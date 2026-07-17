@@ -748,6 +748,7 @@ namespace Azure.Storage.Files.DataLake.Models
     }
     public static partial class DataLakeModelFactory
     {
+        public static Azure.Storage.Files.DataLake.Models.AccessControlChangeResult AccessControlChangeResult(Azure.Storage.Files.DataLake.Models.AccessControlChangeCounters counters, string continuationToken, Azure.Storage.Files.DataLake.Models.AccessControlChangeFailure[] batchFailures) { throw null; }
         public static Azure.Storage.Files.DataLake.Models.DataLakeFileReadResult DataLakeFileReadResult(System.BinaryData content, Azure.Storage.Files.DataLake.Models.FileDownloadDetails details) { throw null; }
         public static Azure.Storage.Files.DataLake.Models.DataLakeFileReadStreamingResult DataLakeFileReadStreamingResult(System.IO.Stream content, Azure.Storage.Files.DataLake.Models.FileDownloadDetails details) { throw null; }
         public static Azure.Storage.Files.DataLake.Models.DataLakeQueryError DataLakeQueryError(string name = null, string description = null, bool isFatal = false, long position = (long)0) { throw null; }
@@ -756,6 +757,7 @@ namespace Azure.Storage.Files.DataLake.Models
         public static Azure.Storage.Files.DataLake.Models.FileDownloadDetails FileDownloadDetails(System.DateTimeOffset lastModified, System.Collections.Generic.IDictionary<string, string> metadata, string contentRange, Azure.ETag eTag, string contentEncoding, string cacheControl, string contentDisposition, string contentLanguage, System.DateTimeOffset copyCompletionTime, string copyStatusDescription, string copyId, string copyProgress, System.Uri copySource, Azure.Storage.Files.DataLake.Models.CopyStatus copyStatus, Azure.Storage.Files.DataLake.Models.DataLakeLeaseDuration leaseDuration, Azure.Storage.Files.DataLake.Models.DataLakeLeaseState leaseState, Azure.Storage.Files.DataLake.Models.DataLakeLeaseStatus leaseStatus, string acceptRanges, bool isServerEncrypted, string encryptionKeySha256, byte[] contentHash, System.DateTimeOffset createdOn, string encryptionContext) { throw null; }
         public static Azure.Storage.Files.DataLake.Models.FileDownloadDetails FileDownloadDetails(System.DateTimeOffset lastModified, System.Collections.Generic.IDictionary<string, string> metadata, string contentRange, Azure.ETag eTag, string contentEncoding, string cacheControl, string contentDisposition, string contentLanguage, System.DateTimeOffset copyCompletionTime, string copyStatusDescription, string copyId, string copyProgress, System.Uri copySource, Azure.Storage.Files.DataLake.Models.CopyStatus copyStatus, Azure.Storage.Files.DataLake.Models.DataLakeLeaseDuration leaseDuration, Azure.Storage.Files.DataLake.Models.DataLakeLeaseState leaseState, Azure.Storage.Files.DataLake.Models.DataLakeLeaseStatus leaseStatus, string acceptRanges, bool isServerEncrypted, string encryptionKeySha256, byte[] contentHash, System.DateTimeOffset createdOn, string encryptionContext, System.Collections.Generic.IList<Azure.Storage.Files.DataLake.Models.PathAccessControlItem> accessControlList) { throw null; }
         public static Azure.Storage.Files.DataLake.Models.FileDownloadInfo FileDownloadInfo(long contentLength, System.IO.Stream content, byte[] contentHash, Azure.Storage.Files.DataLake.Models.FileDownloadDetails properties) { throw null; }
+        public static Azure.Storage.Files.DataLake.Models.FileSystemAccessPolicy FileSystemAccessPolicy(Azure.Storage.Files.DataLake.Models.PublicAccessType dataLakePublicAccess, Azure.ETag eTag, System.DateTimeOffset lastModified, System.Collections.Generic.IEnumerable<Azure.Storage.Files.DataLake.Models.DataLakeSignedIdentifier> signedIdentifiers) { throw null; }
         public static Azure.Storage.Files.DataLake.Models.FileSystemInfo FileSystemInfo(Azure.ETag etag, System.DateTimeOffset lastModified) { throw null; }
         public static Azure.Storage.Files.DataLake.Models.FileSystemItem FileSystemItem(string name, Azure.Storage.Files.DataLake.Models.FileSystemProperties properties) { throw null; }
         public static Azure.Storage.Files.DataLake.Models.FileSystemItem FileSystemItem(string name = null, bool? isDeleted = default(bool?), string versionId = null, Azure.Storage.Files.DataLake.Models.FileSystemProperties properties = null) { throw null; }
@@ -766,6 +768,7 @@ namespace Azure.Storage.Files.DataLake.Models
         public static Azure.Storage.Files.DataLake.Models.PathAccessControl PathAccessControl(string owner, string group, Azure.Storage.Files.DataLake.Models.PathPermissions permissions, System.Collections.Generic.IList<Azure.Storage.Files.DataLake.Models.PathAccessControlItem> acl) { throw null; }
         public static Azure.Storage.Files.DataLake.Models.PathContentInfo PathContentInfo(string contentHash, Azure.ETag eTag, System.DateTimeOffset lastModified, string acceptRanges, string cacheControl, string contentDisposition, string contentEncoding, string contentLanguage, long contentLength, string contentRange, string contentType, System.Collections.Generic.IDictionary<string, string> metadata) { throw null; }
         public static Azure.Storage.Files.DataLake.Models.PathCreateInfo PathCreateInfo(Azure.Storage.Files.DataLake.Models.PathInfo pathInfo, string continuation) { throw null; }
+        public static Azure.Storage.Files.DataLake.Models.PathDeletedItem PathDeletedItem(string path, string deletionId, System.DateTimeOffset? deletedOn, int? remainingRetentionDays) { throw null; }
         public static Azure.Storage.Files.DataLake.Models.PathInfo PathInfo(Azure.ETag eTag, System.DateTimeOffset lastModified) { throw null; }
         public static Azure.Storage.Files.DataLake.Models.PathItem PathItem(string name, bool? isDirectory, System.DateTimeOffset lastModified, Azure.ETag eTag, long? contentLength, string owner, string group, string permissions) { throw null; }
         public static Azure.Storage.Files.DataLake.Models.PathItem PathItem(string name, bool? isDirectory, System.DateTimeOffset lastModified, Azure.ETag eTag, long? contentLength, string owner, string group, string permissions, System.DateTimeOffset? createdOn, System.DateTimeOffset? expiresOn) { throw null; }
@@ -1179,7 +1182,7 @@ namespace Azure.Storage.Files.DataLake.Models
     {
         internal PathSystemProperties() { }
         public long? ContentLength { get { throw null; } }
-        public System.DateTimeOffset? CreationTime { get { throw null; } }
+        public System.DateTimeOffset? CreatedOn { get { throw null; } }
         public string EncryptionContext { get { throw null; } }
         public string EncryptionKeySha256 { get { throw null; } }
         public string EncryptionScope { get { throw null; } }
@@ -1188,7 +1191,7 @@ namespace Azure.Storage.Files.DataLake.Models
         public string Group { get { throw null; } }
         public bool? IsDirectory { get { throw null; } }
         public bool? IsServerEncrypted { get { throw null; } }
-        public System.DateTimeOffset? LastModifiedTime { get { throw null; } }
+        public System.DateTimeOffset? LastModifiedOn { get { throw null; } }
         public string Owner { get { throw null; } }
         public Azure.Storage.Files.DataLake.Models.PathPermissions Permissions { get { throw null; } }
     }

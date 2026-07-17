@@ -94,7 +94,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
                 HttpMessage message = _replicationRecoveryServicesProvidersRestClient.CreateCreateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, providerName, SiteRecoveryServicesProviderCreateOrUpdateContent.ToRequestContent(content), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 RecoveryServicesSiteRecoveryArmOperation<SiteRecoveryServicesProviderResource> operation = new RecoveryServicesSiteRecoveryArmOperation<SiteRecoveryServicesProviderResource>(
-                    new SiteRecoveryServicesProviderOperationSource(Client),
+                    new SiteRecoveryServicesProviderResourceOperationSource(Client),
                     _replicationRecoveryServicesProvidersClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -152,7 +152,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
                 HttpMessage message = _replicationRecoveryServicesProvidersRestClient.CreateCreateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, providerName, SiteRecoveryServicesProviderCreateOrUpdateContent.ToRequestContent(content), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 RecoveryServicesSiteRecoveryArmOperation<SiteRecoveryServicesProviderResource> operation = new RecoveryServicesSiteRecoveryArmOperation<SiteRecoveryServicesProviderResource>(
-                    new SiteRecoveryServicesProviderOperationSource(Client),
+                    new SiteRecoveryServicesProviderResourceOperationSource(Client),
                     _replicationRecoveryServicesProvidersClientDiagnostics,
                     Pipeline,
                     message.Request,

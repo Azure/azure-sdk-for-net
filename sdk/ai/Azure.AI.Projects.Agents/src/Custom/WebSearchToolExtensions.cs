@@ -8,10 +8,18 @@ using OpenAI.Responses;
 
 namespace Azure.AI.Projects.Agents;
 
+/// <summary>
+/// Extension methods that expose Microsoft Foundry-specific configuration on
+/// <see cref="WebSearchTool"/> instances.
+/// </summary>
 public static partial class WebSearchToolExtensions
 {
     extension(WebSearchTool webSearchTool)
     {
+        /// <summary>
+        /// Gets or sets the Foundry-specific custom search configuration applied to this web
+        /// search tool. The value is stored as a JSON patch on the underlying tool definition.
+        /// </summary>
         public ProjectWebSearchConfiguration CustomSearchConfiguration
         {
             get => webSearchTool.Patch.GetJsonModelEx<ProjectWebSearchConfiguration>("$.custom_search_configuration"u8);

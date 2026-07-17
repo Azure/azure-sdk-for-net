@@ -306,7 +306,7 @@ namespace Azure.AI.Language.Conversations
                 Argument.AssertNotNull(content, nameof(content));
 
                 using HttpMessage message = CreateAnalyzeConversationSubmitOperationRequest(content, context);
-                return await ProtocolOperationHelpers.ProcessMessageAsync(Pipeline, message, ClientDiagnostics, "ConversationAnalysisClient.AnalyzeConversationSubmitOperationAsync", OperationFinalStateVia.OperationLocation, context, waitUntil).ConfigureAwait(false);
+                return await ProtocolOperationHelpers.ProcessMessageAsync(Pipeline, message, ClientDiagnostics, "ConversationAnalysisClient.AnalyzeConversationSubmitOperation", OperationFinalStateVia.OperationLocation, context, waitUntil).ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -372,7 +372,7 @@ namespace Azure.AI.Language.Conversations
             try
             {
                 using HttpMessage message = CreateCancelAnalyzeConversationsRequest(jobId, context);
-                return await ProtocolOperationHelpers.ProcessMessageAsync(Pipeline, message, ClientDiagnostics, "ConversationAnalysisClient.CancelAnalyzeConversationsAsync", OperationFinalStateVia.OperationLocation, context, waitUntil).ConfigureAwait(false);
+                return await ProtocolOperationHelpers.ProcessMessageAsync(Pipeline, message, ClientDiagnostics, "ConversationAnalysisClient.CancelAnalyzeConversations", OperationFinalStateVia.OperationLocation, context, waitUntil).ConfigureAwait(false);
             }
             catch (Exception e)
             {

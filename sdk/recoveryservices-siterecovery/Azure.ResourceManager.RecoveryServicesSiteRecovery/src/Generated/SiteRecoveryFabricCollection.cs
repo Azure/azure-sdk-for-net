@@ -99,7 +99,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
                 HttpMessage message = _replicationFabricsRestClient.CreateCreateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, _resourceName, fabricName, SiteRecoveryFabricCreateOrUpdateContent.ToRequestContent(content), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 RecoveryServicesSiteRecoveryArmOperation<SiteRecoveryFabricResource> operation = new RecoveryServicesSiteRecoveryArmOperation<SiteRecoveryFabricResource>(
-                    new SiteRecoveryFabricOperationSource(Client),
+                    new SiteRecoveryFabricResourceOperationSource(Client),
                     _replicationFabricsClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -157,7 +157,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
                 HttpMessage message = _replicationFabricsRestClient.CreateCreateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, _resourceName, fabricName, SiteRecoveryFabricCreateOrUpdateContent.ToRequestContent(content), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 RecoveryServicesSiteRecoveryArmOperation<SiteRecoveryFabricResource> operation = new RecoveryServicesSiteRecoveryArmOperation<SiteRecoveryFabricResource>(
-                    new SiteRecoveryFabricOperationSource(Client),
+                    new SiteRecoveryFabricResourceOperationSource(Client),
                     _replicationFabricsClientDiagnostics,
                     Pipeline,
                     message.Request,

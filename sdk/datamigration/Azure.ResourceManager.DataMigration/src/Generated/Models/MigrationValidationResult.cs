@@ -7,43 +7,15 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.DataMigration;
 
 namespace Azure.ResourceManager.DataMigration.Models
 {
     /// <summary> Migration Validation Result. </summary>
     public partial class MigrationValidationResult
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private protected IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="MigrationValidationResult"/>. </summary>
         internal MigrationValidationResult()
@@ -56,22 +28,25 @@ namespace Azure.ResourceManager.DataMigration.Models
         /// <param name="migrationId"> Migration Identifier. </param>
         /// <param name="summaryResults"> Validation summary results for each database. </param>
         /// <param name="status"> Current status of validation at the migration level. Status from the database validation result status will be aggregated here. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal MigrationValidationResult(string id, string migrationId, IReadOnlyDictionary<string, MigrationValidationDatabaseSummaryResult> summaryResults, MigrationValidationStatus? status, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal MigrationValidationResult(string id, string migrationId, IReadOnlyDictionary<string, MigrationValidationDatabaseSummaryResult> summaryResults, MigrationValidationStatus? status, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Id = id;
             MigrationId = migrationId;
             SummaryResults = summaryResults;
             Status = status;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> Migration validation result identifier. </summary>
         public string Id { get; }
+
         /// <summary> Migration Identifier. </summary>
         public string MigrationId { get; }
+
         /// <summary> Validation summary results for each database. </summary>
         public IReadOnlyDictionary<string, MigrationValidationDatabaseSummaryResult> SummaryResults { get; }
+
         /// <summary> Current status of validation at the migration level. Status from the database validation result status will be aggregated here. </summary>
         public MigrationValidationStatus? Status { get; }
     }

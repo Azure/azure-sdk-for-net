@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.DnsResolver
                 HttpMessage message = _dnsForwardingRulesetsRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, rulesetName, DnsForwardingRulesetData.ToRequestContent(data), matchConditions, context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 DnsResolverArmOperation<DnsForwardingRulesetResource> operation = new DnsResolverArmOperation<DnsForwardingRulesetResource>(
-                    new DnsForwardingRulesetOperationSource(Client),
+                    new DnsForwardingRulesetResourceOperationSource(Client),
                     _dnsForwardingRulesetsClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -154,7 +154,7 @@ namespace Azure.ResourceManager.DnsResolver
                 HttpMessage message = _dnsForwardingRulesetsRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, rulesetName, DnsForwardingRulesetData.ToRequestContent(data), matchConditions, context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 DnsResolverArmOperation<DnsForwardingRulesetResource> operation = new DnsResolverArmOperation<DnsForwardingRulesetResource>(
-                    new DnsForwardingRulesetOperationSource(Client),
+                    new DnsForwardingRulesetResourceOperationSource(Client),
                     _dnsForwardingRulesetsClientDiagnostics,
                     Pipeline,
                     message.Request,

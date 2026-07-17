@@ -20,6 +20,23 @@
               "$ref": "#/definitions/keyVaultAdministrationClientOptions"
             }
           }
+        },
+        "KeyVaultEkmClient": {
+          "type": "object",
+          "description": "Configuration for KeyVaultEkmClient.",
+          "properties": {
+            "VaultBaseUrl": {
+              "type": "string",
+              "format": "uri",
+              "description": "Gets or sets the VaultBaseUrl."
+            },
+            "Credential": {
+              "$ref": "#/definitions/credential"
+            },
+            "Options": {
+              "$ref": "#/definitions/keyVaultAdministrationClientOptions"
+            }
+          }
         }
       },
       "additionalProperties": {

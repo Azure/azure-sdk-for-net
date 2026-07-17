@@ -93,7 +93,7 @@ namespace Azure.ResourceManager.Hci.Vm
                 HttpMessage message = _securityRulesRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, securityRuleName, HciVmSecurityRuleData.ToRequestContent(data), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 VmArmOperation<HciVmSecurityRuleResource> operation = new VmArmOperation<HciVmSecurityRuleResource>(
-                    new HciVmSecurityRuleOperationSource(Client),
+                    new HciVmSecurityRuleResourceOperationSource(Client),
                     _securityRulesClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -151,7 +151,7 @@ namespace Azure.ResourceManager.Hci.Vm
                 HttpMessage message = _securityRulesRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, securityRuleName, HciVmSecurityRuleData.ToRequestContent(data), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 VmArmOperation<HciVmSecurityRuleResource> operation = new VmArmOperation<HciVmSecurityRuleResource>(
-                    new HciVmSecurityRuleOperationSource(Client),
+                    new HciVmSecurityRuleResourceOperationSource(Client),
                     _securityRulesClientDiagnostics,
                     Pipeline,
                     message.Request,

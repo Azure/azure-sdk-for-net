@@ -94,7 +94,7 @@ namespace Azure.ResourceManager.AppContainers
                 HttpMessage message = _containerAppJobsRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, jobName, ContainerAppJobData.ToRequestContent(data), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 AppContainersArmOperation<ContainerAppJobResource> operation = new AppContainersArmOperation<ContainerAppJobResource>(
-                    new ContainerAppJobOperationSource(Client),
+                    new ContainerAppJobResourceOperationSource(Client),
                     _containerAppJobsClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -152,7 +152,7 @@ namespace Azure.ResourceManager.AppContainers
                 HttpMessage message = _containerAppJobsRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, jobName, ContainerAppJobData.ToRequestContent(data), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 AppContainersArmOperation<ContainerAppJobResource> operation = new AppContainersArmOperation<ContainerAppJobResource>(
-                    new ContainerAppJobOperationSource(Client),
+                    new ContainerAppJobResourceOperationSource(Client),
                     _containerAppJobsClientDiagnostics,
                     Pipeline,
                     message.Request,

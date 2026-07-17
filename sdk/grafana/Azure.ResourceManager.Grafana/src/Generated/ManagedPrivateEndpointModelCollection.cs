@@ -93,7 +93,7 @@ namespace Azure.ResourceManager.Grafana
                 HttpMessage message = _managedPrivateEndpointModelsRestClient.CreateCreateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, managedPrivateEndpointName, ManagedPrivateEndpointModelData.ToRequestContent(data), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 GrafanaArmOperation<ManagedPrivateEndpointModelResource> operation = new GrafanaArmOperation<ManagedPrivateEndpointModelResource>(
-                    new ManagedPrivateEndpointModelOperationSource(Client),
+                    new ManagedPrivateEndpointModelResourceOperationSource(Client),
                     _managedPrivateEndpointModelsClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -151,7 +151,7 @@ namespace Azure.ResourceManager.Grafana
                 HttpMessage message = _managedPrivateEndpointModelsRestClient.CreateCreateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, managedPrivateEndpointName, ManagedPrivateEndpointModelData.ToRequestContent(data), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 GrafanaArmOperation<ManagedPrivateEndpointModelResource> operation = new GrafanaArmOperation<ManagedPrivateEndpointModelResource>(
-                    new ManagedPrivateEndpointModelOperationSource(Client),
+                    new ManagedPrivateEndpointModelResourceOperationSource(Client),
                     _managedPrivateEndpointModelsClientDiagnostics,
                     Pipeline,
                     message.Request,

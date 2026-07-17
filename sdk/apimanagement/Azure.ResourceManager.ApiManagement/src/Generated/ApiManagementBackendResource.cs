@@ -6,47 +6,36 @@
 #nullable disable
 
 using System;
-using System.Globalization;
+using System.Diagnostics;
 using System.Threading;
 using System.Threading.Tasks;
+using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
+using Azure.ResourceManager;
 using Azure.ResourceManager.ApiManagement.Models;
 
 namespace Azure.ResourceManager.ApiManagement
 {
     /// <summary>
-    /// A Class representing an ApiManagementBackend along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier"/> you can construct an <see cref="ApiManagementBackendResource"/>
-    /// from an instance of <see cref="ArmClient"/> using the GetApiManagementBackendResource method.
-    /// Otherwise you can get one from its parent resource <see cref="ApiManagementServiceResource"/> using the GetApiManagementBackend method.
+    /// A class representing a ApiManagementBackend along with the instance operations that can be performed on it.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="ApiManagementBackendResource"/> from an instance of <see cref="ArmClient"/> using the GetResource method.
+    /// Otherwise you can get one from its parent resource <see cref="ApiManagementServiceResource"/> using the GetApiManagementBackends method.
     /// </summary>
     public partial class ApiManagementBackendResource : ArmResource
     {
-        /// <summary> Generate the resource identifier of a <see cref="ApiManagementBackendResource"/> instance. </summary>
-        /// <param name="subscriptionId"> The subscriptionId. </param>
-        /// <param name="resourceGroupName"> The resourceGroupName. </param>
-        /// <param name="serviceName"> The serviceName. </param>
-        /// <param name="backendId"> The backendId. </param>
-        public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string serviceName, string backendId)
-        {
-            var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/backends/{backendId}";
-            return new ResourceIdentifier(resourceId);
-        }
-
-        private readonly ClientDiagnostics _apiManagementBackendBackendClientDiagnostics;
-        private readonly BackendRestOperations _apiManagementBackendBackendRestClient;
+        private readonly ClientDiagnostics _backendClientDiagnostics;
+        private readonly Backend _backendRestClient;
         private readonly ApiManagementBackendData _data;
-
         /// <summary> Gets the resource type for the operations. </summary>
         public static readonly ResourceType ResourceType = "Microsoft.ApiManagement/service/backends";
 
-        /// <summary> Initializes a new instance of the <see cref="ApiManagementBackendResource"/> class for mocking. </summary>
+        /// <summary> Initializes a new instance of ApiManagementBackendResource for mocking. </summary>
         protected ApiManagementBackendResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref="ApiManagementBackendResource"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="ApiManagementBackendResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal ApiManagementBackendResource(ArmClient client, ApiManagementBackendData data) : this(client, data.Id)
@@ -55,71 +44,93 @@ namespace Azure.ResourceManager.ApiManagement
             _data = data;
         }
 
-        /// <summary> Initializes a new instance of the <see cref="ApiManagementBackendResource"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="ApiManagementBackendResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal ApiManagementBackendResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _apiManagementBackendBackendClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ApiManagement", ResourceType.Namespace, Diagnostics);
-            TryGetApiVersion(ResourceType, out string apiManagementBackendBackendApiVersion);
-            _apiManagementBackendBackendRestClient = new BackendRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, apiManagementBackendBackendApiVersion);
-#if DEBUG
-			ValidateResourceId(Id);
-#endif
+            TryGetApiVersion(ResourceType, out string apiManagementBackendApiVersion);
+            _backendClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ApiManagement", ResourceType.Namespace, Diagnostics);
+            _backendRestClient = new Backend(_backendClientDiagnostics, Pipeline, Endpoint, apiManagementBackendApiVersion ?? "2025-09-01-preview");
+            ValidateResourceId(id);
         }
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }
 
         /// <summary> Gets the data representing this Feature. </summary>
-        /// <exception cref="InvalidOperationException"> Throws if there is no data loaded in the current instance. </exception>
         public virtual ApiManagementBackendData Data
         {
             get
             {
                 if (!HasData)
+                {
                     throw new InvalidOperationException("The current instance does not have data, you must call Get first.");
+                }
                 return _data;
             }
         }
 
+        /// <summary> Generate the resource identifier for this resource. </summary>
+        /// <param name="subscriptionId"> The subscriptionId. </param>
+        /// <param name="resourceGroupName"> The resourceGroupName. </param>
+        /// <param name="serviceName"> The serviceName. </param>
+        /// <param name="backendId"> The backendId. </param>
+        public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string serviceName, string backendId)
+        {
+            string resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/backends/{backendId}";
+            return new ResourceIdentifier(resourceId);
+        }
+
+        /// <param name="id"></param>
+        [Conditional("DEBUG")]
         internal static void ValidateResourceId(ResourceIdentifier id)
         {
             if (id.ResourceType != ResourceType)
-                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), nameof(id));
+            {
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), nameof(id));
+            }
         }
 
         /// <summary>
         /// Gets the details of the backend specified by its identifier.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/backends/{backendId}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/backends/{backendId}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Backend_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> BackendContracts_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-05-01</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-09-01-preview. </description>
         /// </item>
         /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ApiManagementBackendResource"/></description>
+        /// <term> Resource. </term>
+        /// <description> <see cref="ApiManagementBackendResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<Response<ApiManagementBackendResource>> GetAsync(CancellationToken cancellationToken = default)
         {
-            using var scope = _apiManagementBackendBackendClientDiagnostics.CreateScope("ApiManagementBackendResource.Get");
+            using DiagnosticScope scope = _backendClientDiagnostics.CreateScope("ApiManagementBackendResource.Get");
             scope.Start();
             try
             {
-                var response = await _apiManagementBackendBackendRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _backendRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
+                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                Response<ApiManagementBackendData> response = Response.FromValue(ApiManagementBackendData.FromResponse(result), result);
                 if (response.Value == null)
+                {
                     throw new RequestFailedException(response.GetRawResponse());
+                }
                 return Response.FromValue(new ApiManagementBackendResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -133,33 +144,151 @@ namespace Azure.ResourceManager.ApiManagement
         /// Gets the details of the backend specified by its identifier.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/backends/{backendId}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/backends/{backendId}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Backend_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> BackendContracts_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-05-01</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-09-01-preview. </description>
         /// </item>
         /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ApiManagementBackendResource"/></description>
+        /// <term> Resource. </term>
+        /// <description> <see cref="ApiManagementBackendResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response<ApiManagementBackendResource> Get(CancellationToken cancellationToken = default)
         {
-            using var scope = _apiManagementBackendBackendClientDiagnostics.CreateScope("ApiManagementBackendResource.Get");
+            using DiagnosticScope scope = _backendClientDiagnostics.CreateScope("ApiManagementBackendResource.Get");
             scope.Start();
             try
             {
-                var response = _apiManagementBackendBackendRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _backendRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
+                Response result = Pipeline.ProcessMessage(message, context);
+                Response<ApiManagementBackendData> response = Response.FromValue(ApiManagementBackendData.FromResponse(result), result);
                 if (response.Value == null)
+                {
                     throw new RequestFailedException(response.GetRawResponse());
+                }
+                return Response.FromValue(new ApiManagementBackendResource(Client, response.Value), response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Updates an existing backend.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/backends/{backendId}. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> BackendContracts_Update. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-09-01-preview. </description>
+        /// </item>
+        /// <item>
+        /// <term> Resource. </term>
+        /// <description> <see cref="ApiManagementBackendResource"/>. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="ifMatch"> ETag of the Entity. ETag should match the current entity state from the header response of the GET request or it should be * for unconditional update. </param>
+        /// <param name="patch"> Update parameters. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="ifMatch"/> or <paramref name="patch"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="ifMatch"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual async Task<Response<ApiManagementBackendResource>> UpdateAsync(string ifMatch, ApiManagementBackendPatch patch, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(ifMatch, nameof(ifMatch));
+            Argument.AssertNotNull(patch, nameof(patch));
+
+            using DiagnosticScope scope = _backendClientDiagnostics.CreateScope("ApiManagementBackendResource.Update");
+            scope.Start();
+            try
+            {
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _backendRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, ifMatch, ApiManagementBackendPatch.ToRequestContent(patch), context);
+                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                Response<ApiManagementBackendData> response = Response.FromValue(ApiManagementBackendData.FromResponse(result), result);
+                if (response.Value == null)
+                {
+                    throw new RequestFailedException(response.GetRawResponse());
+                }
+                return Response.FromValue(new ApiManagementBackendResource(Client, response.Value), response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Updates an existing backend.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/backends/{backendId}. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> BackendContracts_Update. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-09-01-preview. </description>
+        /// </item>
+        /// <item>
+        /// <term> Resource. </term>
+        /// <description> <see cref="ApiManagementBackendResource"/>. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="ifMatch"> ETag of the Entity. ETag should match the current entity state from the header response of the GET request or it should be * for unconditional update. </param>
+        /// <param name="patch"> Update parameters. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="ifMatch"/> or <paramref name="patch"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="ifMatch"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual Response<ApiManagementBackendResource> Update(string ifMatch, ApiManagementBackendPatch patch, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(ifMatch, nameof(ifMatch));
+            Argument.AssertNotNull(patch, nameof(patch));
+
+            using DiagnosticScope scope = _backendClientDiagnostics.CreateScope("ApiManagementBackendResource.Update");
+            scope.Start();
+            try
+            {
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _backendRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, ifMatch, ApiManagementBackendPatch.ToRequestContent(patch), context);
+                Response result = Pipeline.ProcessMessage(message, context);
+                Response<ApiManagementBackendData> response = Response.FromValue(ApiManagementBackendData.FromResponse(result), result);
+                if (response.Value == null)
+                {
+                    throw new RequestFailedException(response.GetRawResponse());
+                }
                 return Response.FromValue(new ApiManagementBackendResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -173,38 +302,49 @@ namespace Azure.ResourceManager.ApiManagement
         /// Deletes the specified backend.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/backends/{backendId}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/backends/{backendId}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Backend_Delete</description>
+        /// <term> Operation Id. </term>
+        /// <description> BackendContracts_Delete. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-05-01</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-09-01-preview. </description>
         /// </item>
         /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ApiManagementBackendResource"/></description>
+        /// <term> Resource. </term>
+        /// <description> <see cref="ApiManagementBackendResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="ifMatch"> ETag of the Entity. ETag should match the current entity state from the header response of the GET request or it should be * for unconditional update. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<ArmOperation> DeleteAsync(WaitUntil waitUntil, ETag ifMatch, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="ifMatch"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="ifMatch"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual async Task<ArmOperation> DeleteAsync(WaitUntil waitUntil, string ifMatch, CancellationToken cancellationToken = default)
         {
-            using var scope = _apiManagementBackendBackendClientDiagnostics.CreateScope("ApiManagementBackendResource.Delete");
+            Argument.AssertNotNullOrEmpty(ifMatch, nameof(ifMatch));
+
+            using DiagnosticScope scope = _backendClientDiagnostics.CreateScope("ApiManagementBackendResource.Delete");
             scope.Start();
             try
             {
-                var response = await _apiManagementBackendBackendRestClient.DeleteAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, ifMatch, cancellationToken).ConfigureAwait(false);
-                var uri = _apiManagementBackendBackendRestClient.CreateDeleteRequestUri(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, ifMatch);
-                var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Delete, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
-                var operation = new ApiManagementArmOperation(response, rehydrationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _backendRestClient.CreateDeleteRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, ifMatch, context);
+                Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                RequestUriBuilder uri = message.Request.Uri;
+                RehydrationToken rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Delete, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
+                ApiManagementArmOperation operation = new ApiManagementArmOperation(response, rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
+                {
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
+                }
                 return operation;
             }
             catch (Exception e)
@@ -218,38 +358,49 @@ namespace Azure.ResourceManager.ApiManagement
         /// Deletes the specified backend.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/backends/{backendId}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/backends/{backendId}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Backend_Delete</description>
+        /// <term> Operation Id. </term>
+        /// <description> BackendContracts_Delete. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-05-01</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-09-01-preview. </description>
         /// </item>
         /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ApiManagementBackendResource"/></description>
+        /// <term> Resource. </term>
+        /// <description> <see cref="ApiManagementBackendResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="ifMatch"> ETag of the Entity. ETag should match the current entity state from the header response of the GET request or it should be * for unconditional update. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual ArmOperation Delete(WaitUntil waitUntil, ETag ifMatch, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="ifMatch"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="ifMatch"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual ArmOperation Delete(WaitUntil waitUntil, string ifMatch, CancellationToken cancellationToken = default)
         {
-            using var scope = _apiManagementBackendBackendClientDiagnostics.CreateScope("ApiManagementBackendResource.Delete");
+            Argument.AssertNotNullOrEmpty(ifMatch, nameof(ifMatch));
+
+            using DiagnosticScope scope = _backendClientDiagnostics.CreateScope("ApiManagementBackendResource.Delete");
             scope.Start();
             try
             {
-                var response = _apiManagementBackendBackendRestClient.Delete(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, ifMatch, cancellationToken);
-                var uri = _apiManagementBackendBackendRestClient.CreateDeleteRequestUri(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, ifMatch);
-                var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Delete, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
-                var operation = new ApiManagementArmOperation(response, rehydrationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _backendRestClient.CreateDeleteRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, ifMatch, context);
+                Response response = Pipeline.ProcessMessage(message, context);
+                RequestUriBuilder uri = message.Request.Uri;
+                RehydrationToken rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Delete, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
+                ApiManagementArmOperation operation = new ApiManagementArmOperation(response, rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
+                {
                     operation.WaitForCompletionResponse(cancellationToken);
+                }
                 return operation;
             }
             catch (Exception e)
@@ -260,121 +411,40 @@ namespace Azure.ResourceManager.ApiManagement
         }
 
         /// <summary>
-        /// Updates an existing backend.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/backends/{backendId}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Backend_Update</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-05-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ApiManagementBackendResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="ifMatch"> ETag of the Entity. ETag should match the current entity state from the header response of the GET request or it should be * for unconditional update. </param>
-        /// <param name="patch"> Update parameters. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="patch"/> is null. </exception>
-        public virtual async Task<Response<ApiManagementBackendResource>> UpdateAsync(ETag ifMatch, ApiManagementBackendPatch patch, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(patch, nameof(patch));
-
-            using var scope = _apiManagementBackendBackendClientDiagnostics.CreateScope("ApiManagementBackendResource.Update");
-            scope.Start();
-            try
-            {
-                var response = await _apiManagementBackendBackendRestClient.UpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, ifMatch, patch, cancellationToken).ConfigureAwait(false);
-                return Response.FromValue(new ApiManagementBackendResource(Client, response.Value), response.GetRawResponse());
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// Updates an existing backend.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/backends/{backendId}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Backend_Update</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-05-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ApiManagementBackendResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="ifMatch"> ETag of the Entity. ETag should match the current entity state from the header response of the GET request or it should be * for unconditional update. </param>
-        /// <param name="patch"> Update parameters. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="patch"/> is null. </exception>
-        public virtual Response<ApiManagementBackendResource> Update(ETag ifMatch, ApiManagementBackendPatch patch, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(patch, nameof(patch));
-
-            using var scope = _apiManagementBackendBackendClientDiagnostics.CreateScope("ApiManagementBackendResource.Update");
-            scope.Start();
-            try
-            {
-                var response = _apiManagementBackendBackendRestClient.Update(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, ifMatch, patch, cancellationToken);
-                return Response.FromValue(new ApiManagementBackendResource(Client, response.Value), response.GetRawResponse());
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
         /// Notifies the API Management gateway to create a new connection to the backend after the specified timeout. If no timeout was specified, timeout of 2 minutes is used.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/backends/{backendId}/reconnect</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/backends/{backendId}/reconnect. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Backend_Reconnect</description>
+        /// <term> Operation Id. </term>
+        /// <description> BackendContracts_Reconnect. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-05-01</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-09-01-preview. </description>
         /// </item>
         /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ApiManagementBackendResource"/></description>
+        /// <term> Resource. </term>
+        /// <description> <see cref="ApiManagementBackendResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="backendReconnectContract"> Reconnect request parameters. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response> ReconnectAsync(BackendReconnectContract backendReconnectContract = null, CancellationToken cancellationToken = default)
+        public virtual async Task<Response> ReconnectAsync(BackendReconnectContract backendReconnectContract = default, CancellationToken cancellationToken = default)
         {
-            using var scope = _apiManagementBackendBackendClientDiagnostics.CreateScope("ApiManagementBackendResource.Reconnect");
+            using DiagnosticScope scope = _backendClientDiagnostics.CreateScope("ApiManagementBackendResource.Reconnect");
             scope.Start();
             try
             {
-                var response = await _apiManagementBackendBackendRestClient.ReconnectAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, backendReconnectContract, cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _backendRestClient.CreateReconnectRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, BackendReconnectContract.ToRequestContent(backendReconnectContract), context);
+                Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 return response;
             }
             catch (Exception e)
@@ -388,108 +458,37 @@ namespace Azure.ResourceManager.ApiManagement
         /// Notifies the API Management gateway to create a new connection to the backend after the specified timeout. If no timeout was specified, timeout of 2 minutes is used.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/backends/{backendId}/reconnect</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/backends/{backendId}/reconnect. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Backend_Reconnect</description>
+        /// <term> Operation Id. </term>
+        /// <description> BackendContracts_Reconnect. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-05-01</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-09-01-preview. </description>
         /// </item>
         /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ApiManagementBackendResource"/></description>
+        /// <term> Resource. </term>
+        /// <description> <see cref="ApiManagementBackendResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="backendReconnectContract"> Reconnect request parameters. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response Reconnect(BackendReconnectContract backendReconnectContract = null, CancellationToken cancellationToken = default)
+        public virtual Response Reconnect(BackendReconnectContract backendReconnectContract = default, CancellationToken cancellationToken = default)
         {
-            using var scope = _apiManagementBackendBackendClientDiagnostics.CreateScope("ApiManagementBackendResource.Reconnect");
+            using DiagnosticScope scope = _backendClientDiagnostics.CreateScope("ApiManagementBackendResource.Reconnect");
             scope.Start();
             try
             {
-                var response = _apiManagementBackendBackendRestClient.Reconnect(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, backendReconnectContract, cancellationToken);
-                return response;
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// Gets the entity state (Etag) version of the backend specified by its identifier.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/backends/{backendId}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Backend_GetEntityTag</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-05-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ApiManagementBackendResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<bool>> GetEntityTagAsync(CancellationToken cancellationToken = default)
-        {
-            using var scope = _apiManagementBackendBackendClientDiagnostics.CreateScope("ApiManagementBackendResource.GetEntityTag");
-            scope.Start();
-            try
-            {
-                var response = await _apiManagementBackendBackendRestClient.GetEntityTagAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
-                return response;
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// Gets the entity state (Etag) version of the backend specified by its identifier.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/backends/{backendId}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Backend_GetEntityTag</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-05-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ApiManagementBackendResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<bool> GetEntityTag(CancellationToken cancellationToken = default)
-        {
-            using var scope = _apiManagementBackendBackendClientDiagnostics.CreateScope("ApiManagementBackendResource.GetEntityTag");
-            scope.Start();
-            try
-            {
-                var response = _apiManagementBackendBackendRestClient.GetEntityTag(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _backendRestClient.CreateReconnectRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, BackendReconnectContract.ToRequestContent(backendReconnectContract), context);
+                Response response = Pipeline.ProcessMessage(message, context);
                 return response;
             }
             catch (Exception e)

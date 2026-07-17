@@ -94,7 +94,7 @@ namespace Azure.ResourceManager.AppContainers
                 HttpMessage message = _containerAppsSessionPoolsRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, sessionPoolName, SessionPoolData.ToRequestContent(data), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 AppContainersArmOperation<SessionPoolResource> operation = new AppContainersArmOperation<SessionPoolResource>(
-                    new SessionPoolOperationSource(Client),
+                    new SessionPoolResourceOperationSource(Client),
                     _containerAppsSessionPoolsClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -152,7 +152,7 @@ namespace Azure.ResourceManager.AppContainers
                 HttpMessage message = _containerAppsSessionPoolsRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, sessionPoolName, SessionPoolData.ToRequestContent(data), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 AppContainersArmOperation<SessionPoolResource> operation = new AppContainersArmOperation<SessionPoolResource>(
-                    new SessionPoolOperationSource(Client),
+                    new SessionPoolResourceOperationSource(Client),
                     _containerAppsSessionPoolsClientDiagnostics,
                     Pipeline,
                     message.Request,

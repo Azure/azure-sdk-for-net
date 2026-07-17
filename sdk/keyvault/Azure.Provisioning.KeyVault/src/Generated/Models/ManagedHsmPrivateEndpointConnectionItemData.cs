@@ -24,7 +24,7 @@ namespace Azure.Provisioning.KeyVault
         {
         }
 
-        /// <summary> Gets or sets the Id. </summary>
+        /// <summary> Gets the Id. </summary>
         public BicepValue<ResourceIdentifier> Id
         {
             get
@@ -32,14 +32,9 @@ namespace Azure.Provisioning.KeyVault
                 Initialize();
                 return _id;
             }
-            set
-            {
-                Initialize();
-                _id.Assign(value);
-            }
         }
 
-        /// <summary> Gets or sets the ETag. </summary>
+        /// <summary> Gets the ETag. </summary>
         public BicepValue<ETag> ETag
         {
             get
@@ -47,25 +42,15 @@ namespace Azure.Provisioning.KeyVault
                 Initialize();
                 return _eTag;
             }
-            set
-            {
-                Initialize();
-                _eTag.Assign(value);
-            }
         }
 
-        /// <summary> Gets or sets the Properties. </summary>
+        /// <summary> Gets the Properties. </summary>
         internal ManagedHsmPrivateEndpointConnectionProperties Properties
         {
             get
             {
                 Initialize();
                 return _properties;
-            }
-            set
-            {
-                Initialize();
-                AssignOrReplace(ref _properties, value);
             }
         }
 
@@ -74,15 +59,7 @@ namespace Azure.Provisioning.KeyVault
         {
             get
             {
-                return Properties is null ? default : Properties.PrivateLinkServiceConnectionState;
-            }
-            set
-            {
-                if (Properties is null)
-                {
-                    Properties = new ManagedHsmPrivateEndpointConnectionProperties();
-                }
-                Properties.PrivateLinkServiceConnectionState = value;
+                return Properties.PrivateLinkServiceConnectionState;
             }
         }
 
@@ -91,10 +68,6 @@ namespace Azure.Provisioning.KeyVault
         {
             get
             {
-                if (Properties is null)
-                {
-                    Properties = new ManagedHsmPrivateEndpointConnectionProperties();
-                }
                 return Properties.ProvisioningState;
             }
         }
@@ -104,10 +77,6 @@ namespace Azure.Provisioning.KeyVault
         {
             get
             {
-                if (Properties is null)
-                {
-                    Properties = new ManagedHsmPrivateEndpointConnectionProperties();
-                }
                 return Properties.PrivateEndpointId;
             }
         }
@@ -119,6 +88,10 @@ namespace Azure.Provisioning.KeyVault
             _id = DefineProperty<ResourceIdentifier>(nameof(Id), new string[] { "id" });
             _eTag = DefineProperty<ETag>(nameof(ETag), new string[] { "etag" });
             _properties = DefineModelProperty<ManagedHsmPrivateEndpointConnectionProperties>(nameof(Properties), new string[] { "properties" });
+            DefineAdditionalProperties();
         }
+
+        /// <summary> Define additional provisionable properties for ManagedHsmPrivateEndpointConnectionItemData that are not part of the generated code. </summary>
+        partial void DefineAdditionalProperties();
     }
 }

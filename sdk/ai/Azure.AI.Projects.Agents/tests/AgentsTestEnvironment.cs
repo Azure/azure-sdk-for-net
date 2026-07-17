@@ -14,6 +14,7 @@ namespace Azure.AI.Projects.Agents.Tests
     {
         public string FOUNDRY_PROJECT_ENDPOINT => GetRecordedVariable(nameof(FOUNDRY_PROJECT_ENDPOINT), options => options.IsSecret("https://sanitized-host.services.ai.azure.com/api/projects/sanitized-project"));
         public string FOUNDRY_MODEL_NAME => GetRecordedVariable(nameof(FOUNDRY_MODEL_NAME));
+        public string FOUNDRY_MODEL_NAME2 => GetRecordedVariable(nameof(FOUNDRY_MODEL_NAME2));
         public string APPLICATIONINSIGHTS_CONNECTION_STRING => GetRecordedVariable(nameof(APPLICATIONINSIGHTS_CONNECTION_STRING));
         public string AGENT_DOCKER_IMAGE => GetRecordedVariable(nameof(AGENT_DOCKER_IMAGE));
         public string IMAGE_GENERATION_DEPLOYMENT_NAME => GetRecordedVariable(nameof(IMAGE_GENERATION_DEPLOYMENT_NAME));
@@ -31,6 +32,8 @@ namespace Azure.AI.Projects.Agents.Tests
         public string HOSTED_AGENT_NAME => GetRecordedVariable(nameof(HOSTED_AGENT_NAME));
         public string HOSTED_AGENT_VERSION => GetRecordedVariable(nameof(HOSTED_AGENT_VERSION));
         public string FOUNDRY_AGENT_CONTAINER_IMAGE => GetRecordedVariable(nameof(FOUNDRY_AGENT_CONTAINER_IMAGE));
+        public string WORKIQ_CONNECTION_ID => GetRecordedVariable(nameof(WORKIQ_CONNECTION_ID));
+        public string FABRIC_IQ_CONNECTION_ID => GetRecordedVariable(nameof(FABRIC_IQ_CONNECTION_ID));
         public override Dictionary<string, string> ParseEnvironmentFile() => new()
         {
             { "OPEN-API-KEY", Environment.GetEnvironmentVariable("OPENAI_API_KEY") ?? "api-key" }

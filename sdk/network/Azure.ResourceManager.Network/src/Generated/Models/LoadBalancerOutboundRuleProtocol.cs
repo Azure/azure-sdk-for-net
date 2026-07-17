@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.Network;
 
 namespace Azure.ResourceManager.Network.Models
 {
@@ -14,41 +15,62 @@ namespace Azure.ResourceManager.Network.Models
     public readonly partial struct LoadBalancerOutboundRuleProtocol : IEquatable<LoadBalancerOutboundRuleProtocol>
     {
         private readonly string _value;
+        /// <summary> Tcp. </summary>
+        private const string TcpValue = "Tcp";
+        /// <summary> Udp. </summary>
+        private const string UdpValue = "Udp";
+        /// <summary> All. </summary>
+        private const string AllValue = "All";
 
         /// <summary> Initializes a new instance of <see cref="LoadBalancerOutboundRuleProtocol"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public LoadBalancerOutboundRuleProtocol(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string TcpValue = "Tcp";
-        private const string UdpValue = "Udp";
-        private const string AllValue = "All";
+            _value = value;
+        }
 
         /// <summary> Tcp. </summary>
         public static LoadBalancerOutboundRuleProtocol Tcp { get; } = new LoadBalancerOutboundRuleProtocol(TcpValue);
+
         /// <summary> Udp. </summary>
         public static LoadBalancerOutboundRuleProtocol Udp { get; } = new LoadBalancerOutboundRuleProtocol(UdpValue);
+
         /// <summary> All. </summary>
         public static LoadBalancerOutboundRuleProtocol All { get; } = new LoadBalancerOutboundRuleProtocol(AllValue);
+
         /// <summary> Determines if two <see cref="LoadBalancerOutboundRuleProtocol"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(LoadBalancerOutboundRuleProtocol left, LoadBalancerOutboundRuleProtocol right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="LoadBalancerOutboundRuleProtocol"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(LoadBalancerOutboundRuleProtocol left, LoadBalancerOutboundRuleProtocol right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="LoadBalancerOutboundRuleProtocol"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="LoadBalancerOutboundRuleProtocol"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator LoadBalancerOutboundRuleProtocol(string value) => new LoadBalancerOutboundRuleProtocol(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="LoadBalancerOutboundRuleProtocol"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator LoadBalancerOutboundRuleProtocol?(string value) => value == null ? null : new LoadBalancerOutboundRuleProtocol(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is LoadBalancerOutboundRuleProtocol other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(LoadBalancerOutboundRuleProtocol other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

@@ -229,7 +229,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
                 HttpMessage message = _replicationRecoveryPlansRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, SiteRecoveryRecoveryPlanPatch.ToRequestContent(patch), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 RecoveryServicesSiteRecoveryArmOperation<SiteRecoveryRecoveryPlanResource> operation = new RecoveryServicesSiteRecoveryArmOperation<SiteRecoveryRecoveryPlanResource>(
-                    new SiteRecoveryRecoveryPlanOperationSource(Client),
+                    new SiteRecoveryRecoveryPlanResourceOperationSource(Client),
                     _replicationRecoveryPlansClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -288,7 +288,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
                 HttpMessage message = _replicationRecoveryPlansRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, SiteRecoveryRecoveryPlanPatch.ToRequestContent(patch), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 RecoveryServicesSiteRecoveryArmOperation<SiteRecoveryRecoveryPlanResource> operation = new RecoveryServicesSiteRecoveryArmOperation<SiteRecoveryRecoveryPlanResource>(
-                    new SiteRecoveryRecoveryPlanOperationSource(Client),
+                    new SiteRecoveryRecoveryPlanResourceOperationSource(Client),
                     _replicationRecoveryPlansClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -441,7 +441,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
                 HttpMessage message = _replicationRecoveryPlansRestClient.CreateFailoverCancelRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 RecoveryServicesSiteRecoveryArmOperation<SiteRecoveryRecoveryPlanResource> operation = new RecoveryServicesSiteRecoveryArmOperation<SiteRecoveryRecoveryPlanResource>(
-                    new SiteRecoveryRecoveryPlanOperationSource(Client),
+                    new SiteRecoveryRecoveryPlanResourceOperationSource(Client),
                     _replicationRecoveryPlansClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -496,7 +496,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
                 HttpMessage message = _replicationRecoveryPlansRestClient.CreateFailoverCancelRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 RecoveryServicesSiteRecoveryArmOperation<SiteRecoveryRecoveryPlanResource> operation = new RecoveryServicesSiteRecoveryArmOperation<SiteRecoveryRecoveryPlanResource>(
-                    new SiteRecoveryRecoveryPlanOperationSource(Client),
+                    new SiteRecoveryRecoveryPlanResourceOperationSource(Client),
                     _replicationRecoveryPlansClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -551,7 +551,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
                 HttpMessage message = _replicationRecoveryPlansRestClient.CreateFailoverCommitRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 RecoveryServicesSiteRecoveryArmOperation<SiteRecoveryRecoveryPlanResource> operation = new RecoveryServicesSiteRecoveryArmOperation<SiteRecoveryRecoveryPlanResource>(
-                    new SiteRecoveryRecoveryPlanOperationSource(Client),
+                    new SiteRecoveryRecoveryPlanResourceOperationSource(Client),
                     _replicationRecoveryPlansClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -606,7 +606,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
                 HttpMessage message = _replicationRecoveryPlansRestClient.CreateFailoverCommitRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 RecoveryServicesSiteRecoveryArmOperation<SiteRecoveryRecoveryPlanResource> operation = new RecoveryServicesSiteRecoveryArmOperation<SiteRecoveryRecoveryPlanResource>(
-                    new SiteRecoveryRecoveryPlanOperationSource(Client),
+                    new SiteRecoveryRecoveryPlanResourceOperationSource(Client),
                     _replicationRecoveryPlansClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -665,7 +665,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
                 HttpMessage message = _replicationRecoveryPlansRestClient.CreatePlannedFailoverRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, RecoveryPlanPlannedFailoverContent.ToRequestContent(content), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 RecoveryServicesSiteRecoveryArmOperation<SiteRecoveryRecoveryPlanResource> operation = new RecoveryServicesSiteRecoveryArmOperation<SiteRecoveryRecoveryPlanResource>(
-                    new SiteRecoveryRecoveryPlanOperationSource(Client),
+                    new SiteRecoveryRecoveryPlanResourceOperationSource(Client),
                     _replicationRecoveryPlansClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -724,7 +724,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
                 HttpMessage message = _replicationRecoveryPlansRestClient.CreatePlannedFailoverRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, RecoveryPlanPlannedFailoverContent.ToRequestContent(content), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 RecoveryServicesSiteRecoveryArmOperation<SiteRecoveryRecoveryPlanResource> operation = new RecoveryServicesSiteRecoveryArmOperation<SiteRecoveryRecoveryPlanResource>(
-                    new SiteRecoveryRecoveryPlanOperationSource(Client),
+                    new SiteRecoveryRecoveryPlanResourceOperationSource(Client),
                     _replicationRecoveryPlansClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -779,7 +779,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
                 HttpMessage message = _replicationRecoveryPlansRestClient.CreateReprotectRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 RecoveryServicesSiteRecoveryArmOperation<SiteRecoveryRecoveryPlanResource> operation = new RecoveryServicesSiteRecoveryArmOperation<SiteRecoveryRecoveryPlanResource>(
-                    new SiteRecoveryRecoveryPlanOperationSource(Client),
+                    new SiteRecoveryRecoveryPlanResourceOperationSource(Client),
                     _replicationRecoveryPlansClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -834,7 +834,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
                 HttpMessage message = _replicationRecoveryPlansRestClient.CreateReprotectRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 RecoveryServicesSiteRecoveryArmOperation<SiteRecoveryRecoveryPlanResource> operation = new RecoveryServicesSiteRecoveryArmOperation<SiteRecoveryRecoveryPlanResource>(
-                    new SiteRecoveryRecoveryPlanOperationSource(Client),
+                    new SiteRecoveryRecoveryPlanResourceOperationSource(Client),
                     _replicationRecoveryPlansClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -893,7 +893,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
                 HttpMessage message = _replicationRecoveryPlansRestClient.CreateTestFailoverRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, RecoveryPlanTestFailoverContent.ToRequestContent(content), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 RecoveryServicesSiteRecoveryArmOperation<SiteRecoveryRecoveryPlanResource> operation = new RecoveryServicesSiteRecoveryArmOperation<SiteRecoveryRecoveryPlanResource>(
-                    new SiteRecoveryRecoveryPlanOperationSource(Client),
+                    new SiteRecoveryRecoveryPlanResourceOperationSource(Client),
                     _replicationRecoveryPlansClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -952,7 +952,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
                 HttpMessage message = _replicationRecoveryPlansRestClient.CreateTestFailoverRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, RecoveryPlanTestFailoverContent.ToRequestContent(content), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 RecoveryServicesSiteRecoveryArmOperation<SiteRecoveryRecoveryPlanResource> operation = new RecoveryServicesSiteRecoveryArmOperation<SiteRecoveryRecoveryPlanResource>(
-                    new SiteRecoveryRecoveryPlanOperationSource(Client),
+                    new SiteRecoveryRecoveryPlanResourceOperationSource(Client),
                     _replicationRecoveryPlansClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -1011,7 +1011,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
                 HttpMessage message = _replicationRecoveryPlansRestClient.CreateTestFailoverCleanupRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, RecoveryPlanTestFailoverCleanupContent.ToRequestContent(content), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 RecoveryServicesSiteRecoveryArmOperation<SiteRecoveryRecoveryPlanResource> operation = new RecoveryServicesSiteRecoveryArmOperation<SiteRecoveryRecoveryPlanResource>(
-                    new SiteRecoveryRecoveryPlanOperationSource(Client),
+                    new SiteRecoveryRecoveryPlanResourceOperationSource(Client),
                     _replicationRecoveryPlansClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -1070,7 +1070,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
                 HttpMessage message = _replicationRecoveryPlansRestClient.CreateTestFailoverCleanupRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, RecoveryPlanTestFailoverCleanupContent.ToRequestContent(content), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 RecoveryServicesSiteRecoveryArmOperation<SiteRecoveryRecoveryPlanResource> operation = new RecoveryServicesSiteRecoveryArmOperation<SiteRecoveryRecoveryPlanResource>(
-                    new SiteRecoveryRecoveryPlanOperationSource(Client),
+                    new SiteRecoveryRecoveryPlanResourceOperationSource(Client),
                     _replicationRecoveryPlansClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -1129,7 +1129,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
                 HttpMessage message = _replicationRecoveryPlansRestClient.CreateUnplannedFailoverRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, RecoveryPlanUnplannedFailoverContent.ToRequestContent(content), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 RecoveryServicesSiteRecoveryArmOperation<SiteRecoveryRecoveryPlanResource> operation = new RecoveryServicesSiteRecoveryArmOperation<SiteRecoveryRecoveryPlanResource>(
-                    new SiteRecoveryRecoveryPlanOperationSource(Client),
+                    new SiteRecoveryRecoveryPlanResourceOperationSource(Client),
                     _replicationRecoveryPlansClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -1188,7 +1188,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
                 HttpMessage message = _replicationRecoveryPlansRestClient.CreateUnplannedFailoverRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, RecoveryPlanUnplannedFailoverContent.ToRequestContent(content), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 RecoveryServicesSiteRecoveryArmOperation<SiteRecoveryRecoveryPlanResource> operation = new RecoveryServicesSiteRecoveryArmOperation<SiteRecoveryRecoveryPlanResource>(
-                    new SiteRecoveryRecoveryPlanOperationSource(Client),
+                    new SiteRecoveryRecoveryPlanResourceOperationSource(Client),
                     _replicationRecoveryPlansClientDiagnostics,
                     Pipeline,
                     message.Request,

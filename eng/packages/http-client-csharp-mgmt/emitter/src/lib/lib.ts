@@ -18,6 +18,12 @@ const diags: { [code: string]: DiagnosticDefinition<DiagnosticMessages> } = {
       default: paramMessage`{message}`
     }
   },
+  "codegen-resource-data-not-found": {
+    severity: "error",
+    messages: {
+      default: paramMessage`{message}`
+    }
+  },
   "resource-model-not-associated-with-arm-resource": {
     severity: "warning",
     messages: {

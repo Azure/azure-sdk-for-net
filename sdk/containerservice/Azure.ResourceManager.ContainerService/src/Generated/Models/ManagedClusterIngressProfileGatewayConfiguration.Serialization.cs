@@ -13,7 +13,7 @@ using Azure.ResourceManager.ContainerService;
 
 namespace Azure.ResourceManager.ContainerService.Models
 {
-    /// <summary> Configuration for the ingress managed gateway. See https://aka.ms/k8s-gateway-api for more details. </summary>
+    /// <summary> Configuration for managed Gateway API CRDs. See https://aka.ms/k8s-gateway-api for more details. </summary>
     internal partial class ManagedClusterIngressProfileGatewayConfiguration : IJsonModel<ManagedClusterIngressProfileGatewayConfiguration>
     {
         /// <param name="data"> The data to parse. </param>

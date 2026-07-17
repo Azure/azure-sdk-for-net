@@ -97,7 +97,7 @@ namespace Azure.ResourceManager.Datadog
                 HttpMessage message = _monitorsRestClient.CreateCreateRequest(Id.SubscriptionId, Id.ResourceGroupName, monitorName, DatadogMonitorData.ToRequestContent(data), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 DatadogArmOperation<DatadogMonitorResource> operation = new DatadogArmOperation<DatadogMonitorResource>(
-                    new DatadogMonitorOperationSource(Client),
+                    new DatadogMonitorResourceOperationSource(Client),
                     _monitorsClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -154,7 +154,7 @@ namespace Azure.ResourceManager.Datadog
                 HttpMessage message = _monitorsRestClient.CreateCreateRequest(Id.SubscriptionId, Id.ResourceGroupName, monitorName, DatadogMonitorData.ToRequestContent(data), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 DatadogArmOperation<DatadogMonitorResource> operation = new DatadogArmOperation<DatadogMonitorResource>(
-                    new DatadogMonitorOperationSource(Client),
+                    new DatadogMonitorResourceOperationSource(Client),
                     _monitorsClientDiagnostics,
                     Pipeline,
                     message.Request,

@@ -93,7 +93,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
                 HttpMessage message = _applicationTypeVersionsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, version, ServiceFabricManagedApplicationTypeVersionData.ToRequestContent(data), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 ServiceFabricManagedClustersArmOperation<ServiceFabricManagedApplicationTypeVersionResource> operation = new ServiceFabricManagedClustersArmOperation<ServiceFabricManagedApplicationTypeVersionResource>(
-                    new ServiceFabricManagedApplicationTypeVersionOperationSource(Client),
+                    new ServiceFabricManagedApplicationTypeVersionResourceOperationSource(Client),
                     _applicationTypeVersionsClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -151,7 +151,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
                 HttpMessage message = _applicationTypeVersionsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, version, ServiceFabricManagedApplicationTypeVersionData.ToRequestContent(data), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 ServiceFabricManagedClustersArmOperation<ServiceFabricManagedApplicationTypeVersionResource> operation = new ServiceFabricManagedClustersArmOperation<ServiceFabricManagedApplicationTypeVersionResource>(
-                    new ServiceFabricManagedApplicationTypeVersionOperationSource(Client),
+                    new ServiceFabricManagedApplicationTypeVersionResourceOperationSource(Client),
                     _applicationTypeVersionsClientDiagnostics,
                     Pipeline,
                     message.Request,

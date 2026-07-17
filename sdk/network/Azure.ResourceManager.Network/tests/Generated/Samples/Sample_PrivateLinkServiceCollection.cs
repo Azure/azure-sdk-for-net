@@ -56,14 +56,13 @@ Subnet = new SubnetData
 Id = new ResourceIdentifier("/subscriptions/subid/resourceGroups/rg1/providers/Microsoft.Network/virtualNetworks/vnetlb/subnets/subnetlb"),
 },
 PrivateIPAddressVersion = NetworkIPVersion.IPv4,
-Name = "fe-lb",
 }},
                 VisibilitySubscriptions = { "subscription1", "subscription2", "subscription3" },
                 AutoApprovalSubscriptions = { "subscription1", "subscription2" },
                 Fqdns = { "fqdn1", "fqdn2", "fqdn3" },
                 Location = new AzureLocation("eastus"),
             };
-            ArmOperation<PrivateLinkServiceResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, serviceName, data);
+            ArmOperation<PrivateLinkServiceResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, serviceName, data, cancellationToken: System.Threading.CancellationToken.None);
             PrivateLinkServiceResource result = lro.Value;
 
             // the variable result is a resource, you could call other operations on this instance as well

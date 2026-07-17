@@ -1,6 +1,23 @@
 # Release History
 
-## 1.0.0-beta.2 (Unreleased)
+## 1.0.0-beta.4 (Unreleased)
+
+### Features Added
+
+### Breaking Changes
+
+### Bugs Fixed
+
+### Other Changes
+
+## 1.0.0-beta.3 (2026-06-16)
+
+### Other Changes
+
+- Upgraded dependent Azure.Core to 1.59.0.
+- Upgraded dependent Azure.ResourceManager to 1.14.0.
+
+## 1.0.0-beta.2 (2026-06-01)
 
 ### Features Added
 
@@ -13,10 +30,6 @@
 - Changed `SliSamplingType` wire values for `Max`, `Min`, and `Sum` from `max`, `min`, and `sum` to `Max`, `Min`, and `Sum`.
 - Changed `SliConditionOperator` wire values from symbolic operators to named operators: `==` to `eq`, `!=` to `ne`, `>` to `gt`, `>=` to `gte`, `<` to `lt`, `<=` to `lte`, `@in` to `in`, `!in` to `notin`, `!contains` to `notcontains`, and `!startswith` to `notstartswith`.
 - Changed `WindowUptimeCriteriaComparator` wire values from symbolic operators to named operators: `>` to `gt`, `>=` to `gte`, `<` to `lt`, and `<=` to `lte`.
-
-### Bugs Fixed
-
-### Other Changes
 
 ## 1.0.0-beta.1 (2026-04-22)
 

@@ -229,7 +229,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
                 HttpMessage message = _replicationPoliciesRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, SiteRecoveryPolicyPatch.ToRequestContent(patch), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 RecoveryServicesSiteRecoveryArmOperation<SiteRecoveryPolicyResource> operation = new RecoveryServicesSiteRecoveryArmOperation<SiteRecoveryPolicyResource>(
-                    new SiteRecoveryPolicyOperationSource(Client),
+                    new SiteRecoveryPolicyResourceOperationSource(Client),
                     _replicationPoliciesClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -288,7 +288,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
                 HttpMessage message = _replicationPoliciesRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, SiteRecoveryPolicyPatch.ToRequestContent(patch), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 RecoveryServicesSiteRecoveryArmOperation<SiteRecoveryPolicyResource> operation = new RecoveryServicesSiteRecoveryArmOperation<SiteRecoveryPolicyResource>(
-                    new SiteRecoveryPolicyOperationSource(Client),
+                    new SiteRecoveryPolicyResourceOperationSource(Client),
                     _replicationPoliciesClientDiagnostics,
                     Pipeline,
                     message.Request,

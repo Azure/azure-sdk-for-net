@@ -4,13 +4,13 @@
 #nullable disable
 
 using System;
-using OpenAI;
+using System.Diagnostics.CodeAnalysis;
 
 #pragma warning disable OPENAI001
 
 namespace Azure.AI.Projects.Agents;
 
-[CodeGenType("A2ATool")]
+[CodeGenType("A2APreviewTool")]
 public partial class A2APreviewTool
 {
     /// <summary> Base URL of the agent. </summary>

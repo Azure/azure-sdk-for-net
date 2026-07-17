@@ -7,46 +7,15 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.AppService;
 
 namespace Azure.ResourceManager.AppService.Models
 {
-    /// <summary>
-    /// MachineKey of an app.
-    /// Serialized Name: SiteMachineKey
-    /// </summary>
+    /// <summary> MachineKey of an app. </summary>
     public partial class SiteMachineKey
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="SiteMachineKey"/>. </summary>
         internal SiteMachineKey()
@@ -54,54 +23,33 @@ namespace Azure.ResourceManager.AppService.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="SiteMachineKey"/>. </summary>
-        /// <param name="validation">
-        /// MachineKey validation.
-        /// Serialized Name: SiteMachineKey.validation
-        /// </param>
-        /// <param name="validationKey">
-        /// Validation key.
-        /// Serialized Name: SiteMachineKey.validationKey
-        /// </param>
-        /// <param name="decryption">
-        /// Algorithm used for decryption.
-        /// Serialized Name: SiteMachineKey.decryption
-        /// </param>
-        /// <param name="decryptionKey">
-        /// Decryption key.
-        /// Serialized Name: SiteMachineKey.decryptionKey
-        /// </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal SiteMachineKey(string validation, string validationKey, string decryption, string decryptionKey, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="validation"> MachineKey validation. </param>
+        /// <param name="validationKey"> Validation key. </param>
+        /// <param name="decryption"> Algorithm used for decryption. </param>
+        /// <param name="decryptionKey"> Decryption key. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal SiteMachineKey(string validation, string validationKey, string decryption, string decryptionKey, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Validation = validation;
             ValidationKey = validationKey;
             Decryption = decryption;
             DecryptionKey = decryptionKey;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
-        /// <summary>
-        /// MachineKey validation.
-        /// Serialized Name: SiteMachineKey.validation
-        /// </summary>
+        /// <summary> MachineKey validation. </summary>
         [WirePath("validation")]
         public string Validation { get; }
-        /// <summary>
-        /// Validation key.
-        /// Serialized Name: SiteMachineKey.validationKey
-        /// </summary>
+
+        /// <summary> Validation key. </summary>
         [WirePath("validationKey")]
         public string ValidationKey { get; }
-        /// <summary>
-        /// Algorithm used for decryption.
-        /// Serialized Name: SiteMachineKey.decryption
-        /// </summary>
+
+        /// <summary> Algorithm used for decryption. </summary>
         [WirePath("decryption")]
         public string Decryption { get; }
-        /// <summary>
-        /// Decryption key.
-        /// Serialized Name: SiteMachineKey.decryptionKey
-        /// </summary>
+
+        /// <summary> Decryption key. </summary>
         [WirePath("decryptionKey")]
         public string DecryptionKey { get; }
     }

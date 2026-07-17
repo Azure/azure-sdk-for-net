@@ -24,6 +24,11 @@ namespace Azure.ResourceManager.ComputeLimit
         public static Azure.Response<Azure.ResourceManager.ComputeLimit.ComputeLimitVmFamilyResource> GetComputeLimitVmFamily(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, Azure.Core.AzureLocation location, string vmFamilyName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public static System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.ComputeLimit.ComputeLimitVmFamilyResource>> GetComputeLimitVmFamilyAsync(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, Azure.Core.AzureLocation location, string vmFamilyName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public static Azure.ResourceManager.ComputeLimit.ComputeLimitVmFamilyResource GetComputeLimitVmFamilyResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
+        public static Azure.ResourceManager.ComputeLimit.MemberCapOverrideResource GetMemberCapOverrideResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
+        public static Azure.Response<Azure.ResourceManager.ComputeLimit.SharedLimitCapResource> GetSharedLimitCap(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, Azure.Core.AzureLocation location, string vmFamilyName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public static System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.ComputeLimit.SharedLimitCapResource>> GetSharedLimitCapAsync(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, Azure.Core.AzureLocation location, string vmFamilyName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public static Azure.ResourceManager.ComputeLimit.SharedLimitCapResource GetSharedLimitCapResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
+        public static Azure.ResourceManager.ComputeLimit.SharedLimitCapCollection GetSharedLimitCaps(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, Azure.Core.AzureLocation location) { throw null; }
     }
     public partial class ComputeLimitFeatureCollection : Azure.ResourceManager.ArmCollection, System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.ComputeLimit.ComputeLimitFeatureResource>, System.Collections.Generic.IEnumerable<Azure.ResourceManager.ComputeLimit.ComputeLimitFeatureResource>, System.Collections.IEnumerable
     {
@@ -63,8 +68,10 @@ namespace Azure.ResourceManager.ComputeLimit
         public static Azure.Core.ResourceIdentifier CreateResourceIdentifier(string subscriptionId, Azure.Core.AzureLocation location, string featureName) { throw null; }
         public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Models.OperationStatusResult> Disable(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Models.OperationStatusResult>> DisableAsync(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Models.OperationStatusResult> Enable(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Models.OperationStatusResult>> EnableAsync(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Models.OperationStatusResult> Enable(Azure.WaitUntil waitUntil, Azure.ResourceManager.ComputeLimit.Models.ComputeLimitFeatureEnableContent content = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Models.OperationStatusResult> Enable(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Models.OperationStatusResult>> EnableAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.ComputeLimit.Models.ComputeLimitFeatureEnableContent content = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Models.OperationStatusResult>> EnableAsync(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.ComputeLimit.ComputeLimitFeatureResource> Get(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.ComputeLimit.ComputeLimitFeatureResource>> GetAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         Azure.ResourceManager.ComputeLimit.ComputeLimitFeatureData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ComputeLimit.ComputeLimitFeatureData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -217,6 +224,111 @@ namespace Azure.ResourceManager.ComputeLimit
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ComputeLimit.ComputeLimitVmFamilyData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ComputeLimit.ComputeLimitVmFamilyData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
+    public partial class MemberCapOverrideCollection : Azure.ResourceManager.ArmCollection, System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.ComputeLimit.MemberCapOverrideResource>, System.Collections.Generic.IEnumerable<Azure.ResourceManager.ComputeLimit.MemberCapOverrideResource>, System.Collections.IEnumerable
+    {
+        protected MemberCapOverrideCollection() { }
+        public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.ComputeLimit.MemberCapOverrideResource> CreateOrUpdate(Azure.WaitUntil waitUntil, string memberSubscriptionId, Azure.ResourceManager.ComputeLimit.MemberCapOverrideData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.ComputeLimit.MemberCapOverrideResource>> CreateOrUpdateAsync(Azure.WaitUntil waitUntil, string memberSubscriptionId, Azure.ResourceManager.ComputeLimit.MemberCapOverrideData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<bool> Exists(string memberSubscriptionId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<bool>> ExistsAsync(string memberSubscriptionId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.ComputeLimit.MemberCapOverrideResource> Get(string memberSubscriptionId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Pageable<Azure.ResourceManager.ComputeLimit.MemberCapOverrideResource> GetAll(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.AsyncPageable<Azure.ResourceManager.ComputeLimit.MemberCapOverrideResource> GetAllAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.ComputeLimit.MemberCapOverrideResource>> GetAsync(string memberSubscriptionId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.NullableResponse<Azure.ResourceManager.ComputeLimit.MemberCapOverrideResource> GetIfExists(string memberSubscriptionId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.NullableResponse<Azure.ResourceManager.ComputeLimit.MemberCapOverrideResource>> GetIfExistsAsync(string memberSubscriptionId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        System.Collections.Generic.IAsyncEnumerator<Azure.ResourceManager.ComputeLimit.MemberCapOverrideResource> System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.ComputeLimit.MemberCapOverrideResource>.GetAsyncEnumerator(System.Threading.CancellationToken cancellationToken) { throw null; }
+        System.Collections.Generic.IEnumerator<Azure.ResourceManager.ComputeLimit.MemberCapOverrideResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.ComputeLimit.MemberCapOverrideResource>.GetEnumerator() { throw null; }
+        System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
+    }
+    public partial class MemberCapOverrideData : Azure.ResourceManager.Models.ResourceData, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ComputeLimit.MemberCapOverrideData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ComputeLimit.MemberCapOverrideData>
+    {
+        public MemberCapOverrideData() { }
+        public Azure.ResourceManager.ComputeLimit.Models.MemberCapOverrideProperties Properties { get { throw null; } set { } }
+        protected virtual Azure.ResourceManager.Models.ResourceData JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.Models.ResourceData PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        Azure.ResourceManager.ComputeLimit.MemberCapOverrideData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ComputeLimit.MemberCapOverrideData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ComputeLimit.MemberCapOverrideData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.ComputeLimit.MemberCapOverrideData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ComputeLimit.MemberCapOverrideData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ComputeLimit.MemberCapOverrideData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ComputeLimit.MemberCapOverrideData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
+    public partial class MemberCapOverrideResource : Azure.ResourceManager.ArmResource, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ComputeLimit.MemberCapOverrideData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ComputeLimit.MemberCapOverrideData>
+    {
+        public static readonly Azure.Core.ResourceType ResourceType;
+        protected MemberCapOverrideResource() { }
+        public virtual Azure.ResourceManager.ComputeLimit.MemberCapOverrideData Data { get { throw null; } }
+        public virtual bool HasData { get { throw null; } }
+        public static Azure.Core.ResourceIdentifier CreateResourceIdentifier(string subscriptionId, Azure.Core.AzureLocation location, string vmFamilyName, string memberSubscriptionId) { throw null; }
+        public virtual Azure.ResourceManager.ArmOperation Delete(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation> DeleteAsync(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.ComputeLimit.MemberCapOverrideResource> Get(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.ComputeLimit.MemberCapOverrideResource>> GetAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        Azure.ResourceManager.ComputeLimit.MemberCapOverrideData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ComputeLimit.MemberCapOverrideData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ComputeLimit.MemberCapOverrideData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.ComputeLimit.MemberCapOverrideData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ComputeLimit.MemberCapOverrideData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ComputeLimit.MemberCapOverrideData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ComputeLimit.MemberCapOverrideData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.ComputeLimit.MemberCapOverrideResource> Update(Azure.WaitUntil waitUntil, Azure.ResourceManager.ComputeLimit.MemberCapOverrideData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.ComputeLimit.MemberCapOverrideResource>> UpdateAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.ComputeLimit.MemberCapOverrideData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+    }
+    public partial class SharedLimitCapCollection : Azure.ResourceManager.ArmCollection, System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.ComputeLimit.SharedLimitCapResource>, System.Collections.Generic.IEnumerable<Azure.ResourceManager.ComputeLimit.SharedLimitCapResource>, System.Collections.IEnumerable
+    {
+        protected SharedLimitCapCollection() { }
+        public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.ComputeLimit.SharedLimitCapResource> CreateOrUpdate(Azure.WaitUntil waitUntil, string vmFamilyName, Azure.ResourceManager.ComputeLimit.SharedLimitCapData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.ComputeLimit.SharedLimitCapResource>> CreateOrUpdateAsync(Azure.WaitUntil waitUntil, string vmFamilyName, Azure.ResourceManager.ComputeLimit.SharedLimitCapData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<bool> Exists(string vmFamilyName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<bool>> ExistsAsync(string vmFamilyName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.ComputeLimit.SharedLimitCapResource> Get(string vmFamilyName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Pageable<Azure.ResourceManager.ComputeLimit.SharedLimitCapResource> GetAll(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.AsyncPageable<Azure.ResourceManager.ComputeLimit.SharedLimitCapResource> GetAllAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.ComputeLimit.SharedLimitCapResource>> GetAsync(string vmFamilyName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.NullableResponse<Azure.ResourceManager.ComputeLimit.SharedLimitCapResource> GetIfExists(string vmFamilyName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.NullableResponse<Azure.ResourceManager.ComputeLimit.SharedLimitCapResource>> GetIfExistsAsync(string vmFamilyName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        System.Collections.Generic.IAsyncEnumerator<Azure.ResourceManager.ComputeLimit.SharedLimitCapResource> System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.ComputeLimit.SharedLimitCapResource>.GetAsyncEnumerator(System.Threading.CancellationToken cancellationToken) { throw null; }
+        System.Collections.Generic.IEnumerator<Azure.ResourceManager.ComputeLimit.SharedLimitCapResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.ComputeLimit.SharedLimitCapResource>.GetEnumerator() { throw null; }
+        System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
+    }
+    public partial class SharedLimitCapData : Azure.ResourceManager.Models.ResourceData, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ComputeLimit.SharedLimitCapData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ComputeLimit.SharedLimitCapData>
+    {
+        public SharedLimitCapData() { }
+        public Azure.ResourceManager.ComputeLimit.Models.SharedLimitCapProperties Properties { get { throw null; } set { } }
+        protected virtual Azure.ResourceManager.Models.ResourceData JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.Models.ResourceData PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        Azure.ResourceManager.ComputeLimit.SharedLimitCapData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ComputeLimit.SharedLimitCapData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ComputeLimit.SharedLimitCapData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.ComputeLimit.SharedLimitCapData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ComputeLimit.SharedLimitCapData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ComputeLimit.SharedLimitCapData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ComputeLimit.SharedLimitCapData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
+    public partial class SharedLimitCapResource : Azure.ResourceManager.ArmResource, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ComputeLimit.SharedLimitCapData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ComputeLimit.SharedLimitCapData>
+    {
+        public static readonly Azure.Core.ResourceType ResourceType;
+        protected SharedLimitCapResource() { }
+        public virtual Azure.ResourceManager.ComputeLimit.SharedLimitCapData Data { get { throw null; } }
+        public virtual bool HasData { get { throw null; } }
+        public static Azure.Core.ResourceIdentifier CreateResourceIdentifier(string subscriptionId, Azure.Core.AzureLocation location, string vmFamilyName) { throw null; }
+        public virtual Azure.ResourceManager.ArmOperation Delete(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation> DeleteAsync(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.ComputeLimit.SharedLimitCapResource> Get(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.ComputeLimit.SharedLimitCapResource>> GetAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.ComputeLimit.MemberCapOverrideResource> GetMemberCapOverride(string memberSubscriptionId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.ComputeLimit.MemberCapOverrideResource>> GetMemberCapOverrideAsync(string memberSubscriptionId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.ResourceManager.ComputeLimit.MemberCapOverrideCollection GetMemberCapOverrides() { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.ComputeLimit.Models.SetMemberCapOverridesResult> SetMemberCapOverrides(Azure.ResourceManager.ComputeLimit.Models.ComputeLimitSetMemberCapOverridesContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.ComputeLimit.Models.SetMemberCapOverridesResult>> SetMemberCapOverridesAsync(Azure.ResourceManager.ComputeLimit.Models.ComputeLimitSetMemberCapOverridesContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        Azure.ResourceManager.ComputeLimit.SharedLimitCapData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ComputeLimit.SharedLimitCapData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ComputeLimit.SharedLimitCapData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.ComputeLimit.SharedLimitCapData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ComputeLimit.SharedLimitCapData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ComputeLimit.SharedLimitCapData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ComputeLimit.SharedLimitCapData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.ComputeLimit.SharedLimitCapResource> Update(Azure.WaitUntil waitUntil, Azure.ResourceManager.ComputeLimit.SharedLimitCapData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.ComputeLimit.SharedLimitCapResource>> UpdateAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.ComputeLimit.SharedLimitCapData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+    }
 }
 namespace Azure.ResourceManager.ComputeLimit.Mocking
 {
@@ -227,6 +339,8 @@ namespace Azure.ResourceManager.ComputeLimit.Mocking
         public virtual Azure.ResourceManager.ComputeLimit.ComputeLimitGuestSubscriptionResource GetComputeLimitGuestSubscriptionResource(Azure.Core.ResourceIdentifier id) { throw null; }
         public virtual Azure.ResourceManager.ComputeLimit.ComputeLimitSharedLimitResource GetComputeLimitSharedLimitResource(Azure.Core.ResourceIdentifier id) { throw null; }
         public virtual Azure.ResourceManager.ComputeLimit.ComputeLimitVmFamilyResource GetComputeLimitVmFamilyResource(Azure.Core.ResourceIdentifier id) { throw null; }
+        public virtual Azure.ResourceManager.ComputeLimit.MemberCapOverrideResource GetMemberCapOverrideResource(Azure.Core.ResourceIdentifier id) { throw null; }
+        public virtual Azure.ResourceManager.ComputeLimit.SharedLimitCapResource GetSharedLimitCapResource(Azure.Core.ResourceIdentifier id) { throw null; }
     }
     public partial class MockableComputeLimitSubscriptionResource : Azure.ResourceManager.ArmResource
     {
@@ -243,6 +357,9 @@ namespace Azure.ResourceManager.ComputeLimit.Mocking
         public virtual Azure.ResourceManager.ComputeLimit.ComputeLimitVmFamilyCollection GetComputeLimitVmFamilies(Azure.Core.AzureLocation location) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.ComputeLimit.ComputeLimitVmFamilyResource> GetComputeLimitVmFamily(Azure.Core.AzureLocation location, string vmFamilyName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.ComputeLimit.ComputeLimitVmFamilyResource>> GetComputeLimitVmFamilyAsync(Azure.Core.AzureLocation location, string vmFamilyName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.ComputeLimit.SharedLimitCapResource> GetSharedLimitCap(Azure.Core.AzureLocation location, string vmFamilyName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.ComputeLimit.SharedLimitCapResource>> GetSharedLimitCapAsync(Azure.Core.AzureLocation location, string vmFamilyName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.ResourceManager.ComputeLimit.SharedLimitCapCollection GetSharedLimitCaps(Azure.Core.AzureLocation location) { throw null; }
     }
 }
 namespace Azure.ResourceManager.ComputeLimit.Models
@@ -250,13 +367,35 @@ namespace Azure.ResourceManager.ComputeLimit.Models
     public static partial class ArmComputeLimitModelFactory
     {
         public static Azure.ResourceManager.ComputeLimit.ComputeLimitFeatureData ComputeLimitFeatureData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, Azure.ResourceManager.ComputeLimit.Models.ComputeLimitFeatureProperties properties = null) { throw null; }
+        public static Azure.ResourceManager.ComputeLimit.Models.ComputeLimitFeatureEnableContent ComputeLimitFeatureEnableContent(string serviceTreeId = null) { throw null; }
         public static Azure.ResourceManager.ComputeLimit.Models.ComputeLimitFeatureProperties ComputeLimitFeatureProperties(Azure.ResourceManager.ComputeLimit.Models.ComputeLimitFeatureState? state = default(Azure.ResourceManager.ComputeLimit.Models.ComputeLimitFeatureState?), Azure.ResourceManager.ComputeLimit.Models.ComputeLimitResourceProvisioningState? provisioningState = default(Azure.ResourceManager.ComputeLimit.Models.ComputeLimitResourceProvisioningState?)) { throw null; }
         public static Azure.ResourceManager.ComputeLimit.ComputeLimitGuestSubscriptionData ComputeLimitGuestSubscriptionData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, Azure.ResourceManager.ComputeLimit.Models.ComputeLimitResourceProvisioningState? guestSubscriptionProvisioningState = default(Azure.ResourceManager.ComputeLimit.Models.ComputeLimitResourceProvisioningState?)) { throw null; }
         public static Azure.ResourceManager.ComputeLimit.Models.ComputeLimitLimitName ComputeLimitLimitName(string value = null, string localizedValue = null) { throw null; }
+        public static Azure.ResourceManager.ComputeLimit.Models.ComputeLimitSetMemberCapOverridesContent ComputeLimitSetMemberCapOverridesContent(System.Collections.Generic.IEnumerable<Azure.ResourceManager.ComputeLimit.Models.MemberCap> memberCapOverrides = null) { throw null; }
         public static Azure.ResourceManager.ComputeLimit.ComputeLimitSharedLimitData ComputeLimitSharedLimitData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, Azure.ResourceManager.ComputeLimit.Models.ComputeLimitSharedLimitProperties properties = null) { throw null; }
         public static Azure.ResourceManager.ComputeLimit.Models.ComputeLimitSharedLimitProperties ComputeLimitSharedLimitProperties(Azure.ResourceManager.ComputeLimit.Models.ComputeLimitLimitName resourceName = null, int? limit = default(int?), string unit = null, Azure.ResourceManager.ComputeLimit.Models.ComputeLimitResourceProvisioningState? provisioningState = default(Azure.ResourceManager.ComputeLimit.Models.ComputeLimitResourceProvisioningState?)) { throw null; }
         public static Azure.ResourceManager.ComputeLimit.ComputeLimitVmFamilyData ComputeLimitVmFamilyData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, Azure.ResourceManager.ComputeLimit.Models.ComputeLimitVmFamilyProperties properties = null) { throw null; }
         public static Azure.ResourceManager.ComputeLimit.Models.ComputeLimitVmFamilyProperties ComputeLimitVmFamilyProperties(string category = null, Azure.ResourceManager.ComputeLimit.Models.ComputeLimitResourceProvisioningState? provisioningState = default(Azure.ResourceManager.ComputeLimit.Models.ComputeLimitResourceProvisioningState?)) { throw null; }
+        public static Azure.ResourceManager.ComputeLimit.Models.MemberCap MemberCap(string subscriptionId = null, int cap = 0) { throw null; }
+        public static Azure.ResourceManager.ComputeLimit.MemberCapOverrideData MemberCapOverrideData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, Azure.ResourceManager.ComputeLimit.Models.MemberCapOverrideProperties properties = null) { throw null; }
+        public static Azure.ResourceManager.ComputeLimit.Models.MemberCapOverrideProperties MemberCapOverrideProperties(int cap = 0, Azure.ResourceManager.ComputeLimit.Models.ComputeLimitResourceProvisioningState? provisioningState = default(Azure.ResourceManager.ComputeLimit.Models.ComputeLimitResourceProvisioningState?)) { throw null; }
+        public static Azure.ResourceManager.ComputeLimit.Models.SetMemberCapOverridesResult SetMemberCapOverridesResult(System.Collections.Generic.IEnumerable<Azure.ResourceManager.ComputeLimit.Models.MemberCap> memberCapOverrides = null) { throw null; }
+        public static Azure.ResourceManager.ComputeLimit.SharedLimitCapData SharedLimitCapData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, Azure.ResourceManager.ComputeLimit.Models.SharedLimitCapProperties properties = null) { throw null; }
+        public static Azure.ResourceManager.ComputeLimit.Models.SharedLimitCapProperties SharedLimitCapProperties(int? defaultMemberCap = default(int?), bool isBoundedCap = false, Azure.ResourceManager.ComputeLimit.Models.ComputeLimitResourceProvisioningState? provisioningState = default(Azure.ResourceManager.ComputeLimit.Models.ComputeLimitResourceProvisioningState?)) { throw null; }
+    }
+    public partial class ComputeLimitFeatureEnableContent : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ComputeLimit.Models.ComputeLimitFeatureEnableContent>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ComputeLimit.Models.ComputeLimitFeatureEnableContent>
+    {
+        public ComputeLimitFeatureEnableContent() { }
+        public string ServiceTreeId { get { throw null; } set { } }
+        protected virtual Azure.ResourceManager.ComputeLimit.Models.ComputeLimitFeatureEnableContent JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.ComputeLimit.Models.ComputeLimitFeatureEnableContent PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        Azure.ResourceManager.ComputeLimit.Models.ComputeLimitFeatureEnableContent System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ComputeLimit.Models.ComputeLimitFeatureEnableContent>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ComputeLimit.Models.ComputeLimitFeatureEnableContent>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.ComputeLimit.Models.ComputeLimitFeatureEnableContent System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ComputeLimit.Models.ComputeLimitFeatureEnableContent>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ComputeLimit.Models.ComputeLimitFeatureEnableContent>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ComputeLimit.Models.ComputeLimitFeatureEnableContent>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
     public partial class ComputeLimitFeatureProperties : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ComputeLimit.Models.ComputeLimitFeatureProperties>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ComputeLimit.Models.ComputeLimitFeatureProperties>
     {
@@ -323,6 +462,20 @@ namespace Azure.ResourceManager.ComputeLimit.Models
         public static bool operator !=(Azure.ResourceManager.ComputeLimit.Models.ComputeLimitResourceProvisioningState left, Azure.ResourceManager.ComputeLimit.Models.ComputeLimitResourceProvisioningState right) { throw null; }
         public override string ToString() { throw null; }
     }
+    public partial class ComputeLimitSetMemberCapOverridesContent : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ComputeLimit.Models.ComputeLimitSetMemberCapOverridesContent>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ComputeLimit.Models.ComputeLimitSetMemberCapOverridesContent>
+    {
+        public ComputeLimitSetMemberCapOverridesContent(System.Collections.Generic.IEnumerable<Azure.ResourceManager.ComputeLimit.Models.MemberCap> memberCapOverrides) { }
+        public System.Collections.Generic.IList<Azure.ResourceManager.ComputeLimit.Models.MemberCap> MemberCapOverrides { get { throw null; } }
+        protected virtual Azure.ResourceManager.ComputeLimit.Models.ComputeLimitSetMemberCapOverridesContent JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.ComputeLimit.Models.ComputeLimitSetMemberCapOverridesContent PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        Azure.ResourceManager.ComputeLimit.Models.ComputeLimitSetMemberCapOverridesContent System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ComputeLimit.Models.ComputeLimitSetMemberCapOverridesContent>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ComputeLimit.Models.ComputeLimitSetMemberCapOverridesContent>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.ComputeLimit.Models.ComputeLimitSetMemberCapOverridesContent System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ComputeLimit.Models.ComputeLimitSetMemberCapOverridesContent>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ComputeLimit.Models.ComputeLimitSetMemberCapOverridesContent>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ComputeLimit.Models.ComputeLimitSetMemberCapOverridesContent>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
     public partial class ComputeLimitSharedLimitProperties : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ComputeLimit.Models.ComputeLimitSharedLimitProperties>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ComputeLimit.Models.ComputeLimitSharedLimitProperties>
     {
         public ComputeLimitSharedLimitProperties() { }
@@ -354,5 +507,65 @@ namespace Azure.ResourceManager.ComputeLimit.Models
         Azure.ResourceManager.ComputeLimit.Models.ComputeLimitVmFamilyProperties System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ComputeLimit.Models.ComputeLimitVmFamilyProperties>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ComputeLimit.Models.ComputeLimitVmFamilyProperties>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ComputeLimit.Models.ComputeLimitVmFamilyProperties>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
+    public partial class MemberCap : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ComputeLimit.Models.MemberCap>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ComputeLimit.Models.MemberCap>
+    {
+        public MemberCap(string subscriptionId, int cap) { }
+        public int Cap { get { throw null; } set { } }
+        public string SubscriptionId { get { throw null; } set { } }
+        protected virtual Azure.ResourceManager.ComputeLimit.Models.MemberCap JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.ComputeLimit.Models.MemberCap PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        Azure.ResourceManager.ComputeLimit.Models.MemberCap System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ComputeLimit.Models.MemberCap>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ComputeLimit.Models.MemberCap>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.ComputeLimit.Models.MemberCap System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ComputeLimit.Models.MemberCap>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ComputeLimit.Models.MemberCap>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ComputeLimit.Models.MemberCap>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
+    public partial class MemberCapOverrideProperties : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ComputeLimit.Models.MemberCapOverrideProperties>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ComputeLimit.Models.MemberCapOverrideProperties>
+    {
+        public MemberCapOverrideProperties(int cap) { }
+        public int Cap { get { throw null; } set { } }
+        public Azure.ResourceManager.ComputeLimit.Models.ComputeLimitResourceProvisioningState? ProvisioningState { get { throw null; } }
+        protected virtual Azure.ResourceManager.ComputeLimit.Models.MemberCapOverrideProperties JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.ComputeLimit.Models.MemberCapOverrideProperties PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        Azure.ResourceManager.ComputeLimit.Models.MemberCapOverrideProperties System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ComputeLimit.Models.MemberCapOverrideProperties>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ComputeLimit.Models.MemberCapOverrideProperties>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.ComputeLimit.Models.MemberCapOverrideProperties System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ComputeLimit.Models.MemberCapOverrideProperties>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ComputeLimit.Models.MemberCapOverrideProperties>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ComputeLimit.Models.MemberCapOverrideProperties>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
+    public partial class SetMemberCapOverridesResult : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ComputeLimit.Models.SetMemberCapOverridesResult>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ComputeLimit.Models.SetMemberCapOverridesResult>
+    {
+        internal SetMemberCapOverridesResult() { }
+        public System.Collections.Generic.IList<Azure.ResourceManager.ComputeLimit.Models.MemberCap> MemberCapOverrides { get { throw null; } }
+        protected virtual Azure.ResourceManager.ComputeLimit.Models.SetMemberCapOverridesResult JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.ComputeLimit.Models.SetMemberCapOverridesResult PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        Azure.ResourceManager.ComputeLimit.Models.SetMemberCapOverridesResult System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ComputeLimit.Models.SetMemberCapOverridesResult>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ComputeLimit.Models.SetMemberCapOverridesResult>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.ComputeLimit.Models.SetMemberCapOverridesResult System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ComputeLimit.Models.SetMemberCapOverridesResult>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ComputeLimit.Models.SetMemberCapOverridesResult>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ComputeLimit.Models.SetMemberCapOverridesResult>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
+    public partial class SharedLimitCapProperties : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ComputeLimit.Models.SharedLimitCapProperties>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ComputeLimit.Models.SharedLimitCapProperties>
+    {
+        public SharedLimitCapProperties(bool isBoundedCap) { }
+        public int? DefaultMemberCap { get { throw null; } set { } }
+        public bool IsBoundedCap { get { throw null; } set { } }
+        public Azure.ResourceManager.ComputeLimit.Models.ComputeLimitResourceProvisioningState? ProvisioningState { get { throw null; } }
+        protected virtual Azure.ResourceManager.ComputeLimit.Models.SharedLimitCapProperties JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.ComputeLimit.Models.SharedLimitCapProperties PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        Azure.ResourceManager.ComputeLimit.Models.SharedLimitCapProperties System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ComputeLimit.Models.SharedLimitCapProperties>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ComputeLimit.Models.SharedLimitCapProperties>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.ComputeLimit.Models.SharedLimitCapProperties System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ComputeLimit.Models.SharedLimitCapProperties>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ComputeLimit.Models.SharedLimitCapProperties>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ComputeLimit.Models.SharedLimitCapProperties>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
 }

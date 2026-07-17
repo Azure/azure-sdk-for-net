@@ -7,7 +7,7 @@
 
 namespace Azure.Storage.Files.Shares.Models
 {
-    /// <summary> The OwnerCopyMode. </summary>
+    /// <summary> The owner copy mode. </summary>
     public enum OwnerCopyMode
     {
         /// <summary> source. </summary>

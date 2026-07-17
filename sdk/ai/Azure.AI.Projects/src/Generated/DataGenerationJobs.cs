@@ -5,9 +5,9 @@
 using System;
 using System.ClientModel;
 using System.ClientModel.Primitives;
+using System.Diagnostics.CodeAnalysis;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure.AI.Projects.Memory;
 
 namespace Azure.AI.Projects
 {
@@ -23,11 +23,13 @@ namespace Azure.AI.Projects
         }
 
         /// <summary> Initializes a new instance of DataGenerationJobs. </summary>
+        /// <param name="clientDiagnostics"> The ClientDiagnostics is used to provide tracing support for the client library. </param>
         /// <param name="pipeline"> The HTTP pipeline for sending and receiving REST requests and responses. </param>
         /// <param name="endpoint"> Service endpoint. </param>
         /// <param name="apiVersion"></param>
-        internal DataGenerationJobs(ClientPipeline pipeline, Uri endpoint, string apiVersion)
+        internal DataGenerationJobs(ClientDiagnostics clientDiagnostics, ClientPipeline pipeline, Uri endpoint, string apiVersion)
         {
+            ClientDiagnostics = clientDiagnostics;
             _endpoint = endpoint;
             Pipeline = pipeline;
             _apiVersion = apiVersion;
@@ -36,8 +38,11 @@ namespace Azure.AI.Projects
         /// <summary> The HTTP pipeline for sending and receiving REST requests and responses. </summary>
         public ClientPipeline Pipeline { get; }
 
+        /// <summary> The ClientDiagnostics is used to provide tracing support for the client library. </summary>
+        internal ClientDiagnostics ClientDiagnostics { get; }
+
         /// <summary>
-        /// [Protocol Method] Gets the details of a data generation job by its ID.
+        /// [Protocol Method] Retrieves the specified data generation job and its current status.
         /// <list type="bullet">
         /// <item>
         /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
@@ -51,12 +56,22 @@ namespace Azure.AI.Projects
         /// <returns> The response returned from the service. </returns>
         internal virtual ClientResult GetGenerationJob(string jobId, string foundryFeatures, RequestOptions options)
         {
-            using PipelineMessage message = CreateGetGenerationJobRequest(jobId, foundryFeatures, options);
-            return ClientResult.FromResponse(Pipeline.ProcessMessage(message, options));
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("DataGenerationJobs.GetGenerationJob");
+            scope.Start();
+            try
+            {
+                using PipelineMessage message = CreateGetGenerationJobRequest(jobId, foundryFeatures, options);
+                return ClientResult.FromResponse(Pipeline.ProcessMessage(message, options));
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
 
         /// <summary>
-        /// [Protocol Method] Gets the details of a data generation job by its ID.
+        /// [Protocol Method] Retrieves the specified data generation job and its current status.
         /// <list type="bullet">
         /// <item>
         /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
@@ -70,26 +85,38 @@ namespace Azure.AI.Projects
         /// <returns> The response returned from the service. </returns>
         internal virtual async Task<ClientResult> GetGenerationJobAsync(string jobId, string foundryFeatures, RequestOptions options)
         {
-            using PipelineMessage message = CreateGetGenerationJobRequest(jobId, foundryFeatures, options);
-            return ClientResult.FromResponse(await Pipeline.ProcessMessageAsync(message, options).ConfigureAwait(false));
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("DataGenerationJobs.GetGenerationJob");
+            scope.Start();
+            try
+            {
+                using PipelineMessage message = CreateGetGenerationJobRequest(jobId, foundryFeatures, options);
+                return ClientResult.FromResponse(await Pipeline.ProcessMessageAsync(message, options).ConfigureAwait(false));
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
 
-        /// <summary> Gets the details of a data generation job by its ID. </summary>
+        /// <summary> Retrieves the specified data generation job and its current status. </summary>
         /// <param name="jobId"> The ID of the job. </param>
         /// <param name="foundryFeatures"> A feature flag opt-in required when using preview operations or modifying persisted preview resources. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
         /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
+        [Experimental("AAIP001")]
         internal virtual ClientResult<DataGenerationJob> GetGenerationJob(string jobId, FoundryFeaturesOptInKeys? foundryFeatures = default, CancellationToken cancellationToken = default)
         {
             ClientResult result = GetGenerationJob(jobId, foundryFeatures?.ToSerialString(), cancellationToken.ToRequestOptions());
             return ClientResult.FromValue((DataGenerationJob)result, result.GetRawResponse());
         }
 
-        /// <summary> Gets the details of a data generation job by its ID. </summary>
+        /// <summary> Retrieves the specified data generation job and its current status. </summary>
         /// <param name="jobId"> The ID of the job. </param>
         /// <param name="foundryFeatures"> A feature flag opt-in required when using preview operations or modifying persisted preview resources. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
         /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
+        [Experimental("AAIP001")]
         internal virtual async Task<ClientResult<DataGenerationJob>> GetGenerationJobAsync(string jobId, FoundryFeaturesOptInKeys? foundryFeatures = default, CancellationToken cancellationToken = default)
         {
             ClientResult result = await GetGenerationJobAsync(jobId, foundryFeatures?.ToSerialString(), cancellationToken.ToRequestOptions()).ConfigureAwait(false);
@@ -97,159 +124,7 @@ namespace Azure.AI.Projects
         }
 
         /// <summary>
-        /// [Protocol Method] Returns a list of data generation jobs.
-        /// <list type="bullet">
-        /// <item>
-        /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="foundryFeatures"> A feature flag opt-in required when using preview operations or modifying persisted preview resources. </param>
-        /// <param name="limit">
-        /// A limit on the number of objects to be returned. Limit can range between 1 and 100, and the
-        /// default is 20.
-        /// </param>
-        /// <param name="order">
-        /// Sort order by the `created_at` timestamp of the objects. `asc` for ascending order and`desc`
-        /// for descending order.
-        /// </param>
-        /// <param name="after">
-        /// A cursor for use in pagination. `after` is an object ID that defines your place in the list.
-        /// For instance, if you make a list request and receive 100 objects, ending with obj_foo, your
-        /// subsequent call can include after=obj_foo in order to fetch the next page of the list.
-        /// </param>
-        /// <param name="before">
-        /// A cursor for use in pagination. `before` is an object ID that defines your place in the list.
-        /// For instance, if you make a list request and receive 100 objects, ending with obj_foo, your
-        /// subsequent call can include before=obj_foo in order to fetch the previous page of the list.
-        /// </param>
-        /// <param name="options"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
-        /// <returns> The response returned from the service. </returns>
-        public virtual CollectionResult GetGenerationJobs(string foundryFeatures, int? limit, string order, string after, string before, RequestOptions options)
-        {
-            return new DataGenerationJobsGetGenerationJobsCollectionResult(
-                this,
-                foundryFeatures,
-                limit,
-                order,
-                after,
-                before,
-                options);
-        }
-
-        /// <summary>
-        /// [Protocol Method] Returns a list of data generation jobs.
-        /// <list type="bullet">
-        /// <item>
-        /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="foundryFeatures"> A feature flag opt-in required when using preview operations or modifying persisted preview resources. </param>
-        /// <param name="limit">
-        /// A limit on the number of objects to be returned. Limit can range between 1 and 100, and the
-        /// default is 20.
-        /// </param>
-        /// <param name="order">
-        /// Sort order by the `created_at` timestamp of the objects. `asc` for ascending order and`desc`
-        /// for descending order.
-        /// </param>
-        /// <param name="after">
-        /// A cursor for use in pagination. `after` is an object ID that defines your place in the list.
-        /// For instance, if you make a list request and receive 100 objects, ending with obj_foo, your
-        /// subsequent call can include after=obj_foo in order to fetch the next page of the list.
-        /// </param>
-        /// <param name="before">
-        /// A cursor for use in pagination. `before` is an object ID that defines your place in the list.
-        /// For instance, if you make a list request and receive 100 objects, ending with obj_foo, your
-        /// subsequent call can include before=obj_foo in order to fetch the previous page of the list.
-        /// </param>
-        /// <param name="options"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
-        /// <returns> The response returned from the service. </returns>
-        public virtual AsyncCollectionResult GetGenerationJobsAsync(string foundryFeatures, int? limit, string order, string after, string before, RequestOptions options)
-        {
-            return new DataGenerationJobsGetGenerationJobsAsyncCollectionResult(
-                this,
-                foundryFeatures,
-                limit,
-                order,
-                after,
-                before,
-                options);
-        }
-
-        /// <summary> Returns a list of data generation jobs. </summary>
-        /// <param name="foundryFeatures"> A feature flag opt-in required when using preview operations or modifying persisted preview resources. </param>
-        /// <param name="limit">
-        /// A limit on the number of objects to be returned. Limit can range between 1 and 100, and the
-        /// default is 20.
-        /// </param>
-        /// <param name="order">
-        /// Sort order by the `created_at` timestamp of the objects. `asc` for ascending order and`desc`
-        /// for descending order.
-        /// </param>
-        /// <param name="after">
-        /// A cursor for use in pagination. `after` is an object ID that defines your place in the list.
-        /// For instance, if you make a list request and receive 100 objects, ending with obj_foo, your
-        /// subsequent call can include after=obj_foo in order to fetch the next page of the list.
-        /// </param>
-        /// <param name="before">
-        /// A cursor for use in pagination. `before` is an object ID that defines your place in the list.
-        /// For instance, if you make a list request and receive 100 objects, ending with obj_foo, your
-        /// subsequent call can include before=obj_foo in order to fetch the previous page of the list.
-        /// </param>
-        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
-        public virtual CollectionResult<DataGenerationJob> GetGenerationJobs(FoundryFeaturesOptInKeys? foundryFeatures = default, int? limit = default, MemoryStoreListOrder? order = default, string after = default, string before = default, CancellationToken cancellationToken = default)
-        {
-            return new DataGenerationJobsGetGenerationJobsCollectionResultOfT(
-                this,
-                foundryFeatures?.ToSerialString(),
-                limit,
-                order?.ToString(),
-                after,
-                before,
-                cancellationToken.ToRequestOptions());
-        }
-
-        /// <summary> Returns a list of data generation jobs. </summary>
-        /// <param name="foundryFeatures"> A feature flag opt-in required when using preview operations or modifying persisted preview resources. </param>
-        /// <param name="limit">
-        /// A limit on the number of objects to be returned. Limit can range between 1 and 100, and the
-        /// default is 20.
-        /// </param>
-        /// <param name="order">
-        /// Sort order by the `created_at` timestamp of the objects. `asc` for ascending order and`desc`
-        /// for descending order.
-        /// </param>
-        /// <param name="after">
-        /// A cursor for use in pagination. `after` is an object ID that defines your place in the list.
-        /// For instance, if you make a list request and receive 100 objects, ending with obj_foo, your
-        /// subsequent call can include after=obj_foo in order to fetch the next page of the list.
-        /// </param>
-        /// <param name="before">
-        /// A cursor for use in pagination. `before` is an object ID that defines your place in the list.
-        /// For instance, if you make a list request and receive 100 objects, ending with obj_foo, your
-        /// subsequent call can include before=obj_foo in order to fetch the previous page of the list.
-        /// </param>
-        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
-        public virtual AsyncCollectionResult<DataGenerationJob> GetGenerationJobsAsync(FoundryFeaturesOptInKeys? foundryFeatures = default, int? limit = default, MemoryStoreListOrder? order = default, string after = default, string before = default, CancellationToken cancellationToken = default)
-        {
-            return new DataGenerationJobsGetGenerationJobsAsyncCollectionResultOfT(
-                this,
-                foundryFeatures?.ToSerialString(),
-                limit,
-                order?.ToString(),
-                after,
-                before,
-                cancellationToken.ToRequestOptions());
-        }
-
-        /// <summary>
-        /// [Protocol Method] Creates a data generation job.
+        /// [Protocol Method] Submits a new data generation job for asynchronous execution.
         /// <list type="bullet">
         /// <item>
         /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
@@ -264,12 +139,22 @@ namespace Azure.AI.Projects
         /// <returns> The response returned from the service. </returns>
         internal virtual ClientResult CreateGenerationJob(BinaryContent content, string foundryFeatures = default, string operationId = default, RequestOptions options = null)
         {
-            using PipelineMessage message = CreateCreateGenerationJobRequest(content, foundryFeatures, operationId, options);
-            return ClientResult.FromResponse(Pipeline.ProcessMessage(message, options));
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("DataGenerationJobs.CreateGenerationJob");
+            scope.Start();
+            try
+            {
+                using PipelineMessage message = CreateCreateGenerationJobRequest(content, foundryFeatures, operationId, options);
+                return ClientResult.FromResponse(Pipeline.ProcessMessage(message, options));
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
 
         /// <summary>
-        /// [Protocol Method] Creates a data generation job.
+        /// [Protocol Method] Submits a new data generation job for asynchronous execution.
         /// <list type="bullet">
         /// <item>
         /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
@@ -284,28 +169,40 @@ namespace Azure.AI.Projects
         /// <returns> The response returned from the service. </returns>
         internal virtual async Task<ClientResult> CreateGenerationJobAsync(BinaryContent content, string foundryFeatures = default, string operationId = default, RequestOptions options = null)
         {
-            using PipelineMessage message = CreateCreateGenerationJobRequest(content, foundryFeatures, operationId, options);
-            return ClientResult.FromResponse(await Pipeline.ProcessMessageAsync(message, options).ConfigureAwait(false));
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("DataGenerationJobs.CreateGenerationJob");
+            scope.Start();
+            try
+            {
+                using PipelineMessage message = CreateCreateGenerationJobRequest(content, foundryFeatures, operationId, options);
+                return ClientResult.FromResponse(await Pipeline.ProcessMessageAsync(message, options).ConfigureAwait(false));
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
 
-        /// <summary> Creates a data generation job. </summary>
+        /// <summary> Submits a new data generation job for asynchronous execution. </summary>
         /// <param name="job"> The job to create. </param>
         /// <param name="foundryFeatures"> A feature flag opt-in required when using preview operations or modifying persisted preview resources. </param>
         /// <param name="operationId"> Client-generated unique ID for idempotent retries. When absent, the server creates the job unconditionally. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
         /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
+        [Experimental("AAIP001")]
         internal virtual ClientResult<DataGenerationJob> CreateGenerationJob(DataGenerationJob job, FoundryFeaturesOptInKeys? foundryFeatures = default, string operationId = default, CancellationToken cancellationToken = default)
         {
             ClientResult result = CreateGenerationJob(job, foundryFeatures?.ToSerialString(), operationId, cancellationToken.ToRequestOptions());
             return ClientResult.FromValue((DataGenerationJob)result, result.GetRawResponse());
         }
 
-        /// <summary> Creates a data generation job. </summary>
+        /// <summary> Submits a new data generation job for asynchronous execution. </summary>
         /// <param name="job"> The job to create. </param>
         /// <param name="foundryFeatures"> A feature flag opt-in required when using preview operations or modifying persisted preview resources. </param>
         /// <param name="operationId"> Client-generated unique ID for idempotent retries. When absent, the server creates the job unconditionally. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
         /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
+        [Experimental("AAIP001")]
         internal virtual async Task<ClientResult<DataGenerationJob>> CreateGenerationJobAsync(DataGenerationJob job, FoundryFeaturesOptInKeys? foundryFeatures = default, string operationId = default, CancellationToken cancellationToken = default)
         {
             ClientResult result = await CreateGenerationJobAsync(job, foundryFeatures?.ToSerialString(), operationId, cancellationToken.ToRequestOptions()).ConfigureAwait(false);
@@ -313,7 +210,7 @@ namespace Azure.AI.Projects
         }
 
         /// <summary>
-        /// [Protocol Method] Cancels a data generation job by its ID.
+        /// [Protocol Method] Cancels the specified data generation job if it is still in progress.
         /// <list type="bullet">
         /// <item>
         /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
@@ -327,12 +224,22 @@ namespace Azure.AI.Projects
         /// <returns> The response returned from the service. </returns>
         internal virtual ClientResult CancelGenerationJob(string jobId, string foundryFeatures, RequestOptions options)
         {
-            using PipelineMessage message = CreateCancelGenerationJobRequest(jobId, foundryFeatures, options);
-            return ClientResult.FromResponse(Pipeline.ProcessMessage(message, options));
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("DataGenerationJobs.CancelGenerationJob");
+            scope.Start();
+            try
+            {
+                using PipelineMessage message = CreateCancelGenerationJobRequest(jobId, foundryFeatures, options);
+                return ClientResult.FromResponse(Pipeline.ProcessMessage(message, options));
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
 
         /// <summary>
-        /// [Protocol Method] Cancels a data generation job by its ID.
+        /// [Protocol Method] Cancels the specified data generation job if it is still in progress.
         /// <list type="bullet">
         /// <item>
         /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
@@ -346,26 +253,38 @@ namespace Azure.AI.Projects
         /// <returns> The response returned from the service. </returns>
         internal virtual async Task<ClientResult> CancelGenerationJobAsync(string jobId, string foundryFeatures, RequestOptions options)
         {
-            using PipelineMessage message = CreateCancelGenerationJobRequest(jobId, foundryFeatures, options);
-            return ClientResult.FromResponse(await Pipeline.ProcessMessageAsync(message, options).ConfigureAwait(false));
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("DataGenerationJobs.CancelGenerationJob");
+            scope.Start();
+            try
+            {
+                using PipelineMessage message = CreateCancelGenerationJobRequest(jobId, foundryFeatures, options);
+                return ClientResult.FromResponse(await Pipeline.ProcessMessageAsync(message, options).ConfigureAwait(false));
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
 
-        /// <summary> Cancels a data generation job by its ID. </summary>
+        /// <summary> Cancels the specified data generation job if it is still in progress. </summary>
         /// <param name="jobId"> The ID of the job to cancel. </param>
         /// <param name="foundryFeatures"> A feature flag opt-in required when using preview operations or modifying persisted preview resources. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
         /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
+        [Experimental("AAIP001")]
         internal virtual ClientResult<DataGenerationJob> CancelGenerationJob(string jobId, FoundryFeaturesOptInKeys? foundryFeatures = default, CancellationToken cancellationToken = default)
         {
             ClientResult result = CancelGenerationJob(jobId, foundryFeatures?.ToSerialString(), cancellationToken.ToRequestOptions());
             return ClientResult.FromValue((DataGenerationJob)result, result.GetRawResponse());
         }
 
-        /// <summary> Cancels a data generation job by its ID. </summary>
+        /// <summary> Cancels the specified data generation job if it is still in progress. </summary>
         /// <param name="jobId"> The ID of the job to cancel. </param>
         /// <param name="foundryFeatures"> A feature flag opt-in required when using preview operations or modifying persisted preview resources. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
         /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
+        [Experimental("AAIP001")]
         internal virtual async Task<ClientResult<DataGenerationJob>> CancelGenerationJobAsync(string jobId, FoundryFeaturesOptInKeys? foundryFeatures = default, CancellationToken cancellationToken = default)
         {
             ClientResult result = await CancelGenerationJobAsync(jobId, foundryFeatures?.ToSerialString(), cancellationToken.ToRequestOptions()).ConfigureAwait(false);
@@ -373,7 +292,7 @@ namespace Azure.AI.Projects
         }
 
         /// <summary>
-        /// [Protocol Method] Deletes a data generation job by its ID.
+        /// [Protocol Method] Removes the specified data generation job and its associated output.
         /// <list type="bullet">
         /// <item>
         /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
@@ -387,12 +306,22 @@ namespace Azure.AI.Projects
         /// <returns> The response returned from the service. </returns>
         internal virtual ClientResult DeleteGenerationJob(string jobId, string foundryFeatures, RequestOptions options)
         {
-            using PipelineMessage message = CreateDeleteGenerationJobRequest(jobId, foundryFeatures, options);
-            return ClientResult.FromResponse(Pipeline.ProcessMessage(message, options));
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("DataGenerationJobs.DeleteGenerationJob");
+            scope.Start();
+            try
+            {
+                using PipelineMessage message = CreateDeleteGenerationJobRequest(jobId, foundryFeatures, options);
+                return ClientResult.FromResponse(Pipeline.ProcessMessage(message, options));
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
 
         /// <summary>
-        /// [Protocol Method] Deletes a data generation job by its ID.
+        /// [Protocol Method] Removes the specified data generation job and its associated output.
         /// <list type="bullet">
         /// <item>
         /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
@@ -406,11 +335,21 @@ namespace Azure.AI.Projects
         /// <returns> The response returned from the service. </returns>
         internal virtual async Task<ClientResult> DeleteGenerationJobAsync(string jobId, string foundryFeatures, RequestOptions options)
         {
-            using PipelineMessage message = CreateDeleteGenerationJobRequest(jobId, foundryFeatures, options);
-            return ClientResult.FromResponse(await Pipeline.ProcessMessageAsync(message, options).ConfigureAwait(false));
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("DataGenerationJobs.DeleteGenerationJob");
+            scope.Start();
+            try
+            {
+                using PipelineMessage message = CreateDeleteGenerationJobRequest(jobId, foundryFeatures, options);
+                return ClientResult.FromResponse(await Pipeline.ProcessMessageAsync(message, options).ConfigureAwait(false));
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
 
-        /// <summary> Deletes a data generation job by its ID. </summary>
+        /// <summary> Removes the specified data generation job and its associated output. </summary>
         /// <param name="jobId"> The ID of the job to delete. </param>
         /// <param name="foundryFeatures"> A feature flag opt-in required when using preview operations or modifying persisted preview resources. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
@@ -420,7 +359,7 @@ namespace Azure.AI.Projects
             return DeleteGenerationJob(jobId, foundryFeatures?.ToSerialString(), cancellationToken.ToRequestOptions());
         }
 
-        /// <summary> Deletes a data generation job by its ID. </summary>
+        /// <summary> Removes the specified data generation job and its associated output. </summary>
         /// <param name="jobId"> The ID of the job to delete. </param>
         /// <param name="foundryFeatures"> A feature flag opt-in required when using preview operations or modifying persisted preview resources. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>

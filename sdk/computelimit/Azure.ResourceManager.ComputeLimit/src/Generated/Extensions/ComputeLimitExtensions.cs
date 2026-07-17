@@ -104,6 +104,42 @@ namespace Azure.ResourceManager.ComputeLimit
         }
 
         /// <summary>
+        /// Gets an object representing a <see cref="SharedLimitCapResource"/> along with the instance operations that can be performed on it but with no data.
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableComputeLimitArmClient.GetSharedLimitCapResource(ResourceIdentifier)"/> instead. </description>
+        /// </item>
+        /// </summary>
+        /// <param name="client"> The <see cref="ArmClient"/> the method will execute against. </param>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
+        /// <returns> Returns a <see cref="SharedLimitCapResource"/> object. </returns>
+        public static SharedLimitCapResource GetSharedLimitCapResource(this ArmClient client, ResourceIdentifier id)
+        {
+            Argument.AssertNotNull(client, nameof(client));
+
+            return GetMockableComputeLimitArmClient(client).GetSharedLimitCapResource(id);
+        }
+
+        /// <summary>
+        /// Gets an object representing a <see cref="MemberCapOverrideResource"/> along with the instance operations that can be performed on it but with no data.
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableComputeLimitArmClient.GetMemberCapOverrideResource(ResourceIdentifier)"/> instead. </description>
+        /// </item>
+        /// </summary>
+        /// <param name="client"> The <see cref="ArmClient"/> the method will execute against. </param>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
+        /// <returns> Returns a <see cref="MemberCapOverrideResource"/> object. </returns>
+        public static MemberCapOverrideResource GetMemberCapOverrideResource(this ArmClient client, ResourceIdentifier id)
+        {
+            Argument.AssertNotNull(client, nameof(client));
+
+            return GetMockableComputeLimitArmClient(client).GetMemberCapOverrideResource(id);
+        }
+
+        /// <summary>
         /// Gets a collection of ComputeLimitGuestSubscriptions in the <see cref="SubscriptionResource"/>
         /// <item>
         /// <term> Mocking. </term>
@@ -333,6 +369,64 @@ namespace Azure.ResourceManager.ComputeLimit
             Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
             return GetMockableComputeLimitSubscriptionResource(subscriptionResource).GetComputeLimitVmFamily(location, vmFamilyName, cancellationToken);
+        }
+
+        /// <summary>
+        /// Gets a collection of SharedLimitCaps in the <see cref="SubscriptionResource"/>
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableComputeLimitSubscriptionResource.GetSharedLimitCaps(AzureLocation)"/> instead. </description>
+        /// </item>
+        /// </summary>
+        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource"/> the method will execute against. </param>
+        /// <param name="location"> The location for the resource. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
+        /// <returns> An object representing collection of SharedLimitCaps and their operations over a SharedLimitCapResource. </returns>
+        public static SharedLimitCapCollection GetSharedLimitCaps(this SubscriptionResource subscriptionResource, AzureLocation location)
+        {
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
+
+            return GetMockableComputeLimitSubscriptionResource(subscriptionResource).GetSharedLimitCaps(location);
+        }
+
+        /// <summary>
+        /// Gets the shared limit cap configuration for a VM family, as visible to the caller's subscription.
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableComputeLimitSubscriptionResource.GetSharedLimitCapAsync(AzureLocation, string, CancellationToken)"/> instead. </description>
+        /// </item>
+        /// </summary>
+        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource"/> the method will execute against. </param>
+        /// <param name="location"> The location for the resource. </param>
+        /// <param name="vmFamilyName"> The name of the SharedLimitCap. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
+        [ForwardsClientCalls]
+        public static async Task<Response<SharedLimitCapResource>> GetSharedLimitCapAsync(this SubscriptionResource subscriptionResource, AzureLocation location, string vmFamilyName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
+
+            return await GetMockableComputeLimitSubscriptionResource(subscriptionResource).GetSharedLimitCapAsync(location, vmFamilyName, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Gets the shared limit cap configuration for a VM family, as visible to the caller's subscription.
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableComputeLimitSubscriptionResource.GetSharedLimitCap(AzureLocation, string, CancellationToken)"/> instead. </description>
+        /// </item>
+        /// </summary>
+        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource"/> the method will execute against. </param>
+        /// <param name="location"> The location for the resource. </param>
+        /// <param name="vmFamilyName"> The name of the SharedLimitCap. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
+        [ForwardsClientCalls]
+        public static Response<SharedLimitCapResource> GetSharedLimitCap(this SubscriptionResource subscriptionResource, AzureLocation location, string vmFamilyName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
+
+            return GetMockableComputeLimitSubscriptionResource(subscriptionResource).GetSharedLimitCap(location, vmFamilyName, cancellationToken);
         }
     }
 }

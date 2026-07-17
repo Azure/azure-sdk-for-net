@@ -6,45 +6,37 @@
 #nullable disable
 
 using System;
-using System.Globalization;
+using System.Diagnostics;
 using System.Threading;
 using System.Threading.Tasks;
+using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
+using Azure.ResourceManager;
 using Azure.ResourceManager.Resources;
+using Azure.ResourceManager.SecurityCenter.Models;
 
 namespace Azure.ResourceManager.SecurityCenter
 {
     /// <summary>
-    /// A Class representing a SecurityContact along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="SecurityContactResource"/>
-    /// from an instance of <see cref="ArmClient"/> using the GetSecurityContactResource method.
-    /// Otherwise you can get one from its parent resource <see cref="SubscriptionResource"/> using the GetSecurityContact method.
+    /// A class representing a SecurityContact along with the instance operations that can be performed on it.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="SecurityContactResource"/> from an instance of <see cref="ArmClient"/> using the GetResource method.
+    /// Otherwise you can get one from its parent resource <see cref="SubscriptionResource"/> using the GetSecurityContacts method.
     /// </summary>
     public partial class SecurityContactResource : ArmResource
     {
-        /// <summary> Generate the resource identifier of a <see cref="SecurityContactResource"/> instance. </summary>
-        /// <param name="subscriptionId"> The subscriptionId. </param>
-        /// <param name="securityContactName"> The securityContactName. </param>
-        public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string securityContactName)
-        {
-            var resourceId = $"/subscriptions/{subscriptionId}/providers/Microsoft.Security/securityContacts/{securityContactName}";
-            return new ResourceIdentifier(resourceId);
-        }
-
-        private readonly ClientDiagnostics _securityContactClientDiagnostics;
-        private readonly SecurityContactsRestOperations _securityContactRestClient;
+        private readonly ClientDiagnostics _securityContactsClientDiagnostics;
+        private readonly SecurityContacts _securityContactsRestClient;
         private readonly SecurityContactData _data;
-
         /// <summary> Gets the resource type for the operations. </summary>
         public static readonly ResourceType ResourceType = "Microsoft.Security/securityContacts";
 
-        /// <summary> Initializes a new instance of the <see cref="SecurityContactResource"/> class for mocking. </summary>
+        /// <summary> Initializes a new instance of SecurityContactResource for mocking. </summary>
         protected SecurityContactResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref="SecurityContactResource"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="SecurityContactResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal SecurityContactResource(ArmClient client, SecurityContactData data) : this(client, data.Id)
@@ -53,71 +45,91 @@ namespace Azure.ResourceManager.SecurityCenter
             _data = data;
         }
 
-        /// <summary> Initializes a new instance of the <see cref="SecurityContactResource"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="SecurityContactResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal SecurityContactResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _securityContactClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.SecurityCenter", ResourceType.Namespace, Diagnostics);
             TryGetApiVersion(ResourceType, out string securityContactApiVersion);
-            _securityContactRestClient = new SecurityContactsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, securityContactApiVersion);
-#if DEBUG
-			ValidateResourceId(Id);
-#endif
+            _securityContactsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.SecurityCenter", ResourceType.Namespace, Diagnostics);
+            _securityContactsRestClient = new SecurityContacts(_securityContactsClientDiagnostics, Pipeline, Endpoint, securityContactApiVersion ?? "2023-12-01-preview");
+            ValidateResourceId(id);
         }
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }
 
         /// <summary> Gets the data representing this Feature. </summary>
-        /// <exception cref="InvalidOperationException"> Throws if there is no data loaded in the current instance. </exception>
         public virtual SecurityContactData Data
         {
             get
             {
                 if (!HasData)
+                {
                     throw new InvalidOperationException("The current instance does not have data, you must call Get first.");
+                }
                 return _data;
             }
         }
 
+        /// <summary> Generate the resource identifier for this resource. </summary>
+        /// <param name="subscriptionId"> The subscriptionId. </param>
+        /// <param name="securityContactName"> The securityContactName. </param>
+        public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, SecurityContactName securityContactName)
+        {
+            string resourceId = $"/subscriptions/{subscriptionId}/providers/Microsoft.Security/securityContacts/{securityContactName}";
+            return new ResourceIdentifier(resourceId);
+        }
+
+        /// <param name="id"></param>
+        [Conditional("DEBUG")]
         internal static void ValidateResourceId(ResourceIdentifier id)
         {
             if (id.ResourceType != ResourceType)
-                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), nameof(id));
+            {
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), nameof(id));
+            }
         }
 
         /// <summary>
         /// Get Default Security contact configurations for the subscription
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Security/securityContacts/{securityContactName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.Security/securityContacts/{securityContactName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>SecurityContacts_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> SecurityContacts_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2020-01-01-preview</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2023-12-01-preview. </description>
         /// </item>
         /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="SecurityContactResource"/></description>
+        /// <term> Resource. </term>
+        /// <description> <see cref="SecurityContactResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<Response<SecurityContactResource>> GetAsync(CancellationToken cancellationToken = default)
         {
-            using var scope = _securityContactClientDiagnostics.CreateScope("SecurityContactResource.Get");
+            using DiagnosticScope scope = _securityContactsClientDiagnostics.CreateScope("SecurityContactResource.Get");
             scope.Start();
             try
             {
-                var response = await _securityContactRestClient.GetAsync(Id.SubscriptionId, Id.Name, cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _securityContactsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.Name, context);
+                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                Response<SecurityContactData> response = Response.FromValue(SecurityContactData.FromResponse(result), result);
                 if (response.Value == null)
+                {
                     throw new RequestFailedException(response.GetRawResponse());
+                }
                 return Response.FromValue(new SecurityContactResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -131,33 +143,41 @@ namespace Azure.ResourceManager.SecurityCenter
         /// Get Default Security contact configurations for the subscription
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Security/securityContacts/{securityContactName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.Security/securityContacts/{securityContactName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>SecurityContacts_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> SecurityContacts_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2020-01-01-preview</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2023-12-01-preview. </description>
         /// </item>
         /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="SecurityContactResource"/></description>
+        /// <term> Resource. </term>
+        /// <description> <see cref="SecurityContactResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response<SecurityContactResource> Get(CancellationToken cancellationToken = default)
         {
-            using var scope = _securityContactClientDiagnostics.CreateScope("SecurityContactResource.Get");
+            using DiagnosticScope scope = _securityContactsClientDiagnostics.CreateScope("SecurityContactResource.Get");
             scope.Start();
             try
             {
-                var response = _securityContactRestClient.Get(Id.SubscriptionId, Id.Name, cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _securityContactsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.Name, context);
+                Response result = Pipeline.ProcessMessage(message, context);
+                Response<SecurityContactData> response = Response.FromValue(SecurityContactData.FromResponse(result), result);
                 if (response.Value == null)
+                {
                     throw new RequestFailedException(response.GetRawResponse());
+                }
                 return Response.FromValue(new SecurityContactResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -171,20 +191,20 @@ namespace Azure.ResourceManager.SecurityCenter
         /// Delete security contact configurations for the subscription
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Security/securityContacts/{securityContactName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.Security/securityContacts/{securityContactName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>SecurityContacts_Delete</description>
+        /// <term> Operation Id. </term>
+        /// <description> SecurityContacts_Delete. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2020-01-01-preview</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2023-12-01-preview. </description>
         /// </item>
         /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="SecurityContactResource"/></description>
+        /// <term> Resource. </term>
+        /// <description> <see cref="SecurityContactResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -192,16 +212,23 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<ArmOperation> DeleteAsync(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
-            using var scope = _securityContactClientDiagnostics.CreateScope("SecurityContactResource.Delete");
+            using DiagnosticScope scope = _securityContactsClientDiagnostics.CreateScope("SecurityContactResource.Delete");
             scope.Start();
             try
             {
-                var response = await _securityContactRestClient.DeleteAsync(Id.SubscriptionId, Id.Name, cancellationToken).ConfigureAwait(false);
-                var uri = _securityContactRestClient.CreateDeleteRequestUri(Id.SubscriptionId, Id.Name);
-                var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Delete, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
-                var operation = new SecurityCenterArmOperation(response, rehydrationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _securityContactsRestClient.CreateDeleteRequest(Guid.Parse(Id.SubscriptionId), Id.Name, context);
+                Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                RequestUriBuilder uri = message.Request.Uri;
+                RehydrationToken rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Delete, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
+                SecurityCenterArmOperation operation = new SecurityCenterArmOperation(response, rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
+                {
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
+                }
                 return operation;
             }
             catch (Exception e)
@@ -215,20 +242,20 @@ namespace Azure.ResourceManager.SecurityCenter
         /// Delete security contact configurations for the subscription
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Security/securityContacts/{securityContactName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.Security/securityContacts/{securityContactName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>SecurityContacts_Delete</description>
+        /// <term> Operation Id. </term>
+        /// <description> SecurityContacts_Delete. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2020-01-01-preview</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2023-12-01-preview. </description>
         /// </item>
         /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="SecurityContactResource"/></description>
+        /// <term> Resource. </term>
+        /// <description> <see cref="SecurityContactResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -236,16 +263,23 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual ArmOperation Delete(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
-            using var scope = _securityContactClientDiagnostics.CreateScope("SecurityContactResource.Delete");
+            using DiagnosticScope scope = _securityContactsClientDiagnostics.CreateScope("SecurityContactResource.Delete");
             scope.Start();
             try
             {
-                var response = _securityContactRestClient.Delete(Id.SubscriptionId, Id.Name, cancellationToken);
-                var uri = _securityContactRestClient.CreateDeleteRequestUri(Id.SubscriptionId, Id.Name);
-                var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Delete, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
-                var operation = new SecurityCenterArmOperation(response, rehydrationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _securityContactsRestClient.CreateDeleteRequest(Guid.Parse(Id.SubscriptionId), Id.Name, context);
+                Response response = Pipeline.ProcessMessage(message, context);
+                RequestUriBuilder uri = message.Request.Uri;
+                RehydrationToken rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Delete, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
+                SecurityCenterArmOperation operation = new SecurityCenterArmOperation(response, rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
+                {
                     operation.WaitForCompletionResponse(cancellationToken);
+                }
                 return operation;
             }
             catch (Exception e)
@@ -256,23 +290,23 @@ namespace Azure.ResourceManager.SecurityCenter
         }
 
         /// <summary>
-        /// Create security contact configurations for the subscription
+        /// Update a SecurityContact.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Security/securityContacts/{securityContactName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.Security/securityContacts/{securityContactName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>SecurityContacts_Create</description>
+        /// <term> Operation Id. </term>
+        /// <description> SecurityContacts_Create. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2020-01-01-preview</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2023-12-01-preview. </description>
         /// </item>
         /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="SecurityContactResource"/></description>
+        /// <term> Resource. </term>
+        /// <description> <see cref="SecurityContactResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -284,16 +318,24 @@ namespace Azure.ResourceManager.SecurityCenter
         {
             Argument.AssertNotNull(data, nameof(data));
 
-            using var scope = _securityContactClientDiagnostics.CreateScope("SecurityContactResource.Update");
+            using DiagnosticScope scope = _securityContactsClientDiagnostics.CreateScope("SecurityContactResource.Update");
             scope.Start();
             try
             {
-                var response = await _securityContactRestClient.CreateAsync(Id.SubscriptionId, Id.Name, data, cancellationToken).ConfigureAwait(false);
-                var uri = _securityContactRestClient.CreateCreateRequestUri(Id.SubscriptionId, Id.Name, data);
-                var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
-                var operation = new SecurityCenterArmOperation<SecurityContactResource>(Response.FromValue(new SecurityContactResource(Client, response), response.GetRawResponse()), rehydrationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _securityContactsRestClient.CreateCreateRequest(Guid.Parse(Id.SubscriptionId), Id.Name, SecurityContactData.ToRequestContent(data), context);
+                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                Response<SecurityContactData> response = Response.FromValue(SecurityContactData.FromResponse(result), result);
+                RequestUriBuilder uri = message.Request.Uri;
+                RehydrationToken rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
+                SecurityCenterArmOperation<SecurityContactResource> operation = new SecurityCenterArmOperation<SecurityContactResource>(Response.FromValue(new SecurityContactResource(Client, response.Value), response.GetRawResponse()), rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
+                {
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
+                }
                 return operation;
             }
             catch (Exception e)
@@ -304,23 +346,23 @@ namespace Azure.ResourceManager.SecurityCenter
         }
 
         /// <summary>
-        /// Create security contact configurations for the subscription
+        /// Update a SecurityContact.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Security/securityContacts/{securityContactName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.Security/securityContacts/{securityContactName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>SecurityContacts_Create</description>
+        /// <term> Operation Id. </term>
+        /// <description> SecurityContacts_Create. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2020-01-01-preview</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2023-12-01-preview. </description>
         /// </item>
         /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="SecurityContactResource"/></description>
+        /// <term> Resource. </term>
+        /// <description> <see cref="SecurityContactResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -332,16 +374,24 @@ namespace Azure.ResourceManager.SecurityCenter
         {
             Argument.AssertNotNull(data, nameof(data));
 
-            using var scope = _securityContactClientDiagnostics.CreateScope("SecurityContactResource.Update");
+            using DiagnosticScope scope = _securityContactsClientDiagnostics.CreateScope("SecurityContactResource.Update");
             scope.Start();
             try
             {
-                var response = _securityContactRestClient.Create(Id.SubscriptionId, Id.Name, data, cancellationToken);
-                var uri = _securityContactRestClient.CreateCreateRequestUri(Id.SubscriptionId, Id.Name, data);
-                var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
-                var operation = new SecurityCenterArmOperation<SecurityContactResource>(Response.FromValue(new SecurityContactResource(Client, response), response.GetRawResponse()), rehydrationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _securityContactsRestClient.CreateCreateRequest(Guid.Parse(Id.SubscriptionId), Id.Name, SecurityContactData.ToRequestContent(data), context);
+                Response result = Pipeline.ProcessMessage(message, context);
+                Response<SecurityContactData> response = Response.FromValue(SecurityContactData.FromResponse(result), result);
+                RequestUriBuilder uri = message.Request.Uri;
+                RehydrationToken rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
+                SecurityCenterArmOperation<SecurityContactResource> operation = new SecurityCenterArmOperation<SecurityContactResource>(Response.FromValue(new SecurityContactResource(Client, response.Value), response.GetRawResponse()), rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
+                {
                     operation.WaitForCompletion(cancellationToken);
+                }
                 return operation;
             }
             catch (Exception e)

@@ -94,7 +94,7 @@ namespace Azure.ResourceManager.SqlVirtualMachine
                 HttpMessage message = _sqlVirtualMachinesRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, sqlVmName, SqlVmData.ToRequestContent(data), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 SqlVirtualMachineArmOperation<SqlVmResource> operation = new SqlVirtualMachineArmOperation<SqlVmResource>(
-                    new SqlVmOperationSource(Client),
+                    new SqlVmResourceOperationSource(Client),
                     _sqlVirtualMachinesClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -152,7 +152,7 @@ namespace Azure.ResourceManager.SqlVirtualMachine
                 HttpMessage message = _sqlVirtualMachinesRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, sqlVmName, SqlVmData.ToRequestContent(data), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 SqlVirtualMachineArmOperation<SqlVmResource> operation = new SqlVirtualMachineArmOperation<SqlVmResource>(
-                    new SqlVmOperationSource(Client),
+                    new SqlVmResourceOperationSource(Client),
                     _sqlVirtualMachinesClientDiagnostics,
                     Pipeline,
                     message.Request,

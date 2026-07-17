@@ -254,7 +254,6 @@ namespace Azure.AI.Agents.Persistent
     [ModelReaderWriterBuildable(typeof(UpdateMessageRequest))]
     [ModelReaderWriterBuildable(typeof(UpdateRunRequest))]
     [ModelReaderWriterBuildable(typeof(UpdateThreadRequest))]
-    [ModelReaderWriterBuildable(typeof(UploadFileRequest))]
     [ModelReaderWriterBuildable(typeof(VectorStoreAutoChunkingStrategy))]
     [ModelReaderWriterBuildable(typeof(VectorStoreAutoChunkingStrategyResponse))]
     [ModelReaderWriterBuildable(typeof(VectorStoreChunkingStrategy))]

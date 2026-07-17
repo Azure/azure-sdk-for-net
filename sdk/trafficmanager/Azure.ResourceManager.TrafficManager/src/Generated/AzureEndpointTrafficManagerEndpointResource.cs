@@ -13,7 +13,6 @@ using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager;
-using Azure.ResourceManager.TrafficManager.Models;
 
 namespace Azure.ResourceManager.TrafficManager
 {
@@ -51,7 +50,7 @@ namespace Azure.ResourceManager.TrafficManager
         {
             TryGetApiVersion(ResourceType, out string azureEndpointTrafficManagerEndpointApiVersion);
             _endpointsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.TrafficManager", ResourceType.Namespace, Diagnostics);
-            _endpointsRestClient = new Endpoints(_endpointsClientDiagnostics, Pipeline, Endpoint, azureEndpointTrafficManagerEndpointApiVersion ?? "2022-04-01");
+            _endpointsRestClient = new Endpoints(_endpointsClientDiagnostics, Pipeline, Endpoint, azureEndpointTrafficManagerEndpointApiVersion ?? "2024-04-01-preview");
             ValidateResourceId(id);
         }
 
@@ -105,7 +104,7 @@ namespace Azure.ResourceManager.TrafficManager
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2022-04-01. </description>
+        /// <description> 2024-04-01-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -124,7 +123,7 @@ namespace Azure.ResourceManager.TrafficManager
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _endpointsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, "AzureEndpoints", Id.Name, context);
+                HttpMessage message = _endpointsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, "AzureEndpoints", Id.Name, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<TrafficManagerEndpointData> response = Response.FromValue(TrafficManagerEndpointData.FromResponse(result), result);
                 if (response.Value == null)
@@ -153,7 +152,7 @@ namespace Azure.ResourceManager.TrafficManager
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2022-04-01. </description>
+        /// <description> 2024-04-01-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -172,7 +171,7 @@ namespace Azure.ResourceManager.TrafficManager
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _endpointsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, "AzureEndpoints", Id.Name, context);
+                HttpMessage message = _endpointsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, "AzureEndpoints", Id.Name, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<TrafficManagerEndpointData> response = Response.FromValue(TrafficManagerEndpointData.FromResponse(result), result);
                 if (response.Value == null)
@@ -201,7 +200,7 @@ namespace Azure.ResourceManager.TrafficManager
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2022-04-01. </description>
+        /// <description> 2024-04-01-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -224,7 +223,7 @@ namespace Azure.ResourceManager.TrafficManager
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _endpointsRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, "AzureEndpoints", Id.Name, TrafficManagerEndpointData.ToRequestContent(data), context);
+                HttpMessage message = _endpointsRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, "AzureEndpoints", Id.Name, TrafficManagerEndpointData.ToRequestContent(data), context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<TrafficManagerEndpointData> response = Response.FromValue(TrafficManagerEndpointData.FromResponse(result), result);
                 if (response.Value == null)
@@ -253,7 +252,7 @@ namespace Azure.ResourceManager.TrafficManager
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2022-04-01. </description>
+        /// <description> 2024-04-01-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -276,7 +275,7 @@ namespace Azure.ResourceManager.TrafficManager
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _endpointsRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, "AzureEndpoints", Id.Name, TrafficManagerEndpointData.ToRequestContent(data), context);
+                HttpMessage message = _endpointsRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, "AzureEndpoints", Id.Name, TrafficManagerEndpointData.ToRequestContent(data), context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<TrafficManagerEndpointData> response = Response.FromValue(TrafficManagerEndpointData.FromResponse(result), result);
                 if (response.Value == null)
@@ -305,7 +304,7 @@ namespace Azure.ResourceManager.TrafficManager
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2022-04-01. </description>
+        /// <description> 2024-04-01-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -315,7 +314,7 @@ namespace Azure.ResourceManager.TrafficManager
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<ArmOperation<TrafficManagerDeleteOperationResult>> DeleteAsync(WaitUntil waitUntil, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation> DeleteAsync(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = _endpointsClientDiagnostics.CreateScope("AzureEndpointTrafficManagerEndpointResource.Delete");
             scope.Start();
@@ -325,15 +324,14 @@ namespace Azure.ResourceManager.TrafficManager
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _endpointsRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, "AzureEndpoints", Id.Name, context);
-                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                Response<TrafficManagerDeleteOperationResult> response = Response.FromValue(TrafficManagerDeleteOperationResult.FromResponse(result), result);
+                HttpMessage message = _endpointsRestClient.CreateDeleteRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, "AzureEndpoints", Id.Name, context);
+                Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 RequestUriBuilder uri = message.Request.Uri;
                 RehydrationToken rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Delete, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
-                TrafficManagerArmOperation<TrafficManagerDeleteOperationResult> operation = new TrafficManagerArmOperation<TrafficManagerDeleteOperationResult>(response, rehydrationToken);
+                TrafficManagerArmOperation operation = new TrafficManagerArmOperation(response, rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
                 {
-                    await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
+                    await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
                 }
                 return operation;
             }
@@ -357,7 +355,7 @@ namespace Azure.ResourceManager.TrafficManager
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2022-04-01. </description>
+        /// <description> 2024-04-01-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -367,7 +365,7 @@ namespace Azure.ResourceManager.TrafficManager
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual ArmOperation<TrafficManagerDeleteOperationResult> Delete(WaitUntil waitUntil, CancellationToken cancellationToken = default)
+        public virtual ArmOperation Delete(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = _endpointsClientDiagnostics.CreateScope("AzureEndpointTrafficManagerEndpointResource.Delete");
             scope.Start();
@@ -377,15 +375,14 @@ namespace Azure.ResourceManager.TrafficManager
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _endpointsRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, "AzureEndpoints", Id.Name, context);
-                Response result = Pipeline.ProcessMessage(message, context);
-                Response<TrafficManagerDeleteOperationResult> response = Response.FromValue(TrafficManagerDeleteOperationResult.FromResponse(result), result);
+                HttpMessage message = _endpointsRestClient.CreateDeleteRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, "AzureEndpoints", Id.Name, context);
+                Response response = Pipeline.ProcessMessage(message, context);
                 RequestUriBuilder uri = message.Request.Uri;
                 RehydrationToken rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Delete, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
-                TrafficManagerArmOperation<TrafficManagerDeleteOperationResult> operation = new TrafficManagerArmOperation<TrafficManagerDeleteOperationResult>(response, rehydrationToken);
+                TrafficManagerArmOperation operation = new TrafficManagerArmOperation(response, rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
                 {
-                    operation.WaitForCompletion(cancellationToken);
+                    operation.WaitForCompletionResponse(cancellationToken);
                 }
                 return operation;
             }

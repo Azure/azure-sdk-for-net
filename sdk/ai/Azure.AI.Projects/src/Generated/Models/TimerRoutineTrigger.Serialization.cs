@@ -74,7 +74,7 @@ namespace Azure.AI.Projects
             if (Optional.IsDefined(At))
             {
                 writer.WritePropertyName("at"u8);
-                writer.WriteStringValue(At.Value, "O");
+                writer.WriteNumberValue(At.Value, "U");
             }
         }
 
@@ -103,14 +103,14 @@ namespace Azure.AI.Projects
             {
                 return null;
             }
-            RoutineTriggerType @type = default;
+            RoutineTriggerKind @type = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             DateTimeOffset? at = default;
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("type"u8))
                 {
-                    @type = new RoutineTriggerType(prop.Value.GetString());
+                    @type = new RoutineTriggerKind(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("at"u8))
@@ -119,7 +119,7 @@ namespace Azure.AI.Projects
                     {
                         continue;
                     }
-                    at = prop.Value.GetDateTimeOffset("O");
+                    at = DateTimeOffset.FromUnixTimeSeconds(prop.Value.GetInt64());
                     continue;
                 }
                 if (options.Format != "W")

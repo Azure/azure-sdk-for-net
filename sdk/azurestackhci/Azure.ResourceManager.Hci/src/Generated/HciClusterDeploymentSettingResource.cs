@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.Hci
         {
             TryGetApiVersion(ResourceType, out string hciClusterDeploymentSettingApiVersion);
             _deploymentSettingsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Hci", ResourceType.Namespace, Diagnostics);
-            _deploymentSettingsRestClient = new DeploymentSettings(_deploymentSettingsClientDiagnostics, Pipeline, Endpoint, hciClusterDeploymentSettingApiVersion ?? "2026-04-01-preview");
+            _deploymentSettingsRestClient = new DeploymentSettings(_deploymentSettingsClientDiagnostics, Pipeline, Endpoint, hciClusterDeploymentSettingApiVersion ?? "2026-05-01-preview");
             ValidateResourceId(id);
         }
 
@@ -104,7 +104,7 @@ namespace Azure.ResourceManager.Hci
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-04-01-preview. </description>
+        /// <description> 2026-05-01-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -152,7 +152,7 @@ namespace Azure.ResourceManager.Hci
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-04-01-preview. </description>
+        /// <description> 2026-05-01-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -200,7 +200,7 @@ namespace Azure.ResourceManager.Hci
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-04-01-preview. </description>
+        /// <description> 2026-05-01-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -249,7 +249,7 @@ namespace Azure.ResourceManager.Hci
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-04-01-preview. </description>
+        /// <description> 2026-05-01-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -298,7 +298,7 @@ namespace Azure.ResourceManager.Hci
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-04-01-preview. </description>
+        /// <description> 2026-05-01-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -325,7 +325,7 @@ namespace Azure.ResourceManager.Hci
                 HttpMessage message = _deploymentSettingsRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, HciClusterDeploymentSettingData.ToRequestContent(data), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 HciArmOperation<HciClusterDeploymentSettingResource> operation = new HciArmOperation<HciClusterDeploymentSettingResource>(
-                    new HciClusterDeploymentSettingOperationSource(Client),
+                    new HciClusterDeploymentSettingResourceOperationSource(Client),
                     _deploymentSettingsClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -357,7 +357,7 @@ namespace Azure.ResourceManager.Hci
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-04-01-preview. </description>
+        /// <description> 2026-05-01-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -384,7 +384,7 @@ namespace Azure.ResourceManager.Hci
                 HttpMessage message = _deploymentSettingsRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, HciClusterDeploymentSettingData.ToRequestContent(data), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 HciArmOperation<HciClusterDeploymentSettingResource> operation = new HciArmOperation<HciClusterDeploymentSettingResource>(
-                    new HciClusterDeploymentSettingOperationSource(Client),
+                    new HciClusterDeploymentSettingResourceOperationSource(Client),
                     _deploymentSettingsClientDiagnostics,
                     Pipeline,
                     message.Request,

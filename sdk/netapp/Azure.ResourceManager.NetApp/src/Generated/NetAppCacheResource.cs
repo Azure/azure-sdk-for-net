@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.NetApp
         {
             TryGetApiVersion(ResourceType, out string netAppCacheApiVersion);
             _cachesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.NetApp", ResourceType.Namespace, Diagnostics);
-            _cachesRestClient = new Caches(_cachesClientDiagnostics, Pipeline, Endpoint, netAppCacheApiVersion ?? "2026-01-15-preview");
+            _cachesRestClient = new Caches(_cachesClientDiagnostics, Pipeline, Endpoint, netAppCacheApiVersion ?? "2026-04-15-preview");
             ValidateResourceId(id);
         }
 
@@ -108,7 +108,7 @@ namespace Azure.ResourceManager.NetApp
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-01-15-preview. </description>
+        /// <description> 2026-04-15-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -156,7 +156,7 @@ namespace Azure.ResourceManager.NetApp
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-01-15-preview. </description>
+        /// <description> 2026-04-15-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -204,7 +204,7 @@ namespace Azure.ResourceManager.NetApp
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-01-15-preview. </description>
+        /// <description> 2026-04-15-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -231,7 +231,7 @@ namespace Azure.ResourceManager.NetApp
                 HttpMessage message = _cachesRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, NetAppCachePatch.ToRequestContent(patch), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 NetAppArmOperation<NetAppCacheResource> operation = new NetAppArmOperation<NetAppCacheResource>(
-                    new NetAppCacheOperationSource(Client),
+                    new NetAppCacheResourceOperationSource(Client),
                     _cachesClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -263,7 +263,7 @@ namespace Azure.ResourceManager.NetApp
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-01-15-preview. </description>
+        /// <description> 2026-04-15-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -290,7 +290,7 @@ namespace Azure.ResourceManager.NetApp
                 HttpMessage message = _cachesRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, NetAppCachePatch.ToRequestContent(patch), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 NetAppArmOperation<NetAppCacheResource> operation = new NetAppArmOperation<NetAppCacheResource>(
-                    new NetAppCacheOperationSource(Client),
+                    new NetAppCacheResourceOperationSource(Client),
                     _cachesClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -322,7 +322,7 @@ namespace Azure.ResourceManager.NetApp
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-01-15-preview. </description>
+        /// <description> 2026-04-15-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -371,7 +371,7 @@ namespace Azure.ResourceManager.NetApp
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-01-15-preview. </description>
+        /// <description> 2026-04-15-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -420,7 +420,7 @@ namespace Azure.ResourceManager.NetApp
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-01-15-preview. </description>
+        /// <description> 2026-04-15-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -468,7 +468,7 @@ namespace Azure.ResourceManager.NetApp
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-01-15-preview. </description>
+        /// <description> 2026-04-15-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -516,7 +516,7 @@ namespace Azure.ResourceManager.NetApp
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-01-15-preview. </description>
+        /// <description> 2026-04-15-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -543,7 +543,7 @@ namespace Azure.ResourceManager.NetApp
                 HttpMessage message = _cachesRestClient.CreatePoolChangeRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, NetAppVolumePoolChangeContent.ToRequestContent(content), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 NetAppArmOperation<NetAppCacheResource> operation = new NetAppArmOperation<NetAppCacheResource>(
-                    new NetAppCacheOperationSource(Client),
+                    new NetAppCacheResourceOperationSource(Client),
                     _cachesClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -575,7 +575,7 @@ namespace Azure.ResourceManager.NetApp
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-01-15-preview. </description>
+        /// <description> 2026-04-15-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -602,7 +602,7 @@ namespace Azure.ResourceManager.NetApp
                 HttpMessage message = _cachesRestClient.CreatePoolChangeRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, NetAppVolumePoolChangeContent.ToRequestContent(content), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 NetAppArmOperation<NetAppCacheResource> operation = new NetAppArmOperation<NetAppCacheResource>(
-                    new NetAppCacheOperationSource(Client),
+                    new NetAppCacheResourceOperationSource(Client),
                     _cachesClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -634,7 +634,7 @@ namespace Azure.ResourceManager.NetApp
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-01-15-preview. </description>
+        /// <description> 2026-04-15-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -657,7 +657,7 @@ namespace Azure.ResourceManager.NetApp
                 HttpMessage message = _cachesRestClient.CreateResetSmbPasswordRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 NetAppArmOperation<NetAppCacheResource> operation = new NetAppArmOperation<NetAppCacheResource>(
-                    new NetAppCacheOperationSource(Client),
+                    new NetAppCacheResourceOperationSource(Client),
                     _cachesClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -689,7 +689,7 @@ namespace Azure.ResourceManager.NetApp
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-01-15-preview. </description>
+        /// <description> 2026-04-15-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -712,7 +712,7 @@ namespace Azure.ResourceManager.NetApp
                 HttpMessage message = _cachesRestClient.CreateResetSmbPasswordRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 NetAppArmOperation<NetAppCacheResource> operation = new NetAppArmOperation<NetAppCacheResource>(
-                    new NetAppCacheOperationSource(Client),
+                    new NetAppCacheResourceOperationSource(Client),
                     _cachesClientDiagnostics,
                     Pipeline,
                     message.Request,

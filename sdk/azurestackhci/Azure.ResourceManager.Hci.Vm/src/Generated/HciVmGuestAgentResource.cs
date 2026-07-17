@@ -128,7 +128,7 @@ namespace Azure.ResourceManager.Hci.Vm
                 HttpMessage message = _guestAgentsRestClient.CreateCreateRequest(Id.Parent.Parent.ToString(), HciVmGuestAgentData.ToRequestContent(data), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 VmArmOperation<HciVmGuestAgentResource> operation = new VmArmOperation<HciVmGuestAgentResource>(
-                    new HciVmGuestAgentOperationSource(Client),
+                    new HciVmGuestAgentResourceOperationSource(Client),
                     _guestAgentsClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -187,7 +187,7 @@ namespace Azure.ResourceManager.Hci.Vm
                 HttpMessage message = _guestAgentsRestClient.CreateCreateRequest(Id.Parent.Parent.ToString(), HciVmGuestAgentData.ToRequestContent(data), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 VmArmOperation<HciVmGuestAgentResource> operation = new VmArmOperation<HciVmGuestAgentResource>(
-                    new HciVmGuestAgentOperationSource(Client),
+                    new HciVmGuestAgentResourceOperationSource(Client),
                     _guestAgentsClientDiagnostics,
                     Pipeline,
                     message.Request,

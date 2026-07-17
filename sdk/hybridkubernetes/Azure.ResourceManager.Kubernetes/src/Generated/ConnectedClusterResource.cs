@@ -229,7 +229,7 @@ namespace Azure.ResourceManager.Kubernetes
                 HttpMessage message = _connectedClusterRestClient.CreateUpdateAsyncRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, ConnectedClusterPatch.ToRequestContent(patch), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 KubernetesArmOperation<ConnectedClusterResource> operation = new KubernetesArmOperation<ConnectedClusterResource>(
-                    new ConnectedClusterOperationSource(Client),
+                    new ConnectedClusterResourceOperationSource(Client),
                     _connectedClusterClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -288,7 +288,7 @@ namespace Azure.ResourceManager.Kubernetes
                 HttpMessage message = _connectedClusterRestClient.CreateUpdateAsyncRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, ConnectedClusterPatch.ToRequestContent(patch), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 KubernetesArmOperation<ConnectedClusterResource> operation = new KubernetesArmOperation<ConnectedClusterResource>(
-                    new ConnectedClusterOperationSource(Client),
+                    new ConnectedClusterResourceOperationSource(Client),
                     _connectedClusterClientDiagnostics,
                     Pipeline,
                     message.Request,

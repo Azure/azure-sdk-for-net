@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.HybridCompute;
 
 namespace Azure.ResourceManager.HybridCompute.Models
 {
@@ -14,38 +15,57 @@ namespace Azure.ResourceManager.HybridCompute.Models
     public readonly partial struct HybridComputeAccessRuleDirection : IEquatable<HybridComputeAccessRuleDirection>
     {
         private readonly string _value;
+        /// <summary> Traffic originates outside of network. </summary>
+        private const string InboundValue = "Inbound";
+        /// <summary> Traffic originates inside the network. </summary>
+        private const string OutboundValue = "Outbound";
 
         /// <summary> Initializes a new instance of <see cref="HybridComputeAccessRuleDirection"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public HybridComputeAccessRuleDirection(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string InboundValue = "Inbound";
-        private const string OutboundValue = "Outbound";
+            _value = value;
+        }
 
         /// <summary> Traffic originates outside of network. </summary>
         public static HybridComputeAccessRuleDirection Inbound { get; } = new HybridComputeAccessRuleDirection(InboundValue);
+
         /// <summary> Traffic originates inside the network. </summary>
         public static HybridComputeAccessRuleDirection Outbound { get; } = new HybridComputeAccessRuleDirection(OutboundValue);
+
         /// <summary> Determines if two <see cref="HybridComputeAccessRuleDirection"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(HybridComputeAccessRuleDirection left, HybridComputeAccessRuleDirection right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="HybridComputeAccessRuleDirection"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(HybridComputeAccessRuleDirection left, HybridComputeAccessRuleDirection right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="HybridComputeAccessRuleDirection"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="HybridComputeAccessRuleDirection"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator HybridComputeAccessRuleDirection(string value) => new HybridComputeAccessRuleDirection(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="HybridComputeAccessRuleDirection"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator HybridComputeAccessRuleDirection?(string value) => value == null ? null : new HybridComputeAccessRuleDirection(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is HybridComputeAccessRuleDirection other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(HybridComputeAccessRuleDirection other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

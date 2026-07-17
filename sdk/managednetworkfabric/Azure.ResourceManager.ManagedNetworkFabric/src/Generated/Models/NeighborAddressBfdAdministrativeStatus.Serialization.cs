@@ -9,14 +9,55 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure.Core;
+using Azure.ResourceManager.ManagedNetworkFabric;
 
 namespace Azure.ResourceManager.ManagedNetworkFabric.Models
 {
-    public partial class NeighborAddressBfdAdministrativeStatus : IUtf8JsonSerializable, IJsonModel<NeighborAddressBfdAdministrativeStatus>
+    /// <summary> Neighbor Address Bidirectional Forwarding Detection (BFD) Administrative Status. </summary>
+    public partial class NeighborAddressBfdAdministrativeStatus : IJsonModel<NeighborAddressBfdAdministrativeStatus>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<NeighborAddressBfdAdministrativeStatus>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual NeighborAddressBfdAdministrativeStatus PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<NeighborAddressBfdAdministrativeStatus>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    {
+                        return DeserializeNeighborAddressBfdAdministrativeStatus(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(NeighborAddressBfdAdministrativeStatus)} does not support reading '{options.Format}' format.");
+            }
+        }
 
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<NeighborAddressBfdAdministrativeStatus>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerManagedNetworkFabricContext.Default);
+                default:
+                    throw new FormatException($"The model {nameof(NeighborAddressBfdAdministrativeStatus)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<NeighborAddressBfdAdministrativeStatus>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        NeighborAddressBfdAdministrativeStatus IPersistableModel<NeighborAddressBfdAdministrativeStatus>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<NeighborAddressBfdAdministrativeStatus>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<NeighborAddressBfdAdministrativeStatus>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
@@ -28,12 +69,11 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<NeighborAddressBfdAdministrativeStatus>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<NeighborAddressBfdAdministrativeStatus>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(NeighborAddressBfdAdministrativeStatus)} does not support writing '{format}' format.");
             }
-
             if (Optional.IsDefined(NeighborAddress))
             {
                 writer.WritePropertyName("neighborAddress"u8);
@@ -49,15 +89,15 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                 writer.WritePropertyName("error"u8);
                 writer.WriteStringValue(Error);
             }
-            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
-                foreach (var item in _serializedAdditionalRawData)
+                foreach (var item in _additionalBinaryDataProperties)
                 {
                     writer.WritePropertyName(item.Key);
 #if NET6_0_OR_GREATER
-				writer.WriteRawValue(item.Value);
+                    writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value, ModelSerializationExtensions.JsonDocumentOptions))
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
                     {
                         JsonSerializer.Serialize(writer, document.RootElement);
                     }
@@ -66,22 +106,27 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
             }
         }
 
-        NeighborAddressBfdAdministrativeStatus IJsonModel<NeighborAddressBfdAdministrativeStatus>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        NeighborAddressBfdAdministrativeStatus IJsonModel<NeighborAddressBfdAdministrativeStatus>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual NeighborAddressBfdAdministrativeStatus JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<NeighborAddressBfdAdministrativeStatus>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<NeighborAddressBfdAdministrativeStatus>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(NeighborAddressBfdAdministrativeStatus)} does not support reading '{format}' format.");
             }
-
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
             return DeserializeNeighborAddressBfdAdministrativeStatus(document.RootElement, options);
         }
 
-        internal static NeighborAddressBfdAdministrativeStatus DeserializeNeighborAddressBfdAdministrativeStatus(JsonElement element, ModelReaderWriterOptions options = null)
+        /// <param name="element"> The JSON element to deserialize. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        internal static NeighborAddressBfdAdministrativeStatus DeserializeNeighborAddressBfdAdministrativeStatus(JsonElement element, ModelReaderWriterOptions options)
         {
-            options ??= ModelSerializationExtensions.WireOptions;
-
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -89,67 +134,34 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
             string neighborAddress = default;
             BfdAdministrativeState? administrativeState = default;
             string error = default;
-            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
-            foreach (var property in element.EnumerateObject())
+            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            foreach (var prop in element.EnumerateObject())
             {
-                if (property.NameEquals("neighborAddress"u8))
+                if (prop.NameEquals("neighborAddress"u8))
                 {
-                    neighborAddress = property.Value.GetString();
+                    neighborAddress = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("administrativeState"u8))
+                if (prop.NameEquals("administrativeState"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    administrativeState = new BfdAdministrativeState(property.Value.GetString());
+                    administrativeState = new BfdAdministrativeState(prop.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("error"u8))
+                if (prop.NameEquals("error"u8))
                 {
-                    error = property.Value.GetString();
+                    error = prop.Value.GetString();
                     continue;
                 }
                 if (options.Format != "W")
                 {
-                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = rawDataDictionary;
-            return new NeighborAddressBfdAdministrativeStatus(neighborAddress, administrativeState, error, serializedAdditionalRawData);
+            return new NeighborAddressBfdAdministrativeStatus(neighborAddress, administrativeState, error, additionalBinaryDataProperties);
         }
-
-        BinaryData IPersistableModel<NeighborAddressBfdAdministrativeStatus>.Write(ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<NeighborAddressBfdAdministrativeStatus>)this).GetFormatFromOptions(options) : options.Format;
-
-            switch (format)
-            {
-                case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerManagedNetworkFabricContext.Default);
-                default:
-                    throw new FormatException($"The model {nameof(NeighborAddressBfdAdministrativeStatus)} does not support writing '{options.Format}' format.");
-            }
-        }
-
-        NeighborAddressBfdAdministrativeStatus IPersistableModel<NeighborAddressBfdAdministrativeStatus>.Create(BinaryData data, ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<NeighborAddressBfdAdministrativeStatus>)this).GetFormatFromOptions(options) : options.Format;
-
-            switch (format)
-            {
-                case "J":
-                    {
-                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
-                        return DeserializeNeighborAddressBfdAdministrativeStatus(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(NeighborAddressBfdAdministrativeStatus)} does not support reading '{options.Format}' format.");
-            }
-        }
-
-        string IPersistableModel<NeighborAddressBfdAdministrativeStatus>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

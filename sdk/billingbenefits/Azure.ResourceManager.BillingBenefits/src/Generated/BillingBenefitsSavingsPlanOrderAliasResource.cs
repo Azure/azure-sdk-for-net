@@ -225,7 +225,7 @@ namespace Azure.ResourceManager.BillingBenefits
                 HttpMessage message = _savingsPlanOrderAliasRestClient.CreateCreateRequest(Id.Name, BillingBenefitsSavingsPlanOrderAliasData.ToRequestContent(data), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 BillingBenefitsArmOperation<BillingBenefitsSavingsPlanOrderAliasResource> operation = new BillingBenefitsArmOperation<BillingBenefitsSavingsPlanOrderAliasResource>(
-                    new BillingBenefitsSavingsPlanOrderAliasOperationSource(Client),
+                    new BillingBenefitsSavingsPlanOrderAliasResourceOperationSource(Client),
                     _savingsPlanOrderAliasClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -284,7 +284,7 @@ namespace Azure.ResourceManager.BillingBenefits
                 HttpMessage message = _savingsPlanOrderAliasRestClient.CreateCreateRequest(Id.Name, BillingBenefitsSavingsPlanOrderAliasData.ToRequestContent(data), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 BillingBenefitsArmOperation<BillingBenefitsSavingsPlanOrderAliasResource> operation = new BillingBenefitsArmOperation<BillingBenefitsSavingsPlanOrderAliasResource>(
-                    new BillingBenefitsSavingsPlanOrderAliasOperationSource(Client),
+                    new BillingBenefitsSavingsPlanOrderAliasResourceOperationSource(Client),
                     _savingsPlanOrderAliasClientDiagnostics,
                     Pipeline,
                     message.Request,

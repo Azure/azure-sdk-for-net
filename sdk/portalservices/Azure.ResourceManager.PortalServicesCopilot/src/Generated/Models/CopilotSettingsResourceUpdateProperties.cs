@@ -22,15 +22,15 @@ namespace Azure.ResourceManager.PortalServicesCopilot.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="CopilotSettingsResourceUpdateProperties"/>. </summary>
-        /// <param name="accessControlEnabled"> Boolean indicating if role-based access control is enabled for copilot in this tenant. </param>
+        /// <param name="isAccessControlEnabled"> Boolean indicating if role-based access control is enabled for copilot in this tenant. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal CopilotSettingsResourceUpdateProperties(bool? accessControlEnabled, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal CopilotSettingsResourceUpdateProperties(bool? isAccessControlEnabled, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
-            AccessControlEnabled = accessControlEnabled;
+            IsAccessControlEnabled = isAccessControlEnabled;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> Boolean indicating if role-based access control is enabled for copilot in this tenant. </summary>
-        public bool? AccessControlEnabled { get; set; }
+        public bool? IsAccessControlEnabled { get; set; }
     }
 }

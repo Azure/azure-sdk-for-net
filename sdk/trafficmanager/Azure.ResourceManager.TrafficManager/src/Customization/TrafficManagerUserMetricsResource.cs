@@ -9,13 +9,14 @@ using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager.TrafficManager.Models;
+using Microsoft.TypeSpec.Generator.Customizations;
 
 namespace Azure.ResourceManager.TrafficManager
 {
+    // Preserve the public resource type name shipped by the previous SDK.
+    [CodeGenType("TrafficManagerUserMetricResource")]
     public partial class TrafficManagerUserMetricsResource
     {
-        // The generator emits delete methods with ArmOperation<TrafficManagerDeleteOperationResult>.
-        // Keep these custom methods to preserve the existing non-generic ArmOperation public API.
         /// <summary> Delete a subscription-level key used for Real User Metrics collection. </summary>
         /// <param name="waitUntil"> Completion option. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -29,7 +30,7 @@ namespace Azure.ResourceManager.TrafficManager
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _trafficManagerUserMetricsKeysRestClient.CreateDeleteRequest(Id.SubscriptionId, context);
+                HttpMessage message = _trafficManagerUserMetricsKeysRestClient.CreateDeleteRequest(Guid.Parse(Id.SubscriptionId), context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<TrafficManagerDeleteOperationResult> response = Response.FromValue(TrafficManagerDeleteOperationResult.FromResponse(result), result);
                 RequestUriBuilder uri = message.Request.Uri;
@@ -61,7 +62,7 @@ namespace Azure.ResourceManager.TrafficManager
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _trafficManagerUserMetricsKeysRestClient.CreateDeleteRequest(Id.SubscriptionId, context);
+                HttpMessage message = _trafficManagerUserMetricsKeysRestClient.CreateDeleteRequest(Guid.Parse(Id.SubscriptionId), context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<TrafficManagerDeleteOperationResult> response = Response.FromValue(TrafficManagerDeleteOperationResult.FromResponse(result), result);
                 RequestUriBuilder uri = message.Request.Uri;

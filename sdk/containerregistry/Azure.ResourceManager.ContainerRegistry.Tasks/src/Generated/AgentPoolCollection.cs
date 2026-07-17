@@ -98,7 +98,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Tasks
                 HttpMessage message = _agentPoolsRestClient.CreateCreateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, _registryName, agentPoolName, AgentPoolData.ToRequestContent(data), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 TasksArmOperation<AgentPoolResource> operation = new TasksArmOperation<AgentPoolResource>(
-                    new AgentPoolOperationSource(Client),
+                    new AgentPoolResourceOperationSource(Client),
                     _agentPoolsClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -156,7 +156,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Tasks
                 HttpMessage message = _agentPoolsRestClient.CreateCreateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, _registryName, agentPoolName, AgentPoolData.ToRequestContent(data), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 TasksArmOperation<AgentPoolResource> operation = new TasksArmOperation<AgentPoolResource>(
-                    new AgentPoolOperationSource(Client),
+                    new AgentPoolResourceOperationSource(Client),
                     _agentPoolsClientDiagnostics,
                     Pipeline,
                     message.Request,

@@ -7,47 +7,37 @@
 
 using System;
 using System.Collections.Generic;
-using System.Globalization;
+using System.Diagnostics;
 using System.Threading;
 using System.Threading.Tasks;
+using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
+using Azure.ResourceManager;
 using Azure.ResourceManager.ManagedNetworkFabric.Models;
 using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.ManagedNetworkFabric
 {
     /// <summary>
-    /// A Class representing a NetworkDevice along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="NetworkDeviceResource"/>
-    /// from an instance of <see cref="ArmClient"/> using the GetNetworkDeviceResource method.
-    /// Otherwise you can get one from its parent resource <see cref="ResourceGroupResource"/> using the GetNetworkDevice method.
+    /// A class representing a NetworkDevice along with the instance operations that can be performed on it.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="NetworkDeviceResource"/> from an instance of <see cref="ArmClient"/> using the GetResource method.
+    /// Otherwise you can get one from its parent resource <see cref="ResourceGroupResource"/> using the GetNetworkDevices method.
     /// </summary>
     public partial class NetworkDeviceResource : ArmResource
     {
-        /// <summary> Generate the resource identifier of a <see cref="NetworkDeviceResource"/> instance. </summary>
-        /// <param name="subscriptionId"> The subscriptionId. </param>
-        /// <param name="resourceGroupName"> The resourceGroupName. </param>
-        /// <param name="networkDeviceName"> The networkDeviceName. </param>
-        public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string networkDeviceName)
-        {
-            var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ManagedNetworkFabric/networkDevices/{networkDeviceName}";
-            return new ResourceIdentifier(resourceId);
-        }
-
-        private readonly ClientDiagnostics _networkDeviceClientDiagnostics;
-        private readonly NetworkDevicesRestOperations _networkDeviceRestClient;
+        private readonly ClientDiagnostics _networkDevicesClientDiagnostics;
+        private readonly NetworkDevices _networkDevicesRestClient;
         private readonly NetworkDeviceData _data;
-
         /// <summary> Gets the resource type for the operations. </summary>
         public static readonly ResourceType ResourceType = "Microsoft.ManagedNetworkFabric/networkDevices";
 
-        /// <summary> Initializes a new instance of the <see cref="NetworkDeviceResource"/> class for mocking. </summary>
+        /// <summary> Initializes a new instance of NetworkDeviceResource for mocking. </summary>
         protected NetworkDeviceResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref="NetworkDeviceResource"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="NetworkDeviceResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal NetworkDeviceResource(ArmClient client, NetworkDeviceData data) : this(client, data.Id)
@@ -56,140 +46,92 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
             _data = data;
         }
 
-        /// <summary> Initializes a new instance of the <see cref="NetworkDeviceResource"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="NetworkDeviceResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal NetworkDeviceResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _networkDeviceClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ManagedNetworkFabric", ResourceType.Namespace, Diagnostics);
             TryGetApiVersion(ResourceType, out string networkDeviceApiVersion);
-            _networkDeviceRestClient = new NetworkDevicesRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, networkDeviceApiVersion);
-#if DEBUG
-			ValidateResourceId(Id);
-#endif
+            _networkDevicesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ManagedNetworkFabric", ResourceType.Namespace, Diagnostics);
+            _networkDevicesRestClient = new NetworkDevices(_networkDevicesClientDiagnostics, Pipeline, Endpoint, networkDeviceApiVersion ?? "2025-07-15");
+            ValidateResourceId(id);
         }
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }
 
         /// <summary> Gets the data representing this Feature. </summary>
-        /// <exception cref="InvalidOperationException"> Throws if there is no data loaded in the current instance. </exception>
         public virtual NetworkDeviceData Data
         {
             get
             {
                 if (!HasData)
+                {
                     throw new InvalidOperationException("The current instance does not have data, you must call Get first.");
+                }
                 return _data;
             }
         }
 
+        /// <summary> Generate the resource identifier for this resource. </summary>
+        /// <param name="subscriptionId"> The subscriptionId. </param>
+        /// <param name="resourceGroupName"> The resourceGroupName. </param>
+        /// <param name="networkDeviceName"> The networkDeviceName. </param>
+        public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string networkDeviceName)
+        {
+            string resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ManagedNetworkFabric/networkDevices/{networkDeviceName}";
+            return new ResourceIdentifier(resourceId);
+        }
+
+        /// <param name="id"></param>
+        [Conditional("DEBUG")]
         internal static void ValidateResourceId(ResourceIdentifier id)
         {
             if (id.ResourceType != ResourceType)
-                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), nameof(id));
-        }
-
-        /// <summary> Gets a collection of NetworkDeviceInterfaceResources in the NetworkDevice. </summary>
-        /// <returns> An object representing collection of NetworkDeviceInterfaceResources and their operations over a NetworkDeviceInterfaceResource. </returns>
-        public virtual NetworkDeviceInterfaceCollection GetNetworkDeviceInterfaces()
-        {
-            return GetCachedClient(client => new NetworkDeviceInterfaceCollection(client, Id));
-        }
-
-        /// <summary>
-        /// Get the Network Interface resource details.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ManagedNetworkFabric/networkDevices/{networkDeviceName}/networkInterfaces/{networkInterfaceName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>NetworkInterfaces_Get</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-07-15</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="NetworkDeviceInterfaceResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="networkInterfaceName"> Name of the Network Interface. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="networkInterfaceName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="networkInterfaceName"/> is an empty string, and was expected to be non-empty. </exception>
-        [ForwardsClientCalls]
-        public virtual async Task<Response<NetworkDeviceInterfaceResource>> GetNetworkDeviceInterfaceAsync(string networkInterfaceName, CancellationToken cancellationToken = default)
-        {
-            return await GetNetworkDeviceInterfaces().GetAsync(networkInterfaceName, cancellationToken).ConfigureAwait(false);
-        }
-
-        /// <summary>
-        /// Get the Network Interface resource details.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ManagedNetworkFabric/networkDevices/{networkDeviceName}/networkInterfaces/{networkInterfaceName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>NetworkInterfaces_Get</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-07-15</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="NetworkDeviceInterfaceResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="networkInterfaceName"> Name of the Network Interface. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="networkInterfaceName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="networkInterfaceName"/> is an empty string, and was expected to be non-empty. </exception>
-        [ForwardsClientCalls]
-        public virtual Response<NetworkDeviceInterfaceResource> GetNetworkDeviceInterface(string networkInterfaceName, CancellationToken cancellationToken = default)
-        {
-            return GetNetworkDeviceInterfaces().Get(networkInterfaceName, cancellationToken);
+            {
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), nameof(id));
+            }
         }
 
         /// <summary>
         /// Gets the Network Device resource details.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ManagedNetworkFabric/networkDevices/{networkDeviceName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ManagedNetworkFabric/networkDevices/{networkDeviceName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>NetworkDevices_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> NetworkDevices_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-07-15</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-07-15. </description>
         /// </item>
         /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="NetworkDeviceResource"/></description>
+        /// <term> Resource. </term>
+        /// <description> <see cref="NetworkDeviceResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<Response<NetworkDeviceResource>> GetAsync(CancellationToken cancellationToken = default)
         {
-            using var scope = _networkDeviceClientDiagnostics.CreateScope("NetworkDeviceResource.Get");
+            using DiagnosticScope scope = _networkDevicesClientDiagnostics.CreateScope("NetworkDeviceResource.Get");
             scope.Start();
             try
             {
-                var response = await _networkDeviceRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _networkDevicesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                Response<NetworkDeviceData> response = Response.FromValue(NetworkDeviceData.FromResponse(result), result);
                 if (response.Value == null)
+                {
                     throw new RequestFailedException(response.GetRawResponse());
+                }
                 return Response.FromValue(new NetworkDeviceResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -203,34 +145,160 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         /// Gets the Network Device resource details.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ManagedNetworkFabric/networkDevices/{networkDeviceName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ManagedNetworkFabric/networkDevices/{networkDeviceName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>NetworkDevices_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> NetworkDevices_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-07-15</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-07-15. </description>
         /// </item>
         /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="NetworkDeviceResource"/></description>
+        /// <term> Resource. </term>
+        /// <description> <see cref="NetworkDeviceResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response<NetworkDeviceResource> Get(CancellationToken cancellationToken = default)
         {
-            using var scope = _networkDeviceClientDiagnostics.CreateScope("NetworkDeviceResource.Get");
+            using DiagnosticScope scope = _networkDevicesClientDiagnostics.CreateScope("NetworkDeviceResource.Get");
             scope.Start();
             try
             {
-                var response = _networkDeviceRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _networkDevicesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                Response result = Pipeline.ProcessMessage(message, context);
+                Response<NetworkDeviceData> response = Response.FromValue(NetworkDeviceData.FromResponse(result), result);
                 if (response.Value == null)
+                {
                     throw new RequestFailedException(response.GetRawResponse());
+                }
                 return Response.FromValue(new NetworkDeviceResource(Client, response.Value), response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Update certain properties of the Network Device resource.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ManagedNetworkFabric/networkDevices/{networkDeviceName}. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> NetworkDevices_Update. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-07-15. </description>
+        /// </item>
+        /// <item>
+        /// <term> Resource. </term>
+        /// <description> <see cref="NetworkDeviceResource"/>. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="content"> Network Device properties to update. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        public virtual async Task<ArmOperation<NetworkDeviceResource>> UpdateAsync(WaitUntil waitUntil, NetworkDevicePatchContent content, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(content, nameof(content));
+
+            using DiagnosticScope scope = _networkDevicesClientDiagnostics.CreateScope("NetworkDeviceResource.Update");
+            scope.Start();
+            try
+            {
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _networkDevicesRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, NetworkDevicePatchContent.ToRequestContent(content), context);
+                Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                ManagedNetworkFabricArmOperation<NetworkDeviceResource> operation = new ManagedNetworkFabricArmOperation<NetworkDeviceResource>(
+                    new NetworkDeviceResourceOperationSource(Client),
+                    _networkDevicesClientDiagnostics,
+                    Pipeline,
+                    message.Request,
+                    response,
+                    OperationFinalStateVia.Location);
+                if (waitUntil == WaitUntil.Completed)
+                {
+                    await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
+                }
+                return operation;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Update certain properties of the Network Device resource.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ManagedNetworkFabric/networkDevices/{networkDeviceName}. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> NetworkDevices_Update. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-07-15. </description>
+        /// </item>
+        /// <item>
+        /// <term> Resource. </term>
+        /// <description> <see cref="NetworkDeviceResource"/>. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="content"> Network Device properties to update. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        public virtual ArmOperation<NetworkDeviceResource> Update(WaitUntil waitUntil, NetworkDevicePatchContent content, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(content, nameof(content));
+
+            using DiagnosticScope scope = _networkDevicesClientDiagnostics.CreateScope("NetworkDeviceResource.Update");
+            scope.Start();
+            try
+            {
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _networkDevicesRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, NetworkDevicePatchContent.ToRequestContent(content), context);
+                Response response = Pipeline.ProcessMessage(message, context);
+                ManagedNetworkFabricArmOperation<NetworkDeviceResource> operation = new ManagedNetworkFabricArmOperation<NetworkDeviceResource>(
+                    new NetworkDeviceResourceOperationSource(Client),
+                    _networkDevicesClientDiagnostics,
+                    Pipeline,
+                    message.Request,
+                    response,
+                    OperationFinalStateVia.Location);
+                if (waitUntil == WaitUntil.Completed)
+                {
+                    operation.WaitForCompletion(cancellationToken);
+                }
+                return operation;
             }
             catch (Exception e)
             {
@@ -243,20 +311,20 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         /// Delete the Network Device resource.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ManagedNetworkFabric/networkDevices/{networkDeviceName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ManagedNetworkFabric/networkDevices/{networkDeviceName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>NetworkDevices_Delete</description>
+        /// <term> Operation Id. </term>
+        /// <description> NetworkDevices_Delete. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-07-15</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-07-15. </description>
         /// </item>
         /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="NetworkDeviceResource"/></description>
+        /// <term> Resource. </term>
+        /// <description> <see cref="NetworkDeviceResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -264,14 +332,21 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<ArmOperation> DeleteAsync(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
-            using var scope = _networkDeviceClientDiagnostics.CreateScope("NetworkDeviceResource.Delete");
+            using DiagnosticScope scope = _networkDevicesClientDiagnostics.CreateScope("NetworkDeviceResource.Delete");
             scope.Start();
             try
             {
-                var response = await _networkDeviceRestClient.DeleteAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
-                var operation = new ManagedNetworkFabricArmOperation(_networkDeviceClientDiagnostics, Pipeline, _networkDeviceRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response, OperationFinalStateVia.Location);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _networkDevicesRestClient.CreateDeleteRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                ManagedNetworkFabricArmOperation operation = new ManagedNetworkFabricArmOperation(_networkDevicesClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
+                {
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
+                }
                 return operation;
             }
             catch (Exception e)
@@ -285,20 +360,20 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         /// Delete the Network Device resource.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ManagedNetworkFabric/networkDevices/{networkDeviceName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ManagedNetworkFabric/networkDevices/{networkDeviceName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>NetworkDevices_Delete</description>
+        /// <term> Operation Id. </term>
+        /// <description> NetworkDevices_Delete. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-07-15</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-07-15. </description>
         /// </item>
         /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="NetworkDeviceResource"/></description>
+        /// <term> Resource. </term>
+        /// <description> <see cref="NetworkDeviceResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -306,198 +381,21 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual ArmOperation Delete(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
-            using var scope = _networkDeviceClientDiagnostics.CreateScope("NetworkDeviceResource.Delete");
+            using DiagnosticScope scope = _networkDevicesClientDiagnostics.CreateScope("NetworkDeviceResource.Delete");
             scope.Start();
             try
             {
-                var response = _networkDeviceRestClient.Delete(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
-                var operation = new ManagedNetworkFabricArmOperation(_networkDeviceClientDiagnostics, Pipeline, _networkDeviceRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response, OperationFinalStateVia.Location);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _networkDevicesRestClient.CreateDeleteRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                Response response = Pipeline.ProcessMessage(message, context);
+                ManagedNetworkFabricArmOperation operation = new ManagedNetworkFabricArmOperation(_networkDevicesClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
+                {
                     operation.WaitForCompletionResponse(cancellationToken);
-                return operation;
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// Update certain properties of the Network Device resource.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ManagedNetworkFabric/networkDevices/{networkDeviceName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>NetworkDevices_Update</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-07-15</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="NetworkDeviceResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="patch"> Network Device properties to update. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="patch"/> is null. </exception>
-        public virtual async Task<ArmOperation<NetworkDeviceResource>> UpdateAsync(WaitUntil waitUntil, NetworkDevicePatch patch, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(patch, nameof(patch));
-
-            using var scope = _networkDeviceClientDiagnostics.CreateScope("NetworkDeviceResource.Update");
-            scope.Start();
-            try
-            {
-                var response = await _networkDeviceRestClient.UpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, patch, cancellationToken).ConfigureAwait(false);
-                var operation = new ManagedNetworkFabricArmOperation<NetworkDeviceResource>(new NetworkDeviceOperationSource(Client), _networkDeviceClientDiagnostics, Pipeline, _networkDeviceRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, patch).Request, response, OperationFinalStateVia.Location);
-                if (waitUntil == WaitUntil.Completed)
-                    await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
-                return operation;
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// Update certain properties of the Network Device resource.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ManagedNetworkFabric/networkDevices/{networkDeviceName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>NetworkDevices_Update</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-07-15</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="NetworkDeviceResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="patch"> Network Device properties to update. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="patch"/> is null. </exception>
-        public virtual ArmOperation<NetworkDeviceResource> Update(WaitUntil waitUntil, NetworkDevicePatch patch, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(patch, nameof(patch));
-
-            using var scope = _networkDeviceClientDiagnostics.CreateScope("NetworkDeviceResource.Update");
-            scope.Start();
-            try
-            {
-                var response = _networkDeviceRestClient.Update(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, patch, cancellationToken);
-                var operation = new ManagedNetworkFabricArmOperation<NetworkDeviceResource>(new NetworkDeviceOperationSource(Client), _networkDeviceClientDiagnostics, Pipeline, _networkDeviceRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, patch).Request, response, OperationFinalStateVia.Location);
-                if (waitUntil == WaitUntil.Completed)
-                    operation.WaitForCompletion(cancellationToken);
-                return operation;
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// Reboot the Network Device.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ManagedNetworkFabric/networkDevices/{networkDeviceName}/reboot</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>NetworkDevices_Restart</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-07-15</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="NetworkDeviceResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="content"> Request payload. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        public virtual async Task<ArmOperation<NetworkFabricOperationStatusResult>> RestartAsync(WaitUntil waitUntil, NetworkDeviceRebootContent content, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(content, nameof(content));
-
-            using var scope = _networkDeviceClientDiagnostics.CreateScope("NetworkDeviceResource.Restart");
-            scope.Start();
-            try
-            {
-                var response = await _networkDeviceRestClient.RestartAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content, cancellationToken).ConfigureAwait(false);
-                var operation = new ManagedNetworkFabricArmOperation<NetworkFabricOperationStatusResult>(new NetworkFabricOperationStatusResultOperationSource(), _networkDeviceClientDiagnostics, Pipeline, _networkDeviceRestClient.CreateRestartRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content).Request, response, OperationFinalStateVia.Location);
-                if (waitUntil == WaitUntil.Completed)
-                    await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
-                return operation;
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// Reboot the Network Device.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ManagedNetworkFabric/networkDevices/{networkDeviceName}/reboot</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>NetworkDevices_Restart</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-07-15</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="NetworkDeviceResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="content"> Request payload. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        public virtual ArmOperation<NetworkFabricOperationStatusResult> Restart(WaitUntil waitUntil, NetworkDeviceRebootContent content, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(content, nameof(content));
-
-            using var scope = _networkDeviceClientDiagnostics.CreateScope("NetworkDeviceResource.Restart");
-            scope.Start();
-            try
-            {
-                var response = _networkDeviceRestClient.Restart(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content, cancellationToken);
-                var operation = new ManagedNetworkFabricArmOperation<NetworkFabricOperationStatusResult>(new NetworkFabricOperationStatusResultOperationSource(), _networkDeviceClientDiagnostics, Pipeline, _networkDeviceRestClient.CreateRestartRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content).Request, response, OperationFinalStateVia.Location);
-                if (waitUntil == WaitUntil.Completed)
-                    operation.WaitForCompletion(cancellationToken);
+                }
                 return operation;
             }
             catch (Exception e)
@@ -511,20 +409,20 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         /// Refreshes the configuration the Network Device.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ManagedNetworkFabric/networkDevices/{networkDeviceName}/refreshConfiguration</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ManagedNetworkFabric/networkDevices/{networkDeviceName}/refreshConfiguration. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>NetworkDevices_ReloadConfiguration</description>
+        /// <term> Operation Id. </term>
+        /// <description> NetworkDevices_RefreshConfiguration. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-07-15</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-07-15. </description>
         /// </item>
         /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="NetworkDeviceResource"/></description>
+        /// <term> Resource. </term>
+        /// <description> <see cref="NetworkDeviceResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -532,14 +430,27 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<ArmOperation<NetworkDeviceRefreshConfigurationResult>> ReloadConfigurationAsync(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
-            using var scope = _networkDeviceClientDiagnostics.CreateScope("NetworkDeviceResource.ReloadConfiguration");
+            using DiagnosticScope scope = _networkDevicesClientDiagnostics.CreateScope("NetworkDeviceResource.ReloadConfiguration");
             scope.Start();
             try
             {
-                var response = await _networkDeviceRestClient.ReloadConfigurationAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
-                var operation = new ManagedNetworkFabricArmOperation<NetworkDeviceRefreshConfigurationResult>(new NetworkDeviceRefreshConfigurationResultOperationSource(), _networkDeviceClientDiagnostics, Pipeline, _networkDeviceRestClient.CreateReloadConfigurationRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response, OperationFinalStateVia.Location);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _networkDevicesRestClient.CreateReloadConfigurationRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                ManagedNetworkFabricArmOperation<NetworkDeviceRefreshConfigurationResult> operation = new ManagedNetworkFabricArmOperation<NetworkDeviceRefreshConfigurationResult>(
+                    new NetworkDeviceRefreshConfigurationResultOperationSource(),
+                    _networkDevicesClientDiagnostics,
+                    Pipeline,
+                    message.Request,
+                    response,
+                    OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
+                {
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
+                }
                 return operation;
             }
             catch (Exception e)
@@ -553,20 +464,20 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         /// Refreshes the configuration the Network Device.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ManagedNetworkFabric/networkDevices/{networkDeviceName}/refreshConfiguration</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ManagedNetworkFabric/networkDevices/{networkDeviceName}/refreshConfiguration. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>NetworkDevices_ReloadConfiguration</description>
+        /// <term> Operation Id. </term>
+        /// <description> NetworkDevices_RefreshConfiguration. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-07-15</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-07-15. </description>
         /// </item>
         /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="NetworkDeviceResource"/></description>
+        /// <term> Resource. </term>
+        /// <description> <see cref="NetworkDeviceResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -574,14 +485,27 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual ArmOperation<NetworkDeviceRefreshConfigurationResult> ReloadConfiguration(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
-            using var scope = _networkDeviceClientDiagnostics.CreateScope("NetworkDeviceResource.ReloadConfiguration");
+            using DiagnosticScope scope = _networkDevicesClientDiagnostics.CreateScope("NetworkDeviceResource.ReloadConfiguration");
             scope.Start();
             try
             {
-                var response = _networkDeviceRestClient.ReloadConfiguration(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
-                var operation = new ManagedNetworkFabricArmOperation<NetworkDeviceRefreshConfigurationResult>(new NetworkDeviceRefreshConfigurationResultOperationSource(), _networkDeviceClientDiagnostics, Pipeline, _networkDeviceRestClient.CreateReloadConfigurationRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response, OperationFinalStateVia.Location);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _networkDevicesRestClient.CreateReloadConfigurationRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                Response response = Pipeline.ProcessMessage(message, context);
+                ManagedNetworkFabricArmOperation<NetworkDeviceRefreshConfigurationResult> operation = new ManagedNetworkFabricArmOperation<NetworkDeviceRefreshConfigurationResult>(
+                    new NetworkDeviceRefreshConfigurationResultOperationSource(),
+                    _networkDevicesClientDiagnostics,
+                    Pipeline,
+                    message.Request,
+                    response,
+                    OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
+                {
                     operation.WaitForCompletion(cancellationToken);
+                }
                 return operation;
             }
             catch (Exception e)
@@ -595,20 +519,20 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         /// Updates the Network Device to use the latest certificates. Does not generate new certificates. Allows network devices missed during a previous certificate rotation to be brought back into sync.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ManagedNetworkFabric/networkDevices/{networkDeviceName}/resyncCertificates</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ManagedNetworkFabric/networkDevices/{networkDeviceName}/resyncCertificates. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>NetworkDevices_ResyncCertificates</description>
+        /// <term> Operation Id. </term>
+        /// <description> NetworkDevices_ResyncCertificates. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-07-15</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-07-15. </description>
         /// </item>
         /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="NetworkDeviceResource"/></description>
+        /// <term> Resource. </term>
+        /// <description> <see cref="NetworkDeviceResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -616,14 +540,27 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<ArmOperation<NetworkFabricResyncCertificatesResult>> ResyncCertificatesAsync(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
-            using var scope = _networkDeviceClientDiagnostics.CreateScope("NetworkDeviceResource.ResyncCertificates");
+            using DiagnosticScope scope = _networkDevicesClientDiagnostics.CreateScope("NetworkDeviceResource.ResyncCertificates");
             scope.Start();
             try
             {
-                var response = await _networkDeviceRestClient.ResyncCertificatesAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
-                var operation = new ManagedNetworkFabricArmOperation<NetworkFabricResyncCertificatesResult>(new NetworkFabricResyncCertificatesResultOperationSource(), _networkDeviceClientDiagnostics, Pipeline, _networkDeviceRestClient.CreateResyncCertificatesRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response, OperationFinalStateVia.Location);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _networkDevicesRestClient.CreateResyncCertificatesRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                ManagedNetworkFabricArmOperation<NetworkFabricResyncCertificatesResult> operation = new ManagedNetworkFabricArmOperation<NetworkFabricResyncCertificatesResult>(
+                    new NetworkFabricResyncCertificatesResultOperationSource(),
+                    _networkDevicesClientDiagnostics,
+                    Pipeline,
+                    message.Request,
+                    response,
+                    OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
+                {
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
+                }
                 return operation;
             }
             catch (Exception e)
@@ -637,20 +574,20 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         /// Updates the Network Device to use the latest certificates. Does not generate new certificates. Allows network devices missed during a previous certificate rotation to be brought back into sync.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ManagedNetworkFabric/networkDevices/{networkDeviceName}/resyncCertificates</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ManagedNetworkFabric/networkDevices/{networkDeviceName}/resyncCertificates. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>NetworkDevices_ResyncCertificates</description>
+        /// <term> Operation Id. </term>
+        /// <description> NetworkDevices_ResyncCertificates. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-07-15</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-07-15. </description>
         /// </item>
         /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="NetworkDeviceResource"/></description>
+        /// <term> Resource. </term>
+        /// <description> <see cref="NetworkDeviceResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -658,14 +595,27 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual ArmOperation<NetworkFabricResyncCertificatesResult> ResyncCertificates(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
-            using var scope = _networkDeviceClientDiagnostics.CreateScope("NetworkDeviceResource.ResyncCertificates");
+            using DiagnosticScope scope = _networkDevicesClientDiagnostics.CreateScope("NetworkDeviceResource.ResyncCertificates");
             scope.Start();
             try
             {
-                var response = _networkDeviceRestClient.ResyncCertificates(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
-                var operation = new ManagedNetworkFabricArmOperation<NetworkFabricResyncCertificatesResult>(new NetworkFabricResyncCertificatesResultOperationSource(), _networkDeviceClientDiagnostics, Pipeline, _networkDeviceRestClient.CreateResyncCertificatesRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response, OperationFinalStateVia.Location);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _networkDevicesRestClient.CreateResyncCertificatesRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                Response response = Pipeline.ProcessMessage(message, context);
+                ManagedNetworkFabricArmOperation<NetworkFabricResyncCertificatesResult> operation = new ManagedNetworkFabricArmOperation<NetworkFabricResyncCertificatesResult>(
+                    new NetworkFabricResyncCertificatesResultOperationSource(),
+                    _networkDevicesClientDiagnostics,
+                    Pipeline,
+                    message.Request,
+                    response,
+                    OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
+                {
                     operation.WaitForCompletion(cancellationToken);
+                }
                 return operation;
             }
             catch (Exception e)
@@ -679,20 +629,20 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         /// Updates the Network Device to use the latest passwords. Does not generate new passwords. Allows network devices missed during a previous password rotation to be brought back into sync.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ManagedNetworkFabric/networkDevices/{networkDeviceName}/resyncPasswords</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ManagedNetworkFabric/networkDevices/{networkDeviceName}/resyncPasswords. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>NetworkDevices_ResyncPasswords</description>
+        /// <term> Operation Id. </term>
+        /// <description> NetworkDevices_ResyncPasswords. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-07-15</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-07-15. </description>
         /// </item>
         /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="NetworkDeviceResource"/></description>
+        /// <term> Resource. </term>
+        /// <description> <see cref="NetworkDeviceResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -700,14 +650,27 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<ArmOperation<NetworkDeviceResyncPasswordsResult>> ResyncPasswordsAsync(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
-            using var scope = _networkDeviceClientDiagnostics.CreateScope("NetworkDeviceResource.ResyncPasswords");
+            using DiagnosticScope scope = _networkDevicesClientDiagnostics.CreateScope("NetworkDeviceResource.ResyncPasswords");
             scope.Start();
             try
             {
-                var response = await _networkDeviceRestClient.ResyncPasswordsAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
-                var operation = new ManagedNetworkFabricArmOperation<NetworkDeviceResyncPasswordsResult>(new NetworkDeviceResyncPasswordsResultOperationSource(), _networkDeviceClientDiagnostics, Pipeline, _networkDeviceRestClient.CreateResyncPasswordsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response, OperationFinalStateVia.Location);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _networkDevicesRestClient.CreateResyncPasswordsRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                ManagedNetworkFabricArmOperation<NetworkDeviceResyncPasswordsResult> operation = new ManagedNetworkFabricArmOperation<NetworkDeviceResyncPasswordsResult>(
+                    new NetworkDeviceResyncPasswordsResultOperationSource(),
+                    _networkDevicesClientDiagnostics,
+                    Pipeline,
+                    message.Request,
+                    response,
+                    OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
+                {
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
+                }
                 return operation;
             }
             catch (Exception e)
@@ -721,20 +684,20 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         /// Updates the Network Device to use the latest passwords. Does not generate new passwords. Allows network devices missed during a previous password rotation to be brought back into sync.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ManagedNetworkFabric/networkDevices/{networkDeviceName}/resyncPasswords</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ManagedNetworkFabric/networkDevices/{networkDeviceName}/resyncPasswords. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>NetworkDevices_ResyncPasswords</description>
+        /// <term> Operation Id. </term>
+        /// <description> NetworkDevices_ResyncPasswords. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-07-15</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-07-15. </description>
         /// </item>
         /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="NetworkDeviceResource"/></description>
+        /// <term> Resource. </term>
+        /// <description> <see cref="NetworkDeviceResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -742,14 +705,27 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual ArmOperation<NetworkDeviceResyncPasswordsResult> ResyncPasswords(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
-            using var scope = _networkDeviceClientDiagnostics.CreateScope("NetworkDeviceResource.ResyncPasswords");
+            using DiagnosticScope scope = _networkDevicesClientDiagnostics.CreateScope("NetworkDeviceResource.ResyncPasswords");
             scope.Start();
             try
             {
-                var response = _networkDeviceRestClient.ResyncPasswords(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
-                var operation = new ManagedNetworkFabricArmOperation<NetworkDeviceResyncPasswordsResult>(new NetworkDeviceResyncPasswordsResultOperationSource(), _networkDeviceClientDiagnostics, Pipeline, _networkDeviceRestClient.CreateResyncPasswordsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response, OperationFinalStateVia.Location);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _networkDevicesRestClient.CreateResyncPasswordsRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                Response response = Pipeline.ProcessMessage(message, context);
+                ManagedNetworkFabricArmOperation<NetworkDeviceResyncPasswordsResult> operation = new ManagedNetworkFabricArmOperation<NetworkDeviceResyncPasswordsResult>(
+                    new NetworkDeviceResyncPasswordsResultOperationSource(),
+                    _networkDevicesClientDiagnostics,
+                    Pipeline,
+                    message.Request,
+                    response,
+                    OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
+                {
                     operation.WaitForCompletion(cancellationToken);
+                }
                 return operation;
             }
             catch (Exception e)
@@ -763,20 +739,20 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         /// Run the RO Command on the Network Device.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ManagedNetworkFabric/networkDevices/{networkDeviceName}/runRoCommand</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ManagedNetworkFabric/networkDevices/{networkDeviceName}/runRoCommand. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>NetworkDevices_RunRoCommand</description>
+        /// <term> Operation Id. </term>
+        /// <description> NetworkDevices_RunRoCommand. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-07-15</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-07-15. </description>
         /// </item>
         /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="NetworkDeviceResource"/></description>
+        /// <term> Resource. </term>
+        /// <description> <see cref="NetworkDeviceResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -788,14 +764,27 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         {
             Argument.AssertNotNull(body, nameof(body));
 
-            using var scope = _networkDeviceClientDiagnostics.CreateScope("NetworkDeviceResource.RunRoCommand");
+            using DiagnosticScope scope = _networkDevicesClientDiagnostics.CreateScope("NetworkDeviceResource.RunRoCommand");
             scope.Start();
             try
             {
-                var response = await _networkDeviceRestClient.RunRoCommandAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, body, cancellationToken).ConfigureAwait(false);
-                var operation = new ManagedNetworkFabricArmOperation<CommonPostActionResponseForDeviceROCommandsOperationStatusResult>(new CommonPostActionResponseForDeviceROCommandsOperationStatusResultOperationSource(), _networkDeviceClientDiagnostics, Pipeline, _networkDeviceRestClient.CreateRunRoCommandRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, body).Request, response, OperationFinalStateVia.Location);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _networkDevicesRestClient.CreateRunRoCommandRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, NetworkFabricDeviceReadOnlyCommand.ToRequestContent(body), context);
+                Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                ManagedNetworkFabricArmOperation<CommonPostActionResponseForDeviceROCommandsOperationStatusResult> operation = new ManagedNetworkFabricArmOperation<CommonPostActionResponseForDeviceROCommandsOperationStatusResult>(
+                    new CommonPostActionResponseForDeviceROCommandsOperationStatusResultOperationSource(),
+                    _networkDevicesClientDiagnostics,
+                    Pipeline,
+                    message.Request,
+                    response,
+                    OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
+                {
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
+                }
                 return operation;
             }
             catch (Exception e)
@@ -809,20 +798,20 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         /// Run the RO Command on the Network Device.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ManagedNetworkFabric/networkDevices/{networkDeviceName}/runRoCommand</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ManagedNetworkFabric/networkDevices/{networkDeviceName}/runRoCommand. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>NetworkDevices_RunRoCommand</description>
+        /// <term> Operation Id. </term>
+        /// <description> NetworkDevices_RunRoCommand. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-07-15</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-07-15. </description>
         /// </item>
         /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="NetworkDeviceResource"/></description>
+        /// <term> Resource. </term>
+        /// <description> <see cref="NetworkDeviceResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -834,14 +823,27 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         {
             Argument.AssertNotNull(body, nameof(body));
 
-            using var scope = _networkDeviceClientDiagnostics.CreateScope("NetworkDeviceResource.RunRoCommand");
+            using DiagnosticScope scope = _networkDevicesClientDiagnostics.CreateScope("NetworkDeviceResource.RunRoCommand");
             scope.Start();
             try
             {
-                var response = _networkDeviceRestClient.RunRoCommand(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, body, cancellationToken);
-                var operation = new ManagedNetworkFabricArmOperation<CommonPostActionResponseForDeviceROCommandsOperationStatusResult>(new CommonPostActionResponseForDeviceROCommandsOperationStatusResultOperationSource(), _networkDeviceClientDiagnostics, Pipeline, _networkDeviceRestClient.CreateRunRoCommandRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, body).Request, response, OperationFinalStateVia.Location);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _networkDevicesRestClient.CreateRunRoCommandRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, NetworkFabricDeviceReadOnlyCommand.ToRequestContent(body), context);
+                Response response = Pipeline.ProcessMessage(message, context);
+                ManagedNetworkFabricArmOperation<CommonPostActionResponseForDeviceROCommandsOperationStatusResult> operation = new ManagedNetworkFabricArmOperation<CommonPostActionResponseForDeviceROCommandsOperationStatusResult>(
+                    new CommonPostActionResponseForDeviceROCommandsOperationStatusResultOperationSource(),
+                    _networkDevicesClientDiagnostics,
+                    Pipeline,
+                    message.Request,
+                    response,
+                    OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
+                {
                     operation.WaitForCompletion(cancellationToken);
+                }
                 return operation;
             }
             catch (Exception e)
@@ -855,20 +857,20 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         /// Run the RW Command on the Network Device.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ManagedNetworkFabric/networkDevices/{networkDeviceName}/runRwCommand</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ManagedNetworkFabric/networkDevices/{networkDeviceName}/runRwCommand. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>NetworkDevices_RunRwCommand</description>
+        /// <term> Operation Id. </term>
+        /// <description> NetworkDevices_RunRwCommand. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-07-15</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-07-15. </description>
         /// </item>
         /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="NetworkDeviceResource"/></description>
+        /// <term> Resource. </term>
+        /// <description> <see cref="NetworkDeviceResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -880,14 +882,27 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         {
             Argument.AssertNotNull(body, nameof(body));
 
-            using var scope = _networkDeviceClientDiagnostics.CreateScope("NetworkDeviceResource.RunRwCommand");
+            using DiagnosticScope scope = _networkDevicesClientDiagnostics.CreateScope("NetworkDeviceResource.RunRwCommand");
             scope.Start();
             try
             {
-                var response = await _networkDeviceRestClient.RunRwCommandAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, body, cancellationToken).ConfigureAwait(false);
-                var operation = new ManagedNetworkFabricArmOperation<NetworkDeviceRunRwCommandResult>(new NetworkDeviceRunRwCommandResultOperationSource(), _networkDeviceClientDiagnostics, Pipeline, _networkDeviceRestClient.CreateRunRwCommandRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, body).Request, response, OperationFinalStateVia.Location);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _networkDevicesRestClient.CreateRunRwCommandRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, NetworkFabricDeviceReadWriteCommand.ToRequestContent(body), context);
+                Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                ManagedNetworkFabricArmOperation<NetworkDeviceRunRwCommandResult> operation = new ManagedNetworkFabricArmOperation<NetworkDeviceRunRwCommandResult>(
+                    new NetworkDeviceRunRwCommandResultOperationSource(),
+                    _networkDevicesClientDiagnostics,
+                    Pipeline,
+                    message.Request,
+                    response,
+                    OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
+                {
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
+                }
                 return operation;
             }
             catch (Exception e)
@@ -901,20 +916,20 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         /// Run the RW Command on the Network Device.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ManagedNetworkFabric/networkDevices/{networkDeviceName}/runRwCommand</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ManagedNetworkFabric/networkDevices/{networkDeviceName}/runRwCommand. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>NetworkDevices_RunRwCommand</description>
+        /// <term> Operation Id. </term>
+        /// <description> NetworkDevices_RunRwCommand. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-07-15</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-07-15. </description>
         /// </item>
         /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="NetworkDeviceResource"/></description>
+        /// <term> Resource. </term>
+        /// <description> <see cref="NetworkDeviceResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -926,14 +941,27 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         {
             Argument.AssertNotNull(body, nameof(body));
 
-            using var scope = _networkDeviceClientDiagnostics.CreateScope("NetworkDeviceResource.RunRwCommand");
+            using DiagnosticScope scope = _networkDevicesClientDiagnostics.CreateScope("NetworkDeviceResource.RunRwCommand");
             scope.Start();
             try
             {
-                var response = _networkDeviceRestClient.RunRwCommand(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, body, cancellationToken);
-                var operation = new ManagedNetworkFabricArmOperation<NetworkDeviceRunRwCommandResult>(new NetworkDeviceRunRwCommandResultOperationSource(), _networkDeviceClientDiagnostics, Pipeline, _networkDeviceRestClient.CreateRunRwCommandRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, body).Request, response, OperationFinalStateVia.Location);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _networkDevicesRestClient.CreateRunRwCommandRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, NetworkFabricDeviceReadWriteCommand.ToRequestContent(body), context);
+                Response response = Pipeline.ProcessMessage(message, context);
+                ManagedNetworkFabricArmOperation<NetworkDeviceRunRwCommandResult> operation = new ManagedNetworkFabricArmOperation<NetworkDeviceRunRwCommandResult>(
+                    new NetworkDeviceRunRwCommandResultOperationSource(),
+                    _networkDevicesClientDiagnostics,
+                    Pipeline,
+                    message.Request,
+                    response,
+                    OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
+                {
                     operation.WaitForCompletion(cancellationToken);
+                }
                 return operation;
             }
             catch (Exception e)
@@ -947,20 +975,20 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         /// Updates the Administrative state of the Network Device.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ManagedNetworkFabric/networkDevices/{networkDeviceName}/updateAdministrativeState</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ManagedNetworkFabric/networkDevices/{networkDeviceName}/updateAdministrativeState. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>NetworkDevices_SetAdministrativeState</description>
+        /// <term> Operation Id. </term>
+        /// <description> NetworkDevices_UpdateAdministrativeState. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-07-15</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-07-15. </description>
         /// </item>
         /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="NetworkDeviceResource"/></description>
+        /// <term> Resource. </term>
+        /// <description> <see cref="NetworkDeviceResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -972,14 +1000,27 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         {
             Argument.AssertNotNull(content, nameof(content));
 
-            using var scope = _networkDeviceClientDiagnostics.CreateScope("NetworkDeviceResource.SetAdministrativeState");
+            using DiagnosticScope scope = _networkDevicesClientDiagnostics.CreateScope("NetworkDeviceResource.SetAdministrativeState");
             scope.Start();
             try
             {
-                var response = await _networkDeviceRestClient.SetAdministrativeStateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content, cancellationToken).ConfigureAwait(false);
-                var operation = new ManagedNetworkFabricArmOperation<NetworkDeviceUpdateAdministrativeStateResult>(new NetworkDeviceUpdateAdministrativeStateResultOperationSource(), _networkDeviceClientDiagnostics, Pipeline, _networkDeviceRestClient.CreateSetAdministrativeStateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content).Request, response, OperationFinalStateVia.Location);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _networkDevicesRestClient.CreateSetAdministrativeStateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, UpdateDeviceAdministrativeStateContent.ToRequestContent(content), context);
+                Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                ManagedNetworkFabricArmOperation<NetworkDeviceUpdateAdministrativeStateResult> operation = new ManagedNetworkFabricArmOperation<NetworkDeviceUpdateAdministrativeStateResult>(
+                    new NetworkDeviceUpdateAdministrativeStateResultOperationSource(),
+                    _networkDevicesClientDiagnostics,
+                    Pipeline,
+                    message.Request,
+                    response,
+                    OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
+                {
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
+                }
                 return operation;
             }
             catch (Exception e)
@@ -993,20 +1034,20 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         /// Updates the Administrative state of the Network Device.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ManagedNetworkFabric/networkDevices/{networkDeviceName}/updateAdministrativeState</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ManagedNetworkFabric/networkDevices/{networkDeviceName}/updateAdministrativeState. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>NetworkDevices_SetAdministrativeState</description>
+        /// <term> Operation Id. </term>
+        /// <description> NetworkDevices_UpdateAdministrativeState. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-07-15</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-07-15. </description>
         /// </item>
         /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="NetworkDeviceResource"/></description>
+        /// <term> Resource. </term>
+        /// <description> <see cref="NetworkDeviceResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -1018,14 +1059,27 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         {
             Argument.AssertNotNull(content, nameof(content));
 
-            using var scope = _networkDeviceClientDiagnostics.CreateScope("NetworkDeviceResource.SetAdministrativeState");
+            using DiagnosticScope scope = _networkDevicesClientDiagnostics.CreateScope("NetworkDeviceResource.SetAdministrativeState");
             scope.Start();
             try
             {
-                var response = _networkDeviceRestClient.SetAdministrativeState(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content, cancellationToken);
-                var operation = new ManagedNetworkFabricArmOperation<NetworkDeviceUpdateAdministrativeStateResult>(new NetworkDeviceUpdateAdministrativeStateResultOperationSource(), _networkDeviceClientDiagnostics, Pipeline, _networkDeviceRestClient.CreateSetAdministrativeStateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content).Request, response, OperationFinalStateVia.Location);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _networkDevicesRestClient.CreateSetAdministrativeStateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, UpdateDeviceAdministrativeStateContent.ToRequestContent(content), context);
+                Response response = Pipeline.ProcessMessage(message, context);
+                ManagedNetworkFabricArmOperation<NetworkDeviceUpdateAdministrativeStateResult> operation = new ManagedNetworkFabricArmOperation<NetworkDeviceUpdateAdministrativeStateResult>(
+                    new NetworkDeviceUpdateAdministrativeStateResultOperationSource(),
+                    _networkDevicesClientDiagnostics,
+                    Pipeline,
+                    message.Request,
+                    response,
+                    OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
+                {
                     operation.WaitForCompletion(cancellationToken);
+                }
                 return operation;
             }
             catch (Exception e)
@@ -1039,20 +1093,20 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         /// Upgrades the version of the Network Device.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ManagedNetworkFabric/networkDevices/{networkDeviceName}/upgrade</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ManagedNetworkFabric/networkDevices/{networkDeviceName}/upgrade. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>NetworkDevices_Upgrade</description>
+        /// <term> Operation Id. </term>
+        /// <description> NetworkDevices_Upgrade. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-07-15</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-07-15. </description>
         /// </item>
         /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="NetworkDeviceResource"/></description>
+        /// <term> Resource. </term>
+        /// <description> <see cref="NetworkDeviceResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -1064,14 +1118,27 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         {
             Argument.AssertNotNull(content, nameof(content));
 
-            using var scope = _networkDeviceClientDiagnostics.CreateScope("NetworkDeviceResource.Upgrade");
+            using DiagnosticScope scope = _networkDevicesClientDiagnostics.CreateScope("NetworkDeviceResource.Upgrade");
             scope.Start();
             try
             {
-                var response = await _networkDeviceRestClient.UpgradeAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content, cancellationToken).ConfigureAwait(false);
-                var operation = new ManagedNetworkFabricArmOperation<NetworkDeviceUpgradeResult>(new NetworkDeviceUpgradeResultOperationSource(), _networkDeviceClientDiagnostics, Pipeline, _networkDeviceRestClient.CreateUpgradeRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content).Request, response, OperationFinalStateVia.Location);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _networkDevicesRestClient.CreateUpgradeRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, NetworkDeviceUpgradeContent.ToRequestContent(content), context);
+                Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                ManagedNetworkFabricArmOperation<NetworkDeviceUpgradeResult> operation = new ManagedNetworkFabricArmOperation<NetworkDeviceUpgradeResult>(
+                    new NetworkDeviceUpgradeResultOperationSource(),
+                    _networkDevicesClientDiagnostics,
+                    Pipeline,
+                    message.Request,
+                    response,
+                    OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
+                {
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
+                }
                 return operation;
             }
             catch (Exception e)
@@ -1085,20 +1152,20 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         /// Upgrades the version of the Network Device.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ManagedNetworkFabric/networkDevices/{networkDeviceName}/upgrade</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ManagedNetworkFabric/networkDevices/{networkDeviceName}/upgrade. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>NetworkDevices_Upgrade</description>
+        /// <term> Operation Id. </term>
+        /// <description> NetworkDevices_Upgrade. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-07-15</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-07-15. </description>
         /// </item>
         /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="NetworkDeviceResource"/></description>
+        /// <term> Resource. </term>
+        /// <description> <see cref="NetworkDeviceResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -1110,14 +1177,27 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         {
             Argument.AssertNotNull(content, nameof(content));
 
-            using var scope = _networkDeviceClientDiagnostics.CreateScope("NetworkDeviceResource.Upgrade");
+            using DiagnosticScope scope = _networkDevicesClientDiagnostics.CreateScope("NetworkDeviceResource.Upgrade");
             scope.Start();
             try
             {
-                var response = _networkDeviceRestClient.Upgrade(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content, cancellationToken);
-                var operation = new ManagedNetworkFabricArmOperation<NetworkDeviceUpgradeResult>(new NetworkDeviceUpgradeResultOperationSource(), _networkDeviceClientDiagnostics, Pipeline, _networkDeviceRestClient.CreateUpgradeRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content).Request, response, OperationFinalStateVia.Location);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _networkDevicesRestClient.CreateUpgradeRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, NetworkDeviceUpgradeContent.ToRequestContent(content), context);
+                Response response = Pipeline.ProcessMessage(message, context);
+                ManagedNetworkFabricArmOperation<NetworkDeviceUpgradeResult> operation = new ManagedNetworkFabricArmOperation<NetworkDeviceUpgradeResult>(
+                    new NetworkDeviceUpgradeResultOperationSource(),
+                    _networkDevicesClientDiagnostics,
+                    Pipeline,
+                    message.Request,
+                    response,
+                    OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
+                {
                     operation.WaitForCompletion(cancellationToken);
+                }
                 return operation;
             }
             catch (Exception e)
@@ -1127,27 +1207,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
             }
         }
 
-        /// <summary>
-        /// Add a tag to the current resource.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ManagedNetworkFabric/networkDevices/{networkDeviceName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>NetworkDevices_Get</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-07-15</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="NetworkDeviceResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
+        /// <summary> Add a tag to the current resource. </summary>
         /// <param name="key"> The key for the tag. </param>
         /// <param name="value"> The value for the tag. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -1157,28 +1217,34 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
             Argument.AssertNotNull(key, nameof(key));
             Argument.AssertNotNull(value, nameof(value));
 
-            using var scope = _networkDeviceClientDiagnostics.CreateScope("NetworkDeviceResource.AddTag");
+            using DiagnosticScope scope = _networkDevicesClientDiagnostics.CreateScope("NetworkDeviceResource.AddTag");
             scope.Start();
             try
             {
-                if (await CanUseTagResourceAsync(cancellationToken: cancellationToken).ConfigureAwait(false))
+                if (await CanUseTagResourceAsync(cancellationToken).ConfigureAwait(false))
                 {
-                    var originalTags = await GetTagResource().GetAsync(cancellationToken).ConfigureAwait(false);
+                    Response<TagResource> originalTags = await GetTagResource().GetAsync(cancellationToken).ConfigureAwait(false);
                     originalTags.Value.Data.TagValues[key] = value;
-                    await GetTagResource().CreateOrUpdateAsync(WaitUntil.Completed, originalTags.Value.Data, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    var originalResponse = await _networkDeviceRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
-                    return Response.FromValue(new NetworkDeviceResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
+                    await GetTagResource().CreateOrUpdateAsync(WaitUntil.Completed, originalTags.Value.Data, cancellationToken).ConfigureAwait(false);
+                    RequestContext context = new RequestContext
+                    {
+                        CancellationToken = cancellationToken
+                    };
+                    HttpMessage message = _networkDevicesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                    Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                    Response<NetworkDeviceData> response = Response.FromValue(NetworkDeviceData.FromResponse(result), result);
+                    return Response.FromValue(new NetworkDeviceResource(Client, response.Value), response.GetRawResponse());
                 }
                 else
                 {
-                    var current = (await GetAsync(cancellationToken: cancellationToken).ConfigureAwait(false)).Value.Data;
-                    var patch = new NetworkDevicePatch();
-                    foreach (var tag in current.Tags)
+                    NetworkDeviceData current = (await GetAsync(cancellationToken: cancellationToken).ConfigureAwait(false)).Value.Data;
+                    NetworkDevicePatchContent patch = new NetworkDevicePatchContent();
+                    foreach (KeyValuePair<string, string> tag in current.Tags)
                     {
                         patch.Tags.Add(tag);
                     }
                     patch.Tags[key] = value;
-                    var result = await UpdateAsync(WaitUntil.Completed, patch, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    ArmOperation<NetworkDeviceResource> result = await UpdateAsync(WaitUntil.Completed, patch, cancellationToken: cancellationToken).ConfigureAwait(false);
                     return Response.FromValue(result.Value, result.GetRawResponse());
                 }
             }
@@ -1189,27 +1255,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
             }
         }
 
-        /// <summary>
-        /// Add a tag to the current resource.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ManagedNetworkFabric/networkDevices/{networkDeviceName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>NetworkDevices_Get</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-07-15</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="NetworkDeviceResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
+        /// <summary> Add a tag to the current resource. </summary>
         /// <param name="key"> The key for the tag. </param>
         /// <param name="value"> The value for the tag. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -1219,28 +1265,34 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
             Argument.AssertNotNull(key, nameof(key));
             Argument.AssertNotNull(value, nameof(value));
 
-            using var scope = _networkDeviceClientDiagnostics.CreateScope("NetworkDeviceResource.AddTag");
+            using DiagnosticScope scope = _networkDevicesClientDiagnostics.CreateScope("NetworkDeviceResource.AddTag");
             scope.Start();
             try
             {
-                if (CanUseTagResource(cancellationToken: cancellationToken))
+                if (CanUseTagResource(cancellationToken))
                 {
-                    var originalTags = GetTagResource().Get(cancellationToken);
+                    Response<TagResource> originalTags = GetTagResource().Get(cancellationToken);
                     originalTags.Value.Data.TagValues[key] = value;
-                    GetTagResource().CreateOrUpdate(WaitUntil.Completed, originalTags.Value.Data, cancellationToken: cancellationToken);
-                    var originalResponse = _networkDeviceRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
-                    return Response.FromValue(new NetworkDeviceResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
+                    GetTagResource().CreateOrUpdate(WaitUntil.Completed, originalTags.Value.Data, cancellationToken);
+                    RequestContext context = new RequestContext
+                    {
+                        CancellationToken = cancellationToken
+                    };
+                    HttpMessage message = _networkDevicesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                    Response result = Pipeline.ProcessMessage(message, context);
+                    Response<NetworkDeviceData> response = Response.FromValue(NetworkDeviceData.FromResponse(result), result);
+                    return Response.FromValue(new NetworkDeviceResource(Client, response.Value), response.GetRawResponse());
                 }
                 else
                 {
-                    var current = Get(cancellationToken: cancellationToken).Value.Data;
-                    var patch = new NetworkDevicePatch();
-                    foreach (var tag in current.Tags)
+                    NetworkDeviceData current = Get(cancellationToken: cancellationToken).Value.Data;
+                    NetworkDevicePatchContent patch = new NetworkDevicePatchContent();
+                    foreach (KeyValuePair<string, string> tag in current.Tags)
                     {
                         patch.Tags.Add(tag);
                     }
                     patch.Tags[key] = value;
-                    var result = Update(WaitUntil.Completed, patch, cancellationToken: cancellationToken);
+                    ArmOperation<NetworkDeviceResource> result = Update(WaitUntil.Completed, patch, cancellationToken: cancellationToken);
                     return Response.FromValue(result.Value, result.GetRawResponse());
                 }
             }
@@ -1251,53 +1303,39 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
             }
         }
 
-        /// <summary>
-        /// Replace the tags on the resource with the given set.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ManagedNetworkFabric/networkDevices/{networkDeviceName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>NetworkDevices_Get</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-07-15</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="NetworkDeviceResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="tags"> The set of tags to use as replacement. </param>
+        /// <summary> Replace the tags on the resource with the given set. </summary>
+        /// <param name="tags"> The tags to set on the resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="tags"/> is null. </exception>
         public virtual async Task<Response<NetworkDeviceResource>> SetTagsAsync(IDictionary<string, string> tags, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(tags, nameof(tags));
 
-            using var scope = _networkDeviceClientDiagnostics.CreateScope("NetworkDeviceResource.SetTags");
+            using DiagnosticScope scope = _networkDevicesClientDiagnostics.CreateScope("NetworkDeviceResource.SetTags");
             scope.Start();
             try
             {
-                if (await CanUseTagResourceAsync(cancellationToken: cancellationToken).ConfigureAwait(false))
+                if (await CanUseTagResourceAsync(cancellationToken).ConfigureAwait(false))
                 {
-                    await GetTagResource().DeleteAsync(WaitUntil.Completed, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    var originalTags = await GetTagResource().GetAsync(cancellationToken).ConfigureAwait(false);
+                    await GetTagResource().DeleteAsync(WaitUntil.Completed, cancellationToken).ConfigureAwait(false);
+                    Response<TagResource> originalTags = await GetTagResource().GetAsync(cancellationToken).ConfigureAwait(false);
                     originalTags.Value.Data.TagValues.ReplaceWith(tags);
-                    await GetTagResource().CreateOrUpdateAsync(WaitUntil.Completed, originalTags.Value.Data, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    var originalResponse = await _networkDeviceRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
-                    return Response.FromValue(new NetworkDeviceResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
+                    await GetTagResource().CreateOrUpdateAsync(WaitUntil.Completed, originalTags.Value.Data, cancellationToken).ConfigureAwait(false);
+                    RequestContext context = new RequestContext
+                    {
+                        CancellationToken = cancellationToken
+                    };
+                    HttpMessage message = _networkDevicesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                    Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                    Response<NetworkDeviceData> response = Response.FromValue(NetworkDeviceData.FromResponse(result), result);
+                    return Response.FromValue(new NetworkDeviceResource(Client, response.Value), response.GetRawResponse());
                 }
                 else
                 {
-                    var current = (await GetAsync(cancellationToken: cancellationToken).ConfigureAwait(false)).Value.Data;
-                    var patch = new NetworkDevicePatch();
+                    NetworkDeviceData current = (await GetAsync(cancellationToken: cancellationToken).ConfigureAwait(false)).Value.Data;
+                    NetworkDevicePatchContent patch = new NetworkDevicePatchContent();
                     patch.Tags.ReplaceWith(tags);
-                    var result = await UpdateAsync(WaitUntil.Completed, patch, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    ArmOperation<NetworkDeviceResource> result = await UpdateAsync(WaitUntil.Completed, patch, cancellationToken: cancellationToken).ConfigureAwait(false);
                     return Response.FromValue(result.Value, result.GetRawResponse());
                 }
             }
@@ -1308,53 +1346,39 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
             }
         }
 
-        /// <summary>
-        /// Replace the tags on the resource with the given set.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ManagedNetworkFabric/networkDevices/{networkDeviceName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>NetworkDevices_Get</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-07-15</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="NetworkDeviceResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="tags"> The set of tags to use as replacement. </param>
+        /// <summary> Replace the tags on the resource with the given set. </summary>
+        /// <param name="tags"> The tags to set on the resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="tags"/> is null. </exception>
         public virtual Response<NetworkDeviceResource> SetTags(IDictionary<string, string> tags, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(tags, nameof(tags));
 
-            using var scope = _networkDeviceClientDiagnostics.CreateScope("NetworkDeviceResource.SetTags");
+            using DiagnosticScope scope = _networkDevicesClientDiagnostics.CreateScope("NetworkDeviceResource.SetTags");
             scope.Start();
             try
             {
-                if (CanUseTagResource(cancellationToken: cancellationToken))
+                if (CanUseTagResource(cancellationToken))
                 {
-                    GetTagResource().Delete(WaitUntil.Completed, cancellationToken: cancellationToken);
-                    var originalTags = GetTagResource().Get(cancellationToken);
+                    GetTagResource().Delete(WaitUntil.Completed, cancellationToken);
+                    Response<TagResource> originalTags = GetTagResource().Get(cancellationToken);
                     originalTags.Value.Data.TagValues.ReplaceWith(tags);
-                    GetTagResource().CreateOrUpdate(WaitUntil.Completed, originalTags.Value.Data, cancellationToken: cancellationToken);
-                    var originalResponse = _networkDeviceRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
-                    return Response.FromValue(new NetworkDeviceResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
+                    GetTagResource().CreateOrUpdate(WaitUntil.Completed, originalTags.Value.Data, cancellationToken);
+                    RequestContext context = new RequestContext
+                    {
+                        CancellationToken = cancellationToken
+                    };
+                    HttpMessage message = _networkDevicesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                    Response result = Pipeline.ProcessMessage(message, context);
+                    Response<NetworkDeviceData> response = Response.FromValue(NetworkDeviceData.FromResponse(result), result);
+                    return Response.FromValue(new NetworkDeviceResource(Client, response.Value), response.GetRawResponse());
                 }
                 else
                 {
-                    var current = Get(cancellationToken: cancellationToken).Value.Data;
-                    var patch = new NetworkDevicePatch();
+                    NetworkDeviceData current = Get(cancellationToken: cancellationToken).Value.Data;
+                    NetworkDevicePatchContent patch = new NetworkDevicePatchContent();
                     patch.Tags.ReplaceWith(tags);
-                    var result = Update(WaitUntil.Completed, patch, cancellationToken: cancellationToken);
+                    ArmOperation<NetworkDeviceResource> result = Update(WaitUntil.Completed, patch, cancellationToken: cancellationToken);
                     return Response.FromValue(result.Value, result.GetRawResponse());
                 }
             }
@@ -1365,27 +1389,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
             }
         }
 
-        /// <summary>
-        /// Removes a tag by key from the resource.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ManagedNetworkFabric/networkDevices/{networkDeviceName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>NetworkDevices_Get</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-07-15</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="NetworkDeviceResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
+        /// <summary> Removes a tag by key from the resource. </summary>
         /// <param name="key"> The key for the tag. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> is null. </exception>
@@ -1393,28 +1397,34 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         {
             Argument.AssertNotNull(key, nameof(key));
 
-            using var scope = _networkDeviceClientDiagnostics.CreateScope("NetworkDeviceResource.RemoveTag");
+            using DiagnosticScope scope = _networkDevicesClientDiagnostics.CreateScope("NetworkDeviceResource.RemoveTag");
             scope.Start();
             try
             {
-                if (await CanUseTagResourceAsync(cancellationToken: cancellationToken).ConfigureAwait(false))
+                if (await CanUseTagResourceAsync(cancellationToken).ConfigureAwait(false))
                 {
-                    var originalTags = await GetTagResource().GetAsync(cancellationToken).ConfigureAwait(false);
+                    Response<TagResource> originalTags = await GetTagResource().GetAsync(cancellationToken).ConfigureAwait(false);
                     originalTags.Value.Data.TagValues.Remove(key);
-                    await GetTagResource().CreateOrUpdateAsync(WaitUntil.Completed, originalTags.Value.Data, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    var originalResponse = await _networkDeviceRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
-                    return Response.FromValue(new NetworkDeviceResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
+                    await GetTagResource().CreateOrUpdateAsync(WaitUntil.Completed, originalTags.Value.Data, cancellationToken).ConfigureAwait(false);
+                    RequestContext context = new RequestContext
+                    {
+                        CancellationToken = cancellationToken
+                    };
+                    HttpMessage message = _networkDevicesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                    Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                    Response<NetworkDeviceData> response = Response.FromValue(NetworkDeviceData.FromResponse(result), result);
+                    return Response.FromValue(new NetworkDeviceResource(Client, response.Value), response.GetRawResponse());
                 }
                 else
                 {
-                    var current = (await GetAsync(cancellationToken: cancellationToken).ConfigureAwait(false)).Value.Data;
-                    var patch = new NetworkDevicePatch();
-                    foreach (var tag in current.Tags)
+                    NetworkDeviceData current = (await GetAsync(cancellationToken: cancellationToken).ConfigureAwait(false)).Value.Data;
+                    NetworkDevicePatchContent patch = new NetworkDevicePatchContent();
+                    foreach (KeyValuePair<string, string> tag in current.Tags)
                     {
                         patch.Tags.Add(tag);
                     }
                     patch.Tags.Remove(key);
-                    var result = await UpdateAsync(WaitUntil.Completed, patch, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    ArmOperation<NetworkDeviceResource> result = await UpdateAsync(WaitUntil.Completed, patch, cancellationToken: cancellationToken).ConfigureAwait(false);
                     return Response.FromValue(result.Value, result.GetRawResponse());
                 }
             }
@@ -1425,27 +1435,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
             }
         }
 
-        /// <summary>
-        /// Removes a tag by key from the resource.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ManagedNetworkFabric/networkDevices/{networkDeviceName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>NetworkDevices_Get</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-07-15</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="NetworkDeviceResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
+        /// <summary> Removes a tag by key from the resource. </summary>
         /// <param name="key"> The key for the tag. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> is null. </exception>
@@ -1453,28 +1443,34 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         {
             Argument.AssertNotNull(key, nameof(key));
 
-            using var scope = _networkDeviceClientDiagnostics.CreateScope("NetworkDeviceResource.RemoveTag");
+            using DiagnosticScope scope = _networkDevicesClientDiagnostics.CreateScope("NetworkDeviceResource.RemoveTag");
             scope.Start();
             try
             {
-                if (CanUseTagResource(cancellationToken: cancellationToken))
+                if (CanUseTagResource(cancellationToken))
                 {
-                    var originalTags = GetTagResource().Get(cancellationToken);
+                    Response<TagResource> originalTags = GetTagResource().Get(cancellationToken);
                     originalTags.Value.Data.TagValues.Remove(key);
-                    GetTagResource().CreateOrUpdate(WaitUntil.Completed, originalTags.Value.Data, cancellationToken: cancellationToken);
-                    var originalResponse = _networkDeviceRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
-                    return Response.FromValue(new NetworkDeviceResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
+                    GetTagResource().CreateOrUpdate(WaitUntil.Completed, originalTags.Value.Data, cancellationToken);
+                    RequestContext context = new RequestContext
+                    {
+                        CancellationToken = cancellationToken
+                    };
+                    HttpMessage message = _networkDevicesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                    Response result = Pipeline.ProcessMessage(message, context);
+                    Response<NetworkDeviceData> response = Response.FromValue(NetworkDeviceData.FromResponse(result), result);
+                    return Response.FromValue(new NetworkDeviceResource(Client, response.Value), response.GetRawResponse());
                 }
                 else
                 {
-                    var current = Get(cancellationToken: cancellationToken).Value.Data;
-                    var patch = new NetworkDevicePatch();
-                    foreach (var tag in current.Tags)
+                    NetworkDeviceData current = Get(cancellationToken: cancellationToken).Value.Data;
+                    NetworkDevicePatchContent patch = new NetworkDevicePatchContent();
+                    foreach (KeyValuePair<string, string> tag in current.Tags)
                     {
                         patch.Tags.Add(tag);
                     }
                     patch.Tags.Remove(key);
-                    var result = Update(WaitUntil.Completed, patch, cancellationToken: cancellationToken);
+                    ArmOperation<NetworkDeviceResource> result = Update(WaitUntil.Completed, patch, cancellationToken: cancellationToken);
                     return Response.FromValue(result.Value, result.GetRawResponse());
                 }
             }
@@ -1483,6 +1479,39 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
                 scope.Failed(e);
                 throw;
             }
+        }
+
+        /// <summary> Gets a collection of NetworkDeviceInterfaces in the <see cref="NetworkDeviceResource"/>. </summary>
+        /// <returns> An object representing collection of NetworkDeviceInterfaces and their operations over a NetworkDeviceInterfaceResource. </returns>
+        public virtual NetworkDeviceInterfaceCollection GetNetworkDeviceInterfaces()
+        {
+            return GetCachedClient(client => new NetworkDeviceInterfaceCollection(client, Id));
+        }
+
+        /// <summary> Get the Network Interface resource details. </summary>
+        /// <param name="networkInterfaceName"> Name of the Network Interface. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="networkInterfaceName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="networkInterfaceName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual async Task<Response<NetworkDeviceInterfaceResource>> GetNetworkDeviceInterfaceAsync(string networkInterfaceName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(networkInterfaceName, nameof(networkInterfaceName));
+
+            return await GetNetworkDeviceInterfaces().GetAsync(networkInterfaceName, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary> Get the Network Interface resource details. </summary>
+        /// <param name="networkInterfaceName"> Name of the Network Interface. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="networkInterfaceName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="networkInterfaceName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual Response<NetworkDeviceInterfaceResource> GetNetworkDeviceInterface(string networkInterfaceName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(networkInterfaceName, nameof(networkInterfaceName));
+
+            return GetNetworkDeviceInterfaces().Get(networkInterfaceName, cancellationToken);
         }
     }
 }

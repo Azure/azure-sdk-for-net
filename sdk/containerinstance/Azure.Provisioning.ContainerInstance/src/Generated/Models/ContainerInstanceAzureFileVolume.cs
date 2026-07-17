@@ -108,6 +108,10 @@ namespace Azure.Provisioning.ContainerInstance
             _storageAccountName = DefineProperty<string>(nameof(StorageAccountName), new string[] { "storageAccountName" }, isRequired: true);
             _storageAccountKey = DefineProperty<string>(nameof(StorageAccountKey), new string[] { "storageAccountKey" });
             _storageAccountKeyReference = DefineProperty<string>(nameof(StorageAccountKeyReference), new string[] { "storageAccountKeyReference" });
+            DefineAdditionalProperties();
         }
+
+        /// <summary> Define additional provisionable properties for ContainerInstanceAzureFileVolume that are not part of the generated code. </summary>
+        partial void DefineAdditionalProperties();
     }
 }

@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.NetApp
         {
             TryGetApiVersion(NetAppBackupPolicyResource.ResourceType, out string netAppBackupPolicyApiVersion);
             _backupPoliciesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.NetApp", NetAppBackupPolicyResource.ResourceType.Namespace, Diagnostics);
-            _backupPoliciesRestClient = new BackupPolicies(_backupPoliciesClientDiagnostics, Pipeline, Endpoint, netAppBackupPolicyApiVersion ?? "2026-01-15-preview");
+            _backupPoliciesRestClient = new BackupPolicies(_backupPoliciesClientDiagnostics, Pipeline, Endpoint, netAppBackupPolicyApiVersion ?? "2026-04-15-preview");
             ValidateResourceId(id);
         }
 
@@ -67,7 +67,7 @@ namespace Azure.ResourceManager.NetApp
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-01-15-preview. </description>
+        /// <description> 2026-04-15-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -93,7 +93,7 @@ namespace Azure.ResourceManager.NetApp
                 HttpMessage message = _backupPoliciesRestClient.CreateCreateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, backupPolicyName, NetAppBackupPolicyData.ToRequestContent(data), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 NetAppArmOperation<NetAppBackupPolicyResource> operation = new NetAppArmOperation<NetAppBackupPolicyResource>(
-                    new NetAppBackupPolicyOperationSource(Client),
+                    new NetAppBackupPolicyResourceOperationSource(Client),
                     _backupPoliciesClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -125,7 +125,7 @@ namespace Azure.ResourceManager.NetApp
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-01-15-preview. </description>
+        /// <description> 2026-04-15-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -151,7 +151,7 @@ namespace Azure.ResourceManager.NetApp
                 HttpMessage message = _backupPoliciesRestClient.CreateCreateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, backupPolicyName, NetAppBackupPolicyData.ToRequestContent(data), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 NetAppArmOperation<NetAppBackupPolicyResource> operation = new NetAppArmOperation<NetAppBackupPolicyResource>(
-                    new NetAppBackupPolicyOperationSource(Client),
+                    new NetAppBackupPolicyResourceOperationSource(Client),
                     _backupPoliciesClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -183,7 +183,7 @@ namespace Azure.ResourceManager.NetApp
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-01-15-preview. </description>
+        /// <description> 2026-04-15-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -232,7 +232,7 @@ namespace Azure.ResourceManager.NetApp
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-01-15-preview. </description>
+        /// <description> 2026-04-15-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -281,7 +281,7 @@ namespace Azure.ResourceManager.NetApp
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-01-15-preview. </description>
+        /// <description> 2026-04-15-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -315,7 +315,7 @@ namespace Azure.ResourceManager.NetApp
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-01-15-preview. </description>
+        /// <description> 2026-04-15-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -349,7 +349,7 @@ namespace Azure.ResourceManager.NetApp
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-01-15-preview. </description>
+        /// <description> 2026-04-15-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -406,7 +406,7 @@ namespace Azure.ResourceManager.NetApp
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-01-15-preview. </description>
+        /// <description> 2026-04-15-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -463,7 +463,7 @@ namespace Azure.ResourceManager.NetApp
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-01-15-preview. </description>
+        /// <description> 2026-04-15-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -524,7 +524,7 @@ namespace Azure.ResourceManager.NetApp
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-01-15-preview. </description>
+        /// <description> 2026-04-15-preview. </description>
         /// </item>
         /// </list>
         /// </summary>

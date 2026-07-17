@@ -325,7 +325,7 @@ namespace Azure.ResourceManager.ContainerRegistry
                 HttpMessage message = _privateEndpointConnectionsRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, ContainerRegistryPrivateEndpointConnectionData.ToRequestContent(data), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 ContainerRegistryArmOperation<ContainerRegistryPrivateEndpointConnectionResource> operation = new ContainerRegistryArmOperation<ContainerRegistryPrivateEndpointConnectionResource>(
-                    new ContainerRegistryPrivateEndpointConnectionOperationSource(Client),
+                    new ContainerRegistryPrivateEndpointConnectionResourceOperationSource(Client),
                     _privateEndpointConnectionsClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -384,7 +384,7 @@ namespace Azure.ResourceManager.ContainerRegistry
                 HttpMessage message = _privateEndpointConnectionsRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, ContainerRegistryPrivateEndpointConnectionData.ToRequestContent(data), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 ContainerRegistryArmOperation<ContainerRegistryPrivateEndpointConnectionResource> operation = new ContainerRegistryArmOperation<ContainerRegistryPrivateEndpointConnectionResource>(
-                    new ContainerRegistryPrivateEndpointConnectionOperationSource(Client),
+                    new ContainerRegistryPrivateEndpointConnectionResourceOperationSource(Client),
                     _privateEndpointConnectionsClientDiagnostics,
                     Pipeline,
                     message.Request,

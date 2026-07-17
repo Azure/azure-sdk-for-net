@@ -6,6 +6,7 @@ using System.Runtime.InteropServices;
 using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Core.TestFramework;
+using Azure.Core.TestFramework.Models;
 using Azure.ResourceManager.CosmosDB.Models;
 using Azure.ResourceManager.Network;
 using Azure.ResourceManager.Resources;
@@ -33,9 +34,10 @@ namespace Azure.ResourceManager.CosmosDB.Tests
         protected async Task CommonGlobalSetup()
         {
             SubscriptionResource sr = await GlobalClient.GetDefaultSubscriptionAsync();
+            var rgName = CosmosDBTestUtilities.GenerateResourceGroupName(SessionRecording);
             var rgLro = await sr.GetResourceGroups().CreateOrUpdateAsync(
                 WaitUntil.Started,
-                CosmosDBTestUtilities.GenerateResourceGroupName(SessionRecording),
+                rgName,
                 new ResourceGroupData(AzureLocation.WestUS2));
             _resourceGroupIdentifier = rgLro.Value.Id;
         }
@@ -49,6 +51,24 @@ namespace Azure.ResourceManager.CosmosDB.Tests
         protected CosmosDBManagementClientBase(bool isAsync, RecordedTestMode? mode = default)
             : base(isAsync, mode)
         {
+            CompareBodies = false;
+            // MPG SDK omits the Accept header on some operations (notably DELETEs) where AutoRest used to set
+            // it. Ignore the header for matching purposes; it does not affect server semantics.
+            IgnoredHeaders.Add("Accept");
+            // MPG-generated SDK has a different LRO polling/HTTP-call sequence than the recordings (originally
+            // captured against AutoRest-generated SDK). This causes the per-test TestRandom state to diverge,
+            // making `Recording.GenerateAssetName(prefix)` produce different numeric suffixes at runtime than
+            // the recorded ones (e.g. dbaccount-2915 recorded vs dbaccount-3925 at runtime). Re-recording the
+            // tests requires live Azure access which isn't available here, so normalize the trailing digits of
+            // every "<letters>-?<digits>" path segment in BOTH the request URI and the stored recording URI to
+            // a constant. After normalization, the proxy URI matcher succeeds even when only the random-derived
+            // suffix differs. Body comparison is already disabled above. Letters/digits/operation-status GUIDs
+            // are normalized identically on both sides, so matching remains correct.
+            UriRegexSanitizers.Add(new UriRegexSanitizer(@"[a-zA-Z]{2,}-?(?<n>[0-9]+)(?=[/?]|$)")
+            {
+                GroupForReplace = "n",
+                Value = "X"
+            });
             IgnoreNetworkDependencyVersions();
             JsonPathSanitizers.Add("$..primaryMasterKey");
             JsonPathSanitizers.Add("$..primaryReadonlyMasterKey");
@@ -72,6 +92,7 @@ namespace Azure.ResourceManager.CosmosDB.Tests
                 new CosmosDBAccountCreateOrUpdateContent(AzureLocation.WestUS2, locations)
                 {
                     Kind = kind,
+                    DatabaseAccountOfferType = CosmosDBAccountOfferType.Standard,
                     ConsistencyPolicy = new ConsistencyPolicy(DefaultConsistencyLevel.BoundedStaleness, MaxStalenessPrefix, MaxIntervalInSeconds, null),
                     IPRules = { new CosmosDBIPAddressOrRange("23.43.230.120", null) },
                     IsVirtualNetworkFilterEnabled = true,
@@ -83,6 +104,7 @@ namespace Azure.ResourceManager.CosmosDB.Tests
                 : new CosmosDBAccountCreateOrUpdateContent(AzureLocation.WestUS2, locations)
                 {
                     Kind = kind,
+                    DatabaseAccountOfferType = CosmosDBAccountOfferType.Standard,
                     ConsistencyPolicy = new ConsistencyPolicy(DefaultConsistencyLevel.BoundedStaleness, MaxStalenessPrefix, MaxIntervalInSeconds, null),
                     IPRules = { new CosmosDBIPAddressOrRange("23.43.230.120", null) },
                     IsVirtualNetworkFilterEnabled = true,

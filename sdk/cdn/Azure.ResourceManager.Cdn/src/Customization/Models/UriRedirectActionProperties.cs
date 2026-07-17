@@ -14,12 +14,14 @@ namespace Azure.ResourceManager.Cdn.Models
     // The old constructor and ActionType property (bridging to TypeName) are preserved here, marked as EditorBrowsable.Never.
     public partial class UriRedirectActionProperties
     {
+        /// <summary> Backward-compatibility shim retained when the model was regenerated from TypeSpec; hidden from IntelliSense. See the file-level comment for details. </summary>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public UriRedirectActionProperties(UriRedirectActionType actionType, RedirectType redirectType) : this(redirectType)
         {
             ActionType = actionType;
         }
 
+        /// <summary> Backward-compatibility shim retained when the model was regenerated from TypeSpec; hidden from IntelliSense. See the file-level comment for details. </summary>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public UriRedirectActionType ActionType
         {

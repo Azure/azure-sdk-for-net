@@ -325,7 +325,7 @@ namespace Azure.ResourceManager.DataBoxEdge
                 HttpMessage message = _storageAccountCredentialsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, DataBoxEdgeStorageAccountCredentialData.ToRequestContent(data), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 DataBoxEdgeArmOperation<DataBoxEdgeStorageAccountCredentialResource> operation = new DataBoxEdgeArmOperation<DataBoxEdgeStorageAccountCredentialResource>(
-                    new DataBoxEdgeStorageAccountCredentialOperationSource(Client),
+                    new DataBoxEdgeStorageAccountCredentialResourceOperationSource(Client),
                     _storageAccountCredentialsClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -384,7 +384,7 @@ namespace Azure.ResourceManager.DataBoxEdge
                 HttpMessage message = _storageAccountCredentialsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, DataBoxEdgeStorageAccountCredentialData.ToRequestContent(data), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 DataBoxEdgeArmOperation<DataBoxEdgeStorageAccountCredentialResource> operation = new DataBoxEdgeArmOperation<DataBoxEdgeStorageAccountCredentialResource>(
-                    new DataBoxEdgeStorageAccountCredentialOperationSource(Client),
+                    new DataBoxEdgeStorageAccountCredentialResourceOperationSource(Client),
                     _storageAccountCredentialsClientDiagnostics,
                     Pipeline,
                     message.Request,

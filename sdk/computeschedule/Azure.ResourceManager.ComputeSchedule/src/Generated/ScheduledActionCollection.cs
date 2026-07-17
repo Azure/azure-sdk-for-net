@@ -94,7 +94,7 @@ namespace Azure.ResourceManager.ComputeSchedule
                 HttpMessage message = _scheduledActionsRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, scheduledActionName, ScheduledActionData.ToRequestContent(data), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 ComputeScheduleArmOperation<ScheduledActionResource> operation = new ComputeScheduleArmOperation<ScheduledActionResource>(
-                    new ScheduledActionOperationSource(Client),
+                    new ScheduledActionResourceOperationSource(Client),
                     _scheduledActionsClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -152,7 +152,7 @@ namespace Azure.ResourceManager.ComputeSchedule
                 HttpMessage message = _scheduledActionsRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, scheduledActionName, ScheduledActionData.ToRequestContent(data), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 ComputeScheduleArmOperation<ScheduledActionResource> operation = new ComputeScheduleArmOperation<ScheduledActionResource>(
-                    new ScheduledActionOperationSource(Client),
+                    new ScheduledActionResourceOperationSource(Client),
                     _scheduledActionsClientDiagnostics,
                     Pipeline,
                     message.Request,

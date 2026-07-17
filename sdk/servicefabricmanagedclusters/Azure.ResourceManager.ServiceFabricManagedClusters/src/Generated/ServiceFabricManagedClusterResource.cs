@@ -241,7 +241,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
                 HttpMessage message = _managedClustersRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, ServiceFabricManagedClusterPatch.ToRequestContent(patch), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 ServiceFabricManagedClustersArmOperation<ServiceFabricManagedClusterResource> operation = new ServiceFabricManagedClustersArmOperation<ServiceFabricManagedClusterResource>(
-                    new ServiceFabricManagedClusterOperationSource(Client),
+                    new ServiceFabricManagedClusterResourceOperationSource(Client),
                     _managedClustersClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -300,7 +300,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
                 HttpMessage message = _managedClustersRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, ServiceFabricManagedClusterPatch.ToRequestContent(patch), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 ServiceFabricManagedClustersArmOperation<ServiceFabricManagedClusterResource> operation = new ServiceFabricManagedClustersArmOperation<ServiceFabricManagedClusterResource>(
-                    new ServiceFabricManagedClusterOperationSource(Client),
+                    new ServiceFabricManagedClusterResourceOperationSource(Client),
                     _managedClustersClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -426,7 +426,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
-        /// <description> ManagedApplyMaintenanceWindow_Post. </description>
+        /// <description> ManagedApplyMaintenanceWindow_PostNoBody. </description>
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
@@ -469,7 +469,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
-        /// <description> ManagedApplyMaintenanceWindow_Post. </description>
+        /// <description> ManagedApplyMaintenanceWindow_PostNoBody. </description>
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>

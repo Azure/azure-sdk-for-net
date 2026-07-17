@@ -94,7 +94,7 @@ namespace Azure.ResourceManager.SecretsStoreExtension
                 HttpMessage message = _azureKeyVaultSecretProviderClassesRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, azureKeyVaultSecretProviderClassName, KeyVaultSecretProviderClassData.ToRequestContent(data), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 SecretsStoreExtensionArmOperation<KeyVaultSecretProviderClassResource> operation = new SecretsStoreExtensionArmOperation<KeyVaultSecretProviderClassResource>(
-                    new KeyVaultSecretProviderClassOperationSource(Client),
+                    new KeyVaultSecretProviderClassResourceOperationSource(Client),
                     _azureKeyVaultSecretProviderClassesClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -152,7 +152,7 @@ namespace Azure.ResourceManager.SecretsStoreExtension
                 HttpMessage message = _azureKeyVaultSecretProviderClassesRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, azureKeyVaultSecretProviderClassName, KeyVaultSecretProviderClassData.ToRequestContent(data), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 SecretsStoreExtensionArmOperation<KeyVaultSecretProviderClassResource> operation = new SecretsStoreExtensionArmOperation<KeyVaultSecretProviderClassResource>(
-                    new KeyVaultSecretProviderClassOperationSource(Client),
+                    new KeyVaultSecretProviderClassResourceOperationSource(Client),
                     _azureKeyVaultSecretProviderClassesClientDiagnostics,
                     Pipeline,
                     message.Request,

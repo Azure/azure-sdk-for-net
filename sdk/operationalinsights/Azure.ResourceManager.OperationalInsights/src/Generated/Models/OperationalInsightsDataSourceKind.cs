@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.OperationalInsights;
 
 namespace Azure.ResourceManager.OperationalInsights.Models
 {
@@ -14,131 +15,212 @@ namespace Azure.ResourceManager.OperationalInsights.Models
     public readonly partial struct OperationalInsightsDataSourceKind : IEquatable<OperationalInsightsDataSourceKind>
     {
         private readonly string _value;
+        /// <summary> WindowsEvent. </summary>
+        private const string WindowsEventValue = "WindowsEvent";
+        /// <summary> WindowsPerformanceCounter. </summary>
+        private const string WindowsPerformanceCounterValue = "WindowsPerformanceCounter";
+        /// <summary> IISLogs. </summary>
+        private const string IISLogsValue = "IISLogs";
+        /// <summary> LinuxSyslog. </summary>
+        private const string LinuxSyslogValue = "LinuxSyslog";
+        /// <summary> LinuxSyslogCollection. </summary>
+        private const string LinuxSyslogCollectionValue = "LinuxSyslogCollection";
+        /// <summary> LinuxPerformanceObject. </summary>
+        private const string LinuxPerformanceObjectValue = "LinuxPerformanceObject";
+        /// <summary> LinuxPerformanceCollection. </summary>
+        private const string LinuxPerformanceCollectionValue = "LinuxPerformanceCollection";
+        /// <summary> CustomLog. </summary>
+        private const string CustomLogValue = "CustomLog";
+        /// <summary> CustomLogCollection. </summary>
+        private const string CustomLogCollectionValue = "CustomLogCollection";
+        /// <summary> AzureAuditLog. </summary>
+        private const string AzureAuditLogValue = "AzureAuditLog";
+        /// <summary> AzureActivityLog. </summary>
+        private const string AzureActivityLogValue = "AzureActivityLog";
+        /// <summary> GenericDataSource. </summary>
+        private const string GenericDataSourceValue = "GenericDataSource";
+        /// <summary> ChangeTrackingCustomPath. </summary>
+        private const string ChangeTrackingCustomPathValue = "ChangeTrackingCustomPath";
+        /// <summary> ChangeTrackingPath. </summary>
+        private const string ChangeTrackingPathValue = "ChangeTrackingPath";
+        /// <summary> ChangeTrackingServices. </summary>
+        private const string ChangeTrackingServicesValue = "ChangeTrackingServices";
+        /// <summary> ChangeTrackingDataTypeConfiguration. </summary>
+        private const string ChangeTrackingDataTypeConfigurationValue = "ChangeTrackingDataTypeConfiguration";
+        /// <summary> ChangeTrackingDefaultRegistry. </summary>
+        private const string ChangeTrackingDefaultRegistryValue = "ChangeTrackingDefaultRegistry";
+        /// <summary> ChangeTrackingRegistry. </summary>
+        private const string ChangeTrackingRegistryValue = "ChangeTrackingRegistry";
+        /// <summary> ChangeTrackingLinuxPath. </summary>
+        private const string ChangeTrackingLinuxPathValue = "ChangeTrackingLinuxPath";
+        /// <summary> LinuxChangeTrackingPath. </summary>
+        private const string LinuxChangeTrackingPathValue = "LinuxChangeTrackingPath";
+        /// <summary> ChangeTrackingContentLocation. </summary>
+        private const string ChangeTrackingContentLocationValue = "ChangeTrackingContentLocation";
+        /// <summary> WindowsTelemetry. </summary>
+        private const string WindowsTelemetryValue = "WindowsTelemetry";
+        /// <summary> Office365. </summary>
+        private const string Office365Value = "Office365";
+        /// <summary> SecurityWindowsBaselineConfiguration. </summary>
+        private const string SecurityWindowsBaselineConfigurationValue = "SecurityWindowsBaselineConfiguration";
+        /// <summary> SecurityCenterSecurityWindowsBaselineConfiguration. </summary>
+        private const string SecurityCenterSecurityWindowsBaselineConfigurationValue = "SecurityCenterSecurityWindowsBaselineConfiguration";
+        /// <summary> SecurityEventCollectionConfiguration. </summary>
+        private const string SecurityEventCollectionConfigurationValue = "SecurityEventCollectionConfiguration";
+        /// <summary> SecurityInsightsSecurityEventCollectionConfiguration. </summary>
+        private const string SecurityInsightsSecurityEventCollectionConfigurationValue = "SecurityInsightsSecurityEventCollectionConfiguration";
+        /// <summary> ImportComputerGroup. </summary>
+        private const string ImportComputerGroupValue = "ImportComputerGroup";
+        /// <summary> NetworkMonitoring. </summary>
+        private const string NetworkMonitoringValue = "NetworkMonitoring";
+        /// <summary> Itsm. </summary>
+        private const string ItsmValue = "Itsm";
+        /// <summary> DnsAnalytics. </summary>
+        private const string DnsAnalyticsValue = "DnsAnalytics";
+        /// <summary> ApplicationInsights. </summary>
+        private const string ApplicationInsightsValue = "ApplicationInsights";
+        /// <summary> SqlDataClassification. </summary>
+        private const string SqlDataClassificationValue = "SqlDataClassification";
 
         /// <summary> Initializes a new instance of <see cref="OperationalInsightsDataSourceKind"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public OperationalInsightsDataSourceKind(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string WindowsEventValue = "WindowsEvent";
-        private const string WindowsPerformanceCounterValue = "WindowsPerformanceCounter";
-        private const string IISLogsValue = "IISLogs";
-        private const string LinuxSyslogValue = "LinuxSyslog";
-        private const string LinuxSyslogCollectionValue = "LinuxSyslogCollection";
-        private const string LinuxPerformanceObjectValue = "LinuxPerformanceObject";
-        private const string LinuxPerformanceCollectionValue = "LinuxPerformanceCollection";
-        private const string CustomLogValue = "CustomLog";
-        private const string CustomLogCollectionValue = "CustomLogCollection";
-        private const string AzureAuditLogValue = "AzureAuditLog";
-        private const string AzureActivityLogValue = "AzureActivityLog";
-        private const string GenericDataSourceValue = "GenericDataSource";
-        private const string ChangeTrackingCustomPathValue = "ChangeTrackingCustomPath";
-        private const string ChangeTrackingPathValue = "ChangeTrackingPath";
-        private const string ChangeTrackingServicesValue = "ChangeTrackingServices";
-        private const string ChangeTrackingDataTypeConfigurationValue = "ChangeTrackingDataTypeConfiguration";
-        private const string ChangeTrackingDefaultRegistryValue = "ChangeTrackingDefaultRegistry";
-        private const string ChangeTrackingRegistryValue = "ChangeTrackingRegistry";
-        private const string ChangeTrackingLinuxPathValue = "ChangeTrackingLinuxPath";
-        private const string LinuxChangeTrackingPathValue = "LinuxChangeTrackingPath";
-        private const string ChangeTrackingContentLocationValue = "ChangeTrackingContentLocation";
-        private const string WindowsTelemetryValue = "WindowsTelemetry";
-        private const string Office365Value = "Office365";
-        private const string SecurityWindowsBaselineConfigurationValue = "SecurityWindowsBaselineConfiguration";
-        private const string SecurityCenterSecurityWindowsBaselineConfigurationValue = "SecurityCenterSecurityWindowsBaselineConfiguration";
-        private const string SecurityEventCollectionConfigurationValue = "SecurityEventCollectionConfiguration";
-        private const string SecurityInsightsSecurityEventCollectionConfigurationValue = "SecurityInsightsSecurityEventCollectionConfiguration";
-        private const string ImportComputerGroupValue = "ImportComputerGroup";
-        private const string NetworkMonitoringValue = "NetworkMonitoring";
-        private const string ItsmValue = "Itsm";
-        private const string DnsAnalyticsValue = "DnsAnalytics";
-        private const string ApplicationInsightsValue = "ApplicationInsights";
-        private const string SqlDataClassificationValue = "SqlDataClassification";
+            _value = value;
+        }
 
         /// <summary> WindowsEvent. </summary>
         public static OperationalInsightsDataSourceKind WindowsEvent { get; } = new OperationalInsightsDataSourceKind(WindowsEventValue);
+
         /// <summary> WindowsPerformanceCounter. </summary>
         public static OperationalInsightsDataSourceKind WindowsPerformanceCounter { get; } = new OperationalInsightsDataSourceKind(WindowsPerformanceCounterValue);
+
         /// <summary> IISLogs. </summary>
         public static OperationalInsightsDataSourceKind IISLogs { get; } = new OperationalInsightsDataSourceKind(IISLogsValue);
+
         /// <summary> LinuxSyslog. </summary>
         public static OperationalInsightsDataSourceKind LinuxSyslog { get; } = new OperationalInsightsDataSourceKind(LinuxSyslogValue);
+
         /// <summary> LinuxSyslogCollection. </summary>
         public static OperationalInsightsDataSourceKind LinuxSyslogCollection { get; } = new OperationalInsightsDataSourceKind(LinuxSyslogCollectionValue);
+
         /// <summary> LinuxPerformanceObject. </summary>
         public static OperationalInsightsDataSourceKind LinuxPerformanceObject { get; } = new OperationalInsightsDataSourceKind(LinuxPerformanceObjectValue);
+
         /// <summary> LinuxPerformanceCollection. </summary>
         public static OperationalInsightsDataSourceKind LinuxPerformanceCollection { get; } = new OperationalInsightsDataSourceKind(LinuxPerformanceCollectionValue);
+
         /// <summary> CustomLog. </summary>
         public static OperationalInsightsDataSourceKind CustomLog { get; } = new OperationalInsightsDataSourceKind(CustomLogValue);
+
         /// <summary> CustomLogCollection. </summary>
         public static OperationalInsightsDataSourceKind CustomLogCollection { get; } = new OperationalInsightsDataSourceKind(CustomLogCollectionValue);
+
         /// <summary> AzureAuditLog. </summary>
         public static OperationalInsightsDataSourceKind AzureAuditLog { get; } = new OperationalInsightsDataSourceKind(AzureAuditLogValue);
+
         /// <summary> AzureActivityLog. </summary>
         public static OperationalInsightsDataSourceKind AzureActivityLog { get; } = new OperationalInsightsDataSourceKind(AzureActivityLogValue);
+
         /// <summary> GenericDataSource. </summary>
         public static OperationalInsightsDataSourceKind GenericDataSource { get; } = new OperationalInsightsDataSourceKind(GenericDataSourceValue);
+
         /// <summary> ChangeTrackingCustomPath. </summary>
         public static OperationalInsightsDataSourceKind ChangeTrackingCustomPath { get; } = new OperationalInsightsDataSourceKind(ChangeTrackingCustomPathValue);
+
         /// <summary> ChangeTrackingPath. </summary>
         public static OperationalInsightsDataSourceKind ChangeTrackingPath { get; } = new OperationalInsightsDataSourceKind(ChangeTrackingPathValue);
+
         /// <summary> ChangeTrackingServices. </summary>
         public static OperationalInsightsDataSourceKind ChangeTrackingServices { get; } = new OperationalInsightsDataSourceKind(ChangeTrackingServicesValue);
+
         /// <summary> ChangeTrackingDataTypeConfiguration. </summary>
         public static OperationalInsightsDataSourceKind ChangeTrackingDataTypeConfiguration { get; } = new OperationalInsightsDataSourceKind(ChangeTrackingDataTypeConfigurationValue);
+
         /// <summary> ChangeTrackingDefaultRegistry. </summary>
         public static OperationalInsightsDataSourceKind ChangeTrackingDefaultRegistry { get; } = new OperationalInsightsDataSourceKind(ChangeTrackingDefaultRegistryValue);
+
         /// <summary> ChangeTrackingRegistry. </summary>
         public static OperationalInsightsDataSourceKind ChangeTrackingRegistry { get; } = new OperationalInsightsDataSourceKind(ChangeTrackingRegistryValue);
+
         /// <summary> ChangeTrackingLinuxPath. </summary>
         public static OperationalInsightsDataSourceKind ChangeTrackingLinuxPath { get; } = new OperationalInsightsDataSourceKind(ChangeTrackingLinuxPathValue);
+
         /// <summary> LinuxChangeTrackingPath. </summary>
         public static OperationalInsightsDataSourceKind LinuxChangeTrackingPath { get; } = new OperationalInsightsDataSourceKind(LinuxChangeTrackingPathValue);
+
         /// <summary> ChangeTrackingContentLocation. </summary>
         public static OperationalInsightsDataSourceKind ChangeTrackingContentLocation { get; } = new OperationalInsightsDataSourceKind(ChangeTrackingContentLocationValue);
+
         /// <summary> WindowsTelemetry. </summary>
         public static OperationalInsightsDataSourceKind WindowsTelemetry { get; } = new OperationalInsightsDataSourceKind(WindowsTelemetryValue);
+
         /// <summary> Office365. </summary>
         public static OperationalInsightsDataSourceKind Office365 { get; } = new OperationalInsightsDataSourceKind(Office365Value);
+
         /// <summary> SecurityWindowsBaselineConfiguration. </summary>
         public static OperationalInsightsDataSourceKind SecurityWindowsBaselineConfiguration { get; } = new OperationalInsightsDataSourceKind(SecurityWindowsBaselineConfigurationValue);
+
         /// <summary> SecurityCenterSecurityWindowsBaselineConfiguration. </summary>
         public static OperationalInsightsDataSourceKind SecurityCenterSecurityWindowsBaselineConfiguration { get; } = new OperationalInsightsDataSourceKind(SecurityCenterSecurityWindowsBaselineConfigurationValue);
+
         /// <summary> SecurityEventCollectionConfiguration. </summary>
         public static OperationalInsightsDataSourceKind SecurityEventCollectionConfiguration { get; } = new OperationalInsightsDataSourceKind(SecurityEventCollectionConfigurationValue);
+
         /// <summary> SecurityInsightsSecurityEventCollectionConfiguration. </summary>
         public static OperationalInsightsDataSourceKind SecurityInsightsSecurityEventCollectionConfiguration { get; } = new OperationalInsightsDataSourceKind(SecurityInsightsSecurityEventCollectionConfigurationValue);
+
         /// <summary> ImportComputerGroup. </summary>
         public static OperationalInsightsDataSourceKind ImportComputerGroup { get; } = new OperationalInsightsDataSourceKind(ImportComputerGroupValue);
+
         /// <summary> NetworkMonitoring. </summary>
         public static OperationalInsightsDataSourceKind NetworkMonitoring { get; } = new OperationalInsightsDataSourceKind(NetworkMonitoringValue);
+
         /// <summary> Itsm. </summary>
         public static OperationalInsightsDataSourceKind Itsm { get; } = new OperationalInsightsDataSourceKind(ItsmValue);
+
         /// <summary> DnsAnalytics. </summary>
         public static OperationalInsightsDataSourceKind DnsAnalytics { get; } = new OperationalInsightsDataSourceKind(DnsAnalyticsValue);
+
         /// <summary> ApplicationInsights. </summary>
         public static OperationalInsightsDataSourceKind ApplicationInsights { get; } = new OperationalInsightsDataSourceKind(ApplicationInsightsValue);
+
         /// <summary> SqlDataClassification. </summary>
         public static OperationalInsightsDataSourceKind SqlDataClassification { get; } = new OperationalInsightsDataSourceKind(SqlDataClassificationValue);
+
         /// <summary> Determines if two <see cref="OperationalInsightsDataSourceKind"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(OperationalInsightsDataSourceKind left, OperationalInsightsDataSourceKind right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="OperationalInsightsDataSourceKind"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(OperationalInsightsDataSourceKind left, OperationalInsightsDataSourceKind right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="OperationalInsightsDataSourceKind"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="OperationalInsightsDataSourceKind"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator OperationalInsightsDataSourceKind(string value) => new OperationalInsightsDataSourceKind(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="OperationalInsightsDataSourceKind"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator OperationalInsightsDataSourceKind?(string value) => value == null ? null : new OperationalInsightsDataSourceKind(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is OperationalInsightsDataSourceKind other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(OperationalInsightsDataSourceKind other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

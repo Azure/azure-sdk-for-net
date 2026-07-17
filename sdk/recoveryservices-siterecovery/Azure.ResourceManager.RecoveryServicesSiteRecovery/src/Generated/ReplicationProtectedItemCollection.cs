@@ -94,7 +94,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
                 HttpMessage message = _replicationProtectedItemsRestClient.CreateCreateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, replicatedProtectedItemName, ReplicationProtectedItemCreateOrUpdateContent.ToRequestContent(content), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 RecoveryServicesSiteRecoveryArmOperation<ReplicationProtectedItemResource> operation = new RecoveryServicesSiteRecoveryArmOperation<ReplicationProtectedItemResource>(
-                    new ReplicationProtectedItemOperationSource(Client),
+                    new ReplicationProtectedItemResourceOperationSource(Client),
                     _replicationProtectedItemsClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -152,7 +152,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
                 HttpMessage message = _replicationProtectedItemsRestClient.CreateCreateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, replicatedProtectedItemName, ReplicationProtectedItemCreateOrUpdateContent.ToRequestContent(content), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 RecoveryServicesSiteRecoveryArmOperation<ReplicationProtectedItemResource> operation = new RecoveryServicesSiteRecoveryArmOperation<ReplicationProtectedItemResource>(
-                    new ReplicationProtectedItemOperationSource(Client),
+                    new ReplicationProtectedItemResourceOperationSource(Client),
                     _replicationProtectedItemsClientDiagnostics,
                     Pipeline,
                     message.Request,

@@ -338,7 +338,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
                 HttpMessage message = _eventGridTopicsRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, EventGridTopicData.ToRequestContent(data), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 TestsArmOperation<EventGridTopicResource> operation = new TestsArmOperation<EventGridTopicResource>(
-                    new EventGridTopicOperationSource(Client),
+                    new EventGridTopicResourceOperationSource(Client),
                     _eventGridTopicsClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -398,7 +398,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
                 HttpMessage message = _eventGridTopicsRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, EventGridTopicData.ToRequestContent(data), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 TestsArmOperation<EventGridTopicResource> operation = new TestsArmOperation<EventGridTopicResource>(
-                    new EventGridTopicOperationSource(Client),
+                    new EventGridTopicResourceOperationSource(Client),
                     _eventGridTopicsClientDiagnostics,
                     Pipeline,
                     message.Request,

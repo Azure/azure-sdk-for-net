@@ -94,7 +94,7 @@ namespace Azure.ResourceManager.ExtendedLocations
                 HttpMessage message = _customLocationsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, resourceName, CustomLocationData.ToRequestContent(data), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 ExtendedLocationsArmOperation<CustomLocationResource> operation = new ExtendedLocationsArmOperation<CustomLocationResource>(
-                    new CustomLocationOperationSource(Client),
+                    new CustomLocationResourceOperationSource(Client),
                     _customLocationsClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -152,7 +152,7 @@ namespace Azure.ResourceManager.ExtendedLocations
                 HttpMessage message = _customLocationsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, resourceName, CustomLocationData.ToRequestContent(data), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 ExtendedLocationsArmOperation<CustomLocationResource> operation = new ExtendedLocationsArmOperation<CustomLocationResource>(
-                    new CustomLocationOperationSource(Client),
+                    new CustomLocationResourceOperationSource(Client),
                     _customLocationsClientDiagnostics,
                     Pipeline,
                     message.Request,

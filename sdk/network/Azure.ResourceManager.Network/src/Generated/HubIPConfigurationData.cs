@@ -12,10 +12,7 @@ using Azure.ResourceManager.Network.Models;
 
 namespace Azure.ResourceManager.Network
 {
-    /// <summary>
-    /// A class representing the HubIPConfiguration data model.
-    /// IpConfigurations.
-    /// </summary>
+    /// <summary> IpConfigurations. </summary>
     public partial class HubIPConfigurationData : NetworkResourceData
     {
         /// <summary> Initializes a new instance of <see cref="HubIPConfigurationData"/>. </summary>
@@ -25,42 +22,99 @@ namespace Azure.ResourceManager.Network
 
         /// <summary> Initializes a new instance of <see cref="HubIPConfigurationData"/>. </summary>
         /// <param name="id"> Resource ID. </param>
-        /// <param name="name"> Resource name. </param>
-        /// <param name="resourceType"> Resource type. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        /// <param name="etag"> A unique read-only string that changes whenever the resource is updated. </param>
-        /// <param name="privateIPAddress"> The private IP address of the IP configuration. </param>
-        /// <param name="privateIPAllocationMethod"> The private IP address allocation method. </param>
-        /// <param name="subnet"> The reference to the subnet resource. </param>
-        /// <param name="publicIPAddress"> The reference to the public IP resource. </param>
-        /// <param name="provisioningState"> The provisioning state of the IP configuration resource. </param>
-        internal HubIPConfigurationData(ResourceIdentifier id, string name, ResourceType? resourceType, IDictionary<string, BinaryData> serializedAdditionalRawData, ETag? etag, string privateIPAddress, NetworkIPAllocationMethod? privateIPAllocationMethod, SubnetData subnet, PublicIPAddressData publicIPAddress, NetworkProvisioningState? provisioningState) : base(id, name, resourceType, serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="name"> Name of the resource. </param>
+        /// <param name="type"> Resource type. </param>
+        /// <param name="properties"> The properties of the Virtual Hub IPConfigurations. </param>
+        internal HubIPConfigurationData(ResourceIdentifier id, IDictionary<string, BinaryData> additionalBinaryDataProperties, string name, string @type, HubIPConfigurationPropertiesFormat properties) : base(id, additionalBinaryDataProperties, name, @type)
         {
-            ETag = etag;
-            PrivateIPAddress = privateIPAddress;
-            PrivateIPAllocationMethod = privateIPAllocationMethod;
-            Subnet = subnet;
-            PublicIPAddress = publicIPAddress;
-            ProvisioningState = provisioningState;
+            Properties = properties;
         }
 
-        /// <summary> A unique read-only string that changes whenever the resource is updated. </summary>
-        [WirePath("etag")]
-        public ETag? ETag { get; }
+        /// <summary> The properties of the Virtual Hub IPConfigurations. </summary>
+        [WirePath("properties")]
+        internal HubIPConfigurationPropertiesFormat Properties { get; set; }
+
         /// <summary> The private IP address of the IP configuration. </summary>
         [WirePath("properties.privateIPAddress")]
-        public string PrivateIPAddress { get; set; }
+        public string PrivateIPAddress
+        {
+            get
+            {
+                return Properties is null ? default : Properties.PrivateIPAddress;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new HubIPConfigurationPropertiesFormat();
+                }
+                Properties.PrivateIPAddress = value;
+            }
+        }
+
         /// <summary> The private IP address allocation method. </summary>
         [WirePath("properties.privateIPAllocationMethod")]
-        public NetworkIPAllocationMethod? PrivateIPAllocationMethod { get; set; }
+        public NetworkIPAllocationMethod? PrivateIPAllocationMethod
+        {
+            get
+            {
+                return Properties is null ? default : Properties.PrivateIPAllocationMethod;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new HubIPConfigurationPropertiesFormat();
+                }
+                Properties.PrivateIPAllocationMethod = value;
+            }
+        }
+
         /// <summary> The reference to the subnet resource. </summary>
         [WirePath("properties.subnet")]
-        public SubnetData Subnet { get; set; }
+        public SubnetData Subnet
+        {
+            get
+            {
+                return Properties is null ? default : Properties.Subnet;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new HubIPConfigurationPropertiesFormat();
+                }
+                Properties.Subnet = value;
+            }
+        }
+
         /// <summary> The reference to the public IP resource. </summary>
         [WirePath("properties.publicIPAddress")]
-        public PublicIPAddressData PublicIPAddress { get; set; }
+        public PublicIPAddressData PublicIPAddress
+        {
+            get
+            {
+                return Properties is null ? default : Properties.PublicIPAddress;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new HubIPConfigurationPropertiesFormat();
+                }
+                Properties.PublicIPAddress = value;
+            }
+        }
+
         /// <summary> The provisioning state of the IP configuration resource. </summary>
         [WirePath("properties.provisioningState")]
-        public NetworkProvisioningState? ProvisioningState { get; }
+        public NetworkProvisioningState? ProvisioningState
+        {
+            get
+            {
+                return Properties is null ? default : Properties.ProvisioningState;
+            }
+        }
     }
 }

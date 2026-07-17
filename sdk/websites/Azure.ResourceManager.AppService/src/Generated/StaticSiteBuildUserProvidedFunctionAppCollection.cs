@@ -8,12 +8,13 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.Globalization;
+using System.Diagnostics;
 using System.Threading;
 using System.Threading.Tasks;
-using Autorest.CSharp.Core;
+using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
+using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.AppService
 {
@@ -24,51 +25,49 @@ namespace Azure.ResourceManager.AppService
     /// </summary>
     public partial class StaticSiteBuildUserProvidedFunctionAppCollection : ArmCollection, IEnumerable<StaticSiteBuildUserProvidedFunctionAppResource>, IAsyncEnumerable<StaticSiteBuildUserProvidedFunctionAppResource>
     {
-        private readonly ClientDiagnostics _staticSiteBuildUserProvidedFunctionAppStaticSitesClientDiagnostics;
-        private readonly StaticSitesRestOperations _staticSiteBuildUserProvidedFunctionAppStaticSitesRestClient;
+        private readonly ClientDiagnostics _staticSiteUserProvidedFunctionAppARMResourcesClientDiagnostics;
+        private readonly StaticSiteUserProvidedFunctionAppARMResources _staticSiteUserProvidedFunctionAppARMResourcesRestClient;
 
-        /// <summary> Initializes a new instance of the <see cref="StaticSiteBuildUserProvidedFunctionAppCollection"/> class for mocking. </summary>
+        /// <summary> Initializes a new instance of StaticSiteBuildUserProvidedFunctionAppCollection for mocking. </summary>
         protected StaticSiteBuildUserProvidedFunctionAppCollection()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref="StaticSiteBuildUserProvidedFunctionAppCollection"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="StaticSiteBuildUserProvidedFunctionAppCollection"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
-        /// <param name="id"> The identifier of the parent resource that is the target of operations. </param>
+        /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal StaticSiteBuildUserProvidedFunctionAppCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _staticSiteBuildUserProvidedFunctionAppStaticSitesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.AppService", StaticSiteBuildUserProvidedFunctionAppResource.ResourceType.Namespace, Diagnostics);
-            TryGetApiVersion(StaticSiteBuildUserProvidedFunctionAppResource.ResourceType, out string staticSiteBuildUserProvidedFunctionAppStaticSitesApiVersion);
-            _staticSiteBuildUserProvidedFunctionAppStaticSitesRestClient = new StaticSitesRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, staticSiteBuildUserProvidedFunctionAppStaticSitesApiVersion);
-#if DEBUG
-			ValidateResourceId(Id);
-#endif
+            TryGetApiVersion(StaticSiteBuildUserProvidedFunctionAppResource.ResourceType, out string staticSiteBuildUserProvidedFunctionAppApiVersion);
+            _staticSiteUserProvidedFunctionAppARMResourcesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.AppService", StaticSiteBuildUserProvidedFunctionAppResource.ResourceType.Namespace, Diagnostics);
+            _staticSiteUserProvidedFunctionAppARMResourcesRestClient = new StaticSiteUserProvidedFunctionAppARMResources(_staticSiteUserProvidedFunctionAppARMResourcesClientDiagnostics, Pipeline, Endpoint, staticSiteBuildUserProvidedFunctionAppApiVersion ?? "2026-03-15");
+            ValidateResourceId(id);
         }
 
+        /// <param name="id"></param>
+        [Conditional("DEBUG")]
         internal static void ValidateResourceId(ResourceIdentifier id)
         {
             if (id.ResourceType != StaticSiteBuildResource.ResourceType)
-                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, StaticSiteBuildResource.ResourceType), nameof(id));
+            {
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, StaticSiteBuildResource.ResourceType), nameof(id));
+            }
         }
 
         /// <summary>
         /// Description for Register a user provided function app with a static site build
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/staticSites/{name}/builds/{environmentName}/userProvidedFunctionApps/{functionAppName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/staticSites/{name}/builds/{environmentName}/userProvidedFunctionApps/{functionAppName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>StaticSites_RegisterUserProvidedFunctionAppWithStaticSiteBuild</description>
+        /// <term> Operation Id. </term>
+        /// <description> StaticSiteUserProvidedFunctionAppARMResources_RegisterUserProvidedFunctionAppWithStaticSiteBuild. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-05-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="StaticSiteBuildUserProvidedFunctionAppResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-03-15. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -77,21 +76,34 @@ namespace Azure.ResourceManager.AppService
         /// <param name="data"> A JSON representation of the user provided function app properties. See example. </param>
         /// <param name="isForced"> Specify &lt;code&gt;true&lt;/code&gt; to force the update of the auth configuration on the function app even if an AzureStaticWebApps provider is already configured on the function app. The default is &lt;code&gt;false&lt;/code&gt;. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="functionAppName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="functionAppName"/> or <paramref name="data"/> is null. </exception>
-        public virtual async Task<ArmOperation<StaticSiteBuildUserProvidedFunctionAppResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string functionAppName, StaticSiteUserProvidedFunctionAppData data, bool? isForced = null, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentException"> <paramref name="functionAppName"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual async Task<ArmOperation<StaticSiteBuildUserProvidedFunctionAppResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string functionAppName, StaticSiteUserProvidedFunctionAppData data, bool? isForced = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(functionAppName, nameof(functionAppName));
             Argument.AssertNotNull(data, nameof(data));
 
-            using var scope = _staticSiteBuildUserProvidedFunctionAppStaticSitesClientDiagnostics.CreateScope("StaticSiteBuildUserProvidedFunctionAppCollection.CreateOrUpdate");
+            using DiagnosticScope scope = _staticSiteUserProvidedFunctionAppARMResourcesClientDiagnostics.CreateScope("StaticSiteBuildUserProvidedFunctionAppCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                var response = await _staticSiteBuildUserProvidedFunctionAppStaticSitesRestClient.RegisterUserProvidedFunctionAppWithStaticSiteBuildAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, functionAppName, data, isForced, cancellationToken).ConfigureAwait(false);
-                var operation = new AppServiceArmOperation<StaticSiteBuildUserProvidedFunctionAppResource>(new StaticSiteBuildUserProvidedFunctionAppOperationSource(Client), _staticSiteBuildUserProvidedFunctionAppStaticSitesClientDiagnostics, Pipeline, _staticSiteBuildUserProvidedFunctionAppStaticSitesRestClient.CreateRegisterUserProvidedFunctionAppWithStaticSiteBuildRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, functionAppName, data, isForced).Request, response, OperationFinalStateVia.Location);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _staticSiteUserProvidedFunctionAppARMResourcesRestClient.CreateRegisterUserProvidedFunctionAppWithStaticSiteBuildRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, functionAppName, StaticSiteUserProvidedFunctionAppData.ToRequestContent(data), isForced, context);
+                Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                AppServiceArmOperation<StaticSiteBuildUserProvidedFunctionAppResource> operation = new AppServiceArmOperation<StaticSiteBuildUserProvidedFunctionAppResource>(
+                    new StaticSiteBuildUserProvidedFunctionAppResourceOperationSource(Client),
+                    _staticSiteUserProvidedFunctionAppARMResourcesClientDiagnostics,
+                    Pipeline,
+                    message.Request,
+                    response,
+                    OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
+                {
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
+                }
                 return operation;
             }
             catch (Exception e)
@@ -105,20 +117,16 @@ namespace Azure.ResourceManager.AppService
         /// Description for Register a user provided function app with a static site build
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/staticSites/{name}/builds/{environmentName}/userProvidedFunctionApps/{functionAppName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/staticSites/{name}/builds/{environmentName}/userProvidedFunctionApps/{functionAppName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>StaticSites_RegisterUserProvidedFunctionAppWithStaticSiteBuild</description>
+        /// <term> Operation Id. </term>
+        /// <description> StaticSiteUserProvidedFunctionAppARMResources_RegisterUserProvidedFunctionAppWithStaticSiteBuild. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-05-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="StaticSiteBuildUserProvidedFunctionAppResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-03-15. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -127,21 +135,34 @@ namespace Azure.ResourceManager.AppService
         /// <param name="data"> A JSON representation of the user provided function app properties. See example. </param>
         /// <param name="isForced"> Specify &lt;code&gt;true&lt;/code&gt; to force the update of the auth configuration on the function app even if an AzureStaticWebApps provider is already configured on the function app. The default is &lt;code&gt;false&lt;/code&gt;. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="functionAppName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="functionAppName"/> or <paramref name="data"/> is null. </exception>
-        public virtual ArmOperation<StaticSiteBuildUserProvidedFunctionAppResource> CreateOrUpdate(WaitUntil waitUntil, string functionAppName, StaticSiteUserProvidedFunctionAppData data, bool? isForced = null, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentException"> <paramref name="functionAppName"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual ArmOperation<StaticSiteBuildUserProvidedFunctionAppResource> CreateOrUpdate(WaitUntil waitUntil, string functionAppName, StaticSiteUserProvidedFunctionAppData data, bool? isForced = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(functionAppName, nameof(functionAppName));
             Argument.AssertNotNull(data, nameof(data));
 
-            using var scope = _staticSiteBuildUserProvidedFunctionAppStaticSitesClientDiagnostics.CreateScope("StaticSiteBuildUserProvidedFunctionAppCollection.CreateOrUpdate");
+            using DiagnosticScope scope = _staticSiteUserProvidedFunctionAppARMResourcesClientDiagnostics.CreateScope("StaticSiteBuildUserProvidedFunctionAppCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                var response = _staticSiteBuildUserProvidedFunctionAppStaticSitesRestClient.RegisterUserProvidedFunctionAppWithStaticSiteBuild(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, functionAppName, data, isForced, cancellationToken);
-                var operation = new AppServiceArmOperation<StaticSiteBuildUserProvidedFunctionAppResource>(new StaticSiteBuildUserProvidedFunctionAppOperationSource(Client), _staticSiteBuildUserProvidedFunctionAppStaticSitesClientDiagnostics, Pipeline, _staticSiteBuildUserProvidedFunctionAppStaticSitesRestClient.CreateRegisterUserProvidedFunctionAppWithStaticSiteBuildRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, functionAppName, data, isForced).Request, response, OperationFinalStateVia.Location);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _staticSiteUserProvidedFunctionAppARMResourcesRestClient.CreateRegisterUserProvidedFunctionAppWithStaticSiteBuildRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, functionAppName, StaticSiteUserProvidedFunctionAppData.ToRequestContent(data), isForced, context);
+                Response response = Pipeline.ProcessMessage(message, context);
+                AppServiceArmOperation<StaticSiteBuildUserProvidedFunctionAppResource> operation = new AppServiceArmOperation<StaticSiteBuildUserProvidedFunctionAppResource>(
+                    new StaticSiteBuildUserProvidedFunctionAppResourceOperationSource(Client),
+                    _staticSiteUserProvidedFunctionAppARMResourcesClientDiagnostics,
+                    Pipeline,
+                    message.Request,
+                    response,
+                    OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
+                {
                     operation.WaitForCompletion(cancellationToken);
+                }
                 return operation;
             }
             catch (Exception e)
@@ -155,38 +176,42 @@ namespace Azure.ResourceManager.AppService
         /// Description for Gets the details of the user provided function app registered with a static site build
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/staticSites/{name}/builds/{environmentName}/userProvidedFunctionApps/{functionAppName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/staticSites/{name}/builds/{environmentName}/userProvidedFunctionApps/{functionAppName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>StaticSites_GetUserProvidedFunctionAppForStaticSiteBuild</description>
+        /// <term> Operation Id. </term>
+        /// <description> StaticSiteUserProvidedFunctionAppARMResources_GetUserProvidedFunctionAppForStaticSiteBuild. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-05-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="StaticSiteBuildUserProvidedFunctionAppResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-03-15. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="functionAppName"> Name of the function app registered with the static site build. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="functionAppName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="functionAppName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="functionAppName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual async Task<Response<StaticSiteBuildUserProvidedFunctionAppResource>> GetAsync(string functionAppName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(functionAppName, nameof(functionAppName));
 
-            using var scope = _staticSiteBuildUserProvidedFunctionAppStaticSitesClientDiagnostics.CreateScope("StaticSiteBuildUserProvidedFunctionAppCollection.Get");
+            using DiagnosticScope scope = _staticSiteUserProvidedFunctionAppARMResourcesClientDiagnostics.CreateScope("StaticSiteBuildUserProvidedFunctionAppCollection.Get");
             scope.Start();
             try
             {
-                var response = await _staticSiteBuildUserProvidedFunctionAppStaticSitesRestClient.GetUserProvidedFunctionAppForStaticSiteBuildAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, functionAppName, cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _staticSiteUserProvidedFunctionAppARMResourcesRestClient.CreateGetUserProvidedFunctionAppForStaticSiteBuildRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, functionAppName, context);
+                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                Response<StaticSiteUserProvidedFunctionAppData> response = Response.FromValue(StaticSiteUserProvidedFunctionAppData.FromResponse(result), result);
                 if (response.Value == null)
+                {
                     throw new RequestFailedException(response.GetRawResponse());
+                }
                 return Response.FromValue(new StaticSiteBuildUserProvidedFunctionAppResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -200,38 +225,42 @@ namespace Azure.ResourceManager.AppService
         /// Description for Gets the details of the user provided function app registered with a static site build
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/staticSites/{name}/builds/{environmentName}/userProvidedFunctionApps/{functionAppName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/staticSites/{name}/builds/{environmentName}/userProvidedFunctionApps/{functionAppName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>StaticSites_GetUserProvidedFunctionAppForStaticSiteBuild</description>
+        /// <term> Operation Id. </term>
+        /// <description> StaticSiteUserProvidedFunctionAppARMResources_GetUserProvidedFunctionAppForStaticSiteBuild. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-05-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="StaticSiteBuildUserProvidedFunctionAppResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-03-15. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="functionAppName"> Name of the function app registered with the static site build. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="functionAppName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="functionAppName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="functionAppName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual Response<StaticSiteBuildUserProvidedFunctionAppResource> Get(string functionAppName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(functionAppName, nameof(functionAppName));
 
-            using var scope = _staticSiteBuildUserProvidedFunctionAppStaticSitesClientDiagnostics.CreateScope("StaticSiteBuildUserProvidedFunctionAppCollection.Get");
+            using DiagnosticScope scope = _staticSiteUserProvidedFunctionAppARMResourcesClientDiagnostics.CreateScope("StaticSiteBuildUserProvidedFunctionAppCollection.Get");
             scope.Start();
             try
             {
-                var response = _staticSiteBuildUserProvidedFunctionAppStaticSitesRestClient.GetUserProvidedFunctionAppForStaticSiteBuild(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, functionAppName, cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _staticSiteUserProvidedFunctionAppARMResourcesRestClient.CreateGetUserProvidedFunctionAppForStaticSiteBuildRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, functionAppName, context);
+                Response result = Pipeline.ProcessMessage(message, context);
+                Response<StaticSiteUserProvidedFunctionAppData> response = Response.FromValue(StaticSiteUserProvidedFunctionAppData.FromResponse(result), result);
                 if (response.Value == null)
+                {
                     throw new RequestFailedException(response.GetRawResponse());
+                }
                 return Response.FromValue(new StaticSiteBuildUserProvidedFunctionAppResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -245,50 +274,51 @@ namespace Azure.ResourceManager.AppService
         /// Description for Gets the details of the user provided function apps registered with a static site build
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/staticSites/{name}/builds/{environmentName}/userProvidedFunctionApps</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/staticSites/{name}/builds/{environmentName}/userProvidedFunctionApps. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>StaticSites_GetUserProvidedFunctionAppsForStaticSiteBuild</description>
+        /// <term> Operation Id. </term>
+        /// <description> StaticSiteUserProvidedFunctionAppARMResources_GetUserProvidedFunctionAppsForStaticSiteBuild. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-05-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="StaticSiteBuildUserProvidedFunctionAppResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-03-15. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="StaticSiteBuildUserProvidedFunctionAppResource"/> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="StaticSiteBuildUserProvidedFunctionAppResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<StaticSiteBuildUserProvidedFunctionAppResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _staticSiteBuildUserProvidedFunctionAppStaticSitesRestClient.CreateGetUserProvidedFunctionAppsForStaticSiteBuildRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _staticSiteBuildUserProvidedFunctionAppStaticSitesRestClient.CreateGetUserProvidedFunctionAppsForStaticSiteBuildNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new StaticSiteBuildUserProvidedFunctionAppResource(Client, StaticSiteUserProvidedFunctionAppData.DeserializeStaticSiteUserProvidedFunctionAppData(e)), _staticSiteBuildUserProvidedFunctionAppStaticSitesClientDiagnostics, Pipeline, "StaticSiteBuildUserProvidedFunctionAppCollection.GetAll", "value", "nextLink", cancellationToken);
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new AsyncPageableWrapper<StaticSiteUserProvidedFunctionAppData, StaticSiteBuildUserProvidedFunctionAppResource>(new StaticSiteUserProvidedFunctionAppARMResourcesGetUserProvidedFunctionAppsForStaticSiteBuildAsyncCollectionResultOfT(
+                _staticSiteUserProvidedFunctionAppARMResourcesRestClient,
+                Guid.Parse(Id.SubscriptionId),
+                Id.ResourceGroupName,
+                Id.Parent.Name,
+                Id.Name,
+                context,
+                "StaticSiteBuildUserProvidedFunctionAppCollection.GetAll"), data => new StaticSiteBuildUserProvidedFunctionAppResource(Client, data));
         }
 
         /// <summary>
         /// Description for Gets the details of the user provided function apps registered with a static site build
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/staticSites/{name}/builds/{environmentName}/userProvidedFunctionApps</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/staticSites/{name}/builds/{environmentName}/userProvidedFunctionApps. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>StaticSites_GetUserProvidedFunctionAppsForStaticSiteBuild</description>
+        /// <term> Operation Id. </term>
+        /// <description> StaticSiteUserProvidedFunctionAppARMResources_GetUserProvidedFunctionAppsForStaticSiteBuild. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-05-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="StaticSiteBuildUserProvidedFunctionAppResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-03-15. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -296,45 +326,68 @@ namespace Azure.ResourceManager.AppService
         /// <returns> A collection of <see cref="StaticSiteBuildUserProvidedFunctionAppResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<StaticSiteBuildUserProvidedFunctionAppResource> GetAll(CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _staticSiteBuildUserProvidedFunctionAppStaticSitesRestClient.CreateGetUserProvidedFunctionAppsForStaticSiteBuildRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _staticSiteBuildUserProvidedFunctionAppStaticSitesRestClient.CreateGetUserProvidedFunctionAppsForStaticSiteBuildNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new StaticSiteBuildUserProvidedFunctionAppResource(Client, StaticSiteUserProvidedFunctionAppData.DeserializeStaticSiteUserProvidedFunctionAppData(e)), _staticSiteBuildUserProvidedFunctionAppStaticSitesClientDiagnostics, Pipeline, "StaticSiteBuildUserProvidedFunctionAppCollection.GetAll", "value", "nextLink", cancellationToken);
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new PageableWrapper<StaticSiteUserProvidedFunctionAppData, StaticSiteBuildUserProvidedFunctionAppResource>(new StaticSiteUserProvidedFunctionAppARMResourcesGetUserProvidedFunctionAppsForStaticSiteBuildCollectionResultOfT(
+                _staticSiteUserProvidedFunctionAppARMResourcesRestClient,
+                Guid.Parse(Id.SubscriptionId),
+                Id.ResourceGroupName,
+                Id.Parent.Name,
+                Id.Name,
+                context,
+                "StaticSiteBuildUserProvidedFunctionAppCollection.GetAll"), data => new StaticSiteBuildUserProvidedFunctionAppResource(Client, data));
         }
 
         /// <summary>
         /// Checks to see if the resource exists in azure.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/staticSites/{name}/builds/{environmentName}/userProvidedFunctionApps/{functionAppName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/staticSites/{name}/builds/{environmentName}/userProvidedFunctionApps/{functionAppName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>StaticSites_GetUserProvidedFunctionAppForStaticSiteBuild</description>
+        /// <term> Operation Id. </term>
+        /// <description> StaticSiteUserProvidedFunctionAppARMResources_GetUserProvidedFunctionAppForStaticSiteBuild. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-05-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="StaticSiteBuildUserProvidedFunctionAppResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-03-15. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="functionAppName"> Name of the function app registered with the static site build. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="functionAppName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="functionAppName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="functionAppName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual async Task<Response<bool>> ExistsAsync(string functionAppName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(functionAppName, nameof(functionAppName));
 
-            using var scope = _staticSiteBuildUserProvidedFunctionAppStaticSitesClientDiagnostics.CreateScope("StaticSiteBuildUserProvidedFunctionAppCollection.Exists");
+            using DiagnosticScope scope = _staticSiteUserProvidedFunctionAppARMResourcesClientDiagnostics.CreateScope("StaticSiteBuildUserProvidedFunctionAppCollection.Exists");
             scope.Start();
             try
             {
-                var response = await _staticSiteBuildUserProvidedFunctionAppStaticSitesRestClient.GetUserProvidedFunctionAppForStaticSiteBuildAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, functionAppName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _staticSiteUserProvidedFunctionAppARMResourcesRestClient.CreateGetUserProvidedFunctionAppForStaticSiteBuildRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, functionAppName, context);
+                await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
+                Response result = message.Response;
+                Response<StaticSiteUserProvidedFunctionAppData> response = default;
+                switch (result.Status)
+                {
+                    case 200:
+                        response = Response.FromValue(StaticSiteUserProvidedFunctionAppData.FromResponse(result), result);
+                        break;
+                    case 404:
+                        response = Response.FromValue((StaticSiteUserProvidedFunctionAppData)null, result);
+                        break;
+                    default:
+                        throw new RequestFailedException(result);
+                }
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -348,36 +401,50 @@ namespace Azure.ResourceManager.AppService
         /// Checks to see if the resource exists in azure.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/staticSites/{name}/builds/{environmentName}/userProvidedFunctionApps/{functionAppName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/staticSites/{name}/builds/{environmentName}/userProvidedFunctionApps/{functionAppName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>StaticSites_GetUserProvidedFunctionAppForStaticSiteBuild</description>
+        /// <term> Operation Id. </term>
+        /// <description> StaticSiteUserProvidedFunctionAppARMResources_GetUserProvidedFunctionAppForStaticSiteBuild. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-05-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="StaticSiteBuildUserProvidedFunctionAppResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-03-15. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="functionAppName"> Name of the function app registered with the static site build. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="functionAppName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="functionAppName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="functionAppName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual Response<bool> Exists(string functionAppName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(functionAppName, nameof(functionAppName));
 
-            using var scope = _staticSiteBuildUserProvidedFunctionAppStaticSitesClientDiagnostics.CreateScope("StaticSiteBuildUserProvidedFunctionAppCollection.Exists");
+            using DiagnosticScope scope = _staticSiteUserProvidedFunctionAppARMResourcesClientDiagnostics.CreateScope("StaticSiteBuildUserProvidedFunctionAppCollection.Exists");
             scope.Start();
             try
             {
-                var response = _staticSiteBuildUserProvidedFunctionAppStaticSitesRestClient.GetUserProvidedFunctionAppForStaticSiteBuild(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, functionAppName, cancellationToken: cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _staticSiteUserProvidedFunctionAppARMResourcesRestClient.CreateGetUserProvidedFunctionAppForStaticSiteBuildRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, functionAppName, context);
+                Pipeline.Send(message, context.CancellationToken);
+                Response result = message.Response;
+                Response<StaticSiteUserProvidedFunctionAppData> response = default;
+                switch (result.Status)
+                {
+                    case 200:
+                        response = Response.FromValue(StaticSiteUserProvidedFunctionAppData.FromResponse(result), result);
+                        break;
+                    case 404:
+                        response = Response.FromValue((StaticSiteUserProvidedFunctionAppData)null, result);
+                        break;
+                    default:
+                        throw new RequestFailedException(result);
+                }
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -391,38 +458,54 @@ namespace Azure.ResourceManager.AppService
         /// Tries to get details for this resource from the service.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/staticSites/{name}/builds/{environmentName}/userProvidedFunctionApps/{functionAppName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/staticSites/{name}/builds/{environmentName}/userProvidedFunctionApps/{functionAppName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>StaticSites_GetUserProvidedFunctionAppForStaticSiteBuild</description>
+        /// <term> Operation Id. </term>
+        /// <description> StaticSiteUserProvidedFunctionAppARMResources_GetUserProvidedFunctionAppForStaticSiteBuild. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-05-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="StaticSiteBuildUserProvidedFunctionAppResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-03-15. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="functionAppName"> Name of the function app registered with the static site build. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="functionAppName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="functionAppName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="functionAppName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual async Task<NullableResponse<StaticSiteBuildUserProvidedFunctionAppResource>> GetIfExistsAsync(string functionAppName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(functionAppName, nameof(functionAppName));
 
-            using var scope = _staticSiteBuildUserProvidedFunctionAppStaticSitesClientDiagnostics.CreateScope("StaticSiteBuildUserProvidedFunctionAppCollection.GetIfExists");
+            using DiagnosticScope scope = _staticSiteUserProvidedFunctionAppARMResourcesClientDiagnostics.CreateScope("StaticSiteBuildUserProvidedFunctionAppCollection.GetIfExists");
             scope.Start();
             try
             {
-                var response = await _staticSiteBuildUserProvidedFunctionAppStaticSitesRestClient.GetUserProvidedFunctionAppForStaticSiteBuildAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, functionAppName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _staticSiteUserProvidedFunctionAppARMResourcesRestClient.CreateGetUserProvidedFunctionAppForStaticSiteBuildRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, functionAppName, context);
+                await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
+                Response result = message.Response;
+                Response<StaticSiteUserProvidedFunctionAppData> response = default;
+                switch (result.Status)
+                {
+                    case 200:
+                        response = Response.FromValue(StaticSiteUserProvidedFunctionAppData.FromResponse(result), result);
+                        break;
+                    case 404:
+                        response = Response.FromValue((StaticSiteUserProvidedFunctionAppData)null, result);
+                        break;
+                    default:
+                        throw new RequestFailedException(result);
+                }
                 if (response.Value == null)
+                {
                     return new NoValueResponse<StaticSiteBuildUserProvidedFunctionAppResource>(response.GetRawResponse());
+                }
                 return Response.FromValue(new StaticSiteBuildUserProvidedFunctionAppResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -436,38 +519,54 @@ namespace Azure.ResourceManager.AppService
         /// Tries to get details for this resource from the service.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/staticSites/{name}/builds/{environmentName}/userProvidedFunctionApps/{functionAppName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/staticSites/{name}/builds/{environmentName}/userProvidedFunctionApps/{functionAppName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>StaticSites_GetUserProvidedFunctionAppForStaticSiteBuild</description>
+        /// <term> Operation Id. </term>
+        /// <description> StaticSiteUserProvidedFunctionAppARMResources_GetUserProvidedFunctionAppForStaticSiteBuild. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-05-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="StaticSiteBuildUserProvidedFunctionAppResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-03-15. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="functionAppName"> Name of the function app registered with the static site build. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="functionAppName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="functionAppName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="functionAppName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual NullableResponse<StaticSiteBuildUserProvidedFunctionAppResource> GetIfExists(string functionAppName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(functionAppName, nameof(functionAppName));
 
-            using var scope = _staticSiteBuildUserProvidedFunctionAppStaticSitesClientDiagnostics.CreateScope("StaticSiteBuildUserProvidedFunctionAppCollection.GetIfExists");
+            using DiagnosticScope scope = _staticSiteUserProvidedFunctionAppARMResourcesClientDiagnostics.CreateScope("StaticSiteBuildUserProvidedFunctionAppCollection.GetIfExists");
             scope.Start();
             try
             {
-                var response = _staticSiteBuildUserProvidedFunctionAppStaticSitesRestClient.GetUserProvidedFunctionAppForStaticSiteBuild(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, functionAppName, cancellationToken: cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _staticSiteUserProvidedFunctionAppARMResourcesRestClient.CreateGetUserProvidedFunctionAppForStaticSiteBuildRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, functionAppName, context);
+                Pipeline.Send(message, context.CancellationToken);
+                Response result = message.Response;
+                Response<StaticSiteUserProvidedFunctionAppData> response = default;
+                switch (result.Status)
+                {
+                    case 200:
+                        response = Response.FromValue(StaticSiteUserProvidedFunctionAppData.FromResponse(result), result);
+                        break;
+                    case 404:
+                        response = Response.FromValue((StaticSiteUserProvidedFunctionAppData)null, result);
+                        break;
+                    default:
+                        throw new RequestFailedException(result);
+                }
                 if (response.Value == null)
+                {
                     return new NoValueResponse<StaticSiteBuildUserProvidedFunctionAppResource>(response.GetRawResponse());
+                }
                 return Response.FromValue(new StaticSiteBuildUserProvidedFunctionAppResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -487,6 +586,7 @@ namespace Azure.ResourceManager.AppService
             return GetAll().GetEnumerator();
         }
 
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
         IAsyncEnumerator<StaticSiteBuildUserProvidedFunctionAppResource> IAsyncEnumerable<StaticSiteBuildUserProvidedFunctionAppResource>.GetAsyncEnumerator(CancellationToken cancellationToken)
         {
             return GetAllAsync(cancellationToken: cancellationToken).GetAsyncEnumerator(cancellationToken);

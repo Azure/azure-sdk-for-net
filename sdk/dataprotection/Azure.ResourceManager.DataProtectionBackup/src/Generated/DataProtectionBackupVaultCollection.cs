@@ -100,7 +100,7 @@ namespace Azure.ResourceManager.DataProtectionBackup
                 HttpMessage message = _backupVaultResourcesRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, vaultName, DataProtectionBackupVaultData.ToRequestContent(data), xMsAuthorizationAuxiliary, xMsDeletedVaultId, context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 DataProtectionBackupArmOperation<DataProtectionBackupVaultResource> operation = new DataProtectionBackupArmOperation<DataProtectionBackupVaultResource>(
-                    new DataProtectionBackupVaultOperationSource(Client),
+                    new DataProtectionBackupVaultResourceOperationSource(Client),
                     _backupVaultResourcesClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -160,7 +160,7 @@ namespace Azure.ResourceManager.DataProtectionBackup
                 HttpMessage message = _backupVaultResourcesRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, vaultName, DataProtectionBackupVaultData.ToRequestContent(data), xMsAuthorizationAuxiliary, xMsDeletedVaultId, context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 DataProtectionBackupArmOperation<DataProtectionBackupVaultResource> operation = new DataProtectionBackupArmOperation<DataProtectionBackupVaultResource>(
-                    new DataProtectionBackupVaultOperationSource(Client),
+                    new DataProtectionBackupVaultResourceOperationSource(Client),
                     _backupVaultResourcesClientDiagnostics,
                     Pipeline,
                     message.Request,

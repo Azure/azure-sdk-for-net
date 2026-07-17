@@ -6,82 +6,52 @@
 #nullable disable
 
 using System.Threading;
-using Autorest.CSharp.Core;
+using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
+using Azure.ResourceManager;
+using Azure.ResourceManager.ResourceHealth;
 using Azure.ResourceManager.ResourceHealth.Models;
+using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.ResourceHealth.Mocking
 {
-    /// <summary> A class to add extension methods to ResourceGroupResource. </summary>
+    /// <summary> A class to add extension methods to <see cref="ResourceGroupResource"/>. </summary>
     public partial class MockableResourceHealthResourceGroupResource : ArmResource
     {
         private ClientDiagnostics _availabilityStatusesClientDiagnostics;
-        private AvailabilityStatusesRestOperations _availabilityStatusesRestClient;
+        private AvailabilityStatuses _availabilityStatusesRestClient;
 
-        /// <summary> Initializes a new instance of the <see cref="MockableResourceHealthResourceGroupResource"/> class for mocking. </summary>
+        /// <summary> Initializes a new instance of MockableResourceHealthResourceGroupResource for mocking. </summary>
         protected MockableResourceHealthResourceGroupResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref="MockableResourceHealthResourceGroupResource"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="MockableResourceHealthResourceGroupResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal MockableResourceHealthResourceGroupResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
         }
 
-        private ClientDiagnostics AvailabilityStatusesClientDiagnostics => _availabilityStatusesClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.ResourceHealth", ProviderConstants.DefaultProviderNamespace, Diagnostics);
-        private AvailabilityStatusesRestOperations AvailabilityStatusesRestClient => _availabilityStatusesRestClient ??= new AvailabilityStatusesRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint);
+        private ClientDiagnostics AvailabilityStatusesClientDiagnostics => _availabilityStatusesClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.ResourceHealth.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private string GetApiVersionOrNull(ResourceType resourceType)
-        {
-            TryGetApiVersion(resourceType, out string apiVersion);
-            return apiVersion;
-        }
+        private AvailabilityStatuses AvailabilityStatusesRestClient => _availabilityStatusesRestClient ??= new AvailabilityStatuses(AvailabilityStatusesClientDiagnostics, Pipeline, Endpoint, "2025-05-01");
 
         /// <summary>
         /// Lists the current availability status for all the resources in the resource group.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ResourceHealth/availabilityStatuses</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ResourceHealth/availabilityStatuses. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>AvailabilityStatuses_ListByResourceGroup</description>
+        /// <term> Operation Id. </term>
+        /// <description> AvailabilityStatuses_ListByResourceGroup. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2023-10-01-preview</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="filter"> The filter to apply on the operation. For more information please see https://docs.microsoft.com/en-us/rest/api/apimanagement/apis?redirectedfrom=MSDN. </param>
-        /// <param name="expand"> Setting $expand=recommendedactions in url query expands the recommendedactions in the response. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="ResourceHealthAvailabilityStatus"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<ResourceHealthAvailabilityStatus> GetAvailabilityStatusesByResourceGroupAsync(string filter = null, string expand = null, CancellationToken cancellationToken = default)
-        {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => AvailabilityStatusesRestClient.CreateListByResourceGroupRequest(Id.SubscriptionId, Id.ResourceGroupName, filter, expand);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => AvailabilityStatusesRestClient.CreateListByResourceGroupNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, filter, expand);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => ResourceHealthAvailabilityStatus.DeserializeResourceHealthAvailabilityStatus(e), AvailabilityStatusesClientDiagnostics, Pipeline, "MockableResourceHealthResourceGroupResource.GetAvailabilityStatusesByResourceGroup", "value", "nextLink", cancellationToken);
-        }
-
-        /// <summary>
-        /// Lists the current availability status for all the resources in the resource group.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ResourceHealth/availabilityStatuses</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>AvailabilityStatuses_ListByResourceGroup</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2023-10-01-preview</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-05-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -89,11 +59,57 @@ namespace Azure.ResourceManager.ResourceHealth.Mocking
         /// <param name="expand"> Setting $expand=recommendedactions in url query expands the recommendedactions in the response. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="ResourceHealthAvailabilityStatus"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<ResourceHealthAvailabilityStatus> GetAvailabilityStatusesByResourceGroup(string filter = null, string expand = null, CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<ResourceHealthAvailabilityStatus> GetAvailabilityStatusesByResourceGroupAsync(string filter = default, string expand = default, CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => AvailabilityStatusesRestClient.CreateListByResourceGroupRequest(Id.SubscriptionId, Id.ResourceGroupName, filter, expand);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => AvailabilityStatusesRestClient.CreateListByResourceGroupNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, filter, expand);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => ResourceHealthAvailabilityStatus.DeserializeResourceHealthAvailabilityStatus(e), AvailabilityStatusesClientDiagnostics, Pipeline, "MockableResourceHealthResourceGroupResource.GetAvailabilityStatusesByResourceGroup", "value", "nextLink", cancellationToken);
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new AvailabilityStatusesGetAvailabilityStatusesByResourceGroupAsyncCollectionResultOfT(
+                AvailabilityStatusesRestClient,
+                Id.SubscriptionId,
+                Id.ResourceGroupName,
+                filter,
+                expand,
+                context,
+                "MockableResourceHealthResourceGroupResource.GetAvailabilityStatusesByResourceGroup");
+        }
+
+        /// <summary>
+        /// Lists the current availability status for all the resources in the resource group.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ResourceHealth/availabilityStatuses. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> AvailabilityStatuses_ListByResourceGroup. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-05-01. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="filter"> The filter to apply on the operation. For more information please see https://docs.microsoft.com/en-us/rest/api/apimanagement/apis?redirectedfrom=MSDN. </param>
+        /// <param name="expand"> Setting $expand=recommendedactions in url query expands the recommendedactions in the response. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> A collection of <see cref="ResourceHealthAvailabilityStatus"/> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<ResourceHealthAvailabilityStatus> GetAvailabilityStatusesByResourceGroup(string filter = default, string expand = default, CancellationToken cancellationToken = default)
+        {
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new AvailabilityStatusesGetAvailabilityStatusesByResourceGroupCollectionResultOfT(
+                AvailabilityStatusesRestClient,
+                Id.SubscriptionId,
+                Id.ResourceGroupName,
+                filter,
+                expand,
+                context,
+                "MockableResourceHealthResourceGroupResource.GetAvailabilityStatusesByResourceGroup");
         }
     }
 }

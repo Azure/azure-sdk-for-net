@@ -68,7 +68,7 @@ namespace Azure.ResourceManager.Network.Samples
             NetworkWatcherResource networkWatcher = client.GetNetworkWatcherResource(networkWatcherResourceId);
 
             // invoke the operation
-            await networkWatcher.DeleteAsync(WaitUntil.Completed);
+            await networkWatcher.DeleteAsync(WaitUntil.Completed, cancellationToken: System.Threading.CancellationToken.None);
 
             Console.WriteLine("Succeeded");
         }
@@ -170,7 +170,7 @@ namespace Azure.ResourceManager.Network.Samples
                 "80",
                 "10.2.0.4",
                 "121.10.1.1");
-            ArmOperation<VerificationIPFlowResult> lro = await networkWatcher.VerifyIPFlowAsync(WaitUntil.Completed, content);
+            ArmOperation<VerificationIPFlowResult> lro = await networkWatcher.VerifyIPFlowAsync(WaitUntil.Completed, content, cancellationToken: System.Threading.CancellationToken.None);
             VerificationIPFlowResult result = lro.Value;
 
             Console.WriteLine($"Succeeded: {result}");
@@ -201,7 +201,7 @@ namespace Azure.ResourceManager.Network.Samples
             {
                 TargetNicResourceId = new ResourceIdentifier("/subscriptions/subid/resourceGroups/rg1/providers/Microsoft.Network/networkInterfaces/nic1"),
             };
-            ArmOperation<NextHopResult> lro = await networkWatcher.GetNextHopAsync(WaitUntil.Completed, content);
+            ArmOperation<NextHopResult> lro = await networkWatcher.GetNextHopAsync(WaitUntil.Completed, content, cancellationToken: System.Threading.CancellationToken.None);
             NextHopResult result = lro.Value;
 
             Console.WriteLine($"Succeeded: {result}");
@@ -229,7 +229,7 @@ namespace Azure.ResourceManager.Network.Samples
 
             // invoke the operation
             SecurityGroupViewContent content = new SecurityGroupViewContent(new ResourceIdentifier("/subscriptions/subid/resourceGroups/rg2/providers/Microsoft.Compute/virtualMachines/vm1"));
-            ArmOperation<SecurityGroupViewResult> lro = await networkWatcher.GetVmSecurityRulesAsync(WaitUntil.Completed, content);
+            ArmOperation<SecurityGroupViewResult> lro = await networkWatcher.GetVmSecurityRulesAsync(WaitUntil.Completed, content, System.Threading.CancellationToken.None);
             SecurityGroupViewResult result = lro.Value;
 
             Console.WriteLine($"Succeeded: {result}");
@@ -257,7 +257,7 @@ namespace Azure.ResourceManager.Network.Samples
 
             // invoke the operation
             TroubleshootingContent content = new TroubleshootingContent(new ResourceIdentifier("/subscriptions/subid/resourceGroups/rg2/providers/Microsoft.Compute/virtualMachines/vm1"), new ResourceIdentifier("/subscriptions/subid/resourceGroups/rg1/providers/Microsoft.Storage/storageAccounts/st1"), new Uri("https://st1.blob.core.windows.net/cn1"));
-            ArmOperation<TroubleshootingResult> lro = await networkWatcher.GetTroubleshootingAsync(WaitUntil.Completed, content);
+            ArmOperation<TroubleshootingResult> lro = await networkWatcher.GetTroubleshootingAsync(WaitUntil.Completed, content, cancellationToken: System.Threading.CancellationToken.None);
             TroubleshootingResult result = lro.Value;
 
             Console.WriteLine($"Succeeded: {result}");
@@ -285,7 +285,7 @@ namespace Azure.ResourceManager.Network.Samples
 
             // invoke the operation
             QueryTroubleshootingContent content = new QueryTroubleshootingContent(new ResourceIdentifier("/subscriptions/subid/resourceGroups/rg2/providers/Microsoft.Compute/virtualMachines/vm1"));
-            ArmOperation<TroubleshootingResult> lro = await networkWatcher.GetTroubleshootingResultAsync(WaitUntil.Completed, content);
+            ArmOperation<TroubleshootingResult> lro = await networkWatcher.GetTroubleshootingResultAsync(WaitUntil.Completed, content, cancellationToken: System.Threading.CancellationToken.None);
             TroubleshootingResult result = lro.Value;
 
             Console.WriteLine($"Succeeded: {result}");
@@ -322,7 +322,7 @@ namespace Azure.ResourceManager.Network.Samples
 },
                 },
             };
-            ArmOperation<FlowLogInformation> lro = await networkWatcher.SetFlowLogConfigurationAsync(WaitUntil.Completed, flowLogInformation);
+            ArmOperation<FlowLogInformation> lro = await networkWatcher.SetFlowLogConfigurationAsync(WaitUntil.Completed, flowLogInformation, cancellationToken: System.Threading.CancellationToken.None);
             FlowLogInformation result = lro.Value;
 
             Console.WriteLine($"Succeeded: {result}");
@@ -350,7 +350,7 @@ namespace Azure.ResourceManager.Network.Samples
 
             // invoke the operation
             FlowLogStatusContent content = new FlowLogStatusContent(new ResourceIdentifier("/subscriptions/subid/resourceGroups/rg1/providers/Microsoft.Network/networkSecurityGroups/nsg1"));
-            ArmOperation<FlowLogInformation> lro = await networkWatcher.GetFlowLogStatusAsync(WaitUntil.Completed, content);
+            ArmOperation<FlowLogInformation> lro = await networkWatcher.GetFlowLogStatusAsync(WaitUntil.Completed, content, cancellationToken: System.Threading.CancellationToken.None);
             FlowLogInformation result = lro.Value;
 
             Console.WriteLine($"Succeeded: {result}");
@@ -385,7 +385,7 @@ namespace Azure.ResourceManager.Network.Samples
             {
                 PreferredIPVersion = NetworkIPVersion.IPv4,
             };
-            ArmOperation<ConnectivityInformation> lro = await networkWatcher.CheckConnectivityAsync(WaitUntil.Completed, content);
+            ArmOperation<ConnectivityInformation> lro = await networkWatcher.CheckConnectivityAsync(WaitUntil.Completed, content, cancellationToken: System.Threading.CancellationToken.None);
             ConnectivityInformation result = lro.Value;
 
             Console.WriteLine($"Succeeded: {result}");
@@ -420,7 +420,7 @@ namespace Azure.ResourceManager.Network.Samples
                 Providers = { "Frontier Communications of America, Inc. - ASN 5650" },
                 AzureLocations = { new AzureLocation("West US") },
             };
-            ArmOperation<AzureReachabilityReport> lro = await networkWatcher.GetAzureReachabilityReportAsync(WaitUntil.Completed, content);
+            ArmOperation<AzureReachabilityReport> lro = await networkWatcher.GetAzureReachabilityReportAsync(WaitUntil.Completed, content, cancellationToken: System.Threading.CancellationToken.None);
             AzureReachabilityReport result = lro.Value;
 
             Console.WriteLine($"Succeeded: {result}");
@@ -454,7 +454,7 @@ namespace Azure.ResourceManager.Network.Samples
                 State = "washington",
                 City = "seattle",
             };
-            ArmOperation<AvailableProvidersList> lro = await networkWatcher.GetAvailableProvidersAsync(WaitUntil.Completed, content);
+            ArmOperation<AvailableProvidersList> lro = await networkWatcher.GetAvailableProvidersAsync(WaitUntil.Completed, content, cancellationToken: System.Threading.CancellationToken.None);
             AvailableProvidersList result = lro.Value;
 
             Console.WriteLine($"Succeeded: {result}");
@@ -485,7 +485,7 @@ namespace Azure.ResourceManager.Network.Samples
             {
 new NetworkConfigurationDiagnosticProfile(NetworkTrafficDirection.Inbound, "TCP", "10.1.0.4", "12.11.12.14", "12100")
             });
-            ArmOperation<NetworkConfigurationDiagnosticResponse> lro = await networkWatcher.GetNetworkConfigurationDiagnosticAsync(WaitUntil.Completed, content);
+            ArmOperation<NetworkConfigurationDiagnosticResponse> lro = await networkWatcher.GetNetworkConfigurationDiagnosticAsync(WaitUntil.Completed, content, cancellationToken: System.Threading.CancellationToken.None);
             NetworkConfigurationDiagnosticResponse result = lro.Value;
 
             Console.WriteLine($"Succeeded: {result}");

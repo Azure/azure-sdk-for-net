@@ -91,6 +91,10 @@ namespace Azure.Provisioning.ContainerService
             _transparentHugePageEnabled = DefineProperty<string>(nameof(TransparentHugePageEnabled), new string[] { "transparentHugePageEnabled" });
             _transparentHugePageDefrag = DefineProperty<string>(nameof(TransparentHugePageDefrag), new string[] { "transparentHugePageDefrag" });
             _swapFileSizeInMB = DefineProperty<int>(nameof(SwapFileSizeInMB), new string[] { "swapFileSizeMB" });
+            DefineAdditionalProperties();
         }
+
+        /// <summary> Define additional provisionable properties for LinuxOSConfig that are not part of the generated code. </summary>
+        partial void DefineAdditionalProperties();
     }
 }

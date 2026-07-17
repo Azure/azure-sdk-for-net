@@ -13,6 +13,7 @@ using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager;
+using Azure.ResourceManager.RedisEnterprise.Models;
 
 namespace Azure.ResourceManager.RedisEnterprise
 {
@@ -25,6 +26,8 @@ namespace Azure.ResourceManager.RedisEnterprise
     {
         private readonly ClientDiagnostics _migrationClientDiagnostics;
         private readonly Migration _migrationRestClient;
+        private readonly ClientDiagnostics _migrationsClientDiagnostics;
+        private readonly Migrations _migrationsRestClient;
         private readonly RedisEnterpriseMigrationData _data;
         /// <summary> Gets the resource type for the operations. </summary>
         public static readonly ResourceType ResourceType = "Microsoft.Cache/redisEnterprise/migrations";
@@ -51,6 +54,8 @@ namespace Azure.ResourceManager.RedisEnterprise
             TryGetApiVersion(ResourceType, out string redisEnterpriseMigrationApiVersion);
             _migrationClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.RedisEnterprise", ResourceType.Namespace, Diagnostics);
             _migrationRestClient = new Migration(_migrationClientDiagnostics, Pipeline, Endpoint, redisEnterpriseMigrationApiVersion ?? "2025-08-01-preview");
+            _migrationsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.RedisEnterprise", ResourceType.Namespace, Diagnostics);
+            _migrationsRestClient = new Migrations(_migrationsClientDiagnostics, Pipeline, Endpoint, redisEnterpriseMigrationApiVersion ?? "2025-08-01-preview");
             ValidateResourceId(id);
         }
 
@@ -130,7 +135,7 @@ namespace Azure.ResourceManager.RedisEnterprise
                 HttpMessage message = _migrationRestClient.CreateStartRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, RedisEnterpriseMigrationData.ToRequestContent(data), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 RedisEnterpriseArmOperation<RedisEnterpriseMigrationResource> operation = new RedisEnterpriseArmOperation<RedisEnterpriseMigrationResource>(
-                    new RedisEnterpriseMigrationOperationSource(Client),
+                    new RedisEnterpriseMigrationResourceOperationSource(Client),
                     _migrationClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -189,7 +194,7 @@ namespace Azure.ResourceManager.RedisEnterprise
                 HttpMessage message = _migrationRestClient.CreateStartRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, RedisEnterpriseMigrationData.ToRequestContent(data), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 RedisEnterpriseArmOperation<RedisEnterpriseMigrationResource> operation = new RedisEnterpriseArmOperation<RedisEnterpriseMigrationResource>(
-                    new RedisEnterpriseMigrationOperationSource(Client),
+                    new RedisEnterpriseMigrationResourceOperationSource(Client),
                     _migrationClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -394,6 +399,110 @@ namespace Azure.ResourceManager.RedisEnterprise
                     operation.WaitForCompletionResponse(cancellationToken);
                 }
                 return operation;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Validates if a source Azure Cache for Redis resource can be migrated to a target Azure Managed Redis resource.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Cache/redisEnterprise/{clusterName}/migrations/default/validate. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> Migrations_Validate. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-08-01-preview. </description>
+        /// </item>
+        /// <item>
+        /// <term> Resource. </term>
+        /// <description> <see cref="RedisEnterpriseMigrationResource"/>. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="content"> Parameters supplied to validate a migration operation. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        public virtual async Task<Response<RedisEnterpriseMigrationValidationResponseResult>> ValidateAsync(RedisEnterpriseMigrationValidationRequestContent content, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(content, nameof(content));
+
+            using DiagnosticScope scope = _migrationsClientDiagnostics.CreateScope("RedisEnterpriseMigrationResource.Validate");
+            scope.Start();
+            try
+            {
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _migrationsRestClient.CreateValidateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, RedisEnterpriseMigrationValidationRequestContent.ToRequestContent(content), context);
+                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                Response<RedisEnterpriseMigrationValidationResponseResult> response = Response.FromValue(RedisEnterpriseMigrationValidationResponseResult.FromResponse(result), result);
+                if (response.Value == null)
+                {
+                    throw new RequestFailedException(response.GetRawResponse());
+                }
+                return response;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Validates if a source Azure Cache for Redis resource can be migrated to a target Azure Managed Redis resource.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Cache/redisEnterprise/{clusterName}/migrations/default/validate. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> Migrations_Validate. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-08-01-preview. </description>
+        /// </item>
+        /// <item>
+        /// <term> Resource. </term>
+        /// <description> <see cref="RedisEnterpriseMigrationResource"/>. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="content"> Parameters supplied to validate a migration operation. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        public virtual Response<RedisEnterpriseMigrationValidationResponseResult> Validate(RedisEnterpriseMigrationValidationRequestContent content, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(content, nameof(content));
+
+            using DiagnosticScope scope = _migrationsClientDiagnostics.CreateScope("RedisEnterpriseMigrationResource.Validate");
+            scope.Start();
+            try
+            {
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _migrationsRestClient.CreateValidateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, RedisEnterpriseMigrationValidationRequestContent.ToRequestContent(content), context);
+                Response result = Pipeline.ProcessMessage(message, context);
+                Response<RedisEnterpriseMigrationValidationResponseResult> response = Response.FromValue(RedisEnterpriseMigrationValidationResponseResult.FromResponse(result), result);
+                if (response.Value == null)
+                {
+                    throw new RequestFailedException(response.GetRawResponse());
+                }
+                return response;
             }
             catch (Exception e)
             {

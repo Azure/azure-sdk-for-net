@@ -6,47 +6,36 @@
 #nullable disable
 
 using System;
-using System.Globalization;
+using System.Diagnostics;
 using System.Threading;
 using System.Threading.Tasks;
+using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
+using Azure.ResourceManager;
 using Azure.ResourceManager.CosmosDB.Models;
 
 namespace Azure.ResourceManager.CosmosDB
 {
     /// <summary>
-    /// A Class representing a MongoDBUserDefinition along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="MongoDBUserDefinitionResource"/>
-    /// from an instance of <see cref="ArmClient"/> using the GetMongoDBUserDefinitionResource method.
-    /// Otherwise you can get one from its parent resource <see cref="CosmosDBAccountResource"/> using the GetMongoDBUserDefinition method.
+    /// A class representing a MongoDBUserDefinition along with the instance operations that can be performed on it.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="MongoDBUserDefinitionResource"/> from an instance of <see cref="ArmClient"/> using the GetResource method.
+    /// Otherwise you can get one from its parent resource <see cref="CosmosDBAccountResource"/> using the GetMongoDBUserDefinitions method.
     /// </summary>
     public partial class MongoDBUserDefinitionResource : ArmResource
     {
-        /// <summary> Generate the resource identifier of a <see cref="MongoDBUserDefinitionResource"/> instance. </summary>
-        /// <param name="subscriptionId"> The subscriptionId. </param>
-        /// <param name="resourceGroupName"> The resourceGroupName. </param>
-        /// <param name="accountName"> The accountName. </param>
-        /// <param name="mongoUserDefinitionId"> The mongoUserDefinitionId. </param>
-        public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string accountName, string mongoUserDefinitionId)
-        {
-            var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DocumentDB/databaseAccounts/{accountName}/mongodbUserDefinitions/{mongoUserDefinitionId}";
-            return new ResourceIdentifier(resourceId);
-        }
-
-        private readonly ClientDiagnostics _mongoDBUserDefinitionMongoDBResourcesClientDiagnostics;
-        private readonly MongoDBResourcesRestOperations _mongoDBUserDefinitionMongoDBResourcesRestClient;
+        private readonly ClientDiagnostics _mongoDBResourcesClientDiagnostics;
+        private readonly MongoDBResources _mongoDBResourcesRestClient;
         private readonly MongoDBUserDefinitionData _data;
-
         /// <summary> Gets the resource type for the operations. </summary>
         public static readonly ResourceType ResourceType = "Microsoft.DocumentDB/databaseAccounts/mongodbUserDefinitions";
 
-        /// <summary> Initializes a new instance of the <see cref="MongoDBUserDefinitionResource"/> class for mocking. </summary>
+        /// <summary> Initializes a new instance of MongoDBUserDefinitionResource for mocking. </summary>
         protected MongoDBUserDefinitionResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref="MongoDBUserDefinitionResource"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="MongoDBUserDefinitionResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal MongoDBUserDefinitionResource(ArmClient client, MongoDBUserDefinitionData data) : this(client, data.Id)
@@ -55,71 +44,93 @@ namespace Azure.ResourceManager.CosmosDB
             _data = data;
         }
 
-        /// <summary> Initializes a new instance of the <see cref="MongoDBUserDefinitionResource"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="MongoDBUserDefinitionResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal MongoDBUserDefinitionResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _mongoDBUserDefinitionMongoDBResourcesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.CosmosDB", ResourceType.Namespace, Diagnostics);
-            TryGetApiVersion(ResourceType, out string mongoDBUserDefinitionMongoDBResourcesApiVersion);
-            _mongoDBUserDefinitionMongoDBResourcesRestClient = new MongoDBResourcesRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, mongoDBUserDefinitionMongoDBResourcesApiVersion);
-#if DEBUG
-			ValidateResourceId(Id);
-#endif
+            TryGetApiVersion(ResourceType, out string mongoDBUserDefinitionApiVersion);
+            _mongoDBResourcesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.CosmosDB", ResourceType.Namespace, Diagnostics);
+            _mongoDBResourcesRestClient = new MongoDBResources(_mongoDBResourcesClientDiagnostics, Pipeline, Endpoint, mongoDBUserDefinitionApiVersion ?? "2026-04-01-preview");
+            ValidateResourceId(id);
         }
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }
 
         /// <summary> Gets the data representing this Feature. </summary>
-        /// <exception cref="InvalidOperationException"> Throws if there is no data loaded in the current instance. </exception>
         public virtual MongoDBUserDefinitionData Data
         {
             get
             {
                 if (!HasData)
+                {
                     throw new InvalidOperationException("The current instance does not have data, you must call Get first.");
+                }
                 return _data;
             }
         }
 
+        /// <summary> Generate the resource identifier for this resource. </summary>
+        /// <param name="subscriptionId"> The subscriptionId. </param>
+        /// <param name="resourceGroupName"> The resourceGroupName. </param>
+        /// <param name="accountName"> The accountName. </param>
+        /// <param name="mongoUserDefinitionId"> The mongoUserDefinitionId. </param>
+        public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string accountName, string mongoUserDefinitionId)
+        {
+            string resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DocumentDB/databaseAccounts/{accountName}/mongodbUserDefinitions/{mongoUserDefinitionId}";
+            return new ResourceIdentifier(resourceId);
+        }
+
+        /// <param name="id"></param>
+        [Conditional("DEBUG")]
         internal static void ValidateResourceId(ResourceIdentifier id)
         {
             if (id.ResourceType != ResourceType)
-                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), nameof(id));
+            {
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), nameof(id));
+            }
         }
 
         /// <summary>
         /// Retrieves the properties of an existing Azure Cosmos DB Mongo User Definition with the given Id.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DocumentDB/databaseAccounts/{accountName}/mongodbUserDefinitions/{mongoUserDefinitionId}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DocumentDB/databaseAccounts/{accountName}/mongodbUserDefinitions/{mongoUserDefinitionId}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>MongoDBResources_GetMongoUserDefinition</description>
+        /// <term> Operation Id. </term>
+        /// <description> MongoUserDefinitionGetResultsOperationGroup_GetMongoUserDefinition. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-10-15</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-04-01-preview. </description>
         /// </item>
         /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="MongoDBUserDefinitionResource"/></description>
+        /// <term> Resource. </term>
+        /// <description> <see cref="MongoDBUserDefinitionResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<Response<MongoDBUserDefinitionResource>> GetAsync(CancellationToken cancellationToken = default)
         {
-            using var scope = _mongoDBUserDefinitionMongoDBResourcesClientDiagnostics.CreateScope("MongoDBUserDefinitionResource.Get");
+            using DiagnosticScope scope = _mongoDBResourcesClientDiagnostics.CreateScope("MongoDBUserDefinitionResource.Get");
             scope.Start();
             try
             {
-                var response = await _mongoDBUserDefinitionMongoDBResourcesRestClient.GetMongoUserDefinitionAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _mongoDBResourcesRestClient.CreateGetMongoUserDefinitionRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
+                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                Response<MongoDBUserDefinitionData> response = Response.FromValue(MongoDBUserDefinitionData.FromResponse(result), result);
                 if (response.Value == null)
+                {
                     throw new RequestFailedException(response.GetRawResponse());
+                }
                 return Response.FromValue(new MongoDBUserDefinitionResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -133,33 +144,41 @@ namespace Azure.ResourceManager.CosmosDB
         /// Retrieves the properties of an existing Azure Cosmos DB Mongo User Definition with the given Id.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DocumentDB/databaseAccounts/{accountName}/mongodbUserDefinitions/{mongoUserDefinitionId}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DocumentDB/databaseAccounts/{accountName}/mongodbUserDefinitions/{mongoUserDefinitionId}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>MongoDBResources_GetMongoUserDefinition</description>
+        /// <term> Operation Id. </term>
+        /// <description> MongoUserDefinitionGetResultsOperationGroup_GetMongoUserDefinition. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-10-15</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-04-01-preview. </description>
         /// </item>
         /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="MongoDBUserDefinitionResource"/></description>
+        /// <term> Resource. </term>
+        /// <description> <see cref="MongoDBUserDefinitionResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response<MongoDBUserDefinitionResource> Get(CancellationToken cancellationToken = default)
         {
-            using var scope = _mongoDBUserDefinitionMongoDBResourcesClientDiagnostics.CreateScope("MongoDBUserDefinitionResource.Get");
+            using DiagnosticScope scope = _mongoDBResourcesClientDiagnostics.CreateScope("MongoDBUserDefinitionResource.Get");
             scope.Start();
             try
             {
-                var response = _mongoDBUserDefinitionMongoDBResourcesRestClient.GetMongoUserDefinition(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _mongoDBResourcesRestClient.CreateGetMongoUserDefinitionRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
+                Response result = Pipeline.ProcessMessage(message, context);
+                Response<MongoDBUserDefinitionData> response = Response.FromValue(MongoDBUserDefinitionData.FromResponse(result), result);
                 if (response.Value == null)
+                {
                     throw new RequestFailedException(response.GetRawResponse());
+                }
                 return Response.FromValue(new MongoDBUserDefinitionResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -173,20 +192,20 @@ namespace Azure.ResourceManager.CosmosDB
         /// Deletes an existing Azure Cosmos DB Mongo User Definition.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DocumentDB/databaseAccounts/{accountName}/mongodbUserDefinitions/{mongoUserDefinitionId}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DocumentDB/databaseAccounts/{accountName}/mongodbUserDefinitions/{mongoUserDefinitionId}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>MongoDBResources_DeleteMongoUserDefinition</description>
+        /// <term> Operation Id. </term>
+        /// <description> MongoUserDefinitionGetResultsOperationGroup_DeleteMongoUserDefinition. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-10-15</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-04-01-preview. </description>
         /// </item>
         /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="MongoDBUserDefinitionResource"/></description>
+        /// <term> Resource. </term>
+        /// <description> <see cref="MongoDBUserDefinitionResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -194,14 +213,21 @@ namespace Azure.ResourceManager.CosmosDB
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<ArmOperation> DeleteAsync(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
-            using var scope = _mongoDBUserDefinitionMongoDBResourcesClientDiagnostics.CreateScope("MongoDBUserDefinitionResource.Delete");
+            using DiagnosticScope scope = _mongoDBResourcesClientDiagnostics.CreateScope("MongoDBUserDefinitionResource.Delete");
             scope.Start();
             try
             {
-                var response = await _mongoDBUserDefinitionMongoDBResourcesRestClient.DeleteMongoUserDefinitionAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
-                var operation = new CosmosDBArmOperation(_mongoDBUserDefinitionMongoDBResourcesClientDiagnostics, Pipeline, _mongoDBUserDefinitionMongoDBResourcesRestClient.CreateDeleteMongoUserDefinitionRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name).Request, response, OperationFinalStateVia.Location);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _mongoDBResourcesRestClient.CreateDeleteMongoUserDefinitionRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
+                Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                CosmosDBArmOperation operation = new CosmosDBArmOperation(_mongoDBResourcesClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
+                {
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
+                }
                 return operation;
             }
             catch (Exception e)
@@ -215,20 +241,20 @@ namespace Azure.ResourceManager.CosmosDB
         /// Deletes an existing Azure Cosmos DB Mongo User Definition.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DocumentDB/databaseAccounts/{accountName}/mongodbUserDefinitions/{mongoUserDefinitionId}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DocumentDB/databaseAccounts/{accountName}/mongodbUserDefinitions/{mongoUserDefinitionId}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>MongoDBResources_DeleteMongoUserDefinition</description>
+        /// <term> Operation Id. </term>
+        /// <description> MongoUserDefinitionGetResultsOperationGroup_DeleteMongoUserDefinition. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-10-15</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-04-01-preview. </description>
         /// </item>
         /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="MongoDBUserDefinitionResource"/></description>
+        /// <term> Resource. </term>
+        /// <description> <see cref="MongoDBUserDefinitionResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -236,14 +262,21 @@ namespace Azure.ResourceManager.CosmosDB
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual ArmOperation Delete(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
-            using var scope = _mongoDBUserDefinitionMongoDBResourcesClientDiagnostics.CreateScope("MongoDBUserDefinitionResource.Delete");
+            using DiagnosticScope scope = _mongoDBResourcesClientDiagnostics.CreateScope("MongoDBUserDefinitionResource.Delete");
             scope.Start();
             try
             {
-                var response = _mongoDBUserDefinitionMongoDBResourcesRestClient.DeleteMongoUserDefinition(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
-                var operation = new CosmosDBArmOperation(_mongoDBUserDefinitionMongoDBResourcesClientDiagnostics, Pipeline, _mongoDBUserDefinitionMongoDBResourcesRestClient.CreateDeleteMongoUserDefinitionRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name).Request, response, OperationFinalStateVia.Location);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _mongoDBResourcesRestClient.CreateDeleteMongoUserDefinitionRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
+                Response response = Pipeline.ProcessMessage(message, context);
+                CosmosDBArmOperation operation = new CosmosDBArmOperation(_mongoDBResourcesClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
+                {
                     operation.WaitForCompletionResponse(cancellationToken);
+                }
                 return operation;
             }
             catch (Exception e)
@@ -254,23 +287,23 @@ namespace Azure.ResourceManager.CosmosDB
         }
 
         /// <summary>
-        /// Creates or updates an Azure Cosmos DB Mongo User Definition.
+        /// Update a MongoDBUserDefinition.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DocumentDB/databaseAccounts/{accountName}/mongodbUserDefinitions/{mongoUserDefinitionId}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DocumentDB/databaseAccounts/{accountName}/mongodbUserDefinitions/{mongoUserDefinitionId}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>MongoDBResources_CreateUpdateMongoUserDefinition</description>
+        /// <term> Operation Id. </term>
+        /// <description> MongoUserDefinitionGetResultsOperationGroup_CreateUpdateMongoUserDefinition. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-10-15</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-04-01-preview. </description>
         /// </item>
         /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="MongoDBUserDefinitionResource"/></description>
+        /// <term> Resource. </term>
+        /// <description> <see cref="MongoDBUserDefinitionResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -282,14 +315,27 @@ namespace Azure.ResourceManager.CosmosDB
         {
             Argument.AssertNotNull(content, nameof(content));
 
-            using var scope = _mongoDBUserDefinitionMongoDBResourcesClientDiagnostics.CreateScope("MongoDBUserDefinitionResource.Update");
+            using DiagnosticScope scope = _mongoDBResourcesClientDiagnostics.CreateScope("MongoDBUserDefinitionResource.Update");
             scope.Start();
             try
             {
-                var response = await _mongoDBUserDefinitionMongoDBResourcesRestClient.CreateUpdateMongoUserDefinitionAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, content, cancellationToken).ConfigureAwait(false);
-                var operation = new CosmosDBArmOperation<MongoDBUserDefinitionResource>(new MongoDBUserDefinitionOperationSource(Client), _mongoDBUserDefinitionMongoDBResourcesClientDiagnostics, Pipeline, _mongoDBUserDefinitionMongoDBResourcesRestClient.CreateCreateUpdateMongoUserDefinitionRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, content).Request, response, OperationFinalStateVia.Location);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _mongoDBResourcesRestClient.CreateCreateUpdateMongoUserDefinitionRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, MongoDBUserDefinitionCreateOrUpdateContent.ToRequestContent(content), context);
+                Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                CosmosDBArmOperation<MongoDBUserDefinitionResource> operation = new CosmosDBArmOperation<MongoDBUserDefinitionResource>(
+                    new MongoDBUserDefinitionResourceOperationSource(Client),
+                    _mongoDBResourcesClientDiagnostics,
+                    Pipeline,
+                    message.Request,
+                    response,
+                    OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
+                {
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
+                }
                 return operation;
             }
             catch (Exception e)
@@ -300,23 +346,23 @@ namespace Azure.ResourceManager.CosmosDB
         }
 
         /// <summary>
-        /// Creates or updates an Azure Cosmos DB Mongo User Definition.
+        /// Update a MongoDBUserDefinition.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DocumentDB/databaseAccounts/{accountName}/mongodbUserDefinitions/{mongoUserDefinitionId}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DocumentDB/databaseAccounts/{accountName}/mongodbUserDefinitions/{mongoUserDefinitionId}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>MongoDBResources_CreateUpdateMongoUserDefinition</description>
+        /// <term> Operation Id. </term>
+        /// <description> MongoUserDefinitionGetResultsOperationGroup_CreateUpdateMongoUserDefinition. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-10-15</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-04-01-preview. </description>
         /// </item>
         /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="MongoDBUserDefinitionResource"/></description>
+        /// <term> Resource. </term>
+        /// <description> <see cref="MongoDBUserDefinitionResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -328,14 +374,27 @@ namespace Azure.ResourceManager.CosmosDB
         {
             Argument.AssertNotNull(content, nameof(content));
 
-            using var scope = _mongoDBUserDefinitionMongoDBResourcesClientDiagnostics.CreateScope("MongoDBUserDefinitionResource.Update");
+            using DiagnosticScope scope = _mongoDBResourcesClientDiagnostics.CreateScope("MongoDBUserDefinitionResource.Update");
             scope.Start();
             try
             {
-                var response = _mongoDBUserDefinitionMongoDBResourcesRestClient.CreateUpdateMongoUserDefinition(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, content, cancellationToken);
-                var operation = new CosmosDBArmOperation<MongoDBUserDefinitionResource>(new MongoDBUserDefinitionOperationSource(Client), _mongoDBUserDefinitionMongoDBResourcesClientDiagnostics, Pipeline, _mongoDBUserDefinitionMongoDBResourcesRestClient.CreateCreateUpdateMongoUserDefinitionRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, content).Request, response, OperationFinalStateVia.Location);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _mongoDBResourcesRestClient.CreateCreateUpdateMongoUserDefinitionRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, MongoDBUserDefinitionCreateOrUpdateContent.ToRequestContent(content), context);
+                Response response = Pipeline.ProcessMessage(message, context);
+                CosmosDBArmOperation<MongoDBUserDefinitionResource> operation = new CosmosDBArmOperation<MongoDBUserDefinitionResource>(
+                    new MongoDBUserDefinitionResourceOperationSource(Client),
+                    _mongoDBResourcesClientDiagnostics,
+                    Pipeline,
+                    message.Request,
+                    response,
+                    OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
+                {
                     operation.WaitForCompletion(cancellationToken);
+                }
                 return operation;
             }
             catch (Exception e)

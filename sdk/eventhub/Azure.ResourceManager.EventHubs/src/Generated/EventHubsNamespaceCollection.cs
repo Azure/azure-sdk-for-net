@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.EventHubs
         {
             TryGetApiVersion(EventHubsNamespaceResource.ResourceType, out string eventHubsNamespaceApiVersion);
             _namespacesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.EventHubs", EventHubsNamespaceResource.ResourceType.Namespace, Diagnostics);
-            _namespacesRestClient = new Namespaces(_namespacesClientDiagnostics, Pipeline, Endpoint, eventHubsNamespaceApiVersion ?? "2025-05-01-preview");
+            _namespacesRestClient = new Namespaces(_namespacesClientDiagnostics, Pipeline, Endpoint, eventHubsNamespaceApiVersion ?? "2026-01-01");
             ValidateResourceId(id);
         }
 
@@ -68,7 +68,7 @@ namespace Azure.ResourceManager.EventHubs
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-05-01-preview. </description>
+        /// <description> 2026-01-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -94,7 +94,7 @@ namespace Azure.ResourceManager.EventHubs
                 HttpMessage message = _namespacesRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, namespaceName, EventHubsNamespaceData.ToRequestContent(data), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 EventHubsArmOperation<EventHubsNamespaceResource> operation = new EventHubsArmOperation<EventHubsNamespaceResource>(
-                    new EventHubsNamespaceOperationSource(Client),
+                    new EventHubsNamespaceResourceOperationSource(Client),
                     _namespacesClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -126,7 +126,7 @@ namespace Azure.ResourceManager.EventHubs
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-05-01-preview. </description>
+        /// <description> 2026-01-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -152,7 +152,7 @@ namespace Azure.ResourceManager.EventHubs
                 HttpMessage message = _namespacesRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, namespaceName, EventHubsNamespaceData.ToRequestContent(data), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 EventHubsArmOperation<EventHubsNamespaceResource> operation = new EventHubsArmOperation<EventHubsNamespaceResource>(
-                    new EventHubsNamespaceOperationSource(Client),
+                    new EventHubsNamespaceResourceOperationSource(Client),
                     _namespacesClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -184,7 +184,7 @@ namespace Azure.ResourceManager.EventHubs
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-05-01-preview. </description>
+        /// <description> 2026-01-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -233,7 +233,7 @@ namespace Azure.ResourceManager.EventHubs
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-05-01-preview. </description>
+        /// <description> 2026-01-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -282,7 +282,7 @@ namespace Azure.ResourceManager.EventHubs
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-05-01-preview. </description>
+        /// <description> 2026-01-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -310,7 +310,7 @@ namespace Azure.ResourceManager.EventHubs
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-05-01-preview. </description>
+        /// <description> 2026-01-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -338,7 +338,7 @@ namespace Azure.ResourceManager.EventHubs
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-05-01-preview. </description>
+        /// <description> 2026-01-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -395,7 +395,7 @@ namespace Azure.ResourceManager.EventHubs
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-05-01-preview. </description>
+        /// <description> 2026-01-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -452,7 +452,7 @@ namespace Azure.ResourceManager.EventHubs
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-05-01-preview. </description>
+        /// <description> 2026-01-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -513,7 +513,7 @@ namespace Azure.ResourceManager.EventHubs
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-05-01-preview. </description>
+        /// <description> 2026-01-01. </description>
         /// </item>
         /// </list>
         /// </summary>

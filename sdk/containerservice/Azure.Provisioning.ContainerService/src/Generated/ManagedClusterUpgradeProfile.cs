@@ -24,7 +24,7 @@ namespace Azure.Provisioning.ContainerService
         /// <summary> Creates a new ManagedClusterUpgradeProfile. </summary>
         /// <param name="bicepIdentifier"> The bicep identifier name. </param>
         /// <param name="resourceVersion"> The resource API version. </param>
-        public ManagedClusterUpgradeProfile(string bicepIdentifier, string resourceVersion = null) : base(bicepIdentifier, "Microsoft.ContainerService/managedClusters/upgradeProfiles", resourceVersion ?? "2026-01-01")
+        internal ManagedClusterUpgradeProfile(string bicepIdentifier, string resourceVersion = null) : base(bicepIdentifier, "Microsoft.ContainerService/managedClusters/upgradeProfiles", resourceVersion ?? "2026-01-01")
         {
         }
 
@@ -38,18 +38,13 @@ namespace Azure.Provisioning.ContainerService
             }
         }
 
-        /// <summary> Gets or sets the Name. </summary>
+        /// <summary> Gets the Name. </summary>
         public BicepValue<string> Name
         {
             get
             {
                 Initialize();
                 return _name;
-            }
-            set
-            {
-                Initialize();
-                _name.Assign(value);
             }
         }
 
@@ -63,18 +58,13 @@ namespace Azure.Provisioning.ContainerService
             }
         }
 
-        /// <summary> Gets or sets the Properties. </summary>
+        /// <summary> Gets the Properties. </summary>
         internal ManagedClusterUpgradeProfileProperties Properties
         {
             get
             {
                 Initialize();
                 return _properties;
-            }
-            set
-            {
-                Initialize();
-                AssignOrReplace(ref _properties, value);
             }
         }
 
@@ -93,37 +83,21 @@ namespace Azure.Provisioning.ContainerService
             }
         }
 
-        /// <summary> Gets or sets the ControlPlaneProfile. </summary>
+        /// <summary> Gets the ControlPlaneProfile. </summary>
         public ManagedClusterPoolUpgradeProfile ControlPlaneProfile
         {
             get
             {
-                return Properties is null ? default : Properties.ControlPlaneProfile;
-            }
-            set
-            {
-                if (Properties is null)
-                {
-                    Properties = new ManagedClusterUpgradeProfileProperties();
-                }
-                Properties.ControlPlaneProfile = value;
+                return Properties.ControlPlaneProfile;
             }
         }
 
-        /// <summary> Gets or sets the AgentPoolProfiles. </summary>
+        /// <summary> Gets the AgentPoolProfiles. </summary>
         public BicepList<ManagedClusterPoolUpgradeProfile> AgentPoolProfiles
         {
             get
             {
-                return Properties is null ? default : Properties.AgentPoolProfiles;
-            }
-            set
-            {
-                if (Properties is null)
-                {
-                    Properties = new ManagedClusterUpgradeProfileProperties();
-                }
-                Properties.AgentPoolProfiles = value;
+                return Properties.AgentPoolProfiles;
             }
         }
 
@@ -132,9 +106,9 @@ namespace Azure.Provisioning.ContainerService
         {
             base.DefineProvisionableProperties();
             _id = DefineProperty<ResourceIdentifier>(nameof(Id), new string[] { "id" }, isOutput: true);
-            _name = DefineProperty<string>(nameof(Name), new string[] { "name" }, isRequired: true);
+            _name = DefineProperty<string>(nameof(Name), new string[] { "name" }, isRequired: true, defaultValue: "default");
             _systemData = DefineModelProperty<SystemData>(nameof(SystemData), new string[] { "systemData" }, isOutput: true);
-            _properties = DefineModelProperty<ManagedClusterUpgradeProfileProperties>(nameof(Properties), new string[] { "properties" }, isRequired: true);
+            _properties = DefineModelProperty<ManagedClusterUpgradeProfileProperties>(nameof(Properties), new string[] { "properties" });
             _parent = DefineResource<ContainerServiceManagedCluster>("Parent", new string[] { "parent" }, isRequired: true);
             DefineAdditionalProperties();
         }

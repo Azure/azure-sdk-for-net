@@ -8,12 +8,13 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.Globalization;
+using System.Diagnostics;
 using System.Threading;
 using System.Threading.Tasks;
-using Autorest.CSharp.Core;
+using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
+using Azure.ResourceManager;
 using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.ManagedNetworkFabric
@@ -25,69 +26,75 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
     /// </summary>
     public partial class NetworkDeviceSkuCollection : ArmCollection, IEnumerable<NetworkDeviceSkuResource>, IAsyncEnumerable<NetworkDeviceSkuResource>
     {
-        private readonly ClientDiagnostics _networkDeviceSkuClientDiagnostics;
-        private readonly NetworkDeviceSkusRestOperations _networkDeviceSkuRestClient;
+        private readonly ClientDiagnostics _networkDeviceSkusClientDiagnostics;
+        private readonly NetworkDeviceSkus _networkDeviceSkusRestClient;
 
-        /// <summary> Initializes a new instance of the <see cref="NetworkDeviceSkuCollection"/> class for mocking. </summary>
+        /// <summary> Initializes a new instance of NetworkDeviceSkuCollection for mocking. </summary>
         protected NetworkDeviceSkuCollection()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref="NetworkDeviceSkuCollection"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="NetworkDeviceSkuCollection"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
-        /// <param name="id"> The identifier of the parent resource that is the target of operations. </param>
+        /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal NetworkDeviceSkuCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _networkDeviceSkuClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ManagedNetworkFabric", NetworkDeviceSkuResource.ResourceType.Namespace, Diagnostics);
             TryGetApiVersion(NetworkDeviceSkuResource.ResourceType, out string networkDeviceSkuApiVersion);
-            _networkDeviceSkuRestClient = new NetworkDeviceSkusRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, networkDeviceSkuApiVersion);
-#if DEBUG
-			ValidateResourceId(Id);
-#endif
+            _networkDeviceSkusClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ManagedNetworkFabric", NetworkDeviceSkuResource.ResourceType.Namespace, Diagnostics);
+            _networkDeviceSkusRestClient = new NetworkDeviceSkus(_networkDeviceSkusClientDiagnostics, Pipeline, Endpoint, networkDeviceSkuApiVersion ?? "2025-07-15");
+            ValidateResourceId(id);
         }
 
+        /// <param name="id"></param>
+        [Conditional("DEBUG")]
         internal static void ValidateResourceId(ResourceIdentifier id)
         {
             if (id.ResourceType != SubscriptionResource.ResourceType)
-                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, SubscriptionResource.ResourceType), nameof(id));
+            {
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, SubscriptionResource.ResourceType), nameof(id));
+            }
         }
 
         /// <summary>
         /// Get a Network Device SKU details.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.ManagedNetworkFabric/networkDeviceSkus/{networkDeviceSkuName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.ManagedNetworkFabric/networkDeviceSkus/{networkDeviceSkuName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>NetworkDeviceSkus_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> NetworkDeviceSkus_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-07-15</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="NetworkDeviceSkuResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-07-15. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="networkDeviceSkuName"> Name of the Network Device SKU. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="networkDeviceSkuName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="networkDeviceSkuName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="networkDeviceSkuName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual async Task<Response<NetworkDeviceSkuResource>> GetAsync(string networkDeviceSkuName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(networkDeviceSkuName, nameof(networkDeviceSkuName));
 
-            using var scope = _networkDeviceSkuClientDiagnostics.CreateScope("NetworkDeviceSkuCollection.Get");
+            using DiagnosticScope scope = _networkDeviceSkusClientDiagnostics.CreateScope("NetworkDeviceSkuCollection.Get");
             scope.Start();
             try
             {
-                var response = await _networkDeviceSkuRestClient.GetAsync(Id.SubscriptionId, networkDeviceSkuName, cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _networkDeviceSkusRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), networkDeviceSkuName, context);
+                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                Response<NetworkDeviceSkuData> response = Response.FromValue(NetworkDeviceSkuData.FromResponse(result), result);
                 if (response.Value == null)
+                {
                     throw new RequestFailedException(response.GetRawResponse());
+                }
                 return Response.FromValue(new NetworkDeviceSkuResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -101,38 +108,42 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         /// Get a Network Device SKU details.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.ManagedNetworkFabric/networkDeviceSkus/{networkDeviceSkuName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.ManagedNetworkFabric/networkDeviceSkus/{networkDeviceSkuName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>NetworkDeviceSkus_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> NetworkDeviceSkus_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-07-15</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="NetworkDeviceSkuResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-07-15. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="networkDeviceSkuName"> Name of the Network Device SKU. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="networkDeviceSkuName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="networkDeviceSkuName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="networkDeviceSkuName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual Response<NetworkDeviceSkuResource> Get(string networkDeviceSkuName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(networkDeviceSkuName, nameof(networkDeviceSkuName));
 
-            using var scope = _networkDeviceSkuClientDiagnostics.CreateScope("NetworkDeviceSkuCollection.Get");
+            using DiagnosticScope scope = _networkDeviceSkusClientDiagnostics.CreateScope("NetworkDeviceSkuCollection.Get");
             scope.Start();
             try
             {
-                var response = _networkDeviceSkuRestClient.Get(Id.SubscriptionId, networkDeviceSkuName, cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _networkDeviceSkusRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), networkDeviceSkuName, context);
+                Response result = Pipeline.ProcessMessage(message, context);
+                Response<NetworkDeviceSkuData> response = Response.FromValue(NetworkDeviceSkuData.FromResponse(result), result);
                 if (response.Value == null)
+                {
                     throw new RequestFailedException(response.GetRawResponse());
+                }
                 return Response.FromValue(new NetworkDeviceSkuResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -146,50 +157,44 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         /// List Network Device SKUs for the given subscription.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.ManagedNetworkFabric/networkDeviceSkus</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.ManagedNetworkFabric/networkDeviceSkus. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>NetworkDeviceSkus_ListBySubscription</description>
+        /// <term> Operation Id. </term>
+        /// <description> NetworkDeviceSkus_ListBySubscription. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-07-15</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="NetworkDeviceSkuResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-07-15. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="NetworkDeviceSkuResource"/> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="NetworkDeviceSkuResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<NetworkDeviceSkuResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _networkDeviceSkuRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _networkDeviceSkuRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new NetworkDeviceSkuResource(Client, NetworkDeviceSkuData.DeserializeNetworkDeviceSkuData(e)), _networkDeviceSkuClientDiagnostics, Pipeline, "NetworkDeviceSkuCollection.GetAll", "value", "nextLink", cancellationToken);
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new AsyncPageableWrapper<NetworkDeviceSkuData, NetworkDeviceSkuResource>(new NetworkDeviceSkusGetBySubscriptionAsyncCollectionResultOfT(_networkDeviceSkusRestClient, Guid.Parse(Id.SubscriptionId), context, "NetworkDeviceSkuCollection.GetAll"), data => new NetworkDeviceSkuResource(Client, data));
         }
 
         /// <summary>
         /// List Network Device SKUs for the given subscription.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.ManagedNetworkFabric/networkDeviceSkus</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.ManagedNetworkFabric/networkDeviceSkus. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>NetworkDeviceSkus_ListBySubscription</description>
+        /// <term> Operation Id. </term>
+        /// <description> NetworkDeviceSkus_ListBySubscription. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-07-15</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="NetworkDeviceSkuResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-07-15. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -197,45 +202,61 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         /// <returns> A collection of <see cref="NetworkDeviceSkuResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<NetworkDeviceSkuResource> GetAll(CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _networkDeviceSkuRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _networkDeviceSkuRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new NetworkDeviceSkuResource(Client, NetworkDeviceSkuData.DeserializeNetworkDeviceSkuData(e)), _networkDeviceSkuClientDiagnostics, Pipeline, "NetworkDeviceSkuCollection.GetAll", "value", "nextLink", cancellationToken);
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new PageableWrapper<NetworkDeviceSkuData, NetworkDeviceSkuResource>(new NetworkDeviceSkusGetBySubscriptionCollectionResultOfT(_networkDeviceSkusRestClient, Guid.Parse(Id.SubscriptionId), context, "NetworkDeviceSkuCollection.GetAll"), data => new NetworkDeviceSkuResource(Client, data));
         }
 
         /// <summary>
         /// Checks to see if the resource exists in azure.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.ManagedNetworkFabric/networkDeviceSkus/{networkDeviceSkuName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.ManagedNetworkFabric/networkDeviceSkus/{networkDeviceSkuName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>NetworkDeviceSkus_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> NetworkDeviceSkus_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-07-15</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="NetworkDeviceSkuResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-07-15. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="networkDeviceSkuName"> Name of the Network Device SKU. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="networkDeviceSkuName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="networkDeviceSkuName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="networkDeviceSkuName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual async Task<Response<bool>> ExistsAsync(string networkDeviceSkuName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(networkDeviceSkuName, nameof(networkDeviceSkuName));
 
-            using var scope = _networkDeviceSkuClientDiagnostics.CreateScope("NetworkDeviceSkuCollection.Exists");
+            using DiagnosticScope scope = _networkDeviceSkusClientDiagnostics.CreateScope("NetworkDeviceSkuCollection.Exists");
             scope.Start();
             try
             {
-                var response = await _networkDeviceSkuRestClient.GetAsync(Id.SubscriptionId, networkDeviceSkuName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _networkDeviceSkusRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), networkDeviceSkuName, context);
+                await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
+                Response result = message.Response;
+                Response<NetworkDeviceSkuData> response = default;
+                switch (result.Status)
+                {
+                    case 200:
+                        response = Response.FromValue(NetworkDeviceSkuData.FromResponse(result), result);
+                        break;
+                    case 404:
+                        response = Response.FromValue((NetworkDeviceSkuData)null, result);
+                        break;
+                    default:
+                        throw new RequestFailedException(result);
+                }
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -249,36 +270,50 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         /// Checks to see if the resource exists in azure.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.ManagedNetworkFabric/networkDeviceSkus/{networkDeviceSkuName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.ManagedNetworkFabric/networkDeviceSkus/{networkDeviceSkuName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>NetworkDeviceSkus_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> NetworkDeviceSkus_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-07-15</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="NetworkDeviceSkuResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-07-15. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="networkDeviceSkuName"> Name of the Network Device SKU. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="networkDeviceSkuName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="networkDeviceSkuName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="networkDeviceSkuName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual Response<bool> Exists(string networkDeviceSkuName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(networkDeviceSkuName, nameof(networkDeviceSkuName));
 
-            using var scope = _networkDeviceSkuClientDiagnostics.CreateScope("NetworkDeviceSkuCollection.Exists");
+            using DiagnosticScope scope = _networkDeviceSkusClientDiagnostics.CreateScope("NetworkDeviceSkuCollection.Exists");
             scope.Start();
             try
             {
-                var response = _networkDeviceSkuRestClient.Get(Id.SubscriptionId, networkDeviceSkuName, cancellationToken: cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _networkDeviceSkusRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), networkDeviceSkuName, context);
+                Pipeline.Send(message, context.CancellationToken);
+                Response result = message.Response;
+                Response<NetworkDeviceSkuData> response = default;
+                switch (result.Status)
+                {
+                    case 200:
+                        response = Response.FromValue(NetworkDeviceSkuData.FromResponse(result), result);
+                        break;
+                    case 404:
+                        response = Response.FromValue((NetworkDeviceSkuData)null, result);
+                        break;
+                    default:
+                        throw new RequestFailedException(result);
+                }
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -292,38 +327,54 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         /// Tries to get details for this resource from the service.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.ManagedNetworkFabric/networkDeviceSkus/{networkDeviceSkuName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.ManagedNetworkFabric/networkDeviceSkus/{networkDeviceSkuName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>NetworkDeviceSkus_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> NetworkDeviceSkus_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-07-15</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="NetworkDeviceSkuResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-07-15. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="networkDeviceSkuName"> Name of the Network Device SKU. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="networkDeviceSkuName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="networkDeviceSkuName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="networkDeviceSkuName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual async Task<NullableResponse<NetworkDeviceSkuResource>> GetIfExistsAsync(string networkDeviceSkuName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(networkDeviceSkuName, nameof(networkDeviceSkuName));
 
-            using var scope = _networkDeviceSkuClientDiagnostics.CreateScope("NetworkDeviceSkuCollection.GetIfExists");
+            using DiagnosticScope scope = _networkDeviceSkusClientDiagnostics.CreateScope("NetworkDeviceSkuCollection.GetIfExists");
             scope.Start();
             try
             {
-                var response = await _networkDeviceSkuRestClient.GetAsync(Id.SubscriptionId, networkDeviceSkuName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _networkDeviceSkusRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), networkDeviceSkuName, context);
+                await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
+                Response result = message.Response;
+                Response<NetworkDeviceSkuData> response = default;
+                switch (result.Status)
+                {
+                    case 200:
+                        response = Response.FromValue(NetworkDeviceSkuData.FromResponse(result), result);
+                        break;
+                    case 404:
+                        response = Response.FromValue((NetworkDeviceSkuData)null, result);
+                        break;
+                    default:
+                        throw new RequestFailedException(result);
+                }
                 if (response.Value == null)
+                {
                     return new NoValueResponse<NetworkDeviceSkuResource>(response.GetRawResponse());
+                }
                 return Response.FromValue(new NetworkDeviceSkuResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -337,38 +388,54 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         /// Tries to get details for this resource from the service.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.ManagedNetworkFabric/networkDeviceSkus/{networkDeviceSkuName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.ManagedNetworkFabric/networkDeviceSkus/{networkDeviceSkuName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>NetworkDeviceSkus_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> NetworkDeviceSkus_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-07-15</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="NetworkDeviceSkuResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-07-15. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="networkDeviceSkuName"> Name of the Network Device SKU. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="networkDeviceSkuName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="networkDeviceSkuName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="networkDeviceSkuName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual NullableResponse<NetworkDeviceSkuResource> GetIfExists(string networkDeviceSkuName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(networkDeviceSkuName, nameof(networkDeviceSkuName));
 
-            using var scope = _networkDeviceSkuClientDiagnostics.CreateScope("NetworkDeviceSkuCollection.GetIfExists");
+            using DiagnosticScope scope = _networkDeviceSkusClientDiagnostics.CreateScope("NetworkDeviceSkuCollection.GetIfExists");
             scope.Start();
             try
             {
-                var response = _networkDeviceSkuRestClient.Get(Id.SubscriptionId, networkDeviceSkuName, cancellationToken: cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _networkDeviceSkusRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), networkDeviceSkuName, context);
+                Pipeline.Send(message, context.CancellationToken);
+                Response result = message.Response;
+                Response<NetworkDeviceSkuData> response = default;
+                switch (result.Status)
+                {
+                    case 200:
+                        response = Response.FromValue(NetworkDeviceSkuData.FromResponse(result), result);
+                        break;
+                    case 404:
+                        response = Response.FromValue((NetworkDeviceSkuData)null, result);
+                        break;
+                    default:
+                        throw new RequestFailedException(result);
+                }
                 if (response.Value == null)
+                {
                     return new NoValueResponse<NetworkDeviceSkuResource>(response.GetRawResponse());
+                }
                 return Response.FromValue(new NetworkDeviceSkuResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -388,6 +455,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
             return GetAll().GetEnumerator();
         }
 
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
         IAsyncEnumerator<NetworkDeviceSkuResource> IAsyncEnumerable<NetworkDeviceSkuResource>.GetAsyncEnumerator(CancellationToken cancellationToken)
         {
             return GetAllAsync(cancellationToken: cancellationToken).GetAsyncEnumerator(cancellationToken);

@@ -10,13 +10,55 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.PolicyInsights;
 
 namespace Azure.ResourceManager.PolicyInsights.Models
 {
-    public partial class PolicyDefinitionSummary : IUtf8JsonSerializable, IJsonModel<PolicyDefinitionSummary>
+    /// <summary> Policy definition summary. </summary>
+    public partial class PolicyDefinitionSummary : IJsonModel<PolicyDefinitionSummary>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<PolicyDefinitionSummary>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual PolicyDefinitionSummary PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<PolicyDefinitionSummary>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    {
+                        return DeserializePolicyDefinitionSummary(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(PolicyDefinitionSummary)} does not support reading '{options.Format}' format.");
+            }
+        }
 
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<PolicyDefinitionSummary>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerPolicyInsightsContext.Default);
+                default:
+                    throw new FormatException($"The model {nameof(PolicyDefinitionSummary)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<PolicyDefinitionSummary>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        PolicyDefinitionSummary IPersistableModel<PolicyDefinitionSummary>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<PolicyDefinitionSummary>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<PolicyDefinitionSummary>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
@@ -28,12 +70,11 @@ namespace Azure.ResourceManager.PolicyInsights.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<PolicyDefinitionSummary>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<PolicyDefinitionSummary>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(PolicyDefinitionSummary)} does not support writing '{format}' format.");
             }
-
             if (Optional.IsDefined(PolicyDefinitionId))
             {
                 writer.WritePropertyName("policyDefinitionId"u8);
@@ -48,8 +89,13 @@ namespace Azure.ResourceManager.PolicyInsights.Models
             {
                 writer.WritePropertyName("policyDefinitionGroupNames"u8);
                 writer.WriteStartArray();
-                foreach (var item in PolicyDefinitionGroupNames)
+                foreach (string item in PolicyDefinitionGroupNames)
                 {
+                    if (item == null)
+                    {
+                        writer.WriteNullValue();
+                        continue;
+                    }
                     writer.WriteStringValue(item);
                 }
                 writer.WriteEndArray();
@@ -64,15 +110,15 @@ namespace Azure.ResourceManager.PolicyInsights.Models
                 writer.WritePropertyName("results"u8);
                 writer.WriteObjectValue(Results, options);
             }
-            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
-                foreach (var item in _serializedAdditionalRawData)
+                foreach (var item in _additionalBinaryDataProperties)
                 {
                     writer.WritePropertyName(item.Key);
 #if NET6_0_OR_GREATER
-				writer.WriteRawValue(item.Value);
+                    writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value, ModelSerializationExtensions.JsonDocumentOptions))
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
                     {
                         JsonSerializer.Serialize(writer, document.RootElement);
                     }
@@ -81,22 +127,27 @@ namespace Azure.ResourceManager.PolicyInsights.Models
             }
         }
 
-        PolicyDefinitionSummary IJsonModel<PolicyDefinitionSummary>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        PolicyDefinitionSummary IJsonModel<PolicyDefinitionSummary>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual PolicyDefinitionSummary JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<PolicyDefinitionSummary>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<PolicyDefinitionSummary>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(PolicyDefinitionSummary)} does not support reading '{format}' format.");
             }
-
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
             return DeserializePolicyDefinitionSummary(document.RootElement, options);
         }
 
-        internal static PolicyDefinitionSummary DeserializePolicyDefinitionSummary(JsonElement element, ModelReaderWriterOptions options = null)
+        /// <param name="element"> The JSON element to deserialize. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        internal static PolicyDefinitionSummary DeserializePolicyDefinitionSummary(JsonElement element, ModelReaderWriterOptions options)
         {
-            options ??= ModelSerializationExtensions.WireOptions;
-
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -106,96 +157,70 @@ namespace Azure.ResourceManager.PolicyInsights.Models
             IReadOnlyList<string> policyDefinitionGroupNames = default;
             string effect = default;
             PolicySummaryResults results = default;
-            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
-            foreach (var property in element.EnumerateObject())
+            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            foreach (var prop in element.EnumerateObject())
             {
-                if (property.NameEquals("policyDefinitionId"u8))
+                if (prop.NameEquals("policyDefinitionId"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    policyDefinitionId = new ResourceIdentifier(property.Value.GetString());
+                    policyDefinitionId = new ResourceIdentifier(prop.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("policyDefinitionReferenceId"u8))
+                if (prop.NameEquals("policyDefinitionReferenceId"u8))
                 {
-                    policyDefinitionReferenceId = property.Value.GetString();
+                    policyDefinitionReferenceId = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("policyDefinitionGroupNames"u8))
+                if (prop.NameEquals("policyDefinitionGroupNames"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
                     List<string> array = new List<string>();
-                    foreach (var item in property.Value.EnumerateArray())
+                    foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(item.GetString());
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(item.GetString());
+                        }
                     }
                     policyDefinitionGroupNames = array;
                     continue;
                 }
-                if (property.NameEquals("effect"u8))
+                if (prop.NameEquals("effect"u8))
                 {
-                    effect = property.Value.GetString();
+                    effect = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("results"u8))
+                if (prop.NameEquals("results"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    results = PolicySummaryResults.DeserializePolicySummaryResults(property.Value, options);
+                    results = PolicySummaryResults.DeserializePolicySummaryResults(prop.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
                 {
-                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = rawDataDictionary;
             return new PolicyDefinitionSummary(
                 policyDefinitionId,
                 policyDefinitionReferenceId,
                 policyDefinitionGroupNames ?? new ChangeTrackingList<string>(),
                 effect,
                 results,
-                serializedAdditionalRawData);
+                additionalBinaryDataProperties);
         }
-
-        BinaryData IPersistableModel<PolicyDefinitionSummary>.Write(ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<PolicyDefinitionSummary>)this).GetFormatFromOptions(options) : options.Format;
-
-            switch (format)
-            {
-                case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerPolicyInsightsContext.Default);
-                default:
-                    throw new FormatException($"The model {nameof(PolicyDefinitionSummary)} does not support writing '{options.Format}' format.");
-            }
-        }
-
-        PolicyDefinitionSummary IPersistableModel<PolicyDefinitionSummary>.Create(BinaryData data, ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<PolicyDefinitionSummary>)this).GetFormatFromOptions(options) : options.Format;
-
-            switch (format)
-            {
-                case "J":
-                    {
-                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
-                        return DeserializePolicyDefinitionSummary(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(PolicyDefinitionSummary)} does not support reading '{options.Format}' format.");
-            }
-        }
-
-        string IPersistableModel<PolicyDefinitionSummary>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

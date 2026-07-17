@@ -230,7 +230,7 @@ namespace Azure.ResourceManager.ContainerRegistry
                 HttpMessage message = _webhooksRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, ContainerRegistryWebhookPatch.ToRequestContent(patch), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 ContainerRegistryArmOperation<ContainerRegistryWebhookResource> operation = new ContainerRegistryArmOperation<ContainerRegistryWebhookResource>(
-                    new ContainerRegistryWebhookOperationSource(Client),
+                    new ContainerRegistryWebhookResourceOperationSource(Client),
                     _webhooksClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -289,7 +289,7 @@ namespace Azure.ResourceManager.ContainerRegistry
                 HttpMessage message = _webhooksRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, ContainerRegistryWebhookPatch.ToRequestContent(patch), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 ContainerRegistryArmOperation<ContainerRegistryWebhookResource> operation = new ContainerRegistryArmOperation<ContainerRegistryWebhookResource>(
-                    new ContainerRegistryWebhookOperationSource(Client),
+                    new ContainerRegistryWebhookResourceOperationSource(Client),
                     _webhooksClientDiagnostics,
                     Pipeline,
                     message.Request,

@@ -13,9 +13,9 @@ namespace Azure.AI.Translation.Document
     /// </summary>
     [CodeGenType("TranslationDocumentModelFactory")]
     [CodeGenSuppress("TranslationStatusResult", typeof(string), typeof(DateTimeOffset), typeof(DateTimeOffset), typeof(DocumentTranslationStatus), typeof(TranslationStatusSummary), typeof(JsonElement))]
-    [CodeGenSuppress("DocumentStatusResult", typeof(Uri), typeof(Uri), typeof(DateTimeOffset), typeof(DateTimeOffset), typeof(DocumentTranslationStatus), typeof(string), typeof(float), typeof(string), typeof(long), typeof(int?), typeof(int?), typeof(JsonElement))]
+    [CodeGenSuppress("DocumentStatusResult", typeof(Uri), typeof(Uri), typeof(DateTimeOffset), typeof(DateTimeOffset), typeof(DocumentTranslationStatus), typeof(string), typeof(float), typeof(string), typeof(long), typeof(int?), typeof(int?), typeof(int?), typeof(int?), typeof(JsonElement))]
     [CodeGenSuppress("TranslationSource", typeof(Uri), typeof(DocumentFilter), typeof(string), typeof(TranslationStorageSource?))]
-    [CodeGenSuppress("DocumentTranslateContent")]
+    [CodeGenSuppress("DocumentTranslateContent", typeof(MultipartFormFileData), typeof(IEnumerable<MultipartFormFileData>))]
     public static partial class DocumentTranslationModelFactory
     {
         #region Statuses
@@ -126,7 +126,7 @@ namespace Azure.AI.Translation.Document
                 multipartGlossary.Add(new MultipartFormFileData(null, item, null));
             }
 
-            return new DocumentTranslateContent(new MultipartFormFileData(null, document, null), multipartGlossary, serializedAdditionalRawData: null);
+            return new DocumentTranslateContent(new MultipartFormFileData(null, document, null), multipartGlossary);
         }
     }
 }

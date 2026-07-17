@@ -6,45 +6,39 @@
 #nullable disable
 
 using System;
-using System.Globalization;
+using System.Diagnostics;
 using System.Threading;
 using System.Threading.Tasks;
+using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
+using Azure.ResourceManager;
+using Azure.ResourceManager.CosmosDB.Models;
 using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.CosmosDB
 {
     /// <summary>
-    /// A Class representing a CosmosDBLocation along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="CosmosDBLocationResource"/>
-    /// from an instance of <see cref="ArmClient"/> using the GetCosmosDBLocationResource method.
-    /// Otherwise you can get one from its parent resource <see cref="SubscriptionResource"/> using the GetCosmosDBLocation method.
+    /// A class representing a CosmosDBLocation along with the instance operations that can be performed on it.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="CosmosDBLocationResource"/> from an instance of <see cref="ArmClient"/> using the GetResource method.
+    /// Otherwise you can get one from its parent resource <see cref="SubscriptionResource"/> using the GetCosmosDBLocations method.
     /// </summary>
     public partial class CosmosDBLocationResource : ArmResource
     {
-        /// <summary> Generate the resource identifier of a <see cref="CosmosDBLocationResource"/> instance. </summary>
-        /// <param name="subscriptionId"> The subscriptionId. </param>
-        /// <param name="location"> The location. </param>
-        public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, AzureLocation location)
-        {
-            var resourceId = $"/subscriptions/{subscriptionId}/providers/Microsoft.DocumentDB/locations/{location}";
-            return new ResourceIdentifier(resourceId);
-        }
-
-        private readonly ClientDiagnostics _cosmosDBLocationLocationsClientDiagnostics;
-        private readonly LocationsRestOperations _cosmosDBLocationLocationsRestClient;
+        private readonly ClientDiagnostics _locationsClientDiagnostics;
+        private readonly Locations _locationsRestClient;
+        private readonly ClientDiagnostics _softDeletedDatabaseAccountsClientDiagnostics;
+        private readonly SoftDeletedDatabaseAccounts _softDeletedDatabaseAccountsRestClient;
         private readonly CosmosDBLocationData _data;
-
         /// <summary> Gets the resource type for the operations. </summary>
         public static readonly ResourceType ResourceType = "Microsoft.DocumentDB/locations";
 
-        /// <summary> Initializes a new instance of the <see cref="CosmosDBLocationResource"/> class for mocking. </summary>
+        /// <summary> Initializes a new instance of CosmosDBLocationResource for mocking. </summary>
         protected CosmosDBLocationResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref="CosmosDBLocationResource"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="CosmosDBLocationResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal CosmosDBLocationResource(ArmClient client, CosmosDBLocationData data) : this(client, data.Id)
@@ -53,68 +47,254 @@ namespace Azure.ResourceManager.CosmosDB
             _data = data;
         }
 
-        /// <summary> Initializes a new instance of the <see cref="CosmosDBLocationResource"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="CosmosDBLocationResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal CosmosDBLocationResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _cosmosDBLocationLocationsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.CosmosDB", ResourceType.Namespace, Diagnostics);
-            TryGetApiVersion(ResourceType, out string cosmosDBLocationLocationsApiVersion);
-            _cosmosDBLocationLocationsRestClient = new LocationsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, cosmosDBLocationLocationsApiVersion);
-#if DEBUG
-			ValidateResourceId(Id);
-#endif
+            TryGetApiVersion(ResourceType, out string cosmosDBLocationApiVersion);
+            _locationsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.CosmosDB", ResourceType.Namespace, Diagnostics);
+            _locationsRestClient = new Locations(_locationsClientDiagnostics, Pipeline, Endpoint, cosmosDBLocationApiVersion ?? "2026-04-01-preview");
+            _softDeletedDatabaseAccountsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.CosmosDB", ResourceType.Namespace, Diagnostics);
+            _softDeletedDatabaseAccountsRestClient = new SoftDeletedDatabaseAccounts(_softDeletedDatabaseAccountsClientDiagnostics, Pipeline, Endpoint, cosmosDBLocationApiVersion ?? "2026-04-01-preview");
+            ValidateResourceId(id);
         }
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }
 
         /// <summary> Gets the data representing this Feature. </summary>
-        /// <exception cref="InvalidOperationException"> Throws if there is no data loaded in the current instance. </exception>
         public virtual CosmosDBLocationData Data
         {
             get
             {
                 if (!HasData)
+                {
                     throw new InvalidOperationException("The current instance does not have data, you must call Get first.");
+                }
                 return _data;
             }
         }
 
+        /// <summary> Generate the resource identifier for this resource. </summary>
+        /// <param name="subscriptionId"> The subscriptionId. </param>
+        /// <param name="location"> The location. </param>
+        public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, AzureLocation location)
+        {
+            string resourceId = $"/subscriptions/{subscriptionId}/providers/Microsoft.DocumentDB/locations/{location}";
+            return new ResourceIdentifier(resourceId);
+        }
+
+        /// <param name="id"></param>
+        [Conditional("DEBUG")]
         internal static void ValidateResourceId(ResourceIdentifier id)
         {
             if (id.ResourceType != ResourceType)
-                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), nameof(id));
+            {
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), nameof(id));
+            }
         }
 
-        /// <summary> Gets a collection of RestorableCosmosDBAccountResources in the CosmosDBLocation. </summary>
-        /// <returns> An object representing collection of RestorableCosmosDBAccountResources and their operations over a RestorableCosmosDBAccountResource. </returns>
+        /// <summary>
+        /// Get the properties of an existing Cosmos DB location
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.DocumentDB/locations/{location}. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> LocationGetResults_Get. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-04-01-preview. </description>
+        /// </item>
+        /// <item>
+        /// <term> Resource. </term>
+        /// <description> <see cref="CosmosDBLocationResource"/>. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual async Task<Response<CosmosDBLocationResource>> GetAsync(CancellationToken cancellationToken = default)
+        {
+            using DiagnosticScope scope = _locationsClientDiagnostics.CreateScope("CosmosDBLocationResource.Get");
+            scope.Start();
+            try
+            {
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _locationsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.Name, context);
+                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                Response<CosmosDBLocationData> response = Response.FromValue(CosmosDBLocationData.FromResponse(result), result);
+                if (response.Value == null)
+                {
+                    throw new RequestFailedException(response.GetRawResponse());
+                }
+                return Response.FromValue(new CosmosDBLocationResource(Client, response.Value), response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Get the properties of an existing Cosmos DB location
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.DocumentDB/locations/{location}. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> LocationGetResults_Get. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-04-01-preview. </description>
+        /// </item>
+        /// <item>
+        /// <term> Resource. </term>
+        /// <description> <see cref="CosmosDBLocationResource"/>. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual Response<CosmosDBLocationResource> Get(CancellationToken cancellationToken = default)
+        {
+            using DiagnosticScope scope = _locationsClientDiagnostics.CreateScope("CosmosDBLocationResource.Get");
+            scope.Start();
+            try
+            {
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _locationsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.Name, context);
+                Response result = Pipeline.ProcessMessage(message, context);
+                Response<CosmosDBLocationData> response = Response.FromValue(CosmosDBLocationData.FromResponse(result), result);
+                if (response.Value == null)
+                {
+                    throw new RequestFailedException(response.GetRawResponse());
+                }
+                return Response.FromValue(new CosmosDBLocationResource(Client, response.Value), response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Lists all the soft-deleted Azure Cosmos DB database accounts available under the subscription and in a region. This call requires 'Microsoft.DocumentDB/locations/softDeletedDatabaseAccounts/read' permission.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.DocumentDB/locations/{location}/softDeletedDatabaseAccounts. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> SoftDeletedDatabaseAccounts_ListByLocation. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-04-01-preview. </description>
+        /// </item>
+        /// <item>
+        /// <term> Resource. </term>
+        /// <description> <see cref="CosmosDBLocationResource"/>. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual async Task<Response<SoftDeletedDatabaseAccountsListResult>> GetByLocationAsync(CancellationToken cancellationToken = default)
+        {
+            using DiagnosticScope scope = _softDeletedDatabaseAccountsClientDiagnostics.CreateScope("CosmosDBLocationResource.GetByLocation");
+            scope.Start();
+            try
+            {
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _softDeletedDatabaseAccountsRestClient.CreateGetByLocationRequest(Guid.Parse(Id.SubscriptionId), Id.Name, context);
+                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                Response<SoftDeletedDatabaseAccountsListResult> response = Response.FromValue(SoftDeletedDatabaseAccountsListResult.FromResponse(result), result);
+                if (response.Value == null)
+                {
+                    throw new RequestFailedException(response.GetRawResponse());
+                }
+                return response;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Lists all the soft-deleted Azure Cosmos DB database accounts available under the subscription and in a region. This call requires 'Microsoft.DocumentDB/locations/softDeletedDatabaseAccounts/read' permission.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.DocumentDB/locations/{location}/softDeletedDatabaseAccounts. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> SoftDeletedDatabaseAccounts_ListByLocation. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-04-01-preview. </description>
+        /// </item>
+        /// <item>
+        /// <term> Resource. </term>
+        /// <description> <see cref="CosmosDBLocationResource"/>. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual Response<SoftDeletedDatabaseAccountsListResult> GetByLocation(CancellationToken cancellationToken = default)
+        {
+            using DiagnosticScope scope = _softDeletedDatabaseAccountsClientDiagnostics.CreateScope("CosmosDBLocationResource.GetByLocation");
+            scope.Start();
+            try
+            {
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _softDeletedDatabaseAccountsRestClient.CreateGetByLocationRequest(Guid.Parse(Id.SubscriptionId), Id.Name, context);
+                Response result = Pipeline.ProcessMessage(message, context);
+                Response<SoftDeletedDatabaseAccountsListResult> response = Response.FromValue(SoftDeletedDatabaseAccountsListResult.FromResponse(result), result);
+                if (response.Value == null)
+                {
+                    throw new RequestFailedException(response.GetRawResponse());
+                }
+                return response;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> Gets a collection of RestorableCosmosDBAccounts in the <see cref="CosmosDBLocationResource"/>. </summary>
+        /// <returns> An object representing collection of RestorableCosmosDBAccounts and their operations over a RestorableCosmosDBAccountResource. </returns>
         public virtual RestorableCosmosDBAccountCollection GetRestorableCosmosDBAccounts()
         {
             return GetCachedClient(client => new RestorableCosmosDBAccountCollection(client, Id));
         }
 
-        /// <summary>
-        /// Retrieves the properties of an existing Azure Cosmos DB restorable database account.  This call requires 'Microsoft.DocumentDB/locations/restorableDatabaseAccounts/read/*' permission.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.DocumentDB/locations/{location}/restorableDatabaseAccounts/{instanceId}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>RestorableDatabaseAccounts_GetByLocation</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-10-15</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="RestorableCosmosDBAccountResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
+        /// <summary> Retrieves the properties of an existing Azure Cosmos DB restorable database account.  This call requires 'Microsoft.DocumentDB/locations/restorableDatabaseAccounts/read/*' permission. </summary>
         /// <param name="instanceId"> The instanceId GUID of a restorable database account. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         [ForwardsClientCalls]
@@ -123,113 +303,13 @@ namespace Azure.ResourceManager.CosmosDB
             return await GetRestorableCosmosDBAccounts().GetAsync(instanceId, cancellationToken).ConfigureAwait(false);
         }
 
-        /// <summary>
-        /// Retrieves the properties of an existing Azure Cosmos DB restorable database account.  This call requires 'Microsoft.DocumentDB/locations/restorableDatabaseAccounts/read/*' permission.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.DocumentDB/locations/{location}/restorableDatabaseAccounts/{instanceId}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>RestorableDatabaseAccounts_GetByLocation</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-10-15</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="RestorableCosmosDBAccountResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
+        /// <summary> Retrieves the properties of an existing Azure Cosmos DB restorable database account.  This call requires 'Microsoft.DocumentDB/locations/restorableDatabaseAccounts/read/*' permission. </summary>
         /// <param name="instanceId"> The instanceId GUID of a restorable database account. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         [ForwardsClientCalls]
         public virtual Response<RestorableCosmosDBAccountResource> GetRestorableCosmosDBAccount(Guid instanceId, CancellationToken cancellationToken = default)
         {
             return GetRestorableCosmosDBAccounts().Get(instanceId, cancellationToken);
-        }
-
-        /// <summary>
-        /// Get the properties of an existing Cosmos DB location
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.DocumentDB/locations/{location}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Locations_Get</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-10-15</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="CosmosDBLocationResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<CosmosDBLocationResource>> GetAsync(CancellationToken cancellationToken = default)
-        {
-            using var scope = _cosmosDBLocationLocationsClientDiagnostics.CreateScope("CosmosDBLocationResource.Get");
-            scope.Start();
-            try
-            {
-                var response = await _cosmosDBLocationLocationsRestClient.GetAsync(Id.SubscriptionId, new AzureLocation(Id.Name), cancellationToken).ConfigureAwait(false);
-                if (response.Value == null)
-                    throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new CosmosDBLocationResource(Client, response.Value), response.GetRawResponse());
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// Get the properties of an existing Cosmos DB location
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.DocumentDB/locations/{location}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Locations_Get</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-10-15</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="CosmosDBLocationResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<CosmosDBLocationResource> Get(CancellationToken cancellationToken = default)
-        {
-            using var scope = _cosmosDBLocationLocationsClientDiagnostics.CreateScope("CosmosDBLocationResource.Get");
-            scope.Start();
-            try
-            {
-                var response = _cosmosDBLocationLocationsRestClient.Get(Id.SubscriptionId, new AzureLocation(Id.Name), cancellationToken);
-                if (response.Value == null)
-                    throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new CosmosDBLocationResource(Client, response.Value), response.GetRawResponse());
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
         }
     }
 }

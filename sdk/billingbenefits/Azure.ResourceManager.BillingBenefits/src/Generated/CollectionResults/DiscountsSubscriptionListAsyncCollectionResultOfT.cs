@@ -50,8 +50,8 @@ namespace Azure.ResourceManager.BillingBenefits
                     yield break;
                 }
                 DiscountList result = DiscountList.FromResponse(response);
-                yield return Page<DiscountData>.FromValues((IReadOnlyList<DiscountData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 nextPage = result.NextLink;
+                yield return Page<DiscountData>.FromValues((IReadOnlyList<DiscountData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 if (nextPage == null)
                 {
                     yield break;

@@ -55,7 +55,10 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        DataReplicationFabricAgentCustomProperties IPersistableModel<DataReplicationFabricAgentCustomProperties>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+        DataReplicationFabricAgentCustomProperties IPersistableModel<DataReplicationFabricAgentCustomProperties>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            return PersistableModelCreateCore(data, options);
+        }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         string IPersistableModel<DataReplicationFabricAgentCustomProperties>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
@@ -83,7 +86,10 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        DataReplicationFabricAgentCustomProperties IJsonModel<DataReplicationFabricAgentCustomProperties>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+        DataReplicationFabricAgentCustomProperties IJsonModel<DataReplicationFabricAgentCustomProperties>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            return JsonModelCreateCore(ref reader, options);
+        }
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>

@@ -6,47 +6,36 @@
 #nullable disable
 
 using System;
-using System.Globalization;
+using System.Diagnostics;
 using System.Threading;
 using System.Threading.Tasks;
+using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
+using Azure.ResourceManager;
 using Azure.ResourceManager.Sql.Models;
 
 namespace Azure.ResourceManager.Sql
 {
     /// <summary>
-    /// A Class representing a ManagedInstanceEncryptionProtector along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="ManagedInstanceEncryptionProtectorResource"/>
-    /// from an instance of <see cref="ArmClient"/> using the GetManagedInstanceEncryptionProtectorResource method.
-    /// Otherwise you can get one from its parent resource <see cref="ManagedInstanceResource"/> using the GetManagedInstanceEncryptionProtector method.
+    /// A class representing a ManagedInstanceEncryptionProtector along with the instance operations that can be performed on it.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="ManagedInstanceEncryptionProtectorResource"/> from an instance of <see cref="ArmClient"/> using the GetResource method.
+    /// Otherwise you can get one from its parent resource <see cref="ManagedInstanceResource"/> using the GetManagedInstanceEncryptionProtectors method.
     /// </summary>
     public partial class ManagedInstanceEncryptionProtectorResource : ArmResource
     {
-        /// <summary> Generate the resource identifier of a <see cref="ManagedInstanceEncryptionProtectorResource"/> instance. </summary>
-        /// <param name="subscriptionId"> The subscriptionId. </param>
-        /// <param name="resourceGroupName"> The resourceGroupName. </param>
-        /// <param name="managedInstanceName"> The managedInstanceName. </param>
-        /// <param name="encryptionProtectorName"> The encryptionProtectorName. </param>
-        public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string managedInstanceName, EncryptionProtectorName encryptionProtectorName)
-        {
-            var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/managedInstances/{managedInstanceName}/encryptionProtector/{encryptionProtectorName}";
-            return new ResourceIdentifier(resourceId);
-        }
-
-        private readonly ClientDiagnostics _managedInstanceEncryptionProtectorClientDiagnostics;
-        private readonly ManagedInstanceEncryptionProtectorsRestOperations _managedInstanceEncryptionProtectorRestClient;
+        private readonly ClientDiagnostics _managedInstanceEncryptionProtectorsClientDiagnostics;
+        private readonly ManagedInstanceEncryptionProtectors _managedInstanceEncryptionProtectorsRestClient;
         private readonly ManagedInstanceEncryptionProtectorData _data;
-
         /// <summary> Gets the resource type for the operations. </summary>
         public static readonly ResourceType ResourceType = "Microsoft.Sql/managedInstances/encryptionProtector";
 
-        /// <summary> Initializes a new instance of the <see cref="ManagedInstanceEncryptionProtectorResource"/> class for mocking. </summary>
+        /// <summary> Initializes a new instance of ManagedInstanceEncryptionProtectorResource for mocking. </summary>
         protected ManagedInstanceEncryptionProtectorResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref="ManagedInstanceEncryptionProtectorResource"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="ManagedInstanceEncryptionProtectorResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal ManagedInstanceEncryptionProtectorResource(ArmClient client, ManagedInstanceEncryptionProtectorData data) : this(client, data.Id)
@@ -55,71 +44,93 @@ namespace Azure.ResourceManager.Sql
             _data = data;
         }
 
-        /// <summary> Initializes a new instance of the <see cref="ManagedInstanceEncryptionProtectorResource"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="ManagedInstanceEncryptionProtectorResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal ManagedInstanceEncryptionProtectorResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _managedInstanceEncryptionProtectorClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Sql", ResourceType.Namespace, Diagnostics);
             TryGetApiVersion(ResourceType, out string managedInstanceEncryptionProtectorApiVersion);
-            _managedInstanceEncryptionProtectorRestClient = new ManagedInstanceEncryptionProtectorsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, managedInstanceEncryptionProtectorApiVersion);
-#if DEBUG
-			ValidateResourceId(Id);
-#endif
+            _managedInstanceEncryptionProtectorsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Sql", ResourceType.Namespace, Diagnostics);
+            _managedInstanceEncryptionProtectorsRestClient = new ManagedInstanceEncryptionProtectors(_managedInstanceEncryptionProtectorsClientDiagnostics, Pipeline, Endpoint, managedInstanceEncryptionProtectorApiVersion ?? "2025-02-01-preview");
+            ValidateResourceId(id);
         }
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }
 
         /// <summary> Gets the data representing this Feature. </summary>
-        /// <exception cref="InvalidOperationException"> Throws if there is no data loaded in the current instance. </exception>
         public virtual ManagedInstanceEncryptionProtectorData Data
         {
             get
             {
                 if (!HasData)
+                {
                     throw new InvalidOperationException("The current instance does not have data, you must call Get first.");
+                }
                 return _data;
             }
         }
 
+        /// <summary> Generate the resource identifier for this resource. </summary>
+        /// <param name="subscriptionId"> The subscriptionId. </param>
+        /// <param name="resourceGroupName"> The resourceGroupName. </param>
+        /// <param name="managedInstanceName"> The managedInstanceName. </param>
+        /// <param name="encryptionProtectorName"> The encryptionProtectorName. </param>
+        public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string managedInstanceName, EncryptionProtectorName encryptionProtectorName)
+        {
+            string resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/managedInstances/{managedInstanceName}/encryptionProtector/{encryptionProtectorName}";
+            return new ResourceIdentifier(resourceId);
+        }
+
+        /// <param name="id"></param>
+        [Conditional("DEBUG")]
         internal static void ValidateResourceId(ResourceIdentifier id)
         {
             if (id.ResourceType != ResourceType)
-                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), nameof(id));
+            {
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), nameof(id));
+            }
         }
 
         /// <summary>
         /// Gets a managed instance encryption protector.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/managedInstances/{managedInstanceName}/encryptionProtector/{encryptionProtectorName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/managedInstances/{managedInstanceName}/encryptionProtector/{encryptionProtectorName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ManagedInstanceEncryptionProtectors_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> ManagedInstanceEncryptionProtectors_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-01-01</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-02-01-preview. </description>
         /// </item>
         /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ManagedInstanceEncryptionProtectorResource"/></description>
+        /// <term> Resource. </term>
+        /// <description> <see cref="ManagedInstanceEncryptionProtectorResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<Response<ManagedInstanceEncryptionProtectorResource>> GetAsync(CancellationToken cancellationToken = default)
         {
-            using var scope = _managedInstanceEncryptionProtectorClientDiagnostics.CreateScope("ManagedInstanceEncryptionProtectorResource.Get");
+            using DiagnosticScope scope = _managedInstanceEncryptionProtectorsClientDiagnostics.CreateScope("ManagedInstanceEncryptionProtectorResource.Get");
             scope.Start();
             try
             {
-                var response = await _managedInstanceEncryptionProtectorRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _managedInstanceEncryptionProtectorsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
+                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                Response<ManagedInstanceEncryptionProtectorData> response = Response.FromValue(ManagedInstanceEncryptionProtectorData.FromResponse(result), result);
                 if (response.Value == null)
+                {
                     throw new RequestFailedException(response.GetRawResponse());
+                }
                 return Response.FromValue(new ManagedInstanceEncryptionProtectorResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -133,33 +144,41 @@ namespace Azure.ResourceManager.Sql
         /// Gets a managed instance encryption protector.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/managedInstances/{managedInstanceName}/encryptionProtector/{encryptionProtectorName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/managedInstances/{managedInstanceName}/encryptionProtector/{encryptionProtectorName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ManagedInstanceEncryptionProtectors_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> ManagedInstanceEncryptionProtectors_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-01-01</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-02-01-preview. </description>
         /// </item>
         /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ManagedInstanceEncryptionProtectorResource"/></description>
+        /// <term> Resource. </term>
+        /// <description> <see cref="ManagedInstanceEncryptionProtectorResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response<ManagedInstanceEncryptionProtectorResource> Get(CancellationToken cancellationToken = default)
         {
-            using var scope = _managedInstanceEncryptionProtectorClientDiagnostics.CreateScope("ManagedInstanceEncryptionProtectorResource.Get");
+            using DiagnosticScope scope = _managedInstanceEncryptionProtectorsClientDiagnostics.CreateScope("ManagedInstanceEncryptionProtectorResource.Get");
             scope.Start();
             try
             {
-                var response = _managedInstanceEncryptionProtectorRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _managedInstanceEncryptionProtectorsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
+                Response result = Pipeline.ProcessMessage(message, context);
+                Response<ManagedInstanceEncryptionProtectorData> response = Response.FromValue(ManagedInstanceEncryptionProtectorData.FromResponse(result), result);
                 if (response.Value == null)
+                {
                     throw new RequestFailedException(response.GetRawResponse());
+                }
                 return Response.FromValue(new ManagedInstanceEncryptionProtectorResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -170,23 +189,121 @@ namespace Azure.ResourceManager.Sql
         }
 
         /// <summary>
-        /// Updates an existing encryption protector.
+        /// Revalidates an existing encryption protector.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/managedInstances/{managedInstanceName}/encryptionProtector/{encryptionProtectorName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/managedInstances/{managedInstanceName}/encryptionProtector/{encryptionProtectorName}/revalidate. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ManagedInstanceEncryptionProtectors_CreateOrUpdate</description>
+        /// <term> Operation Id. </term>
+        /// <description> ManagedInstanceEncryptionProtectors_Revalidate. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-01-01</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-02-01-preview. </description>
         /// </item>
         /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ManagedInstanceEncryptionProtectorResource"/></description>
+        /// <term> Resource. </term>
+        /// <description> <see cref="ManagedInstanceEncryptionProtectorResource"/>. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual async Task<ArmOperation> RevalidateAsync(WaitUntil waitUntil, CancellationToken cancellationToken = default)
+        {
+            using DiagnosticScope scope = _managedInstanceEncryptionProtectorsClientDiagnostics.CreateScope("ManagedInstanceEncryptionProtectorResource.Revalidate");
+            scope.Start();
+            try
+            {
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _managedInstanceEncryptionProtectorsRestClient.CreateRevalidateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
+                Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                SqlArmOperation operation = new SqlArmOperation(_managedInstanceEncryptionProtectorsClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
+                if (waitUntil == WaitUntil.Completed)
+                {
+                    await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
+                }
+                return operation;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Revalidates an existing encryption protector.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/managedInstances/{managedInstanceName}/encryptionProtector/{encryptionProtectorName}/revalidate. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> ManagedInstanceEncryptionProtectors_Revalidate. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-02-01-preview. </description>
+        /// </item>
+        /// <item>
+        /// <term> Resource. </term>
+        /// <description> <see cref="ManagedInstanceEncryptionProtectorResource"/>. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual ArmOperation Revalidate(WaitUntil waitUntil, CancellationToken cancellationToken = default)
+        {
+            using DiagnosticScope scope = _managedInstanceEncryptionProtectorsClientDiagnostics.CreateScope("ManagedInstanceEncryptionProtectorResource.Revalidate");
+            scope.Start();
+            try
+            {
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _managedInstanceEncryptionProtectorsRestClient.CreateRevalidateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
+                Response response = Pipeline.ProcessMessage(message, context);
+                SqlArmOperation operation = new SqlArmOperation(_managedInstanceEncryptionProtectorsClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
+                if (waitUntil == WaitUntil.Completed)
+                {
+                    operation.WaitForCompletionResponse(cancellationToken);
+                }
+                return operation;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Update a ManagedInstanceEncryptionProtector.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/managedInstances/{managedInstanceName}/encryptionProtector/{encryptionProtectorName}. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> ManagedInstanceEncryptionProtectors_CreateOrUpdate. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-02-01-preview. </description>
+        /// </item>
+        /// <item>
+        /// <term> Resource. </term>
+        /// <description> <see cref="ManagedInstanceEncryptionProtectorResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -198,14 +315,27 @@ namespace Azure.ResourceManager.Sql
         {
             Argument.AssertNotNull(data, nameof(data));
 
-            using var scope = _managedInstanceEncryptionProtectorClientDiagnostics.CreateScope("ManagedInstanceEncryptionProtectorResource.Update");
+            using DiagnosticScope scope = _managedInstanceEncryptionProtectorsClientDiagnostics.CreateScope("ManagedInstanceEncryptionProtectorResource.Update");
             scope.Start();
             try
             {
-                var response = await _managedInstanceEncryptionProtectorRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, data, cancellationToken).ConfigureAwait(false);
-                var operation = new SqlArmOperation<ManagedInstanceEncryptionProtectorResource>(new ManagedInstanceEncryptionProtectorOperationSource(Client), _managedInstanceEncryptionProtectorClientDiagnostics, Pipeline, _managedInstanceEncryptionProtectorRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, data).Request, response, OperationFinalStateVia.Location);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _managedInstanceEncryptionProtectorsRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, ManagedInstanceEncryptionProtectorData.ToRequestContent(data), context);
+                Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                SqlArmOperation<ManagedInstanceEncryptionProtectorResource> operation = new SqlArmOperation<ManagedInstanceEncryptionProtectorResource>(
+                    new ManagedInstanceEncryptionProtectorResourceOperationSource(Client),
+                    _managedInstanceEncryptionProtectorsClientDiagnostics,
+                    Pipeline,
+                    message.Request,
+                    response,
+                    OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
+                {
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
+                }
                 return operation;
             }
             catch (Exception e)
@@ -216,23 +346,23 @@ namespace Azure.ResourceManager.Sql
         }
 
         /// <summary>
-        /// Updates an existing encryption protector.
+        /// Update a ManagedInstanceEncryptionProtector.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/managedInstances/{managedInstanceName}/encryptionProtector/{encryptionProtectorName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/managedInstances/{managedInstanceName}/encryptionProtector/{encryptionProtectorName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ManagedInstanceEncryptionProtectors_CreateOrUpdate</description>
+        /// <term> Operation Id. </term>
+        /// <description> ManagedInstanceEncryptionProtectors_CreateOrUpdate. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-01-01</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-02-01-preview. </description>
         /// </item>
         /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ManagedInstanceEncryptionProtectorResource"/></description>
+        /// <term> Resource. </term>
+        /// <description> <see cref="ManagedInstanceEncryptionProtectorResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -244,98 +374,27 @@ namespace Azure.ResourceManager.Sql
         {
             Argument.AssertNotNull(data, nameof(data));
 
-            using var scope = _managedInstanceEncryptionProtectorClientDiagnostics.CreateScope("ManagedInstanceEncryptionProtectorResource.Update");
+            using DiagnosticScope scope = _managedInstanceEncryptionProtectorsClientDiagnostics.CreateScope("ManagedInstanceEncryptionProtectorResource.Update");
             scope.Start();
             try
             {
-                var response = _managedInstanceEncryptionProtectorRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, data, cancellationToken);
-                var operation = new SqlArmOperation<ManagedInstanceEncryptionProtectorResource>(new ManagedInstanceEncryptionProtectorOperationSource(Client), _managedInstanceEncryptionProtectorClientDiagnostics, Pipeline, _managedInstanceEncryptionProtectorRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, data).Request, response, OperationFinalStateVia.Location);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _managedInstanceEncryptionProtectorsRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, ManagedInstanceEncryptionProtectorData.ToRequestContent(data), context);
+                Response response = Pipeline.ProcessMessage(message, context);
+                SqlArmOperation<ManagedInstanceEncryptionProtectorResource> operation = new SqlArmOperation<ManagedInstanceEncryptionProtectorResource>(
+                    new ManagedInstanceEncryptionProtectorResourceOperationSource(Client),
+                    _managedInstanceEncryptionProtectorsClientDiagnostics,
+                    Pipeline,
+                    message.Request,
+                    response,
+                    OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
+                {
                     operation.WaitForCompletion(cancellationToken);
-                return operation;
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// Revalidates an existing encryption protector.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/managedInstances/{managedInstanceName}/encryptionProtector/{encryptionProtectorName}/revalidate</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ManagedInstanceEncryptionProtectors_Revalidate</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-01-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ManagedInstanceEncryptionProtectorResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<ArmOperation> RevalidateAsync(WaitUntil waitUntil, CancellationToken cancellationToken = default)
-        {
-            using var scope = _managedInstanceEncryptionProtectorClientDiagnostics.CreateScope("ManagedInstanceEncryptionProtectorResource.Revalidate");
-            scope.Start();
-            try
-            {
-                var response = await _managedInstanceEncryptionProtectorRestClient.RevalidateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
-                var operation = new SqlArmOperation(_managedInstanceEncryptionProtectorClientDiagnostics, Pipeline, _managedInstanceEncryptionProtectorRestClient.CreateRevalidateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name).Request, response, OperationFinalStateVia.Location);
-                if (waitUntil == WaitUntil.Completed)
-                    await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
-                return operation;
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// Revalidates an existing encryption protector.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/managedInstances/{managedInstanceName}/encryptionProtector/{encryptionProtectorName}/revalidate</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ManagedInstanceEncryptionProtectors_Revalidate</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-01-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ManagedInstanceEncryptionProtectorResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual ArmOperation Revalidate(WaitUntil waitUntil, CancellationToken cancellationToken = default)
-        {
-            using var scope = _managedInstanceEncryptionProtectorClientDiagnostics.CreateScope("ManagedInstanceEncryptionProtectorResource.Revalidate");
-            scope.Start();
-            try
-            {
-                var response = _managedInstanceEncryptionProtectorRestClient.Revalidate(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
-                var operation = new SqlArmOperation(_managedInstanceEncryptionProtectorClientDiagnostics, Pipeline, _managedInstanceEncryptionProtectorRestClient.CreateRevalidateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name).Request, response, OperationFinalStateVia.Location);
-                if (waitUntil == WaitUntil.Completed)
-                    operation.WaitForCompletionResponse(cancellationToken);
+                }
                 return operation;
             }
             catch (Exception e)

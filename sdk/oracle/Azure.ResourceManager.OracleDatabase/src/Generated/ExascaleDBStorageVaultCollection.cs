@@ -94,7 +94,7 @@ namespace Azure.ResourceManager.OracleDatabase
                 HttpMessage message = _exascaleDbStorageVaultsRestClient.CreateCreateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, exascaleDbStorageVaultName, ExascaleDBStorageVaultData.ToRequestContent(data), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 OracleDatabaseArmOperation<ExascaleDBStorageVaultResource> operation = new OracleDatabaseArmOperation<ExascaleDBStorageVaultResource>(
-                    new ExascaleDBStorageVaultOperationSource(Client),
+                    new ExascaleDBStorageVaultResourceOperationSource(Client),
                     _exascaleDbStorageVaultsClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -152,7 +152,7 @@ namespace Azure.ResourceManager.OracleDatabase
                 HttpMessage message = _exascaleDbStorageVaultsRestClient.CreateCreateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, exascaleDbStorageVaultName, ExascaleDBStorageVaultData.ToRequestContent(data), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 OracleDatabaseArmOperation<ExascaleDBStorageVaultResource> operation = new OracleDatabaseArmOperation<ExascaleDBStorageVaultResource>(
-                    new ExascaleDBStorageVaultOperationSource(Client),
+                    new ExascaleDBStorageVaultResourceOperationSource(Client),
                     _exascaleDbStorageVaultsClientDiagnostics,
                     Pipeline,
                     message.Request,

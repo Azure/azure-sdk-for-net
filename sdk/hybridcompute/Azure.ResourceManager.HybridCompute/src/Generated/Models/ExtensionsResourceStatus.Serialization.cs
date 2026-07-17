@@ -8,16 +8,56 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
-using System.Text;
 using System.Text.Json;
-using Azure.Core;
+using Azure.ResourceManager.HybridCompute;
 
 namespace Azure.ResourceManager.HybridCompute.Models
 {
-    public partial class ExtensionsResourceStatus : IUtf8JsonSerializable, IJsonModel<ExtensionsResourceStatus>
+    /// <summary> Instance view status. </summary>
+    public partial class ExtensionsResourceStatus : IJsonModel<ExtensionsResourceStatus>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ExtensionsResourceStatus>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual ExtensionsResourceStatus PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<ExtensionsResourceStatus>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    {
+                        return DeserializeExtensionsResourceStatus(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(ExtensionsResourceStatus)} does not support reading '{options.Format}' format.");
+            }
+        }
 
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<ExtensionsResourceStatus>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerHybridComputeContext.Default);
+                default:
+                    throw new FormatException($"The model {nameof(ExtensionsResourceStatus)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<ExtensionsResourceStatus>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        ExtensionsResourceStatus IPersistableModel<ExtensionsResourceStatus>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<ExtensionsResourceStatus>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<ExtensionsResourceStatus>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
@@ -29,12 +69,11 @@ namespace Azure.ResourceManager.HybridCompute.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<ExtensionsResourceStatus>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<ExtensionsResourceStatus>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(ExtensionsResourceStatus)} does not support writing '{format}' format.");
             }
-
             if (Optional.IsDefined(Code))
             {
                 writer.WritePropertyName("code"u8);
@@ -60,15 +99,15 @@ namespace Azure.ResourceManager.HybridCompute.Models
                 writer.WritePropertyName("time"u8);
                 writer.WriteStringValue(Time.Value, "O");
             }
-            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
-                foreach (var item in _serializedAdditionalRawData)
+                foreach (var item in _additionalBinaryDataProperties)
                 {
                     writer.WritePropertyName(item.Key);
 #if NET6_0_OR_GREATER
-				writer.WriteRawValue(item.Value);
+                    writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value, ModelSerializationExtensions.JsonDocumentOptions))
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
                     {
                         JsonSerializer.Serialize(writer, document.RootElement);
                     }
@@ -77,22 +116,27 @@ namespace Azure.ResourceManager.HybridCompute.Models
             }
         }
 
-        ExtensionsResourceStatus IJsonModel<ExtensionsResourceStatus>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        ExtensionsResourceStatus IJsonModel<ExtensionsResourceStatus>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual ExtensionsResourceStatus JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<ExtensionsResourceStatus>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<ExtensionsResourceStatus>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(ExtensionsResourceStatus)} does not support reading '{format}' format.");
             }
-
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
             return DeserializeExtensionsResourceStatus(document.RootElement, options);
         }
 
-        internal static ExtensionsResourceStatus DeserializeExtensionsResourceStatus(JsonElement element, ModelReaderWriterOptions options = null)
+        /// <param name="element"> The JSON element to deserialize. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        internal static ExtensionsResourceStatus DeserializeExtensionsResourceStatus(JsonElement element, ModelReaderWriterOptions options)
         {
-            options ??= ModelSerializationExtensions.WireOptions;
-
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -102,204 +146,54 @@ namespace Azure.ResourceManager.HybridCompute.Models
             string displayStatus = default;
             string message = default;
             DateTimeOffset? time = default;
-            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
-            foreach (var property in element.EnumerateObject())
+            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            foreach (var prop in element.EnumerateObject())
             {
-                if (property.NameEquals("code"u8))
+                if (prop.NameEquals("code"u8))
                 {
-                    code = property.Value.GetString();
+                    code = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("level"u8))
+                if (prop.NameEquals("level"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    level = property.Value.GetString().ToExtensionsStatusLevelType();
+                    level = prop.Value.GetString().ToExtensionsStatusLevelType();
                     continue;
                 }
-                if (property.NameEquals("displayStatus"u8))
+                if (prop.NameEquals("displayStatus"u8))
                 {
-                    displayStatus = property.Value.GetString();
+                    displayStatus = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("message"u8))
+                if (prop.NameEquals("message"u8))
                 {
-                    message = property.Value.GetString();
+                    message = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("time"u8))
+                if (prop.NameEquals("time"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    time = property.Value.GetDateTimeOffset("O");
+                    time = prop.Value.GetDateTimeOffset("O");
                     continue;
                 }
                 if (options.Format != "W")
                 {
-                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = rawDataDictionary;
             return new ExtensionsResourceStatus(
                 code,
                 level,
                 displayStatus,
                 message,
                 time,
-                serializedAdditionalRawData);
+                additionalBinaryDataProperties);
         }
-
-        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
-        {
-            StringBuilder builder = new StringBuilder();
-            BicepModelReaderWriterOptions bicepOptions = options as BicepModelReaderWriterOptions;
-            IDictionary<string, string> propertyOverrides = null;
-            bool hasObjectOverride = bicepOptions != null && bicepOptions.PropertyOverrides.TryGetValue(this, out propertyOverrides);
-            bool hasPropertyOverride = false;
-            string propertyOverride = null;
-
-            builder.AppendLine("{");
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Code), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  code: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(Code))
-                {
-                    builder.Append("  code: ");
-                    if (Code.Contains(Environment.NewLine))
-                    {
-                        builder.AppendLine("'''");
-                        builder.AppendLine($"{Code}'''");
-                    }
-                    else
-                    {
-                        builder.AppendLine($"'{Code}'");
-                    }
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Level), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  level: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(Level))
-                {
-                    builder.Append("  level: ");
-                    builder.AppendLine($"'{Level.Value.ToSerialString()}'");
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(DisplayStatus), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  displayStatus: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(DisplayStatus))
-                {
-                    builder.Append("  displayStatus: ");
-                    if (DisplayStatus.Contains(Environment.NewLine))
-                    {
-                        builder.AppendLine("'''");
-                        builder.AppendLine($"{DisplayStatus}'''");
-                    }
-                    else
-                    {
-                        builder.AppendLine($"'{DisplayStatus}'");
-                    }
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Message), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  message: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(Message))
-                {
-                    builder.Append("  message: ");
-                    if (Message.Contains(Environment.NewLine))
-                    {
-                        builder.AppendLine("'''");
-                        builder.AppendLine($"{Message}'''");
-                    }
-                    else
-                    {
-                        builder.AppendLine($"'{Message}'");
-                    }
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Time), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  time: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(Time))
-                {
-                    builder.Append("  time: ");
-                    var formattedDateTimeString = TypeFormatters.ToString(Time.Value, "o");
-                    builder.AppendLine($"'{formattedDateTimeString}'");
-                }
-            }
-
-            builder.AppendLine("}");
-            return BinaryData.FromString(builder.ToString());
-        }
-
-        BinaryData IPersistableModel<ExtensionsResourceStatus>.Write(ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<ExtensionsResourceStatus>)this).GetFormatFromOptions(options) : options.Format;
-
-            switch (format)
-            {
-                case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerHybridComputeContext.Default);
-                case "bicep":
-                    return SerializeBicep(options);
-                default:
-                    throw new FormatException($"The model {nameof(ExtensionsResourceStatus)} does not support writing '{options.Format}' format.");
-            }
-        }
-
-        ExtensionsResourceStatus IPersistableModel<ExtensionsResourceStatus>.Create(BinaryData data, ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<ExtensionsResourceStatus>)this).GetFormatFromOptions(options) : options.Format;
-
-            switch (format)
-            {
-                case "J":
-                    {
-                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
-                        return DeserializeExtensionsResourceStatus(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(ExtensionsResourceStatus)} does not support reading '{options.Format}' format.");
-            }
-        }
-
-        string IPersistableModel<ExtensionsResourceStatus>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

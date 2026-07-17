@@ -2,7 +2,6 @@
 // Licensed under the MIT License.
 
 using System;
-using System.ClientModel.Primitives;
 using System.Threading.Tasks;
 using Azure.Identity;
 using Microsoft.ClientModel.TestFramework;
@@ -12,7 +11,6 @@ using System.Linq;
 using System.Threading;
 
 namespace Azure.AI.Projects.Agents.Tests.Samples;
-#pragma warning disable AAIP001
 
 public class Sample_SessionsCRUD : SamplesBase
 {
@@ -30,9 +28,7 @@ public class Sample_SessionsCRUD : SamplesBase
         var hostedAgentName = TestEnvironment.HOSTED_AGENT_NAME;
         var hostedAgentVersion = TestEnvironment.HOSTED_AGENT_VERSION;
 #endif
-        AgentAdministrationClientOptions options = new();
-        options.AddPolicy(new FeaturePolicy("HostedAgents=V1Preview"), PipelinePosition.PerCall);
-        AgentAdministrationClient agentsClient = new(endpoint: new Uri(projectEndpoint), tokenProvider: new DefaultAzureCredential(), options: options);
+        AgentAdministrationClient agentsClient = new(endpoint: new Uri(projectEndpoint), tokenProvider: new DefaultAzureCredential());
         #endregion
         #region Snippet:Sample_CreateAgent_SessionsCRUD_Async
         ProjectsAgentVersion agentVersion = await agentsClient.GetAgentVersionAsync(
@@ -96,9 +92,7 @@ public class Sample_SessionsCRUD : SamplesBase
         var hostedAgentName = TestEnvironment.HOSTED_AGENT_NAME;
         var hostedAgentVersion = TestEnvironment.HOSTED_AGENT_VERSION;
 #endif
-        AgentAdministrationClientOptions options = new();
-        options.AddPolicy(new FeaturePolicy("HostedAgents=V1Preview,AgentEndpoints=V1Preview"), PipelinePosition.PerCall);
-        AgentAdministrationClient agentsClient = new(endpoint: new Uri(projectEndpoint), tokenProvider: new DefaultAzureCredential(), options: options);
+        AgentAdministrationClient agentsClient = new(endpoint: new Uri(projectEndpoint), tokenProvider: new DefaultAzureCredential());
         #region Snippet:Sample_CreateAgent_SessionsCRUD_Sync
         ProjectsAgentVersion agentVersion = agentsClient.GetAgentVersion(
             agentName: hostedAgentName,

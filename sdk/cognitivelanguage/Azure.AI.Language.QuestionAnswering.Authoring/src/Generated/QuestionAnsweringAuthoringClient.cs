@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.ClientModel;
 using System.Diagnostics.CodeAnalysis;
 using System.Threading;
 using System.Threading.Tasks;
@@ -366,7 +367,7 @@ namespace Azure.AI.Language.QuestionAnswering.Authoring
                 Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
 
                 using HttpMessage message = CreateDeleteProjectRequest(projectName, context);
-                return await ProtocolOperationHelpers.ProcessMessageAsync(Pipeline, message, ClientDiagnostics, "QuestionAnsweringAuthoringClient.DeleteProjectAsync", OperationFinalStateVia.OperationLocation, context, waitUntil).ConfigureAwait(false);
+                return await ProtocolOperationHelpers.ProcessMessageAsync(Pipeline, message, ClientDiagnostics, "QuestionAnsweringAuthoringClient.DeleteProject", OperationFinalStateVia.OperationLocation, context, waitUntil).ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -538,7 +539,7 @@ namespace Azure.AI.Language.QuestionAnswering.Authoring
                 Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
 
                 using HttpMessage message = CreateExportRequest(projectName, format, assetKind, context);
-                return await ProtocolOperationHelpers.ProcessMessageAsync(Pipeline, message, ClientDiagnostics, "QuestionAnsweringAuthoringClient.ExportAsync", OperationFinalStateVia.OperationLocation, context, waitUntil).ConfigureAwait(false);
+                return await ProtocolOperationHelpers.ProcessMessageAsync(Pipeline, message, ClientDiagnostics, "QuestionAnsweringAuthoringClient.Export", OperationFinalStateVia.OperationLocation, context, waitUntil).ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -732,7 +733,7 @@ namespace Azure.AI.Language.QuestionAnswering.Authoring
                 Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
 
                 using HttpMessage message = CreateImportRequest(projectName, content, format, assetKind, context);
-                return await ProtocolOperationHelpers.ProcessMessageAsync(Pipeline, message, ClientDiagnostics, "QuestionAnsweringAuthoringClient.ImportAsync", OperationFinalStateVia.OperationLocation, context, waitUntil).ConfigureAwait(false);
+                return await ProtocolOperationHelpers.ProcessMessageAsync(Pipeline, message, ClientDiagnostics, "QuestionAnsweringAuthoringClient.Import", OperationFinalStateVia.OperationLocation, context, waitUntil).ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -780,8 +781,8 @@ namespace Azure.AI.Language.QuestionAnswering.Authoring
         /// <param name="contentType"> The contentType to use which has the multipart/form-data boundary. </param>
         /// <param name="assetKind"> Kind of the asset of the project. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="projectName"/> or <paramref name="content"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="projectName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="projectName"/>, <paramref name="content"/> or <paramref name="contentType"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="projectName"/> or <paramref name="contentType"/> is an empty string, and was expected to be non-empty. </exception>
         /// <returns> The response returned from the service. </returns>
         public virtual Operation ImportFromFiles(WaitUntil waitUntil, string projectName, RequestContent content, string contentType, string assetKind = default, RequestContext context = null)
         {
@@ -791,6 +792,7 @@ namespace Azure.AI.Language.QuestionAnswering.Authoring
             {
                 Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
                 Argument.AssertNotNull(content, nameof(content));
+                Argument.AssertNotNullOrEmpty(contentType, nameof(contentType));
 
                 using HttpMessage message = CreateImportFromFilesRequest(projectName, content, contentType, assetKind, context);
                 return ProtocolOperationHelpers.ProcessMessage(Pipeline, message, ClientDiagnostics, "QuestionAnsweringAuthoringClient.ImportFromFiles", OperationFinalStateVia.OperationLocation, context, waitUntil);
@@ -809,8 +811,8 @@ namespace Azure.AI.Language.QuestionAnswering.Authoring
         /// <param name="contentType"> The contentType to use which has the multipart/form-data boundary. </param>
         /// <param name="assetKind"> Kind of the asset of the project. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="projectName"/> or <paramref name="content"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="projectName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="projectName"/>, <paramref name="content"/> or <paramref name="contentType"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="projectName"/> or <paramref name="contentType"/> is an empty string, and was expected to be non-empty. </exception>
         /// <returns> The response returned from the service. </returns>
         public virtual async Task<Operation> ImportFromFilesAsync(WaitUntil waitUntil, string projectName, RequestContent content, string contentType, string assetKind = default, RequestContext context = null)
         {
@@ -820,15 +822,54 @@ namespace Azure.AI.Language.QuestionAnswering.Authoring
             {
                 Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
                 Argument.AssertNotNull(content, nameof(content));
+                Argument.AssertNotNullOrEmpty(contentType, nameof(contentType));
 
                 using HttpMessage message = CreateImportFromFilesRequest(projectName, content, contentType, assetKind, context);
-                return await ProtocolOperationHelpers.ProcessMessageAsync(Pipeline, message, ClientDiagnostics, "QuestionAnsweringAuthoringClient.ImportFromFilesAsync", OperationFinalStateVia.OperationLocation, context, waitUntil).ConfigureAwait(false);
+                return await ProtocolOperationHelpers.ProcessMessageAsync(Pipeline, message, ClientDiagnostics, "QuestionAnsweringAuthoringClient.ImportFromFiles", OperationFinalStateVia.OperationLocation, context, waitUntil).ConfigureAwait(false);
             }
             catch (Exception e)
             {
                 scope.Failed(e);
                 throw;
             }
+        }
+
+        /// <summary> Import project assets from file. </summary>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="projectName"> The name of the project to use. </param>
+        /// <param name="body"> Collection of files containing project assets the needs to be imported. </param>
+        /// <param name="assetKind"> Kind of the asset of the project. </param>
+        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="projectName"/> or <paramref name="body"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="projectName"/> is an empty string, and was expected to be non-empty. </exception>
+        [Experimental("SCME0004")]
+        public virtual Operation ImportFromFiles(WaitUntil waitUntil, string projectName, ImportFiles body, AssetKind? assetKind = default, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
+            Argument.AssertNotNull(body, nameof(body));
+
+            using MultiPartFormContent content = body.ToMultipartFormContent();
+            using RequestContent requestContent = RequestContent.Create(content);
+            return ImportFromFiles(waitUntil, projectName, requestContent, content.MediaType, assetKind?.ToString(), cancellationToken.ToRequestContext());
+        }
+
+        /// <summary> Import project assets from file. </summary>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="projectName"> The name of the project to use. </param>
+        /// <param name="body"> Collection of files containing project assets the needs to be imported. </param>
+        /// <param name="assetKind"> Kind of the asset of the project. </param>
+        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="projectName"/> or <paramref name="body"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="projectName"/> is an empty string, and was expected to be non-empty. </exception>
+        [Experimental("SCME0004")]
+        public virtual async Task<Operation> ImportFromFilesAsync(WaitUntil waitUntil, string projectName, ImportFiles body, AssetKind? assetKind = default, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
+            Argument.AssertNotNull(body, nameof(body));
+
+            using MultiPartFormContent content = body.ToMultipartFormContent();
+            using RequestContent requestContent = RequestContent.Create(content);
+            return await ImportFromFilesAsync(waitUntil, projectName, requestContent, content.MediaType, assetKind?.ToString(), cancellationToken.ToRequestContext()).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -976,7 +1017,7 @@ namespace Azure.AI.Language.QuestionAnswering.Authoring
                 Argument.AssertNotNullOrEmpty(deploymentName, nameof(deploymentName));
 
                 using HttpMessage message = CreateDeployProjectRequest(projectName, deploymentName, context);
-                return await ProtocolOperationHelpers.ProcessMessageAsync(Pipeline, message, ClientDiagnostics, "QuestionAnsweringAuthoringClient.DeployProjectAsync", OperationFinalStateVia.OperationLocation, context, waitUntil).ConfigureAwait(false);
+                return await ProtocolOperationHelpers.ProcessMessageAsync(Pipeline, message, ClientDiagnostics, "QuestionAnsweringAuthoringClient.DeployProject", OperationFinalStateVia.OperationLocation, context, waitUntil).ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -1590,7 +1631,7 @@ namespace Azure.AI.Language.QuestionAnswering.Authoring
                 Argument.AssertNotNull(content, nameof(content));
 
                 using HttpMessage message = CreateUpdateSourcesRequest(projectName, content, context);
-                return await ProtocolOperationHelpers.ProcessMessageAsync(Pipeline, message, ClientDiagnostics, "QuestionAnsweringAuthoringClient.UpdateSourcesAsync", OperationFinalStateVia.OperationLocation, context, waitUntil).ConfigureAwait(false);
+                return await ProtocolOperationHelpers.ProcessMessageAsync(Pipeline, message, ClientDiagnostics, "QuestionAnsweringAuthoringClient.UpdateSources", OperationFinalStateVia.OperationLocation, context, waitUntil).ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -1605,8 +1646,8 @@ namespace Azure.AI.Language.QuestionAnswering.Authoring
         /// <param name="content"> The content to send as the body of the request. </param>
         /// <param name="contentType"> The contentType to use which has the multipart/form-data boundary. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="projectName"/> or <paramref name="content"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="projectName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="projectName"/>, <paramref name="content"/> or <paramref name="contentType"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="projectName"/> or <paramref name="contentType"/> is an empty string, and was expected to be non-empty. </exception>
         /// <returns> The response returned from the service. </returns>
         public virtual Operation UpdateSourcesFromFiles(WaitUntil waitUntil, string projectName, RequestContent content, string contentType, RequestContext context = null)
         {
@@ -1616,6 +1657,7 @@ namespace Azure.AI.Language.QuestionAnswering.Authoring
             {
                 Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
                 Argument.AssertNotNull(content, nameof(content));
+                Argument.AssertNotNullOrEmpty(contentType, nameof(contentType));
 
                 using HttpMessage message = CreateUpdateSourcesFromFilesRequest(projectName, content, contentType, context);
                 return ProtocolOperationHelpers.ProcessMessage(Pipeline, message, ClientDiagnostics, "QuestionAnsweringAuthoringClient.UpdateSourcesFromFiles", OperationFinalStateVia.OperationLocation, context, waitUntil);
@@ -1633,8 +1675,8 @@ namespace Azure.AI.Language.QuestionAnswering.Authoring
         /// <param name="content"> The content to send as the body of the request. </param>
         /// <param name="contentType"> The contentType to use which has the multipart/form-data boundary. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="projectName"/> or <paramref name="content"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="projectName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="projectName"/>, <paramref name="content"/> or <paramref name="contentType"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="projectName"/> or <paramref name="contentType"/> is an empty string, and was expected to be non-empty. </exception>
         /// <returns> The response returned from the service. </returns>
         public virtual async Task<Operation> UpdateSourcesFromFilesAsync(WaitUntil waitUntil, string projectName, RequestContent content, string contentType, RequestContext context = null)
         {
@@ -1644,9 +1686,10 @@ namespace Azure.AI.Language.QuestionAnswering.Authoring
             {
                 Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
                 Argument.AssertNotNull(content, nameof(content));
+                Argument.AssertNotNullOrEmpty(contentType, nameof(contentType));
 
                 using HttpMessage message = CreateUpdateSourcesFromFilesRequest(projectName, content, contentType, context);
-                return await ProtocolOperationHelpers.ProcessMessageAsync(Pipeline, message, ClientDiagnostics, "QuestionAnsweringAuthoringClient.UpdateSourcesFromFilesAsync", OperationFinalStateVia.OperationLocation, context, waitUntil).ConfigureAwait(false);
+                return await ProtocolOperationHelpers.ProcessMessageAsync(Pipeline, message, ClientDiagnostics, "QuestionAnsweringAuthoringClient.UpdateSourcesFromFiles", OperationFinalStateVia.OperationLocation, context, waitUntil).ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -1916,7 +1959,7 @@ namespace Azure.AI.Language.QuestionAnswering.Authoring
                 Argument.AssertNotNull(content, nameof(content));
 
                 using HttpMessage message = CreateUpdateQnasRequest(projectName, content, context);
-                return await ProtocolOperationHelpers.ProcessMessageAsync(Pipeline, message, ClientDiagnostics, "QuestionAnsweringAuthoringClient.UpdateQnasAsync", OperationFinalStateVia.OperationLocation, context, waitUntil).ConfigureAwait(false);
+                return await ProtocolOperationHelpers.ProcessMessageAsync(Pipeline, message, ClientDiagnostics, "QuestionAnsweringAuthoringClient.UpdateQnas", OperationFinalStateVia.OperationLocation, context, waitUntil).ConfigureAwait(false);
             }
             catch (Exception e)
             {

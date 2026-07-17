@@ -46,7 +46,7 @@ namespace Azure.ResourceManager.Network.Samples
                 PeerIP = "192.168.1.5",
                 HubVirtualNetworkConnectionId = new ResourceIdentifier("/subscriptions/subid/resourceGroups/rg1/providers/Microsoft.Network/virtualHubs/hub1/hubVirtualNetworkConnections/hubVnetConn1"),
             };
-            ArmOperation<BgpConnectionResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, connectionName, data);
+            ArmOperation<BgpConnectionResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, connectionName, data, cancellationToken: System.Threading.CancellationToken.None);
             BgpConnectionResource result = lro.Value;
 
             // the variable result is a resource, you could call other operations on this instance as well

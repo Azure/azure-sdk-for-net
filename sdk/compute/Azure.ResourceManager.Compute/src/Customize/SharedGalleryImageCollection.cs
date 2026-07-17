@@ -11,7 +11,6 @@ using System.Globalization;
 using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
-using Autorest.CSharp.Core;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager.Compute.Models;
@@ -27,7 +26,7 @@ namespace Azure.ResourceManager.Compute
     public partial class SharedGalleryImageCollection : ArmCollection, IEnumerable<SharedGalleryImageResource>, IAsyncEnumerable<SharedGalleryImageResource>
     {
         private readonly ClientDiagnostics _sharedGalleryImageClientDiagnostics;
-        private readonly SharedGalleryImagesRestOperations _sharedGalleryImageRestClient;
+        private readonly SharedGalleryImages _sharedGalleryImageRestClient;
 
         /// <summary> Initializes a new instance of the <see cref="SharedGalleryImageCollection"/> class for mocking. </summary>
         protected SharedGalleryImageCollection()
@@ -41,7 +40,7 @@ namespace Azure.ResourceManager.Compute
         {
             _sharedGalleryImageClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Compute", SharedGalleryImageResource.ResourceType.Namespace, Diagnostics);
             TryGetApiVersion(SharedGalleryImageResource.ResourceType, out string sharedGalleryImageApiVersion);
-            _sharedGalleryImageRestClient = new SharedGalleryImagesRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, sharedGalleryImageApiVersion);
+            _sharedGalleryImageRestClient = new SharedGalleryImages(_sharedGalleryImageClientDiagnostics, Pipeline, Endpoint, sharedGalleryImageApiVersion);
 #if DEBUG
             ValidateResourceId(Id);
 #endif
@@ -86,11 +85,14 @@ namespace Azure.ResourceManager.Compute
             scope.Start();
             try
             {
-                var response = await _sharedGalleryImageRestClient.GetAsync(Id.SubscriptionId, new AzureLocation(Id.Parent.Name), Id.Name, galleryImageName, cancellationToken).ConfigureAwait(false);
-                if (response.Value == null)
-                    throw new RequestFailedException(response.GetRawResponse());
-                response.Value.Id = SharedGalleryImageResource.CreateResourceIdentifier(Id.SubscriptionId, new AzureLocation(Id.Parent.Name), Id.Name, galleryImageName);
-                return Response.FromValue(new SharedGalleryImageResource(Client, response.Value), response.GetRawResponse());
+                using var message = _sharedGalleryImageRestClient.CreateGetSharedGalleryImageRequest(Id.SubscriptionId, new AzureLocation(Id.Parent.Name), Id.Name, galleryImageName, new RequestContext { CancellationToken = cancellationToken });
+                await Pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
+                if (message.Response.IsError)
+                    throw new RequestFailedException(message.Response);
+                using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                var data = SharedGalleryImageData.DeserializeSharedGalleryImageData(document.RootElement, ModelSerializationExtensions.WireOptions);
+                data.Id = SharedGalleryImageResource.CreateResourceIdentifier(Id.SubscriptionId, new AzureLocation(Id.Parent.Name), Id.Name, galleryImageName);
+                return Response.FromValue(new SharedGalleryImageResource(Client, data), message.Response);
             }
             catch (Exception e)
             {
@@ -132,11 +134,14 @@ namespace Azure.ResourceManager.Compute
             scope.Start();
             try
             {
-                var response = _sharedGalleryImageRestClient.Get(Id.SubscriptionId, new AzureLocation(Id.Parent.Name), Id.Name, galleryImageName, cancellationToken);
-                if (response.Value == null)
-                    throw new RequestFailedException(response.GetRawResponse());
-                response.Value.Id = SharedGalleryImageResource.CreateResourceIdentifier(Id.SubscriptionId, new AzureLocation(Id.Parent.Name), Id.Name, galleryImageName);
-                return Response.FromValue(new SharedGalleryImageResource(Client, response.Value), response.GetRawResponse());
+                using var message = _sharedGalleryImageRestClient.CreateGetSharedGalleryImageRequest(Id.SubscriptionId, new AzureLocation(Id.Parent.Name), Id.Name, galleryImageName, new RequestContext { CancellationToken = cancellationToken });
+                Pipeline.Send(message, cancellationToken);
+                if (message.Response.IsError)
+                    throw new RequestFailedException(message.Response);
+                using var document = JsonDocument.Parse(message.Response.ContentStream);
+                var data = SharedGalleryImageData.DeserializeSharedGalleryImageData(document.RootElement, ModelSerializationExtensions.WireOptions);
+                data.Id = SharedGalleryImageResource.CreateResourceIdentifier(Id.SubscriptionId, new AzureLocation(Id.Parent.Name), Id.Name, galleryImageName);
+                return Response.FromValue(new SharedGalleryImageResource(Client, data), message.Response);
             }
             catch (Exception e)
             {
@@ -171,9 +176,10 @@ namespace Azure.ResourceManager.Compute
         /// <returns> An async collection of <see cref="SharedGalleryImageResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<SharedGalleryImageResource> GetAllAsync(SharedToValue? sharedTo = null, CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _sharedGalleryImageRestClient.CreateListRequest(Id.SubscriptionId, new AzureLocation(Id.Parent.Name), Id.Name, sharedTo);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _sharedGalleryImageRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, new AzureLocation(Id.Parent.Name), Id.Name, sharedTo);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new SharedGalleryImageResource(Client, DeserializeSharedGalleryImageData(e)), _sharedGalleryImageClientDiagnostics, Pipeline, "SharedGalleryImageCollection.GetAll", "value", "nextLink", cancellationToken);
+            var context = new RequestContext { CancellationToken = cancellationToken };
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _sharedGalleryImageRestClient.CreateGetSharedGalleryImagesRequest(Id.SubscriptionId, new AzureLocation(Id.Parent.Name), Id.Name, sharedTo?.ToString(), context);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _sharedGalleryImageRestClient.CreateNextGetSharedGalleryImagesRequest(new Uri(nextLink), Id.SubscriptionId, new AzureLocation(Id.Parent.Name), Id.Name, sharedTo?.ToString(), context);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new SharedGalleryImageResource(Client, DeserializeSharedGalleryImageData(e)), _sharedGalleryImageClientDiagnostics, Pipeline, "SharedGalleryImageCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -202,14 +208,15 @@ namespace Azure.ResourceManager.Compute
         /// <returns> A collection of <see cref="SharedGalleryImageResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<SharedGalleryImageResource> GetAll(SharedToValue? sharedTo = null, CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _sharedGalleryImageRestClient.CreateListRequest(Id.SubscriptionId, new AzureLocation(Id.Parent.Name), Id.Name, sharedTo);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _sharedGalleryImageRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, new AzureLocation(Id.Parent.Name), Id.Name, sharedTo);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new SharedGalleryImageResource(Client, DeserializeSharedGalleryImageData(e)), _sharedGalleryImageClientDiagnostics, Pipeline, "SharedGalleryImageCollection.GetAll", "value", "nextLink", cancellationToken);
+            var context = new RequestContext { CancellationToken = cancellationToken };
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _sharedGalleryImageRestClient.CreateGetSharedGalleryImagesRequest(Id.SubscriptionId, new AzureLocation(Id.Parent.Name), Id.Name, sharedTo?.ToString(), context);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _sharedGalleryImageRestClient.CreateNextGetSharedGalleryImagesRequest(new Uri(nextLink), Id.SubscriptionId, new AzureLocation(Id.Parent.Name), Id.Name, sharedTo?.ToString(), context);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new SharedGalleryImageResource(Client, DeserializeSharedGalleryImageData(e)), _sharedGalleryImageClientDiagnostics, Pipeline, "SharedGalleryImageCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         private SharedGalleryImageData DeserializeSharedGalleryImageData(JsonElement element)
         {
-            var data = SharedGalleryImageData.DeserializeSharedGalleryImageData(element);
+            var data = SharedGalleryImageData.DeserializeSharedGalleryImageData(element, ModelSerializationExtensions.WireOptions);
             data.Id = SharedGalleryImageResource.CreateResourceIdentifier(Id.SubscriptionId, new AzureLocation(Id.Parent.Name), Id.Name, data.Name);
             return data;
         }
@@ -247,8 +254,13 @@ namespace Azure.ResourceManager.Compute
             scope.Start();
             try
             {
-                var response = await _sharedGalleryImageRestClient.GetAsync(Id.SubscriptionId, new AzureLocation(Id.Parent.Name), Id.Name, galleryImageName, cancellationToken: cancellationToken).ConfigureAwait(false);
-                return Response.FromValue(response.Value != null, response.GetRawResponse());
+                using var message = _sharedGalleryImageRestClient.CreateGetSharedGalleryImageRequest(Id.SubscriptionId, new AzureLocation(Id.Parent.Name), Id.Name, galleryImageName, new RequestContext { CancellationToken = cancellationToken });
+                await Pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
+                if (message.Response.Status == 404)
+                    return Response.FromValue(false, message.Response);
+                if (message.Response.IsError)
+                    throw new RequestFailedException(message.Response);
+                return Response.FromValue(true, message.Response);
             }
             catch (Exception e)
             {
@@ -290,8 +302,13 @@ namespace Azure.ResourceManager.Compute
             scope.Start();
             try
             {
-                var response = _sharedGalleryImageRestClient.Get(Id.SubscriptionId, new AzureLocation(Id.Parent.Name), Id.Name, galleryImageName, cancellationToken: cancellationToken);
-                return Response.FromValue(response.Value != null, response.GetRawResponse());
+                using var message = _sharedGalleryImageRestClient.CreateGetSharedGalleryImageRequest(Id.SubscriptionId, new AzureLocation(Id.Parent.Name), Id.Name, galleryImageName, new RequestContext { CancellationToken = cancellationToken });
+                Pipeline.Send(message, cancellationToken);
+                if (message.Response.Status == 404)
+                    return Response.FromValue(false, message.Response);
+                if (message.Response.IsError)
+                    throw new RequestFailedException(message.Response);
+                return Response.FromValue(true, message.Response);
             }
             catch (Exception e)
             {
@@ -333,11 +350,16 @@ namespace Azure.ResourceManager.Compute
             scope.Start();
             try
             {
-                var response = await _sharedGalleryImageRestClient.GetAsync(Id.SubscriptionId, new AzureLocation(Id.Parent.Name), Id.Name, galleryImageName, cancellationToken: cancellationToken).ConfigureAwait(false);
-                if (response.Value == null)
-                    return new NoValueResponse<SharedGalleryImageResource>(response.GetRawResponse());
-                response.Value.Id = SharedGalleryImageResource.CreateResourceIdentifier(Id.SubscriptionId, new AzureLocation(Id.Parent.Name), Id.Name, galleryImageName);
-                return Response.FromValue(new SharedGalleryImageResource(Client, response.Value), response.GetRawResponse());
+                using var message = _sharedGalleryImageRestClient.CreateGetSharedGalleryImageRequest(Id.SubscriptionId, new AzureLocation(Id.Parent.Name), Id.Name, galleryImageName, new RequestContext { CancellationToken = cancellationToken });
+                await Pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
+                if (message.Response.Status == 404)
+                    return new NoValueResponse<SharedGalleryImageResource>(message.Response);
+                if (message.Response.IsError)
+                    throw new RequestFailedException(message.Response);
+                using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                var data = SharedGalleryImageData.DeserializeSharedGalleryImageData(document.RootElement, ModelSerializationExtensions.WireOptions);
+                data.Id = SharedGalleryImageResource.CreateResourceIdentifier(Id.SubscriptionId, new AzureLocation(Id.Parent.Name), Id.Name, galleryImageName);
+                return Response.FromValue(new SharedGalleryImageResource(Client, data), message.Response);
             }
             catch (Exception e)
             {
@@ -379,11 +401,16 @@ namespace Azure.ResourceManager.Compute
             scope.Start();
             try
             {
-                var response = _sharedGalleryImageRestClient.Get(Id.SubscriptionId, new AzureLocation(Id.Parent.Name), Id.Name, galleryImageName, cancellationToken: cancellationToken);
-                if (response.Value == null)
-                    return new NoValueResponse<SharedGalleryImageResource>(response.GetRawResponse());
-                response.Value.Id = SharedGalleryImageResource.CreateResourceIdentifier(Id.SubscriptionId, new AzureLocation(Id.Parent.Name), Id.Name, galleryImageName);
-                return Response.FromValue(new SharedGalleryImageResource(Client, response.Value), response.GetRawResponse());
+                using var message = _sharedGalleryImageRestClient.CreateGetSharedGalleryImageRequest(Id.SubscriptionId, new AzureLocation(Id.Parent.Name), Id.Name, galleryImageName, new RequestContext { CancellationToken = cancellationToken });
+                Pipeline.Send(message, cancellationToken);
+                if (message.Response.Status == 404)
+                    return new NoValueResponse<SharedGalleryImageResource>(message.Response);
+                if (message.Response.IsError)
+                    throw new RequestFailedException(message.Response);
+                using var document = JsonDocument.Parse(message.Response.ContentStream);
+                var data = SharedGalleryImageData.DeserializeSharedGalleryImageData(document.RootElement, ModelSerializationExtensions.WireOptions);
+                data.Id = SharedGalleryImageResource.CreateResourceIdentifier(Id.SubscriptionId, new AzureLocation(Id.Parent.Name), Id.Name, galleryImageName);
+                return Response.FromValue(new SharedGalleryImageResource(Client, data), message.Response);
             }
             catch (Exception e)
             {

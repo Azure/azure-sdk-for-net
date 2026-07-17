@@ -55,7 +55,10 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        ClusterProviderSpecificRecoveryPointDetails IPersistableModel<ClusterProviderSpecificRecoveryPointDetails>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+        ClusterProviderSpecificRecoveryPointDetails IPersistableModel<ClusterProviderSpecificRecoveryPointDetails>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            return PersistableModelCreateCore(data, options);
+        }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         string IPersistableModel<ClusterProviderSpecificRecoveryPointDetails>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
@@ -83,7 +86,10 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        ClusterProviderSpecificRecoveryPointDetails IJsonModel<ClusterProviderSpecificRecoveryPointDetails>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+        ClusterProviderSpecificRecoveryPointDetails IJsonModel<ClusterProviderSpecificRecoveryPointDetails>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            return JsonModelCreateCore(ref reader, options);
+        }
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>

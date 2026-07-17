@@ -9,14 +9,55 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure.Core;
+using Azure.ResourceManager.Automation;
 
 namespace Azure.ResourceManager.Automation.Models
 {
-    public partial class SoftwareUpdateConfigurationTargetProperties : IUtf8JsonSerializable, IJsonModel<SoftwareUpdateConfigurationTargetProperties>
+    /// <summary> Group specific to the update configuration. </summary>
+    public partial class SoftwareUpdateConfigurationTargetProperties : IJsonModel<SoftwareUpdateConfigurationTargetProperties>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<SoftwareUpdateConfigurationTargetProperties>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual SoftwareUpdateConfigurationTargetProperties PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<SoftwareUpdateConfigurationTargetProperties>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    {
+                        return DeserializeSoftwareUpdateConfigurationTargetProperties(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(SoftwareUpdateConfigurationTargetProperties)} does not support reading '{options.Format}' format.");
+            }
+        }
 
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<SoftwareUpdateConfigurationTargetProperties>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerAutomationContext.Default);
+                default:
+                    throw new FormatException($"The model {nameof(SoftwareUpdateConfigurationTargetProperties)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<SoftwareUpdateConfigurationTargetProperties>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        SoftwareUpdateConfigurationTargetProperties IPersistableModel<SoftwareUpdateConfigurationTargetProperties>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<SoftwareUpdateConfigurationTargetProperties>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<SoftwareUpdateConfigurationTargetProperties>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
@@ -28,17 +69,16 @@ namespace Azure.ResourceManager.Automation.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<SoftwareUpdateConfigurationTargetProperties>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<SoftwareUpdateConfigurationTargetProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(SoftwareUpdateConfigurationTargetProperties)} does not support writing '{format}' format.");
             }
-
             if (Optional.IsCollectionDefined(AzureQueries))
             {
                 writer.WritePropertyName("azureQueries"u8);
                 writer.WriteStartArray();
-                foreach (var item in AzureQueries)
+                foreach (AzureQueryProperties item in AzureQueries)
                 {
                     writer.WriteObjectValue(item, options);
                 }
@@ -48,21 +88,21 @@ namespace Azure.ResourceManager.Automation.Models
             {
                 writer.WritePropertyName("nonAzureQueries"u8);
                 writer.WriteStartArray();
-                foreach (var item in NonAzureQueries)
+                foreach (NonAzureQueryProperties item in NonAzureQueries)
                 {
                     writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
-                foreach (var item in _serializedAdditionalRawData)
+                foreach (var item in _additionalBinaryDataProperties)
                 {
                     writer.WritePropertyName(item.Key);
 #if NET6_0_OR_GREATER
-				writer.WriteRawValue(item.Value);
+                    writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value, ModelSerializationExtensions.JsonDocumentOptions))
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
                     {
                         JsonSerializer.Serialize(writer, document.RootElement);
                     }
@@ -71,54 +111,58 @@ namespace Azure.ResourceManager.Automation.Models
             }
         }
 
-        SoftwareUpdateConfigurationTargetProperties IJsonModel<SoftwareUpdateConfigurationTargetProperties>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        SoftwareUpdateConfigurationTargetProperties IJsonModel<SoftwareUpdateConfigurationTargetProperties>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual SoftwareUpdateConfigurationTargetProperties JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<SoftwareUpdateConfigurationTargetProperties>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<SoftwareUpdateConfigurationTargetProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(SoftwareUpdateConfigurationTargetProperties)} does not support reading '{format}' format.");
             }
-
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
             return DeserializeSoftwareUpdateConfigurationTargetProperties(document.RootElement, options);
         }
 
-        internal static SoftwareUpdateConfigurationTargetProperties DeserializeSoftwareUpdateConfigurationTargetProperties(JsonElement element, ModelReaderWriterOptions options = null)
+        /// <param name="element"> The JSON element to deserialize. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        internal static SoftwareUpdateConfigurationTargetProperties DeserializeSoftwareUpdateConfigurationTargetProperties(JsonElement element, ModelReaderWriterOptions options)
         {
-            options ??= ModelSerializationExtensions.WireOptions;
-
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             IList<AzureQueryProperties> azureQueries = default;
             IList<NonAzureQueryProperties> nonAzureQueries = default;
-            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
-            foreach (var property in element.EnumerateObject())
+            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            foreach (var prop in element.EnumerateObject())
             {
-                if (property.NameEquals("azureQueries"u8))
+                if (prop.NameEquals("azureQueries"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
                     List<AzureQueryProperties> array = new List<AzureQueryProperties>();
-                    foreach (var item in property.Value.EnumerateArray())
+                    foreach (var item in prop.Value.EnumerateArray())
                     {
                         array.Add(AzureQueryProperties.DeserializeAzureQueryProperties(item, options));
                     }
                     azureQueries = array;
                     continue;
                 }
-                if (property.NameEquals("nonAzureQueries"u8))
+                if (prop.NameEquals("nonAzureQueries"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
                     List<NonAzureQueryProperties> array = new List<NonAzureQueryProperties>();
-                    foreach (var item in property.Value.EnumerateArray())
+                    foreach (var item in prop.Value.EnumerateArray())
                     {
                         array.Add(NonAzureQueryProperties.DeserializeNonAzureQueryProperties(item, options));
                     }
@@ -127,42 +171,10 @@ namespace Azure.ResourceManager.Automation.Models
                 }
                 if (options.Format != "W")
                 {
-                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = rawDataDictionary;
-            return new SoftwareUpdateConfigurationTargetProperties(azureQueries ?? new ChangeTrackingList<AzureQueryProperties>(), nonAzureQueries ?? new ChangeTrackingList<NonAzureQueryProperties>(), serializedAdditionalRawData);
+            return new SoftwareUpdateConfigurationTargetProperties(azureQueries ?? new ChangeTrackingList<AzureQueryProperties>(), nonAzureQueries ?? new ChangeTrackingList<NonAzureQueryProperties>(), additionalBinaryDataProperties);
         }
-
-        BinaryData IPersistableModel<SoftwareUpdateConfigurationTargetProperties>.Write(ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<SoftwareUpdateConfigurationTargetProperties>)this).GetFormatFromOptions(options) : options.Format;
-
-            switch (format)
-            {
-                case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerAutomationContext.Default);
-                default:
-                    throw new FormatException($"The model {nameof(SoftwareUpdateConfigurationTargetProperties)} does not support writing '{options.Format}' format.");
-            }
-        }
-
-        SoftwareUpdateConfigurationTargetProperties IPersistableModel<SoftwareUpdateConfigurationTargetProperties>.Create(BinaryData data, ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<SoftwareUpdateConfigurationTargetProperties>)this).GetFormatFromOptions(options) : options.Format;
-
-            switch (format)
-            {
-                case "J":
-                    {
-                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
-                        return DeserializeSoftwareUpdateConfigurationTargetProperties(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(SoftwareUpdateConfigurationTargetProperties)} does not support reading '{options.Format}' format.");
-            }
-        }
-
-        string IPersistableModel<SoftwareUpdateConfigurationTargetProperties>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

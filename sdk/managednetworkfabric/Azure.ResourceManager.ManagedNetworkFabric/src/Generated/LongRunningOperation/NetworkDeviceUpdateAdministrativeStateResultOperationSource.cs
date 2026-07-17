@@ -8,23 +8,36 @@
 using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
+using Azure;
 using Azure.Core;
 using Azure.ResourceManager.ManagedNetworkFabric.Models;
 
 namespace Azure.ResourceManager.ManagedNetworkFabric
 {
-    internal class NetworkDeviceUpdateAdministrativeStateResultOperationSource : IOperationSource<NetworkDeviceUpdateAdministrativeStateResult>
+    /// <summary></summary>
+    internal partial class NetworkDeviceUpdateAdministrativeStateResultOperationSource : IOperationSource<NetworkDeviceUpdateAdministrativeStateResult>
     {
-        NetworkDeviceUpdateAdministrativeStateResult IOperationSource<NetworkDeviceUpdateAdministrativeStateResult>.CreateResult(Response response, CancellationToken cancellationToken)
+        /// <summary></summary>
+        internal NetworkDeviceUpdateAdministrativeStateResultOperationSource()
         {
-            using var document = JsonDocument.Parse(response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
-            return NetworkDeviceUpdateAdministrativeStateResult.DeserializeNetworkDeviceUpdateAdministrativeStateResult(document.RootElement);
         }
 
+        /// <param name="response"> The response from the service. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns></returns>
+        NetworkDeviceUpdateAdministrativeStateResult IOperationSource<NetworkDeviceUpdateAdministrativeStateResult>.CreateResult(Response response, CancellationToken cancellationToken)
+        {
+            using JsonDocument document = JsonDocument.Parse(response.ContentStream);
+            return NetworkDeviceUpdateAdministrativeStateResult.DeserializeNetworkDeviceUpdateAdministrativeStateResult(document.RootElement, ModelSerializationExtensions.WireOptions);
+        }
+
+        /// <param name="response"> The response from the service. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns></returns>
         async ValueTask<NetworkDeviceUpdateAdministrativeStateResult> IOperationSource<NetworkDeviceUpdateAdministrativeStateResult>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
-            using var document = await JsonDocument.ParseAsync(response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
-            return NetworkDeviceUpdateAdministrativeStateResult.DeserializeNetworkDeviceUpdateAdministrativeStateResult(document.RootElement);
+            using JsonDocument document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+            return NetworkDeviceUpdateAdministrativeStateResult.DeserializeNetworkDeviceUpdateAdministrativeStateResult(document.RootElement, ModelSerializationExtensions.WireOptions);
         }
     }
 }

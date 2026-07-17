@@ -15,37 +15,8 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
     /// <summary> The Network To Network Interconnect resource patch definition. </summary>
     public partial class NetworkToNetworkInterconnectPatch : ResourceData
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="NetworkToNetworkInterconnectPatch"/>. </summary>
         public NetworkToNetworkInterconnectPatch()
@@ -53,51 +24,172 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="NetworkToNetworkInterconnectPatch"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="layer2Configuration"> Common properties for Layer2Configuration. </param>
-        /// <param name="optionBLayer3Configuration"> Common properties for Layer3Configuration. </param>
-        /// <param name="npbStaticRouteConfiguration"> NPB Static Route Configuration properties. </param>
-        /// <param name="staticRouteConfiguration"> Static Route Configuration. </param>
-        /// <param name="importRoutePolicy"> Import Route Policy information. </param>
-        /// <param name="exportRoutePolicy"> Export Route Policy information. </param>
-        /// <param name="egressAclId"> Egress Acl. ARM resource ID of Access Control Lists. </param>
-        /// <param name="ingressAclId"> Ingress Acl. ARM resource ID of Access Control Lists. </param>
-        /// <param name="microBfdState"> Micro BFD enabled/disabled state. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal NetworkToNetworkInterconnectPatch(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, Layer2Configuration layer2Configuration, OptionBLayer3Configuration optionBLayer3Configuration, NpbStaticRouteConfiguration npbStaticRouteConfiguration, NniStaticRoutePatchConfiguration staticRouteConfiguration, ImportRoutePolicyInformation importRoutePolicy, ExportRoutePolicyInformation exportRoutePolicy, ResourceIdentifier egressAclId, ResourceIdentifier ingressAclId, NetworkFabricMicroBfdState? microBfdState, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="properties"> Resource properties. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal NetworkToNetworkInterconnectPatch(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, NetworkToNetworkInterconnectPatchProperties properties, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(id, name, resourceType, systemData)
         {
-            Layer2Configuration = layer2Configuration;
-            OptionBLayer3Configuration = optionBLayer3Configuration;
-            NpbStaticRouteConfiguration = npbStaticRouteConfiguration;
-            StaticRouteConfiguration = staticRouteConfiguration;
-            ImportRoutePolicy = importRoutePolicy;
-            ExportRoutePolicy = exportRoutePolicy;
-            EgressAclId = egressAclId;
-            IngressAclId = ingressAclId;
-            MicroBfdState = microBfdState;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            Properties = properties;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
+        /// <summary> Resource properties. </summary>
+        internal NetworkToNetworkInterconnectPatchProperties Properties { get; set; }
+
         /// <summary> Common properties for Layer2Configuration. </summary>
-        public Layer2Configuration Layer2Configuration { get; set; }
+        public Layer2ConfigurationPatch Layer2Settings
+        {
+            get
+            {
+                return Properties is null ? default : Properties.Layer2Settings;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new NetworkToNetworkInterconnectPatchProperties();
+                }
+                Properties.Layer2Settings = value;
+            }
+        }
+
         /// <summary> Common properties for Layer3Configuration. </summary>
-        public OptionBLayer3Configuration OptionBLayer3Configuration { get; set; }
+        public OptionBLayer3ConfigurationPatchProperties OptionBLayer3Settings
+        {
+            get
+            {
+                return Properties is null ? default : Properties.OptionBLayer3Settings;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new NetworkToNetworkInterconnectPatchProperties();
+                }
+                Properties.OptionBLayer3Settings = value;
+            }
+        }
+
         /// <summary> NPB Static Route Configuration properties. </summary>
-        public NpbStaticRouteConfiguration NpbStaticRouteConfiguration { get; set; }
+        public NpbStaticRouteConfigurationPatch NpbStaticRouteSettings
+        {
+            get
+            {
+                return Properties is null ? default : Properties.NpbStaticRouteSettings;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new NetworkToNetworkInterconnectPatchProperties();
+                }
+                Properties.NpbStaticRouteSettings = value;
+            }
+        }
+
         /// <summary> Static Route Configuration. </summary>
-        public NniStaticRoutePatchConfiguration StaticRouteConfiguration { get; set; }
+        public NniStaticRoutePatchConfiguration StaticRouteConfiguration
+        {
+            get
+            {
+                return Properties is null ? default : Properties.StaticRouteConfiguration;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new NetworkToNetworkInterconnectPatchProperties();
+                }
+                Properties.StaticRouteConfiguration = value;
+            }
+        }
+
         /// <summary> Import Route Policy information. </summary>
-        public ImportRoutePolicyInformation ImportRoutePolicy { get; set; }
+        public ImportRoutePolicyInformationPatch ImportRoutePolicySettings
+        {
+            get
+            {
+                return Properties is null ? default : Properties.ImportRoutePolicySettings;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new NetworkToNetworkInterconnectPatchProperties();
+                }
+                Properties.ImportRoutePolicySettings = value;
+            }
+        }
+
         /// <summary> Export Route Policy information. </summary>
-        public ExportRoutePolicyInformation ExportRoutePolicy { get; set; }
+        public ExportRoutePolicyInformationPatch ExportRoutePolicySettings
+        {
+            get
+            {
+                return Properties is null ? default : Properties.ExportRoutePolicySettings;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new NetworkToNetworkInterconnectPatchProperties();
+                }
+                Properties.ExportRoutePolicySettings = value;
+            }
+        }
+
         /// <summary> Egress Acl. ARM resource ID of Access Control Lists. </summary>
-        public ResourceIdentifier EgressAclId { get; set; }
+        public ResourceIdentifier EgressAclId
+        {
+            get
+            {
+                return Properties is null ? default : Properties.EgressAclId;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new NetworkToNetworkInterconnectPatchProperties();
+                }
+                Properties.EgressAclId = value;
+            }
+        }
+
         /// <summary> Ingress Acl. ARM resource ID of Access Control Lists. </summary>
-        public ResourceIdentifier IngressAclId { get; set; }
+        public ResourceIdentifier IngressAclId
+        {
+            get
+            {
+                return Properties is null ? default : Properties.IngressAclId;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new NetworkToNetworkInterconnectPatchProperties();
+                }
+                Properties.IngressAclId = value;
+            }
+        }
+
         /// <summary> Micro BFD enabled/disabled state. </summary>
-        public NetworkFabricMicroBfdState? MicroBfdState { get; set; }
+        public NetworkFabricMicroBfdState? MicroBfdState
+        {
+            get
+            {
+                return Properties is null ? default : Properties.MicroBfdState;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new NetworkToNetworkInterconnectPatchProperties();
+                }
+                Properties.MicroBfdState = value;
+            }
+        }
     }
 }

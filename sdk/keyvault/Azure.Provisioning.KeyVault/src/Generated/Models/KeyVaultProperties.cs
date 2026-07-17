@@ -303,6 +303,10 @@ namespace Azure.Provisioning.KeyVault
             _provisioningState = DefineProperty<KeyVaultProvisioningState>(nameof(ProvisioningState), new string[] { "provisioningState" });
             _privateEndpointConnections = DefineListProperty<KeyVaultPrivateEndpointConnectionItemData>(nameof(PrivateEndpointConnections), new string[] { "privateEndpointConnections" }, isOutput: true);
             _publicNetworkAccess = DefineProperty<string>(nameof(PublicNetworkAccess), new string[] { "publicNetworkAccess" });
+            DefineAdditionalProperties();
         }
+
+        /// <summary> Define additional provisionable properties for KeyVaultProperties that are not part of the generated code. </summary>
+        partial void DefineAdditionalProperties();
     }
 }

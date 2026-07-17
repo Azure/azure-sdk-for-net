@@ -1595,7 +1595,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Mocking
                 HttpMessage message = ReplicationJobsRestClient.CreateExportSiteRecoveryJobRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, resourceName, SiteRecoveryJobQueryContent.ToRequestContent(content), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 RecoveryServicesSiteRecoveryArmOperation<SiteRecoveryJobResource> operation = new RecoveryServicesSiteRecoveryArmOperation<SiteRecoveryJobResource>(
-                    new SiteRecoveryJobOperationSource(Client),
+                    new SiteRecoveryJobResourceOperationSource(Client),
                     ReplicationJobsClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -1653,7 +1653,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Mocking
                 HttpMessage message = ReplicationJobsRestClient.CreateExportSiteRecoveryJobRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, resourceName, SiteRecoveryJobQueryContent.ToRequestContent(content), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 RecoveryServicesSiteRecoveryArmOperation<SiteRecoveryJobResource> operation = new RecoveryServicesSiteRecoveryArmOperation<SiteRecoveryJobResource>(
-                    new SiteRecoveryJobOperationSource(Client),
+                    new SiteRecoveryJobResourceOperationSource(Client),
                     ReplicationJobsClientDiagnostics,
                     Pipeline,
                     message.Request,

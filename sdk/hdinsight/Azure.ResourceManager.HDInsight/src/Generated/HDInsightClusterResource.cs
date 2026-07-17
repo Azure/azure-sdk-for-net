@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using System.Diagnostics;
 using System.Threading;
 using System.Threading.Tasks;
@@ -508,6 +509,112 @@ namespace Azure.ResourceManager.HDInsight
                     operation.WaitForCompletionResponse(cancellationToken);
                 }
                 return operation;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// The the async operation status.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.HDInsight/clusters/{clusterName}/azureasyncoperations/{operationId}. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> Clusters_GetAzureAsyncOperationStatus. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-01-15-preview. </description>
+        /// </item>
+        /// <item>
+        /// <term> Resource. </term>
+        /// <description> <see cref="HDInsightClusterResource"/>. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="operationId"> The long running operation id. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="operationId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="operationId"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual async Task<Response<HDInsightAsyncOperationResult>> GetAsyncOperationStatusAsync(string operationId, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(operationId, nameof(operationId));
+
+            using DiagnosticScope scope = _hdInsightClusterClientDiagnostics.CreateScope("HDInsightClusterResource.GetAsyncOperationStatus");
+            scope.Start();
+            try
+            {
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _hdInsightClusterRestClient.CreateGetAsyncOperationStatusRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, operationId, context);
+                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                Response<HDInsightAsyncOperationResult> response = Response.FromValue(HDInsightAsyncOperationResult.FromResponse(result), result);
+                if (response.Value == null)
+                {
+                    throw new RequestFailedException(response.GetRawResponse());
+                }
+                return response;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// The the async operation status.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.HDInsight/clusters/{clusterName}/azureasyncoperations/{operationId}. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> Clusters_GetAzureAsyncOperationStatus. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-01-15-preview. </description>
+        /// </item>
+        /// <item>
+        /// <term> Resource. </term>
+        /// <description> <see cref="HDInsightClusterResource"/>. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="operationId"> The long running operation id. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="operationId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="operationId"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual Response<HDInsightAsyncOperationResult> GetAsyncOperationStatus(string operationId, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(operationId, nameof(operationId));
+
+            using DiagnosticScope scope = _hdInsightClusterClientDiagnostics.CreateScope("HDInsightClusterResource.GetAsyncOperationStatus");
+            scope.Start();
+            try
+            {
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _hdInsightClusterRestClient.CreateGetAsyncOperationStatusRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, operationId, context);
+                Response result = Pipeline.ProcessMessage(message, context);
+                Response<HDInsightAsyncOperationResult> response = Response.FromValue(HDInsightAsyncOperationResult.FromResponse(result), result);
+                if (response.Value == null)
+                {
+                    throw new RequestFailedException(response.GetRawResponse());
+                }
+                return response;
             }
             catch (Exception e)
             {
@@ -1243,6 +1350,118 @@ namespace Azure.ResourceManager.HDInsight
         }
 
         /// <summary>
+        /// Configures the HTTP settings on the specified cluster. This API is deprecated, please use UpdateGatewaySettings in cluster endpoint instead.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.HDInsight/clusters/{clusterName}/configurations/{configurationName}. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> Configurations_Update. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-01-15-preview. </description>
+        /// </item>
+        /// <item>
+        /// <term> Resource. </term>
+        /// <description> <see cref="HDInsightClusterResource"/>. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="configurationName"> The name of the cluster configuration. </param>
+        /// <param name="clusterConfiguration"> The cluster configurations. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="configurationName"/> or <paramref name="clusterConfiguration"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="configurationName"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual async Task<ArmOperation> UpdateConfigurationAsync(WaitUntil waitUntil, string configurationName, IDictionary<string, string> clusterConfiguration, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(configurationName, nameof(configurationName));
+            Argument.AssertNotNull(clusterConfiguration, nameof(clusterConfiguration));
+
+            using DiagnosticScope scope = _configurationsClientDiagnostics.CreateScope("HDInsightClusterResource.UpdateConfiguration");
+            scope.Start();
+            try
+            {
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _configurationsRestClient.CreateUpdateConfigurationRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, configurationName, BinaryContentHelper.FromDictionary(clusterConfiguration), context);
+                Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                HDInsightArmOperation operation = new HDInsightArmOperation(_configurationsClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
+                if (waitUntil == WaitUntil.Completed)
+                {
+                    await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
+                }
+                return operation;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Configures the HTTP settings on the specified cluster. This API is deprecated, please use UpdateGatewaySettings in cluster endpoint instead.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.HDInsight/clusters/{clusterName}/configurations/{configurationName}. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> Configurations_Update. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-01-15-preview. </description>
+        /// </item>
+        /// <item>
+        /// <term> Resource. </term>
+        /// <description> <see cref="HDInsightClusterResource"/>. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="configurationName"> The name of the cluster configuration. </param>
+        /// <param name="clusterConfiguration"> The cluster configurations. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="configurationName"/> or <paramref name="clusterConfiguration"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="configurationName"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual ArmOperation UpdateConfiguration(WaitUntil waitUntil, string configurationName, IDictionary<string, string> clusterConfiguration, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(configurationName, nameof(configurationName));
+            Argument.AssertNotNull(clusterConfiguration, nameof(clusterConfiguration));
+
+            using DiagnosticScope scope = _configurationsClientDiagnostics.CreateScope("HDInsightClusterResource.UpdateConfiguration");
+            scope.Start();
+            try
+            {
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _configurationsRestClient.CreateUpdateConfigurationRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, configurationName, BinaryContentHelper.FromDictionary(clusterConfiguration), context);
+                Response response = Pipeline.ProcessMessage(message, context);
+                HDInsightArmOperation operation = new HDInsightArmOperation(_configurationsClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
+                if (waitUntil == WaitUntil.Completed)
+                {
+                    operation.WaitForCompletionResponse(cancellationToken);
+                }
+                return operation;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
         /// Creates an HDInsight cluster extension.
         /// <list type="bullet">
         /// <item>
@@ -1339,6 +1558,114 @@ namespace Azure.ResourceManager.HDInsight
                     CancellationToken = cancellationToken
                 };
                 HttpMessage message = _extensionsRestClient.CreateCreateExtensionRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, extensionName, HDInsightClusterCreateExtensionContent.ToRequestContent(content), context);
+                Response response = Pipeline.ProcessMessage(message, context);
+                HDInsightArmOperation operation = new HDInsightArmOperation(_extensionsClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
+                if (waitUntil == WaitUntil.Completed)
+                {
+                    operation.WaitForCompletionResponse(cancellationToken);
+                }
+                return operation;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Deletes the specified extension for HDInsight cluster.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.HDInsight/clusters/{clusterName}/extensions/{extensionName}. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> Extensions_Delete. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-01-15-preview. </description>
+        /// </item>
+        /// <item>
+        /// <term> Resource. </term>
+        /// <description> <see cref="HDInsightClusterResource"/>. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="extensionName"> The name of the cluster extension. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="extensionName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="extensionName"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual async Task<ArmOperation> DeleteExtensionAsync(WaitUntil waitUntil, string extensionName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(extensionName, nameof(extensionName));
+
+            using DiagnosticScope scope = _extensionsClientDiagnostics.CreateScope("HDInsightClusterResource.DeleteExtension");
+            scope.Start();
+            try
+            {
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _extensionsRestClient.CreateDeleteExtensionRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, extensionName, context);
+                Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                HDInsightArmOperation operation = new HDInsightArmOperation(_extensionsClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
+                if (waitUntil == WaitUntil.Completed)
+                {
+                    await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
+                }
+                return operation;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Deletes the specified extension for HDInsight cluster.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.HDInsight/clusters/{clusterName}/extensions/{extensionName}. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> Extensions_Delete. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-01-15-preview. </description>
+        /// </item>
+        /// <item>
+        /// <term> Resource. </term>
+        /// <description> <see cref="HDInsightClusterResource"/>. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="extensionName"> The name of the cluster extension. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="extensionName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="extensionName"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual ArmOperation DeleteExtension(WaitUntil waitUntil, string extensionName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(extensionName, nameof(extensionName));
+
+            using DiagnosticScope scope = _extensionsClientDiagnostics.CreateScope("HDInsightClusterResource.DeleteExtension");
+            scope.Start();
+            try
+            {
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _extensionsRestClient.CreateDeleteExtensionRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, extensionName, context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 HDInsightArmOperation operation = new HDInsightArmOperation(_extensionsClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
@@ -1967,6 +2294,222 @@ namespace Azure.ResourceManager.HDInsight
         }
 
         /// <summary>
+        /// Gets the extension properties for the specified HDInsight cluster extension.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.HDInsight/clusters/{clusterName}/extensions/{extensionName}. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> Extensions_Get. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-01-15-preview. </description>
+        /// </item>
+        /// <item>
+        /// <term> Resource. </term>
+        /// <description> <see cref="HDInsightClusterResource"/>. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="extensionName"> The name of the cluster extension. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="extensionName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="extensionName"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual async Task<Response<HDInsightClusterExtensionStatus>> GetExtensionAsync(string extensionName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(extensionName, nameof(extensionName));
+
+            using DiagnosticScope scope = _extensionsClientDiagnostics.CreateScope("HDInsightClusterResource.GetExtension");
+            scope.Start();
+            try
+            {
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _extensionsRestClient.CreateGetExtensionRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, extensionName, context);
+                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                Response<HDInsightClusterExtensionStatus> response = Response.FromValue(HDInsightClusterExtensionStatus.FromResponse(result), result);
+                if (response.Value == null)
+                {
+                    throw new RequestFailedException(response.GetRawResponse());
+                }
+                return response;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Gets the extension properties for the specified HDInsight cluster extension.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.HDInsight/clusters/{clusterName}/extensions/{extensionName}. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> Extensions_Get. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-01-15-preview. </description>
+        /// </item>
+        /// <item>
+        /// <term> Resource. </term>
+        /// <description> <see cref="HDInsightClusterResource"/>. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="extensionName"> The name of the cluster extension. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="extensionName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="extensionName"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual Response<HDInsightClusterExtensionStatus> GetExtension(string extensionName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(extensionName, nameof(extensionName));
+
+            using DiagnosticScope scope = _extensionsClientDiagnostics.CreateScope("HDInsightClusterResource.GetExtension");
+            scope.Start();
+            try
+            {
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _extensionsRestClient.CreateGetExtensionRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, extensionName, context);
+                Response result = Pipeline.ProcessMessage(message, context);
+                Response<HDInsightClusterExtensionStatus> response = Response.FromValue(HDInsightClusterExtensionStatus.FromResponse(result), result);
+                if (response.Value == null)
+                {
+                    throw new RequestFailedException(response.GetRawResponse());
+                }
+                return response;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Gets the async operation status.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.HDInsight/clusters/{clusterName}/extensions/{extensionName}/azureAsyncOperations/{operationId}. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> Extensions_GetAzureAsyncOperationStatus. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-01-15-preview. </description>
+        /// </item>
+        /// <item>
+        /// <term> Resource. </term>
+        /// <description> <see cref="HDInsightClusterResource"/>. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="extensionName"> The name of the cluster extension. </param>
+        /// <param name="operationId"> The long running operation id. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="extensionName"/> or <paramref name="operationId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="extensionName"/> or <paramref name="operationId"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual async Task<Response<HDInsightAsyncOperationResult>> GetExtensionAsyncOperationStatusAsync(string extensionName, string operationId, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(extensionName, nameof(extensionName));
+            Argument.AssertNotNullOrEmpty(operationId, nameof(operationId));
+
+            using DiagnosticScope scope = _extensionsClientDiagnostics.CreateScope("HDInsightClusterResource.GetExtensionAsyncOperationStatus");
+            scope.Start();
+            try
+            {
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _extensionsRestClient.CreateGetExtensionAsyncOperationStatusRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, extensionName, operationId, context);
+                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                Response<HDInsightAsyncOperationResult> response = Response.FromValue(HDInsightAsyncOperationResult.FromResponse(result), result);
+                if (response.Value == null)
+                {
+                    throw new RequestFailedException(response.GetRawResponse());
+                }
+                return response;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Gets the async operation status.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.HDInsight/clusters/{clusterName}/extensions/{extensionName}/azureAsyncOperations/{operationId}. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> Extensions_GetAzureAsyncOperationStatus. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-01-15-preview. </description>
+        /// </item>
+        /// <item>
+        /// <term> Resource. </term>
+        /// <description> <see cref="HDInsightClusterResource"/>. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="extensionName"> The name of the cluster extension. </param>
+        /// <param name="operationId"> The long running operation id. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="extensionName"/> or <paramref name="operationId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="extensionName"/> or <paramref name="operationId"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual Response<HDInsightAsyncOperationResult> GetExtensionAsyncOperationStatus(string extensionName, string operationId, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(extensionName, nameof(extensionName));
+            Argument.AssertNotNullOrEmpty(operationId, nameof(operationId));
+
+            using DiagnosticScope scope = _extensionsClientDiagnostics.CreateScope("HDInsightClusterResource.GetExtensionAsyncOperationStatus");
+            scope.Start();
+            try
+            {
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _extensionsRestClient.CreateGetExtensionAsyncOperationStatusRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, extensionName, operationId, context);
+                Response result = Pipeline.ProcessMessage(message, context);
+                Response<HDInsightAsyncOperationResult> response = Response.FromValue(HDInsightAsyncOperationResult.FromResponse(result), result);
+                if (response.Value == null)
+                {
+                    throw new RequestFailedException(response.GetRawResponse());
+                }
+                return response;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
         /// Gets the status of Azure Monitor Agent on the HDInsight cluster.
         /// <list type="bullet">
         /// <item>
@@ -2351,6 +2894,218 @@ namespace Azure.ResourceManager.HDInsight
         }
 
         /// <summary>
+        /// Gets the async operation status of execution operation.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.HDInsight/clusters/{clusterName}/executeScriptActions/azureasyncoperations/{operationId}. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> ScriptActions_GetExecutionAsyncOperationStatus. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-01-15-preview. </description>
+        /// </item>
+        /// <item>
+        /// <term> Resource. </term>
+        /// <description> <see cref="HDInsightClusterResource"/>. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="operationId"> The long running operation id. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="operationId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="operationId"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual async Task<Response<HDInsightAsyncOperationResult>> GetScriptActionExecutionAsyncOperationStatusAsync(string operationId, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(operationId, nameof(operationId));
+
+            using DiagnosticScope scope = _scriptActionsClientDiagnostics.CreateScope("HDInsightClusterResource.GetScriptActionExecutionAsyncOperationStatus");
+            scope.Start();
+            try
+            {
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _scriptActionsRestClient.CreateGetScriptActionExecutionAsyncOperationStatusRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, operationId, context);
+                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                Response<HDInsightAsyncOperationResult> response = Response.FromValue(HDInsightAsyncOperationResult.FromResponse(result), result);
+                if (response.Value == null)
+                {
+                    throw new RequestFailedException(response.GetRawResponse());
+                }
+                return response;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Gets the async operation status of execution operation.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.HDInsight/clusters/{clusterName}/executeScriptActions/azureasyncoperations/{operationId}. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> ScriptActions_GetExecutionAsyncOperationStatus. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-01-15-preview. </description>
+        /// </item>
+        /// <item>
+        /// <term> Resource. </term>
+        /// <description> <see cref="HDInsightClusterResource"/>. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="operationId"> The long running operation id. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="operationId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="operationId"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual Response<HDInsightAsyncOperationResult> GetScriptActionExecutionAsyncOperationStatus(string operationId, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(operationId, nameof(operationId));
+
+            using DiagnosticScope scope = _scriptActionsClientDiagnostics.CreateScope("HDInsightClusterResource.GetScriptActionExecutionAsyncOperationStatus");
+            scope.Start();
+            try
+            {
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _scriptActionsRestClient.CreateGetScriptActionExecutionAsyncOperationStatusRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, operationId, context);
+                Response result = Pipeline.ProcessMessage(message, context);
+                Response<HDInsightAsyncOperationResult> response = Response.FromValue(HDInsightAsyncOperationResult.FromResponse(result), result);
+                if (response.Value == null)
+                {
+                    throw new RequestFailedException(response.GetRawResponse());
+                }
+                return response;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Gets the script execution detail for the given script execution ID.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.HDInsight/clusters/{clusterName}/scriptExecutionHistory/{scriptExecutionId}. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> ScriptActions_GetExecutionDetail. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-01-15-preview. </description>
+        /// </item>
+        /// <item>
+        /// <term> Resource. </term>
+        /// <description> <see cref="HDInsightClusterResource"/>. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="scriptExecutionId"> The script execution Id. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="scriptExecutionId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="scriptExecutionId"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual async Task<Response<RuntimeScriptActionDetail>> GetScriptActionExecutionDetailAsync(string scriptExecutionId, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(scriptExecutionId, nameof(scriptExecutionId));
+
+            using DiagnosticScope scope = _scriptActionsClientDiagnostics.CreateScope("HDInsightClusterResource.GetScriptActionExecutionDetail");
+            scope.Start();
+            try
+            {
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _scriptActionsRestClient.CreateGetScriptActionExecutionDetailRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, scriptExecutionId, context);
+                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                Response<RuntimeScriptActionDetail> response = Response.FromValue(RuntimeScriptActionDetail.FromResponse(result), result);
+                if (response.Value == null)
+                {
+                    throw new RequestFailedException(response.GetRawResponse());
+                }
+                return response;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Gets the script execution detail for the given script execution ID.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.HDInsight/clusters/{clusterName}/scriptExecutionHistory/{scriptExecutionId}. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> ScriptActions_GetExecutionDetail. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-01-15-preview. </description>
+        /// </item>
+        /// <item>
+        /// <term> Resource. </term>
+        /// <description> <see cref="HDInsightClusterResource"/>. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="scriptExecutionId"> The script execution Id. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="scriptExecutionId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="scriptExecutionId"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual Response<RuntimeScriptActionDetail> GetScriptActionExecutionDetail(string scriptExecutionId, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(scriptExecutionId, nameof(scriptExecutionId));
+
+            using DiagnosticScope scope = _scriptActionsClientDiagnostics.CreateScope("HDInsightClusterResource.GetScriptActionExecutionDetail");
+            scope.Start();
+            try
+            {
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _scriptActionsRestClient.CreateGetScriptActionExecutionDetailRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, scriptExecutionId, context);
+                Response result = Pipeline.ProcessMessage(message, context);
+                Response<RuntimeScriptActionDetail> response = Response.FromValue(RuntimeScriptActionDetail.FromResponse(result), result);
+                if (response.Value == null)
+                {
+                    throw new RequestFailedException(response.GetRawResponse());
+                }
+                return response;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
         /// Lists all the persisted script actions for the specified cluster.
         /// <list type="bullet">
         /// <item>
@@ -2599,6 +3354,112 @@ namespace Azure.ResourceManager.HDInsight
         }
 
         /// <summary>
+        /// Gets the async operation status.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.HDInsight/clusters/{clusterName}/restartHosts/azureasyncoperations/{operationId}. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> VirtualMachines_GetAsyncOperationStatus. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-01-15-preview. </description>
+        /// </item>
+        /// <item>
+        /// <term> Resource. </term>
+        /// <description> <see cref="HDInsightClusterResource"/>. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="operationId"> The long running operation id. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="operationId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="operationId"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual async Task<Response<HDInsightAsyncOperationResult>> GetVirtualMachineAsyncOperationStatusAsync(string operationId, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(operationId, nameof(operationId));
+
+            using DiagnosticScope scope = _virtualMachinesClientDiagnostics.CreateScope("HDInsightClusterResource.GetVirtualMachineAsyncOperationStatus");
+            scope.Start();
+            try
+            {
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _virtualMachinesRestClient.CreateGetVirtualMachineAsyncOperationStatusRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, operationId, context);
+                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                Response<HDInsightAsyncOperationResult> response = Response.FromValue(HDInsightAsyncOperationResult.FromResponse(result), result);
+                if (response.Value == null)
+                {
+                    throw new RequestFailedException(response.GetRawResponse());
+                }
+                return response;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Gets the async operation status.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.HDInsight/clusters/{clusterName}/restartHosts/azureasyncoperations/{operationId}. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> VirtualMachines_GetAsyncOperationStatus. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-01-15-preview. </description>
+        /// </item>
+        /// <item>
+        /// <term> Resource. </term>
+        /// <description> <see cref="HDInsightClusterResource"/>. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="operationId"> The long running operation id. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="operationId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="operationId"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual Response<HDInsightAsyncOperationResult> GetVirtualMachineAsyncOperationStatus(string operationId, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(operationId, nameof(operationId));
+
+            using DiagnosticScope scope = _virtualMachinesClientDiagnostics.CreateScope("HDInsightClusterResource.GetVirtualMachineAsyncOperationStatus");
+            scope.Start();
+            try
+            {
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _virtualMachinesRestClient.CreateGetVirtualMachineAsyncOperationStatusRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, operationId, context);
+                Response result = Pipeline.ProcessMessage(message, context);
+                Response<HDInsightAsyncOperationResult> response = Response.FromValue(HDInsightAsyncOperationResult.FromResponse(result), result);
+                if (response.Value == null)
+                {
+                    throw new RequestFailedException(response.GetRawResponse());
+                }
+                return response;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
         /// Lists the HDInsight clusters hosts
         /// <list type="bullet">
         /// <item>
@@ -2672,6 +3533,112 @@ namespace Azure.ResourceManager.HDInsight
                 Id.Name,
                 context,
                 "HDInsightClusterResource.GetVirtualMachineHosts");
+        }
+
+        /// <summary>
+        /// Restarts the specified HDInsight cluster hosts.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.HDInsight/clusters/{clusterName}/restartHosts. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> VirtualMachines_RestartHosts. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-01-15-preview. </description>
+        /// </item>
+        /// <item>
+        /// <term> Resource. </term>
+        /// <description> <see cref="HDInsightClusterResource"/>. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="content"> The list of hosts to restart. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        public virtual async Task<ArmOperation> RestartVirtualMachineHostsAsync(WaitUntil waitUntil, IEnumerable<string> content, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(content, nameof(content));
+
+            using DiagnosticScope scope = _virtualMachinesClientDiagnostics.CreateScope("HDInsightClusterResource.RestartVirtualMachineHosts");
+            scope.Start();
+            try
+            {
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _virtualMachinesRestClient.CreateRestartVirtualMachineHostsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, BinaryContentHelper.FromEnumerable(content), context);
+                Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                HDInsightArmOperation operation = new HDInsightArmOperation(_virtualMachinesClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
+                if (waitUntil == WaitUntil.Completed)
+                {
+                    await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
+                }
+                return operation;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Restarts the specified HDInsight cluster hosts.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.HDInsight/clusters/{clusterName}/restartHosts. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> VirtualMachines_RestartHosts. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-01-15-preview. </description>
+        /// </item>
+        /// <item>
+        /// <term> Resource. </term>
+        /// <description> <see cref="HDInsightClusterResource"/>. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="content"> The list of hosts to restart. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        public virtual ArmOperation RestartVirtualMachineHosts(WaitUntil waitUntil, IEnumerable<string> content, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(content, nameof(content));
+
+            using DiagnosticScope scope = _virtualMachinesClientDiagnostics.CreateScope("HDInsightClusterResource.RestartVirtualMachineHosts");
+            scope.Start();
+            try
+            {
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _virtualMachinesRestClient.CreateRestartVirtualMachineHostsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, BinaryContentHelper.FromEnumerable(content), context);
+                Response response = Pipeline.ProcessMessage(message, context);
+                HDInsightArmOperation operation = new HDInsightArmOperation(_virtualMachinesClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
+                if (waitUntil == WaitUntil.Completed)
+                {
+                    operation.WaitForCompletionResponse(cancellationToken);
+                }
+                return operation;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
 
         /// <summary> Gets a collection of HDInsightApplications in the <see cref="HDInsightClusterResource"/>. </summary>

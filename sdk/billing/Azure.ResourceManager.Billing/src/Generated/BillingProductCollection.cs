@@ -8,13 +8,13 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.Globalization;
+using System.Diagnostics;
 using System.Threading;
 using System.Threading.Tasks;
-using Autorest.CSharp.Core;
+using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager.Billing.Models;
+using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.Billing
 {
@@ -25,69 +25,75 @@ namespace Azure.ResourceManager.Billing
     /// </summary>
     public partial class BillingProductCollection : ArmCollection, IEnumerable<BillingProductResource>, IAsyncEnumerable<BillingProductResource>
     {
-        private readonly ClientDiagnostics _billingProductProductsClientDiagnostics;
-        private readonly ProductsRestOperations _billingProductProductsRestClient;
+        private readonly ClientDiagnostics _productsClientDiagnostics;
+        private readonly Products _productsRestClient;
 
-        /// <summary> Initializes a new instance of the <see cref="BillingProductCollection"/> class for mocking. </summary>
+        /// <summary> Initializes a new instance of BillingProductCollection for mocking. </summary>
         protected BillingProductCollection()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref="BillingProductCollection"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="BillingProductCollection"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
-        /// <param name="id"> The identifier of the parent resource that is the target of operations. </param>
+        /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal BillingProductCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _billingProductProductsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Billing", BillingProductResource.ResourceType.Namespace, Diagnostics);
-            TryGetApiVersion(BillingProductResource.ResourceType, out string billingProductProductsApiVersion);
-            _billingProductProductsRestClient = new ProductsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, billingProductProductsApiVersion);
-#if DEBUG
-			ValidateResourceId(Id);
-#endif
+            TryGetApiVersion(BillingProductResource.ResourceType, out string billingProductApiVersion);
+            _productsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Billing", BillingProductResource.ResourceType.Namespace, Diagnostics);
+            _productsRestClient = new Products(_productsClientDiagnostics, Pipeline, Endpoint, billingProductApiVersion ?? "2024-04-01");
+            ValidateResourceId(id);
         }
 
+        /// <param name="id"></param>
+        [Conditional("DEBUG")]
         internal static void ValidateResourceId(ResourceIdentifier id)
         {
             if (id.ResourceType != BillingAccountResource.ResourceType)
-                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, BillingAccountResource.ResourceType), nameof(id));
+            {
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, BillingAccountResource.ResourceType), nameof(id));
+            }
         }
 
         /// <summary>
         /// Gets a product by ID. The operation is supported only for billing accounts with agreement type Microsoft Customer Agreement.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/providers/Microsoft.Billing/billingAccounts/{billingAccountName}/products/{productName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /providers/Microsoft.Billing/billingAccounts/{billingAccountName}/products/{productName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Products_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> Products_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-04-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="BillingProductResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-04-01. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="productName"> The ID that uniquely identifies a product. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="productName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="productName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="productName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual async Task<Response<BillingProductResource>> GetAsync(string productName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(productName, nameof(productName));
 
-            using var scope = _billingProductProductsClientDiagnostics.CreateScope("BillingProductCollection.Get");
+            using DiagnosticScope scope = _productsClientDiagnostics.CreateScope("BillingProductCollection.Get");
             scope.Start();
             try
             {
-                var response = await _billingProductProductsRestClient.GetAsync(Id.Name, productName, cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _productsRestClient.CreateGetRequest(Id.Name, productName, context);
+                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                Response<BillingProductData> response = Response.FromValue(BillingProductData.FromResponse(result), result);
                 if (response.Value == null)
+                {
                     throw new RequestFailedException(response.GetRawResponse());
+                }
                 return Response.FromValue(new BillingProductResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -101,38 +107,42 @@ namespace Azure.ResourceManager.Billing
         /// Gets a product by ID. The operation is supported only for billing accounts with agreement type Microsoft Customer Agreement.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/providers/Microsoft.Billing/billingAccounts/{billingAccountName}/products/{productName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /providers/Microsoft.Billing/billingAccounts/{billingAccountName}/products/{productName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Products_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> Products_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-04-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="BillingProductResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-04-01. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="productName"> The ID that uniquely identifies a product. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="productName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="productName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="productName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual Response<BillingProductResource> Get(string productName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(productName, nameof(productName));
 
-            using var scope = _billingProductProductsClientDiagnostics.CreateScope("BillingProductCollection.Get");
+            using DiagnosticScope scope = _productsClientDiagnostics.CreateScope("BillingProductCollection.Get");
             scope.Start();
             try
             {
-                var response = _billingProductProductsRestClient.Get(Id.Name, productName, cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _productsRestClient.CreateGetRequest(Id.Name, productName, context);
+                Response result = Pipeline.ProcessMessage(message, context);
+                Response<BillingProductData> response = Response.FromValue(BillingProductData.FromResponse(result), result);
                 if (response.Value == null)
+                {
                     throw new RequestFailedException(response.GetRawResponse());
+                }
                 return Response.FromValue(new BillingProductResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -146,102 +156,138 @@ namespace Azure.ResourceManager.Billing
         /// Lists the products for a billing account. These don't include products billed based on usage. The operation is supported for billing accounts with agreement type Microsoft Customer Agreement or Microsoft Partner Agreement.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/providers/Microsoft.Billing/billingAccounts/{billingAccountName}/products</description>
+        /// <term> Request Path. </term>
+        /// <description> /providers/Microsoft.Billing/billingAccounts/{billingAccountName}/products. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Products_ListByBillingAccount</description>
+        /// <term> Operation Id. </term>
+        /// <description> Products_ListByBillingAccount. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-04-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="BillingProductResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-04-01. </description>
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="options"> A property bag which contains all the parameters of this method except the LRO qualifier and request context parameter. </param>
+        /// <param name="filter"> The filter query option allows clients to filter a collection of resources that are addressed by a request URL. </param>
+        /// <param name="orderBy"> The orderby query option allows clients to request resources in a particular order. </param>
+        /// <param name="maxCount"> The top query option requests the number of items in the queried collection to be included in the result. The maximum supported value for top is 50. </param>
+        /// <param name="skip"> The skip query option requests the number of items in the queried collection that are to be skipped and not included in the result. </param>
+        /// <param name="count"> The count query option allows clients to request a count of the matching resources included with the resources in the response. </param>
+        /// <param name="search"> The search query option allows clients to request items within a collection matching a free-text search expression. search is only supported for string fields. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="BillingProductResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<BillingProductResource> GetAllAsync(BillingProductCollectionGetAllOptions options, CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="BillingProductResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<BillingProductResource> GetAllAsync(string filter = default, string orderBy = default, long? maxCount = default, long? skip = default, bool? count = default, string search = default, CancellationToken cancellationToken = default)
         {
-            options ??= new BillingProductCollectionGetAllOptions();
-
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _billingProductProductsRestClient.CreateListByBillingAccountRequest(Id.Name, options.Filter, options.OrderBy, options.Top, options.Skip, options.Count, options.Search);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _billingProductProductsRestClient.CreateListByBillingAccountNextPageRequest(nextLink, Id.Name, options.Filter, options.OrderBy, options.Top, options.Skip, options.Count, options.Search);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new BillingProductResource(Client, BillingProductData.DeserializeBillingProductData(e)), _billingProductProductsClientDiagnostics, Pipeline, "BillingProductCollection.GetAll", "value", "nextLink", cancellationToken);
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new AsyncPageableWrapper<BillingProductData, BillingProductResource>(new ProductsGetByBillingAccountAsyncCollectionResultOfT(
+                _productsRestClient,
+                Id.Name,
+                filter,
+                orderBy,
+                maxCount,
+                skip,
+                count,
+                search,
+                context,
+                "BillingProductCollection.GetAll"), data => new BillingProductResource(Client, data));
         }
 
         /// <summary>
         /// Lists the products for a billing account. These don't include products billed based on usage. The operation is supported for billing accounts with agreement type Microsoft Customer Agreement or Microsoft Partner Agreement.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/providers/Microsoft.Billing/billingAccounts/{billingAccountName}/products</description>
+        /// <term> Request Path. </term>
+        /// <description> /providers/Microsoft.Billing/billingAccounts/{billingAccountName}/products. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Products_ListByBillingAccount</description>
+        /// <term> Operation Id. </term>
+        /// <description> Products_ListByBillingAccount. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-04-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="BillingProductResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-04-01. </description>
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="options"> A property bag which contains all the parameters of this method except the LRO qualifier and request context parameter. </param>
+        /// <param name="filter"> The filter query option allows clients to filter a collection of resources that are addressed by a request URL. </param>
+        /// <param name="orderBy"> The orderby query option allows clients to request resources in a particular order. </param>
+        /// <param name="maxCount"> The top query option requests the number of items in the queried collection to be included in the result. The maximum supported value for top is 50. </param>
+        /// <param name="skip"> The skip query option requests the number of items in the queried collection that are to be skipped and not included in the result. </param>
+        /// <param name="count"> The count query option allows clients to request a count of the matching resources included with the resources in the response. </param>
+        /// <param name="search"> The search query option allows clients to request items within a collection matching a free-text search expression. search is only supported for string fields. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="BillingProductResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<BillingProductResource> GetAll(BillingProductCollectionGetAllOptions options, CancellationToken cancellationToken = default)
+        public virtual Pageable<BillingProductResource> GetAll(string filter = default, string orderBy = default, long? maxCount = default, long? skip = default, bool? count = default, string search = default, CancellationToken cancellationToken = default)
         {
-            options ??= new BillingProductCollectionGetAllOptions();
-
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _billingProductProductsRestClient.CreateListByBillingAccountRequest(Id.Name, options.Filter, options.OrderBy, options.Top, options.Skip, options.Count, options.Search);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _billingProductProductsRestClient.CreateListByBillingAccountNextPageRequest(nextLink, Id.Name, options.Filter, options.OrderBy, options.Top, options.Skip, options.Count, options.Search);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new BillingProductResource(Client, BillingProductData.DeserializeBillingProductData(e)), _billingProductProductsClientDiagnostics, Pipeline, "BillingProductCollection.GetAll", "value", "nextLink", cancellationToken);
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new PageableWrapper<BillingProductData, BillingProductResource>(new ProductsGetByBillingAccountCollectionResultOfT(
+                _productsRestClient,
+                Id.Name,
+                filter,
+                orderBy,
+                maxCount,
+                skip,
+                count,
+                search,
+                context,
+                "BillingProductCollection.GetAll"), data => new BillingProductResource(Client, data));
         }
 
         /// <summary>
         /// Checks to see if the resource exists in azure.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/providers/Microsoft.Billing/billingAccounts/{billingAccountName}/products/{productName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /providers/Microsoft.Billing/billingAccounts/{billingAccountName}/products/{productName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Products_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> Products_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-04-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="BillingProductResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-04-01. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="productName"> The ID that uniquely identifies a product. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="productName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="productName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="productName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual async Task<Response<bool>> ExistsAsync(string productName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(productName, nameof(productName));
 
-            using var scope = _billingProductProductsClientDiagnostics.CreateScope("BillingProductCollection.Exists");
+            using DiagnosticScope scope = _productsClientDiagnostics.CreateScope("BillingProductCollection.Exists");
             scope.Start();
             try
             {
-                var response = await _billingProductProductsRestClient.GetAsync(Id.Name, productName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _productsRestClient.CreateGetRequest(Id.Name, productName, context);
+                await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
+                Response result = message.Response;
+                Response<BillingProductData> response = default;
+                switch (result.Status)
+                {
+                    case 200:
+                        response = Response.FromValue(BillingProductData.FromResponse(result), result);
+                        break;
+                    case 404:
+                        response = Response.FromValue((BillingProductData)null, result);
+                        break;
+                    default:
+                        throw new RequestFailedException(result);
+                }
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -255,36 +301,50 @@ namespace Azure.ResourceManager.Billing
         /// Checks to see if the resource exists in azure.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/providers/Microsoft.Billing/billingAccounts/{billingAccountName}/products/{productName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /providers/Microsoft.Billing/billingAccounts/{billingAccountName}/products/{productName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Products_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> Products_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-04-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="BillingProductResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-04-01. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="productName"> The ID that uniquely identifies a product. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="productName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="productName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="productName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual Response<bool> Exists(string productName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(productName, nameof(productName));
 
-            using var scope = _billingProductProductsClientDiagnostics.CreateScope("BillingProductCollection.Exists");
+            using DiagnosticScope scope = _productsClientDiagnostics.CreateScope("BillingProductCollection.Exists");
             scope.Start();
             try
             {
-                var response = _billingProductProductsRestClient.Get(Id.Name, productName, cancellationToken: cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _productsRestClient.CreateGetRequest(Id.Name, productName, context);
+                Pipeline.Send(message, context.CancellationToken);
+                Response result = message.Response;
+                Response<BillingProductData> response = default;
+                switch (result.Status)
+                {
+                    case 200:
+                        response = Response.FromValue(BillingProductData.FromResponse(result), result);
+                        break;
+                    case 404:
+                        response = Response.FromValue((BillingProductData)null, result);
+                        break;
+                    default:
+                        throw new RequestFailedException(result);
+                }
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -298,38 +358,54 @@ namespace Azure.ResourceManager.Billing
         /// Tries to get details for this resource from the service.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/providers/Microsoft.Billing/billingAccounts/{billingAccountName}/products/{productName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /providers/Microsoft.Billing/billingAccounts/{billingAccountName}/products/{productName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Products_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> Products_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-04-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="BillingProductResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-04-01. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="productName"> The ID that uniquely identifies a product. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="productName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="productName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="productName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual async Task<NullableResponse<BillingProductResource>> GetIfExistsAsync(string productName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(productName, nameof(productName));
 
-            using var scope = _billingProductProductsClientDiagnostics.CreateScope("BillingProductCollection.GetIfExists");
+            using DiagnosticScope scope = _productsClientDiagnostics.CreateScope("BillingProductCollection.GetIfExists");
             scope.Start();
             try
             {
-                var response = await _billingProductProductsRestClient.GetAsync(Id.Name, productName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _productsRestClient.CreateGetRequest(Id.Name, productName, context);
+                await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
+                Response result = message.Response;
+                Response<BillingProductData> response = default;
+                switch (result.Status)
+                {
+                    case 200:
+                        response = Response.FromValue(BillingProductData.FromResponse(result), result);
+                        break;
+                    case 404:
+                        response = Response.FromValue((BillingProductData)null, result);
+                        break;
+                    default:
+                        throw new RequestFailedException(result);
+                }
                 if (response.Value == null)
+                {
                     return new NoValueResponse<BillingProductResource>(response.GetRawResponse());
+                }
                 return Response.FromValue(new BillingProductResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -343,38 +419,54 @@ namespace Azure.ResourceManager.Billing
         /// Tries to get details for this resource from the service.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/providers/Microsoft.Billing/billingAccounts/{billingAccountName}/products/{productName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /providers/Microsoft.Billing/billingAccounts/{billingAccountName}/products/{productName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Products_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> Products_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-04-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="BillingProductResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-04-01. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="productName"> The ID that uniquely identifies a product. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="productName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="productName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="productName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual NullableResponse<BillingProductResource> GetIfExists(string productName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(productName, nameof(productName));
 
-            using var scope = _billingProductProductsClientDiagnostics.CreateScope("BillingProductCollection.GetIfExists");
+            using DiagnosticScope scope = _productsClientDiagnostics.CreateScope("BillingProductCollection.GetIfExists");
             scope.Start();
             try
             {
-                var response = _billingProductProductsRestClient.Get(Id.Name, productName, cancellationToken: cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _productsRestClient.CreateGetRequest(Id.Name, productName, context);
+                Pipeline.Send(message, context.CancellationToken);
+                Response result = message.Response;
+                Response<BillingProductData> response = default;
+                switch (result.Status)
+                {
+                    case 200:
+                        response = Response.FromValue(BillingProductData.FromResponse(result), result);
+                        break;
+                    case 404:
+                        response = Response.FromValue((BillingProductData)null, result);
+                        break;
+                    default:
+                        throw new RequestFailedException(result);
+                }
                 if (response.Value == null)
+                {
                     return new NoValueResponse<BillingProductResource>(response.GetRawResponse());
+                }
                 return Response.FromValue(new BillingProductResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -386,17 +478,18 @@ namespace Azure.ResourceManager.Billing
 
         IEnumerator<BillingProductResource> IEnumerable<BillingProductResource>.GetEnumerator()
         {
-            return GetAll(options: null).GetEnumerator();
+            return GetAll().GetEnumerator();
         }
 
         IEnumerator IEnumerable.GetEnumerator()
         {
-            return GetAll(options: null).GetEnumerator();
+            return GetAll().GetEnumerator();
         }
 
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
         IAsyncEnumerator<BillingProductResource> IAsyncEnumerable<BillingProductResource>.GetAsyncEnumerator(CancellationToken cancellationToken)
         {
-            return GetAllAsync(options: null, cancellationToken: cancellationToken).GetAsyncEnumerator(cancellationToken);
+            return GetAllAsync(cancellationToken: cancellationToken).GetAsyncEnumerator(cancellationToken);
         }
     }
 }

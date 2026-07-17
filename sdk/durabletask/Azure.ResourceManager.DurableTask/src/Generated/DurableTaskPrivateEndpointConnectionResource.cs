@@ -18,9 +18,9 @@ using Azure.ResourceManager.DurableTask.Models;
 namespace Azure.ResourceManager.DurableTask
 {
     /// <summary>
-    /// A class representing a PrivateEndpointConnection along with the instance operations that can be performed on it.
+    /// A class representing a DurableTaskPrivateEndpointConnection along with the instance operations that can be performed on it.
     /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="DurableTaskPrivateEndpointConnectionResource"/> from an instance of <see cref="ArmClient"/> using the GetResource method.
-    /// Otherwise you can get one from its parent resource <see cref="DurableTaskSchedulerResource"/> using the GetPrivateEndpointConnections method.
+    /// Otherwise you can get one from its parent resource <see cref="DurableTaskSchedulerResource"/> using the GetDurableTaskPrivateEndpointConnections method.
     /// </summary>
     public partial class DurableTaskPrivateEndpointConnectionResource : ArmResource
     {
@@ -49,9 +49,9 @@ namespace Azure.ResourceManager.DurableTask
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal DurableTaskPrivateEndpointConnectionResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            TryGetApiVersion(ResourceType, out string privateEndpointConnectionApiVersion);
+            TryGetApiVersion(ResourceType, out string durableTaskPrivateEndpointConnectionApiVersion);
             _schedulersClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.DurableTask", ResourceType.Namespace, Diagnostics);
-            _schedulersRestClient = new Schedulers(_schedulersClientDiagnostics, Pipeline, Endpoint, privateEndpointConnectionApiVersion ?? "2026-02-01");
+            _schedulersRestClient = new Schedulers(_schedulersClientDiagnostics, Pipeline, Endpoint, durableTaskPrivateEndpointConnectionApiVersion ?? "2026-02-01");
             ValidateResourceId(id);
         }
 
@@ -228,7 +228,7 @@ namespace Azure.ResourceManager.DurableTask
                 HttpMessage message = _schedulersRestClient.CreateUpdatePrivateEndpointConnectionRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, DurableTaskPrivateEndpointConnectionPatch.ToRequestContent(patch), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 DurableTaskArmOperation<DurableTaskPrivateEndpointConnectionResource> operation = new DurableTaskArmOperation<DurableTaskPrivateEndpointConnectionResource>(
-                    new PrivateEndpointConnectionOperationSource(Client),
+                    new DurableTaskPrivateEndpointConnectionResourceOperationSource(Client),
                     _schedulersClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -287,7 +287,7 @@ namespace Azure.ResourceManager.DurableTask
                 HttpMessage message = _schedulersRestClient.CreateUpdatePrivateEndpointConnectionRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, DurableTaskPrivateEndpointConnectionPatch.ToRequestContent(patch), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 DurableTaskArmOperation<DurableTaskPrivateEndpointConnectionResource> operation = new DurableTaskArmOperation<DurableTaskPrivateEndpointConnectionResource>(
-                    new PrivateEndpointConnectionOperationSource(Client),
+                    new DurableTaskPrivateEndpointConnectionResourceOperationSource(Client),
                     _schedulersClientDiagnostics,
                     Pipeline,
                     message.Request,

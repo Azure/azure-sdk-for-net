@@ -4,11 +4,13 @@
 
 using System;
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 using System.Text.Json;
 
 namespace Azure.AI.Extensions.OpenAI
 {
     /// <summary> A FabricIQ server-side tool. </summary>
+    [Experimental("AAIP001")]
     public partial class ResponsesFabricIQPreviewTool : ResponsesTool
     {
         /// <summary> Initializes a new instance of <see cref="ResponsesFabricIQPreviewTool"/>. </summary>
@@ -19,7 +21,6 @@ namespace Azure.AI.Extensions.OpenAI
             Argument.AssertNotNull(projectConnectionId, nameof(projectConnectionId));
 
             ProjectConnectionId = projectConnectionId;
-            ToolConfigs = new ChangeTrackingDictionary<string, ToolConfig>();
         }
 
         /// <summary> Initializes a new instance of <see cref="ResponsesFabricIQPreviewTool"/>. </summary>
@@ -27,24 +28,14 @@ namespace Azure.AI.Extensions.OpenAI
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="projectConnectionId"> The ID of the FabricIQ project connection. </param>
         /// <param name="serverLabel"> (Optional) The label of the FabricIQ MCP server to connect to. </param>
-        /// <param name="serverUrl"> (Optional) The URL of the FabricIQ MCP server. If not provided, the URL from the project connection will be used. </param>
+        /// <param name="serverUri"> (Optional) The URL of the FabricIQ MCP server. If not provided, the URL from the project connection will be used. </param>
         /// <param name="requireApproval"> (Optional) Whether the agent requires approval before executing actions. Default is always. </param>
-        /// <param name="name"> Optional user-defined name for this tool or configuration. </param>
-        /// <param name="description"> Optional user-defined description for this tool or configuration. </param>
-        /// <param name="toolConfigs">
-        /// Per-tool configuration map. Keys are tool names or `*` (catch-all default).
-        /// Resolution order: exact tool name match takes priority over `*`.
-        /// Unknown tool names are silently ignored at runtime.
-        /// </param>
-        internal ResponsesFabricIQPreviewTool(ToolType @type, IDictionary<string, BinaryData> additionalBinaryDataProperties, string projectConnectionId, string serverLabel, Uri serverUrl, BinaryData requireApproval, string name, string description, IDictionary<string, ToolConfig> toolConfigs) : base(@type, additionalBinaryDataProperties)
+        internal ResponsesFabricIQPreviewTool(ToolType @type, IDictionary<string, BinaryData> additionalBinaryDataProperties, string projectConnectionId, string serverLabel, Uri serverUri, BinaryData requireApproval) : base(@type, additionalBinaryDataProperties)
         {
             ProjectConnectionId = projectConnectionId;
             ServerLabel = serverLabel;
-            ServerUrl = serverUrl;
+            ServerUri = serverUri;
             RequireApproval = requireApproval;
-            Name = name;
-            Description = description;
-            ToolConfigs = toolConfigs;
         }
 
         /// <summary> The ID of the FabricIQ project connection. </summary>
@@ -54,7 +45,7 @@ namespace Azure.AI.Extensions.OpenAI
         public string ServerLabel { get; set; }
 
         /// <summary> (Optional) The URL of the FabricIQ MCP server. If not provided, the URL from the project connection will be used. </summary>
-        public Uri ServerUrl { get; set; }
+        public Uri ServerUri { get; set; }
 
         /// <summary>
         /// (Optional) Whether the agent requires approval before executing actions. Default is always.
@@ -96,18 +87,5 @@ namespace Azure.AI.Extensions.OpenAI
         /// </para>
         /// </summary>
         public BinaryData RequireApproval { get; set; }
-
-        /// <summary> Optional user-defined name for this tool or configuration. </summary>
-        public string Name { get; set; }
-
-        /// <summary> Optional user-defined description for this tool or configuration. </summary>
-        public string Description { get; set; }
-
-        /// <summary>
-        /// Per-tool configuration map. Keys are tool names or `*` (catch-all default).
-        /// Resolution order: exact tool name match takes priority over `*`.
-        /// Unknown tool names are silently ignored at runtime.
-        /// </summary>
-        public IDictionary<string, ToolConfig> ToolConfigs { get; }
     }
 }

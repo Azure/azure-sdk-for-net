@@ -6,47 +6,35 @@
 #nullable disable
 
 using System;
-using System.Globalization;
+using System.Diagnostics;
 using System.Threading;
 using System.Threading.Tasks;
+using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
+using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.CosmosDB
 {
     /// <summary>
-    /// A Class representing a CosmosDBFleetspaceAccount along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="CosmosDBFleetspaceAccountResource"/>
-    /// from an instance of <see cref="ArmClient"/> using the GetCosmosDBFleetspaceAccountResource method.
-    /// Otherwise you can get one from its parent resource <see cref="CosmosDBFleetspaceResource"/> using the GetCosmosDBFleetspaceAccount method.
+    /// A class representing a CosmosDBFleetspaceAccount along with the instance operations that can be performed on it.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="CosmosDBFleetspaceAccountResource"/> from an instance of <see cref="ArmClient"/> using the GetResource method.
+    /// Otherwise you can get one from its parent resource <see cref="CosmosDBFleetspaceResource"/> using the GetCosmosDBFleetspaceAccounts method.
     /// </summary>
     public partial class CosmosDBFleetspaceAccountResource : ArmResource
     {
-        /// <summary> Generate the resource identifier of a <see cref="CosmosDBFleetspaceAccountResource"/> instance. </summary>
-        /// <param name="subscriptionId"> The subscriptionId. </param>
-        /// <param name="resourceGroupName"> The resourceGroupName. </param>
-        /// <param name="fleetName"> The fleetName. </param>
-        /// <param name="fleetspaceName"> The fleetspaceName. </param>
-        /// <param name="fleetspaceAccountName"> The fleetspaceAccountName. </param>
-        public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string fleetName, string fleetspaceName, string fleetspaceAccountName)
-        {
-            var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DocumentDB/fleets/{fleetName}/fleetspaces/{fleetspaceName}/fleetspaceAccounts/{fleetspaceAccountName}";
-            return new ResourceIdentifier(resourceId);
-        }
-
-        private readonly ClientDiagnostics _cosmosDBFleetspaceAccountFleetspaceAccountClientDiagnostics;
-        private readonly FleetspaceAccountRestOperations _cosmosDBFleetspaceAccountFleetspaceAccountRestClient;
+        private readonly ClientDiagnostics _fleetspaceAccountClientDiagnostics;
+        private readonly FleetspaceAccount _fleetspaceAccountRestClient;
         private readonly CosmosDBFleetspaceAccountData _data;
-
         /// <summary> Gets the resource type for the operations. </summary>
         public static readonly ResourceType ResourceType = "Microsoft.DocumentDB/fleets/fleetspaces/fleetspaceAccounts";
 
-        /// <summary> Initializes a new instance of the <see cref="CosmosDBFleetspaceAccountResource"/> class for mocking. </summary>
+        /// <summary> Initializes a new instance of CosmosDBFleetspaceAccountResource for mocking. </summary>
         protected CosmosDBFleetspaceAccountResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref="CosmosDBFleetspaceAccountResource"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="CosmosDBFleetspaceAccountResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal CosmosDBFleetspaceAccountResource(ArmClient client, CosmosDBFleetspaceAccountData data) : this(client, data.Id)
@@ -55,71 +43,94 @@ namespace Azure.ResourceManager.CosmosDB
             _data = data;
         }
 
-        /// <summary> Initializes a new instance of the <see cref="CosmosDBFleetspaceAccountResource"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="CosmosDBFleetspaceAccountResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal CosmosDBFleetspaceAccountResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _cosmosDBFleetspaceAccountFleetspaceAccountClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.CosmosDB", ResourceType.Namespace, Diagnostics);
-            TryGetApiVersion(ResourceType, out string cosmosDBFleetspaceAccountFleetspaceAccountApiVersion);
-            _cosmosDBFleetspaceAccountFleetspaceAccountRestClient = new FleetspaceAccountRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, cosmosDBFleetspaceAccountFleetspaceAccountApiVersion);
-#if DEBUG
-			ValidateResourceId(Id);
-#endif
+            TryGetApiVersion(ResourceType, out string cosmosDBFleetspaceAccountApiVersion);
+            _fleetspaceAccountClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.CosmosDB", ResourceType.Namespace, Diagnostics);
+            _fleetspaceAccountRestClient = new FleetspaceAccount(_fleetspaceAccountClientDiagnostics, Pipeline, Endpoint, cosmosDBFleetspaceAccountApiVersion ?? "2026-04-01-preview");
+            ValidateResourceId(id);
         }
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }
 
         /// <summary> Gets the data representing this Feature. </summary>
-        /// <exception cref="InvalidOperationException"> Throws if there is no data loaded in the current instance. </exception>
         public virtual CosmosDBFleetspaceAccountData Data
         {
             get
             {
                 if (!HasData)
+                {
                     throw new InvalidOperationException("The current instance does not have data, you must call Get first.");
+                }
                 return _data;
             }
         }
 
+        /// <summary> Generate the resource identifier for this resource. </summary>
+        /// <param name="subscriptionId"> The subscriptionId. </param>
+        /// <param name="resourceGroupName"> The resourceGroupName. </param>
+        /// <param name="fleetName"> The fleetName. </param>
+        /// <param name="fleetspaceName"> The fleetspaceName. </param>
+        /// <param name="fleetspaceAccountName"> The fleetspaceAccountName. </param>
+        public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string fleetName, string fleetspaceName, string fleetspaceAccountName)
+        {
+            string resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DocumentDB/fleets/{fleetName}/fleetspaces/{fleetspaceName}/fleetspaceAccounts/{fleetspaceAccountName}";
+            return new ResourceIdentifier(resourceId);
+        }
+
+        /// <param name="id"></param>
+        [Conditional("DEBUG")]
         internal static void ValidateResourceId(ResourceIdentifier id)
         {
             if (id.ResourceType != ResourceType)
-                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), nameof(id));
+            {
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), nameof(id));
+            }
         }
 
         /// <summary>
         /// Retrieves the properties of an existing Azure Cosmos DB fleetspace account under a fleetspace
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DocumentDB/fleets/{fleetName}/fleetspaces/{fleetspaceName}/fleetspaceAccounts/{fleetspaceAccountName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DocumentDB/fleets/{fleetName}/fleetspaces/{fleetspaceName}/fleetspaceAccounts/{fleetspaceAccountName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>FleetspaceAccount_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> FleetspaceAccountResources_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-10-15</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-04-01-preview. </description>
         /// </item>
         /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="CosmosDBFleetspaceAccountResource"/></description>
+        /// <term> Resource. </term>
+        /// <description> <see cref="CosmosDBFleetspaceAccountResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<Response<CosmosDBFleetspaceAccountResource>> GetAsync(CancellationToken cancellationToken = default)
         {
-            using var scope = _cosmosDBFleetspaceAccountFleetspaceAccountClientDiagnostics.CreateScope("CosmosDBFleetspaceAccountResource.Get");
+            using DiagnosticScope scope = _fleetspaceAccountClientDiagnostics.CreateScope("CosmosDBFleetspaceAccountResource.Get");
             scope.Start();
             try
             {
-                var response = await _cosmosDBFleetspaceAccountFleetspaceAccountRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _fleetspaceAccountRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, context);
+                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                Response<CosmosDBFleetspaceAccountData> response = Response.FromValue(CosmosDBFleetspaceAccountData.FromResponse(result), result);
                 if (response.Value == null)
+                {
                     throw new RequestFailedException(response.GetRawResponse());
+                }
                 return Response.FromValue(new CosmosDBFleetspaceAccountResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -133,33 +144,41 @@ namespace Azure.ResourceManager.CosmosDB
         /// Retrieves the properties of an existing Azure Cosmos DB fleetspace account under a fleetspace
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DocumentDB/fleets/{fleetName}/fleetspaces/{fleetspaceName}/fleetspaceAccounts/{fleetspaceAccountName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DocumentDB/fleets/{fleetName}/fleetspaces/{fleetspaceName}/fleetspaceAccounts/{fleetspaceAccountName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>FleetspaceAccount_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> FleetspaceAccountResources_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-10-15</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-04-01-preview. </description>
         /// </item>
         /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="CosmosDBFleetspaceAccountResource"/></description>
+        /// <term> Resource. </term>
+        /// <description> <see cref="CosmosDBFleetspaceAccountResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response<CosmosDBFleetspaceAccountResource> Get(CancellationToken cancellationToken = default)
         {
-            using var scope = _cosmosDBFleetspaceAccountFleetspaceAccountClientDiagnostics.CreateScope("CosmosDBFleetspaceAccountResource.Get");
+            using DiagnosticScope scope = _fleetspaceAccountClientDiagnostics.CreateScope("CosmosDBFleetspaceAccountResource.Get");
             scope.Start();
             try
             {
-                var response = _cosmosDBFleetspaceAccountFleetspaceAccountRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _fleetspaceAccountRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, context);
+                Response result = Pipeline.ProcessMessage(message, context);
+                Response<CosmosDBFleetspaceAccountData> response = Response.FromValue(CosmosDBFleetspaceAccountData.FromResponse(result), result);
                 if (response.Value == null)
+                {
                     throw new RequestFailedException(response.GetRawResponse());
+                }
                 return Response.FromValue(new CosmosDBFleetspaceAccountResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -173,20 +192,20 @@ namespace Azure.ResourceManager.CosmosDB
         /// Removes an existing Azure Cosmos DB fleetspace account from a fleetspace.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DocumentDB/fleets/{fleetName}/fleetspaces/{fleetspaceName}/fleetspaceAccounts/{fleetspaceAccountName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DocumentDB/fleets/{fleetName}/fleetspaces/{fleetspaceName}/fleetspaceAccounts/{fleetspaceAccountName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>FleetspaceAccount_Delete</description>
+        /// <term> Operation Id. </term>
+        /// <description> FleetspaceAccountResources_Delete. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-10-15</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-04-01-preview. </description>
         /// </item>
         /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="CosmosDBFleetspaceAccountResource"/></description>
+        /// <term> Resource. </term>
+        /// <description> <see cref="CosmosDBFleetspaceAccountResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -194,14 +213,21 @@ namespace Azure.ResourceManager.CosmosDB
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<ArmOperation> DeleteAsync(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
-            using var scope = _cosmosDBFleetspaceAccountFleetspaceAccountClientDiagnostics.CreateScope("CosmosDBFleetspaceAccountResource.Delete");
+            using DiagnosticScope scope = _fleetspaceAccountClientDiagnostics.CreateScope("CosmosDBFleetspaceAccountResource.Delete");
             scope.Start();
             try
             {
-                var response = await _cosmosDBFleetspaceAccountFleetspaceAccountRestClient.DeleteAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
-                var operation = new CosmosDBArmOperation(_cosmosDBFleetspaceAccountFleetspaceAccountClientDiagnostics, Pipeline, _cosmosDBFleetspaceAccountFleetspaceAccountRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name).Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _fleetspaceAccountRestClient.CreateDeleteRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, context);
+                Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                CosmosDBArmOperation operation = new CosmosDBArmOperation(_fleetspaceAccountClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
+                {
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
+                }
                 return operation;
             }
             catch (Exception e)
@@ -215,20 +241,20 @@ namespace Azure.ResourceManager.CosmosDB
         /// Removes an existing Azure Cosmos DB fleetspace account from a fleetspace.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DocumentDB/fleets/{fleetName}/fleetspaces/{fleetspaceName}/fleetspaceAccounts/{fleetspaceAccountName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DocumentDB/fleets/{fleetName}/fleetspaces/{fleetspaceName}/fleetspaceAccounts/{fleetspaceAccountName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>FleetspaceAccount_Delete</description>
+        /// <term> Operation Id. </term>
+        /// <description> FleetspaceAccountResources_Delete. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-10-15</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-04-01-preview. </description>
         /// </item>
         /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="CosmosDBFleetspaceAccountResource"/></description>
+        /// <term> Resource. </term>
+        /// <description> <see cref="CosmosDBFleetspaceAccountResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -236,14 +262,21 @@ namespace Azure.ResourceManager.CosmosDB
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual ArmOperation Delete(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
-            using var scope = _cosmosDBFleetspaceAccountFleetspaceAccountClientDiagnostics.CreateScope("CosmosDBFleetspaceAccountResource.Delete");
+            using DiagnosticScope scope = _fleetspaceAccountClientDiagnostics.CreateScope("CosmosDBFleetspaceAccountResource.Delete");
             scope.Start();
             try
             {
-                var response = _cosmosDBFleetspaceAccountFleetspaceAccountRestClient.Delete(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, cancellationToken);
-                var operation = new CosmosDBArmOperation(_cosmosDBFleetspaceAccountFleetspaceAccountClientDiagnostics, Pipeline, _cosmosDBFleetspaceAccountFleetspaceAccountRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name).Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _fleetspaceAccountRestClient.CreateDeleteRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, context);
+                Response response = Pipeline.ProcessMessage(message, context);
+                CosmosDBArmOperation operation = new CosmosDBArmOperation(_fleetspaceAccountClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
+                {
                     operation.WaitForCompletionResponse(cancellationToken);
+                }
                 return operation;
             }
             catch (Exception e)
@@ -254,23 +287,23 @@ namespace Azure.ResourceManager.CosmosDB
         }
 
         /// <summary>
-        /// Creates an Azure Cosmos DB fleetspace account under a fleetspace.
+        /// Update a CosmosDBFleetspaceAccount.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DocumentDB/fleets/{fleetName}/fleetspaces/{fleetspaceName}/fleetspaceAccounts/{fleetspaceAccountName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DocumentDB/fleets/{fleetName}/fleetspaces/{fleetspaceName}/fleetspaceAccounts/{fleetspaceAccountName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>FleetspaceAccount_Create</description>
+        /// <term> Operation Id. </term>
+        /// <description> FleetspaceAccountResources_Create. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-10-15</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-04-01-preview. </description>
         /// </item>
         /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="CosmosDBFleetspaceAccountResource"/></description>
+        /// <term> Resource. </term>
+        /// <description> <see cref="CosmosDBFleetspaceAccountResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -282,14 +315,27 @@ namespace Azure.ResourceManager.CosmosDB
         {
             Argument.AssertNotNull(data, nameof(data));
 
-            using var scope = _cosmosDBFleetspaceAccountFleetspaceAccountClientDiagnostics.CreateScope("CosmosDBFleetspaceAccountResource.Update");
+            using DiagnosticScope scope = _fleetspaceAccountClientDiagnostics.CreateScope("CosmosDBFleetspaceAccountResource.Update");
             scope.Start();
             try
             {
-                var response = await _cosmosDBFleetspaceAccountFleetspaceAccountRestClient.CreateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, data, cancellationToken).ConfigureAwait(false);
-                var operation = new CosmosDBArmOperation<CosmosDBFleetspaceAccountResource>(new CosmosDBFleetspaceAccountOperationSource(Client), _cosmosDBFleetspaceAccountFleetspaceAccountClientDiagnostics, Pipeline, _cosmosDBFleetspaceAccountFleetspaceAccountRestClient.CreateCreateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, data).Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _fleetspaceAccountRestClient.CreateCreateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, CosmosDBFleetspaceAccountData.ToRequestContent(data), context);
+                Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                CosmosDBArmOperation<CosmosDBFleetspaceAccountResource> operation = new CosmosDBArmOperation<CosmosDBFleetspaceAccountResource>(
+                    new CosmosDBFleetspaceAccountResourceOperationSource(Client),
+                    _fleetspaceAccountClientDiagnostics,
+                    Pipeline,
+                    message.Request,
+                    response,
+                    OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
+                {
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
+                }
                 return operation;
             }
             catch (Exception e)
@@ -300,23 +346,23 @@ namespace Azure.ResourceManager.CosmosDB
         }
 
         /// <summary>
-        /// Creates an Azure Cosmos DB fleetspace account under a fleetspace.
+        /// Update a CosmosDBFleetspaceAccount.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DocumentDB/fleets/{fleetName}/fleetspaces/{fleetspaceName}/fleetspaceAccounts/{fleetspaceAccountName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DocumentDB/fleets/{fleetName}/fleetspaces/{fleetspaceName}/fleetspaceAccounts/{fleetspaceAccountName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>FleetspaceAccount_Create</description>
+        /// <term> Operation Id. </term>
+        /// <description> FleetspaceAccountResources_Create. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-10-15</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-04-01-preview. </description>
         /// </item>
         /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="CosmosDBFleetspaceAccountResource"/></description>
+        /// <term> Resource. </term>
+        /// <description> <see cref="CosmosDBFleetspaceAccountResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -328,14 +374,27 @@ namespace Azure.ResourceManager.CosmosDB
         {
             Argument.AssertNotNull(data, nameof(data));
 
-            using var scope = _cosmosDBFleetspaceAccountFleetspaceAccountClientDiagnostics.CreateScope("CosmosDBFleetspaceAccountResource.Update");
+            using DiagnosticScope scope = _fleetspaceAccountClientDiagnostics.CreateScope("CosmosDBFleetspaceAccountResource.Update");
             scope.Start();
             try
             {
-                var response = _cosmosDBFleetspaceAccountFleetspaceAccountRestClient.Create(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, data, cancellationToken);
-                var operation = new CosmosDBArmOperation<CosmosDBFleetspaceAccountResource>(new CosmosDBFleetspaceAccountOperationSource(Client), _cosmosDBFleetspaceAccountFleetspaceAccountClientDiagnostics, Pipeline, _cosmosDBFleetspaceAccountFleetspaceAccountRestClient.CreateCreateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, data).Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _fleetspaceAccountRestClient.CreateCreateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, CosmosDBFleetspaceAccountData.ToRequestContent(data), context);
+                Response response = Pipeline.ProcessMessage(message, context);
+                CosmosDBArmOperation<CosmosDBFleetspaceAccountResource> operation = new CosmosDBArmOperation<CosmosDBFleetspaceAccountResource>(
+                    new CosmosDBFleetspaceAccountResourceOperationSource(Client),
+                    _fleetspaceAccountClientDiagnostics,
+                    Pipeline,
+                    message.Request,
+                    response,
+                    OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
+                {
                     operation.WaitForCompletion(cancellationToken);
+                }
                 return operation;
             }
             catch (Exception e)

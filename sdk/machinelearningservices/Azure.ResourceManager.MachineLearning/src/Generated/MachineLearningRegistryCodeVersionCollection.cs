@@ -8,12 +8,13 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.Globalization;
+using System.Diagnostics;
 using System.Threading;
 using System.Threading.Tasks;
-using Autorest.CSharp.Core;
+using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
+using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.MachineLearning
 {
@@ -24,51 +25,49 @@ namespace Azure.ResourceManager.MachineLearning
     /// </summary>
     public partial class MachineLearningRegistryCodeVersionCollection : ArmCollection, IEnumerable<MachineLearningRegistryCodeVersionResource>, IAsyncEnumerable<MachineLearningRegistryCodeVersionResource>
     {
-        private readonly ClientDiagnostics _machineLearningRegistryCodeVersionRegistryCodeVersionsClientDiagnostics;
-        private readonly RegistryCodeVersionsRestOperations _machineLearningRegistryCodeVersionRegistryCodeVersionsRestClient;
+        private readonly ClientDiagnostics _registryCodeVersionsClientDiagnostics;
+        private readonly RegistryCodeVersions _registryCodeVersionsRestClient;
 
-        /// <summary> Initializes a new instance of the <see cref="MachineLearningRegistryCodeVersionCollection"/> class for mocking. </summary>
+        /// <summary> Initializes a new instance of MachineLearningRegistryCodeVersionCollection for mocking. </summary>
         protected MachineLearningRegistryCodeVersionCollection()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref="MachineLearningRegistryCodeVersionCollection"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="MachineLearningRegistryCodeVersionCollection"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
-        /// <param name="id"> The identifier of the parent resource that is the target of operations. </param>
+        /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal MachineLearningRegistryCodeVersionCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _machineLearningRegistryCodeVersionRegistryCodeVersionsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.MachineLearning", MachineLearningRegistryCodeVersionResource.ResourceType.Namespace, Diagnostics);
-            TryGetApiVersion(MachineLearningRegistryCodeVersionResource.ResourceType, out string machineLearningRegistryCodeVersionRegistryCodeVersionsApiVersion);
-            _machineLearningRegistryCodeVersionRegistryCodeVersionsRestClient = new RegistryCodeVersionsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, machineLearningRegistryCodeVersionRegistryCodeVersionsApiVersion);
-#if DEBUG
-			ValidateResourceId(Id);
-#endif
+            TryGetApiVersion(MachineLearningRegistryCodeVersionResource.ResourceType, out string machineLearningRegistryCodeVersionApiVersion);
+            _registryCodeVersionsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.MachineLearning", MachineLearningRegistryCodeVersionResource.ResourceType.Namespace, Diagnostics);
+            _registryCodeVersionsRestClient = new RegistryCodeVersions(_registryCodeVersionsClientDiagnostics, Pipeline, Endpoint, machineLearningRegistryCodeVersionApiVersion ?? "2026-03-15-preview");
+            ValidateResourceId(id);
         }
 
+        /// <param name="id"></param>
+        [Conditional("DEBUG")]
         internal static void ValidateResourceId(ResourceIdentifier id)
         {
             if (id.ResourceType != MachineLearningRegistryCodeContainerResource.ResourceType)
-                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, MachineLearningRegistryCodeContainerResource.ResourceType), nameof(id));
+            {
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, MachineLearningRegistryCodeContainerResource.ResourceType), nameof(id));
+            }
         }
 
         /// <summary>
         /// Create or update version.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.MachineLearningServices/registries/{registryName}/codes/{codeName}/versions/{version}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.MachineLearningServices/registries/{registryName}/codes/{codeName}/versions/{version}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>RegistryCodeVersions_CreateOrUpdate</description>
+        /// <term> Operation Id. </term>
+        /// <description> CodeVersions_CreateOrUpdate. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-04-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="MachineLearningRegistryCodeVersionResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-03-15-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -76,21 +75,34 @@ namespace Azure.ResourceManager.MachineLearning
         /// <param name="version"> Version identifier. </param>
         /// <param name="data"> Version entity to create or update. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="version"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="version"/> or <paramref name="data"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="version"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual async Task<ArmOperation<MachineLearningRegistryCodeVersionResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string version, MachineLearningCodeVersionData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(version, nameof(version));
             Argument.AssertNotNull(data, nameof(data));
 
-            using var scope = _machineLearningRegistryCodeVersionRegistryCodeVersionsClientDiagnostics.CreateScope("MachineLearningRegistryCodeVersionCollection.CreateOrUpdate");
+            using DiagnosticScope scope = _registryCodeVersionsClientDiagnostics.CreateScope("MachineLearningRegistryCodeVersionCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                var response = await _machineLearningRegistryCodeVersionRegistryCodeVersionsRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, version, data, cancellationToken).ConfigureAwait(false);
-                var operation = new MachineLearningArmOperation<MachineLearningRegistryCodeVersionResource>(new MachineLearningRegistryCodeVersionOperationSource(Client), _machineLearningRegistryCodeVersionRegistryCodeVersionsClientDiagnostics, Pipeline, _machineLearningRegistryCodeVersionRegistryCodeVersionsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, version, data).Request, response, OperationFinalStateVia.OriginalUri);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _registryCodeVersionsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, version, MachineLearningCodeVersionData.ToRequestContent(data), context);
+                Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                MachineLearningArmOperation<MachineLearningRegistryCodeVersionResource> operation = new MachineLearningArmOperation<MachineLearningRegistryCodeVersionResource>(
+                    new MachineLearningRegistryCodeVersionResourceOperationSource(Client),
+                    _registryCodeVersionsClientDiagnostics,
+                    Pipeline,
+                    message.Request,
+                    response,
+                    OperationFinalStateVia.OriginalUri);
                 if (waitUntil == WaitUntil.Completed)
+                {
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
+                }
                 return operation;
             }
             catch (Exception e)
@@ -104,20 +116,16 @@ namespace Azure.ResourceManager.MachineLearning
         /// Create or update version.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.MachineLearningServices/registries/{registryName}/codes/{codeName}/versions/{version}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.MachineLearningServices/registries/{registryName}/codes/{codeName}/versions/{version}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>RegistryCodeVersions_CreateOrUpdate</description>
+        /// <term> Operation Id. </term>
+        /// <description> CodeVersions_CreateOrUpdate. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-04-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="MachineLearningRegistryCodeVersionResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-03-15-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -125,21 +133,34 @@ namespace Azure.ResourceManager.MachineLearning
         /// <param name="version"> Version identifier. </param>
         /// <param name="data"> Version entity to create or update. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="version"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="version"/> or <paramref name="data"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="version"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual ArmOperation<MachineLearningRegistryCodeVersionResource> CreateOrUpdate(WaitUntil waitUntil, string version, MachineLearningCodeVersionData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(version, nameof(version));
             Argument.AssertNotNull(data, nameof(data));
 
-            using var scope = _machineLearningRegistryCodeVersionRegistryCodeVersionsClientDiagnostics.CreateScope("MachineLearningRegistryCodeVersionCollection.CreateOrUpdate");
+            using DiagnosticScope scope = _registryCodeVersionsClientDiagnostics.CreateScope("MachineLearningRegistryCodeVersionCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                var response = _machineLearningRegistryCodeVersionRegistryCodeVersionsRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, version, data, cancellationToken);
-                var operation = new MachineLearningArmOperation<MachineLearningRegistryCodeVersionResource>(new MachineLearningRegistryCodeVersionOperationSource(Client), _machineLearningRegistryCodeVersionRegistryCodeVersionsClientDiagnostics, Pipeline, _machineLearningRegistryCodeVersionRegistryCodeVersionsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, version, data).Request, response, OperationFinalStateVia.OriginalUri);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _registryCodeVersionsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, version, MachineLearningCodeVersionData.ToRequestContent(data), context);
+                Response response = Pipeline.ProcessMessage(message, context);
+                MachineLearningArmOperation<MachineLearningRegistryCodeVersionResource> operation = new MachineLearningArmOperation<MachineLearningRegistryCodeVersionResource>(
+                    new MachineLearningRegistryCodeVersionResourceOperationSource(Client),
+                    _registryCodeVersionsClientDiagnostics,
+                    Pipeline,
+                    message.Request,
+                    response,
+                    OperationFinalStateVia.OriginalUri);
                 if (waitUntil == WaitUntil.Completed)
+                {
                     operation.WaitForCompletion(cancellationToken);
+                }
                 return operation;
             }
             catch (Exception e)
@@ -153,38 +174,42 @@ namespace Azure.ResourceManager.MachineLearning
         /// Get version.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.MachineLearningServices/registries/{registryName}/codes/{codeName}/versions/{version}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.MachineLearningServices/registries/{registryName}/codes/{codeName}/versions/{version}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>RegistryCodeVersions_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> CodeVersions_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-04-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="MachineLearningRegistryCodeVersionResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-03-15-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="version"> Version identifier. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="version"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="version"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="version"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual async Task<Response<MachineLearningRegistryCodeVersionResource>> GetAsync(string version, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(version, nameof(version));
 
-            using var scope = _machineLearningRegistryCodeVersionRegistryCodeVersionsClientDiagnostics.CreateScope("MachineLearningRegistryCodeVersionCollection.Get");
+            using DiagnosticScope scope = _registryCodeVersionsClientDiagnostics.CreateScope("MachineLearningRegistryCodeVersionCollection.Get");
             scope.Start();
             try
             {
-                var response = await _machineLearningRegistryCodeVersionRegistryCodeVersionsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, version, cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _registryCodeVersionsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, version, context);
+                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                Response<MachineLearningCodeVersionData> response = Response.FromValue(MachineLearningCodeVersionData.FromResponse(result), result);
                 if (response.Value == null)
+                {
                     throw new RequestFailedException(response.GetRawResponse());
+                }
                 return Response.FromValue(new MachineLearningRegistryCodeVersionResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -198,38 +223,42 @@ namespace Azure.ResourceManager.MachineLearning
         /// Get version.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.MachineLearningServices/registries/{registryName}/codes/{codeName}/versions/{version}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.MachineLearningServices/registries/{registryName}/codes/{codeName}/versions/{version}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>RegistryCodeVersions_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> CodeVersions_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-04-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="MachineLearningRegistryCodeVersionResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-03-15-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="version"> Version identifier. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="version"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="version"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="version"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual Response<MachineLearningRegistryCodeVersionResource> Get(string version, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(version, nameof(version));
 
-            using var scope = _machineLearningRegistryCodeVersionRegistryCodeVersionsClientDiagnostics.CreateScope("MachineLearningRegistryCodeVersionCollection.Get");
+            using DiagnosticScope scope = _registryCodeVersionsClientDiagnostics.CreateScope("MachineLearningRegistryCodeVersionCollection.Get");
             scope.Start();
             try
             {
-                var response = _machineLearningRegistryCodeVersionRegistryCodeVersionsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, version, cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _registryCodeVersionsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, version, context);
+                Response result = Pipeline.ProcessMessage(message, context);
+                Response<MachineLearningCodeVersionData> response = Response.FromValue(MachineLearningCodeVersionData.FromResponse(result), result);
                 if (response.Value == null)
+                {
                     throw new RequestFailedException(response.GetRawResponse());
+                }
                 return Response.FromValue(new MachineLearningRegistryCodeVersionResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -243,53 +272,16 @@ namespace Azure.ResourceManager.MachineLearning
         /// List versions.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.MachineLearningServices/registries/{registryName}/codes/{codeName}/versions</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.MachineLearningServices/registries/{registryName}/codes/{codeName}/versions. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>RegistryCodeVersions_List</description>
+        /// <term> Operation Id. </term>
+        /// <description> CodeVersions_List. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-04-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="MachineLearningRegistryCodeVersionResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="orderBy"> Ordering of list. </param>
-        /// <param name="top"> Maximum number of records to return. </param>
-        /// <param name="skip"> Continuation token for pagination. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="MachineLearningRegistryCodeVersionResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<MachineLearningRegistryCodeVersionResource> GetAllAsync(string orderBy = null, int? top = null, string skip = null, CancellationToken cancellationToken = default)
-        {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _machineLearningRegistryCodeVersionRegistryCodeVersionsRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, orderBy, top, skip);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _machineLearningRegistryCodeVersionRegistryCodeVersionsRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, orderBy, top, skip);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new MachineLearningRegistryCodeVersionResource(Client, MachineLearningCodeVersionData.DeserializeMachineLearningCodeVersionData(e)), _machineLearningRegistryCodeVersionRegistryCodeVersionsClientDiagnostics, Pipeline, "MachineLearningRegistryCodeVersionCollection.GetAll", "value", "nextLink", cancellationToken);
-        }
-
-        /// <summary>
-        /// List versions.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.MachineLearningServices/registries/{registryName}/codes/{codeName}/versions</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>RegistryCodeVersions_List</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-04-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="MachineLearningRegistryCodeVersionResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-03-15-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -298,47 +290,114 @@ namespace Azure.ResourceManager.MachineLearning
         /// <param name="skip"> Continuation token for pagination. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="MachineLearningRegistryCodeVersionResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<MachineLearningRegistryCodeVersionResource> GetAll(string orderBy = null, int? top = null, string skip = null, CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<MachineLearningRegistryCodeVersionResource> GetAllAsync(string orderBy = default, int? top = default, string skip = default, CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _machineLearningRegistryCodeVersionRegistryCodeVersionsRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, orderBy, top, skip);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _machineLearningRegistryCodeVersionRegistryCodeVersionsRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, orderBy, top, skip);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new MachineLearningRegistryCodeVersionResource(Client, MachineLearningCodeVersionData.DeserializeMachineLearningCodeVersionData(e)), _machineLearningRegistryCodeVersionRegistryCodeVersionsClientDiagnostics, Pipeline, "MachineLearningRegistryCodeVersionCollection.GetAll", "value", "nextLink", cancellationToken);
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new AsyncPageableWrapper<MachineLearningCodeVersionData, MachineLearningRegistryCodeVersionResource>(new RegistryCodeVersionsGetAllAsyncCollectionResultOfT(
+                _registryCodeVersionsRestClient,
+                Id.SubscriptionId,
+                Id.ResourceGroupName,
+                Id.Parent.Name,
+                Id.Name,
+                orderBy,
+                top,
+                skip,
+                context,
+                "MachineLearningRegistryCodeVersionCollection.GetAll"), data => new MachineLearningRegistryCodeVersionResource(Client, data));
+        }
+
+        /// <summary>
+        /// List versions.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.MachineLearningServices/registries/{registryName}/codes/{codeName}/versions. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> CodeVersions_List. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-03-15-preview. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="orderBy"> Ordering of list. </param>
+        /// <param name="top"> Maximum number of records to return. </param>
+        /// <param name="skip"> Continuation token for pagination. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> A collection of <see cref="MachineLearningRegistryCodeVersionResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<MachineLearningRegistryCodeVersionResource> GetAll(string orderBy = default, int? top = default, string skip = default, CancellationToken cancellationToken = default)
+        {
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new PageableWrapper<MachineLearningCodeVersionData, MachineLearningRegistryCodeVersionResource>(new RegistryCodeVersionsGetAllCollectionResultOfT(
+                _registryCodeVersionsRestClient,
+                Id.SubscriptionId,
+                Id.ResourceGroupName,
+                Id.Parent.Name,
+                Id.Name,
+                orderBy,
+                top,
+                skip,
+                context,
+                "MachineLearningRegistryCodeVersionCollection.GetAll"), data => new MachineLearningRegistryCodeVersionResource(Client, data));
         }
 
         /// <summary>
         /// Checks to see if the resource exists in azure.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.MachineLearningServices/registries/{registryName}/codes/{codeName}/versions/{version}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.MachineLearningServices/registries/{registryName}/codes/{codeName}/versions/{version}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>RegistryCodeVersions_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> CodeVersions_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-04-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="MachineLearningRegistryCodeVersionResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-03-15-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="version"> Version identifier. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="version"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="version"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="version"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual async Task<Response<bool>> ExistsAsync(string version, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(version, nameof(version));
 
-            using var scope = _machineLearningRegistryCodeVersionRegistryCodeVersionsClientDiagnostics.CreateScope("MachineLearningRegistryCodeVersionCollection.Exists");
+            using DiagnosticScope scope = _registryCodeVersionsClientDiagnostics.CreateScope("MachineLearningRegistryCodeVersionCollection.Exists");
             scope.Start();
             try
             {
-                var response = await _machineLearningRegistryCodeVersionRegistryCodeVersionsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, version, cancellationToken: cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _registryCodeVersionsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, version, context);
+                await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
+                Response result = message.Response;
+                Response<MachineLearningCodeVersionData> response = default;
+                switch (result.Status)
+                {
+                    case 200:
+                        response = Response.FromValue(MachineLearningCodeVersionData.FromResponse(result), result);
+                        break;
+                    case 404:
+                        response = Response.FromValue((MachineLearningCodeVersionData)null, result);
+                        break;
+                    default:
+                        throw new RequestFailedException(result);
+                }
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -352,36 +411,50 @@ namespace Azure.ResourceManager.MachineLearning
         /// Checks to see if the resource exists in azure.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.MachineLearningServices/registries/{registryName}/codes/{codeName}/versions/{version}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.MachineLearningServices/registries/{registryName}/codes/{codeName}/versions/{version}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>RegistryCodeVersions_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> CodeVersions_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-04-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="MachineLearningRegistryCodeVersionResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-03-15-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="version"> Version identifier. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="version"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="version"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="version"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual Response<bool> Exists(string version, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(version, nameof(version));
 
-            using var scope = _machineLearningRegistryCodeVersionRegistryCodeVersionsClientDiagnostics.CreateScope("MachineLearningRegistryCodeVersionCollection.Exists");
+            using DiagnosticScope scope = _registryCodeVersionsClientDiagnostics.CreateScope("MachineLearningRegistryCodeVersionCollection.Exists");
             scope.Start();
             try
             {
-                var response = _machineLearningRegistryCodeVersionRegistryCodeVersionsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, version, cancellationToken: cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _registryCodeVersionsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, version, context);
+                Pipeline.Send(message, context.CancellationToken);
+                Response result = message.Response;
+                Response<MachineLearningCodeVersionData> response = default;
+                switch (result.Status)
+                {
+                    case 200:
+                        response = Response.FromValue(MachineLearningCodeVersionData.FromResponse(result), result);
+                        break;
+                    case 404:
+                        response = Response.FromValue((MachineLearningCodeVersionData)null, result);
+                        break;
+                    default:
+                        throw new RequestFailedException(result);
+                }
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -395,38 +468,54 @@ namespace Azure.ResourceManager.MachineLearning
         /// Tries to get details for this resource from the service.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.MachineLearningServices/registries/{registryName}/codes/{codeName}/versions/{version}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.MachineLearningServices/registries/{registryName}/codes/{codeName}/versions/{version}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>RegistryCodeVersions_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> CodeVersions_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-04-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="MachineLearningRegistryCodeVersionResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-03-15-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="version"> Version identifier. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="version"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="version"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="version"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual async Task<NullableResponse<MachineLearningRegistryCodeVersionResource>> GetIfExistsAsync(string version, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(version, nameof(version));
 
-            using var scope = _machineLearningRegistryCodeVersionRegistryCodeVersionsClientDiagnostics.CreateScope("MachineLearningRegistryCodeVersionCollection.GetIfExists");
+            using DiagnosticScope scope = _registryCodeVersionsClientDiagnostics.CreateScope("MachineLearningRegistryCodeVersionCollection.GetIfExists");
             scope.Start();
             try
             {
-                var response = await _machineLearningRegistryCodeVersionRegistryCodeVersionsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, version, cancellationToken: cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _registryCodeVersionsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, version, context);
+                await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
+                Response result = message.Response;
+                Response<MachineLearningCodeVersionData> response = default;
+                switch (result.Status)
+                {
+                    case 200:
+                        response = Response.FromValue(MachineLearningCodeVersionData.FromResponse(result), result);
+                        break;
+                    case 404:
+                        response = Response.FromValue((MachineLearningCodeVersionData)null, result);
+                        break;
+                    default:
+                        throw new RequestFailedException(result);
+                }
                 if (response.Value == null)
+                {
                     return new NoValueResponse<MachineLearningRegistryCodeVersionResource>(response.GetRawResponse());
+                }
                 return Response.FromValue(new MachineLearningRegistryCodeVersionResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -440,38 +529,54 @@ namespace Azure.ResourceManager.MachineLearning
         /// Tries to get details for this resource from the service.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.MachineLearningServices/registries/{registryName}/codes/{codeName}/versions/{version}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.MachineLearningServices/registries/{registryName}/codes/{codeName}/versions/{version}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>RegistryCodeVersions_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> CodeVersions_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-04-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="MachineLearningRegistryCodeVersionResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-03-15-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="version"> Version identifier. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="version"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="version"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="version"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual NullableResponse<MachineLearningRegistryCodeVersionResource> GetIfExists(string version, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(version, nameof(version));
 
-            using var scope = _machineLearningRegistryCodeVersionRegistryCodeVersionsClientDiagnostics.CreateScope("MachineLearningRegistryCodeVersionCollection.GetIfExists");
+            using DiagnosticScope scope = _registryCodeVersionsClientDiagnostics.CreateScope("MachineLearningRegistryCodeVersionCollection.GetIfExists");
             scope.Start();
             try
             {
-                var response = _machineLearningRegistryCodeVersionRegistryCodeVersionsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, version, cancellationToken: cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _registryCodeVersionsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, version, context);
+                Pipeline.Send(message, context.CancellationToken);
+                Response result = message.Response;
+                Response<MachineLearningCodeVersionData> response = default;
+                switch (result.Status)
+                {
+                    case 200:
+                        response = Response.FromValue(MachineLearningCodeVersionData.FromResponse(result), result);
+                        break;
+                    case 404:
+                        response = Response.FromValue((MachineLearningCodeVersionData)null, result);
+                        break;
+                    default:
+                        throw new RequestFailedException(result);
+                }
                 if (response.Value == null)
+                {
                     return new NoValueResponse<MachineLearningRegistryCodeVersionResource>(response.GetRawResponse());
+                }
                 return Response.FromValue(new MachineLearningRegistryCodeVersionResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -491,6 +596,7 @@ namespace Azure.ResourceManager.MachineLearning
             return GetAll().GetEnumerator();
         }
 
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
         IAsyncEnumerator<MachineLearningRegistryCodeVersionResource> IAsyncEnumerable<MachineLearningRegistryCodeVersionResource>.GetAsyncEnumerator(CancellationToken cancellationToken)
         {
             return GetAllAsync(cancellationToken: cancellationToken).GetAsyncEnumerator(cancellationToken);

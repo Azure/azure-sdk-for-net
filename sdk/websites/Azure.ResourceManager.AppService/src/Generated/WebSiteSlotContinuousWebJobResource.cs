@@ -6,47 +6,35 @@
 #nullable disable
 
 using System;
-using System.Globalization;
+using System.Diagnostics;
 using System.Threading;
 using System.Threading.Tasks;
+using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
+using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.AppService
 {
     /// <summary>
-    /// A Class representing a WebSiteSlotContinuousWebJob along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="WebSiteSlotContinuousWebJobResource"/>
-    /// from an instance of <see cref="ArmClient"/> using the GetWebSiteSlotContinuousWebJobResource method.
-    /// Otherwise you can get one from its parent resource <see cref="WebSiteSlotResource"/> using the GetWebSiteSlotContinuousWebJob method.
+    /// A class representing a WebSiteSlotContinuousWebJob along with the instance operations that can be performed on it.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="WebSiteSlotContinuousWebJobResource"/> from an instance of <see cref="ArmClient"/> using the GetResource method.
+    /// Otherwise you can get one from its parent resource <see cref="WebSiteSlotResource"/> using the GetWebSiteSlotContinuousWebJobs method.
     /// </summary>
     public partial class WebSiteSlotContinuousWebJobResource : ArmResource
     {
-        /// <summary> Generate the resource identifier of a <see cref="WebSiteSlotContinuousWebJobResource"/> instance. </summary>
-        /// <param name="subscriptionId"> The subscriptionId. </param>
-        /// <param name="resourceGroupName"> The resourceGroupName. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="slot"> The slot. </param>
-        /// <param name="webJobName"> The webJobName. </param>
-        public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string name, string slot, string webJobName)
-        {
-            var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/slots/{slot}/continuouswebjobs/{webJobName}";
-            return new ResourceIdentifier(resourceId);
-        }
-
-        private readonly ClientDiagnostics _webSiteSlotContinuousWebJobWebAppsClientDiagnostics;
-        private readonly WebAppsRestOperations _webSiteSlotContinuousWebJobWebAppsRestClient;
+        private readonly ClientDiagnostics _continuousWebJobOperationGroupClientDiagnostics;
+        private readonly ContinuousWebJobOperationGroup _continuousWebJobOperationGroupRestClient;
         private readonly ContinuousWebJobData _data;
-
         /// <summary> Gets the resource type for the operations. </summary>
         public static readonly ResourceType ResourceType = "Microsoft.Web/sites/slots/continuouswebjobs";
 
-        /// <summary> Initializes a new instance of the <see cref="WebSiteSlotContinuousWebJobResource"/> class for mocking. </summary>
+        /// <summary> Initializes a new instance of WebSiteSlotContinuousWebJobResource for mocking. </summary>
         protected WebSiteSlotContinuousWebJobResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref="WebSiteSlotContinuousWebJobResource"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="WebSiteSlotContinuousWebJobResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal WebSiteSlotContinuousWebJobResource(ArmClient client, ContinuousWebJobData data) : this(client, data.Id)
@@ -55,71 +43,94 @@ namespace Azure.ResourceManager.AppService
             _data = data;
         }
 
-        /// <summary> Initializes a new instance of the <see cref="WebSiteSlotContinuousWebJobResource"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="WebSiteSlotContinuousWebJobResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal WebSiteSlotContinuousWebJobResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _webSiteSlotContinuousWebJobWebAppsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.AppService", ResourceType.Namespace, Diagnostics);
-            TryGetApiVersion(ResourceType, out string webSiteSlotContinuousWebJobWebAppsApiVersion);
-            _webSiteSlotContinuousWebJobWebAppsRestClient = new WebAppsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, webSiteSlotContinuousWebJobWebAppsApiVersion);
-#if DEBUG
-			ValidateResourceId(Id);
-#endif
+            TryGetApiVersion(ResourceType, out string webSiteSlotContinuousWebJobApiVersion);
+            _continuousWebJobOperationGroupClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.AppService", ResourceType.Namespace, Diagnostics);
+            _continuousWebJobOperationGroupRestClient = new ContinuousWebJobOperationGroup(_continuousWebJobOperationGroupClientDiagnostics, Pipeline, Endpoint, webSiteSlotContinuousWebJobApiVersion ?? "2026-03-15");
+            ValidateResourceId(id);
         }
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }
 
         /// <summary> Gets the data representing this Feature. </summary>
-        /// <exception cref="InvalidOperationException"> Throws if there is no data loaded in the current instance. </exception>
         public virtual ContinuousWebJobData Data
         {
             get
             {
                 if (!HasData)
+                {
                     throw new InvalidOperationException("The current instance does not have data, you must call Get first.");
+                }
                 return _data;
             }
         }
 
+        /// <summary> Generate the resource identifier for this resource. </summary>
+        /// <param name="subscriptionId"> The subscriptionId. </param>
+        /// <param name="resourceGroupName"> The resourceGroupName. </param>
+        /// <param name="name"> The name. </param>
+        /// <param name="slot"> The slot. </param>
+        /// <param name="webJobName"> The webJobName. </param>
+        public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string name, string slot, string webJobName)
+        {
+            string resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/slots/{slot}/continuouswebjobs/{webJobName}";
+            return new ResourceIdentifier(resourceId);
+        }
+
+        /// <param name="id"></param>
+        [Conditional("DEBUG")]
         internal static void ValidateResourceId(ResourceIdentifier id)
         {
             if (id.ResourceType != ResourceType)
-                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), nameof(id));
+            {
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), nameof(id));
+            }
         }
 
         /// <summary>
         /// Description for Gets a continuous web job by its ID for an app, or a deployment slot.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/slots/{slot}/continuouswebjobs/{webJobName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/slots/{slot}/continuouswebjobs/{webJobName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>WebApps_GetContinuousWebJobSlot</description>
+        /// <term> Operation Id. </term>
+        /// <description> ContinuousWebJobOperationGroup_GetContinuousWebJobSlot. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-05-01</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-03-15. </description>
         /// </item>
         /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="WebSiteSlotContinuousWebJobResource"/></description>
+        /// <term> Resource. </term>
+        /// <description> <see cref="WebSiteSlotContinuousWebJobResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<Response<WebSiteSlotContinuousWebJobResource>> GetAsync(CancellationToken cancellationToken = default)
         {
-            using var scope = _webSiteSlotContinuousWebJobWebAppsClientDiagnostics.CreateScope("WebSiteSlotContinuousWebJobResource.Get");
+            using DiagnosticScope scope = _continuousWebJobOperationGroupClientDiagnostics.CreateScope("WebSiteSlotContinuousWebJobResource.Get");
             scope.Start();
             try
             {
-                var response = await _webSiteSlotContinuousWebJobWebAppsRestClient.GetContinuousWebJobSlotAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _continuousWebJobOperationGroupRestClient.CreateGetContinuousWebJobSlotRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, context);
+                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                Response<ContinuousWebJobData> response = Response.FromValue(ContinuousWebJobData.FromResponse(result), result);
                 if (response.Value == null)
+                {
                     throw new RequestFailedException(response.GetRawResponse());
+                }
                 return Response.FromValue(new WebSiteSlotContinuousWebJobResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -133,33 +144,41 @@ namespace Azure.ResourceManager.AppService
         /// Description for Gets a continuous web job by its ID for an app, or a deployment slot.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/slots/{slot}/continuouswebjobs/{webJobName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/slots/{slot}/continuouswebjobs/{webJobName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>WebApps_GetContinuousWebJobSlot</description>
+        /// <term> Operation Id. </term>
+        /// <description> ContinuousWebJobOperationGroup_GetContinuousWebJobSlot. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-05-01</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-03-15. </description>
         /// </item>
         /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="WebSiteSlotContinuousWebJobResource"/></description>
+        /// <term> Resource. </term>
+        /// <description> <see cref="WebSiteSlotContinuousWebJobResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response<WebSiteSlotContinuousWebJobResource> Get(CancellationToken cancellationToken = default)
         {
-            using var scope = _webSiteSlotContinuousWebJobWebAppsClientDiagnostics.CreateScope("WebSiteSlotContinuousWebJobResource.Get");
+            using DiagnosticScope scope = _continuousWebJobOperationGroupClientDiagnostics.CreateScope("WebSiteSlotContinuousWebJobResource.Get");
             scope.Start();
             try
             {
-                var response = _webSiteSlotContinuousWebJobWebAppsRestClient.GetContinuousWebJobSlot(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _continuousWebJobOperationGroupRestClient.CreateGetContinuousWebJobSlotRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, context);
+                Response result = Pipeline.ProcessMessage(message, context);
+                Response<ContinuousWebJobData> response = Response.FromValue(ContinuousWebJobData.FromResponse(result), result);
                 if (response.Value == null)
+                {
                     throw new RequestFailedException(response.GetRawResponse());
+                }
                 return Response.FromValue(new WebSiteSlotContinuousWebJobResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -173,20 +192,20 @@ namespace Azure.ResourceManager.AppService
         /// Description for Delete a continuous web job by its ID for an app, or a deployment slot.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/slots/{slot}/continuouswebjobs/{webJobName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/slots/{slot}/continuouswebjobs/{webJobName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>WebApps_DeleteContinuousWebJobSlot</description>
+        /// <term> Operation Id. </term>
+        /// <description> ContinuousWebJobOperationGroup_DeleteContinuousWebJobSlot. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-05-01</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-03-15. </description>
         /// </item>
         /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="WebSiteSlotContinuousWebJobResource"/></description>
+        /// <term> Resource. </term>
+        /// <description> <see cref="WebSiteSlotContinuousWebJobResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -194,16 +213,23 @@ namespace Azure.ResourceManager.AppService
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<ArmOperation> DeleteAsync(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
-            using var scope = _webSiteSlotContinuousWebJobWebAppsClientDiagnostics.CreateScope("WebSiteSlotContinuousWebJobResource.Delete");
+            using DiagnosticScope scope = _continuousWebJobOperationGroupClientDiagnostics.CreateScope("WebSiteSlotContinuousWebJobResource.Delete");
             scope.Start();
             try
             {
-                var response = await _webSiteSlotContinuousWebJobWebAppsRestClient.DeleteContinuousWebJobSlotAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
-                var uri = _webSiteSlotContinuousWebJobWebAppsRestClient.CreateDeleteContinuousWebJobSlotRequestUri(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name);
-                var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Delete, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
-                var operation = new AppServiceArmOperation(response, rehydrationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _continuousWebJobOperationGroupRestClient.CreateDeleteContinuousWebJobSlotRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, context);
+                Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                RequestUriBuilder uri = message.Request.Uri;
+                RehydrationToken rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Delete, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
+                AppServiceArmOperation operation = new AppServiceArmOperation(response, rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
+                {
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
+                }
                 return operation;
             }
             catch (Exception e)
@@ -217,20 +243,20 @@ namespace Azure.ResourceManager.AppService
         /// Description for Delete a continuous web job by its ID for an app, or a deployment slot.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/slots/{slot}/continuouswebjobs/{webJobName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/slots/{slot}/continuouswebjobs/{webJobName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>WebApps_DeleteContinuousWebJobSlot</description>
+        /// <term> Operation Id. </term>
+        /// <description> ContinuousWebJobOperationGroup_DeleteContinuousWebJobSlot. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-05-01</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-03-15. </description>
         /// </item>
         /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="WebSiteSlotContinuousWebJobResource"/></description>
+        /// <term> Resource. </term>
+        /// <description> <see cref="WebSiteSlotContinuousWebJobResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -238,16 +264,23 @@ namespace Azure.ResourceManager.AppService
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual ArmOperation Delete(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
-            using var scope = _webSiteSlotContinuousWebJobWebAppsClientDiagnostics.CreateScope("WebSiteSlotContinuousWebJobResource.Delete");
+            using DiagnosticScope scope = _continuousWebJobOperationGroupClientDiagnostics.CreateScope("WebSiteSlotContinuousWebJobResource.Delete");
             scope.Start();
             try
             {
-                var response = _webSiteSlotContinuousWebJobWebAppsRestClient.DeleteContinuousWebJobSlot(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, cancellationToken);
-                var uri = _webSiteSlotContinuousWebJobWebAppsRestClient.CreateDeleteContinuousWebJobSlotRequestUri(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name);
-                var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Delete, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
-                var operation = new AppServiceArmOperation(response, rehydrationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _continuousWebJobOperationGroupRestClient.CreateDeleteContinuousWebJobSlotRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, context);
+                Response response = Pipeline.ProcessMessage(message, context);
+                RequestUriBuilder uri = message.Request.Uri;
+                RehydrationToken rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Delete, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
+                AppServiceArmOperation operation = new AppServiceArmOperation(response, rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
+                {
                     operation.WaitForCompletionResponse(cancellationToken);
+                }
                 return operation;
             }
             catch (Exception e)
@@ -261,31 +294,36 @@ namespace Azure.ResourceManager.AppService
         /// Description for Start a continuous web job for an app, or a deployment slot.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/slots/{slot}/continuouswebjobs/{webJobName}/start</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/slots/{slot}/continuouswebjobs/{webJobName}/start. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>WebApps_StartContinuousWebJobSlot</description>
+        /// <term> Operation Id. </term>
+        /// <description> ContinuousWebJobOperationGroup_StartContinuousWebJobSlot. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-05-01</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-03-15. </description>
         /// </item>
         /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="WebSiteSlotContinuousWebJobResource"/></description>
+        /// <term> Resource. </term>
+        /// <description> <see cref="WebSiteSlotContinuousWebJobResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<Response> StartContinuousWebJobSlotAsync(CancellationToken cancellationToken = default)
         {
-            using var scope = _webSiteSlotContinuousWebJobWebAppsClientDiagnostics.CreateScope("WebSiteSlotContinuousWebJobResource.StartContinuousWebJobSlot");
+            using DiagnosticScope scope = _continuousWebJobOperationGroupClientDiagnostics.CreateScope("WebSiteSlotContinuousWebJobResource.StartContinuousWebJobSlot");
             scope.Start();
             try
             {
-                var response = await _webSiteSlotContinuousWebJobWebAppsRestClient.StartContinuousWebJobSlotAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _continuousWebJobOperationGroupRestClient.CreateStartContinuousWebJobSlotRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, context);
+                Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 return response;
             }
             catch (Exception e)
@@ -299,31 +337,36 @@ namespace Azure.ResourceManager.AppService
         /// Description for Start a continuous web job for an app, or a deployment slot.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/slots/{slot}/continuouswebjobs/{webJobName}/start</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/slots/{slot}/continuouswebjobs/{webJobName}/start. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>WebApps_StartContinuousWebJobSlot</description>
+        /// <term> Operation Id. </term>
+        /// <description> ContinuousWebJobOperationGroup_StartContinuousWebJobSlot. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-05-01</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-03-15. </description>
         /// </item>
         /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="WebSiteSlotContinuousWebJobResource"/></description>
+        /// <term> Resource. </term>
+        /// <description> <see cref="WebSiteSlotContinuousWebJobResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response StartContinuousWebJobSlot(CancellationToken cancellationToken = default)
         {
-            using var scope = _webSiteSlotContinuousWebJobWebAppsClientDiagnostics.CreateScope("WebSiteSlotContinuousWebJobResource.StartContinuousWebJobSlot");
+            using DiagnosticScope scope = _continuousWebJobOperationGroupClientDiagnostics.CreateScope("WebSiteSlotContinuousWebJobResource.StartContinuousWebJobSlot");
             scope.Start();
             try
             {
-                var response = _webSiteSlotContinuousWebJobWebAppsRestClient.StartContinuousWebJobSlot(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _continuousWebJobOperationGroupRestClient.CreateStartContinuousWebJobSlotRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, context);
+                Response response = Pipeline.ProcessMessage(message, context);
                 return response;
             }
             catch (Exception e)
@@ -337,31 +380,36 @@ namespace Azure.ResourceManager.AppService
         /// Description for Stop a continuous web job for an app, or a deployment slot.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/slots/{slot}/continuouswebjobs/{webJobName}/stop</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/slots/{slot}/continuouswebjobs/{webJobName}/stop. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>WebApps_StopContinuousWebJobSlot</description>
+        /// <term> Operation Id. </term>
+        /// <description> ContinuousWebJobOperationGroup_StopContinuousWebJobSlot. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-05-01</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-03-15. </description>
         /// </item>
         /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="WebSiteSlotContinuousWebJobResource"/></description>
+        /// <term> Resource. </term>
+        /// <description> <see cref="WebSiteSlotContinuousWebJobResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<Response> StopContinuousWebJobSlotAsync(CancellationToken cancellationToken = default)
         {
-            using var scope = _webSiteSlotContinuousWebJobWebAppsClientDiagnostics.CreateScope("WebSiteSlotContinuousWebJobResource.StopContinuousWebJobSlot");
+            using DiagnosticScope scope = _continuousWebJobOperationGroupClientDiagnostics.CreateScope("WebSiteSlotContinuousWebJobResource.StopContinuousWebJobSlot");
             scope.Start();
             try
             {
-                var response = await _webSiteSlotContinuousWebJobWebAppsRestClient.StopContinuousWebJobSlotAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _continuousWebJobOperationGroupRestClient.CreateStopContinuousWebJobSlotRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, context);
+                Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 return response;
             }
             catch (Exception e)
@@ -375,31 +423,36 @@ namespace Azure.ResourceManager.AppService
         /// Description for Stop a continuous web job for an app, or a deployment slot.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/slots/{slot}/continuouswebjobs/{webJobName}/stop</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/slots/{slot}/continuouswebjobs/{webJobName}/stop. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>WebApps_StopContinuousWebJobSlot</description>
+        /// <term> Operation Id. </term>
+        /// <description> ContinuousWebJobOperationGroup_StopContinuousWebJobSlot. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-05-01</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-03-15. </description>
         /// </item>
         /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="WebSiteSlotContinuousWebJobResource"/></description>
+        /// <term> Resource. </term>
+        /// <description> <see cref="WebSiteSlotContinuousWebJobResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response StopContinuousWebJobSlot(CancellationToken cancellationToken = default)
         {
-            using var scope = _webSiteSlotContinuousWebJobWebAppsClientDiagnostics.CreateScope("WebSiteSlotContinuousWebJobResource.StopContinuousWebJobSlot");
+            using DiagnosticScope scope = _continuousWebJobOperationGroupClientDiagnostics.CreateScope("WebSiteSlotContinuousWebJobResource.StopContinuousWebJobSlot");
             scope.Start();
             try
             {
-                var response = _webSiteSlotContinuousWebJobWebAppsRestClient.StopContinuousWebJobSlot(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _continuousWebJobOperationGroupRestClient.CreateStopContinuousWebJobSlotRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, context);
+                Response response = Pipeline.ProcessMessage(message, context);
                 return response;
             }
             catch (Exception e)

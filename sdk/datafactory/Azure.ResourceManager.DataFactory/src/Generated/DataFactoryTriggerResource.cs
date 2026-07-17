@@ -6,49 +6,38 @@
 #nullable disable
 
 using System;
-using System.Globalization;
+using System.Diagnostics;
 using System.Threading;
 using System.Threading.Tasks;
+using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
+using Azure.ResourceManager;
 using Azure.ResourceManager.DataFactory.Models;
 
 namespace Azure.ResourceManager.DataFactory
 {
     /// <summary>
-    /// A Class representing a DataFactoryTrigger along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="DataFactoryTriggerResource"/>
-    /// from an instance of <see cref="ArmClient"/> using the GetDataFactoryTriggerResource method.
-    /// Otherwise you can get one from its parent resource <see cref="DataFactoryResource"/> using the GetDataFactoryTrigger method.
+    /// A class representing a DataFactoryTrigger along with the instance operations that can be performed on it.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="DataFactoryTriggerResource"/> from an instance of <see cref="ArmClient"/> using the GetResource method.
+    /// Otherwise you can get one from its parent resource <see cref="DataFactoryResource"/> using the GetDataFactoryTriggers method.
     /// </summary>
     public partial class DataFactoryTriggerResource : ArmResource
     {
-        /// <summary> Generate the resource identifier of a <see cref="DataFactoryTriggerResource"/> instance. </summary>
-        /// <param name="subscriptionId"> The subscriptionId. </param>
-        /// <param name="resourceGroupName"> The resourceGroupName. </param>
-        /// <param name="factoryName"> The factoryName. </param>
-        /// <param name="triggerName"> The triggerName. </param>
-        public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string factoryName, string triggerName)
-        {
-            var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataFactory/factories/{factoryName}/triggers/{triggerName}";
-            return new ResourceIdentifier(resourceId);
-        }
-
-        private readonly ClientDiagnostics _dataFactoryTriggerTriggersClientDiagnostics;
-        private readonly TriggersRestOperations _dataFactoryTriggerTriggersRestClient;
+        private readonly ClientDiagnostics _triggersClientDiagnostics;
+        private readonly Triggers _triggersRestClient;
         private readonly ClientDiagnostics _triggerRunsClientDiagnostics;
-        private readonly TriggerRunsRestOperations _triggerRunsRestClient;
+        private readonly TriggerRuns _triggerRunsRestClient;
         private readonly DataFactoryTriggerData _data;
-
         /// <summary> Gets the resource type for the operations. </summary>
         public static readonly ResourceType ResourceType = "Microsoft.DataFactory/factories/triggers";
 
-        /// <summary> Initializes a new instance of the <see cref="DataFactoryTriggerResource"/> class for mocking. </summary>
+        /// <summary> Initializes a new instance of DataFactoryTriggerResource for mocking. </summary>
         protected DataFactoryTriggerResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref="DataFactoryTriggerResource"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="DataFactoryTriggerResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal DataFactoryTriggerResource(ArmClient client, DataFactoryTriggerData data) : this(client, data.Id)
@@ -57,74 +46,96 @@ namespace Azure.ResourceManager.DataFactory
             _data = data;
         }
 
-        /// <summary> Initializes a new instance of the <see cref="DataFactoryTriggerResource"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="DataFactoryTriggerResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal DataFactoryTriggerResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _dataFactoryTriggerTriggersClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.DataFactory", ResourceType.Namespace, Diagnostics);
-            TryGetApiVersion(ResourceType, out string dataFactoryTriggerTriggersApiVersion);
-            _dataFactoryTriggerTriggersRestClient = new TriggersRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, dataFactoryTriggerTriggersApiVersion);
-            _triggerRunsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.DataFactory", ProviderConstants.DefaultProviderNamespace, Diagnostics);
-            _triggerRunsRestClient = new TriggerRunsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint);
-#if DEBUG
-			ValidateResourceId(Id);
-#endif
+            TryGetApiVersion(ResourceType, out string dataFactoryTriggerApiVersion);
+            _triggersClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.DataFactory", ResourceType.Namespace, Diagnostics);
+            _triggersRestClient = new Triggers(_triggersClientDiagnostics, Pipeline, Endpoint, dataFactoryTriggerApiVersion ?? "2018-06-01");
+            _triggerRunsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.DataFactory", ResourceType.Namespace, Diagnostics);
+            _triggerRunsRestClient = new TriggerRuns(_triggerRunsClientDiagnostics, Pipeline, Endpoint, dataFactoryTriggerApiVersion ?? "2018-06-01");
+            ValidateResourceId(id);
         }
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }
 
         /// <summary> Gets the data representing this Feature. </summary>
-        /// <exception cref="InvalidOperationException"> Throws if there is no data loaded in the current instance. </exception>
         public virtual DataFactoryTriggerData Data
         {
             get
             {
                 if (!HasData)
+                {
                     throw new InvalidOperationException("The current instance does not have data, you must call Get first.");
+                }
                 return _data;
             }
         }
 
+        /// <summary> Generate the resource identifier for this resource. </summary>
+        /// <param name="subscriptionId"> The subscriptionId. </param>
+        /// <param name="resourceGroupName"> The resourceGroupName. </param>
+        /// <param name="factoryName"> The factoryName. </param>
+        /// <param name="triggerName"> The triggerName. </param>
+        public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string factoryName, string triggerName)
+        {
+            string resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataFactory/factories/{factoryName}/triggers/{triggerName}";
+            return new ResourceIdentifier(resourceId);
+        }
+
+        /// <param name="id"></param>
+        [Conditional("DEBUG")]
         internal static void ValidateResourceId(ResourceIdentifier id)
         {
             if (id.ResourceType != ResourceType)
-                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), nameof(id));
+            {
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), nameof(id));
+            }
         }
 
         /// <summary>
         /// Gets a trigger.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataFactory/factories/{factoryName}/triggers/{triggerName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataFactory/factories/{factoryName}/triggers/{triggerName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Triggers_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> TriggerResources_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2018-06-01</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2018-06-01. </description>
         /// </item>
         /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="DataFactoryTriggerResource"/></description>
+        /// <term> Resource. </term>
+        /// <description> <see cref="DataFactoryTriggerResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="ifNoneMatch"> ETag of the trigger entity. Should only be specified for get. If the ETag matches the existing entity tag, or if * was provided, then no content will be returned. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<DataFactoryTriggerResource>> GetAsync(string ifNoneMatch = null, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<DataFactoryTriggerResource>> GetAsync(ETag? ifNoneMatch = default, CancellationToken cancellationToken = default)
         {
-            using var scope = _dataFactoryTriggerTriggersClientDiagnostics.CreateScope("DataFactoryTriggerResource.Get");
+            using DiagnosticScope scope = _triggersClientDiagnostics.CreateScope("DataFactoryTriggerResource.Get");
             scope.Start();
             try
             {
-                var response = await _dataFactoryTriggerTriggersRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, ifNoneMatch, cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _triggersRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, ifNoneMatch, context);
+                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                Response<DataFactoryTriggerData> response = Response.FromValue(DataFactoryTriggerData.FromResponse(result), result);
                 if (response.Value == null)
+                {
                     throw new RequestFailedException(response.GetRawResponse());
+                }
                 return Response.FromValue(new DataFactoryTriggerResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -138,34 +149,42 @@ namespace Azure.ResourceManager.DataFactory
         /// Gets a trigger.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataFactory/factories/{factoryName}/triggers/{triggerName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataFactory/factories/{factoryName}/triggers/{triggerName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Triggers_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> TriggerResources_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2018-06-01</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2018-06-01. </description>
         /// </item>
         /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="DataFactoryTriggerResource"/></description>
+        /// <term> Resource. </term>
+        /// <description> <see cref="DataFactoryTriggerResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="ifNoneMatch"> ETag of the trigger entity. Should only be specified for get. If the ETag matches the existing entity tag, or if * was provided, then no content will be returned. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<DataFactoryTriggerResource> Get(string ifNoneMatch = null, CancellationToken cancellationToken = default)
+        public virtual Response<DataFactoryTriggerResource> Get(ETag? ifNoneMatch = default, CancellationToken cancellationToken = default)
         {
-            using var scope = _dataFactoryTriggerTriggersClientDiagnostics.CreateScope("DataFactoryTriggerResource.Get");
+            using DiagnosticScope scope = _triggersClientDiagnostics.CreateScope("DataFactoryTriggerResource.Get");
             scope.Start();
             try
             {
-                var response = _dataFactoryTriggerTriggersRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, ifNoneMatch, cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _triggersRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, ifNoneMatch, context);
+                Response result = Pipeline.ProcessMessage(message, context);
+                Response<DataFactoryTriggerData> response = Response.FromValue(DataFactoryTriggerData.FromResponse(result), result);
                 if (response.Value == null)
+                {
                     throw new RequestFailedException(response.GetRawResponse());
+                }
                 return Response.FromValue(new DataFactoryTriggerResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -179,20 +198,20 @@ namespace Azure.ResourceManager.DataFactory
         /// Deletes a trigger.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataFactory/factories/{factoryName}/triggers/{triggerName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataFactory/factories/{factoryName}/triggers/{triggerName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Triggers_Delete</description>
+        /// <term> Operation Id. </term>
+        /// <description> TriggerResources_Delete. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2018-06-01</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2018-06-01. </description>
         /// </item>
         /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="DataFactoryTriggerResource"/></description>
+        /// <term> Resource. </term>
+        /// <description> <see cref="DataFactoryTriggerResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -200,16 +219,23 @@ namespace Azure.ResourceManager.DataFactory
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<ArmOperation> DeleteAsync(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
-            using var scope = _dataFactoryTriggerTriggersClientDiagnostics.CreateScope("DataFactoryTriggerResource.Delete");
+            using DiagnosticScope scope = _triggersClientDiagnostics.CreateScope("DataFactoryTriggerResource.Delete");
             scope.Start();
             try
             {
-                var response = await _dataFactoryTriggerTriggersRestClient.DeleteAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
-                var uri = _dataFactoryTriggerTriggersRestClient.CreateDeleteRequestUri(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
-                var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Delete, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
-                var operation = new DataFactoryArmOperation(response, rehydrationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _triggersRestClient.CreateDeleteRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
+                Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                RequestUriBuilder uri = message.Request.Uri;
+                RehydrationToken rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Delete, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
+                DataFactoryArmOperation operation = new DataFactoryArmOperation(response, rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
+                {
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
+                }
                 return operation;
             }
             catch (Exception e)
@@ -223,20 +249,20 @@ namespace Azure.ResourceManager.DataFactory
         /// Deletes a trigger.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataFactory/factories/{factoryName}/triggers/{triggerName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataFactory/factories/{factoryName}/triggers/{triggerName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Triggers_Delete</description>
+        /// <term> Operation Id. </term>
+        /// <description> TriggerResources_Delete. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2018-06-01</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2018-06-01. </description>
         /// </item>
         /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="DataFactoryTriggerResource"/></description>
+        /// <term> Resource. </term>
+        /// <description> <see cref="DataFactoryTriggerResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -244,16 +270,23 @@ namespace Azure.ResourceManager.DataFactory
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual ArmOperation Delete(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
-            using var scope = _dataFactoryTriggerTriggersClientDiagnostics.CreateScope("DataFactoryTriggerResource.Delete");
+            using DiagnosticScope scope = _triggersClientDiagnostics.CreateScope("DataFactoryTriggerResource.Delete");
             scope.Start();
             try
             {
-                var response = _dataFactoryTriggerTriggersRestClient.Delete(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
-                var uri = _dataFactoryTriggerTriggersRestClient.CreateDeleteRequestUri(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
-                var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Delete, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
-                var operation = new DataFactoryArmOperation(response, rehydrationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _triggersRestClient.CreateDeleteRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
+                Response response = Pipeline.ProcessMessage(message, context);
+                RequestUriBuilder uri = message.Request.Uri;
+                RehydrationToken rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Delete, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
+                DataFactoryArmOperation operation = new DataFactoryArmOperation(response, rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
+                {
                     operation.WaitForCompletionResponse(cancellationToken);
+                }
                 return operation;
             }
             catch (Exception e)
@@ -264,46 +297,45 @@ namespace Azure.ResourceManager.DataFactory
         }
 
         /// <summary>
-        /// Creates or updates a trigger.
+        /// Cancel a single trigger instance by runId.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataFactory/factories/{factoryName}/triggers/{triggerName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataFactory/factories/{factoryName}/triggers/{triggerName}/triggerRuns/{runId}/cancel. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Triggers_CreateOrUpdate</description>
+        /// <term> Operation Id. </term>
+        /// <description> TriggerResources_Cancel. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2018-06-01</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2018-06-01. </description>
         /// </item>
         /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="DataFactoryTriggerResource"/></description>
+        /// <term> Resource. </term>
+        /// <description> <see cref="DataFactoryTriggerResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="data"> Trigger resource definition. </param>
-        /// <param name="ifMatch"> ETag of the trigger entity.  Should only be specified for update, for which it should match existing entity or can be * for unconditional update. </param>
+        /// <param name="runId"> The pipeline run identifier. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
-        public virtual async Task<ArmOperation<DataFactoryTriggerResource>> UpdateAsync(WaitUntil waitUntil, DataFactoryTriggerData data, string ifMatch = null, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="runId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="runId"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual async Task<Response> CancelTriggerRunAsync(string runId, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(data, nameof(data));
+            Argument.AssertNotNullOrEmpty(runId, nameof(runId));
 
-            using var scope = _dataFactoryTriggerTriggersClientDiagnostics.CreateScope("DataFactoryTriggerResource.Update");
+            using DiagnosticScope scope = _triggerRunsClientDiagnostics.CreateScope("DataFactoryTriggerResource.CancelTriggerRun");
             scope.Start();
             try
             {
-                var response = await _dataFactoryTriggerTriggersRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, data, ifMatch, cancellationToken).ConfigureAwait(false);
-                var uri = _dataFactoryTriggerTriggersRestClient.CreateCreateOrUpdateRequestUri(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, data, ifMatch);
-                var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
-                var operation = new DataFactoryArmOperation<DataFactoryTriggerResource>(Response.FromValue(new DataFactoryTriggerResource(Client, response), response.GetRawResponse()), rehydrationToken);
-                if (waitUntil == WaitUntil.Completed)
-                    await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
-                return operation;
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _triggerRunsRestClient.CreateCancelTriggerRunRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, runId, context);
+                Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                return response;
             }
             catch (Exception e)
             {
@@ -313,130 +345,45 @@ namespace Azure.ResourceManager.DataFactory
         }
 
         /// <summary>
-        /// Creates or updates a trigger.
+        /// Cancel a single trigger instance by runId.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataFactory/factories/{factoryName}/triggers/{triggerName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataFactory/factories/{factoryName}/triggers/{triggerName}/triggerRuns/{runId}/cancel. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Triggers_CreateOrUpdate</description>
+        /// <term> Operation Id. </term>
+        /// <description> TriggerResources_Cancel. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2018-06-01</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2018-06-01. </description>
         /// </item>
         /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="DataFactoryTriggerResource"/></description>
+        /// <term> Resource. </term>
+        /// <description> <see cref="DataFactoryTriggerResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="data"> Trigger resource definition. </param>
-        /// <param name="ifMatch"> ETag of the trigger entity.  Should only be specified for update, for which it should match existing entity or can be * for unconditional update. </param>
+        /// <param name="runId"> The pipeline run identifier. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
-        public virtual ArmOperation<DataFactoryTriggerResource> Update(WaitUntil waitUntil, DataFactoryTriggerData data, string ifMatch = null, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="runId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="runId"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual Response CancelTriggerRun(string runId, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(data, nameof(data));
+            Argument.AssertNotNullOrEmpty(runId, nameof(runId));
 
-            using var scope = _dataFactoryTriggerTriggersClientDiagnostics.CreateScope("DataFactoryTriggerResource.Update");
+            using DiagnosticScope scope = _triggerRunsClientDiagnostics.CreateScope("DataFactoryTriggerResource.CancelTriggerRun");
             scope.Start();
             try
             {
-                var response = _dataFactoryTriggerTriggersRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, data, ifMatch, cancellationToken);
-                var uri = _dataFactoryTriggerTriggersRestClient.CreateCreateOrUpdateRequestUri(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, data, ifMatch);
-                var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
-                var operation = new DataFactoryArmOperation<DataFactoryTriggerResource>(Response.FromValue(new DataFactoryTriggerResource(Client, response), response.GetRawResponse()), rehydrationToken);
-                if (waitUntil == WaitUntil.Completed)
-                    operation.WaitForCompletion(cancellationToken);
-                return operation;
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// Subscribe event trigger to events.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataFactory/factories/{factoryName}/triggers/{triggerName}/subscribeToEvents</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Triggers_SubscribeToEvents</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2018-06-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="DataFactoryTriggerResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<ArmOperation<DataFactoryTriggerSubscriptionOperationResult>> SubscribeToEventsAsync(WaitUntil waitUntil, CancellationToken cancellationToken = default)
-        {
-            using var scope = _dataFactoryTriggerTriggersClientDiagnostics.CreateScope("DataFactoryTriggerResource.SubscribeToEvents");
-            scope.Start();
-            try
-            {
-                var response = await _dataFactoryTriggerTriggersRestClient.SubscribeToEventsAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
-                var operation = new DataFactoryArmOperation<DataFactoryTriggerSubscriptionOperationResult>(new DataFactoryTriggerSubscriptionOperationResultOperationSource(), _dataFactoryTriggerTriggersClientDiagnostics, Pipeline, _dataFactoryTriggerTriggersRestClient.CreateSubscribeToEventsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name).Request, response, OperationFinalStateVia.Location);
-                if (waitUntil == WaitUntil.Completed)
-                    await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
-                return operation;
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// Subscribe event trigger to events.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataFactory/factories/{factoryName}/triggers/{triggerName}/subscribeToEvents</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Triggers_SubscribeToEvents</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2018-06-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="DataFactoryTriggerResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual ArmOperation<DataFactoryTriggerSubscriptionOperationResult> SubscribeToEvents(WaitUntil waitUntil, CancellationToken cancellationToken = default)
-        {
-            using var scope = _dataFactoryTriggerTriggersClientDiagnostics.CreateScope("DataFactoryTriggerResource.SubscribeToEvents");
-            scope.Start();
-            try
-            {
-                var response = _dataFactoryTriggerTriggersRestClient.SubscribeToEvents(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
-                var operation = new DataFactoryArmOperation<DataFactoryTriggerSubscriptionOperationResult>(new DataFactoryTriggerSubscriptionOperationResultOperationSource(), _dataFactoryTriggerTriggersClientDiagnostics, Pipeline, _dataFactoryTriggerTriggersRestClient.CreateSubscribeToEventsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name).Request, response, OperationFinalStateVia.Location);
-                if (waitUntil == WaitUntil.Completed)
-                    operation.WaitForCompletion(cancellationToken);
-                return operation;
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _triggerRunsRestClient.CreateCancelTriggerRunRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, runId, context);
+                Response response = Pipeline.ProcessMessage(message, context);
+                return response;
             }
             catch (Exception e)
             {
@@ -449,31 +396,41 @@ namespace Azure.ResourceManager.DataFactory
         /// Get a trigger's event subscription status.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataFactory/factories/{factoryName}/triggers/{triggerName}/getEventSubscriptionStatus</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataFactory/factories/{factoryName}/triggers/{triggerName}/getEventSubscriptionStatus. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Triggers_GetEventSubscriptionStatus</description>
+        /// <term> Operation Id. </term>
+        /// <description> TriggerResources_GetEventSubscriptionStatus. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2018-06-01</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2018-06-01. </description>
         /// </item>
         /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="DataFactoryTriggerResource"/></description>
+        /// <term> Resource. </term>
+        /// <description> <see cref="DataFactoryTriggerResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<Response<DataFactoryTriggerSubscriptionOperationResult>> GetEventSubscriptionStatusAsync(CancellationToken cancellationToken = default)
         {
-            using var scope = _dataFactoryTriggerTriggersClientDiagnostics.CreateScope("DataFactoryTriggerResource.GetEventSubscriptionStatus");
+            using DiagnosticScope scope = _triggersClientDiagnostics.CreateScope("DataFactoryTriggerResource.GetEventSubscriptionStatus");
             scope.Start();
             try
             {
-                var response = await _dataFactoryTriggerTriggersRestClient.GetEventSubscriptionStatusAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _triggersRestClient.CreateGetEventSubscriptionStatusRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
+                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                Response<DataFactoryTriggerSubscriptionOperationResult> response = Response.FromValue(DataFactoryTriggerSubscriptionOperationResult.FromResponse(result), result);
+                if (response.Value == null)
+                {
+                    throw new RequestFailedException(response.GetRawResponse());
+                }
                 return response;
             }
             catch (Exception e)
@@ -487,31 +444,41 @@ namespace Azure.ResourceManager.DataFactory
         /// Get a trigger's event subscription status.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataFactory/factories/{factoryName}/triggers/{triggerName}/getEventSubscriptionStatus</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataFactory/factories/{factoryName}/triggers/{triggerName}/getEventSubscriptionStatus. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Triggers_GetEventSubscriptionStatus</description>
+        /// <term> Operation Id. </term>
+        /// <description> TriggerResources_GetEventSubscriptionStatus. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2018-06-01</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2018-06-01. </description>
         /// </item>
         /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="DataFactoryTriggerResource"/></description>
+        /// <term> Resource. </term>
+        /// <description> <see cref="DataFactoryTriggerResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response<DataFactoryTriggerSubscriptionOperationResult> GetEventSubscriptionStatus(CancellationToken cancellationToken = default)
         {
-            using var scope = _dataFactoryTriggerTriggersClientDiagnostics.CreateScope("DataFactoryTriggerResource.GetEventSubscriptionStatus");
+            using DiagnosticScope scope = _triggersClientDiagnostics.CreateScope("DataFactoryTriggerResource.GetEventSubscriptionStatus");
             scope.Start();
             try
             {
-                var response = _dataFactoryTriggerTriggersRestClient.GetEventSubscriptionStatus(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _triggersRestClient.CreateGetEventSubscriptionStatusRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
+                Response result = Pipeline.ProcessMessage(message, context);
+                Response<DataFactoryTriggerSubscriptionOperationResult> response = Response.FromValue(DataFactoryTriggerSubscriptionOperationResult.FromResponse(result), result);
+                if (response.Value == null)
+                {
+                    throw new RequestFailedException(response.GetRawResponse());
+                }
                 return response;
             }
             catch (Exception e)
@@ -522,39 +489,45 @@ namespace Azure.ResourceManager.DataFactory
         }
 
         /// <summary>
-        /// Unsubscribe event trigger from events.
+        /// Rerun single trigger instance by runId.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataFactory/factories/{factoryName}/triggers/{triggerName}/unsubscribeFromEvents</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataFactory/factories/{factoryName}/triggers/{triggerName}/triggerRuns/{runId}/rerun. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Triggers_UnsubscribeFromEvents</description>
+        /// <term> Operation Id. </term>
+        /// <description> TriggerResources_Rerun. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2018-06-01</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2018-06-01. </description>
         /// </item>
         /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="DataFactoryTriggerResource"/></description>
+        /// <term> Resource. </term>
+        /// <description> <see cref="DataFactoryTriggerResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="runId"> The pipeline run identifier. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<ArmOperation<DataFactoryTriggerSubscriptionOperationResult>> UnsubscribeFromEventsAsync(WaitUntil waitUntil, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="runId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="runId"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual async Task<Response> RerunTriggerRunAsync(string runId, CancellationToken cancellationToken = default)
         {
-            using var scope = _dataFactoryTriggerTriggersClientDiagnostics.CreateScope("DataFactoryTriggerResource.UnsubscribeFromEvents");
+            Argument.AssertNotNullOrEmpty(runId, nameof(runId));
+
+            using DiagnosticScope scope = _triggerRunsClientDiagnostics.CreateScope("DataFactoryTriggerResource.RerunTriggerRun");
             scope.Start();
             try
             {
-                var response = await _dataFactoryTriggerTriggersRestClient.UnsubscribeFromEventsAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
-                var operation = new DataFactoryArmOperation<DataFactoryTriggerSubscriptionOperationResult>(new DataFactoryTriggerSubscriptionOperationResultOperationSource(), _dataFactoryTriggerTriggersClientDiagnostics, Pipeline, _dataFactoryTriggerTriggersRestClient.CreateUnsubscribeFromEventsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name).Request, response, OperationFinalStateVia.Location);
-                if (waitUntil == WaitUntil.Completed)
-                    await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
-                return operation;
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _triggerRunsRestClient.CreateRerunTriggerRunRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, runId, context);
+                Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                return response;
             }
             catch (Exception e)
             {
@@ -564,39 +537,45 @@ namespace Azure.ResourceManager.DataFactory
         }
 
         /// <summary>
-        /// Unsubscribe event trigger from events.
+        /// Rerun single trigger instance by runId.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataFactory/factories/{factoryName}/triggers/{triggerName}/unsubscribeFromEvents</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataFactory/factories/{factoryName}/triggers/{triggerName}/triggerRuns/{runId}/rerun. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Triggers_UnsubscribeFromEvents</description>
+        /// <term> Operation Id. </term>
+        /// <description> TriggerResources_Rerun. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2018-06-01</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2018-06-01. </description>
         /// </item>
         /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="DataFactoryTriggerResource"/></description>
+        /// <term> Resource. </term>
+        /// <description> <see cref="DataFactoryTriggerResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="runId"> The pipeline run identifier. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual ArmOperation<DataFactoryTriggerSubscriptionOperationResult> UnsubscribeFromEvents(WaitUntil waitUntil, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="runId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="runId"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual Response RerunTriggerRun(string runId, CancellationToken cancellationToken = default)
         {
-            using var scope = _dataFactoryTriggerTriggersClientDiagnostics.CreateScope("DataFactoryTriggerResource.UnsubscribeFromEvents");
+            Argument.AssertNotNullOrEmpty(runId, nameof(runId));
+
+            using DiagnosticScope scope = _triggerRunsClientDiagnostics.CreateScope("DataFactoryTriggerResource.RerunTriggerRun");
             scope.Start();
             try
             {
-                var response = _dataFactoryTriggerTriggersRestClient.UnsubscribeFromEvents(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
-                var operation = new DataFactoryArmOperation<DataFactoryTriggerSubscriptionOperationResult>(new DataFactoryTriggerSubscriptionOperationResultOperationSource(), _dataFactoryTriggerTriggersClientDiagnostics, Pipeline, _dataFactoryTriggerTriggersRestClient.CreateUnsubscribeFromEventsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name).Request, response, OperationFinalStateVia.Location);
-                if (waitUntil == WaitUntil.Completed)
-                    operation.WaitForCompletion(cancellationToken);
-                return operation;
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _triggerRunsRestClient.CreateRerunTriggerRunRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, runId, context);
+                Response response = Pipeline.ProcessMessage(message, context);
+                return response;
             }
             catch (Exception e)
             {
@@ -609,20 +588,20 @@ namespace Azure.ResourceManager.DataFactory
         /// Starts a trigger.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataFactory/factories/{factoryName}/triggers/{triggerName}/start</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataFactory/factories/{factoryName}/triggers/{triggerName}/start. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Triggers_Start</description>
+        /// <term> Operation Id. </term>
+        /// <description> TriggerResources_Start. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2018-06-01</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2018-06-01. </description>
         /// </item>
         /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="DataFactoryTriggerResource"/></description>
+        /// <term> Resource. </term>
+        /// <description> <see cref="DataFactoryTriggerResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -630,14 +609,21 @@ namespace Azure.ResourceManager.DataFactory
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<ArmOperation> StartAsync(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
-            using var scope = _dataFactoryTriggerTriggersClientDiagnostics.CreateScope("DataFactoryTriggerResource.Start");
+            using DiagnosticScope scope = _triggersClientDiagnostics.CreateScope("DataFactoryTriggerResource.Start");
             scope.Start();
             try
             {
-                var response = await _dataFactoryTriggerTriggersRestClient.StartAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
-                var operation = new DataFactoryArmOperation(_dataFactoryTriggerTriggersClientDiagnostics, Pipeline, _dataFactoryTriggerTriggersRestClient.CreateStartRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name).Request, response, OperationFinalStateVia.Location);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _triggersRestClient.CreateStartRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
+                Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                DataFactoryArmOperation operation = new DataFactoryArmOperation(_triggersClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
+                {
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
+                }
                 return operation;
             }
             catch (Exception e)
@@ -651,20 +637,20 @@ namespace Azure.ResourceManager.DataFactory
         /// Starts a trigger.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataFactory/factories/{factoryName}/triggers/{triggerName}/start</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataFactory/factories/{factoryName}/triggers/{triggerName}/start. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Triggers_Start</description>
+        /// <term> Operation Id. </term>
+        /// <description> TriggerResources_Start. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2018-06-01</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2018-06-01. </description>
         /// </item>
         /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="DataFactoryTriggerResource"/></description>
+        /// <term> Resource. </term>
+        /// <description> <see cref="DataFactoryTriggerResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -672,14 +658,21 @@ namespace Azure.ResourceManager.DataFactory
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual ArmOperation Start(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
-            using var scope = _dataFactoryTriggerTriggersClientDiagnostics.CreateScope("DataFactoryTriggerResource.Start");
+            using DiagnosticScope scope = _triggersClientDiagnostics.CreateScope("DataFactoryTriggerResource.Start");
             scope.Start();
             try
             {
-                var response = _dataFactoryTriggerTriggersRestClient.Start(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
-                var operation = new DataFactoryArmOperation(_dataFactoryTriggerTriggersClientDiagnostics, Pipeline, _dataFactoryTriggerTriggersRestClient.CreateStartRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name).Request, response, OperationFinalStateVia.Location);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _triggersRestClient.CreateStartRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
+                Response response = Pipeline.ProcessMessage(message, context);
+                DataFactoryArmOperation operation = new DataFactoryArmOperation(_triggersClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
+                {
                     operation.WaitForCompletionResponse(cancellationToken);
+                }
                 return operation;
             }
             catch (Exception e)
@@ -693,20 +686,20 @@ namespace Azure.ResourceManager.DataFactory
         /// Stops a trigger.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataFactory/factories/{factoryName}/triggers/{triggerName}/stop</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataFactory/factories/{factoryName}/triggers/{triggerName}/stop. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Triggers_Stop</description>
+        /// <term> Operation Id. </term>
+        /// <description> TriggerResources_Stop. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2018-06-01</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2018-06-01. </description>
         /// </item>
         /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="DataFactoryTriggerResource"/></description>
+        /// <term> Resource. </term>
+        /// <description> <see cref="DataFactoryTriggerResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -714,14 +707,21 @@ namespace Azure.ResourceManager.DataFactory
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<ArmOperation> StopAsync(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
-            using var scope = _dataFactoryTriggerTriggersClientDiagnostics.CreateScope("DataFactoryTriggerResource.Stop");
+            using DiagnosticScope scope = _triggersClientDiagnostics.CreateScope("DataFactoryTriggerResource.Stop");
             scope.Start();
             try
             {
-                var response = await _dataFactoryTriggerTriggersRestClient.StopAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
-                var operation = new DataFactoryArmOperation(_dataFactoryTriggerTriggersClientDiagnostics, Pipeline, _dataFactoryTriggerTriggersRestClient.CreateStopRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name).Request, response, OperationFinalStateVia.Location);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _triggersRestClient.CreateStopRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
+                Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                DataFactoryArmOperation operation = new DataFactoryArmOperation(_triggersClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
+                {
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
+                }
                 return operation;
             }
             catch (Exception e)
@@ -735,20 +735,20 @@ namespace Azure.ResourceManager.DataFactory
         /// Stops a trigger.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataFactory/factories/{factoryName}/triggers/{triggerName}/stop</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataFactory/factories/{factoryName}/triggers/{triggerName}/stop. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Triggers_Stop</description>
+        /// <term> Operation Id. </term>
+        /// <description> TriggerResources_Stop. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2018-06-01</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2018-06-01. </description>
         /// </item>
         /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="DataFactoryTriggerResource"/></description>
+        /// <term> Resource. </term>
+        /// <description> <see cref="DataFactoryTriggerResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -756,14 +756,21 @@ namespace Azure.ResourceManager.DataFactory
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual ArmOperation Stop(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
-            using var scope = _dataFactoryTriggerTriggersClientDiagnostics.CreateScope("DataFactoryTriggerResource.Stop");
+            using DiagnosticScope scope = _triggersClientDiagnostics.CreateScope("DataFactoryTriggerResource.Stop");
             scope.Start();
             try
             {
-                var response = _dataFactoryTriggerTriggersRestClient.Stop(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
-                var operation = new DataFactoryArmOperation(_dataFactoryTriggerTriggersClientDiagnostics, Pipeline, _dataFactoryTriggerTriggersRestClient.CreateStopRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name).Request, response, OperationFinalStateVia.Location);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _triggersRestClient.CreateStopRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
+                Response response = Pipeline.ProcessMessage(message, context);
+                DataFactoryArmOperation operation = new DataFactoryArmOperation(_triggersClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
+                {
                     operation.WaitForCompletionResponse(cancellationToken);
+                }
                 return operation;
             }
             catch (Exception e)
@@ -774,36 +781,52 @@ namespace Azure.ResourceManager.DataFactory
         }
 
         /// <summary>
-        /// Rerun single trigger instance by runId.
+        /// Subscribe event trigger to events.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataFactory/factories/{factoryName}/triggers/{triggerName}/triggerRuns/{runId}/rerun</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataFactory/factories/{factoryName}/triggers/{triggerName}/subscribeToEvents. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>TriggerRuns_Rerun</description>
+        /// <term> Operation Id. </term>
+        /// <description> TriggerResources_SubscribeToEvents. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2018-06-01</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2018-06-01. </description>
+        /// </item>
+        /// <item>
+        /// <term> Resource. </term>
+        /// <description> <see cref="DataFactoryTriggerResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="runId"> The pipeline run identifier. </param>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="runId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="runId"/> is null. </exception>
-        public virtual async Task<Response> RerunTriggerRunAsync(string runId, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation<DataFactoryTriggerSubscriptionOperationResult>> SubscribeToEventsAsync(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(runId, nameof(runId));
-
-            using var scope = _triggerRunsClientDiagnostics.CreateScope("DataFactoryTriggerResource.RerunTriggerRun");
+            using DiagnosticScope scope = _triggersClientDiagnostics.CreateScope("DataFactoryTriggerResource.SubscribeToEvents");
             scope.Start();
             try
             {
-                var response = await _triggerRunsRestClient.RerunAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, runId, cancellationToken).ConfigureAwait(false);
-                return response;
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _triggersRestClient.CreateSubscribeToEventsRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
+                Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                DataFactoryArmOperation<DataFactoryTriggerSubscriptionOperationResult> operation = new DataFactoryArmOperation<DataFactoryTriggerSubscriptionOperationResult>(
+                    new DataFactoryTriggerSubscriptionOperationResultOperationSource(),
+                    _triggersClientDiagnostics,
+                    Pipeline,
+                    message.Request,
+                    response,
+                    OperationFinalStateVia.Location);
+                if (waitUntil == WaitUntil.Completed)
+                {
+                    await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
+                }
+                return operation;
             }
             catch (Exception e)
             {
@@ -813,36 +836,52 @@ namespace Azure.ResourceManager.DataFactory
         }
 
         /// <summary>
-        /// Rerun single trigger instance by runId.
+        /// Subscribe event trigger to events.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataFactory/factories/{factoryName}/triggers/{triggerName}/triggerRuns/{runId}/rerun</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataFactory/factories/{factoryName}/triggers/{triggerName}/subscribeToEvents. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>TriggerRuns_Rerun</description>
+        /// <term> Operation Id. </term>
+        /// <description> TriggerResources_SubscribeToEvents. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2018-06-01</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2018-06-01. </description>
+        /// </item>
+        /// <item>
+        /// <term> Resource. </term>
+        /// <description> <see cref="DataFactoryTriggerResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="runId"> The pipeline run identifier. </param>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="runId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="runId"/> is null. </exception>
-        public virtual Response RerunTriggerRun(string runId, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<DataFactoryTriggerSubscriptionOperationResult> SubscribeToEvents(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(runId, nameof(runId));
-
-            using var scope = _triggerRunsClientDiagnostics.CreateScope("DataFactoryTriggerResource.RerunTriggerRun");
+            using DiagnosticScope scope = _triggersClientDiagnostics.CreateScope("DataFactoryTriggerResource.SubscribeToEvents");
             scope.Start();
             try
             {
-                var response = _triggerRunsRestClient.Rerun(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, runId, cancellationToken);
-                return response;
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _triggersRestClient.CreateSubscribeToEventsRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
+                Response response = Pipeline.ProcessMessage(message, context);
+                DataFactoryArmOperation<DataFactoryTriggerSubscriptionOperationResult> operation = new DataFactoryArmOperation<DataFactoryTriggerSubscriptionOperationResult>(
+                    new DataFactoryTriggerSubscriptionOperationResultOperationSource(),
+                    _triggersClientDiagnostics,
+                    Pipeline,
+                    message.Request,
+                    response,
+                    OperationFinalStateVia.Location);
+                if (waitUntil == WaitUntil.Completed)
+                {
+                    operation.WaitForCompletion(cancellationToken);
+                }
+                return operation;
             }
             catch (Exception e)
             {
@@ -852,36 +891,52 @@ namespace Azure.ResourceManager.DataFactory
         }
 
         /// <summary>
-        /// Cancel a single trigger instance by runId.
+        /// Unsubscribe event trigger from events.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataFactory/factories/{factoryName}/triggers/{triggerName}/triggerRuns/{runId}/cancel</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataFactory/factories/{factoryName}/triggers/{triggerName}/unsubscribeFromEvents. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>TriggerRuns_Cancel</description>
+        /// <term> Operation Id. </term>
+        /// <description> TriggerResources_UnsubscribeFromEvents. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2018-06-01</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2018-06-01. </description>
+        /// </item>
+        /// <item>
+        /// <term> Resource. </term>
+        /// <description> <see cref="DataFactoryTriggerResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="runId"> The pipeline run identifier. </param>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="runId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="runId"/> is null. </exception>
-        public virtual async Task<Response> CancelTriggerRunAsync(string runId, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation<DataFactoryTriggerSubscriptionOperationResult>> UnsubscribeFromEventsAsync(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(runId, nameof(runId));
-
-            using var scope = _triggerRunsClientDiagnostics.CreateScope("DataFactoryTriggerResource.CancelTriggerRun");
+            using DiagnosticScope scope = _triggersClientDiagnostics.CreateScope("DataFactoryTriggerResource.UnsubscribeFromEvents");
             scope.Start();
             try
             {
-                var response = await _triggerRunsRestClient.CancelAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, runId, cancellationToken).ConfigureAwait(false);
-                return response;
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _triggersRestClient.CreateUnsubscribeFromEventsRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
+                Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                DataFactoryArmOperation<DataFactoryTriggerSubscriptionOperationResult> operation = new DataFactoryArmOperation<DataFactoryTriggerSubscriptionOperationResult>(
+                    new DataFactoryTriggerSubscriptionOperationResultOperationSource(),
+                    _triggersClientDiagnostics,
+                    Pipeline,
+                    message.Request,
+                    response,
+                    OperationFinalStateVia.Location);
+                if (waitUntil == WaitUntil.Completed)
+                {
+                    await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
+                }
+                return operation;
             }
             catch (Exception e)
             {
@@ -891,36 +946,166 @@ namespace Azure.ResourceManager.DataFactory
         }
 
         /// <summary>
-        /// Cancel a single trigger instance by runId.
+        /// Unsubscribe event trigger from events.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataFactory/factories/{factoryName}/triggers/{triggerName}/triggerRuns/{runId}/cancel</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataFactory/factories/{factoryName}/triggers/{triggerName}/unsubscribeFromEvents. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>TriggerRuns_Cancel</description>
+        /// <term> Operation Id. </term>
+        /// <description> TriggerResources_UnsubscribeFromEvents. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2018-06-01</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2018-06-01. </description>
+        /// </item>
+        /// <item>
+        /// <term> Resource. </term>
+        /// <description> <see cref="DataFactoryTriggerResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="runId"> The pipeline run identifier. </param>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="runId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="runId"/> is null. </exception>
-        public virtual Response CancelTriggerRun(string runId, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<DataFactoryTriggerSubscriptionOperationResult> UnsubscribeFromEvents(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(runId, nameof(runId));
-
-            using var scope = _triggerRunsClientDiagnostics.CreateScope("DataFactoryTriggerResource.CancelTriggerRun");
+            using DiagnosticScope scope = _triggersClientDiagnostics.CreateScope("DataFactoryTriggerResource.UnsubscribeFromEvents");
             scope.Start();
             try
             {
-                var response = _triggerRunsRestClient.Cancel(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, runId, cancellationToken);
-                return response;
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _triggersRestClient.CreateUnsubscribeFromEventsRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
+                Response response = Pipeline.ProcessMessage(message, context);
+                DataFactoryArmOperation<DataFactoryTriggerSubscriptionOperationResult> operation = new DataFactoryArmOperation<DataFactoryTriggerSubscriptionOperationResult>(
+                    new DataFactoryTriggerSubscriptionOperationResultOperationSource(),
+                    _triggersClientDiagnostics,
+                    Pipeline,
+                    message.Request,
+                    response,
+                    OperationFinalStateVia.Location);
+                if (waitUntil == WaitUntil.Completed)
+                {
+                    operation.WaitForCompletion(cancellationToken);
+                }
+                return operation;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Update a DataFactoryTrigger.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataFactory/factories/{factoryName}/triggers/{triggerName}. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> TriggerResources_CreateOrUpdate. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2018-06-01. </description>
+        /// </item>
+        /// <item>
+        /// <term> Resource. </term>
+        /// <description> <see cref="DataFactoryTriggerResource"/>. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="data"> Trigger resource definition. </param>
+        /// <param name="ifMatch"> ETag of the trigger entity.  Should only be specified for update, for which it should match existing entity or can be * for unconditional update. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
+        public virtual async Task<ArmOperation<DataFactoryTriggerResource>> UpdateAsync(WaitUntil waitUntil, DataFactoryTriggerData data, ETag? ifMatch = default, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(data, nameof(data));
+
+            using DiagnosticScope scope = _triggersClientDiagnostics.CreateScope("DataFactoryTriggerResource.Update");
+            scope.Start();
+            try
+            {
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _triggersRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, DataFactoryTriggerData.ToRequestContent(data), ifMatch, context);
+                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                Response<DataFactoryTriggerData> response = Response.FromValue(DataFactoryTriggerData.FromResponse(result), result);
+                RequestUriBuilder uri = message.Request.Uri;
+                RehydrationToken rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
+                DataFactoryArmOperation<DataFactoryTriggerResource> operation = new DataFactoryArmOperation<DataFactoryTriggerResource>(Response.FromValue(new DataFactoryTriggerResource(Client, response.Value), response.GetRawResponse()), rehydrationToken);
+                if (waitUntil == WaitUntil.Completed)
+                {
+                    await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
+                }
+                return operation;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Update a DataFactoryTrigger.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataFactory/factories/{factoryName}/triggers/{triggerName}. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> TriggerResources_CreateOrUpdate. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2018-06-01. </description>
+        /// </item>
+        /// <item>
+        /// <term> Resource. </term>
+        /// <description> <see cref="DataFactoryTriggerResource"/>. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="data"> Trigger resource definition. </param>
+        /// <param name="ifMatch"> ETag of the trigger entity.  Should only be specified for update, for which it should match existing entity or can be * for unconditional update. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
+        public virtual ArmOperation<DataFactoryTriggerResource> Update(WaitUntil waitUntil, DataFactoryTriggerData data, ETag? ifMatch = default, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(data, nameof(data));
+
+            using DiagnosticScope scope = _triggersClientDiagnostics.CreateScope("DataFactoryTriggerResource.Update");
+            scope.Start();
+            try
+            {
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _triggersRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, DataFactoryTriggerData.ToRequestContent(data), ifMatch, context);
+                Response result = Pipeline.ProcessMessage(message, context);
+                Response<DataFactoryTriggerData> response = Response.FromValue(DataFactoryTriggerData.FromResponse(result), result);
+                RequestUriBuilder uri = message.Request.Uri;
+                RehydrationToken rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
+                DataFactoryArmOperation<DataFactoryTriggerResource> operation = new DataFactoryArmOperation<DataFactoryTriggerResource>(Response.FromValue(new DataFactoryTriggerResource(Client, response.Value), response.GetRawResponse()), rehydrationToken);
+                if (waitUntil == WaitUntil.Completed)
+                {
+                    operation.WaitForCompletion(cancellationToken);
+                }
+                return operation;
             }
             catch (Exception e)
             {

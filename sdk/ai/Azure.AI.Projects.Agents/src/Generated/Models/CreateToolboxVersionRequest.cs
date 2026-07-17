@@ -16,7 +16,7 @@ namespace Azure.AI.Projects.Agents
 
         /// <summary> Initializes a new instance of <see cref="CreateToolboxVersionRequest"/>. </summary>
         /// <param name="tools"> The list of tools to include in this version. </param>
-        internal CreateToolboxVersionRequest(IEnumerable<ProjectsAgentTool> tools)
+        internal CreateToolboxVersionRequest(IEnumerable<ToolboxTool> tools)
         {
             Metadata = new ChangeTrackingDictionary<string, string>();
             Tools = tools.ToList();
@@ -30,7 +30,7 @@ namespace Azure.AI.Projects.Agents
         /// <param name="skills"> The list of skill sources to include in this version. A skill reference specifies a skill name and optionally a version. If version is omitted, the skill's default version is used. </param>
         /// <param name="policies"> Policy configuration for this toolbox version. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal CreateToolboxVersionRequest(string description, IDictionary<string, string> metadata, IList<ProjectsAgentTool> tools, IList<ToolboxSkill> skills, ToolboxPolicies policies, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal CreateToolboxVersionRequest(string description, IDictionary<string, string> metadata, IList<ToolboxTool> tools, IList<ToolboxSkill> skills, ToolboxPolicies policies, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Description = description;
             Metadata = metadata;
@@ -47,7 +47,7 @@ namespace Azure.AI.Projects.Agents
         public IDictionary<string, string> Metadata { get; }
 
         /// <summary> The list of tools to include in this version. </summary>
-        public IList<ProjectsAgentTool> Tools { get; }
+        public IList<ToolboxTool> Tools { get; }
 
         /// <summary> The list of skill sources to include in this version. A skill reference specifies a skill name and optionally a version. If version is omitted, the skill's default version is used. </summary>
         public IList<ToolboxSkill> Skills { get; }

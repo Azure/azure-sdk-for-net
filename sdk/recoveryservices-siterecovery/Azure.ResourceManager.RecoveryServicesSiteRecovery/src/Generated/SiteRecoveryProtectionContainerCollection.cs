@@ -94,7 +94,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
                 HttpMessage message = _replicationProtectionContainersRestClient.CreateCreateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, protectionContainerName, SiteRecoveryProtectionContainerCreateOrUpdateContent.ToRequestContent(content), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 RecoveryServicesSiteRecoveryArmOperation<SiteRecoveryProtectionContainerResource> operation = new RecoveryServicesSiteRecoveryArmOperation<SiteRecoveryProtectionContainerResource>(
-                    new SiteRecoveryProtectionContainerOperationSource(Client),
+                    new SiteRecoveryProtectionContainerResourceOperationSource(Client),
                     _replicationProtectionContainersClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -152,7 +152,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
                 HttpMessage message = _replicationProtectionContainersRestClient.CreateCreateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, protectionContainerName, SiteRecoveryProtectionContainerCreateOrUpdateContent.ToRequestContent(content), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 RecoveryServicesSiteRecoveryArmOperation<SiteRecoveryProtectionContainerResource> operation = new RecoveryServicesSiteRecoveryArmOperation<SiteRecoveryProtectionContainerResource>(
-                    new SiteRecoveryProtectionContainerOperationSource(Client),
+                    new SiteRecoveryProtectionContainerResourceOperationSource(Client),
                     _replicationProtectionContainersClientDiagnostics,
                     Pipeline,
                     message.Request,

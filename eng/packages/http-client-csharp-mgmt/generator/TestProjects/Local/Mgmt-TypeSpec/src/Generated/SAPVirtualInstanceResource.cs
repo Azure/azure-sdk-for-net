@@ -228,7 +228,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
                 HttpMessage message = _sapVirtualInstancesRestClient.CreateCreateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, SAPVirtualInstanceData.ToRequestContent(data), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 TestsArmOperation<SAPVirtualInstanceResource> operation = new TestsArmOperation<SAPVirtualInstanceResource>(
-                    new SAPVirtualInstanceOperationSource(Client),
+                    new SAPVirtualInstanceResourceOperationSource(Client),
                     _sapVirtualInstancesClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -288,7 +288,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
                 HttpMessage message = _sapVirtualInstancesRestClient.CreateCreateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, SAPVirtualInstanceData.ToRequestContent(data), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 TestsArmOperation<SAPVirtualInstanceResource> operation = new TestsArmOperation<SAPVirtualInstanceResource>(
-                    new SAPVirtualInstanceOperationSource(Client),
+                    new SAPVirtualInstanceResourceOperationSource(Client),
                     _sapVirtualInstancesClientDiagnostics,
                     Pipeline,
                     message.Request,

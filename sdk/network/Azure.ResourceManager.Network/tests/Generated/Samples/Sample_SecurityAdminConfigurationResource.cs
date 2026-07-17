@@ -70,7 +70,7 @@ namespace Azure.ResourceManager.Network.Samples
 
             // invoke the operation
             bool? force = false;
-            await securityAdminConfiguration.DeleteAsync(WaitUntil.Completed, force: force);
+            await securityAdminConfiguration.DeleteAsync(WaitUntil.Completed, force: force, cancellationToken: System.Threading.CancellationToken.None);
 
             Console.WriteLine("Succeeded");
         }
@@ -102,7 +102,7 @@ namespace Azure.ResourceManager.Network.Samples
                 Description = "A configuration which will update any network groups ip addresses at commit times.",
                 NetworkGroupAddressSpaceAggregationOption = AddressSpaceAggregationOption.Manual,
             };
-            ArmOperation<SecurityAdminConfigurationResource> lro = await securityAdminConfiguration.UpdateAsync(WaitUntil.Completed, data);
+            ArmOperation<SecurityAdminConfigurationResource> lro = await securityAdminConfiguration.UpdateAsync(WaitUntil.Completed, data, cancellationToken: System.Threading.CancellationToken.None);
             SecurityAdminConfigurationResource result = lro.Value;
 
             // the variable result is a resource, you could call other operations on this instance as well
@@ -139,7 +139,7 @@ namespace Azure.ResourceManager.Network.Samples
                 Description = "A sample policy",
                 ApplyOnNetworkIntentPolicyBasedServices = { NetworkIntentPolicyBasedService.None },
             };
-            ArmOperation<SecurityAdminConfigurationResource> lro = await securityAdminConfiguration.UpdateAsync(WaitUntil.Completed, data);
+            ArmOperation<SecurityAdminConfigurationResource> lro = await securityAdminConfiguration.UpdateAsync(WaitUntil.Completed, data, cancellationToken: System.Threading.CancellationToken.None);
             SecurityAdminConfigurationResource result = lro.Value;
 
             // the variable result is a resource, you could call other operations on this instance as well

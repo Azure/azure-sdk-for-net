@@ -91,44 +91,6 @@ namespace Azure.ResourceManager.AppService.Models
             return new SiteSeal(html, serializedAdditionalRawData);
         }
 
-        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
-        {
-            StringBuilder builder = new StringBuilder();
-            BicepModelReaderWriterOptions bicepOptions = options as BicepModelReaderWriterOptions;
-            IDictionary<string, string> propertyOverrides = null;
-            bool hasObjectOverride = bicepOptions != null && bicepOptions.PropertyOverrides.TryGetValue(this, out propertyOverrides);
-            bool hasPropertyOverride = false;
-            string propertyOverride = null;
-
-            builder.AppendLine("{");
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Html), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  html: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(Html))
-                {
-                    builder.Append("  html: ");
-                    if (Html.Contains(Environment.NewLine))
-                    {
-                        builder.AppendLine("'''");
-                        builder.AppendLine($"{Html}'''");
-                    }
-                    else
-                    {
-                        builder.AppendLine($"'{Html}'");
-                    }
-                }
-            }
-
-            builder.AppendLine("}");
-            return BinaryData.FromString(builder.ToString());
-        }
-
         BinaryData IPersistableModel<SiteSeal>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<SiteSeal>)this).GetFormatFromOptions(options) : options.Format;
@@ -137,8 +99,6 @@ namespace Azure.ResourceManager.AppService.Models
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options, AzureResourceManagerAppServiceContext.Default);
-                case "bicep":
-                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(SiteSeal)} does not support writing '{options.Format}' format.");
             }

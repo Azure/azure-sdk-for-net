@@ -125,6 +125,10 @@ namespace Azure.Provisioning.Batch
             _elevationLevel = DefineProperty<BatchUserAccountElevationLevel>(nameof(ElevationLevel), new string[] { "elevationLevel" });
             _linuxUserConfiguration = DefineModelProperty<BatchLinuxUserConfiguration>(nameof(LinuxUserConfiguration), new string[] { "linuxUserConfiguration" });
             _windowsUserConfiguration = DefineModelProperty<BatchWindowsUserConfiguration>(nameof(WindowsUserConfiguration), new string[] { "windowsUserConfiguration" });
+            DefineAdditionalProperties();
         }
+
+        /// <summary> Define additional provisionable properties for BatchUserAccount that are not part of the generated code. </summary>
+        partial void DefineAdditionalProperties();
     }
 }

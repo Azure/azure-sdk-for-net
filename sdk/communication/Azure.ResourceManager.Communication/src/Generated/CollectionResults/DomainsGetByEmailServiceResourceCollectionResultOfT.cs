@@ -55,8 +55,8 @@ namespace Azure.ResourceManager.Communication
                     yield break;
                 }
                 DomainResourceList result = DomainResourceList.FromResponse(response);
-                yield return Page<CommunicationDomainResourceData>.FromValues((IReadOnlyList<CommunicationDomainResourceData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 nextPage = result.NextLink;
+                yield return Page<CommunicationDomainResourceData>.FromValues((IReadOnlyList<CommunicationDomainResourceData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 if (nextPage == null)
                 {
                     yield break;

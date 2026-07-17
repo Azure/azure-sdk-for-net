@@ -6,125 +6,106 @@
 #nullable disable
 
 using System;
-using System.Text.Json;
-using System.Threading;
-using System.Threading.Tasks;
+using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager.Billing.Models;
 
 namespace Azure.ResourceManager.Billing
 {
-    internal partial class PaymentMethodsRestOperations
+    internal partial class PaymentMethods
     {
-        private readonly TelemetryDetails _userAgent;
-        private readonly HttpPipeline _pipeline;
         private readonly Uri _endpoint;
         private readonly string _apiVersion;
 
-        /// <summary> Initializes a new instance of PaymentMethodsRestOperations. </summary>
+        /// <summary> Initializes a new instance of PaymentMethods for mocking. </summary>
+        protected PaymentMethods()
+        {
+        }
+
+        /// <summary> Initializes a new instance of PaymentMethods. </summary>
+        /// <param name="clientDiagnostics"> The ClientDiagnostics is used to provide tracing support for the client library. </param>
         /// <param name="pipeline"> The HTTP pipeline for sending and receiving REST requests and responses. </param>
-        /// <param name="applicationId"> The application id to use for user agent. </param>
-        /// <param name="endpoint"> server parameter. </param>
-        /// <param name="apiVersion"> Api Version. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="pipeline"/> or <paramref name="apiVersion"/> is null. </exception>
-        public PaymentMethodsRestOperations(HttpPipeline pipeline, string applicationId, Uri endpoint = null, string apiVersion = default)
+        /// <param name="endpoint"> Service endpoint. </param>
+        /// <param name="apiVersion"></param>
+        internal PaymentMethods(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Uri endpoint, string apiVersion)
         {
-            _pipeline = pipeline ?? throw new ArgumentNullException(nameof(pipeline));
-            _endpoint = endpoint ?? new Uri("https://management.azure.com");
-            _apiVersion = apiVersion ?? "2024-04-01";
-            _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
+            ClientDiagnostics = clientDiagnostics;
+            _endpoint = endpoint;
+            Pipeline = pipeline;
+            _apiVersion = apiVersion;
         }
 
-        internal RequestUriBuilder CreateListByBillingProfileRequestUri(string billingAccountName, string billingProfileName)
+        /// <summary> The HTTP pipeline for sending and receiving REST requests and responses. </summary>
+        public virtual HttpPipeline Pipeline { get; }
+
+        /// <summary> The ClientDiagnostics is used to provide tracing support for the client library. </summary>
+        internal ClientDiagnostics ClientDiagnostics { get; }
+
+        internal HttpMessage CreateGetByBillingAccountRequest(string billingAccountName, string paymentMethodName, RequestContext context)
         {
-            var uri = new RawRequestUriBuilder();
+            RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/providers/Microsoft.Billing/billingAccounts/", false);
             uri.AppendPath(billingAccountName, true);
-            uri.AppendPath("/billingProfiles/", false);
-            uri.AppendPath(billingProfileName, true);
-            uri.AppendPath("/paymentMethodLinks", false);
-            uri.AppendQuery("api-version", _apiVersion, true);
-            return uri;
-        }
-
-        internal HttpMessage CreateListByBillingProfileRequest(string billingAccountName, string billingProfileName)
-        {
-            var message = _pipeline.CreateMessage();
-            var request = message.Request;
-            request.Method = RequestMethod.Get;
-            var uri = new RawRequestUriBuilder();
-            uri.Reset(_endpoint);
-            uri.AppendPath("/providers/Microsoft.Billing/billingAccounts/", false);
-            uri.AppendPath(billingAccountName, true);
-            uri.AppendPath("/billingProfiles/", false);
-            uri.AppendPath(billingProfileName, true);
-            uri.AppendPath("/paymentMethodLinks", false);
-            uri.AppendQuery("api-version", _apiVersion, true);
+            uri.AppendPath("/paymentMethods/", false);
+            uri.AppendPath(paymentMethodName, true);
+            if (_apiVersion != null)
+            {
+                uri.AppendQuery("api-version", _apiVersion, true);
+            }
+            HttpMessage message = Pipeline.CreateMessage();
+            Request request = message.Request;
             request.Uri = uri;
-            request.Headers.Add("Accept", "application/json");
-            _userAgent.Apply(message);
+            request.Method = RequestMethod.Get;
+            request.Headers.SetValue("Accept", "application/json");
             return message;
         }
 
-        /// <summary> Lists payment methods attached to a billing profile. The operation is supported only for billing accounts with agreement type Microsoft Customer Agreement. </summary>
-        /// <param name="billingAccountName"> The ID that uniquely identifies a billing account. </param>
-        /// <param name="billingProfileName"> The ID that uniquely identifies a billing profile. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="billingAccountName"/> or <paramref name="billingProfileName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="billingAccountName"/> or <paramref name="billingProfileName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<PaymentMethodLinksListResult>> ListByBillingProfileAsync(string billingAccountName, string billingProfileName, CancellationToken cancellationToken = default)
+        internal HttpMessage CreateGetByBillingAccountRequest(string billingAccountName, RequestContext context)
         {
-            Argument.AssertNotNullOrEmpty(billingAccountName, nameof(billingAccountName));
-            Argument.AssertNotNullOrEmpty(billingProfileName, nameof(billingProfileName));
-
-            using var message = CreateListByBillingProfileRequest(billingAccountName, billingProfileName);
-            await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
-            switch (message.Response.Status)
+            RawRequestUriBuilder uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/providers/Microsoft.Billing/billingAccounts/", false);
+            uri.AppendPath(billingAccountName, true);
+            uri.AppendPath("/paymentMethods", false);
+            if (_apiVersion != null)
             {
-                case 200:
-                    {
-                        PaymentMethodLinksListResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
-                        value = PaymentMethodLinksListResult.DeserializePaymentMethodLinksListResult(document.RootElement);
-                        return Response.FromValue(value, message.Response);
-                    }
-                default:
-                    throw new RequestFailedException(message.Response);
+                uri.AppendQuery("api-version", _apiVersion, true);
             }
+            HttpMessage message = Pipeline.CreateMessage();
+            Request request = message.Request;
+            request.Uri = uri;
+            request.Method = RequestMethod.Get;
+            request.Headers.SetValue("Accept", "application/json");
+            return message;
         }
 
-        /// <summary> Lists payment methods attached to a billing profile. The operation is supported only for billing accounts with agreement type Microsoft Customer Agreement. </summary>
-        /// <param name="billingAccountName"> The ID that uniquely identifies a billing account. </param>
-        /// <param name="billingProfileName"> The ID that uniquely identifies a billing profile. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="billingAccountName"/> or <paramref name="billingProfileName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="billingAccountName"/> or <paramref name="billingProfileName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<PaymentMethodLinksListResult> ListByBillingProfile(string billingAccountName, string billingProfileName, CancellationToken cancellationToken = default)
+        internal HttpMessage CreateNextGetByBillingAccountRequest(Uri nextPage, string billingAccountName, RequestContext context)
         {
-            Argument.AssertNotNullOrEmpty(billingAccountName, nameof(billingAccountName));
-            Argument.AssertNotNullOrEmpty(billingProfileName, nameof(billingProfileName));
-
-            using var message = CreateListByBillingProfileRequest(billingAccountName, billingProfileName);
-            _pipeline.Send(message, cancellationToken);
-            switch (message.Response.Status)
+            RawRequestUriBuilder uri = new RawRequestUriBuilder();
+            if (nextPage.IsAbsoluteUri)
             {
-                case 200:
-                    {
-                        PaymentMethodLinksListResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
-                        value = PaymentMethodLinksListResult.DeserializePaymentMethodLinksListResult(document.RootElement);
-                        return Response.FromValue(value, message.Response);
-                    }
-                default:
-                    throw new RequestFailedException(message.Response);
+                uri.Reset(nextPage);
             }
+            else
+            {
+                uri.Reset(new Uri(_endpoint, nextPage));
+            }
+            if (_apiVersion != null)
+            {
+                uri.UpdateQuery("api-version", _apiVersion);
+            }
+            HttpMessage message = Pipeline.CreateMessage();
+            Request request = message.Request;
+            request.Uri = uri;
+            request.Method = RequestMethod.Get;
+            request.Headers.SetValue("Accept", "application/json");
+            return message;
         }
 
-        internal RequestUriBuilder CreateGetByBillingProfileRequestUri(string billingAccountName, string billingProfileName, string paymentMethodName)
+        internal HttpMessage CreateGetByBillingProfileRequest(string billingAccountName, string billingProfileName, string paymentMethodName, RequestContext context)
         {
-            var uri = new RawRequestUriBuilder();
+            RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/providers/Microsoft.Billing/billingAccounts/", false);
             uri.AppendPath(billingAccountName, true);
@@ -132,694 +113,135 @@ namespace Azure.ResourceManager.Billing
             uri.AppendPath(billingProfileName, true);
             uri.AppendPath("/paymentMethodLinks/", false);
             uri.AppendPath(paymentMethodName, true);
-            uri.AppendQuery("api-version", _apiVersion, true);
-            return uri;
+            if (_apiVersion != null)
+            {
+                uri.AppendQuery("api-version", _apiVersion, true);
+            }
+            HttpMessage message = Pipeline.CreateMessage();
+            Request request = message.Request;
+            request.Uri = uri;
+            request.Method = RequestMethod.Get;
+            request.Headers.SetValue("Accept", "application/json");
+            return message;
         }
 
-        internal HttpMessage CreateGetByBillingProfileRequest(string billingAccountName, string billingProfileName, string paymentMethodName)
+        internal HttpMessage CreateGetByBillingProfileRequest(string billingAccountName, string billingProfileName, RequestContext context)
         {
-            var message = _pipeline.CreateMessage();
-            var request = message.Request;
-            request.Method = RequestMethod.Get;
-            var uri = new RawRequestUriBuilder();
+            RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/providers/Microsoft.Billing/billingAccounts/", false);
             uri.AppendPath(billingAccountName, true);
             uri.AppendPath("/billingProfiles/", false);
             uri.AppendPath(billingProfileName, true);
-            uri.AppendPath("/paymentMethodLinks/", false);
-            uri.AppendPath(paymentMethodName, true);
-            uri.AppendQuery("api-version", _apiVersion, true);
+            uri.AppendPath("/paymentMethodLinks", false);
+            if (_apiVersion != null)
+            {
+                uri.AppendQuery("api-version", _apiVersion, true);
+            }
+            HttpMessage message = Pipeline.CreateMessage();
+            Request request = message.Request;
             request.Uri = uri;
-            request.Headers.Add("Accept", "application/json");
-            _userAgent.Apply(message);
-            return message;
-        }
-
-        /// <summary> Gets a payment method linked with a billing profile. The operation is supported only for billing accounts with agreement type Microsoft Customer Agreement. </summary>
-        /// <param name="billingAccountName"> The ID that uniquely identifies a billing account. </param>
-        /// <param name="billingProfileName"> The ID that uniquely identifies a billing profile. </param>
-        /// <param name="paymentMethodName"> The ID that uniquely identifies a payment method. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="billingAccountName"/>, <paramref name="billingProfileName"/> or <paramref name="paymentMethodName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="billingAccountName"/>, <paramref name="billingProfileName"/> or <paramref name="paymentMethodName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<BillingPaymentMethodLinkData>> GetByBillingProfileAsync(string billingAccountName, string billingProfileName, string paymentMethodName, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(billingAccountName, nameof(billingAccountName));
-            Argument.AssertNotNullOrEmpty(billingProfileName, nameof(billingProfileName));
-            Argument.AssertNotNullOrEmpty(paymentMethodName, nameof(paymentMethodName));
-
-            using var message = CreateGetByBillingProfileRequest(billingAccountName, billingProfileName, paymentMethodName);
-            await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
-            switch (message.Response.Status)
-            {
-                case 200:
-                    {
-                        BillingPaymentMethodLinkData value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
-                        value = BillingPaymentMethodLinkData.DeserializeBillingPaymentMethodLinkData(document.RootElement);
-                        return Response.FromValue(value, message.Response);
-                    }
-                case 404:
-                    return Response.FromValue((BillingPaymentMethodLinkData)null, message.Response);
-                default:
-                    throw new RequestFailedException(message.Response);
-            }
-        }
-
-        /// <summary> Gets a payment method linked with a billing profile. The operation is supported only for billing accounts with agreement type Microsoft Customer Agreement. </summary>
-        /// <param name="billingAccountName"> The ID that uniquely identifies a billing account. </param>
-        /// <param name="billingProfileName"> The ID that uniquely identifies a billing profile. </param>
-        /// <param name="paymentMethodName"> The ID that uniquely identifies a payment method. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="billingAccountName"/>, <paramref name="billingProfileName"/> or <paramref name="paymentMethodName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="billingAccountName"/>, <paramref name="billingProfileName"/> or <paramref name="paymentMethodName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<BillingPaymentMethodLinkData> GetByBillingProfile(string billingAccountName, string billingProfileName, string paymentMethodName, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(billingAccountName, nameof(billingAccountName));
-            Argument.AssertNotNullOrEmpty(billingProfileName, nameof(billingProfileName));
-            Argument.AssertNotNullOrEmpty(paymentMethodName, nameof(paymentMethodName));
-
-            using var message = CreateGetByBillingProfileRequest(billingAccountName, billingProfileName, paymentMethodName);
-            _pipeline.Send(message, cancellationToken);
-            switch (message.Response.Status)
-            {
-                case 200:
-                    {
-                        BillingPaymentMethodLinkData value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
-                        value = BillingPaymentMethodLinkData.DeserializeBillingPaymentMethodLinkData(document.RootElement);
-                        return Response.FromValue(value, message.Response);
-                    }
-                case 404:
-                    return Response.FromValue((BillingPaymentMethodLinkData)null, message.Response);
-                default:
-                    throw new RequestFailedException(message.Response);
-            }
-        }
-
-        internal RequestUriBuilder CreateListByBillingAccountRequestUri(string billingAccountName)
-        {
-            var uri = new RawRequestUriBuilder();
-            uri.Reset(_endpoint);
-            uri.AppendPath("/providers/Microsoft.Billing/billingAccounts/", false);
-            uri.AppendPath(billingAccountName, true);
-            uri.AppendPath("/paymentMethods", false);
-            uri.AppendQuery("api-version", _apiVersion, true);
-            return uri;
-        }
-
-        internal HttpMessage CreateListByBillingAccountRequest(string billingAccountName)
-        {
-            var message = _pipeline.CreateMessage();
-            var request = message.Request;
             request.Method = RequestMethod.Get;
-            var uri = new RawRequestUriBuilder();
-            uri.Reset(_endpoint);
-            uri.AppendPath("/providers/Microsoft.Billing/billingAccounts/", false);
-            uri.AppendPath(billingAccountName, true);
-            uri.AppendPath("/paymentMethods", false);
-            uri.AppendQuery("api-version", _apiVersion, true);
-            request.Uri = uri;
-            request.Headers.Add("Accept", "application/json");
-            _userAgent.Apply(message);
+            request.Headers.SetValue("Accept", "application/json");
             return message;
         }
 
-        /// <summary> Lists the payment methods available for a billing account. Along with the payment methods owned by the caller, these payment methods can be attached to a billing profile to make payments. The operation is supported only for billing accounts with agreement type Microsoft Customer Agreement. </summary>
-        /// <param name="billingAccountName"> The ID that uniquely identifies a billing account. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="billingAccountName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="billingAccountName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<PaymentMethodsListResult>> ListByBillingAccountAsync(string billingAccountName, CancellationToken cancellationToken = default)
+        internal HttpMessage CreateNextGetByBillingProfileRequest(Uri nextPage, string billingAccountName, string billingProfileName, RequestContext context)
         {
-            Argument.AssertNotNullOrEmpty(billingAccountName, nameof(billingAccountName));
-
-            using var message = CreateListByBillingAccountRequest(billingAccountName);
-            await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
-            switch (message.Response.Status)
+            RawRequestUriBuilder uri = new RawRequestUriBuilder();
+            if (nextPage.IsAbsoluteUri)
             {
-                case 200:
-                    {
-                        PaymentMethodsListResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
-                        value = PaymentMethodsListResult.DeserializePaymentMethodsListResult(document.RootElement);
-                        return Response.FromValue(value, message.Response);
-                    }
-                default:
-                    throw new RequestFailedException(message.Response);
+                uri.Reset(nextPage);
             }
-        }
-
-        /// <summary> Lists the payment methods available for a billing account. Along with the payment methods owned by the caller, these payment methods can be attached to a billing profile to make payments. The operation is supported only for billing accounts with agreement type Microsoft Customer Agreement. </summary>
-        /// <param name="billingAccountName"> The ID that uniquely identifies a billing account. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="billingAccountName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="billingAccountName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<PaymentMethodsListResult> ListByBillingAccount(string billingAccountName, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(billingAccountName, nameof(billingAccountName));
-
-            using var message = CreateListByBillingAccountRequest(billingAccountName);
-            _pipeline.Send(message, cancellationToken);
-            switch (message.Response.Status)
+            else
             {
-                case 200:
-                    {
-                        PaymentMethodsListResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
-                        value = PaymentMethodsListResult.DeserializePaymentMethodsListResult(document.RootElement);
-                        return Response.FromValue(value, message.Response);
-                    }
-                default:
-                    throw new RequestFailedException(message.Response);
+                uri.Reset(new Uri(_endpoint, nextPage));
             }
-        }
-
-        internal RequestUriBuilder CreateGetByBillingAccountRequestUri(string billingAccountName, string paymentMethodName)
-        {
-            var uri = new RawRequestUriBuilder();
-            uri.Reset(_endpoint);
-            uri.AppendPath("/providers/Microsoft.Billing/billingAccounts/", false);
-            uri.AppendPath(billingAccountName, true);
-            uri.AppendPath("/paymentMethods/", false);
-            uri.AppendPath(paymentMethodName, true);
-            uri.AppendQuery("api-version", _apiVersion, true);
-            return uri;
-        }
-
-        internal HttpMessage CreateGetByBillingAccountRequest(string billingAccountName, string paymentMethodName)
-        {
-            var message = _pipeline.CreateMessage();
-            var request = message.Request;
+            if (_apiVersion != null)
+            {
+                uri.UpdateQuery("api-version", _apiVersion);
+            }
+            HttpMessage message = Pipeline.CreateMessage();
+            Request request = message.Request;
+            request.Uri = uri;
             request.Method = RequestMethod.Get;
-            var uri = new RawRequestUriBuilder();
-            uri.Reset(_endpoint);
-            uri.AppendPath("/providers/Microsoft.Billing/billingAccounts/", false);
-            uri.AppendPath(billingAccountName, true);
-            uri.AppendPath("/paymentMethods/", false);
-            uri.AppendPath(paymentMethodName, true);
-            uri.AppendQuery("api-version", _apiVersion, true);
-            request.Uri = uri;
-            request.Headers.Add("Accept", "application/json");
-            _userAgent.Apply(message);
+            request.Headers.SetValue("Accept", "application/json");
             return message;
         }
 
-        /// <summary> Gets a payment method available for a billing account. The operation is supported only for billing accounts with agreement type Microsoft Customer Agreement. </summary>
-        /// <param name="billingAccountName"> The ID that uniquely identifies a billing account. </param>
-        /// <param name="paymentMethodName"> The ID that uniquely identifies a payment method. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="billingAccountName"/> or <paramref name="paymentMethodName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="billingAccountName"/> or <paramref name="paymentMethodName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<BillingPaymentMethodData>> GetByBillingAccountAsync(string billingAccountName, string paymentMethodName, CancellationToken cancellationToken = default)
+        internal HttpMessage CreateGetByUserRequest(string paymentMethodName, RequestContext context)
         {
-            Argument.AssertNotNullOrEmpty(billingAccountName, nameof(billingAccountName));
-            Argument.AssertNotNullOrEmpty(paymentMethodName, nameof(paymentMethodName));
-
-            using var message = CreateGetByBillingAccountRequest(billingAccountName, paymentMethodName);
-            await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
-            switch (message.Response.Status)
-            {
-                case 200:
-                    {
-                        BillingPaymentMethodData value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
-                        value = BillingPaymentMethodData.DeserializeBillingPaymentMethodData(document.RootElement);
-                        return Response.FromValue(value, message.Response);
-                    }
-                case 404:
-                    return Response.FromValue((BillingPaymentMethodData)null, message.Response);
-                default:
-                    throw new RequestFailedException(message.Response);
-            }
-        }
-
-        /// <summary> Gets a payment method available for a billing account. The operation is supported only for billing accounts with agreement type Microsoft Customer Agreement. </summary>
-        /// <param name="billingAccountName"> The ID that uniquely identifies a billing account. </param>
-        /// <param name="paymentMethodName"> The ID that uniquely identifies a payment method. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="billingAccountName"/> or <paramref name="paymentMethodName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="billingAccountName"/> or <paramref name="paymentMethodName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<BillingPaymentMethodData> GetByBillingAccount(string billingAccountName, string paymentMethodName, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(billingAccountName, nameof(billingAccountName));
-            Argument.AssertNotNullOrEmpty(paymentMethodName, nameof(paymentMethodName));
-
-            using var message = CreateGetByBillingAccountRequest(billingAccountName, paymentMethodName);
-            _pipeline.Send(message, cancellationToken);
-            switch (message.Response.Status)
-            {
-                case 200:
-                    {
-                        BillingPaymentMethodData value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
-                        value = BillingPaymentMethodData.DeserializeBillingPaymentMethodData(document.RootElement);
-                        return Response.FromValue(value, message.Response);
-                    }
-                case 404:
-                    return Response.FromValue((BillingPaymentMethodData)null, message.Response);
-                default:
-                    throw new RequestFailedException(message.Response);
-            }
-        }
-
-        internal RequestUriBuilder CreateListByUserRequestUri()
-        {
-            var uri = new RawRequestUriBuilder();
-            uri.Reset(_endpoint);
-            uri.AppendPath("/providers/Microsoft.Billing/paymentMethods", false);
-            uri.AppendQuery("api-version", _apiVersion, true);
-            return uri;
-        }
-
-        internal HttpMessage CreateListByUserRequest()
-        {
-            var message = _pipeline.CreateMessage();
-            var request = message.Request;
-            request.Method = RequestMethod.Get;
-            var uri = new RawRequestUriBuilder();
-            uri.Reset(_endpoint);
-            uri.AppendPath("/providers/Microsoft.Billing/paymentMethods", false);
-            uri.AppendQuery("api-version", _apiVersion, true);
-            request.Uri = uri;
-            request.Headers.Add("Accept", "application/json");
-            _userAgent.Apply(message);
-            return message;
-        }
-
-        /// <summary> Lists the payment methods owned by the caller. </summary>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async Task<Response<PaymentMethodsListResult>> ListByUserAsync(CancellationToken cancellationToken = default)
-        {
-            using var message = CreateListByUserRequest();
-            await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
-            switch (message.Response.Status)
-            {
-                case 200:
-                    {
-                        PaymentMethodsListResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
-                        value = PaymentMethodsListResult.DeserializePaymentMethodsListResult(document.RootElement);
-                        return Response.FromValue(value, message.Response);
-                    }
-                default:
-                    throw new RequestFailedException(message.Response);
-            }
-        }
-
-        /// <summary> Lists the payment methods owned by the caller. </summary>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public Response<PaymentMethodsListResult> ListByUser(CancellationToken cancellationToken = default)
-        {
-            using var message = CreateListByUserRequest();
-            _pipeline.Send(message, cancellationToken);
-            switch (message.Response.Status)
-            {
-                case 200:
-                    {
-                        PaymentMethodsListResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
-                        value = PaymentMethodsListResult.DeserializePaymentMethodsListResult(document.RootElement);
-                        return Response.FromValue(value, message.Response);
-                    }
-                default:
-                    throw new RequestFailedException(message.Response);
-            }
-        }
-
-        internal RequestUriBuilder CreateDeleteByUserRequestUri(string paymentMethodName)
-        {
-            var uri = new RawRequestUriBuilder();
+            RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/providers/Microsoft.Billing/paymentMethods/", false);
             uri.AppendPath(paymentMethodName, true);
-            uri.AppendQuery("api-version", _apiVersion, true);
-            return uri;
+            if (_apiVersion != null)
+            {
+                uri.AppendQuery("api-version", _apiVersion, true);
+            }
+            HttpMessage message = Pipeline.CreateMessage();
+            Request request = message.Request;
+            request.Uri = uri;
+            request.Method = RequestMethod.Get;
+            request.Headers.SetValue("Accept", "application/json");
+            return message;
         }
 
-        internal HttpMessage CreateDeleteByUserRequest(string paymentMethodName)
+        internal HttpMessage CreateDeleteByUserRequest(string paymentMethodName, RequestContext context)
         {
-            var message = _pipeline.CreateMessage();
-            var request = message.Request;
+            RawRequestUriBuilder uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/providers/Microsoft.Billing/paymentMethods/", false);
+            uri.AppendPath(paymentMethodName, true);
+            if (_apiVersion != null)
+            {
+                uri.AppendQuery("api-version", _apiVersion, true);
+            }
+            HttpMessage message = Pipeline.CreateMessage();
+            Request request = message.Request;
+            request.Uri = uri;
             request.Method = RequestMethod.Delete;
-            var uri = new RawRequestUriBuilder();
-            uri.Reset(_endpoint);
-            uri.AppendPath("/providers/Microsoft.Billing/paymentMethods/", false);
-            uri.AppendPath(paymentMethodName, true);
-            uri.AppendQuery("api-version", _apiVersion, true);
-            request.Uri = uri;
-            request.Headers.Add("Accept", "application/json");
-            _userAgent.Apply(message);
             return message;
         }
 
-        /// <summary> Deletes a payment method owned by the caller. </summary>
-        /// <param name="paymentMethodName"> The ID that uniquely identifies a payment method. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="paymentMethodName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="paymentMethodName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response> DeleteByUserAsync(string paymentMethodName, CancellationToken cancellationToken = default)
+        internal HttpMessage CreateGetByUserRequest(RequestContext context)
         {
-            Argument.AssertNotNullOrEmpty(paymentMethodName, nameof(paymentMethodName));
-
-            using var message = CreateDeleteByUserRequest(paymentMethodName);
-            await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
-            switch (message.Response.Status)
-            {
-                case 200:
-                case 204:
-                    return message.Response;
-                default:
-                    throw new RequestFailedException(message.Response);
-            }
-        }
-
-        /// <summary> Deletes a payment method owned by the caller. </summary>
-        /// <param name="paymentMethodName"> The ID that uniquely identifies a payment method. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="paymentMethodName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="paymentMethodName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response DeleteByUser(string paymentMethodName, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(paymentMethodName, nameof(paymentMethodName));
-
-            using var message = CreateDeleteByUserRequest(paymentMethodName);
-            _pipeline.Send(message, cancellationToken);
-            switch (message.Response.Status)
-            {
-                case 200:
-                case 204:
-                    return message.Response;
-                default:
-                    throw new RequestFailedException(message.Response);
-            }
-        }
-
-        internal RequestUriBuilder CreateGetByUserRequestUri(string paymentMethodName)
-        {
-            var uri = new RawRequestUriBuilder();
+            RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
-            uri.AppendPath("/providers/Microsoft.Billing/paymentMethods/", false);
-            uri.AppendPath(paymentMethodName, true);
-            uri.AppendQuery("api-version", _apiVersion, true);
-            return uri;
-        }
-
-        internal HttpMessage CreateGetByUserRequest(string paymentMethodName)
-        {
-            var message = _pipeline.CreateMessage();
-            var request = message.Request;
+            uri.AppendPath("/providers/Microsoft.Billing/paymentMethods", false);
+            if (_apiVersion != null)
+            {
+                uri.AppendQuery("api-version", _apiVersion, true);
+            }
+            HttpMessage message = Pipeline.CreateMessage();
+            Request request = message.Request;
+            request.Uri = uri;
             request.Method = RequestMethod.Get;
-            var uri = new RawRequestUriBuilder();
-            uri.Reset(_endpoint);
-            uri.AppendPath("/providers/Microsoft.Billing/paymentMethods/", false);
-            uri.AppendPath(paymentMethodName, true);
-            uri.AppendQuery("api-version", _apiVersion, true);
-            request.Uri = uri;
-            request.Headers.Add("Accept", "application/json");
-            _userAgent.Apply(message);
+            request.Headers.SetValue("Accept", "application/json");
             return message;
         }
 
-        /// <summary> Gets a payment method owned by the caller. </summary>
-        /// <param name="paymentMethodName"> The ID that uniquely identifies a payment method. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="paymentMethodName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="paymentMethodName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<BillingPaymentMethodData>> GetByUserAsync(string paymentMethodName, CancellationToken cancellationToken = default)
+        internal HttpMessage CreateNextGetByUserRequest(Uri nextPage, RequestContext context)
         {
-            Argument.AssertNotNullOrEmpty(paymentMethodName, nameof(paymentMethodName));
-
-            using var message = CreateGetByUserRequest(paymentMethodName);
-            await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
-            switch (message.Response.Status)
+            RawRequestUriBuilder uri = new RawRequestUriBuilder();
+            if (nextPage.IsAbsoluteUri)
             {
-                case 200:
-                    {
-                        BillingPaymentMethodData value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
-                        value = BillingPaymentMethodData.DeserializeBillingPaymentMethodData(document.RootElement);
-                        return Response.FromValue(value, message.Response);
-                    }
-                case 404:
-                    return Response.FromValue((BillingPaymentMethodData)null, message.Response);
-                default:
-                    throw new RequestFailedException(message.Response);
+                uri.Reset(nextPage);
             }
-        }
-
-        /// <summary> Gets a payment method owned by the caller. </summary>
-        /// <param name="paymentMethodName"> The ID that uniquely identifies a payment method. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="paymentMethodName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="paymentMethodName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<BillingPaymentMethodData> GetByUser(string paymentMethodName, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(paymentMethodName, nameof(paymentMethodName));
-
-            using var message = CreateGetByUserRequest(paymentMethodName);
-            _pipeline.Send(message, cancellationToken);
-            switch (message.Response.Status)
+            else
             {
-                case 200:
-                    {
-                        BillingPaymentMethodData value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
-                        value = BillingPaymentMethodData.DeserializeBillingPaymentMethodData(document.RootElement);
-                        return Response.FromValue(value, message.Response);
-                    }
-                case 404:
-                    return Response.FromValue((BillingPaymentMethodData)null, message.Response);
-                default:
-                    throw new RequestFailedException(message.Response);
+                uri.Reset(new Uri(_endpoint, nextPage));
             }
-        }
-
-        internal RequestUriBuilder CreateListByBillingProfileNextPageRequestUri(string nextLink, string billingAccountName, string billingProfileName)
-        {
-            var uri = new RawRequestUriBuilder();
-            uri.Reset(_endpoint);
-            uri.AppendRawNextLink(nextLink, false);
-            return uri;
-        }
-
-        internal HttpMessage CreateListByBillingProfileNextPageRequest(string nextLink, string billingAccountName, string billingProfileName)
-        {
-            var message = _pipeline.CreateMessage();
-            var request = message.Request;
+            if (_apiVersion != null)
+            {
+                uri.UpdateQuery("api-version", _apiVersion);
+            }
+            HttpMessage message = Pipeline.CreateMessage();
+            Request request = message.Request;
+            request.Uri = uri;
             request.Method = RequestMethod.Get;
-            var uri = new RawRequestUriBuilder();
-            uri.Reset(_endpoint);
-            uri.AppendRawNextLink(nextLink, false);
-            request.Uri = uri;
-            request.Headers.Add("Accept", "application/json");
-            _userAgent.Apply(message);
+            request.Headers.SetValue("Accept", "application/json");
             return message;
-        }
-
-        /// <summary> Lists payment methods attached to a billing profile. The operation is supported only for billing accounts with agreement type Microsoft Customer Agreement. </summary>
-        /// <param name="nextLink"> The URL to the next page of results. </param>
-        /// <param name="billingAccountName"> The ID that uniquely identifies a billing account. </param>
-        /// <param name="billingProfileName"> The ID that uniquely identifies a billing profile. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="billingAccountName"/> or <paramref name="billingProfileName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="billingAccountName"/> or <paramref name="billingProfileName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<PaymentMethodLinksListResult>> ListByBillingProfileNextPageAsync(string nextLink, string billingAccountName, string billingProfileName, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(nextLink, nameof(nextLink));
-            Argument.AssertNotNullOrEmpty(billingAccountName, nameof(billingAccountName));
-            Argument.AssertNotNullOrEmpty(billingProfileName, nameof(billingProfileName));
-
-            using var message = CreateListByBillingProfileNextPageRequest(nextLink, billingAccountName, billingProfileName);
-            await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
-            switch (message.Response.Status)
-            {
-                case 200:
-                    {
-                        PaymentMethodLinksListResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
-                        value = PaymentMethodLinksListResult.DeserializePaymentMethodLinksListResult(document.RootElement);
-                        return Response.FromValue(value, message.Response);
-                    }
-                default:
-                    throw new RequestFailedException(message.Response);
-            }
-        }
-
-        /// <summary> Lists payment methods attached to a billing profile. The operation is supported only for billing accounts with agreement type Microsoft Customer Agreement. </summary>
-        /// <param name="nextLink"> The URL to the next page of results. </param>
-        /// <param name="billingAccountName"> The ID that uniquely identifies a billing account. </param>
-        /// <param name="billingProfileName"> The ID that uniquely identifies a billing profile. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="billingAccountName"/> or <paramref name="billingProfileName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="billingAccountName"/> or <paramref name="billingProfileName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<PaymentMethodLinksListResult> ListByBillingProfileNextPage(string nextLink, string billingAccountName, string billingProfileName, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(nextLink, nameof(nextLink));
-            Argument.AssertNotNullOrEmpty(billingAccountName, nameof(billingAccountName));
-            Argument.AssertNotNullOrEmpty(billingProfileName, nameof(billingProfileName));
-
-            using var message = CreateListByBillingProfileNextPageRequest(nextLink, billingAccountName, billingProfileName);
-            _pipeline.Send(message, cancellationToken);
-            switch (message.Response.Status)
-            {
-                case 200:
-                    {
-                        PaymentMethodLinksListResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
-                        value = PaymentMethodLinksListResult.DeserializePaymentMethodLinksListResult(document.RootElement);
-                        return Response.FromValue(value, message.Response);
-                    }
-                default:
-                    throw new RequestFailedException(message.Response);
-            }
-        }
-
-        internal RequestUriBuilder CreateListByBillingAccountNextPageRequestUri(string nextLink, string billingAccountName)
-        {
-            var uri = new RawRequestUriBuilder();
-            uri.Reset(_endpoint);
-            uri.AppendRawNextLink(nextLink, false);
-            return uri;
-        }
-
-        internal HttpMessage CreateListByBillingAccountNextPageRequest(string nextLink, string billingAccountName)
-        {
-            var message = _pipeline.CreateMessage();
-            var request = message.Request;
-            request.Method = RequestMethod.Get;
-            var uri = new RawRequestUriBuilder();
-            uri.Reset(_endpoint);
-            uri.AppendRawNextLink(nextLink, false);
-            request.Uri = uri;
-            request.Headers.Add("Accept", "application/json");
-            _userAgent.Apply(message);
-            return message;
-        }
-
-        /// <summary> Lists the payment methods available for a billing account. Along with the payment methods owned by the caller, these payment methods can be attached to a billing profile to make payments. The operation is supported only for billing accounts with agreement type Microsoft Customer Agreement. </summary>
-        /// <param name="nextLink"> The URL to the next page of results. </param>
-        /// <param name="billingAccountName"> The ID that uniquely identifies a billing account. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> or <paramref name="billingAccountName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="billingAccountName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<PaymentMethodsListResult>> ListByBillingAccountNextPageAsync(string nextLink, string billingAccountName, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(nextLink, nameof(nextLink));
-            Argument.AssertNotNullOrEmpty(billingAccountName, nameof(billingAccountName));
-
-            using var message = CreateListByBillingAccountNextPageRequest(nextLink, billingAccountName);
-            await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
-            switch (message.Response.Status)
-            {
-                case 200:
-                    {
-                        PaymentMethodsListResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
-                        value = PaymentMethodsListResult.DeserializePaymentMethodsListResult(document.RootElement);
-                        return Response.FromValue(value, message.Response);
-                    }
-                default:
-                    throw new RequestFailedException(message.Response);
-            }
-        }
-
-        /// <summary> Lists the payment methods available for a billing account. Along with the payment methods owned by the caller, these payment methods can be attached to a billing profile to make payments. The operation is supported only for billing accounts with agreement type Microsoft Customer Agreement. </summary>
-        /// <param name="nextLink"> The URL to the next page of results. </param>
-        /// <param name="billingAccountName"> The ID that uniquely identifies a billing account. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> or <paramref name="billingAccountName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="billingAccountName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<PaymentMethodsListResult> ListByBillingAccountNextPage(string nextLink, string billingAccountName, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(nextLink, nameof(nextLink));
-            Argument.AssertNotNullOrEmpty(billingAccountName, nameof(billingAccountName));
-
-            using var message = CreateListByBillingAccountNextPageRequest(nextLink, billingAccountName);
-            _pipeline.Send(message, cancellationToken);
-            switch (message.Response.Status)
-            {
-                case 200:
-                    {
-                        PaymentMethodsListResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
-                        value = PaymentMethodsListResult.DeserializePaymentMethodsListResult(document.RootElement);
-                        return Response.FromValue(value, message.Response);
-                    }
-                default:
-                    throw new RequestFailedException(message.Response);
-            }
-        }
-
-        internal RequestUriBuilder CreateListByUserNextPageRequestUri(string nextLink)
-        {
-            var uri = new RawRequestUriBuilder();
-            uri.Reset(_endpoint);
-            uri.AppendRawNextLink(nextLink, false);
-            return uri;
-        }
-
-        internal HttpMessage CreateListByUserNextPageRequest(string nextLink)
-        {
-            var message = _pipeline.CreateMessage();
-            var request = message.Request;
-            request.Method = RequestMethod.Get;
-            var uri = new RawRequestUriBuilder();
-            uri.Reset(_endpoint);
-            uri.AppendRawNextLink(nextLink, false);
-            request.Uri = uri;
-            request.Headers.Add("Accept", "application/json");
-            _userAgent.Apply(message);
-            return message;
-        }
-
-        /// <summary> Lists the payment methods owned by the caller. </summary>
-        /// <param name="nextLink"> The URL to the next page of results. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> is null. </exception>
-        public async Task<Response<PaymentMethodsListResult>> ListByUserNextPageAsync(string nextLink, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(nextLink, nameof(nextLink));
-
-            using var message = CreateListByUserNextPageRequest(nextLink);
-            await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
-            switch (message.Response.Status)
-            {
-                case 200:
-                    {
-                        PaymentMethodsListResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
-                        value = PaymentMethodsListResult.DeserializePaymentMethodsListResult(document.RootElement);
-                        return Response.FromValue(value, message.Response);
-                    }
-                default:
-                    throw new RequestFailedException(message.Response);
-            }
-        }
-
-        /// <summary> Lists the payment methods owned by the caller. </summary>
-        /// <param name="nextLink"> The URL to the next page of results. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> is null. </exception>
-        public Response<PaymentMethodsListResult> ListByUserNextPage(string nextLink, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(nextLink, nameof(nextLink));
-
-            using var message = CreateListByUserNextPageRequest(nextLink);
-            _pipeline.Send(message, cancellationToken);
-            switch (message.Response.Status)
-            {
-                case 200:
-                    {
-                        PaymentMethodsListResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
-                        value = PaymentMethodsListResult.DeserializePaymentMethodsListResult(document.RootElement);
-                        return Response.FromValue(value, message.Response);
-                    }
-                default:
-                    throw new RequestFailedException(message.Response);
-            }
         }
     }
 }

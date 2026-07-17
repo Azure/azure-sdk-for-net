@@ -225,7 +225,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
                 HttpMessage message = _replicationJobsRestClient.CreateCancelRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 RecoveryServicesSiteRecoveryArmOperation<SiteRecoveryJobResource> operation = new RecoveryServicesSiteRecoveryArmOperation<SiteRecoveryJobResource>(
-                    new SiteRecoveryJobOperationSource(Client),
+                    new SiteRecoveryJobResourceOperationSource(Client),
                     _replicationJobsClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -280,7 +280,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
                 HttpMessage message = _replicationJobsRestClient.CreateCancelRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 RecoveryServicesSiteRecoveryArmOperation<SiteRecoveryJobResource> operation = new RecoveryServicesSiteRecoveryArmOperation<SiteRecoveryJobResource>(
-                    new SiteRecoveryJobOperationSource(Client),
+                    new SiteRecoveryJobResourceOperationSource(Client),
                     _replicationJobsClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -335,7 +335,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
                 HttpMessage message = _replicationJobsRestClient.CreateRestartRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 RecoveryServicesSiteRecoveryArmOperation<SiteRecoveryJobResource> operation = new RecoveryServicesSiteRecoveryArmOperation<SiteRecoveryJobResource>(
-                    new SiteRecoveryJobOperationSource(Client),
+                    new SiteRecoveryJobResourceOperationSource(Client),
                     _replicationJobsClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -390,7 +390,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
                 HttpMessage message = _replicationJobsRestClient.CreateRestartRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 RecoveryServicesSiteRecoveryArmOperation<SiteRecoveryJobResource> operation = new RecoveryServicesSiteRecoveryArmOperation<SiteRecoveryJobResource>(
-                    new SiteRecoveryJobOperationSource(Client),
+                    new SiteRecoveryJobResourceOperationSource(Client),
                     _replicationJobsClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -449,7 +449,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
                 HttpMessage message = _replicationJobsRestClient.CreateResumeRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, ReplicationResumeJobContent.ToRequestContent(content), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 RecoveryServicesSiteRecoveryArmOperation<SiteRecoveryJobResource> operation = new RecoveryServicesSiteRecoveryArmOperation<SiteRecoveryJobResource>(
-                    new SiteRecoveryJobOperationSource(Client),
+                    new SiteRecoveryJobResourceOperationSource(Client),
                     _replicationJobsClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -508,7 +508,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
                 HttpMessage message = _replicationJobsRestClient.CreateResumeRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, ReplicationResumeJobContent.ToRequestContent(content), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 RecoveryServicesSiteRecoveryArmOperation<SiteRecoveryJobResource> operation = new RecoveryServicesSiteRecoveryArmOperation<SiteRecoveryJobResource>(
-                    new SiteRecoveryJobOperationSource(Client),
+                    new SiteRecoveryJobResourceOperationSource(Client),
                     _replicationJobsClientDiagnostics,
                     Pipeline,
                     message.Request,

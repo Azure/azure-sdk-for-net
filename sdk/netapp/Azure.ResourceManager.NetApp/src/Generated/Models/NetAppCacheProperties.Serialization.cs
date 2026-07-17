@@ -192,6 +192,11 @@ namespace Azure.ResourceManager.NetApp.Models
                 writer.WritePropertyName("writeBack"u8);
                 writer.WriteStringValue(WriteBack.Value.ToString());
             }
+            if (options.Format != "W" && Optional.IsDefined(FileAccessLogs))
+            {
+                writer.WritePropertyName("fileAccessLogs"u8);
+                writer.WriteStringValue(FileAccessLogs.Value.ToString());
+            }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
                 foreach (var item in _additionalBinaryDataProperties)
@@ -258,6 +263,7 @@ namespace Azure.ResourceManager.NetApp.Models
             NetAppCifsChangeNotifyState? cifsChangeNotifications = default;
             NetAppGlobalFileLockingState? globalFileLocking = default;
             NetAppEnableWriteBackState? writeBack = default;
+            NetAppCacheFileAccessLogs? fileAccessLogs = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -463,6 +469,15 @@ namespace Azure.ResourceManager.NetApp.Models
                     writeBack = new NetAppEnableWriteBackState(prop.Value.GetString());
                     continue;
                 }
+                if (prop.NameEquals("fileAccessLogs"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    fileAccessLogs = new NetAppCacheFileAccessLogs(prop.Value.GetString());
+                    continue;
+                }
                 if (options.Format != "W")
                 {
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
@@ -493,6 +508,7 @@ namespace Azure.ResourceManager.NetApp.Models
                 cifsChangeNotifications,
                 globalFileLocking,
                 writeBack,
+                fileAccessLogs,
                 additionalBinaryDataProperties);
         }
     }

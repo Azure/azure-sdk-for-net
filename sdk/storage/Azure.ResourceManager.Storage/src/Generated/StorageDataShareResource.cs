@@ -230,7 +230,7 @@ namespace Azure.ResourceManager.Storage
                 HttpMessage message = _dataSharesRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, StorageDataSharePatch.ToRequestContent(patch), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 StorageArmOperation<StorageDataShareResource> operation = new StorageArmOperation<StorageDataShareResource>(
-                    new StorageDataShareOperationSource(Client),
+                    new StorageDataShareResourceOperationSource(Client),
                     _dataSharesClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -289,7 +289,7 @@ namespace Azure.ResourceManager.Storage
                 HttpMessage message = _dataSharesRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, StorageDataSharePatch.ToRequestContent(patch), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 StorageArmOperation<StorageDataShareResource> operation = new StorageArmOperation<StorageDataShareResource>(
-                    new StorageDataShareOperationSource(Client),
+                    new StorageDataShareResourceOperationSource(Client),
                     _dataSharesClientDiagnostics,
                     Pipeline,
                     message.Request,

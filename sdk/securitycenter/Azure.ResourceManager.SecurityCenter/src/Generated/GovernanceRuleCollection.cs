@@ -10,9 +10,10 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
-using Autorest.CSharp.Core;
+using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
+using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.SecurityCenter
 {
@@ -23,42 +24,38 @@ namespace Azure.ResourceManager.SecurityCenter
     /// </summary>
     public partial class GovernanceRuleCollection : ArmCollection, IEnumerable<GovernanceRuleResource>, IAsyncEnumerable<GovernanceRuleResource>
     {
-        private readonly ClientDiagnostics _governanceRuleClientDiagnostics;
-        private readonly GovernanceRulesRestOperations _governanceRuleRestClient;
+        private readonly ClientDiagnostics _governanceRulesClientDiagnostics;
+        private readonly GovernanceRules _governanceRulesRestClient;
 
-        /// <summary> Initializes a new instance of the <see cref="GovernanceRuleCollection"/> class for mocking. </summary>
+        /// <summary> Initializes a new instance of GovernanceRuleCollection for mocking. </summary>
         protected GovernanceRuleCollection()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref="GovernanceRuleCollection"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="GovernanceRuleCollection"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
-        /// <param name="id"> The identifier of the parent resource that is the target of operations. </param>
+        /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal GovernanceRuleCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _governanceRuleClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.SecurityCenter", GovernanceRuleResource.ResourceType.Namespace, Diagnostics);
             TryGetApiVersion(GovernanceRuleResource.ResourceType, out string governanceRuleApiVersion);
-            _governanceRuleRestClient = new GovernanceRulesRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, governanceRuleApiVersion);
+            _governanceRulesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.SecurityCenter", GovernanceRuleResource.ResourceType.Namespace, Diagnostics);
+            _governanceRulesRestClient = new GovernanceRules(_governanceRulesClientDiagnostics, Pipeline, Endpoint, governanceRuleApiVersion ?? "2022-01-01-preview");
         }
 
         /// <summary>
         /// Creates or updates a governance rule over a given scope
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/{scope}/providers/Microsoft.Security/governanceRules/{ruleId}</description>
+        /// <term> Request Path. </term>
+        /// <description> /{scope}/providers/Microsoft.Security/governanceRules/{ruleId}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>GovernanceRules_CreateOrUpdate</description>
+        /// <term> Operation Id. </term>
+        /// <description> GovernanceRules_CreateOrUpdate. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2022-01-01-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="GovernanceRuleResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2022-01-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -66,23 +63,31 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <param name="ruleId"> The governance rule key - unique key for the standard governance rule (GUID). </param>
         /// <param name="data"> Governance rule over a given scope. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="ruleId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="ruleId"/> or <paramref name="data"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="ruleId"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual async Task<ArmOperation<GovernanceRuleResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string ruleId, GovernanceRuleData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(ruleId, nameof(ruleId));
             Argument.AssertNotNull(data, nameof(data));
 
-            using var scope = _governanceRuleClientDiagnostics.CreateScope("GovernanceRuleCollection.CreateOrUpdate");
+            using DiagnosticScope scope = _governanceRulesClientDiagnostics.CreateScope("GovernanceRuleCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                var response = await _governanceRuleRestClient.CreateOrUpdateAsync(Id, ruleId, data, cancellationToken).ConfigureAwait(false);
-                var uri = _governanceRuleRestClient.CreateCreateOrUpdateRequestUri(Id, ruleId, data);
-                var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
-                var operation = new SecurityCenterArmOperation<GovernanceRuleResource>(Response.FromValue(new GovernanceRuleResource(Client, response), response.GetRawResponse()), rehydrationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _governanceRulesRestClient.CreateCreateOrUpdateRequest(Id.ToString(), ruleId, GovernanceRuleData.ToRequestContent(data), context);
+                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                Response<GovernanceRuleData> response = Response.FromValue(GovernanceRuleData.FromResponse(result), result);
+                RequestUriBuilder uri = message.Request.Uri;
+                RehydrationToken rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
+                SecurityCenterArmOperation<GovernanceRuleResource> operation = new SecurityCenterArmOperation<GovernanceRuleResource>(Response.FromValue(new GovernanceRuleResource(Client, response.Value), response.GetRawResponse()), rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
+                {
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
+                }
                 return operation;
             }
             catch (Exception e)
@@ -96,20 +101,16 @@ namespace Azure.ResourceManager.SecurityCenter
         /// Creates or updates a governance rule over a given scope
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/{scope}/providers/Microsoft.Security/governanceRules/{ruleId}</description>
+        /// <term> Request Path. </term>
+        /// <description> /{scope}/providers/Microsoft.Security/governanceRules/{ruleId}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>GovernanceRules_CreateOrUpdate</description>
+        /// <term> Operation Id. </term>
+        /// <description> GovernanceRules_CreateOrUpdate. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2022-01-01-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="GovernanceRuleResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2022-01-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -117,23 +118,31 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <param name="ruleId"> The governance rule key - unique key for the standard governance rule (GUID). </param>
         /// <param name="data"> Governance rule over a given scope. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="ruleId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="ruleId"/> or <paramref name="data"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="ruleId"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual ArmOperation<GovernanceRuleResource> CreateOrUpdate(WaitUntil waitUntil, string ruleId, GovernanceRuleData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(ruleId, nameof(ruleId));
             Argument.AssertNotNull(data, nameof(data));
 
-            using var scope = _governanceRuleClientDiagnostics.CreateScope("GovernanceRuleCollection.CreateOrUpdate");
+            using DiagnosticScope scope = _governanceRulesClientDiagnostics.CreateScope("GovernanceRuleCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                var response = _governanceRuleRestClient.CreateOrUpdate(Id, ruleId, data, cancellationToken);
-                var uri = _governanceRuleRestClient.CreateCreateOrUpdateRequestUri(Id, ruleId, data);
-                var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
-                var operation = new SecurityCenterArmOperation<GovernanceRuleResource>(Response.FromValue(new GovernanceRuleResource(Client, response), response.GetRawResponse()), rehydrationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _governanceRulesRestClient.CreateCreateOrUpdateRequest(Id.ToString(), ruleId, GovernanceRuleData.ToRequestContent(data), context);
+                Response result = Pipeline.ProcessMessage(message, context);
+                Response<GovernanceRuleData> response = Response.FromValue(GovernanceRuleData.FromResponse(result), result);
+                RequestUriBuilder uri = message.Request.Uri;
+                RehydrationToken rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
+                SecurityCenterArmOperation<GovernanceRuleResource> operation = new SecurityCenterArmOperation<GovernanceRuleResource>(Response.FromValue(new GovernanceRuleResource(Client, response.Value), response.GetRawResponse()), rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
+                {
                     operation.WaitForCompletion(cancellationToken);
+                }
                 return operation;
             }
             catch (Exception e)
@@ -147,38 +156,42 @@ namespace Azure.ResourceManager.SecurityCenter
         /// Get a specific governance rule for the requested scope by ruleId
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/{scope}/providers/Microsoft.Security/governanceRules/{ruleId}</description>
+        /// <term> Request Path. </term>
+        /// <description> /{scope}/providers/Microsoft.Security/governanceRules/{ruleId}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>GovernanceRules_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> GovernanceRules_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2022-01-01-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="GovernanceRuleResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2022-01-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="ruleId"> The governance rule key - unique key for the standard governance rule (GUID). </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="ruleId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="ruleId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="ruleId"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual async Task<Response<GovernanceRuleResource>> GetAsync(string ruleId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(ruleId, nameof(ruleId));
 
-            using var scope = _governanceRuleClientDiagnostics.CreateScope("GovernanceRuleCollection.Get");
+            using DiagnosticScope scope = _governanceRulesClientDiagnostics.CreateScope("GovernanceRuleCollection.Get");
             scope.Start();
             try
             {
-                var response = await _governanceRuleRestClient.GetAsync(Id, ruleId, cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _governanceRulesRestClient.CreateGetRequest(Id.ToString(), ruleId, context);
+                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                Response<GovernanceRuleData> response = Response.FromValue(GovernanceRuleData.FromResponse(result), result);
                 if (response.Value == null)
+                {
                     throw new RequestFailedException(response.GetRawResponse());
+                }
                 return Response.FromValue(new GovernanceRuleResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -192,38 +205,42 @@ namespace Azure.ResourceManager.SecurityCenter
         /// Get a specific governance rule for the requested scope by ruleId
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/{scope}/providers/Microsoft.Security/governanceRules/{ruleId}</description>
+        /// <term> Request Path. </term>
+        /// <description> /{scope}/providers/Microsoft.Security/governanceRules/{ruleId}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>GovernanceRules_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> GovernanceRules_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2022-01-01-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="GovernanceRuleResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2022-01-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="ruleId"> The governance rule key - unique key for the standard governance rule (GUID). </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="ruleId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="ruleId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="ruleId"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual Response<GovernanceRuleResource> Get(string ruleId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(ruleId, nameof(ruleId));
 
-            using var scope = _governanceRuleClientDiagnostics.CreateScope("GovernanceRuleCollection.Get");
+            using DiagnosticScope scope = _governanceRulesClientDiagnostics.CreateScope("GovernanceRuleCollection.Get");
             scope.Start();
             try
             {
-                var response = _governanceRuleRestClient.Get(Id, ruleId, cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _governanceRulesRestClient.CreateGetRequest(Id.ToString(), ruleId, context);
+                Response result = Pipeline.ProcessMessage(message, context);
+                Response<GovernanceRuleData> response = Response.FromValue(GovernanceRuleData.FromResponse(result), result);
                 if (response.Value == null)
+                {
                     throw new RequestFailedException(response.GetRawResponse());
+                }
                 return Response.FromValue(new GovernanceRuleResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -237,50 +254,44 @@ namespace Azure.ResourceManager.SecurityCenter
         /// Get a list of all relevant governance rules over a scope
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/{scope}/providers/Microsoft.Security/governanceRules</description>
+        /// <term> Request Path. </term>
+        /// <description> /{scope}/providers/Microsoft.Security/governanceRules. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>GovernanceRules_List</description>
+        /// <term> Operation Id. </term>
+        /// <description> GovernanceRules_List. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2022-01-01-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="GovernanceRuleResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2022-01-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="GovernanceRuleResource"/> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="GovernanceRuleResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<GovernanceRuleResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _governanceRuleRestClient.CreateListRequest(Id);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _governanceRuleRestClient.CreateListNextPageRequest(nextLink, Id);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new GovernanceRuleResource(Client, GovernanceRuleData.DeserializeGovernanceRuleData(e)), _governanceRuleClientDiagnostics, Pipeline, "GovernanceRuleCollection.GetAll", "value", "nextLink", cancellationToken);
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new AsyncPageableWrapper<GovernanceRuleData, GovernanceRuleResource>(new GovernanceRulesGetAllAsyncCollectionResultOfT(_governanceRulesRestClient, Id.ToString(), context, "GovernanceRuleCollection.GetAll"), data => new GovernanceRuleResource(Client, data));
         }
 
         /// <summary>
         /// Get a list of all relevant governance rules over a scope
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/{scope}/providers/Microsoft.Security/governanceRules</description>
+        /// <term> Request Path. </term>
+        /// <description> /{scope}/providers/Microsoft.Security/governanceRules. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>GovernanceRules_List</description>
+        /// <term> Operation Id. </term>
+        /// <description> GovernanceRules_List. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2022-01-01-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="GovernanceRuleResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2022-01-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -288,45 +299,61 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <returns> A collection of <see cref="GovernanceRuleResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<GovernanceRuleResource> GetAll(CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _governanceRuleRestClient.CreateListRequest(Id);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _governanceRuleRestClient.CreateListNextPageRequest(nextLink, Id);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new GovernanceRuleResource(Client, GovernanceRuleData.DeserializeGovernanceRuleData(e)), _governanceRuleClientDiagnostics, Pipeline, "GovernanceRuleCollection.GetAll", "value", "nextLink", cancellationToken);
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new PageableWrapper<GovernanceRuleData, GovernanceRuleResource>(new GovernanceRulesGetAllCollectionResultOfT(_governanceRulesRestClient, Id.ToString(), context, "GovernanceRuleCollection.GetAll"), data => new GovernanceRuleResource(Client, data));
         }
 
         /// <summary>
         /// Checks to see if the resource exists in azure.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/{scope}/providers/Microsoft.Security/governanceRules/{ruleId}</description>
+        /// <term> Request Path. </term>
+        /// <description> /{scope}/providers/Microsoft.Security/governanceRules/{ruleId}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>GovernanceRules_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> GovernanceRules_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2022-01-01-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="GovernanceRuleResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2022-01-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="ruleId"> The governance rule key - unique key for the standard governance rule (GUID). </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="ruleId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="ruleId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="ruleId"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual async Task<Response<bool>> ExistsAsync(string ruleId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(ruleId, nameof(ruleId));
 
-            using var scope = _governanceRuleClientDiagnostics.CreateScope("GovernanceRuleCollection.Exists");
+            using DiagnosticScope scope = _governanceRulesClientDiagnostics.CreateScope("GovernanceRuleCollection.Exists");
             scope.Start();
             try
             {
-                var response = await _governanceRuleRestClient.GetAsync(Id, ruleId, cancellationToken: cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _governanceRulesRestClient.CreateGetRequest(Id.ToString(), ruleId, context);
+                await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
+                Response result = message.Response;
+                Response<GovernanceRuleData> response = default;
+                switch (result.Status)
+                {
+                    case 200:
+                        response = Response.FromValue(GovernanceRuleData.FromResponse(result), result);
+                        break;
+                    case 404:
+                        response = Response.FromValue((GovernanceRuleData)null, result);
+                        break;
+                    default:
+                        throw new RequestFailedException(result);
+                }
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -340,36 +367,50 @@ namespace Azure.ResourceManager.SecurityCenter
         /// Checks to see if the resource exists in azure.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/{scope}/providers/Microsoft.Security/governanceRules/{ruleId}</description>
+        /// <term> Request Path. </term>
+        /// <description> /{scope}/providers/Microsoft.Security/governanceRules/{ruleId}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>GovernanceRules_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> GovernanceRules_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2022-01-01-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="GovernanceRuleResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2022-01-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="ruleId"> The governance rule key - unique key for the standard governance rule (GUID). </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="ruleId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="ruleId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="ruleId"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual Response<bool> Exists(string ruleId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(ruleId, nameof(ruleId));
 
-            using var scope = _governanceRuleClientDiagnostics.CreateScope("GovernanceRuleCollection.Exists");
+            using DiagnosticScope scope = _governanceRulesClientDiagnostics.CreateScope("GovernanceRuleCollection.Exists");
             scope.Start();
             try
             {
-                var response = _governanceRuleRestClient.Get(Id, ruleId, cancellationToken: cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _governanceRulesRestClient.CreateGetRequest(Id.ToString(), ruleId, context);
+                Pipeline.Send(message, context.CancellationToken);
+                Response result = message.Response;
+                Response<GovernanceRuleData> response = default;
+                switch (result.Status)
+                {
+                    case 200:
+                        response = Response.FromValue(GovernanceRuleData.FromResponse(result), result);
+                        break;
+                    case 404:
+                        response = Response.FromValue((GovernanceRuleData)null, result);
+                        break;
+                    default:
+                        throw new RequestFailedException(result);
+                }
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -383,38 +424,54 @@ namespace Azure.ResourceManager.SecurityCenter
         /// Tries to get details for this resource from the service.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/{scope}/providers/Microsoft.Security/governanceRules/{ruleId}</description>
+        /// <term> Request Path. </term>
+        /// <description> /{scope}/providers/Microsoft.Security/governanceRules/{ruleId}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>GovernanceRules_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> GovernanceRules_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2022-01-01-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="GovernanceRuleResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2022-01-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="ruleId"> The governance rule key - unique key for the standard governance rule (GUID). </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="ruleId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="ruleId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="ruleId"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual async Task<NullableResponse<GovernanceRuleResource>> GetIfExistsAsync(string ruleId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(ruleId, nameof(ruleId));
 
-            using var scope = _governanceRuleClientDiagnostics.CreateScope("GovernanceRuleCollection.GetIfExists");
+            using DiagnosticScope scope = _governanceRulesClientDiagnostics.CreateScope("GovernanceRuleCollection.GetIfExists");
             scope.Start();
             try
             {
-                var response = await _governanceRuleRestClient.GetAsync(Id, ruleId, cancellationToken: cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _governanceRulesRestClient.CreateGetRequest(Id.ToString(), ruleId, context);
+                await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
+                Response result = message.Response;
+                Response<GovernanceRuleData> response = default;
+                switch (result.Status)
+                {
+                    case 200:
+                        response = Response.FromValue(GovernanceRuleData.FromResponse(result), result);
+                        break;
+                    case 404:
+                        response = Response.FromValue((GovernanceRuleData)null, result);
+                        break;
+                    default:
+                        throw new RequestFailedException(result);
+                }
                 if (response.Value == null)
+                {
                     return new NoValueResponse<GovernanceRuleResource>(response.GetRawResponse());
+                }
                 return Response.FromValue(new GovernanceRuleResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -428,38 +485,54 @@ namespace Azure.ResourceManager.SecurityCenter
         /// Tries to get details for this resource from the service.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/{scope}/providers/Microsoft.Security/governanceRules/{ruleId}</description>
+        /// <term> Request Path. </term>
+        /// <description> /{scope}/providers/Microsoft.Security/governanceRules/{ruleId}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>GovernanceRules_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> GovernanceRules_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2022-01-01-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="GovernanceRuleResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2022-01-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="ruleId"> The governance rule key - unique key for the standard governance rule (GUID). </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="ruleId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="ruleId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="ruleId"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual NullableResponse<GovernanceRuleResource> GetIfExists(string ruleId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(ruleId, nameof(ruleId));
 
-            using var scope = _governanceRuleClientDiagnostics.CreateScope("GovernanceRuleCollection.GetIfExists");
+            using DiagnosticScope scope = _governanceRulesClientDiagnostics.CreateScope("GovernanceRuleCollection.GetIfExists");
             scope.Start();
             try
             {
-                var response = _governanceRuleRestClient.Get(Id, ruleId, cancellationToken: cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _governanceRulesRestClient.CreateGetRequest(Id.ToString(), ruleId, context);
+                Pipeline.Send(message, context.CancellationToken);
+                Response result = message.Response;
+                Response<GovernanceRuleData> response = default;
+                switch (result.Status)
+                {
+                    case 200:
+                        response = Response.FromValue(GovernanceRuleData.FromResponse(result), result);
+                        break;
+                    case 404:
+                        response = Response.FromValue((GovernanceRuleData)null, result);
+                        break;
+                    default:
+                        throw new RequestFailedException(result);
+                }
                 if (response.Value == null)
+                {
                     return new NoValueResponse<GovernanceRuleResource>(response.GetRawResponse());
+                }
                 return Response.FromValue(new GovernanceRuleResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -479,6 +552,7 @@ namespace Azure.ResourceManager.SecurityCenter
             return GetAll().GetEnumerator();
         }
 
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
         IAsyncEnumerator<GovernanceRuleResource> IAsyncEnumerable<GovernanceRuleResource>.GetAsyncEnumerator(CancellationToken cancellationToken)
         {
             return GetAllAsync(cancellationToken: cancellationToken).GetAsyncEnumerator(cancellationToken);

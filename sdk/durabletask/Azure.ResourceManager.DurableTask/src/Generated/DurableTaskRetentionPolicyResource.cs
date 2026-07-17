@@ -130,7 +130,7 @@ namespace Azure.ResourceManager.DurableTask
                 HttpMessage message = _retentionPoliciesRestClient.CreateCreateOrReplaceRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, DurableTaskRetentionPolicyData.ToRequestContent(data), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 DurableTaskArmOperation<DurableTaskRetentionPolicyResource> operation = new DurableTaskArmOperation<DurableTaskRetentionPolicyResource>(
-                    new DurableTaskRetentionPolicyOperationSource(Client),
+                    new DurableTaskRetentionPolicyResourceOperationSource(Client),
                     _retentionPoliciesClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -189,7 +189,7 @@ namespace Azure.ResourceManager.DurableTask
                 HttpMessage message = _retentionPoliciesRestClient.CreateCreateOrReplaceRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, DurableTaskRetentionPolicyData.ToRequestContent(data), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 DurableTaskArmOperation<DurableTaskRetentionPolicyResource> operation = new DurableTaskArmOperation<DurableTaskRetentionPolicyResource>(
-                    new DurableTaskRetentionPolicyOperationSource(Client),
+                    new DurableTaskRetentionPolicyResourceOperationSource(Client),
                     _retentionPoliciesClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -344,7 +344,7 @@ namespace Azure.ResourceManager.DurableTask
                 HttpMessage message = _retentionPoliciesRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, DurableTaskRetentionPolicyData.ToRequestContent(data), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 DurableTaskArmOperation<DurableTaskRetentionPolicyResource> operation = new DurableTaskArmOperation<DurableTaskRetentionPolicyResource>(
-                    new DurableTaskRetentionPolicyOperationSource(Client),
+                    new DurableTaskRetentionPolicyResourceOperationSource(Client),
                     _retentionPoliciesClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -403,7 +403,7 @@ namespace Azure.ResourceManager.DurableTask
                 HttpMessage message = _retentionPoliciesRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, DurableTaskRetentionPolicyData.ToRequestContent(data), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 DurableTaskArmOperation<DurableTaskRetentionPolicyResource> operation = new DurableTaskArmOperation<DurableTaskRetentionPolicyResource>(
-                    new DurableTaskRetentionPolicyOperationSource(Client),
+                    new DurableTaskRetentionPolicyResourceOperationSource(Client),
                     _retentionPoliciesClientDiagnostics,
                     Pipeline,
                     message.Request,

@@ -8,264 +8,246 @@
 using System;
 using System.Collections.Generic;
 using Azure.Core;
+using Azure.ResourceManager.AppService;
 using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.AppService.Models
 {
-    /// <summary>
-    /// The workflow type.
-    /// Serialized Name: Workflow
-    /// </summary>
+    /// <summary> The workflow type. </summary>
     public partial class WorkflowData : TrackedResourceData
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="WorkflowData"/>. </summary>
-        /// <param name="location"> The location. </param>
+        /// <param name="location"> The geo-location where the resource lives. </param>
         public WorkflowData(AzureLocation location) : base(location)
         {
-            Parameters = new ChangeTrackingDictionary<string, WorkflowContent>();
         }
 
         /// <summary> Initializes a new instance of <see cref="WorkflowData"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="tags"> The tags. </param>
-        /// <param name="location"> The location. </param>
-        /// <param name="identity">
-        /// Managed service identity.
-        /// Serialized Name: Workflow.identity
-        /// </param>
-        /// <param name="provisioningState">
-        /// Gets the provisioning state.
-        /// Serialized Name: Workflow.properties.provisioningState
-        /// </param>
-        /// <param name="createdOn">
-        /// Gets the created time.
-        /// Serialized Name: Workflow.properties.createdTime
-        /// </param>
-        /// <param name="changedOn">
-        /// Gets the changed time.
-        /// Serialized Name: Workflow.properties.changedTime
-        /// </param>
-        /// <param name="state">
-        /// The state.
-        /// Serialized Name: Workflow.properties.state
-        /// </param>
-        /// <param name="version">
-        /// Gets the version.
-        /// Serialized Name: Workflow.properties.version
-        /// </param>
-        /// <param name="accessEndpoint">
-        /// Gets the access endpoint.
-        /// Serialized Name: Workflow.properties.accessEndpoint
-        /// </param>
-        /// <param name="endpointsConfiguration">
-        /// The endpoints configuration.
-        /// Serialized Name: Workflow.properties.endpointsConfiguration
-        /// </param>
-        /// <param name="accessControl">
-        /// The access control configuration.
-        /// Serialized Name: Workflow.properties.accessControl
-        /// </param>
-        /// <param name="sku">
-        /// The sku.
-        /// Serialized Name: Workflow.properties.sku
-        /// </param>
-        /// <param name="integrationAccount">
-        /// The integration account.
-        /// Serialized Name: Workflow.properties.integrationAccount
-        /// </param>
-        /// <param name="integrationServiceEnvironment">
-        /// The integration service environment.
-        /// Serialized Name: Workflow.properties.integrationServiceEnvironment
-        /// </param>
-        /// <param name="definition">
-        /// The definition.
-        /// Serialized Name: Workflow.properties.definition
-        /// </param>
-        /// <param name="parameters">
-        /// The parameters.
-        /// Serialized Name: Workflow.properties.parameters
-        /// </param>
-        /// <param name="kind">
-        /// The workflow kind.
-        /// Serialized Name: Workflow.properties.kind
-        /// </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal WorkflowData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ManagedServiceIdentity identity, WorkflowProvisioningState? provisioningState, DateTimeOffset? createdOn, DateTimeOffset? changedOn, WorkflowState? state, string version, string accessEndpoint, FlowEndpointsConfiguration endpointsConfiguration, FlowAccessControlConfiguration accessControl, WorkflowSku sku, WorkflowResourceReference integrationAccount, WorkflowResourceReference integrationServiceEnvironment, BinaryData definition, IDictionary<string, WorkflowContent> parameters, AppServiceKind? kind, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData, tags, location)
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="tags"> Resource tags. </param>
+        /// <param name="location"> The geo-location where the resource lives. </param>
+        /// <param name="properties"> The workflow properties. </param>
+        /// <param name="identity"> Managed service identity. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal WorkflowData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, WorkflowProperties properties, ManagedServiceIdentity identity, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(id, name, resourceType, systemData, tags, location)
         {
+            Properties = properties;
             Identity = identity;
-            ProvisioningState = provisioningState;
-            CreatedOn = createdOn;
-            ChangedOn = changedOn;
-            State = state;
-            Version = version;
-            AccessEndpoint = accessEndpoint;
-            EndpointsConfiguration = endpointsConfiguration;
-            AccessControl = accessControl;
-            Sku = sku;
-            IntegrationAccount = integrationAccount;
-            IntegrationServiceEnvironment = integrationServiceEnvironment;
-            Definition = definition;
-            Parameters = parameters;
-            Kind = kind;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
-        /// <summary> Initializes a new instance of <see cref="WorkflowData"/> for deserialization. </summary>
-        internal WorkflowData()
-        {
-        }
+        /// <summary> The workflow properties. </summary>
+        [WirePath("properties")]
+        internal WorkflowProperties Properties { get; set; }
 
-        /// <summary>
-        /// Managed service identity.
-        /// Serialized Name: Workflow.identity
-        /// </summary>
+        /// <summary> Managed service identity. </summary>
         [WirePath("identity")]
         public ManagedServiceIdentity Identity { get; set; }
-        /// <summary>
-        /// Gets the provisioning state.
-        /// Serialized Name: Workflow.properties.provisioningState
-        /// </summary>
+
+        /// <summary> Gets the provisioning state. </summary>
         [WirePath("properties.provisioningState")]
-        public WorkflowProvisioningState? ProvisioningState { get; }
-        /// <summary>
-        /// Gets the created time.
-        /// Serialized Name: Workflow.properties.createdTime
-        /// </summary>
+        public WorkflowProvisioningState? ProvisioningState
+        {
+            get
+            {
+                return Properties is null ? default : Properties.ProvisioningState;
+            }
+        }
+
+        /// <summary> Gets the created time. </summary>
         [WirePath("properties.createdTime")]
-        public DateTimeOffset? CreatedOn { get; }
-        /// <summary>
-        /// Gets the changed time.
-        /// Serialized Name: Workflow.properties.changedTime
-        /// </summary>
+        public DateTimeOffset? CreatedOn
+        {
+            get
+            {
+                return Properties is null ? default : Properties.CreatedOn;
+            }
+        }
+
+        /// <summary> Gets the changed time. </summary>
         [WirePath("properties.changedTime")]
-        public DateTimeOffset? ChangedOn { get; }
-        /// <summary>
-        /// The state.
-        /// Serialized Name: Workflow.properties.state
-        /// </summary>
+        public DateTimeOffset? ChangedOn
+        {
+            get
+            {
+                return Properties is null ? default : Properties.ChangedOn;
+            }
+        }
+
+        /// <summary> The state. </summary>
         [WirePath("properties.state")]
-        public WorkflowState? State { get; set; }
-        /// <summary>
-        /// Gets the version.
-        /// Serialized Name: Workflow.properties.version
-        /// </summary>
+        public WorkflowState? State
+        {
+            get
+            {
+                return Properties is null ? default : Properties.State;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new WorkflowProperties();
+                }
+                Properties.State = value;
+            }
+        }
+
+        /// <summary> Gets the version. </summary>
         [WirePath("properties.version")]
-        public string Version { get; }
-        /// <summary>
-        /// Gets the access endpoint.
-        /// Serialized Name: Workflow.properties.accessEndpoint
-        /// </summary>
+        public string Version
+        {
+            get
+            {
+                return Properties is null ? default : Properties.Version;
+            }
+        }
+
+        /// <summary> Gets the access endpoint. </summary>
         [WirePath("properties.accessEndpoint")]
-        public string AccessEndpoint { get; }
-        /// <summary>
-        /// The endpoints configuration.
-        /// Serialized Name: Workflow.properties.endpointsConfiguration
-        /// </summary>
+        public string AccessEndpoint
+        {
+            get
+            {
+                return Properties is null ? default : Properties.AccessEndpoint;
+            }
+        }
+
+        /// <summary> The endpoints configuration. </summary>
         [WirePath("properties.endpointsConfiguration")]
-        public FlowEndpointsConfiguration EndpointsConfiguration { get; set; }
-        /// <summary>
-        /// The access control configuration.
-        /// Serialized Name: Workflow.properties.accessControl
-        /// </summary>
+        public FlowEndpointsConfiguration EndpointsConfiguration
+        {
+            get
+            {
+                return Properties is null ? default : Properties.EndpointsConfiguration;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new WorkflowProperties();
+                }
+                Properties.EndpointsConfiguration = value;
+            }
+        }
+
+        /// <summary> The access control configuration. </summary>
         [WirePath("properties.accessControl")]
-        public FlowAccessControlConfiguration AccessControl { get; set; }
-        /// <summary>
-        /// The sku.
-        /// Serialized Name: Workflow.properties.sku
-        /// </summary>
+        public FlowAccessControlConfiguration AccessControl
+        {
+            get
+            {
+                return Properties is null ? default : Properties.AccessControl;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new WorkflowProperties();
+                }
+                Properties.AccessControl = value;
+            }
+        }
+
+        /// <summary> The sku. </summary>
         [WirePath("properties.sku")]
-        public WorkflowSku Sku { get; }
-        /// <summary>
-        /// The integration account.
-        /// Serialized Name: Workflow.properties.integrationAccount
-        /// </summary>
+        public WorkflowSku Sku
+        {
+            get
+            {
+                return Properties is null ? default : Properties.Sku;
+            }
+        }
+
+        /// <summary> The integration account. </summary>
         [WirePath("properties.integrationAccount")]
-        public WorkflowResourceReference IntegrationAccount { get; set; }
-        /// <summary>
-        /// The integration service environment.
-        /// Serialized Name: Workflow.properties.integrationServiceEnvironment
-        /// </summary>
+        public WorkflowResourceReference IntegrationAccount
+        {
+            get
+            {
+                return Properties is null ? default : Properties.IntegrationAccount;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new WorkflowProperties();
+                }
+                Properties.IntegrationAccount = value;
+            }
+        }
+
+        /// <summary> The integration service environment. </summary>
         [WirePath("properties.integrationServiceEnvironment")]
-        public WorkflowResourceReference IntegrationServiceEnvironment { get; set; }
-        /// <summary>
-        /// The definition.
-        /// Serialized Name: Workflow.properties.definition
-        /// <para>
-        /// To assign an object to this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
+        public WorkflowResourceReference IntegrationServiceEnvironment
+        {
+            get
+            {
+                return Properties is null ? default : Properties.IntegrationServiceEnvironment;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new WorkflowProperties();
+                }
+                Properties.IntegrationServiceEnvironment = value;
+            }
+        }
+
+        /// <summary> The definition. </summary>
         [WirePath("properties.definition")]
-        public BinaryData Definition { get; set; }
-        /// <summary>
-        /// The parameters.
-        /// Serialized Name: Workflow.properties.parameters
-        /// </summary>
+        public BinaryData Definition
+        {
+            get
+            {
+                return Properties is null ? default : Properties.Definition;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new WorkflowProperties();
+                }
+                Properties.Definition = value;
+            }
+        }
+
+        /// <summary> The parameters. </summary>
         [WirePath("properties.parameters")]
-        public IDictionary<string, WorkflowContent> Parameters { get; }
-        /// <summary>
-        /// The workflow kind.
-        /// Serialized Name: Workflow.properties.kind
-        /// </summary>
+        public IDictionary<string, WorkflowContent> Parameters
+        {
+            get
+            {
+                if (Properties is null)
+                {
+                    Properties = new WorkflowProperties();
+                }
+                return Properties.Parameters;
+            }
+        }
+
+        /// <summary> The workflow kind. </summary>
         [WirePath("properties.kind")]
-        public AppServiceKind? Kind { get; set; }
+        public AppServiceKind? Kind
+        {
+            get
+            {
+                return Properties is null ? default : Properties.Kind;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new WorkflowProperties();
+                }
+                Properties.Kind = value;
+            }
+        }
     }
 }

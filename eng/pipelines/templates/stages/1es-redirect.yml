@@ -11,7 +11,7 @@ resources:
     - repository: azure-sdk-build-tools
       type: git
       name: internal/azure-sdk-build-tools
-      ref: refs/tags/azure-sdk-build-tools_20260112.5
+      ref: refs/tags/azure-sdk-build-tools_20260702.2
 
 parameters:
 - name: stages
@@ -40,7 +40,8 @@ extends:
         - 1ES.PT.Tag-refs/tags/canary
     settings:
       skipBuildTagsForGitHubPullRequests: true
-      networkIsolationPolicy: Permissive
+      # Do not add CFSClean until packages are published through ESRP instead of directly to NuGet.
+      networkIsolationPolicy: Permissive, CFSClean2, CFSClean3
     sdl:
       ${{ if and(eq(variables['Build.DefinitionName'], 'net - core'), eq(variables['Build.SourceBranchName'], 'main'), eq(variables['System.TeamProject'], 'internal')) }}:
         autobaseline:

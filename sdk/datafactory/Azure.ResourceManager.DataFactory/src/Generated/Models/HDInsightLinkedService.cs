@@ -8,6 +8,7 @@
 using System;
 using System.Collections.Generic;
 using Azure.Core.Expressions.DataFactory;
+using Azure.ResourceManager.DataFactory;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
@@ -17,12 +18,11 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <summary> Initializes a new instance of <see cref="HDInsightLinkedService"/>. </summary>
         /// <param name="clusterUri"> HDInsight cluster URI. Type: string (or Expression with resultType string). </param>
         /// <exception cref="ArgumentNullException"> <paramref name="clusterUri"/> is null. </exception>
-        public HDInsightLinkedService(DataFactoryElement<string> clusterUri)
+        public HDInsightLinkedService(DataFactoryElement<string> clusterUri) : base("HDInsight")
         {
             Argument.AssertNotNull(clusterUri, nameof(clusterUri));
 
-            ClusterUri = clusterUri;
-            LinkedServiceType = "HDInsight";
+            TypeProperties = new HDInsightLinkedServiceTypeProperties(clusterUri);
         }
 
         /// <summary> Initializes a new instance of <see cref="HDInsightLinkedService"/>. </summary>
@@ -32,56 +32,137 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <param name="description"> Linked service description. </param>
         /// <param name="parameters"> Parameters for linked service. </param>
         /// <param name="annotations"> List of tags that can be used for describing the linked service. </param>
-        /// <param name="additionalProperties"> Additional Properties. </param>
-        /// <param name="clusterUri"> HDInsight cluster URI. Type: string (or Expression with resultType string). </param>
-        /// <param name="clusterAuthType"> HDInsight cluster authentication type. </param>
-        /// <param name="userName"> HDInsight cluster user name. Type: string (or Expression with resultType string). </param>
-        /// <param name="password"> HDInsight cluster password. </param>
-        /// <param name="linkedServiceName"> The Azure Storage linked service reference. </param>
-        /// <param name="hcatalogLinkedServiceName"> A reference to the Azure SQL linked service that points to the HCatalog database. </param>
-        /// <param name="encryptedCredential"> The encrypted credential used for authentication. Credentials are encrypted using the integration runtime credential manager. Type: string. </param>
-        /// <param name="isEspEnabled"> Specify if the HDInsight is created with ESP (Enterprise Security Package). Type: Boolean. </param>
-        /// <param name="fileSystem"> Specify the FileSystem if the main storage for the HDInsight is ADLS Gen2. Type: string (or Expression with resultType string). </param>
-        /// <param name="credential"> The credential reference containing MI authentication information for the HDInsight cluster. </param>
-        internal HDInsightLinkedService(string linkedServiceType, string linkedServiceVersion, IntegrationRuntimeReference connectVia, string description, IDictionary<string, EntityParameterSpecification> parameters, IList<BinaryData> annotations, IDictionary<string, BinaryData> additionalProperties, DataFactoryElement<string> clusterUri, HDInsightClusterAuthenticationType? clusterAuthType, DataFactoryElement<string> userName, DataFactorySecret password, DataFactoryLinkedServiceReference linkedServiceName, DataFactoryLinkedServiceReference hcatalogLinkedServiceName, string encryptedCredential, DataFactoryElement<bool> isEspEnabled, DataFactoryElement<string> fileSystem, DataFactoryCredentialReference credential) : base(linkedServiceType, linkedServiceVersion, connectVia, description, parameters, annotations, additionalProperties)
+        /// <param name="additionalProperties"></param>
+        /// <param name="typeProperties"> HDInsight linked service properties. </param>
+        /// <param name="linkedServiceName"></param>
+        /// <param name="password"></param>
+        internal HDInsightLinkedService(string linkedServiceType, string linkedServiceVersion, IntegrationRuntimeReference connectVia, string description, IDictionary<string, EntityParameterSpecification> parameters, IList<BinaryData> annotations, IDictionary<string, BinaryData> additionalProperties, HDInsightLinkedServiceTypeProperties typeProperties, DataFactoryLinkedServiceReference linkedServiceName, DataFactorySecret password) : base(linkedServiceType, linkedServiceVersion, connectVia, description, parameters, annotations, additionalProperties)
         {
-            ClusterUri = clusterUri;
-            ClusterAuthType = clusterAuthType;
-            UserName = userName;
-            Password = password;
+            TypeProperties = typeProperties;
             LinkedServiceName = linkedServiceName;
-            HcatalogLinkedServiceName = hcatalogLinkedServiceName;
-            EncryptedCredential = encryptedCredential;
-            IsEspEnabled = isEspEnabled;
-            FileSystem = fileSystem;
-            Credential = credential;
-            LinkedServiceType = linkedServiceType ?? "HDInsight";
+            Password = password;
         }
 
-        /// <summary> Initializes a new instance of <see cref="HDInsightLinkedService"/> for deserialization. </summary>
-        internal HDInsightLinkedService()
-        {
-        }
+        /// <summary> HDInsight linked service properties. </summary>
+        internal HDInsightLinkedServiceTypeProperties TypeProperties { get; set; }
 
         /// <summary> HDInsight cluster URI. Type: string (or Expression with resultType string). </summary>
-        public DataFactoryElement<string> ClusterUri { get; set; }
+        public DataFactoryElement<string> ClusterUri
+        {
+            get
+            {
+                return TypeProperties is null ? default : TypeProperties.ClusterUri;
+            }
+            set
+            {
+                if (TypeProperties is null)
+                {
+                    TypeProperties = new HDInsightLinkedServiceTypeProperties();
+                }
+                TypeProperties.ClusterUri = value;
+            }
+        }
+
         /// <summary> HDInsight cluster authentication type. </summary>
-        public HDInsightClusterAuthenticationType? ClusterAuthType { get; set; }
+        public HDInsightClusterAuthenticationType? ClusterAuthType
+        {
+            get
+            {
+                return TypeProperties is null ? default : TypeProperties.ClusterAuthType;
+            }
+            set
+            {
+                if (TypeProperties is null)
+                {
+                    TypeProperties = new HDInsightLinkedServiceTypeProperties();
+                }
+                TypeProperties.ClusterAuthType = value;
+            }
+        }
+
         /// <summary> HDInsight cluster user name. Type: string (or Expression with resultType string). </summary>
-        public DataFactoryElement<string> UserName { get; set; }
-        /// <summary> HDInsight cluster password. </summary>
-        public DataFactorySecret Password { get; set; }
-        /// <summary> The Azure Storage linked service reference. </summary>
-        public DataFactoryLinkedServiceReference LinkedServiceName { get; set; }
-        /// <summary> A reference to the Azure SQL linked service that points to the HCatalog database. </summary>
-        public DataFactoryLinkedServiceReference HcatalogLinkedServiceName { get; set; }
+        public DataFactoryElement<string> UserName
+        {
+            get
+            {
+                return TypeProperties is null ? default : TypeProperties.UserName;
+            }
+            set
+            {
+                if (TypeProperties is null)
+                {
+                    TypeProperties = new HDInsightLinkedServiceTypeProperties();
+                }
+                TypeProperties.UserName = value;
+            }
+        }
+
         /// <summary> The encrypted credential used for authentication. Credentials are encrypted using the integration runtime credential manager. Type: string. </summary>
-        public string EncryptedCredential { get; set; }
+        public string EncryptedCredential
+        {
+            get
+            {
+                return TypeProperties is null ? default : TypeProperties.EncryptedCredential;
+            }
+            set
+            {
+                if (TypeProperties is null)
+                {
+                    TypeProperties = new HDInsightLinkedServiceTypeProperties();
+                }
+                TypeProperties.EncryptedCredential = value;
+            }
+        }
+
         /// <summary> Specify if the HDInsight is created with ESP (Enterprise Security Package). Type: Boolean. </summary>
-        public DataFactoryElement<bool> IsEspEnabled { get; set; }
+        public DataFactoryElement<bool> IsEspEnabled
+        {
+            get
+            {
+                return TypeProperties is null ? default : TypeProperties.IsEspEnabled;
+            }
+            set
+            {
+                if (TypeProperties is null)
+                {
+                    TypeProperties = new HDInsightLinkedServiceTypeProperties();
+                }
+                TypeProperties.IsEspEnabled = value;
+            }
+        }
+
         /// <summary> Specify the FileSystem if the main storage for the HDInsight is ADLS Gen2. Type: string (or Expression with resultType string). </summary>
-        public DataFactoryElement<string> FileSystem { get; set; }
+        public DataFactoryElement<string> FileSystem
+        {
+            get
+            {
+                return TypeProperties is null ? default : TypeProperties.FileSystem;
+            }
+            set
+            {
+                if (TypeProperties is null)
+                {
+                    TypeProperties = new HDInsightLinkedServiceTypeProperties();
+                }
+                TypeProperties.FileSystem = value;
+            }
+        }
+
         /// <summary> The credential reference containing MI authentication information for the HDInsight cluster. </summary>
-        public DataFactoryCredentialReference Credential { get; set; }
+        public DataFactoryCredentialReference Credential
+        {
+            get
+            {
+                return TypeProperties is null ? default : TypeProperties.Credential;
+            }
+            set
+            {
+                if (TypeProperties is null)
+                {
+                    TypeProperties = new HDInsightLinkedServiceTypeProperties();
+                }
+                TypeProperties.Credential = value;
+            }
+        }
     }
 }

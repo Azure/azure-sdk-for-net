@@ -56,8 +56,8 @@ namespace Azure.ResourceManager.StandbyPool
                     yield break;
                 }
                 StandbyVirtualMachinePoolRuntimeViewResourceListResult result = StandbyVirtualMachinePoolRuntimeViewResourceListResult.FromResponse(response);
-                yield return Page<StandbyVirtualMachinePoolRuntimeViewData>.FromValues((IReadOnlyList<StandbyVirtualMachinePoolRuntimeViewData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 nextPage = result.NextLink;
+                yield return Page<StandbyVirtualMachinePoolRuntimeViewData>.FromValues((IReadOnlyList<StandbyVirtualMachinePoolRuntimeViewData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 if (nextPage == null)
                 {
                     yield break;

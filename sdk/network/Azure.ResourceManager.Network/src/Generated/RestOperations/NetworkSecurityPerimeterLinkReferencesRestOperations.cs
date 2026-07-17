@@ -6,434 +6,140 @@
 #nullable disable
 
 using System;
-using System.Text.Json;
-using System.Threading;
-using System.Threading.Tasks;
+using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager.Network.Models;
 
 namespace Azure.ResourceManager.Network
 {
-    internal partial class NetworkSecurityPerimeterLinkReferencesRestOperations
+    internal partial class NetworkSecurityPerimeterLinkReferences
     {
-        private readonly TelemetryDetails _userAgent;
-        private readonly HttpPipeline _pipeline;
         private readonly Uri _endpoint;
         private readonly string _apiVersion;
 
-        /// <summary> Initializes a new instance of NetworkSecurityPerimeterLinkReferencesRestOperations. </summary>
+        /// <summary> Initializes a new instance of NetworkSecurityPerimeterLinkReferences for mocking. </summary>
+        protected NetworkSecurityPerimeterLinkReferences()
+        {
+        }
+
+        /// <summary> Initializes a new instance of NetworkSecurityPerimeterLinkReferences. </summary>
+        /// <param name="clientDiagnostics"> The ClientDiagnostics is used to provide tracing support for the client library. </param>
         /// <param name="pipeline"> The HTTP pipeline for sending and receiving REST requests and responses. </param>
-        /// <param name="applicationId"> The application id to use for user agent. </param>
-        /// <param name="endpoint"> server parameter. </param>
-        /// <param name="apiVersion"> Api Version. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="pipeline"/> or <paramref name="apiVersion"/> is null. </exception>
-        public NetworkSecurityPerimeterLinkReferencesRestOperations(HttpPipeline pipeline, string applicationId, Uri endpoint = null, string apiVersion = default)
+        /// <param name="endpoint"> Service endpoint. </param>
+        /// <param name="apiVersion"></param>
+        internal NetworkSecurityPerimeterLinkReferences(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Uri endpoint, string apiVersion)
         {
-            _pipeline = pipeline ?? throw new ArgumentNullException(nameof(pipeline));
-            _endpoint = endpoint ?? new Uri("https://management.azure.com");
-            _apiVersion = apiVersion ?? "2025-05-01";
-            _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
+            ClientDiagnostics = clientDiagnostics;
+            _endpoint = endpoint;
+            Pipeline = pipeline;
+            _apiVersion = apiVersion;
         }
 
-        internal RequestUriBuilder CreateGetRequestUri(string subscriptionId, string resourceGroupName, string networkSecurityPerimeterName, string linkReferenceName)
+        /// <summary> The HTTP pipeline for sending and receiving REST requests and responses. </summary>
+        public virtual HttpPipeline Pipeline { get; }
+
+        /// <summary> The ClientDiagnostics is used to provide tracing support for the client library. </summary>
+        internal ClientDiagnostics ClientDiagnostics { get; }
+
+        internal HttpMessage CreateGetRequest(Guid subscriptionId, string resourceGroupName, string networkSecurityPerimeterName, string linkReferenceName, RequestContext context)
         {
-            var uri = new RawRequestUriBuilder();
+            RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/subscriptions/", false);
-            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath(subscriptionId.ToString(), true);
             uri.AppendPath("/resourceGroups/", false);
             uri.AppendPath(resourceGroupName, true);
             uri.AppendPath("/providers/Microsoft.Network/networkSecurityPerimeters/", false);
             uri.AppendPath(networkSecurityPerimeterName, true);
             uri.AppendPath("/linkReferences/", false);
             uri.AppendPath(linkReferenceName, true);
-            uri.AppendQuery("api-version", _apiVersion, true);
-            return uri;
-        }
-
-        internal HttpMessage CreateGetRequest(string subscriptionId, string resourceGroupName, string networkSecurityPerimeterName, string linkReferenceName)
-        {
-            var message = _pipeline.CreateMessage();
-            var request = message.Request;
-            request.Method = RequestMethod.Get;
-            var uri = new RawRequestUriBuilder();
-            uri.Reset(_endpoint);
-            uri.AppendPath("/subscriptions/", false);
-            uri.AppendPath(subscriptionId, true);
-            uri.AppendPath("/resourceGroups/", false);
-            uri.AppendPath(resourceGroupName, true);
-            uri.AppendPath("/providers/Microsoft.Network/networkSecurityPerimeters/", false);
-            uri.AppendPath(networkSecurityPerimeterName, true);
-            uri.AppendPath("/linkReferences/", false);
-            uri.AppendPath(linkReferenceName, true);
-            uri.AppendQuery("api-version", _apiVersion, true);
+            if (_apiVersion != null)
+            {
+                uri.AppendQuery("api-version", _apiVersion, true);
+            }
+            HttpMessage message = Pipeline.CreateMessage();
+            Request request = message.Request;
             request.Uri = uri;
-            request.Headers.Add("Accept", "application/json");
-            _userAgent.Apply(message);
+            request.Method = RequestMethod.Get;
+            request.Headers.SetValue("Accept", "application/json");
             return message;
         }
 
-        /// <summary> Gets the specified NSP linkReference resource. </summary>
-        /// <param name="subscriptionId"> The subscription credentials which uniquely identify the Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
-        /// <param name="resourceGroupName"> The name of the resource group. </param>
-        /// <param name="networkSecurityPerimeterName"> The name of the network security perimeter. </param>
-        /// <param name="linkReferenceName"> The name of the NSP linkReference. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="networkSecurityPerimeterName"/> or <paramref name="linkReferenceName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="networkSecurityPerimeterName"/> or <paramref name="linkReferenceName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<NetworkSecurityPerimeterLinkReferenceData>> GetAsync(string subscriptionId, string resourceGroupName, string networkSecurityPerimeterName, string linkReferenceName, CancellationToken cancellationToken = default)
+        internal HttpMessage CreateDeleteRequest(Guid subscriptionId, string resourceGroupName, string networkSecurityPerimeterName, string linkReferenceName, RequestContext context)
         {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(networkSecurityPerimeterName, nameof(networkSecurityPerimeterName));
-            Argument.AssertNotNullOrEmpty(linkReferenceName, nameof(linkReferenceName));
-
-            using var message = CreateGetRequest(subscriptionId, resourceGroupName, networkSecurityPerimeterName, linkReferenceName);
-            await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
-            switch (message.Response.Status)
-            {
-                case 200:
-                    {
-                        NetworkSecurityPerimeterLinkReferenceData value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
-                        value = NetworkSecurityPerimeterLinkReferenceData.DeserializeNetworkSecurityPerimeterLinkReferenceData(document.RootElement);
-                        return Response.FromValue(value, message.Response);
-                    }
-                case 404:
-                    return Response.FromValue((NetworkSecurityPerimeterLinkReferenceData)null, message.Response);
-                default:
-                    throw new RequestFailedException(message.Response);
-            }
-        }
-
-        /// <summary> Gets the specified NSP linkReference resource. </summary>
-        /// <param name="subscriptionId"> The subscription credentials which uniquely identify the Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
-        /// <param name="resourceGroupName"> The name of the resource group. </param>
-        /// <param name="networkSecurityPerimeterName"> The name of the network security perimeter. </param>
-        /// <param name="linkReferenceName"> The name of the NSP linkReference. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="networkSecurityPerimeterName"/> or <paramref name="linkReferenceName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="networkSecurityPerimeterName"/> or <paramref name="linkReferenceName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<NetworkSecurityPerimeterLinkReferenceData> Get(string subscriptionId, string resourceGroupName, string networkSecurityPerimeterName, string linkReferenceName, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(networkSecurityPerimeterName, nameof(networkSecurityPerimeterName));
-            Argument.AssertNotNullOrEmpty(linkReferenceName, nameof(linkReferenceName));
-
-            using var message = CreateGetRequest(subscriptionId, resourceGroupName, networkSecurityPerimeterName, linkReferenceName);
-            _pipeline.Send(message, cancellationToken);
-            switch (message.Response.Status)
-            {
-                case 200:
-                    {
-                        NetworkSecurityPerimeterLinkReferenceData value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
-                        value = NetworkSecurityPerimeterLinkReferenceData.DeserializeNetworkSecurityPerimeterLinkReferenceData(document.RootElement);
-                        return Response.FromValue(value, message.Response);
-                    }
-                case 404:
-                    return Response.FromValue((NetworkSecurityPerimeterLinkReferenceData)null, message.Response);
-                default:
-                    throw new RequestFailedException(message.Response);
-            }
-        }
-
-        internal RequestUriBuilder CreateDeleteRequestUri(string subscriptionId, string resourceGroupName, string networkSecurityPerimeterName, string linkReferenceName)
-        {
-            var uri = new RawRequestUriBuilder();
+            RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/subscriptions/", false);
-            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath(subscriptionId.ToString(), true);
             uri.AppendPath("/resourceGroups/", false);
             uri.AppendPath(resourceGroupName, true);
             uri.AppendPath("/providers/Microsoft.Network/networkSecurityPerimeters/", false);
             uri.AppendPath(networkSecurityPerimeterName, true);
             uri.AppendPath("/linkReferences/", false);
             uri.AppendPath(linkReferenceName, true);
-            uri.AppendQuery("api-version", _apiVersion, true);
-            return uri;
-        }
-
-        internal HttpMessage CreateDeleteRequest(string subscriptionId, string resourceGroupName, string networkSecurityPerimeterName, string linkReferenceName)
-        {
-            var message = _pipeline.CreateMessage();
-            var request = message.Request;
+            if (_apiVersion != null)
+            {
+                uri.AppendQuery("api-version", _apiVersion, true);
+            }
+            HttpMessage message = Pipeline.CreateMessage();
+            Request request = message.Request;
+            request.Uri = uri;
             request.Method = RequestMethod.Delete;
-            var uri = new RawRequestUriBuilder();
-            uri.Reset(_endpoint);
-            uri.AppendPath("/subscriptions/", false);
-            uri.AppendPath(subscriptionId, true);
-            uri.AppendPath("/resourceGroups/", false);
-            uri.AppendPath(resourceGroupName, true);
-            uri.AppendPath("/providers/Microsoft.Network/networkSecurityPerimeters/", false);
-            uri.AppendPath(networkSecurityPerimeterName, true);
-            uri.AppendPath("/linkReferences/", false);
-            uri.AppendPath(linkReferenceName, true);
-            uri.AppendQuery("api-version", _apiVersion, true);
-            request.Uri = uri;
-            request.Headers.Add("Accept", "application/json");
-            _userAgent.Apply(message);
             return message;
         }
 
-        /// <summary> Deletes an NSP LinkReference resource. </summary>
-        /// <param name="subscriptionId"> The subscription credentials which uniquely identify the Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
-        /// <param name="resourceGroupName"> The name of the resource group. </param>
-        /// <param name="networkSecurityPerimeterName"> The name of the network security perimeter. </param>
-        /// <param name="linkReferenceName"> The name of the NSP linkReference. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="networkSecurityPerimeterName"/> or <paramref name="linkReferenceName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="networkSecurityPerimeterName"/> or <paramref name="linkReferenceName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response> DeleteAsync(string subscriptionId, string resourceGroupName, string networkSecurityPerimeterName, string linkReferenceName, CancellationToken cancellationToken = default)
+        internal HttpMessage CreateGetAllRequest(Guid subscriptionId, string resourceGroupName, string networkSecurityPerimeterName, int? top, string skipToken, RequestContext context)
         {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(networkSecurityPerimeterName, nameof(networkSecurityPerimeterName));
-            Argument.AssertNotNullOrEmpty(linkReferenceName, nameof(linkReferenceName));
-
-            using var message = CreateDeleteRequest(subscriptionId, resourceGroupName, networkSecurityPerimeterName, linkReferenceName);
-            await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
-            switch (message.Response.Status)
-            {
-                case 200:
-                case 202:
-                case 204:
-                    return message.Response;
-                default:
-                    throw new RequestFailedException(message.Response);
-            }
-        }
-
-        /// <summary> Deletes an NSP LinkReference resource. </summary>
-        /// <param name="subscriptionId"> The subscription credentials which uniquely identify the Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
-        /// <param name="resourceGroupName"> The name of the resource group. </param>
-        /// <param name="networkSecurityPerimeterName"> The name of the network security perimeter. </param>
-        /// <param name="linkReferenceName"> The name of the NSP linkReference. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="networkSecurityPerimeterName"/> or <paramref name="linkReferenceName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="networkSecurityPerimeterName"/> or <paramref name="linkReferenceName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response Delete(string subscriptionId, string resourceGroupName, string networkSecurityPerimeterName, string linkReferenceName, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(networkSecurityPerimeterName, nameof(networkSecurityPerimeterName));
-            Argument.AssertNotNullOrEmpty(linkReferenceName, nameof(linkReferenceName));
-
-            using var message = CreateDeleteRequest(subscriptionId, resourceGroupName, networkSecurityPerimeterName, linkReferenceName);
-            _pipeline.Send(message, cancellationToken);
-            switch (message.Response.Status)
-            {
-                case 200:
-                case 202:
-                case 204:
-                    return message.Response;
-                default:
-                    throw new RequestFailedException(message.Response);
-            }
-        }
-
-        internal RequestUriBuilder CreateListRequestUri(string subscriptionId, string resourceGroupName, string networkSecurityPerimeterName, int? top, string skipToken)
-        {
-            var uri = new RawRequestUriBuilder();
+            RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/subscriptions/", false);
-            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath(subscriptionId.ToString(), true);
             uri.AppendPath("/resourceGroups/", false);
             uri.AppendPath(resourceGroupName, true);
             uri.AppendPath("/providers/Microsoft.Network/networkSecurityPerimeters/", false);
             uri.AppendPath(networkSecurityPerimeterName, true);
             uri.AppendPath("/linkReferences", false);
-            uri.AppendQuery("api-version", _apiVersion, true);
+            if (_apiVersion != null)
+            {
+                uri.AppendQuery("api-version", _apiVersion, true);
+            }
             if (top != null)
             {
-                uri.AppendQuery("$top", top.Value, true);
+                uri.AppendQuery("$top", TypeFormatters.ConvertToString(top), true);
             }
             if (skipToken != null)
             {
                 uri.AppendQuery("$skipToken", skipToken, true);
             }
-            return uri;
-        }
-
-        internal HttpMessage CreateListRequest(string subscriptionId, string resourceGroupName, string networkSecurityPerimeterName, int? top, string skipToken)
-        {
-            var message = _pipeline.CreateMessage();
-            var request = message.Request;
-            request.Method = RequestMethod.Get;
-            var uri = new RawRequestUriBuilder();
-            uri.Reset(_endpoint);
-            uri.AppendPath("/subscriptions/", false);
-            uri.AppendPath(subscriptionId, true);
-            uri.AppendPath("/resourceGroups/", false);
-            uri.AppendPath(resourceGroupName, true);
-            uri.AppendPath("/providers/Microsoft.Network/networkSecurityPerimeters/", false);
-            uri.AppendPath(networkSecurityPerimeterName, true);
-            uri.AppendPath("/linkReferences", false);
-            uri.AppendQuery("api-version", _apiVersion, true);
-            if (top != null)
-            {
-                uri.AppendQuery("$top", top.Value, true);
-            }
-            if (skipToken != null)
-            {
-                uri.AppendQuery("$skipToken", skipToken, true);
-            }
+            HttpMessage message = Pipeline.CreateMessage();
+            Request request = message.Request;
             request.Uri = uri;
-            request.Headers.Add("Accept", "application/json");
-            _userAgent.Apply(message);
+            request.Method = RequestMethod.Get;
+            request.Headers.SetValue("Accept", "application/json");
             return message;
         }
 
-        /// <summary> Lists the NSP LinkReference resources in the specified network security perimeter. </summary>
-        /// <param name="subscriptionId"> The subscription credentials which uniquely identify the Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
-        /// <param name="resourceGroupName"> The name of the resource group. </param>
-        /// <param name="networkSecurityPerimeterName"> The name of the network security perimeter. </param>
-        /// <param name="top"> An optional query parameter which specifies the maximum number of records to be returned by the server. </param>
-        /// <param name="skipToken"> SkipToken is only used if a previous operation returned a partial result. If a previous response contains a nextLink element, the value of the nextLink element will include a skipToken parameter that specifies a starting point to use for subsequent calls. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="networkSecurityPerimeterName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="networkSecurityPerimeterName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<NetworkSecurityPerimeterLinkReferenceListResult>> ListAsync(string subscriptionId, string resourceGroupName, string networkSecurityPerimeterName, int? top = null, string skipToken = null, CancellationToken cancellationToken = default)
+        internal HttpMessage CreateNextGetAllRequest(Uri nextPage, Guid subscriptionId, string resourceGroupName, string networkSecurityPerimeterName, int? top, string skipToken, RequestContext context)
         {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(networkSecurityPerimeterName, nameof(networkSecurityPerimeterName));
-
-            using var message = CreateListRequest(subscriptionId, resourceGroupName, networkSecurityPerimeterName, top, skipToken);
-            await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
-            switch (message.Response.Status)
+            RawRequestUriBuilder uri = new RawRequestUriBuilder();
+            if (nextPage.IsAbsoluteUri)
             {
-                case 200:
-                    {
-                        NetworkSecurityPerimeterLinkReferenceListResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
-                        value = NetworkSecurityPerimeterLinkReferenceListResult.DeserializeNetworkSecurityPerimeterLinkReferenceListResult(document.RootElement);
-                        return Response.FromValue(value, message.Response);
-                    }
-                default:
-                    throw new RequestFailedException(message.Response);
+                uri.Reset(nextPage);
             }
-        }
-
-        /// <summary> Lists the NSP LinkReference resources in the specified network security perimeter. </summary>
-        /// <param name="subscriptionId"> The subscription credentials which uniquely identify the Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
-        /// <param name="resourceGroupName"> The name of the resource group. </param>
-        /// <param name="networkSecurityPerimeterName"> The name of the network security perimeter. </param>
-        /// <param name="top"> An optional query parameter which specifies the maximum number of records to be returned by the server. </param>
-        /// <param name="skipToken"> SkipToken is only used if a previous operation returned a partial result. If a previous response contains a nextLink element, the value of the nextLink element will include a skipToken parameter that specifies a starting point to use for subsequent calls. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="networkSecurityPerimeterName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="networkSecurityPerimeterName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<NetworkSecurityPerimeterLinkReferenceListResult> List(string subscriptionId, string resourceGroupName, string networkSecurityPerimeterName, int? top = null, string skipToken = null, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(networkSecurityPerimeterName, nameof(networkSecurityPerimeterName));
-
-            using var message = CreateListRequest(subscriptionId, resourceGroupName, networkSecurityPerimeterName, top, skipToken);
-            _pipeline.Send(message, cancellationToken);
-            switch (message.Response.Status)
+            else
             {
-                case 200:
-                    {
-                        NetworkSecurityPerimeterLinkReferenceListResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
-                        value = NetworkSecurityPerimeterLinkReferenceListResult.DeserializeNetworkSecurityPerimeterLinkReferenceListResult(document.RootElement);
-                        return Response.FromValue(value, message.Response);
-                    }
-                default:
-                    throw new RequestFailedException(message.Response);
+                uri.Reset(new Uri(_endpoint, nextPage));
             }
-        }
-
-        internal RequestUriBuilder CreateListNextPageRequestUri(string nextLink, string subscriptionId, string resourceGroupName, string networkSecurityPerimeterName, int? top, string skipToken)
-        {
-            var uri = new RawRequestUriBuilder();
-            uri.Reset(_endpoint);
-            uri.AppendRawNextLink(nextLink, false);
-            return uri;
-        }
-
-        internal HttpMessage CreateListNextPageRequest(string nextLink, string subscriptionId, string resourceGroupName, string networkSecurityPerimeterName, int? top, string skipToken)
-        {
-            var message = _pipeline.CreateMessage();
-            var request = message.Request;
-            request.Method = RequestMethod.Get;
-            var uri = new RawRequestUriBuilder();
-            uri.Reset(_endpoint);
-            uri.AppendRawNextLink(nextLink, false);
+            if (_apiVersion != null)
+            {
+                uri.UpdateQuery("api-version", _apiVersion);
+            }
+            HttpMessage message = Pipeline.CreateMessage();
+            Request request = message.Request;
             request.Uri = uri;
-            request.Headers.Add("Accept", "application/json");
-            _userAgent.Apply(message);
+            request.Method = RequestMethod.Get;
+            request.Headers.SetValue("Accept", "application/json");
             return message;
-        }
-
-        /// <summary> Lists the NSP LinkReference resources in the specified network security perimeter. </summary>
-        /// <param name="nextLink"> The URL to the next page of results. </param>
-        /// <param name="subscriptionId"> The subscription credentials which uniquely identify the Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
-        /// <param name="resourceGroupName"> The name of the resource group. </param>
-        /// <param name="networkSecurityPerimeterName"> The name of the network security perimeter. </param>
-        /// <param name="top"> An optional query parameter which specifies the maximum number of records to be returned by the server. </param>
-        /// <param name="skipToken"> SkipToken is only used if a previous operation returned a partial result. If a previous response contains a nextLink element, the value of the nextLink element will include a skipToken parameter that specifies a starting point to use for subsequent calls. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="networkSecurityPerimeterName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="networkSecurityPerimeterName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<NetworkSecurityPerimeterLinkReferenceListResult>> ListNextPageAsync(string nextLink, string subscriptionId, string resourceGroupName, string networkSecurityPerimeterName, int? top = null, string skipToken = null, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(nextLink, nameof(nextLink));
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(networkSecurityPerimeterName, nameof(networkSecurityPerimeterName));
-
-            using var message = CreateListNextPageRequest(nextLink, subscriptionId, resourceGroupName, networkSecurityPerimeterName, top, skipToken);
-            await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
-            switch (message.Response.Status)
-            {
-                case 200:
-                    {
-                        NetworkSecurityPerimeterLinkReferenceListResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
-                        value = NetworkSecurityPerimeterLinkReferenceListResult.DeserializeNetworkSecurityPerimeterLinkReferenceListResult(document.RootElement);
-                        return Response.FromValue(value, message.Response);
-                    }
-                default:
-                    throw new RequestFailedException(message.Response);
-            }
-        }
-
-        /// <summary> Lists the NSP LinkReference resources in the specified network security perimeter. </summary>
-        /// <param name="nextLink"> The URL to the next page of results. </param>
-        /// <param name="subscriptionId"> The subscription credentials which uniquely identify the Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
-        /// <param name="resourceGroupName"> The name of the resource group. </param>
-        /// <param name="networkSecurityPerimeterName"> The name of the network security perimeter. </param>
-        /// <param name="top"> An optional query parameter which specifies the maximum number of records to be returned by the server. </param>
-        /// <param name="skipToken"> SkipToken is only used if a previous operation returned a partial result. If a previous response contains a nextLink element, the value of the nextLink element will include a skipToken parameter that specifies a starting point to use for subsequent calls. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="networkSecurityPerimeterName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="networkSecurityPerimeterName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<NetworkSecurityPerimeterLinkReferenceListResult> ListNextPage(string nextLink, string subscriptionId, string resourceGroupName, string networkSecurityPerimeterName, int? top = null, string skipToken = null, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(nextLink, nameof(nextLink));
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(networkSecurityPerimeterName, nameof(networkSecurityPerimeterName));
-
-            using var message = CreateListNextPageRequest(nextLink, subscriptionId, resourceGroupName, networkSecurityPerimeterName, top, skipToken);
-            _pipeline.Send(message, cancellationToken);
-            switch (message.Response.Status)
-            {
-                case 200:
-                    {
-                        NetworkSecurityPerimeterLinkReferenceListResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
-                        value = NetworkSecurityPerimeterLinkReferenceListResult.DeserializeNetworkSecurityPerimeterLinkReferenceListResult(document.RootElement);
-                        return Response.FromValue(value, message.Response);
-                    }
-                default:
-                    throw new RequestFailedException(message.Response);
-            }
         }
     }
 }

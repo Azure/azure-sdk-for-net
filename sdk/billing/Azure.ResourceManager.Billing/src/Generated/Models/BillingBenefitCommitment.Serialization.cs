@@ -8,16 +8,56 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
-using System.Text;
 using System.Text.Json;
-using Azure.Core;
+using Azure.ResourceManager.Billing;
 
 namespace Azure.ResourceManager.Billing.Models
 {
-    public partial class BillingBenefitCommitment : IUtf8JsonSerializable, IJsonModel<BillingBenefitCommitment>
+    /// <summary> Commitment towards the benefit. </summary>
+    public partial class BillingBenefitCommitment : BillingPrice, IJsonModel<BillingBenefitCommitment>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<BillingBenefitCommitment>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override BillingPrice PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<BillingBenefitCommitment>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    {
+                        return DeserializeBillingBenefitCommitment(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(BillingBenefitCommitment)} does not support reading '{options.Format}' format.");
+            }
+        }
 
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<BillingBenefitCommitment>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerBillingContext.Default);
+                default:
+                    throw new FormatException($"The model {nameof(BillingBenefitCommitment)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<BillingBenefitCommitment>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BillingBenefitCommitment IPersistableModel<BillingBenefitCommitment>.Create(BinaryData data, ModelReaderWriterOptions options) => (BillingBenefitCommitment)PersistableModelCreateCore(data, options);
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<BillingBenefitCommitment>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<BillingBenefitCommitment>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
@@ -29,12 +69,11 @@ namespace Azure.ResourceManager.Billing.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<BillingBenefitCommitment>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<BillingBenefitCommitment>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(BillingBenefitCommitment)} does not support writing '{format}' format.");
             }
-
             base.JsonModelWriteCore(writer, options);
             if (Optional.IsDefined(Grain))
             {
@@ -43,164 +82,66 @@ namespace Azure.ResourceManager.Billing.Models
             }
         }
 
-        BillingBenefitCommitment IJsonModel<BillingBenefitCommitment>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BillingBenefitCommitment IJsonModel<BillingBenefitCommitment>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => (BillingBenefitCommitment)JsonModelCreateCore(ref reader, options);
+
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override BillingPrice JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<BillingBenefitCommitment>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<BillingBenefitCommitment>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(BillingBenefitCommitment)} does not support reading '{format}' format.");
             }
-
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
             return DeserializeBillingBenefitCommitment(document.RootElement, options);
         }
 
-        internal static BillingBenefitCommitment DeserializeBillingBenefitCommitment(JsonElement element, ModelReaderWriterOptions options = null)
+        /// <param name="element"> The JSON element to deserialize. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        internal static BillingBenefitCommitment DeserializeBillingBenefitCommitment(JsonElement element, ModelReaderWriterOptions options)
         {
-            options ??= ModelSerializationExtensions.WireOptions;
-
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            BillingBenefitCommitmentGrain? grain = default;
             string currencyCode = default;
             double? amount = default;
-            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
-            foreach (var property in element.EnumerateObject())
+            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            BillingBenefitCommitmentGrain? grain = default;
+            foreach (var prop in element.EnumerateObject())
             {
-                if (property.NameEquals("grain"u8))
+                if (prop.NameEquals("currencyCode"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    currencyCode = prop.Value.GetString();
+                    continue;
+                }
+                if (prop.NameEquals("amount"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    grain = new BillingBenefitCommitmentGrain(property.Value.GetString());
+                    amount = prop.Value.GetDouble();
                     continue;
                 }
-                if (property.NameEquals("currencyCode"u8))
+                if (prop.NameEquals("grain"u8))
                 {
-                    currencyCode = property.Value.GetString();
-                    continue;
-                }
-                if (property.NameEquals("amount"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    amount = property.Value.GetDouble();
+                    grain = new BillingBenefitCommitmentGrain(prop.Value.GetString());
                     continue;
                 }
                 if (options.Format != "W")
                 {
-                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = rawDataDictionary;
-            return new BillingBenefitCommitment(currencyCode, amount, serializedAdditionalRawData, grain);
+            return new BillingBenefitCommitment(currencyCode, amount, additionalBinaryDataProperties, grain);
         }
-
-        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
-        {
-            StringBuilder builder = new StringBuilder();
-            BicepModelReaderWriterOptions bicepOptions = options as BicepModelReaderWriterOptions;
-            IDictionary<string, string> propertyOverrides = null;
-            bool hasObjectOverride = bicepOptions != null && bicepOptions.PropertyOverrides.TryGetValue(this, out propertyOverrides);
-            bool hasPropertyOverride = false;
-            string propertyOverride = null;
-
-            builder.AppendLine("{");
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Grain), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  grain: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(Grain))
-                {
-                    builder.Append("  grain: ");
-                    builder.AppendLine($"'{Grain.Value.ToString()}'");
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(CurrencyCode), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  currencyCode: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(CurrencyCode))
-                {
-                    builder.Append("  currencyCode: ");
-                    if (CurrencyCode.Contains(Environment.NewLine))
-                    {
-                        builder.AppendLine("'''");
-                        builder.AppendLine($"{CurrencyCode}'''");
-                    }
-                    else
-                    {
-                        builder.AppendLine($"'{CurrencyCode}'");
-                    }
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Amount), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  amount: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(Amount))
-                {
-                    builder.Append("  amount: ");
-                    builder.AppendLine($"'{Amount.Value.ToString()}'");
-                }
-            }
-
-            builder.AppendLine("}");
-            return BinaryData.FromString(builder.ToString());
-        }
-
-        BinaryData IPersistableModel<BillingBenefitCommitment>.Write(ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<BillingBenefitCommitment>)this).GetFormatFromOptions(options) : options.Format;
-
-            switch (format)
-            {
-                case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerBillingContext.Default);
-                case "bicep":
-                    return SerializeBicep(options);
-                default:
-                    throw new FormatException($"The model {nameof(BillingBenefitCommitment)} does not support writing '{options.Format}' format.");
-            }
-        }
-
-        BillingBenefitCommitment IPersistableModel<BillingBenefitCommitment>.Create(BinaryData data, ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<BillingBenefitCommitment>)this).GetFormatFromOptions(options) : options.Format;
-
-            switch (format)
-            {
-                case "J":
-                    {
-                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
-                        return DeserializeBillingBenefitCommitment(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(BillingBenefitCommitment)} does not support reading '{options.Format}' format.");
-            }
-        }
-
-        string IPersistableModel<BillingBenefitCommitment>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

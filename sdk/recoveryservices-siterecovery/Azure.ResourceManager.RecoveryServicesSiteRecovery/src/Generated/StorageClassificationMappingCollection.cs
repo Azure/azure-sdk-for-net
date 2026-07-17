@@ -94,7 +94,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
                 HttpMessage message = _replicationStorageClassificationMappingsRestClient.CreateCreateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, storageClassificationMappingName, StorageClassificationMappingCreateOrUpdateContent.ToRequestContent(content), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 RecoveryServicesSiteRecoveryArmOperation<StorageClassificationMappingResource> operation = new RecoveryServicesSiteRecoveryArmOperation<StorageClassificationMappingResource>(
-                    new StorageClassificationMappingOperationSource(Client),
+                    new StorageClassificationMappingResourceOperationSource(Client),
                     _replicationStorageClassificationMappingsClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -152,7 +152,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
                 HttpMessage message = _replicationStorageClassificationMappingsRestClient.CreateCreateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, storageClassificationMappingName, StorageClassificationMappingCreateOrUpdateContent.ToRequestContent(content), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 RecoveryServicesSiteRecoveryArmOperation<StorageClassificationMappingResource> operation = new RecoveryServicesSiteRecoveryArmOperation<StorageClassificationMappingResource>(
-                    new StorageClassificationMappingOperationSource(Client),
+                    new StorageClassificationMappingResourceOperationSource(Client),
                     _replicationStorageClassificationMappingsClientDiagnostics,
                     Pipeline,
                     message.Request,

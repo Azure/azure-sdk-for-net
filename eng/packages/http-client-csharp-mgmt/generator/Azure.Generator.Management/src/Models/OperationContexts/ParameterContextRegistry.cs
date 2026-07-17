@@ -4,6 +4,7 @@
 using Azure.Core;
 using Azure.Generator.Management.Utilities;
 using Azure.Generator.Management.Visitors;
+using Microsoft.TypeSpec.Generator.ClientModel.Providers;
 using Microsoft.TypeSpec.Generator.Expressions;
 using Microsoft.TypeSpec.Generator.Primitives;
 using Microsoft.TypeSpec.Generator.Providers;
@@ -60,6 +61,33 @@ internal class ParameterContextRegistry : IReadOnlyDictionary<string, ParameterC
     public bool TryGetValue(string key, [MaybeNullWhen(false)] out ParameterContextMapping value)
     {
         return _parameters.TryGetValue(key, out value);
+    }
+
+    public ParameterContextRegistry WithContextualParameterOverrides(IReadOnlyList<ParameterContextMapping> parameterOverrides)
+    {
+        if (parameterOverrides.Count == 0)
+        {
+            return this;
+        }
+
+        var merged = _parameters.ToDictionary(p => p.Key, p => p.Value);
+        var changed = false;
+        foreach (var parameterOverride in parameterOverrides)
+        {
+            if (parameterOverride.ContextualParameter is null)
+            {
+                continue;
+            }
+
+            if (merged.TryGetValue(parameterOverride.ParameterName, out var existing) &&
+                existing.ContextualParameter is null)
+            {
+                merged[parameterOverride.ParameterName] = parameterOverride;
+                changed = true;
+            }
+        }
+
+        return changed ? new ParameterContextRegistry([.. merged.Values]) : this;
     }
 
     IEnumerator IEnumerable.GetEnumerator()
@@ -131,6 +159,30 @@ internal class ParameterContextRegistry : IReadOnlyDictionary<string, ParameterC
                         var createContent = Static(typeof(RequestContent)).Invoke(
                             nameof(RequestContent.Create),
                             [stringForm]);
+                        if (bodyParameter.Type.IsNullable)
+                        {
+                            arguments.Add(new TernaryConditionalExpression(bodyParameter.NotEqual(Null), createContent, Null));
+                        }
+                        else
+                        {
+                            arguments.Add(createContent);
+                        }
+                    }
+                    else if (bodyParameter.Type.IsList)
+                    {
+                        var createContent = Static<BinaryContentHelperDefinition>().Invoke("FromEnumerable", [bodyParameter]);
+                        if (bodyParameter.Type.IsNullable)
+                        {
+                            arguments.Add(new TernaryConditionalExpression(bodyParameter.NotEqual(Null), createContent, Null));
+                        }
+                        else
+                        {
+                            arguments.Add(createContent);
+                        }
+                    }
+                    else if (bodyParameter.Type.IsDictionary)
+                    {
+                        var createContent = Static<BinaryContentHelperDefinition>().Invoke("FromDictionary", [bodyParameter]);
                         if (bodyParameter.Type.IsNullable)
                         {
                             arguments.Add(new TernaryConditionalExpression(bodyParameter.NotEqual(Null), createContent, Null));

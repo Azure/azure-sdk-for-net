@@ -93,7 +93,7 @@ namespace Azure.ResourceManager.DevCenter
                 HttpMessage message = _projectPoliciesRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, projectPolicyName, DevCenterProjectPolicyData.ToRequestContent(data), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 DevCenterArmOperation<DevCenterProjectPolicyResource> operation = new DevCenterArmOperation<DevCenterProjectPolicyResource>(
-                    new DevCenterProjectPolicyOperationSource(Client),
+                    new DevCenterProjectPolicyResourceOperationSource(Client),
                     _projectPoliciesClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -151,7 +151,7 @@ namespace Azure.ResourceManager.DevCenter
                 HttpMessage message = _projectPoliciesRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, projectPolicyName, DevCenterProjectPolicyData.ToRequestContent(data), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 DevCenterArmOperation<DevCenterProjectPolicyResource> operation = new DevCenterArmOperation<DevCenterProjectPolicyResource>(
-                    new DevCenterProjectPolicyOperationSource(Client),
+                    new DevCenterProjectPolicyResourceOperationSource(Client),
                     _projectPoliciesClientDiagnostics,
                     Pipeline,
                     message.Request,

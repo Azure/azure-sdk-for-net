@@ -78,7 +78,7 @@ namespace Azure.ResourceManager.SelfHelp
                 HttpMessage message = _diagnosticResourcesRestClient.CreateCreateRequest(Id.ToString(), diagnosticsResourceName, SelfHelpDiagnosticData.ToRequestContent(data), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 SelfHelpArmOperation<SelfHelpDiagnosticResource> operation = new SelfHelpArmOperation<SelfHelpDiagnosticResource>(
-                    new SelfHelpDiagnosticOperationSource(Client),
+                    new SelfHelpDiagnosticResourceOperationSource(Client),
                     _diagnosticResourcesClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -135,7 +135,7 @@ namespace Azure.ResourceManager.SelfHelp
                 HttpMessage message = _diagnosticResourcesRestClient.CreateCreateRequest(Id.ToString(), diagnosticsResourceName, SelfHelpDiagnosticData.ToRequestContent(data), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 SelfHelpArmOperation<SelfHelpDiagnosticResource> operation = new SelfHelpArmOperation<SelfHelpDiagnosticResource>(
-                    new SelfHelpDiagnosticOperationSource(Client),
+                    new SelfHelpDiagnosticResourceOperationSource(Client),
                     _diagnosticResourcesClientDiagnostics,
                     Pipeline,
                     message.Request,

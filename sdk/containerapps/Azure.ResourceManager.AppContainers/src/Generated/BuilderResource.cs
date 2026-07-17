@@ -229,7 +229,7 @@ namespace Azure.ResourceManager.AppContainers
                 HttpMessage message = _buildersRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, BuilderPatch.ToRequestContent(patch), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 AppContainersArmOperation<BuilderResource> operation = new AppContainersArmOperation<BuilderResource>(
-                    new BuilderOperationSource(Client),
+                    new BuilderResourceOperationSource(Client),
                     _buildersClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -288,7 +288,7 @@ namespace Azure.ResourceManager.AppContainers
                 HttpMessage message = _buildersRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, BuilderPatch.ToRequestContent(patch), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 AppContainersArmOperation<BuilderResource> operation = new AppContainersArmOperation<BuilderResource>(
-                    new BuilderOperationSource(Client),
+                    new BuilderResourceOperationSource(Client),
                     _buildersClientDiagnostics,
                     Pipeline,
                     message.Request,

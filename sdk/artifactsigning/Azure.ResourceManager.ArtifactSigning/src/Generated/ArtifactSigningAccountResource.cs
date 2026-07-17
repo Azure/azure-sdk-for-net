@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.ArtifactSigning
         {
             TryGetApiVersion(ResourceType, out string artifactSigningAccountApiVersion);
             _codeSigningAccountsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ArtifactSigning", ResourceType.Namespace, Diagnostics);
-            _codeSigningAccountsRestClient = new CodeSigningAccounts(_codeSigningAccountsClientDiagnostics, Pipeline, Endpoint, artifactSigningAccountApiVersion ?? "2025-10-13");
+            _codeSigningAccountsRestClient = new CodeSigningAccounts(_codeSigningAccountsClientDiagnostics, Pipeline, Endpoint, artifactSigningAccountApiVersion ?? "2026-05-15-preview");
             ValidateResourceId(id);
         }
 
@@ -106,7 +106,7 @@ namespace Azure.ResourceManager.ArtifactSigning
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-10-13. </description>
+        /// <description> 2026-05-15-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -154,7 +154,7 @@ namespace Azure.ResourceManager.ArtifactSigning
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-10-13. </description>
+        /// <description> 2026-05-15-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -202,7 +202,7 @@ namespace Azure.ResourceManager.ArtifactSigning
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-10-13. </description>
+        /// <description> 2026-05-15-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -229,7 +229,7 @@ namespace Azure.ResourceManager.ArtifactSigning
                 HttpMessage message = _codeSigningAccountsRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, ArtifactSigningAccountPatch.ToRequestContent(patch), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 ArtifactSigningArmOperation<ArtifactSigningAccountResource> operation = new ArtifactSigningArmOperation<ArtifactSigningAccountResource>(
-                    new ArtifactSigningAccountOperationSource(Client),
+                    new ArtifactSigningAccountResourceOperationSource(Client),
                     _codeSigningAccountsClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -261,7 +261,7 @@ namespace Azure.ResourceManager.ArtifactSigning
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-10-13. </description>
+        /// <description> 2026-05-15-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -288,7 +288,7 @@ namespace Azure.ResourceManager.ArtifactSigning
                 HttpMessage message = _codeSigningAccountsRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, ArtifactSigningAccountPatch.ToRequestContent(patch), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 ArtifactSigningArmOperation<ArtifactSigningAccountResource> operation = new ArtifactSigningArmOperation<ArtifactSigningAccountResource>(
-                    new ArtifactSigningAccountOperationSource(Client),
+                    new ArtifactSigningAccountResourceOperationSource(Client),
                     _codeSigningAccountsClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -320,7 +320,7 @@ namespace Azure.ResourceManager.ArtifactSigning
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-10-13. </description>
+        /// <description> 2026-05-15-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -369,7 +369,7 @@ namespace Azure.ResourceManager.ArtifactSigning
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-10-13. </description>
+        /// <description> 2026-05-15-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>

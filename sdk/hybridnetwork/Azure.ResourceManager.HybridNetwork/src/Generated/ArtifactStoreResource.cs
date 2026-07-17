@@ -7,50 +7,39 @@
 
 using System;
 using System.Collections.Generic;
-using System.Globalization;
+using System.Diagnostics;
 using System.Threading;
 using System.Threading.Tasks;
-using Autorest.CSharp.Core;
+using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
+using Azure.ResourceManager;
 using Azure.ResourceManager.HybridNetwork.Models;
+using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.HybridNetwork
 {
     /// <summary>
-    /// A Class representing an ArtifactStore along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier"/> you can construct an <see cref="ArtifactStoreResource"/>
-    /// from an instance of <see cref="ArmClient"/> using the GetArtifactStoreResource method.
-    /// Otherwise you can get one from its parent resource <see cref="PublisherResource"/> using the GetArtifactStore method.
+    /// A class representing a ArtifactStore along with the instance operations that can be performed on it.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="ArtifactStoreResource"/> from an instance of <see cref="ArmClient"/> using the GetResource method.
+    /// Otherwise you can get one from its parent resource <see cref="PublisherResource"/> using the GetArtifactStores method.
     /// </summary>
     public partial class ArtifactStoreResource : ArmResource
     {
-        /// <summary> Generate the resource identifier of a <see cref="ArtifactStoreResource"/> instance. </summary>
-        /// <param name="subscriptionId"> The subscriptionId. </param>
-        /// <param name="resourceGroupName"> The resourceGroupName. </param>
-        /// <param name="publisherName"> The publisherName. </param>
-        /// <param name="artifactStoreName"> The artifactStoreName. </param>
-        public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string publisherName, string artifactStoreName)
-        {
-            var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.HybridNetwork/publishers/{publisherName}/artifactStores/{artifactStoreName}";
-            return new ResourceIdentifier(resourceId);
-        }
-
-        private readonly ClientDiagnostics _artifactStoreClientDiagnostics;
-        private readonly ArtifactStoresRestOperations _artifactStoreRestClient;
+        private readonly ClientDiagnostics _artifactStoresClientDiagnostics;
+        private readonly ArtifactStores _artifactStoresRestClient;
         private readonly ClientDiagnostics _proxyArtifactClientDiagnostics;
-        private readonly ProxyArtifactRestOperations _proxyArtifactRestClient;
+        private readonly ProxyArtifact _proxyArtifactRestClient;
         private readonly ArtifactStoreData _data;
-
         /// <summary> Gets the resource type for the operations. </summary>
         public static readonly ResourceType ResourceType = "Microsoft.HybridNetwork/publishers/artifactStores";
 
-        /// <summary> Initializes a new instance of the <see cref="ArtifactStoreResource"/> class for mocking. </summary>
+        /// <summary> Initializes a new instance of ArtifactStoreResource for mocking. </summary>
         protected ArtifactStoreResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref="ArtifactStoreResource"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="ArtifactStoreResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal ArtifactStoreResource(ArmClient client, ArtifactStoreData data) : this(client, data.Id)
@@ -59,142 +48,95 @@ namespace Azure.ResourceManager.HybridNetwork
             _data = data;
         }
 
-        /// <summary> Initializes a new instance of the <see cref="ArtifactStoreResource"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="ArtifactStoreResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal ArtifactStoreResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _artifactStoreClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.HybridNetwork", ResourceType.Namespace, Diagnostics);
             TryGetApiVersion(ResourceType, out string artifactStoreApiVersion);
-            _artifactStoreRestClient = new ArtifactStoresRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, artifactStoreApiVersion);
-            _proxyArtifactClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.HybridNetwork", ProviderConstants.DefaultProviderNamespace, Diagnostics);
-            _proxyArtifactRestClient = new ProxyArtifactRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint);
-#if DEBUG
-			ValidateResourceId(Id);
-#endif
+            _artifactStoresClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.HybridNetwork", ResourceType.Namespace, Diagnostics);
+            _artifactStoresRestClient = new ArtifactStores(_artifactStoresClientDiagnostics, Pipeline, Endpoint, artifactStoreApiVersion ?? "2025-03-30");
+            _proxyArtifactClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.HybridNetwork", ResourceType.Namespace, Diagnostics);
+            _proxyArtifactRestClient = new ProxyArtifact(_proxyArtifactClientDiagnostics, Pipeline, Endpoint, artifactStoreApiVersion ?? "2025-03-30");
+            ValidateResourceId(id);
         }
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }
 
         /// <summary> Gets the data representing this Feature. </summary>
-        /// <exception cref="InvalidOperationException"> Throws if there is no data loaded in the current instance. </exception>
         public virtual ArtifactStoreData Data
         {
             get
             {
                 if (!HasData)
+                {
                     throw new InvalidOperationException("The current instance does not have data, you must call Get first.");
+                }
                 return _data;
             }
         }
 
+        /// <summary> Generate the resource identifier for this resource. </summary>
+        /// <param name="subscriptionId"> The subscriptionId. </param>
+        /// <param name="resourceGroupName"> The resourceGroupName. </param>
+        /// <param name="publisherName"> The publisherName. </param>
+        /// <param name="artifactStoreName"> The artifactStoreName. </param>
+        public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string publisherName, string artifactStoreName)
+        {
+            string resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.HybridNetwork/publishers/{publisherName}/artifactStores/{artifactStoreName}";
+            return new ResourceIdentifier(resourceId);
+        }
+
+        /// <param name="id"></param>
+        [Conditional("DEBUG")]
         internal static void ValidateResourceId(ResourceIdentifier id)
         {
             if (id.ResourceType != ResourceType)
-                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), nameof(id));
-        }
-
-        /// <summary> Gets a collection of ArtifactManifestResources in the ArtifactStore. </summary>
-        /// <returns> An object representing collection of ArtifactManifestResources and their operations over a ArtifactManifestResource. </returns>
-        public virtual ArtifactManifestCollection GetArtifactManifests()
-        {
-            return GetCachedClient(client => new ArtifactManifestCollection(client, Id));
-        }
-
-        /// <summary>
-        /// Gets information about a artifact manifest resource.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.HybridNetwork/publishers/{publisherName}/artifactStores/{artifactStoreName}/artifactManifests/{artifactManifestName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ArtifactManifests_Get</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2023-09-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ArtifactManifestResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="artifactManifestName"> The name of the artifact manifest. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="artifactManifestName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="artifactManifestName"/> is an empty string, and was expected to be non-empty. </exception>
-        [ForwardsClientCalls]
-        public virtual async Task<Response<ArtifactManifestResource>> GetArtifactManifestAsync(string artifactManifestName, CancellationToken cancellationToken = default)
-        {
-            return await GetArtifactManifests().GetAsync(artifactManifestName, cancellationToken).ConfigureAwait(false);
-        }
-
-        /// <summary>
-        /// Gets information about a artifact manifest resource.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.HybridNetwork/publishers/{publisherName}/artifactStores/{artifactStoreName}/artifactManifests/{artifactManifestName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ArtifactManifests_Get</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2023-09-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ArtifactManifestResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="artifactManifestName"> The name of the artifact manifest. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="artifactManifestName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="artifactManifestName"/> is an empty string, and was expected to be non-empty. </exception>
-        [ForwardsClientCalls]
-        public virtual Response<ArtifactManifestResource> GetArtifactManifest(string artifactManifestName, CancellationToken cancellationToken = default)
-        {
-            return GetArtifactManifests().Get(artifactManifestName, cancellationToken);
+            {
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), nameof(id));
+            }
         }
 
         /// <summary>
         /// Gets information about the specified artifact store.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.HybridNetwork/publishers/{publisherName}/artifactStores/{artifactStoreName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.HybridNetwork/publishers/{publisherName}/artifactStores/{artifactStoreName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ArtifactStores_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> ArtifactStores_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2023-09-01</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-03-30. </description>
         /// </item>
         /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ArtifactStoreResource"/></description>
+        /// <term> Resource. </term>
+        /// <description> <see cref="ArtifactStoreResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<Response<ArtifactStoreResource>> GetAsync(CancellationToken cancellationToken = default)
         {
-            using var scope = _artifactStoreClientDiagnostics.CreateScope("ArtifactStoreResource.Get");
+            using DiagnosticScope scope = _artifactStoresClientDiagnostics.CreateScope("ArtifactStoreResource.Get");
             scope.Start();
             try
             {
-                var response = await _artifactStoreRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _artifactStoresRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
+                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                Response<ArtifactStoreData> response = Response.FromValue(ArtifactStoreData.FromResponse(result), result);
                 if (response.Value == null)
+                {
                     throw new RequestFailedException(response.GetRawResponse());
+                }
                 return Response.FromValue(new ArtifactStoreResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -208,118 +150,42 @@ namespace Azure.ResourceManager.HybridNetwork
         /// Gets information about the specified artifact store.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.HybridNetwork/publishers/{publisherName}/artifactStores/{artifactStoreName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.HybridNetwork/publishers/{publisherName}/artifactStores/{artifactStoreName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ArtifactStores_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> ArtifactStores_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2023-09-01</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-03-30. </description>
         /// </item>
         /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ArtifactStoreResource"/></description>
+        /// <term> Resource. </term>
+        /// <description> <see cref="ArtifactStoreResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response<ArtifactStoreResource> Get(CancellationToken cancellationToken = default)
         {
-            using var scope = _artifactStoreClientDiagnostics.CreateScope("ArtifactStoreResource.Get");
+            using DiagnosticScope scope = _artifactStoresClientDiagnostics.CreateScope("ArtifactStoreResource.Get");
             scope.Start();
             try
             {
-                var response = _artifactStoreRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _artifactStoresRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
+                Response result = Pipeline.ProcessMessage(message, context);
+                Response<ArtifactStoreData> response = Response.FromValue(ArtifactStoreData.FromResponse(result), result);
                 if (response.Value == null)
+                {
                     throw new RequestFailedException(response.GetRawResponse());
+                }
                 return Response.FromValue(new ArtifactStoreResource(Client, response.Value), response.GetRawResponse());
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// Deletes the specified artifact store.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.HybridNetwork/publishers/{publisherName}/artifactStores/{artifactStoreName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ArtifactStores_Delete</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2023-09-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ArtifactStoreResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<ArmOperation> DeleteAsync(WaitUntil waitUntil, CancellationToken cancellationToken = default)
-        {
-            using var scope = _artifactStoreClientDiagnostics.CreateScope("ArtifactStoreResource.Delete");
-            scope.Start();
-            try
-            {
-                var response = await _artifactStoreRestClient.DeleteAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
-                var operation = new HybridNetworkArmOperation(_artifactStoreClientDiagnostics, Pipeline, _artifactStoreRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name).Request, response, OperationFinalStateVia.Location);
-                if (waitUntil == WaitUntil.Completed)
-                    await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
-                return operation;
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// Deletes the specified artifact store.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.HybridNetwork/publishers/{publisherName}/artifactStores/{artifactStoreName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ArtifactStores_Delete</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2023-09-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ArtifactStoreResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual ArmOperation Delete(WaitUntil waitUntil, CancellationToken cancellationToken = default)
-        {
-            using var scope = _artifactStoreClientDiagnostics.CreateScope("ArtifactStoreResource.Delete");
-            scope.Start();
-            try
-            {
-                var response = _artifactStoreRestClient.Delete(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
-                var operation = new HybridNetworkArmOperation(_artifactStoreClientDiagnostics, Pipeline, _artifactStoreRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name).Request, response, OperationFinalStateVia.Location);
-                if (waitUntil == WaitUntil.Completed)
-                    operation.WaitForCompletionResponse(cancellationToken);
-                return operation;
             }
             catch (Exception e)
             {
@@ -332,20 +198,20 @@ namespace Azure.ResourceManager.HybridNetwork
         /// Update artifact store resource.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.HybridNetwork/publishers/{publisherName}/artifactStores/{artifactStoreName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.HybridNetwork/publishers/{publisherName}/artifactStores/{artifactStoreName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ArtifactStores_Update</description>
+        /// <term> Operation Id. </term>
+        /// <description> ArtifactStores_Update. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2023-09-01</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-03-30. </description>
         /// </item>
         /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ArtifactStoreResource"/></description>
+        /// <term> Resource. </term>
+        /// <description> <see cref="ArtifactStoreResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -356,11 +222,21 @@ namespace Azure.ResourceManager.HybridNetwork
         {
             Argument.AssertNotNull(tagsObject, nameof(tagsObject));
 
-            using var scope = _artifactStoreClientDiagnostics.CreateScope("ArtifactStoreResource.Update");
+            using DiagnosticScope scope = _artifactStoresClientDiagnostics.CreateScope("ArtifactStoreResource.Update");
             scope.Start();
             try
             {
-                var response = await _artifactStoreRestClient.UpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, tagsObject, cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _artifactStoresRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, TagsObject.ToRequestContent(tagsObject), context);
+                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                Response<ArtifactStoreData> response = Response.FromValue(ArtifactStoreData.FromResponse(result), result);
+                if (response.Value == null)
+                {
+                    throw new RequestFailedException(response.GetRawResponse());
+                }
                 return Response.FromValue(new ArtifactStoreResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -374,20 +250,20 @@ namespace Azure.ResourceManager.HybridNetwork
         /// Update artifact store resource.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.HybridNetwork/publishers/{publisherName}/artifactStores/{artifactStoreName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.HybridNetwork/publishers/{publisherName}/artifactStores/{artifactStoreName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ArtifactStores_Update</description>
+        /// <term> Operation Id. </term>
+        /// <description> ArtifactStores_Update. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2023-09-01</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-03-30. </description>
         /// </item>
         /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ArtifactStoreResource"/></description>
+        /// <term> Resource. </term>
+        /// <description> <see cref="ArtifactStoreResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -398,11 +274,21 @@ namespace Azure.ResourceManager.HybridNetwork
         {
             Argument.AssertNotNull(tagsObject, nameof(tagsObject));
 
-            using var scope = _artifactStoreClientDiagnostics.CreateScope("ArtifactStoreResource.Update");
+            using DiagnosticScope scope = _artifactStoresClientDiagnostics.CreateScope("ArtifactStoreResource.Update");
             scope.Start();
             try
             {
-                var response = _artifactStoreRestClient.Update(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, tagsObject, cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _artifactStoresRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, TagsObject.ToRequestContent(tagsObject), context);
+                Response result = Pipeline.ProcessMessage(message, context);
+                Response<ArtifactStoreData> response = Response.FromValue(ArtifactStoreData.FromResponse(result), result);
+                if (response.Value == null)
+                {
+                    throw new RequestFailedException(response.GetRawResponse());
+                }
                 return Response.FromValue(new ArtifactStoreResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -413,45 +299,804 @@ namespace Azure.ResourceManager.HybridNetwork
         }
 
         /// <summary>
-        /// Lists all the available artifacts in the parent Artifact Store.
+        /// Deletes the specified artifact store.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.HybridNetwork/publishers/{publisherName}/artifactStores/{artifactStoreName}/artifacts</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.HybridNetwork/publishers/{publisherName}/artifactStores/{artifactStoreName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ProxyArtifact_List</description>
+        /// <term> Operation Id. </term>
+        /// <description> ArtifactStores_Delete. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2023-09-01</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-03-30. </description>
+        /// </item>
+        /// <item>
+        /// <term> Resource. </term>
+        /// <description> <see cref="ArtifactStoreResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="ProxyArtifactListOverview"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<ProxyArtifactListOverview> GetProxyArtifactsAsync(CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation> DeleteAsync(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _proxyArtifactRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _proxyArtifactRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => ProxyArtifactListOverview.DeserializeProxyArtifactListOverview(e), _proxyArtifactClientDiagnostics, Pipeline, "ArtifactStoreResource.GetProxyArtifacts", "value", "nextLink", cancellationToken);
+            using DiagnosticScope scope = _artifactStoresClientDiagnostics.CreateScope("ArtifactStoreResource.Delete");
+            scope.Start();
+            try
+            {
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _artifactStoresRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
+                Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                HybridNetworkArmOperation operation = new HybridNetworkArmOperation(_artifactStoresClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
+                if (waitUntil == WaitUntil.Completed)
+                {
+                    await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
+                }
+                return operation;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Deletes the specified artifact store.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.HybridNetwork/publishers/{publisherName}/artifactStores/{artifactStoreName}. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> ArtifactStores_Delete. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-03-30. </description>
+        /// </item>
+        /// <item>
+        /// <term> Resource. </term>
+        /// <description> <see cref="ArtifactStoreResource"/>. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual ArmOperation Delete(WaitUntil waitUntil, CancellationToken cancellationToken = default)
+        {
+            using DiagnosticScope scope = _artifactStoresClientDiagnostics.CreateScope("ArtifactStoreResource.Delete");
+            scope.Start();
+            try
+            {
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _artifactStoresRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
+                Response response = Pipeline.ProcessMessage(message, context);
+                HybridNetworkArmOperation operation = new HybridNetworkArmOperation(_artifactStoresClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
+                if (waitUntil == WaitUntil.Completed)
+                {
+                    operation.WaitForCompletionResponse(cancellationToken);
+                }
+                return operation;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Add network fabric controllers to artifact stores
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.HybridNetwork/publishers/{publisherName}/artifactStores/{artifactStoreName}/addNetworkFabricControllerEndPoints. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> ArtifactStores_AddNetworkFabricControllerEndPoints. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-03-30. </description>
+        /// </item>
+        /// <item>
+        /// <term> Resource. </term>
+        /// <description> <see cref="ArtifactStoreResource"/>. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="artifactStoreNetworkFabricControllerEndPoints"> Parameters supplied to the create or update application group operation. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="artifactStoreNetworkFabricControllerEndPoints"/> is null. </exception>
+        public virtual async Task<ArmOperation> AddNetworkFabricControllerEndPointsAsync(WaitUntil waitUntil, ArtifactStoreNetworkFabricControllerEndPoints artifactStoreNetworkFabricControllerEndPoints, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(artifactStoreNetworkFabricControllerEndPoints, nameof(artifactStoreNetworkFabricControllerEndPoints));
+
+            using DiagnosticScope scope = _artifactStoresClientDiagnostics.CreateScope("ArtifactStoreResource.AddNetworkFabricControllerEndPoints");
+            scope.Start();
+            try
+            {
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _artifactStoresRestClient.CreateAddNetworkFabricControllerEndPointsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, ArtifactStoreNetworkFabricControllerEndPoints.ToRequestContent(artifactStoreNetworkFabricControllerEndPoints), context);
+                Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                HybridNetworkArmOperation operation = new HybridNetworkArmOperation(_artifactStoresClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
+                if (waitUntil == WaitUntil.Completed)
+                {
+                    await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
+                }
+                return operation;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Add network fabric controllers to artifact stores
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.HybridNetwork/publishers/{publisherName}/artifactStores/{artifactStoreName}/addNetworkFabricControllerEndPoints. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> ArtifactStores_AddNetworkFabricControllerEndPoints. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-03-30. </description>
+        /// </item>
+        /// <item>
+        /// <term> Resource. </term>
+        /// <description> <see cref="ArtifactStoreResource"/>. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="artifactStoreNetworkFabricControllerEndPoints"> Parameters supplied to the create or update application group operation. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="artifactStoreNetworkFabricControllerEndPoints"/> is null. </exception>
+        public virtual ArmOperation AddNetworkFabricControllerEndPoints(WaitUntil waitUntil, ArtifactStoreNetworkFabricControllerEndPoints artifactStoreNetworkFabricControllerEndPoints, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(artifactStoreNetworkFabricControllerEndPoints, nameof(artifactStoreNetworkFabricControllerEndPoints));
+
+            using DiagnosticScope scope = _artifactStoresClientDiagnostics.CreateScope("ArtifactStoreResource.AddNetworkFabricControllerEndPoints");
+            scope.Start();
+            try
+            {
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _artifactStoresRestClient.CreateAddNetworkFabricControllerEndPointsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, ArtifactStoreNetworkFabricControllerEndPoints.ToRequestContent(artifactStoreNetworkFabricControllerEndPoints), context);
+                Response response = Pipeline.ProcessMessage(message, context);
+                HybridNetworkArmOperation operation = new HybridNetworkArmOperation(_artifactStoresClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
+                if (waitUntil == WaitUntil.Completed)
+                {
+                    operation.WaitForCompletionResponse(cancellationToken);
+                }
+                return operation;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Approve manual private endpoints on artifact stores
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.HybridNetwork/publishers/{publisherName}/artifactStores/{artifactStoreName}/approvePrivateEndPoints. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> ArtifactStores_ApprovePrivateEndPoints. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-03-30. </description>
+        /// </item>
+        /// <item>
+        /// <term> Resource. </term>
+        /// <description> <see cref="ArtifactStoreResource"/>. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="artifactStorePrivateEndPointsFormat"> Parameters supplied to approve private endpoints. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="artifactStorePrivateEndPointsFormat"/> is null. </exception>
+        public virtual async Task<ArmOperation> ApprovePrivateEndPointsAsync(WaitUntil waitUntil, ArtifactStorePrivateEndPointsFormat artifactStorePrivateEndPointsFormat, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(artifactStorePrivateEndPointsFormat, nameof(artifactStorePrivateEndPointsFormat));
+
+            using DiagnosticScope scope = _artifactStoresClientDiagnostics.CreateScope("ArtifactStoreResource.ApprovePrivateEndPoints");
+            scope.Start();
+            try
+            {
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _artifactStoresRestClient.CreateApprovePrivateEndPointsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, ArtifactStorePrivateEndPointsFormat.ToRequestContent(artifactStorePrivateEndPointsFormat), context);
+                Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                HybridNetworkArmOperation operation = new HybridNetworkArmOperation(_artifactStoresClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
+                if (waitUntil == WaitUntil.Completed)
+                {
+                    await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
+                }
+                return operation;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Approve manual private endpoints on artifact stores
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.HybridNetwork/publishers/{publisherName}/artifactStores/{artifactStoreName}/approvePrivateEndPoints. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> ArtifactStores_ApprovePrivateEndPoints. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-03-30. </description>
+        /// </item>
+        /// <item>
+        /// <term> Resource. </term>
+        /// <description> <see cref="ArtifactStoreResource"/>. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="artifactStorePrivateEndPointsFormat"> Parameters supplied to approve private endpoints. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="artifactStorePrivateEndPointsFormat"/> is null. </exception>
+        public virtual ArmOperation ApprovePrivateEndPoints(WaitUntil waitUntil, ArtifactStorePrivateEndPointsFormat artifactStorePrivateEndPointsFormat, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(artifactStorePrivateEndPointsFormat, nameof(artifactStorePrivateEndPointsFormat));
+
+            using DiagnosticScope scope = _artifactStoresClientDiagnostics.CreateScope("ArtifactStoreResource.ApprovePrivateEndPoints");
+            scope.Start();
+            try
+            {
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _artifactStoresRestClient.CreateApprovePrivateEndPointsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, ArtifactStorePrivateEndPointsFormat.ToRequestContent(artifactStorePrivateEndPointsFormat), context);
+                Response response = Pipeline.ProcessMessage(message, context);
+                HybridNetworkArmOperation operation = new HybridNetworkArmOperation(_artifactStoresClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
+                if (waitUntil == WaitUntil.Completed)
+                {
+                    operation.WaitForCompletionResponse(cancellationToken);
+                }
+                return operation;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Delete network fabric controllers on artifact stores
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.HybridNetwork/publishers/{publisherName}/artifactStores/{artifactStoreName}/deleteNetworkFabricControllerEndPoints. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> ArtifactStores_DeleteNetworkFabricControllerEndPoints. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-03-30. </description>
+        /// </item>
+        /// <item>
+        /// <term> Resource. </term>
+        /// <description> <see cref="ArtifactStoreResource"/>. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="artifactStoreNetworkFabricControllerEndPoints"> Parameters supplied to the create or update application group operation. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="artifactStoreNetworkFabricControllerEndPoints"/> is null. </exception>
+        public virtual async Task<ArmOperation> DeleteNetworkFabricControllerEndPointsAsync(WaitUntil waitUntil, ArtifactStoreNetworkFabricControllerEndPoints artifactStoreNetworkFabricControllerEndPoints, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(artifactStoreNetworkFabricControllerEndPoints, nameof(artifactStoreNetworkFabricControllerEndPoints));
+
+            using DiagnosticScope scope = _artifactStoresClientDiagnostics.CreateScope("ArtifactStoreResource.DeleteNetworkFabricControllerEndPoints");
+            scope.Start();
+            try
+            {
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _artifactStoresRestClient.CreateDeleteNetworkFabricControllerEndPointsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, ArtifactStoreNetworkFabricControllerEndPoints.ToRequestContent(artifactStoreNetworkFabricControllerEndPoints), context);
+                Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                HybridNetworkArmOperation operation = new HybridNetworkArmOperation(_artifactStoresClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
+                if (waitUntil == WaitUntil.Completed)
+                {
+                    await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
+                }
+                return operation;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Delete network fabric controllers on artifact stores
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.HybridNetwork/publishers/{publisherName}/artifactStores/{artifactStoreName}/deleteNetworkFabricControllerEndPoints. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> ArtifactStores_DeleteNetworkFabricControllerEndPoints. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-03-30. </description>
+        /// </item>
+        /// <item>
+        /// <term> Resource. </term>
+        /// <description> <see cref="ArtifactStoreResource"/>. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="artifactStoreNetworkFabricControllerEndPoints"> Parameters supplied to the create or update application group operation. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="artifactStoreNetworkFabricControllerEndPoints"/> is null. </exception>
+        public virtual ArmOperation DeleteNetworkFabricControllerEndPoints(WaitUntil waitUntil, ArtifactStoreNetworkFabricControllerEndPoints artifactStoreNetworkFabricControllerEndPoints, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(artifactStoreNetworkFabricControllerEndPoints, nameof(artifactStoreNetworkFabricControllerEndPoints));
+
+            using DiagnosticScope scope = _artifactStoresClientDiagnostics.CreateScope("ArtifactStoreResource.DeleteNetworkFabricControllerEndPoints");
+            scope.Start();
+            try
+            {
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _artifactStoresRestClient.CreateDeleteNetworkFabricControllerEndPointsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, ArtifactStoreNetworkFabricControllerEndPoints.ToRequestContent(artifactStoreNetworkFabricControllerEndPoints), context);
+                Response response = Pipeline.ProcessMessage(message, context);
+                HybridNetworkArmOperation operation = new HybridNetworkArmOperation(_artifactStoresClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
+                if (waitUntil == WaitUntil.Completed)
+                {
+                    operation.WaitForCompletionResponse(cancellationToken);
+                }
+                return operation;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// List network fabric controllers to artifact stores
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.HybridNetwork/publishers/{publisherName}/artifactStores/{artifactStoreName}/listNetworkFabricControllerPrivateEndPoints. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> ArtifactStores_ListNetworkFabricControllerPrivateEndPoints. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-03-30. </description>
+        /// </item>
+        /// <item>
+        /// <term> Resource. </term>
+        /// <description> <see cref="ArtifactStoreResource"/>. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        internal async Task<ArmOperation<ArtifactStoreNetworkFabricControllerEndPointsList>> GetNetworkFabricControllerPrivateEndPointsAsync(WaitUntil waitUntil, CancellationToken cancellationToken = default)
+        {
+            using DiagnosticScope scope = _artifactStoresClientDiagnostics.CreateScope("ArtifactStoreResource.GetNetworkFabricControllerPrivateEndPoints");
+            scope.Start();
+            try
+            {
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _artifactStoresRestClient.CreateGetNetworkFabricControllerPrivateEndPointsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
+                Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                HybridNetworkArmOperation<ArtifactStoreNetworkFabricControllerEndPointsList> operation = new HybridNetworkArmOperation<ArtifactStoreNetworkFabricControllerEndPointsList>(
+                    new ArtifactStoreNetworkFabricControllerEndPointsListOperationSource(),
+                    _artifactStoresClientDiagnostics,
+                    Pipeline,
+                    message.Request,
+                    response,
+                    OperationFinalStateVia.Location);
+                if (waitUntil == WaitUntil.Completed)
+                {
+                    await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
+                }
+                return operation;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// List network fabric controllers to artifact stores
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.HybridNetwork/publishers/{publisherName}/artifactStores/{artifactStoreName}/listNetworkFabricControllerPrivateEndPoints. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> ArtifactStores_ListNetworkFabricControllerPrivateEndPoints. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-03-30. </description>
+        /// </item>
+        /// <item>
+        /// <term> Resource. </term>
+        /// <description> <see cref="ArtifactStoreResource"/>. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        internal ArmOperation<ArtifactStoreNetworkFabricControllerEndPointsList> GetNetworkFabricControllerPrivateEndPoints(WaitUntil waitUntil, CancellationToken cancellationToken = default)
+        {
+            using DiagnosticScope scope = _artifactStoresClientDiagnostics.CreateScope("ArtifactStoreResource.GetNetworkFabricControllerPrivateEndPoints");
+            scope.Start();
+            try
+            {
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _artifactStoresRestClient.CreateGetNetworkFabricControllerPrivateEndPointsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
+                Response response = Pipeline.ProcessMessage(message, context);
+                HybridNetworkArmOperation<ArtifactStoreNetworkFabricControllerEndPointsList> operation = new HybridNetworkArmOperation<ArtifactStoreNetworkFabricControllerEndPointsList>(
+                    new ArtifactStoreNetworkFabricControllerEndPointsListOperationSource(),
+                    _artifactStoresClientDiagnostics,
+                    Pipeline,
+                    message.Request,
+                    response,
+                    OperationFinalStateVia.Location);
+                if (waitUntil == WaitUntil.Completed)
+                {
+                    operation.WaitForCompletion(cancellationToken);
+                }
+                return operation;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// List manual private endpoints on artifact stores
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.HybridNetwork/publishers/{publisherName}/artifactStores/{artifactStoreName}/listPrivateEndPoints. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> ArtifactStores_ListPrivateEndPoints. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-03-30. </description>
+        /// </item>
+        /// <item>
+        /// <term> Resource. </term>
+        /// <description> <see cref="ArtifactStoreResource"/>. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        internal async Task<ArmOperation<ArtifactStorePrivateEndPointsListResult>> GetPrivateEndPointsAsync(WaitUntil waitUntil, CancellationToken cancellationToken = default)
+        {
+            using DiagnosticScope scope = _artifactStoresClientDiagnostics.CreateScope("ArtifactStoreResource.GetPrivateEndPoints");
+            scope.Start();
+            try
+            {
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _artifactStoresRestClient.CreateGetPrivateEndPointsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
+                Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                HybridNetworkArmOperation<ArtifactStorePrivateEndPointsListResult> operation = new HybridNetworkArmOperation<ArtifactStorePrivateEndPointsListResult>(
+                    new ArtifactStorePrivateEndPointsListResultOperationSource(),
+                    _artifactStoresClientDiagnostics,
+                    Pipeline,
+                    message.Request,
+                    response,
+                    OperationFinalStateVia.Location);
+                if (waitUntil == WaitUntil.Completed)
+                {
+                    await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
+                }
+                return operation;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// List manual private endpoints on artifact stores
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.HybridNetwork/publishers/{publisherName}/artifactStores/{artifactStoreName}/listPrivateEndPoints. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> ArtifactStores_ListPrivateEndPoints. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-03-30. </description>
+        /// </item>
+        /// <item>
+        /// <term> Resource. </term>
+        /// <description> <see cref="ArtifactStoreResource"/>. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        internal ArmOperation<ArtifactStorePrivateEndPointsListResult> GetPrivateEndPoints(WaitUntil waitUntil, CancellationToken cancellationToken = default)
+        {
+            using DiagnosticScope scope = _artifactStoresClientDiagnostics.CreateScope("ArtifactStoreResource.GetPrivateEndPoints");
+            scope.Start();
+            try
+            {
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _artifactStoresRestClient.CreateGetPrivateEndPointsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
+                Response response = Pipeline.ProcessMessage(message, context);
+                HybridNetworkArmOperation<ArtifactStorePrivateEndPointsListResult> operation = new HybridNetworkArmOperation<ArtifactStorePrivateEndPointsListResult>(
+                    new ArtifactStorePrivateEndPointsListResultOperationSource(),
+                    _artifactStoresClientDiagnostics,
+                    Pipeline,
+                    message.Request,
+                    response,
+                    OperationFinalStateVia.Location);
+                if (waitUntil == WaitUntil.Completed)
+                {
+                    operation.WaitForCompletion(cancellationToken);
+                }
+                return operation;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Remove manual private endpoints on artifact stores
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.HybridNetwork/publishers/{publisherName}/artifactStores/{artifactStoreName}/removePrivateEndPoints. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> ArtifactStores_RemovePrivateEndPoints. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-03-30. </description>
+        /// </item>
+        /// <item>
+        /// <term> Resource. </term>
+        /// <description> <see cref="ArtifactStoreResource"/>. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="artifactStorePrivateEndPointsFormat"> Parameters supplied to the create or update application group operation. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="artifactStorePrivateEndPointsFormat"/> is null. </exception>
+        public virtual async Task<ArmOperation> RemovePrivateEndPointsAsync(WaitUntil waitUntil, ArtifactStorePrivateEndPointsFormat artifactStorePrivateEndPointsFormat, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(artifactStorePrivateEndPointsFormat, nameof(artifactStorePrivateEndPointsFormat));
+
+            using DiagnosticScope scope = _artifactStoresClientDiagnostics.CreateScope("ArtifactStoreResource.RemovePrivateEndPoints");
+            scope.Start();
+            try
+            {
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _artifactStoresRestClient.CreateRemovePrivateEndPointsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, ArtifactStorePrivateEndPointsFormat.ToRequestContent(artifactStorePrivateEndPointsFormat), context);
+                Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                HybridNetworkArmOperation operation = new HybridNetworkArmOperation(_artifactStoresClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
+                if (waitUntil == WaitUntil.Completed)
+                {
+                    await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
+                }
+                return operation;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Remove manual private endpoints on artifact stores
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.HybridNetwork/publishers/{publisherName}/artifactStores/{artifactStoreName}/removePrivateEndPoints. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> ArtifactStores_RemovePrivateEndPoints. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-03-30. </description>
+        /// </item>
+        /// <item>
+        /// <term> Resource. </term>
+        /// <description> <see cref="ArtifactStoreResource"/>. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="artifactStorePrivateEndPointsFormat"> Parameters supplied to the create or update application group operation. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="artifactStorePrivateEndPointsFormat"/> is null. </exception>
+        public virtual ArmOperation RemovePrivateEndPoints(WaitUntil waitUntil, ArtifactStorePrivateEndPointsFormat artifactStorePrivateEndPointsFormat, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(artifactStorePrivateEndPointsFormat, nameof(artifactStorePrivateEndPointsFormat));
+
+            using DiagnosticScope scope = _artifactStoresClientDiagnostics.CreateScope("ArtifactStoreResource.RemovePrivateEndPoints");
+            scope.Start();
+            try
+            {
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _artifactStoresRestClient.CreateRemovePrivateEndPointsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, ArtifactStorePrivateEndPointsFormat.ToRequestContent(artifactStorePrivateEndPointsFormat), context);
+                Response response = Pipeline.ProcessMessage(message, context);
+                HybridNetworkArmOperation operation = new HybridNetworkArmOperation(_artifactStoresClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
+                if (waitUntil == WaitUntil.Completed)
+                {
+                    operation.WaitForCompletionResponse(cancellationToken);
+                }
+                return operation;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
 
         /// <summary>
         /// Lists all the available artifacts in the parent Artifact Store.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.HybridNetwork/publishers/{publisherName}/artifactStores/{artifactStoreName}/artifacts</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.HybridNetwork/publishers/{publisherName}/artifactStores/{artifactStoreName}/artifacts. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ProxyArtifact_List</description>
+        /// <term> Operation Id. </term>
+        /// <description> ProxyArtifact_List. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2023-09-01</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-03-30. </description>
+        /// </item>
+        /// <item>
+        /// <term> Resource. </term>
+        /// <description> <see cref="ArtifactStoreResource"/>. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> A collection of <see cref="ProxyArtifactListOverview"/> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<ProxyArtifactListOverview> GetProxyArtifactsAsync(CancellationToken cancellationToken = default)
+        {
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new ProxyArtifactGetProxyArtifactsAsyncCollectionResultOfT(
+                _proxyArtifactRestClient,
+                Id.SubscriptionId,
+                Id.ResourceGroupName,
+                Id.Parent.Name,
+                Id.Name,
+                context,
+                "ArtifactStoreResource.GetProxyArtifacts");
+        }
+
+        /// <summary>
+        /// Lists all the available artifacts in the parent Artifact Store.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.HybridNetwork/publishers/{publisherName}/artifactStores/{artifactStoreName}/artifacts. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> ProxyArtifact_List. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-03-30. </description>
+        /// </item>
+        /// <item>
+        /// <term> Resource. </term>
+        /// <description> <see cref="ArtifactStoreResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -459,85 +1104,128 @@ namespace Azure.ResourceManager.HybridNetwork
         /// <returns> A collection of <see cref="ProxyArtifactListOverview"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<ProxyArtifactListOverview> GetProxyArtifacts(CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _proxyArtifactRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _proxyArtifactRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => ProxyArtifactListOverview.DeserializeProxyArtifactListOverview(e), _proxyArtifactClientDiagnostics, Pipeline, "ArtifactStoreResource.GetProxyArtifacts", "value", "nextLink", cancellationToken);
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new ProxyArtifactGetProxyArtifactsCollectionResultOfT(
+                _proxyArtifactRestClient,
+                Id.SubscriptionId,
+                Id.ResourceGroupName,
+                Id.Parent.Name,
+                Id.Name,
+                context,
+                "ArtifactStoreResource.GetProxyArtifacts");
         }
 
         /// <summary>
         /// Get a Artifact overview information.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.HybridNetwork/publishers/{publisherName}/artifactStores/{artifactStoreName}/artifactVersions</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.HybridNetwork/publishers/{publisherName}/artifactStores/{artifactStoreName}/artifactVersions. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ProxyArtifact_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> ProxyArtifact_ProxyArtifactGet. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2023-09-01</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-03-30. </description>
+        /// </item>
+        /// <item>
+        /// <term> Resource. </term>
+        /// <description> <see cref="ArtifactStoreResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="artifactName"> The name of the artifact. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="artifactName"/> is null. </exception>
-        /// <returns> An async collection of <see cref="ProxyArtifactVersionsListOverview"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<ProxyArtifactVersionsListOverview> GetProxyArtifactsAsync(string artifactName, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(artifactName, nameof(artifactName));
-
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _proxyArtifactRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, artifactName);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _proxyArtifactRestClient.CreateGetNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, artifactName);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => ProxyArtifactVersionsListOverview.DeserializeProxyArtifactVersionsListOverview(e), _proxyArtifactClientDiagnostics, Pipeline, "ArtifactStoreResource.GetProxyArtifacts", "value", "nextLink", cancellationToken);
-        }
-
-        /// <summary>
-        /// Get a Artifact overview information.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.HybridNetwork/publishers/{publisherName}/artifactStores/{artifactStoreName}/artifactVersions</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ProxyArtifact_Get</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2023-09-01</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="artifactName"> The name of the artifact. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="artifactName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="artifactName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <returns> A collection of <see cref="ProxyArtifactVersionsListOverview"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<ProxyArtifactVersionsListOverview> GetProxyArtifacts(string artifactName, CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<ProxyArtifactVersionsListOverview> GetProxyArtifactVersionsAsync(string artifactName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(artifactName, nameof(artifactName));
+            Argument.AssertNotNullOrEmpty(artifactName, nameof(artifactName));
 
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _proxyArtifactRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, artifactName);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _proxyArtifactRestClient.CreateGetNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, artifactName);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => ProxyArtifactVersionsListOverview.DeserializeProxyArtifactVersionsListOverview(e), _proxyArtifactClientDiagnostics, Pipeline, "ArtifactStoreResource.GetProxyArtifacts", "value", "nextLink", cancellationToken);
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new ProxyArtifactGetProxyArtifactVersionsAsyncCollectionResultOfT(
+                _proxyArtifactRestClient,
+                Id.SubscriptionId,
+                Id.ResourceGroupName,
+                Id.Parent.Name,
+                Id.Name,
+                artifactName,
+                context,
+                "ArtifactStoreResource.GetProxyArtifactVersions");
+        }
+
+        /// <summary>
+        /// Get a Artifact overview information.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.HybridNetwork/publishers/{publisherName}/artifactStores/{artifactStoreName}/artifactVersions. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> ProxyArtifact_ProxyArtifactGet. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-03-30. </description>
+        /// </item>
+        /// <item>
+        /// <term> Resource. </term>
+        /// <description> <see cref="ArtifactStoreResource"/>. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="artifactName"> The name of the artifact. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="artifactName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="artifactName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <returns> A collection of <see cref="ProxyArtifactVersionsListOverview"/> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<ProxyArtifactVersionsListOverview> GetProxyArtifactVersions(string artifactName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(artifactName, nameof(artifactName));
+
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new ProxyArtifactGetProxyArtifactVersionsCollectionResultOfT(
+                _proxyArtifactRestClient,
+                Id.SubscriptionId,
+                Id.ResourceGroupName,
+                Id.Parent.Name,
+                Id.Name,
+                artifactName,
+                context,
+                "ArtifactStoreResource.GetProxyArtifactVersions");
         }
 
         /// <summary>
         /// Change artifact state defined in artifact store.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.HybridNetwork/publishers/{publisherName}/artifactStores/{artifactStoreName}/artifactVersions/{artifactVersionName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.HybridNetwork/publishers/{publisherName}/artifactStores/{artifactStoreName}/artifactVersions/{artifactVersionName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ProxyArtifact_UpdateState</description>
+        /// <term> Operation Id. </term>
+        /// <description> ProxyArtifact_UpdateState. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2023-09-01</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-03-30. </description>
+        /// </item>
+        /// <item>
+        /// <term> Resource. </term>
+        /// <description> <see cref="ArtifactStoreResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -546,22 +1234,35 @@ namespace Azure.ResourceManager.HybridNetwork
         /// <param name="artifactName"> The name of the artifact. </param>
         /// <param name="artifactChangeState"> Parameters supplied to update the state of artifact manifest. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="artifactVersionName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="artifactVersionName"/>, <paramref name="artifactName"/> or <paramref name="artifactChangeState"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="artifactVersionName"/> or <paramref name="artifactName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual async Task<ArmOperation<ProxyArtifactVersionsListOverview>> UpdateStateProxyArtifactAsync(WaitUntil waitUntil, string artifactVersionName, string artifactName, ArtifactChangeState artifactChangeState, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(artifactVersionName, nameof(artifactVersionName));
-            Argument.AssertNotNull(artifactName, nameof(artifactName));
+            Argument.AssertNotNullOrEmpty(artifactName, nameof(artifactName));
             Argument.AssertNotNull(artifactChangeState, nameof(artifactChangeState));
 
-            using var scope = _proxyArtifactClientDiagnostics.CreateScope("ArtifactStoreResource.UpdateStateProxyArtifact");
+            using DiagnosticScope scope = _proxyArtifactClientDiagnostics.CreateScope("ArtifactStoreResource.UpdateStateProxyArtifact");
             scope.Start();
             try
             {
-                var response = await _proxyArtifactRestClient.UpdateStateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, artifactVersionName, artifactName, artifactChangeState, cancellationToken).ConfigureAwait(false);
-                var operation = new HybridNetworkArmOperation<ProxyArtifactVersionsListOverview>(new ProxyArtifactVersionsListOverviewOperationSource(), _proxyArtifactClientDiagnostics, Pipeline, _proxyArtifactRestClient.CreateUpdateStateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, artifactVersionName, artifactName, artifactChangeState).Request, response, OperationFinalStateVia.Location);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _proxyArtifactRestClient.CreateUpdateStateProxyArtifactRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, artifactVersionName, artifactName, ArtifactChangeState.ToRequestContent(artifactChangeState), context);
+                Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                HybridNetworkArmOperation<ProxyArtifactVersionsListOverview> operation = new HybridNetworkArmOperation<ProxyArtifactVersionsListOverview>(
+                    new ProxyArtifactVersionsListOverviewOperationSource(),
+                    _proxyArtifactClientDiagnostics,
+                    Pipeline,
+                    message.Request,
+                    response,
+                    OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
+                {
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
+                }
                 return operation;
             }
             catch (Exception e)
@@ -575,16 +1276,20 @@ namespace Azure.ResourceManager.HybridNetwork
         /// Change artifact state defined in artifact store.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.HybridNetwork/publishers/{publisherName}/artifactStores/{artifactStoreName}/artifactVersions/{artifactVersionName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.HybridNetwork/publishers/{publisherName}/artifactStores/{artifactStoreName}/artifactVersions/{artifactVersionName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ProxyArtifact_UpdateState</description>
+        /// <term> Operation Id. </term>
+        /// <description> ProxyArtifact_UpdateState. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2023-09-01</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-03-30. </description>
+        /// </item>
+        /// <item>
+        /// <term> Resource. </term>
+        /// <description> <see cref="ArtifactStoreResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -593,22 +1298,35 @@ namespace Azure.ResourceManager.HybridNetwork
         /// <param name="artifactName"> The name of the artifact. </param>
         /// <param name="artifactChangeState"> Parameters supplied to update the state of artifact manifest. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="artifactVersionName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="artifactVersionName"/>, <paramref name="artifactName"/> or <paramref name="artifactChangeState"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="artifactVersionName"/> or <paramref name="artifactName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual ArmOperation<ProxyArtifactVersionsListOverview> UpdateStateProxyArtifact(WaitUntil waitUntil, string artifactVersionName, string artifactName, ArtifactChangeState artifactChangeState, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(artifactVersionName, nameof(artifactVersionName));
-            Argument.AssertNotNull(artifactName, nameof(artifactName));
+            Argument.AssertNotNullOrEmpty(artifactName, nameof(artifactName));
             Argument.AssertNotNull(artifactChangeState, nameof(artifactChangeState));
 
-            using var scope = _proxyArtifactClientDiagnostics.CreateScope("ArtifactStoreResource.UpdateStateProxyArtifact");
+            using DiagnosticScope scope = _proxyArtifactClientDiagnostics.CreateScope("ArtifactStoreResource.UpdateStateProxyArtifact");
             scope.Start();
             try
             {
-                var response = _proxyArtifactRestClient.UpdateState(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, artifactVersionName, artifactName, artifactChangeState, cancellationToken);
-                var operation = new HybridNetworkArmOperation<ProxyArtifactVersionsListOverview>(new ProxyArtifactVersionsListOverviewOperationSource(), _proxyArtifactClientDiagnostics, Pipeline, _proxyArtifactRestClient.CreateUpdateStateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, artifactVersionName, artifactName, artifactChangeState).Request, response, OperationFinalStateVia.Location);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _proxyArtifactRestClient.CreateUpdateStateProxyArtifactRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, artifactVersionName, artifactName, ArtifactChangeState.ToRequestContent(artifactChangeState), context);
+                Response response = Pipeline.ProcessMessage(message, context);
+                HybridNetworkArmOperation<ProxyArtifactVersionsListOverview> operation = new HybridNetworkArmOperation<ProxyArtifactVersionsListOverview>(
+                    new ProxyArtifactVersionsListOverviewOperationSource(),
+                    _proxyArtifactClientDiagnostics,
+                    Pipeline,
+                    message.Request,
+                    response,
+                    OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
+                {
                     operation.WaitForCompletion(cancellationToken);
+                }
                 return operation;
             }
             catch (Exception e)
@@ -618,27 +1336,7 @@ namespace Azure.ResourceManager.HybridNetwork
             }
         }
 
-        /// <summary>
-        /// Add a tag to the current resource.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.HybridNetwork/publishers/{publisherName}/artifactStores/{artifactStoreName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ArtifactStores_Get</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2023-09-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ArtifactStoreResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
+        /// <summary> Add a tag to the current resource. </summary>
         /// <param name="key"> The key for the tag. </param>
         /// <param name="value"> The value for the tag. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -648,29 +1346,35 @@ namespace Azure.ResourceManager.HybridNetwork
             Argument.AssertNotNull(key, nameof(key));
             Argument.AssertNotNull(value, nameof(value));
 
-            using var scope = _artifactStoreClientDiagnostics.CreateScope("ArtifactStoreResource.AddTag");
+            using DiagnosticScope scope = _artifactStoresClientDiagnostics.CreateScope("ArtifactStoreResource.AddTag");
             scope.Start();
             try
             {
-                if (await CanUseTagResourceAsync(cancellationToken: cancellationToken).ConfigureAwait(false))
+                if (await CanUseTagResourceAsync(cancellationToken).ConfigureAwait(false))
                 {
-                    var originalTags = await GetTagResource().GetAsync(cancellationToken).ConfigureAwait(false);
+                    Response<TagResource> originalTags = await GetTagResource().GetAsync(cancellationToken).ConfigureAwait(false);
                     originalTags.Value.Data.TagValues[key] = value;
-                    await GetTagResource().CreateOrUpdateAsync(WaitUntil.Completed, originalTags.Value.Data, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    var originalResponse = await _artifactStoreRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
-                    return Response.FromValue(new ArtifactStoreResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
+                    await GetTagResource().CreateOrUpdateAsync(WaitUntil.Completed, originalTags.Value.Data, cancellationToken).ConfigureAwait(false);
+                    RequestContext context = new RequestContext
+                    {
+                        CancellationToken = cancellationToken
+                    };
+                    HttpMessage message = _artifactStoresRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
+                    Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                    Response<ArtifactStoreData> response = Response.FromValue(ArtifactStoreData.FromResponse(result), result);
+                    return Response.FromValue(new ArtifactStoreResource(Client, response.Value), response.GetRawResponse());
                 }
                 else
                 {
-                    var current = (await GetAsync(cancellationToken: cancellationToken).ConfigureAwait(false)).Value.Data;
-                    var patch = new TagsObject();
-                    foreach (var tag in current.Tags)
+                    ArtifactStoreData current = (await GetAsync(cancellationToken: cancellationToken).ConfigureAwait(false)).Value.Data;
+                    TagsObject patch = new TagsObject();
+                    foreach (KeyValuePair<string, string> tag in current.Tags)
                     {
                         patch.Tags.Add(tag);
                     }
                     patch.Tags[key] = value;
-                    var result = await UpdateAsync(patch, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return result;
+                    Response<ArtifactStoreResource> result = await UpdateAsync(patch, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    return Response.FromValue(result.Value, result.GetRawResponse());
                 }
             }
             catch (Exception e)
@@ -680,27 +1384,7 @@ namespace Azure.ResourceManager.HybridNetwork
             }
         }
 
-        /// <summary>
-        /// Add a tag to the current resource.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.HybridNetwork/publishers/{publisherName}/artifactStores/{artifactStoreName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ArtifactStores_Get</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2023-09-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ArtifactStoreResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
+        /// <summary> Add a tag to the current resource. </summary>
         /// <param name="key"> The key for the tag. </param>
         /// <param name="value"> The value for the tag. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -710,29 +1394,35 @@ namespace Azure.ResourceManager.HybridNetwork
             Argument.AssertNotNull(key, nameof(key));
             Argument.AssertNotNull(value, nameof(value));
 
-            using var scope = _artifactStoreClientDiagnostics.CreateScope("ArtifactStoreResource.AddTag");
+            using DiagnosticScope scope = _artifactStoresClientDiagnostics.CreateScope("ArtifactStoreResource.AddTag");
             scope.Start();
             try
             {
-                if (CanUseTagResource(cancellationToken: cancellationToken))
+                if (CanUseTagResource(cancellationToken))
                 {
-                    var originalTags = GetTagResource().Get(cancellationToken);
+                    Response<TagResource> originalTags = GetTagResource().Get(cancellationToken);
                     originalTags.Value.Data.TagValues[key] = value;
-                    GetTagResource().CreateOrUpdate(WaitUntil.Completed, originalTags.Value.Data, cancellationToken: cancellationToken);
-                    var originalResponse = _artifactStoreRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
-                    return Response.FromValue(new ArtifactStoreResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
+                    GetTagResource().CreateOrUpdate(WaitUntil.Completed, originalTags.Value.Data, cancellationToken);
+                    RequestContext context = new RequestContext
+                    {
+                        CancellationToken = cancellationToken
+                    };
+                    HttpMessage message = _artifactStoresRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
+                    Response result = Pipeline.ProcessMessage(message, context);
+                    Response<ArtifactStoreData> response = Response.FromValue(ArtifactStoreData.FromResponse(result), result);
+                    return Response.FromValue(new ArtifactStoreResource(Client, response.Value), response.GetRawResponse());
                 }
                 else
                 {
-                    var current = Get(cancellationToken: cancellationToken).Value.Data;
-                    var patch = new TagsObject();
-                    foreach (var tag in current.Tags)
+                    ArtifactStoreData current = Get(cancellationToken: cancellationToken).Value.Data;
+                    TagsObject patch = new TagsObject();
+                    foreach (KeyValuePair<string, string> tag in current.Tags)
                     {
                         patch.Tags.Add(tag);
                     }
                     patch.Tags[key] = value;
-                    var result = Update(patch, cancellationToken: cancellationToken);
-                    return result;
+                    Response<ArtifactStoreResource> result = Update(patch, cancellationToken: cancellationToken);
+                    return Response.FromValue(result.Value, result.GetRawResponse());
                 }
             }
             catch (Exception e)
@@ -742,54 +1432,40 @@ namespace Azure.ResourceManager.HybridNetwork
             }
         }
 
-        /// <summary>
-        /// Replace the tags on the resource with the given set.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.HybridNetwork/publishers/{publisherName}/artifactStores/{artifactStoreName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ArtifactStores_Get</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2023-09-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ArtifactStoreResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="tags"> The set of tags to use as replacement. </param>
+        /// <summary> Replace the tags on the resource with the given set. </summary>
+        /// <param name="tags"> The tags to set on the resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="tags"/> is null. </exception>
         public virtual async Task<Response<ArtifactStoreResource>> SetTagsAsync(IDictionary<string, string> tags, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(tags, nameof(tags));
 
-            using var scope = _artifactStoreClientDiagnostics.CreateScope("ArtifactStoreResource.SetTags");
+            using DiagnosticScope scope = _artifactStoresClientDiagnostics.CreateScope("ArtifactStoreResource.SetTags");
             scope.Start();
             try
             {
-                if (await CanUseTagResourceAsync(cancellationToken: cancellationToken).ConfigureAwait(false))
+                if (await CanUseTagResourceAsync(cancellationToken).ConfigureAwait(false))
                 {
-                    await GetTagResource().DeleteAsync(WaitUntil.Completed, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    var originalTags = await GetTagResource().GetAsync(cancellationToken).ConfigureAwait(false);
+                    await GetTagResource().DeleteAsync(WaitUntil.Completed, cancellationToken).ConfigureAwait(false);
+                    Response<TagResource> originalTags = await GetTagResource().GetAsync(cancellationToken).ConfigureAwait(false);
                     originalTags.Value.Data.TagValues.ReplaceWith(tags);
-                    await GetTagResource().CreateOrUpdateAsync(WaitUntil.Completed, originalTags.Value.Data, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    var originalResponse = await _artifactStoreRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
-                    return Response.FromValue(new ArtifactStoreResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
+                    await GetTagResource().CreateOrUpdateAsync(WaitUntil.Completed, originalTags.Value.Data, cancellationToken).ConfigureAwait(false);
+                    RequestContext context = new RequestContext
+                    {
+                        CancellationToken = cancellationToken
+                    };
+                    HttpMessage message = _artifactStoresRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
+                    Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                    Response<ArtifactStoreData> response = Response.FromValue(ArtifactStoreData.FromResponse(result), result);
+                    return Response.FromValue(new ArtifactStoreResource(Client, response.Value), response.GetRawResponse());
                 }
                 else
                 {
-                    var current = (await GetAsync(cancellationToken: cancellationToken).ConfigureAwait(false)).Value.Data;
-                    var patch = new TagsObject();
+                    ArtifactStoreData current = (await GetAsync(cancellationToken: cancellationToken).ConfigureAwait(false)).Value.Data;
+                    TagsObject patch = new TagsObject();
                     patch.Tags.ReplaceWith(tags);
-                    var result = await UpdateAsync(patch, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return result;
+                    Response<ArtifactStoreResource> result = await UpdateAsync(patch, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    return Response.FromValue(result.Value, result.GetRawResponse());
                 }
             }
             catch (Exception e)
@@ -799,54 +1475,40 @@ namespace Azure.ResourceManager.HybridNetwork
             }
         }
 
-        /// <summary>
-        /// Replace the tags on the resource with the given set.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.HybridNetwork/publishers/{publisherName}/artifactStores/{artifactStoreName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ArtifactStores_Get</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2023-09-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ArtifactStoreResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="tags"> The set of tags to use as replacement. </param>
+        /// <summary> Replace the tags on the resource with the given set. </summary>
+        /// <param name="tags"> The tags to set on the resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="tags"/> is null. </exception>
         public virtual Response<ArtifactStoreResource> SetTags(IDictionary<string, string> tags, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(tags, nameof(tags));
 
-            using var scope = _artifactStoreClientDiagnostics.CreateScope("ArtifactStoreResource.SetTags");
+            using DiagnosticScope scope = _artifactStoresClientDiagnostics.CreateScope("ArtifactStoreResource.SetTags");
             scope.Start();
             try
             {
-                if (CanUseTagResource(cancellationToken: cancellationToken))
+                if (CanUseTagResource(cancellationToken))
                 {
-                    GetTagResource().Delete(WaitUntil.Completed, cancellationToken: cancellationToken);
-                    var originalTags = GetTagResource().Get(cancellationToken);
+                    GetTagResource().Delete(WaitUntil.Completed, cancellationToken);
+                    Response<TagResource> originalTags = GetTagResource().Get(cancellationToken);
                     originalTags.Value.Data.TagValues.ReplaceWith(tags);
-                    GetTagResource().CreateOrUpdate(WaitUntil.Completed, originalTags.Value.Data, cancellationToken: cancellationToken);
-                    var originalResponse = _artifactStoreRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
-                    return Response.FromValue(new ArtifactStoreResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
+                    GetTagResource().CreateOrUpdate(WaitUntil.Completed, originalTags.Value.Data, cancellationToken);
+                    RequestContext context = new RequestContext
+                    {
+                        CancellationToken = cancellationToken
+                    };
+                    HttpMessage message = _artifactStoresRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
+                    Response result = Pipeline.ProcessMessage(message, context);
+                    Response<ArtifactStoreData> response = Response.FromValue(ArtifactStoreData.FromResponse(result), result);
+                    return Response.FromValue(new ArtifactStoreResource(Client, response.Value), response.GetRawResponse());
                 }
                 else
                 {
-                    var current = Get(cancellationToken: cancellationToken).Value.Data;
-                    var patch = new TagsObject();
+                    ArtifactStoreData current = Get(cancellationToken: cancellationToken).Value.Data;
+                    TagsObject patch = new TagsObject();
                     patch.Tags.ReplaceWith(tags);
-                    var result = Update(patch, cancellationToken: cancellationToken);
-                    return result;
+                    Response<ArtifactStoreResource> result = Update(patch, cancellationToken: cancellationToken);
+                    return Response.FromValue(result.Value, result.GetRawResponse());
                 }
             }
             catch (Exception e)
@@ -856,27 +1518,7 @@ namespace Azure.ResourceManager.HybridNetwork
             }
         }
 
-        /// <summary>
-        /// Removes a tag by key from the resource.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.HybridNetwork/publishers/{publisherName}/artifactStores/{artifactStoreName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ArtifactStores_Get</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2023-09-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ArtifactStoreResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
+        /// <summary> Removes a tag by key from the resource. </summary>
         /// <param name="key"> The key for the tag. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> is null. </exception>
@@ -884,29 +1526,35 @@ namespace Azure.ResourceManager.HybridNetwork
         {
             Argument.AssertNotNull(key, nameof(key));
 
-            using var scope = _artifactStoreClientDiagnostics.CreateScope("ArtifactStoreResource.RemoveTag");
+            using DiagnosticScope scope = _artifactStoresClientDiagnostics.CreateScope("ArtifactStoreResource.RemoveTag");
             scope.Start();
             try
             {
-                if (await CanUseTagResourceAsync(cancellationToken: cancellationToken).ConfigureAwait(false))
+                if (await CanUseTagResourceAsync(cancellationToken).ConfigureAwait(false))
                 {
-                    var originalTags = await GetTagResource().GetAsync(cancellationToken).ConfigureAwait(false);
+                    Response<TagResource> originalTags = await GetTagResource().GetAsync(cancellationToken).ConfigureAwait(false);
                     originalTags.Value.Data.TagValues.Remove(key);
-                    await GetTagResource().CreateOrUpdateAsync(WaitUntil.Completed, originalTags.Value.Data, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    var originalResponse = await _artifactStoreRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
-                    return Response.FromValue(new ArtifactStoreResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
+                    await GetTagResource().CreateOrUpdateAsync(WaitUntil.Completed, originalTags.Value.Data, cancellationToken).ConfigureAwait(false);
+                    RequestContext context = new RequestContext
+                    {
+                        CancellationToken = cancellationToken
+                    };
+                    HttpMessage message = _artifactStoresRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
+                    Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                    Response<ArtifactStoreData> response = Response.FromValue(ArtifactStoreData.FromResponse(result), result);
+                    return Response.FromValue(new ArtifactStoreResource(Client, response.Value), response.GetRawResponse());
                 }
                 else
                 {
-                    var current = (await GetAsync(cancellationToken: cancellationToken).ConfigureAwait(false)).Value.Data;
-                    var patch = new TagsObject();
-                    foreach (var tag in current.Tags)
+                    ArtifactStoreData current = (await GetAsync(cancellationToken: cancellationToken).ConfigureAwait(false)).Value.Data;
+                    TagsObject patch = new TagsObject();
+                    foreach (KeyValuePair<string, string> tag in current.Tags)
                     {
                         patch.Tags.Add(tag);
                     }
                     patch.Tags.Remove(key);
-                    var result = await UpdateAsync(patch, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return result;
+                    Response<ArtifactStoreResource> result = await UpdateAsync(patch, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    return Response.FromValue(result.Value, result.GetRawResponse());
                 }
             }
             catch (Exception e)
@@ -916,27 +1564,7 @@ namespace Azure.ResourceManager.HybridNetwork
             }
         }
 
-        /// <summary>
-        /// Removes a tag by key from the resource.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.HybridNetwork/publishers/{publisherName}/artifactStores/{artifactStoreName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ArtifactStores_Get</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2023-09-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ArtifactStoreResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
+        /// <summary> Removes a tag by key from the resource. </summary>
         /// <param name="key"> The key for the tag. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> is null. </exception>
@@ -944,29 +1572,35 @@ namespace Azure.ResourceManager.HybridNetwork
         {
             Argument.AssertNotNull(key, nameof(key));
 
-            using var scope = _artifactStoreClientDiagnostics.CreateScope("ArtifactStoreResource.RemoveTag");
+            using DiagnosticScope scope = _artifactStoresClientDiagnostics.CreateScope("ArtifactStoreResource.RemoveTag");
             scope.Start();
             try
             {
-                if (CanUseTagResource(cancellationToken: cancellationToken))
+                if (CanUseTagResource(cancellationToken))
                 {
-                    var originalTags = GetTagResource().Get(cancellationToken);
+                    Response<TagResource> originalTags = GetTagResource().Get(cancellationToken);
                     originalTags.Value.Data.TagValues.Remove(key);
-                    GetTagResource().CreateOrUpdate(WaitUntil.Completed, originalTags.Value.Data, cancellationToken: cancellationToken);
-                    var originalResponse = _artifactStoreRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
-                    return Response.FromValue(new ArtifactStoreResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
+                    GetTagResource().CreateOrUpdate(WaitUntil.Completed, originalTags.Value.Data, cancellationToken);
+                    RequestContext context = new RequestContext
+                    {
+                        CancellationToken = cancellationToken
+                    };
+                    HttpMessage message = _artifactStoresRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
+                    Response result = Pipeline.ProcessMessage(message, context);
+                    Response<ArtifactStoreData> response = Response.FromValue(ArtifactStoreData.FromResponse(result), result);
+                    return Response.FromValue(new ArtifactStoreResource(Client, response.Value), response.GetRawResponse());
                 }
                 else
                 {
-                    var current = Get(cancellationToken: cancellationToken).Value.Data;
-                    var patch = new TagsObject();
-                    foreach (var tag in current.Tags)
+                    ArtifactStoreData current = Get(cancellationToken: cancellationToken).Value.Data;
+                    TagsObject patch = new TagsObject();
+                    foreach (KeyValuePair<string, string> tag in current.Tags)
                     {
                         patch.Tags.Add(tag);
                     }
                     patch.Tags.Remove(key);
-                    var result = Update(patch, cancellationToken: cancellationToken);
-                    return result;
+                    Response<ArtifactStoreResource> result = Update(patch, cancellationToken: cancellationToken);
+                    return Response.FromValue(result.Value, result.GetRawResponse());
                 }
             }
             catch (Exception e)
@@ -974,6 +1608,39 @@ namespace Azure.ResourceManager.HybridNetwork
                 scope.Failed(e);
                 throw;
             }
+        }
+
+        /// <summary> Gets a collection of ArtifactManifests in the <see cref="ArtifactStoreResource"/>. </summary>
+        /// <returns> An object representing collection of ArtifactManifests and their operations over a ArtifactManifestResource. </returns>
+        public virtual ArtifactManifestCollection GetArtifactManifests()
+        {
+            return GetCachedClient(client => new ArtifactManifestCollection(client, Id));
+        }
+
+        /// <summary> Gets information about a artifact manifest resource. </summary>
+        /// <param name="artifactManifestName"> The name of the artifact manifest. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="artifactManifestName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="artifactManifestName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual async Task<Response<ArtifactManifestResource>> GetArtifactManifestAsync(string artifactManifestName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(artifactManifestName, nameof(artifactManifestName));
+
+            return await GetArtifactManifests().GetAsync(artifactManifestName, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary> Gets information about a artifact manifest resource. </summary>
+        /// <param name="artifactManifestName"> The name of the artifact manifest. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="artifactManifestName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="artifactManifestName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual Response<ArtifactManifestResource> GetArtifactManifest(string artifactManifestName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(artifactManifestName, nameof(artifactManifestName));
+
+            return GetArtifactManifests().Get(artifactManifestName, cancellationToken);
         }
     }
 }

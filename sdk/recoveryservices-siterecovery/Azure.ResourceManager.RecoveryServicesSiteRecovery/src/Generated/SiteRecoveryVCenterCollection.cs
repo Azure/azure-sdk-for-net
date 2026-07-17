@@ -94,7 +94,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
                 HttpMessage message = _replicationvCentersRestClient.CreateCreateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, vcenterName, SiteRecoveryVCenterCreateOrUpdateContent.ToRequestContent(content), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 RecoveryServicesSiteRecoveryArmOperation<SiteRecoveryVCenterResource> operation = new RecoveryServicesSiteRecoveryArmOperation<SiteRecoveryVCenterResource>(
-                    new SiteRecoveryVCenterOperationSource(Client),
+                    new SiteRecoveryVCenterResourceOperationSource(Client),
                     _replicationvCentersClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -152,7 +152,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
                 HttpMessage message = _replicationvCentersRestClient.CreateCreateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, vcenterName, SiteRecoveryVCenterCreateOrUpdateContent.ToRequestContent(content), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 RecoveryServicesSiteRecoveryArmOperation<SiteRecoveryVCenterResource> operation = new RecoveryServicesSiteRecoveryArmOperation<SiteRecoveryVCenterResource>(
-                    new SiteRecoveryVCenterOperationSource(Client),
+                    new SiteRecoveryVCenterResourceOperationSource(Client),
                     _replicationvCentersClientDiagnostics,
                     Pipeline,
                     message.Request,

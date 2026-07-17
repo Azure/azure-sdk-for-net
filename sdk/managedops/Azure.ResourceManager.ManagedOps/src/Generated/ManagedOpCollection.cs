@@ -94,7 +94,7 @@ namespace Azure.ResourceManager.ManagedOps
                 HttpMessage message = _managedOperationsRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), managedOpsName, ManagedOpData.ToRequestContent(data), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 ManagedOpsArmOperation<ManagedOpResource> operation = new ManagedOpsArmOperation<ManagedOpResource>(
-                    new ManagedOpOperationSource(Client),
+                    new ManagedOpResourceOperationSource(Client),
                     _managedOperationsClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -152,7 +152,7 @@ namespace Azure.ResourceManager.ManagedOps
                 HttpMessage message = _managedOperationsRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), managedOpsName, ManagedOpData.ToRequestContent(data), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 ManagedOpsArmOperation<ManagedOpResource> operation = new ManagedOpsArmOperation<ManagedOpResource>(
-                    new ManagedOpOperationSource(Client),
+                    new ManagedOpResourceOperationSource(Client),
                     _managedOperationsClientDiagnostics,
                     Pipeline,
                     message.Request,

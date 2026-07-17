@@ -8,67 +8,66 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.Globalization;
+using System.Diagnostics;
 using System.Threading;
 using System.Threading.Tasks;
-using Autorest.CSharp.Core;
+using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
+using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.OperationalInsights
 {
     /// <summary>
     /// A class representing a collection of <see cref="OperationalInsightsDataExportResource"/> and their operations.
     /// Each <see cref="OperationalInsightsDataExportResource"/> in the collection will belong to the same instance of <see cref="OperationalInsightsWorkspaceResource"/>.
-    /// To get an <see cref="OperationalInsightsDataExportCollection"/> instance call the GetOperationalInsightsDataExports method from an instance of <see cref="OperationalInsightsWorkspaceResource"/>.
+    /// To get a <see cref="OperationalInsightsDataExportCollection"/> instance call the GetOperationalInsightsDataExports method from an instance of <see cref="OperationalInsightsWorkspaceResource"/>.
     /// </summary>
     public partial class OperationalInsightsDataExportCollection : ArmCollection, IEnumerable<OperationalInsightsDataExportResource>, IAsyncEnumerable<OperationalInsightsDataExportResource>
     {
-        private readonly ClientDiagnostics _operationalInsightsDataExportDataExportsClientDiagnostics;
-        private readonly DataExportsRestOperations _operationalInsightsDataExportDataExportsRestClient;
+        private readonly ClientDiagnostics _dataExportsClientDiagnostics;
+        private readonly DataExports _dataExportsRestClient;
 
-        /// <summary> Initializes a new instance of the <see cref="OperationalInsightsDataExportCollection"/> class for mocking. </summary>
+        /// <summary> Initializes a new instance of OperationalInsightsDataExportCollection for mocking. </summary>
         protected OperationalInsightsDataExportCollection()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref="OperationalInsightsDataExportCollection"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="OperationalInsightsDataExportCollection"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
-        /// <param name="id"> The identifier of the parent resource that is the target of operations. </param>
+        /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal OperationalInsightsDataExportCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _operationalInsightsDataExportDataExportsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.OperationalInsights", OperationalInsightsDataExportResource.ResourceType.Namespace, Diagnostics);
-            TryGetApiVersion(OperationalInsightsDataExportResource.ResourceType, out string operationalInsightsDataExportDataExportsApiVersion);
-            _operationalInsightsDataExportDataExportsRestClient = new DataExportsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, operationalInsightsDataExportDataExportsApiVersion);
-#if DEBUG
-			ValidateResourceId(Id);
-#endif
+            TryGetApiVersion(OperationalInsightsDataExportResource.ResourceType, out string operationalInsightsDataExportApiVersion);
+            _dataExportsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.OperationalInsights", OperationalInsightsDataExportResource.ResourceType.Namespace, Diagnostics);
+            _dataExportsRestClient = new DataExports(_dataExportsClientDiagnostics, Pipeline, Endpoint, operationalInsightsDataExportApiVersion ?? "2025-07-01");
+            ValidateResourceId(id);
         }
 
+        /// <param name="id"></param>
+        [Conditional("DEBUG")]
         internal static void ValidateResourceId(ResourceIdentifier id)
         {
             if (id.ResourceType != OperationalInsightsWorkspaceResource.ResourceType)
-                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, OperationalInsightsWorkspaceResource.ResourceType), nameof(id));
+            {
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, OperationalInsightsWorkspaceResource.ResourceType), nameof(id));
+            }
         }
 
         /// <summary>
         /// Create or update a data export.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourcegroups/{resourceGroupName}/providers/Microsoft.OperationalInsights/workspaces/{workspaceName}/dataExports/{dataExportName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.OperationalInsights/workspaces/{workspaceName}/dataExports/{dataExportName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>DataExports_CreateOrUpdate</description>
+        /// <term> Operation Id. </term>
+        /// <description> DataExports_CreateOrUpdate. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-02-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="OperationalInsightsDataExportResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-07-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -76,23 +75,31 @@ namespace Azure.ResourceManager.OperationalInsights
         /// <param name="dataExportName"> The data export rule name. </param>
         /// <param name="data"> The parameters required to create or update a data export. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="dataExportName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="dataExportName"/> or <paramref name="data"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="dataExportName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual async Task<ArmOperation<OperationalInsightsDataExportResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string dataExportName, OperationalInsightsDataExportData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(dataExportName, nameof(dataExportName));
             Argument.AssertNotNull(data, nameof(data));
 
-            using var scope = _operationalInsightsDataExportDataExportsClientDiagnostics.CreateScope("OperationalInsightsDataExportCollection.CreateOrUpdate");
+            using DiagnosticScope scope = _dataExportsClientDiagnostics.CreateScope("OperationalInsightsDataExportCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                var response = await _operationalInsightsDataExportDataExportsRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, dataExportName, data, cancellationToken).ConfigureAwait(false);
-                var uri = _operationalInsightsDataExportDataExportsRestClient.CreateCreateOrUpdateRequestUri(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, dataExportName, data);
-                var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
-                var operation = new OperationalInsightsArmOperation<OperationalInsightsDataExportResource>(Response.FromValue(new OperationalInsightsDataExportResource(Client, response), response.GetRawResponse()), rehydrationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _dataExportsRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, dataExportName, OperationalInsightsDataExportData.ToRequestContent(data), context);
+                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                Response<OperationalInsightsDataExportData> response = Response.FromValue(OperationalInsightsDataExportData.FromResponse(result), result);
+                RequestUriBuilder uri = message.Request.Uri;
+                RehydrationToken rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
+                OperationalInsightsArmOperation<OperationalInsightsDataExportResource> operation = new OperationalInsightsArmOperation<OperationalInsightsDataExportResource>(Response.FromValue(new OperationalInsightsDataExportResource(Client, response.Value), response.GetRawResponse()), rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
+                {
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
+                }
                 return operation;
             }
             catch (Exception e)
@@ -106,20 +113,16 @@ namespace Azure.ResourceManager.OperationalInsights
         /// Create or update a data export.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourcegroups/{resourceGroupName}/providers/Microsoft.OperationalInsights/workspaces/{workspaceName}/dataExports/{dataExportName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.OperationalInsights/workspaces/{workspaceName}/dataExports/{dataExportName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>DataExports_CreateOrUpdate</description>
+        /// <term> Operation Id. </term>
+        /// <description> DataExports_CreateOrUpdate. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-02-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="OperationalInsightsDataExportResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-07-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -127,23 +130,31 @@ namespace Azure.ResourceManager.OperationalInsights
         /// <param name="dataExportName"> The data export rule name. </param>
         /// <param name="data"> The parameters required to create or update a data export. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="dataExportName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="dataExportName"/> or <paramref name="data"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="dataExportName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual ArmOperation<OperationalInsightsDataExportResource> CreateOrUpdate(WaitUntil waitUntil, string dataExportName, OperationalInsightsDataExportData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(dataExportName, nameof(dataExportName));
             Argument.AssertNotNull(data, nameof(data));
 
-            using var scope = _operationalInsightsDataExportDataExportsClientDiagnostics.CreateScope("OperationalInsightsDataExportCollection.CreateOrUpdate");
+            using DiagnosticScope scope = _dataExportsClientDiagnostics.CreateScope("OperationalInsightsDataExportCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                var response = _operationalInsightsDataExportDataExportsRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, dataExportName, data, cancellationToken);
-                var uri = _operationalInsightsDataExportDataExportsRestClient.CreateCreateOrUpdateRequestUri(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, dataExportName, data);
-                var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
-                var operation = new OperationalInsightsArmOperation<OperationalInsightsDataExportResource>(Response.FromValue(new OperationalInsightsDataExportResource(Client, response), response.GetRawResponse()), rehydrationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _dataExportsRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, dataExportName, OperationalInsightsDataExportData.ToRequestContent(data), context);
+                Response result = Pipeline.ProcessMessage(message, context);
+                Response<OperationalInsightsDataExportData> response = Response.FromValue(OperationalInsightsDataExportData.FromResponse(result), result);
+                RequestUriBuilder uri = message.Request.Uri;
+                RehydrationToken rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
+                OperationalInsightsArmOperation<OperationalInsightsDataExportResource> operation = new OperationalInsightsArmOperation<OperationalInsightsDataExportResource>(Response.FromValue(new OperationalInsightsDataExportResource(Client, response.Value), response.GetRawResponse()), rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
+                {
                     operation.WaitForCompletion(cancellationToken);
+                }
                 return operation;
             }
             catch (Exception e)
@@ -157,38 +168,42 @@ namespace Azure.ResourceManager.OperationalInsights
         /// Gets a data export instance.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourcegroups/{resourceGroupName}/providers/Microsoft.OperationalInsights/workspaces/{workspaceName}/dataExports/{dataExportName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.OperationalInsights/workspaces/{workspaceName}/dataExports/{dataExportName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>DataExports_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> DataExports_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-02-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="OperationalInsightsDataExportResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-07-01. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="dataExportName"> The data export rule name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="dataExportName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="dataExportName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="dataExportName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual async Task<Response<OperationalInsightsDataExportResource>> GetAsync(string dataExportName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(dataExportName, nameof(dataExportName));
 
-            using var scope = _operationalInsightsDataExportDataExportsClientDiagnostics.CreateScope("OperationalInsightsDataExportCollection.Get");
+            using DiagnosticScope scope = _dataExportsClientDiagnostics.CreateScope("OperationalInsightsDataExportCollection.Get");
             scope.Start();
             try
             {
-                var response = await _operationalInsightsDataExportDataExportsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, dataExportName, cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _dataExportsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, dataExportName, context);
+                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                Response<OperationalInsightsDataExportData> response = Response.FromValue(OperationalInsightsDataExportData.FromResponse(result), result);
                 if (response.Value == null)
+                {
                     throw new RequestFailedException(response.GetRawResponse());
+                }
                 return Response.FromValue(new OperationalInsightsDataExportResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -202,38 +217,42 @@ namespace Azure.ResourceManager.OperationalInsights
         /// Gets a data export instance.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourcegroups/{resourceGroupName}/providers/Microsoft.OperationalInsights/workspaces/{workspaceName}/dataExports/{dataExportName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.OperationalInsights/workspaces/{workspaceName}/dataExports/{dataExportName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>DataExports_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> DataExports_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-02-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="OperationalInsightsDataExportResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-07-01. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="dataExportName"> The data export rule name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="dataExportName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="dataExportName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="dataExportName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual Response<OperationalInsightsDataExportResource> Get(string dataExportName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(dataExportName, nameof(dataExportName));
 
-            using var scope = _operationalInsightsDataExportDataExportsClientDiagnostics.CreateScope("OperationalInsightsDataExportCollection.Get");
+            using DiagnosticScope scope = _dataExportsClientDiagnostics.CreateScope("OperationalInsightsDataExportCollection.Get");
             scope.Start();
             try
             {
-                var response = _operationalInsightsDataExportDataExportsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, dataExportName, cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _dataExportsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, dataExportName, context);
+                Response result = Pipeline.ProcessMessage(message, context);
+                Response<OperationalInsightsDataExportData> response = Response.FromValue(OperationalInsightsDataExportData.FromResponse(result), result);
                 if (response.Value == null)
+                {
                     throw new RequestFailedException(response.GetRawResponse());
+                }
                 return Response.FromValue(new OperationalInsightsDataExportResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -247,49 +266,50 @@ namespace Azure.ResourceManager.OperationalInsights
         /// Lists the data export instances within a workspace.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourcegroups/{resourceGroupName}/providers/Microsoft.OperationalInsights/workspaces/{workspaceName}/dataExports</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.OperationalInsights/workspaces/{workspaceName}/dataExports. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>DataExports_ListByWorkspace</description>
+        /// <term> Operation Id. </term>
+        /// <description> DataExports_ListByWorkspace. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-02-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="OperationalInsightsDataExportResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-07-01. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="OperationalInsightsDataExportResource"/> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="OperationalInsightsDataExportResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<OperationalInsightsDataExportResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _operationalInsightsDataExportDataExportsRestClient.CreateListByWorkspaceRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => new OperationalInsightsDataExportResource(Client, OperationalInsightsDataExportData.DeserializeOperationalInsightsDataExportData(e)), _operationalInsightsDataExportDataExportsClientDiagnostics, Pipeline, "OperationalInsightsDataExportCollection.GetAll", "value", null, cancellationToken);
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new AsyncPageableWrapper<OperationalInsightsDataExportData, OperationalInsightsDataExportResource>(new DataExportsGetByWorkspaceAsyncCollectionResultOfT(
+                _dataExportsRestClient,
+                Guid.Parse(Id.SubscriptionId),
+                Id.ResourceGroupName,
+                Id.Name,
+                context,
+                "OperationalInsightsDataExportCollection.GetAll"), data => new OperationalInsightsDataExportResource(Client, data));
         }
 
         /// <summary>
         /// Lists the data export instances within a workspace.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourcegroups/{resourceGroupName}/providers/Microsoft.OperationalInsights/workspaces/{workspaceName}/dataExports</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.OperationalInsights/workspaces/{workspaceName}/dataExports. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>DataExports_ListByWorkspace</description>
+        /// <term> Operation Id. </term>
+        /// <description> DataExports_ListByWorkspace. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-02-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="OperationalInsightsDataExportResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-07-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -297,44 +317,67 @@ namespace Azure.ResourceManager.OperationalInsights
         /// <returns> A collection of <see cref="OperationalInsightsDataExportResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<OperationalInsightsDataExportResource> GetAll(CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _operationalInsightsDataExportDataExportsRestClient.CreateListByWorkspaceRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, null, e => new OperationalInsightsDataExportResource(Client, OperationalInsightsDataExportData.DeserializeOperationalInsightsDataExportData(e)), _operationalInsightsDataExportDataExportsClientDiagnostics, Pipeline, "OperationalInsightsDataExportCollection.GetAll", "value", null, cancellationToken);
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new PageableWrapper<OperationalInsightsDataExportData, OperationalInsightsDataExportResource>(new DataExportsGetByWorkspaceCollectionResultOfT(
+                _dataExportsRestClient,
+                Guid.Parse(Id.SubscriptionId),
+                Id.ResourceGroupName,
+                Id.Name,
+                context,
+                "OperationalInsightsDataExportCollection.GetAll"), data => new OperationalInsightsDataExportResource(Client, data));
         }
 
         /// <summary>
         /// Checks to see if the resource exists in azure.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourcegroups/{resourceGroupName}/providers/Microsoft.OperationalInsights/workspaces/{workspaceName}/dataExports/{dataExportName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.OperationalInsights/workspaces/{workspaceName}/dataExports/{dataExportName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>DataExports_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> DataExports_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-02-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="OperationalInsightsDataExportResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-07-01. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="dataExportName"> The data export rule name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="dataExportName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="dataExportName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="dataExportName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual async Task<Response<bool>> ExistsAsync(string dataExportName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(dataExportName, nameof(dataExportName));
 
-            using var scope = _operationalInsightsDataExportDataExportsClientDiagnostics.CreateScope("OperationalInsightsDataExportCollection.Exists");
+            using DiagnosticScope scope = _dataExportsClientDiagnostics.CreateScope("OperationalInsightsDataExportCollection.Exists");
             scope.Start();
             try
             {
-                var response = await _operationalInsightsDataExportDataExportsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, dataExportName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _dataExportsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, dataExportName, context);
+                await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
+                Response result = message.Response;
+                Response<OperationalInsightsDataExportData> response = default;
+                switch (result.Status)
+                {
+                    case 200:
+                        response = Response.FromValue(OperationalInsightsDataExportData.FromResponse(result), result);
+                        break;
+                    case 404:
+                        response = Response.FromValue((OperationalInsightsDataExportData)null, result);
+                        break;
+                    default:
+                        throw new RequestFailedException(result);
+                }
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -348,36 +391,50 @@ namespace Azure.ResourceManager.OperationalInsights
         /// Checks to see if the resource exists in azure.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourcegroups/{resourceGroupName}/providers/Microsoft.OperationalInsights/workspaces/{workspaceName}/dataExports/{dataExportName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.OperationalInsights/workspaces/{workspaceName}/dataExports/{dataExportName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>DataExports_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> DataExports_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-02-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="OperationalInsightsDataExportResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-07-01. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="dataExportName"> The data export rule name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="dataExportName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="dataExportName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="dataExportName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual Response<bool> Exists(string dataExportName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(dataExportName, nameof(dataExportName));
 
-            using var scope = _operationalInsightsDataExportDataExportsClientDiagnostics.CreateScope("OperationalInsightsDataExportCollection.Exists");
+            using DiagnosticScope scope = _dataExportsClientDiagnostics.CreateScope("OperationalInsightsDataExportCollection.Exists");
             scope.Start();
             try
             {
-                var response = _operationalInsightsDataExportDataExportsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, dataExportName, cancellationToken: cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _dataExportsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, dataExportName, context);
+                Pipeline.Send(message, context.CancellationToken);
+                Response result = message.Response;
+                Response<OperationalInsightsDataExportData> response = default;
+                switch (result.Status)
+                {
+                    case 200:
+                        response = Response.FromValue(OperationalInsightsDataExportData.FromResponse(result), result);
+                        break;
+                    case 404:
+                        response = Response.FromValue((OperationalInsightsDataExportData)null, result);
+                        break;
+                    default:
+                        throw new RequestFailedException(result);
+                }
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -391,38 +448,54 @@ namespace Azure.ResourceManager.OperationalInsights
         /// Tries to get details for this resource from the service.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourcegroups/{resourceGroupName}/providers/Microsoft.OperationalInsights/workspaces/{workspaceName}/dataExports/{dataExportName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.OperationalInsights/workspaces/{workspaceName}/dataExports/{dataExportName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>DataExports_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> DataExports_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-02-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="OperationalInsightsDataExportResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-07-01. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="dataExportName"> The data export rule name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="dataExportName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="dataExportName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="dataExportName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual async Task<NullableResponse<OperationalInsightsDataExportResource>> GetIfExistsAsync(string dataExportName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(dataExportName, nameof(dataExportName));
 
-            using var scope = _operationalInsightsDataExportDataExportsClientDiagnostics.CreateScope("OperationalInsightsDataExportCollection.GetIfExists");
+            using DiagnosticScope scope = _dataExportsClientDiagnostics.CreateScope("OperationalInsightsDataExportCollection.GetIfExists");
             scope.Start();
             try
             {
-                var response = await _operationalInsightsDataExportDataExportsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, dataExportName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _dataExportsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, dataExportName, context);
+                await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
+                Response result = message.Response;
+                Response<OperationalInsightsDataExportData> response = default;
+                switch (result.Status)
+                {
+                    case 200:
+                        response = Response.FromValue(OperationalInsightsDataExportData.FromResponse(result), result);
+                        break;
+                    case 404:
+                        response = Response.FromValue((OperationalInsightsDataExportData)null, result);
+                        break;
+                    default:
+                        throw new RequestFailedException(result);
+                }
                 if (response.Value == null)
+                {
                     return new NoValueResponse<OperationalInsightsDataExportResource>(response.GetRawResponse());
+                }
                 return Response.FromValue(new OperationalInsightsDataExportResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -436,38 +509,54 @@ namespace Azure.ResourceManager.OperationalInsights
         /// Tries to get details for this resource from the service.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourcegroups/{resourceGroupName}/providers/Microsoft.OperationalInsights/workspaces/{workspaceName}/dataExports/{dataExportName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.OperationalInsights/workspaces/{workspaceName}/dataExports/{dataExportName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>DataExports_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> DataExports_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-02-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="OperationalInsightsDataExportResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-07-01. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="dataExportName"> The data export rule name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="dataExportName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="dataExportName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="dataExportName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual NullableResponse<OperationalInsightsDataExportResource> GetIfExists(string dataExportName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(dataExportName, nameof(dataExportName));
 
-            using var scope = _operationalInsightsDataExportDataExportsClientDiagnostics.CreateScope("OperationalInsightsDataExportCollection.GetIfExists");
+            using DiagnosticScope scope = _dataExportsClientDiagnostics.CreateScope("OperationalInsightsDataExportCollection.GetIfExists");
             scope.Start();
             try
             {
-                var response = _operationalInsightsDataExportDataExportsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, dataExportName, cancellationToken: cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _dataExportsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, dataExportName, context);
+                Pipeline.Send(message, context.CancellationToken);
+                Response result = message.Response;
+                Response<OperationalInsightsDataExportData> response = default;
+                switch (result.Status)
+                {
+                    case 200:
+                        response = Response.FromValue(OperationalInsightsDataExportData.FromResponse(result), result);
+                        break;
+                    case 404:
+                        response = Response.FromValue((OperationalInsightsDataExportData)null, result);
+                        break;
+                    default:
+                        throw new RequestFailedException(result);
+                }
                 if (response.Value == null)
+                {
                     return new NoValueResponse<OperationalInsightsDataExportResource>(response.GetRawResponse());
+                }
                 return Response.FromValue(new OperationalInsightsDataExportResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -487,6 +576,7 @@ namespace Azure.ResourceManager.OperationalInsights
             return GetAll().GetEnumerator();
         }
 
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
         IAsyncEnumerator<OperationalInsightsDataExportResource> IAsyncEnumerable<OperationalInsightsDataExportResource>.GetAsyncEnumerator(CancellationToken cancellationToken)
         {
             return GetAllAsync(cancellationToken: cancellationToken).GetAsyncEnumerator(cancellationToken);

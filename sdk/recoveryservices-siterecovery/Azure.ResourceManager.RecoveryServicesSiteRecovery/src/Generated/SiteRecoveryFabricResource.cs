@@ -227,7 +227,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
                 HttpMessage message = _replicationFabricsRestClient.CreateCheckConsistencyRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 RecoveryServicesSiteRecoveryArmOperation<SiteRecoveryFabricResource> operation = new RecoveryServicesSiteRecoveryArmOperation<SiteRecoveryFabricResource>(
-                    new SiteRecoveryFabricOperationSource(Client),
+                    new SiteRecoveryFabricResourceOperationSource(Client),
                     _replicationFabricsClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -282,7 +282,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
                 HttpMessage message = _replicationFabricsRestClient.CreateCheckConsistencyRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 RecoveryServicesSiteRecoveryArmOperation<SiteRecoveryFabricResource> operation = new RecoveryServicesSiteRecoveryArmOperation<SiteRecoveryFabricResource>(
-                    new SiteRecoveryFabricOperationSource(Client),
+                    new SiteRecoveryFabricResourceOperationSource(Client),
                     _replicationFabricsClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -537,7 +537,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
                 HttpMessage message = _replicationFabricsRestClient.CreateReassociateGatewayRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, FailoverProcessServerContent.ToRequestContent(content), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 RecoveryServicesSiteRecoveryArmOperation<SiteRecoveryFabricResource> operation = new RecoveryServicesSiteRecoveryArmOperation<SiteRecoveryFabricResource>(
-                    new SiteRecoveryFabricOperationSource(Client),
+                    new SiteRecoveryFabricResourceOperationSource(Client),
                     _replicationFabricsClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -596,7 +596,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
                 HttpMessage message = _replicationFabricsRestClient.CreateReassociateGatewayRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, FailoverProcessServerContent.ToRequestContent(content), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 RecoveryServicesSiteRecoveryArmOperation<SiteRecoveryFabricResource> operation = new RecoveryServicesSiteRecoveryArmOperation<SiteRecoveryFabricResource>(
-                    new SiteRecoveryFabricOperationSource(Client),
+                    new SiteRecoveryFabricResourceOperationSource(Client),
                     _replicationFabricsClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -753,7 +753,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
                 HttpMessage message = _replicationFabricsRestClient.CreateRenewCertificateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, RenewCertificateContent.ToRequestContent(content), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 RecoveryServicesSiteRecoveryArmOperation<SiteRecoveryFabricResource> operation = new RecoveryServicesSiteRecoveryArmOperation<SiteRecoveryFabricResource>(
-                    new SiteRecoveryFabricOperationSource(Client),
+                    new SiteRecoveryFabricResourceOperationSource(Client),
                     _replicationFabricsClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -812,7 +812,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
                 HttpMessage message = _replicationFabricsRestClient.CreateRenewCertificateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, RenewCertificateContent.ToRequestContent(content), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 RecoveryServicesSiteRecoveryArmOperation<SiteRecoveryFabricResource> operation = new RecoveryServicesSiteRecoveryArmOperation<SiteRecoveryFabricResource>(
-                    new SiteRecoveryFabricOperationSource(Client),
+                    new SiteRecoveryFabricResourceOperationSource(Client),
                     _replicationFabricsClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -871,7 +871,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
                 HttpMessage message = _replicationFabricsRestClient.CreateCreateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, SiteRecoveryFabricCreateOrUpdateContent.ToRequestContent(content), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 RecoveryServicesSiteRecoveryArmOperation<SiteRecoveryFabricResource> operation = new RecoveryServicesSiteRecoveryArmOperation<SiteRecoveryFabricResource>(
-                    new SiteRecoveryFabricOperationSource(Client),
+                    new SiteRecoveryFabricResourceOperationSource(Client),
                     _replicationFabricsClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -930,7 +930,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
                 HttpMessage message = _replicationFabricsRestClient.CreateCreateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, SiteRecoveryFabricCreateOrUpdateContent.ToRequestContent(content), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 RecoveryServicesSiteRecoveryArmOperation<SiteRecoveryFabricResource> operation = new RecoveryServicesSiteRecoveryArmOperation<SiteRecoveryFabricResource>(
-                    new SiteRecoveryFabricOperationSource(Client),
+                    new SiteRecoveryFabricResourceOperationSource(Client),
                     _replicationFabricsClientDiagnostics,
                     Pipeline,
                     message.Request,

@@ -1,4 +1,4 @@
-// Copyright (c) Microsoft Corporation. All rights reserved.
+﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
 #nullable disable
@@ -6,149 +6,225 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading;
 using Azure;
 using Azure.Core;
 using Azure.ResourceManager.Dns.Models;
 using Azure.ResourceManager.Models;
 using Azure.ResourceManager.Resources.Models;
-
-[assembly: CodeGenSuppressType("DnsRecordData")]
+using CodeGenSuppressAttribute = Microsoft.TypeSpec.Generator.Customizations.CodeGenSuppressAttribute;
 
 namespace Azure.ResourceManager.Dns
 {
     /// <summary> A class representing the Record data model. </summary>
+    [CodeGenSuppressAttribute("_additionalBinaryDataProperties")]
+    [CodeGenSuppressAttribute("Properties")]
+    [CodeGenSuppressAttribute("ETag")]
+    [CodeGenSuppressAttribute("Metadata")]
+    [CodeGenSuppressAttribute("TtlInSeconds")]
+    [CodeGenSuppressAttribute("Fqdn")]
+    [CodeGenSuppressAttribute("ProvisioningState")]
+    [CodeGenSuppressAttribute("TargetResource")]
+    [CodeGenSuppressAttribute("TrafficManagementProfile")]
+    [CodeGenSuppressAttribute("Name")]
+    [CodeGenSuppressAttribute("DnsRecordData", typeof(string), typeof(IDictionary<string, BinaryData>))]
+    [CodeGenSuppressAttribute("DnsRecordData", typeof(IDictionary<string, BinaryData>))]
     public partial class DnsRecordData : DnsBaseRecordData
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
-
         /// <summary> Initializes a new instance of <see cref="DnsRecordData"/>. </summary>
         public DnsRecordData()
         {
-            DnsARecords = new ChangeTrackingList<DnsARecordInfo>();
-            DnsAaaaRecords = new ChangeTrackingList<DnsAaaaRecordInfo>();
-            DnsMXRecords = new ChangeTrackingList<DnsMXRecordInfo>();
-            DnsNSRecords = new ChangeTrackingList<DnsNSRecordInfo>();
-            DnsPtrRecords = new ChangeTrackingList<DnsPtrRecordInfo>();
-            DnsSrvRecords = new ChangeTrackingList<DnsSrvRecordInfo>();
-            DnsTxtRecords = new ChangeTrackingList<DnsTxtRecordInfo>();
-            DnsCaaRecords = new ChangeTrackingList<DnsCaaRecordInfo>();
-            DnsDSRecords = new ChangeTrackingList<DnsDSRecordInfo>();
-            DnsTlsaRecords = new ChangeTrackingList<DnsTlsaRecordInfo>();
-            DnsNaptrRecords = new ChangeTrackingList<DnsNaptrRecordInfo>();
         }
 
         /// <summary> Initializes a new instance of <see cref="DnsRecordData"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="etag"> The etag of the record set. </param>
-        /// <param name="metadata"> The metadata attached to the record set. </param>
-        /// <param name="ttl"> The TTL (time-to-live) of the records in the record set. </param>
-        /// <param name="fqdn"> Fully qualified domain name of the record set. </param>
-        /// <param name="provisioningState"> provisioning State of the record set. </param>
-        /// <param name="targetResource"> A reference to an azure resource from where the dns resource value is taken. </param>
-        /// <param name="trafficManagementProfile"> A reference to an azure traffic manager profile resource from where the dns resource value is taken. </param>
-        /// <param name="aRecords"> The list of A records in the record set. </param>
-        /// <param name="aaaaRecords"> The list of AAAA records in the record set. </param>
-        /// <param name="mxRecords"> The list of MX records in the record set. </param>
-        /// <param name="nsRecords"> The list of NS records in the record set. </param>
-        /// <param name="ptrRecords"> The list of PTR records in the record set. </param>
-        /// <param name="srvRecords"> The list of SRV records in the record set. </param>
-        /// <param name="txtRecords"> The list of TXT records in the record set. </param>
-        /// <param name="cnameRecordInfo"> The CNAME record in the  record set. </param>
-        /// <param name="soaRecordInfo"> The SOA record in the record set. </param>
-        /// <param name="caaRecords"> The list of CAA records in the record set. </param>
-        /// <param name="dsRecords"> The list of DS records in the record set. </param>
-        /// <param name="tlsaRecords"> The list of TLSA records in the record set. </param>
-        /// <param name="naptrRecords"> The list of NAPTR records in the record set. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal DnsRecordData(ResourceIdentifier id, string name, ResourceType resourceType, ResourceManager.Models.SystemData systemData, ETag? etag, IDictionary<string, string> metadata, long? ttl, string fqdn, string provisioningState, WritableSubResource targetResource, WritableSubResource trafficManagementProfile, IList<DnsARecordInfo> aRecords, IList<DnsAaaaRecordInfo> aaaaRecords, IList<DnsMXRecordInfo> mxRecords, IList<DnsNSRecordInfo> nsRecords, IList<DnsPtrRecordInfo> ptrRecords, IList<DnsSrvRecordInfo> srvRecords, IList<DnsTxtRecordInfo> txtRecords, DnsCnameRecordInfo cnameRecordInfo, DnsSoaRecordInfo soaRecordInfo, IList<DnsCaaRecordInfo> caaRecords, IList<DnsDSRecordInfo> dsRecords, IList<DnsTlsaRecordInfo> tlsaRecords, IList<DnsNaptrRecordInfo> naptrRecords, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData, etag, metadata, ttl, fqdn, provisioningState, targetResource, trafficManagementProfile, serializedAdditionalRawData)
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="properties"> The properties of the record set. </param>
+        /// <param name="eTag"> The etag of the record set. </param>
+        internal DnsRecordData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, BinaryData> additionalBinaryDataProperties, DnsRecordSetProperties properties, ETag? eTag) : base(id, name, resourceType, systemData, additionalBinaryDataProperties, properties, eTag)
         {
-            DnsARecords = aRecords;
-            DnsAaaaRecords = aaaaRecords;
-            DnsMXRecords = mxRecords;
-            DnsNSRecords = nsRecords;
-            DnsPtrRecords = ptrRecords;
-            DnsSrvRecords = srvRecords;
-            DnsTxtRecords = txtRecords;
-            DnsCnameRecordInfo = cnameRecordInfo;
-            DnsSoaRecordInfo = soaRecordInfo;
-            DnsCaaRecords = caaRecords;
-            DnsDSRecords = dsRecords;
-            DnsTlsaRecords = tlsaRecords;
-            DnsNaptrRecords = naptrRecords;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The list of A records in the record set. </summary>
-        public IList<DnsARecordInfo> DnsARecords { get; }
-        /// <summary> The list of AAAA records in the record set. </summary>
-        public IList<DnsAaaaRecordInfo> DnsAaaaRecords { get; }
-        /// <summary> The list of MX records in the record set. </summary>
-        public IList<DnsMXRecordInfo> DnsMXRecords { get; }
-        /// <summary> The list of NS records in the record set. </summary>
-        public IList<DnsNSRecordInfo> DnsNSRecords { get; }
-        /// <summary> The list of PTR records in the record set. </summary>
-        public IList<DnsPtrRecordInfo> DnsPtrRecords { get; }
-        /// <summary> The list of SRV records in the record set. </summary>
-        public IList<DnsSrvRecordInfo> DnsSrvRecords { get; }
-        /// <summary> The list of TXT records in the record set. </summary>
-        public IList<DnsTxtRecordInfo> DnsTxtRecords { get; }
-        /// <summary> The CNAME record in the  record set. </summary>
-        internal DnsCnameRecordInfo DnsCnameRecordInfo { get; set; }
-        /// <summary> The canonical name for this CNAME record. </summary>
-        public string Cname
+        public IList<DnsARecordInfo> DnsARecords
         {
-            get => DnsCnameRecordInfo is null ? default : DnsCnameRecordInfo.Cname;
-            set
+            get
             {
-                if (DnsCnameRecordInfo is null)
-                    DnsCnameRecordInfo = new DnsCnameRecordInfo();
-                DnsCnameRecordInfo.Cname = value;
+                if (Properties is null)
+                {
+                    Properties = new DnsRecordSetProperties();
+                }
+                return Properties.DnsARecords;
+            }
+        }
+
+        /// <summary> The list of AAAA records in the record set. </summary>
+        public IList<DnsAaaaRecordInfo> DnsAaaaRecords
+        {
+            get
+            {
+                if (Properties is null)
+                {
+                    Properties = new DnsRecordSetProperties();
+                }
+                return Properties.DnsAaaaRecords;
+            }
+        }
+
+        /// <summary> The list of MX records in the record set. </summary>
+        public IList<DnsMXRecordInfo> DnsMXRecords
+        {
+            get
+            {
+                if (Properties is null)
+                {
+                    Properties = new DnsRecordSetProperties();
+                }
+                return Properties.DnsMXRecords;
+            }
+        }
+
+        /// <summary> The list of NS records in the record set. </summary>
+        public IList<DnsNSRecordInfo> DnsNSRecords
+        {
+            get
+            {
+                if (Properties is null)
+                {
+                    Properties = new DnsRecordSetProperties();
+                }
+                return Properties.DnsNSRecords;
+            }
+        }
+
+        /// <summary> The list of PTR records in the record set. </summary>
+        public IList<DnsPtrRecordInfo> DnsPtrRecords
+        {
+            get
+            {
+                if (Properties is null)
+                {
+                    Properties = new DnsRecordSetProperties();
+                }
+                return Properties.DnsPtrRecords;
+            }
+        }
+
+        /// <summary> The list of SRV records in the record set. </summary>
+        public IList<DnsSrvRecordInfo> DnsSrvRecords
+        {
+            get
+            {
+                if (Properties is null)
+                {
+                    Properties = new DnsRecordSetProperties();
+                }
+                return Properties.DnsSrvRecords;
+            }
+        }
+
+        /// <summary> The list of TXT records in the record set. </summary>
+        public IList<DnsTxtRecordInfo> DnsTxtRecords
+        {
+            get
+            {
+                if (Properties is null)
+                {
+                    Properties = new DnsRecordSetProperties();
+                }
+                return Properties.DnsTxtRecords;
             }
         }
 
         /// <summary> The SOA record in the record set. </summary>
-        public DnsSoaRecordInfo DnsSoaRecordInfo { get; set; }
+        public DnsSoaRecordInfo DnsSoaRecordInfo
+        {
+            get
+            {
+                return Properties is null ? default : Properties.DnsSoaRecord;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new DnsRecordSetProperties();
+                }
+                Properties.DnsSoaRecord = value;
+            }
+        }
+
         /// <summary> The list of CAA records in the record set. </summary>
-        public IList<DnsCaaRecordInfo> DnsCaaRecords { get; }
+        public IList<DnsCaaRecordInfo> DnsCaaRecords
+        {
+            get
+            {
+                if (Properties is null)
+                {
+                    Properties = new DnsRecordSetProperties();
+                }
+                return Properties.DnsCaaRecords;
+            }
+        }
+
         /// <summary> The list of DS records in the record set. </summary>
-        public IList<DnsDSRecordInfo> DnsDSRecords { get; }
+        public IList<DnsDSRecordInfo> DnsDSRecords
+        {
+            get
+            {
+                if (Properties is null)
+                {
+                    Properties = new DnsRecordSetProperties();
+                }
+                return Properties.DnsDSRecords;
+            }
+        }
+
         /// <summary> The list of TLSA records in the record set. </summary>
-        public IList<DnsTlsaRecordInfo> DnsTlsaRecords { get; }
+        public IList<DnsTlsaRecordInfo> DnsTlsaRecords
+        {
+            get
+            {
+                if (Properties is null)
+                {
+                    Properties = new DnsRecordSetProperties();
+                }
+                return Properties.DnsTlsaRecords;
+            }
+        }
+
         /// <summary> The list of NAPTR records in the record set. </summary>
-        public IList<DnsNaptrRecordInfo> DnsNaptrRecords { get; }
+        public IList<DnsNaptrRecordInfo> DnsNaptrRecords
+        {
+            get
+            {
+                if (Properties is null)
+                {
+                    Properties = new DnsRecordSetProperties();
+                }
+                return Properties.DnsNaptrRecords;
+            }
+        }
+
+        /// <summary> The canonical name for this CNAME record. </summary>
+        public string Cname
+        {
+            get
+            {
+                return Properties is null ? default : Properties.Cname;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new DnsRecordSetProperties();
+                }
+                Properties.Cname = value;
+            }
+        }
+
         /// <summary> The DnsRecordType in the record set. </summary>
         public DnsRecordType RecordType
         {
@@ -158,6 +234,30 @@ namespace Azure.ResourceManager.Dns
                 DnsRecordType recordType = DnsRecordTypeExtensions.ToDnsRecordType(resourceTypeString);
                 return recordType;
             }
+        }
+
+        internal static AsyncPageable<TResource> GetAllAsync<TResource>(RecordSets recordSetsRestClient, ArmClient client, ResourceIdentifier zoneId, string recordType, int? top, string recordsetnamesuffix, CancellationToken cancellationToken, string diagnosticScope, Func<ArmClient, ResourceIdentifier, TResource> createResource)
+        {
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+
+            return new AsyncPageableWrapper<DnsRecordData, TResource>(
+                new RecordSetsGetByTypeAsyncCollectionResultOfT(recordSetsRestClient, zoneId.SubscriptionId, zoneId.ResourceGroupName, zoneId.Name, recordType, top, recordsetnamesuffix, context, diagnosticScope),
+                data => createResource(client, data.Id));
+        }
+
+        internal static Pageable<TResource> GetAll<TResource>(RecordSets recordSetsRestClient, ArmClient client, ResourceIdentifier zoneId, string recordType, int? top, string recordsetnamesuffix, CancellationToken cancellationToken, string diagnosticScope, Func<ArmClient, ResourceIdentifier, TResource> createResource)
+        {
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+
+            return new PageableWrapper<DnsRecordData, TResource>(
+                new RecordSetsGetByTypeCollectionResultOfT(recordSetsRestClient, zoneId.SubscriptionId, zoneId.ResourceGroupName, zoneId.Name, recordType, top, recordsetnamesuffix, context, diagnosticScope),
+                data => createResource(client, data.Id));
         }
     }
 }

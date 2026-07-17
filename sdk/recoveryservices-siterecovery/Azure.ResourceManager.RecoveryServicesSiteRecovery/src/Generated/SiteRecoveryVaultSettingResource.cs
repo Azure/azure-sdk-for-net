@@ -229,7 +229,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
                 HttpMessage message = _replicationVaultSettingRestClient.CreateCreateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, SiteRecoveryVaultSettingCreateOrUpdateContent.ToRequestContent(content), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 RecoveryServicesSiteRecoveryArmOperation<SiteRecoveryVaultSettingResource> operation = new RecoveryServicesSiteRecoveryArmOperation<SiteRecoveryVaultSettingResource>(
-                    new SiteRecoveryVaultSettingOperationSource(Client),
+                    new SiteRecoveryVaultSettingResourceOperationSource(Client),
                     _replicationVaultSettingClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -288,7 +288,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
                 HttpMessage message = _replicationVaultSettingRestClient.CreateCreateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, SiteRecoveryVaultSettingCreateOrUpdateContent.ToRequestContent(content), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 RecoveryServicesSiteRecoveryArmOperation<SiteRecoveryVaultSettingResource> operation = new RecoveryServicesSiteRecoveryArmOperation<SiteRecoveryVaultSettingResource>(
-                    new SiteRecoveryVaultSettingOperationSource(Client),
+                    new SiteRecoveryVaultSettingResourceOperationSource(Client),
                     _replicationVaultSettingClientDiagnostics,
                     Pipeline,
                     message.Request,

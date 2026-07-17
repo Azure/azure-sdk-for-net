@@ -55,7 +55,10 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        RecoveryPlanGroupTaskDetails IPersistableModel<RecoveryPlanGroupTaskDetails>.Create(BinaryData data, ModelReaderWriterOptions options) => (UnknownRecoveryPlanGroupTaskDetails)PersistableModelCreateCore(data, options);
+        RecoveryPlanGroupTaskDetails IPersistableModel<RecoveryPlanGroupTaskDetails>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            return (RecoveryPlanGroupTaskDetails)PersistableModelCreateCore(data, options);
+        }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         string IPersistableModel<RecoveryPlanGroupTaskDetails>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
@@ -83,7 +86,10 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        RecoveryPlanGroupTaskDetails IJsonModel<RecoveryPlanGroupTaskDetails>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => (UnknownRecoveryPlanGroupTaskDetails)JsonModelCreateCore(ref reader, options);
+        RecoveryPlanGroupTaskDetails IJsonModel<RecoveryPlanGroupTaskDetails>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            return (RecoveryPlanGroupTaskDetails)JsonModelCreateCore(ref reader, options);
+        }
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>

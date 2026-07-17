@@ -93,7 +93,7 @@ namespace Azure.ResourceManager.ContainerRegistry
                 HttpMessage message = _cacheRulesRestClient.CreateCreateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, cacheRuleName, ContainerRegistryCacheRuleData.ToRequestContent(data), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 ContainerRegistryArmOperation<ContainerRegistryCacheRuleResource> operation = new ContainerRegistryArmOperation<ContainerRegistryCacheRuleResource>(
-                    new ContainerRegistryCacheRuleOperationSource(Client),
+                    new ContainerRegistryCacheRuleResourceOperationSource(Client),
                     _cacheRulesClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -151,7 +151,7 @@ namespace Azure.ResourceManager.ContainerRegistry
                 HttpMessage message = _cacheRulesRestClient.CreateCreateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, cacheRuleName, ContainerRegistryCacheRuleData.ToRequestContent(data), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 ContainerRegistryArmOperation<ContainerRegistryCacheRuleResource> operation = new ContainerRegistryArmOperation<ContainerRegistryCacheRuleResource>(
-                    new ContainerRegistryCacheRuleOperationSource(Client),
+                    new ContainerRegistryCacheRuleResourceOperationSource(Client),
                     _cacheRulesClientDiagnostics,
                     Pipeline,
                     message.Request,

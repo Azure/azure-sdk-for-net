@@ -2084,7 +2084,7 @@ namespace Azure.ResourceManager.CostManagement.Mocking
                 HttpMessage message = GenerateDetailedCostReportRestClient.CreateCreateOperationRequest(scope.ToString(), GenerateDetailedCostReportContent.ToRequestContent(content), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 CostManagementArmOperation<GenerateDetailedCostReportOperationResultResource> operation = new CostManagementArmOperation<GenerateDetailedCostReportOperationResultResource>(
-                    new GenerateDetailedCostReportOperationResultOperationSource(Client),
+                    new GenerateDetailedCostReportOperationResultResourceOperationSource(Client),
                     GenerateDetailedCostReportClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -2141,7 +2141,7 @@ namespace Azure.ResourceManager.CostManagement.Mocking
                 HttpMessage message = GenerateDetailedCostReportRestClient.CreateCreateOperationRequest(scope.ToString(), GenerateDetailedCostReportContent.ToRequestContent(content), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 CostManagementArmOperation<GenerateDetailedCostReportOperationResultResource> operation = new CostManagementArmOperation<GenerateDetailedCostReportOperationResultResource>(
-                    new GenerateDetailedCostReportOperationResultOperationSource(Client),
+                    new GenerateDetailedCostReportOperationResultResourceOperationSource(Client),
                     GenerateDetailedCostReportClientDiagnostics,
                     Pipeline,
                     message.Request,

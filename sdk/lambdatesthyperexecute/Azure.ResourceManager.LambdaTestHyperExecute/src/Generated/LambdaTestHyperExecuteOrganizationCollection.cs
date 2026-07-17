@@ -94,7 +94,7 @@ namespace Azure.ResourceManager.LambdaTestHyperExecute
                 HttpMessage message = _organizationsRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, organizationname, LambdaTestHyperExecuteOrganizationData.ToRequestContent(data), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 LambdaTestHyperExecuteArmOperation<LambdaTestHyperExecuteOrganizationResource> operation = new LambdaTestHyperExecuteArmOperation<LambdaTestHyperExecuteOrganizationResource>(
-                    new LambdaTestHyperExecuteOrganizationOperationSource(Client),
+                    new LambdaTestHyperExecuteOrganizationResourceOperationSource(Client),
                     _organizationsClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -152,7 +152,7 @@ namespace Azure.ResourceManager.LambdaTestHyperExecute
                 HttpMessage message = _organizationsRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, organizationname, LambdaTestHyperExecuteOrganizationData.ToRequestContent(data), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 LambdaTestHyperExecuteArmOperation<LambdaTestHyperExecuteOrganizationResource> operation = new LambdaTestHyperExecuteArmOperation<LambdaTestHyperExecuteOrganizationResource>(
-                    new LambdaTestHyperExecuteOrganizationOperationSource(Client),
+                    new LambdaTestHyperExecuteOrganizationResourceOperationSource(Client),
                     _organizationsClientDiagnostics,
                     Pipeline,
                     message.Request,

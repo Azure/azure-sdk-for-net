@@ -139,9 +139,9 @@ namespace Azure.Generator.Management.Utilities
             }
         }
 
-        public static MethodBodyStatement? BuildSetterForPropertyFlatten(ModelProvider innerModel, PropertyProvider internalProperty, PropertyProvider innerProperty, bool isPropertyLiftedToNullable)
+        public static MethodBodyStatement? BuildSetterForPropertyFlatten(ModelProvider innerModel, PropertyProvider internalProperty, PropertyProvider innerProperty, bool isPropertyLiftedToNullable, bool allowCollectionSetter = false)
         {
-            if (innerProperty.Type.IsCollection)
+            if (innerProperty.Type.IsCollection && !allowCollectionSetter)
             {
                 return null;
             }

@@ -93,7 +93,7 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication
                 HttpMessage message = _protectedItemRestClient.CreateCreateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, protectedItemName, DataReplicationProtectedItemData.ToRequestContent(data), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 RecoveryServicesDataReplicationArmOperation<DataReplicationProtectedItemResource> operation = new RecoveryServicesDataReplicationArmOperation<DataReplicationProtectedItemResource>(
-                    new DataReplicationProtectedItemOperationSource(Client),
+                    new DataReplicationProtectedItemResourceOperationSource(Client),
                     _protectedItemClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -151,7 +151,7 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication
                 HttpMessage message = _protectedItemRestClient.CreateCreateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, protectedItemName, DataReplicationProtectedItemData.ToRequestContent(data), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 RecoveryServicesDataReplicationArmOperation<DataReplicationProtectedItemResource> operation = new RecoveryServicesDataReplicationArmOperation<DataReplicationProtectedItemResource>(
-                    new DataReplicationProtectedItemOperationSource(Client),
+                    new DataReplicationProtectedItemResourceOperationSource(Client),
                     _protectedItemClientDiagnostics,
                     Pipeline,
                     message.Request,

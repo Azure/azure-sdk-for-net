@@ -253,7 +253,7 @@ namespace Azure.ResourceManager.HybridNetwork.Tests.Scenario
             NetworkServiceDesignVersionData retrievedData = nsdvResourceRetrieved.Data;
             Assert.IsNotNull(nsdvResourceRetrieved);
             Assert.AreEqual(nsdv.Data.Location, retrievedData.Location);
-            Assert.AreEqual(CGSchemaId, retrievedData.Properties.ConfigurationGroupSchemaReferences["vnet_ConfigGroupSchema"].Id);
+            Assert.AreEqual(CGSchemaId, retrievedData.Properties.ReferencedConfigurationGroupSchemas["vnet_ConfigGroupSchema"].Id);
             var ret = (NetworkFunctionDefinitionResourceElementTemplateDetails)retrievedData.Properties.ResourceElementTemplates[0];
             Assert.AreEqual(ArtifactStoreId, ret.Configuration.ArtifactProfile.ArtifactStoreReferenceId);
         }
@@ -305,7 +305,7 @@ namespace Azure.ResourceManager.HybridNetwork.Tests.Scenario
             Assert.IsNotNull(snsResourceRetrieved);
             Assert.AreEqual(sns.Data.Location, retrievedData.Location);
             Assert.AreEqual(SiteId, retrievedData.Properties.SiteReferenceId);
-            Assert.AreEqual(CGValueId, retrievedData.Properties.DesiredStateConfigurationGroupValueReferences["vnet_ConfigGroupSchema"].Id);
+            Assert.AreEqual(CGValueId, retrievedData.Properties.DesiredStateConfigurationGroupValueReferencedResources["vnet_ConfigGroupSchema"].Id);
             var nsdvRef = (OpenDeploymentResourceReference)retrievedData.Properties.NetworkServiceDesignVersionResourceReference;
             Assert.AreEqual(NSDVId, nsdvRef.Id);
         }

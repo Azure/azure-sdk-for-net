@@ -8,23 +8,36 @@
 using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
+using Azure;
 using Azure.Core;
 using Azure.ResourceManager.ManagedNetworkFabric.Models;
 
 namespace Azure.ResourceManager.ManagedNetworkFabric
 {
-    internal class UpdateAdministrativeStateResultOperationSource : IOperationSource<UpdateAdministrativeStateResult>
+    /// <summary></summary>
+    internal partial class UpdateAdministrativeStateResultOperationSource : IOperationSource<UpdateAdministrativeStateResult>
     {
-        UpdateAdministrativeStateResult IOperationSource<UpdateAdministrativeStateResult>.CreateResult(Response response, CancellationToken cancellationToken)
+        /// <summary></summary>
+        internal UpdateAdministrativeStateResultOperationSource()
         {
-            using var document = JsonDocument.Parse(response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
-            return UpdateAdministrativeStateResult.DeserializeUpdateAdministrativeStateResult(document.RootElement);
         }
 
+        /// <param name="response"> The response from the service. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns></returns>
+        UpdateAdministrativeStateResult IOperationSource<UpdateAdministrativeStateResult>.CreateResult(Response response, CancellationToken cancellationToken)
+        {
+            using JsonDocument document = JsonDocument.Parse(response.ContentStream);
+            return UpdateAdministrativeStateResult.DeserializeUpdateAdministrativeStateResult(document.RootElement, ModelSerializationExtensions.WireOptions);
+        }
+
+        /// <param name="response"> The response from the service. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns></returns>
         async ValueTask<UpdateAdministrativeStateResult> IOperationSource<UpdateAdministrativeStateResult>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
-            using var document = await JsonDocument.ParseAsync(response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
-            return UpdateAdministrativeStateResult.DeserializeUpdateAdministrativeStateResult(document.RootElement);
+            using JsonDocument document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+            return UpdateAdministrativeStateResult.DeserializeUpdateAdministrativeStateResult(document.RootElement, ModelSerializationExtensions.WireOptions);
         }
     }
 }

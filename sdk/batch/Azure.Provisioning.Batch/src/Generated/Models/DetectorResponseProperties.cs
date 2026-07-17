@@ -20,18 +20,13 @@ namespace Azure.Provisioning.Batch
         {
         }
 
-        /// <summary> Gets or sets the Value. </summary>
+        /// <summary> Gets the Value. </summary>
         public BicepValue<string> Value
         {
             get
             {
                 Initialize();
                 return _value;
-            }
-            set
-            {
-                Initialize();
-                _value.Assign(value);
             }
         }
 
@@ -40,6 +35,10 @@ namespace Azure.Provisioning.Batch
         {
             base.DefineProvisionableProperties();
             _value = DefineProperty<string>(nameof(Value), new string[] { "value" });
+            DefineAdditionalProperties();
         }
+
+        /// <summary> Define additional provisionable properties for DetectorResponseProperties that are not part of the generated code. </summary>
+        partial void DefineAdditionalProperties();
     }
 }

@@ -93,7 +93,7 @@ namespace Azure.ResourceManager.Cdn
                 HttpMessage message = _originGroupsRestClient.CreateCreateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, originGroupName, CdnOriginGroupData.ToRequestContent(data), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 CdnArmOperation<CdnOriginGroupResource> operation = new CdnArmOperation<CdnOriginGroupResource>(
-                    new CdnOriginGroupOperationSource(Client),
+                    new CdnOriginGroupResourceOperationSource(Client),
                     _originGroupsClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -151,7 +151,7 @@ namespace Azure.ResourceManager.Cdn
                 HttpMessage message = _originGroupsRestClient.CreateCreateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, originGroupName, CdnOriginGroupData.ToRequestContent(data), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 CdnArmOperation<CdnOriginGroupResource> operation = new CdnArmOperation<CdnOriginGroupResource>(
-                    new CdnOriginGroupOperationSource(Client),
+                    new CdnOriginGroupResourceOperationSource(Client),
                     _originGroupsClientDiagnostics,
                     Pipeline,
                     message.Request,

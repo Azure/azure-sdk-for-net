@@ -7,78 +7,45 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.MachineLearning;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
     /// <summary>
     /// OneLake artifact (data source) configuration.
-    /// Please note <see cref="OneLakeArtifact"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-    /// The available derived classes include <see cref="LakeHouseArtifact"/>.
+    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="LakeHouseArtifact"/>.
     /// </summary>
     public abstract partial class OneLakeArtifact
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private protected IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="OneLakeArtifact"/>. </summary>
         /// <param name="artifactName"> [Required] OneLake artifact name. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="artifactName"/> is null. </exception>
-        protected OneLakeArtifact(string artifactName)
-        {
-            Argument.AssertNotNull(artifactName, nameof(artifactName));
-
-            ArtifactName = artifactName;
-        }
-
-        /// <summary> Initializes a new instance of <see cref="OneLakeArtifact"/>. </summary>
         /// <param name="artifactType"> [Required] OneLake artifact type. </param>
-        /// <param name="artifactName"> [Required] OneLake artifact name. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal OneLakeArtifact(OneLakeArtifactType artifactType, string artifactName, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        private protected OneLakeArtifact(string artifactName, OneLakeArtifactType artifactType)
         {
-            ArtifactType = artifactType;
             ArtifactName = artifactName;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            ArtifactType = artifactType;
         }
 
-        /// <summary> Initializes a new instance of <see cref="OneLakeArtifact"/> for deserialization. </summary>
-        internal OneLakeArtifact()
+        /// <summary> Initializes a new instance of <see cref="OneLakeArtifact"/>. </summary>
+        /// <param name="artifactName"> [Required] OneLake artifact name. </param>
+        /// <param name="artifactType"> [Required] OneLake artifact type. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal OneLakeArtifact(string artifactName, OneLakeArtifactType artifactType, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
+            ArtifactName = artifactName;
+            ArtifactType = artifactType;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
-        /// <summary> [Required] OneLake artifact type. </summary>
-        internal OneLakeArtifactType ArtifactType { get; set; }
         /// <summary> [Required] OneLake artifact name. </summary>
         [WirePath("artifactName")]
         public string ArtifactName { get; set; }
+
+        /// <summary> [Required] OneLake artifact type. </summary>
+        [WirePath("artifactType")]
+        internal OneLakeArtifactType ArtifactType { get; set; }
     }
 }

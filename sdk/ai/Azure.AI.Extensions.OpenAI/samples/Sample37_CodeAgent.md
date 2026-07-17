@@ -1,19 +1,11 @@
 # Sample on getting the responses from hosted code Agent in Azure.AI.Extensions.OpenAI.
 
-**Note:** This feature is in the preview, to use it, please disable the `AAIP001` warning.
-
-```C#
-#pragma warning disable AAIP001
-```
-
-Hosted agents simplify the custom agent deployment on fully controlled environment [see more](https://learn.microsoft.com/azure/ai-foundry/agents/concepts/hosted-agents). `Azure.AI.Projects` allow interactions with hosted agents using `HostedAgentDefinition`. In this example we will deploy the hosted agent and use it from the `Azure.AI.Extensions.OpenAI`.
-
 ## Hosted Code Agent Deployment prerequisites
 
 In this example we will use the code from the simple [sample](https://github.com/Azure/azure-sdk-for-python/blob/main/sdk/agentserver/azure-ai-agentserver-responses/samples/sample_01_getting_started.py). The service defined in this file just gets the request, adds "Echo: " to it and sends it back using the responses protocol.
 
 ## Run the sample
-`Azure.AI.Projects` can be used only to create an `ProjectsAgentVersion` object, however hosted object represents the running container, which exposes the OpenAI-compatible API.
+`Azure.AI.Projects` can be used only to create a `ProjectsAgentVersion` object, however hosted object represents the running container, which exposes the OpenAI-compatible API.
 1. Create a folder, containing agent code and dependencies. In our example, it should be located `Assets/AgentsCode` folder next to the sample itself (this folder is not provided).
 2. Copy the contents of a [sample](https://github.com/Azure/azure-sdk-for-python/blob/main/sdk/agentserver/azure-ai-agentserver-responses/samples/sample_01_getting_started.py) to the file main.py in the `Assets` folder.
 3. Create the `requirements.txt` in `Assets` folder with the next contents.
@@ -42,7 +34,7 @@ AIProjectClient projectClient = new(endpoint: new(projectEndpoint), tokenProvide
 2. For brevity we will create the method, returning the `CreateAgentVersionFromCodeMetadata` object.
 
 ```C# Snippet:Sample_CodeAgentMetadata_CodeAgent
-private static CreateAgentVersionFromCodeMetadata GetAgentMetadata()
+private static AgentVersionFromCodeMetadata GetAgentMetadata()
 {
     HostedAgentDefinition agentDefinition = new(
         cpu: "0.5",
@@ -56,7 +48,7 @@ private static CreateAgentVersionFromCodeMetadata GetAgentMetadata()
             dependencyResolution: CodeDependencyResolution.RemoteBuild
         ),
     };
-    CreateAgentVersionFromCodeMetadata metadata = new(agentDefinition);
+    AgentVersionFromCodeMetadata metadata = new(agentDefinition);
     metadata.Metadata["enableVnextExperience"] = "true";
     return metadata;
 }
