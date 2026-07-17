@@ -595,16 +595,28 @@ namespace Azure.Messaging.ServiceBus.Tests.Amqp
         }
 
         [Test]
-        public void ParseGetMessageSessionsResponseThrowsForEmptySessionIdInStringArray()
+        public void ParseGetMessageSessionsResponseReturnsEmptySessionIdInStringArray()
         {
-            // A valid session id is always non-empty (the broker rejects an empty SessionId at
-            // send time), so an empty entry in the response is treated as invalid.
+            // Empty string is a valid session id (a session can be created via AcceptSessionAsync("")
+            // + session state and is returned by this operation), so it must be returned, not rejected.
             var response = CreateGetSessionsResponse(
                 AmqpResponseStatusCode.OK, new[] { "session-1", "" });
 
-            Assert.That(
-                () => AmqpReceiver.ParseGetMessageSessionsResponse(response),
-                Throws.InstanceOf<ServiceBusException>());
+            var result = AmqpReceiver.ParseGetMessageSessionsResponse(response);
+
+            Assert.That(result, Is.EqualTo(new[] { "session-1", "" }));
+        }
+
+        [Test]
+        public void ParseGetMessageSessionsResponseReturnsEmptySessionIdInObjectArray()
+        {
+            // Empty string is a valid session id and must be returned, not rejected.
+            var response = CreateGetSessionsResponse(
+                AmqpResponseStatusCode.OK, new object[] { "session-1", "" });
+
+            var result = AmqpReceiver.ParseGetMessageSessionsResponse(response);
+
+            Assert.That(result, Is.EqualTo(new[] { "session-1", "" }));
         }
 
         [Test]
@@ -619,34 +631,34 @@ namespace Azure.Messaging.ServiceBus.Tests.Amqp
         }
 
         [Test]
-        public void ParseGetMessageSessionsResponseReportsAllInvalidIndexesInStringArray()
+        public void ParseGetMessageSessionsResponseReportsAllNullIndexesInStringArray()
         {
-            // Invalid entries at indexes 0 (null) and 2 (empty): the parser must finish iterating
-            // and report both, describing why each is invalid (covers the null and empty reasons).
+            // Null entries at indexes 0 and 2 are invalid: the parser must finish iterating and
+            // report both. The empty string at index 1 is valid and must not be flagged.
             var response = CreateGetSessionsResponse(
-                AmqpResponseStatusCode.OK, new[] { null, "session-2", "" });
+                AmqpResponseStatusCode.OK, new string[] { null, "", null });
 
             Assert.That(
                 () => AmqpReceiver.ParseGetMessageSessionsResponse(response),
                 Throws.InstanceOf<ServiceBusException>()
                     .With.Message.Contains("index 0 was null")
-                    .And.Message.Contains("index 2 was an empty string"));
+                    .And.Message.Contains("index 2 was null"));
         }
 
         [Test]
         public void ParseGetMessageSessionsResponseReportsAllInvalidIndexesInObjectArray()
         {
-            // Invalid entries at indexes 0 (null), 2 (empty), and 3 (non-string): the parser must
-            // finish iterating and report all three, including the offending type.
+            // Invalid entries at indexes 0 (null) and 2 (non-string): the parser must finish
+            // iterating and report both, including the offending type. The empty string at index 1
+            // is valid and must not be flagged.
             var response = CreateGetSessionsResponse(
-                AmqpResponseStatusCode.OK, new object[] { null, "session-2", "", 5 });
+                AmqpResponseStatusCode.OK, new object[] { null, "", 5 });
 
             Assert.That(
                 () => AmqpReceiver.ParseGetMessageSessionsResponse(response),
                 Throws.InstanceOf<ServiceBusException>()
                     .With.Message.Contains("index 0 was null")
-                    .And.Message.Contains("index 2 was an empty string")
-                    .And.Message.Contains("index 3").And.Message.Contains("Int32"));
+                    .And.Message.Contains("index 2").And.Message.Contains("Int32"));
         }
 
         [Test]
