@@ -1,4 +1,4 @@
-# Azure.ResourceManager.Enclave management client library for .NET
+# Microsoft Azure Enclave management client library for .NET
 
 This library supports managing Microsoft Azure resources.
 
