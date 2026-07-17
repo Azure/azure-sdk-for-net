@@ -13,7 +13,7 @@ using System.Text.Json;
 namespace Azure.AI.Agents.Persistent
 {
     /// <summary> Specifies a tool the model should use. Use to force the model to call a specific tool. </summary>
-    public partial class PersistentAgentsNamedToolChoice : IJsonModel<PersistentAgentsNamedToolChoice>
+    internal partial class PersistentAgentsNamedToolChoice : IJsonModel<PersistentAgentsNamedToolChoice>
     {
         /// <summary> Initializes a new instance of <see cref="PersistentAgentsNamedToolChoice"/> for deserialization. </summary>
         internal PersistentAgentsNamedToolChoice()

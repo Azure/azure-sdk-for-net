@@ -1043,6 +1043,15 @@ namespace Azure.AI.Language.Conversations.Authoring
             return new AnalyzeConversationAuthoringConfusionMatrixRow(additionalProperties);
         }
 
+        /// <summary> Represents a cell in a confusion matrix. </summary>
+        /// <param name="normalizedValue"> Represents normalized value in percentages. </param>
+        /// <param name="rawValue"> Represents raw value. </param>
+        /// <returns> A new <see cref="Authoring.AnalyzeConversationAuthoringConfusionMatrixCell"/> instance for mocking. </returns>
+        public static AnalyzeConversationAuthoringConfusionMatrixCell AnalyzeConversationAuthoringConfusionMatrixCell(float normalizedValue = default, float rawValue = default)
+        {
+            return new AnalyzeConversationAuthoringConfusionMatrixCell(normalizedValue, rawValue, additionalBinaryDataProperties: null);
+        }
+
         /// <summary> Represents the evaluation result for an entity. </summary>
         /// <param name="f1"> Represents the model F1 score. </param>
         /// <param name="precision"> Represents the model precision. </param>
