@@ -597,8 +597,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Amqp
         [Test]
         public void ParseGetMessageSessionsResponseReturnsEmptySessionIdInStringArray()
         {
-            // Empty string is a valid session id (a session can be created via AcceptSessionAsync("")
-            // + session state and is returned by this operation), so it must be returned, not rejected.
+            // Empty string is a valid session id and must be returned, not rejected by the parser.
             var response = CreateGetSessionsResponse(
                 AmqpResponseStatusCode.OK, new[] { "session-1", "" });
 

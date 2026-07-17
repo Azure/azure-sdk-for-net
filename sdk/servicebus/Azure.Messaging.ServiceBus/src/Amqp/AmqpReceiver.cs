@@ -1673,8 +1673,7 @@ namespace Azure.Messaging.ServiceBus.Amqp
                 {
                     // Iterate the full array and collect every invalid entry rather than throwing on
                     // the first, so all offending entries are reported. Empty string is a valid session
-                    // id: a session with an empty id can be created via AcceptSessionAsync("") + session
-                    // state, and this operation returns it (live-verified), so only null is rejected.
+                    // id and must be preserved if the service returns it, so only null is rejected here.
                     List<string> invalidDescriptions = null;
                     for (int i = 0; i < sessionArray.Length; i++)
                     {
@@ -1695,8 +1694,8 @@ namespace Azure.Messaging.ServiceBus.Amqp
                 {
                     // Iterate the full array and collect every invalid entry rather than throwing on
                     // the first, describing why each is invalid so all offending entries are reported.
-                    // Empty string is a valid session id (live-verified: AcceptSessionAsync("") + session
-                    // state, and this operation returns ""), so only null and non-string are rejected.
+                    // Empty string is a valid session id and must be preserved if the service returns
+                    // it, so only null and non-string entries are rejected.
                     var result = new string[objectArray.Length];
                     List<string> invalidDescriptions = null;
                     for (int i = 0; i < objectArray.Length; i++)
