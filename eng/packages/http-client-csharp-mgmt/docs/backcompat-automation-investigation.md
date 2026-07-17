@@ -186,7 +186,12 @@ This is the crux, and it splits the scenario:
   type referenced there in the old contract identifies the target). Where such an anchor is unique
   the mapping is deterministic; where several last-GA types share an identical shape, or the shape
   itself changed in the same release, the match is ambiguous and a per-type hint (effectively the
-  `[CodeGenType]` the author writes today) is unavoidable. So this subset is *boilerplate-generable
+  `[CodeGenType]` the author writes today) is unavoidable. (Concretely: two empty/near-empty
+  `properties` bags that both serialize to `{ }` or to the same `{ tags, properties }` field set
+  are indistinguishable by shape, so an anchor keyed only on serialized properties cannot tell which
+  last-GA name belongs to which newly generated type; and if the spec both renames the type *and*
+  adds/removes a property in the same release, even the graph-position anchor no longer matches a
+  single last-GA type cleanly.) So this subset is *boilerplate-generable
   given a mapping*, not *mapping-inferable from names alone*.
 
 **Automation approach:** teach the emitter/generator to consume the frozen last-GA contract and
