@@ -42,15 +42,15 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Mocking
 
         private ClientDiagnostics FirewallsClientDiagnostics => _firewallsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.PaloAltoNetworks.Ngfw.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private Firewalls FirewallsRestClient => _firewallsRestClient ??= new Firewalls(FirewallsClientDiagnostics, Pipeline, Endpoint, "2025-10-08");
+        private Firewalls FirewallsRestClient => _firewallsRestClient ??= new Firewalls(FirewallsClientDiagnostics, Pipeline, Endpoint, "2026-05-11-preview");
 
         private ClientDiagnostics LocalRulestacksClientDiagnostics => _localRulestacksClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.PaloAltoNetworks.Ngfw.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private LocalRulestacks LocalRulestacksRestClient => _localRulestacksRestClient ??= new LocalRulestacks(LocalRulestacksClientDiagnostics, Pipeline, Endpoint, "2025-10-08");
+        private LocalRulestacks LocalRulestacksRestClient => _localRulestacksRestClient ??= new LocalRulestacks(LocalRulestacksClientDiagnostics, Pipeline, Endpoint, "2026-05-11-preview");
 
         private ClientDiagnostics PaloAltoNetworksCloudngfwOperationsClientDiagnostics => _paloAltoNetworksCloudngfwOperationsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.PaloAltoNetworks.Ngfw.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private PaloAltoNetworksCloudngfwOperations PaloAltoNetworksCloudngfwOperationsRestClient => _paloAltoNetworksCloudngfwOperationsRestClient ??= new PaloAltoNetworksCloudngfwOperations(PaloAltoNetworksCloudngfwOperationsClientDiagnostics, Pipeline, Endpoint, "2025-10-08");
+        private PaloAltoNetworksCloudngfwOperations PaloAltoNetworksCloudngfwOperationsRestClient => _paloAltoNetworksCloudngfwOperationsRestClient ??= new PaloAltoNetworksCloudngfwOperations(PaloAltoNetworksCloudngfwOperationsClientDiagnostics, Pipeline, Endpoint, "2026-05-11-preview");
 
         /// <summary>
         /// List FirewallResource resources by subscription ID
@@ -65,7 +65,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-10-08. </description>
+        /// <description> 2026-05-11-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -93,7 +93,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-10-08. </description>
+        /// <description> 2026-05-11-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -121,7 +121,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-10-08. </description>
+        /// <description> 2026-05-11-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -149,7 +149,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-10-08. </description>
+        /// <description> 2026-05-11-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -165,7 +165,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Mocking
         }
 
         /// <summary>
-        /// CreateProductSerialNumber
+        /// A long-running provider action.
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>
@@ -177,7 +177,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-10-08. </description>
+        /// <description> 2026-05-11-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -209,7 +209,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Mocking
         }
 
         /// <summary>
-        /// CreateProductSerialNumber
+        /// A long-running provider action.
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>
@@ -221,7 +221,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-10-08. </description>
+        /// <description> 2026-05-11-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -253,7 +253,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Mocking
         }
 
         /// <summary>
-        /// GetCloudManagerTenants
+        /// A long-running provider action.
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>
@@ -265,7 +265,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-10-08. </description>
+        /// <description> 2026-05-11-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -297,7 +297,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Mocking
         }
 
         /// <summary>
-        /// GetCloudManagerTenants
+        /// A long-running provider action.
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>
@@ -309,7 +309,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-10-08. </description>
+        /// <description> 2026-05-11-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -341,7 +341,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Mocking
         }
 
         /// <summary>
-        /// GetProductSerialNumberStatus
+        /// A long-running provider action.
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>
@@ -353,7 +353,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-10-08. </description>
+        /// <description> 2026-05-11-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -385,7 +385,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Mocking
         }
 
         /// <summary>
-        /// GetProductSerialNumberStatus
+        /// A long-running provider action.
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>
@@ -397,7 +397,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-10-08. </description>
+        /// <description> 2026-05-11-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -429,7 +429,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Mocking
         }
 
         /// <summary>
-        /// GetSupportInfo
+        /// A long-running provider action.
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>
@@ -441,7 +441,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-10-08. </description>
+        /// <description> 2026-05-11-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -473,7 +473,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Mocking
         }
 
         /// <summary>
-        /// GetSupportInfo
+        /// A long-running provider action.
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>
@@ -485,7 +485,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-10-08. </description>
+        /// <description> 2026-05-11-preview. </description>
         /// </item>
         /// </list>
         /// </summary>

@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-10-08. </description>
+        /// <description> 2026-05-11-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-10-08. </description>
+        /// <description> 2026-05-11-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -116,7 +116,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-10-08. </description>
+        /// <description> 2026-05-11-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -145,7 +145,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-10-08. </description>
+        /// <description> 2026-05-11-preview. </description>
         /// </item>
         /// </list>
         /// </summary>

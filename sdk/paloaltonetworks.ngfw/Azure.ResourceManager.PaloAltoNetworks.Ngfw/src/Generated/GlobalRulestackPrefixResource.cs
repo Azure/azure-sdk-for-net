@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
         {
             TryGetApiVersion(ResourceType, out string globalRulestackPrefixApiVersion);
             _prefixListGlobalRulestackClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.PaloAltoNetworks.Ngfw", ResourceType.Namespace, Diagnostics);
-            _prefixListGlobalRulestackRestClient = new PrefixListGlobalRulestack(_prefixListGlobalRulestackClientDiagnostics, Pipeline, Endpoint, globalRulestackPrefixApiVersion ?? "2025-10-08");
+            _prefixListGlobalRulestackRestClient = new PrefixListGlobalRulestack(_prefixListGlobalRulestackClientDiagnostics, Pipeline, Endpoint, globalRulestackPrefixApiVersion ?? "2026-05-11-preview");
             ValidateResourceId(id);
         }
 
@@ -102,7 +102,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-10-08. </description>
+        /// <description> 2026-05-11-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -150,7 +150,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-10-08. </description>
+        /// <description> 2026-05-11-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -198,7 +198,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-10-08. </description>
+        /// <description> 2026-05-11-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -247,7 +247,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-10-08. </description>
+        /// <description> 2026-05-11-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -296,7 +296,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-10-08. </description>
+        /// <description> 2026-05-11-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -355,7 +355,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-10-08. </description>
+        /// <description> 2026-05-11-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
