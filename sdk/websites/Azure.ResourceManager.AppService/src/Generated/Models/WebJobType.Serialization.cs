@@ -11,6 +11,7 @@ namespace Azure.ResourceManager.AppService.Models
 {
     internal static partial class WebJobTypeExtensions
     {
+        /// <param name="value"> The value to serialize. </param>
         public static string ToSerialString(this WebJobType value) => value switch
         {
             WebJobType.Continuous => "Continuous",
@@ -18,10 +19,17 @@ namespace Azure.ResourceManager.AppService.Models
             _ => throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown WebJobType value.")
         };
 
+        /// <param name="value"> The value to deserialize. </param>
         public static WebJobType ToWebJobType(this string value)
         {
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Continuous")) return WebJobType.Continuous;
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Triggered")) return WebJobType.Triggered;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Continuous"))
+            {
+                return WebJobType.Continuous;
+            }
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Triggered"))
+            {
+                return WebJobType.Triggered;
+            }
             throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown WebJobType value.");
         }
     }

@@ -5,93 +5,88 @@
 
 #nullable disable
 
+using System;
 using System.Threading;
-using Autorest.CSharp.Core;
+using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
+using Azure.ResourceManager;
+using Azure.ResourceManager.Automation;
 using Azure.ResourceManager.Automation.Models;
+using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.Automation.Mocking
 {
-    /// <summary> A class to add extension methods to SubscriptionResource. </summary>
+    /// <summary> A class to add extension methods to <see cref="SubscriptionResource"/>. </summary>
     public partial class MockableAutomationSubscriptionResource : ArmResource
     {
         private ClientDiagnostics _automationAccountClientDiagnostics;
-        private AutomationAccountRestOperations _automationAccountRestClient;
+        private AutomationAccount _automationAccountRestClient;
         private ClientDiagnostics _deletedAutomationAccountsClientDiagnostics;
-        private DeletedAutomationAccountsRestOperations _deletedAutomationAccountsRestClient;
+        private DeletedAutomationAccounts _deletedAutomationAccountsRestClient;
 
-        /// <summary> Initializes a new instance of the <see cref="MockableAutomationSubscriptionResource"/> class for mocking. </summary>
+        /// <summary> Initializes a new instance of MockableAutomationSubscriptionResource for mocking. </summary>
         protected MockableAutomationSubscriptionResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref="MockableAutomationSubscriptionResource"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="MockableAutomationSubscriptionResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal MockableAutomationSubscriptionResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
         }
 
-        private ClientDiagnostics AutomationAccountClientDiagnostics => _automationAccountClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Automation", AutomationAccountResource.ResourceType.Namespace, Diagnostics);
-        private AutomationAccountRestOperations AutomationAccountRestClient => _automationAccountRestClient ??= new AutomationAccountRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, GetApiVersionOrNull(AutomationAccountResource.ResourceType));
-        private ClientDiagnostics deletedAutomationAccountsClientDiagnostics => _deletedAutomationAccountsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Automation", ProviderConstants.DefaultProviderNamespace, Diagnostics);
-        private DeletedAutomationAccountsRestOperations deletedAutomationAccountsRestClient => _deletedAutomationAccountsRestClient ??= new DeletedAutomationAccountsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint);
+        private ClientDiagnostics AutomationAccountClientDiagnostics => _automationAccountClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Automation.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private string GetApiVersionOrNull(ResourceType resourceType)
-        {
-            TryGetApiVersion(resourceType, out string apiVersion);
-            return apiVersion;
-        }
+        private AutomationAccount AutomationAccountRestClient => _automationAccountRestClient ??= new AutomationAccount(AutomationAccountClientDiagnostics, Pipeline, Endpoint, "2024-10-23");
+
+        private ClientDiagnostics DeletedAutomationAccountsClientDiagnostics => _deletedAutomationAccountsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Automation.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
+
+        private DeletedAutomationAccounts DeletedAutomationAccountsRestClient => _deletedAutomationAccountsRestClient ??= new DeletedAutomationAccounts(DeletedAutomationAccountsClientDiagnostics, Pipeline, Endpoint, "2024-10-23");
 
         /// <summary>
         /// Retrieve a list of accounts within a given subscription.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Automation/automationAccounts</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.Automation/automationAccounts. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>AutomationAccount_List</description>
+        /// <term> Operation Id. </term>
+        /// <description> AutomationAccounts_List. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2021-06-22</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="AutomationAccountResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-10-23. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="AutomationAccountResource"/> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="AutomationAccountResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<AutomationAccountResource> GetAutomationAccountsAsync(CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => AutomationAccountRestClient.CreateListRequest(Id.SubscriptionId);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => AutomationAccountRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new AutomationAccountResource(Client, AutomationAccountData.DeserializeAutomationAccountData(e)), AutomationAccountClientDiagnostics, Pipeline, "MockableAutomationSubscriptionResource.GetAutomationAccounts", "value", "nextLink", cancellationToken);
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new AsyncPageableWrapper<AutomationAccountData, AutomationAccountResource>(new AutomationAccountGetAllAsyncCollectionResultOfT(AutomationAccountRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableAutomationSubscriptionResource.GetAutomationAccounts"), data => new AutomationAccountResource(Client, data));
         }
 
         /// <summary>
         /// Retrieve a list of accounts within a given subscription.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Automation/automationAccounts</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.Automation/automationAccounts. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>AutomationAccount_List</description>
+        /// <term> Operation Id. </term>
+        /// <description> AutomationAccounts_List. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2021-06-22</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="AutomationAccountResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-10-23. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -99,50 +94,55 @@ namespace Azure.ResourceManager.Automation.Mocking
         /// <returns> A collection of <see cref="AutomationAccountResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<AutomationAccountResource> GetAutomationAccounts(CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => AutomationAccountRestClient.CreateListRequest(Id.SubscriptionId);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => AutomationAccountRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new AutomationAccountResource(Client, AutomationAccountData.DeserializeAutomationAccountData(e)), AutomationAccountClientDiagnostics, Pipeline, "MockableAutomationSubscriptionResource.GetAutomationAccounts", "value", "nextLink", cancellationToken);
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new PageableWrapper<AutomationAccountData, AutomationAccountResource>(new AutomationAccountGetAllCollectionResultOfT(AutomationAccountRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableAutomationSubscriptionResource.GetAutomationAccounts"), data => new AutomationAccountResource(Client, data));
         }
 
         /// <summary>
         /// Retrieve deleted automation account.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Automation/deletedAutomationAccounts</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.Automation/deletedAutomationAccounts. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>deletedAutomationAccounts_ListBySubscription</description>
+        /// <term> Operation Id. </term>
+        /// <description> deletedAutomationAccountsOperationGroup_ListBySubscription. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2022-01-31</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-10-23. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="DeletedAutomationAccount"/> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="DeletedAutomationAccount"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<DeletedAutomationAccount> GetDeletedAutomationAccountsBySubscriptionAsync(CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => deletedAutomationAccountsRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => DeletedAutomationAccount.DeserializeDeletedAutomationAccount(e), deletedAutomationAccountsClientDiagnostics, Pipeline, "MockableAutomationSubscriptionResource.GetDeletedAutomationAccountsBySubscription", "value", null, cancellationToken);
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new DeletedAutomationAccountsGetDeletedAutomationAccountsBySubscriptionAsyncCollectionResultOfT(DeletedAutomationAccountsRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableAutomationSubscriptionResource.GetDeletedAutomationAccountsBySubscription");
         }
 
         /// <summary>
         /// Retrieve deleted automation account.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Automation/deletedAutomationAccounts</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.Automation/deletedAutomationAccounts. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>deletedAutomationAccounts_ListBySubscription</description>
+        /// <term> Operation Id. </term>
+        /// <description> deletedAutomationAccountsOperationGroup_ListBySubscription. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2022-01-31</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-10-23. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -150,8 +150,11 @@ namespace Azure.ResourceManager.Automation.Mocking
         /// <returns> A collection of <see cref="DeletedAutomationAccount"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<DeletedAutomationAccount> GetDeletedAutomationAccountsBySubscription(CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => deletedAutomationAccountsRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, null, e => DeletedAutomationAccount.DeserializeDeletedAutomationAccount(e), deletedAutomationAccountsClientDiagnostics, Pipeline, "MockableAutomationSubscriptionResource.GetDeletedAutomationAccountsBySubscription", "value", null, cancellationToken);
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new DeletedAutomationAccountsGetDeletedAutomationAccountsBySubscriptionCollectionResultOfT(DeletedAutomationAccountsRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableAutomationSubscriptionResource.GetDeletedAutomationAccountsBySubscription");
         }
     }
 }

@@ -58,6 +58,10 @@ namespace Azure.Provisioning.Batch
             base.DefineProvisionableProperties();
             _mode = DefineProperty<BatchHostEndpointSettingsModeType>(nameof(Mode), new string[] { "mode" });
             _inVmAccessControlProfileReferenceId = DefineProperty<ResourceIdentifier>(nameof(InVmAccessControlProfileReferenceId), new string[] { "inVMAccessControlProfileReferenceId" });
+            DefineAdditionalProperties();
         }
+
+        /// <summary> Define additional provisionable properties for BatchHostEndpointSettings that are not part of the generated code. </summary>
+        partial void DefineAdditionalProperties();
     }
 }

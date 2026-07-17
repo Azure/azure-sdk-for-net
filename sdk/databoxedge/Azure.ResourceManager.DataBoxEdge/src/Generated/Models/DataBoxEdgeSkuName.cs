@@ -32,17 +32,17 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
         private const string EdgePHighValue = "EdgeP_High";
         private const string EdgePRBaseValue = "EdgePR_Base";
         private const string EdgePRBaseUpsValue = "EdgePR_Base_UPS";
-        private const string EP2641VpuWValue = "EP2_64_1VPU_W";
-        private const string EP21281T4Mx1WValue = "EP2_128_1T4_Mx1_W";
-        private const string EP22562T4WValue = "EP2_256_2T4_W";
+        private const string EP2_64_1VpuWValue = "EP2_64_1VPU_W";
+        private const string EP2_128_1T4Mx1WValue = "EP2_128_1T4_Mx1_W";
+        private const string EP2_256_2T4WValue = "EP2_256_2T4_W";
         private const string EdgeMRMiniValue = "EdgeMR_Mini";
         private const string RcaSmallValue = "RCA_Small";
         private const string RcaLargeValue = "RCA_Large";
         private const string RdcValue = "RDC";
         private const string ManagementValue = "Management";
-        private const string EP264Mx1WValue = "EP2_64_Mx1_W";
-        private const string EP2128Gpu1Mx1WValue = "EP2_128_GPU1_Mx1_W";
-        private const string EP2256Gpu2Mx1Value = "EP2_256_GPU2_Mx1";
+        private const string EP2_64_Mx1WValue = "EP2_64_Mx1_W";
+        private const string EP2_128Gpu1Mx1WValue = "EP2_128_GPU1_Mx1_W";
+        private const string EP2_256Gpu2Mx1Value = "EP2_256_GPU2_Mx1";
         private const string EdgeMRTcpValue = "EdgeMR_TCP";
 
         /// <summary> Initializes a new instance of <see cref="DataBoxEdgeSkuName"/>. </summary>
@@ -106,6 +106,15 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
         /// <summary> Gets the EdgePRBaseUps. </summary>
         public static DataBoxEdgeSkuName EdgePRBaseUps { get; } = new DataBoxEdgeSkuName(EdgePRBaseUpsValue);
 
+        /// <summary> Gets the EP2_64_1VpuW. </summary>
+        public static DataBoxEdgeSkuName EP2_64_1VpuW { get; } = new DataBoxEdgeSkuName(EP2_64_1VpuWValue);
+
+        /// <summary> Gets the EP2_128_1T4Mx1W. </summary>
+        public static DataBoxEdgeSkuName EP2_128_1T4Mx1W { get; } = new DataBoxEdgeSkuName(EP2_128_1T4Mx1WValue);
+
+        /// <summary> Gets the EP2_256_2T4W. </summary>
+        public static DataBoxEdgeSkuName EP2_256_2T4W { get; } = new DataBoxEdgeSkuName(EP2_256_2T4WValue);
+
         /// <summary> Gets the EdgeMRMini. </summary>
         public static DataBoxEdgeSkuName EdgeMRMini { get; } = new DataBoxEdgeSkuName(EdgeMRMiniValue);
 
@@ -120,6 +129,15 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
 
         /// <summary> Gets the Management. </summary>
         public static DataBoxEdgeSkuName Management { get; } = new DataBoxEdgeSkuName(ManagementValue);
+
+        /// <summary> Gets the EP2_64_Mx1W. </summary>
+        public static DataBoxEdgeSkuName EP2_64_Mx1W { get; } = new DataBoxEdgeSkuName(EP2_64_Mx1WValue);
+
+        /// <summary> Gets the EP2_128Gpu1Mx1W. </summary>
+        public static DataBoxEdgeSkuName EP2_128Gpu1Mx1W { get; } = new DataBoxEdgeSkuName(EP2_128Gpu1Mx1WValue);
+
+        /// <summary> Gets the EP2_256Gpu2Mx1. </summary>
+        public static DataBoxEdgeSkuName EP2_256Gpu2Mx1 { get; } = new DataBoxEdgeSkuName(EP2_256Gpu2Mx1Value);
 
         /// <summary> Gets the EdgeMRTcp. </summary>
         public static DataBoxEdgeSkuName EdgeMRTcp { get; } = new DataBoxEdgeSkuName(EdgeMRTcpValue);

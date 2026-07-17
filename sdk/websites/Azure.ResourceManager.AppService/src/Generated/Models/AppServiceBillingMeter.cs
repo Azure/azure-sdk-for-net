@@ -8,47 +8,16 @@
 using System;
 using System.Collections.Generic;
 using Azure.Core;
+using Azure.ResourceManager.AppService;
 using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.AppService.Models
 {
-    /// <summary>
-    /// App Service billing entity that contains information about meter which the Azure billing system utilizes to charge users for services.
-    /// Serialized Name: BillingMeter
-    /// </summary>
+    /// <summary> App Service billing entity that contains information about meter which the Azure billing system utilizes to charge users for services. </summary>
     public partial class AppServiceBillingMeter : ResourceData
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="AppServiceBillingMeter"/>. </summary>
         public AppServiceBillingMeter()
@@ -56,92 +25,134 @@ namespace Azure.ResourceManager.AppService.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="AppServiceBillingMeter"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="meterId">
-        /// Meter GUID onboarded in Commerce
-        /// Serialized Name: BillingMeter.properties.meterId
-        /// </param>
-        /// <param name="billingLocation">
-        /// Azure Location of billable resource
-        /// Serialized Name: BillingMeter.properties.billingLocation
-        /// </param>
-        /// <param name="shortName">
-        /// Short Name from App Service Azure pricing Page
-        /// Serialized Name: BillingMeter.properties.shortName
-        /// </param>
-        /// <param name="friendlyName">
-        /// Friendly name of the meter
-        /// Serialized Name: BillingMeter.properties.friendlyName
-        /// </param>
-        /// <param name="osType">
-        /// App Service OS type meter used for
-        /// Serialized Name: BillingMeter.properties.osType
-        /// </param>
-        /// <param name="multiplier">
-        /// Meter Multiplier
-        /// Serialized Name: BillingMeter.properties.multiplier
-        /// </param>
-        /// <param name="kind">
-        /// Kind of resource.
-        /// Serialized Name: ProxyOnlyResource.kind
-        /// </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal AppServiceBillingMeter(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, Guid? meterId, AzureLocation? billingLocation, string shortName, string friendlyName, string osType, double? multiplier, string kind, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="properties"> BillingMeter resource specific properties. </param>
+        /// <param name="kind"> Kind of resource. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal AppServiceBillingMeter(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, BillingMeterProperties properties, string kind, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(id, name, resourceType, systemData)
         {
-            MeterId = meterId;
-            BillingLocation = billingLocation;
-            ShortName = shortName;
-            FriendlyName = friendlyName;
-            OSType = osType;
-            Multiplier = multiplier;
+            Properties = properties;
             Kind = kind;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
-        /// <summary>
-        /// Meter GUID onboarded in Commerce
-        /// Serialized Name: BillingMeter.properties.meterId
-        /// </summary>
-        [WirePath("properties.meterId")]
-        public Guid? MeterId { get; set; }
-        /// <summary>
-        /// Azure Location of billable resource
-        /// Serialized Name: BillingMeter.properties.billingLocation
-        /// </summary>
-        [WirePath("properties.billingLocation")]
-        public AzureLocation? BillingLocation { get; set; }
-        /// <summary>
-        /// Short Name from App Service Azure pricing Page
-        /// Serialized Name: BillingMeter.properties.shortName
-        /// </summary>
-        [WirePath("properties.shortName")]
-        public string ShortName { get; set; }
-        /// <summary>
-        /// Friendly name of the meter
-        /// Serialized Name: BillingMeter.properties.friendlyName
-        /// </summary>
-        [WirePath("properties.friendlyName")]
-        public string FriendlyName { get; set; }
-        /// <summary>
-        /// App Service OS type meter used for
-        /// Serialized Name: BillingMeter.properties.osType
-        /// </summary>
-        [WirePath("properties.osType")]
-        public string OSType { get; set; }
-        /// <summary>
-        /// Meter Multiplier
-        /// Serialized Name: BillingMeter.properties.multiplier
-        /// </summary>
-        [WirePath("properties.multiplier")]
-        public double? Multiplier { get; set; }
-        /// <summary>
-        /// Kind of resource.
-        /// Serialized Name: ProxyOnlyResource.kind
-        /// </summary>
+        /// <summary> BillingMeter resource specific properties. </summary>
+        [WirePath("properties")]
+        internal BillingMeterProperties Properties { get; set; }
+
+        /// <summary> Kind of resource. </summary>
         [WirePath("kind")]
         public string Kind { get; set; }
+
+        /// <summary> Meter GUID onboarded in Commerce. </summary>
+        [WirePath("properties.meterId")]
+        public Guid? MeterId
+        {
+            get
+            {
+                return Properties is null ? default : Properties.MeterId;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new BillingMeterProperties();
+                }
+                Properties.MeterId = value;
+            }
+        }
+
+        /// <summary> Azure Location of billable resource. </summary>
+        [WirePath("properties.billingLocation")]
+        public AzureLocation? BillingLocation
+        {
+            get
+            {
+                return Properties is null ? default : Properties.BillingLocation;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new BillingMeterProperties();
+                }
+                Properties.BillingLocation = value;
+            }
+        }
+
+        /// <summary> Short Name from App Service Azure pricing Page. </summary>
+        [WirePath("properties.shortName")]
+        public string ShortName
+        {
+            get
+            {
+                return Properties is null ? default : Properties.ShortName;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new BillingMeterProperties();
+                }
+                Properties.ShortName = value;
+            }
+        }
+
+        /// <summary> Friendly name of the meter. </summary>
+        [WirePath("properties.friendlyName")]
+        public string FriendlyName
+        {
+            get
+            {
+                return Properties is null ? default : Properties.FriendlyName;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new BillingMeterProperties();
+                }
+                Properties.FriendlyName = value;
+            }
+        }
+
+        /// <summary> App Service OS type meter used for. </summary>
+        [WirePath("properties.osType")]
+        public string OSType
+        {
+            get
+            {
+                return Properties is null ? default : Properties.OSType;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new BillingMeterProperties();
+                }
+                Properties.OSType = value;
+            }
+        }
+
+        /// <summary> Meter Multiplier. </summary>
+        [WirePath("properties.multiplier")]
+        public double? Multiplier
+        {
+            get
+            {
+                return Properties is null ? default : Properties.Multiplier;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new BillingMeterProperties();
+                }
+                Properties.Multiplier = value;
+            }
+        }
     }
 }

@@ -8,16 +8,56 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
-using System.Text;
 using System.Text.Json;
-using Azure.Core;
+using Azure.ResourceManager.MachineLearning;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
-    public partial class MachineLearningCertificateDatastoreSecrets : IUtf8JsonSerializable, IJsonModel<MachineLearningCertificateDatastoreSecrets>
+    /// <summary> Datastore certificate secrets. </summary>
+    public partial class MachineLearningCertificateDatastoreSecrets : MachineLearningDatastoreSecrets, IJsonModel<MachineLearningCertificateDatastoreSecrets>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<MachineLearningCertificateDatastoreSecrets>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override MachineLearningDatastoreSecrets PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<MachineLearningCertificateDatastoreSecrets>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    {
+                        return DeserializeMachineLearningCertificateDatastoreSecrets(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(MachineLearningCertificateDatastoreSecrets)} does not support reading '{options.Format}' format.");
+            }
+        }
 
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<MachineLearningCertificateDatastoreSecrets>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerMachineLearningContext.Default);
+                default:
+                    throw new FormatException($"The model {nameof(MachineLearningCertificateDatastoreSecrets)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<MachineLearningCertificateDatastoreSecrets>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        MachineLearningCertificateDatastoreSecrets IPersistableModel<MachineLearningCertificateDatastoreSecrets>.Create(BinaryData data, ModelReaderWriterOptions options) => (MachineLearningCertificateDatastoreSecrets)PersistableModelCreateCore(data, options);
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<MachineLearningCertificateDatastoreSecrets>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<MachineLearningCertificateDatastoreSecrets>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
@@ -29,158 +69,70 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<MachineLearningCertificateDatastoreSecrets>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<MachineLearningCertificateDatastoreSecrets>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(MachineLearningCertificateDatastoreSecrets)} does not support writing '{format}' format.");
             }
-
             base.JsonModelWriteCore(writer, options);
             if (Optional.IsDefined(Certificate))
             {
-                if (Certificate != null)
-                {
-                    writer.WritePropertyName("certificate"u8);
-                    writer.WriteStringValue(Certificate);
-                }
-                else
-                {
-                    writer.WriteNull("certificate");
-                }
+                writer.WritePropertyName("certificate"u8);
+                writer.WriteStringValue(Certificate);
             }
         }
 
-        MachineLearningCertificateDatastoreSecrets IJsonModel<MachineLearningCertificateDatastoreSecrets>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        MachineLearningCertificateDatastoreSecrets IJsonModel<MachineLearningCertificateDatastoreSecrets>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => (MachineLearningCertificateDatastoreSecrets)JsonModelCreateCore(ref reader, options);
+
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override MachineLearningDatastoreSecrets JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<MachineLearningCertificateDatastoreSecrets>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<MachineLearningCertificateDatastoreSecrets>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(MachineLearningCertificateDatastoreSecrets)} does not support reading '{format}' format.");
             }
-
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
             return DeserializeMachineLearningCertificateDatastoreSecrets(document.RootElement, options);
         }
 
-        internal static MachineLearningCertificateDatastoreSecrets DeserializeMachineLearningCertificateDatastoreSecrets(JsonElement element, ModelReaderWriterOptions options = null)
+        /// <param name="element"> The JSON element to deserialize. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        internal static MachineLearningCertificateDatastoreSecrets DeserializeMachineLearningCertificateDatastoreSecrets(JsonElement element, ModelReaderWriterOptions options)
         {
-            options ??= ModelSerializationExtensions.WireOptions;
-
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            string certificate = default;
             SecretsType secretsType = default;
-            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
-            foreach (var property in element.EnumerateObject())
+            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            string certificate = default;
+            foreach (var prop in element.EnumerateObject())
             {
-                if (property.NameEquals("certificate"u8))
+                if (prop.NameEquals("secretsType"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    secretsType = new SecretsType(prop.Value.GetString());
+                    continue;
+                }
+                if (prop.NameEquals("certificate"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         certificate = null;
                         continue;
                     }
-                    certificate = property.Value.GetString();
-                    continue;
-                }
-                if (property.NameEquals("secretsType"u8))
-                {
-                    secretsType = new SecretsType(property.Value.GetString());
+                    certificate = prop.Value.GetString();
                     continue;
                 }
                 if (options.Format != "W")
                 {
-                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = rawDataDictionary;
-            return new MachineLearningCertificateDatastoreSecrets(secretsType, serializedAdditionalRawData, certificate);
+            return new MachineLearningCertificateDatastoreSecrets(secretsType, additionalBinaryDataProperties, certificate);
         }
-
-        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
-        {
-            StringBuilder builder = new StringBuilder();
-            BicepModelReaderWriterOptions bicepOptions = options as BicepModelReaderWriterOptions;
-            IDictionary<string, string> propertyOverrides = null;
-            bool hasObjectOverride = bicepOptions != null && bicepOptions.PropertyOverrides.TryGetValue(this, out propertyOverrides);
-            bool hasPropertyOverride = false;
-            string propertyOverride = null;
-
-            builder.AppendLine("{");
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Certificate), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  certificate: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(Certificate))
-                {
-                    builder.Append("  certificate: ");
-                    if (Certificate.Contains(Environment.NewLine))
-                    {
-                        builder.AppendLine("'''");
-                        builder.AppendLine($"{Certificate}'''");
-                    }
-                    else
-                    {
-                        builder.AppendLine($"'{Certificate}'");
-                    }
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(SecretsType), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  secretsType: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                builder.Append("  secretsType: ");
-                builder.AppendLine($"'{SecretsType.ToString()}'");
-            }
-
-            builder.AppendLine("}");
-            return BinaryData.FromString(builder.ToString());
-        }
-
-        BinaryData IPersistableModel<MachineLearningCertificateDatastoreSecrets>.Write(ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<MachineLearningCertificateDatastoreSecrets>)this).GetFormatFromOptions(options) : options.Format;
-
-            switch (format)
-            {
-                case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerMachineLearningContext.Default);
-                case "bicep":
-                    return SerializeBicep(options);
-                default:
-                    throw new FormatException($"The model {nameof(MachineLearningCertificateDatastoreSecrets)} does not support writing '{options.Format}' format.");
-            }
-        }
-
-        MachineLearningCertificateDatastoreSecrets IPersistableModel<MachineLearningCertificateDatastoreSecrets>.Create(BinaryData data, ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<MachineLearningCertificateDatastoreSecrets>)this).GetFormatFromOptions(options) : options.Format;
-
-            switch (format)
-            {
-                case "J":
-                    {
-                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
-                        return DeserializeMachineLearningCertificateDatastoreSecrets(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(MachineLearningCertificateDatastoreSecrets)} does not support reading '{options.Format}' format.");
-            }
-        }
-
-        string IPersistableModel<MachineLearningCertificateDatastoreSecrets>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

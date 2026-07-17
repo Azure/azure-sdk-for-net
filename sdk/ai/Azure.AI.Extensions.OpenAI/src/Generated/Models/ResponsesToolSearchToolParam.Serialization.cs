@@ -74,7 +74,7 @@ namespace Azure.AI.Extensions.OpenAI
             if (Optional.IsDefined(Execution))
             {
                 writer.WritePropertyName("execution"u8);
-                writer.WriteStringValue(Execution.Value.ToSerialString());
+                writer.WriteStringValue(Execution.Value.ToString());
             }
             if (Optional.IsDefined(Description))
             {
@@ -131,7 +131,7 @@ namespace Azure.AI.Extensions.OpenAI
                     {
                         continue;
                     }
-                    execution = prop.Value.GetString().ToResponsesToolSearchExecutionType();
+                    execution = new ResponsesToolSearchExecutionType(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("description"u8))

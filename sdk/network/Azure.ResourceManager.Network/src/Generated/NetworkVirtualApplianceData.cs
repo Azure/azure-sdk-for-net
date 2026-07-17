@@ -189,20 +189,6 @@ namespace Azure.ResourceManager.Network
             }
         }
 
-        /// <summary> List of Resource Uri of Public IPs for Internet Ingress Scenario. </summary>
-        [WirePath("properties.internetIngressPublicIps")]
-        public IList<InternetIngressPublicIpsProperties> InternetIngressPublicIps
-        {
-            get
-            {
-                if (Properties is null)
-                {
-                    Properties = new NetworkVirtualAppliancePropertiesFormat();
-                }
-                return Properties.InternetIngressPublicIps;
-            }
-        }
-
         /// <summary> The provisioning state of the resource. </summary>
         [WirePath("properties.provisioningState")]
         public NetworkProvisioningState? ProvisioningState
@@ -270,16 +256,6 @@ namespace Azure.ResourceManager.Network
                     Properties = new NetworkVirtualAppliancePropertiesFormat();
                 }
                 return Properties.NvaInterfaceConfigurations;
-            }
-        }
-
-        /// <summary> A Internal Load Balancer's HA port frontend IP address. Can be used to set routes &amp; UDR to load balance traffic between NVA instances. </summary>
-        [WirePath("properties.privateIpAddress")]
-        public string PrivateIpAddress
-        {
-            get
-            {
-                return Properties is null ? default : Properties.PrivateIpAddress;
             }
         }
 

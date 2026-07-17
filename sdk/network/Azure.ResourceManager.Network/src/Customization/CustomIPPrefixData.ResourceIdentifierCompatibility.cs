@@ -14,7 +14,7 @@ namespace Azure.ResourceManager.Network
         [WirePath("properties.customIpPrefixParent")]
         public ResourceIdentifier ParentCustomIPPrefixId
         {
-            get => CustomIpPrefixParent;
+            get => Properties is null ? default : Properties.CustomIPPrefixParent;
             set { } // Compatibility setter: previous GA surface was settable; generated model treats this service-populated property as read-only.
         }
     }

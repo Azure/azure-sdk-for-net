@@ -49,11 +49,11 @@ namespace Azure.ResourceManager.Network.Models
 
         /// <summary> Reference to the ip configuration on this container nic. </summary>
         [WirePath("properties.ipConfigurations")]
-        public IReadOnlyList<ContainerNetworkInterfaceIPConfiguration> IpConfigurations
+        public IReadOnlyList<ContainerNetworkInterfaceIPConfiguration> IPConfigurations
         {
             get
             {
-                return Properties is null ? default : Properties.IpConfigurations;
+                return Properties is null ? default : Properties.IPConfigurations;
             }
         }
 

@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.SecurityCenter;
 
 namespace Azure.ResourceManager.SecurityCenter.Models
 {
@@ -14,41 +15,67 @@ namespace Azure.ResourceManager.SecurityCenter.Models
     internal readonly partial struct AssessedResourceType : IEquatable<AssessedResourceType>
     {
         private readonly string _value;
+        /// <summary> SqlServerVulnerability. </summary>
+        private const string SqlServerVulnerabilityValue = "SqlServerVulnerability";
+        /// <summary> ContainerRegistryVulnerability. </summary>
+        private const string ContainerRegistryVulnerabilityValue = "ContainerRegistryVulnerability";
+        /// <summary> ServerVulnerability. </summary>
+        private const string ServerVulnerabilityValue = "ServerVulnerability";
+        /// <summary> ServerVulnerabilityAssessment. </summary>
+        private const string ServerVulnerabilityAssessmentValue = "ServerVulnerabilityAssessment";
 
         /// <summary> Initializes a new instance of <see cref="AssessedResourceType"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public AssessedResourceType(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string SqlServerVulnerabilityValue = "SqlServerVulnerability";
-        private const string ContainerRegistryVulnerabilityValue = "ContainerRegistryVulnerability";
-        private const string ServerVulnerabilityValue = "ServerVulnerability";
+            _value = value;
+        }
 
         /// <summary> SqlServerVulnerability. </summary>
         public static AssessedResourceType SqlServerVulnerability { get; } = new AssessedResourceType(SqlServerVulnerabilityValue);
+
         /// <summary> ContainerRegistryVulnerability. </summary>
         public static AssessedResourceType ContainerRegistryVulnerability { get; } = new AssessedResourceType(ContainerRegistryVulnerabilityValue);
+
         /// <summary> ServerVulnerability. </summary>
         public static AssessedResourceType ServerVulnerability { get; } = new AssessedResourceType(ServerVulnerabilityValue);
+
+        /// <summary> ServerVulnerabilityAssessment. </summary>
+        public static AssessedResourceType ServerVulnerabilityAssessment { get; } = new AssessedResourceType(ServerVulnerabilityAssessmentValue);
+
         /// <summary> Determines if two <see cref="AssessedResourceType"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(AssessedResourceType left, AssessedResourceType right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="AssessedResourceType"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(AssessedResourceType left, AssessedResourceType right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="AssessedResourceType"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="AssessedResourceType"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator AssessedResourceType(string value) => new AssessedResourceType(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="AssessedResourceType"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator AssessedResourceType?(string value) => value == null ? null : new AssessedResourceType(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is AssessedResourceType other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(AssessedResourceType other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

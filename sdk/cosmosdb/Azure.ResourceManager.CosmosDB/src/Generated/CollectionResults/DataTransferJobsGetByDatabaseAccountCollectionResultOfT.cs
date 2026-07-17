@@ -55,8 +55,8 @@ namespace Azure.ResourceManager.CosmosDB
                     yield break;
                 }
                 DataTransferJobFeedResults result = DataTransferJobFeedResults.FromResponse(response);
-                yield return Page<DataTransferJobData>.FromValues((IReadOnlyList<DataTransferJobData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 nextPage = result.NextLink;
+                yield return Page<DataTransferJobData>.FromValues((IReadOnlyList<DataTransferJobData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 if (nextPage == null)
                 {
                     yield break;

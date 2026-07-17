@@ -50,8 +50,8 @@ namespace Azure.ResourceManager.Compute
                     yield break;
                 }
                 RestorePointCollectionListResult result = RestorePointCollectionListResult.FromResponse(response);
-                yield return Page<RestorePointGroupData>.FromValues((IReadOnlyList<RestorePointGroupData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 nextPage = result.NextLink;
+                yield return Page<RestorePointGroupData>.FromValues((IReadOnlyList<RestorePointGroupData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 if (nextPage == null)
                 {
                     yield break;

@@ -218,7 +218,7 @@ namespace Azure.ResourceManager.Network
             return message;
         }
 
-        internal HttpMessage CreateGenerateLOARequest(Guid subscriptionId, string resourceGroupName, string expressRoutePortName, RequestContent content, RequestContext context)
+        internal HttpMessage CreateGenerateLoaRequest(Guid subscriptionId, string resourceGroupName, string expressRoutePortName, RequestContent content, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);

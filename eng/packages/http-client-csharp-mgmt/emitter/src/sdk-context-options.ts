@@ -9,7 +9,10 @@ import {
   SdkHttpOperation,
   SdkMethod
 } from "@azure-tools/typespec-client-generator-core";
-import { CodeModel, CSharpEmitterContext } from "@typespec/http-client-csharp";
+import type {
+  CodeModel,
+  CSharpEmitterContext
+} from "./code-model-types.js";
 import { getAllSdkClients } from "./sdk-client-utils.js";
 
 // https://github.com/Azure/typespec-azure/blob/main/packages/typespec-azure-resource-manager/README.md#armprovidernamespace

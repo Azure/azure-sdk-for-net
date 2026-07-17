@@ -55,8 +55,8 @@ namespace Azure.ResourceManager.Compute
                     yield break;
                 }
                 GalleryImageList result = GalleryImageList.FromResponse(response);
-                yield return Page<GalleryImageData>.FromValues((IReadOnlyList<GalleryImageData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 nextPage = result.NextLink;
+                yield return Page<GalleryImageData>.FromValues((IReadOnlyList<GalleryImageData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 if (nextPage == null)
                 {
                     yield break;

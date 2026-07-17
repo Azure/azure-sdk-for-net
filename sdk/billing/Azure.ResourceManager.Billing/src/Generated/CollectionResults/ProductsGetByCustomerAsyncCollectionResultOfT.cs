@@ -71,8 +71,8 @@ namespace Azure.ResourceManager.Billing
                     yield break;
                 }
                 ProductListResult result = ProductListResult.FromResponse(response);
-                yield return Page<BillingProductData>.FromValues(result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 nextPage = result.NextLink;
+                yield return Page<BillingProductData>.FromValues(result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 if (nextPage == null)
                 {
                     yield break;

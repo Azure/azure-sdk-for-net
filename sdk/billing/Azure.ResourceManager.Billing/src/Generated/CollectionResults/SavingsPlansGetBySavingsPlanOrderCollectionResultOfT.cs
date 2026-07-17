@@ -52,8 +52,8 @@ namespace Azure.ResourceManager.Billing
                     yield break;
                 }
                 SavingsPlanModelList result = SavingsPlanModelList.FromResponse(response);
-                yield return Page<BillingSavingsPlanModelData>.FromValues((IReadOnlyList<BillingSavingsPlanModelData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 nextPage = result.NextLink;
+                yield return Page<BillingSavingsPlanModelData>.FromValues((IReadOnlyList<BillingSavingsPlanModelData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 if (nextPage == null)
                 {
                     yield break;

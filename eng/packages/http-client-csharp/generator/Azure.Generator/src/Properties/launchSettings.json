@@ -240,6 +240,11 @@
       "commandName": "Executable",
       "executablePath": "dotnet"
     },
+    "http-encode-boolean": {
+      "commandLineArgs": "$(SolutionDir)/../dist/generator/Microsoft.TypeSpec.Generator.dll $(SolutionDir)/TestProjects/Spector/http/encode/boolean -g AzureStubGenerator",
+      "commandName": "Executable",
+      "executablePath": "dotnet"
+    },
     "http-encode-bytes": {
       "commandLineArgs": "$(SolutionDir)/../dist/generator/Microsoft.TypeSpec.Generator.dll $(SolutionDir)/TestProjects/Spector/http/encode/bytes -g AzureStubGenerator",
       "commandName": "Executable",

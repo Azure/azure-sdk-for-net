@@ -21,7 +21,7 @@ namespace Azure.ResourceManager.Network.Models
         /// <summary> Initializes a new instance of <see cref="ContainerNetworkInterfacePropertiesFormat"/>. </summary>
         internal ContainerNetworkInterfacePropertiesFormat()
         {
-            IpConfigurations = new ChangeTrackingList<ContainerNetworkInterfaceIPConfiguration>();
+            IPConfigurations = new ChangeTrackingList<ContainerNetworkInterfaceIPConfiguration>();
         }
 
         /// <summary> Initializes a new instance of <see cref="ContainerNetworkInterfacePropertiesFormat"/>. </summary>
@@ -34,7 +34,7 @@ namespace Azure.ResourceManager.Network.Models
         {
             ContainerNetworkInterfaceConfiguration = containerNetworkInterfaceConfiguration;
             Container = container;
-            IpConfigurations = ipConfigurations;
+            IPConfigurations = ipConfigurations;
             ProvisioningState = provisioningState;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
@@ -49,7 +49,7 @@ namespace Azure.ResourceManager.Network.Models
 
         /// <summary> Reference to the ip configuration on this container nic. </summary>
         [WirePath("ipConfigurations")]
-        public IReadOnlyList<ContainerNetworkInterfaceIPConfiguration> IpConfigurations { get; } = new ChangeTrackingList<ContainerNetworkInterfaceIPConfiguration>();
+        public IReadOnlyList<ContainerNetworkInterfaceIPConfiguration> IPConfigurations { get; } = new ChangeTrackingList<ContainerNetworkInterfaceIPConfiguration>();
 
         /// <summary> The provisioning state of the container network interface resource. </summary>
         [WirePath("provisioningState")]

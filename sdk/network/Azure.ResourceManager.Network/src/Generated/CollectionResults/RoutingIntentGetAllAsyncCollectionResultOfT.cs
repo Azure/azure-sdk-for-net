@@ -56,8 +56,8 @@ namespace Azure.ResourceManager.Network
                     yield break;
                 }
                 ListRoutingIntentResult result = ListRoutingIntentResult.FromResponse(response);
-                yield return Page<RoutingIntentData>.FromValues((IReadOnlyList<RoutingIntentData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 nextPage = result.NextLink;
+                yield return Page<RoutingIntentData>.FromValues((IReadOnlyList<RoutingIntentData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 if (nextPage == null)
                 {
                     yield break;

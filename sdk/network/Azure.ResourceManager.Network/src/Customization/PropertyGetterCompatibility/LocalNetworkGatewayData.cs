@@ -9,12 +9,6 @@ namespace Azure.ResourceManager.Network
     public partial class LocalNetworkGatewayData
     {
         /// <summary> Compatibility member. </summary>
-        public global::System.String GatewayIPAddress
-        {
-            get => GatewayIpAddress;
-            set => GatewayIpAddress = value;
-        }
-        /// <summary> Compatibility member. </summary>
         public global::System.Collections.Generic.IList<global::System.String> LocalNetworkAddressPrefixes { get; } = new global::System.Collections.Generic.List<global::System.String>();
     }
 }

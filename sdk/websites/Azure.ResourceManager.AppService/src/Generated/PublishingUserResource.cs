@@ -6,43 +6,36 @@
 #nullable disable
 
 using System;
-using System.Globalization;
+using System.Diagnostics;
 using System.Threading;
 using System.Threading.Tasks;
+using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
+using Azure.ResourceManager;
 using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.AppService
 {
     /// <summary>
-    /// A Class representing a PublishingUser along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="PublishingUserResource"/>
-    /// from an instance of <see cref="ArmClient"/> using the GetPublishingUserResource method.
+    /// A class representing a PublishingUser along with the instance operations that can be performed on it.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="PublishingUserResource"/> from an instance of <see cref="ArmClient"/> using the GetResource method.
     /// Otherwise you can get one from its parent resource <see cref="TenantResource"/> using the GetPublishingUser method.
     /// </summary>
     public partial class PublishingUserResource : ArmResource
     {
-        /// <summary> Generate the resource identifier of a <see cref="PublishingUserResource"/> instance. </summary>
-        public static ResourceIdentifier CreateResourceIdentifier()
-        {
-            var resourceId = $"/providers/Microsoft.Web/publishingUsers/web";
-            return new ResourceIdentifier(resourceId);
-        }
-
-        private readonly ClientDiagnostics _publishingUserClientDiagnostics;
-        private readonly AppServiceManagementRestOperations _publishingUserRestClient;
+        private readonly ClientDiagnostics _usersClientDiagnostics;
+        private readonly Users _usersRestClient;
         private readonly PublishingUserData _data;
-
         /// <summary> Gets the resource type for the operations. </summary>
         public static readonly ResourceType ResourceType = "Microsoft.Web/publishingUsers";
 
-        /// <summary> Initializes a new instance of the <see cref="PublishingUserResource"/> class for mocking. </summary>
+        /// <summary> Initializes a new instance of PublishingUserResource for mocking. </summary>
         protected PublishingUserResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref="PublishingUserResource"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="PublishingUserResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal PublishingUserResource(ArmClient client, PublishingUserData data) : this(client, data.Id)
@@ -51,117 +44,47 @@ namespace Azure.ResourceManager.AppService
             _data = data;
         }
 
-        /// <summary> Initializes a new instance of the <see cref="PublishingUserResource"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="PublishingUserResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal PublishingUserResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _publishingUserClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.AppService", ResourceType.Namespace, Diagnostics);
             TryGetApiVersion(ResourceType, out string publishingUserApiVersion);
-            _publishingUserRestClient = new AppServiceManagementRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, publishingUserApiVersion);
-#if DEBUG
-			ValidateResourceId(Id);
-#endif
+            _usersClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.AppService", ResourceType.Namespace, Diagnostics);
+            _usersRestClient = new Users(_usersClientDiagnostics, Pipeline, Endpoint, publishingUserApiVersion ?? "2026-03-15");
+            ValidateResourceId(id);
         }
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }
 
         /// <summary> Gets the data representing this Feature. </summary>
-        /// <exception cref="InvalidOperationException"> Throws if there is no data loaded in the current instance. </exception>
         public virtual PublishingUserData Data
         {
             get
             {
                 if (!HasData)
+                {
                     throw new InvalidOperationException("The current instance does not have data, you must call Get first.");
+                }
                 return _data;
             }
         }
 
+        /// <summary> Generate the resource identifier for this resource. </summary>
+        public static ResourceIdentifier CreateResourceIdentifier()
+        {
+            string resourceId = $"/providers/Microsoft.Web/publishingUsers/web";
+            return new ResourceIdentifier(resourceId);
+        }
+
+        /// <param name="id"></param>
+        [Conditional("DEBUG")]
         internal static void ValidateResourceId(ResourceIdentifier id)
         {
             if (id.ResourceType != ResourceType)
-                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), nameof(id));
-        }
-
-        /// <summary>
-        /// Description for Gets publishing user
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/providers/Microsoft.Web/publishingUsers/web</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>GetPublishingUser</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-05-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="PublishingUserResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<PublishingUserResource>> GetAsync(CancellationToken cancellationToken = default)
-        {
-            using var scope = _publishingUserClientDiagnostics.CreateScope("PublishingUserResource.Get");
-            scope.Start();
-            try
             {
-                var response = await _publishingUserRestClient.GetPublishingUserAsync(cancellationToken).ConfigureAwait(false);
-                if (response.Value == null)
-                    throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new PublishingUserResource(Client, response.Value), response.GetRawResponse());
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// Description for Gets publishing user
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/providers/Microsoft.Web/publishingUsers/web</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>GetPublishingUser</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-05-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="PublishingUserResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<PublishingUserResource> Get(CancellationToken cancellationToken = default)
-        {
-            using var scope = _publishingUserClientDiagnostics.CreateScope("PublishingUserResource.Get");
-            scope.Start();
-            try
-            {
-                var response = _publishingUserRestClient.GetPublishingUser(cancellationToken);
-                if (response.Value == null)
-                    throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new PublishingUserResource(Client, response.Value), response.GetRawResponse());
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), nameof(id));
             }
         }
 
@@ -169,20 +92,20 @@ namespace Azure.ResourceManager.AppService
         /// Description for Updates publishing user
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/providers/Microsoft.Web/publishingUsers/web</description>
+        /// <term> Request Path. </term>
+        /// <description> /providers/Microsoft.Web/publishingUsers/web. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>UpdatePublishingUser</description>
+        /// <term> Operation Id. </term>
+        /// <description> Users_UpdatePublishingUser. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-05-01</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-03-15. </description>
         /// </item>
         /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="PublishingUserResource"/></description>
+        /// <term> Resource. </term>
+        /// <description> <see cref="PublishingUserResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -194,16 +117,24 @@ namespace Azure.ResourceManager.AppService
         {
             Argument.AssertNotNull(data, nameof(data));
 
-            using var scope = _publishingUserClientDiagnostics.CreateScope("PublishingUserResource.CreateOrUpdate");
+            using DiagnosticScope scope = _usersClientDiagnostics.CreateScope("PublishingUserResource.CreateOrUpdate");
             scope.Start();
             try
             {
-                var response = await _publishingUserRestClient.UpdatePublishingUserAsync(data, cancellationToken).ConfigureAwait(false);
-                var uri = _publishingUserRestClient.CreateUpdatePublishingUserRequestUri(data);
-                var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
-                var operation = new AppServiceArmOperation<PublishingUserResource>(Response.FromValue(new PublishingUserResource(Client, response), response.GetRawResponse()), rehydrationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _usersRestClient.CreateUpdatePublishingUserRequest(PublishingUserData.ToRequestContent(data), context);
+                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                Response<PublishingUserData> response = Response.FromValue(PublishingUserData.FromResponse(result), result);
+                RequestUriBuilder uri = message.Request.Uri;
+                RehydrationToken rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
+                AppServiceArmOperation<PublishingUserResource> operation = new AppServiceArmOperation<PublishingUserResource>(Response.FromValue(new PublishingUserResource(Client, response.Value), response.GetRawResponse()), rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
+                {
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
+                }
                 return operation;
             }
             catch (Exception e)
@@ -217,20 +148,20 @@ namespace Azure.ResourceManager.AppService
         /// Description for Updates publishing user
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/providers/Microsoft.Web/publishingUsers/web</description>
+        /// <term> Request Path. </term>
+        /// <description> /providers/Microsoft.Web/publishingUsers/web. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>UpdatePublishingUser</description>
+        /// <term> Operation Id. </term>
+        /// <description> Users_UpdatePublishingUser. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-05-01</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-03-15. </description>
         /// </item>
         /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="PublishingUserResource"/></description>
+        /// <term> Resource. </term>
+        /// <description> <see cref="PublishingUserResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -242,17 +173,121 @@ namespace Azure.ResourceManager.AppService
         {
             Argument.AssertNotNull(data, nameof(data));
 
-            using var scope = _publishingUserClientDiagnostics.CreateScope("PublishingUserResource.CreateOrUpdate");
+            using DiagnosticScope scope = _usersClientDiagnostics.CreateScope("PublishingUserResource.CreateOrUpdate");
             scope.Start();
             try
             {
-                var response = _publishingUserRestClient.UpdatePublishingUser(data, cancellationToken);
-                var uri = _publishingUserRestClient.CreateUpdatePublishingUserRequestUri(data);
-                var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
-                var operation = new AppServiceArmOperation<PublishingUserResource>(Response.FromValue(new PublishingUserResource(Client, response), response.GetRawResponse()), rehydrationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _usersRestClient.CreateUpdatePublishingUserRequest(PublishingUserData.ToRequestContent(data), context);
+                Response result = Pipeline.ProcessMessage(message, context);
+                Response<PublishingUserData> response = Response.FromValue(PublishingUserData.FromResponse(result), result);
+                RequestUriBuilder uri = message.Request.Uri;
+                RehydrationToken rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
+                AppServiceArmOperation<PublishingUserResource> operation = new AppServiceArmOperation<PublishingUserResource>(Response.FromValue(new PublishingUserResource(Client, response.Value), response.GetRawResponse()), rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
+                {
                     operation.WaitForCompletion(cancellationToken);
+                }
                 return operation;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Description for Gets publishing user
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /providers/Microsoft.Web/publishingUsers/web. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> Users_GetPublishingUser. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-03-15. </description>
+        /// </item>
+        /// <item>
+        /// <term> Resource. </term>
+        /// <description> <see cref="PublishingUserResource"/>. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual async Task<Response<PublishingUserResource>> GetAsync(CancellationToken cancellationToken = default)
+        {
+            using DiagnosticScope scope = _usersClientDiagnostics.CreateScope("PublishingUserResource.Get");
+            scope.Start();
+            try
+            {
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _usersRestClient.CreateGetPublishingUserRequest(context);
+                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                Response<PublishingUserData> response = Response.FromValue(PublishingUserData.FromResponse(result), result);
+                if (response.Value == null)
+                {
+                    throw new RequestFailedException(response.GetRawResponse());
+                }
+                return Response.FromValue(new PublishingUserResource(Client, response.Value), response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Description for Gets publishing user
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /providers/Microsoft.Web/publishingUsers/web. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> Users_GetPublishingUser. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-03-15. </description>
+        /// </item>
+        /// <item>
+        /// <term> Resource. </term>
+        /// <description> <see cref="PublishingUserResource"/>. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual Response<PublishingUserResource> Get(CancellationToken cancellationToken = default)
+        {
+            using DiagnosticScope scope = _usersClientDiagnostics.CreateScope("PublishingUserResource.Get");
+            scope.Start();
+            try
+            {
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _usersRestClient.CreateGetPublishingUserRequest(context);
+                Response result = Pipeline.ProcessMessage(message, context);
+                Response<PublishingUserData> response = Response.FromValue(PublishingUserData.FromResponse(result), result);
+                if (response.Value == null)
+                {
+                    throw new RequestFailedException(response.GetRawResponse());
+                }
+                return Response.FromValue(new PublishingUserResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {

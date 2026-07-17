@@ -397,7 +397,7 @@ public class AgentsTestBase : ProjectsClientTestBase
     {
         FabricIQPreviewTool fabricIQTool = new(projectConnectionId: TestEnvironment.FABRIC_IQ_CONNECTION_ID)
         {
-            RequireApproval = BinaryData.FromObjectAsJson("never"),
+            RequireApproval = new McpToolCallApprovalPolicy(GlobalMcpToolCallApprovalPolicy.NeverRequireApproval),
         };
         return fabricIQTool;
     }
@@ -461,7 +461,7 @@ public class AgentsTestBase : ProjectsClientTestBase
     {
         try
         {
-            await projectClient.AgentAdministrationClient.GetAgentToolboxes().DeleteToolboxAsync(name: TOOLBOX_NAME);
+            await projectClient.AgentAdministrationClient.GetAgentToolboxes().DeleteAsync(name: TOOLBOX_NAME);
         }
         catch
         {
@@ -471,22 +471,23 @@ public class AgentsTestBase : ProjectsClientTestBase
     private async Task<McpTool> GetToolBoxAsync(AIProjectClient projectClient)
     {
         await RemoveToolBoxMayBe(projectClient);
-        ProjectsAgentTool mcp = ProjectsAgentTool.AsProjectTool(ResponseTool.CreateMcpTool(
-            serverLabel: "api-specs",
-            serverUri: new Uri("https://gitmcp.io/Azure/azure-rest-api-specs"),
-            toolCallApprovalPolicy: new McpToolCallApprovalPolicy(GlobalMcpToolCallApprovalPolicy.AlwaysRequireApproval)
-        ));
-        ProjectsAgentTool codeInterpreter = ResponseTool.CreateCodeInterpreterTool(
-            new CodeInterpreterToolContainer(
+        MCPToolboxTool mcp = new(serverLabel: "api-specs")
+        {
+            ServerUri = new Uri("https://gitmcp.io/Azure/azure-rest-api-specs"),
+            ToolCallApprovalPolicy = new McpToolCallApprovalPolicy(GlobalMcpToolCallApprovalPolicy.AlwaysRequireApproval)
+        };
+        CodeInterpreterToolboxTool codeInterpreter = new()
+        {
+            Container = new CodeInterpreterToolContainer(
                 CodeInterpreterToolContainerConfiguration.CreateAutomaticContainerConfiguration([])
             )
-        ).AsAgentTool();
-        ToolboxSearchPreviewTool searchTool = new()
+        };
+        ToolboxSearchPreviewToolboxTool searchTool = new()
         {
             Name = "ToolBoxSearch",
             Description = "Search for the toolboxes"
         };
-        ToolboxVersion toolBox = await projectClient.AgentAdministrationClient.GetAgentToolboxes().CreateToolboxVersionAsync(
+        ToolboxVersion toolBox = await projectClient.AgentAdministrationClient.GetAgentToolboxes().CreateVersionAsync(
             name: TOOLBOX_NAME,
             tools: [mcp, codeInterpreter, searchTool],
             description: "Toolbox for the unit test."

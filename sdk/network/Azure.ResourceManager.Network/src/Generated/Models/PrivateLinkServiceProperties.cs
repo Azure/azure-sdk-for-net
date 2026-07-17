@@ -20,15 +20,15 @@ namespace Azure.ResourceManager.Network.Models
         /// <summary> Initializes a new instance of <see cref="PrivateLinkServiceProperties"/>. </summary>
         public PrivateLinkServiceProperties()
         {
-            LoadBalancerFrontendIpConfigurations = new ChangeTrackingList<FrontendIPConfigurationData>();
-            IpConfigurations = new ChangeTrackingList<PrivateLinkServiceIPConfiguration>();
+            LoadBalancerFrontendIPConfigurations = new ChangeTrackingList<FrontendIPConfigurationData>();
+            IPConfigurations = new ChangeTrackingList<PrivateLinkServiceIPConfiguration>();
             NetworkInterfaces = new ChangeTrackingList<NetworkInterfaceData>();
             PrivateEndpointConnections = new ChangeTrackingList<NetworkPrivateEndpointConnectionData>();
             Fqdns = new ChangeTrackingList<string>();
         }
 
         /// <summary> Initializes a new instance of <see cref="PrivateLinkServiceProperties"/>. </summary>
-        /// <param name="loadBalancerFrontendIpConfigurations"> An array of references to the load balancer IP configurations. </param>
+        /// <param name="loadBalancerFrontendIPConfigurations"> An array of references to the load balancer IP configurations. </param>
         /// <param name="ipConfigurations"> An array of private link service IP configurations. </param>
         /// <param name="destinationIPAddress"> The destination IP address of the private link service. </param>
         /// <param name="accessMode"> The access mode of the private link service. </param>
@@ -41,10 +41,10 @@ namespace Azure.ResourceManager.Network.Models
         /// <param name="alias"> The alias of the private link service. </param>
         /// <param name="enableProxyProtocol"> Whether the private link service is enabled for proxy protocol or not. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal PrivateLinkServiceProperties(IList<FrontendIPConfigurationData> loadBalancerFrontendIpConfigurations, IList<PrivateLinkServiceIPConfiguration> ipConfigurations, string destinationIPAddress, PrivateLinkServiceAccessMode? accessMode, IReadOnlyList<NetworkInterfaceData> networkInterfaces, NetworkProvisioningState? provisioningState, IReadOnlyList<NetworkPrivateEndpointConnectionData> privateEndpointConnections, PrivateLinkServicePropertiesVisibility visibility, PrivateLinkServicePropertiesAutoApproval autoApproval, IList<string> fqdns, string @alias, bool? enableProxyProtocol, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal PrivateLinkServiceProperties(IList<FrontendIPConfigurationData> loadBalancerFrontendIPConfigurations, IList<PrivateLinkServiceIPConfiguration> ipConfigurations, string destinationIPAddress, PrivateLinkServiceAccessMode? accessMode, IReadOnlyList<NetworkInterfaceData> networkInterfaces, NetworkProvisioningState? provisioningState, IReadOnlyList<NetworkPrivateEndpointConnectionData> privateEndpointConnections, PrivateLinkServicePropertiesVisibility visibility, PrivateLinkServicePropertiesAutoApproval autoApproval, IList<string> fqdns, string @alias, bool? enableProxyProtocol, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
-            LoadBalancerFrontendIpConfigurations = loadBalancerFrontendIpConfigurations;
-            IpConfigurations = ipConfigurations;
+            LoadBalancerFrontendIPConfigurations = loadBalancerFrontendIPConfigurations;
+            IPConfigurations = ipConfigurations;
             DestinationIPAddress = destinationIPAddress;
             AccessMode = accessMode;
             NetworkInterfaces = networkInterfaces;
@@ -60,11 +60,11 @@ namespace Azure.ResourceManager.Network.Models
 
         /// <summary> An array of references to the load balancer IP configurations. </summary>
         [WirePath("loadBalancerFrontendIpConfigurations")]
-        public IList<FrontendIPConfigurationData> LoadBalancerFrontendIpConfigurations { get; } = new ChangeTrackingList<FrontendIPConfigurationData>();
+        public IList<FrontendIPConfigurationData> LoadBalancerFrontendIPConfigurations { get; } = new ChangeTrackingList<FrontendIPConfigurationData>();
 
         /// <summary> An array of private link service IP configurations. </summary>
         [WirePath("ipConfigurations")]
-        public IList<PrivateLinkServiceIPConfiguration> IpConfigurations { get; } = new ChangeTrackingList<PrivateLinkServiceIPConfiguration>();
+        public IList<PrivateLinkServiceIPConfiguration> IPConfigurations { get; } = new ChangeTrackingList<PrivateLinkServiceIPConfiguration>();
 
         /// <summary> The destination IP address of the private link service. </summary>
         [WirePath("destinationIPAddress")]

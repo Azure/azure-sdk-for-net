@@ -9,3 +9,5 @@ extends:
     Artifacts:
     - name: Azure.ResourceManager.ServiceFabric
       safeName: AzureResourceManagerServiceFabric
+    - name: Azure.Provisioning.ServiceFabric
+      safeName: AzureProvisioningServiceFabric

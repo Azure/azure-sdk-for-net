@@ -10,13 +10,65 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.MachineLearning;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
-    public partial class DestinationAssetContent : IUtf8JsonSerializable, IJsonModel<DestinationAssetContent>
+    /// <summary> Publishing destination registry asset information. </summary>
+    public partial class DestinationAssetContent : IJsonModel<DestinationAssetContent>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<DestinationAssetContent>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual DestinationAssetContent PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<DestinationAssetContent>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    {
+                        return DeserializeDestinationAssetContent(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(DestinationAssetContent)} does not support reading '{options.Format}' format.");
+            }
+        }
 
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<DestinationAssetContent>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerMachineLearningContext.Default);
+                default:
+                    throw new FormatException($"The model {nameof(DestinationAssetContent)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<DestinationAssetContent>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        DestinationAssetContent IPersistableModel<DestinationAssetContent>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<DestinationAssetContent>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
+        /// <param name="destinationAssetContent"> The <see cref="DestinationAssetContent"/> to serialize into <see cref="RequestContent"/>. </param>
+        internal static RequestContent ToRequestContent(DestinationAssetContent destinationAssetContent)
+        {
+            if (destinationAssetContent == null)
+            {
+                return null;
+            }
+            return RequestContent.Create(destinationAssetContent, ModelSerializationExtensions.WireOptions);
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<DestinationAssetContent>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
@@ -28,57 +80,35 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<DestinationAssetContent>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<DestinationAssetContent>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(DestinationAssetContent)} does not support writing '{format}' format.");
             }
-
-            if (Optional.IsDefined(RegistryName))
-            {
-                if (RegistryName != null)
-                {
-                    writer.WritePropertyName("registryName"u8);
-                    writer.WriteStringValue(RegistryName);
-                }
-                else
-                {
-                    writer.WriteNull("registryName");
-                }
-            }
             if (Optional.IsDefined(DestinationName))
             {
-                if (DestinationName != null)
-                {
-                    writer.WritePropertyName("destinationName"u8);
-                    writer.WriteStringValue(DestinationName);
-                }
-                else
-                {
-                    writer.WriteNull("destinationName");
-                }
+                writer.WritePropertyName("destinationName"u8);
+                writer.WriteStringValue(DestinationName);
             }
             if (Optional.IsDefined(DestinationVersion))
             {
-                if (DestinationVersion != null)
-                {
-                    writer.WritePropertyName("destinationVersion"u8);
-                    writer.WriteStringValue(DestinationVersion);
-                }
-                else
-                {
-                    writer.WriteNull("destinationVersion");
-                }
+                writer.WritePropertyName("destinationVersion"u8);
+                writer.WriteStringValue(DestinationVersion);
             }
-            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            if (Optional.IsDefined(RegistryName))
             {
-                foreach (var item in _serializedAdditionalRawData)
+                writer.WritePropertyName("registryName"u8);
+                writer.WriteStringValue(RegistryName);
+            }
+            if (options.Format != "W" && _additionalBinaryDataProperties != null)
+            {
+                foreach (var item in _additionalBinaryDataProperties)
                 {
                     writer.WritePropertyName(item.Key);
 #if NET6_0_OR_GREATER
-				writer.WriteRawValue(item.Value);
+                    writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value, ModelSerializationExtensions.JsonDocumentOptions))
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
                     {
                         JsonSerializer.Serialize(writer, document.RootElement);
                     }
@@ -87,101 +117,73 @@ namespace Azure.ResourceManager.MachineLearning.Models
             }
         }
 
-        DestinationAssetContent IJsonModel<DestinationAssetContent>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        DestinationAssetContent IJsonModel<DestinationAssetContent>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual DestinationAssetContent JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<DestinationAssetContent>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<DestinationAssetContent>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(DestinationAssetContent)} does not support reading '{format}' format.");
             }
-
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
             return DeserializeDestinationAssetContent(document.RootElement, options);
         }
 
-        internal static DestinationAssetContent DeserializeDestinationAssetContent(JsonElement element, ModelReaderWriterOptions options = null)
+        /// <param name="element"> The JSON element to deserialize. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        internal static DestinationAssetContent DeserializeDestinationAssetContent(JsonElement element, ModelReaderWriterOptions options)
         {
-            options ??= ModelSerializationExtensions.WireOptions;
-
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            string registryName = default;
             string destinationName = default;
             string destinationVersion = default;
-            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
-            foreach (var property in element.EnumerateObject())
+            string registryName = default;
+            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            foreach (var prop in element.EnumerateObject())
             {
-                if (property.NameEquals("registryName"u8))
+                if (prop.NameEquals("destinationName"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        registryName = null;
-                        continue;
-                    }
-                    registryName = property.Value.GetString();
-                    continue;
-                }
-                if (property.NameEquals("destinationName"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         destinationName = null;
                         continue;
                     }
-                    destinationName = property.Value.GetString();
+                    destinationName = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("destinationVersion"u8))
+                if (prop.NameEquals("destinationVersion"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         destinationVersion = null;
                         continue;
                     }
-                    destinationVersion = property.Value.GetString();
+                    destinationVersion = prop.Value.GetString();
+                    continue;
+                }
+                if (prop.NameEquals("registryName"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        registryName = null;
+                        continue;
+                    }
+                    registryName = prop.Value.GetString();
                     continue;
                 }
                 if (options.Format != "W")
                 {
-                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = rawDataDictionary;
-            return new DestinationAssetContent(registryName, destinationName, destinationVersion, serializedAdditionalRawData);
+            return new DestinationAssetContent(destinationName, destinationVersion, registryName, additionalBinaryDataProperties);
         }
-
-        BinaryData IPersistableModel<DestinationAssetContent>.Write(ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<DestinationAssetContent>)this).GetFormatFromOptions(options) : options.Format;
-
-            switch (format)
-            {
-                case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerMachineLearningContext.Default);
-                default:
-                    throw new FormatException($"The model {nameof(DestinationAssetContent)} does not support writing '{options.Format}' format.");
-            }
-        }
-
-        DestinationAssetContent IPersistableModel<DestinationAssetContent>.Create(BinaryData data, ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<DestinationAssetContent>)this).GetFormatFromOptions(options) : options.Format;
-
-            switch (format)
-            {
-                case "J":
-                    {
-                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
-                        return DeserializeDestinationAssetContent(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(DestinationAssetContent)} does not support reading '{options.Format}' format.");
-            }
-        }
-
-        string IPersistableModel<DestinationAssetContent>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

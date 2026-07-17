@@ -71,6 +71,9 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
     [ModelReaderWriterBuildable(typeof(CycleTestStoreData))]
     [ModelReaderWriterBuildable(typeof(CycleTestStoreProperties))]
     [ModelReaderWriterBuildable(typeof(CycleTestStoreResource))]
+    [ModelReaderWriterBuildable(typeof(DeleteFinalResultTestData))]
+    [ModelReaderWriterBuildable(typeof(DeleteFinalResultTestProperties))]
+    [ModelReaderWriterBuildable(typeof(DeleteFinalResultTestResource))]
     [ModelReaderWriterBuildable(typeof(DerivedPatch))]
     [ModelReaderWriterBuildable(typeof(DuplicatePropertyTestData))]
     [ModelReaderWriterBuildable(typeof(DuplicatePropertyTestListResult))]
@@ -213,6 +216,12 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
     [ModelReaderWriterBuildable(typeof(SharedParamReproListResult))]
     [ModelReaderWriterBuildable(typeof(SiblingPatch))]
     [ModelReaderWriterBuildable(typeof(SiblingPatchListResult))]
+    [ModelReaderWriterBuildable(typeof(SolutionsApplicationDefinitionData))]
+    [ModelReaderWriterBuildable(typeof(SolutionsApplicationDefinitionPatch))]
+    [ModelReaderWriterBuildable(typeof(SolutionsApplicationDefinitionProperties))]
+    [ModelReaderWriterBuildable(typeof(SolutionsApplicationDefinitionResource))]
+    [ModelReaderWriterBuildable(typeof(SolutionsGenericResource))]
+    [ModelReaderWriterBuildable(typeof(SolutionsResource))]
     [ModelReaderWriterBuildable(typeof(StorageSyncServiceData))]
     [ModelReaderWriterBuildable(typeof(StorageSyncServiceProperties))]
     [ModelReaderWriterBuildable(typeof(StorageSyncServiceResource))]
@@ -220,6 +229,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
     [ModelReaderWriterBuildable(typeof(SubscriptionQuotaAllocationsListData))]
     [ModelReaderWriterBuildable(typeof(SubscriptionQuotaAllocationsListProperties))]
     [ModelReaderWriterBuildable(typeof(SubscriptionQuotaAllocationsListResource))]
+    [ModelReaderWriterBuildable(typeof(SystemData))]
     [ModelReaderWriterBuildable(typeof(TargetData))]
     [ModelReaderWriterBuildable(typeof(TargetListResult))]
     [ModelReaderWriterBuildable(typeof(TargetResource))]
@@ -270,7 +280,6 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
     [ModelReaderWriterBuildable(typeof(Models.ZooRecommendation))]
     [ModelReaderWriterBuildable(typeof(ZooResource))]
     [ModelReaderWriterBuildable(typeof(ZooUpdateProperties))]
-    [ModelReaderWriterBuildable(typeof(SystemData))]
     public partial class AzureGeneratorMgmtTypeSpecTestsContext : ModelReaderWriterContext
     {
     }

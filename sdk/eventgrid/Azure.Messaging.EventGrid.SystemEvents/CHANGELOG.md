@@ -1,14 +1,20 @@
 # Release History
 
-## 1.1.0-beta.1 (Unreleased)
+## 1.1.0-beta.2 (Unreleased)
+
+### Features Added
+
+### Breaking Changes
+
+### Bugs Fixed
+
+### Other Changes
+
+## 1.1.0-beta.1 (2026-06-25)
 
 ### Features Added
 
 - Implemented `IJsonModel` and `IPersistableModel` deserialization methods for events.
-
-### Bug Fixes
-
-### Other Changes
 
 ## 1.0.0 (2025-06-23)
 

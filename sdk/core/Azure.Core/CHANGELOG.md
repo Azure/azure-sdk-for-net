@@ -1,17 +1,28 @@
 # Release History
 
-## 1.60.0-beta.1 (Unreleased)
+## 1.61.0-beta.1 (Unreleased)
+
+### Features Added
+
+### Breaking Changes
+
+### Bugs Fixed
+
+- Fixed an issue where `RequestFailedException` could throw a secondary `ArgumentNullException` while formatting a failed response that had a text content-type header but an empty body, masking the actual service failure. The exception now preserves the original HTTP status, reason phrase, and headers, and no longer formats empty response content.
+
+### Other Changes
+
+## 1.60.0 (2026-06-30)
 
 ### Features Added
 
 - Added experimental (`AZID0004`) `DisableMtlsProofOfPossession` property to `ManagedIdentityCredentialOptions` to allow explicit opt-out of mTLS proof-of-possession token acquisition when the underlying requirements are met.
 - Simplified mTLS token binding integration for Managed Identity by moving to an optional, runtime-resolved attestation model using lazy reflection-based resolution of the `Microsoft.Identity.Client.KeyAttestation` extension package.
 
-### Breaking Changes
-
 ### Bugs Fixed
 
-### Other Changes
+- Fixed a regression (introduced with managed identity host capability detection) where `DefaultAzureCredential` could throw an `AuthenticationFailedException` and stop evaluating the credential chain on hosts without a managed identity — for example, a developer machine running in Visual Studio where the IMDS endpoint (169.254.169.254) is unreachable. When `ManagedIdentityCredential` is part of a chain, a failure to detect the managed identity source/capabilities is now surfaced as a `CredentialUnavailableException`, allowing the chain to continue to the next credential.
+- Fixed a related case where `DefaultAzureCredential` could still abort the credential chain with an `AuthenticationFailedException` when managed identity source detection succeeded but the subsequent token acquisition reported that all managed identity sources were unavailable (MSAL `managed_identity_all_sources_unavailable`). When `ManagedIdentityCredential` is part of a chain, this is now surfaced as a `CredentialUnavailableException` so the chain continues to the next credential.
 
 ## 1.59.0 (2026-06-09)
 

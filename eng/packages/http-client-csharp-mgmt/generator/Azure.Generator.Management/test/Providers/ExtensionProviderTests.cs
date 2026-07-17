@@ -9,7 +9,9 @@ using Azure;
 using Azure.Core;
 using Azure.ResourceManager;
 using Humanizer;
+using Microsoft.TypeSpec.Generator.Primitives;
 using NUnit.Framework;
+using System.Collections.Generic;
 
 namespace Azure.Generator.Management.Tests.Providers
 {
@@ -103,6 +105,16 @@ namespace Azure.Generator.Management.Tests.Providers
             Assert.That(modelType, Is.Not.Null);
 
             Assert.That(modelType!.GetXmlDocTypeName(), Is.EqualTo("Samples.Models.ResponseType"));
+        }
+
+        [TestCase]
+        public void Verify_MockingCrefFormatsGenericParameters()
+        {
+            var stringEnumerableType = new CSharpType(typeof(IEnumerable<>), typeof(string));
+            var dictionaryType = new CSharpType(typeof(IReadOnlyDictionary<,>), typeof(string), stringEnumerableType);
+
+            Assert.That(stringEnumerableType.GetXmlDocTypeName(), Is.EqualTo("IEnumerable{string}"));
+            Assert.That(dictionaryType.GetXmlDocTypeName(), Is.EqualTo("IReadOnlyDictionary{string, IEnumerable{string}}"));
         }
 
         [TestCase]

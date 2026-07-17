@@ -71,8 +71,8 @@ namespace Azure.ResourceManager.DevTestLabs
                     yield break;
                 }
                 ArmTemplateList result = ArmTemplateList.FromResponse(response);
-                yield return Page<DevTestLabArmTemplateData>.FromValues((IReadOnlyList<DevTestLabArmTemplateData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 nextPage = result.NextLink;
+                yield return Page<DevTestLabArmTemplateData>.FromValues((IReadOnlyList<DevTestLabArmTemplateData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 if (nextPage == null)
                 {
                     yield break;

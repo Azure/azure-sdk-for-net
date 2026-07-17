@@ -6,45 +6,36 @@
 #nullable disable
 
 using System;
-using System.Globalization;
+using System.Diagnostics;
 using System.Threading;
 using System.Threading.Tasks;
+using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
+using Azure.ResourceManager;
 using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.SecurityCenter
 {
     /// <summary>
-    /// A Class representing a SubscriptionAssessmentMetadata along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="SubscriptionAssessmentMetadataResource"/>
-    /// from an instance of <see cref="ArmClient"/> using the GetSubscriptionAssessmentMetadataResource method.
-    /// Otherwise you can get one from its parent resource <see cref="SubscriptionResource"/> using the GetSubscriptionAssessmentMetadata method.
+    /// A class representing a SubscriptionAssessmentMetadata along with the instance operations that can be performed on it.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="SubscriptionAssessmentMetadataResource"/> from an instance of <see cref="ArmClient"/> using the GetResource method.
+    /// Otherwise you can get one from its parent resource <see cref="SubscriptionResource"/> using the GetAllSubscriptionAssessmentMetadata method.
     /// </summary>
     public partial class SubscriptionAssessmentMetadataResource : ArmResource
     {
-        /// <summary> Generate the resource identifier of a <see cref="SubscriptionAssessmentMetadataResource"/> instance. </summary>
-        /// <param name="subscriptionId"> The subscriptionId. </param>
-        /// <param name="assessmentMetadataName"> The assessmentMetadataName. </param>
-        public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string assessmentMetadataName)
-        {
-            var resourceId = $"/subscriptions/{subscriptionId}/providers/Microsoft.Security/assessmentMetadata/{assessmentMetadataName}";
-            return new ResourceIdentifier(resourceId);
-        }
-
-        private readonly ClientDiagnostics _subscriptionAssessmentMetadataAssessmentsMetadataClientDiagnostics;
-        private readonly AssessmentsMetadataRestOperations _subscriptionAssessmentMetadataAssessmentsMetadataRestClient;
+        private readonly ClientDiagnostics _assessmentsMetadataClientDiagnostics;
+        private readonly AssessmentsMetadata _assessmentsMetadataRestClient;
         private readonly SecurityAssessmentMetadataData _data;
-
         /// <summary> Gets the resource type for the operations. </summary>
         public static readonly ResourceType ResourceType = "Microsoft.Security/assessmentMetadata";
 
-        /// <summary> Initializes a new instance of the <see cref="SubscriptionAssessmentMetadataResource"/> class for mocking. </summary>
+        /// <summary> Initializes a new instance of SubscriptionAssessmentMetadataResource for mocking. </summary>
         protected SubscriptionAssessmentMetadataResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref="SubscriptionAssessmentMetadataResource"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="SubscriptionAssessmentMetadataResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal SubscriptionAssessmentMetadataResource(ArmClient client, SecurityAssessmentMetadataData data) : this(client, data.Id)
@@ -53,71 +44,91 @@ namespace Azure.ResourceManager.SecurityCenter
             _data = data;
         }
 
-        /// <summary> Initializes a new instance of the <see cref="SubscriptionAssessmentMetadataResource"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="SubscriptionAssessmentMetadataResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal SubscriptionAssessmentMetadataResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _subscriptionAssessmentMetadataAssessmentsMetadataClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.SecurityCenter", ResourceType.Namespace, Diagnostics);
-            TryGetApiVersion(ResourceType, out string subscriptionAssessmentMetadataAssessmentsMetadataApiVersion);
-            _subscriptionAssessmentMetadataAssessmentsMetadataRestClient = new AssessmentsMetadataRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, subscriptionAssessmentMetadataAssessmentsMetadataApiVersion);
-#if DEBUG
-			ValidateResourceId(Id);
-#endif
+            TryGetApiVersion(ResourceType, out string subscriptionAssessmentMetadataApiVersion);
+            _assessmentsMetadataClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.SecurityCenter", ResourceType.Namespace, Diagnostics);
+            _assessmentsMetadataRestClient = new AssessmentsMetadata(_assessmentsMetadataClientDiagnostics, Pipeline, Endpoint, subscriptionAssessmentMetadataApiVersion ?? "2025-05-04");
+            ValidateResourceId(id);
         }
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }
 
         /// <summary> Gets the data representing this Feature. </summary>
-        /// <exception cref="InvalidOperationException"> Throws if there is no data loaded in the current instance. </exception>
         public virtual SecurityAssessmentMetadataData Data
         {
             get
             {
                 if (!HasData)
+                {
                     throw new InvalidOperationException("The current instance does not have data, you must call Get first.");
+                }
                 return _data;
             }
         }
 
+        /// <summary> Generate the resource identifier for this resource. </summary>
+        /// <param name="subscriptionId"> The subscriptionId. </param>
+        /// <param name="assessmentMetadataName"> The assessmentMetadataName. </param>
+        public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string assessmentMetadataName)
+        {
+            string resourceId = $"/subscriptions/{subscriptionId}/providers/Microsoft.Security/assessmentMetadata/{assessmentMetadataName}";
+            return new ResourceIdentifier(resourceId);
+        }
+
+        /// <param name="id"></param>
+        [Conditional("DEBUG")]
         internal static void ValidateResourceId(ResourceIdentifier id)
         {
             if (id.ResourceType != ResourceType)
-                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), nameof(id));
+            {
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), nameof(id));
+            }
         }
 
         /// <summary>
         /// Get metadata information on an assessment type in a specific subscription
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Security/assessmentMetadata/{assessmentMetadataName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.Security/assessmentMetadata/{assessmentMetadataName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>AssessmentsMetadata_GetInSubscription</description>
+        /// <term> Operation Id. </term>
+        /// <description> AssessmentsMetadata_GetInSubscription. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2021-06-01</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-05-04. </description>
         /// </item>
         /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="SubscriptionAssessmentMetadataResource"/></description>
+        /// <term> Resource. </term>
+        /// <description> <see cref="SubscriptionAssessmentMetadataResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<Response<SubscriptionAssessmentMetadataResource>> GetAsync(CancellationToken cancellationToken = default)
         {
-            using var scope = _subscriptionAssessmentMetadataAssessmentsMetadataClientDiagnostics.CreateScope("SubscriptionAssessmentMetadataResource.Get");
+            using DiagnosticScope scope = _assessmentsMetadataClientDiagnostics.CreateScope("SubscriptionAssessmentMetadataResource.Get");
             scope.Start();
             try
             {
-                var response = await _subscriptionAssessmentMetadataAssessmentsMetadataRestClient.GetInSubscriptionAsync(Id.SubscriptionId, Id.Name, cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _assessmentsMetadataRestClient.CreateGetInSubscriptionRequest(Guid.Parse(Id.SubscriptionId), Id.Name, context);
+                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                Response<SecurityAssessmentMetadataData> response = Response.FromValue(SecurityAssessmentMetadataData.FromResponse(result), result);
                 if (response.Value == null)
+                {
                     throw new RequestFailedException(response.GetRawResponse());
+                }
                 return Response.FromValue(new SubscriptionAssessmentMetadataResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -131,33 +142,41 @@ namespace Azure.ResourceManager.SecurityCenter
         /// Get metadata information on an assessment type in a specific subscription
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Security/assessmentMetadata/{assessmentMetadataName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.Security/assessmentMetadata/{assessmentMetadataName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>AssessmentsMetadata_GetInSubscription</description>
+        /// <term> Operation Id. </term>
+        /// <description> AssessmentsMetadata_GetInSubscription. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2021-06-01</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-05-04. </description>
         /// </item>
         /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="SubscriptionAssessmentMetadataResource"/></description>
+        /// <term> Resource. </term>
+        /// <description> <see cref="SubscriptionAssessmentMetadataResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response<SubscriptionAssessmentMetadataResource> Get(CancellationToken cancellationToken = default)
         {
-            using var scope = _subscriptionAssessmentMetadataAssessmentsMetadataClientDiagnostics.CreateScope("SubscriptionAssessmentMetadataResource.Get");
+            using DiagnosticScope scope = _assessmentsMetadataClientDiagnostics.CreateScope("SubscriptionAssessmentMetadataResource.Get");
             scope.Start();
             try
             {
-                var response = _subscriptionAssessmentMetadataAssessmentsMetadataRestClient.GetInSubscription(Id.SubscriptionId, Id.Name, cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _assessmentsMetadataRestClient.CreateGetInSubscriptionRequest(Guid.Parse(Id.SubscriptionId), Id.Name, context);
+                Response result = Pipeline.ProcessMessage(message, context);
+                Response<SecurityAssessmentMetadataData> response = Response.FromValue(SecurityAssessmentMetadataData.FromResponse(result), result);
                 if (response.Value == null)
+                {
                     throw new RequestFailedException(response.GetRawResponse());
+                }
                 return Response.FromValue(new SubscriptionAssessmentMetadataResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -171,20 +190,20 @@ namespace Azure.ResourceManager.SecurityCenter
         /// Delete metadata information on an assessment type in a specific subscription, will cause the deletion of all the assessments of that type in that subscription
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Security/assessmentMetadata/{assessmentMetadataName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.Security/assessmentMetadata/{assessmentMetadataName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>AssessmentsMetadata_DeleteInSubscription</description>
+        /// <term> Operation Id. </term>
+        /// <description> AssessmentsMetadata_DeleteInSubscription. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2021-06-01</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-05-04. </description>
         /// </item>
         /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="SubscriptionAssessmentMetadataResource"/></description>
+        /// <term> Resource. </term>
+        /// <description> <see cref="SubscriptionAssessmentMetadataResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -192,16 +211,23 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<ArmOperation> DeleteAsync(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
-            using var scope = _subscriptionAssessmentMetadataAssessmentsMetadataClientDiagnostics.CreateScope("SubscriptionAssessmentMetadataResource.Delete");
+            using DiagnosticScope scope = _assessmentsMetadataClientDiagnostics.CreateScope("SubscriptionAssessmentMetadataResource.Delete");
             scope.Start();
             try
             {
-                var response = await _subscriptionAssessmentMetadataAssessmentsMetadataRestClient.DeleteInSubscriptionAsync(Id.SubscriptionId, Id.Name, cancellationToken).ConfigureAwait(false);
-                var uri = _subscriptionAssessmentMetadataAssessmentsMetadataRestClient.CreateDeleteInSubscriptionRequestUri(Id.SubscriptionId, Id.Name);
-                var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Delete, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
-                var operation = new SecurityCenterArmOperation(response, rehydrationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _assessmentsMetadataRestClient.CreateDeleteInSubscriptionRequest(Guid.Parse(Id.SubscriptionId), Id.Name, context);
+                Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                RequestUriBuilder uri = message.Request.Uri;
+                RehydrationToken rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Delete, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
+                SecurityCenterArmOperation operation = new SecurityCenterArmOperation(response, rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
+                {
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
+                }
                 return operation;
             }
             catch (Exception e)
@@ -215,20 +241,20 @@ namespace Azure.ResourceManager.SecurityCenter
         /// Delete metadata information on an assessment type in a specific subscription, will cause the deletion of all the assessments of that type in that subscription
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Security/assessmentMetadata/{assessmentMetadataName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.Security/assessmentMetadata/{assessmentMetadataName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>AssessmentsMetadata_DeleteInSubscription</description>
+        /// <term> Operation Id. </term>
+        /// <description> AssessmentsMetadata_DeleteInSubscription. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2021-06-01</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-05-04. </description>
         /// </item>
         /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="SubscriptionAssessmentMetadataResource"/></description>
+        /// <term> Resource. </term>
+        /// <description> <see cref="SubscriptionAssessmentMetadataResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -236,16 +262,23 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual ArmOperation Delete(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
-            using var scope = _subscriptionAssessmentMetadataAssessmentsMetadataClientDiagnostics.CreateScope("SubscriptionAssessmentMetadataResource.Delete");
+            using DiagnosticScope scope = _assessmentsMetadataClientDiagnostics.CreateScope("SubscriptionAssessmentMetadataResource.Delete");
             scope.Start();
             try
             {
-                var response = _subscriptionAssessmentMetadataAssessmentsMetadataRestClient.DeleteInSubscription(Id.SubscriptionId, Id.Name, cancellationToken);
-                var uri = _subscriptionAssessmentMetadataAssessmentsMetadataRestClient.CreateDeleteInSubscriptionRequestUri(Id.SubscriptionId, Id.Name);
-                var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Delete, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
-                var operation = new SecurityCenterArmOperation(response, rehydrationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _assessmentsMetadataRestClient.CreateDeleteInSubscriptionRequest(Guid.Parse(Id.SubscriptionId), Id.Name, context);
+                Response response = Pipeline.ProcessMessage(message, context);
+                RequestUriBuilder uri = message.Request.Uri;
+                RehydrationToken rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Delete, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
+                SecurityCenterArmOperation operation = new SecurityCenterArmOperation(response, rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
+                {
                     operation.WaitForCompletionResponse(cancellationToken);
+                }
                 return operation;
             }
             catch (Exception e)
@@ -256,23 +289,23 @@ namespace Azure.ResourceManager.SecurityCenter
         }
 
         /// <summary>
-        /// Create metadata information on an assessment type in a specific subscription
+        /// Update a SubscriptionAssessmentMetadata.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Security/assessmentMetadata/{assessmentMetadataName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.Security/assessmentMetadata/{assessmentMetadataName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>AssessmentsMetadata_CreateInSubscription</description>
+        /// <term> Operation Id. </term>
+        /// <description> AssessmentsMetadata_CreateInSubscription. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2021-06-01</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-05-04. </description>
         /// </item>
         /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="SubscriptionAssessmentMetadataResource"/></description>
+        /// <term> Resource. </term>
+        /// <description> <see cref="SubscriptionAssessmentMetadataResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -284,16 +317,24 @@ namespace Azure.ResourceManager.SecurityCenter
         {
             Argument.AssertNotNull(data, nameof(data));
 
-            using var scope = _subscriptionAssessmentMetadataAssessmentsMetadataClientDiagnostics.CreateScope("SubscriptionAssessmentMetadataResource.Update");
+            using DiagnosticScope scope = _assessmentsMetadataClientDiagnostics.CreateScope("SubscriptionAssessmentMetadataResource.Update");
             scope.Start();
             try
             {
-                var response = await _subscriptionAssessmentMetadataAssessmentsMetadataRestClient.CreateInSubscriptionAsync(Id.SubscriptionId, Id.Name, data, cancellationToken).ConfigureAwait(false);
-                var uri = _subscriptionAssessmentMetadataAssessmentsMetadataRestClient.CreateCreateInSubscriptionRequestUri(Id.SubscriptionId, Id.Name, data);
-                var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
-                var operation = new SecurityCenterArmOperation<SubscriptionAssessmentMetadataResource>(Response.FromValue(new SubscriptionAssessmentMetadataResource(Client, response), response.GetRawResponse()), rehydrationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _assessmentsMetadataRestClient.CreateCreateInSubscriptionRequest(Guid.Parse(Id.SubscriptionId), Id.Name, SecurityAssessmentMetadataData.ToRequestContent(data), context);
+                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                Response<SecurityAssessmentMetadataData> response = Response.FromValue(SecurityAssessmentMetadataData.FromResponse(result), result);
+                RequestUriBuilder uri = message.Request.Uri;
+                RehydrationToken rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
+                SecurityCenterArmOperation<SubscriptionAssessmentMetadataResource> operation = new SecurityCenterArmOperation<SubscriptionAssessmentMetadataResource>(Response.FromValue(new SubscriptionAssessmentMetadataResource(Client, response.Value), response.GetRawResponse()), rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
+                {
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
+                }
                 return operation;
             }
             catch (Exception e)
@@ -304,23 +345,23 @@ namespace Azure.ResourceManager.SecurityCenter
         }
 
         /// <summary>
-        /// Create metadata information on an assessment type in a specific subscription
+        /// Update a SubscriptionAssessmentMetadata.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Security/assessmentMetadata/{assessmentMetadataName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.Security/assessmentMetadata/{assessmentMetadataName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>AssessmentsMetadata_CreateInSubscription</description>
+        /// <term> Operation Id. </term>
+        /// <description> AssessmentsMetadata_CreateInSubscription. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2021-06-01</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-05-04. </description>
         /// </item>
         /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="SubscriptionAssessmentMetadataResource"/></description>
+        /// <term> Resource. </term>
+        /// <description> <see cref="SubscriptionAssessmentMetadataResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -332,16 +373,24 @@ namespace Azure.ResourceManager.SecurityCenter
         {
             Argument.AssertNotNull(data, nameof(data));
 
-            using var scope = _subscriptionAssessmentMetadataAssessmentsMetadataClientDiagnostics.CreateScope("SubscriptionAssessmentMetadataResource.Update");
+            using DiagnosticScope scope = _assessmentsMetadataClientDiagnostics.CreateScope("SubscriptionAssessmentMetadataResource.Update");
             scope.Start();
             try
             {
-                var response = _subscriptionAssessmentMetadataAssessmentsMetadataRestClient.CreateInSubscription(Id.SubscriptionId, Id.Name, data, cancellationToken);
-                var uri = _subscriptionAssessmentMetadataAssessmentsMetadataRestClient.CreateCreateInSubscriptionRequestUri(Id.SubscriptionId, Id.Name, data);
-                var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
-                var operation = new SecurityCenterArmOperation<SubscriptionAssessmentMetadataResource>(Response.FromValue(new SubscriptionAssessmentMetadataResource(Client, response), response.GetRawResponse()), rehydrationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _assessmentsMetadataRestClient.CreateCreateInSubscriptionRequest(Guid.Parse(Id.SubscriptionId), Id.Name, SecurityAssessmentMetadataData.ToRequestContent(data), context);
+                Response result = Pipeline.ProcessMessage(message, context);
+                Response<SecurityAssessmentMetadataData> response = Response.FromValue(SecurityAssessmentMetadataData.FromResponse(result), result);
+                RequestUriBuilder uri = message.Request.Uri;
+                RehydrationToken rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
+                SecurityCenterArmOperation<SubscriptionAssessmentMetadataResource> operation = new SecurityCenterArmOperation<SubscriptionAssessmentMetadataResource>(Response.FromValue(new SubscriptionAssessmentMetadataResource(Client, response.Value), response.GetRawResponse()), rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
+                {
                     operation.WaitForCompletion(cancellationToken);
+                }
                 return operation;
             }
             catch (Exception e)

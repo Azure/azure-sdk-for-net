@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.ArtifactSigning.Mocking
 
         private ClientDiagnostics CodeSigningAccountsClientDiagnostics => _codeSigningAccountsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.ArtifactSigning.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private CodeSigningAccounts CodeSigningAccountsRestClient => _codeSigningAccountsRestClient ??= new CodeSigningAccounts(CodeSigningAccountsClientDiagnostics, Pipeline, Endpoint, "2025-10-13");
+        private CodeSigningAccounts CodeSigningAccountsRestClient => _codeSigningAccountsRestClient ??= new CodeSigningAccounts(CodeSigningAccountsClientDiagnostics, Pipeline, Endpoint, "2026-05-15-preview");
 
         /// <summary>
         /// Lists artifact signing accounts within a subscription.
@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.ArtifactSigning.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-10-13. </description>
+        /// <description> 2026-05-15-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -81,7 +81,7 @@ namespace Azure.ResourceManager.ArtifactSigning.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-10-13. </description>
+        /// <description> 2026-05-15-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -109,7 +109,7 @@ namespace Azure.ResourceManager.ArtifactSigning.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-10-13. </description>
+        /// <description> 2026-05-15-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -157,7 +157,7 @@ namespace Azure.ResourceManager.ArtifactSigning.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-10-13. </description>
+        /// <description> 2026-05-15-preview. </description>
         /// </item>
         /// </list>
         /// </summary>

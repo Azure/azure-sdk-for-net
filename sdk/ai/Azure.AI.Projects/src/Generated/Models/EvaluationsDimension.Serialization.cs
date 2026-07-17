@@ -82,10 +82,10 @@ namespace Azure.AI.Projects.Evaluation
             writer.WriteStringValue(Description);
             writer.WritePropertyName("weight"u8);
             writer.WriteNumberValue(Weight);
-            if (Optional.IsDefined(AlwaysApplicable))
+            if (Optional.IsDefined(IsAlwaysApplicable))
             {
                 writer.WritePropertyName("always_applicable"u8);
-                writer.WriteBooleanValue(AlwaysApplicable.Value);
+                writer.WriteBooleanValue(IsAlwaysApplicable.Value);
             }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
@@ -132,7 +132,7 @@ namespace Azure.AI.Projects.Evaluation
             string id = default;
             string description = default;
             int weight = default;
-            bool? alwaysApplicable = default;
+            bool? isAlwaysApplicable = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -157,7 +157,7 @@ namespace Azure.AI.Projects.Evaluation
                     {
                         continue;
                     }
-                    alwaysApplicable = prop.Value.GetBoolean();
+                    isAlwaysApplicable = prop.Value.GetBoolean();
                     continue;
                 }
                 if (options.Format != "W")
@@ -165,7 +165,7 @@ namespace Azure.AI.Projects.Evaluation
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new EvaluationsDimension(id, description, weight, alwaysApplicable, additionalBinaryDataProperties);
+            return new EvaluationsDimension(id, description, weight, isAlwaysApplicable, additionalBinaryDataProperties);
         }
     }
 }
