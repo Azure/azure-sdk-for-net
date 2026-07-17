@@ -1,0 +1,49 @@
+parameters:
+  DevFeedName: 'public/azure-sdk-for-python'
+  EnableTwineAuth: true
+  EnablePipAuth: true
+  EnableUvAuth: true
+
+steps:
+  - pwsh: |
+      # For safety default to publishing to the private feed.
+      # Publish to https://dev.azure.com/azure-sdk/internal/_packaging?_a=feed&feed=azure-sdk-for-python-pr
+      $devopsFeedName = 'internal/azure-sdk-for-python-pr'
+      if ('$(Build.Repository.Name)' -eq 'Azure/azure-sdk-for-python') {
+        # Publish to https://dev.azure.com/azure-sdk/public/_packaging?_a=feed&feed=azure-sdk-for-python
+        $devopsFeedName = '${{ parameters.DevFeedName }}'
+      }
+      echo "##vso[task.setvariable variable=DevFeedName]$devopsFeedName"
+      echo "Using DevopsFeed = $devopsFeedName"
+    displayName: Setup DevOpsFeedName
+
+  - ${{ if eq(parameters.EnableTwineAuth, true) }}:
+    - task: TwineAuthenticate@0
+      displayName: 'Twine Authenticate to feed'
+      inputs:
+        artifactFeeds: $(DevFeedName)
+
+  - ${{ if eq(parameters.EnablePipAuth, true) }}:
+    - task: PipAuthenticate@1
+      displayName: 'Pip Authenticate to feed'
+      inputs:
+        artifactFeeds: $(DevFeedName)
+        onlyAddExtraIndex: false
+
+  - ${{ if eq(parameters.EnableUvAuth, true) }}:
+    - pwsh: |
+        if ($env:PIP_INDEX_URL) {
+          Write-Host "Found pip index URL: $($env:PIP_INDEX_URL)"
+          # UV_DEFAULT_INDEX is the canonical replacement for the deprecated UV_INDEX_URL (uv 0.4.23+).
+          # PIP_INDEX_URL is set by PipAuthenticate@1 and contains embedded credentials, which uv
+          # will use for Basic auth against the ADO feed (and its PyPI upstream) per astral-sh/uv#12651.
+          Write-Host "##vso[task.setvariable variable=UV_DEFAULT_INDEX]$($env:PIP_INDEX_URL)"
+          # Disable keyring so uv uses the URL-embedded credentials directly.
+          Write-Host "##vso[task.setvariable variable=UV_KEYRING_PROVIDER]disabled"
+        } else {
+          Write-Host "##[warning]PIP_INDEX_URL not set - uv will fall back to public PyPI."
+        }
+        # Force any managed Python downloads to go directly to GitHub releases
+        # rather than the default CDN (releases.astral.sh).
+        Write-Host "##vso[task.setvariable variable=UV_PYTHON_INSTALL_MIRROR]https://github.com/astral-sh/python-build-standalone/releases/download"
+      displayName: 'Configure UV Authentication'

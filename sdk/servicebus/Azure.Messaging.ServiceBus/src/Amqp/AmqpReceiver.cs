@@ -423,7 +423,7 @@ namespace Azure.Messaging.ServiceBus.Amqp
         /// <summary>
         /// Drains an AMQP link. When drain failure happens we make sure to close the link to ensure ordering.
         /// </summary>
-        /// <param name="link">The AMPQ link to drain.</param>
+        /// <param name="link">The AMQP link to drain.</param>
         /// <param name="cancellationToken">An optional <see cref="CancellationToken"/> instance to signal the request to cancel the operation.</param>
         /// <returns>A task to be resolved on when the operation has completed.</returns>
         public async Task SafeDrainLinkAsync(ReceivingAmqpLink link, CancellationToken cancellationToken)
@@ -1586,6 +1586,163 @@ namespace Azure.Messaging.ServiceBus.Amqp
             {
                 throw LinkException;
             }
+        }
+
+        /// <summary>
+        /// Lists the IDs of sessions for the requested page. The set returned depends on
+        /// <paramref name="lastUpdatedTime"/>: pass <see cref="DateTimeOffset.MaxValue"/> to list all
+        /// sessions that have active messages or session state, or a real timestamp to list only
+        /// sessions whose session state was set or updated after that time. Wraps the raw AMQP
+        /// management request with the receiver's retry policy.
+        /// </summary>
+        ///
+        /// <param name="lastUpdatedTime">
+        /// Filter timestamp. Pass <see cref="DateTimeOffset.MaxValue"/> to retrieve all sessions that
+        /// have active messages or session state. Pass a real timestamp to retrieve only sessions whose
+        /// session state was set or updated after that time. The value is converted to a UTC
+        /// <see cref="DateTime"/> via <see cref="DateTimeOffset.UtcDateTime"/> for AMQP encoding.
+        /// </param>
+        /// <param name="skip">Zero-based pagination offset (number of sessions to skip).</param>
+        /// <param name="top">Maximum number of session IDs to return in a single page.</param>
+        /// <param name="cancellationToken">
+        /// An optional <see cref="CancellationToken"/> instance to signal the request to cancel the operation.
+        /// </param>
+        ///
+        /// <returns>
+        /// A read-only list of session ID strings for the requested page, or an empty list when no
+        /// (more) sessions match the filter.
+        /// </returns>
+        public override async Task<IReadOnlyList<string>> GetMessageSessionsAsync(
+            DateTimeOffset lastUpdatedTime,
+            int skip,
+            int top,
+            CancellationToken cancellationToken)
+        {
+            return await _retryPolicy.RunOperation(
+                static async (args, timeout, _) =>
+                    await args.receiver.GetMessageSessionsInternal(timeout, args.lastUpdatedTime, args.skip, args.top).ConfigureAwait(false),
+                (receiver: this, lastUpdatedTime, skip, top),
+                _connectionScope,
+                cancellationToken).ConfigureAwait(false);
+        }
+
+        internal async Task<IReadOnlyList<string>> GetMessageSessionsInternal(
+            TimeSpan timeout, DateTimeOffset lastUpdatedTime, int skip, int top)
+        {
+            var amqpRequestMessage = AmqpRequestMessage.CreateRequest(
+                ManagementConstants.Operations.GetMessageSessionsOperation, timeout, null);
+
+            // No associated link name -- this is an entity-level operation.
+            // Convert DateTimeOffset to UTC DateTime for AMQP timestamp encoding.
+            // DateTimeOffset.MaxValue is the all-sessions sentinel (matches the AMQP contract
+            // and Java's MAXDATE). Do NOT change it to MinValue: the encoder would send a
+            // negative, pre-epoch timestamp that the service does not interpret as "all sessions."
+            amqpRequestMessage.Map[ManagementConstants.Properties.LastUpdatedTime] = lastUpdatedTime.UtcDateTime;
+            amqpRequestMessage.Map[ManagementConstants.Properties.Skip] = skip;
+            amqpRequestMessage.Map[ManagementConstants.Properties.Top] = top;
+
+            var amqpResponseMessage = await ExecuteRequest(timeout, amqpRequestMessage).ConfigureAwait(false);
+
+            return ParseGetMessageSessionsResponse(amqpResponseMessage);
+        }
+
+        /// <summary>
+        /// Parses the management response for the get-message-sessions operation into a list of
+        /// session IDs. Extracted from <see cref="GetMessageSessionsInternal"/> so the parsing and
+        /// validation branches can be unit tested without a live AMQP round-trip.
+        /// </summary>
+        /// <param name="amqpResponseMessage">The management response to parse.</param>
+        /// <returns>The session IDs for the page, or an empty list when no (more) sessions match.</returns>
+        internal static IReadOnlyList<string> ParseGetMessageSessionsResponse(AmqpResponseMessage amqpResponseMessage)
+        {
+            if (amqpResponseMessage.StatusCode == AmqpResponseStatusCode.OK)
+            {
+                // 200 OK with no map body or no 'sessions-ids' key is a contract violation:
+                // the documented "no sessions" path is 204 No Content (handled below). Treat anything
+                // else as an error rather than dereferencing a null Map (NRE) or silently returning
+                // an empty result, which would mask protocol or server issues.
+                if (amqpResponseMessage.Map == null ||
+                    !amqpResponseMessage.Map.TryGetValue<object>(ManagementConstants.Properties.SessionIds, out var sessionsObj))
+                {
+                    throw new ServiceBusException(
+                        "The management response contained a missing or invalid 'sessions-ids' payload.",
+                        ServiceBusFailureReason.GeneralError);
+                }
+
+                if (sessionsObj is string[] sessionArray)
+                {
+                    // Iterate the full array and collect every invalid entry rather than throwing on
+                    // the first, so all offending entries are reported. Empty string is a valid session
+                    // id and must be preserved if the service returns it, so only null is rejected here.
+                    List<string> invalidDescriptions = null;
+                    for (int i = 0; i < sessionArray.Length; i++)
+                    {
+                        if (sessionArray[i] is null)
+                        {
+                            (invalidDescriptions ??= new List<string>()).Add($"index {i} was null");
+                        }
+                    }
+                    if (invalidDescriptions != null)
+                    {
+                        throw new ServiceBusException(
+                            $"The management response contained invalid session ids ({string.Join(", ", invalidDescriptions)}).",
+                            ServiceBusFailureReason.GeneralError);
+                    }
+                    return sessionArray;
+                }
+                if (sessionsObj is object[] objectArray)
+                {
+                    // Iterate the full array and collect every invalid entry rather than throwing on
+                    // the first, describing why each is invalid so all offending entries are reported.
+                    // Empty string is a valid session id and must be preserved if the service returns
+                    // it, so only null and non-string entries are rejected.
+                    var result = new string[objectArray.Length];
+                    List<string> invalidDescriptions = null;
+                    for (int i = 0; i < objectArray.Length; i++)
+                    {
+                        if (objectArray[i] is string sessionId)
+                        {
+                            result[i] = sessionId;
+                        }
+                        else
+                        {
+                            var reason = objectArray[i] is null
+                                ? "was null"
+                                : $"was of type {objectArray[i].GetType().Name}";
+                            (invalidDescriptions ??= new List<string>()).Add($"index {i} {reason}");
+                        }
+                    }
+                    if (invalidDescriptions != null)
+                    {
+                        throw new ServiceBusException(
+                            $"The management response contained invalid session ids ({string.Join(", ", invalidDescriptions)}).",
+                            ServiceBusFailureReason.GeneralError);
+                    }
+                    return result;
+                }
+
+                // Key was present but the value was an unexpected type.
+                throw new ServiceBusException(
+                    "The management response contained a missing or invalid 'sessions-ids' payload.",
+                    ServiceBusFailureReason.GeneralError);
+            }
+            else if (amqpResponseMessage.StatusCode == AmqpResponseStatusCode.NoContent)
+            {
+                return Array.Empty<string>();
+            }
+            else if (amqpResponseMessage.StatusCode == AmqpResponseStatusCode.NotFound &&
+                     Equals(AmqpClientConstants.MessageNotFoundError, amqpResponseMessage.GetResponseErrorCondition()))
+            {
+                // The service currently returns 204 NoContent (with com.microsoft:session-not-found)
+                // for empty results, which the branch above handles. This 404 + message-not-found
+                // catch is a defensive safety net in case the service signals an empty result as a
+                // 404 instead; it is harmless because the NoContent branch already covers empty. Other
+                // 404 conditions (e.g., entity not found) fall through to the exception below so
+                // callers can distinguish "no sessions" from "queue doesn't exist".
+                return Array.Empty<string>();
+            }
+
+            throw amqpResponseMessage.ToMessagingContractException();
         }
     }
 }
