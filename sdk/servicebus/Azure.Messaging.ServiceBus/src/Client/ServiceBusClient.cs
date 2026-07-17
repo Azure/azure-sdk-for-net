@@ -565,7 +565,7 @@ namespace Azure.Messaging.ServiceBus
         }
 
         /// <summary>
-        /// Lists the IDs of sessions with active messages in a session-enabled queue.
+        /// Lists the IDs of sessions that have active messages or session state in a session-enabled queue.
         /// </summary>
         ///
         /// <param name="queueName">The name of the session-enabled queue.</param>
@@ -610,7 +610,7 @@ namespace Azure.Messaging.ServiceBus
         }
 
         /// <summary>
-        /// Lists the IDs of sessions with active messages in a session-enabled subscription.
+        /// Lists the IDs of sessions that have active messages or session state in a session-enabled subscription.
         /// </summary>
         ///
         /// <param name="topicName">The name of the topic.</param>

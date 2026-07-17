@@ -240,13 +240,13 @@ namespace Azure.Messaging.ServiceBus.Core
         /// <summary>
         /// Lists the IDs of sessions for the requested page. The set returned depends on
         /// <paramref name="lastUpdatedTime"/>: pass <see cref="DateTimeOffset.MaxValue"/> to list all
-        /// sessions that have active messages, or a real timestamp to list only sessions whose session
-        /// state was set or updated after that time.
+        /// sessions that have active messages or session state, or a real timestamp to list only
+        /// sessions whose session state was set or updated after that time.
         /// </summary>
         ///
         /// <param name="lastUpdatedTime">Filter timestamp. Pass <see cref="DateTimeOffset.MaxValue"/>
-        /// to retrieve all sessions that have active messages. Pass a real timestamp to retrieve only
-        /// sessions whose session state was set or updated after that time.</param>
+        /// to retrieve all sessions that have active messages or session state. Pass a real timestamp
+        /// to retrieve only sessions whose session state was set or updated after that time.</param>
         /// <param name="skip">Pagination offset.</param>
         /// <param name="top">Page size.</param>
         /// <param name="cancellationToken">An optional <see cref="CancellationToken"/> instance to signal the request to cancel the operation.</param>

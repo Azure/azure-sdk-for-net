@@ -1591,15 +1591,15 @@ namespace Azure.Messaging.ServiceBus.Amqp
         /// <summary>
         /// Lists the IDs of sessions for the requested page. The set returned depends on
         /// <paramref name="lastUpdatedTime"/>: pass <see cref="DateTimeOffset.MaxValue"/> to list all
-        /// sessions that have active messages, or a real timestamp to list only sessions whose session
-        /// state was set or updated after that time. Wraps the raw AMQP management request with the
-        /// receiver's retry policy.
+        /// sessions that have active messages or session state, or a real timestamp to list only
+        /// sessions whose session state was set or updated after that time. Wraps the raw AMQP
+        /// management request with the receiver's retry policy.
         /// </summary>
         ///
         /// <param name="lastUpdatedTime">
-        /// Filter timestamp. Pass <see cref="DateTimeOffset.MaxValue"/> to retrieve all sessions
-        /// that have active messages. Pass a real timestamp to retrieve only sessions whose session
-        /// state was set or updated after that time. The value is converted to a UTC
+        /// Filter timestamp. Pass <see cref="DateTimeOffset.MaxValue"/> to retrieve all sessions that
+        /// have active messages or session state. Pass a real timestamp to retrieve only sessions whose
+        /// session state was set or updated after that time. The value is converted to a UTC
         /// <see cref="DateTime"/> via <see cref="DateTimeOffset.UtcDateTime"/> for AMQP encoding.
         /// </param>
         /// <param name="skip">Zero-based pagination offset (number of sessions to skip).</param>
