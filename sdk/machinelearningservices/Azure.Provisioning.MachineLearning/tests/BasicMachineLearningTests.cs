@@ -15,6 +15,8 @@ namespace Azure.Provisioning.MachineLearning.Tests;
 
 public class BasicMachineLearningTests
 {
+    // Based on the Azure Quickstart template:
+    // https://github.com/Azure/azure-quickstart-templates/blob/master/quickstarts/microsoft.machinelearningservices/machine-learning-workspace/main.bicep
     internal static Trycep CreateWorkspaceTest()
     {
         return new Trycep().Define(
