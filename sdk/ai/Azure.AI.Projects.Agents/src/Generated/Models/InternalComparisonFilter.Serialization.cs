@@ -10,7 +10,8 @@ using Azure.AI.Projects.Agents;
 
 namespace OpenAI
 {
-    internal partial class InternalComparisonFilter : IJsonModel<InternalComparisonFilter>
+    /// <summary> Comparison Filter. </summary>
+    public partial class InternalComparisonFilter : IJsonModel<InternalComparisonFilter>
     {
         /// <summary> Initializes a new instance of <see cref="InternalComparisonFilter"/> for deserialization. </summary>
         internal InternalComparisonFilter()
