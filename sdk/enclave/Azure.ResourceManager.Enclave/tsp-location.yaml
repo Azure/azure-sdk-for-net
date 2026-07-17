@@ -1,0 +1,6 @@
+directory: specification/mission/resource-manager/Microsoft.Mission/Mission
+commit: 0a9b716f16cf2a1746dfe4f68ba59e423c118f87
+repo: Azure/azure-rest-api-specs
+additionalDirectories: 
+
+emitterPackageJsonPath: eng/azure-typespec-http-client-csharp-mgmt-emitter-package.json
