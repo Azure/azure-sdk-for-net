@@ -11,7 +11,7 @@ using NUnit.Framework;
 
 namespace Azure.AI.Projects.Agents.Tests.Samples;
 
-public class Sample_AgentsDraft : SamplesBase
+public class Sample_AgentDraft : SamplesBase
 {
     [Test]
     [AsyncOnly]
@@ -27,7 +27,7 @@ public class Sample_AgentsDraft : SamplesBase
 #endif
         AgentAdministrationClientOptions options = new();
         options.AddPolicy(new FeaturePolicy("DraftAgents=V1Preview"), PipelinePosition.PerCall);
-        AgentAdministrationClient agentsClient = new(endpoint: new Uri(projectEndpoint), tokenProvider: new AzureCliCredential());
+        AgentAdministrationClient agentsClient = new(endpoint: new Uri(projectEndpoint), tokenProvider: new DefaultAzureCredential(), options: options);
         #endregion
 
         #region Snippet:Sample_CreateAgentVersion_AgentsDraft_Async
@@ -42,7 +42,7 @@ public class Sample_AgentsDraft : SamplesBase
         #endregion
         #region Snippet:Sample_GetDefaultVersion_AgentsDraft_Async
         ProjectsAgentRecord agent = await agentsClient.GetAgentAsync(agentName: agentVersion1.Name);
-        Console.WriteLine($"The latest version of agent \"{agent.Name}\" is {agent.Versions.Latest}.");
+        Console.WriteLine($"The latest version of agent \"{agent.Name}\" is {agent.Versions.Latest.Version}.");
         #endregion
 
         #region Snippet:Sample_CreateAnotherAgentVersion_AgentsDraft_Async
@@ -55,7 +55,7 @@ public class Sample_AgentsDraft : SamplesBase
             options: new(agentDefinition));
         Console.WriteLine($"Agent created name: {agentVersion2.Name}, version: {agentVersion2.Version}");
         agent = await agentsClient.GetAgentAsync(agentName: agentVersion1.Name);
-        Console.WriteLine($"The latest version of agent \"{agent.Name}\" is now {agent.Versions.Latest}.");
+        Console.WriteLine($"The latest version of agent \"{agent.Name}\" is now {agent.Versions.Latest.Version}.");
         #endregion
 
         #region Snippet:Sample_CreateDraft_AgentsDraft_Async
@@ -72,7 +72,7 @@ public class Sample_AgentsDraft : SamplesBase
         );
         Console.WriteLine($"Agent created draft name: {agentVersionDraft.Name}, version: {agentVersionDraft.Version}");
         agent = await agentsClient.GetAgentAsync(agentName: agentVersion1.Name);
-        Console.WriteLine($"The latest version of agent \"{agent.Name}\" is still {agent.Versions.Latest}.");
+        Console.WriteLine($"The latest version of agent \"{agent.Name}\" is still {agent.Versions.Latest.Version}.");
         #endregion
 
         #region Snippet:Sample_ListReleaseAgents_AgentsDraft_Async
@@ -110,7 +110,7 @@ public class Sample_AgentsDraft : SamplesBase
 #endif
         AgentAdministrationClientOptions options = new();
         options.AddPolicy(new FeaturePolicy("DraftAgents=V1Preview"), PipelinePosition.PerCall);
-        AgentAdministrationClient agentsClient = new(endpoint: new Uri(projectEndpoint), tokenProvider: new AzureCliCredential());
+        AgentAdministrationClient agentsClient = new(endpoint: new Uri(projectEndpoint), tokenProvider: new DefaultAzureCredential(), options: options);
 
         #region Snippet:Sample_CreateAgentVersion_AgentsDraft_Sync
         DeclarativeAgentDefinition agentDefinition = new(model: modelDeploymentName)
@@ -124,7 +124,7 @@ public class Sample_AgentsDraft : SamplesBase
         #endregion
         #region Snippet:Sample_GetDefaultVersion_AgentsDraft_Sync
         ProjectsAgentRecord agent = agentsClient.GetAgent(agentName: agentVersion1.Name);
-        Console.WriteLine($"The latest version of agent \"{agent.Name}\" is {agent.Versions.Latest}.");
+        Console.WriteLine($"The latest version of agent \"{agent.Name}\" is {agent.Versions.Latest.Version}.");
         #endregion
 
         #region Snippet:Sample_CreateAnotherAgentVersion_AgentsDraft_Sync
@@ -137,7 +137,7 @@ public class Sample_AgentsDraft : SamplesBase
             options: new(agentDefinition));
         Console.WriteLine($"Agent created name: {agentVersion2.Name}, version: {agentVersion2.Version}");
         agent = agentsClient.GetAgent(agentName: agentVersion1.Name);
-        Console.WriteLine($"The latest version of agent \"{agent.Name}\" is now {agent.Versions.Latest}.");
+        Console.WriteLine($"The latest version of agent \"{agent.Name}\" is now {agent.Versions.Latest.Version}.");
         #endregion
 
         #region Snippet:Sample_CreateDraft_AgentsDraft_Sync
@@ -154,7 +154,7 @@ public class Sample_AgentsDraft : SamplesBase
         );
         Console.WriteLine($"Agent created draft name: {agentVersionDraft.Name}, version: {agentVersionDraft.Version}");
         agent = agentsClient.GetAgent(agentName: agentVersion1.Name);
-        Console.WriteLine($"The latest version of agent \"{agent.Name}\" is still {agent.Versions.Latest}.");
+        Console.WriteLine($"The latest version of agent \"{agent.Name}\" is still {agent.Versions.Latest.Version}.");
         #endregion
 
         #region Snippet:Sample_ListReleaseAgents_AgentsDraft_Sync
@@ -179,6 +179,6 @@ public class Sample_AgentsDraft : SamplesBase
         #endregion
     }
 
-    public Sample_AgentsDraft(bool isAsync) : base(isAsync)
+    public Sample_AgentDraft(bool isAsync) : base(isAsync)
     { }
 }

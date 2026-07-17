@@ -22,6 +22,7 @@ Develop Agents using the Azure AI Foundry platform, leveraging an extensive ecos
 - [Additional concepts](#additional-concepts)
 - [Examples](#examples)
   - [Declarative Agents](#declarative-agents)
+    - [Agent version drafts](#agent-version-drafts)
   - [Hosted Agents](#hosted-agents)
     - [Hosted Agents from Docker images](#hosted-docker-based)
     - [Hosted Agents from Code](#hosted-code-based)
@@ -145,6 +146,78 @@ Console.WriteLine($"Agent created (id: {agentVersion2.Id}, name: {agentVersion2.
 
 The code above will result in the creation of a `ProjectsAgentVersion` object, which is the data object containing the Agent's name and version.
 
+#### Agent version drafts
+
+**Note:** This is a preview feature and requires the `Foundry-Features` request header to contain `DraftAgents=V1Preview`.
+The `AAIP001` warning needs to be ignored.
+
+```C#
+#pragma warning disable AAIP001
+```
+
+If the Agent Version is not ready for production, it may be created with the `Draft` flag set to `true`. The draft Agent version
+is a string like `draft-1784249270168`. The draft will not be set as the Agent's latest version.
+
+To use Agents version drafts, we need to provide the `Foundry-Features` preview header with `DraftAgents=V1Preview` value in our REST requests. It can be done using `PipelinePolicy`.
+
+```C# Snippet:Sample_Agents_ExperimentalHeader
+internal class FeaturePolicy(string feature) : PipelinePolicy
+{
+    private const string _FEATURE_HEADER = "Foundry-Features";
+
+    public override void Process(PipelineMessage message, IReadOnlyList<PipelinePolicy> pipeline, int currentIndex)
+    {
+        message.Request.Headers.Add(_FEATURE_HEADER, feature);
+        ProcessNext(message, pipeline, currentIndex);
+    }
+
+    public override async ValueTask ProcessAsync(PipelineMessage message, IReadOnlyList<PipelinePolicy> pipeline, int currentIndex)
+    {
+        message.Request.Headers.Add(_FEATURE_HEADER, feature);
+        await ProcessNextAsync(message, pipeline, currentIndex);
+    }
+}
+```
+
+Create `AgentAdministrationClient` with the draft feature enabled:
+
+```C# Snippet:Sample_CreateAgentClient_AgentsDraft
+var projectEndpoint = System.Environment.GetEnvironmentVariable("FOUNDRY_PROJECT_ENDPOINT");
+var modelDeploymentName = System.Environment.GetEnvironmentVariable("FOUNDRY_MODEL_NAME");
+AgentAdministrationClientOptions options = new();
+options.AddPolicy(new FeaturePolicy("DraftAgents=V1Preview"), PipelinePosition.PerCall);
+AgentAdministrationClient agentsClient = new(endpoint: new Uri(projectEndpoint), tokenProvider: new DefaultAzureCredential(), options: options);
+```
+
+Create a draft version:
+
+```C# Snippet:Sample_CreateDraft_AgentsDraft_Async
+agentDefinition = new(model: modelDeploymentName)
+{
+    Instructions = "You are a prompt agent which gives wrong answers with 0.1 probability."
+};
+ProjectsAgentVersion agentVersionDraft = await agentsClient.CreateAgentVersionAsync(
+    agentName: agent.Name,
+    options: new(agentDefinition)
+    {
+        Draft = true
+    }
+);
+Console.WriteLine($"Agent created draft name: {agentVersionDraft.Name}, version: {agentVersionDraft.Version}");
+agent = await agentsClient.GetAgentAsync(agentName: agentVersion1.Name);
+Console.WriteLine($"The latest version of agent \"{agent.Name}\" is still {agent.Versions.Latest.Version}.");
+```
+
+By default, draft versions are not listed. To include them, `includeDrafts` needs to be set to `true`.
+
+```C# Snippet:Sample_ListReleaseAgentsWithDrafts_AgentsDraft_Async
+Console.WriteLine($"Here are \"release\" versions of the agent {agent.Name}:");
+await foreach (ProjectsAgentVersion agentVersion in agentsClient.GetAgentVersionsAsync(agentName: agent.Name, includeDrafts: true))
+{
+    Console.WriteLine($"    {agentVersion.Version}, is draft: {agentVersion.Draft ?? false}");
+}
+```
+
 ### Hosted Agents
 
 Hosted agents simplify custom agent deployment in a fully controlled environment ([see more](https://learn.microsoft.com/azure/ai-foundry/agents/concepts/hosted-agents)).
@@ -206,7 +279,7 @@ azure-ai-agentserver-invocations
 azure-ai-agentserver-responses
 ```
 
-Prepare the metadata for Agent:
+Prepare the metadata for the Agent:
 
 ```C# Snippet:Sample_CodeAgentMetadata_CodeAgentProj
 private static AgentVersionFromCodeMetadata GetAgentMetadata()

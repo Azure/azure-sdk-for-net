@@ -1,8 +1,8 @@
 # Sample for Agent version drafts in Azure.AI.Projects.Agents
 
-Agent version draft may be useful for Agent testing, when it is not yet ready foor release. In this example we will demonstrate creation ov draft Agent versions.
+An Agent version draft may be useful for Agent testing, when it is not yet ready for release. In this example we will demonstrate the creation of draft Agent versions.
 
-To use Agents version drafts, we need to provide the `Foundry-Features` header in our REST requests. It can be done using `PipelinePolicy`.
+To use Agent version drafts, we need to provide the `Foundry-Features` header in our REST requests. It can be done using `PipelinePolicy`.
 
 ```C# Snippet:Sample_Agents_ExperimentalHeader
 internal class FeaturePolicy(string feature) : PipelinePolicy
@@ -29,17 +29,17 @@ We also need to ignore the `AAIP001` warning.
 #pragma warning disable AAIP001
 ```
 
-1. First, we need to create agent client and read the environment variables, which will be used in the next steps. We will also set `DraftAgents=V1Preview` preview header.
+1. First, we need to create the agent client and read the environment variables, which will be used in the next steps. We will also set the `DraftAgents=V1Preview` preview header.
 
 ```C# Snippet:Sample_CreateAgentClient_AgentsDraft
 var projectEndpoint = System.Environment.GetEnvironmentVariable("FOUNDRY_PROJECT_ENDPOINT");
 var modelDeploymentName = System.Environment.GetEnvironmentVariable("FOUNDRY_MODEL_NAME");
 AgentAdministrationClientOptions options = new();
 options.AddPolicy(new FeaturePolicy("DraftAgents=V1Preview"), PipelinePosition.PerCall);
-AgentAdministrationClient agentsClient = new(endpoint: new Uri(projectEndpoint), tokenProvider: new AzureCliCredential());
+AgentAdministrationClient agentsClient = new(endpoint: new Uri(projectEndpoint), tokenProvider: new DefaultAzureCredential(), options: options);
 ```
 
-2. Use the client to create versioned agent object.
+2. Use the client to create a versioned agent object.
 
 Synchronous sample:
 ```C# Snippet:Sample_CreateAgentVersion_AgentsDraft_Sync
@@ -70,16 +70,16 @@ Console.WriteLine($"Agent created: name: {agentVersion1.Name}, version: {agentVe
 Synchronous sample:
 ```C# Snippet:Sample_GetDefaultVersion_AgentsDraft_Sync
 ProjectsAgentRecord agent = agentsClient.GetAgent(agentName: agentVersion1.Name);
-Console.WriteLine($"The latest version of agent \"{agent.Name}\" is {agent.Versions.Latest}.");
+Console.WriteLine($"The latest version of agent \"{agent.Name}\" is {agent.Versions.Latest.Version}.");
 ```
 
 Asynchronous sample:
 ```C# Snippet:Sample_GetDefaultVersion_AgentsDraft_Async
 ProjectsAgentRecord agent = await agentsClient.GetAgentAsync(agentName: agentVersion1.Name);
-Console.WriteLine($"The latest version of agent \"{agent.Name}\" is {agent.Versions.Latest}.");
+Console.WriteLine($"The latest version of agent \"{agent.Name}\" is {agent.Versions.Latest.Version}.");
 ```
 
-4. Create another another Agent version and again, retrieve the Agent and get the latest version.
+4. Create another Agent version and again, retrieve the Agent and get the latest version.
 
 Synchronous sample:
 ```C# Snippet:Sample_CreateAnotherAgentVersion_AgentsDraft_Sync
@@ -92,7 +92,7 @@ ProjectsAgentVersion agentVersion2 = agentsClient.CreateAgentVersion(
     options: new(agentDefinition));
 Console.WriteLine($"Agent created name: {agentVersion2.Name}, version: {agentVersion2.Version}");
 agent = agentsClient.GetAgent(agentName: agentVersion1.Name);
-Console.WriteLine($"The latest version of agent \"{agent.Name}\" is now {agent.Versions.Latest}.");
+Console.WriteLine($"The latest version of agent \"{agent.Name}\" is now {agent.Versions.Latest.Version}.");
 ```
 
 Asynchronous sample:
@@ -106,10 +106,10 @@ ProjectsAgentVersion agentVersion2 = await agentsClient.CreateAgentVersionAsync(
     options: new(agentDefinition));
 Console.WriteLine($"Agent created name: {agentVersion2.Name}, version: {agentVersion2.Version}");
 agent = await agentsClient.GetAgentAsync(agentName: agentVersion1.Name);
-Console.WriteLine($"The latest version of agent \"{agent.Name}\" is now {agent.Versions.Latest}.");
+Console.WriteLine($"The latest version of agent \"{agent.Name}\" is now {agent.Versions.Latest.Version}.");
 ```
 
-5. Now create the Agent Draft version and inspect the latest version again. Note, it did not changed now.
+5. Now create the Agent Draft version and inspect the latest version again. Note that it did not change this time.
 
 Synchronous sample:
 ```C# Snippet:Sample_CreateDraft_AgentsDraft_Sync
@@ -126,7 +126,7 @@ ProjectsAgentVersion agentVersionDraft = agentsClient.CreateAgentVersion(
 );
 Console.WriteLine($"Agent created draft name: {agentVersionDraft.Name}, version: {agentVersionDraft.Version}");
 agent = agentsClient.GetAgent(agentName: agentVersion1.Name);
-Console.WriteLine($"The latest version of agent \"{agent.Name}\" is still {agent.Versions.Latest}.");
+Console.WriteLine($"The latest version of agent \"{agent.Name}\" is still {agent.Versions.Latest.Version}.");
 ```
 
 Asynchronous sample:
@@ -144,10 +144,10 @@ ProjectsAgentVersion agentVersionDraft = await agentsClient.CreateAgentVersionAs
 );
 Console.WriteLine($"Agent created draft name: {agentVersionDraft.Name}, version: {agentVersionDraft.Version}");
 agent = await agentsClient.GetAgentAsync(agentName: agentVersion1.Name);
-Console.WriteLine($"The latest version of agent \"{agent.Name}\" is still {agent.Versions.Latest}.");
+Console.WriteLine($"The latest version of agent \"{agent.Name}\" is still {agent.Versions.Latest.Version}.");
 ```
 
-6. List agents. The Agent version draft are not listed by default.
+6. List agents. The Agent version drafts are not listed by default.
 
 Synchronous sample:
 ```C# Snippet:Sample_ListReleaseAgents_AgentsDraft_Sync
