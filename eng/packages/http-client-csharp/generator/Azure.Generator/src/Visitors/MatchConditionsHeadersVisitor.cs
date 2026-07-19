@@ -139,8 +139,9 @@ namespace Azure.Generator.Visitors
                 return;
             }
 
-            var updatedStatements = new List<MethodBodyStatement>(method.BodyStatements.Count());
-            foreach (var statement in method.BodyStatements)
+            var originalStatements = method.BodyStatements.ToList();
+            var updatedStatements = new List<MethodBodyStatement>(originalStatements.Count);
+            foreach (var statement in originalStatements)
             {
                 updatedStatements.Add(TryUpdateCustomETagHeader(statement, customETagParameters, out var updatedStatement)
                     ? updatedStatement
