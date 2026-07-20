@@ -14,7 +14,7 @@ namespace Azure.ResourceManager.ContainerServiceSafeguards
     public partial class DeploymentSafeguardData : Azure.ResourceManager.Models.ResourceData, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ContainerServiceSafeguards.DeploymentSafeguardData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ContainerServiceSafeguards.DeploymentSafeguardData>
     {
         public DeploymentSafeguardData() { }
-        public string ETag { get { throw null; } }
+        public Azure.ETag? ETag { get { throw null; } }
         public Azure.ResourceManager.ContainerServiceSafeguards.Models.DeploymentSafeguardsProperties Properties { get { throw null; } set { } }
         protected virtual Azure.ResourceManager.Models.ResourceData JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.ContainerServiceSafeguards.Models
 {
     public static partial class ArmContainerServiceSafeguardsModelFactory
     {
-        public static Azure.ResourceManager.ContainerServiceSafeguards.DeploymentSafeguardData DeploymentSafeguardData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, Azure.ResourceManager.ContainerServiceSafeguards.Models.DeploymentSafeguardsProperties properties = null, string eTag = null) { throw null; }
+        public static Azure.ResourceManager.ContainerServiceSafeguards.DeploymentSafeguardData DeploymentSafeguardData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, Azure.ResourceManager.ContainerServiceSafeguards.Models.DeploymentSafeguardsProperties properties = null, Azure.ETag? eTag = default(Azure.ETag?)) { throw null; }
         public static Azure.ResourceManager.ContainerServiceSafeguards.Models.DeploymentSafeguardsProperties DeploymentSafeguardsProperties(Azure.ResourceManager.ContainerServiceSafeguards.Models.ProvisioningState? provisioningState = default(Azure.ResourceManager.ContainerServiceSafeguards.Models.ProvisioningState?), Azure.ResourceManager.ContainerServiceSafeguards.Models.DeploymentSafeguardsLevel level = default(Azure.ResourceManager.ContainerServiceSafeguards.Models.DeploymentSafeguardsLevel), System.Collections.Generic.IEnumerable<string> excludedNamespaces = null, System.Collections.Generic.IEnumerable<string> systemExcludedNamespaces = null, Azure.ResourceManager.ContainerServiceSafeguards.Models.PodSecurityStandardsLevel? podSecurityStandardsLevel = default(Azure.ResourceManager.ContainerServiceSafeguards.Models.PodSecurityStandardsLevel?)) { throw null; }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]

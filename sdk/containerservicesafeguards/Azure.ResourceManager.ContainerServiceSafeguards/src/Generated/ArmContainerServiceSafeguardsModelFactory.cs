@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.ContainerServiceSafeguards.Models
         /// <param name="properties"> The resource-specific properties for this resource. </param>
         /// <param name="eTag"> If eTag is provided in the response body, it may also be provided as a header per the normal etag convention.  Entity tags are used for comparing two or more entities from the same requested resource. HTTP/1.1 uses entity tags in the etag (section 14.19), If-Match (section 14.24), If-None-Match (section 14.26), and If-Range (section 14.27) header fields. </param>
         /// <returns> A new <see cref="ContainerServiceSafeguards.DeploymentSafeguardData"/> instance for mocking. </returns>
-        public static DeploymentSafeguardData DeploymentSafeguardData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, DeploymentSafeguardsProperties properties = default, string eTag = default)
+        public static DeploymentSafeguardData DeploymentSafeguardData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, DeploymentSafeguardsProperties properties = default, ETag? eTag = default)
         {
             return new DeploymentSafeguardData(
                 id,
