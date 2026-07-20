@@ -2,7 +2,6 @@
 // Licensed under the MIT License.
 
 using System;
-using System.ClientModel;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.IO;
@@ -110,7 +109,7 @@ public class Sample_CodeAgentReminderTool: ProjectsOpenAITestBase
         var projectEndpoint = TestEnvironment.FOUNDRY_PROJECT_ENDPOINT;
         var modelDeploymentName = TestEnvironment.FOUNDRY_MODEL_NAME;
 #endif
-        AIProjectClient projectClient = new(endpoint: new(projectEndpoint), tokenProvider: new AzureCliCredential());
+        AIProjectClient projectClient = new(endpoint: new(projectEndpoint), tokenProvider: new DefaultAzureCredential());
         AgentToolboxes toolboxClient = projectClient.AgentAdministrationClient.GetAgentToolboxes();
         #endregion
         #region Snippet:Sample_CreateToolbox_CodeAgentReminderTool_Async
@@ -144,7 +143,7 @@ public class Sample_CodeAgentReminderTool: ProjectsOpenAITestBase
             throw new InvalidOperationException($"The Agent deployment failed, status: {agentVersion.Status}");
         }
         #endregion
-        #region Snippet:Sample_GetResponseFromAgent_CodeAgentReminderTool_Async
+        #region Snippet:Sample_WaitForSession_CodeAgentReminderTool_Async
         string prompt = "Please remind me to go to lunch after one minute.";
         DateTimeOffset responseTime;
         ProjectAgentSession session = await projectClient.AgentAdministrationClient.CreateSessionAsync(agentName: agentVersion.Name, versionIndicator: new VersionRefIndicator(agentVersion.Version));
@@ -155,28 +154,29 @@ public class Sample_CodeAgentReminderTool: ProjectsOpenAITestBase
         }
         if (session.Status != AgentSessionStatus.Active)
         {
-            SessionLogEvent logEvent = await projectClient.AgentAdministrationClient.GetSessionLogStreamAsync(agentName: agentVersion.Name, agentVersion: agentVersion.Version, sessionId: session.AgentSessionId);
-            throw new InvalidOperationException($"The session creation arrived to non successful status {session.Status}. Log stream:\n{logEvent.Data}");
+            throw new InvalidOperationException($"The session creation reached a non-successful status {session.Status}.");
         }
         #endregion
         #region Snippet:Sample_GetResponseFromAgent_CodeAgentReminderTool_Async
         Console.WriteLine($"Sending prompt {prompt} in session {session.AgentSessionId}...");
-        try
+        ProjectOpenAIClientOptions oaiOptions = new();
+        oaiOptions.AddPolicy(new SessionHeaderPolicy(session.AgentSessionId), PipelinePosition.PerCall);
+        ProjectResponsesClient responseClient = projectClient.ProjectOpenAIClient.GetProjectResponsesClientForAgentEndpoint(agentVersion.Name, options: oaiOptions);
+        ResponseResult response = await responseClient.CreateResponseAsync(prompt);
+        Console.WriteLine("Response items:");
+        foreach (ResponseItem item in response.OutputItems)
         {
-            ProjectOpenAIClientOptions oaiOptions = new();
-            oaiOptions.AddPolicy(new SessionHeaderPolicy(session.AgentSessionId), PipelinePosition.PerCall);
-            ProjectResponsesClient responseClient = projectClient.ProjectOpenAIClient.GetProjectResponsesClientForAgentEndpoint(agentVersion.Name, options: oaiOptions);
-            ResponseResult response = await responseClient.CreateResponseAsync(prompt);
-
-            Console.WriteLine(response.GetOutputText());
-            responseTime = response.CreatedAt;
+            if (item is FunctionCallOutputResponseItem functionResponse)
+            {
+                Console.WriteLine($"    Function output {functionResponse.FunctionOutput}");
+            }
+            else if (item is FunctionCallResponseItem functionCall)
+            {
+                Console.WriteLine($"    Calling function {functionCall.FunctionName} with arguments {functionCall.FunctionArguments}");
+            }
         }
-        catch (ClientResultException)
-        {
-            SessionLogEvent logEvent = await projectClient.AgentAdministrationClient.GetSessionLogStreamAsync(agentName: agentVersion.Name, agentVersion: agentVersion.Version, sessionId: session.AgentSessionId);
-            Console.WriteLine(logEvent.Data);
-            throw;
-        }
+        Console.WriteLine(response.GetOutputText());
+        responseTime = response.CreatedAt;
         #endregion
         #region Snippet:Sample_GetCreatedTrigger_CodeAgentReminderTool_Async
         Console.WriteLine("Wait for a half of a second and inspect the routines.");
@@ -184,7 +184,7 @@ public class Sample_CodeAgentReminderTool: ProjectsOpenAITestBase
         ProjectsRoutine created = null;
         await foreach (ProjectsRoutine routine in projectClient.Routines.GetRoutinesAsync(order: MemoryStoreListOrder.Descending, limit: 1))
         {
-            // The routine created lo earlier then response and not later then one minute after response.
+            // The routine created no earlier then response and not later then one minute after response.
             if (routine.CreatedAt >= responseTime && routine.CreatedAt < responseTime.AddMinutes(1))
             {
                 created = routine;
@@ -200,9 +200,9 @@ public class Sample_CodeAgentReminderTool: ProjectsOpenAITestBase
         {
             throw new InvalidOperationException($"The routine was not created.");
         }
-        Console.WriteLine($"The last created routine is {created.Name}, assume it was created by ReminderPreviewToolboxTool.");
+        Console.WriteLine($"The last created routine is {created.Name}, assuming it was created by ReminderPreviewToolboxTool.");
         #endregion
-        #region Snippet:Sample_GetResponseFromAgent_CodeAgentReminderTool_Async
+        #region Snippet:Sample_WaitForRoutine_CodeAgentReminderTool_Async
         int minutesWait = 10;
         Console.WriteLine($"Waiting for run for {minutesWait} minutes...");
         DateTime deadline = DateTime.UtcNow + TimeSpan.FromMinutes(minutesWait);
@@ -229,9 +229,9 @@ public class Sample_CodeAgentReminderTool: ProjectsOpenAITestBase
         }
         CheckRunResult(completedRun, minutesWait, runWasTriggered);
         #endregion
-        #region Snippet:Sample_PrintOutput_CodeAgentReminderTool_Async
+        #region Snippet:Sample_OutputStatus_CodeAgentReminderTool_Async
         Console.WriteLine($"The run has completed with status {completedRun.Status}, response ID is {completedRun.ResponseId}");
-        //  Currently the response retrieval is not supported.
+        // Currently the response retrieval is not supported.
         // ProjectResponsesClient oaiClient = projectClient.ProjectOpenAIClient.GetProjectResponsesClientForAgentEndpoint(agentVersion.Name);
         // ResponseResult result = await oaiClient.GetResponseAsync(new GetResponseOptions(responseId: completedRun.ResponseId));
         // if (result.Error is not null)
@@ -242,8 +242,155 @@ public class Sample_CodeAgentReminderTool: ProjectsOpenAITestBase
         #endregion
         #region Snippet:DeleteCodeAgentReminderTool_CodeAgentReminderTool_Async
         await toolboxClient.DeleteAsync(toolBox.Name);
-        await projectClient.AgentAdministrationClient.StopSessionAsync(agentName: agentVersion.Name, sessionId: session.AgentSessionId);
         await projectClient.AgentAdministrationClient.DeleteAgentAsync(agentVersion.Name, force: true);
+        #endregion
+    }
+
+    [Test]
+    [SyncOnly]
+    public void CodeAgentReminderToolCreateSync()
+    {
+        IgnoreSampleMayBe();
+#if SNIPPET
+        var projectEndpoint = System.Environment.GetEnvironmentVariable("FOUNDRY_PROJECT_ENDPOINT");
+        var modelDeploymentName = System.Environment.GetEnvironmentVariable("FOUNDRY_MODEL_NAME");
+#else
+        var projectEndpoint = TestEnvironment.FOUNDRY_PROJECT_ENDPOINT;
+        var modelDeploymentName = TestEnvironment.FOUNDRY_MODEL_NAME;
+#endif
+        AIProjectClient projectClient = new(endpoint: new(projectEndpoint), tokenProvider: new DefaultAzureCredential());
+        AgentToolboxes toolboxClient = projectClient.AgentAdministrationClient.GetAgentToolboxes();
+        #region Snippet:Sample_CreateToolbox_CodeAgentReminderTool_Sync
+        ToolboxVersion toolBox = toolboxClient.CreateVersion(
+            name: "toolboxWithTheReminder",
+            tools: [new ReminderPreviewToolboxTool()],
+            description: "The toolbox with a reminder tool."
+        );
+        Console.WriteLine($"Created a toolbox {toolBox.Name} v. {toolBox.Version}.");
+        #endregion
+        #region Snippet:Sample_CreateAgent_CodeAgentReminderTool_Sync
+        ProjectsAgentVersion agentVersion = projectClient.AgentAdministrationClient.CreateAgentVersionFromCode(
+            agentName: "myCodeAgentReminderTool",
+            filePath: GetDirectory(Path.Combine(["Assets", "AgentsCodeToolbox"])),
+            metadata: GetAgentMetadata(
+                middlewareAgentName: "codeAgentMiddleware1",
+                toolboxName: toolBox.Name,
+                foundryProjectEndpoint: projectEndpoint,
+                modelDeploymentName: modelDeploymentName
+            )
+        );
+        #endregion
+        #region Snippet:Sample_WaitForDeployment_CodeAgentReminderTool_Sync
+        while (agentVersion.Status != AgentVersionStatus.Active && agentVersion.Status != AgentVersionStatus.Failed)
+        {
+            Thread.Sleep(500);
+            agentVersion = projectClient.AgentAdministrationClient.GetAgentVersion(agentName: agentVersion.Name, agentVersion: agentVersion.Version);
+        }
+        if (agentVersion.Status != AgentVersionStatus.Active)
+        {
+            throw new InvalidOperationException($"The Agent deployment failed, status: {agentVersion.Status}");
+        }
+        #endregion
+        #region Snippet:Sample_WaitForSession_CodeAgentReminderTool_Sync
+        string prompt = "Please remind me to go to lunch after one minute.";
+        DateTimeOffset responseTime;
+        ProjectAgentSession session = projectClient.AgentAdministrationClient.CreateSession(agentName: agentVersion.Name, versionIndicator: new VersionRefIndicator(agentVersion.Version));
+        while (session.Status != AgentSessionStatus.Failed && session.Status != AgentSessionStatus.Active)
+        {
+            Thread.Sleep(500);
+            session = projectClient.AgentAdministrationClient.GetSession(agentName: agentVersion.Name, sessionId: session.AgentSessionId);
+        }
+        if (session.Status != AgentSessionStatus.Active)
+        {
+            throw new InvalidOperationException($"The session creation reached a non-successful status {session.Status}.");
+        }
+        #endregion
+        #region Snippet:Sample_GetResponseFromAgent_CodeAgentReminderTool_Sync
+        Console.WriteLine($"Sending prompt {prompt} in session {session.AgentSessionId}...");
+        ProjectOpenAIClientOptions oaiOptions = new();
+        oaiOptions.AddPolicy(new SessionHeaderPolicy(session.AgentSessionId), PipelinePosition.PerCall);
+        ProjectResponsesClient responseClient = projectClient.ProjectOpenAIClient.GetProjectResponsesClientForAgentEndpoint(agentVersion.Name, options: oaiOptions);
+        ResponseResult response = responseClient.CreateResponse(prompt);
+        Console.WriteLine("Response items:");
+        foreach (ResponseItem item in response.OutputItems)
+        {
+            if (item is FunctionCallOutputResponseItem functionResponse)
+            {
+                Console.WriteLine($"    Function output {functionResponse.FunctionOutput}");
+            }
+            else if (item is FunctionCallResponseItem functionCall)
+            {
+                Console.WriteLine($"    Calling function {functionCall.FunctionName} with arguments {functionCall.FunctionArguments}");
+            }
+        }
+        Console.WriteLine(response.GetOutputText());
+        responseTime = response.CreatedAt;
+        #endregion
+        #region Snippet:Sample_GetCreatedTrigger_CodeAgentReminderTool_Sync
+        Console.WriteLine("Wait for a half of a second and inspect the routines.");
+        Thread.Sleep(500);
+        ProjectsRoutine created = null;
+        foreach (ProjectsRoutine routine in projectClient.Routines.GetRoutines(order: MemoryStoreListOrder.Descending, limit: 1))
+        {
+            // The routine created no earlier then response and not later then one minute after response.
+            if (routine.CreatedAt >= responseTime && routine.CreatedAt < responseTime.AddMinutes(1))
+            {
+                created = routine;
+                break;
+            }
+            // If the latest routine was created before the response, our routine was not created.
+            else if (routine.CreatedAt < responseTime)
+            {
+                break;
+            }
+        }
+        if (created == null)
+        {
+            throw new InvalidOperationException($"The routine was not created.");
+        }
+        Console.WriteLine($"The last created routine is {created.Name}, assuming it was created by ReminderPreviewToolboxTool.");
+        #endregion
+        #region Snippet:Sample_WaitForRoutine_CodeAgentReminderTool_Sync
+        int minutesWait = 10;
+        Console.WriteLine($"Waiting for run for {minutesWait} minutes...");
+        DateTime deadline = DateTime.UtcNow + TimeSpan.FromMinutes(minutesWait);
+        RoutineRun completedRun = null;
+        bool runWasTriggered = false;
+        while (DateTime.UtcNow < deadline)
+        {
+            Thread.Sleep(500);
+            foreach (RoutineRun run in projectClient.Routines.GetRoutineRuns(name: created.Name))
+            {
+                runWasTriggered = true;
+                Console.WriteLine($"    - run ID {run.Id}, status: {run.Status}, trigger type: {run.TriggerType}, triggered at: {run.TriggeredAt?.ToString() ?? "<Not triggered yet>"}, ended at: {run.EndedAt?.ToString() ?? "<Not ended yet>"}");
+                if (string.Equals(run.Status, "finished", StringComparison.InvariantCultureIgnoreCase) ||
+                    string.Equals(run.Status, "failed", StringComparison.InvariantCultureIgnoreCase) ||
+                    string.Equals(run.Status, "killed", StringComparison.InvariantCultureIgnoreCase))
+                {
+                    completedRun = run;
+                }
+            }
+            if (completedRun is not null)
+            {
+                break;
+            }
+        }
+        CheckRunResult(completedRun, minutesWait, runWasTriggered);
+        #endregion
+        #region Snippet:Sample_OutputStatus_CodeAgentReminderTool_Sync
+        Console.WriteLine($"The run has completed with status {completedRun.Status}, response ID is {completedRun.ResponseId}");
+        // Currently the response retrieval is not supported.
+        // ProjectResponsesClient oaiClient = projectClient.ProjectOpenAIClient.GetProjectResponsesClientForAgentEndpoint(agentVersion.Name);
+        // ResponseResult result = await oaiClient.GetResponseAsync(new GetResponseOptions(responseId: completedRun.ResponseId));
+        // if (result.Error is not null)
+        // {
+        //     throw new InvalidOperationException($"The response, triggered by routine resulted in error. Code: {result.Error.Code}, Message: {result.Error.Message}");
+        // }
+        // Console.WriteLine($"Response: {result.GetOutputText()}");
+        #endregion
+        #region Snippet:DeleteCodeAgentReminderTool_CodeAgentReminderTool_Sync
+        toolboxClient.Delete(toolBox.Name);
+        projectClient.AgentAdministrationClient.DeleteAgent(agentVersion.Name, force: true);
         #endregion
     }
 
