@@ -127,6 +127,12 @@ namespace Azure.Generator.Visitors
 
         private static void UpdateCustomETagHeaders(ScmMethodProvider method)
         {
+            var bodyStatements = method.BodyStatements;
+            if (bodyStatements == null)
+            {
+                return;
+            }
+
             var customETagParameters = method.Signature.Parameters
                 .Where(parameter =>
                     parameter.Location == ParameterLocation.Header &&
@@ -134,12 +140,12 @@ namespace Azure.Generator.Visitors
                     !_conditionalHeaders.Contains(parameter.WireInfo.SerializedName))
                 .ToDictionary(parameter => parameter.WireInfo.SerializedName, StringComparer.OrdinalIgnoreCase);
 
-            if (customETagParameters.Count == 0 || method.BodyStatements == null)
+            if (customETagParameters.Count == 0)
             {
                 return;
             }
 
-            var originalStatements = method.BodyStatements.ToList();
+            var originalStatements = bodyStatements.ToList();
             var updatedStatements = new List<MethodBodyStatement>(originalStatements.Count);
             foreach (var statement in originalStatements)
             {
