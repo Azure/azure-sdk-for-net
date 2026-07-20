@@ -86,6 +86,14 @@ namespace Azure.Provisioning.Tests.BicepValues
         }
 
         [Test]
+        public void CannotAssignOutputNestedProperty()
+        {
+            var resource = new TestResource("test");
+
+            Assert.Throws<InvalidOperationException>(() => resource.OutputModel.Id = "value");
+        }
+
+        [Test]
         public void ValidateListProperty_Undefined()
         {
             var resource = new TestResource("test");
@@ -1285,7 +1293,7 @@ namespace Azure.Provisioning.Tests.BicepValues
                 _withValue = DefineProperty<string>("WithValue", ["withValue"]);
                 _withoutValue = DefineProperty<string>("WithoutValue", ["withoutValue"]);
                 _outputValue = DefineProperty<string>("OutputValue", ["outputValue"], isOutput: true);
-                _outputModel = DefineModelProperty<OutputModel>("OutputModel", ["outputModel"], isOutput: true);
+                _outputModel = DefineModelProperty("OutputModel", ["outputModel"], new OutputModel(), isOutput: true);
                 _list = DefineListProperty<string>("List", ["list"]);
                 _outputList = DefineListProperty<string>("OutputList", ["outputList"], isOutput: true);
                 _models = DefineListProperty<TestModel>("Models", ["models"]);
@@ -1355,6 +1363,7 @@ namespace Azure.Provisioning.Tests.BicepValues
             public BicepValue<string> Id
             {
                 get { Initialize(); return _id!; }
+                set { Initialize(); _id!.Assign(value); }
             }
 
             protected override void DefineProvisionableProperties()
