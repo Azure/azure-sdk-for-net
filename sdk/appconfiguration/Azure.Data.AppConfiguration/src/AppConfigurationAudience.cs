@@ -38,7 +38,7 @@ namespace Azure.Data.AppConfiguration
         public static AppConfigurationAudience AzurePublicCloud { get; } = new AppConfigurationAudience(AzurePublicCloudValue);
 
         /// <summary> Azure Public Cloud (AzConfig). </summary>
-        public static AppConfigurationAudience AzurePublicCloudAz { get; } = new AppConfigurationAudience(AzurePublicCloudAzValue);
+        private static AppConfigurationAudience AzurePublicCloudAz { get; } = new AppConfigurationAudience(AzurePublicCloudAzValue);
 
         /// <summary> Determines if two <see cref="AppConfigurationAudience"/> values are the same. </summary>
         public static bool operator ==(AppConfigurationAudience left, AppConfigurationAudience right) => left.Equals(right);
