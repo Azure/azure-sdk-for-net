@@ -9,56 +9,57 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure.Core;
 using Azure.ResourceManager.Enclave;
 
 namespace Azure.ResourceManager.Enclave.Models
 {
-    /// <summary> Monitoring Settings Patch Model. </summary>
-    public partial class MonitoringSettingsPatchModel : IJsonModel<MonitoringSettingsPatchModel>
+    /// <summary> TransitOptionParams Properties. </summary>
+    public partial class VirtualEnclaveTransitOptionContent : IJsonModel<VirtualEnclaveTransitOptionContent>
     {
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual MonitoringSettingsPatchModel PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        protected virtual VirtualEnclaveTransitOptionContent PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<MonitoringSettingsPatchModel>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<VirtualEnclaveTransitOptionContent>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeMonitoringSettingsPatchModel(document.RootElement, options);
+                        return DeserializeVirtualEnclaveTransitOptionContent(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(MonitoringSettingsPatchModel)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(VirtualEnclaveTransitOptionContent)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<MonitoringSettingsPatchModel>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<VirtualEnclaveTransitOptionContent>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options, AzureResourceManagerEnclaveContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(MonitoringSettingsPatchModel)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(VirtualEnclaveTransitOptionContent)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<MonitoringSettingsPatchModel>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<VirtualEnclaveTransitOptionContent>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        MonitoringSettingsPatchModel IPersistableModel<MonitoringSettingsPatchModel>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+        VirtualEnclaveTransitOptionContent IPersistableModel<VirtualEnclaveTransitOptionContent>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<MonitoringSettingsPatchModel>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<VirtualEnclaveTransitOptionContent>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<MonitoringSettingsPatchModel>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<VirtualEnclaveTransitOptionContent>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -69,25 +70,20 @@ namespace Azure.ResourceManager.Enclave.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<MonitoringSettingsPatchModel>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<VirtualEnclaveTransitOptionContent>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(MonitoringSettingsPatchModel)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(VirtualEnclaveTransitOptionContent)} does not support writing '{format}' format.");
             }
-            if (Optional.IsCollectionDefined(DiagnosticDestinations))
+            if (Optional.IsDefined(ScaleUnits))
             {
-                writer.WritePropertyName("diagnosticDestinations"u8);
-                writer.WriteStartArray();
-                foreach (MonitoringDestinationPatchModel item in DiagnosticDestinations)
-                {
-                    writer.WriteObjectValue(item, options);
-                }
-                writer.WriteEndArray();
+                writer.WritePropertyName("scaleUnits"u8);
+                writer.WriteNumberValue(ScaleUnits.Value);
             }
-            if (Optional.IsDefined(FlowLogDestination))
+            if (Optional.IsDefined(RemoteVirtualNetworkId))
             {
-                writer.WritePropertyName("flowLogDestination"u8);
-                writer.WriteObjectValue(FlowLogDestination, options);
+                writer.WritePropertyName("remoteVirtualNetworkId"u8);
+                writer.WriteStringValue(RemoteVirtualNetworkId);
             }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
@@ -108,55 +104,50 @@ namespace Azure.ResourceManager.Enclave.Models
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        MonitoringSettingsPatchModel IJsonModel<MonitoringSettingsPatchModel>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+        VirtualEnclaveTransitOptionContent IJsonModel<VirtualEnclaveTransitOptionContent>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual MonitoringSettingsPatchModel JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        protected virtual VirtualEnclaveTransitOptionContent JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<MonitoringSettingsPatchModel>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<VirtualEnclaveTransitOptionContent>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(MonitoringSettingsPatchModel)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(VirtualEnclaveTransitOptionContent)} does not support reading '{format}' format.");
             }
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeMonitoringSettingsPatchModel(document.RootElement, options);
+            return DeserializeVirtualEnclaveTransitOptionContent(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        internal static MonitoringSettingsPatchModel DeserializeMonitoringSettingsPatchModel(JsonElement element, ModelReaderWriterOptions options)
+        internal static VirtualEnclaveTransitOptionContent DeserializeVirtualEnclaveTransitOptionContent(JsonElement element, ModelReaderWriterOptions options)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            IList<MonitoringDestinationPatchModel> diagnosticDestinations = default;
-            MonitoringDestinationPatchModel flowLogDestination = default;
+            long? scaleUnits = default;
+            ResourceIdentifier remoteVirtualNetworkId = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
-                if (prop.NameEquals("diagnosticDestinations"u8))
+                if (prop.NameEquals("scaleUnits"u8))
                 {
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    List<MonitoringDestinationPatchModel> array = new List<MonitoringDestinationPatchModel>();
-                    foreach (var item in prop.Value.EnumerateArray())
-                    {
-                        array.Add(MonitoringDestinationPatchModel.DeserializeMonitoringDestinationPatchModel(item, options));
-                    }
-                    diagnosticDestinations = array;
+                    scaleUnits = prop.Value.GetInt64();
                     continue;
                 }
-                if (prop.NameEquals("flowLogDestination"u8))
+                if (prop.NameEquals("remoteVirtualNetworkId"u8))
                 {
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    flowLogDestination = MonitoringDestinationPatchModel.DeserializeMonitoringDestinationPatchModel(prop.Value, options);
+                    remoteVirtualNetworkId = new ResourceIdentifier(prop.Value.GetString());
                     continue;
                 }
                 if (options.Format != "W")
@@ -164,7 +155,7 @@ namespace Azure.ResourceManager.Enclave.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new MonitoringSettingsPatchModel(diagnosticDestinations ?? new ChangeTrackingList<MonitoringDestinationPatchModel>(), flowLogDestination, additionalBinaryDataProperties);
+            return new VirtualEnclaveTransitOptionContent(scaleUnits, remoteVirtualNetworkId, additionalBinaryDataProperties);
         }
     }
 }

@@ -542,7 +542,7 @@ namespace Azure.ResourceManager.Enclave.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<DedicatedHubResourceData, DedicatedHubResource>(new DedicatedHubGetBySubscriptionAsyncCollectionResultOfT(DedicatedHubRestClient, Guid.Parse(Id.SubscriptionId), communityName, context, "MockableEnclaveSubscriptionResource.GetDedicatedHubResources"), data => new DedicatedHubResource(Client, data));
+            return new AsyncPageableWrapper<DedicatedHubData, DedicatedHubResource>(new DedicatedHubGetBySubscriptionAsyncCollectionResultOfT(DedicatedHubRestClient, Guid.Parse(Id.SubscriptionId), communityName, context, "MockableEnclaveSubscriptionResource.GetDedicatedHubResources"), data => new DedicatedHubResource(Client, data));
         }
 
         /// <summary>
@@ -575,7 +575,7 @@ namespace Azure.ResourceManager.Enclave.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<DedicatedHubResourceData, DedicatedHubResource>(new DedicatedHubGetBySubscriptionCollectionResultOfT(DedicatedHubRestClient, Guid.Parse(Id.SubscriptionId), communityName, context, "MockableEnclaveSubscriptionResource.GetDedicatedHubResources"), data => new DedicatedHubResource(Client, data));
+            return new PageableWrapper<DedicatedHubData, DedicatedHubResource>(new DedicatedHubGetBySubscriptionCollectionResultOfT(DedicatedHubRestClient, Guid.Parse(Id.SubscriptionId), communityName, context, "MockableEnclaveSubscriptionResource.GetDedicatedHubResources"), data => new DedicatedHubResource(Client, data));
         }
     }
 }

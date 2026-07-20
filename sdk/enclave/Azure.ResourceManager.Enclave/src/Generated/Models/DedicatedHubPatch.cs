@@ -12,22 +12,22 @@ using Azure.ResourceManager.Enclave;
 namespace Azure.ResourceManager.Enclave.Models
 {
     /// <summary> Dedicated Hub Patch Resource. </summary>
-    public partial class DedicatedHubResourcePatch
+    public partial class DedicatedHubPatch
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="DedicatedHubResourcePatch"/>. </summary>
-        public DedicatedHubResourcePatch()
+        /// <summary> Initializes a new instance of <see cref="DedicatedHubPatch"/>. </summary>
+        public DedicatedHubPatch()
         {
             Tags = new ChangeTrackingDictionary<string, string>();
         }
 
-        /// <summary> Initializes a new instance of <see cref="DedicatedHubResourcePatch"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="DedicatedHubPatch"/>. </summary>
         /// <param name="properties"> The DedicatedHub resource. </param>
         /// <param name="tags"> Resource tags. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal DedicatedHubResourcePatch(DedicatedHubPatchProperties properties, IDictionary<string, string> tags, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal DedicatedHubPatch(DedicatedHubPatchProperties properties, IDictionary<string, string> tags, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Properties = properties;
             Tags = tags;
@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.Enclave.Models
         public IDictionary<string, string> Tags { get; }
 
         /// <summary> Designation of hub resource allocation (Pooled or Reserved). </summary>
-        public Designation? DedicatedHubPatchDesignation
+        public VirtualEnclaveDesignation? DedicatedHubPatchDesignation
         {
             get
             {

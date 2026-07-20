@@ -11,23 +11,23 @@ using Azure.ResourceManager.Enclave;
 
 namespace Azure.ResourceManager.Enclave.Models
 {
-    /// <summary> Monitoring Settings. </summary>
-    public partial class MonitoringSettingsModel
+    /// <summary> Monitoring Settings Patch Model. </summary>
+    public partial class VirtualEnclaveMonitoringSettingsPatch
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="MonitoringSettingsModel"/>. </summary>
-        public MonitoringSettingsModel()
+        /// <summary> Initializes a new instance of <see cref="VirtualEnclaveMonitoringSettingsPatch"/>. </summary>
+        public VirtualEnclaveMonitoringSettingsPatch()
         {
-            DiagnosticDestinations = new ChangeTrackingList<MonitoringDestination>();
+            DiagnosticDestinations = new ChangeTrackingList<VirtualEnclaveMonitoringDestinationPatch>();
         }
 
-        /// <summary> Initializes a new instance of <see cref="MonitoringSettingsModel"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="VirtualEnclaveMonitoringSettingsPatch"/>. </summary>
         /// <param name="diagnosticDestinations"> Log Analytics workspace destinations where diagnostic logs will be stored. </param>
         /// <param name="flowLogDestination"> Log Analytics workspace destination where virtual network flow logs will be stored. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal MonitoringSettingsModel(IList<MonitoringDestination> diagnosticDestinations, MonitoringDestination flowLogDestination, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal VirtualEnclaveMonitoringSettingsPatch(IList<VirtualEnclaveMonitoringDestinationPatch> diagnosticDestinations, VirtualEnclaveMonitoringDestinationPatch flowLogDestination, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             DiagnosticDestinations = diagnosticDestinations;
             FlowLogDestination = flowLogDestination;
@@ -35,9 +35,9 @@ namespace Azure.ResourceManager.Enclave.Models
         }
 
         /// <summary> Log Analytics workspace destinations where diagnostic logs will be stored. </summary>
-        public IList<MonitoringDestination> DiagnosticDestinations { get; }
+        public IList<VirtualEnclaveMonitoringDestinationPatch> DiagnosticDestinations { get; }
 
         /// <summary> Log Analytics workspace destination where virtual network flow logs will be stored. </summary>
-        public MonitoringDestination FlowLogDestination { get; set; }
+        public VirtualEnclaveMonitoringDestinationPatch FlowLogDestination { get; set; }
     }
 }

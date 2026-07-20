@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.Enclave.Models
         /// <param name="provisioningState"> Provisioning State. </param>
         /// <param name="updateMode"> Whether update mode is automatic or manual. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal VirtualEnclaveEndpointProperties(IList<EnclaveEndpointDestinationRule> ruleCollection, IReadOnlyList<ResourceIdentifier> resourceCollection, VirtualEnclaveProvisioningState? provisioningState, UpdateMode? updateMode, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal VirtualEnclaveEndpointProperties(IList<EnclaveEndpointDestinationRule> ruleCollection, IReadOnlyList<ResourceIdentifier> resourceCollection, VirtualEnclaveProvisioningState? provisioningState, VirtualEnclaveUpdateMode? updateMode, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             RuleCollection = ruleCollection;
             ResourceCollection = resourceCollection;
@@ -55,6 +55,6 @@ namespace Azure.ResourceManager.Enclave.Models
         public VirtualEnclaveProvisioningState? ProvisioningState { get; }
 
         /// <summary> Whether update mode is automatic or manual. </summary>
-        public UpdateMode? UpdateMode { get; set; }
+        public VirtualEnclaveUpdateMode? UpdateMode { get; set; }
     }
 }

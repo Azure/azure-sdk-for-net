@@ -145,7 +145,7 @@ namespace Azure.ResourceManager.Enclave.Models
             ResourceIdentifier vHubResourceId = default;
             ResourceIdentifier firewallResourceId = default;
             ResourceIdentifier firewallPolicyResourceId = default;
-            Designation? designation = default;
+            VirtualEnclaveDesignation? designation = default;
             VirtualEnclaveProvisioningState? provisioningState = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
@@ -183,7 +183,7 @@ namespace Azure.ResourceManager.Enclave.Models
                     {
                         continue;
                     }
-                    designation = new Designation(prop.Value.GetString());
+                    designation = new VirtualEnclaveDesignation(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("provisioningState"u8))

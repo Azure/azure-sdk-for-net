@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.Enclave.Models
         /// <param name="ruleCollection"> Enclave Endpoint Rule Collection. </param>
         /// <param name="updateMode"> Whether update mode is automatic or manual. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal EnclaveEndpointPatchProperties(IList<EnclaveEndpointDestinationRule> ruleCollection, UpdateMode? updateMode, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal EnclaveEndpointPatchProperties(IList<EnclaveEndpointDestinationRule> ruleCollection, VirtualEnclaveUpdateMode? updateMode, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             RuleCollection = ruleCollection;
             UpdateMode = updateMode;
@@ -43,6 +43,6 @@ namespace Azure.ResourceManager.Enclave.Models
         public IList<EnclaveEndpointDestinationRule> RuleCollection { get; }
 
         /// <summary> Whether update mode is automatic or manual. </summary>
-        public UpdateMode? UpdateMode { get; set; }
+        public VirtualEnclaveUpdateMode? UpdateMode { get; set; }
     }
 }

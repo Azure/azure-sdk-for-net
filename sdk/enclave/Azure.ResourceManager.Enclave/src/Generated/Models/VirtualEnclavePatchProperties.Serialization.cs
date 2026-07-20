@@ -196,7 +196,7 @@ namespace Azure.ResourceManager.Enclave.Models
             }
             EnclaveVirtualNetwork enclaveVirtualNetwork = default;
             bool? isBastionEnabled = default;
-            ResourceVisibilityMode? workloadResourceVisibility = default;
+            VirtualEnclaveResourceVisibilityMode? workloadResourceVisibility = default;
             RbacInheritanceMode? rbacInheritance = default;
             IList<VirtualEnclaveRoleAssignmentItem> enclaveRoleAssignments = default;
             IList<VirtualEnclaveRoleAssignmentItem> workloadRoleAssignments = default;
@@ -205,7 +205,7 @@ namespace Azure.ResourceManager.Enclave.Models
             VirtualEnclaveMaintenanceModeConfigurationPatch maintenanceModeConfiguration = default;
             ResourceIdentifier dedicatedHubResourceId = default;
             VirtualEnclaveApprovalSettingsPatchProperties approvalSettings = default;
-            MonitoringSettingsPatchModel monitoringSettings = default;
+            VirtualEnclaveMonitoringSettingsPatch monitoringSettings = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -229,7 +229,7 @@ namespace Azure.ResourceManager.Enclave.Models
                     {
                         continue;
                     }
-                    workloadResourceVisibility = new ResourceVisibilityMode(prop.Value.GetString());
+                    workloadResourceVisibility = new VirtualEnclaveResourceVisibilityMode(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("rbacInheritance"u8))
@@ -325,7 +325,7 @@ namespace Azure.ResourceManager.Enclave.Models
                     {
                         continue;
                     }
-                    monitoringSettings = MonitoringSettingsPatchModel.DeserializeMonitoringSettingsPatchModel(prop.Value, options);
+                    monitoringSettings = VirtualEnclaveMonitoringSettingsPatch.DeserializeVirtualEnclaveMonitoringSettingsPatch(prop.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

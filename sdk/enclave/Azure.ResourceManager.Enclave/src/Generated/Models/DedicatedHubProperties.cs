@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.Enclave.Models
         /// <param name="designation"> Designation of hub resource allocation (Pooled or Reserved). </param>
         /// <param name="provisioningState"> The status of the last operation. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal DedicatedHubProperties(ResourceIdentifier vHubResourceId, ResourceIdentifier firewallResourceId, ResourceIdentifier firewallPolicyResourceId, Designation? designation, VirtualEnclaveProvisioningState? provisioningState, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal DedicatedHubProperties(ResourceIdentifier vHubResourceId, ResourceIdentifier firewallResourceId, ResourceIdentifier firewallPolicyResourceId, VirtualEnclaveDesignation? designation, VirtualEnclaveProvisioningState? provisioningState, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             VHubResourceId = vHubResourceId;
             FirewallResourceId = firewallResourceId;
@@ -49,7 +49,7 @@ namespace Azure.ResourceManager.Enclave.Models
         public ResourceIdentifier FirewallPolicyResourceId { get; }
 
         /// <summary> Designation of hub resource allocation (Pooled or Reserved). </summary>
-        public Designation? Designation { get; set; }
+        public VirtualEnclaveDesignation? Designation { get; set; }
 
         /// <summary> The status of the last operation. </summary>
         public VirtualEnclaveProvisioningState? ProvisioningState { get; }

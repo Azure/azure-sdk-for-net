@@ -126,8 +126,8 @@ namespace Azure.ResourceManager.Enclave.Models
             {
                 return null;
             }
-            TransitOptionType? @type = default;
-            TransitOptionParams @params = default;
+            VirtualEnclaveTransitOptionType? @type = default;
+            VirtualEnclaveTransitOptionContent @params = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -137,7 +137,7 @@ namespace Azure.ResourceManager.Enclave.Models
                     {
                         continue;
                     }
-                    @type = new TransitOptionType(prop.Value.GetString());
+                    @type = new VirtualEnclaveTransitOptionType(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("params"u8))
@@ -146,7 +146,7 @@ namespace Azure.ResourceManager.Enclave.Models
                     {
                         continue;
                     }
-                    @params = TransitOptionParams.DeserializeTransitOptionParams(prop.Value, options);
+                    @params = VirtualEnclaveTransitOptionContent.DeserializeVirtualEnclaveTransitOptionContent(prop.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

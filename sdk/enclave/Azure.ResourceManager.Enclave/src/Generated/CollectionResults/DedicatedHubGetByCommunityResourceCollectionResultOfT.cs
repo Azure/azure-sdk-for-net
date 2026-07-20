@@ -14,7 +14,7 @@ using Azure.ResourceManager.Enclave.Models;
 
 namespace Azure.ResourceManager.Enclave
 {
-    internal partial class DedicatedHubGetByCommunityResourceCollectionResultOfT : Pageable<DedicatedHubResourceData>
+    internal partial class DedicatedHubGetByCommunityResourceCollectionResultOfT : Pageable<DedicatedHubData>
     {
         private readonly DedicatedHub _client;
         private readonly Guid _subscriptionId;
@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.Enclave
         /// <param name="continuationToken"> A continuation token indicating where to resume paging. </param>
         /// <param name="pageSizeHint"> The number of items per page. </param>
         /// <returns> The pages of DedicatedHubGetByCommunityResourceCollectionResultOfT as an enumerable collection. </returns>
-        public override IEnumerable<Page<DedicatedHubResourceData>> AsPages(string continuationToken, int? pageSizeHint)
+        public override IEnumerable<Page<DedicatedHubData>> AsPages(string continuationToken, int? pageSizeHint)
         {
             Uri nextPage = continuationToken != null ? new Uri(continuationToken) : null;
             while (true)
@@ -56,7 +56,7 @@ namespace Azure.ResourceManager.Enclave
                 }
                 DedicatedHubResourceListResult result = DedicatedHubResourceListResult.FromResponse(response);
                 nextPage = result.NextLink;
-                yield return Page<DedicatedHubResourceData>.FromValues((IReadOnlyList<DedicatedHubResourceData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
+                yield return Page<DedicatedHubData>.FromValues((IReadOnlyList<DedicatedHubData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 if (nextPage == null)
                 {
                     yield break;

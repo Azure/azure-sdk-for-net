@@ -1644,12 +1644,6 @@
       ]
     },
     {
-      "filename": "/sdk/enclave/**/*.cs",
-      "words": [
-        "mobo"
-      ]
-    },
-    {
       "filename": "**/sdk/workloadorchestration/**/*.cs",
       "words": [
         "inprogress",

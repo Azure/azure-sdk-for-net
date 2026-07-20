@@ -169,7 +169,7 @@ namespace Azure.ResourceManager.Enclave.Models
             {
                 writer.WritePropertyName("dedicatedHubList"u8);
                 writer.WriteStartArray();
-                foreach (DedicatedHubResourceData item in DedicatedHubList)
+                foreach (DedicatedHubData item in DedicatedHubList)
                 {
                     writer.WriteObjectValue(item, options);
                 }
@@ -249,8 +249,8 @@ namespace Azure.ResourceManager.Enclave.Models
             VirtualEnclaveFirewallSku? firewallSku = default;
             VirtualEnclaveBaseApprovalSettings granularApprovalSettings = default;
             VirtualEnclaveMaintenanceModeConfiguration maintenanceModeConfiguration = default;
-            IReadOnlyList<DedicatedHubResourceData> dedicatedHubList = default;
-            MonitoringSettingsModel monitoringSettings = default;
+            IReadOnlyList<DedicatedHubData> dedicatedHubList = default;
+            VirtualEnclaveMonitoringSettings monitoringSettings = default;
             IList<string> addressSpaces = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
@@ -395,10 +395,10 @@ namespace Azure.ResourceManager.Enclave.Models
                     {
                         continue;
                     }
-                    List<DedicatedHubResourceData> array = new List<DedicatedHubResourceData>();
+                    List<DedicatedHubData> array = new List<DedicatedHubData>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(DedicatedHubResourceData.DeserializeDedicatedHubResourceData(item, options));
+                        array.Add(DedicatedHubData.DeserializeDedicatedHubData(item, options));
                     }
                     dedicatedHubList = array;
                     continue;
@@ -409,7 +409,7 @@ namespace Azure.ResourceManager.Enclave.Models
                     {
                         continue;
                     }
-                    monitoringSettings = MonitoringSettingsModel.DeserializeMonitoringSettingsModel(prop.Value, options);
+                    monitoringSettings = VirtualEnclaveMonitoringSettings.DeserializeVirtualEnclaveMonitoringSettings(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("addressSpaces"u8))
@@ -451,7 +451,7 @@ namespace Azure.ResourceManager.Enclave.Models
                 firewallSku,
                 granularApprovalSettings,
                 maintenanceModeConfiguration,
-                dedicatedHubList ?? new ChangeTrackingList<DedicatedHubResourceData>(),
+                dedicatedHubList ?? new ChangeTrackingList<DedicatedHubData>(),
                 monitoringSettings,
                 addressSpaces ?? new ChangeTrackingList<string>(),
                 additionalBinaryDataProperties);

@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.Enclave.Models
         /// <param name="monitoringSettings"> Community Monitoring Settings for diagnostic and virtual network flow logs. </param>
         /// <param name="addressSpaces"> Address spaces list. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal VirtualEnclaveCommunityPatchProperties(IList<string> dnsServers, IList<VirtualEnclaveGovernedService> governedServiceList, CommunityPropertiesPolicyOverride? policyOverride, IList<VirtualEnclaveRoleAssignmentItem> communityRoleAssignments, VirtualEnclaveFirewallSku? firewallSku, ApprovalSettingsPatchProperties granularApprovalSettings, VirtualEnclaveMaintenanceModeConfigurationPatch maintenanceModeConfiguration, MonitoringSettingsPatchModel monitoringSettings, IList<string> addressSpaces, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal VirtualEnclaveCommunityPatchProperties(IList<string> dnsServers, IList<VirtualEnclaveGovernedService> governedServiceList, CommunityPropertiesPolicyOverride? policyOverride, IList<VirtualEnclaveRoleAssignmentItem> communityRoleAssignments, VirtualEnclaveFirewallSku? firewallSku, ApprovalSettingsPatchProperties granularApprovalSettings, VirtualEnclaveMaintenanceModeConfigurationPatch maintenanceModeConfiguration, VirtualEnclaveMonitoringSettingsPatch monitoringSettings, IList<string> addressSpaces, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             DnsServers = dnsServers;
             GovernedServiceList = governedServiceList;
@@ -73,7 +73,7 @@ namespace Azure.ResourceManager.Enclave.Models
         public VirtualEnclaveMaintenanceModeConfigurationPatch MaintenanceModeConfiguration { get; set; }
 
         /// <summary> Community Monitoring Settings for diagnostic and virtual network flow logs. </summary>
-        public MonitoringSettingsPatchModel MonitoringSettings { get; set; }
+        public VirtualEnclaveMonitoringSettingsPatch MonitoringSettings { get; set; }
 
         /// <summary> Address spaces list. </summary>
         public IList<string> AddressSpaces { get; }

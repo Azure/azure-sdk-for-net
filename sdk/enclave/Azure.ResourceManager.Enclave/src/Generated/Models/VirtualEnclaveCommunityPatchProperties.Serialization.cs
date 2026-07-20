@@ -198,7 +198,7 @@ namespace Azure.ResourceManager.Enclave.Models
             VirtualEnclaveFirewallSku? firewallSku = default;
             ApprovalSettingsPatchProperties granularApprovalSettings = default;
             VirtualEnclaveMaintenanceModeConfigurationPatch maintenanceModeConfiguration = default;
-            MonitoringSettingsPatchModel monitoringSettings = default;
+            VirtualEnclaveMonitoringSettingsPatch monitoringSettings = default;
             IList<string> addressSpaces = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
@@ -294,7 +294,7 @@ namespace Azure.ResourceManager.Enclave.Models
                     {
                         continue;
                     }
-                    monitoringSettings = MonitoringSettingsPatchModel.DeserializeMonitoringSettingsPatchModel(prop.Value, options);
+                    monitoringSettings = VirtualEnclaveMonitoringSettingsPatch.DeserializeVirtualEnclaveMonitoringSettingsPatch(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("addressSpaces"u8))

@@ -12,7 +12,7 @@ using Azure.ResourceManager.Enclave;
 namespace Azure.ResourceManager.Enclave.Models
 {
     /// <summary> Specifies the designation of the dedicated hub. </summary>
-    public readonly partial struct Designation : IEquatable<Designation>
+    public readonly partial struct VirtualEnclaveDesignation : IEquatable<VirtualEnclaveDesignation>
     {
         private readonly string _value;
         /// <summary> Designation Type Pooled. </summary>
@@ -20,10 +20,10 @@ namespace Azure.ResourceManager.Enclave.Models
         /// <summary> Designation Type Reserved. </summary>
         private const string ReservedValue = "Reserved";
 
-        /// <summary> Initializes a new instance of <see cref="Designation"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="VirtualEnclaveDesignation"/>. </summary>
         /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        public Designation(string value)
+        public VirtualEnclaveDesignation(string value)
         {
             Argument.AssertNotNull(value, nameof(value));
 
@@ -31,35 +31,35 @@ namespace Azure.ResourceManager.Enclave.Models
         }
 
         /// <summary> Designation Type Pooled. </summary>
-        public static Designation Pooled { get; } = new Designation(PooledValue);
+        public static VirtualEnclaveDesignation Pooled { get; } = new VirtualEnclaveDesignation(PooledValue);
 
         /// <summary> Designation Type Reserved. </summary>
-        public static Designation Reserved { get; } = new Designation(ReservedValue);
+        public static VirtualEnclaveDesignation Reserved { get; } = new VirtualEnclaveDesignation(ReservedValue);
 
-        /// <summary> Determines if two <see cref="Designation"/> values are the same. </summary>
+        /// <summary> Determines if two <see cref="VirtualEnclaveDesignation"/> values are the same. </summary>
         /// <param name="left"> The left value to compare. </param>
         /// <param name="right"> The right value to compare. </param>
-        public static bool operator ==(Designation left, Designation right) => left.Equals(right);
+        public static bool operator ==(VirtualEnclaveDesignation left, VirtualEnclaveDesignation right) => left.Equals(right);
 
-        /// <summary> Determines if two <see cref="Designation"/> values are not the same. </summary>
+        /// <summary> Determines if two <see cref="VirtualEnclaveDesignation"/> values are not the same. </summary>
         /// <param name="left"> The left value to compare. </param>
         /// <param name="right"> The right value to compare. </param>
-        public static bool operator !=(Designation left, Designation right) => !left.Equals(right);
+        public static bool operator !=(VirtualEnclaveDesignation left, VirtualEnclaveDesignation right) => !left.Equals(right);
 
-        /// <summary> Converts a string to a <see cref="Designation"/>. </summary>
+        /// <summary> Converts a string to a <see cref="VirtualEnclaveDesignation"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator Designation(string value) => new Designation(value);
+        public static implicit operator VirtualEnclaveDesignation(string value) => new VirtualEnclaveDesignation(value);
 
-        /// <summary> Converts a string to a <see cref="Designation"/>. </summary>
+        /// <summary> Converts a string to a <see cref="VirtualEnclaveDesignation"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator Designation?(string value) => value == null ? null : new Designation(value);
+        public static implicit operator VirtualEnclaveDesignation?(string value) => value == null ? null : new VirtualEnclaveDesignation(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public override bool Equals(object obj) => obj is Designation other && Equals(other);
+        public override bool Equals(object obj) => obj is VirtualEnclaveDesignation other && Equals(other);
 
         /// <inheritdoc/>
-        public bool Equals(Designation other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
+        public bool Equals(VirtualEnclaveDesignation other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

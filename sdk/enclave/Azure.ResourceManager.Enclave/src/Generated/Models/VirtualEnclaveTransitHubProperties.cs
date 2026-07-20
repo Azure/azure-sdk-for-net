@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.Enclave.Models
         /// <param name="resourceCollection"> List of resource ids modified by transitHubs. </param>
         /// <param name="securityProvider"> Specifies the security provider for the transit hub. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal VirtualEnclaveTransitHubProperties(VirtualEnclaveProvisioningState? provisioningState, TransitHubState? state, VirtualEnclaveTransitOptionProperties transitOption, IReadOnlyList<ResourceIdentifier> resourceCollection, SecurityProvider? securityProvider, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal VirtualEnclaveTransitHubProperties(VirtualEnclaveProvisioningState? provisioningState, VirtualEnclaveTransitHubState? state, VirtualEnclaveTransitOptionProperties transitOption, IReadOnlyList<ResourceIdentifier> resourceCollection, VirtualEnclaveSecurityProvider? securityProvider, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             ProvisioningState = provisioningState;
             State = state;
@@ -45,7 +45,7 @@ namespace Azure.ResourceManager.Enclave.Models
         public VirtualEnclaveProvisioningState? ProvisioningState { get; }
 
         /// <summary> The state of the transitHub. </summary>
-        public TransitHubState? State { get; set; }
+        public VirtualEnclaveTransitHubState? State { get; set; }
 
         /// <summary> The TransitOption of the transitHub. </summary>
         public VirtualEnclaveTransitOptionProperties TransitOption { get; set; }
@@ -54,6 +54,6 @@ namespace Azure.ResourceManager.Enclave.Models
         public IReadOnlyList<ResourceIdentifier> ResourceCollection { get; }
 
         /// <summary> Specifies the security provider for the transit hub. </summary>
-        public SecurityProvider? SecurityProvider { get; set; }
+        public VirtualEnclaveSecurityProvider? SecurityProvider { get; set; }
     }
 }

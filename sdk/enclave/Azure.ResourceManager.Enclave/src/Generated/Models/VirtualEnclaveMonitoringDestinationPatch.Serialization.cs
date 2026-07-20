@@ -14,57 +14,57 @@ using Azure.ResourceManager.Enclave;
 
 namespace Azure.ResourceManager.Enclave.Models
 {
-    /// <summary> Monitoring destination configuration with multiple workspaces. </summary>
-    public partial class MonitoringDestination : IJsonModel<MonitoringDestination>
+    /// <summary> Monitoring Destination Patch Model. </summary>
+    public partial class VirtualEnclaveMonitoringDestinationPatch : IJsonModel<VirtualEnclaveMonitoringDestinationPatch>
     {
-        /// <summary> Initializes a new instance of <see cref="MonitoringDestination"/> for deserialization. </summary>
-        internal MonitoringDestination()
+        /// <summary> Initializes a new instance of <see cref="VirtualEnclaveMonitoringDestinationPatch"/> for deserialization. </summary>
+        internal VirtualEnclaveMonitoringDestinationPatch()
         {
         }
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual MonitoringDestination PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        protected virtual VirtualEnclaveMonitoringDestinationPatch PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<MonitoringDestination>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<VirtualEnclaveMonitoringDestinationPatch>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeMonitoringDestination(document.RootElement, options);
+                        return DeserializeVirtualEnclaveMonitoringDestinationPatch(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(MonitoringDestination)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(VirtualEnclaveMonitoringDestinationPatch)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<MonitoringDestination>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<VirtualEnclaveMonitoringDestinationPatch>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options, AzureResourceManagerEnclaveContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(MonitoringDestination)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(VirtualEnclaveMonitoringDestinationPatch)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<MonitoringDestination>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<VirtualEnclaveMonitoringDestinationPatch>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        MonitoringDestination IPersistableModel<MonitoringDestination>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+        VirtualEnclaveMonitoringDestinationPatch IPersistableModel<VirtualEnclaveMonitoringDestinationPatch>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<MonitoringDestination>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<VirtualEnclaveMonitoringDestinationPatch>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<MonitoringDestination>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<VirtualEnclaveMonitoringDestinationPatch>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -75,10 +75,10 @@ namespace Azure.ResourceManager.Enclave.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<MonitoringDestination>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<VirtualEnclaveMonitoringDestinationPatch>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(MonitoringDestination)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(VirtualEnclaveMonitoringDestinationPatch)} does not support writing '{format}' format.");
             }
             writer.WritePropertyName("destinationType"u8);
             writer.WriteStringValue(DestinationType.ToString());
@@ -111,30 +111,30 @@ namespace Azure.ResourceManager.Enclave.Models
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        MonitoringDestination IJsonModel<MonitoringDestination>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+        VirtualEnclaveMonitoringDestinationPatch IJsonModel<VirtualEnclaveMonitoringDestinationPatch>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual MonitoringDestination JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        protected virtual VirtualEnclaveMonitoringDestinationPatch JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<MonitoringDestination>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<VirtualEnclaveMonitoringDestinationPatch>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(MonitoringDestination)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(VirtualEnclaveMonitoringDestinationPatch)} does not support reading '{format}' format.");
             }
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeMonitoringDestination(document.RootElement, options);
+            return DeserializeVirtualEnclaveMonitoringDestinationPatch(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        internal static MonitoringDestination DeserializeMonitoringDestination(JsonElement element, ModelReaderWriterOptions options)
+        internal static VirtualEnclaveMonitoringDestinationPatch DeserializeVirtualEnclaveMonitoringDestinationPatch(JsonElement element, ModelReaderWriterOptions options)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            MonitoringDestinationType destinationType = default;
+            VirtualEnclaveMonitoringDestinationType destinationType = default;
             ResourceIdentifier customWorkspaceResourceId = default;
             string diagnosticSettingsName = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
@@ -142,7 +142,7 @@ namespace Azure.ResourceManager.Enclave.Models
             {
                 if (prop.NameEquals("destinationType"u8))
                 {
-                    destinationType = new MonitoringDestinationType(prop.Value.GetString());
+                    destinationType = new VirtualEnclaveMonitoringDestinationType(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("customWorkspaceResourceId"u8))
@@ -164,7 +164,7 @@ namespace Azure.ResourceManager.Enclave.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new MonitoringDestination(destinationType, customWorkspaceResourceId, diagnosticSettingsName, additionalBinaryDataProperties);
+            return new VirtualEnclaveMonitoringDestinationPatch(destinationType, customWorkspaceResourceId, diagnosticSettingsName, additionalBinaryDataProperties);
         }
     }
 }

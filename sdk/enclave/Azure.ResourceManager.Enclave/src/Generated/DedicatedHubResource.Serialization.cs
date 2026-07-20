@@ -12,28 +12,28 @@ using System.Text.Json;
 namespace Azure.ResourceManager.Enclave
 {
     /// <summary></summary>
-    public partial class DedicatedHubResource : IJsonModel<DedicatedHubResourceData>
+    public partial class DedicatedHubResource : IJsonModel<DedicatedHubData>
     {
-        private static IJsonModel<DedicatedHubResourceData> s_dataDeserializationInstance;
+        private static IJsonModel<DedicatedHubData> s_dataDeserializationInstance;
 
-        private static IJsonModel<DedicatedHubResourceData> DataDeserializationInstance => s_dataDeserializationInstance ??= new DedicatedHubResourceData();
+        private static IJsonModel<DedicatedHubData> DataDeserializationInstance => s_dataDeserializationInstance ??= new DedicatedHubData();
 
         /// <param name="writer"> The writer to serialize the model to. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<DedicatedHubResourceData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<DedicatedHubResourceData>)Data).Write(writer, options);
+        void IJsonModel<DedicatedHubData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<DedicatedHubData>)Data).Write(writer, options);
 
         /// <param name="reader"> The reader for deserializing the model. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        DedicatedHubResourceData IJsonModel<DedicatedHubResourceData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => DataDeserializationInstance.Create(ref reader, options);
+        DedicatedHubData IJsonModel<DedicatedHubData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => DataDeserializationInstance.Create(ref reader, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<DedicatedHubResourceData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<DedicatedHubResourceData>(Data, options, AzureResourceManagerEnclaveContext.Default);
+        BinaryData IPersistableModel<DedicatedHubData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<DedicatedHubData>(Data, options, AzureResourceManagerEnclaveContext.Default);
 
         /// <param name="data"> The binary data to be processed. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        DedicatedHubResourceData IPersistableModel<DedicatedHubResourceData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<DedicatedHubResourceData>(data, options, AzureResourceManagerEnclaveContext.Default);
+        DedicatedHubData IPersistableModel<DedicatedHubData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<DedicatedHubData>(data, options, AzureResourceManagerEnclaveContext.Default);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<DedicatedHubResourceData>.GetFormatFromOptions(ModelReaderWriterOptions options) => DataDeserializationInstance.GetFormatFromOptions(options);
+        string IPersistableModel<DedicatedHubData>.GetFormatFromOptions(ModelReaderWriterOptions options) => DataDeserializationInstance.GetFormatFromOptions(options);
     }
 }

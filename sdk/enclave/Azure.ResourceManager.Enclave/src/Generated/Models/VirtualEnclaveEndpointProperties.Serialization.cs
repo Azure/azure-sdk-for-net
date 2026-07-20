@@ -157,7 +157,7 @@ namespace Azure.ResourceManager.Enclave.Models
             IList<EnclaveEndpointDestinationRule> ruleCollection = default;
             IReadOnlyList<ResourceIdentifier> resourceCollection = default;
             VirtualEnclaveProvisioningState? provisioningState = default;
-            UpdateMode? updateMode = default;
+            VirtualEnclaveUpdateMode? updateMode = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -207,7 +207,7 @@ namespace Azure.ResourceManager.Enclave.Models
                     {
                         continue;
                     }
-                    updateMode = new UpdateMode(prop.Value.GetString());
+                    updateMode = new VirtualEnclaveUpdateMode(prop.Value.GetString());
                     continue;
                 }
                 if (options.Format != "W")

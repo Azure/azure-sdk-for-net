@@ -45,7 +45,7 @@ namespace Azure.ResourceManager.Enclave.Models
         /// <param name="resourceCollection"> List of resource ids modified by enclave Connections. </param>
         /// <param name="updateMode"> Destination Endpoint supports automatic or manual updates. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal VirtualEnclaveConnectionProperties(EnclaveConnectionState? state, ResourceIdentifier communityResourceId, ResourceIdentifier sourceResourceId, string sourceCidr, ResourceIdentifier destinationEndpointId, VirtualEnclaveProvisioningState? provisioningState, IReadOnlyList<ResourceIdentifier> resourceCollection, UpdateMode? updateMode, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal VirtualEnclaveConnectionProperties(EnclaveConnectionState? state, ResourceIdentifier communityResourceId, ResourceIdentifier sourceResourceId, string sourceCidr, ResourceIdentifier destinationEndpointId, VirtualEnclaveProvisioningState? provisioningState, IReadOnlyList<ResourceIdentifier> resourceCollection, VirtualEnclaveUpdateMode? updateMode, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             State = state;
             CommunityResourceId = communityResourceId;
@@ -80,6 +80,6 @@ namespace Azure.ResourceManager.Enclave.Models
         public IReadOnlyList<ResourceIdentifier> ResourceCollection { get; }
 
         /// <summary> Destination Endpoint supports automatic or manual updates. </summary>
-        public UpdateMode? UpdateMode { get; }
+        public VirtualEnclaveUpdateMode? UpdateMode { get; }
     }
 }

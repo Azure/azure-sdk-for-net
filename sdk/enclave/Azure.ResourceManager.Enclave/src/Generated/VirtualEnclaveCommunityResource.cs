@@ -851,9 +851,9 @@ namespace Azure.ResourceManager.Enclave
 
         /// <summary> Gets a collection of DedicatedHubResources in the <see cref="VirtualEnclaveCommunityResource"/>. </summary>
         /// <returns> An object representing collection of DedicatedHubResources and their operations over a DedicatedHubResource. </returns>
-        public virtual DedicatedHubResourceCollection GetDedicatedHubResources()
+        public virtual DedicatedHubCollection GetDedicatedHubResources()
         {
-            return GetCachedClient(client => new DedicatedHubResourceCollection(client, Id));
+            return GetCachedClient(client => new DedicatedHubCollection(client, Id));
         }
 
         /// <summary> Get a DedicatedHubResource. </summary>

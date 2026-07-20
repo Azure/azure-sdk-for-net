@@ -25,7 +25,7 @@ namespace Azure.ResourceManager.Enclave.Models
         /// <param name="type"> Transit Option Type. </param>
         /// <param name="params"> Transit Option Params. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal VirtualEnclaveTransitOptionProperties(TransitOptionType? @type, TransitOptionParams @params, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal VirtualEnclaveTransitOptionProperties(VirtualEnclaveTransitOptionType? @type, VirtualEnclaveTransitOptionContent @params, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Type = @type;
             Params = @params;
@@ -33,9 +33,9 @@ namespace Azure.ResourceManager.Enclave.Models
         }
 
         /// <summary> Transit Option Type. </summary>
-        public TransitOptionType? Type { get; set; }
+        public VirtualEnclaveTransitOptionType? Type { get; set; }
 
         /// <summary> Transit Option Params. </summary>
-        public TransitOptionParams Params { get; set; }
+        public VirtualEnclaveTransitOptionContent Params { get; set; }
     }
 }

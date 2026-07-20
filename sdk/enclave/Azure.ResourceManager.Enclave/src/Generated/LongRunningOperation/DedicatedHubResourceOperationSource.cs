@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.Enclave
         DedicatedHubResource IOperationSource<DedicatedHubResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
             using JsonDocument document = JsonDocument.Parse(response.ContentStream);
-            DedicatedHubResourceData data = DedicatedHubResourceData.DeserializeDedicatedHubResourceData(document.RootElement, ModelSerializationExtensions.WireOptions);
+            DedicatedHubData data = DedicatedHubData.DeserializeDedicatedHubData(document.RootElement, ModelSerializationExtensions.WireOptions);
             return new DedicatedHubResource(_client, data);
         }
 
@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.Enclave
         async ValueTask<DedicatedHubResource> IOperationSource<DedicatedHubResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using JsonDocument document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-            DedicatedHubResourceData data = DedicatedHubResourceData.DeserializeDedicatedHubResourceData(document.RootElement, ModelSerializationExtensions.WireOptions);
+            DedicatedHubData data = DedicatedHubData.DeserializeDedicatedHubData(document.RootElement, ModelSerializationExtensions.WireOptions);
             return new DedicatedHubResource(_client, data);
         }
     }

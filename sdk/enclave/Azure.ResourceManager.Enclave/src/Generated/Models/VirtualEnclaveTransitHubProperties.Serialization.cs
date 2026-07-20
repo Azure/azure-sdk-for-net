@@ -153,10 +153,10 @@ namespace Azure.ResourceManager.Enclave.Models
                 return null;
             }
             VirtualEnclaveProvisioningState? provisioningState = default;
-            TransitHubState? state = default;
+            VirtualEnclaveTransitHubState? state = default;
             VirtualEnclaveTransitOptionProperties transitOption = default;
             IReadOnlyList<ResourceIdentifier> resourceCollection = default;
-            SecurityProvider? securityProvider = default;
+            VirtualEnclaveSecurityProvider? securityProvider = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -175,7 +175,7 @@ namespace Azure.ResourceManager.Enclave.Models
                     {
                         continue;
                     }
-                    state = new TransitHubState(prop.Value.GetString());
+                    state = new VirtualEnclaveTransitHubState(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("transitOption"u8))
@@ -214,7 +214,7 @@ namespace Azure.ResourceManager.Enclave.Models
                     {
                         continue;
                     }
-                    securityProvider = new SecurityProvider(prop.Value.GetString());
+                    securityProvider = new VirtualEnclaveSecurityProvider(prop.Value.GetString());
                     continue;
                 }
                 if (options.Format != "W")

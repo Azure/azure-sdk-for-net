@@ -11,25 +11,25 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Enclave.Models
 {
-    /// <summary> Monitoring destination configuration with multiple workspaces. </summary>
-    public partial class MonitoringDestination
+    /// <summary> Monitoring Destination Patch Model. </summary>
+    public partial class VirtualEnclaveMonitoringDestinationPatch
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="MonitoringDestination"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="VirtualEnclaveMonitoringDestinationPatch"/>. </summary>
         /// <param name="destinationType"> The type of monitoring workspace destination. </param>
-        public MonitoringDestination(MonitoringDestinationType destinationType)
+        public VirtualEnclaveMonitoringDestinationPatch(VirtualEnclaveMonitoringDestinationType destinationType)
         {
             DestinationType = destinationType;
         }
 
-        /// <summary> Initializes a new instance of <see cref="MonitoringDestination"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="VirtualEnclaveMonitoringDestinationPatch"/>. </summary>
         /// <param name="destinationType"> The type of monitoring workspace destination. </param>
         /// <param name="customWorkspaceResourceId"> Log analytics workspace resource ID for custom workspace. </param>
         /// <param name="diagnosticSettingsName"> Custom name for diagnostic settings. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal MonitoringDestination(MonitoringDestinationType destinationType, ResourceIdentifier customWorkspaceResourceId, string diagnosticSettingsName, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal VirtualEnclaveMonitoringDestinationPatch(VirtualEnclaveMonitoringDestinationType destinationType, ResourceIdentifier customWorkspaceResourceId, string diagnosticSettingsName, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             DestinationType = destinationType;
             CustomWorkspaceResourceId = customWorkspaceResourceId;
@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.Enclave.Models
         }
 
         /// <summary> The type of monitoring workspace destination. </summary>
-        public MonitoringDestinationType DestinationType { get; set; }
+        public VirtualEnclaveMonitoringDestinationType DestinationType { get; }
 
         /// <summary> Log analytics workspace resource ID for custom workspace. </summary>
         public ResourceIdentifier CustomWorkspaceResourceId { get; set; }

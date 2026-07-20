@@ -134,7 +134,7 @@ namespace Azure.ResourceManager.Enclave.Models
                 return null;
             }
             IList<CommunityEndpointDestinationRule> ruleCollection = default;
-            UpdateMode? updateMode = default;
+            VirtualEnclaveUpdateMode? updateMode = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -154,7 +154,7 @@ namespace Azure.ResourceManager.Enclave.Models
                     {
                         continue;
                     }
-                    updateMode = new UpdateMode(prop.Value.GetString());
+                    updateMode = new VirtualEnclaveUpdateMode(prop.Value.GetString());
                     continue;
                 }
                 if (options.Format != "W")

@@ -18,10 +18,10 @@ using Azure.ResourceManager.Models;
 namespace Azure.ResourceManager.Enclave
 {
     /// <summary> DedicatedHub Model Resource. </summary>
-    public partial class DedicatedHubResourceData : TrackedResourceData, IJsonModel<DedicatedHubResourceData>
+    public partial class DedicatedHubData : TrackedResourceData, IJsonModel<DedicatedHubData>
     {
-        /// <summary> Initializes a new instance of <see cref="DedicatedHubResourceData"/> for deserialization. </summary>
-        internal DedicatedHubResourceData()
+        /// <summary> Initializes a new instance of <see cref="DedicatedHubData"/> for deserialization. </summary>
+        internal DedicatedHubData()
         {
         }
 
@@ -29,62 +29,62 @@ namespace Azure.ResourceManager.Enclave
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual ResourceData PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<DedicatedHubResourceData>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<DedicatedHubData>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeDedicatedHubResourceData(document.RootElement, options);
+                        return DeserializeDedicatedHubData(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(DedicatedHubResourceData)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(DedicatedHubData)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<DedicatedHubResourceData>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<DedicatedHubData>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options, AzureResourceManagerEnclaveContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(DedicatedHubResourceData)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(DedicatedHubData)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<DedicatedHubResourceData>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<DedicatedHubData>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        DedicatedHubResourceData IPersistableModel<DedicatedHubResourceData>.Create(BinaryData data, ModelReaderWriterOptions options) => (DedicatedHubResourceData)PersistableModelCreateCore(data, options);
+        DedicatedHubData IPersistableModel<DedicatedHubData>.Create(BinaryData data, ModelReaderWriterOptions options) => (DedicatedHubData)PersistableModelCreateCore(data, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<DedicatedHubResourceData>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<DedicatedHubData>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
-        /// <param name="dedicatedHubResourceData"> The <see cref="DedicatedHubResourceData"/> to serialize into <see cref="RequestContent"/>. </param>
-        internal static RequestContent ToRequestContent(DedicatedHubResourceData dedicatedHubResourceData)
+        /// <param name="dedicatedHubData"> The <see cref="DedicatedHubData"/> to serialize into <see cref="RequestContent"/>. </param>
+        internal static RequestContent ToRequestContent(DedicatedHubData dedicatedHubData)
         {
-            if (dedicatedHubResourceData == null)
+            if (dedicatedHubData == null)
             {
                 return null;
             }
-            return RequestContent.Create(dedicatedHubResourceData, ModelSerializationExtensions.WireOptions);
+            return RequestContent.Create(dedicatedHubData, ModelSerializationExtensions.WireOptions);
         }
 
-        /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="DedicatedHubResourceData"/> from. </param>
-        internal static DedicatedHubResourceData FromResponse(Response response)
+        /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="DedicatedHubData"/> from. </param>
+        internal static DedicatedHubData FromResponse(Response response)
         {
             using JsonDocument document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
-            return DeserializeDedicatedHubResourceData(document.RootElement, ModelSerializationExtensions.WireOptions);
+            return DeserializeDedicatedHubData(document.RootElement, ModelSerializationExtensions.WireOptions);
         }
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<DedicatedHubResourceData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<DedicatedHubData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -95,10 +95,10 @@ namespace Azure.ResourceManager.Enclave
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<DedicatedHubResourceData>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<DedicatedHubData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(DedicatedHubResourceData)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(DedicatedHubData)} does not support writing '{format}' format.");
             }
             base.JsonModelWriteCore(writer, options);
             if (Optional.IsDefined(Properties))
@@ -125,24 +125,24 @@ namespace Azure.ResourceManager.Enclave
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        DedicatedHubResourceData IJsonModel<DedicatedHubResourceData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => (DedicatedHubResourceData)JsonModelCreateCore(ref reader, options);
+        DedicatedHubData IJsonModel<DedicatedHubData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => (DedicatedHubData)JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual ResourceData JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<DedicatedHubResourceData>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<DedicatedHubData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(DedicatedHubResourceData)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(DedicatedHubData)} does not support reading '{format}' format.");
             }
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeDedicatedHubResourceData(document.RootElement, options);
+            return DeserializeDedicatedHubData(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        internal static DedicatedHubResourceData DeserializeDedicatedHubResourceData(JsonElement element, ModelReaderWriterOptions options)
+        internal static DedicatedHubData DeserializeDedicatedHubData(JsonElement element, ModelReaderWriterOptions options)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -230,7 +230,7 @@ namespace Azure.ResourceManager.Enclave
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new DedicatedHubResourceData(
+            return new DedicatedHubData(
                 id,
                 name,
                 resourceType,

@@ -12,7 +12,7 @@ using Azure.ResourceManager.Enclave;
 namespace Azure.ResourceManager.Enclave.Models
 {
     /// <summary> Update Mode. </summary>
-    public readonly partial struct UpdateMode : IEquatable<UpdateMode>
+    public readonly partial struct VirtualEnclaveUpdateMode : IEquatable<VirtualEnclaveUpdateMode>
     {
         private readonly string _value;
         /// <summary> UpdateMode Type Automatic. </summary>
@@ -20,10 +20,10 @@ namespace Azure.ResourceManager.Enclave.Models
         /// <summary> UpdateMode Type Manual. </summary>
         private const string ManualValue = "Manual";
 
-        /// <summary> Initializes a new instance of <see cref="UpdateMode"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="VirtualEnclaveUpdateMode"/>. </summary>
         /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        public UpdateMode(string value)
+        public VirtualEnclaveUpdateMode(string value)
         {
             Argument.AssertNotNull(value, nameof(value));
 
@@ -31,35 +31,35 @@ namespace Azure.ResourceManager.Enclave.Models
         }
 
         /// <summary> UpdateMode Type Automatic. </summary>
-        public static UpdateMode Automatic { get; } = new UpdateMode(AutomaticValue);
+        public static VirtualEnclaveUpdateMode Automatic { get; } = new VirtualEnclaveUpdateMode(AutomaticValue);
 
         /// <summary> UpdateMode Type Manual. </summary>
-        public static UpdateMode Manual { get; } = new UpdateMode(ManualValue);
+        public static VirtualEnclaveUpdateMode Manual { get; } = new VirtualEnclaveUpdateMode(ManualValue);
 
-        /// <summary> Determines if two <see cref="UpdateMode"/> values are the same. </summary>
+        /// <summary> Determines if two <see cref="VirtualEnclaveUpdateMode"/> values are the same. </summary>
         /// <param name="left"> The left value to compare. </param>
         /// <param name="right"> The right value to compare. </param>
-        public static bool operator ==(UpdateMode left, UpdateMode right) => left.Equals(right);
+        public static bool operator ==(VirtualEnclaveUpdateMode left, VirtualEnclaveUpdateMode right) => left.Equals(right);
 
-        /// <summary> Determines if two <see cref="UpdateMode"/> values are not the same. </summary>
+        /// <summary> Determines if two <see cref="VirtualEnclaveUpdateMode"/> values are not the same. </summary>
         /// <param name="left"> The left value to compare. </param>
         /// <param name="right"> The right value to compare. </param>
-        public static bool operator !=(UpdateMode left, UpdateMode right) => !left.Equals(right);
+        public static bool operator !=(VirtualEnclaveUpdateMode left, VirtualEnclaveUpdateMode right) => !left.Equals(right);
 
-        /// <summary> Converts a string to a <see cref="UpdateMode"/>. </summary>
+        /// <summary> Converts a string to a <see cref="VirtualEnclaveUpdateMode"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator UpdateMode(string value) => new UpdateMode(value);
+        public static implicit operator VirtualEnclaveUpdateMode(string value) => new VirtualEnclaveUpdateMode(value);
 
-        /// <summary> Converts a string to a <see cref="UpdateMode"/>. </summary>
+        /// <summary> Converts a string to a <see cref="VirtualEnclaveUpdateMode"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator UpdateMode?(string value) => value == null ? null : new UpdateMode(value);
+        public static implicit operator VirtualEnclaveUpdateMode?(string value) => value == null ? null : new VirtualEnclaveUpdateMode(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public override bool Equals(object obj) => obj is UpdateMode other && Equals(other);
+        public override bool Equals(object obj) => obj is VirtualEnclaveUpdateMode other && Equals(other);
 
         /// <inheritdoc/>
-        public bool Equals(UpdateMode other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
+        public bool Equals(VirtualEnclaveUpdateMode other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

@@ -12,21 +12,21 @@ using Azure.Core;
 namespace Azure.ResourceManager.Enclave.Models
 {
     /// <summary> TransitOptionParams Properties. </summary>
-    public partial class TransitOptionParams
+    public partial class VirtualEnclaveTransitOptionContent
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="TransitOptionParams"/>. </summary>
-        public TransitOptionParams()
+        /// <summary> Initializes a new instance of <see cref="VirtualEnclaveTransitOptionContent"/>. </summary>
+        public VirtualEnclaveTransitOptionContent()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="TransitOptionParams"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="VirtualEnclaveTransitOptionContent"/>. </summary>
         /// <param name="scaleUnits"> Transit Option Params scaleUnits. </param>
         /// <param name="remoteVirtualNetworkId"> Transit Option Params remoteVirtualNetworkId. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal TransitOptionParams(long? scaleUnits, ResourceIdentifier remoteVirtualNetworkId, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal VirtualEnclaveTransitOptionContent(long? scaleUnits, ResourceIdentifier remoteVirtualNetworkId, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             ScaleUnits = scaleUnits;
             RemoteVirtualNetworkId = remoteVirtualNetworkId;

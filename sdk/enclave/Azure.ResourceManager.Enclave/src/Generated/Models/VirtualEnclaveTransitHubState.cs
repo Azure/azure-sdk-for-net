@@ -12,7 +12,7 @@ using Azure.ResourceManager.Enclave;
 namespace Azure.ResourceManager.Enclave.Models
 {
     /// <summary> Specifies the state of the transitHub. </summary>
-    public readonly partial struct TransitHubState : IEquatable<TransitHubState>
+    public readonly partial struct VirtualEnclaveTransitHubState : IEquatable<VirtualEnclaveTransitHubState>
     {
         private readonly string _value;
         /// <summary> TransitHubState Type PendingApproval. </summary>
@@ -26,10 +26,10 @@ namespace Azure.ResourceManager.Enclave.Models
         /// <summary> TransitHubState Type Failed. </summary>
         private const string FailedValue = "Failed";
 
-        /// <summary> Initializes a new instance of <see cref="TransitHubState"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="VirtualEnclaveTransitHubState"/>. </summary>
         /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        public TransitHubState(string value)
+        public VirtualEnclaveTransitHubState(string value)
         {
             Argument.AssertNotNull(value, nameof(value));
 
@@ -37,44 +37,44 @@ namespace Azure.ResourceManager.Enclave.Models
         }
 
         /// <summary> TransitHubState Type PendingApproval. </summary>
-        public static TransitHubState PendingApproval { get; } = new TransitHubState(PendingApprovalValue);
+        public static VirtualEnclaveTransitHubState PendingApproval { get; } = new VirtualEnclaveTransitHubState(PendingApprovalValue);
 
         /// <summary> TransitHubState Type Approved. </summary>
-        public static TransitHubState Approved { get; } = new TransitHubState(ApprovedValue);
+        public static VirtualEnclaveTransitHubState Approved { get; } = new VirtualEnclaveTransitHubState(ApprovedValue);
 
         /// <summary> TransitHubState Type PendingUpdate. </summary>
-        public static TransitHubState PendingUpdate { get; } = new TransitHubState(PendingUpdateValue);
+        public static VirtualEnclaveTransitHubState PendingUpdate { get; } = new VirtualEnclaveTransitHubState(PendingUpdateValue);
 
         /// <summary> TransitHubState Type Active. </summary>
-        public static TransitHubState Active { get; } = new TransitHubState(ActiveValue);
+        public static VirtualEnclaveTransitHubState Active { get; } = new VirtualEnclaveTransitHubState(ActiveValue);
 
         /// <summary> TransitHubState Type Failed. </summary>
-        public static TransitHubState Failed { get; } = new TransitHubState(FailedValue);
+        public static VirtualEnclaveTransitHubState Failed { get; } = new VirtualEnclaveTransitHubState(FailedValue);
 
-        /// <summary> Determines if two <see cref="TransitHubState"/> values are the same. </summary>
+        /// <summary> Determines if two <see cref="VirtualEnclaveTransitHubState"/> values are the same. </summary>
         /// <param name="left"> The left value to compare. </param>
         /// <param name="right"> The right value to compare. </param>
-        public static bool operator ==(TransitHubState left, TransitHubState right) => left.Equals(right);
+        public static bool operator ==(VirtualEnclaveTransitHubState left, VirtualEnclaveTransitHubState right) => left.Equals(right);
 
-        /// <summary> Determines if two <see cref="TransitHubState"/> values are not the same. </summary>
+        /// <summary> Determines if two <see cref="VirtualEnclaveTransitHubState"/> values are not the same. </summary>
         /// <param name="left"> The left value to compare. </param>
         /// <param name="right"> The right value to compare. </param>
-        public static bool operator !=(TransitHubState left, TransitHubState right) => !left.Equals(right);
+        public static bool operator !=(VirtualEnclaveTransitHubState left, VirtualEnclaveTransitHubState right) => !left.Equals(right);
 
-        /// <summary> Converts a string to a <see cref="TransitHubState"/>. </summary>
+        /// <summary> Converts a string to a <see cref="VirtualEnclaveTransitHubState"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator TransitHubState(string value) => new TransitHubState(value);
+        public static implicit operator VirtualEnclaveTransitHubState(string value) => new VirtualEnclaveTransitHubState(value);
 
-        /// <summary> Converts a string to a <see cref="TransitHubState"/>. </summary>
+        /// <summary> Converts a string to a <see cref="VirtualEnclaveTransitHubState"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator TransitHubState?(string value) => value == null ? null : new TransitHubState(value);
+        public static implicit operator VirtualEnclaveTransitHubState?(string value) => value == null ? null : new VirtualEnclaveTransitHubState(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public override bool Equals(object obj) => obj is TransitHubState other && Equals(other);
+        public override bool Equals(object obj) => obj is VirtualEnclaveTransitHubState other && Equals(other);
 
         /// <inheritdoc/>
-        public bool Equals(TransitHubState other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
+        public bool Equals(VirtualEnclaveTransitHubState other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

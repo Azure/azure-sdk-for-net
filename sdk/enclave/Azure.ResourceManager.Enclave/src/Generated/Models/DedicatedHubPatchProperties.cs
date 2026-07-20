@@ -24,13 +24,13 @@ namespace Azure.ResourceManager.Enclave.Models
         /// <summary> Initializes a new instance of <see cref="DedicatedHubPatchProperties"/>. </summary>
         /// <param name="designation"> Designation of hub resource allocation (Pooled or Reserved). </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal DedicatedHubPatchProperties(Designation? designation, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal DedicatedHubPatchProperties(VirtualEnclaveDesignation? designation, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Designation = designation;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> Designation of hub resource allocation (Pooled or Reserved). </summary>
-        public Designation? Designation { get; set; }
+        public VirtualEnclaveDesignation? Designation { get; set; }
     }
 }

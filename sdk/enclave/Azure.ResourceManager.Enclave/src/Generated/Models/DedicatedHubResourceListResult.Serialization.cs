@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.Enclave.Models
             }
             writer.WritePropertyName("value"u8);
             writer.WriteStartArray();
-            foreach (DedicatedHubResourceData item in Value)
+            foreach (DedicatedHubData item in Value)
             {
                 writer.WriteObjectValue(item, options);
             }
@@ -141,17 +141,17 @@ namespace Azure.ResourceManager.Enclave.Models
             {
                 return null;
             }
-            IList<DedicatedHubResourceData> value = default;
+            IList<DedicatedHubData> value = default;
             Uri nextLink = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("value"u8))
                 {
-                    List<DedicatedHubResourceData> array = new List<DedicatedHubResourceData>();
+                    List<DedicatedHubData> array = new List<DedicatedHubData>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(DedicatedHubResourceData.DeserializeDedicatedHubResourceData(item, options));
+                        array.Add(DedicatedHubData.DeserializeDedicatedHubData(item, options));
                     }
                     value = array;
                     continue;

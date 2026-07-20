@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.Enclave.Models
         /// <param name="transitOption"> The TransitOption of the transitHub. </param>
         /// <param name="securityProvider"> Specifies the security provider for the transit hub. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal VirtualEnclaveTransitHubPatchProperties(TransitHubState? state, VirtualEnclaveTransitOptionProperties transitOption, SecurityProvider? securityProvider, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal VirtualEnclaveTransitHubPatchProperties(VirtualEnclaveTransitHubState? state, VirtualEnclaveTransitOptionProperties transitOption, VirtualEnclaveSecurityProvider? securityProvider, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             State = state;
             TransitOption = transitOption;
@@ -35,12 +35,12 @@ namespace Azure.ResourceManager.Enclave.Models
         }
 
         /// <summary> The state of the transitHub. </summary>
-        public TransitHubState? State { get; set; }
+        public VirtualEnclaveTransitHubState? State { get; set; }
 
         /// <summary> The TransitOption of the transitHub. </summary>
         public VirtualEnclaveTransitOptionProperties TransitOption { get; set; }
 
         /// <summary> Specifies the security provider for the transit hub. </summary>
-        public SecurityProvider? SecurityProvider { get; set; }
+        public VirtualEnclaveSecurityProvider? SecurityProvider { get; set; }
     }
 }

@@ -12,7 +12,7 @@ using Azure.ResourceManager.Enclave;
 namespace Azure.ResourceManager.Enclave.Models
 {
     /// <summary> Specifies the type of the transitOption. </summary>
-    public readonly partial struct TransitOptionType : IEquatable<TransitOptionType>
+    public readonly partial struct VirtualEnclaveTransitOptionType : IEquatable<VirtualEnclaveTransitOptionType>
     {
         private readonly string _value;
         /// <summary> TransitOptionType ExpressRoute. </summary>
@@ -22,10 +22,10 @@ namespace Azure.ResourceManager.Enclave.Models
         /// <summary> TransitOptionType Peering. </summary>
         private const string PeeringValue = "Peering";
 
-        /// <summary> Initializes a new instance of <see cref="TransitOptionType"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="VirtualEnclaveTransitOptionType"/>. </summary>
         /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        public TransitOptionType(string value)
+        public VirtualEnclaveTransitOptionType(string value)
         {
             Argument.AssertNotNull(value, nameof(value));
 
@@ -33,38 +33,38 @@ namespace Azure.ResourceManager.Enclave.Models
         }
 
         /// <summary> TransitOptionType ExpressRoute. </summary>
-        public static TransitOptionType ExpressRoute { get; } = new TransitOptionType(ExpressRouteValue);
+        public static VirtualEnclaveTransitOptionType ExpressRoute { get; } = new VirtualEnclaveTransitOptionType(ExpressRouteValue);
 
         /// <summary> TransitOptionType Gateway. </summary>
-        public static TransitOptionType Gateway { get; } = new TransitOptionType(GatewayValue);
+        public static VirtualEnclaveTransitOptionType Gateway { get; } = new VirtualEnclaveTransitOptionType(GatewayValue);
 
         /// <summary> TransitOptionType Peering. </summary>
-        public static TransitOptionType Peering { get; } = new TransitOptionType(PeeringValue);
+        public static VirtualEnclaveTransitOptionType Peering { get; } = new VirtualEnclaveTransitOptionType(PeeringValue);
 
-        /// <summary> Determines if two <see cref="TransitOptionType"/> values are the same. </summary>
+        /// <summary> Determines if two <see cref="VirtualEnclaveTransitOptionType"/> values are the same. </summary>
         /// <param name="left"> The left value to compare. </param>
         /// <param name="right"> The right value to compare. </param>
-        public static bool operator ==(TransitOptionType left, TransitOptionType right) => left.Equals(right);
+        public static bool operator ==(VirtualEnclaveTransitOptionType left, VirtualEnclaveTransitOptionType right) => left.Equals(right);
 
-        /// <summary> Determines if two <see cref="TransitOptionType"/> values are not the same. </summary>
+        /// <summary> Determines if two <see cref="VirtualEnclaveTransitOptionType"/> values are not the same. </summary>
         /// <param name="left"> The left value to compare. </param>
         /// <param name="right"> The right value to compare. </param>
-        public static bool operator !=(TransitOptionType left, TransitOptionType right) => !left.Equals(right);
+        public static bool operator !=(VirtualEnclaveTransitOptionType left, VirtualEnclaveTransitOptionType right) => !left.Equals(right);
 
-        /// <summary> Converts a string to a <see cref="TransitOptionType"/>. </summary>
+        /// <summary> Converts a string to a <see cref="VirtualEnclaveTransitOptionType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator TransitOptionType(string value) => new TransitOptionType(value);
+        public static implicit operator VirtualEnclaveTransitOptionType(string value) => new VirtualEnclaveTransitOptionType(value);
 
-        /// <summary> Converts a string to a <see cref="TransitOptionType"/>. </summary>
+        /// <summary> Converts a string to a <see cref="VirtualEnclaveTransitOptionType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator TransitOptionType?(string value) => value == null ? null : new TransitOptionType(value);
+        public static implicit operator VirtualEnclaveTransitOptionType?(string value) => value == null ? null : new VirtualEnclaveTransitOptionType(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public override bool Equals(object obj) => obj is TransitOptionType other && Equals(other);
+        public override bool Equals(object obj) => obj is VirtualEnclaveTransitOptionType other && Equals(other);
 
         /// <inheritdoc/>
-        public bool Equals(TransitOptionType other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
+        public bool Equals(VirtualEnclaveTransitOptionType other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

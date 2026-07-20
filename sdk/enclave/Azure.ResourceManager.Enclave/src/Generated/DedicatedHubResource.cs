@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.Enclave
     {
         private readonly ClientDiagnostics _dedicatedHubClientDiagnostics;
         private readonly DedicatedHub _dedicatedHubRestClient;
-        private readonly DedicatedHubResourceData _data;
+        private readonly DedicatedHubData _data;
         /// <summary> Gets the resource type for the operations. </summary>
         public static readonly ResourceType ResourceType = "Microsoft.Mission/communities/dedicatedHubs";
 
@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.Enclave
         /// <summary> Initializes a new instance of <see cref="DedicatedHubResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
-        internal DedicatedHubResource(ArmClient client, DedicatedHubResourceData data) : this(client, data.Id)
+        internal DedicatedHubResource(ArmClient client, DedicatedHubData data) : this(client, data.Id)
         {
             HasData = true;
             _data = data;
@@ -61,7 +61,7 @@ namespace Azure.ResourceManager.Enclave
         public virtual bool HasData { get; }
 
         /// <summary> Gets the data representing this Feature. </summary>
-        public virtual DedicatedHubResourceData Data
+        public virtual DedicatedHubData Data
         {
             get
             {
@@ -128,7 +128,7 @@ namespace Azure.ResourceManager.Enclave
                 };
                 HttpMessage message = _dedicatedHubRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                Response<DedicatedHubResourceData> response = Response.FromValue(DedicatedHubResourceData.FromResponse(result), result);
+                Response<DedicatedHubData> response = Response.FromValue(DedicatedHubData.FromResponse(result), result);
                 if (response.Value == null)
                 {
                     throw new RequestFailedException(response.GetRawResponse());
@@ -176,7 +176,7 @@ namespace Azure.ResourceManager.Enclave
                 };
                 HttpMessage message = _dedicatedHubRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
                 Response result = Pipeline.ProcessMessage(message, context);
-                Response<DedicatedHubResourceData> response = Response.FromValue(DedicatedHubResourceData.FromResponse(result), result);
+                Response<DedicatedHubData> response = Response.FromValue(DedicatedHubData.FromResponse(result), result);
                 if (response.Value == null)
                 {
                     throw new RequestFailedException(response.GetRawResponse());
@@ -215,7 +215,7 @@ namespace Azure.ResourceManager.Enclave
         /// <param name="patch"> The resource properties to be updated. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="patch"/> is null. </exception>
-        public virtual async Task<ArmOperation<DedicatedHubResource>> UpdateAsync(WaitUntil waitUntil, DedicatedHubResourcePatch patch, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation<DedicatedHubResource>> UpdateAsync(WaitUntil waitUntil, DedicatedHubPatch patch, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(patch, nameof(patch));
 
@@ -227,7 +227,7 @@ namespace Azure.ResourceManager.Enclave
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _dedicatedHubRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, DedicatedHubResourcePatch.ToRequestContent(patch), context);
+                HttpMessage message = _dedicatedHubRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, DedicatedHubPatch.ToRequestContent(patch), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 EnclaveArmOperation<DedicatedHubResource> operation = new EnclaveArmOperation<DedicatedHubResource>(
                     new DedicatedHubResourceOperationSource(Client),
@@ -274,7 +274,7 @@ namespace Azure.ResourceManager.Enclave
         /// <param name="patch"> The resource properties to be updated. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="patch"/> is null. </exception>
-        public virtual ArmOperation<DedicatedHubResource> Update(WaitUntil waitUntil, DedicatedHubResourcePatch patch, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<DedicatedHubResource> Update(WaitUntil waitUntil, DedicatedHubPatch patch, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(patch, nameof(patch));
 
@@ -286,7 +286,7 @@ namespace Azure.ResourceManager.Enclave
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _dedicatedHubRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, DedicatedHubResourcePatch.ToRequestContent(patch), context);
+                HttpMessage message = _dedicatedHubRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, DedicatedHubPatch.ToRequestContent(patch), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 EnclaveArmOperation<DedicatedHubResource> operation = new EnclaveArmOperation<DedicatedHubResource>(
                     new DedicatedHubResourceOperationSource(Client),
@@ -431,13 +431,13 @@ namespace Azure.ResourceManager.Enclave
                     };
                     HttpMessage message = _dedicatedHubRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
                     Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                    Response<DedicatedHubResourceData> response = Response.FromValue(DedicatedHubResourceData.FromResponse(result), result);
+                    Response<DedicatedHubData> response = Response.FromValue(DedicatedHubData.FromResponse(result), result);
                     return Response.FromValue(new DedicatedHubResource(Client, response.Value), response.GetRawResponse());
                 }
                 else
                 {
-                    DedicatedHubResourceData current = (await GetAsync(cancellationToken: cancellationToken).ConfigureAwait(false)).Value.Data;
-                    DedicatedHubResourcePatch patch = new DedicatedHubResourcePatch();
+                    DedicatedHubData current = (await GetAsync(cancellationToken: cancellationToken).ConfigureAwait(false)).Value.Data;
+                    DedicatedHubPatch patch = new DedicatedHubPatch();
                     foreach (KeyValuePair<string, string> tag in current.Tags)
                     {
                         patch.Tags.Add(tag);
@@ -479,13 +479,13 @@ namespace Azure.ResourceManager.Enclave
                     };
                     HttpMessage message = _dedicatedHubRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
                     Response result = Pipeline.ProcessMessage(message, context);
-                    Response<DedicatedHubResourceData> response = Response.FromValue(DedicatedHubResourceData.FromResponse(result), result);
+                    Response<DedicatedHubData> response = Response.FromValue(DedicatedHubData.FromResponse(result), result);
                     return Response.FromValue(new DedicatedHubResource(Client, response.Value), response.GetRawResponse());
                 }
                 else
                 {
-                    DedicatedHubResourceData current = Get(cancellationToken: cancellationToken).Value.Data;
-                    DedicatedHubResourcePatch patch = new DedicatedHubResourcePatch();
+                    DedicatedHubData current = Get(cancellationToken: cancellationToken).Value.Data;
+                    DedicatedHubPatch patch = new DedicatedHubPatch();
                     foreach (KeyValuePair<string, string> tag in current.Tags)
                     {
                         patch.Tags.Add(tag);
@@ -526,13 +526,13 @@ namespace Azure.ResourceManager.Enclave
                     };
                     HttpMessage message = _dedicatedHubRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
                     Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                    Response<DedicatedHubResourceData> response = Response.FromValue(DedicatedHubResourceData.FromResponse(result), result);
+                    Response<DedicatedHubData> response = Response.FromValue(DedicatedHubData.FromResponse(result), result);
                     return Response.FromValue(new DedicatedHubResource(Client, response.Value), response.GetRawResponse());
                 }
                 else
                 {
-                    DedicatedHubResourceData current = (await GetAsync(cancellationToken: cancellationToken).ConfigureAwait(false)).Value.Data;
-                    DedicatedHubResourcePatch patch = new DedicatedHubResourcePatch();
+                    DedicatedHubData current = (await GetAsync(cancellationToken: cancellationToken).ConfigureAwait(false)).Value.Data;
+                    DedicatedHubPatch patch = new DedicatedHubPatch();
                     patch.Tags.ReplaceWith(tags);
                     ArmOperation<DedicatedHubResource> result = await UpdateAsync(WaitUntil.Completed, patch, cancellationToken: cancellationToken).ConfigureAwait(false);
                     return Response.FromValue(result.Value, result.GetRawResponse());
@@ -569,13 +569,13 @@ namespace Azure.ResourceManager.Enclave
                     };
                     HttpMessage message = _dedicatedHubRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
                     Response result = Pipeline.ProcessMessage(message, context);
-                    Response<DedicatedHubResourceData> response = Response.FromValue(DedicatedHubResourceData.FromResponse(result), result);
+                    Response<DedicatedHubData> response = Response.FromValue(DedicatedHubData.FromResponse(result), result);
                     return Response.FromValue(new DedicatedHubResource(Client, response.Value), response.GetRawResponse());
                 }
                 else
                 {
-                    DedicatedHubResourceData current = Get(cancellationToken: cancellationToken).Value.Data;
-                    DedicatedHubResourcePatch patch = new DedicatedHubResourcePatch();
+                    DedicatedHubData current = Get(cancellationToken: cancellationToken).Value.Data;
+                    DedicatedHubPatch patch = new DedicatedHubPatch();
                     patch.Tags.ReplaceWith(tags);
                     ArmOperation<DedicatedHubResource> result = Update(WaitUntil.Completed, patch, cancellationToken: cancellationToken);
                     return Response.FromValue(result.Value, result.GetRawResponse());
@@ -611,13 +611,13 @@ namespace Azure.ResourceManager.Enclave
                     };
                     HttpMessage message = _dedicatedHubRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
                     Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                    Response<DedicatedHubResourceData> response = Response.FromValue(DedicatedHubResourceData.FromResponse(result), result);
+                    Response<DedicatedHubData> response = Response.FromValue(DedicatedHubData.FromResponse(result), result);
                     return Response.FromValue(new DedicatedHubResource(Client, response.Value), response.GetRawResponse());
                 }
                 else
                 {
-                    DedicatedHubResourceData current = (await GetAsync(cancellationToken: cancellationToken).ConfigureAwait(false)).Value.Data;
-                    DedicatedHubResourcePatch patch = new DedicatedHubResourcePatch();
+                    DedicatedHubData current = (await GetAsync(cancellationToken: cancellationToken).ConfigureAwait(false)).Value.Data;
+                    DedicatedHubPatch patch = new DedicatedHubPatch();
                     foreach (KeyValuePair<string, string> tag in current.Tags)
                     {
                         patch.Tags.Add(tag);
@@ -657,13 +657,13 @@ namespace Azure.ResourceManager.Enclave
                     };
                     HttpMessage message = _dedicatedHubRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
                     Response result = Pipeline.ProcessMessage(message, context);
-                    Response<DedicatedHubResourceData> response = Response.FromValue(DedicatedHubResourceData.FromResponse(result), result);
+                    Response<DedicatedHubData> response = Response.FromValue(DedicatedHubData.FromResponse(result), result);
                     return Response.FromValue(new DedicatedHubResource(Client, response.Value), response.GetRawResponse());
                 }
                 else
                 {
-                    DedicatedHubResourceData current = Get(cancellationToken: cancellationToken).Value.Data;
-                    DedicatedHubResourcePatch patch = new DedicatedHubResourcePatch();
+                    DedicatedHubData current = Get(cancellationToken: cancellationToken).Value.Data;
+                    DedicatedHubPatch patch = new DedicatedHubPatch();
                     foreach (KeyValuePair<string, string> tag in current.Tags)
                     {
                         patch.Tags.Add(tag);

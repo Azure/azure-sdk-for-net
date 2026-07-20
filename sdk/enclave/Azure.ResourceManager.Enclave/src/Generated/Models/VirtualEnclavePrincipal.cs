@@ -21,7 +21,7 @@ namespace Azure.ResourceManager.Enclave.Models
         /// <param name="id"> The object id associated with the principal. </param>
         /// <param name="type"> The type of the object id. We currently allow users, groups, and service principals. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="id"/> is null. </exception>
-        public VirtualEnclavePrincipal(string id, PrincipalType @type)
+        public VirtualEnclavePrincipal(string id, VirtualEnclavePrincipalType @type)
         {
             Argument.AssertNotNull(id, nameof(id));
 
@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.Enclave.Models
         /// <param name="id"> The object id associated with the principal. </param>
         /// <param name="type"> The type of the object id. We currently allow users, groups, and service principals. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal VirtualEnclavePrincipal(string id, PrincipalType @type, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal VirtualEnclavePrincipal(string id, VirtualEnclavePrincipalType @type, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Id = id;
             Type = @type;
@@ -44,6 +44,6 @@ namespace Azure.ResourceManager.Enclave.Models
         public string Id { get; set; }
 
         /// <summary> The type of the object id. We currently allow users, groups, and service principals. </summary>
-        public PrincipalType Type { get; set; }
+        public VirtualEnclavePrincipalType Type { get; set; }
     }
 }
