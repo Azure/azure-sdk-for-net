@@ -12,7 +12,6 @@ namespace Azure.Data.AppConfiguration
         private readonly string _value;
         private const string AzureChinaValue = "https://appconfig.azure.cn";
         private const string AzureGovernmentValue = "https://appconfig.azure.us";
-        private const string AzurePublicCloudAzValue = "https://azconfig.io";
         private const string AzurePublicCloudValue = "https://appconfig.azure.com";
 
         /// <summary>
