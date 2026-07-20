@@ -19,8 +19,6 @@ using Microsoft.TypeSpec.Generator.Customizations;
 
 namespace Azure.ResourceManager.Authorization
 {
-    [CodeGenSuppress("Delete", typeof(WaitUntil), typeof(CancellationToken))]
-    [CodeGenSuppress("DeleteAsync", typeof(WaitUntil), typeof(CancellationToken))]
     public partial class AuthorizationRoleDefinitionResource
     {
         /// <inheritdoc cref="CreateResourceIdentifier(string, string)"/>
