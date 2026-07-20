@@ -1,4 +1,4 @@
-# Azure.ResourceManager.ContainerServicePreparedImgSpec management client library for .NET
+# Microsoft Azure Container Service Prepared Image Specification management client library for .NET
 
 This library supports managing Microsoft Azure resources.
 
