@@ -9,7 +9,7 @@ steps:
       # For safety default to publishing to the private feed.
       # Publish to https://dev.azure.com/azure-sdk/internal/_packaging?_a=feed&feed=azure-sdk-for-python-pr
       $devopsFeedName = 'internal/azure-sdk-for-python-pr'
-      if ('$(Build.Repository.Name)' -eq 'Azure/azure-sdk-for-python') {
+      if (-not ('$(Build.Repository.Name)').EndsWith('-pr')) {
         # Publish to https://dev.azure.com/azure-sdk/public/_packaging?_a=feed&feed=azure-sdk-for-python
         $devopsFeedName = '${{ parameters.DevFeedName }}'
       }
