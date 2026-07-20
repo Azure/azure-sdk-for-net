@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.Authorization
 
         /// <summary> Resource associated with this decision record. </summary>
         [WirePath("properties.resource")]
-        public Models.AccessReviewDecisionResource Resource
+        public AccessReviewDecisionResourceTarget Resource
         {
             get
             {

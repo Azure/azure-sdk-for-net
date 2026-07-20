@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.Authorization.Models
         /// <param name="insights"> This is the collection of insights for this decision item. </param>
         /// <param name="principalResourceMembership"> Details of the membership type. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal AccessReviewDecisionPatch(AccessReviewDecisionIdentity principal, AccessReviewDecisionResource resource, AccessRecommendationType? recommendation, AccessReviewResult? decision, string justification, DateTimeOffset? reviewedOn, AccessReviewActorIdentity reviewedBy, AccessReviewApplyResult? applyResult, DateTimeOffset? appliedOn, AccessReviewActorIdentity appliedBy, IList<AccessReviewDecisionInsight> insights, AccessReviewDecisionPrincipalResourceMembership principalResourceMembership, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal AccessReviewDecisionPatch(AccessReviewDecisionIdentity principal, AccessReviewDecisionResourceTarget resource, AccessRecommendationType? recommendation, AccessReviewResult? decision, string justification, DateTimeOffset? reviewedOn, AccessReviewActorIdentity reviewedBy, AccessReviewApplyResult? applyResult, DateTimeOffset? appliedOn, AccessReviewActorIdentity appliedBy, IList<AccessReviewDecisionInsight> insights, AccessReviewDecisionPrincipalResourceMembership principalResourceMembership, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Principal = principal;
             Resource = resource;
@@ -60,7 +60,7 @@ namespace Azure.ResourceManager.Authorization.Models
 
         /// <summary> Resource associated with this decision record. </summary>
         [WirePath("resource")]
-        public AccessReviewDecisionResource Resource { get; }
+        public AccessReviewDecisionResourceTarget Resource { get; }
 
         /// <summary> The feature- generated recommendation shown to the reviewer. </summary>
         [WirePath("recommendation")]

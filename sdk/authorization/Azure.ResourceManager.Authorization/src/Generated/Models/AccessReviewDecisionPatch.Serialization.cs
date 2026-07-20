@@ -193,7 +193,7 @@ namespace Azure.ResourceManager.Authorization.Models
                 return null;
             }
             AccessReviewDecisionIdentity principal = default;
-            AccessReviewDecisionResource resource = default;
+            AccessReviewDecisionResourceTarget resource = default;
             AccessRecommendationType? recommendation = default;
             AccessReviewResult? decision = default;
             string justification = default;
@@ -224,7 +224,7 @@ namespace Azure.ResourceManager.Authorization.Models
                         resource = null;
                         continue;
                     }
-                    resource = AccessReviewDecisionResource.DeserializeAccessReviewDecisionResource(prop.Value, options);
+                    resource = AccessReviewDecisionResourceTarget.DeserializeAccessReviewDecisionResourceTarget(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("recommendation"u8))

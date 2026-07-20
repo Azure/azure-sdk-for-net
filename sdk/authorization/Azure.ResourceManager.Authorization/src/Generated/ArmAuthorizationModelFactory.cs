@@ -1560,7 +1560,7 @@ namespace Azure.ResourceManager.Authorization.Models
         /// <param name="insights"> This is the collection of insights for this decision item. </param>
         /// <param name="membershipTypes"> Every decision item in an access review represents a principal's membership to a resource. This property represents details of the membership. Examples of this detail might be whether the principal has direct access or indirect access. </param>
         /// <returns> A new <see cref="Authorization.AccessReviewDecisionData"/> instance for mocking. </returns>
-        public static AccessReviewDecisionData AccessReviewDecisionData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, AccessReviewDecisionIdentity principal = default, AccessReviewDecisionResource resource = default, AccessRecommendationType? recommendation = default, AccessReviewResult? decision = default, string justification = default, DateTimeOffset? reviewedOn = default, AccessReviewActorIdentity reviewedBy = default, AccessReviewApplyResult? applyResult = default, DateTimeOffset? appliedOn = default, AccessReviewActorIdentity appliedBy = default, IEnumerable<AccessReviewDecisionInsight> insights = default, IEnumerable<AccessReviewDecisionPrincipalResourceMembershipType> membershipTypes = default)
+        public static AccessReviewDecisionData AccessReviewDecisionData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, AccessReviewDecisionIdentity principal = default, AccessReviewDecisionResourceTarget resource = default, AccessRecommendationType? recommendation = default, AccessReviewResult? decision = default, string justification = default, DateTimeOffset? reviewedOn = default, AccessReviewActorIdentity reviewedBy = default, AccessReviewApplyResult? applyResult = default, DateTimeOffset? appliedOn = default, AccessReviewActorIdentity appliedBy = default, IEnumerable<AccessReviewDecisionInsight> insights = default, IEnumerable<AccessReviewDecisionPrincipalResourceMembershipType> membershipTypes = default)
         {
             return new AccessReviewDecisionData(
                 id,
@@ -1597,7 +1597,7 @@ namespace Azure.ResourceManager.Authorization.Models
         /// <param name="insights"> This is the collection of insights for this decision item. </param>
         /// <param name="membershipTypes"> Every decision item in an access review represents a principal's membership to a resource. This property represents details of the membership. Examples of this detail might be whether the principal has direct access or indirect access. </param>
         /// <returns> A new <see cref="Models.AccessReviewDecisionPatch"/> instance for mocking. </returns>
-        public static AccessReviewDecisionPatch AccessReviewDecisionPatch(AccessReviewDecisionIdentity principal = default, AccessReviewDecisionResource resource = default, AccessRecommendationType? recommendation = default, AccessReviewResult? decision = default, string justification = default, DateTimeOffset? reviewedOn = default, AccessReviewActorIdentity reviewedBy = default, AccessReviewApplyResult? applyResult = default, DateTimeOffset? appliedOn = default, AccessReviewActorIdentity appliedBy = default, IEnumerable<AccessReviewDecisionInsight> insights = default, IEnumerable<AccessReviewDecisionPrincipalResourceMembershipType> membershipTypes = default)
+        public static AccessReviewDecisionPatch AccessReviewDecisionPatch(AccessReviewDecisionIdentity principal = default, AccessReviewDecisionResourceTarget resource = default, AccessRecommendationType? recommendation = default, AccessReviewResult? decision = default, string justification = default, DateTimeOffset? reviewedOn = default, AccessReviewActorIdentity reviewedBy = default, AccessReviewApplyResult? applyResult = default, DateTimeOffset? appliedOn = default, AccessReviewActorIdentity appliedBy = default, IEnumerable<AccessReviewDecisionInsight> insights = default, IEnumerable<AccessReviewDecisionPrincipalResourceMembershipType> membershipTypes = default)
         {
             insights ??= new ChangeTrackingList<AccessReviewDecisionInsight>();
 
@@ -1647,10 +1647,10 @@ namespace Azure.ResourceManager.Authorization.Models
         /// <param name="type"> The type of resource. </param>
         /// <param name="id"> The id of resource associated with a decision record. </param>
         /// <param name="displayName"> The display name of resource associated with a decision record. </param>
-        /// <returns> A new <see cref="Models.AccessReviewDecisionResource"/> instance for mocking. </returns>
-        public static AccessReviewDecisionResource AccessReviewDecisionResource(DecisionResourceType @type = default, string id = default, string displayName = default)
+        /// <returns> A new <see cref="Models.AccessReviewDecisionResourceTarget"/> instance for mocking. </returns>
+        public static AccessReviewDecisionResourceTarget AccessReviewDecisionResourceTarget(DecisionResourceType @type = default, string id = default, string displayName = default)
         {
-            return new AccessReviewDecisionResource(@type, id, displayName, default);
+            return new AccessReviewDecisionResourceTarget(@type, id, displayName, default);
         }
 
         /// <param name="id"> The access review insight id. </param>

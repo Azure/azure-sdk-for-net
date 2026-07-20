@@ -14,56 +14,56 @@ using Azure.ResourceManager.Authorization;
 namespace Azure.ResourceManager.Authorization.Models
 {
     /// <summary> Target of the decision. </summary>
-    public partial class AccessReviewDecisionResource : IJsonModel<AccessReviewDecisionResource>
+    public partial class AccessReviewDecisionResourceTarget : IJsonModel<AccessReviewDecisionResourceTarget>
     {
-        /// <summary> Initializes a new instance of <see cref="AccessReviewDecisionResource"/> for deserialization. </summary>
-        internal AccessReviewDecisionResource()
+        /// <summary> Initializes a new instance of <see cref="AccessReviewDecisionResourceTarget"/> for deserialization. </summary>
+        internal AccessReviewDecisionResourceTarget()
         {
         }
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual AccessReviewDecisionResource PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        protected virtual AccessReviewDecisionResourceTarget PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<AccessReviewDecisionResource>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<AccessReviewDecisionResourceTarget>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeAccessReviewDecisionResource(document.RootElement, options);
+                        return DeserializeAccessReviewDecisionResourceTarget(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(AccessReviewDecisionResource)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(AccessReviewDecisionResourceTarget)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<AccessReviewDecisionResource>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<AccessReviewDecisionResourceTarget>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options, AzureResourceManagerAuthorizationContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(AccessReviewDecisionResource)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(AccessReviewDecisionResourceTarget)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<AccessReviewDecisionResource>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<AccessReviewDecisionResourceTarget>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        AccessReviewDecisionResource IPersistableModel<AccessReviewDecisionResource>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+        AccessReviewDecisionResourceTarget IPersistableModel<AccessReviewDecisionResourceTarget>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<AccessReviewDecisionResource>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<AccessReviewDecisionResourceTarget>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<AccessReviewDecisionResource>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<AccessReviewDecisionResourceTarget>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -74,10 +74,10 @@ namespace Azure.ResourceManager.Authorization.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<AccessReviewDecisionResource>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<AccessReviewDecisionResourceTarget>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(AccessReviewDecisionResource)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(AccessReviewDecisionResourceTarget)} does not support writing '{format}' format.");
             }
             writer.WritePropertyName("type"u8);
             writer.WriteStringValue(Type.ToString());
@@ -110,24 +110,24 @@ namespace Azure.ResourceManager.Authorization.Models
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        AccessReviewDecisionResource IJsonModel<AccessReviewDecisionResource>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+        AccessReviewDecisionResourceTarget IJsonModel<AccessReviewDecisionResourceTarget>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual AccessReviewDecisionResource JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        protected virtual AccessReviewDecisionResourceTarget JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<AccessReviewDecisionResource>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<AccessReviewDecisionResourceTarget>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(AccessReviewDecisionResource)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(AccessReviewDecisionResourceTarget)} does not support reading '{format}' format.");
             }
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeAccessReviewDecisionResource(document.RootElement, options);
+            return DeserializeAccessReviewDecisionResourceTarget(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        internal static AccessReviewDecisionResource DeserializeAccessReviewDecisionResource(JsonElement element, ModelReaderWriterOptions options)
+        internal static AccessReviewDecisionResourceTarget DeserializeAccessReviewDecisionResourceTarget(JsonElement element, ModelReaderWriterOptions options)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -159,7 +159,7 @@ namespace Azure.ResourceManager.Authorization.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new AccessReviewDecisionResource(@type, id, displayName, additionalBinaryDataProperties);
+            return new AccessReviewDecisionResourceTarget(@type, id, displayName, additionalBinaryDataProperties);
         }
     }
 }

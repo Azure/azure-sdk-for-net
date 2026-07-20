@@ -12,24 +12,24 @@ using Azure.ResourceManager.Authorization;
 namespace Azure.ResourceManager.Authorization.Models
 {
     /// <summary> Target of the decision. </summary>
-    public partial class AccessReviewDecisionResource
+    public partial class AccessReviewDecisionResourceTarget
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="AccessReviewDecisionResource"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="AccessReviewDecisionResourceTarget"/>. </summary>
         /// <param name="type"> The type of resource. </param>
-        internal AccessReviewDecisionResource(DecisionResourceType @type)
+        internal AccessReviewDecisionResourceTarget(DecisionResourceType @type)
         {
             Type = @type;
         }
 
-        /// <summary> Initializes a new instance of <see cref="AccessReviewDecisionResource"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="AccessReviewDecisionResourceTarget"/>. </summary>
         /// <param name="type"> The type of resource. </param>
         /// <param name="id"> The id of resource associated with a decision record. </param>
         /// <param name="displayName"> The display name of resource associated with a decision record. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal AccessReviewDecisionResource(DecisionResourceType @type, string id, string displayName, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal AccessReviewDecisionResourceTarget(DecisionResourceType @type, string id, string displayName, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Type = @type;
             Id = id;
