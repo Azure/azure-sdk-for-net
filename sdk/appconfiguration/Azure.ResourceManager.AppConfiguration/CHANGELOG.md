@@ -4,6 +4,8 @@
 
 ### Features Added
 
+- Added support for Network Security Perimeter (NSP) configuration on `AppConfigurationStoreResource`, including new `Get`, `GetByConfigurationStore`, and `Reconcile` operations for `NetworkSecurityPerimeterConfiguration`, along with related models such as `NetworkSecurityPerimeter`, `NetworkSecurityProfile`, `ProvisioningIssue`, and `ResourceAssociation`.
+
 ### Breaking Changes
 
 ### Bugs Fixed
