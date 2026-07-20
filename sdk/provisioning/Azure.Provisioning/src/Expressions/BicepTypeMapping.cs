@@ -2,11 +2,13 @@
 // Licensed under the MIT License.
 
 using System;
+using System.Buffers;
 using System.Collections.Generic;
 using System.Globalization;
 using System.Net;
 using System.Reflection;
 using System.Runtime.Serialization;
+using System.Text;
 using System.Text.Json;
 using System.Xml;
 using Azure.Core;
@@ -94,8 +96,13 @@ internal static class BicepTypeMapping
 
         try
         {
-            using JsonDocument document = JsonDocument.Parse(value.ToMemory());
-            return ToBicep(document.RootElement);
+            Utf8JsonReader reader = new(value.ToMemory().Span);
+            BicepExpression expression = ReadJsonValue(ref reader);
+            if (reader.Read())
+            {
+                throw new JsonException();
+            }
+            return expression;
         }
         catch (JsonException)
         {
@@ -103,57 +110,89 @@ internal static class BicepTypeMapping
         }
     }
 
-    private static BicepExpression ToBicep(JsonElement element) =>
-        element.ValueKind switch
+    private static BicepExpression ReadJsonValue(ref Utf8JsonReader reader)
+    {
+        if (!reader.Read())
         {
-            JsonValueKind.Object => new ObjectExpression(GetObjectProperties(element)),
-            JsonValueKind.Array => BicepSyntax.Array(GetArrayValues(element)),
-            JsonValueKind.String => BicepSyntax.Value(element.GetString()!),
-            JsonValueKind.Number => ToBicepNumber(element),
-            JsonValueKind.True => BicepSyntax.Value(true),
-            JsonValueKind.False => BicepSyntax.Value(false),
-            JsonValueKind.Null => BicepSyntax.Null(),
-            _ => throw new InvalidOperationException($"Cannot convert JSON {element.ValueKind} to a Bicep expression.")
+            throw new JsonException();
+        }
+        return ToBicep(ref reader);
+    }
+
+    private static BicepExpression ToBicep(ref Utf8JsonReader reader) =>
+        reader.TokenType switch
+        {
+            JsonTokenType.StartObject => new ObjectExpression(ReadObjectProperties(ref reader)),
+            JsonTokenType.StartArray => BicepSyntax.Array(ReadArrayValues(ref reader)),
+            JsonTokenType.String => BicepSyntax.Value(reader.GetString()!),
+            JsonTokenType.Number => ToBicepNumber(ref reader),
+            JsonTokenType.True => BicepSyntax.Value(true),
+            JsonTokenType.False => BicepSyntax.Value(false),
+            JsonTokenType.Null => BicepSyntax.Null(),
+            _ => throw new JsonException()
         };
 
-    private static PropertyExpression[] GetObjectProperties(JsonElement element)
+    private static PropertyExpression[] ReadObjectProperties(ref Utf8JsonReader reader)
     {
         List<PropertyExpression> properties = [];
-        foreach (JsonProperty property in element.EnumerateObject())
+        while (reader.Read())
         {
-            properties.Add(new PropertyExpression(property.Name, ToBicep(property.Value)));
+            if (reader.TokenType == JsonTokenType.EndObject)
+            {
+                return [.. properties];
+            }
+            if (reader.TokenType != JsonTokenType.PropertyName)
+            {
+                throw new JsonException();
+            }
+
+            string propertyName = reader.GetString()!;
+            properties.Add(new PropertyExpression(propertyName, ReadJsonValue(ref reader)));
         }
-        return [.. properties];
+        throw new JsonException();
     }
 
-    private static BicepExpression[] GetArrayValues(JsonElement element)
+    private static BicepExpression[] ReadArrayValues(ref Utf8JsonReader reader)
     {
         List<BicepExpression> values = [];
-        foreach (JsonElement item in element.EnumerateArray())
+        while (reader.Read())
         {
-            values.Add(ToBicep(item));
+            if (reader.TokenType == JsonTokenType.EndArray)
+            {
+                return [.. values];
+            }
+
+            values.Add(ToBicep(ref reader));
         }
-        return [.. values];
+        throw new JsonException();
     }
 
-    private static BicepExpression ToBicepNumber(JsonElement element)
+    private static BicepExpression ToBicepNumber(ref Utf8JsonReader reader)
     {
-        if (element.TryGetInt32(out int intValue))
+        if (reader.TryGetInt32(out int intValue))
         {
             return BicepSyntax.Value(intValue);
         }
-        if (element.TryGetInt64(out long longValue))
+        if (reader.TryGetInt64(out long longValue))
         {
             return BicepSyntax.Value(longValue);
         }
-        if (element.TryGetDouble(out double doubleValue) &&
+        if (reader.TryGetDouble(out double doubleValue) &&
             !double.IsNaN(doubleValue) &&
             !double.IsInfinity(doubleValue))
         {
             return BicepSyntax.Value(doubleValue);
         }
 
-        return BicepFunction.ParseJson(BicepSyntax.Value(element.GetRawText())).Compile();
+        return BicepFunction.ParseJson(BicepSyntax.Value(GetRawTokenText(ref reader))).Compile();
+    }
+
+    private static string GetRawTokenText(ref Utf8JsonReader reader)
+    {
+        byte[] tokenBytes = reader.HasValueSequence ?
+            reader.ValueSequence.ToArray() :
+            reader.ValueSpan.ToArray();
+        return Encoding.UTF8.GetString(tokenBytes);
     }
 
     /// <summary>
