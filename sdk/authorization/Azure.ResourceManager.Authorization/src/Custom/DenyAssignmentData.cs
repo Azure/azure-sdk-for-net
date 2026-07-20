@@ -21,7 +21,7 @@ namespace Azure.ResourceManager.Authorization
         [Obsolete("This property is deprecated and it will be removed in a future version. Please use DeniedPermissions instead.")]
         public IReadOnlyList<DenyAssignmentPermission> Permissions
         {
-            get => (IReadOnlyList<DenyAssignmentPermission>)DeniedPermissions;
+            get => DeniedPermissions as IReadOnlyList<DenyAssignmentPermission>;
         }
 
         /// <summary> Array of principals to which the deny assignment applies. </summary>
@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.Authorization
         [Obsolete("This property is deprecated and it will be removed in a future version. Please use DeniedPrincipals instead.")]
         public IReadOnlyList<RoleManagementPrincipal> Principals
         {
-            get => (IReadOnlyList<RoleManagementPrincipal>)DeniedPrincipals;
+            get => DeniedPrincipals as IReadOnlyList<RoleManagementPrincipal>;
         }
 
         /// <summary> Array of principals to which the deny assignment does not apply. </summary>
@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.Authorization
         [Obsolete("This property is deprecated and it will be removed in a future version. Please use ExcludedPrincipals instead.")]
         public IReadOnlyList<RoleManagementPrincipal> ExcludePrincipals
         {
-            get => (IReadOnlyList<RoleManagementPrincipal>)ExcludedPrincipals;
+            get => ExcludedPrincipals as IReadOnlyList<RoleManagementPrincipal>;
         }
     }
 }
