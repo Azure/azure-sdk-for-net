@@ -26,10 +26,8 @@ Azure.Monitor.OpenTelemetry.AspNetCore
 Azure.Projects
 Azure.Projects.Provisioning
 Azure.Provisioning
-Azure.Provisioning.Deployment
 Azure.ResourceManager.InformaticaDataManagement
 Microsoft.Azure.WebJobs.Extensions.EventHubs
 Microsoft.Azure.WebJobs.Extensions.ServiceBus
-Microsoft.Azure.WebJobs.Extensions.SignalRService
 Microsoft.Azure.WebJobs.Extensions.Tables
 Microsoft.ClientModel.TestFramework
