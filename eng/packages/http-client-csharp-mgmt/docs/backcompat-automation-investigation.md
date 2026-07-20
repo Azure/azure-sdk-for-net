@@ -175,8 +175,8 @@ stay ambiguous.
 
 - **Discriminator `Unknown*` fallbacks — 🟡, and *not* reconstructable from the name.** An earlier
   revision of this doc claimed these were deterministic because the old name is "mechanically
-  `Unknown{Base}` and the base survives migration." That is wrong, and the CosmosDB citation is the
-  counter-example: 1.4.0 GA shipped the base as `BackupPolicy` (so the fallback was
+  `Unknown{Base}` and the base survives migration." That is wrong, and the `UnknownBackupPolicy`
+  citation above is the counter-example: 1.4.0 GA shipped the base as `BackupPolicy` (so the fallback was
   `UnknownBackupPolicy`), but the migration renamed the base to `CosmosDBAccountBackupPolicy`, so
   the current generation emits `UnknownCosmosDBAccountBackupPolicy`. The `Unknown{Base}` string did
   **not** survive, precisely because the base itself was renamed. On top of that, a library can
@@ -214,9 +214,10 @@ base identity), applying the old name via the existing `NameVisitor` when the ma
 explicit author rename (custom `[CodeGenType]` or `client.tsp` `@clientName`) always takes
 precedence over any inferred mapping, and an ambiguous anchor falls back to a per-type hint. This is
 the single most frequent custom-code pattern in the survey, but the verdict is *partial* — not
-✅ — because recovering the new→old identity (not emitting the rename once known) is the hard part,
-and even the discriminator fallbacks depend on first mapping their base type rather than on any
-reconstructable naming convention.
+✅ — because recovering the new→old identity (the challenge is identifying which newly generated
+type corresponds to which last-GA type, not applying the rename once that correspondence is known)
+is the hard part, and even the discriminator fallbacks depend on first mapping their base type
+rather than on any reconstructable naming convention.
 
 ### 2. Restore a removed base type (`: ResourceData`, other bases) — ✅ Automatable
 
