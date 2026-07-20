@@ -4,7 +4,6 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using Microsoft.Azure.Amqp.Framing;
 
@@ -13,7 +12,7 @@ using Microsoft.Azure.Amqp.Framing;
 namespace Azure.Core.Amqp
 {
     /// <summary>
-    /// The body abstractions allow to optimize several use cases to make sure body memory is only converted when needed and as little as possible.
+    /// The body abstractions allow optimizing several use cases to make sure body memory is only converted when needed and as little as possible.
     /// </summary>
     internal abstract class MessageBody : IEnumerable<ReadOnlyMemory<byte>>
     {
@@ -216,7 +215,6 @@ namespace Azure.Core.Amqp
                 }
             }
 
-            [DoesNotReturn]
             private static ReadOnlyMemory<byte> ThrowArgumentOutOfRange(string paramName)
             {
                 throw new ArgumentOutOfRangeException(paramName, "Provided data segment is not compatible.");
