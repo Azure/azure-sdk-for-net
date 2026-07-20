@@ -10,12 +10,6 @@
   - `Reconcile(WaitUntil, string networkSecurityPerimeterConfigurationName)` — reconciles an NSP configuration.
 - Added new models: `NetworkSecurityPerimeterConfiguration`, `NetworkSecurityPerimeterConfigurationProperties`, `NetworkSecurityPerimeter`, `NetworkSecurityProfile`, `AccessRule`, `AccessRuleProperties`, `AccessRuleDirection`, `ProvisioningIssue`, `ProvisioningIssueProperties`, `ResourceAssociation`, `ResourceAssociationAccessMode`, `IssueType`, `Severity`.
 
-### Breaking Changes
-
-### Bugs Fixed
-
-### Other Changes
-
 ## 1.5.0-beta.1 (2026-04-28)
 
 ### Features Added

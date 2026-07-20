@@ -262,6 +262,7 @@ namespace Azure.ResourceManager.AppConfiguration
     }
     public partial class AppConfigurationSnapshotData : Azure.ResourceManager.Models.ResourceData, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.AppConfiguration.AppConfigurationSnapshotData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.AppConfiguration.AppConfigurationSnapshotData>
     {
+        public AppConfigurationSnapshotData() { }
         public AppConfigurationSnapshotData(System.Collections.Generic.IEnumerable<Azure.ResourceManager.AppConfiguration.Models.SnapshotKeyValueFilter> filters) { }
         public Azure.ResourceManager.AppConfiguration.Models.SnapshotCompositionType? CompositionType { get { throw null; } set { } }
         public System.DateTimeOffset? CreatedOn { get { throw null; } }
