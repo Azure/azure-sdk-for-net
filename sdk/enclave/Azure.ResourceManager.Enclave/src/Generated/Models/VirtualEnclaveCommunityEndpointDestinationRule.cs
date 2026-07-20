@@ -13,18 +13,18 @@ using Azure.ResourceManager.Enclave;
 namespace Azure.ResourceManager.Enclave.Models
 {
     /// <summary> Base type for destination rules. </summary>
-    public partial class CommunityEndpointDestinationRule
+    public partial class VirtualEnclaveCommunityEndpointDestinationRule
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="CommunityEndpointDestinationRule"/>. </summary>
-        public CommunityEndpointDestinationRule()
+        /// <summary> Initializes a new instance of <see cref="VirtualEnclaveCommunityEndpointDestinationRule"/>. </summary>
+        public VirtualEnclaveCommunityEndpointDestinationRule()
         {
-            Protocols = new ChangeTrackingList<CommunityEndpointProtocol>();
+            Protocols = new ChangeTrackingList<VirtualEnclaveCommunityEndpointProtocol>();
         }
 
-        /// <summary> Initializes a new instance of <see cref="CommunityEndpointDestinationRule"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="VirtualEnclaveCommunityEndpointDestinationRule"/>. </summary>
         /// <param name="destinationType"> Destination Type. </param>
         /// <param name="protocols"> Protocols. Options specified by Endpoint Protocol Enum. </param>
         /// <param name="transitHubResourceId"> Transit Hub Resource Id. </param>
@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.Enclave.Models
         /// <param name="destination"> Destination address. Can include multiple CIDR/IP Addresses or fqdn tags or fqdns (for community endpoint) separated by commas. </param>
         /// <param name="ports"> Port. Can include multiple ports separated by commas or a range indicated by a hyphen. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal CommunityEndpointDestinationRule(CommunityEndpointDestinationType? destinationType, IList<CommunityEndpointProtocol> protocols, ResourceIdentifier transitHubResourceId, string endpointRuleName, string destination, string ports, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal VirtualEnclaveCommunityEndpointDestinationRule(VirtualEnclaveCommunityEndpointDestinationType? destinationType, IList<VirtualEnclaveCommunityEndpointProtocol> protocols, ResourceIdentifier transitHubResourceId, string endpointRuleName, string destination, string ports, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             DestinationType = destinationType;
             Protocols = protocols;
@@ -44,10 +44,10 @@ namespace Azure.ResourceManager.Enclave.Models
         }
 
         /// <summary> Destination Type. </summary>
-        public CommunityEndpointDestinationType? DestinationType { get; set; }
+        public VirtualEnclaveCommunityEndpointDestinationType? DestinationType { get; set; }
 
         /// <summary> Protocols. Options specified by Endpoint Protocol Enum. </summary>
-        public IList<CommunityEndpointProtocol> Protocols { get; }
+        public IList<VirtualEnclaveCommunityEndpointProtocol> Protocols { get; }
 
         /// <summary> Transit Hub Resource Id. </summary>
         public ResourceIdentifier TransitHubResourceId { get; set; }

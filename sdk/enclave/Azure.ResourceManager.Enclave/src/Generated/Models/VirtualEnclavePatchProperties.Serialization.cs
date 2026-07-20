@@ -197,7 +197,7 @@ namespace Azure.ResourceManager.Enclave.Models
             EnclaveVirtualNetwork enclaveVirtualNetwork = default;
             bool? isBastionEnabled = default;
             VirtualEnclaveResourceVisibilityMode? workloadResourceVisibility = default;
-            RbacInheritanceMode? rbacInheritance = default;
+            VirtualEnclaveRbacInheritanceMode? rbacInheritance = default;
             IList<VirtualEnclaveRoleAssignmentItem> enclaveRoleAssignments = default;
             IList<VirtualEnclaveRoleAssignmentItem> workloadRoleAssignments = default;
             IList<VirtualEnclaveGovernedService> governedServiceList = default;
@@ -238,7 +238,7 @@ namespace Azure.ResourceManager.Enclave.Models
                     {
                         continue;
                     }
-                    rbacInheritance = new RbacInheritanceMode(prop.Value.GetString());
+                    rbacInheritance = new VirtualEnclaveRbacInheritanceMode(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("enclaveRoleAssignments"u8))

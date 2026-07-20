@@ -134,13 +134,13 @@ namespace Azure.ResourceManager.Enclave.Models
             {
                 return null;
             }
-            ApprovalDeletionCallbackRequestResourceRequestAction resourceRequestAction = default;
+            VirtualEnclaveApprovalDeletionCallbackResourceAction resourceRequestAction = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("resourceRequestAction"u8))
                 {
-                    resourceRequestAction = new ApprovalDeletionCallbackRequestResourceRequestAction(prop.Value.GetString());
+                    resourceRequestAction = new VirtualEnclaveApprovalDeletionCallbackResourceAction(prop.Value.GetString());
                     continue;
                 }
                 if (options.Format != "W")

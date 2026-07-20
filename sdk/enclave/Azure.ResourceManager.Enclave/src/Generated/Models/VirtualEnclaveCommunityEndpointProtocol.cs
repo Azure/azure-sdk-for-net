@@ -12,7 +12,7 @@ using Azure.ResourceManager.Enclave;
 namespace Azure.ResourceManager.Enclave.Models
 {
     /// <summary> Community Endpoint Protocol Enum. </summary>
-    public readonly partial struct CommunityEndpointProtocol : IEquatable<CommunityEndpointProtocol>
+    public readonly partial struct VirtualEnclaveCommunityEndpointProtocol : IEquatable<VirtualEnclaveCommunityEndpointProtocol>
     {
         private readonly string _value;
         /// <summary> CommunityEndpointProtocol Type ANY. </summary>
@@ -32,10 +32,10 @@ namespace Azure.ResourceManager.Enclave.Models
         /// <summary> CommunityEndpointProtocol Type HTTP. </summary>
         private const string HttpValue = "HTTP";
 
-        /// <summary> Initializes a new instance of <see cref="CommunityEndpointProtocol"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="VirtualEnclaveCommunityEndpointProtocol"/>. </summary>
         /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        public CommunityEndpointProtocol(string value)
+        public VirtualEnclaveCommunityEndpointProtocol(string value)
         {
             Argument.AssertNotNull(value, nameof(value));
 
@@ -43,53 +43,53 @@ namespace Azure.ResourceManager.Enclave.Models
         }
 
         /// <summary> CommunityEndpointProtocol Type ANY. </summary>
-        public static CommunityEndpointProtocol Any { get; } = new CommunityEndpointProtocol(AnyValue);
+        public static VirtualEnclaveCommunityEndpointProtocol Any { get; } = new VirtualEnclaveCommunityEndpointProtocol(AnyValue);
 
         /// <summary> CommunityEndpointProtocol Type TCP. </summary>
-        public static CommunityEndpointProtocol Tcp { get; } = new CommunityEndpointProtocol(TcpValue);
+        public static VirtualEnclaveCommunityEndpointProtocol Tcp { get; } = new VirtualEnclaveCommunityEndpointProtocol(TcpValue);
 
         /// <summary> CommunityEndpointProtocol Type UDP. </summary>
-        public static CommunityEndpointProtocol Udp { get; } = new CommunityEndpointProtocol(UdpValue);
+        public static VirtualEnclaveCommunityEndpointProtocol Udp { get; } = new VirtualEnclaveCommunityEndpointProtocol(UdpValue);
 
         /// <summary> CommunityEndpointProtocol Type ICMP. </summary>
-        public static CommunityEndpointProtocol Icmp { get; } = new CommunityEndpointProtocol(IcmpValue);
+        public static VirtualEnclaveCommunityEndpointProtocol Icmp { get; } = new VirtualEnclaveCommunityEndpointProtocol(IcmpValue);
 
         /// <summary> CommunityEndpointProtocol Type ESP. </summary>
-        public static CommunityEndpointProtocol Esp { get; } = new CommunityEndpointProtocol(EspValue);
+        public static VirtualEnclaveCommunityEndpointProtocol Esp { get; } = new VirtualEnclaveCommunityEndpointProtocol(EspValue);
 
         /// <summary> CommunityEndpointProtocol Type AH. </summary>
-        public static CommunityEndpointProtocol AH { get; } = new CommunityEndpointProtocol(AHValue);
+        public static VirtualEnclaveCommunityEndpointProtocol AH { get; } = new VirtualEnclaveCommunityEndpointProtocol(AHValue);
 
         /// <summary> CommunityEndpointProtocol Type HTTPS. </summary>
-        public static CommunityEndpointProtocol Https { get; } = new CommunityEndpointProtocol(HttpsValue);
+        public static VirtualEnclaveCommunityEndpointProtocol Https { get; } = new VirtualEnclaveCommunityEndpointProtocol(HttpsValue);
 
         /// <summary> CommunityEndpointProtocol Type HTTP. </summary>
-        public static CommunityEndpointProtocol Http { get; } = new CommunityEndpointProtocol(HttpValue);
+        public static VirtualEnclaveCommunityEndpointProtocol Http { get; } = new VirtualEnclaveCommunityEndpointProtocol(HttpValue);
 
-        /// <summary> Determines if two <see cref="CommunityEndpointProtocol"/> values are the same. </summary>
+        /// <summary> Determines if two <see cref="VirtualEnclaveCommunityEndpointProtocol"/> values are the same. </summary>
         /// <param name="left"> The left value to compare. </param>
         /// <param name="right"> The right value to compare. </param>
-        public static bool operator ==(CommunityEndpointProtocol left, CommunityEndpointProtocol right) => left.Equals(right);
+        public static bool operator ==(VirtualEnclaveCommunityEndpointProtocol left, VirtualEnclaveCommunityEndpointProtocol right) => left.Equals(right);
 
-        /// <summary> Determines if two <see cref="CommunityEndpointProtocol"/> values are not the same. </summary>
+        /// <summary> Determines if two <see cref="VirtualEnclaveCommunityEndpointProtocol"/> values are not the same. </summary>
         /// <param name="left"> The left value to compare. </param>
         /// <param name="right"> The right value to compare. </param>
-        public static bool operator !=(CommunityEndpointProtocol left, CommunityEndpointProtocol right) => !left.Equals(right);
+        public static bool operator !=(VirtualEnclaveCommunityEndpointProtocol left, VirtualEnclaveCommunityEndpointProtocol right) => !left.Equals(right);
 
-        /// <summary> Converts a string to a <see cref="CommunityEndpointProtocol"/>. </summary>
+        /// <summary> Converts a string to a <see cref="VirtualEnclaveCommunityEndpointProtocol"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator CommunityEndpointProtocol(string value) => new CommunityEndpointProtocol(value);
+        public static implicit operator VirtualEnclaveCommunityEndpointProtocol(string value) => new VirtualEnclaveCommunityEndpointProtocol(value);
 
-        /// <summary> Converts a string to a <see cref="CommunityEndpointProtocol"/>. </summary>
+        /// <summary> Converts a string to a <see cref="VirtualEnclaveCommunityEndpointProtocol"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator CommunityEndpointProtocol?(string value) => value == null ? null : new CommunityEndpointProtocol(value);
+        public static implicit operator VirtualEnclaveCommunityEndpointProtocol?(string value) => value == null ? null : new VirtualEnclaveCommunityEndpointProtocol(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public override bool Equals(object obj) => obj is CommunityEndpointProtocol other && Equals(other);
+        public override bool Equals(object obj) => obj is VirtualEnclaveCommunityEndpointProtocol other && Equals(other);
 
         /// <inheritdoc/>
-        public bool Equals(CommunityEndpointProtocol other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
+        public bool Equals(VirtualEnclaveCommunityEndpointProtocol other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

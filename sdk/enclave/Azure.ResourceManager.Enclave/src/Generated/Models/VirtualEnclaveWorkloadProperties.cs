@@ -46,7 +46,7 @@ namespace Azure.ResourceManager.Enclave.Models
         internal ManagedOnBehalfOfConfiguration ManagedOnBehalfOfConfiguration { get; }
 
         /// <summary> Managed-On-Behalf-Of broker resources. </summary>
-        public IReadOnlyList<MoboBrokerResource> ManagedOnBehalfOfMoboBrokerResources
+        public IReadOnlyList<VirtualEnclaveManagedOnBehalfOfBroker> ManagedOnBehalfOfMoboBrokerResources
         {
             get
             {

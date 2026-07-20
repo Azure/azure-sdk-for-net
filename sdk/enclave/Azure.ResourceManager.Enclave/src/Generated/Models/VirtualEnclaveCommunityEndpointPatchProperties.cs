@@ -12,35 +12,35 @@ using Azure.ResourceManager.Enclave;
 
 namespace Azure.ResourceManager.Enclave.Models
 {
-    /// <summary> Enclave Endpoint patchable Properties. </summary>
-    public partial class EnclaveEndpointPatchProperties
+    /// <summary> Community Endpoint patchable Properties. </summary>
+    public partial class VirtualEnclaveCommunityEndpointPatchProperties
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="EnclaveEndpointPatchProperties"/>. </summary>
-        /// <param name="ruleCollection"> Enclave Endpoint Rule Collection. </param>
+        /// <summary> Initializes a new instance of <see cref="VirtualEnclaveCommunityEndpointPatchProperties"/>. </summary>
+        /// <param name="ruleCollection"> Community Endpoint Rule Collection. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="ruleCollection"/> is null. </exception>
-        public EnclaveEndpointPatchProperties(IEnumerable<EnclaveEndpointDestinationRule> ruleCollection)
+        public VirtualEnclaveCommunityEndpointPatchProperties(IEnumerable<VirtualEnclaveCommunityEndpointDestinationRule> ruleCollection)
         {
             Argument.AssertNotNull(ruleCollection, nameof(ruleCollection));
 
             RuleCollection = ruleCollection.ToList();
         }
 
-        /// <summary> Initializes a new instance of <see cref="EnclaveEndpointPatchProperties"/>. </summary>
-        /// <param name="ruleCollection"> Enclave Endpoint Rule Collection. </param>
+        /// <summary> Initializes a new instance of <see cref="VirtualEnclaveCommunityEndpointPatchProperties"/>. </summary>
+        /// <param name="ruleCollection"> Community Endpoint Rule Collection. </param>
         /// <param name="updateMode"> Whether update mode is automatic or manual. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal EnclaveEndpointPatchProperties(IList<EnclaveEndpointDestinationRule> ruleCollection, VirtualEnclaveUpdateMode? updateMode, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal VirtualEnclaveCommunityEndpointPatchProperties(IList<VirtualEnclaveCommunityEndpointDestinationRule> ruleCollection, VirtualEnclaveUpdateMode? updateMode, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             RuleCollection = ruleCollection;
             UpdateMode = updateMode;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
-        /// <summary> Enclave Endpoint Rule Collection. </summary>
-        public IList<EnclaveEndpointDestinationRule> RuleCollection { get; }
+        /// <summary> Community Endpoint Rule Collection. </summary>
+        public IList<VirtualEnclaveCommunityEndpointDestinationRule> RuleCollection { get; }
 
         /// <summary> Whether update mode is automatic or manual. </summary>
         public VirtualEnclaveUpdateMode? UpdateMode { get; set; }

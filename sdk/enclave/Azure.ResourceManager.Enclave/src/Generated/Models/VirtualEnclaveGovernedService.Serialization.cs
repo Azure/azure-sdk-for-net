@@ -160,9 +160,9 @@ namespace Azure.ResourceManager.Enclave.Models
             }
             VirtualEnclaveGovernedServiceIdentifier serviceId = default;
             string serviceName = default;
-            GovernedServiceItemOption? option = default;
-            GovernedServiceItemEnforcement? enforcement = default;
-            GovernedServiceItemPolicyAction? policyAction = default;
+            VirtualEnclaveGovernedServiceItemOption? option = default;
+            VirtualEnclaveGovernedServiceItemEnforcement? enforcement = default;
+            VirtualEnclaveGovernedServiceItemPolicyAction? policyAction = default;
             IReadOnlyList<string> initiatives = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
@@ -183,7 +183,7 @@ namespace Azure.ResourceManager.Enclave.Models
                     {
                         continue;
                     }
-                    option = new GovernedServiceItemOption(prop.Value.GetString());
+                    option = new VirtualEnclaveGovernedServiceItemOption(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("enforcement"u8))
@@ -192,7 +192,7 @@ namespace Azure.ResourceManager.Enclave.Models
                     {
                         continue;
                     }
-                    enforcement = new GovernedServiceItemEnforcement(prop.Value.GetString());
+                    enforcement = new VirtualEnclaveGovernedServiceItemEnforcement(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("policyAction"u8))
@@ -201,7 +201,7 @@ namespace Azure.ResourceManager.Enclave.Models
                     {
                         continue;
                     }
-                    policyAction = new GovernedServiceItemPolicyAction(prop.Value.GetString());
+                    policyAction = new VirtualEnclaveGovernedServiceItemPolicyAction(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("initiatives"u8))

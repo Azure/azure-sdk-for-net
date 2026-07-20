@@ -15,51 +15,51 @@ using Azure.ResourceManager.Enclave;
 namespace Azure.ResourceManager.Enclave.Models
 {
     /// <summary> Managed-On-Behalf-Of broker resource. This resource is created by the Resource Provider to manage some resources on behalf of the user. </summary>
-    public partial class MoboBrokerResource : IJsonModel<MoboBrokerResource>
+    public partial class VirtualEnclaveManagedOnBehalfOfBroker : IJsonModel<VirtualEnclaveManagedOnBehalfOfBroker>
     {
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual MoboBrokerResource PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        protected virtual VirtualEnclaveManagedOnBehalfOfBroker PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<MoboBrokerResource>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<VirtualEnclaveManagedOnBehalfOfBroker>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeMoboBrokerResource(document.RootElement, options);
+                        return DeserializeVirtualEnclaveManagedOnBehalfOfBroker(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(MoboBrokerResource)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(VirtualEnclaveManagedOnBehalfOfBroker)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<MoboBrokerResource>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<VirtualEnclaveManagedOnBehalfOfBroker>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options, AzureResourceManagerEnclaveContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(MoboBrokerResource)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(VirtualEnclaveManagedOnBehalfOfBroker)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<MoboBrokerResource>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<VirtualEnclaveManagedOnBehalfOfBroker>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        MoboBrokerResource IPersistableModel<MoboBrokerResource>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+        VirtualEnclaveManagedOnBehalfOfBroker IPersistableModel<VirtualEnclaveManagedOnBehalfOfBroker>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<MoboBrokerResource>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<VirtualEnclaveManagedOnBehalfOfBroker>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<MoboBrokerResource>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<VirtualEnclaveManagedOnBehalfOfBroker>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -70,10 +70,10 @@ namespace Azure.ResourceManager.Enclave.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<MoboBrokerResource>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<VirtualEnclaveManagedOnBehalfOfBroker>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(MoboBrokerResource)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(VirtualEnclaveManagedOnBehalfOfBroker)} does not support writing '{format}' format.");
             }
             if (Optional.IsDefined(Id))
             {
@@ -99,24 +99,24 @@ namespace Azure.ResourceManager.Enclave.Models
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        MoboBrokerResource IJsonModel<MoboBrokerResource>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+        VirtualEnclaveManagedOnBehalfOfBroker IJsonModel<VirtualEnclaveManagedOnBehalfOfBroker>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual MoboBrokerResource JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        protected virtual VirtualEnclaveManagedOnBehalfOfBroker JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<MoboBrokerResource>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<VirtualEnclaveManagedOnBehalfOfBroker>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(MoboBrokerResource)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(VirtualEnclaveManagedOnBehalfOfBroker)} does not support reading '{format}' format.");
             }
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeMoboBrokerResource(document.RootElement, options);
+            return DeserializeVirtualEnclaveManagedOnBehalfOfBroker(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        internal static MoboBrokerResource DeserializeMoboBrokerResource(JsonElement element, ModelReaderWriterOptions options)
+        internal static VirtualEnclaveManagedOnBehalfOfBroker DeserializeVirtualEnclaveManagedOnBehalfOfBroker(JsonElement element, ModelReaderWriterOptions options)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -140,7 +140,7 @@ namespace Azure.ResourceManager.Enclave.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new MoboBrokerResource(id, additionalBinaryDataProperties);
+            return new VirtualEnclaveManagedOnBehalfOfBroker(id, additionalBinaryDataProperties);
         }
     }
 }

@@ -45,7 +45,7 @@ namespace Azure.ResourceManager.Enclave.Models
         /// <param name="approvalSettings"> Approval requirements for various actions on the enclave's resources. </param>
         /// <param name="monitoringSettings"> Virtual Enclave Monitoring Settings for diagnostic and virtual network flow logs. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal VirtualEnclavePatchProperties(EnclaveVirtualNetwork enclaveVirtualNetwork, bool? isBastionEnabled, VirtualEnclaveResourceVisibilityMode? workloadResourceVisibility, RbacInheritanceMode? rbacInheritance, IList<VirtualEnclaveRoleAssignmentItem> enclaveRoleAssignments, IList<VirtualEnclaveRoleAssignmentItem> workloadRoleAssignments, IList<VirtualEnclaveGovernedService> governedServiceList, EnclaveDefaultSettingsPatch enclaveDefaultSettings, VirtualEnclaveMaintenanceModeConfigurationPatch maintenanceModeConfiguration, ResourceIdentifier dedicatedHubResourceId, VirtualEnclaveApprovalSettingsPatchProperties approvalSettings, VirtualEnclaveMonitoringSettingsPatch monitoringSettings, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal VirtualEnclavePatchProperties(EnclaveVirtualNetwork enclaveVirtualNetwork, bool? isBastionEnabled, VirtualEnclaveResourceVisibilityMode? workloadResourceVisibility, VirtualEnclaveRbacInheritanceMode? rbacInheritance, IList<VirtualEnclaveRoleAssignmentItem> enclaveRoleAssignments, IList<VirtualEnclaveRoleAssignmentItem> workloadRoleAssignments, IList<VirtualEnclaveGovernedService> governedServiceList, EnclaveDefaultSettingsPatch enclaveDefaultSettings, VirtualEnclaveMaintenanceModeConfigurationPatch maintenanceModeConfiguration, ResourceIdentifier dedicatedHubResourceId, VirtualEnclaveApprovalSettingsPatchProperties approvalSettings, VirtualEnclaveMonitoringSettingsPatch monitoringSettings, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             EnclaveVirtualNetwork = enclaveVirtualNetwork;
             IsBastionEnabled = isBastionEnabled;
@@ -72,7 +72,7 @@ namespace Azure.ResourceManager.Enclave.Models
         public VirtualEnclaveResourceVisibilityMode? WorkloadResourceVisibility { get; set; }
 
         /// <summary> Controls whether standard Azure RBAC role inheritance applies to the workload resource group(s). </summary>
-        public RbacInheritanceMode? RbacInheritance { get; set; }
+        public VirtualEnclaveRbacInheritanceMode? RbacInheritance { get; set; }
 
         /// <summary> Enclave role assignments. </summary>
         public IList<VirtualEnclaveRoleAssignmentItem> EnclaveRoleAssignments { get; }

@@ -15,51 +15,51 @@ using Azure.ResourceManager.Enclave;
 namespace Azure.ResourceManager.Enclave.Models
 {
     /// <summary> Base type for destination rules. </summary>
-    public partial class CommunityEndpointDestinationRule : IJsonModel<CommunityEndpointDestinationRule>
+    public partial class VirtualEnclaveCommunityEndpointDestinationRule : IJsonModel<VirtualEnclaveCommunityEndpointDestinationRule>
     {
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual CommunityEndpointDestinationRule PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        protected virtual VirtualEnclaveCommunityEndpointDestinationRule PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<CommunityEndpointDestinationRule>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<VirtualEnclaveCommunityEndpointDestinationRule>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeCommunityEndpointDestinationRule(document.RootElement, options);
+                        return DeserializeVirtualEnclaveCommunityEndpointDestinationRule(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(CommunityEndpointDestinationRule)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(VirtualEnclaveCommunityEndpointDestinationRule)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<CommunityEndpointDestinationRule>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<VirtualEnclaveCommunityEndpointDestinationRule>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options, AzureResourceManagerEnclaveContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(CommunityEndpointDestinationRule)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(VirtualEnclaveCommunityEndpointDestinationRule)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<CommunityEndpointDestinationRule>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<VirtualEnclaveCommunityEndpointDestinationRule>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        CommunityEndpointDestinationRule IPersistableModel<CommunityEndpointDestinationRule>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+        VirtualEnclaveCommunityEndpointDestinationRule IPersistableModel<VirtualEnclaveCommunityEndpointDestinationRule>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<CommunityEndpointDestinationRule>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<VirtualEnclaveCommunityEndpointDestinationRule>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<CommunityEndpointDestinationRule>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<VirtualEnclaveCommunityEndpointDestinationRule>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -70,10 +70,10 @@ namespace Azure.ResourceManager.Enclave.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<CommunityEndpointDestinationRule>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<VirtualEnclaveCommunityEndpointDestinationRule>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(CommunityEndpointDestinationRule)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(VirtualEnclaveCommunityEndpointDestinationRule)} does not support writing '{format}' format.");
             }
             if (Optional.IsDefined(DestinationType))
             {
@@ -84,7 +84,7 @@ namespace Azure.ResourceManager.Enclave.Models
             {
                 writer.WritePropertyName("protocols"u8);
                 writer.WriteStartArray();
-                foreach (CommunityEndpointProtocol item in Protocols)
+                foreach (VirtualEnclaveCommunityEndpointProtocol item in Protocols)
                 {
                     writer.WriteStringValue(item.ToString());
                 }
@@ -129,31 +129,31 @@ namespace Azure.ResourceManager.Enclave.Models
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        CommunityEndpointDestinationRule IJsonModel<CommunityEndpointDestinationRule>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+        VirtualEnclaveCommunityEndpointDestinationRule IJsonModel<VirtualEnclaveCommunityEndpointDestinationRule>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual CommunityEndpointDestinationRule JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        protected virtual VirtualEnclaveCommunityEndpointDestinationRule JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<CommunityEndpointDestinationRule>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<VirtualEnclaveCommunityEndpointDestinationRule>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(CommunityEndpointDestinationRule)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(VirtualEnclaveCommunityEndpointDestinationRule)} does not support reading '{format}' format.");
             }
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeCommunityEndpointDestinationRule(document.RootElement, options);
+            return DeserializeVirtualEnclaveCommunityEndpointDestinationRule(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        internal static CommunityEndpointDestinationRule DeserializeCommunityEndpointDestinationRule(JsonElement element, ModelReaderWriterOptions options)
+        internal static VirtualEnclaveCommunityEndpointDestinationRule DeserializeVirtualEnclaveCommunityEndpointDestinationRule(JsonElement element, ModelReaderWriterOptions options)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            CommunityEndpointDestinationType? destinationType = default;
-            IList<CommunityEndpointProtocol> protocols = default;
+            VirtualEnclaveCommunityEndpointDestinationType? destinationType = default;
+            IList<VirtualEnclaveCommunityEndpointProtocol> protocols = default;
             ResourceIdentifier transitHubResourceId = default;
             string endpointRuleName = default;
             string destination = default;
@@ -167,7 +167,7 @@ namespace Azure.ResourceManager.Enclave.Models
                     {
                         continue;
                     }
-                    destinationType = new CommunityEndpointDestinationType(prop.Value.GetString());
+                    destinationType = new VirtualEnclaveCommunityEndpointDestinationType(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("protocols"u8))
@@ -176,10 +176,10 @@ namespace Azure.ResourceManager.Enclave.Models
                     {
                         continue;
                     }
-                    List<CommunityEndpointProtocol> array = new List<CommunityEndpointProtocol>();
+                    List<VirtualEnclaveCommunityEndpointProtocol> array = new List<VirtualEnclaveCommunityEndpointProtocol>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(new CommunityEndpointProtocol(item.GetString()));
+                        array.Add(new VirtualEnclaveCommunityEndpointProtocol(item.GetString()));
                     }
                     protocols = array;
                     continue;
@@ -213,9 +213,9 @@ namespace Azure.ResourceManager.Enclave.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new CommunityEndpointDestinationRule(
+            return new VirtualEnclaveCommunityEndpointDestinationRule(
                 destinationType,
-                protocols ?? new ChangeTrackingList<CommunityEndpointProtocol>(),
+                protocols ?? new ChangeTrackingList<VirtualEnclaveCommunityEndpointProtocol>(),
                 transitHubResourceId,
                 endpointRuleName,
                 destination,

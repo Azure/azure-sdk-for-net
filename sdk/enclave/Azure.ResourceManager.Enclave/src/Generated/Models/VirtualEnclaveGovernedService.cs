@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.Enclave.Models
         /// <param name="policyAction"> Enforcement mode for policy. AuditOnly, Enforce, or None. </param>
         /// <param name="initiatives"> Initiatives associated with this service. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal VirtualEnclaveGovernedService(VirtualEnclaveGovernedServiceIdentifier serviceId, string serviceName, GovernedServiceItemOption? option, GovernedServiceItemEnforcement? enforcement, GovernedServiceItemPolicyAction? policyAction, IReadOnlyList<string> initiatives, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal VirtualEnclaveGovernedService(VirtualEnclaveGovernedServiceIdentifier serviceId, string serviceName, VirtualEnclaveGovernedServiceItemOption? option, VirtualEnclaveGovernedServiceItemEnforcement? enforcement, VirtualEnclaveGovernedServiceItemPolicyAction? policyAction, IReadOnlyList<string> initiatives, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             ServiceId = serviceId;
             ServiceName = serviceName;
@@ -51,13 +51,13 @@ namespace Azure.ResourceManager.Enclave.Models
         public string ServiceName { get; }
 
         /// <summary> Governance option for this service (Allow, Deny, ExceptionOnly, or NotApplicable). </summary>
-        public GovernedServiceItemOption? Option { get; set; }
+        public VirtualEnclaveGovernedServiceItemOption? Option { get; set; }
 
         /// <summary> Initiative enforcement (Enabled or Disabled). </summary>
-        public GovernedServiceItemEnforcement? Enforcement { get; set; }
+        public VirtualEnclaveGovernedServiceItemEnforcement? Enforcement { get; set; }
 
         /// <summary> Enforcement mode for policy. AuditOnly, Enforce, or None. </summary>
-        public GovernedServiceItemPolicyAction? PolicyAction { get; set; }
+        public VirtualEnclaveGovernedServiceItemPolicyAction? PolicyAction { get; set; }
 
         /// <summary> Initiatives associated with this service. </summary>
         public IReadOnlyList<string> Initiatives { get; }

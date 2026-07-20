@@ -82,7 +82,7 @@ namespace Azure.ResourceManager.Enclave.Models
             }
             writer.WritePropertyName("ruleCollection"u8);
             writer.WriteStartArray();
-            foreach (CommunityEndpointDestinationRule item in RuleCollection)
+            foreach (VirtualEnclaveCommunityEndpointDestinationRule item in RuleCollection)
             {
                 writer.WriteObjectValue(item, options);
             }
@@ -154,7 +154,7 @@ namespace Azure.ResourceManager.Enclave.Models
             {
                 return null;
             }
-            IList<CommunityEndpointDestinationRule> ruleCollection = default;
+            IList<VirtualEnclaveCommunityEndpointDestinationRule> ruleCollection = default;
             IReadOnlyList<ResourceIdentifier> resourceCollection = default;
             VirtualEnclaveProvisioningState? provisioningState = default;
             VirtualEnclaveUpdateMode? updateMode = default;
@@ -163,10 +163,10 @@ namespace Azure.ResourceManager.Enclave.Models
             {
                 if (prop.NameEquals("ruleCollection"u8))
                 {
-                    List<CommunityEndpointDestinationRule> array = new List<CommunityEndpointDestinationRule>();
+                    List<VirtualEnclaveCommunityEndpointDestinationRule> array = new List<VirtualEnclaveCommunityEndpointDestinationRule>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(CommunityEndpointDestinationRule.DeserializeCommunityEndpointDestinationRule(item, options));
+                        array.Add(VirtualEnclaveCommunityEndpointDestinationRule.DeserializeVirtualEnclaveCommunityEndpointDestinationRule(item, options));
                     }
                     ruleCollection = array;
                     continue;

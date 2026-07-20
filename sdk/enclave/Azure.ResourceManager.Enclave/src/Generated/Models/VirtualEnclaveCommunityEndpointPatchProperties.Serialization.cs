@@ -14,56 +14,56 @@ using Azure.ResourceManager.Enclave;
 namespace Azure.ResourceManager.Enclave.Models
 {
     /// <summary> Community Endpoint patchable Properties. </summary>
-    public partial class CommunityEndpointPatchProperties : IJsonModel<CommunityEndpointPatchProperties>
+    public partial class VirtualEnclaveCommunityEndpointPatchProperties : IJsonModel<VirtualEnclaveCommunityEndpointPatchProperties>
     {
-        /// <summary> Initializes a new instance of <see cref="CommunityEndpointPatchProperties"/> for deserialization. </summary>
-        internal CommunityEndpointPatchProperties()
+        /// <summary> Initializes a new instance of <see cref="VirtualEnclaveCommunityEndpointPatchProperties"/> for deserialization. </summary>
+        internal VirtualEnclaveCommunityEndpointPatchProperties()
         {
         }
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual CommunityEndpointPatchProperties PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        protected virtual VirtualEnclaveCommunityEndpointPatchProperties PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<CommunityEndpointPatchProperties>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<VirtualEnclaveCommunityEndpointPatchProperties>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeCommunityEndpointPatchProperties(document.RootElement, options);
+                        return DeserializeVirtualEnclaveCommunityEndpointPatchProperties(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(CommunityEndpointPatchProperties)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(VirtualEnclaveCommunityEndpointPatchProperties)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<CommunityEndpointPatchProperties>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<VirtualEnclaveCommunityEndpointPatchProperties>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options, AzureResourceManagerEnclaveContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(CommunityEndpointPatchProperties)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(VirtualEnclaveCommunityEndpointPatchProperties)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<CommunityEndpointPatchProperties>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<VirtualEnclaveCommunityEndpointPatchProperties>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        CommunityEndpointPatchProperties IPersistableModel<CommunityEndpointPatchProperties>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+        VirtualEnclaveCommunityEndpointPatchProperties IPersistableModel<VirtualEnclaveCommunityEndpointPatchProperties>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<CommunityEndpointPatchProperties>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<VirtualEnclaveCommunityEndpointPatchProperties>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<CommunityEndpointPatchProperties>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<VirtualEnclaveCommunityEndpointPatchProperties>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -74,14 +74,14 @@ namespace Azure.ResourceManager.Enclave.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<CommunityEndpointPatchProperties>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<VirtualEnclaveCommunityEndpointPatchProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(CommunityEndpointPatchProperties)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(VirtualEnclaveCommunityEndpointPatchProperties)} does not support writing '{format}' format.");
             }
             writer.WritePropertyName("ruleCollection"u8);
             writer.WriteStartArray();
-            foreach (CommunityEndpointDestinationRule item in RuleCollection)
+            foreach (VirtualEnclaveCommunityEndpointDestinationRule item in RuleCollection)
             {
                 writer.WriteObjectValue(item, options);
             }
@@ -110,40 +110,40 @@ namespace Azure.ResourceManager.Enclave.Models
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        CommunityEndpointPatchProperties IJsonModel<CommunityEndpointPatchProperties>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+        VirtualEnclaveCommunityEndpointPatchProperties IJsonModel<VirtualEnclaveCommunityEndpointPatchProperties>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual CommunityEndpointPatchProperties JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        protected virtual VirtualEnclaveCommunityEndpointPatchProperties JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<CommunityEndpointPatchProperties>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<VirtualEnclaveCommunityEndpointPatchProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(CommunityEndpointPatchProperties)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(VirtualEnclaveCommunityEndpointPatchProperties)} does not support reading '{format}' format.");
             }
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeCommunityEndpointPatchProperties(document.RootElement, options);
+            return DeserializeVirtualEnclaveCommunityEndpointPatchProperties(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        internal static CommunityEndpointPatchProperties DeserializeCommunityEndpointPatchProperties(JsonElement element, ModelReaderWriterOptions options)
+        internal static VirtualEnclaveCommunityEndpointPatchProperties DeserializeVirtualEnclaveCommunityEndpointPatchProperties(JsonElement element, ModelReaderWriterOptions options)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            IList<CommunityEndpointDestinationRule> ruleCollection = default;
+            IList<VirtualEnclaveCommunityEndpointDestinationRule> ruleCollection = default;
             VirtualEnclaveUpdateMode? updateMode = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("ruleCollection"u8))
                 {
-                    List<CommunityEndpointDestinationRule> array = new List<CommunityEndpointDestinationRule>();
+                    List<VirtualEnclaveCommunityEndpointDestinationRule> array = new List<VirtualEnclaveCommunityEndpointDestinationRule>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(CommunityEndpointDestinationRule.DeserializeCommunityEndpointDestinationRule(item, options));
+                        array.Add(VirtualEnclaveCommunityEndpointDestinationRule.DeserializeVirtualEnclaveCommunityEndpointDestinationRule(item, options));
                     }
                     ruleCollection = array;
                     continue;
@@ -162,7 +162,7 @@ namespace Azure.ResourceManager.Enclave.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new CommunityEndpointPatchProperties(ruleCollection, updateMode, additionalBinaryDataProperties);
+            return new VirtualEnclaveCommunityEndpointPatchProperties(ruleCollection, updateMode, additionalBinaryDataProperties);
         }
     }
 }

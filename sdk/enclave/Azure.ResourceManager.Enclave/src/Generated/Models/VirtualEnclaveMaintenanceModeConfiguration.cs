@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.Enclave.Models
 
         /// <summary> Initializes a new instance of <see cref="VirtualEnclaveMaintenanceModeConfiguration"/>. </summary>
         /// <param name="mode"> Current mode of Maintenance Mode Configuration. </param>
-        public VirtualEnclaveMaintenanceModeConfiguration(MaintenanceModeConfigurationModelMode mode)
+        public VirtualEnclaveMaintenanceModeConfiguration(VirtualEnclaveMaintenanceModeConfigurationMode mode)
         {
             Mode = mode;
             Principals = new ChangeTrackingList<VirtualEnclavePrincipal>();
@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.Enclave.Models
         /// <param name="principals"> The user, group or service principal object affected by Maintenance Mode. </param>
         /// <param name="justification"> Justification for entering or exiting Maintenance Mode. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal VirtualEnclaveMaintenanceModeConfiguration(MaintenanceModeConfigurationModelMode mode, IList<VirtualEnclavePrincipal> principals, MaintenanceModeConfigurationModelJustification? justification, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal VirtualEnclaveMaintenanceModeConfiguration(VirtualEnclaveMaintenanceModeConfigurationMode mode, IList<VirtualEnclavePrincipal> principals, VirtualEnclaveMaintenanceModeJustification? justification, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Mode = mode;
             Principals = principals;
@@ -39,12 +39,12 @@ namespace Azure.ResourceManager.Enclave.Models
         }
 
         /// <summary> Current mode of Maintenance Mode Configuration. </summary>
-        public MaintenanceModeConfigurationModelMode Mode { get; set; }
+        public VirtualEnclaveMaintenanceModeConfigurationMode Mode { get; set; }
 
         /// <summary> The user, group or service principal object affected by Maintenance Mode. </summary>
         public IList<VirtualEnclavePrincipal> Principals { get; }
 
         /// <summary> Justification for entering or exiting Maintenance Mode. </summary>
-        public MaintenanceModeConfigurationModelJustification? Justification { get; set; }
+        public VirtualEnclaveMaintenanceModeJustification? Justification { get; set; }
     }
 }

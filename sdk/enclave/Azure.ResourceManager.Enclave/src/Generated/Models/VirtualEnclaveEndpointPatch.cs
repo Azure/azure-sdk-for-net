@@ -27,7 +27,7 @@ namespace Azure.ResourceManager.Enclave.Models
         /// <param name="properties"> Enclave Endpoint Patch properties. </param>
         /// <param name="tags"> Resource tags. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal VirtualEnclaveEndpointPatch(EnclaveEndpointPatchProperties properties, IDictionary<string, string> tags, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal VirtualEnclaveEndpointPatch(VirtualEnclaveEndpointPatchProperties properties, IDictionary<string, string> tags, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Properties = properties;
             Tags = tags;
@@ -35,7 +35,7 @@ namespace Azure.ResourceManager.Enclave.Models
         }
 
         /// <summary> Enclave Endpoint Patch properties. </summary>
-        public EnclaveEndpointPatchProperties Properties { get; set; }
+        public VirtualEnclaveEndpointPatchProperties Properties { get; set; }
 
         /// <summary> Resource tags. </summary>
         public IDictionary<string, string> Tags { get; }

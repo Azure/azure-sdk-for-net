@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.Enclave.Models
         /// <summary> Initializes a new instance of <see cref="VirtualEnclaveCommunityEndpointProperties"/>. </summary>
         /// <param name="ruleCollection"> Community Endpoint Rule Collection. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="ruleCollection"/> is null. </exception>
-        public VirtualEnclaveCommunityEndpointProperties(IEnumerable<CommunityEndpointDestinationRule> ruleCollection)
+        public VirtualEnclaveCommunityEndpointProperties(IEnumerable<VirtualEnclaveCommunityEndpointDestinationRule> ruleCollection)
         {
             Argument.AssertNotNull(ruleCollection, nameof(ruleCollection));
 
@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.Enclave.Models
         /// <param name="provisioningState"> Provisioning State. </param>
         /// <param name="updateMode"> Whether update mode is automatic or manual. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal VirtualEnclaveCommunityEndpointProperties(IList<CommunityEndpointDestinationRule> ruleCollection, IReadOnlyList<ResourceIdentifier> resourceCollection, VirtualEnclaveProvisioningState? provisioningState, VirtualEnclaveUpdateMode? updateMode, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal VirtualEnclaveCommunityEndpointProperties(IList<VirtualEnclaveCommunityEndpointDestinationRule> ruleCollection, IReadOnlyList<ResourceIdentifier> resourceCollection, VirtualEnclaveProvisioningState? provisioningState, VirtualEnclaveUpdateMode? updateMode, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             RuleCollection = ruleCollection;
             ResourceCollection = resourceCollection;
@@ -46,7 +46,7 @@ namespace Azure.ResourceManager.Enclave.Models
         }
 
         /// <summary> Community Endpoint Rule Collection. </summary>
-        public IList<CommunityEndpointDestinationRule> RuleCollection { get; }
+        public IList<VirtualEnclaveCommunityEndpointDestinationRule> RuleCollection { get; }
 
         /// <summary> List of resource ids created by community endpoint. </summary>
         public IReadOnlyList<ResourceIdentifier> ResourceCollection { get; }

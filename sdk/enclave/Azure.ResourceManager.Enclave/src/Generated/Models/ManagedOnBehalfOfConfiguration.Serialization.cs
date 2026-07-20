@@ -78,7 +78,7 @@ namespace Azure.ResourceManager.Enclave.Models
             {
                 writer.WritePropertyName("moboBrokerResources"u8);
                 writer.WriteStartArray();
-                foreach (MoboBrokerResource item in MoboBrokerResources)
+                foreach (VirtualEnclaveManagedOnBehalfOfBroker item in MoboBrokerResources)
                 {
                     writer.WriteObjectValue(item, options);
                 }
@@ -126,7 +126,7 @@ namespace Azure.ResourceManager.Enclave.Models
             {
                 return null;
             }
-            IReadOnlyList<MoboBrokerResource> moboBrokerResources = default;
+            IReadOnlyList<VirtualEnclaveManagedOnBehalfOfBroker> moboBrokerResources = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -136,10 +136,10 @@ namespace Azure.ResourceManager.Enclave.Models
                     {
                         continue;
                     }
-                    List<MoboBrokerResource> array = new List<MoboBrokerResource>();
+                    List<VirtualEnclaveManagedOnBehalfOfBroker> array = new List<VirtualEnclaveManagedOnBehalfOfBroker>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(MoboBrokerResource.DeserializeMoboBrokerResource(item, options));
+                        array.Add(VirtualEnclaveManagedOnBehalfOfBroker.DeserializeVirtualEnclaveManagedOnBehalfOfBroker(item, options));
                     }
                     moboBrokerResources = array;
                     continue;
@@ -149,7 +149,7 @@ namespace Azure.ResourceManager.Enclave.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new ManagedOnBehalfOfConfiguration(moboBrokerResources ?? new ChangeTrackingList<MoboBrokerResource>(), additionalBinaryDataProperties);
+            return new ManagedOnBehalfOfConfiguration(moboBrokerResources ?? new ChangeTrackingList<VirtualEnclaveManagedOnBehalfOfBroker>(), additionalBinaryDataProperties);
         }
     }
 }

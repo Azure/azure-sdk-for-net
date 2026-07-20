@@ -46,18 +46,18 @@ namespace Azure.ResourceManager.Enclave.Models
         /// <param name="resourceGroupCollection"> List of resource group ids. </param>
         /// <param name="managedOnBehalfOfMoboBrokerResources"> Managed-On-Behalf-Of broker resources. </param>
         /// <returns> A new <see cref="Models.VirtualEnclaveWorkloadProperties"/> instance for mocking. </returns>
-        public static VirtualEnclaveWorkloadProperties VirtualEnclaveWorkloadProperties(VirtualEnclaveProvisioningState? provisioningState = default, IEnumerable<string> resourceGroupCollection = default, IEnumerable<MoboBrokerResource> managedOnBehalfOfMoboBrokerResources = default)
+        public static VirtualEnclaveWorkloadProperties VirtualEnclaveWorkloadProperties(VirtualEnclaveProvisioningState? provisioningState = default, IEnumerable<string> resourceGroupCollection = default, IEnumerable<VirtualEnclaveManagedOnBehalfOfBroker> managedOnBehalfOfMoboBrokerResources = default)
         {
             resourceGroupCollection ??= new ChangeTrackingList<string>();
 
-            return new VirtualEnclaveWorkloadProperties(provisioningState, (resourceGroupCollection ?? new ChangeTrackingList<string>()).ToList(), managedOnBehalfOfMoboBrokerResources is null ? default : new ManagedOnBehalfOfConfiguration((managedOnBehalfOfMoboBrokerResources ?? new ChangeTrackingList<MoboBrokerResource>()).ToList(), default), default);
+            return new VirtualEnclaveWorkloadProperties(provisioningState, (resourceGroupCollection ?? new ChangeTrackingList<string>()).ToList(), managedOnBehalfOfMoboBrokerResources is null ? default : new ManagedOnBehalfOfConfiguration((managedOnBehalfOfMoboBrokerResources ?? new ChangeTrackingList<VirtualEnclaveManagedOnBehalfOfBroker>()).ToList(), default), default);
         }
 
         /// <param name="id"> Resource identifier of a Managed-On-Behalf-Of broker resource. </param>
-        /// <returns> A new <see cref="Models.MoboBrokerResource"/> instance for mocking. </returns>
-        public static MoboBrokerResource MoboBrokerResource(ResourceIdentifier id = default)
+        /// <returns> A new <see cref="Models.VirtualEnclaveManagedOnBehalfOfBroker"/> instance for mocking. </returns>
+        public static VirtualEnclaveManagedOnBehalfOfBroker VirtualEnclaveManagedOnBehalfOfBroker(ResourceIdentifier id = default)
         {
-            return new MoboBrokerResource(id, default);
+            return new VirtualEnclaveManagedOnBehalfOfBroker(id, default);
         }
 
         /// <param name="workloadPatchResourceGroupCollection"> List of resource group ids. </param>
@@ -114,7 +114,7 @@ namespace Azure.ResourceManager.Enclave.Models
         /// <param name="approvalSettings"> Approval requirements for various actions on the enclave's resources. </param>
         /// <param name="monitoringSettings"> Virtual Enclave Monitoring Settings for diagnostic and virtual network flow logs. </param>
         /// <returns> A new <see cref="Models.VirtualEnclaveProperties"/> instance for mocking. </returns>
-        public static VirtualEnclaveProperties VirtualEnclaveProperties(VirtualEnclaveProvisioningState? provisioningState = default, EnclaveVirtualNetwork enclaveVirtualNetwork = default, EnclaveAddressSpaces enclaveAddressSpaces = default, ResourceIdentifier communityResourceId = default, IEnumerable<ResourceIdentifier> resourceCollection = default, string managedResourceGroupName = default, IEnumerable<MoboBrokerResource> managedOnBehalfOfMoboBrokerResources = default, bool? isBastionEnabled = default, VirtualEnclaveResourceVisibilityMode? workloadResourceVisibility = default, RbacInheritanceMode? rbacInheritance = default, IEnumerable<VirtualEnclaveRoleAssignmentItem> enclaveRoleAssignments = default, IEnumerable<VirtualEnclaveRoleAssignmentItem> workloadRoleAssignments = default, IEnumerable<VirtualEnclaveGovernedService> governedServiceList = default, EnclaveDefaultSettings enclaveDefaultSettings = default, VirtualEnclaveMaintenanceModeConfiguration maintenanceModeConfiguration = default, ResourceIdentifier dedicatedHubResourceId = default, VirtualEnclaveApprovalSettings approvalSettings = default, VirtualEnclaveMonitoringSettings monitoringSettings = default)
+        public static VirtualEnclaveProperties VirtualEnclaveProperties(VirtualEnclaveProvisioningState? provisioningState = default, EnclaveVirtualNetwork enclaveVirtualNetwork = default, EnclaveAddressSpaces enclaveAddressSpaces = default, ResourceIdentifier communityResourceId = default, IEnumerable<ResourceIdentifier> resourceCollection = default, string managedResourceGroupName = default, IEnumerable<VirtualEnclaveManagedOnBehalfOfBroker> managedOnBehalfOfMoboBrokerResources = default, bool? isBastionEnabled = default, VirtualEnclaveResourceVisibilityMode? workloadResourceVisibility = default, VirtualEnclaveRbacInheritanceMode? rbacInheritance = default, IEnumerable<VirtualEnclaveRoleAssignmentItem> enclaveRoleAssignments = default, IEnumerable<VirtualEnclaveRoleAssignmentItem> workloadRoleAssignments = default, IEnumerable<VirtualEnclaveGovernedService> governedServiceList = default, EnclaveDefaultSettings enclaveDefaultSettings = default, VirtualEnclaveMaintenanceModeConfiguration maintenanceModeConfiguration = default, ResourceIdentifier dedicatedHubResourceId = default, VirtualEnclaveApprovalSettings approvalSettings = default, VirtualEnclaveMonitoringSettings monitoringSettings = default)
         {
             resourceCollection ??= new ChangeTrackingList<ResourceIdentifier>();
             enclaveRoleAssignments ??= new ChangeTrackingList<VirtualEnclaveRoleAssignmentItem>();
@@ -128,7 +128,7 @@ namespace Azure.ResourceManager.Enclave.Models
                 communityResourceId,
                 (resourceCollection ?? new ChangeTrackingList<ResourceIdentifier>()).ToList(),
                 managedResourceGroupName,
-                managedOnBehalfOfMoboBrokerResources is null ? default : new ManagedOnBehalfOfConfiguration((managedOnBehalfOfMoboBrokerResources ?? new ChangeTrackingList<MoboBrokerResource>()).ToList(), default),
+                managedOnBehalfOfMoboBrokerResources is null ? default : new ManagedOnBehalfOfConfiguration((managedOnBehalfOfMoboBrokerResources ?? new ChangeTrackingList<VirtualEnclaveManagedOnBehalfOfBroker>()).ToList(), default),
                 isBastionEnabled,
                 workloadResourceVisibility,
                 rbacInheritance,
@@ -215,7 +215,7 @@ namespace Azure.ResourceManager.Enclave.Models
         /// <param name="policyAction"> Enforcement mode for policy. AuditOnly, Enforce, or None. </param>
         /// <param name="initiatives"> Initiatives associated with this service. </param>
         /// <returns> A new <see cref="Models.VirtualEnclaveGovernedService"/> instance for mocking. </returns>
-        public static VirtualEnclaveGovernedService VirtualEnclaveGovernedService(VirtualEnclaveGovernedServiceIdentifier serviceId = default, string serviceName = default, GovernedServiceItemOption? option = default, GovernedServiceItemEnforcement? enforcement = default, GovernedServiceItemPolicyAction? policyAction = default, IEnumerable<string> initiatives = default)
+        public static VirtualEnclaveGovernedService VirtualEnclaveGovernedService(VirtualEnclaveGovernedServiceIdentifier serviceId = default, string serviceName = default, VirtualEnclaveGovernedServiceItemOption? option = default, VirtualEnclaveGovernedServiceItemEnforcement? enforcement = default, VirtualEnclaveGovernedServiceItemPolicyAction? policyAction = default, IEnumerable<string> initiatives = default)
         {
             initiatives ??= new ChangeTrackingList<string>();
 
@@ -245,7 +245,7 @@ namespace Azure.ResourceManager.Enclave.Models
         /// <param name="principals"> The user, group or service principal object affected by Maintenance Mode. </param>
         /// <param name="justification"> Justification for entering or exiting Maintenance Mode. </param>
         /// <returns> A new <see cref="Models.VirtualEnclaveMaintenanceModeConfiguration"/> instance for mocking. </returns>
-        public static VirtualEnclaveMaintenanceModeConfiguration VirtualEnclaveMaintenanceModeConfiguration(MaintenanceModeConfigurationModelMode mode = default, IEnumerable<VirtualEnclavePrincipal> principals = default, MaintenanceModeConfigurationModelJustification? justification = default)
+        public static VirtualEnclaveMaintenanceModeConfiguration VirtualEnclaveMaintenanceModeConfiguration(VirtualEnclaveMaintenanceModeConfigurationMode mode = default, IEnumerable<VirtualEnclavePrincipal> principals = default, VirtualEnclaveMaintenanceModeJustification? justification = default)
         {
             principals ??= new ChangeTrackingList<VirtualEnclavePrincipal>();
 
@@ -323,7 +323,7 @@ namespace Azure.ResourceManager.Enclave.Models
         /// <param name="approvalSettings"> Approval requirements for various actions on the enclave's resources. </param>
         /// <param name="monitoringSettings"> Virtual Enclave Monitoring Settings for diagnostic and virtual network flow logs. </param>
         /// <returns> A new <see cref="Models.VirtualEnclavePatchProperties"/> instance for mocking. </returns>
-        public static VirtualEnclavePatchProperties VirtualEnclavePatchProperties(EnclaveVirtualNetwork enclaveVirtualNetwork = default, bool? isBastionEnabled = default, VirtualEnclaveResourceVisibilityMode? workloadResourceVisibility = default, RbacInheritanceMode? rbacInheritance = default, IEnumerable<VirtualEnclaveRoleAssignmentItem> enclaveRoleAssignments = default, IEnumerable<VirtualEnclaveRoleAssignmentItem> workloadRoleAssignments = default, IEnumerable<VirtualEnclaveGovernedService> governedServiceList = default, VirtualEnclaveDiagnosticDestination? enclaveDefaultDiagnosticDestination = default, VirtualEnclaveMaintenanceModeConfigurationPatch maintenanceModeConfiguration = default, ResourceIdentifier dedicatedHubResourceId = default, VirtualEnclaveApprovalSettingsPatchProperties approvalSettings = default, VirtualEnclaveMonitoringSettingsPatch monitoringSettings = default)
+        public static VirtualEnclavePatchProperties VirtualEnclavePatchProperties(EnclaveVirtualNetwork enclaveVirtualNetwork = default, bool? isBastionEnabled = default, VirtualEnclaveResourceVisibilityMode? workloadResourceVisibility = default, VirtualEnclaveRbacInheritanceMode? rbacInheritance = default, IEnumerable<VirtualEnclaveRoleAssignmentItem> enclaveRoleAssignments = default, IEnumerable<VirtualEnclaveRoleAssignmentItem> workloadRoleAssignments = default, IEnumerable<VirtualEnclaveGovernedService> governedServiceList = default, VirtualEnclaveDiagnosticDestination? enclaveDefaultDiagnosticDestination = default, VirtualEnclaveMaintenanceModeConfigurationPatch maintenanceModeConfiguration = default, ResourceIdentifier dedicatedHubResourceId = default, VirtualEnclaveApprovalSettingsPatchProperties approvalSettings = default, VirtualEnclaveMonitoringSettingsPatch monitoringSettings = default)
         {
             enclaveRoleAssignments ??= new ChangeTrackingList<VirtualEnclaveRoleAssignmentItem>();
             workloadRoleAssignments ??= new ChangeTrackingList<VirtualEnclaveRoleAssignmentItem>();
@@ -349,7 +349,7 @@ namespace Azure.ResourceManager.Enclave.Models
         /// <param name="principals"> The user, group or service principal object affected by Maintenance Mode. </param>
         /// <param name="justification"> Justification for entering or exiting Maintenance Mode. </param>
         /// <returns> A new <see cref="Models.VirtualEnclaveMaintenanceModeConfigurationPatch"/> instance for mocking. </returns>
-        public static VirtualEnclaveMaintenanceModeConfigurationPatch VirtualEnclaveMaintenanceModeConfigurationPatch(MaintenanceModeConfigurationModelMode mode = default, IEnumerable<VirtualEnclavePrincipal> principals = default, MaintenanceModeConfigurationModelJustification? justification = default)
+        public static VirtualEnclaveMaintenanceModeConfigurationPatch VirtualEnclaveMaintenanceModeConfigurationPatch(VirtualEnclaveMaintenanceModeConfigurationMode mode = default, IEnumerable<VirtualEnclavePrincipal> principals = default, VirtualEnclaveMaintenanceModeJustification? justification = default)
         {
             principals ??= new ChangeTrackingList<VirtualEnclavePrincipal>();
 
@@ -389,7 +389,7 @@ namespace Azure.ResourceManager.Enclave.Models
         /// <param name="approvalStatus"> Approval status indicating 'Approved' or 'Rejected'. </param>
         /// <param name="approvalCallbackPayload"> Payload requested by client upon approval action. </param>
         /// <returns> A new <see cref="Models.ApprovalCallbackContent"/> instance for mocking. </returns>
-        public static ApprovalCallbackContent ApprovalCallbackContent(ApprovalCallbackRequestResourceRequestAction resourceRequestAction = default, ApprovalCallbackRequestApprovalStatus approvalStatus = default, string approvalCallbackPayload = default)
+        public static ApprovalCallbackContent ApprovalCallbackContent(VirtualEnclaveApprovalCallbackResourceAction resourceRequestAction = default, ApprovalCallbackRequestApprovalStatus approvalStatus = default, string approvalCallbackPayload = default)
         {
             return new ApprovalCallbackContent(resourceRequestAction, approvalStatus, approvalCallbackPayload, default);
         }
@@ -403,7 +403,7 @@ namespace Azure.ResourceManager.Enclave.Models
 
         /// <param name="resourceRequestAction"> Resource request action indicating action which needed to be performed upon calling approval-deletion-callback post action. </param>
         /// <returns> A new <see cref="Models.ApprovalDeletionCallbackContent"/> instance for mocking. </returns>
-        public static ApprovalDeletionCallbackContent ApprovalDeletionCallbackContent(ApprovalDeletionCallbackRequestResourceRequestAction resourceRequestAction = default)
+        public static ApprovalDeletionCallbackContent ApprovalDeletionCallbackContent(VirtualEnclaveApprovalDeletionCallbackResourceAction resourceRequestAction = default)
         {
             return new ApprovalDeletionCallbackContent(resourceRequestAction, default);
         }
@@ -449,7 +449,7 @@ namespace Azure.ResourceManager.Enclave.Models
         /// <param name="monitoringSettings"> Community Monitoring Settings for diagnostic and virtual network flow logs. </param>
         /// <param name="addressSpaces"> Address spaces list. </param>
         /// <returns> A new <see cref="Models.VirtualEnclaveCommunityProperties"/> instance for mocking. </returns>
-        public static VirtualEnclaveCommunityProperties VirtualEnclaveCommunityProperties(string addressSpace = default, IEnumerable<string> dnsServers = default, VirtualEnclaveProvisioningState? provisioningState = default, IEnumerable<ResourceIdentifier> resourceCollection = default, string managedResourceGroupName = default, IEnumerable<MoboBrokerResource> managedOnBehalfOfMoboBrokerResources = default, IEnumerable<VirtualEnclaveGovernedService> governedServiceList = default, CommunityPropertiesPolicyOverride? policyOverride = default, IEnumerable<VirtualEnclaveRoleAssignmentItem> communityRoleAssignments = default, VirtualEnclaveFirewallSku? firewallSku = default, VirtualEnclaveBaseApprovalSettings granularApprovalSettings = default, VirtualEnclaveMaintenanceModeConfiguration maintenanceModeConfiguration = default, IEnumerable<DedicatedHubData> dedicatedHubList = default, VirtualEnclaveMonitoringSettings monitoringSettings = default, IEnumerable<string> addressSpaces = default)
+        public static VirtualEnclaveCommunityProperties VirtualEnclaveCommunityProperties(string addressSpace = default, IEnumerable<string> dnsServers = default, VirtualEnclaveProvisioningState? provisioningState = default, IEnumerable<ResourceIdentifier> resourceCollection = default, string managedResourceGroupName = default, IEnumerable<VirtualEnclaveManagedOnBehalfOfBroker> managedOnBehalfOfMoboBrokerResources = default, IEnumerable<VirtualEnclaveGovernedService> governedServiceList = default, CommunityPropertiesPolicyOverride? policyOverride = default, IEnumerable<VirtualEnclaveRoleAssignmentItem> communityRoleAssignments = default, VirtualEnclaveFirewallSku? firewallSku = default, VirtualEnclaveBaseApprovalSettings granularApprovalSettings = default, VirtualEnclaveMaintenanceModeConfiguration maintenanceModeConfiguration = default, IEnumerable<DedicatedHubData> dedicatedHubList = default, VirtualEnclaveMonitoringSettings monitoringSettings = default, IEnumerable<string> addressSpaces = default)
         {
             dnsServers ??= new ChangeTrackingList<string>();
             resourceCollection ??= new ChangeTrackingList<ResourceIdentifier>();
@@ -464,7 +464,7 @@ namespace Azure.ResourceManager.Enclave.Models
                 provisioningState,
                 (resourceCollection ?? new ChangeTrackingList<ResourceIdentifier>()).ToList(),
                 managedResourceGroupName,
-                managedOnBehalfOfMoboBrokerResources is null ? default : new ManagedOnBehalfOfConfiguration((managedOnBehalfOfMoboBrokerResources ?? new ChangeTrackingList<MoboBrokerResource>()).ToList(), default),
+                managedOnBehalfOfMoboBrokerResources is null ? default : new ManagedOnBehalfOfConfiguration((managedOnBehalfOfMoboBrokerResources ?? new ChangeTrackingList<VirtualEnclaveManagedOnBehalfOfBroker>()).ToList(), default),
                 (governedServiceList ?? new ChangeTrackingList<VirtualEnclaveGovernedService>()).ToList(),
                 policyOverride,
                 (communityRoleAssignments ?? new ChangeTrackingList<VirtualEnclaveRoleAssignmentItem>()).ToList(),
@@ -801,7 +801,7 @@ namespace Azure.ResourceManager.Enclave.Models
         /// <param name="properties"> Enclave Endpoint Patch properties. </param>
         /// <param name="tags"> Resource tags. </param>
         /// <returns> A new <see cref="Models.VirtualEnclaveEndpointPatch"/> instance for mocking. </returns>
-        public static VirtualEnclaveEndpointPatch VirtualEnclaveEndpointPatch(EnclaveEndpointPatchProperties properties = default, IDictionary<string, string> tags = default)
+        public static VirtualEnclaveEndpointPatch VirtualEnclaveEndpointPatch(VirtualEnclaveEndpointPatchProperties properties = default, IDictionary<string, string> tags = default)
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
 
@@ -810,12 +810,12 @@ namespace Azure.ResourceManager.Enclave.Models
 
         /// <param name="ruleCollection"> Enclave Endpoint Rule Collection. </param>
         /// <param name="updateMode"> Whether update mode is automatic or manual. </param>
-        /// <returns> A new <see cref="Models.EnclaveEndpointPatchProperties"/> instance for mocking. </returns>
-        public static EnclaveEndpointPatchProperties EnclaveEndpointPatchProperties(IEnumerable<EnclaveEndpointDestinationRule> ruleCollection = default, VirtualEnclaveUpdateMode? updateMode = default)
+        /// <returns> A new <see cref="Models.VirtualEnclaveEndpointPatchProperties"/> instance for mocking. </returns>
+        public static VirtualEnclaveEndpointPatchProperties VirtualEnclaveEndpointPatchProperties(IEnumerable<EnclaveEndpointDestinationRule> ruleCollection = default, VirtualEnclaveUpdateMode? updateMode = default)
         {
             ruleCollection ??= new ChangeTrackingList<EnclaveEndpointDestinationRule>();
 
-            return new EnclaveEndpointPatchProperties((ruleCollection ?? new ChangeTrackingList<EnclaveEndpointDestinationRule>()).ToList(), updateMode, default);
+            return new VirtualEnclaveEndpointPatchProperties((ruleCollection ?? new ChangeTrackingList<EnclaveEndpointDestinationRule>()).ToList(), updateMode, default);
         }
 
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
@@ -846,12 +846,12 @@ namespace Azure.ResourceManager.Enclave.Models
         /// <param name="provisioningState"> Provisioning State. </param>
         /// <param name="updateMode"> Whether update mode is automatic or manual. </param>
         /// <returns> A new <see cref="Models.VirtualEnclaveCommunityEndpointProperties"/> instance for mocking. </returns>
-        public static VirtualEnclaveCommunityEndpointProperties VirtualEnclaveCommunityEndpointProperties(IEnumerable<CommunityEndpointDestinationRule> ruleCollection = default, IEnumerable<ResourceIdentifier> resourceCollection = default, VirtualEnclaveProvisioningState? provisioningState = default, VirtualEnclaveUpdateMode? updateMode = default)
+        public static VirtualEnclaveCommunityEndpointProperties VirtualEnclaveCommunityEndpointProperties(IEnumerable<VirtualEnclaveCommunityEndpointDestinationRule> ruleCollection = default, IEnumerable<ResourceIdentifier> resourceCollection = default, VirtualEnclaveProvisioningState? provisioningState = default, VirtualEnclaveUpdateMode? updateMode = default)
         {
-            ruleCollection ??= new ChangeTrackingList<CommunityEndpointDestinationRule>();
+            ruleCollection ??= new ChangeTrackingList<VirtualEnclaveCommunityEndpointDestinationRule>();
             resourceCollection ??= new ChangeTrackingList<ResourceIdentifier>();
 
-            return new VirtualEnclaveCommunityEndpointProperties((ruleCollection ?? new ChangeTrackingList<CommunityEndpointDestinationRule>()).ToList(), (resourceCollection ?? new ChangeTrackingList<ResourceIdentifier>()).ToList(), provisioningState, updateMode, default);
+            return new VirtualEnclaveCommunityEndpointProperties((ruleCollection ?? new ChangeTrackingList<VirtualEnclaveCommunityEndpointDestinationRule>()).ToList(), (resourceCollection ?? new ChangeTrackingList<ResourceIdentifier>()).ToList(), provisioningState, updateMode, default);
         }
 
         /// <param name="destinationType"> Destination Type. </param>
@@ -860,14 +860,14 @@ namespace Azure.ResourceManager.Enclave.Models
         /// <param name="endpointRuleName"> Endpoint Rule Name. </param>
         /// <param name="destination"> Destination address. Can include multiple CIDR/IP Addresses or fqdn tags or fqdns (for community endpoint) separated by commas. </param>
         /// <param name="ports"> Port. Can include multiple ports separated by commas or a range indicated by a hyphen. </param>
-        /// <returns> A new <see cref="Models.CommunityEndpointDestinationRule"/> instance for mocking. </returns>
-        public static CommunityEndpointDestinationRule CommunityEndpointDestinationRule(CommunityEndpointDestinationType? destinationType = default, IEnumerable<CommunityEndpointProtocol> protocols = default, ResourceIdentifier transitHubResourceId = default, string endpointRuleName = default, string destination = default, string ports = default)
+        /// <returns> A new <see cref="Models.VirtualEnclaveCommunityEndpointDestinationRule"/> instance for mocking. </returns>
+        public static VirtualEnclaveCommunityEndpointDestinationRule VirtualEnclaveCommunityEndpointDestinationRule(VirtualEnclaveCommunityEndpointDestinationType? destinationType = default, IEnumerable<VirtualEnclaveCommunityEndpointProtocol> protocols = default, ResourceIdentifier transitHubResourceId = default, string endpointRuleName = default, string destination = default, string ports = default)
         {
-            protocols ??= new ChangeTrackingList<CommunityEndpointProtocol>();
+            protocols ??= new ChangeTrackingList<VirtualEnclaveCommunityEndpointProtocol>();
 
-            return new CommunityEndpointDestinationRule(
+            return new VirtualEnclaveCommunityEndpointDestinationRule(
                 destinationType,
-                (protocols ?? new ChangeTrackingList<CommunityEndpointProtocol>()).ToList(),
+                (protocols ?? new ChangeTrackingList<VirtualEnclaveCommunityEndpointProtocol>()).ToList(),
                 transitHubResourceId,
                 endpointRuleName,
                 destination,
@@ -878,7 +878,7 @@ namespace Azure.ResourceManager.Enclave.Models
         /// <param name="properties"> Community Endpoint Patch properties. </param>
         /// <param name="tags"> Resource tags. </param>
         /// <returns> A new <see cref="Models.VirtualEnclaveCommunityEndpointPatch"/> instance for mocking. </returns>
-        public static VirtualEnclaveCommunityEndpointPatch VirtualEnclaveCommunityEndpointPatch(CommunityEndpointPatchProperties properties = default, IDictionary<string, string> tags = default)
+        public static VirtualEnclaveCommunityEndpointPatch VirtualEnclaveCommunityEndpointPatch(VirtualEnclaveCommunityEndpointPatchProperties properties = default, IDictionary<string, string> tags = default)
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
 
@@ -887,12 +887,12 @@ namespace Azure.ResourceManager.Enclave.Models
 
         /// <param name="ruleCollection"> Community Endpoint Rule Collection. </param>
         /// <param name="updateMode"> Whether update mode is automatic or manual. </param>
-        /// <returns> A new <see cref="Models.CommunityEndpointPatchProperties"/> instance for mocking. </returns>
-        public static CommunityEndpointPatchProperties CommunityEndpointPatchProperties(IEnumerable<CommunityEndpointDestinationRule> ruleCollection = default, VirtualEnclaveUpdateMode? updateMode = default)
+        /// <returns> A new <see cref="Models.VirtualEnclaveCommunityEndpointPatchProperties"/> instance for mocking. </returns>
+        public static VirtualEnclaveCommunityEndpointPatchProperties VirtualEnclaveCommunityEndpointPatchProperties(IEnumerable<VirtualEnclaveCommunityEndpointDestinationRule> ruleCollection = default, VirtualEnclaveUpdateMode? updateMode = default)
         {
-            ruleCollection ??= new ChangeTrackingList<CommunityEndpointDestinationRule>();
+            ruleCollection ??= new ChangeTrackingList<VirtualEnclaveCommunityEndpointDestinationRule>();
 
-            return new CommunityEndpointPatchProperties((ruleCollection ?? new ChangeTrackingList<CommunityEndpointDestinationRule>()).ToList(), updateMode, default);
+            return new VirtualEnclaveCommunityEndpointPatchProperties((ruleCollection ?? new ChangeTrackingList<VirtualEnclaveCommunityEndpointDestinationRule>()).ToList(), updateMode, default);
         }
 
         /// <param name="dedicatedHubPatchDesignation"> Designation of hub resource allocation (Pooled or Reserved). </param>

@@ -148,7 +148,7 @@ namespace Azure.ResourceManager.Enclave.Models
             {
                 return null;
             }
-            CommunityEndpointPatchProperties properties = default;
+            VirtualEnclaveCommunityEndpointPatchProperties properties = default;
             IDictionary<string, string> tags = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
@@ -159,7 +159,7 @@ namespace Azure.ResourceManager.Enclave.Models
                     {
                         continue;
                     }
-                    properties = CommunityEndpointPatchProperties.DeserializeCommunityEndpointPatchProperties(prop.Value, options);
+                    properties = VirtualEnclaveCommunityEndpointPatchProperties.DeserializeVirtualEnclaveCommunityEndpointPatchProperties(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("tags"u8))

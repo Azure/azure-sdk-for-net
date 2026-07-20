@@ -138,15 +138,15 @@ namespace Azure.ResourceManager.Enclave.Models
             {
                 return null;
             }
-            MaintenanceModeConfigurationModelMode mode = default;
+            VirtualEnclaveMaintenanceModeConfigurationMode mode = default;
             IList<VirtualEnclavePrincipal> principals = default;
-            MaintenanceModeConfigurationModelJustification? justification = default;
+            VirtualEnclaveMaintenanceModeJustification? justification = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("mode"u8))
                 {
-                    mode = new MaintenanceModeConfigurationModelMode(prop.Value.GetString());
+                    mode = new VirtualEnclaveMaintenanceModeConfigurationMode(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("principals"u8))
@@ -169,7 +169,7 @@ namespace Azure.ResourceManager.Enclave.Models
                     {
                         continue;
                     }
-                    justification = new MaintenanceModeConfigurationModelJustification(prop.Value.GetString());
+                    justification = new VirtualEnclaveMaintenanceModeJustification(prop.Value.GetString());
                     continue;
                 }
                 if (options.Format != "W")
