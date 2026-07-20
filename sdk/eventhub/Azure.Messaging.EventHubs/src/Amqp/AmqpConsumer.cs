@@ -35,6 +35,9 @@ namespace Azure.Messaging.EventHubs.Amqp
         /// <summary>The interval that an attempt to receive events should wait for additional events when less than the requested count was available.</summary>
         private static readonly TimeSpan ReceiveBuildBatchInterval = TimeSpan.FromMilliseconds(20);
 
+        /// <summary>The minimum interval to allow between warnings that the prefetch size limit may be constraining throughput.</summary>
+        private static readonly TimeSpan PrefetchSizeLimitWarningInterval = TimeSpan.FromSeconds(60);
+
         /// <summary>A captured exception that indicates the partition was stolen by another consumer; this should be surfaced when an attempt is made to open a consumer link.</summary>
         private volatile Exception _activePartitionStolenException;
 
@@ -44,8 +47,14 @@ namespace Azure.Messaging.EventHubs.Amqp
         /// <summary>The configured prefetch size limit in bytes; <c>null</c> when not configured.</summary>
         private readonly long? _prefetchSizeInBytes;
 
-        /// <summary>Indicates whether the prefetch size limit warning has already been logged for this consumer to avoid log spam.</summary>
-        private volatile bool _prefetchSizeLimitWarningLogged;
+        /// <summary>The UTC ticks of the point at which the prefetch size limit warning was last logged; 0 when no warning has been logged.</summary>
+        private long _lastPrefetchSizeLimitWarningTicks;
+
+        /// <summary>
+        ///   The instance of <see cref="EventHubsEventSource" /> which can be mocked for testing.
+        /// </summary>
+        ///
+        internal EventHubsEventSource Logger { get; set; } = EventHubsEventSource.Log;
 
         /// <summary>
         ///   Indicates whether or not this consumer has been closed.
@@ -282,16 +291,7 @@ namespace Azure.Messaging.EventHubs.Amqp
 
                         if (messagesReceived == null)
                         {
-                            // When PrefetchSizeInBytes is configured and no messages were received,
-                            // check whether the link credit has been exhausted.  This is a strong
-                            // indicator that the prefetch byte size limit is constraining throughput.
-
-                            if (_prefetchSizeInBytes.HasValue && !_prefetchSizeLimitWarningLogged && link.LinkCredit == 0)
-                            {
-                                _prefetchSizeLimitWarningLogged = true;
-                                EventHubsEventSource.Log.PrefetchSizeLimitReached(EventHubName, ConsumerGroup, PartitionId, _prefetchSizeInBytes.Value, link.Settings.TotalLinkCredit);
-                            }
-
+                            WarnPrefetchSizeLimitIfCreditExhausted(link);
                             return EmptyEventSet;
                         }
 
@@ -323,6 +323,14 @@ namespace Azure.Messaging.EventHubs.Amqp
                             {
                                 LastReceivedEvent = lastReceivedEvent;
                             }
+                        }
+
+                        // An empty result is returned through this path rather than the null check above;
+                        // inspect the link state to detect a prefetch size limit that is constraining throughput.
+
+                        if (receivedEventCount == 0)
+                        {
+                            WarnPrefetchSizeLimitIfCreditExhausted(link);
                         }
 
                         return receivedEvents ?? EmptyEventSet;
@@ -418,6 +426,32 @@ namespace Azure.Messaging.EventHubs.Amqp
                     LastReceivedEvent?.SequenceNumber.ToString(),
                     maximumEventCount,
                     waitTime.TotalSeconds);
+            }
+        }
+
+        /// <summary>
+        ///   Inspects the state of the AMQP link after a receive operation completed with no events and
+        ///   logs a warning when the configured prefetch size limit appears to be constraining throughput,
+        ///   indicated by the link credit being fully exhausted.  Warnings are limited to one per
+        ///   <see cref="PrefetchSizeLimitWarningInterval" /> to avoid log spam.
+        /// </summary>
+        ///
+        /// <param name="link">The AMQP link that was used for the receive operation.</param>
+        ///
+        internal void WarnPrefetchSizeLimitIfCreditExhausted(ReceivingAmqpLink link)
+        {
+            if ((!_prefetchSizeInBytes.HasValue) || (link == null) || (link.LinkCredit != 0))
+            {
+                return;
+            }
+
+            var currentTicks = DateTime.UtcNow.Ticks;
+            var lastWarningTicks = Interlocked.Read(ref _lastPrefetchSizeLimitWarningTicks);
+
+            if (((currentTicks - lastWarningTicks) >= PrefetchSizeLimitWarningInterval.Ticks)
+                && (Interlocked.CompareExchange(ref _lastPrefetchSizeLimitWarningTicks, currentTicks, lastWarningTicks) == lastWarningTicks))
+            {
+                Logger.PrefetchSizeLimitReached(EventHubName, ConsumerGroup, PartitionId, _prefetchSizeInBytes.Value, link.Settings.TotalLinkCredit);
             }
         }
 
