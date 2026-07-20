@@ -40,7 +40,7 @@ namespace Azure.Core.Amqp
                 return new EagerCopyingMessageBody(segments ?? Enumerable.Empty<Data>());
             }
 
-            return new EagerCopyingSingleSegmentMessageBody(GetDataMemory(single[0]));
+            return new EagerCopyingSingleSegmentMessageBody(GetDataAsMemory(single[0]));
         }
 
         protected abstract ReadOnlyMemory<byte> WrittenMemory { get; }
@@ -57,7 +57,7 @@ namespace Azure.Core.Amqp
             return memory.WrittenMemory;
         }
 
-        private static ReadOnlyMemory<byte> GetDataMemory(Data data) =>
+        private static ReadOnlyMemory<byte> GetDataAsMemory(Data data) =>
             data.Value switch
             {
                 byte[] bytes => (ReadOnlyMemory<byte>)bytes,
@@ -190,7 +190,7 @@ namespace Azure.Core.Amqp
                     ReadOnlyMemory<byte> dataToAppend = segment switch
                     {
                         ReadOnlyMemory<byte> romSegment => romSegment,
-                        Data data => GetDataMemory(data),
+                        Data data => GetDataAsMemory(data),
                         _ => ThrowArgumentOutOfRange(nameof(segment))
                     };
                     length += dataToAppend.Length;
