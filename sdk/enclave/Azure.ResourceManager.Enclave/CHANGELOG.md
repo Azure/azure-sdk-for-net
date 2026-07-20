@@ -1,8 +1,11 @@
 # Release History
 
-## 1.0.0-beta.1 (Unreleased)
+## 1.0.0-beta.1 (2026-07-20)
 
 ### Features Added
+
+- Initial beta release of the Azure Enclave (`Microsoft.Mission`) management library for .NET, targeting API version `2026-03-01-preview`. Provides management-plane support for communities, enclaves, community/enclave endpoints and connections, dedicated and transit hubs, workloads, approvals, and monitoring settings.
+
 
 This package follows the [new Azure SDK guidelines](https://azure.github.io/azure-sdk/general_introduction.html), and provides many core capabilities:
 
