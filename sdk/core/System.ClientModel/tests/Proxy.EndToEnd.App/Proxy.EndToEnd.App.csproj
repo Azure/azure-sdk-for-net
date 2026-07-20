@@ -12,7 +12,7 @@
   <ItemGroup>
     <ProjectReference Include="..\..\src\System.ClientModel.csproj" />
     <ProjectReference Include="..\Proxy.EndToEnd.OpenAILike\Proxy.EndToEnd.OpenAILike.csproj" />
-    <ProjectReference Include="..\Proxy.EndToEnd.ThirdPartyA\Proxy.EndToEnd.ThirdPartyA.csproj" />
+    <ProjectReference Include="..\Proxy.EndToEnd.FirstPartyA\Proxy.EndToEnd.FirstPartyA.csproj" />
     <ProjectReference Include="..\Proxy.EndToEnd.ThirdPartyB\Proxy.EndToEnd.ThirdPartyB.csproj" />
   </ItemGroup>
 

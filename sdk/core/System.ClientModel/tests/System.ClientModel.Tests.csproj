@@ -28,7 +28,7 @@
     <ProjectReference Include="..\src\System.ClientModel.csproj" />
     <ProjectReference Include="client\System.ClientModel.Tests.Client.csproj" />
     <ProjectReference Include="Proxy.EndToEnd.OpenAILike\Proxy.EndToEnd.OpenAILike.csproj" />
-    <ProjectReference Include="Proxy.EndToEnd.ThirdPartyA\Proxy.EndToEnd.ThirdPartyA.csproj" />
+    <ProjectReference Include="Proxy.EndToEnd.FirstPartyA\Proxy.EndToEnd.FirstPartyA.csproj" />
     <ProjectReference Include="Proxy.EndToEnd.ThirdPartyB\Proxy.EndToEnd.ThirdPartyB.csproj" />
   </ItemGroup>
 
@@ -47,11 +47,11 @@
     <None Remove="internal.perf/**" />
     <Compile Remove="gen*/**" />
     <Compile Remove="Proxy.EndToEnd.OpenAILike/**" />
-    <Compile Remove="Proxy.EndToEnd.ThirdPartyA/**" />
+    <Compile Remove="Proxy.EndToEnd.FirstPartyA/**" />
     <Compile Remove="Proxy.EndToEnd.ThirdPartyB/**" />
     <Compile Remove="Proxy.EndToEnd.App/**" />
     <None Remove="Proxy.EndToEnd.OpenAILike/**" />
-    <None Remove="Proxy.EndToEnd.ThirdPartyA/**" />
+    <None Remove="Proxy.EndToEnd.FirstPartyA/**" />
     <None Remove="Proxy.EndToEnd.ThirdPartyB/**" />
     <None Remove="Proxy.EndToEnd.App/**" />
   </ItemGroup>

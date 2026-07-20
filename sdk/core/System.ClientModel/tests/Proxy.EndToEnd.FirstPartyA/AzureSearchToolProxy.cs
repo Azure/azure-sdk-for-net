@@ -5,7 +5,7 @@ using System.ClientModel.Primitives;
 using System.ClientModel.Tests.Proxy.OpenAILike;
 using System.Text.Json;
 
-namespace System.ClientModel.Tests.Proxy.ThirdPartyA
+namespace System.ClientModel.Tests.Proxy.FirstPartyA
 {
     /// <summary>
     /// Conditional proxy that takes over deserialization only when the payload's "type" discriminator

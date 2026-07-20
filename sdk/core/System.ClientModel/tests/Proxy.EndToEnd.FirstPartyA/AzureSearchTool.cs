@@ -5,11 +5,12 @@ using System.ClientModel.Primitives;
 using System.ClientModel.Tests.Proxy.OpenAILike;
 using System.Text.Json;
 
-namespace System.ClientModel.Tests.Proxy.ThirdPartyA
+namespace System.ClientModel.Tests.Proxy.FirstPartyA
 {
     /// <summary>
     /// A new ResponseTool subtype the base "OpenAI-like" library does not know about. It is defined
-    /// in this third-party assembly and is selected purely by the "azure_search" discriminator.
+    /// in this first-party assembly (a Microsoft library that extends OpenAI) and is selected purely
+    /// by the "azure_search" discriminator.
     /// </summary>
     public sealed class AzureSearchTool : ResponseTool
     {

@@ -2,9 +2,9 @@
 // Licensed under the MIT License.
 
 using System.ClientModel.Primitives;
+using System.ClientModel.Tests.Proxy.FirstPartyA;
 using System.ClientModel.Tests.Proxy.OpenAILike;
 using System.ClientModel.Tests.Proxy.OpenAILike.Mocks;
-using System.ClientModel.Tests.Proxy.ThirdPartyA;
 using System.ClientModel.Tests.Proxy.ThirdPartyB;
 using NUnit.Framework;
 
@@ -50,7 +50,7 @@ namespace System.ClientModel.Tests.ModelReaderWriterTests
         }
 
         [Test]
-        public void AzureSearch_RoutedToThirdPartyA()
+        public void AzureSearch_RoutedToFirstPartyA()
         {
             ResponseToolsClient client = CreateClient("{\"type\":\"azure_search\",\"index_name\":\"docs\"}", RegisterBothProxies);
 
@@ -93,6 +93,42 @@ namespace System.ClientModel.Tests.ModelReaderWriterTests
             ResponseTool tool = client.GetTool("t5");
 
             Assert.IsInstanceOf<UnknownResponseTool>(tool);
+        }
+
+        [Test]
+        public void FirstPartyClient_HidesProxy_RoutesAzureSearch()
+        {
+            // The end user constructs the first-party client and registers NOTHING — the proxy is
+            // hidden inside FirstPartyToolsClient. Routing to the first-party subtype still happens.
+            var pipelineOptions = new ClientPipelineOptions
+            {
+                Transport = new CannedResponseTransport("{\"type\":\"azure_search\",\"index_name\":\"docs\"}")
+            };
+            var client = new FirstPartyToolsClient(pipelineOptions);
+
+            ResponseTool tool = client.GetTool("t6");
+
+            Assert.IsInstanceOf<AzureSearchTool>(tool);
+            Assert.AreEqual(typeof(AzureSearchTool).Assembly, tool.GetType().Assembly);
+            Assert.AreEqual("docs", ((AzureSearchTool)tool).IndexName);
+        }
+
+        [Test]
+        public void FirstPartyClient_HiddenProxy_CoexistsWithExplicitThirdParty()
+        {
+            // First-party proxy stays hidden; the customer layers the third-party Bing proxy on top.
+            // Each proxy only claims its own discriminator (note 18).
+            var pipelineOptions = new ClientPipelineOptions
+            {
+                Transport = new CannedResponseTransport("{\"type\":\"bing_grounding\",\"market\":\"en-US\"}")
+            };
+            var client = new FirstPartyToolsClient(pipelineOptions, o => o.AddBingTools());
+
+            ResponseTool tool = client.GetTool("t7");
+
+            Assert.IsInstanceOf<BingGroundingTool>(tool);
+            Assert.AreEqual(typeof(BingGroundingTool).Assembly, tool.GetType().Assembly);
+            Assert.AreEqual("en-US", ((BingGroundingTool)tool).Market);
         }
     }
 }
