@@ -3,7 +3,6 @@
 
 using Azure.Generator.Provisioning.Utilities;
 using Microsoft.TypeSpec.Generator.Expressions;
-using Microsoft.TypeSpec.Generator.Input;
 using Microsoft.TypeSpec.Generator.Input.Extensions;
 using Microsoft.TypeSpec.Generator.Primitives;
 using Microsoft.TypeSpec.Generator.Providers;
@@ -34,9 +33,6 @@ namespace Azure.Generator.Provisioning.Providers
         /// <summary>Optional default value (e.g., for singleton resource names).</summary>
         public string? DefaultValue { get; }
 
-        /// <summary>The input model represented by this property, if any.</summary>
-        public InputModelType? ModelType { get; }
-
         private ProvisioningPropertyProvider(
             FieldProvider backingField,
             CSharpType type,
@@ -47,8 +43,7 @@ namespace Azure.Generator.Provisioning.Providers
             bool isOutput,
             bool isSettable,
             bool isRequired,
-            string? defaultValue,
-            InputModelType? modelType)
+            string? defaultValue)
             : base(null, MethodSignatureModifiers.Public, type, name, body, enclosingType)
         {
             BackingField = backingField;
@@ -57,7 +52,6 @@ namespace Azure.Generator.Provisioning.Providers
             IsSettable = isSettable;
             IsRequired = isRequired;
             DefaultValue = defaultValue;
-            ModelType = modelType;
         }
 
         /// <summary>
@@ -72,7 +66,6 @@ namespace Azure.Generator.Provisioning.Providers
             bool isRequired,
             string[] bicepPath,
             string? defaultValue,
-            InputModelType? modelType,
             TypeProvider enclosingType)
         {
             var field = new FieldProvider(
@@ -113,7 +106,7 @@ namespace Azure.Generator.Provisioning.Providers
 
             return new ProvisioningPropertyProvider(
                 field, bicepType, resolvedName, body, enclosingType,
-                bicepPath, isOutput, isSettable, isRequired, defaultValue, modelType);
+                bicepPath, isOutput, isSettable, isRequired, defaultValue);
         }
     }
 }

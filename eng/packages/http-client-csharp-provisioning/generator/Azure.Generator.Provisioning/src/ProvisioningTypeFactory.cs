@@ -195,18 +195,10 @@ namespace Azure.Generator.Provisioning
                 return ProvisioningPropertyProvider.Create(
                     resolvedName, bicepType,
                     info.IsOutput, info.IsSettable, info.IsRequired, info.BicepPath, info.DefaultValue,
-                    GetModelType(inputModelProperty.Type), enclosingType);
+                    enclosingType);
             }
 
             return baseProperty;
         }
-
-        private static InputModelType? GetModelType(InputType inputType)
-            => inputType switch
-            {
-                InputModelType modelType => modelType,
-                InputNullableType nullableType => GetModelType(nullableType.Type),
-                _ => null
-            };
     }
 }

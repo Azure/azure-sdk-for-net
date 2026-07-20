@@ -4,7 +4,6 @@
 using Azure.Provisioning;
 using Azure.Provisioning.Primitives;
 using Microsoft.TypeSpec.Generator.Expressions;
-using Microsoft.TypeSpec.Generator.Input;
 using Microsoft.TypeSpec.Generator.Input.Extensions;
 using Microsoft.TypeSpec.Generator.Primitives;
 using System;
@@ -103,7 +102,7 @@ namespace Azure.Generator.Provisioning.Utilities
         /// model is also emitted as a provisionable resource.
         /// </summary>
         public static ValueExpression[] BuildDefineModelPropertyArgs(
-            InputModelType? modelType,
+            CSharpType modelType,
             string propertyName,
             string[] bicepPath,
             bool isOutput,
@@ -111,8 +110,10 @@ namespace Azure.Generator.Provisioning.Utilities
             string? defaultValue = null)
         {
             var args = BuildDefinePropertyArgs(propertyName, bicepPath, isOutput, isRequired, defaultValue).ToList();
-            if (modelType is not null
-                && ProvisioningGenerator.Instance.TypeFactory.CreateModel(modelType) is Providers.ProvisioningResourceProvider resource)
+            var resource = ProvisioningGenerator.Instance.OutputLibrary.TypeProviders
+                .OfType<Providers.ProvisioningResourceProvider>()
+                .FirstOrDefault(candidate => candidate.Type.Equals(modelType));
+            if (resource is not null)
             {
                 args.Insert(2, New.Instance(resource.Type, [Literal(resource.Name.ToVariableName())]));
             }

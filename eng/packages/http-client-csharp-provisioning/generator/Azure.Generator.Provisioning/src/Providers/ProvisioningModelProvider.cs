@@ -184,7 +184,7 @@ namespace Azure.Generator.Provisioning.Providers
                     This.Invoke(
                         methodName,
                         methodName == "DefineModelProperty"
-                            ? BicepTypeHelpers.BuildDefineModelPropertyArgs(provProp.ModelType, provProp.Name, provProp.BicepPath, provProp.IsOutput, provProp.IsRequired, provProp.DefaultValue)
+                            ? BicepTypeHelpers.BuildDefineModelPropertyArgs(field.Type, provProp.Name, provProp.BicepPath, provProp.IsOutput, provProp.IsRequired, provProp.DefaultValue)
                             : BicepTypeHelpers.BuildDefinePropertyArgs(provProp.Name, provProp.BicepPath, provProp.IsOutput, provProp.IsRequired, provProp.DefaultValue),
                         typeArgs,
                         false)
