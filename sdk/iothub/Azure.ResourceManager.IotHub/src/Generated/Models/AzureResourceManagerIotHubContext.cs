@@ -92,6 +92,7 @@ namespace Azure.ResourceManager.IotHub
     [ModelReaderWriterBuildable(typeof(RoutingCosmosDBSqlApiProperties))]
     [ModelReaderWriterBuildable(typeof(RoutingEndpoints))]
     [ModelReaderWriterBuildable(typeof(RoutingEventHubProperties))]
+    [ModelReaderWriterBuildable(typeof(RoutingEventStreamProperties))]
     [ModelReaderWriterBuildable(typeof(RoutingMessage))]
     [ModelReaderWriterBuildable(typeof(RoutingRuleProperties))]
     [ModelReaderWriterBuildable(typeof(RoutingServiceBusQueueEndpointProperties))]
