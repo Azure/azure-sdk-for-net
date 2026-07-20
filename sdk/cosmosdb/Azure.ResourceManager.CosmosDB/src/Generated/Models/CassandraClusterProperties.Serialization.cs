@@ -314,7 +314,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
             CassandraError provisionError = default;
             IList<string> extensions = default;
             IList<CassandraClusterBackupSchedule> backupSchedules = default;
-            ScheduledEventStrategy? scheduledEventStrategy = default;
+            CassandraScheduledEventStrategy? scheduledEventStrategy = default;
             ServiceConnectionType? azureConnectionMethod = default;
             ResourceIdentifier privateLinkResourceId = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
@@ -562,7 +562,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                     {
                         continue;
                     }
-                    scheduledEventStrategy = new ScheduledEventStrategy(prop.Value.GetString());
+                    scheduledEventStrategy = new CassandraScheduledEventStrategy(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("azureConnectionMethod"u8))

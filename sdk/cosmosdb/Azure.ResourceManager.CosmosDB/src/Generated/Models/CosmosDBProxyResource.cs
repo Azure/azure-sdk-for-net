@@ -12,22 +12,22 @@ using Azure.ResourceManager.CosmosDB;
 namespace Azure.ResourceManager.CosmosDB.Models
 {
     /// <summary> The resource model definition for a ARM proxy resource. It will have everything other than required location and tags. </summary>
-    public partial class ArmProxyResource
+    public partial class CosmosDBProxyResource
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="ArmProxyResource"/>. </summary>
-        public ArmProxyResource()
+        /// <summary> Initializes a new instance of <see cref="CosmosDBProxyResource"/>. </summary>
+        public CosmosDBProxyResource()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="ArmProxyResource"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="CosmosDBProxyResource"/>. </summary>
         /// <param name="id"> The unique resource identifier of the database account. </param>
         /// <param name="name"> The name of the database account. </param>
         /// <param name="type"> The type of Azure resource. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ArmProxyResource(string id, string name, string @type, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal CosmosDBProxyResource(string id, string name, string @type, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Id = id;
             Name = name;
