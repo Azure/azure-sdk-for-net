@@ -18,12 +18,19 @@ namespace Azure.ResourceManager.PreviewAlertRule.Models
     public static partial class ArmPreviewAlertRuleModelFactory
     {
         /// <param name="location"> The location of the rule resource. </param>
+        /// <param name="properties"></param>
+        /// <returns> A new <see cref="Models.PreviewAlertRuleContent"/> instance for mocking. </returns>
+        public static PreviewAlertRuleContent PreviewAlertRuleContent(AzureLocation location = default, PreviewAlertRuleRequestProperties properties = default)
+        {
+            return new PreviewAlertRuleContent(location, properties, default);
+        }
+
         /// <param name="timespan"> Specifies the timespan of the preview in ISO 8601 duration format. </param>
         /// <param name="scheduledQueryRuleProperties"> The properties of the alert rule to preview. </param>
-        /// <returns> A new <see cref="Models.PreviewAlertRuleContent"/> instance for mocking. </returns>
-        public static PreviewAlertRuleContent PreviewAlertRuleContent(AzureLocation location = default, TimeSpan timespan = default, LogAlertRule scheduledQueryRuleProperties = default)
+        /// <returns> A new <see cref="Models.PreviewAlertRuleRequestProperties"/> instance for mocking. </returns>
+        public static PreviewAlertRuleRequestProperties PreviewAlertRuleRequestProperties(TimeSpan timespan = default, LogAlertRule scheduledQueryRuleProperties = default)
         {
-            return new PreviewAlertRuleContent(location, default, default);
+            return new PreviewAlertRuleRequestProperties(timespan, scheduledQueryRuleProperties, default);
         }
 
         /// <param name="tags"> Resource tags. </param>
