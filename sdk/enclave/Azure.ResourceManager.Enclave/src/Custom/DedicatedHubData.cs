@@ -11,9 +11,4 @@ namespace Azure.ResourceManager.Enclave
     public partial class DedicatedHubData
     {
     }
-
-    [CodeGenType("DedicatedHubResourceCollection")]
-    public partial class DedicatedHubCollection
-    {
-    }
 }
