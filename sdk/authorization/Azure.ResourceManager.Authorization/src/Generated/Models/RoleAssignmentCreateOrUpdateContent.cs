@@ -72,46 +72,6 @@ namespace Azure.ResourceManager.Authorization.Models
             }
         }
 
-        /// <summary> The principal type of the assigned principal ID. </summary>
-        [WirePath("properties.principalType")]
-        public RoleManagementPrincipalType? PrincipalType
-        {
-            get
-            {
-                return Properties.PrincipalType;
-            }
-        }
-
-        /// <summary> Description of role assignment. </summary>
-        [WirePath("properties.description")]
-        public string Description
-        {
-            get
-            {
-                return Properties.Description;
-            }
-        }
-
-        /// <summary> The conditions on the role assignment. This limits the resources it can be assigned to. e.g.: @Resource[Microsoft.Storage/storageAccounts/blobServices/containers:ContainerName] StringEqualsIgnoreCase 'foo_storage_container'. </summary>
-        [WirePath("properties.condition")]
-        public string Condition
-        {
-            get
-            {
-                return Properties.Condition;
-            }
-        }
-
-        /// <summary> Version of the condition. Currently the only accepted value is '2.0'. </summary>
-        [WirePath("properties.conditionVersion")]
-        public string ConditionVersion
-        {
-            get
-            {
-                return Properties.ConditionVersion;
-            }
-        }
-
         /// <summary> Time it was created. </summary>
         [WirePath("properties.createdOn")]
         public DateTimeOffset? CreatedOn
@@ -149,16 +109,6 @@ namespace Azure.ResourceManager.Authorization.Models
             get
             {
                 return Properties.UpdatedBy;
-            }
-        }
-
-        /// <summary> Id of the delegated managed identity resource. </summary>
-        [WirePath("properties.delegatedManagedIdentityResourceId")]
-        public ResourceIdentifier DelegatedManagedIdentityResourceId
-        {
-            get
-            {
-                return Properties.DelegatedManagedIdentityResourceId;
             }
         }
     }

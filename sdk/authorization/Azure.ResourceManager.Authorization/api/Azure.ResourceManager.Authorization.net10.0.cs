@@ -2949,14 +2949,14 @@ namespace Azure.ResourceManager.Authorization.Models
     public partial class RoleAssignmentCreateOrUpdateContent : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Authorization.Models.RoleAssignmentCreateOrUpdateContent>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Authorization.Models.RoleAssignmentCreateOrUpdateContent>
     {
         public RoleAssignmentCreateOrUpdateContent(Azure.Core.ResourceIdentifier roleDefinitionId, System.Guid principalId) { }
-        public string Condition { get { throw null; } }
-        public string ConditionVersion { get { throw null; } }
+        public string Condition { get { throw null; } set { } }
+        public string ConditionVersion { get { throw null; } set { } }
         public string CreatedBy { get { throw null; } }
         public System.DateTimeOffset? CreatedOn { get { throw null; } }
-        public Azure.Core.ResourceIdentifier DelegatedManagedIdentityResourceId { get { throw null; } }
-        public string Description { get { throw null; } }
+        public Azure.Core.ResourceIdentifier DelegatedManagedIdentityResourceId { get { throw null; } set { } }
+        public string Description { get { throw null; } set { } }
         public System.Guid PrincipalId { get { throw null; } }
-        public Azure.ResourceManager.Authorization.Models.RoleManagementPrincipalType? PrincipalType { get { throw null; } }
+        public Azure.ResourceManager.Authorization.Models.RoleManagementPrincipalType? PrincipalType { get { throw null; } set { } }
         public Azure.Core.ResourceIdentifier RoleDefinitionId { get { throw null; } }
         public string Scope { get { throw null; } }
         public string UpdatedBy { get { throw null; } }
