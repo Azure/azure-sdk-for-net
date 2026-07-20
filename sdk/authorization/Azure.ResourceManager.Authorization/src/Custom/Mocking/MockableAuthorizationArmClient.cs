@@ -17,6 +17,8 @@ using Microsoft.TypeSpec.Generator.Customizations;
 
 namespace Azure.ResourceManager.Authorization.Mocking
 {
+    // The management generator exposes path components already represented by the extension operation's ResourceIdentifier scope.
+    // Suppress these malformed convenience methods until the generator derives those values from scope: https://github.com/Azure/azure-sdk-for-net/issues/61113.
     [CodeGenSuppress("GetAzurePermissionsForResource", typeof(ResourceIdentifier), typeof(string), typeof(string), typeof(string), typeof(string), typeof(string), typeof(string), typeof(CancellationToken))]
     [CodeGenSuppress("GetAzurePermissionsForResourceAsync", typeof(ResourceIdentifier), typeof(string), typeof(string), typeof(string), typeof(string), typeof(string), typeof(string), typeof(CancellationToken))]
     public partial class MockableAuthorizationArmClient
