@@ -3300,7 +3300,7 @@ namespace Azure.ResourceManager.Authorization.Models
     }
     public abstract partial class RoleManagementPolicyRule : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Authorization.Models.RoleManagementPolicyRule>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Authorization.Models.RoleManagementPolicyRule>
     {
-        internal RoleManagementPolicyRule() { }
+        protected RoleManagementPolicyRule() { }
         public string Id { get { throw null; } set { } }
         public Azure.ResourceManager.Authorization.Models.RoleManagementPolicyRuleTarget Target { get { throw null; } set { } }
         protected virtual Azure.ResourceManager.Authorization.Models.RoleManagementPolicyRule JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }

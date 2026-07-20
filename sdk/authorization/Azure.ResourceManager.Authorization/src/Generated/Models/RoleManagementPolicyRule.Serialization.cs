@@ -19,11 +19,6 @@ namespace Azure.ResourceManager.Authorization.Models
     [PersistableModelProxy(typeof(UnknownRoleManagementPolicyRule))]
     public abstract partial class RoleManagementPolicyRule : IJsonModel<RoleManagementPolicyRule>
     {
-        /// <summary> Initializes a new instance of <see cref="RoleManagementPolicyRule"/> for deserialization. </summary>
-        internal RoleManagementPolicyRule()
-        {
-        }
-
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual RoleManagementPolicyRule PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
