@@ -207,8 +207,9 @@ namespace Azure.Core.Amqp
                 for (var i = 0; i < numberOfSegments; i++)
                 {
                     var dataToAppend = segments[i];
+                    int writtenBefore = refWriter.WrittenCount;
                     refWriter.Write(dataToAppend.Span);
-                    segments[i] = refWriter.WrittenMemory.Slice(refWriter.WrittenMemory.Length - dataToAppend.Length, dataToAppend.Length);
+                    segments[i] = refWriter.WrittenMemory.Slice(writtenBefore, dataToAppend.Length);
                 }
             }
 
