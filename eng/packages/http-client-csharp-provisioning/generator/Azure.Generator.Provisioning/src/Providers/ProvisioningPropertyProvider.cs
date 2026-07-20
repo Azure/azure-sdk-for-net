@@ -33,6 +33,9 @@ namespace Azure.Generator.Provisioning.Providers
         /// <summary>Optional default value (e.g., for singleton resource names).</summary>
         public string? DefaultValue { get; }
 
+        /// <summary>Optional Bicep literal serialization format.</summary>
+        public string? Format { get; }
+
         private ProvisioningPropertyProvider(
             FieldProvider backingField,
             CSharpType type,
@@ -43,7 +46,8 @@ namespace Azure.Generator.Provisioning.Providers
             bool isOutput,
             bool isSettable,
             bool isRequired,
-            string? defaultValue)
+            string? defaultValue,
+            string? format)
             : base(null, MethodSignatureModifiers.Public, type, name, body, enclosingType)
         {
             BackingField = backingField;
@@ -52,6 +56,7 @@ namespace Azure.Generator.Provisioning.Providers
             IsSettable = isSettable;
             IsRequired = isRequired;
             DefaultValue = defaultValue;
+            Format = format;
         }
 
         /// <summary>
@@ -66,6 +71,7 @@ namespace Azure.Generator.Provisioning.Providers
             bool isRequired,
             string[] bicepPath,
             string? defaultValue,
+            string? format,
             TypeProvider enclosingType)
         {
             var field = new FieldProvider(
@@ -106,7 +112,7 @@ namespace Azure.Generator.Provisioning.Providers
 
             return new ProvisioningPropertyProvider(
                 field, bicepType, resolvedName, body, enclosingType,
-                bicepPath, isOutput, isSettable, isRequired, defaultValue);
+                bicepPath, isOutput, isSettable, isRequired, defaultValue, format);
         }
     }
 }

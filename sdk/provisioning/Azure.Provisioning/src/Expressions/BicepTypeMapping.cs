@@ -83,12 +83,18 @@ internal static class BicepTypeMapping
     /// Convert a <see cref="BinaryData"/> value into a Bicep expression.
     /// </summary>
     /// <param name="value">The <see cref="BinaryData"/> value.</param>
+    /// <param name="format">An optional format that controls literal serialization.</param>
     /// <returns>The corresponding Bicep expression.</returns>
-    public static BicepExpression ToBicep(BinaryData value)
+    public static BicepExpression ToBicep(BinaryData value, string? format)
     {
+        if (format == "base64")
+        {
+            return BicepSyntax.Value(Convert.ToBase64String(value.ToArray()));
+        }
+
         try
         {
-            using JsonDocument document = JsonDocument.Parse(value.ToString());
+            using JsonDocument document = JsonDocument.Parse(value.ToMemory());
             return ToBicep(document.RootElement);
         }
         catch (JsonException)

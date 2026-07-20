@@ -6,6 +6,7 @@ using System.Globalization;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
+using Azure.Provisioning.Primitives;
 using Azure.Provisioning.Resources;
 using NUnit.Framework;
 
@@ -243,6 +244,17 @@ public class BicepValueTests
     }
 
     [Test]
+    public void ValidateBinaryDataWithBase64FormatCompilesToBase64String()
+    {
+        BinaryDataResource resource = new("resource");
+        resource.Blob = BinaryData.FromString("\"not-json-anymore\"");
+        TestHelpers.AssertExpression("'Im5vdC1qc29uLWFueW1vcmUi'", resource.Blob);
+
+        resource.Blob = BinaryData.FromString("""{"name":"value"}""");
+        TestHelpers.AssertExpression("'eyJuYW1lIjoidmFsdWUifQ=='", resource.Blob);
+    }
+
+    [Test]
     public async Task ValidateTimeSpanPropertyWithFormat()
     {
         await using Trycep test = new();
@@ -275,5 +287,27 @@ public class BicepValueTests
                   }
                 }
                 """);
+    }
+
+    private class BinaryDataResource : ProvisionableResource
+    {
+        private BicepValue<BinaryData>? _blob;
+
+        public BicepValue<BinaryData> Blob
+        {
+            get { Initialize(); return _blob!; }
+            set { Initialize(); _blob!.Assign(value); }
+        }
+
+        public BinaryDataResource(string bicepIdentifier)
+            : base(bicepIdentifier, "Test.Provider/binaryDataResources", "2024-01-01")
+        {
+        }
+
+        protected override void DefineProvisionableProperties()
+        {
+            base.DefineProvisionableProperties();
+            _blob = DefineProperty<BinaryData>("Blob", ["properties", "blob"], format: "base64");
+        }
     }
 }

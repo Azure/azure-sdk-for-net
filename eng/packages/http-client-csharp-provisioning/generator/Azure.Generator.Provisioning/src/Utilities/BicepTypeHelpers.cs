@@ -4,6 +4,7 @@
 using Azure.Provisioning;
 using Azure.Provisioning.Primitives;
 using Microsoft.TypeSpec.Generator.Expressions;
+using Microsoft.TypeSpec.Generator.Input;
 using Microsoft.TypeSpec.Generator.Primitives;
 using System;
 using System.Collections.Generic;
@@ -74,7 +75,7 @@ namespace Azure.Generator.Provisioning.Utilities
         /// isOutput and isRequired are independent flags and only emitted when true, using named arguments.
         /// </summary>
         public static ValueExpression[] BuildDefinePropertyArgs(
-            string propertyName, string[] bicepPath, bool isOutput, bool isRequired, string? defaultValue = null)
+            string propertyName, string[] bicepPath, bool isOutput, bool isRequired, string? defaultValue = null, string? format = null)
         {
             var args = new List<ValueExpression>
             {
@@ -93,7 +94,19 @@ namespace Azure.Generator.Provisioning.Utilities
             {
                 args.Add(new PositionalParameterReferenceExpression("defaultValue", Literal(defaultValue)));
             }
+            if (format is not null)
+            {
+                args.Add(new PositionalParameterReferenceExpression("format", Literal(format)));
+            }
             return [.. args];
         }
+
+        public static string? GetLiteralFormat(InputType type) =>
+            type switch
+            {
+                InputPrimitiveType primitive when primitive == InputPrimitiveType.Base64 => "base64",
+                InputNullableType nullable => GetLiteralFormat(nullable.Type),
+                _ => null
+            };
     }
 }
