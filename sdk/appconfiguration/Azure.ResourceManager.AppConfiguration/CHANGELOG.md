@@ -10,6 +10,8 @@
 
 ### Bugs Fixed
 
+- Restored the public parameterless constructor on `AppConfigurationSnapshotData` as `[Obsolete]` to preserve backward compatibility after `Filters` became a required constructor parameter. Use the `AppConfigurationSnapshotData(IEnumerable<SnapshotKeyValueFilter>)` constructor instead.
+
 ### Other Changes
 
 ## 1.5.0-beta.1 (2026-04-28)

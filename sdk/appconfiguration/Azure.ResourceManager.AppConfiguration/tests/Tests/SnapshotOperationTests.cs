@@ -49,11 +49,10 @@ namespace Azure.ResourceManager.AppConfiguration.Tests
 
                 // Prepare Snapshot.
                 SnapshotName = Recording.GenerateAssetName("testapp-snapshot");
-                AppConfigurationSnapshotData snapshotData = new AppConfigurationSnapshotData()
+                AppConfigurationSnapshotData snapshotData = new AppConfigurationSnapshotData(new[] { new SnapshotKeyValueFilter("key1/*") { Label = "app1" } })
                 {
                     RetentionPeriod = 3600,
                 };
-                snapshotData.Filters.Add(new SnapshotKeyValueFilter("key1/*") { Label = "app1" });
                 Snapshot = (await ConfigStore.GetAppConfigurationSnapshots().CreateOrUpdateAsync(WaitUntil.Completed, SnapshotName, snapshotData)).Value;
             }
         }

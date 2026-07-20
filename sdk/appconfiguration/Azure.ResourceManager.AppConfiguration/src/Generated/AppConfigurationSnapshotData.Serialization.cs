@@ -20,11 +20,6 @@ namespace Azure.ResourceManager.AppConfiguration
     /// <summary> The snapshot resource. </summary>
     public partial class AppConfigurationSnapshotData : ResourceData, IJsonModel<AppConfigurationSnapshotData>
     {
-        /// <summary> Initializes a new instance of <see cref="AppConfigurationSnapshotData"/> for deserialization. </summary>
-        internal AppConfigurationSnapshotData()
-        {
-        }
-
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual ResourceData PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
@@ -101,11 +96,8 @@ namespace Azure.ResourceManager.AppConfiguration
                 throw new FormatException($"The model {nameof(AppConfigurationSnapshotData)} does not support writing '{format}' format.");
             }
             base.JsonModelWriteCore(writer, options);
-            if (Optional.IsDefined(Properties))
-            {
-                writer.WritePropertyName("properties"u8);
-                writer.WriteObjectValue(Properties, options);
-            }
+            writer.WritePropertyName("properties"u8);
+            writer.WriteObjectValue(Properties, options);
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
                 foreach (var item in _additionalBinaryDataProperties)

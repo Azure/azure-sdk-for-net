@@ -48,11 +48,10 @@ namespace Azure.ResourceManager.AppConfiguration.Tests
         public async Task CreateOrUpdateTest()
         {
             string snapshotName = Recording.GenerateAssetName("testapp-");
-            AppConfigurationSnapshotData snapshotData = new AppConfigurationSnapshotData()
+            AppConfigurationSnapshotData snapshotData = new AppConfigurationSnapshotData(new[] { new SnapshotKeyValueFilter("key1/*") { Label = "app1" } })
             {
                 RetentionPeriod = 3600
             };
-            snapshotData.Filters.Add(new SnapshotKeyValueFilter("key1/*") { Label = "app1" });
 
             AppConfigurationSnapshotResource snapshot = (await ConfigStore.GetAppConfigurationSnapshots().CreateOrUpdateAsync(WaitUntil.Completed, snapshotName, snapshotData)).Value;
 
@@ -66,11 +65,10 @@ namespace Azure.ResourceManager.AppConfiguration.Tests
         public async Task GetTest()
         {
             string snapshotName = Recording.GenerateAssetName("testapp-");
-            AppConfigurationSnapshotData snapshotData = new AppConfigurationSnapshotData()
+            AppConfigurationSnapshotData snapshotData = new AppConfigurationSnapshotData(new[] { new SnapshotKeyValueFilter("key1/*") { Label = "app1" } })
             {
                 RetentionPeriod = 3600
             };
-            snapshotData.Filters.Add(new SnapshotKeyValueFilter("key1/*") { Label = "app1" });
 
             await ConfigStore.GetAppConfigurationSnapshots().CreateOrUpdateAsync(WaitUntil.Completed, snapshotName, snapshotData);
 
@@ -86,11 +84,10 @@ namespace Azure.ResourceManager.AppConfiguration.Tests
         public async Task ExistsTest()
         {
             string snapshotName = Recording.GenerateAssetName("testapp-");
-            AppConfigurationSnapshotData snapshotData = new AppConfigurationSnapshotData()
+            AppConfigurationSnapshotData snapshotData = new AppConfigurationSnapshotData(new[] { new SnapshotKeyValueFilter("key1/*") { Label = "app1" } })
             {
                 RetentionPeriod = 3600
             };
-            snapshotData.Filters.Add(new SnapshotKeyValueFilter("key1/*") { Label = "app1" });
 
             await ConfigStore.GetAppConfigurationSnapshots().CreateOrUpdateAsync(WaitUntil.Completed, snapshotName, snapshotData);
 

@@ -1,0 +1,10 @@
+# Azure.ResourceManager.AppConfiguration approved analyzer suppressions.
+# See eng/analyzerallowlist/README.md for the file format and review policy.
+
+# AppConfigurationSnapshotData's parameterless constructor is obsolete (kept as an ApiCompat
+# backward-compat shim after the 2025-08-01-preview spec update made `filters` a required
+# constructor argument), but generated code (the DataDeserializationInstance singleton in
+# AppConfigurationSnapshotResource.Serialization.cs, and the ModelReaderWriterContext source
+# generator output) must still reference it to construct/deserialize instances, and generated
+# code cannot carry a pragma.
+nowarn:CS0618 N:Azure.ResourceManager.AppConfiguration
