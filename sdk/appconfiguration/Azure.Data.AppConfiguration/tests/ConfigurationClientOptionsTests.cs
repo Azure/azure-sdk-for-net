@@ -9,6 +9,11 @@ namespace Azure.Data.AppConfiguration.Tests
 {
     public class ConfigurationClientOptionsTests
     {
+        // The "https://azconfig.io" audience is only used to exercise scope parsing in these tests,
+        // so it is defined here rather than exposed on the production AppConfigurationAudience type.
+        private const string AzurePublicCloudAzValue = "https://azconfig.io";
+        private static readonly AppConfigurationAudience AzurePublicCloudAz = new AppConfigurationAudience(AzurePublicCloudAzValue);
+
         // This test validates that the client options always uses the supplied token audience
         // when it is provided via the options.
         [TestCaseSource(nameof(GetDefaultScopeWithSuppliedValueTestCases))]
@@ -38,8 +43,8 @@ namespace Azure.Data.AppConfiguration.Tests
         {
             get
             {
-                yield return new TestCaseData(AppConfigurationAudience.AzurePublicCloudAz, "https://locaLhost.azconfiG.com", $"{AppConfigurationAudience.AzurePublicCloudAz}/.default");
-                yield return new TestCaseData(AppConfigurationAudience.AzurePublicCloudAz, "https://locaLhost.azconfiG.com/", $"{AppConfigurationAudience.AzurePublicCloudAz}/.default");
+                yield return new TestCaseData(AzurePublicCloudAz, "https://locaLhost.azconfiG.com", $"{AzurePublicCloudAz}/.default");
+                yield return new TestCaseData(AzurePublicCloudAz, "https://locaLhost.azconfiG.com/", $"{AzurePublicCloudAz}/.default");
                 yield return new TestCaseData(AppConfigurationAudience.AzureChina, "https://other.AZconfig.cn", $"{AppConfigurationAudience.AzureChina}/.default");
                 yield return new TestCaseData(AppConfigurationAudience.AzureChina, "https://other.AZconfig.cn/", $"{AppConfigurationAudience.AzureChina}/.default");
                 yield return new TestCaseData(AppConfigurationAudience.AzureGovernment, "https://gov-localhost-2353453.azconfig.us", $"{AppConfigurationAudience.AzureGovernment}/.default");
@@ -56,10 +61,10 @@ namespace Azure.Data.AppConfiguration.Tests
             get
             {
                 // public cloud
-                yield return new TestCaseData("http://locaLhost.azconfiG.io", $"{AppConfigurationAudience.AzurePublicCloudAz}/.default");
-                yield return new TestCaseData("https://locaLhost.azconfiG.io/", $"{AppConfigurationAudience.AzurePublicCloudAz}/.default");
-                yield return new TestCaseData("https://locaLhost.azconfiG.io//", $"{AppConfigurationAudience.AzurePublicCloudAz}/.default");
-                yield return new TestCaseData("https://contoso.azconfig.io", $"{AppConfigurationAudience.AzurePublicCloudAz}/.default");
+                yield return new TestCaseData("http://locaLhost.azconfiG.io", $"{AzurePublicCloudAz}/.default");
+                yield return new TestCaseData("https://locaLhost.azconfiG.io/", $"{AzurePublicCloudAz}/.default");
+                yield return new TestCaseData("https://locaLhost.azconfiG.io//", $"{AzurePublicCloudAz}/.default");
+                yield return new TestCaseData("https://contoso.azconfig.io", $"{AzurePublicCloudAz}/.default");
                 yield return new TestCaseData("https://contoso.appconfig.azure.com", $"{AppConfigurationAudience.AzurePublicCloud}/.default");
                 yield return new TestCaseData("https://contoso.appconfig.azure.com/", $"{AppConfigurationAudience.AzurePublicCloud}/.default");
                 // staging is an explicitly recognized host
