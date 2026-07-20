@@ -1,10 +1,6 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-// The TypeSpec management generator omits generic ArmResource extensions, while AutoRest mapped
-// roleDefinitionId to ResourceIdentifier although the service parameter is a name string. TypeSpec also
-// places the legacy variable-resource permissions route on ArmClient. This partial preserves the shipped surfaces.
-
 #nullable disable
 
 using System;
@@ -20,6 +16,9 @@ namespace Azure.ResourceManager.Authorization
 {
     public static partial class AuthorizationExtensions
     {
+        // TypeSpec places the variable-resource permissions operation on ArmClient and generates the singular name.
+        // These legacy extensions restore the shipped ResourceGroupResource methods and forward through their mockable surface.
+
         /// <summary>
         /// Gets all permissions the caller has for a resource.
         /// <list type="bullet">
@@ -50,6 +49,8 @@ namespace Azure.ResourceManager.Authorization
         /// <exception cref="ArgumentException"> <paramref name="resourceName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/>, <paramref name="resourceProviderNamespace"/>, <paramref name="parentResourcePath"/>, <paramref name="resourceType"/> or <paramref name="resourceName"/> is null. </exception>
         /// <returns> An async collection of <see cref="RoleDefinitionPermission"/> that may take multiple service requests to iterate over. </returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        [Obsolete("this method is deprecated and will be removed in a future version, please use GetAzurePermissionsForResource instead.")]
         public static AsyncPageable<RoleDefinitionPermission> GetAzurePermissionsForResourcesAsync(this ResourceGroupResource resourceGroupResource, string resourceProviderNamespace, string parentResourcePath, string resourceType, string resourceName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
@@ -87,12 +88,17 @@ namespace Azure.ResourceManager.Authorization
         /// <exception cref="ArgumentException"> <paramref name="resourceName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/>, <paramref name="resourceProviderNamespace"/>, <paramref name="parentResourcePath"/>, <paramref name="resourceType"/> or <paramref name="resourceName"/> is null. </exception>
         /// <returns> A collection of <see cref="RoleDefinitionPermission"/> that may take multiple service requests to iterate over. </returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        [Obsolete("this method is deprecated and will be removed in a future version, please use GetAzurePermissionsForResource instead.")]
         public static Pageable<RoleDefinitionPermission> GetAzurePermissionsForResources(this ResourceGroupResource resourceGroupResource, string resourceProviderNamespace, string parentResourcePath, string resourceType, string resourceName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
 
             return GetMockableAuthorizationResourceGroupResource(resourceGroupResource).GetAzurePermissionsForResources(resourceProviderNamespace, parentResourcePath, resourceType, resourceName, cancellationToken);
         }
+
+        // AutoRest exposed roleDefinitionId as ResourceIdentifier while TypeSpec generates the service's string name.
+        // These hidden overloads restore the shipped signatures and forward to the generated string methods.
 
         /// <inheritdoc cref="GetAuthorizationRoleDefinition(ArmClient, ResourceIdentifier, string, CancellationToken)"/>
         [EditorBrowsable(EditorBrowsableState.Never)]
@@ -115,6 +121,9 @@ namespace Azure.ResourceManager.Authorization
 
             return await GetMockableAuthorizationArmClient(client).GetAuthorizationRoleDefinitionAsync(scope, roleDefinitionId, cancellationToken).ConfigureAwait(false);
         }
+
+        // The management generator omits generic ArmResource extensions.
+        // This block restores the shipped generic ArmResource extension surface through the matching mockable type.
 
         private static MockableAuthorizationArmResource GetMockableAuthorizationArmResource(ArmResource resource)
         {

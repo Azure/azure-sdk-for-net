@@ -4,7 +4,7 @@
 // AutoRest mapped roleDefinitionId to ResourceIdentifier although the service parameter is a name string.
 // This hidden obsolete overload preserves GA compatibility and forwards to the generated string API.
 // The management generator intentionally emits resource DELETE operations without final results.
-// The custom DELETE methods retain the previously shipped generic ArmOperation<TResource> surface.
+// The custom DELETE methods restore the shipped generic operation and use this resource instance as its result.
 
 #nullable disable
 
@@ -71,7 +71,7 @@ namespace Azure.ResourceManager.Authorization
                 RequestUriBuilder uri = message.Request.Uri;
                 RehydrationToken rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Delete, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
                 AuthorizationArmOperation<AuthorizationRoleDefinitionResource> operation = new AuthorizationArmOperation<AuthorizationRoleDefinitionResource>(
-                    Response.FromValue(CreateDeleteResult(response), response),
+                    Response.FromValue(this, response),
                     rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
                 {
@@ -124,7 +124,7 @@ namespace Azure.ResourceManager.Authorization
                 RequestUriBuilder uri = message.Request.Uri;
                 RehydrationToken rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Delete, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
                 AuthorizationArmOperation<AuthorizationRoleDefinitionResource> operation = new AuthorizationArmOperation<AuthorizationRoleDefinitionResource>(
-                    Response.FromValue(CreateDeleteResult(response), response),
+                    Response.FromValue(this, response),
                     rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
                 {
@@ -137,19 +137,6 @@ namespace Azure.ResourceManager.Authorization
                 scope.Failed(e);
                 throw;
             }
-        }
-
-        private AuthorizationRoleDefinitionResource CreateDeleteResult(Response response)
-        {
-            // A successful DELETE can return the deleted resource or an empty 204 response. Preserve
-            // returned data when present; otherwise return an identity-only resource without fabricating data.
-            if (response.Content?.ToMemory().Length > 0)
-            {
-                AuthorizationRoleDefinitionData data = AuthorizationRoleDefinitionData.FromResponse(response);
-                return new AuthorizationRoleDefinitionResource(Client, data);
-            }
-
-            return new AuthorizationRoleDefinitionResource(Client, Id);
         }
     }
 }

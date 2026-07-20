@@ -2,7 +2,7 @@
 // Licensed under the MIT License.
 
 // The management generator intentionally emits resource DELETE operations without final results.
-// The custom DELETE methods retain the previously shipped generic ArmOperation<TResource> surface.
+// The custom DELETE methods restore the shipped generic operation and use this resource instance as its result.
 
 #nullable disable
 
@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.Authorization
                 RequestUriBuilder uri = message.Request.Uri;
                 RehydrationToken rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Delete, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
                 AuthorizationArmOperation<RoleAssignmentResource> operation = new AuthorizationArmOperation<RoleAssignmentResource>(
-                    Response.FromValue(CreateDeleteResult(response), response),
+                    Response.FromValue(this, response),
                     rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
                 {
@@ -113,7 +113,7 @@ namespace Azure.ResourceManager.Authorization
                 RequestUriBuilder uri = message.Request.Uri;
                 RehydrationToken rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Delete, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
                 AuthorizationArmOperation<RoleAssignmentResource> operation = new AuthorizationArmOperation<RoleAssignmentResource>(
-                    Response.FromValue(CreateDeleteResult(response), response),
+                    Response.FromValue(this, response),
                     rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
                 {
@@ -126,19 +126,6 @@ namespace Azure.ResourceManager.Authorization
                 scope.Failed(e);
                 throw;
             }
-        }
-
-        private RoleAssignmentResource CreateDeleteResult(Response response)
-        {
-            // A successful DELETE can return the deleted resource or an empty 204 response. Preserve
-            // returned data when present; otherwise return an identity-only resource without fabricating data.
-            if (response.Content?.ToMemory().Length > 0)
-            {
-                RoleAssignmentData data = RoleAssignmentData.FromResponse(response);
-                return new RoleAssignmentResource(Client, data);
-            }
-
-            return new RoleAssignmentResource(Client, Id);
         }
     }
 }
