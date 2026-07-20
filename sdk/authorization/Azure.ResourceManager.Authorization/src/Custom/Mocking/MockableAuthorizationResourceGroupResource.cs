@@ -11,17 +11,13 @@ using System.ComponentModel;
 using System.Threading;
 using Azure;
 using Azure.Core;
+using Azure.ResourceManager.Authorization;
 using Azure.ResourceManager.Authorization.Models;
 
 namespace Azure.ResourceManager.Authorization.Mocking
 {
     public partial class MockableAuthorizationResourceGroupResource
     {
-        private MockableAuthorizationArmClient GetMockableAuthorizationArmClient()
-        {
-            return GetCachedClient(client => new MockableAuthorizationArmClient(client, ResourceIdentifier.Root));
-        }
-
         // The generated ArmClient method rejects empty route segments that the GA ResourceGroupResource method accepted.
         // The direct generated pageable wrappers below preserve those legacy inputs without duplicating REST handling.
 
@@ -77,7 +73,7 @@ namespace Azure.ResourceManager.Authorization.Mocking
                     "MockableAuthorizationResourceGroupResource.GetAzurePermissionsForResources");
             }
 
-            return GetMockableAuthorizationArmClient().GetAzurePermissionsForResourceAsync(
+            return Client.GetAzurePermissionsForResourceAsync(
                 Id,
                 Id.ResourceGroupName,
                 resourceProviderNamespace,
@@ -140,7 +136,7 @@ namespace Azure.ResourceManager.Authorization.Mocking
                     "MockableAuthorizationResourceGroupResource.GetAzurePermissionsForResources");
             }
 
-            return GetMockableAuthorizationArmClient().GetAzurePermissionsForResource(
+            return Client.GetAzurePermissionsForResource(
                 Id,
                 Id.ResourceGroupName,
                 resourceProviderNamespace,
