@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.Authorization.Models
 
         /// <summary> Initializes a new instance of <see cref="AccessReviewDecisionResourceTarget"/>. </summary>
         /// <param name="type"> The type of resource. </param>
-        internal AccessReviewDecisionResourceTarget(DecisionResourceType @type)
+        internal AccessReviewDecisionResourceTarget(AccessReviewDecisionResourceType @type)
         {
             Type = @type;
         }
@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.Authorization.Models
         /// <param name="id"> The id of resource associated with a decision record. </param>
         /// <param name="displayName"> The display name of resource associated with a decision record. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal AccessReviewDecisionResourceTarget(DecisionResourceType @type, string id, string displayName, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal AccessReviewDecisionResourceTarget(AccessReviewDecisionResourceType @type, string id, string displayName, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Type = @type;
             Id = id;
@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.Authorization.Models
 
         /// <summary> The type of resource. </summary>
         [WirePath("type")]
-        public DecisionResourceType Type { get; }
+        public AccessReviewDecisionResourceType Type { get; }
 
         /// <summary> The id of resource associated with a decision record. </summary>
         [WirePath("id")]

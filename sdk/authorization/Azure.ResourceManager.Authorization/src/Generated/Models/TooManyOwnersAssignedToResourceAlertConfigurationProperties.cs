@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.Authorization.Models
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="thresholdNumberOfOwners"> The threshold number of owners. </param>
         /// <param name="thresholdPercentageOfOwnersOutOfAllRoleMembers"> The threshold percentage of owners out of all role members. </param>
-        internal TooManyOwnersAssignedToResourceAlertConfigurationProperties(string alertDefinitionId, string scope, bool? isEnabled, string alertConfigurationType, AlertDefinitionData alertDefinition, IDictionary<string, BinaryData> additionalBinaryDataProperties, int? thresholdNumberOfOwners, int? thresholdPercentageOfOwnersOutOfAllRoleMembers) : base(alertDefinitionId, scope, isEnabled, alertConfigurationType, alertDefinition, additionalBinaryDataProperties)
+        internal TooManyOwnersAssignedToResourceAlertConfigurationProperties(string alertDefinitionId, string scope, bool? isEnabled, string alertConfigurationType, RoleManagementAlertDefinitionData alertDefinition, IDictionary<string, BinaryData> additionalBinaryDataProperties, int? thresholdNumberOfOwners, int? thresholdPercentageOfOwnersOutOfAllRoleMembers) : base(alertDefinitionId, scope, isEnabled, alertConfigurationType, alertDefinition, additionalBinaryDataProperties)
         {
             ThresholdNumberOfOwners = thresholdNumberOfOwners;
             ThresholdPercentageOfOwnersOutOfAllRoleMembers = thresholdPercentageOfOwnersOutOfAllRoleMembers;

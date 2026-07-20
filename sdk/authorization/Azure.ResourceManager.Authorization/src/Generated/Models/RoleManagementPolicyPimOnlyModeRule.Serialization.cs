@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.Authorization.Models
             RoleManagementPolicyRuleType ruleType = default;
             RoleManagementPolicyRuleTarget target = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
-            PIMOnlyModeSettings pimOnlyModeSettings = default;
+            PimOnlyModeSettings pimOnlyModeSettings = default;
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("id"u8))
@@ -139,7 +139,7 @@ namespace Azure.ResourceManager.Authorization.Models
                     {
                         continue;
                     }
-                    pimOnlyModeSettings = PIMOnlyModeSettings.DeserializePIMOnlyModeSettings(prop.Value, options);
+                    pimOnlyModeSettings = PimOnlyModeSettings.DeserializePimOnlyModeSettings(prop.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

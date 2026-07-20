@@ -25,13 +25,13 @@ namespace Azure.ResourceManager.Authorization.Models
         /// <param name="target"> The target of the current rule. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="pimOnlyModeSettings"> The PIM Only Mode settings. </param>
-        internal RoleManagementPolicyPimOnlyModeRule(string id, RoleManagementPolicyRuleType ruleType, RoleManagementPolicyRuleTarget target, IDictionary<string, BinaryData> additionalBinaryDataProperties, PIMOnlyModeSettings pimOnlyModeSettings) : base(id, ruleType, target, additionalBinaryDataProperties)
+        internal RoleManagementPolicyPimOnlyModeRule(string id, RoleManagementPolicyRuleType ruleType, RoleManagementPolicyRuleTarget target, IDictionary<string, BinaryData> additionalBinaryDataProperties, PimOnlyModeSettings pimOnlyModeSettings) : base(id, ruleType, target, additionalBinaryDataProperties)
         {
             PimOnlyModeSettings = pimOnlyModeSettings;
         }
 
         /// <summary> The PIM Only Mode settings. </summary>
         [WirePath("pimOnlyModeSettings")]
-        public PIMOnlyModeSettings PimOnlyModeSettings { get; set; }
+        public PimOnlyModeSettings PimOnlyModeSettings { get; set; }
     }
 }

@@ -14,7 +14,7 @@ using Azure.ResourceManager.Authorization.Models;
 
 namespace Azure.ResourceManager.Authorization
 {
-    internal partial class AlertConfigurationsGetForScopeCollectionResultOfT : Pageable<AlertConfigurationData>
+    internal partial class AlertConfigurationsGetForScopeCollectionResultOfT : Pageable<RoleManagementAlertConfigurationData>
     {
         private readonly AlertConfigurations _client;
         private readonly string _scope;
@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.Authorization
         /// <param name="continuationToken"> A continuation token indicating where to resume paging. </param>
         /// <param name="pageSizeHint"> The number of items per page. </param>
         /// <returns> The pages of AlertConfigurationsGetForScopeCollectionResultOfT as an enumerable collection. </returns>
-        public override IEnumerable<Page<AlertConfigurationData>> AsPages(string continuationToken, int? pageSizeHint)
+        public override IEnumerable<Page<RoleManagementAlertConfigurationData>> AsPages(string continuationToken, int? pageSizeHint)
         {
             Uri nextPage = continuationToken != null ? new Uri(continuationToken) : null;
             while (true)
@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.Authorization
                 }
                 AlertConfigurationListResult result = AlertConfigurationListResult.FromResponse(response);
                 nextPage = result.NextLink;
-                yield return Page<AlertConfigurationData>.FromValues((IReadOnlyList<AlertConfigurationData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
+                yield return Page<RoleManagementAlertConfigurationData>.FromValues((IReadOnlyList<RoleManagementAlertConfigurationData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 if (nextPage == null)
                 {
                     yield break;

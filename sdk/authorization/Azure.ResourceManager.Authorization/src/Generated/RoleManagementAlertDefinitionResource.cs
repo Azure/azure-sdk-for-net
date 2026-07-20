@@ -17,40 +17,40 @@ using Azure.ResourceManager;
 namespace Azure.ResourceManager.Authorization
 {
     /// <summary>
-    /// A class representing a AlertDefinition along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="AlertDefinitionResource"/> from an instance of <see cref="ArmClient"/> using the GetResource method.
-    /// Otherwise you can get one from its parent resource <see cref="ArmResource"/> using the GetAlertDefinitions method.
+    /// A class representing a RoleManagementAlertDefinition along with the instance operations that can be performed on it.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="RoleManagementAlertDefinitionResource"/> from an instance of <see cref="ArmClient"/> using the GetResource method.
+    /// Otherwise you can get one from its parent resource <see cref="ArmResource"/> using the GetRoleManagementAlertDefinitions method.
     /// </summary>
-    public partial class AlertDefinitionResource : ArmResource
+    public partial class RoleManagementAlertDefinitionResource : ArmResource
     {
         private readonly ClientDiagnostics _alertDefinitionsClientDiagnostics;
         private readonly AlertDefinitions _alertDefinitionsRestClient;
-        private readonly AlertDefinitionData _data;
+        private readonly RoleManagementAlertDefinitionData _data;
         /// <summary> Gets the resource type for the operations. </summary>
         public static readonly ResourceType ResourceType = "Microsoft.Authorization/roleManagementAlertDefinitions";
 
-        /// <summary> Initializes a new instance of AlertDefinitionResource for mocking. </summary>
-        protected AlertDefinitionResource()
+        /// <summary> Initializes a new instance of RoleManagementAlertDefinitionResource for mocking. </summary>
+        protected RoleManagementAlertDefinitionResource()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="AlertDefinitionResource"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="RoleManagementAlertDefinitionResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
-        internal AlertDefinitionResource(ArmClient client, AlertDefinitionData data) : this(client, data.Id)
+        internal RoleManagementAlertDefinitionResource(ArmClient client, RoleManagementAlertDefinitionData data) : this(client, data.Id)
         {
             HasData = true;
             _data = data;
         }
 
-        /// <summary> Initializes a new instance of <see cref="AlertDefinitionResource"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="RoleManagementAlertDefinitionResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
-        internal AlertDefinitionResource(ArmClient client, ResourceIdentifier id) : base(client, id)
+        internal RoleManagementAlertDefinitionResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            TryGetApiVersion(ResourceType, out string alertDefinitionApiVersion);
+            TryGetApiVersion(ResourceType, out string roleManagementAlertDefinitionApiVersion);
             _alertDefinitionsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Authorization", ResourceType.Namespace, Diagnostics);
-            _alertDefinitionsRestClient = new AlertDefinitions(_alertDefinitionsClientDiagnostics, Pipeline, Endpoint, alertDefinitionApiVersion ?? "2022-08-01-preview");
+            _alertDefinitionsRestClient = new AlertDefinitions(_alertDefinitionsClientDiagnostics, Pipeline, Endpoint, roleManagementAlertDefinitionApiVersion ?? "2022-08-01-preview");
             ValidateResourceId(id);
         }
 
@@ -58,7 +58,7 @@ namespace Azure.ResourceManager.Authorization
         public virtual bool HasData { get; }
 
         /// <summary> Gets the data representing this Feature. </summary>
-        public virtual AlertDefinitionData Data
+        public virtual RoleManagementAlertDefinitionData Data
         {
             get
             {
@@ -106,14 +106,14 @@ namespace Azure.ResourceManager.Authorization
         /// </item>
         /// <item>
         /// <term> Resource. </term>
-        /// <description> <see cref="AlertDefinitionResource"/>. </description>
+        /// <description> <see cref="RoleManagementAlertDefinitionResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<AlertDefinitionResource>> GetAsync(CancellationToken cancellationToken = default)
+        public virtual async Task<Response<RoleManagementAlertDefinitionResource>> GetAsync(CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _alertDefinitionsClientDiagnostics.CreateScope("AlertDefinitionResource.Get");
+            using DiagnosticScope scope = _alertDefinitionsClientDiagnostics.CreateScope("RoleManagementAlertDefinitionResource.Get");
             scope.Start();
             try
             {
@@ -123,12 +123,12 @@ namespace Azure.ResourceManager.Authorization
                 };
                 HttpMessage message = _alertDefinitionsRestClient.CreateGetRequest(Id.Parent.ToString(), Id.Name, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                Response<AlertDefinitionData> response = Response.FromValue(AlertDefinitionData.FromResponse(result), result);
+                Response<RoleManagementAlertDefinitionData> response = Response.FromValue(RoleManagementAlertDefinitionData.FromResponse(result), result);
                 if (response.Value == null)
                 {
                     throw new RequestFailedException(response.GetRawResponse());
                 }
-                return Response.FromValue(new AlertDefinitionResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new RoleManagementAlertDefinitionResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -154,14 +154,14 @@ namespace Azure.ResourceManager.Authorization
         /// </item>
         /// <item>
         /// <term> Resource. </term>
-        /// <description> <see cref="AlertDefinitionResource"/>. </description>
+        /// <description> <see cref="RoleManagementAlertDefinitionResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<AlertDefinitionResource> Get(CancellationToken cancellationToken = default)
+        public virtual Response<RoleManagementAlertDefinitionResource> Get(CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _alertDefinitionsClientDiagnostics.CreateScope("AlertDefinitionResource.Get");
+            using DiagnosticScope scope = _alertDefinitionsClientDiagnostics.CreateScope("RoleManagementAlertDefinitionResource.Get");
             scope.Start();
             try
             {
@@ -171,12 +171,12 @@ namespace Azure.ResourceManager.Authorization
                 };
                 HttpMessage message = _alertDefinitionsRestClient.CreateGetRequest(Id.Parent.ToString(), Id.Name, context);
                 Response result = Pipeline.ProcessMessage(message, context);
-                Response<AlertDefinitionData> response = Response.FromValue(AlertDefinitionData.FromResponse(result), result);
+                Response<RoleManagementAlertDefinitionData> response = Response.FromValue(RoleManagementAlertDefinitionData.FromResponse(result), result);
                 if (response.Value == null)
                 {
                     throw new RequestFailedException(response.GetRawResponse());
                 }
-                return Response.FromValue(new AlertDefinitionResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new RoleManagementAlertDefinitionResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {

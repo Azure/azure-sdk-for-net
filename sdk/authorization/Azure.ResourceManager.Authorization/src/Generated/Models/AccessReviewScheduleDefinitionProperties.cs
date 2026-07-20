@@ -140,11 +140,11 @@ namespace Azure.ResourceManager.Authorization.Models
 
         /// <summary> Flag to indicate whether sending mails to reviewers and the review creator is enabled. </summary>
         [WirePath("settings.mailNotificationsEnabled")]
-        public bool? MailNotificationsEnabled
+        public bool? IsMailNotificationsEnabled
         {
             get
             {
-                return Settings is null ? default : Settings.MailNotificationsEnabled;
+                return Settings is null ? default : Settings.IsMailNotificationsEnabled;
             }
             set
             {
@@ -152,17 +152,17 @@ namespace Azure.ResourceManager.Authorization.Models
                 {
                     Settings = new AccessReviewScheduleSettings();
                 }
-                Settings.MailNotificationsEnabled = value;
+                Settings.IsMailNotificationsEnabled = value;
             }
         }
 
         /// <summary> Flag to indicate whether sending reminder emails to reviewers are enabled. </summary>
         [WirePath("settings.reminderNotificationsEnabled")]
-        public bool? ReminderNotificationsEnabled
+        public bool? IsReminderNotificationsEnabled
         {
             get
             {
-                return Settings is null ? default : Settings.ReminderNotificationsEnabled;
+                return Settings is null ? default : Settings.IsReminderNotificationsEnabled;
             }
             set
             {
@@ -170,17 +170,17 @@ namespace Azure.ResourceManager.Authorization.Models
                 {
                     Settings = new AccessReviewScheduleSettings();
                 }
-                Settings.ReminderNotificationsEnabled = value;
+                Settings.IsReminderNotificationsEnabled = value;
             }
         }
 
         /// <summary> Flag to indicate whether reviewers are required to provide a justification when reviewing access. </summary>
         [WirePath("settings.defaultDecisionEnabled")]
-        public bool? DefaultDecisionEnabled
+        public bool? IsDefaultDecisionEnabled
         {
             get
             {
-                return Settings is null ? default : Settings.DefaultDecisionEnabled;
+                return Settings is null ? default : Settings.IsDefaultDecisionEnabled;
             }
             set
             {
@@ -188,17 +188,17 @@ namespace Azure.ResourceManager.Authorization.Models
                 {
                     Settings = new AccessReviewScheduleSettings();
                 }
-                Settings.DefaultDecisionEnabled = value;
+                Settings.IsDefaultDecisionEnabled = value;
             }
         }
 
         /// <summary> Flag to indicate whether the reviewer is required to pass justification when recording a decision. </summary>
         [WirePath("settings.justificationRequiredOnApproval")]
-        public bool? JustificationRequiredOnApproval
+        public bool? IsJustificationRequiredOnApproval
         {
             get
             {
-                return Settings is null ? default : Settings.JustificationRequiredOnApproval;
+                return Settings is null ? default : Settings.IsJustificationRequiredOnApproval;
             }
             set
             {
@@ -206,13 +206,13 @@ namespace Azure.ResourceManager.Authorization.Models
                 {
                     Settings = new AccessReviewScheduleSettings();
                 }
-                Settings.JustificationRequiredOnApproval = value;
+                Settings.IsJustificationRequiredOnApproval = value;
             }
         }
 
         /// <summary> This specifies the behavior for the autoReview feature when an access review completes. </summary>
         [WirePath("settings.defaultDecision")]
-        public DefaultDecisionType? DefaultDecision
+        public AccessReviewDefaultDecisionType? DefaultDecision
         {
             get
             {
@@ -230,11 +230,11 @@ namespace Azure.ResourceManager.Authorization.Models
 
         /// <summary> Flag to indicate whether auto-apply capability, to automatically change the target object access resource, is enabled. If not enabled, a user must, after the review completes, apply the access review. </summary>
         [WirePath("settings.autoApplyDecisionsEnabled")]
-        public bool? AutoApplyDecisionsEnabled
+        public bool? IsAutoApplyDecisionsEnabled
         {
             get
             {
-                return Settings is null ? default : Settings.AutoApplyDecisionsEnabled;
+                return Settings is null ? default : Settings.IsAutoApplyDecisionsEnabled;
             }
             set
             {
@@ -242,17 +242,17 @@ namespace Azure.ResourceManager.Authorization.Models
                 {
                     Settings = new AccessReviewScheduleSettings();
                 }
-                Settings.AutoApplyDecisionsEnabled = value;
+                Settings.IsAutoApplyDecisionsEnabled = value;
             }
         }
 
         /// <summary> Flag to indicate whether showing recommendations to reviewers is enabled. </summary>
         [WirePath("settings.recommendationsEnabled")]
-        public bool? RecommendationsEnabled
+        public bool? IsRecommendationsEnabled
         {
             get
             {
-                return Settings is null ? default : Settings.RecommendationsEnabled;
+                return Settings is null ? default : Settings.IsRecommendationsEnabled;
             }
             set
             {
@@ -260,7 +260,7 @@ namespace Azure.ResourceManager.Authorization.Models
                 {
                     Settings = new AccessReviewScheduleSettings();
                 }
-                Settings.RecommendationsEnabled = value;
+                Settings.IsRecommendationsEnabled = value;
             }
         }
 

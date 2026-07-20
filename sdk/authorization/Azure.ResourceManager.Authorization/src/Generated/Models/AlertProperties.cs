@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.Authorization.Models
         /// <summary> Initializes a new instance of <see cref="AlertProperties"/>. </summary>
         public AlertProperties()
         {
-            AlertIncidents = new ChangeTrackingList<AlertIncidentData>();
+            AlertIncidents = new ChangeTrackingList<RoleManagementAlertIncidentData>();
         }
 
         /// <summary> Initializes a new instance of <see cref="AlertProperties"/>. </summary>
@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.Authorization.Models
         /// <param name="alertIncidents"> The alert incidents. </param>
         /// <param name="alertConfiguration"> The alert configuration. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal AlertProperties(string scope, bool? isActive, int? incidentCount, DateTimeOffset? lastModifiedOn, DateTimeOffset? lastScannedOn, AlertDefinitionData alertDefinition, IReadOnlyList<AlertIncidentData> alertIncidents, AlertConfigurationData alertConfiguration, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal AlertProperties(string scope, bool? isActive, int? incidentCount, DateTimeOffset? lastModifiedOn, DateTimeOffset? lastScannedOn, RoleManagementAlertDefinitionData alertDefinition, IReadOnlyList<RoleManagementAlertIncidentData> alertIncidents, RoleManagementAlertConfigurationData alertConfiguration, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Scope = scope;
             IsActive = isActive;
@@ -68,14 +68,14 @@ namespace Azure.ResourceManager.Authorization.Models
 
         /// <summary> The alert definition. </summary>
         [WirePath("alertDefinition")]
-        public AlertDefinitionData AlertDefinition { get; }
+        public RoleManagementAlertDefinitionData AlertDefinition { get; }
 
         /// <summary> The alert incidents. </summary>
         [WirePath("alertIncidents")]
-        public IReadOnlyList<AlertIncidentData> AlertIncidents { get; } = new ChangeTrackingList<AlertIncidentData>();
+        public IReadOnlyList<RoleManagementAlertIncidentData> AlertIncidents { get; } = new ChangeTrackingList<RoleManagementAlertIncidentData>();
 
         /// <summary> The alert configuration. </summary>
         [WirePath("alertConfiguration")]
-        public AlertConfigurationData AlertConfiguration { get; }
+        public RoleManagementAlertConfigurationData AlertConfiguration { get; }
     }
 }

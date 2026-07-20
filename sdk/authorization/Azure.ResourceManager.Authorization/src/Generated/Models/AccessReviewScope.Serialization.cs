@@ -99,20 +99,20 @@ namespace Azure.ResourceManager.Authorization.Models
                 writer.WritePropertyName("inactiveDuration"u8);
                 writer.WriteStringValue(InactiveDuration.Value, "P");
             }
-            if (Optional.IsDefined(ExpandNestedMemberships))
+            if (Optional.IsDefined(IsExpandNestedMemberships))
             {
                 writer.WritePropertyName("expandNestedMemberships"u8);
-                writer.WriteBooleanValue(ExpandNestedMemberships.Value);
+                writer.WriteBooleanValue(IsExpandNestedMemberships.Value);
             }
-            if (Optional.IsDefined(IncludeInheritedAccess))
+            if (Optional.IsDefined(IsIncludeInheritedAccess))
             {
                 writer.WritePropertyName("includeInheritedAccess"u8);
-                writer.WriteBooleanValue(IncludeInheritedAccess.Value);
+                writer.WriteBooleanValue(IsIncludeInheritedAccess.Value);
             }
-            if (Optional.IsDefined(IncludeAccessBelowResource))
+            if (Optional.IsDefined(IsIncludeAccessBelowResource))
             {
                 writer.WritePropertyName("includeAccessBelowResource"u8);
-                writer.WriteBooleanValue(IncludeAccessBelowResource.Value);
+                writer.WriteBooleanValue(IsIncludeAccessBelowResource.Value);
             }
             if (Optional.IsDefined(ExcludeResourceId))
             {
@@ -171,9 +171,9 @@ namespace Azure.ResourceManager.Authorization.Models
             AccessReviewScopePrincipalType? principalType = default;
             AccessReviewScopeAssignmentState? assignmentState = default;
             TimeSpan? inactiveDuration = default;
-            bool? expandNestedMemberships = default;
-            bool? includeInheritedAccess = default;
-            bool? includeAccessBelowResource = default;
+            bool? isExpandNestedMemberships = default;
+            bool? isIncludeInheritedAccess = default;
+            bool? isIncludeAccessBelowResource = default;
             string excludeResourceId = default;
             string excludeRoleDefinitionId = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
@@ -222,7 +222,7 @@ namespace Azure.ResourceManager.Authorization.Models
                     {
                         continue;
                     }
-                    expandNestedMemberships = prop.Value.GetBoolean();
+                    isExpandNestedMemberships = prop.Value.GetBoolean();
                     continue;
                 }
                 if (prop.NameEquals("includeInheritedAccess"u8))
@@ -231,7 +231,7 @@ namespace Azure.ResourceManager.Authorization.Models
                     {
                         continue;
                     }
-                    includeInheritedAccess = prop.Value.GetBoolean();
+                    isIncludeInheritedAccess = prop.Value.GetBoolean();
                     continue;
                 }
                 if (prop.NameEquals("includeAccessBelowResource"u8))
@@ -240,7 +240,7 @@ namespace Azure.ResourceManager.Authorization.Models
                     {
                         continue;
                     }
-                    includeAccessBelowResource = prop.Value.GetBoolean();
+                    isIncludeAccessBelowResource = prop.Value.GetBoolean();
                     continue;
                 }
                 if (prop.NameEquals("excludeResourceId"u8))
@@ -264,9 +264,9 @@ namespace Azure.ResourceManager.Authorization.Models
                 principalType,
                 assignmentState,
                 inactiveDuration,
-                expandNestedMemberships,
-                includeInheritedAccess,
-                includeAccessBelowResource,
+                isExpandNestedMemberships,
+                isIncludeInheritedAccess,
+                isIncludeAccessBelowResource,
                 excludeResourceId,
                 excludeRoleDefinitionId,
                 additionalBinaryDataProperties);

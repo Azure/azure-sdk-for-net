@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.Authorization.Models
 
         /// <summary> Initializes a new instance of <see cref="AlertIncidentListResult"/>. </summary>
         /// <param name="value"> The AlertIncident items on this page. </param>
-        internal AlertIncidentListResult(IEnumerable<AlertIncidentData> value)
+        internal AlertIncidentListResult(IEnumerable<RoleManagementAlertIncidentData> value)
         {
             Value = value.ToList();
         }
@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.Authorization.Models
         /// <param name="value"> The AlertIncident items on this page. </param>
         /// <param name="nextLink"> The link to the next page of items. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal AlertIncidentListResult(IList<AlertIncidentData> value, Uri nextLink, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal AlertIncidentListResult(IList<RoleManagementAlertIncidentData> value, Uri nextLink, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Value = value;
             NextLink = nextLink;
@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.Authorization.Models
 
         /// <summary> The AlertIncident items on this page. </summary>
         [WirePath("value")]
-        public IList<AlertIncidentData> Value { get; }
+        public IList<RoleManagementAlertIncidentData> Value { get; }
 
         /// <summary> The link to the next page of items. </summary>
         [WirePath("nextLink")]

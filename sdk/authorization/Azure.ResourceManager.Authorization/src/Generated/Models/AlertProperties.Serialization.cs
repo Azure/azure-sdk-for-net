@@ -108,7 +108,7 @@ namespace Azure.ResourceManager.Authorization.Models
             {
                 writer.WritePropertyName("alertIncidents"u8);
                 writer.WriteStartArray();
-                foreach (AlertIncidentData item in AlertIncidents)
+                foreach (RoleManagementAlertIncidentData item in AlertIncidents)
                 {
                     writer.WriteObjectValue(item, options);
                 }
@@ -166,9 +166,9 @@ namespace Azure.ResourceManager.Authorization.Models
             int? incidentCount = default;
             DateTimeOffset? lastModifiedOn = default;
             DateTimeOffset? lastScannedOn = default;
-            AlertDefinitionData alertDefinition = default;
-            IReadOnlyList<AlertIncidentData> alertIncidents = default;
-            AlertConfigurationData alertConfiguration = default;
+            RoleManagementAlertDefinitionData alertDefinition = default;
+            IReadOnlyList<RoleManagementAlertIncidentData> alertIncidents = default;
+            RoleManagementAlertConfigurationData alertConfiguration = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -219,7 +219,7 @@ namespace Azure.ResourceManager.Authorization.Models
                     {
                         continue;
                     }
-                    alertDefinition = AlertDefinitionData.DeserializeAlertDefinitionData(prop.Value, options);
+                    alertDefinition = RoleManagementAlertDefinitionData.DeserializeRoleManagementAlertDefinitionData(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("alertIncidents"u8))
@@ -228,10 +228,10 @@ namespace Azure.ResourceManager.Authorization.Models
                     {
                         continue;
                     }
-                    List<AlertIncidentData> array = new List<AlertIncidentData>();
+                    List<RoleManagementAlertIncidentData> array = new List<RoleManagementAlertIncidentData>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(AlertIncidentData.DeserializeAlertIncidentData(item, options));
+                        array.Add(RoleManagementAlertIncidentData.DeserializeRoleManagementAlertIncidentData(item, options));
                     }
                     alertIncidents = array;
                     continue;
@@ -242,7 +242,7 @@ namespace Azure.ResourceManager.Authorization.Models
                     {
                         continue;
                     }
-                    alertConfiguration = AlertConfigurationData.DeserializeAlertConfigurationData(prop.Value, options);
+                    alertConfiguration = RoleManagementAlertConfigurationData.DeserializeRoleManagementAlertConfigurationData(prop.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
@@ -257,7 +257,7 @@ namespace Azure.ResourceManager.Authorization.Models
                 lastModifiedOn,
                 lastScannedOn,
                 alertDefinition,
-                alertIncidents ?? new ChangeTrackingList<AlertIncidentData>(),
+                alertIncidents ?? new ChangeTrackingList<RoleManagementAlertIncidentData>(),
                 alertConfiguration,
                 additionalBinaryDataProperties);
         }

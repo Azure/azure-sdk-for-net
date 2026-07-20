@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.Authorization.Models
             }
             writer.WritePropertyName("value"u8);
             writer.WriteStartArray();
-            foreach (AlertIncidentData item in Value)
+            foreach (RoleManagementAlertIncidentData item in Value)
             {
                 writer.WriteObjectValue(item, options);
             }
@@ -141,17 +141,17 @@ namespace Azure.ResourceManager.Authorization.Models
             {
                 return null;
             }
-            IList<AlertIncidentData> value = default;
+            IList<RoleManagementAlertIncidentData> value = default;
             Uri nextLink = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("value"u8))
                 {
-                    List<AlertIncidentData> array = new List<AlertIncidentData>();
+                    List<RoleManagementAlertIncidentData> array = new List<RoleManagementAlertIncidentData>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(AlertIncidentData.DeserializeAlertIncidentData(item, options));
+                        array.Add(RoleManagementAlertIncidentData.DeserializeRoleManagementAlertIncidentData(item, options));
                     }
                     value = array;
                     continue;

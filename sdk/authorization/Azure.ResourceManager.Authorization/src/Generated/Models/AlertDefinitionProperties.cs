@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.Authorization.Models
         /// <param name="isRemediatable"> True if the alert can be remediated; false, otherwise. </param>
         /// <param name="isConfigurable"> True if the alert configuration can be configured; false, otherwise. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal AlertDefinitionProperties(string displayName, string scope, string description, SeverityLevel? severityLevel, string securityImpact, string mitigationSteps, string howToPrevent, bool? isRemediatable, bool? isConfigurable, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal AlertDefinitionProperties(string displayName, string scope, string description, RoleManagementAlertSeverityLevel? severityLevel, string securityImpact, string mitigationSteps, string howToPrevent, bool? isRemediatable, bool? isConfigurable, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             DisplayName = displayName;
             Scope = scope;
@@ -61,7 +61,7 @@ namespace Azure.ResourceManager.Authorization.Models
 
         /// <summary> Severity level of the alert. </summary>
         [WirePath("severityLevel")]
-        public SeverityLevel? SeverityLevel { get; }
+        public RoleManagementAlertSeverityLevel? SeverityLevel { get; }
 
         /// <summary> Security impact of the alert. </summary>
         [WirePath("securityImpact")]

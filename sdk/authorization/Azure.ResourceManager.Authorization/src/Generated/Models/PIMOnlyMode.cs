@@ -12,7 +12,7 @@ using Azure.ResourceManager.Authorization;
 namespace Azure.ResourceManager.Authorization.Models
 {
     /// <summary> Determines whether the setting is enabled, disabled or report only. </summary>
-    public readonly partial struct PIMOnlyMode : IEquatable<PIMOnlyMode>
+    public readonly partial struct PimOnlyMode : IEquatable<PimOnlyMode>
     {
         private readonly string _value;
         /// <summary> Disabled. </summary>
@@ -22,10 +22,10 @@ namespace Azure.ResourceManager.Authorization.Models
         /// <summary> ReportOnly. </summary>
         private const string ReportOnlyValue = "ReportOnly";
 
-        /// <summary> Initializes a new instance of <see cref="PIMOnlyMode"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="PimOnlyMode"/>. </summary>
         /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        public PIMOnlyMode(string value)
+        public PimOnlyMode(string value)
         {
             Argument.AssertNotNull(value, nameof(value));
 
@@ -33,38 +33,38 @@ namespace Azure.ResourceManager.Authorization.Models
         }
 
         /// <summary> Disabled. </summary>
-        public static PIMOnlyMode Disabled { get; } = new PIMOnlyMode(DisabledValue);
+        public static PimOnlyMode Disabled { get; } = new PimOnlyMode(DisabledValue);
 
         /// <summary> Enabled. </summary>
-        public static PIMOnlyMode Enabled { get; } = new PIMOnlyMode(EnabledValue);
+        public static PimOnlyMode Enabled { get; } = new PimOnlyMode(EnabledValue);
 
         /// <summary> ReportOnly. </summary>
-        public static PIMOnlyMode ReportOnly { get; } = new PIMOnlyMode(ReportOnlyValue);
+        public static PimOnlyMode ReportOnly { get; } = new PimOnlyMode(ReportOnlyValue);
 
-        /// <summary> Determines if two <see cref="PIMOnlyMode"/> values are the same. </summary>
+        /// <summary> Determines if two <see cref="PimOnlyMode"/> values are the same. </summary>
         /// <param name="left"> The left value to compare. </param>
         /// <param name="right"> The right value to compare. </param>
-        public static bool operator ==(PIMOnlyMode left, PIMOnlyMode right) => left.Equals(right);
+        public static bool operator ==(PimOnlyMode left, PimOnlyMode right) => left.Equals(right);
 
-        /// <summary> Determines if two <see cref="PIMOnlyMode"/> values are not the same. </summary>
+        /// <summary> Determines if two <see cref="PimOnlyMode"/> values are not the same. </summary>
         /// <param name="left"> The left value to compare. </param>
         /// <param name="right"> The right value to compare. </param>
-        public static bool operator !=(PIMOnlyMode left, PIMOnlyMode right) => !left.Equals(right);
+        public static bool operator !=(PimOnlyMode left, PimOnlyMode right) => !left.Equals(right);
 
-        /// <summary> Converts a string to a <see cref="PIMOnlyMode"/>. </summary>
+        /// <summary> Converts a string to a <see cref="PimOnlyMode"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator PIMOnlyMode(string value) => new PIMOnlyMode(value);
+        public static implicit operator PimOnlyMode(string value) => new PimOnlyMode(value);
 
-        /// <summary> Converts a string to a <see cref="PIMOnlyMode"/>. </summary>
+        /// <summary> Converts a string to a <see cref="PimOnlyMode"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator PIMOnlyMode?(string value) => value == null ? null : new PIMOnlyMode(value);
+        public static implicit operator PimOnlyMode?(string value) => value == null ? null : new PimOnlyMode(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public override bool Equals(object obj) => obj is PIMOnlyMode other && Equals(other);
+        public override bool Equals(object obj) => obj is PimOnlyMode other && Equals(other);
 
         /// <inheritdoc/>
-        public bool Equals(PIMOnlyMode other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
+        public bool Equals(PimOnlyMode other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

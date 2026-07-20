@@ -133,7 +133,7 @@ namespace Azure.ResourceManager.Authorization.Models
             {
                 return null;
             }
-            DecisionResourceType @type = default;
+            AccessReviewDecisionResourceType @type = default;
             string id = default;
             string displayName = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
@@ -141,7 +141,7 @@ namespace Azure.ResourceManager.Authorization.Models
             {
                 if (prop.NameEquals("type"u8))
                 {
-                    @type = new DecisionResourceType(prop.Value.GetString());
+                    @type = new AccessReviewDecisionResourceType(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("id"u8))

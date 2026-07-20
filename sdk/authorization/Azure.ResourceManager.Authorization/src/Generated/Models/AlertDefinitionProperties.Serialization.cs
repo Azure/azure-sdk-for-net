@@ -164,7 +164,7 @@ namespace Azure.ResourceManager.Authorization.Models
             string displayName = default;
             string scope = default;
             string description = default;
-            SeverityLevel? severityLevel = default;
+            RoleManagementAlertSeverityLevel? severityLevel = default;
             string securityImpact = default;
             string mitigationSteps = default;
             string howToPrevent = default;
@@ -194,7 +194,7 @@ namespace Azure.ResourceManager.Authorization.Models
                     {
                         continue;
                     }
-                    severityLevel = new SeverityLevel(prop.Value.GetString());
+                    severityLevel = new RoleManagementAlertSeverityLevel(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("securityImpact"u8))

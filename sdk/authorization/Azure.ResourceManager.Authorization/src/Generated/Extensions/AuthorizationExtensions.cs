@@ -1237,46 +1237,46 @@ namespace Azure.ResourceManager.Authorization
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="AlertResource"/> along with the instance operations that can be performed on it but with no data.
+        /// Gets an object representing a <see cref="RoleManagementAlertResource"/> along with the instance operations that can be performed on it but with no data.
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableAuthorizationArmClient.GetAlertResource(ResourceIdentifier)"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockableAuthorizationArmClient.GetRoleManagementAlertResource(ResourceIdentifier)"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient"/> the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
-        /// <returns> Returns a <see cref="AlertResource"/> object. </returns>
-        public static AlertResource GetAlertResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="RoleManagementAlertResource"/> object. </returns>
+        public static RoleManagementAlertResource GetRoleManagementAlertResource(this ArmClient client, ResourceIdentifier id)
         {
             Argument.AssertNotNull(client, nameof(client));
 
-            return GetMockableAuthorizationArmClient(client).GetAlertResource(id);
+            return GetMockableAuthorizationArmClient(client).GetRoleManagementAlertResource(id);
         }
 
         /// <summary>
-        /// Gets a collection of <see cref="AlertCollection"/> objects within the specified scope.
+        /// Gets a collection of <see cref="RoleManagementAlertCollection"/> objects within the specified scope.
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableAuthorizationArmClient.GetAlerts(ResourceIdentifier)"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockableAuthorizationArmClient.GetRoleManagementAlerts(ResourceIdentifier)"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient"/> the method will execute against. </param>
         /// <param name="scope"> The scope of the resource collection to get. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
-        /// <returns> Returns a collection of <see cref="AlertResource"/> objects. </returns>
-        public static AlertCollection GetAlerts(this ArmClient client, ResourceIdentifier scope)
+        /// <returns> Returns a collection of <see cref="RoleManagementAlertResource"/> objects. </returns>
+        public static RoleManagementAlertCollection GetRoleManagementAlerts(this ArmClient client, ResourceIdentifier scope)
         {
             Argument.AssertNotNull(client, nameof(client));
 
-            return GetMockableAuthorizationArmClient(client).GetAlerts(scope);
+            return GetMockableAuthorizationArmClient(client).GetRoleManagementAlerts(scope);
         }
 
         /// <summary>
         /// Get the specified alert.
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableAuthorizationArmClient.GetAlert(ResourceIdentifier, string, CancellationToken)"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockableAuthorizationArmClient.GetRoleManagementAlert(ResourceIdentifier, string, CancellationToken)"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient"/> the method will execute against. </param>
@@ -1285,18 +1285,18 @@ namespace Azure.ResourceManager.Authorization
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
         [ForwardsClientCalls]
-        public static Response<AlertResource> GetAlert(this ArmClient client, ResourceIdentifier scope, string alertId, CancellationToken cancellationToken = default)
+        public static Response<RoleManagementAlertResource> GetRoleManagementAlert(this ArmClient client, ResourceIdentifier scope, string alertId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(client, nameof(client));
 
-            return GetMockableAuthorizationArmClient(client).GetAlert(scope, alertId, cancellationToken);
+            return GetMockableAuthorizationArmClient(client).GetRoleManagementAlert(scope, alertId, cancellationToken);
         }
 
         /// <summary>
         /// Get the specified alert.
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableAuthorizationArmClient.GetAlertAsync(ResourceIdentifier, string, CancellationToken)"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockableAuthorizationArmClient.GetRoleManagementAlertAsync(ResourceIdentifier, string, CancellationToken)"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient"/> the method will execute against. </param>
@@ -1305,54 +1305,54 @@ namespace Azure.ResourceManager.Authorization
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
         [ForwardsClientCalls]
-        public static async Task<Response<AlertResource>> GetAlertAsync(this ArmClient client, ResourceIdentifier scope, string alertId, CancellationToken cancellationToken = default)
+        public static async Task<Response<RoleManagementAlertResource>> GetRoleManagementAlertAsync(this ArmClient client, ResourceIdentifier scope, string alertId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(client, nameof(client));
 
-            return await GetMockableAuthorizationArmClient(client).GetAlertAsync(scope, alertId, cancellationToken).ConfigureAwait(false);
+            return await GetMockableAuthorizationArmClient(client).GetRoleManagementAlertAsync(scope, alertId, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="AlertConfigurationResource"/> along with the instance operations that can be performed on it but with no data.
+        /// Gets an object representing a <see cref="RoleManagementAlertConfigurationResource"/> along with the instance operations that can be performed on it but with no data.
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableAuthorizationArmClient.GetAlertConfigurationResource(ResourceIdentifier)"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockableAuthorizationArmClient.GetRoleManagementAlertConfigurationResource(ResourceIdentifier)"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient"/> the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
-        /// <returns> Returns a <see cref="AlertConfigurationResource"/> object. </returns>
-        public static AlertConfigurationResource GetAlertConfigurationResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="RoleManagementAlertConfigurationResource"/> object. </returns>
+        public static RoleManagementAlertConfigurationResource GetRoleManagementAlertConfigurationResource(this ArmClient client, ResourceIdentifier id)
         {
             Argument.AssertNotNull(client, nameof(client));
 
-            return GetMockableAuthorizationArmClient(client).GetAlertConfigurationResource(id);
+            return GetMockableAuthorizationArmClient(client).GetRoleManagementAlertConfigurationResource(id);
         }
 
         /// <summary>
-        /// Gets a collection of <see cref="AlertConfigurationCollection"/> objects within the specified scope.
+        /// Gets a collection of <see cref="RoleManagementAlertConfigurationCollection"/> objects within the specified scope.
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableAuthorizationArmClient.GetAlertConfigurations(ResourceIdentifier)"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockableAuthorizationArmClient.GetRoleManagementAlertConfigurations(ResourceIdentifier)"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient"/> the method will execute against. </param>
         /// <param name="scope"> The scope of the resource collection to get. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
-        /// <returns> Returns a collection of <see cref="AlertConfigurationResource"/> objects. </returns>
-        public static AlertConfigurationCollection GetAlertConfigurations(this ArmClient client, ResourceIdentifier scope)
+        /// <returns> Returns a collection of <see cref="RoleManagementAlertConfigurationResource"/> objects. </returns>
+        public static RoleManagementAlertConfigurationCollection GetRoleManagementAlertConfigurations(this ArmClient client, ResourceIdentifier scope)
         {
             Argument.AssertNotNull(client, nameof(client));
 
-            return GetMockableAuthorizationArmClient(client).GetAlertConfigurations(scope);
+            return GetMockableAuthorizationArmClient(client).GetRoleManagementAlertConfigurations(scope);
         }
 
         /// <summary>
         /// Get the specified alert configuration.
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableAuthorizationArmClient.GetAlertConfiguration(ResourceIdentifier, string, CancellationToken)"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockableAuthorizationArmClient.GetRoleManagementAlertConfiguration(ResourceIdentifier, string, CancellationToken)"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient"/> the method will execute against. </param>
@@ -1361,18 +1361,18 @@ namespace Azure.ResourceManager.Authorization
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
         [ForwardsClientCalls]
-        public static Response<AlertConfigurationResource> GetAlertConfiguration(this ArmClient client, ResourceIdentifier scope, string alertId, CancellationToken cancellationToken = default)
+        public static Response<RoleManagementAlertConfigurationResource> GetRoleManagementAlertConfiguration(this ArmClient client, ResourceIdentifier scope, string alertId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(client, nameof(client));
 
-            return GetMockableAuthorizationArmClient(client).GetAlertConfiguration(scope, alertId, cancellationToken);
+            return GetMockableAuthorizationArmClient(client).GetRoleManagementAlertConfiguration(scope, alertId, cancellationToken);
         }
 
         /// <summary>
         /// Get the specified alert configuration.
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableAuthorizationArmClient.GetAlertConfigurationAsync(ResourceIdentifier, string, CancellationToken)"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockableAuthorizationArmClient.GetRoleManagementAlertConfigurationAsync(ResourceIdentifier, string, CancellationToken)"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient"/> the method will execute against. </param>
@@ -1381,54 +1381,54 @@ namespace Azure.ResourceManager.Authorization
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
         [ForwardsClientCalls]
-        public static async Task<Response<AlertConfigurationResource>> GetAlertConfigurationAsync(this ArmClient client, ResourceIdentifier scope, string alertId, CancellationToken cancellationToken = default)
+        public static async Task<Response<RoleManagementAlertConfigurationResource>> GetRoleManagementAlertConfigurationAsync(this ArmClient client, ResourceIdentifier scope, string alertId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(client, nameof(client));
 
-            return await GetMockableAuthorizationArmClient(client).GetAlertConfigurationAsync(scope, alertId, cancellationToken).ConfigureAwait(false);
+            return await GetMockableAuthorizationArmClient(client).GetRoleManagementAlertConfigurationAsync(scope, alertId, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="AlertDefinitionResource"/> along with the instance operations that can be performed on it but with no data.
+        /// Gets an object representing a <see cref="RoleManagementAlertDefinitionResource"/> along with the instance operations that can be performed on it but with no data.
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableAuthorizationArmClient.GetAlertDefinitionResource(ResourceIdentifier)"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockableAuthorizationArmClient.GetRoleManagementAlertDefinitionResource(ResourceIdentifier)"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient"/> the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
-        /// <returns> Returns a <see cref="AlertDefinitionResource"/> object. </returns>
-        public static AlertDefinitionResource GetAlertDefinitionResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="RoleManagementAlertDefinitionResource"/> object. </returns>
+        public static RoleManagementAlertDefinitionResource GetRoleManagementAlertDefinitionResource(this ArmClient client, ResourceIdentifier id)
         {
             Argument.AssertNotNull(client, nameof(client));
 
-            return GetMockableAuthorizationArmClient(client).GetAlertDefinitionResource(id);
+            return GetMockableAuthorizationArmClient(client).GetRoleManagementAlertDefinitionResource(id);
         }
 
         /// <summary>
-        /// Gets a collection of <see cref="AlertDefinitionCollection"/> objects within the specified scope.
+        /// Gets a collection of <see cref="RoleManagementAlertDefinitionCollection"/> objects within the specified scope.
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableAuthorizationArmClient.GetAlertDefinitions(ResourceIdentifier)"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockableAuthorizationArmClient.GetRoleManagementAlertDefinitions(ResourceIdentifier)"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient"/> the method will execute against. </param>
         /// <param name="scope"> The scope of the resource collection to get. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
-        /// <returns> Returns a collection of <see cref="AlertDefinitionResource"/> objects. </returns>
-        public static AlertDefinitionCollection GetAlertDefinitions(this ArmClient client, ResourceIdentifier scope)
+        /// <returns> Returns a collection of <see cref="RoleManagementAlertDefinitionResource"/> objects. </returns>
+        public static RoleManagementAlertDefinitionCollection GetRoleManagementAlertDefinitions(this ArmClient client, ResourceIdentifier scope)
         {
             Argument.AssertNotNull(client, nameof(client));
 
-            return GetMockableAuthorizationArmClient(client).GetAlertDefinitions(scope);
+            return GetMockableAuthorizationArmClient(client).GetRoleManagementAlertDefinitions(scope);
         }
 
         /// <summary>
         /// Get the specified alert definition.
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableAuthorizationArmClient.GetAlertDefinition(ResourceIdentifier, string, CancellationToken)"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockableAuthorizationArmClient.GetRoleManagementAlertDefinition(ResourceIdentifier, string, CancellationToken)"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient"/> the method will execute against. </param>
@@ -1437,18 +1437,18 @@ namespace Azure.ResourceManager.Authorization
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
         [ForwardsClientCalls]
-        public static Response<AlertDefinitionResource> GetAlertDefinition(this ArmClient client, ResourceIdentifier scope, string alertDefinitionId, CancellationToken cancellationToken = default)
+        public static Response<RoleManagementAlertDefinitionResource> GetRoleManagementAlertDefinition(this ArmClient client, ResourceIdentifier scope, string alertDefinitionId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(client, nameof(client));
 
-            return GetMockableAuthorizationArmClient(client).GetAlertDefinition(scope, alertDefinitionId, cancellationToken);
+            return GetMockableAuthorizationArmClient(client).GetRoleManagementAlertDefinition(scope, alertDefinitionId, cancellationToken);
         }
 
         /// <summary>
         /// Get the specified alert definition.
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableAuthorizationArmClient.GetAlertDefinitionAsync(ResourceIdentifier, string, CancellationToken)"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockableAuthorizationArmClient.GetRoleManagementAlertDefinitionAsync(ResourceIdentifier, string, CancellationToken)"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient"/> the method will execute against. </param>
@@ -1457,54 +1457,54 @@ namespace Azure.ResourceManager.Authorization
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
         [ForwardsClientCalls]
-        public static async Task<Response<AlertDefinitionResource>> GetAlertDefinitionAsync(this ArmClient client, ResourceIdentifier scope, string alertDefinitionId, CancellationToken cancellationToken = default)
+        public static async Task<Response<RoleManagementAlertDefinitionResource>> GetRoleManagementAlertDefinitionAsync(this ArmClient client, ResourceIdentifier scope, string alertDefinitionId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(client, nameof(client));
 
-            return await GetMockableAuthorizationArmClient(client).GetAlertDefinitionAsync(scope, alertDefinitionId, cancellationToken).ConfigureAwait(false);
+            return await GetMockableAuthorizationArmClient(client).GetRoleManagementAlertDefinitionAsync(scope, alertDefinitionId, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="AlertIncidentResource"/> along with the instance operations that can be performed on it but with no data.
+        /// Gets an object representing a <see cref="RoleManagementAlertIncidentResource"/> along with the instance operations that can be performed on it but with no data.
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableAuthorizationArmClient.GetAlertIncidentResource(ResourceIdentifier)"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockableAuthorizationArmClient.GetRoleManagementAlertIncidentResource(ResourceIdentifier)"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient"/> the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
-        /// <returns> Returns a <see cref="AlertIncidentResource"/> object. </returns>
-        public static AlertIncidentResource GetAlertIncidentResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="RoleManagementAlertIncidentResource"/> object. </returns>
+        public static RoleManagementAlertIncidentResource GetRoleManagementAlertIncidentResource(this ArmClient client, ResourceIdentifier id)
         {
             Argument.AssertNotNull(client, nameof(client));
 
-            return GetMockableAuthorizationArmClient(client).GetAlertIncidentResource(id);
+            return GetMockableAuthorizationArmClient(client).GetRoleManagementAlertIncidentResource(id);
         }
 
         /// <summary>
-        /// Gets a collection of <see cref="AlertIncidentCollection"/> objects within the specified scope.
+        /// Gets a collection of <see cref="RoleManagementAlertIncidentCollection"/> objects within the specified scope.
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableAuthorizationArmClient.GetAlertIncidents(ResourceIdentifier)"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockableAuthorizationArmClient.GetRoleManagementAlertIncidents(ResourceIdentifier)"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient"/> the method will execute against. </param>
         /// <param name="scope"> The scope of the resource collection to get. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
-        /// <returns> Returns a collection of <see cref="AlertIncidentResource"/> objects. </returns>
-        public static AlertIncidentCollection GetAlertIncidents(this ArmClient client, ResourceIdentifier scope)
+        /// <returns> Returns a collection of <see cref="RoleManagementAlertIncidentResource"/> objects. </returns>
+        public static RoleManagementAlertIncidentCollection GetRoleManagementAlertIncidents(this ArmClient client, ResourceIdentifier scope)
         {
             Argument.AssertNotNull(client, nameof(client));
 
-            return GetMockableAuthorizationArmClient(client).GetAlertIncidents(scope);
+            return GetMockableAuthorizationArmClient(client).GetRoleManagementAlertIncidents(scope);
         }
 
         /// <summary>
         /// Get the specified alert incident.
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableAuthorizationArmClient.GetAlertIncident(ResourceIdentifier, string, CancellationToken)"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockableAuthorizationArmClient.GetRoleManagementAlertIncident(ResourceIdentifier, string, CancellationToken)"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient"/> the method will execute against. </param>
@@ -1513,18 +1513,18 @@ namespace Azure.ResourceManager.Authorization
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
         [ForwardsClientCalls]
-        public static Response<AlertIncidentResource> GetAlertIncident(this ArmClient client, ResourceIdentifier scope, string alertIncidentId, CancellationToken cancellationToken = default)
+        public static Response<RoleManagementAlertIncidentResource> GetRoleManagementAlertIncident(this ArmClient client, ResourceIdentifier scope, string alertIncidentId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(client, nameof(client));
 
-            return GetMockableAuthorizationArmClient(client).GetAlertIncident(scope, alertIncidentId, cancellationToken);
+            return GetMockableAuthorizationArmClient(client).GetRoleManagementAlertIncident(scope, alertIncidentId, cancellationToken);
         }
 
         /// <summary>
         /// Get the specified alert incident.
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableAuthorizationArmClient.GetAlertIncidentAsync(ResourceIdentifier, string, CancellationToken)"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockableAuthorizationArmClient.GetRoleManagementAlertIncidentAsync(ResourceIdentifier, string, CancellationToken)"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient"/> the method will execute against. </param>
@@ -1533,11 +1533,11 @@ namespace Azure.ResourceManager.Authorization
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
         [ForwardsClientCalls]
-        public static async Task<Response<AlertIncidentResource>> GetAlertIncidentAsync(this ArmClient client, ResourceIdentifier scope, string alertIncidentId, CancellationToken cancellationToken = default)
+        public static async Task<Response<RoleManagementAlertIncidentResource>> GetRoleManagementAlertIncidentAsync(this ArmClient client, ResourceIdentifier scope, string alertIncidentId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(client, nameof(client));
 
-            return await GetMockableAuthorizationArmClient(client).GetAlertIncidentAsync(scope, alertIncidentId, cancellationToken).ConfigureAwait(false);
+            return await GetMockableAuthorizationArmClient(client).GetRoleManagementAlertIncidentAsync(scope, alertIncidentId, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>

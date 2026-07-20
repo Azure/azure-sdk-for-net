@@ -763,21 +763,21 @@ namespace Azure.ResourceManager.Authorization.Mocking
             return await GetAuthorizationRoleDefinitions(scope).GetAsync(roleDefinitionId, cancellationToken).ConfigureAwait(false);
         }
 
-        /// <summary> Gets an object representing a <see cref="AlertResource"/> along with the instance operations that can be performed on it but with no data. </summary>
+        /// <summary> Gets an object representing a <see cref="RoleManagementAlertResource"/> along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="AlertResource"/> object. </returns>
-        public virtual AlertResource GetAlertResource(ResourceIdentifier id)
+        /// <returns> Returns a <see cref="RoleManagementAlertResource"/> object. </returns>
+        public virtual RoleManagementAlertResource GetRoleManagementAlertResource(ResourceIdentifier id)
         {
-            AlertResource.ValidateResourceId(id);
-            return new AlertResource(Client, id);
+            RoleManagementAlertResource.ValidateResourceId(id);
+            return new RoleManagementAlertResource(Client, id);
         }
 
-        /// <summary> Gets a collection of <see cref="AlertCollection"/> objects within the specified scope. </summary>
+        /// <summary> Gets a collection of <see cref="RoleManagementAlertCollection"/> objects within the specified scope. </summary>
         /// <param name="scope"> The scope of the resource collection to get. </param>
-        /// <returns> Returns a collection of <see cref="AlertResource"/> objects. </returns>
-        public virtual AlertCollection GetAlerts(ResourceIdentifier scope)
+        /// <returns> Returns a collection of <see cref="RoleManagementAlertResource"/> objects. </returns>
+        public virtual RoleManagementAlertCollection GetRoleManagementAlerts(ResourceIdentifier scope)
         {
-            return new AlertCollection(Client, scope);
+            return new RoleManagementAlertCollection(Client, scope);
         }
 
         /// <summary> Get the specified alert. </summary>
@@ -787,11 +787,11 @@ namespace Azure.ResourceManager.Authorization.Mocking
         /// <exception cref="ArgumentNullException"> <paramref name="alertId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="alertId"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual Response<AlertResource> GetAlert(ResourceIdentifier scope, string alertId, CancellationToken cancellationToken = default)
+        public virtual Response<RoleManagementAlertResource> GetRoleManagementAlert(ResourceIdentifier scope, string alertId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(alertId, nameof(alertId));
 
-            return GetAlerts(scope).Get(alertId, cancellationToken);
+            return GetRoleManagementAlerts(scope).Get(alertId, cancellationToken);
         }
 
         /// <summary> Get the specified alert. </summary>
@@ -801,28 +801,28 @@ namespace Azure.ResourceManager.Authorization.Mocking
         /// <exception cref="ArgumentNullException"> <paramref name="alertId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="alertId"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual async Task<Response<AlertResource>> GetAlertAsync(ResourceIdentifier scope, string alertId, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<RoleManagementAlertResource>> GetRoleManagementAlertAsync(ResourceIdentifier scope, string alertId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(alertId, nameof(alertId));
 
-            return await GetAlerts(scope).GetAsync(alertId, cancellationToken).ConfigureAwait(false);
+            return await GetRoleManagementAlerts(scope).GetAsync(alertId, cancellationToken).ConfigureAwait(false);
         }
 
-        /// <summary> Gets an object representing a <see cref="AlertConfigurationResource"/> along with the instance operations that can be performed on it but with no data. </summary>
+        /// <summary> Gets an object representing a <see cref="RoleManagementAlertConfigurationResource"/> along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="AlertConfigurationResource"/> object. </returns>
-        public virtual AlertConfigurationResource GetAlertConfigurationResource(ResourceIdentifier id)
+        /// <returns> Returns a <see cref="RoleManagementAlertConfigurationResource"/> object. </returns>
+        public virtual RoleManagementAlertConfigurationResource GetRoleManagementAlertConfigurationResource(ResourceIdentifier id)
         {
-            AlertConfigurationResource.ValidateResourceId(id);
-            return new AlertConfigurationResource(Client, id);
+            RoleManagementAlertConfigurationResource.ValidateResourceId(id);
+            return new RoleManagementAlertConfigurationResource(Client, id);
         }
 
-        /// <summary> Gets a collection of <see cref="AlertConfigurationCollection"/> objects within the specified scope. </summary>
+        /// <summary> Gets a collection of <see cref="RoleManagementAlertConfigurationCollection"/> objects within the specified scope. </summary>
         /// <param name="scope"> The scope of the resource collection to get. </param>
-        /// <returns> Returns a collection of <see cref="AlertConfigurationResource"/> objects. </returns>
-        public virtual AlertConfigurationCollection GetAlertConfigurations(ResourceIdentifier scope)
+        /// <returns> Returns a collection of <see cref="RoleManagementAlertConfigurationResource"/> objects. </returns>
+        public virtual RoleManagementAlertConfigurationCollection GetRoleManagementAlertConfigurations(ResourceIdentifier scope)
         {
-            return new AlertConfigurationCollection(Client, scope);
+            return new RoleManagementAlertConfigurationCollection(Client, scope);
         }
 
         /// <summary> Get the specified alert configuration. </summary>
@@ -832,11 +832,11 @@ namespace Azure.ResourceManager.Authorization.Mocking
         /// <exception cref="ArgumentNullException"> <paramref name="alertId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="alertId"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual Response<AlertConfigurationResource> GetAlertConfiguration(ResourceIdentifier scope, string alertId, CancellationToken cancellationToken = default)
+        public virtual Response<RoleManagementAlertConfigurationResource> GetRoleManagementAlertConfiguration(ResourceIdentifier scope, string alertId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(alertId, nameof(alertId));
 
-            return GetAlertConfigurations(scope).Get(alertId, cancellationToken);
+            return GetRoleManagementAlertConfigurations(scope).Get(alertId, cancellationToken);
         }
 
         /// <summary> Get the specified alert configuration. </summary>
@@ -846,28 +846,28 @@ namespace Azure.ResourceManager.Authorization.Mocking
         /// <exception cref="ArgumentNullException"> <paramref name="alertId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="alertId"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual async Task<Response<AlertConfigurationResource>> GetAlertConfigurationAsync(ResourceIdentifier scope, string alertId, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<RoleManagementAlertConfigurationResource>> GetRoleManagementAlertConfigurationAsync(ResourceIdentifier scope, string alertId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(alertId, nameof(alertId));
 
-            return await GetAlertConfigurations(scope).GetAsync(alertId, cancellationToken).ConfigureAwait(false);
+            return await GetRoleManagementAlertConfigurations(scope).GetAsync(alertId, cancellationToken).ConfigureAwait(false);
         }
 
-        /// <summary> Gets an object representing a <see cref="AlertDefinitionResource"/> along with the instance operations that can be performed on it but with no data. </summary>
+        /// <summary> Gets an object representing a <see cref="RoleManagementAlertDefinitionResource"/> along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="AlertDefinitionResource"/> object. </returns>
-        public virtual AlertDefinitionResource GetAlertDefinitionResource(ResourceIdentifier id)
+        /// <returns> Returns a <see cref="RoleManagementAlertDefinitionResource"/> object. </returns>
+        public virtual RoleManagementAlertDefinitionResource GetRoleManagementAlertDefinitionResource(ResourceIdentifier id)
         {
-            AlertDefinitionResource.ValidateResourceId(id);
-            return new AlertDefinitionResource(Client, id);
+            RoleManagementAlertDefinitionResource.ValidateResourceId(id);
+            return new RoleManagementAlertDefinitionResource(Client, id);
         }
 
-        /// <summary> Gets a collection of <see cref="AlertDefinitionCollection"/> objects within the specified scope. </summary>
+        /// <summary> Gets a collection of <see cref="RoleManagementAlertDefinitionCollection"/> objects within the specified scope. </summary>
         /// <param name="scope"> The scope of the resource collection to get. </param>
-        /// <returns> Returns a collection of <see cref="AlertDefinitionResource"/> objects. </returns>
-        public virtual AlertDefinitionCollection GetAlertDefinitions(ResourceIdentifier scope)
+        /// <returns> Returns a collection of <see cref="RoleManagementAlertDefinitionResource"/> objects. </returns>
+        public virtual RoleManagementAlertDefinitionCollection GetRoleManagementAlertDefinitions(ResourceIdentifier scope)
         {
-            return new AlertDefinitionCollection(Client, scope);
+            return new RoleManagementAlertDefinitionCollection(Client, scope);
         }
 
         /// <summary> Get the specified alert definition. </summary>
@@ -877,11 +877,11 @@ namespace Azure.ResourceManager.Authorization.Mocking
         /// <exception cref="ArgumentNullException"> <paramref name="alertDefinitionId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="alertDefinitionId"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual Response<AlertDefinitionResource> GetAlertDefinition(ResourceIdentifier scope, string alertDefinitionId, CancellationToken cancellationToken = default)
+        public virtual Response<RoleManagementAlertDefinitionResource> GetRoleManagementAlertDefinition(ResourceIdentifier scope, string alertDefinitionId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(alertDefinitionId, nameof(alertDefinitionId));
 
-            return GetAlertDefinitions(scope).Get(alertDefinitionId, cancellationToken);
+            return GetRoleManagementAlertDefinitions(scope).Get(alertDefinitionId, cancellationToken);
         }
 
         /// <summary> Get the specified alert definition. </summary>
@@ -891,42 +891,28 @@ namespace Azure.ResourceManager.Authorization.Mocking
         /// <exception cref="ArgumentNullException"> <paramref name="alertDefinitionId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="alertDefinitionId"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual async Task<Response<AlertDefinitionResource>> GetAlertDefinitionAsync(ResourceIdentifier scope, string alertDefinitionId, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<RoleManagementAlertDefinitionResource>> GetRoleManagementAlertDefinitionAsync(ResourceIdentifier scope, string alertDefinitionId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(alertDefinitionId, nameof(alertDefinitionId));
 
-            return await GetAlertDefinitions(scope).GetAsync(alertDefinitionId, cancellationToken).ConfigureAwait(false);
+            return await GetRoleManagementAlertDefinitions(scope).GetAsync(alertDefinitionId, cancellationToken).ConfigureAwait(false);
         }
 
-        /// <summary> Gets an object representing a <see cref="AlertIncidentResource"/> along with the instance operations that can be performed on it but with no data. </summary>
+        /// <summary> Gets an object representing a <see cref="RoleManagementAlertIncidentResource"/> along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="AlertIncidentResource"/> object. </returns>
-        public virtual AlertIncidentResource GetAlertIncidentResource(ResourceIdentifier id)
+        /// <returns> Returns a <see cref="RoleManagementAlertIncidentResource"/> object. </returns>
+        public virtual RoleManagementAlertIncidentResource GetRoleManagementAlertIncidentResource(ResourceIdentifier id)
         {
-            AlertIncidentResource.ValidateResourceId(id);
-            return new AlertIncidentResource(Client, id);
+            RoleManagementAlertIncidentResource.ValidateResourceId(id);
+            return new RoleManagementAlertIncidentResource(Client, id);
         }
 
-        /// <summary> Gets a collection of <see cref="AlertIncidentCollection"/> objects within the specified scope. </summary>
+        /// <summary> Gets a collection of <see cref="RoleManagementAlertIncidentCollection"/> objects within the specified scope. </summary>
         /// <param name="scope"> The scope of the resource collection to get. </param>
-        /// <returns> Returns a collection of <see cref="AlertIncidentResource"/> objects. </returns>
-        public virtual AlertIncidentCollection GetAlertIncidents(ResourceIdentifier scope)
+        /// <returns> Returns a collection of <see cref="RoleManagementAlertIncidentResource"/> objects. </returns>
+        public virtual RoleManagementAlertIncidentCollection GetRoleManagementAlertIncidents(ResourceIdentifier scope)
         {
-            return new AlertIncidentCollection(Client, scope);
-        }
-
-        /// <summary> Get the specified alert incident. </summary>
-        /// <param name="scope"> The scope of the resource collection to get. </param>
-        /// <param name="alertIncidentId"> The name of the alert incident to get. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="alertIncidentId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="alertIncidentId"/> is an empty string, and was expected to be non-empty. </exception>
-        [ForwardsClientCalls]
-        public virtual Response<AlertIncidentResource> GetAlertIncident(ResourceIdentifier scope, string alertIncidentId, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(alertIncidentId, nameof(alertIncidentId));
-
-            return GetAlertIncidents(scope).Get(alertIncidentId, cancellationToken);
+            return new RoleManagementAlertIncidentCollection(Client, scope);
         }
 
         /// <summary> Get the specified alert incident. </summary>
@@ -936,11 +922,25 @@ namespace Azure.ResourceManager.Authorization.Mocking
         /// <exception cref="ArgumentNullException"> <paramref name="alertIncidentId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="alertIncidentId"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual async Task<Response<AlertIncidentResource>> GetAlertIncidentAsync(ResourceIdentifier scope, string alertIncidentId, CancellationToken cancellationToken = default)
+        public virtual Response<RoleManagementAlertIncidentResource> GetRoleManagementAlertIncident(ResourceIdentifier scope, string alertIncidentId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(alertIncidentId, nameof(alertIncidentId));
 
-            return await GetAlertIncidents(scope).GetAsync(alertIncidentId, cancellationToken).ConfigureAwait(false);
+            return GetRoleManagementAlertIncidents(scope).Get(alertIncidentId, cancellationToken);
+        }
+
+        /// <summary> Get the specified alert incident. </summary>
+        /// <param name="scope"> The scope of the resource collection to get. </param>
+        /// <param name="alertIncidentId"> The name of the alert incident to get. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="alertIncidentId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="alertIncidentId"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual async Task<Response<RoleManagementAlertIncidentResource>> GetRoleManagementAlertIncidentAsync(ResourceIdentifier scope, string alertIncidentId, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(alertIncidentId, nameof(alertIncidentId));
+
+            return await GetRoleManagementAlertIncidents(scope).GetAsync(alertIncidentId, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary> Gets an object representing a <see cref="AccessReviewDefaultSettingResource"/> along with the instance operations that can be performed on it but with no data. </summary>

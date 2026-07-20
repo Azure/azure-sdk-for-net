@@ -127,13 +127,13 @@ namespace Azure.ResourceManager.Authorization.Models
         /// <param name="principalType"> The identity type user/servicePrincipal to review. </param>
         /// <param name="assignmentState"> The role assignment state eligible/active to review. </param>
         /// <param name="inactiveDuration"> Duration users are inactive for. The value should be in ISO  8601 format (http://en.wikipedia.org/wiki/ISO_8601#Durations).This code can be used to convert TimeSpan to a valid interval string: XmlConvert.ToString(new TimeSpan(hours, minutes, seconds)). </param>
-        /// <param name="expandNestedMemberships"> Flag to indicate whether to expand nested memberships or not. </param>
-        /// <param name="includeInheritedAccess"> Flag to indicate whether to expand nested memberships or not. </param>
-        /// <param name="includeAccessBelowResource"> Flag to indicate whether to expand nested memberships or not. </param>
+        /// <param name="isExpandNestedMemberships"> Flag to indicate whether to expand nested memberships or not. </param>
+        /// <param name="isIncludeInheritedAccess"> Flag to indicate whether to expand nested memberships or not. </param>
+        /// <param name="isIncludeAccessBelowResource"> Flag to indicate whether to expand nested memberships or not. </param>
         /// <param name="excludeResourceId"> This is used to indicate the resource id(s) to exclude. </param>
         /// <param name="excludeRoleDefinitionId"> This is used to indicate the role definition id(s) to exclude. </param>
         /// <returns> A new <see cref="Models.AccessReviewScope"/> instance for mocking. </returns>
-        public static AccessReviewScope AccessReviewScope(string resourceId = default, string roleDefinitionId = default, AccessReviewScopePrincipalType? principalType = default, AccessReviewScopeAssignmentState? assignmentState = default, TimeSpan? inactiveDuration = default, bool? expandNestedMemberships = default, bool? includeInheritedAccess = default, bool? includeAccessBelowResource = default, string excludeResourceId = default, string excludeRoleDefinitionId = default)
+        public static AccessReviewScope AccessReviewScope(string resourceId = default, string roleDefinitionId = default, AccessReviewScopePrincipalType? principalType = default, AccessReviewScopeAssignmentState? assignmentState = default, TimeSpan? inactiveDuration = default, bool? isExpandNestedMemberships = default, bool? isIncludeInheritedAccess = default, bool? isIncludeAccessBelowResource = default, string excludeResourceId = default, string excludeRoleDefinitionId = default)
         {
             return new AccessReviewScope(
                 resourceId,
@@ -141,9 +141,9 @@ namespace Azure.ResourceManager.Authorization.Models
                 principalType,
                 assignmentState,
                 inactiveDuration,
-                expandNestedMemberships,
-                includeInheritedAccess,
-                includeAccessBelowResource,
+                isExpandNestedMemberships,
+                isIncludeInheritedAccess,
+                isIncludeAccessBelowResource,
                 excludeResourceId,
                 excludeRoleDefinitionId,
                 default);
@@ -210,39 +210,39 @@ namespace Azure.ResourceManager.Authorization.Models
         /// <param name="principalType"> The identity type : user/servicePrincipal. </param>
         /// <param name="principalName"> The identity display name. </param>
         /// <param name="userPrincipalName"> The user principal name(if valid). </param>
-        /// <param name="mailNotificationsEnabled"> Flag to indicate whether sending mails to reviewers and the review creator is enabled. </param>
-        /// <param name="reminderNotificationsEnabled"> Flag to indicate whether sending reminder emails to reviewers are enabled. </param>
-        /// <param name="defaultDecisionEnabled"> Flag to indicate whether reviewers are required to provide a justification when reviewing access. </param>
-        /// <param name="justificationRequiredOnApproval"> Flag to indicate whether the reviewer is required to pass justification when recording a decision. </param>
+        /// <param name="isMailNotificationsEnabled"> Flag to indicate whether sending mails to reviewers and the review creator is enabled. </param>
+        /// <param name="isReminderNotificationsEnabled"> Flag to indicate whether sending reminder emails to reviewers are enabled. </param>
+        /// <param name="isDefaultDecisionEnabled"> Flag to indicate whether reviewers are required to provide a justification when reviewing access. </param>
+        /// <param name="isJustificationRequiredOnApproval"> Flag to indicate whether the reviewer is required to pass justification when recording a decision. </param>
         /// <param name="defaultDecision"> This specifies the behavior for the autoReview feature when an access review completes. </param>
-        /// <param name="autoApplyDecisionsEnabled"> Flag to indicate whether auto-apply capability, to automatically change the target object access resource, is enabled. If not enabled, a user must, after the review completes, apply the access review. </param>
-        /// <param name="recommendationsEnabled"> Flag to indicate whether showing recommendations to reviewers is enabled. </param>
+        /// <param name="isAutoApplyDecisionsEnabled"> Flag to indicate whether auto-apply capability, to automatically change the target object access resource, is enabled. If not enabled, a user must, after the review completes, apply the access review. </param>
+        /// <param name="isRecommendationsEnabled"> Flag to indicate whether showing recommendations to reviewers is enabled. </param>
         /// <param name="recommendationLookBackDuration"> Recommendations for access reviews are calculated by looking back at 30 days of data(w.r.t the start date of the review) by default. However, in some scenarios, customers want to change how far back to look at and want to configure 60 days, 90 days, etc. instead. This setting allows customers to configure this duration. The value should be in ISO  8601 format (http://en.wikipedia.org/wiki/ISO_8601#Durations).This code can be used to convert TimeSpan to a valid interval string: XmlConvert.ToString(new TimeSpan(hours, minutes, seconds)). </param>
         /// <param name="instanceDurationInDays"> The duration in days for an instance. </param>
         /// <param name="pattern"> Access Review schedule definition recurrence pattern. </param>
         /// <param name="range"> Access Review schedule definition recurrence range. </param>
         /// <returns> A new <see cref="Authorization.AccessReviewScheduleDefinitionData"/> instance for mocking. </returns>
-        public static AccessReviewScheduleDefinitionData AccessReviewScheduleDefinitionData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, string displayName = default, AccessReviewScheduleDefinitionStatus? status = default, string descriptionForAdmins = default, string descriptionForReviewers = default, AccessReviewScope scope = default, IEnumerable<AccessReviewReviewer> reviewers = default, IEnumerable<AccessReviewReviewer> backupReviewers = default, AccessReviewScheduleDefinitionReviewersType? reviewersType = default, IEnumerable<AccessReviewInstanceData> instances = default, string principalId = default, AccessReviewActorIdentityType? principalType = default, string principalName = default, string userPrincipalName = default, bool? mailNotificationsEnabled = default, bool? reminderNotificationsEnabled = default, bool? defaultDecisionEnabled = default, bool? justificationRequiredOnApproval = default, DefaultDecisionType? defaultDecision = default, bool? autoApplyDecisionsEnabled = default, bool? recommendationsEnabled = default, TimeSpan? recommendationLookBackDuration = default, int? instanceDurationInDays = default, AccessReviewRecurrencePattern pattern = default, AccessReviewRecurrenceRange range = default)
+        public static AccessReviewScheduleDefinitionData AccessReviewScheduleDefinitionData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, string displayName = default, AccessReviewScheduleDefinitionStatus? status = default, string descriptionForAdmins = default, string descriptionForReviewers = default, AccessReviewScope scope = default, IEnumerable<AccessReviewReviewer> reviewers = default, IEnumerable<AccessReviewReviewer> backupReviewers = default, AccessReviewScheduleDefinitionReviewersType? reviewersType = default, IEnumerable<AccessReviewInstanceData> instances = default, string principalId = default, AccessReviewActorIdentityType? principalType = default, string principalName = default, string userPrincipalName = default, bool? isMailNotificationsEnabled = default, bool? isReminderNotificationsEnabled = default, bool? isDefaultDecisionEnabled = default, bool? isJustificationRequiredOnApproval = default, AccessReviewDefaultDecisionType? defaultDecision = default, bool? isAutoApplyDecisionsEnabled = default, bool? isRecommendationsEnabled = default, TimeSpan? recommendationLookBackDuration = default, int? instanceDurationInDays = default, AccessReviewRecurrencePattern pattern = default, AccessReviewRecurrenceRange range = default)
         {
             return new AccessReviewScheduleDefinitionData(
                 id,
                 name,
                 resourceType,
                 systemData,
-                displayName is null && status is null && descriptionForAdmins is null && descriptionForReviewers is null && principalId is null && principalType is null && principalName is null && userPrincipalName is null && mailNotificationsEnabled is null && reminderNotificationsEnabled is null && defaultDecisionEnabled is null && justificationRequiredOnApproval is null && defaultDecision is null && autoApplyDecisionsEnabled is null && recommendationsEnabled is null && recommendationLookBackDuration is null && instanceDurationInDays is null && pattern is null && range is null && scope is null && reviewers is null && backupReviewers is null && reviewersType is null && instances is null ? default : new AccessReviewScheduleDefinitionProperties(
+                displayName is null && status is null && descriptionForAdmins is null && descriptionForReviewers is null && principalId is null && principalType is null && principalName is null && userPrincipalName is null && isMailNotificationsEnabled is null && isReminderNotificationsEnabled is null && isDefaultDecisionEnabled is null && isJustificationRequiredOnApproval is null && defaultDecision is null && isAutoApplyDecisionsEnabled is null && isRecommendationsEnabled is null && recommendationLookBackDuration is null && instanceDurationInDays is null && pattern is null && range is null && scope is null && reviewers is null && backupReviewers is null && reviewersType is null && instances is null ? default : new AccessReviewScheduleDefinitionProperties(
                     displayName,
                     status,
                     descriptionForAdmins,
                     descriptionForReviewers,
                     new AccessReviewActorIdentity(principalId, principalType, principalName, userPrincipalName, default),
                     new AccessReviewScheduleSettings(
-                        mailNotificationsEnabled,
-                        reminderNotificationsEnabled,
-                        defaultDecisionEnabled,
-                        justificationRequiredOnApproval,
+                        isMailNotificationsEnabled,
+                        isReminderNotificationsEnabled,
+                        isDefaultDecisionEnabled,
+                        isJustificationRequiredOnApproval,
                         defaultDecision,
-                        autoApplyDecisionsEnabled,
-                        recommendationsEnabled,
+                        isAutoApplyDecisionsEnabled,
+                        isRecommendationsEnabled,
                         recommendationLookBackDuration,
                         instanceDurationInDays,
                         new AccessReviewRecurrenceSettings(pattern, range, default),
@@ -264,13 +264,13 @@ namespace Azure.ResourceManager.Authorization.Models
         /// <param name="principalType"> The identity type : user/servicePrincipal. </param>
         /// <param name="principalName"> The identity display name. </param>
         /// <param name="userPrincipalName"> The user principal name(if valid). </param>
-        /// <param name="mailNotificationsEnabled"> Flag to indicate whether sending mails to reviewers and the review creator is enabled. </param>
-        /// <param name="reminderNotificationsEnabled"> Flag to indicate whether sending reminder emails to reviewers are enabled. </param>
-        /// <param name="defaultDecisionEnabled"> Flag to indicate whether reviewers are required to provide a justification when reviewing access. </param>
-        /// <param name="justificationRequiredOnApproval"> Flag to indicate whether the reviewer is required to pass justification when recording a decision. </param>
+        /// <param name="isMailNotificationsEnabled"> Flag to indicate whether sending mails to reviewers and the review creator is enabled. </param>
+        /// <param name="isReminderNotificationsEnabled"> Flag to indicate whether sending reminder emails to reviewers are enabled. </param>
+        /// <param name="isDefaultDecisionEnabled"> Flag to indicate whether reviewers are required to provide a justification when reviewing access. </param>
+        /// <param name="isJustificationRequiredOnApproval"> Flag to indicate whether the reviewer is required to pass justification when recording a decision. </param>
         /// <param name="defaultDecision"> This specifies the behavior for the autoReview feature when an access review completes. </param>
-        /// <param name="autoApplyDecisionsEnabled"> Flag to indicate whether auto-apply capability, to automatically change the target object access resource, is enabled. If not enabled, a user must, after the review completes, apply the access review. </param>
-        /// <param name="recommendationsEnabled"> Flag to indicate whether showing recommendations to reviewers is enabled. </param>
+        /// <param name="isAutoApplyDecisionsEnabled"> Flag to indicate whether auto-apply capability, to automatically change the target object access resource, is enabled. If not enabled, a user must, after the review completes, apply the access review. </param>
+        /// <param name="isRecommendationsEnabled"> Flag to indicate whether showing recommendations to reviewers is enabled. </param>
         /// <param name="recommendationLookBackDuration"> Recommendations for access reviews are calculated by looking back at 30 days of data(w.r.t the start date of the review) by default. However, in some scenarios, customers want to change how far back to look at and want to configure 60 days, 90 days, etc. instead. This setting allows customers to configure this duration. The value should be in ISO  8601 format (http://en.wikipedia.org/wiki/ISO_8601#Durations).This code can be used to convert TimeSpan to a valid interval string: XmlConvert.ToString(new TimeSpan(hours, minutes, seconds)). </param>
         /// <param name="instanceDurationInDays"> The duration in days for an instance. </param>
         /// <param name="pattern"> Access Review schedule definition recurrence pattern. </param>
@@ -281,7 +281,7 @@ namespace Azure.ResourceManager.Authorization.Models
         /// <param name="reviewersType"> This field specifies the type of reviewers for a review. Usually for a review, reviewers are explicitly assigned. However, in some cases, the reviewers may not be assigned and instead be chosen dynamically. For example managers review or self review. </param>
         /// <param name="instances"> This is the collection of instances returned when one does an expand on it. </param>
         /// <returns> A new <see cref="Models.AccessReviewScheduleDefinitionProperties"/> instance for mocking. </returns>
-        public static AccessReviewScheduleDefinitionProperties AccessReviewScheduleDefinitionProperties(string displayName = default, AccessReviewScheduleDefinitionStatus? status = default, string descriptionForAdmins = default, string descriptionForReviewers = default, string principalId = default, AccessReviewActorIdentityType? principalType = default, string principalName = default, string userPrincipalName = default, bool? mailNotificationsEnabled = default, bool? reminderNotificationsEnabled = default, bool? defaultDecisionEnabled = default, bool? justificationRequiredOnApproval = default, DefaultDecisionType? defaultDecision = default, bool? autoApplyDecisionsEnabled = default, bool? recommendationsEnabled = default, TimeSpan? recommendationLookBackDuration = default, int? instanceDurationInDays = default, AccessReviewRecurrencePattern pattern = default, AccessReviewRecurrenceRange range = default, AccessReviewScope scope = default, IEnumerable<AccessReviewReviewer> reviewers = default, IEnumerable<AccessReviewReviewer> backupReviewers = default, AccessReviewScheduleDefinitionReviewersType? reviewersType = default, IEnumerable<AccessReviewInstanceData> instances = default)
+        public static AccessReviewScheduleDefinitionProperties AccessReviewScheduleDefinitionProperties(string displayName = default, AccessReviewScheduleDefinitionStatus? status = default, string descriptionForAdmins = default, string descriptionForReviewers = default, string principalId = default, AccessReviewActorIdentityType? principalType = default, string principalName = default, string userPrincipalName = default, bool? isMailNotificationsEnabled = default, bool? isReminderNotificationsEnabled = default, bool? isDefaultDecisionEnabled = default, bool? isJustificationRequiredOnApproval = default, AccessReviewDefaultDecisionType? defaultDecision = default, bool? isAutoApplyDecisionsEnabled = default, bool? isRecommendationsEnabled = default, TimeSpan? recommendationLookBackDuration = default, int? instanceDurationInDays = default, AccessReviewRecurrencePattern pattern = default, AccessReviewRecurrenceRange range = default, AccessReviewScope scope = default, IEnumerable<AccessReviewReviewer> reviewers = default, IEnumerable<AccessReviewReviewer> backupReviewers = default, AccessReviewScheduleDefinitionReviewersType? reviewersType = default, IEnumerable<AccessReviewInstanceData> instances = default)
         {
             reviewers ??= new ChangeTrackingList<AccessReviewReviewer>();
             backupReviewers ??= new ChangeTrackingList<AccessReviewReviewer>();
@@ -293,14 +293,14 @@ namespace Azure.ResourceManager.Authorization.Models
                 descriptionForAdmins,
                 descriptionForReviewers,
                 principalId is null && principalType is null && principalName is null && userPrincipalName is null ? default : new AccessReviewActorIdentity(principalId, principalType, principalName, userPrincipalName, default),
-                mailNotificationsEnabled is null && reminderNotificationsEnabled is null && defaultDecisionEnabled is null && justificationRequiredOnApproval is null && defaultDecision is null && autoApplyDecisionsEnabled is null && recommendationsEnabled is null && recommendationLookBackDuration is null && instanceDurationInDays is null && pattern is null && range is null ? default : new AccessReviewScheduleSettings(
-                    mailNotificationsEnabled,
-                    reminderNotificationsEnabled,
-                    defaultDecisionEnabled,
-                    justificationRequiredOnApproval,
+                isMailNotificationsEnabled is null && isReminderNotificationsEnabled is null && isDefaultDecisionEnabled is null && isJustificationRequiredOnApproval is null && defaultDecision is null && isAutoApplyDecisionsEnabled is null && isRecommendationsEnabled is null && recommendationLookBackDuration is null && instanceDurationInDays is null && pattern is null && range is null ? default : new AccessReviewScheduleSettings(
+                    isMailNotificationsEnabled,
+                    isReminderNotificationsEnabled,
+                    isDefaultDecisionEnabled,
+                    isJustificationRequiredOnApproval,
                     defaultDecision,
-                    autoApplyDecisionsEnabled,
-                    recommendationsEnabled,
+                    isAutoApplyDecisionsEnabled,
+                    isRecommendationsEnabled,
                     recommendationLookBackDuration,
                     instanceDurationInDays,
                     new AccessReviewRecurrenceSettings(pattern, range, default),
@@ -313,28 +313,28 @@ namespace Azure.ResourceManager.Authorization.Models
                 default);
         }
 
-        /// <param name="mailNotificationsEnabled"> Flag to indicate whether sending mails to reviewers and the review creator is enabled. </param>
-        /// <param name="reminderNotificationsEnabled"> Flag to indicate whether sending reminder emails to reviewers are enabled. </param>
-        /// <param name="defaultDecisionEnabled"> Flag to indicate whether reviewers are required to provide a justification when reviewing access. </param>
-        /// <param name="justificationRequiredOnApproval"> Flag to indicate whether the reviewer is required to pass justification when recording a decision. </param>
+        /// <param name="isMailNotificationsEnabled"> Flag to indicate whether sending mails to reviewers and the review creator is enabled. </param>
+        /// <param name="isReminderNotificationsEnabled"> Flag to indicate whether sending reminder emails to reviewers are enabled. </param>
+        /// <param name="isDefaultDecisionEnabled"> Flag to indicate whether reviewers are required to provide a justification when reviewing access. </param>
+        /// <param name="isJustificationRequiredOnApproval"> Flag to indicate whether the reviewer is required to pass justification when recording a decision. </param>
         /// <param name="defaultDecision"> This specifies the behavior for the autoReview feature when an access review completes. </param>
-        /// <param name="autoApplyDecisionsEnabled"> Flag to indicate whether auto-apply capability, to automatically change the target object access resource, is enabled. If not enabled, a user must, after the review completes, apply the access review. </param>
-        /// <param name="recommendationsEnabled"> Flag to indicate whether showing recommendations to reviewers is enabled. </param>
+        /// <param name="isAutoApplyDecisionsEnabled"> Flag to indicate whether auto-apply capability, to automatically change the target object access resource, is enabled. If not enabled, a user must, after the review completes, apply the access review. </param>
+        /// <param name="isRecommendationsEnabled"> Flag to indicate whether showing recommendations to reviewers is enabled. </param>
         /// <param name="recommendationLookBackDuration"> Recommendations for access reviews are calculated by looking back at 30 days of data(w.r.t the start date of the review) by default. However, in some scenarios, customers want to change how far back to look at and want to configure 60 days, 90 days, etc. instead. This setting allows customers to configure this duration. The value should be in ISO  8601 format (http://en.wikipedia.org/wiki/ISO_8601#Durations).This code can be used to convert TimeSpan to a valid interval string: XmlConvert.ToString(new TimeSpan(hours, minutes, seconds)). </param>
         /// <param name="instanceDurationInDays"> The duration in days for an instance. </param>
         /// <param name="pattern"> Access Review schedule definition recurrence pattern. </param>
         /// <param name="range"> Access Review schedule definition recurrence range. </param>
         /// <returns> A new <see cref="Models.AccessReviewScheduleSettings"/> instance for mocking. </returns>
-        public static AccessReviewScheduleSettings AccessReviewScheduleSettings(bool? mailNotificationsEnabled = default, bool? reminderNotificationsEnabled = default, bool? defaultDecisionEnabled = default, bool? justificationRequiredOnApproval = default, DefaultDecisionType? defaultDecision = default, bool? autoApplyDecisionsEnabled = default, bool? recommendationsEnabled = default, TimeSpan? recommendationLookBackDuration = default, int? instanceDurationInDays = default, AccessReviewRecurrencePattern pattern = default, AccessReviewRecurrenceRange range = default)
+        public static AccessReviewScheduleSettings AccessReviewScheduleSettings(bool? isMailNotificationsEnabled = default, bool? isReminderNotificationsEnabled = default, bool? isDefaultDecisionEnabled = default, bool? isJustificationRequiredOnApproval = default, AccessReviewDefaultDecisionType? defaultDecision = default, bool? isAutoApplyDecisionsEnabled = default, bool? isRecommendationsEnabled = default, TimeSpan? recommendationLookBackDuration = default, int? instanceDurationInDays = default, AccessReviewRecurrencePattern pattern = default, AccessReviewRecurrenceRange range = default)
         {
             return new AccessReviewScheduleSettings(
-                mailNotificationsEnabled,
-                reminderNotificationsEnabled,
-                defaultDecisionEnabled,
-                justificationRequiredOnApproval,
+                isMailNotificationsEnabled,
+                isReminderNotificationsEnabled,
+                isDefaultDecisionEnabled,
+                isJustificationRequiredOnApproval,
                 defaultDecision,
-                autoApplyDecisionsEnabled,
-                recommendationsEnabled,
+                isAutoApplyDecisionsEnabled,
+                isRecommendationsEnabled,
                 recommendationLookBackDuration,
                 instanceDurationInDays,
                 pattern is null && range is null ? default : new AccessReviewRecurrenceSettings(pattern, range, default),
@@ -404,33 +404,33 @@ namespace Azure.ResourceManager.Authorization.Models
         /// <param name="name"> The name of the resource. </param>
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
         /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
-        /// <param name="mailNotificationsEnabled"> Flag to indicate whether sending mails to reviewers and the review creator is enabled. </param>
-        /// <param name="reminderNotificationsEnabled"> Flag to indicate whether sending reminder emails to reviewers are enabled. </param>
-        /// <param name="defaultDecisionEnabled"> Flag to indicate whether reviewers are required to provide a justification when reviewing access. </param>
-        /// <param name="justificationRequiredOnApproval"> Flag to indicate whether the reviewer is required to pass justification when recording a decision. </param>
+        /// <param name="isMailNotificationsEnabled"> Flag to indicate whether sending mails to reviewers and the review creator is enabled. </param>
+        /// <param name="isReminderNotificationsEnabled"> Flag to indicate whether sending reminder emails to reviewers are enabled. </param>
+        /// <param name="isDefaultDecisionEnabled"> Flag to indicate whether reviewers are required to provide a justification when reviewing access. </param>
+        /// <param name="isJustificationRequiredOnApproval"> Flag to indicate whether the reviewer is required to pass justification when recording a decision. </param>
         /// <param name="defaultDecision"> This specifies the behavior for the autoReview feature when an access review completes. </param>
-        /// <param name="autoApplyDecisionsEnabled"> Flag to indicate whether auto-apply capability, to automatically change the target object access resource, is enabled. If not enabled, a user must, after the review completes, apply the access review. </param>
-        /// <param name="recommendationsEnabled"> Flag to indicate whether showing recommendations to reviewers is enabled. </param>
+        /// <param name="isAutoApplyDecisionsEnabled"> Flag to indicate whether auto-apply capability, to automatically change the target object access resource, is enabled. If not enabled, a user must, after the review completes, apply the access review. </param>
+        /// <param name="isRecommendationsEnabled"> Flag to indicate whether showing recommendations to reviewers is enabled. </param>
         /// <param name="recommendationLookBackDuration"> Recommendations for access reviews are calculated by looking back at 30 days of data(w.r.t the start date of the review) by default. However, in some scenarios, customers want to change how far back to look at and want to configure 60 days, 90 days, etc. instead. This setting allows customers to configure this duration. The value should be in ISO  8601 format (http://en.wikipedia.org/wiki/ISO_8601#Durations).This code can be used to convert TimeSpan to a valid interval string: XmlConvert.ToString(new TimeSpan(hours, minutes, seconds)). </param>
         /// <param name="instanceDurationInDays"> The duration in days for an instance. </param>
         /// <param name="pattern"> Access Review schedule definition recurrence pattern. </param>
         /// <param name="range"> Access Review schedule definition recurrence range. </param>
         /// <returns> A new <see cref="Authorization.AccessReviewDefaultSettingsData"/> instance for mocking. </returns>
-        public static AccessReviewDefaultSettingsData AccessReviewDefaultSettingsData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, bool? mailNotificationsEnabled = default, bool? reminderNotificationsEnabled = default, bool? defaultDecisionEnabled = default, bool? justificationRequiredOnApproval = default, DefaultDecisionType? defaultDecision = default, bool? autoApplyDecisionsEnabled = default, bool? recommendationsEnabled = default, TimeSpan? recommendationLookBackDuration = default, int? instanceDurationInDays = default, AccessReviewRecurrencePattern pattern = default, AccessReviewRecurrenceRange range = default)
+        public static AccessReviewDefaultSettingsData AccessReviewDefaultSettingsData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, bool? isMailNotificationsEnabled = default, bool? isReminderNotificationsEnabled = default, bool? isDefaultDecisionEnabled = default, bool? isJustificationRequiredOnApproval = default, AccessReviewDefaultDecisionType? defaultDecision = default, bool? isAutoApplyDecisionsEnabled = default, bool? isRecommendationsEnabled = default, TimeSpan? recommendationLookBackDuration = default, int? instanceDurationInDays = default, AccessReviewRecurrencePattern pattern = default, AccessReviewRecurrenceRange range = default)
         {
             return new AccessReviewDefaultSettingsData(
                 id,
                 name,
                 resourceType,
                 systemData,
-                mailNotificationsEnabled is null && reminderNotificationsEnabled is null && defaultDecisionEnabled is null && justificationRequiredOnApproval is null && defaultDecision is null && autoApplyDecisionsEnabled is null && recommendationsEnabled is null && recommendationLookBackDuration is null && instanceDurationInDays is null && pattern is null && range is null ? default : new AccessReviewScheduleSettings(
-                    mailNotificationsEnabled,
-                    reminderNotificationsEnabled,
-                    defaultDecisionEnabled,
-                    justificationRequiredOnApproval,
+                isMailNotificationsEnabled is null && isReminderNotificationsEnabled is null && isDefaultDecisionEnabled is null && isJustificationRequiredOnApproval is null && defaultDecision is null && isAutoApplyDecisionsEnabled is null && isRecommendationsEnabled is null && recommendationLookBackDuration is null && instanceDurationInDays is null && pattern is null && range is null ? default : new AccessReviewScheduleSettings(
+                    isMailNotificationsEnabled,
+                    isReminderNotificationsEnabled,
+                    isDefaultDecisionEnabled,
+                    isJustificationRequiredOnApproval,
                     defaultDecision,
-                    autoApplyDecisionsEnabled,
-                    recommendationsEnabled,
+                    isAutoApplyDecisionsEnabled,
+                    isRecommendationsEnabled,
                     recommendationLookBackDuration,
                     instanceDurationInDays,
                     new AccessReviewRecurrenceSettings(pattern, range, default),
@@ -981,7 +981,7 @@ namespace Azure.ResourceManager.Authorization.Models
         /// <param name="target"> The target of the current rule. </param>
         /// <param name="pimOnlyModeSettings"> The PIM Only Mode settings. </param>
         /// <returns> A new <see cref="Models.RoleManagementPolicyPimOnlyModeRule"/> instance for mocking. </returns>
-        public static RoleManagementPolicyPimOnlyModeRule RoleManagementPolicyPimOnlyModeRule(string id = default, RoleManagementPolicyRuleTarget target = default, PIMOnlyModeSettings pimOnlyModeSettings = default)
+        public static RoleManagementPolicyPimOnlyModeRule RoleManagementPolicyPimOnlyModeRule(string id = default, RoleManagementPolicyRuleTarget target = default, PimOnlyModeSettings pimOnlyModeSettings = default)
         {
             return new RoleManagementPolicyPimOnlyModeRule(id, default, target, default, pimOnlyModeSettings);
         }
@@ -989,13 +989,13 @@ namespace Azure.ResourceManager.Authorization.Models
         /// <param name="mode"> Determines whether the setting is enabled, disabled or report only. </param>
         /// <param name="excludes"> The list of excluded entities that the rule does not apply to. </param>
         /// <param name="excludedAssignmentTypes"> The list of excluded assignment types allowed. </param>
-        /// <returns> A new <see cref="Models.PIMOnlyModeSettings"/> instance for mocking. </returns>
-        public static PIMOnlyModeSettings PIMOnlyModeSettings(PIMOnlyMode? mode = default, IEnumerable<UsersOrServicePrincipalSet> excludes = default, IEnumerable<ExcludedPrincipalTypes> excludedAssignmentTypes = default)
+        /// <returns> A new <see cref="Models.PimOnlyModeSettings"/> instance for mocking. </returns>
+        public static PimOnlyModeSettings PimOnlyModeSettings(PimOnlyMode? mode = default, IEnumerable<UsersOrServicePrincipalSet> excludes = default, IEnumerable<ExcludedPrincipalType> excludedAssignmentTypes = default)
         {
             excludes ??= new ChangeTrackingList<UsersOrServicePrincipalSet>();
-            excludedAssignmentTypes ??= new ChangeTrackingList<ExcludedPrincipalTypes>();
+            excludedAssignmentTypes ??= new ChangeTrackingList<ExcludedPrincipalType>();
 
-            return new PIMOnlyModeSettings(mode, (excludes ?? new ChangeTrackingList<UsersOrServicePrincipalSet>()).ToList(), (excludedAssignmentTypes ?? new ChangeTrackingList<ExcludedPrincipalTypes>()).ToList(), default);
+            return new PimOnlyModeSettings(mode, (excludes ?? new ChangeTrackingList<UsersOrServicePrincipalSet>()).ToList(), (excludedAssignmentTypes ?? new ChangeTrackingList<ExcludedPrincipalType>()).ToList(), default);
         }
 
         /// <param name="type"> The type of user. </param>
@@ -1285,10 +1285,10 @@ namespace Azure.ResourceManager.Authorization.Models
         /// <param name="alertDefinition"> The alert definition. </param>
         /// <param name="alertIncidents"> The alert incidents. </param>
         /// <param name="alertConfiguration"> The alert configuration. </param>
-        /// <returns> A new <see cref="Authorization.AlertData"/> instance for mocking. </returns>
-        public static AlertData AlertData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, string scope = default, bool? isActive = default, int? incidentCount = default, DateTimeOffset? lastModifiedOn = default, DateTimeOffset? lastScannedOn = default, AlertDefinitionData alertDefinition = default, IEnumerable<AlertIncidentData> alertIncidents = default, AlertConfigurationData alertConfiguration = default)
+        /// <returns> A new <see cref="Authorization.RoleManagementAlertData"/> instance for mocking. </returns>
+        public static RoleManagementAlertData RoleManagementAlertData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, string scope = default, bool? isActive = default, int? incidentCount = default, DateTimeOffset? lastModifiedOn = default, DateTimeOffset? lastScannedOn = default, RoleManagementAlertDefinitionData alertDefinition = default, IEnumerable<RoleManagementAlertIncidentData> alertIncidents = default, RoleManagementAlertConfigurationData alertConfiguration = default)
         {
-            return new AlertData(
+            return new RoleManagementAlertData(
                 id,
                 name,
                 resourceType,
@@ -1300,7 +1300,7 @@ namespace Azure.ResourceManager.Authorization.Models
                     lastModifiedOn,
                     lastScannedOn,
                     alertDefinition,
-                    (alertIncidents ?? new ChangeTrackingList<AlertIncidentData>()).ToList(),
+                    (alertIncidents ?? new ChangeTrackingList<RoleManagementAlertIncidentData>()).ToList(),
                     alertConfiguration,
                     default),
                 default);
@@ -1319,10 +1319,10 @@ namespace Azure.ResourceManager.Authorization.Models
         /// <param name="howToPrevent"> The ways to prevent the alert. </param>
         /// <param name="isRemediatable"> True if the alert can be remediated; false, otherwise. </param>
         /// <param name="isConfigurable"> True if the alert configuration can be configured; false, otherwise. </param>
-        /// <returns> A new <see cref="Authorization.AlertDefinitionData"/> instance for mocking. </returns>
-        public static AlertDefinitionData AlertDefinitionData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, string displayName = default, string scope = default, string description = default, SeverityLevel? severityLevel = default, string securityImpact = default, string mitigationSteps = default, string howToPrevent = default, bool? isRemediatable = default, bool? isConfigurable = default)
+        /// <returns> A new <see cref="Authorization.RoleManagementAlertDefinitionData"/> instance for mocking. </returns>
+        public static RoleManagementAlertDefinitionData RoleManagementAlertDefinitionData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, string displayName = default, string scope = default, string description = default, RoleManagementAlertSeverityLevel? severityLevel = default, string securityImpact = default, string mitigationSteps = default, string howToPrevent = default, bool? isRemediatable = default, bool? isConfigurable = default)
         {
-            return new AlertDefinitionData(
+            return new RoleManagementAlertDefinitionData(
                 id,
                 name,
                 resourceType,
@@ -1346,10 +1346,10 @@ namespace Azure.ResourceManager.Authorization.Models
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
         /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
         /// <param name="properties"> Alert incident properties. </param>
-        /// <returns> A new <see cref="Authorization.AlertIncidentData"/> instance for mocking. </returns>
-        public static AlertIncidentData AlertIncidentData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, AlertIncidentProperties properties = default)
+        /// <returns> A new <see cref="Authorization.RoleManagementAlertIncidentData"/> instance for mocking. </returns>
+        public static RoleManagementAlertIncidentData RoleManagementAlertIncidentData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, AlertIncidentProperties properties = default)
         {
-            return new AlertIncidentData(
+            return new RoleManagementAlertIncidentData(
                 id,
                 name,
                 resourceType,
@@ -1423,10 +1423,10 @@ namespace Azure.ResourceManager.Authorization.Models
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
         /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
         /// <param name="properties"> Alert configuration properties. </param>
-        /// <returns> A new <see cref="Authorization.AlertConfigurationData"/> instance for mocking. </returns>
-        public static AlertConfigurationData AlertConfigurationData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, AlertConfigurationProperties properties = default)
+        /// <returns> A new <see cref="Authorization.RoleManagementAlertConfigurationData"/> instance for mocking. </returns>
+        public static RoleManagementAlertConfigurationData RoleManagementAlertConfigurationData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, AlertConfigurationProperties properties = default)
         {
-            return new AlertConfigurationData(
+            return new RoleManagementAlertConfigurationData(
                 id,
                 name,
                 resourceType,
@@ -1441,7 +1441,7 @@ namespace Azure.ResourceManager.Authorization.Models
         /// <param name="alertConfigurationType"> The alert configuration type. </param>
         /// <param name="alertDefinition"> The alert definition. </param>
         /// <returns> A new <see cref="Models.AlertConfigurationProperties"/> instance for mocking. </returns>
-        public static AlertConfigurationProperties AlertConfigurationProperties(string alertDefinitionId = default, string scope = default, bool? isEnabled = default, string alertConfigurationType = default, AlertDefinitionData alertDefinition = default)
+        public static AlertConfigurationProperties AlertConfigurationProperties(string alertDefinitionId = default, string scope = default, bool? isEnabled = default, string alertConfigurationType = default, RoleManagementAlertDefinitionData alertDefinition = default)
         {
             return new UnknownAlertConfigurationProperties(
                 alertDefinitionId,
@@ -1457,7 +1457,7 @@ namespace Azure.ResourceManager.Authorization.Models
         /// <param name="isEnabled"> True if the alert is enabled, false will disable the scanning for the specific alert. </param>
         /// <param name="alertDefinition"> The alert definition. </param>
         /// <returns> A new <see cref="Models.AzureRolesAssignedOutsidePimAlertConfigurationProperties"/> instance for mocking. </returns>
-        public static AzureRolesAssignedOutsidePimAlertConfigurationProperties AzureRolesAssignedOutsidePimAlertConfigurationProperties(string alertDefinitionId = default, string scope = default, bool? isEnabled = default, AlertDefinitionData alertDefinition = default)
+        public static AzureRolesAssignedOutsidePimAlertConfigurationProperties AzureRolesAssignedOutsidePimAlertConfigurationProperties(string alertDefinitionId = default, string scope = default, bool? isEnabled = default, RoleManagementAlertDefinitionData alertDefinition = default)
         {
             return new AzureRolesAssignedOutsidePimAlertConfigurationProperties(
                 alertDefinitionId,
@@ -1473,7 +1473,7 @@ namespace Azure.ResourceManager.Authorization.Models
         /// <param name="isEnabled"> True if the alert is enabled, false will disable the scanning for the specific alert. </param>
         /// <param name="alertDefinition"> The alert definition. </param>
         /// <returns> A new <see cref="Models.DuplicateRoleCreatedAlertConfigurationProperties"/> instance for mocking. </returns>
-        public static DuplicateRoleCreatedAlertConfigurationProperties DuplicateRoleCreatedAlertConfigurationProperties(string alertDefinitionId = default, string scope = default, bool? isEnabled = default, AlertDefinitionData alertDefinition = default)
+        public static DuplicateRoleCreatedAlertConfigurationProperties DuplicateRoleCreatedAlertConfigurationProperties(string alertDefinitionId = default, string scope = default, bool? isEnabled = default, RoleManagementAlertDefinitionData alertDefinition = default)
         {
             return new DuplicateRoleCreatedAlertConfigurationProperties(
                 alertDefinitionId,
@@ -1491,7 +1491,7 @@ namespace Azure.ResourceManager.Authorization.Models
         /// <param name="thresholdNumberOfOwners"> The threshold number of owners. </param>
         /// <param name="thresholdPercentageOfOwnersOutOfAllRoleMembers"> The threshold percentage of owners out of all role members. </param>
         /// <returns> A new <see cref="Models.TooManyOwnersAssignedToResourceAlertConfigurationProperties"/> instance for mocking. </returns>
-        public static TooManyOwnersAssignedToResourceAlertConfigurationProperties TooManyOwnersAssignedToResourceAlertConfigurationProperties(string alertDefinitionId = default, string scope = default, bool? isEnabled = default, AlertDefinitionData alertDefinition = default, int? thresholdNumberOfOwners = default, int? thresholdPercentageOfOwnersOutOfAllRoleMembers = default)
+        public static TooManyOwnersAssignedToResourceAlertConfigurationProperties TooManyOwnersAssignedToResourceAlertConfigurationProperties(string alertDefinitionId = default, string scope = default, bool? isEnabled = default, RoleManagementAlertDefinitionData alertDefinition = default, int? thresholdNumberOfOwners = default, int? thresholdPercentageOfOwnersOutOfAllRoleMembers = default)
         {
             return new TooManyOwnersAssignedToResourceAlertConfigurationProperties(
                 alertDefinitionId,
@@ -1511,7 +1511,7 @@ namespace Azure.ResourceManager.Authorization.Models
         /// <param name="thresholdNumberOfPermanentOwners"> The threshold number of permanent owners. </param>
         /// <param name="thresholdPercentageOfPermanentOwnersOutOfAllOwners"> The threshold percentage of permanent owners out of all owners. </param>
         /// <returns> A new <see cref="Models.TooManyPermanentOwnersAssignedToResourceAlertConfigurationProperties"/> instance for mocking. </returns>
-        public static TooManyPermanentOwnersAssignedToResourceAlertConfigurationProperties TooManyPermanentOwnersAssignedToResourceAlertConfigurationProperties(string alertDefinitionId = default, string scope = default, bool? isEnabled = default, AlertDefinitionData alertDefinition = default, int? thresholdNumberOfPermanentOwners = default, int? thresholdPercentageOfPermanentOwnersOutOfAllOwners = default)
+        public static TooManyPermanentOwnersAssignedToResourceAlertConfigurationProperties TooManyPermanentOwnersAssignedToResourceAlertConfigurationProperties(string alertDefinitionId = default, string scope = default, bool? isEnabled = default, RoleManagementAlertDefinitionData alertDefinition = default, int? thresholdNumberOfPermanentOwners = default, int? thresholdPercentageOfPermanentOwnersOutOfAllOwners = default)
         {
             return new TooManyPermanentOwnersAssignedToResourceAlertConfigurationProperties(
                 alertDefinitionId,
@@ -1648,7 +1648,7 @@ namespace Azure.ResourceManager.Authorization.Models
         /// <param name="id"> The id of resource associated with a decision record. </param>
         /// <param name="displayName"> The display name of resource associated with a decision record. </param>
         /// <returns> A new <see cref="Models.AccessReviewDecisionResourceTarget"/> instance for mocking. </returns>
-        public static AccessReviewDecisionResourceTarget AccessReviewDecisionResourceTarget(DecisionResourceType @type = default, string id = default, string displayName = default)
+        public static AccessReviewDecisionResourceTarget AccessReviewDecisionResourceTarget(AccessReviewDecisionResourceType @type = default, string id = default, string displayName = default)
         {
             return new AccessReviewDecisionResourceTarget(@type, id, displayName, default);
         }

@@ -14,24 +14,24 @@ using Azure.ResourceManager.Models;
 namespace Azure.ResourceManager.Authorization
 {
     /// <summary> The alert. </summary>
-    public partial class AlertData : ResourceData
+    public partial class RoleManagementAlertData : ResourceData
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="AlertData"/>. </summary>
-        public AlertData()
+        /// <summary> Initializes a new instance of <see cref="RoleManagementAlertData"/>. </summary>
+        public RoleManagementAlertData()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="AlertData"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="RoleManagementAlertData"/>. </summary>
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
         /// <param name="name"> The name of the resource. </param>
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
         /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
         /// <param name="properties"> Alert properties. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal AlertData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, AlertProperties properties, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(id, name, resourceType, systemData)
+        internal RoleManagementAlertData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, AlertProperties properties, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(id, name, resourceType, systemData)
         {
             Properties = properties;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
@@ -101,7 +101,7 @@ namespace Azure.ResourceManager.Authorization
 
         /// <summary> The alert definition. </summary>
         [WirePath("properties.alertDefinition")]
-        public AlertDefinitionData AlertDefinition
+        public RoleManagementAlertDefinitionData AlertDefinition
         {
             get
             {
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.Authorization
 
         /// <summary> The alert incidents. </summary>
         [WirePath("properties.alertIncidents")]
-        public IReadOnlyList<AlertIncidentData> AlertIncidents
+        public IReadOnlyList<RoleManagementAlertIncidentData> AlertIncidents
         {
             get
             {
@@ -125,7 +125,7 @@ namespace Azure.ResourceManager.Authorization
 
         /// <summary> The alert configuration. </summary>
         [WirePath("properties.alertConfiguration")]
-        public AlertConfigurationData AlertConfiguration
+        public RoleManagementAlertConfigurationData AlertConfiguration
         {
             get
             {

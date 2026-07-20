@@ -173,47 +173,47 @@ namespace Azure.ResourceManager.Authorization
 
         /// <summary> Flag to indicate whether sending mails to reviewers and the review creator is enabled. </summary>
         [WirePath("properties.settings.mailNotificationsEnabled")]
-        public bool? MailNotificationsEnabled
+        public bool? IsMailNotificationsEnabled
         {
             get
             {
-                return Properties is null ? default : Properties.MailNotificationsEnabled;
+                return Properties is null ? default : Properties.IsMailNotificationsEnabled;
             }
         }
 
         /// <summary> Flag to indicate whether sending reminder emails to reviewers are enabled. </summary>
         [WirePath("properties.settings.reminderNotificationsEnabled")]
-        public bool? ReminderNotificationsEnabled
+        public bool? IsReminderNotificationsEnabled
         {
             get
             {
-                return Properties is null ? default : Properties.ReminderNotificationsEnabled;
+                return Properties is null ? default : Properties.IsReminderNotificationsEnabled;
             }
         }
 
         /// <summary> Flag to indicate whether reviewers are required to provide a justification when reviewing access. </summary>
         [WirePath("properties.settings.defaultDecisionEnabled")]
-        public bool? DefaultDecisionEnabled
+        public bool? IsDefaultDecisionEnabled
         {
             get
             {
-                return Properties is null ? default : Properties.DefaultDecisionEnabled;
+                return Properties is null ? default : Properties.IsDefaultDecisionEnabled;
             }
         }
 
         /// <summary> Flag to indicate whether the reviewer is required to pass justification when recording a decision. </summary>
         [WirePath("properties.settings.justificationRequiredOnApproval")]
-        public bool? JustificationRequiredOnApproval
+        public bool? IsJustificationRequiredOnApproval
         {
             get
             {
-                return Properties is null ? default : Properties.JustificationRequiredOnApproval;
+                return Properties is null ? default : Properties.IsJustificationRequiredOnApproval;
             }
         }
 
         /// <summary> This specifies the behavior for the autoReview feature when an access review completes. </summary>
         [WirePath("properties.settings.defaultDecision")]
-        public DefaultDecisionType? DefaultDecision
+        public AccessReviewDefaultDecisionType? DefaultDecision
         {
             get
             {
@@ -223,21 +223,21 @@ namespace Azure.ResourceManager.Authorization
 
         /// <summary> Flag to indicate whether auto-apply capability, to automatically change the target object access resource, is enabled. If not enabled, a user must, after the review completes, apply the access review. </summary>
         [WirePath("properties.settings.autoApplyDecisionsEnabled")]
-        public bool? AutoApplyDecisionsEnabled
+        public bool? IsAutoApplyDecisionsEnabled
         {
             get
             {
-                return Properties is null ? default : Properties.AutoApplyDecisionsEnabled;
+                return Properties is null ? default : Properties.IsAutoApplyDecisionsEnabled;
             }
         }
 
         /// <summary> Flag to indicate whether showing recommendations to reviewers is enabled. </summary>
         [WirePath("properties.settings.recommendationsEnabled")]
-        public bool? RecommendationsEnabled
+        public bool? IsRecommendationsEnabled
         {
             get
             {
-                return Properties is null ? default : Properties.RecommendationsEnabled;
+                return Properties is null ? default : Properties.IsRecommendationsEnabled;
             }
         }
 

@@ -14,51 +14,51 @@ using Azure.ResourceManager.Authorization;
 namespace Azure.ResourceManager.Authorization.Models
 {
     /// <summary> The PIM Only Mode settings. </summary>
-    public partial class PIMOnlyModeSettings : IJsonModel<PIMOnlyModeSettings>
+    public partial class PimOnlyModeSettings : IJsonModel<PimOnlyModeSettings>
     {
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual PIMOnlyModeSettings PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        protected virtual PimOnlyModeSettings PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<PIMOnlyModeSettings>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<PimOnlyModeSettings>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializePIMOnlyModeSettings(document.RootElement, options);
+                        return DeserializePimOnlyModeSettings(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(PIMOnlyModeSettings)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(PimOnlyModeSettings)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<PIMOnlyModeSettings>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<PimOnlyModeSettings>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options, AzureResourceManagerAuthorizationContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(PIMOnlyModeSettings)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(PimOnlyModeSettings)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<PIMOnlyModeSettings>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<PimOnlyModeSettings>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        PIMOnlyModeSettings IPersistableModel<PIMOnlyModeSettings>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+        PimOnlyModeSettings IPersistableModel<PimOnlyModeSettings>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<PIMOnlyModeSettings>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<PimOnlyModeSettings>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<PIMOnlyModeSettings>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<PimOnlyModeSettings>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -69,10 +69,10 @@ namespace Azure.ResourceManager.Authorization.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<PIMOnlyModeSettings>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<PimOnlyModeSettings>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(PIMOnlyModeSettings)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(PimOnlyModeSettings)} does not support writing '{format}' format.");
             }
             if (Optional.IsDefined(Mode))
             {
@@ -93,7 +93,7 @@ namespace Azure.ResourceManager.Authorization.Models
             {
                 writer.WritePropertyName("excludedAssignmentTypes"u8);
                 writer.WriteStartArray();
-                foreach (ExcludedPrincipalTypes item in ExcludedAssignmentTypes)
+                foreach (ExcludedPrincipalType item in ExcludedAssignmentTypes)
                 {
                     writer.WriteStringValue(item.ToString());
                 }
@@ -118,32 +118,32 @@ namespace Azure.ResourceManager.Authorization.Models
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        PIMOnlyModeSettings IJsonModel<PIMOnlyModeSettings>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+        PimOnlyModeSettings IJsonModel<PimOnlyModeSettings>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual PIMOnlyModeSettings JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        protected virtual PimOnlyModeSettings JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<PIMOnlyModeSettings>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<PimOnlyModeSettings>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(PIMOnlyModeSettings)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(PimOnlyModeSettings)} does not support reading '{format}' format.");
             }
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializePIMOnlyModeSettings(document.RootElement, options);
+            return DeserializePimOnlyModeSettings(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        internal static PIMOnlyModeSettings DeserializePIMOnlyModeSettings(JsonElement element, ModelReaderWriterOptions options)
+        internal static PimOnlyModeSettings DeserializePimOnlyModeSettings(JsonElement element, ModelReaderWriterOptions options)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            PIMOnlyMode? mode = default;
+            PimOnlyMode? mode = default;
             IList<UsersOrServicePrincipalSet> excludes = default;
-            IList<ExcludedPrincipalTypes> excludedAssignmentTypes = default;
+            IList<ExcludedPrincipalType> excludedAssignmentTypes = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -153,7 +153,7 @@ namespace Azure.ResourceManager.Authorization.Models
                     {
                         continue;
                     }
-                    mode = new PIMOnlyMode(prop.Value.GetString());
+                    mode = new PimOnlyMode(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("excludes"u8))
@@ -176,10 +176,10 @@ namespace Azure.ResourceManager.Authorization.Models
                     {
                         continue;
                     }
-                    List<ExcludedPrincipalTypes> array = new List<ExcludedPrincipalTypes>();
+                    List<ExcludedPrincipalType> array = new List<ExcludedPrincipalType>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(new ExcludedPrincipalTypes(item.GetString()));
+                        array.Add(new ExcludedPrincipalType(item.GetString()));
                     }
                     excludedAssignmentTypes = array;
                     continue;
@@ -189,7 +189,7 @@ namespace Azure.ResourceManager.Authorization.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new PIMOnlyModeSettings(mode, excludes ?? new ChangeTrackingList<UsersOrServicePrincipalSet>(), excludedAssignmentTypes ?? new ChangeTrackingList<ExcludedPrincipalTypes>(), additionalBinaryDataProperties);
+            return new PimOnlyModeSettings(mode, excludes ?? new ChangeTrackingList<UsersOrServicePrincipalSet>(), excludedAssignmentTypes ?? new ChangeTrackingList<ExcludedPrincipalType>(), additionalBinaryDataProperties);
         }
     }
 }

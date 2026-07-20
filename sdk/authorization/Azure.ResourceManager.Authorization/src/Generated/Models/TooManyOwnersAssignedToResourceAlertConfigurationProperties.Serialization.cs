@@ -116,7 +116,7 @@ namespace Azure.ResourceManager.Authorization.Models
             string scope = default;
             bool? isEnabled = default;
             string alertConfigurationType = "TooManyOwnersAssignedToResourceAlertConfiguration";
-            AlertDefinitionData alertDefinition = default;
+            RoleManagementAlertDefinitionData alertDefinition = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             int? thresholdNumberOfOwners = default;
             int? thresholdPercentageOfOwnersOutOfAllRoleMembers = default;
@@ -152,7 +152,7 @@ namespace Azure.ResourceManager.Authorization.Models
                     {
                         continue;
                     }
-                    alertDefinition = AlertDefinitionData.DeserializeAlertDefinitionData(prop.Value, options);
+                    alertDefinition = RoleManagementAlertDefinitionData.DeserializeRoleManagementAlertDefinitionData(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("thresholdNumberOfOwners"u8))

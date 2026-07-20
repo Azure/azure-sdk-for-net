@@ -28,22 +28,22 @@ namespace Azure.ResourceManager.Authorization.Models
         /// <param name="principalType"> The identity type user/servicePrincipal to review. </param>
         /// <param name="assignmentState"> The role assignment state eligible/active to review. </param>
         /// <param name="inactiveDuration"> Duration users are inactive for. The value should be in ISO  8601 format (http://en.wikipedia.org/wiki/ISO_8601#Durations).This code can be used to convert TimeSpan to a valid interval string: XmlConvert.ToString(new TimeSpan(hours, minutes, seconds)). </param>
-        /// <param name="expandNestedMemberships"> Flag to indicate whether to expand nested memberships or not. </param>
-        /// <param name="includeInheritedAccess"> Flag to indicate whether to expand nested memberships or not. </param>
-        /// <param name="includeAccessBelowResource"> Flag to indicate whether to expand nested memberships or not. </param>
+        /// <param name="isExpandNestedMemberships"> Flag to indicate whether to expand nested memberships or not. </param>
+        /// <param name="isIncludeInheritedAccess"> Flag to indicate whether to expand nested memberships or not. </param>
+        /// <param name="isIncludeAccessBelowResource"> Flag to indicate whether to expand nested memberships or not. </param>
         /// <param name="excludeResourceId"> This is used to indicate the resource id(s) to exclude. </param>
         /// <param name="excludeRoleDefinitionId"> This is used to indicate the role definition id(s) to exclude. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal AccessReviewScope(string resourceId, string roleDefinitionId, AccessReviewScopePrincipalType? principalType, AccessReviewScopeAssignmentState? assignmentState, TimeSpan? inactiveDuration, bool? expandNestedMemberships, bool? includeInheritedAccess, bool? includeAccessBelowResource, string excludeResourceId, string excludeRoleDefinitionId, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal AccessReviewScope(string resourceId, string roleDefinitionId, AccessReviewScopePrincipalType? principalType, AccessReviewScopeAssignmentState? assignmentState, TimeSpan? inactiveDuration, bool? isExpandNestedMemberships, bool? isIncludeInheritedAccess, bool? isIncludeAccessBelowResource, string excludeResourceId, string excludeRoleDefinitionId, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             ResourceId = resourceId;
             RoleDefinitionId = roleDefinitionId;
             PrincipalType = principalType;
             AssignmentState = assignmentState;
             InactiveDuration = inactiveDuration;
-            ExpandNestedMemberships = expandNestedMemberships;
-            IncludeInheritedAccess = includeInheritedAccess;
-            IncludeAccessBelowResource = includeAccessBelowResource;
+            IsExpandNestedMemberships = isExpandNestedMemberships;
+            IsIncludeInheritedAccess = isIncludeInheritedAccess;
+            IsIncludeAccessBelowResource = isIncludeAccessBelowResource;
             ExcludeResourceId = excludeResourceId;
             ExcludeRoleDefinitionId = excludeRoleDefinitionId;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
@@ -71,15 +71,15 @@ namespace Azure.ResourceManager.Authorization.Models
 
         /// <summary> Flag to indicate whether to expand nested memberships or not. </summary>
         [WirePath("expandNestedMemberships")]
-        public bool? ExpandNestedMemberships { get; set; }
+        public bool? IsExpandNestedMemberships { get; set; }
 
         /// <summary> Flag to indicate whether to expand nested memberships or not. </summary>
         [WirePath("includeInheritedAccess")]
-        public bool? IncludeInheritedAccess { get; set; }
+        public bool? IsIncludeInheritedAccess { get; set; }
 
         /// <summary> Flag to indicate whether to expand nested memberships or not. </summary>
         [WirePath("includeAccessBelowResource")]
-        public bool? IncludeAccessBelowResource { get; set; }
+        public bool? IsIncludeAccessBelowResource { get; set; }
 
         /// <summary> This is used to indicate the resource id(s) to exclude. </summary>
         [WirePath("excludeResourceId")]

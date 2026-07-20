@@ -18,28 +18,28 @@ using Azure.ResourceManager;
 namespace Azure.ResourceManager.Authorization
 {
     /// <summary>
-    /// A class representing a collection of <see cref="AlertConfigurationResource"/> and their operations.
-    /// Each <see cref="AlertConfigurationResource"/> in the collection will belong to the same instance of <see cref="ArmResource"/>.
-    /// To get a <see cref="AlertConfigurationCollection"/> instance call the GetAlertConfigurations method from an instance of <see cref="ArmResource"/>.
+    /// A class representing a collection of <see cref="RoleManagementAlertConfigurationResource"/> and their operations.
+    /// Each <see cref="RoleManagementAlertConfigurationResource"/> in the collection will belong to the same instance of <see cref="ArmResource"/>.
+    /// To get a <see cref="RoleManagementAlertConfigurationCollection"/> instance call the GetRoleManagementAlertConfigurations method from an instance of <see cref="ArmResource"/>.
     /// </summary>
-    public partial class AlertConfigurationCollection : ArmCollection, IEnumerable<AlertConfigurationResource>, IAsyncEnumerable<AlertConfigurationResource>
+    public partial class RoleManagementAlertConfigurationCollection : ArmCollection, IEnumerable<RoleManagementAlertConfigurationResource>, IAsyncEnumerable<RoleManagementAlertConfigurationResource>
     {
         private readonly ClientDiagnostics _alertConfigurationsClientDiagnostics;
         private readonly AlertConfigurations _alertConfigurationsRestClient;
 
-        /// <summary> Initializes a new instance of AlertConfigurationCollection for mocking. </summary>
-        protected AlertConfigurationCollection()
+        /// <summary> Initializes a new instance of RoleManagementAlertConfigurationCollection for mocking. </summary>
+        protected RoleManagementAlertConfigurationCollection()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="AlertConfigurationCollection"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="RoleManagementAlertConfigurationCollection"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
-        internal AlertConfigurationCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
+        internal RoleManagementAlertConfigurationCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            TryGetApiVersion(AlertConfigurationResource.ResourceType, out string alertConfigurationApiVersion);
-            _alertConfigurationsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Authorization", AlertConfigurationResource.ResourceType.Namespace, Diagnostics);
-            _alertConfigurationsRestClient = new AlertConfigurations(_alertConfigurationsClientDiagnostics, Pipeline, Endpoint, alertConfigurationApiVersion ?? "2022-08-01-preview");
+            TryGetApiVersion(RoleManagementAlertConfigurationResource.ResourceType, out string roleManagementAlertConfigurationApiVersion);
+            _alertConfigurationsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Authorization", RoleManagementAlertConfigurationResource.ResourceType.Namespace, Diagnostics);
+            _alertConfigurationsRestClient = new AlertConfigurations(_alertConfigurationsClientDiagnostics, Pipeline, Endpoint, roleManagementAlertConfigurationApiVersion ?? "2022-08-01-preview");
         }
 
         /// <summary>
@@ -63,11 +63,11 @@ namespace Azure.ResourceManager.Authorization
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="alertId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="alertId"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual async Task<Response<AlertConfigurationResource>> GetAsync(string alertId, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<RoleManagementAlertConfigurationResource>> GetAsync(string alertId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(alertId, nameof(alertId));
 
-            using DiagnosticScope scope = _alertConfigurationsClientDiagnostics.CreateScope("AlertConfigurationCollection.Get");
+            using DiagnosticScope scope = _alertConfigurationsClientDiagnostics.CreateScope("RoleManagementAlertConfigurationCollection.Get");
             scope.Start();
             try
             {
@@ -77,12 +77,12 @@ namespace Azure.ResourceManager.Authorization
                 };
                 HttpMessage message = _alertConfigurationsRestClient.CreateGetRequest(Id.ToString(), alertId, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                Response<AlertConfigurationData> response = Response.FromValue(AlertConfigurationData.FromResponse(result), result);
+                Response<RoleManagementAlertConfigurationData> response = Response.FromValue(RoleManagementAlertConfigurationData.FromResponse(result), result);
                 if (response.Value == null)
                 {
                     throw new RequestFailedException(response.GetRawResponse());
                 }
-                return Response.FromValue(new AlertConfigurationResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new RoleManagementAlertConfigurationResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -112,11 +112,11 @@ namespace Azure.ResourceManager.Authorization
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="alertId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="alertId"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual Response<AlertConfigurationResource> Get(string alertId, CancellationToken cancellationToken = default)
+        public virtual Response<RoleManagementAlertConfigurationResource> Get(string alertId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(alertId, nameof(alertId));
 
-            using DiagnosticScope scope = _alertConfigurationsClientDiagnostics.CreateScope("AlertConfigurationCollection.Get");
+            using DiagnosticScope scope = _alertConfigurationsClientDiagnostics.CreateScope("RoleManagementAlertConfigurationCollection.Get");
             scope.Start();
             try
             {
@@ -126,12 +126,12 @@ namespace Azure.ResourceManager.Authorization
                 };
                 HttpMessage message = _alertConfigurationsRestClient.CreateGetRequest(Id.ToString(), alertId, context);
                 Response result = Pipeline.ProcessMessage(message, context);
-                Response<AlertConfigurationData> response = Response.FromValue(AlertConfigurationData.FromResponse(result), result);
+                Response<RoleManagementAlertConfigurationData> response = Response.FromValue(RoleManagementAlertConfigurationData.FromResponse(result), result);
                 if (response.Value == null)
                 {
                     throw new RequestFailedException(response.GetRawResponse());
                 }
-                return Response.FromValue(new AlertConfigurationResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new RoleManagementAlertConfigurationResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -158,14 +158,14 @@ namespace Azure.ResourceManager.Authorization
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="AlertConfigurationResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<AlertConfigurationResource> GetAllAsync(CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="RoleManagementAlertConfigurationResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<RoleManagementAlertConfigurationResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
             RequestContext context = new RequestContext
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<AlertConfigurationData, AlertConfigurationResource>(new AlertConfigurationsGetForScopeAsyncCollectionResultOfT(_alertConfigurationsRestClient, Id.ToString(), context, "AlertConfigurationCollection.GetAll"), data => new AlertConfigurationResource(Client, data));
+            return new AsyncPageableWrapper<RoleManagementAlertConfigurationData, RoleManagementAlertConfigurationResource>(new AlertConfigurationsGetForScopeAsyncCollectionResultOfT(_alertConfigurationsRestClient, Id.ToString(), context, "RoleManagementAlertConfigurationCollection.GetAll"), data => new RoleManagementAlertConfigurationResource(Client, data));
         }
 
         /// <summary>
@@ -186,14 +186,14 @@ namespace Azure.ResourceManager.Authorization
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="AlertConfigurationResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<AlertConfigurationResource> GetAll(CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="RoleManagementAlertConfigurationResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<RoleManagementAlertConfigurationResource> GetAll(CancellationToken cancellationToken = default)
         {
             RequestContext context = new RequestContext
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<AlertConfigurationData, AlertConfigurationResource>(new AlertConfigurationsGetForScopeCollectionResultOfT(_alertConfigurationsRestClient, Id.ToString(), context, "AlertConfigurationCollection.GetAll"), data => new AlertConfigurationResource(Client, data));
+            return new PageableWrapper<RoleManagementAlertConfigurationData, RoleManagementAlertConfigurationResource>(new AlertConfigurationsGetForScopeCollectionResultOfT(_alertConfigurationsRestClient, Id.ToString(), context, "RoleManagementAlertConfigurationCollection.GetAll"), data => new RoleManagementAlertConfigurationResource(Client, data));
         }
 
         /// <summary>
@@ -221,7 +221,7 @@ namespace Azure.ResourceManager.Authorization
         {
             Argument.AssertNotNullOrEmpty(alertId, nameof(alertId));
 
-            using DiagnosticScope scope = _alertConfigurationsClientDiagnostics.CreateScope("AlertConfigurationCollection.Exists");
+            using DiagnosticScope scope = _alertConfigurationsClientDiagnostics.CreateScope("RoleManagementAlertConfigurationCollection.Exists");
             scope.Start();
             try
             {
@@ -232,14 +232,14 @@ namespace Azure.ResourceManager.Authorization
                 HttpMessage message = _alertConfigurationsRestClient.CreateGetRequest(Id.ToString(), alertId, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
-                Response<AlertConfigurationData> response = default;
+                Response<RoleManagementAlertConfigurationData> response = default;
                 switch (result.Status)
                 {
                     case 200:
-                        response = Response.FromValue(AlertConfigurationData.FromResponse(result), result);
+                        response = Response.FromValue(RoleManagementAlertConfigurationData.FromResponse(result), result);
                         break;
                     case 404:
-                        response = Response.FromValue((AlertConfigurationData)null, result);
+                        response = Response.FromValue((RoleManagementAlertConfigurationData)null, result);
                         break;
                     default:
                         throw new RequestFailedException(result);
@@ -278,7 +278,7 @@ namespace Azure.ResourceManager.Authorization
         {
             Argument.AssertNotNullOrEmpty(alertId, nameof(alertId));
 
-            using DiagnosticScope scope = _alertConfigurationsClientDiagnostics.CreateScope("AlertConfigurationCollection.Exists");
+            using DiagnosticScope scope = _alertConfigurationsClientDiagnostics.CreateScope("RoleManagementAlertConfigurationCollection.Exists");
             scope.Start();
             try
             {
@@ -289,14 +289,14 @@ namespace Azure.ResourceManager.Authorization
                 HttpMessage message = _alertConfigurationsRestClient.CreateGetRequest(Id.ToString(), alertId, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
-                Response<AlertConfigurationData> response = default;
+                Response<RoleManagementAlertConfigurationData> response = default;
                 switch (result.Status)
                 {
                     case 200:
-                        response = Response.FromValue(AlertConfigurationData.FromResponse(result), result);
+                        response = Response.FromValue(RoleManagementAlertConfigurationData.FromResponse(result), result);
                         break;
                     case 404:
-                        response = Response.FromValue((AlertConfigurationData)null, result);
+                        response = Response.FromValue((RoleManagementAlertConfigurationData)null, result);
                         break;
                     default:
                         throw new RequestFailedException(result);
@@ -331,11 +331,11 @@ namespace Azure.ResourceManager.Authorization
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="alertId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="alertId"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual async Task<NullableResponse<AlertConfigurationResource>> GetIfExistsAsync(string alertId, CancellationToken cancellationToken = default)
+        public virtual async Task<NullableResponse<RoleManagementAlertConfigurationResource>> GetIfExistsAsync(string alertId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(alertId, nameof(alertId));
 
-            using DiagnosticScope scope = _alertConfigurationsClientDiagnostics.CreateScope("AlertConfigurationCollection.GetIfExists");
+            using DiagnosticScope scope = _alertConfigurationsClientDiagnostics.CreateScope("RoleManagementAlertConfigurationCollection.GetIfExists");
             scope.Start();
             try
             {
@@ -346,23 +346,23 @@ namespace Azure.ResourceManager.Authorization
                 HttpMessage message = _alertConfigurationsRestClient.CreateGetRequest(Id.ToString(), alertId, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
-                Response<AlertConfigurationData> response = default;
+                Response<RoleManagementAlertConfigurationData> response = default;
                 switch (result.Status)
                 {
                     case 200:
-                        response = Response.FromValue(AlertConfigurationData.FromResponse(result), result);
+                        response = Response.FromValue(RoleManagementAlertConfigurationData.FromResponse(result), result);
                         break;
                     case 404:
-                        response = Response.FromValue((AlertConfigurationData)null, result);
+                        response = Response.FromValue((RoleManagementAlertConfigurationData)null, result);
                         break;
                     default:
                         throw new RequestFailedException(result);
                 }
                 if (response.Value == null)
                 {
-                    return new NoValueResponse<AlertConfigurationResource>(response.GetRawResponse());
+                    return new NoValueResponse<RoleManagementAlertConfigurationResource>(response.GetRawResponse());
                 }
-                return Response.FromValue(new AlertConfigurationResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new RoleManagementAlertConfigurationResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -392,11 +392,11 @@ namespace Azure.ResourceManager.Authorization
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="alertId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="alertId"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual NullableResponse<AlertConfigurationResource> GetIfExists(string alertId, CancellationToken cancellationToken = default)
+        public virtual NullableResponse<RoleManagementAlertConfigurationResource> GetIfExists(string alertId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(alertId, nameof(alertId));
 
-            using DiagnosticScope scope = _alertConfigurationsClientDiagnostics.CreateScope("AlertConfigurationCollection.GetIfExists");
+            using DiagnosticScope scope = _alertConfigurationsClientDiagnostics.CreateScope("RoleManagementAlertConfigurationCollection.GetIfExists");
             scope.Start();
             try
             {
@@ -407,23 +407,23 @@ namespace Azure.ResourceManager.Authorization
                 HttpMessage message = _alertConfigurationsRestClient.CreateGetRequest(Id.ToString(), alertId, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
-                Response<AlertConfigurationData> response = default;
+                Response<RoleManagementAlertConfigurationData> response = default;
                 switch (result.Status)
                 {
                     case 200:
-                        response = Response.FromValue(AlertConfigurationData.FromResponse(result), result);
+                        response = Response.FromValue(RoleManagementAlertConfigurationData.FromResponse(result), result);
                         break;
                     case 404:
-                        response = Response.FromValue((AlertConfigurationData)null, result);
+                        response = Response.FromValue((RoleManagementAlertConfigurationData)null, result);
                         break;
                     default:
                         throw new RequestFailedException(result);
                 }
                 if (response.Value == null)
                 {
-                    return new NoValueResponse<AlertConfigurationResource>(response.GetRawResponse());
+                    return new NoValueResponse<RoleManagementAlertConfigurationResource>(response.GetRawResponse());
                 }
-                return Response.FromValue(new AlertConfigurationResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new RoleManagementAlertConfigurationResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -432,7 +432,7 @@ namespace Azure.ResourceManager.Authorization
             }
         }
 
-        IEnumerator<AlertConfigurationResource> IEnumerable<AlertConfigurationResource>.GetEnumerator()
+        IEnumerator<RoleManagementAlertConfigurationResource> IEnumerable<RoleManagementAlertConfigurationResource>.GetEnumerator()
         {
             return GetAll().GetEnumerator();
         }
@@ -443,7 +443,7 @@ namespace Azure.ResourceManager.Authorization
         }
 
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        IAsyncEnumerator<AlertConfigurationResource> IAsyncEnumerable<AlertConfigurationResource>.GetAsyncEnumerator(CancellationToken cancellationToken)
+        IAsyncEnumerator<RoleManagementAlertConfigurationResource> IAsyncEnumerable<RoleManagementAlertConfigurationResource>.GetAsyncEnumerator(CancellationToken cancellationToken)
         {
             return GetAllAsync(cancellationToken: cancellationToken).GetAsyncEnumerator(cancellationToken);
         }

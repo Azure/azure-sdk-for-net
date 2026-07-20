@@ -85,40 +85,40 @@ namespace Azure.ResourceManager.Authorization.Models
             {
                 throw new FormatException($"The model {nameof(AccessReviewScheduleSettings)} does not support writing '{format}' format.");
             }
-            if (Optional.IsDefined(MailNotificationsEnabled))
+            if (Optional.IsDefined(IsMailNotificationsEnabled))
             {
                 writer.WritePropertyName("mailNotificationsEnabled"u8);
-                writer.WriteBooleanValue(MailNotificationsEnabled.Value);
+                writer.WriteBooleanValue(IsMailNotificationsEnabled.Value);
             }
-            if (Optional.IsDefined(ReminderNotificationsEnabled))
+            if (Optional.IsDefined(IsReminderNotificationsEnabled))
             {
                 writer.WritePropertyName("reminderNotificationsEnabled"u8);
-                writer.WriteBooleanValue(ReminderNotificationsEnabled.Value);
+                writer.WriteBooleanValue(IsReminderNotificationsEnabled.Value);
             }
-            if (Optional.IsDefined(DefaultDecisionEnabled))
+            if (Optional.IsDefined(IsDefaultDecisionEnabled))
             {
                 writer.WritePropertyName("defaultDecisionEnabled"u8);
-                writer.WriteBooleanValue(DefaultDecisionEnabled.Value);
+                writer.WriteBooleanValue(IsDefaultDecisionEnabled.Value);
             }
-            if (Optional.IsDefined(JustificationRequiredOnApproval))
+            if (Optional.IsDefined(IsJustificationRequiredOnApproval))
             {
                 writer.WritePropertyName("justificationRequiredOnApproval"u8);
-                writer.WriteBooleanValue(JustificationRequiredOnApproval.Value);
+                writer.WriteBooleanValue(IsJustificationRequiredOnApproval.Value);
             }
             if (Optional.IsDefined(DefaultDecision))
             {
                 writer.WritePropertyName("defaultDecision"u8);
                 writer.WriteStringValue(DefaultDecision.Value.ToString());
             }
-            if (Optional.IsDefined(AutoApplyDecisionsEnabled))
+            if (Optional.IsDefined(IsAutoApplyDecisionsEnabled))
             {
                 writer.WritePropertyName("autoApplyDecisionsEnabled"u8);
-                writer.WriteBooleanValue(AutoApplyDecisionsEnabled.Value);
+                writer.WriteBooleanValue(IsAutoApplyDecisionsEnabled.Value);
             }
-            if (Optional.IsDefined(RecommendationsEnabled))
+            if (Optional.IsDefined(IsRecommendationsEnabled))
             {
                 writer.WritePropertyName("recommendationsEnabled"u8);
-                writer.WriteBooleanValue(RecommendationsEnabled.Value);
+                writer.WriteBooleanValue(IsRecommendationsEnabled.Value);
             }
             if (Optional.IsDefined(RecommendationLookBackDuration))
             {
@@ -177,13 +177,13 @@ namespace Azure.ResourceManager.Authorization.Models
             {
                 return null;
             }
-            bool? mailNotificationsEnabled = default;
-            bool? reminderNotificationsEnabled = default;
-            bool? defaultDecisionEnabled = default;
-            bool? justificationRequiredOnApproval = default;
-            DefaultDecisionType? defaultDecision = default;
-            bool? autoApplyDecisionsEnabled = default;
-            bool? recommendationsEnabled = default;
+            bool? isMailNotificationsEnabled = default;
+            bool? isReminderNotificationsEnabled = default;
+            bool? isDefaultDecisionEnabled = default;
+            bool? isJustificationRequiredOnApproval = default;
+            AccessReviewDefaultDecisionType? defaultDecision = default;
+            bool? isAutoApplyDecisionsEnabled = default;
+            bool? isRecommendationsEnabled = default;
             TimeSpan? recommendationLookBackDuration = default;
             int? instanceDurationInDays = default;
             AccessReviewRecurrenceSettings recurrence = default;
@@ -196,7 +196,7 @@ namespace Azure.ResourceManager.Authorization.Models
                     {
                         continue;
                     }
-                    mailNotificationsEnabled = prop.Value.GetBoolean();
+                    isMailNotificationsEnabled = prop.Value.GetBoolean();
                     continue;
                 }
                 if (prop.NameEquals("reminderNotificationsEnabled"u8))
@@ -205,7 +205,7 @@ namespace Azure.ResourceManager.Authorization.Models
                     {
                         continue;
                     }
-                    reminderNotificationsEnabled = prop.Value.GetBoolean();
+                    isReminderNotificationsEnabled = prop.Value.GetBoolean();
                     continue;
                 }
                 if (prop.NameEquals("defaultDecisionEnabled"u8))
@@ -214,7 +214,7 @@ namespace Azure.ResourceManager.Authorization.Models
                     {
                         continue;
                     }
-                    defaultDecisionEnabled = prop.Value.GetBoolean();
+                    isDefaultDecisionEnabled = prop.Value.GetBoolean();
                     continue;
                 }
                 if (prop.NameEquals("justificationRequiredOnApproval"u8))
@@ -223,7 +223,7 @@ namespace Azure.ResourceManager.Authorization.Models
                     {
                         continue;
                     }
-                    justificationRequiredOnApproval = prop.Value.GetBoolean();
+                    isJustificationRequiredOnApproval = prop.Value.GetBoolean();
                     continue;
                 }
                 if (prop.NameEquals("defaultDecision"u8))
@@ -232,7 +232,7 @@ namespace Azure.ResourceManager.Authorization.Models
                     {
                         continue;
                     }
-                    defaultDecision = new DefaultDecisionType(prop.Value.GetString());
+                    defaultDecision = new AccessReviewDefaultDecisionType(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("autoApplyDecisionsEnabled"u8))
@@ -241,7 +241,7 @@ namespace Azure.ResourceManager.Authorization.Models
                     {
                         continue;
                     }
-                    autoApplyDecisionsEnabled = prop.Value.GetBoolean();
+                    isAutoApplyDecisionsEnabled = prop.Value.GetBoolean();
                     continue;
                 }
                 if (prop.NameEquals("recommendationsEnabled"u8))
@@ -250,7 +250,7 @@ namespace Azure.ResourceManager.Authorization.Models
                     {
                         continue;
                     }
-                    recommendationsEnabled = prop.Value.GetBoolean();
+                    isRecommendationsEnabled = prop.Value.GetBoolean();
                     continue;
                 }
                 if (prop.NameEquals("recommendationLookBackDuration"u8))
@@ -286,13 +286,13 @@ namespace Azure.ResourceManager.Authorization.Models
                 }
             }
             return new AccessReviewScheduleSettings(
-                mailNotificationsEnabled,
-                reminderNotificationsEnabled,
-                defaultDecisionEnabled,
-                justificationRequiredOnApproval,
+                isMailNotificationsEnabled,
+                isReminderNotificationsEnabled,
+                isDefaultDecisionEnabled,
+                isJustificationRequiredOnApproval,
                 defaultDecision,
-                autoApplyDecisionsEnabled,
-                recommendationsEnabled,
+                isAutoApplyDecisionsEnabled,
+                isRecommendationsEnabled,
                 recommendationLookBackDuration,
                 instanceDurationInDays,
                 recurrence,

@@ -17,40 +17,40 @@ using Azure.ResourceManager;
 namespace Azure.ResourceManager.Authorization
 {
     /// <summary>
-    /// A class representing a AlertIncident along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="AlertIncidentResource"/> from an instance of <see cref="ArmClient"/> using the GetResource method.
-    /// Otherwise you can get one from its parent resource <see cref="AlertResource"/> using the GetAlertIncidents method.
+    /// A class representing a RoleManagementAlertIncident along with the instance operations that can be performed on it.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="RoleManagementAlertIncidentResource"/> from an instance of <see cref="ArmClient"/> using the GetResource method.
+    /// Otherwise you can get one from its parent resource <see cref="RoleManagementAlertResource"/> using the GetRoleManagementAlertIncidents method.
     /// </summary>
-    public partial class AlertIncidentResource : ArmResource
+    public partial class RoleManagementAlertIncidentResource : ArmResource
     {
         private readonly ClientDiagnostics _alertIncidentsClientDiagnostics;
         private readonly AlertIncidents _alertIncidentsRestClient;
-        private readonly AlertIncidentData _data;
+        private readonly RoleManagementAlertIncidentData _data;
         /// <summary> Gets the resource type for the operations. </summary>
         public static readonly ResourceType ResourceType = "Microsoft.Authorization/roleManagementAlerts/alertIncidents";
 
-        /// <summary> Initializes a new instance of AlertIncidentResource for mocking. </summary>
-        protected AlertIncidentResource()
+        /// <summary> Initializes a new instance of RoleManagementAlertIncidentResource for mocking. </summary>
+        protected RoleManagementAlertIncidentResource()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="AlertIncidentResource"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="RoleManagementAlertIncidentResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
-        internal AlertIncidentResource(ArmClient client, AlertIncidentData data) : this(client, data.Id)
+        internal RoleManagementAlertIncidentResource(ArmClient client, RoleManagementAlertIncidentData data) : this(client, data.Id)
         {
             HasData = true;
             _data = data;
         }
 
-        /// <summary> Initializes a new instance of <see cref="AlertIncidentResource"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="RoleManagementAlertIncidentResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
-        internal AlertIncidentResource(ArmClient client, ResourceIdentifier id) : base(client, id)
+        internal RoleManagementAlertIncidentResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            TryGetApiVersion(ResourceType, out string alertIncidentApiVersion);
+            TryGetApiVersion(ResourceType, out string roleManagementAlertIncidentApiVersion);
             _alertIncidentsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Authorization", ResourceType.Namespace, Diagnostics);
-            _alertIncidentsRestClient = new AlertIncidents(_alertIncidentsClientDiagnostics, Pipeline, Endpoint, alertIncidentApiVersion ?? "2022-08-01-preview");
+            _alertIncidentsRestClient = new AlertIncidents(_alertIncidentsClientDiagnostics, Pipeline, Endpoint, roleManagementAlertIncidentApiVersion ?? "2022-08-01-preview");
             ValidateResourceId(id);
         }
 
@@ -58,7 +58,7 @@ namespace Azure.ResourceManager.Authorization
         public virtual bool HasData { get; }
 
         /// <summary> Gets the data representing this Feature. </summary>
-        public virtual AlertIncidentData Data
+        public virtual RoleManagementAlertIncidentData Data
         {
             get
             {
@@ -107,14 +107,14 @@ namespace Azure.ResourceManager.Authorization
         /// </item>
         /// <item>
         /// <term> Resource. </term>
-        /// <description> <see cref="AlertIncidentResource"/>. </description>
+        /// <description> <see cref="RoleManagementAlertIncidentResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<AlertIncidentResource>> GetAsync(CancellationToken cancellationToken = default)
+        public virtual async Task<Response<RoleManagementAlertIncidentResource>> GetAsync(CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _alertIncidentsClientDiagnostics.CreateScope("AlertIncidentResource.Get");
+            using DiagnosticScope scope = _alertIncidentsClientDiagnostics.CreateScope("RoleManagementAlertIncidentResource.Get");
             scope.Start();
             try
             {
@@ -124,12 +124,12 @@ namespace Azure.ResourceManager.Authorization
                 };
                 HttpMessage message = _alertIncidentsRestClient.CreateGetRequest(Id.Parent.Parent.ToString(), Id.Parent.Name, Id.Name, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                Response<AlertIncidentData> response = Response.FromValue(AlertIncidentData.FromResponse(result), result);
+                Response<RoleManagementAlertIncidentData> response = Response.FromValue(RoleManagementAlertIncidentData.FromResponse(result), result);
                 if (response.Value == null)
                 {
                     throw new RequestFailedException(response.GetRawResponse());
                 }
-                return Response.FromValue(new AlertIncidentResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new RoleManagementAlertIncidentResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -155,14 +155,14 @@ namespace Azure.ResourceManager.Authorization
         /// </item>
         /// <item>
         /// <term> Resource. </term>
-        /// <description> <see cref="AlertIncidentResource"/>. </description>
+        /// <description> <see cref="RoleManagementAlertIncidentResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<AlertIncidentResource> Get(CancellationToken cancellationToken = default)
+        public virtual Response<RoleManagementAlertIncidentResource> Get(CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _alertIncidentsClientDiagnostics.CreateScope("AlertIncidentResource.Get");
+            using DiagnosticScope scope = _alertIncidentsClientDiagnostics.CreateScope("RoleManagementAlertIncidentResource.Get");
             scope.Start();
             try
             {
@@ -172,12 +172,12 @@ namespace Azure.ResourceManager.Authorization
                 };
                 HttpMessage message = _alertIncidentsRestClient.CreateGetRequest(Id.Parent.Parent.ToString(), Id.Parent.Name, Id.Name, context);
                 Response result = Pipeline.ProcessMessage(message, context);
-                Response<AlertIncidentData> response = Response.FromValue(AlertIncidentData.FromResponse(result), result);
+                Response<RoleManagementAlertIncidentData> response = Response.FromValue(RoleManagementAlertIncidentData.FromResponse(result), result);
                 if (response.Value == null)
                 {
                     throw new RequestFailedException(response.GetRawResponse());
                 }
-                return Response.FromValue(new AlertIncidentResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new RoleManagementAlertIncidentResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -203,14 +203,14 @@ namespace Azure.ResourceManager.Authorization
         /// </item>
         /// <item>
         /// <term> Resource. </term>
-        /// <description> <see cref="AlertIncidentResource"/>. </description>
+        /// <description> <see cref="RoleManagementAlertIncidentResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<Response> RemediateAsync(CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _alertIncidentsClientDiagnostics.CreateScope("AlertIncidentResource.Remediate");
+            using DiagnosticScope scope = _alertIncidentsClientDiagnostics.CreateScope("RoleManagementAlertIncidentResource.Remediate");
             scope.Start();
             try
             {
@@ -246,14 +246,14 @@ namespace Azure.ResourceManager.Authorization
         /// </item>
         /// <item>
         /// <term> Resource. </term>
-        /// <description> <see cref="AlertIncidentResource"/>. </description>
+        /// <description> <see cref="RoleManagementAlertIncidentResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response Remediate(CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _alertIncidentsClientDiagnostics.CreateScope("AlertIncidentResource.Remediate");
+            using DiagnosticScope scope = _alertIncidentsClientDiagnostics.CreateScope("RoleManagementAlertIncidentResource.Remediate");
             scope.Start();
             try
             {

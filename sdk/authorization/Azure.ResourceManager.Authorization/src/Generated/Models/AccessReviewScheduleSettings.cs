@@ -23,26 +23,26 @@ namespace Azure.ResourceManager.Authorization.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="AccessReviewScheduleSettings"/>. </summary>
-        /// <param name="mailNotificationsEnabled"> Flag to indicate whether sending mails to reviewers and the review creator is enabled. </param>
-        /// <param name="reminderNotificationsEnabled"> Flag to indicate whether sending reminder emails to reviewers are enabled. </param>
-        /// <param name="defaultDecisionEnabled"> Flag to indicate whether reviewers are required to provide a justification when reviewing access. </param>
-        /// <param name="justificationRequiredOnApproval"> Flag to indicate whether the reviewer is required to pass justification when recording a decision. </param>
+        /// <param name="isMailNotificationsEnabled"> Flag to indicate whether sending mails to reviewers and the review creator is enabled. </param>
+        /// <param name="isReminderNotificationsEnabled"> Flag to indicate whether sending reminder emails to reviewers are enabled. </param>
+        /// <param name="isDefaultDecisionEnabled"> Flag to indicate whether reviewers are required to provide a justification when reviewing access. </param>
+        /// <param name="isJustificationRequiredOnApproval"> Flag to indicate whether the reviewer is required to pass justification when recording a decision. </param>
         /// <param name="defaultDecision"> This specifies the behavior for the autoReview feature when an access review completes. </param>
-        /// <param name="autoApplyDecisionsEnabled"> Flag to indicate whether auto-apply capability, to automatically change the target object access resource, is enabled. If not enabled, a user must, after the review completes, apply the access review. </param>
-        /// <param name="recommendationsEnabled"> Flag to indicate whether showing recommendations to reviewers is enabled. </param>
+        /// <param name="isAutoApplyDecisionsEnabled"> Flag to indicate whether auto-apply capability, to automatically change the target object access resource, is enabled. If not enabled, a user must, after the review completes, apply the access review. </param>
+        /// <param name="isRecommendationsEnabled"> Flag to indicate whether showing recommendations to reviewers is enabled. </param>
         /// <param name="recommendationLookBackDuration"> Recommendations for access reviews are calculated by looking back at 30 days of data(w.r.t the start date of the review) by default. However, in some scenarios, customers want to change how far back to look at and want to configure 60 days, 90 days, etc. instead. This setting allows customers to configure this duration. The value should be in ISO  8601 format (http://en.wikipedia.org/wiki/ISO_8601#Durations).This code can be used to convert TimeSpan to a valid interval string: XmlConvert.ToString(new TimeSpan(hours, minutes, seconds)). </param>
         /// <param name="instanceDurationInDays"> The duration in days for an instance. </param>
         /// <param name="recurrence"> Access Review Settings. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal AccessReviewScheduleSettings(bool? mailNotificationsEnabled, bool? reminderNotificationsEnabled, bool? defaultDecisionEnabled, bool? justificationRequiredOnApproval, DefaultDecisionType? defaultDecision, bool? autoApplyDecisionsEnabled, bool? recommendationsEnabled, TimeSpan? recommendationLookBackDuration, int? instanceDurationInDays, AccessReviewRecurrenceSettings recurrence, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal AccessReviewScheduleSettings(bool? isMailNotificationsEnabled, bool? isReminderNotificationsEnabled, bool? isDefaultDecisionEnabled, bool? isJustificationRequiredOnApproval, AccessReviewDefaultDecisionType? defaultDecision, bool? isAutoApplyDecisionsEnabled, bool? isRecommendationsEnabled, TimeSpan? recommendationLookBackDuration, int? instanceDurationInDays, AccessReviewRecurrenceSettings recurrence, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
-            MailNotificationsEnabled = mailNotificationsEnabled;
-            ReminderNotificationsEnabled = reminderNotificationsEnabled;
-            DefaultDecisionEnabled = defaultDecisionEnabled;
-            JustificationRequiredOnApproval = justificationRequiredOnApproval;
+            IsMailNotificationsEnabled = isMailNotificationsEnabled;
+            IsReminderNotificationsEnabled = isReminderNotificationsEnabled;
+            IsDefaultDecisionEnabled = isDefaultDecisionEnabled;
+            IsJustificationRequiredOnApproval = isJustificationRequiredOnApproval;
             DefaultDecision = defaultDecision;
-            AutoApplyDecisionsEnabled = autoApplyDecisionsEnabled;
-            RecommendationsEnabled = recommendationsEnabled;
+            IsAutoApplyDecisionsEnabled = isAutoApplyDecisionsEnabled;
+            IsRecommendationsEnabled = isRecommendationsEnabled;
             RecommendationLookBackDuration = recommendationLookBackDuration;
             InstanceDurationInDays = instanceDurationInDays;
             Recurrence = recurrence;
@@ -51,31 +51,31 @@ namespace Azure.ResourceManager.Authorization.Models
 
         /// <summary> Flag to indicate whether sending mails to reviewers and the review creator is enabled. </summary>
         [WirePath("mailNotificationsEnabled")]
-        public bool? MailNotificationsEnabled { get; set; }
+        public bool? IsMailNotificationsEnabled { get; set; }
 
         /// <summary> Flag to indicate whether sending reminder emails to reviewers are enabled. </summary>
         [WirePath("reminderNotificationsEnabled")]
-        public bool? ReminderNotificationsEnabled { get; set; }
+        public bool? IsReminderNotificationsEnabled { get; set; }
 
         /// <summary> Flag to indicate whether reviewers are required to provide a justification when reviewing access. </summary>
         [WirePath("defaultDecisionEnabled")]
-        public bool? DefaultDecisionEnabled { get; set; }
+        public bool? IsDefaultDecisionEnabled { get; set; }
 
         /// <summary> Flag to indicate whether the reviewer is required to pass justification when recording a decision. </summary>
         [WirePath("justificationRequiredOnApproval")]
-        public bool? JustificationRequiredOnApproval { get; set; }
+        public bool? IsJustificationRequiredOnApproval { get; set; }
 
         /// <summary> This specifies the behavior for the autoReview feature when an access review completes. </summary>
         [WirePath("defaultDecision")]
-        public DefaultDecisionType? DefaultDecision { get; set; }
+        public AccessReviewDefaultDecisionType? DefaultDecision { get; set; }
 
         /// <summary> Flag to indicate whether auto-apply capability, to automatically change the target object access resource, is enabled. If not enabled, a user must, after the review completes, apply the access review. </summary>
         [WirePath("autoApplyDecisionsEnabled")]
-        public bool? AutoApplyDecisionsEnabled { get; set; }
+        public bool? IsAutoApplyDecisionsEnabled { get; set; }
 
         /// <summary> Flag to indicate whether showing recommendations to reviewers is enabled. </summary>
         [WirePath("recommendationsEnabled")]
-        public bool? RecommendationsEnabled { get; set; }
+        public bool? IsRecommendationsEnabled { get; set; }
 
         /// <summary> Recommendations for access reviews are calculated by looking back at 30 days of data(w.r.t the start date of the review) by default. However, in some scenarios, customers want to change how far back to look at and want to configure 60 days, 90 days, etc. instead. This setting allows customers to configure this duration. The value should be in ISO  8601 format (http://en.wikipedia.org/wiki/ISO_8601#Durations).This code can be used to convert TimeSpan to a valid interval string: XmlConvert.ToString(new TimeSpan(hours, minutes, seconds)). </summary>
         [WirePath("recommendationLookBackDuration")]

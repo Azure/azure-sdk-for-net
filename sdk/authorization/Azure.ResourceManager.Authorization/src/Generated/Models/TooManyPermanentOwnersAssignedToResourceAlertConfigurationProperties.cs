@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.Authorization.Models
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="thresholdNumberOfPermanentOwners"> The threshold number of permanent owners. </param>
         /// <param name="thresholdPercentageOfPermanentOwnersOutOfAllOwners"> The threshold percentage of permanent owners out of all owners. </param>
-        internal TooManyPermanentOwnersAssignedToResourceAlertConfigurationProperties(string alertDefinitionId, string scope, bool? isEnabled, string alertConfigurationType, AlertDefinitionData alertDefinition, IDictionary<string, BinaryData> additionalBinaryDataProperties, int? thresholdNumberOfPermanentOwners, int? thresholdPercentageOfPermanentOwnersOutOfAllOwners) : base(alertDefinitionId, scope, isEnabled, alertConfigurationType, alertDefinition, additionalBinaryDataProperties)
+        internal TooManyPermanentOwnersAssignedToResourceAlertConfigurationProperties(string alertDefinitionId, string scope, bool? isEnabled, string alertConfigurationType, RoleManagementAlertDefinitionData alertDefinition, IDictionary<string, BinaryData> additionalBinaryDataProperties, int? thresholdNumberOfPermanentOwners, int? thresholdPercentageOfPermanentOwnersOutOfAllOwners) : base(alertDefinitionId, scope, isEnabled, alertConfigurationType, alertDefinition, additionalBinaryDataProperties)
         {
             ThresholdNumberOfPermanentOwners = thresholdNumberOfPermanentOwners;
             ThresholdPercentageOfPermanentOwnersOutOfAllOwners = thresholdPercentageOfPermanentOwnersOutOfAllOwners;

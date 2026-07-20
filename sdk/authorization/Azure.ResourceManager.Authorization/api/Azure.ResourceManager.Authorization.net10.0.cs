@@ -77,17 +77,17 @@ namespace Azure.ResourceManager.Authorization
     public partial class AccessReviewDefaultSettingsData : Azure.ResourceManager.Models.ResourceData, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Authorization.AccessReviewDefaultSettingsData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Authorization.AccessReviewDefaultSettingsData>
     {
         internal AccessReviewDefaultSettingsData() { }
-        public bool? AutoApplyDecisionsEnabled { get { throw null; } }
-        public Azure.ResourceManager.Authorization.Models.DefaultDecisionType? DefaultDecision { get { throw null; } }
-        public bool? DefaultDecisionEnabled { get { throw null; } }
+        public Azure.ResourceManager.Authorization.Models.AccessReviewDefaultDecisionType? DefaultDecision { get { throw null; } }
         public int? InstanceDurationInDays { get { throw null; } }
-        public bool? JustificationRequiredOnApproval { get { throw null; } }
-        public bool? MailNotificationsEnabled { get { throw null; } }
+        public bool? IsAutoApplyDecisionsEnabled { get { throw null; } }
+        public bool? IsDefaultDecisionEnabled { get { throw null; } }
+        public bool? IsJustificationRequiredOnApproval { get { throw null; } }
+        public bool? IsMailNotificationsEnabled { get { throw null; } }
+        public bool? IsRecommendationsEnabled { get { throw null; } }
+        public bool? IsReminderNotificationsEnabled { get { throw null; } }
         public Azure.ResourceManager.Authorization.Models.AccessReviewRecurrencePattern Pattern { get { throw null; } }
         public Azure.ResourceManager.Authorization.Models.AccessReviewRecurrenceRange Range { get { throw null; } }
         public System.TimeSpan? RecommendationLookBackDuration { get { throw null; } }
-        public bool? RecommendationsEnabled { get { throw null; } }
-        public bool? ReminderNotificationsEnabled { get { throw null; } }
         protected virtual Azure.ResourceManager.Models.ResourceData JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         protected virtual Azure.ResourceManager.Models.ResourceData PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -287,25 +287,25 @@ namespace Azure.ResourceManager.Authorization
     public partial class AccessReviewScheduleDefinitionData : Azure.ResourceManager.Models.ResourceData, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Authorization.AccessReviewScheduleDefinitionData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Authorization.AccessReviewScheduleDefinitionData>
     {
         internal AccessReviewScheduleDefinitionData() { }
-        public bool? AutoApplyDecisionsEnabled { get { throw null; } }
         public System.Collections.Generic.IList<Azure.ResourceManager.Authorization.Models.AccessReviewReviewer> BackupReviewers { get { throw null; } }
-        public Azure.ResourceManager.Authorization.Models.DefaultDecisionType? DefaultDecision { get { throw null; } }
-        public bool? DefaultDecisionEnabled { get { throw null; } }
+        public Azure.ResourceManager.Authorization.Models.AccessReviewDefaultDecisionType? DefaultDecision { get { throw null; } }
         public string DescriptionForAdmins { get { throw null; } }
         public string DescriptionForReviewers { get { throw null; } }
         public string DisplayName { get { throw null; } }
         public int? InstanceDurationInDays { get { throw null; } }
         public System.Collections.Generic.IList<Azure.ResourceManager.Authorization.AccessReviewInstanceData> Instances { get { throw null; } }
-        public bool? JustificationRequiredOnApproval { get { throw null; } }
-        public bool? MailNotificationsEnabled { get { throw null; } }
+        public bool? IsAutoApplyDecisionsEnabled { get { throw null; } }
+        public bool? IsDefaultDecisionEnabled { get { throw null; } }
+        public bool? IsJustificationRequiredOnApproval { get { throw null; } }
+        public bool? IsMailNotificationsEnabled { get { throw null; } }
+        public bool? IsRecommendationsEnabled { get { throw null; } }
+        public bool? IsReminderNotificationsEnabled { get { throw null; } }
         public Azure.ResourceManager.Authorization.Models.AccessReviewRecurrencePattern Pattern { get { throw null; } }
         public string PrincipalId { get { throw null; } }
         public string PrincipalName { get { throw null; } }
         public Azure.ResourceManager.Authorization.Models.AccessReviewActorIdentityType? PrincipalType { get { throw null; } }
         public Azure.ResourceManager.Authorization.Models.AccessReviewRecurrenceRange Range { get { throw null; } }
         public System.TimeSpan? RecommendationLookBackDuration { get { throw null; } }
-        public bool? RecommendationsEnabled { get { throw null; } }
-        public bool? ReminderNotificationsEnabled { get { throw null; } }
         public System.Collections.Generic.IList<Azure.ResourceManager.Authorization.Models.AccessReviewReviewer> Reviewers { get { throw null; } }
         public Azure.ResourceManager.Authorization.Models.AccessReviewScheduleDefinitionReviewersType? ReviewersType { get { throw null; } }
         public Azure.ResourceManager.Authorization.Models.AccessReviewScope Scope { get { throw null; } }
@@ -344,208 +344,6 @@ namespace Azure.ResourceManager.Authorization
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Authorization.AccessReviewScheduleDefinitionData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Authorization.AccessReviewScheduleDefinitionResource> Update(Azure.WaitUntil waitUntil, Azure.ResourceManager.Authorization.Models.AccessReviewScheduleDefinitionProperties properties, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Authorization.AccessReviewScheduleDefinitionResource>> UpdateAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.Authorization.Models.AccessReviewScheduleDefinitionProperties properties, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-    }
-    public partial class AlertCollection : Azure.ResourceManager.ArmCollection, System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.Authorization.AlertResource>, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Authorization.AlertResource>, System.Collections.IEnumerable
-    {
-        protected AlertCollection() { }
-        public virtual Azure.Response<bool> Exists(string alertId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<bool>> ExistsAsync(string alertId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<Azure.ResourceManager.Authorization.AlertResource> Get(string alertId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Pageable<Azure.ResourceManager.Authorization.AlertResource> GetAll(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.AsyncPageable<Azure.ResourceManager.Authorization.AlertResource> GetAllAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Authorization.AlertResource>> GetAsync(string alertId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.NullableResponse<Azure.ResourceManager.Authorization.AlertResource> GetIfExists(string alertId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.NullableResponse<Azure.ResourceManager.Authorization.AlertResource>> GetIfExistsAsync(string alertId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        System.Collections.Generic.IAsyncEnumerator<Azure.ResourceManager.Authorization.AlertResource> System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.Authorization.AlertResource>.GetAsyncEnumerator(System.Threading.CancellationToken cancellationToken) { throw null; }
-        System.Collections.Generic.IEnumerator<Azure.ResourceManager.Authorization.AlertResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.Authorization.AlertResource>.GetEnumerator() { throw null; }
-        System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
-    }
-    public partial class AlertConfigurationCollection : Azure.ResourceManager.ArmCollection, System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.Authorization.AlertConfigurationResource>, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Authorization.AlertConfigurationResource>, System.Collections.IEnumerable
-    {
-        protected AlertConfigurationCollection() { }
-        public virtual Azure.Response<bool> Exists(string alertId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<bool>> ExistsAsync(string alertId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<Azure.ResourceManager.Authorization.AlertConfigurationResource> Get(string alertId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Pageable<Azure.ResourceManager.Authorization.AlertConfigurationResource> GetAll(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.AsyncPageable<Azure.ResourceManager.Authorization.AlertConfigurationResource> GetAllAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Authorization.AlertConfigurationResource>> GetAsync(string alertId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.NullableResponse<Azure.ResourceManager.Authorization.AlertConfigurationResource> GetIfExists(string alertId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.NullableResponse<Azure.ResourceManager.Authorization.AlertConfigurationResource>> GetIfExistsAsync(string alertId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        System.Collections.Generic.IAsyncEnumerator<Azure.ResourceManager.Authorization.AlertConfigurationResource> System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.Authorization.AlertConfigurationResource>.GetAsyncEnumerator(System.Threading.CancellationToken cancellationToken) { throw null; }
-        System.Collections.Generic.IEnumerator<Azure.ResourceManager.Authorization.AlertConfigurationResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.Authorization.AlertConfigurationResource>.GetEnumerator() { throw null; }
-        System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
-    }
-    public partial class AlertConfigurationData : Azure.ResourceManager.Models.ResourceData, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Authorization.AlertConfigurationData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Authorization.AlertConfigurationData>
-    {
-        public AlertConfigurationData() { }
-        public Azure.ResourceManager.Authorization.Models.AlertConfigurationProperties Properties { get { throw null; } set { } }
-        protected virtual Azure.ResourceManager.Models.ResourceData JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        protected virtual Azure.ResourceManager.Models.ResourceData PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        Azure.ResourceManager.Authorization.AlertConfigurationData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Authorization.AlertConfigurationData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Authorization.AlertConfigurationData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        Azure.ResourceManager.Authorization.AlertConfigurationData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Authorization.AlertConfigurationData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Authorization.AlertConfigurationData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Authorization.AlertConfigurationData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-    }
-    public partial class AlertConfigurationResource : Azure.ResourceManager.ArmResource, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Authorization.AlertConfigurationData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Authorization.AlertConfigurationData>
-    {
-        public static readonly Azure.Core.ResourceType ResourceType;
-        protected AlertConfigurationResource() { }
-        public virtual Azure.ResourceManager.Authorization.AlertConfigurationData Data { get { throw null; } }
-        public virtual bool HasData { get { throw null; } }
-        public static Azure.Core.ResourceIdentifier CreateResourceIdentifier(string scope, string alertId) { throw null; }
-        public virtual Azure.Response<Azure.ResourceManager.Authorization.AlertConfigurationResource> Get(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Authorization.AlertConfigurationResource>> GetAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        Azure.ResourceManager.Authorization.AlertConfigurationData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Authorization.AlertConfigurationData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Authorization.AlertConfigurationData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        Azure.ResourceManager.Authorization.AlertConfigurationData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Authorization.AlertConfigurationData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Authorization.AlertConfigurationData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Authorization.AlertConfigurationData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        public virtual Azure.Response Update(Azure.ResourceManager.Authorization.AlertConfigurationData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response> UpdateAsync(Azure.ResourceManager.Authorization.AlertConfigurationData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-    }
-    public partial class AlertData : Azure.ResourceManager.Models.ResourceData, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Authorization.AlertData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Authorization.AlertData>
-    {
-        public AlertData() { }
-        public Azure.ResourceManager.Authorization.AlertConfigurationData AlertConfiguration { get { throw null; } }
-        public Azure.ResourceManager.Authorization.AlertDefinitionData AlertDefinition { get { throw null; } }
-        public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.Authorization.AlertIncidentData> AlertIncidents { get { throw null; } }
-        public int? IncidentCount { get { throw null; } }
-        public bool? IsActive { get { throw null; } set { } }
-        public System.DateTimeOffset? LastModifiedOn { get { throw null; } }
-        public System.DateTimeOffset? LastScannedOn { get { throw null; } }
-        public string Scope { get { throw null; } }
-        protected virtual Azure.ResourceManager.Models.ResourceData JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        protected virtual Azure.ResourceManager.Models.ResourceData PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        Azure.ResourceManager.Authorization.AlertData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Authorization.AlertData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Authorization.AlertData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        Azure.ResourceManager.Authorization.AlertData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Authorization.AlertData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Authorization.AlertData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Authorization.AlertData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-    }
-    public partial class AlertDefinitionCollection : Azure.ResourceManager.ArmCollection, System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.Authorization.AlertDefinitionResource>, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Authorization.AlertDefinitionResource>, System.Collections.IEnumerable
-    {
-        protected AlertDefinitionCollection() { }
-        public virtual Azure.Response<bool> Exists(string alertDefinitionId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<bool>> ExistsAsync(string alertDefinitionId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<Azure.ResourceManager.Authorization.AlertDefinitionResource> Get(string alertDefinitionId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Pageable<Azure.ResourceManager.Authorization.AlertDefinitionResource> GetAll(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.AsyncPageable<Azure.ResourceManager.Authorization.AlertDefinitionResource> GetAllAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Authorization.AlertDefinitionResource>> GetAsync(string alertDefinitionId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.NullableResponse<Azure.ResourceManager.Authorization.AlertDefinitionResource> GetIfExists(string alertDefinitionId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.NullableResponse<Azure.ResourceManager.Authorization.AlertDefinitionResource>> GetIfExistsAsync(string alertDefinitionId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        System.Collections.Generic.IAsyncEnumerator<Azure.ResourceManager.Authorization.AlertDefinitionResource> System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.Authorization.AlertDefinitionResource>.GetAsyncEnumerator(System.Threading.CancellationToken cancellationToken) { throw null; }
-        System.Collections.Generic.IEnumerator<Azure.ResourceManager.Authorization.AlertDefinitionResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.Authorization.AlertDefinitionResource>.GetEnumerator() { throw null; }
-        System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
-    }
-    public partial class AlertDefinitionData : Azure.ResourceManager.Models.ResourceData, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Authorization.AlertDefinitionData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Authorization.AlertDefinitionData>
-    {
-        internal AlertDefinitionData() { }
-        public string Description { get { throw null; } }
-        public string DisplayName { get { throw null; } }
-        public string HowToPrevent { get { throw null; } }
-        public bool? IsConfigurable { get { throw null; } }
-        public bool? IsRemediatable { get { throw null; } }
-        public string MitigationSteps { get { throw null; } }
-        public string Scope { get { throw null; } }
-        public string SecurityImpact { get { throw null; } }
-        public Azure.ResourceManager.Authorization.Models.SeverityLevel? SeverityLevel { get { throw null; } }
-        protected virtual Azure.ResourceManager.Models.ResourceData JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        protected virtual Azure.ResourceManager.Models.ResourceData PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        Azure.ResourceManager.Authorization.AlertDefinitionData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Authorization.AlertDefinitionData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Authorization.AlertDefinitionData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        Azure.ResourceManager.Authorization.AlertDefinitionData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Authorization.AlertDefinitionData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Authorization.AlertDefinitionData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Authorization.AlertDefinitionData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-    }
-    public partial class AlertDefinitionResource : Azure.ResourceManager.ArmResource, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Authorization.AlertDefinitionData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Authorization.AlertDefinitionData>
-    {
-        public static readonly Azure.Core.ResourceType ResourceType;
-        protected AlertDefinitionResource() { }
-        public virtual Azure.ResourceManager.Authorization.AlertDefinitionData Data { get { throw null; } }
-        public virtual bool HasData { get { throw null; } }
-        public static Azure.Core.ResourceIdentifier CreateResourceIdentifier(string scope, string alertDefinitionId) { throw null; }
-        public virtual Azure.Response<Azure.ResourceManager.Authorization.AlertDefinitionResource> Get(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Authorization.AlertDefinitionResource>> GetAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        Azure.ResourceManager.Authorization.AlertDefinitionData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Authorization.AlertDefinitionData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Authorization.AlertDefinitionData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        Azure.ResourceManager.Authorization.AlertDefinitionData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Authorization.AlertDefinitionData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Authorization.AlertDefinitionData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Authorization.AlertDefinitionData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-    }
-    public partial class AlertIncidentCollection : Azure.ResourceManager.ArmCollection, System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.Authorization.AlertIncidentResource>, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Authorization.AlertIncidentResource>, System.Collections.IEnumerable
-    {
-        protected AlertIncidentCollection() { }
-        public virtual Azure.Response<bool> Exists(string alertIncidentId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<bool>> ExistsAsync(string alertIncidentId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<Azure.ResourceManager.Authorization.AlertIncidentResource> Get(string alertIncidentId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Pageable<Azure.ResourceManager.Authorization.AlertIncidentResource> GetAll(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.AsyncPageable<Azure.ResourceManager.Authorization.AlertIncidentResource> GetAllAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Authorization.AlertIncidentResource>> GetAsync(string alertIncidentId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.NullableResponse<Azure.ResourceManager.Authorization.AlertIncidentResource> GetIfExists(string alertIncidentId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.NullableResponse<Azure.ResourceManager.Authorization.AlertIncidentResource>> GetIfExistsAsync(string alertIncidentId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        System.Collections.Generic.IAsyncEnumerator<Azure.ResourceManager.Authorization.AlertIncidentResource> System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.Authorization.AlertIncidentResource>.GetAsyncEnumerator(System.Threading.CancellationToken cancellationToken) { throw null; }
-        System.Collections.Generic.IEnumerator<Azure.ResourceManager.Authorization.AlertIncidentResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.Authorization.AlertIncidentResource>.GetEnumerator() { throw null; }
-        System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
-    }
-    public partial class AlertIncidentData : Azure.ResourceManager.Models.ResourceData, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Authorization.AlertIncidentData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Authorization.AlertIncidentData>
-    {
-        internal AlertIncidentData() { }
-        public Azure.ResourceManager.Authorization.Models.AlertIncidentProperties Properties { get { throw null; } }
-        protected virtual Azure.ResourceManager.Models.ResourceData JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        protected virtual Azure.ResourceManager.Models.ResourceData PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        Azure.ResourceManager.Authorization.AlertIncidentData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Authorization.AlertIncidentData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Authorization.AlertIncidentData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        Azure.ResourceManager.Authorization.AlertIncidentData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Authorization.AlertIncidentData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Authorization.AlertIncidentData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Authorization.AlertIncidentData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-    }
-    public partial class AlertIncidentResource : Azure.ResourceManager.ArmResource, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Authorization.AlertIncidentData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Authorization.AlertIncidentData>
-    {
-        public static readonly Azure.Core.ResourceType ResourceType;
-        protected AlertIncidentResource() { }
-        public virtual Azure.ResourceManager.Authorization.AlertIncidentData Data { get { throw null; } }
-        public virtual bool HasData { get { throw null; } }
-        public static Azure.Core.ResourceIdentifier CreateResourceIdentifier(string scope, string alertId, string alertIncidentId) { throw null; }
-        public virtual Azure.Response<Azure.ResourceManager.Authorization.AlertIncidentResource> Get(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Authorization.AlertIncidentResource>> GetAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response Remediate(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response> RemediateAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        Azure.ResourceManager.Authorization.AlertIncidentData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Authorization.AlertIncidentData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Authorization.AlertIncidentData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        Azure.ResourceManager.Authorization.AlertIncidentData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Authorization.AlertIncidentData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Authorization.AlertIncidentData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Authorization.AlertIncidentData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-    }
-    public partial class AlertResource : Azure.ResourceManager.ArmResource, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Authorization.AlertData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Authorization.AlertData>
-    {
-        public static readonly Azure.Core.ResourceType ResourceType;
-        protected AlertResource() { }
-        public virtual Azure.ResourceManager.Authorization.AlertData Data { get { throw null; } }
-        public virtual bool HasData { get { throw null; } }
-        public static Azure.Core.ResourceIdentifier CreateResourceIdentifier(string scope, string alertId) { throw null; }
-        public virtual Azure.Response<Azure.ResourceManager.Authorization.AlertResource> Get(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<Azure.ResourceManager.Authorization.AlertIncidentResource> GetAlertIncident(string alertIncidentId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Authorization.AlertIncidentResource>> GetAlertIncidentAsync(string alertIncidentId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.ResourceManager.Authorization.AlertIncidentCollection GetAlertIncidents() { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Authorization.AlertResource>> GetAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Authorization.Models.AlertOperationResult> Refresh(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Authorization.Models.AlertOperationResult>> RefreshAsync(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        Azure.ResourceManager.Authorization.AlertData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Authorization.AlertData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Authorization.AlertData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        Azure.ResourceManager.Authorization.AlertData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Authorization.AlertData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Authorization.AlertData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Authorization.AlertData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        public virtual Azure.Response Update(Azure.ResourceManager.Authorization.AlertData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response> UpdateAsync(Azure.ResourceManager.Authorization.AlertData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
     public partial class AttributeNamespaceCollection : Azure.ResourceManager.ArmCollection
     {
@@ -609,24 +407,8 @@ namespace Azure.ResourceManager.Authorization
         public static System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Authorization.AccessReviewScheduleDefinitionResource>> GetAccessReviewScheduleDefinitionAsync(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, string scheduleDefinitionId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public static Azure.ResourceManager.Authorization.AccessReviewScheduleDefinitionResource GetAccessReviewScheduleDefinitionResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
         public static Azure.ResourceManager.Authorization.AccessReviewScheduleDefinitionCollection GetAccessReviewScheduleDefinitions(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource) { throw null; }
-        public static Azure.Response<Azure.ResourceManager.Authorization.AlertResource> GetAlert(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier scope, string alertId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public static System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Authorization.AlertResource>> GetAlertAsync(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier scope, string alertId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public static Azure.Response<Azure.ResourceManager.Authorization.AlertConfigurationResource> GetAlertConfiguration(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier scope, string alertId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public static System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Authorization.AlertConfigurationResource>> GetAlertConfigurationAsync(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier scope, string alertId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public static Azure.ResourceManager.Authorization.AlertConfigurationResource GetAlertConfigurationResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
-        public static Azure.ResourceManager.Authorization.AlertConfigurationCollection GetAlertConfigurations(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier scope) { throw null; }
-        public static Azure.Response<Azure.ResourceManager.Authorization.AlertDefinitionResource> GetAlertDefinition(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier scope, string alertDefinitionId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public static System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Authorization.AlertDefinitionResource>> GetAlertDefinitionAsync(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier scope, string alertDefinitionId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public static Azure.ResourceManager.Authorization.AlertDefinitionResource GetAlertDefinitionResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
-        public static Azure.ResourceManager.Authorization.AlertDefinitionCollection GetAlertDefinitions(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier scope) { throw null; }
-        public static Azure.Response<Azure.ResourceManager.Authorization.AlertIncidentResource> GetAlertIncident(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier scope, string alertIncidentId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public static System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Authorization.AlertIncidentResource>> GetAlertIncidentAsync(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier scope, string alertIncidentId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public static Azure.ResourceManager.Authorization.AlertIncidentResource GetAlertIncidentResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
-        public static Azure.ResourceManager.Authorization.AlertIncidentCollection GetAlertIncidents(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier scope) { throw null; }
         public static Azure.Response<Azure.ResourceManager.Authorization.Models.AlertOperationResult> GetAlertOperation(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier scope, string operationId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public static System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Authorization.Models.AlertOperationResult>> GetAlertOperationAsync(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier scope, string operationId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public static Azure.ResourceManager.Authorization.AlertResource GetAlertResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
-        public static Azure.ResourceManager.Authorization.AlertCollection GetAlerts(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier scope) { throw null; }
         public static Azure.Pageable<Azure.ResourceManager.Authorization.AccessReviewScheduleDefinitionData> GetAll(this Azure.ResourceManager.Resources.TenantResource tenantResource, string filter = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public static Azure.AsyncPageable<Azure.ResourceManager.Authorization.AccessReviewScheduleDefinitionData> GetAllAsync(this Azure.ResourceManager.Resources.TenantResource tenantResource, string filter = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public static Azure.ResourceManager.Authorization.AuthorizationProviderOperationsMetadataCollection GetAllAuthorizationProviderOperationsMetadata(this Azure.ResourceManager.Resources.TenantResource tenantResource) { throw null; }
@@ -712,6 +494,22 @@ namespace Azure.ResourceManager.Authorization
         public static Azure.ResourceManager.Authorization.RoleEligibilityScheduleResource GetRoleEligibilityScheduleResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
         public static Azure.ResourceManager.Authorization.RoleEligibilityScheduleCollection GetRoleEligibilitySchedules(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier scope) { throw null; }
         public static Azure.ResourceManager.Authorization.RoleEligibilityScheduleCollection GetRoleEligibilitySchedules(this Azure.ResourceManager.ArmResource armResource) { throw null; }
+        public static Azure.Response<Azure.ResourceManager.Authorization.RoleManagementAlertResource> GetRoleManagementAlert(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier scope, string alertId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public static System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Authorization.RoleManagementAlertResource>> GetRoleManagementAlertAsync(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier scope, string alertId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public static Azure.Response<Azure.ResourceManager.Authorization.RoleManagementAlertConfigurationResource> GetRoleManagementAlertConfiguration(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier scope, string alertId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public static System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Authorization.RoleManagementAlertConfigurationResource>> GetRoleManagementAlertConfigurationAsync(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier scope, string alertId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public static Azure.ResourceManager.Authorization.RoleManagementAlertConfigurationResource GetRoleManagementAlertConfigurationResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
+        public static Azure.ResourceManager.Authorization.RoleManagementAlertConfigurationCollection GetRoleManagementAlertConfigurations(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier scope) { throw null; }
+        public static Azure.Response<Azure.ResourceManager.Authorization.RoleManagementAlertDefinitionResource> GetRoleManagementAlertDefinition(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier scope, string alertDefinitionId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public static System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Authorization.RoleManagementAlertDefinitionResource>> GetRoleManagementAlertDefinitionAsync(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier scope, string alertDefinitionId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public static Azure.ResourceManager.Authorization.RoleManagementAlertDefinitionResource GetRoleManagementAlertDefinitionResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
+        public static Azure.ResourceManager.Authorization.RoleManagementAlertDefinitionCollection GetRoleManagementAlertDefinitions(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier scope) { throw null; }
+        public static Azure.Response<Azure.ResourceManager.Authorization.RoleManagementAlertIncidentResource> GetRoleManagementAlertIncident(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier scope, string alertIncidentId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public static System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Authorization.RoleManagementAlertIncidentResource>> GetRoleManagementAlertIncidentAsync(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier scope, string alertIncidentId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public static Azure.ResourceManager.Authorization.RoleManagementAlertIncidentResource GetRoleManagementAlertIncidentResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
+        public static Azure.ResourceManager.Authorization.RoleManagementAlertIncidentCollection GetRoleManagementAlertIncidents(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier scope) { throw null; }
+        public static Azure.ResourceManager.Authorization.RoleManagementAlertResource GetRoleManagementAlertResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
+        public static Azure.ResourceManager.Authorization.RoleManagementAlertCollection GetRoleManagementAlerts(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier scope) { throw null; }
         public static Azure.ResourceManager.Authorization.RoleManagementPolicyCollection GetRoleManagementPolicies(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier scope) { throw null; }
         public static Azure.ResourceManager.Authorization.RoleManagementPolicyCollection GetRoleManagementPolicies(this Azure.ResourceManager.ArmResource armResource) { throw null; }
         public static Azure.Response<Azure.ResourceManager.Authorization.RoleManagementPolicyResource> GetRoleManagementPolicy(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier scope, string roleManagementPolicyName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
@@ -1377,6 +1175,208 @@ namespace Azure.ResourceManager.Authorization
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Authorization.RoleEligibilityScheduleData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Authorization.RoleEligibilityScheduleData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
+    public partial class RoleManagementAlertCollection : Azure.ResourceManager.ArmCollection, System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.Authorization.RoleManagementAlertResource>, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Authorization.RoleManagementAlertResource>, System.Collections.IEnumerable
+    {
+        protected RoleManagementAlertCollection() { }
+        public virtual Azure.Response<bool> Exists(string alertId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<bool>> ExistsAsync(string alertId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.Authorization.RoleManagementAlertResource> Get(string alertId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Pageable<Azure.ResourceManager.Authorization.RoleManagementAlertResource> GetAll(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.AsyncPageable<Azure.ResourceManager.Authorization.RoleManagementAlertResource> GetAllAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Authorization.RoleManagementAlertResource>> GetAsync(string alertId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.NullableResponse<Azure.ResourceManager.Authorization.RoleManagementAlertResource> GetIfExists(string alertId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.NullableResponse<Azure.ResourceManager.Authorization.RoleManagementAlertResource>> GetIfExistsAsync(string alertId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        System.Collections.Generic.IAsyncEnumerator<Azure.ResourceManager.Authorization.RoleManagementAlertResource> System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.Authorization.RoleManagementAlertResource>.GetAsyncEnumerator(System.Threading.CancellationToken cancellationToken) { throw null; }
+        System.Collections.Generic.IEnumerator<Azure.ResourceManager.Authorization.RoleManagementAlertResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.Authorization.RoleManagementAlertResource>.GetEnumerator() { throw null; }
+        System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
+    }
+    public partial class RoleManagementAlertConfigurationCollection : Azure.ResourceManager.ArmCollection, System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.Authorization.RoleManagementAlertConfigurationResource>, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Authorization.RoleManagementAlertConfigurationResource>, System.Collections.IEnumerable
+    {
+        protected RoleManagementAlertConfigurationCollection() { }
+        public virtual Azure.Response<bool> Exists(string alertId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<bool>> ExistsAsync(string alertId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.Authorization.RoleManagementAlertConfigurationResource> Get(string alertId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Pageable<Azure.ResourceManager.Authorization.RoleManagementAlertConfigurationResource> GetAll(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.AsyncPageable<Azure.ResourceManager.Authorization.RoleManagementAlertConfigurationResource> GetAllAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Authorization.RoleManagementAlertConfigurationResource>> GetAsync(string alertId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.NullableResponse<Azure.ResourceManager.Authorization.RoleManagementAlertConfigurationResource> GetIfExists(string alertId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.NullableResponse<Azure.ResourceManager.Authorization.RoleManagementAlertConfigurationResource>> GetIfExistsAsync(string alertId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        System.Collections.Generic.IAsyncEnumerator<Azure.ResourceManager.Authorization.RoleManagementAlertConfigurationResource> System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.Authorization.RoleManagementAlertConfigurationResource>.GetAsyncEnumerator(System.Threading.CancellationToken cancellationToken) { throw null; }
+        System.Collections.Generic.IEnumerator<Azure.ResourceManager.Authorization.RoleManagementAlertConfigurationResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.Authorization.RoleManagementAlertConfigurationResource>.GetEnumerator() { throw null; }
+        System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
+    }
+    public partial class RoleManagementAlertConfigurationData : Azure.ResourceManager.Models.ResourceData, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Authorization.RoleManagementAlertConfigurationData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Authorization.RoleManagementAlertConfigurationData>
+    {
+        public RoleManagementAlertConfigurationData() { }
+        public Azure.ResourceManager.Authorization.Models.AlertConfigurationProperties Properties { get { throw null; } set { } }
+        protected virtual Azure.ResourceManager.Models.ResourceData JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.Models.ResourceData PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        Azure.ResourceManager.Authorization.RoleManagementAlertConfigurationData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Authorization.RoleManagementAlertConfigurationData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Authorization.RoleManagementAlertConfigurationData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.Authorization.RoleManagementAlertConfigurationData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Authorization.RoleManagementAlertConfigurationData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Authorization.RoleManagementAlertConfigurationData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Authorization.RoleManagementAlertConfigurationData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
+    public partial class RoleManagementAlertConfigurationResource : Azure.ResourceManager.ArmResource, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Authorization.RoleManagementAlertConfigurationData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Authorization.RoleManagementAlertConfigurationData>
+    {
+        public static readonly Azure.Core.ResourceType ResourceType;
+        protected RoleManagementAlertConfigurationResource() { }
+        public virtual Azure.ResourceManager.Authorization.RoleManagementAlertConfigurationData Data { get { throw null; } }
+        public virtual bool HasData { get { throw null; } }
+        public static Azure.Core.ResourceIdentifier CreateResourceIdentifier(string scope, string alertId) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.Authorization.RoleManagementAlertConfigurationResource> Get(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Authorization.RoleManagementAlertConfigurationResource>> GetAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        Azure.ResourceManager.Authorization.RoleManagementAlertConfigurationData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Authorization.RoleManagementAlertConfigurationData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Authorization.RoleManagementAlertConfigurationData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.Authorization.RoleManagementAlertConfigurationData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Authorization.RoleManagementAlertConfigurationData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Authorization.RoleManagementAlertConfigurationData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Authorization.RoleManagementAlertConfigurationData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        public virtual Azure.Response Update(Azure.ResourceManager.Authorization.RoleManagementAlertConfigurationData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response> UpdateAsync(Azure.ResourceManager.Authorization.RoleManagementAlertConfigurationData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+    }
+    public partial class RoleManagementAlertData : Azure.ResourceManager.Models.ResourceData, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Authorization.RoleManagementAlertData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Authorization.RoleManagementAlertData>
+    {
+        public RoleManagementAlertData() { }
+        public Azure.ResourceManager.Authorization.RoleManagementAlertConfigurationData AlertConfiguration { get { throw null; } }
+        public Azure.ResourceManager.Authorization.RoleManagementAlertDefinitionData AlertDefinition { get { throw null; } }
+        public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.Authorization.RoleManagementAlertIncidentData> AlertIncidents { get { throw null; } }
+        public int? IncidentCount { get { throw null; } }
+        public bool? IsActive { get { throw null; } set { } }
+        public System.DateTimeOffset? LastModifiedOn { get { throw null; } }
+        public System.DateTimeOffset? LastScannedOn { get { throw null; } }
+        public string Scope { get { throw null; } }
+        protected virtual Azure.ResourceManager.Models.ResourceData JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.Models.ResourceData PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        Azure.ResourceManager.Authorization.RoleManagementAlertData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Authorization.RoleManagementAlertData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Authorization.RoleManagementAlertData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.Authorization.RoleManagementAlertData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Authorization.RoleManagementAlertData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Authorization.RoleManagementAlertData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Authorization.RoleManagementAlertData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
+    public partial class RoleManagementAlertDefinitionCollection : Azure.ResourceManager.ArmCollection, System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.Authorization.RoleManagementAlertDefinitionResource>, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Authorization.RoleManagementAlertDefinitionResource>, System.Collections.IEnumerable
+    {
+        protected RoleManagementAlertDefinitionCollection() { }
+        public virtual Azure.Response<bool> Exists(string alertDefinitionId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<bool>> ExistsAsync(string alertDefinitionId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.Authorization.RoleManagementAlertDefinitionResource> Get(string alertDefinitionId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Pageable<Azure.ResourceManager.Authorization.RoleManagementAlertDefinitionResource> GetAll(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.AsyncPageable<Azure.ResourceManager.Authorization.RoleManagementAlertDefinitionResource> GetAllAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Authorization.RoleManagementAlertDefinitionResource>> GetAsync(string alertDefinitionId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.NullableResponse<Azure.ResourceManager.Authorization.RoleManagementAlertDefinitionResource> GetIfExists(string alertDefinitionId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.NullableResponse<Azure.ResourceManager.Authorization.RoleManagementAlertDefinitionResource>> GetIfExistsAsync(string alertDefinitionId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        System.Collections.Generic.IAsyncEnumerator<Azure.ResourceManager.Authorization.RoleManagementAlertDefinitionResource> System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.Authorization.RoleManagementAlertDefinitionResource>.GetAsyncEnumerator(System.Threading.CancellationToken cancellationToken) { throw null; }
+        System.Collections.Generic.IEnumerator<Azure.ResourceManager.Authorization.RoleManagementAlertDefinitionResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.Authorization.RoleManagementAlertDefinitionResource>.GetEnumerator() { throw null; }
+        System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
+    }
+    public partial class RoleManagementAlertDefinitionData : Azure.ResourceManager.Models.ResourceData, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Authorization.RoleManagementAlertDefinitionData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Authorization.RoleManagementAlertDefinitionData>
+    {
+        internal RoleManagementAlertDefinitionData() { }
+        public string Description { get { throw null; } }
+        public string DisplayName { get { throw null; } }
+        public string HowToPrevent { get { throw null; } }
+        public bool? IsConfigurable { get { throw null; } }
+        public bool? IsRemediatable { get { throw null; } }
+        public string MitigationSteps { get { throw null; } }
+        public string Scope { get { throw null; } }
+        public string SecurityImpact { get { throw null; } }
+        public Azure.ResourceManager.Authorization.Models.RoleManagementAlertSeverityLevel? SeverityLevel { get { throw null; } }
+        protected virtual Azure.ResourceManager.Models.ResourceData JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.Models.ResourceData PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        Azure.ResourceManager.Authorization.RoleManagementAlertDefinitionData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Authorization.RoleManagementAlertDefinitionData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Authorization.RoleManagementAlertDefinitionData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.Authorization.RoleManagementAlertDefinitionData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Authorization.RoleManagementAlertDefinitionData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Authorization.RoleManagementAlertDefinitionData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Authorization.RoleManagementAlertDefinitionData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
+    public partial class RoleManagementAlertDefinitionResource : Azure.ResourceManager.ArmResource, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Authorization.RoleManagementAlertDefinitionData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Authorization.RoleManagementAlertDefinitionData>
+    {
+        public static readonly Azure.Core.ResourceType ResourceType;
+        protected RoleManagementAlertDefinitionResource() { }
+        public virtual Azure.ResourceManager.Authorization.RoleManagementAlertDefinitionData Data { get { throw null; } }
+        public virtual bool HasData { get { throw null; } }
+        public static Azure.Core.ResourceIdentifier CreateResourceIdentifier(string scope, string alertDefinitionId) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.Authorization.RoleManagementAlertDefinitionResource> Get(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Authorization.RoleManagementAlertDefinitionResource>> GetAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        Azure.ResourceManager.Authorization.RoleManagementAlertDefinitionData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Authorization.RoleManagementAlertDefinitionData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Authorization.RoleManagementAlertDefinitionData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.Authorization.RoleManagementAlertDefinitionData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Authorization.RoleManagementAlertDefinitionData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Authorization.RoleManagementAlertDefinitionData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Authorization.RoleManagementAlertDefinitionData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
+    public partial class RoleManagementAlertIncidentCollection : Azure.ResourceManager.ArmCollection, System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.Authorization.RoleManagementAlertIncidentResource>, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Authorization.RoleManagementAlertIncidentResource>, System.Collections.IEnumerable
+    {
+        protected RoleManagementAlertIncidentCollection() { }
+        public virtual Azure.Response<bool> Exists(string alertIncidentId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<bool>> ExistsAsync(string alertIncidentId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.Authorization.RoleManagementAlertIncidentResource> Get(string alertIncidentId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Pageable<Azure.ResourceManager.Authorization.RoleManagementAlertIncidentResource> GetAll(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.AsyncPageable<Azure.ResourceManager.Authorization.RoleManagementAlertIncidentResource> GetAllAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Authorization.RoleManagementAlertIncidentResource>> GetAsync(string alertIncidentId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.NullableResponse<Azure.ResourceManager.Authorization.RoleManagementAlertIncidentResource> GetIfExists(string alertIncidentId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.NullableResponse<Azure.ResourceManager.Authorization.RoleManagementAlertIncidentResource>> GetIfExistsAsync(string alertIncidentId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        System.Collections.Generic.IAsyncEnumerator<Azure.ResourceManager.Authorization.RoleManagementAlertIncidentResource> System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.Authorization.RoleManagementAlertIncidentResource>.GetAsyncEnumerator(System.Threading.CancellationToken cancellationToken) { throw null; }
+        System.Collections.Generic.IEnumerator<Azure.ResourceManager.Authorization.RoleManagementAlertIncidentResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.Authorization.RoleManagementAlertIncidentResource>.GetEnumerator() { throw null; }
+        System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
+    }
+    public partial class RoleManagementAlertIncidentData : Azure.ResourceManager.Models.ResourceData, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Authorization.RoleManagementAlertIncidentData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Authorization.RoleManagementAlertIncidentData>
+    {
+        internal RoleManagementAlertIncidentData() { }
+        public Azure.ResourceManager.Authorization.Models.AlertIncidentProperties Properties { get { throw null; } }
+        protected virtual Azure.ResourceManager.Models.ResourceData JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.Models.ResourceData PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        Azure.ResourceManager.Authorization.RoleManagementAlertIncidentData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Authorization.RoleManagementAlertIncidentData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Authorization.RoleManagementAlertIncidentData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.Authorization.RoleManagementAlertIncidentData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Authorization.RoleManagementAlertIncidentData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Authorization.RoleManagementAlertIncidentData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Authorization.RoleManagementAlertIncidentData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
+    public partial class RoleManagementAlertIncidentResource : Azure.ResourceManager.ArmResource, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Authorization.RoleManagementAlertIncidentData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Authorization.RoleManagementAlertIncidentData>
+    {
+        public static readonly Azure.Core.ResourceType ResourceType;
+        protected RoleManagementAlertIncidentResource() { }
+        public virtual Azure.ResourceManager.Authorization.RoleManagementAlertIncidentData Data { get { throw null; } }
+        public virtual bool HasData { get { throw null; } }
+        public static Azure.Core.ResourceIdentifier CreateResourceIdentifier(string scope, string alertId, string alertIncidentId) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.Authorization.RoleManagementAlertIncidentResource> Get(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Authorization.RoleManagementAlertIncidentResource>> GetAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response Remediate(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response> RemediateAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        Azure.ResourceManager.Authorization.RoleManagementAlertIncidentData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Authorization.RoleManagementAlertIncidentData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Authorization.RoleManagementAlertIncidentData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.Authorization.RoleManagementAlertIncidentData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Authorization.RoleManagementAlertIncidentData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Authorization.RoleManagementAlertIncidentData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Authorization.RoleManagementAlertIncidentData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
+    public partial class RoleManagementAlertResource : Azure.ResourceManager.ArmResource, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Authorization.RoleManagementAlertData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Authorization.RoleManagementAlertData>
+    {
+        public static readonly Azure.Core.ResourceType ResourceType;
+        protected RoleManagementAlertResource() { }
+        public virtual Azure.ResourceManager.Authorization.RoleManagementAlertData Data { get { throw null; } }
+        public virtual bool HasData { get { throw null; } }
+        public static Azure.Core.ResourceIdentifier CreateResourceIdentifier(string scope, string alertId) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.Authorization.RoleManagementAlertResource> Get(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Authorization.RoleManagementAlertResource>> GetAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.Authorization.RoleManagementAlertIncidentResource> GetRoleManagementAlertIncident(string alertIncidentId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Authorization.RoleManagementAlertIncidentResource>> GetRoleManagementAlertIncidentAsync(string alertIncidentId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.ResourceManager.Authorization.RoleManagementAlertIncidentCollection GetRoleManagementAlertIncidents() { throw null; }
+        public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Authorization.Models.AlertOperationResult> Refresh(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Authorization.Models.AlertOperationResult>> RefreshAsync(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        Azure.ResourceManager.Authorization.RoleManagementAlertData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Authorization.RoleManagementAlertData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Authorization.RoleManagementAlertData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.Authorization.RoleManagementAlertData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Authorization.RoleManagementAlertData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Authorization.RoleManagementAlertData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Authorization.RoleManagementAlertData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        public virtual Azure.Response Update(Azure.ResourceManager.Authorization.RoleManagementAlertData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response> UpdateAsync(Azure.ResourceManager.Authorization.RoleManagementAlertData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+    }
     public partial class RoleManagementPolicyAssignmentCollection : Azure.ResourceManager.ArmCollection, System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.Authorization.RoleManagementPolicyAssignmentResource>, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Authorization.RoleManagementPolicyAssignmentResource>, System.Collections.IEnumerable
     {
         protected RoleManagementPolicyAssignmentCollection() { }
@@ -1641,24 +1641,8 @@ namespace Azure.ResourceManager.Authorization.Mocking
         public virtual Azure.ResourceManager.Authorization.AccessReviewInstanceResource GetAccessReviewInstanceResource(Azure.Core.ResourceIdentifier id) { throw null; }
         public virtual Azure.ResourceManager.Authorization.AccessReviewInstancesAssignedForMyApprovalResource GetAccessReviewInstancesAssignedForMyApprovalResource(Azure.Core.ResourceIdentifier id) { throw null; }
         public virtual Azure.ResourceManager.Authorization.AccessReviewScheduleDefinitionResource GetAccessReviewScheduleDefinitionResource(Azure.Core.ResourceIdentifier id) { throw null; }
-        public virtual Azure.Response<Azure.ResourceManager.Authorization.AlertResource> GetAlert(Azure.Core.ResourceIdentifier scope, string alertId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Authorization.AlertResource>> GetAlertAsync(Azure.Core.ResourceIdentifier scope, string alertId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<Azure.ResourceManager.Authorization.AlertConfigurationResource> GetAlertConfiguration(Azure.Core.ResourceIdentifier scope, string alertId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Authorization.AlertConfigurationResource>> GetAlertConfigurationAsync(Azure.Core.ResourceIdentifier scope, string alertId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.ResourceManager.Authorization.AlertConfigurationResource GetAlertConfigurationResource(Azure.Core.ResourceIdentifier id) { throw null; }
-        public virtual Azure.ResourceManager.Authorization.AlertConfigurationCollection GetAlertConfigurations(Azure.Core.ResourceIdentifier scope) { throw null; }
-        public virtual Azure.Response<Azure.ResourceManager.Authorization.AlertDefinitionResource> GetAlertDefinition(Azure.Core.ResourceIdentifier scope, string alertDefinitionId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Authorization.AlertDefinitionResource>> GetAlertDefinitionAsync(Azure.Core.ResourceIdentifier scope, string alertDefinitionId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.ResourceManager.Authorization.AlertDefinitionResource GetAlertDefinitionResource(Azure.Core.ResourceIdentifier id) { throw null; }
-        public virtual Azure.ResourceManager.Authorization.AlertDefinitionCollection GetAlertDefinitions(Azure.Core.ResourceIdentifier scope) { throw null; }
-        public virtual Azure.Response<Azure.ResourceManager.Authorization.AlertIncidentResource> GetAlertIncident(Azure.Core.ResourceIdentifier scope, string alertIncidentId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Authorization.AlertIncidentResource>> GetAlertIncidentAsync(Azure.Core.ResourceIdentifier scope, string alertIncidentId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.ResourceManager.Authorization.AlertIncidentResource GetAlertIncidentResource(Azure.Core.ResourceIdentifier id) { throw null; }
-        public virtual Azure.ResourceManager.Authorization.AlertIncidentCollection GetAlertIncidents(Azure.Core.ResourceIdentifier scope) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.Authorization.Models.AlertOperationResult> GetAlertOperation(Azure.Core.ResourceIdentifier scope, string operationId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Authorization.Models.AlertOperationResult>> GetAlertOperationAsync(Azure.Core.ResourceIdentifier scope, string operationId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.ResourceManager.Authorization.AlertResource GetAlertResource(Azure.Core.ResourceIdentifier id) { throw null; }
-        public virtual Azure.ResourceManager.Authorization.AlertCollection GetAlerts(Azure.Core.ResourceIdentifier scope) { throw null; }
         public virtual Azure.ResourceManager.Authorization.AttributeNamespaceResource GetAttributeNamespaceResource(Azure.Core.ResourceIdentifier id) { throw null; }
         public virtual Azure.ResourceManager.Authorization.AuthorizationProviderOperationsMetadataResource GetAuthorizationProviderOperationsMetadataResource(Azure.Core.ResourceIdentifier id) { throw null; }
         [System.ObsoleteAttribute("this method is deprecated and will be removed in a future version, please use GetAuthorizationRoleDefinition(ResourceIdentifier scope, string roleDefinitionId, CancellationToken cancellationToken = default) instead.")]
@@ -1703,6 +1687,22 @@ namespace Azure.ResourceManager.Authorization.Mocking
         public virtual Azure.ResourceManager.Authorization.RoleEligibilityScheduleRequestCollection GetRoleEligibilityScheduleRequests(Azure.Core.ResourceIdentifier scope) { throw null; }
         public virtual Azure.ResourceManager.Authorization.RoleEligibilityScheduleResource GetRoleEligibilityScheduleResource(Azure.Core.ResourceIdentifier id) { throw null; }
         public virtual Azure.ResourceManager.Authorization.RoleEligibilityScheduleCollection GetRoleEligibilitySchedules(Azure.Core.ResourceIdentifier scope) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.Authorization.RoleManagementAlertResource> GetRoleManagementAlert(Azure.Core.ResourceIdentifier scope, string alertId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Authorization.RoleManagementAlertResource>> GetRoleManagementAlertAsync(Azure.Core.ResourceIdentifier scope, string alertId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.Authorization.RoleManagementAlertConfigurationResource> GetRoleManagementAlertConfiguration(Azure.Core.ResourceIdentifier scope, string alertId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Authorization.RoleManagementAlertConfigurationResource>> GetRoleManagementAlertConfigurationAsync(Azure.Core.ResourceIdentifier scope, string alertId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.ResourceManager.Authorization.RoleManagementAlertConfigurationResource GetRoleManagementAlertConfigurationResource(Azure.Core.ResourceIdentifier id) { throw null; }
+        public virtual Azure.ResourceManager.Authorization.RoleManagementAlertConfigurationCollection GetRoleManagementAlertConfigurations(Azure.Core.ResourceIdentifier scope) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.Authorization.RoleManagementAlertDefinitionResource> GetRoleManagementAlertDefinition(Azure.Core.ResourceIdentifier scope, string alertDefinitionId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Authorization.RoleManagementAlertDefinitionResource>> GetRoleManagementAlertDefinitionAsync(Azure.Core.ResourceIdentifier scope, string alertDefinitionId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.ResourceManager.Authorization.RoleManagementAlertDefinitionResource GetRoleManagementAlertDefinitionResource(Azure.Core.ResourceIdentifier id) { throw null; }
+        public virtual Azure.ResourceManager.Authorization.RoleManagementAlertDefinitionCollection GetRoleManagementAlertDefinitions(Azure.Core.ResourceIdentifier scope) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.Authorization.RoleManagementAlertIncidentResource> GetRoleManagementAlertIncident(Azure.Core.ResourceIdentifier scope, string alertIncidentId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Authorization.RoleManagementAlertIncidentResource>> GetRoleManagementAlertIncidentAsync(Azure.Core.ResourceIdentifier scope, string alertIncidentId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.ResourceManager.Authorization.RoleManagementAlertIncidentResource GetRoleManagementAlertIncidentResource(Azure.Core.ResourceIdentifier id) { throw null; }
+        public virtual Azure.ResourceManager.Authorization.RoleManagementAlertIncidentCollection GetRoleManagementAlertIncidents(Azure.Core.ResourceIdentifier scope) { throw null; }
+        public virtual Azure.ResourceManager.Authorization.RoleManagementAlertResource GetRoleManagementAlertResource(Azure.Core.ResourceIdentifier id) { throw null; }
+        public virtual Azure.ResourceManager.Authorization.RoleManagementAlertCollection GetRoleManagementAlerts(Azure.Core.ResourceIdentifier scope) { throw null; }
         public virtual Azure.ResourceManager.Authorization.RoleManagementPolicyCollection GetRoleManagementPolicies(Azure.Core.ResourceIdentifier scope) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.Authorization.RoleManagementPolicyResource> GetRoleManagementPolicy(Azure.Core.ResourceIdentifier scope, string roleManagementPolicyName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.Authorization.RoleManagementPolicyAssignmentResource> GetRoleManagementPolicyAssignment(Azure.Core.ResourceIdentifier scope, string roleManagementPolicyAssignmentName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
@@ -1991,7 +1991,7 @@ namespace Azure.ResourceManager.Authorization.Models
         internal AccessReviewDecisionResourceTarget() { }
         public string DisplayName { get { throw null; } }
         public string Id { get { throw null; } }
-        public Azure.ResourceManager.Authorization.Models.DecisionResourceType Type { get { throw null; } }
+        public Azure.ResourceManager.Authorization.Models.AccessReviewDecisionResourceType Type { get { throw null; } }
         protected virtual Azure.ResourceManager.Authorization.Models.AccessReviewDecisionResourceTarget JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         protected virtual Azure.ResourceManager.Authorization.Models.AccessReviewDecisionResourceTarget PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -2001,6 +2001,22 @@ namespace Azure.ResourceManager.Authorization.Models
         Azure.ResourceManager.Authorization.Models.AccessReviewDecisionResourceTarget System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Authorization.Models.AccessReviewDecisionResourceTarget>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Authorization.Models.AccessReviewDecisionResourceTarget>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Authorization.Models.AccessReviewDecisionResourceTarget>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct AccessReviewDecisionResourceType : System.IEquatable<Azure.ResourceManager.Authorization.Models.AccessReviewDecisionResourceType>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public AccessReviewDecisionResourceType(string value) { throw null; }
+        public static Azure.ResourceManager.Authorization.Models.AccessReviewDecisionResourceType AzureRole { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.Authorization.Models.AccessReviewDecisionResourceType other) { throw null; }
+        public override bool Equals(object obj) { throw null; }
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.ResourceManager.Authorization.Models.AccessReviewDecisionResourceType left, Azure.ResourceManager.Authorization.Models.AccessReviewDecisionResourceType right) { throw null; }
+        public static implicit operator Azure.ResourceManager.Authorization.Models.AccessReviewDecisionResourceType (string value) { throw null; }
+        public static implicit operator Azure.ResourceManager.Authorization.Models.AccessReviewDecisionResourceType? (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.Authorization.Models.AccessReviewDecisionResourceType left, Azure.ResourceManager.Authorization.Models.AccessReviewDecisionResourceType right) { throw null; }
+        public override string ToString() { throw null; }
     }
     public partial class AccessReviewDecisionServicePrincipalIdentity : Azure.ResourceManager.Authorization.Models.AccessReviewDecisionIdentity, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Authorization.Models.AccessReviewDecisionServicePrincipalIdentity>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Authorization.Models.AccessReviewDecisionServicePrincipalIdentity>
     {
@@ -2043,6 +2059,24 @@ namespace Azure.ResourceManager.Authorization.Models
         Azure.ResourceManager.Authorization.Models.AccessReviewDecisionUserSignInInsightProperties System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Authorization.Models.AccessReviewDecisionUserSignInInsightProperties>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Authorization.Models.AccessReviewDecisionUserSignInInsightProperties>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Authorization.Models.AccessReviewDecisionUserSignInInsightProperties>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct AccessReviewDefaultDecisionType : System.IEquatable<Azure.ResourceManager.Authorization.Models.AccessReviewDefaultDecisionType>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public AccessReviewDefaultDecisionType(string value) { throw null; }
+        public static Azure.ResourceManager.Authorization.Models.AccessReviewDefaultDecisionType Approve { get { throw null; } }
+        public static Azure.ResourceManager.Authorization.Models.AccessReviewDefaultDecisionType Deny { get { throw null; } }
+        public static Azure.ResourceManager.Authorization.Models.AccessReviewDefaultDecisionType Recommendation { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.Authorization.Models.AccessReviewDefaultDecisionType other) { throw null; }
+        public override bool Equals(object obj) { throw null; }
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.ResourceManager.Authorization.Models.AccessReviewDefaultDecisionType left, Azure.ResourceManager.Authorization.Models.AccessReviewDefaultDecisionType right) { throw null; }
+        public static implicit operator Azure.ResourceManager.Authorization.Models.AccessReviewDefaultDecisionType (string value) { throw null; }
+        public static implicit operator Azure.ResourceManager.Authorization.Models.AccessReviewDefaultDecisionType? (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.Authorization.Models.AccessReviewDefaultDecisionType left, Azure.ResourceManager.Authorization.Models.AccessReviewDefaultDecisionType right) { throw null; }
+        public override string ToString() { throw null; }
     }
     public partial class AccessReviewHistoryDefinitionProperties : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Authorization.Models.AccessReviewHistoryDefinitionProperties>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Authorization.Models.AccessReviewHistoryDefinitionProperties>
     {
@@ -2299,25 +2333,25 @@ namespace Azure.ResourceManager.Authorization.Models
     public partial class AccessReviewScheduleDefinitionProperties : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Authorization.Models.AccessReviewScheduleDefinitionProperties>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Authorization.Models.AccessReviewScheduleDefinitionProperties>
     {
         public AccessReviewScheduleDefinitionProperties() { }
-        public bool? AutoApplyDecisionsEnabled { get { throw null; } set { } }
         public System.Collections.Generic.IList<Azure.ResourceManager.Authorization.Models.AccessReviewReviewer> BackupReviewers { get { throw null; } }
-        public Azure.ResourceManager.Authorization.Models.DefaultDecisionType? DefaultDecision { get { throw null; } set { } }
-        public bool? DefaultDecisionEnabled { get { throw null; } set { } }
+        public Azure.ResourceManager.Authorization.Models.AccessReviewDefaultDecisionType? DefaultDecision { get { throw null; } set { } }
         public string DescriptionForAdmins { get { throw null; } set { } }
         public string DescriptionForReviewers { get { throw null; } set { } }
         public string DisplayName { get { throw null; } set { } }
         public int? InstanceDurationInDays { get { throw null; } set { } }
         public System.Collections.Generic.IList<Azure.ResourceManager.Authorization.AccessReviewInstanceData> Instances { get { throw null; } }
-        public bool? JustificationRequiredOnApproval { get { throw null; } set { } }
-        public bool? MailNotificationsEnabled { get { throw null; } set { } }
+        public bool? IsAutoApplyDecisionsEnabled { get { throw null; } set { } }
+        public bool? IsDefaultDecisionEnabled { get { throw null; } set { } }
+        public bool? IsJustificationRequiredOnApproval { get { throw null; } set { } }
+        public bool? IsMailNotificationsEnabled { get { throw null; } set { } }
+        public bool? IsRecommendationsEnabled { get { throw null; } set { } }
+        public bool? IsReminderNotificationsEnabled { get { throw null; } set { } }
         public Azure.ResourceManager.Authorization.Models.AccessReviewRecurrencePattern Pattern { get { throw null; } set { } }
         public string PrincipalId { get { throw null; } }
         public string PrincipalName { get { throw null; } }
         public Azure.ResourceManager.Authorization.Models.AccessReviewActorIdentityType? PrincipalType { get { throw null; } }
         public Azure.ResourceManager.Authorization.Models.AccessReviewRecurrenceRange Range { get { throw null; } set { } }
         public System.TimeSpan? RecommendationLookBackDuration { get { throw null; } set { } }
-        public bool? RecommendationsEnabled { get { throw null; } set { } }
-        public bool? ReminderNotificationsEnabled { get { throw null; } set { } }
         public System.Collections.Generic.IList<Azure.ResourceManager.Authorization.Models.AccessReviewReviewer> Reviewers { get { throw null; } }
         public Azure.ResourceManager.Authorization.Models.AccessReviewScheduleDefinitionReviewersType? ReviewersType { get { throw null; } }
         public Azure.ResourceManager.Authorization.Models.AccessReviewScope Scope { get { throw null; } }
@@ -2380,17 +2414,17 @@ namespace Azure.ResourceManager.Authorization.Models
     public partial class AccessReviewScheduleSettings : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Authorization.Models.AccessReviewScheduleSettings>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Authorization.Models.AccessReviewScheduleSettings>
     {
         public AccessReviewScheduleSettings() { }
-        public bool? AutoApplyDecisionsEnabled { get { throw null; } set { } }
-        public Azure.ResourceManager.Authorization.Models.DefaultDecisionType? DefaultDecision { get { throw null; } set { } }
-        public bool? DefaultDecisionEnabled { get { throw null; } set { } }
+        public Azure.ResourceManager.Authorization.Models.AccessReviewDefaultDecisionType? DefaultDecision { get { throw null; } set { } }
         public int? InstanceDurationInDays { get { throw null; } set { } }
-        public bool? JustificationRequiredOnApproval { get { throw null; } set { } }
-        public bool? MailNotificationsEnabled { get { throw null; } set { } }
+        public bool? IsAutoApplyDecisionsEnabled { get { throw null; } set { } }
+        public bool? IsDefaultDecisionEnabled { get { throw null; } set { } }
+        public bool? IsJustificationRequiredOnApproval { get { throw null; } set { } }
+        public bool? IsMailNotificationsEnabled { get { throw null; } set { } }
+        public bool? IsRecommendationsEnabled { get { throw null; } set { } }
+        public bool? IsReminderNotificationsEnabled { get { throw null; } set { } }
         public Azure.ResourceManager.Authorization.Models.AccessReviewRecurrencePattern Pattern { get { throw null; } set { } }
         public Azure.ResourceManager.Authorization.Models.AccessReviewRecurrenceRange Range { get { throw null; } set { } }
         public System.TimeSpan? RecommendationLookBackDuration { get { throw null; } set { } }
-        public bool? RecommendationsEnabled { get { throw null; } set { } }
-        public bool? ReminderNotificationsEnabled { get { throw null; } set { } }
         protected virtual Azure.ResourceManager.Authorization.Models.AccessReviewScheduleSettings JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         protected virtual Azure.ResourceManager.Authorization.Models.AccessReviewScheduleSettings PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -2407,10 +2441,10 @@ namespace Azure.ResourceManager.Authorization.Models
         public Azure.ResourceManager.Authorization.Models.AccessReviewScopeAssignmentState? AssignmentState { get { throw null; } }
         public string ExcludeResourceId { get { throw null; } set { } }
         public string ExcludeRoleDefinitionId { get { throw null; } set { } }
-        public bool? ExpandNestedMemberships { get { throw null; } set { } }
         public System.TimeSpan? InactiveDuration { get { throw null; } set { } }
-        public bool? IncludeAccessBelowResource { get { throw null; } set { } }
-        public bool? IncludeInheritedAccess { get { throw null; } set { } }
+        public bool? IsExpandNestedMemberships { get { throw null; } set { } }
+        public bool? IsIncludeAccessBelowResource { get { throw null; } set { } }
+        public bool? IsIncludeInheritedAccess { get { throw null; } set { } }
         public Azure.ResourceManager.Authorization.Models.AccessReviewScopePrincipalType? PrincipalType { get { throw null; } }
         public string ResourceId { get { throw null; } }
         public string RoleDefinitionId { get { throw null; } }
@@ -2464,7 +2498,7 @@ namespace Azure.ResourceManager.Authorization.Models
     public abstract partial class AlertConfigurationProperties : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Authorization.Models.AlertConfigurationProperties>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Authorization.Models.AlertConfigurationProperties>
     {
         internal AlertConfigurationProperties() { }
-        public Azure.ResourceManager.Authorization.AlertDefinitionData AlertDefinition { get { throw null; } }
+        public Azure.ResourceManager.Authorization.RoleManagementAlertDefinitionData AlertDefinition { get { throw null; } }
         public string AlertDefinitionId { get { throw null; } }
         public bool? IsEnabled { get { throw null; } set { } }
         public string Scope { get { throw null; } }
@@ -2519,11 +2553,11 @@ namespace Azure.ResourceManager.Authorization.Models
         public static Azure.ResourceManager.Authorization.Models.AccessReviewDecisionInsight AccessReviewDecisionInsight(string id = null, string name = null, string type = null, Azure.ResourceManager.Authorization.Models.AccessReviewDecisionInsightProperties properties = null) { throw null; }
         public static Azure.ResourceManager.Authorization.Models.AccessReviewDecisionInsightProperties AccessReviewDecisionInsightProperties(string type = null, System.DateTimeOffset? insightCreatedOn = default(System.DateTimeOffset?)) { throw null; }
         public static Azure.ResourceManager.Authorization.Models.AccessReviewDecisionPatch AccessReviewDecisionPatch(Azure.ResourceManager.Authorization.Models.AccessReviewDecisionIdentity principal = null, Azure.ResourceManager.Authorization.Models.AccessReviewDecisionResourceTarget resource = null, Azure.ResourceManager.Authorization.Models.AccessRecommendationType? recommendation = default(Azure.ResourceManager.Authorization.Models.AccessRecommendationType?), Azure.ResourceManager.Authorization.Models.AccessReviewResult? decision = default(Azure.ResourceManager.Authorization.Models.AccessReviewResult?), string justification = null, System.DateTimeOffset? reviewedOn = default(System.DateTimeOffset?), Azure.ResourceManager.Authorization.Models.AccessReviewActorIdentity reviewedBy = null, Azure.ResourceManager.Authorization.Models.AccessReviewApplyResult? applyResult = default(Azure.ResourceManager.Authorization.Models.AccessReviewApplyResult?), System.DateTimeOffset? appliedOn = default(System.DateTimeOffset?), Azure.ResourceManager.Authorization.Models.AccessReviewActorIdentity appliedBy = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Authorization.Models.AccessReviewDecisionInsight> insights = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Authorization.Models.AccessReviewDecisionPrincipalResourceMembershipType> membershipTypes = null) { throw null; }
-        public static Azure.ResourceManager.Authorization.Models.AccessReviewDecisionResourceTarget AccessReviewDecisionResourceTarget(Azure.ResourceManager.Authorization.Models.DecisionResourceType type = default(Azure.ResourceManager.Authorization.Models.DecisionResourceType), string id = null, string displayName = null) { throw null; }
+        public static Azure.ResourceManager.Authorization.Models.AccessReviewDecisionResourceTarget AccessReviewDecisionResourceTarget(Azure.ResourceManager.Authorization.Models.AccessReviewDecisionResourceType type = default(Azure.ResourceManager.Authorization.Models.AccessReviewDecisionResourceType), string id = null, string displayName = null) { throw null; }
         public static Azure.ResourceManager.Authorization.Models.AccessReviewDecisionServicePrincipalIdentity AccessReviewDecisionServicePrincipalIdentity(string id = null, string displayName = null, string appId = null) { throw null; }
         public static Azure.ResourceManager.Authorization.Models.AccessReviewDecisionUserIdentity AccessReviewDecisionUserIdentity(string id = null, string displayName = null, string userPrincipalName = null) { throw null; }
         public static Azure.ResourceManager.Authorization.Models.AccessReviewDecisionUserSignInInsightProperties AccessReviewDecisionUserSignInInsightProperties(System.DateTimeOffset? insightCreatedOn = default(System.DateTimeOffset?), System.DateTimeOffset? lastSignInOn = default(System.DateTimeOffset?)) { throw null; }
-        public static Azure.ResourceManager.Authorization.AccessReviewDefaultSettingsData AccessReviewDefaultSettingsData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, bool? mailNotificationsEnabled = default(bool?), bool? reminderNotificationsEnabled = default(bool?), bool? defaultDecisionEnabled = default(bool?), bool? justificationRequiredOnApproval = default(bool?), Azure.ResourceManager.Authorization.Models.DefaultDecisionType? defaultDecision = default(Azure.ResourceManager.Authorization.Models.DefaultDecisionType?), bool? autoApplyDecisionsEnabled = default(bool?), bool? recommendationsEnabled = default(bool?), System.TimeSpan? recommendationLookBackDuration = default(System.TimeSpan?), int? instanceDurationInDays = default(int?), Azure.ResourceManager.Authorization.Models.AccessReviewRecurrencePattern pattern = null, Azure.ResourceManager.Authorization.Models.AccessReviewRecurrenceRange range = null) { throw null; }
+        public static Azure.ResourceManager.Authorization.AccessReviewDefaultSettingsData AccessReviewDefaultSettingsData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, bool? isMailNotificationsEnabled = default(bool?), bool? isReminderNotificationsEnabled = default(bool?), bool? isDefaultDecisionEnabled = default(bool?), bool? isJustificationRequiredOnApproval = default(bool?), Azure.ResourceManager.Authorization.Models.AccessReviewDefaultDecisionType? defaultDecision = default(Azure.ResourceManager.Authorization.Models.AccessReviewDefaultDecisionType?), bool? isAutoApplyDecisionsEnabled = default(bool?), bool? isRecommendationsEnabled = default(bool?), System.TimeSpan? recommendationLookBackDuration = default(System.TimeSpan?), int? instanceDurationInDays = default(int?), Azure.ResourceManager.Authorization.Models.AccessReviewRecurrencePattern pattern = null, Azure.ResourceManager.Authorization.Models.AccessReviewRecurrenceRange range = null) { throw null; }
         public static Azure.ResourceManager.Authorization.AccessReviewHistoryDefinitionData AccessReviewHistoryDefinitionData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, string displayName = null, System.DateTimeOffset? reviewHistoryPeriodStartOn = default(System.DateTimeOffset?), System.DateTimeOffset? reviewHistoryPeriodEndOn = default(System.DateTimeOffset?), System.Collections.Generic.IEnumerable<Azure.ResourceManager.Authorization.Models.AccessReviewResult> decisions = null, Azure.ResourceManager.Authorization.Models.AccessReviewHistoryDefinitionStatus? status = default(Azure.ResourceManager.Authorization.Models.AccessReviewHistoryDefinitionStatus?), System.DateTimeOffset? createdOn = default(System.DateTimeOffset?), System.Collections.Generic.IEnumerable<Azure.ResourceManager.Authorization.Models.AccessReviewScope> scopes = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Authorization.Models.AccessReviewHistoryInstance> instances = null, string principalId = null, Azure.ResourceManager.Authorization.Models.AccessReviewActorIdentityType? principalType = default(Azure.ResourceManager.Authorization.Models.AccessReviewActorIdentityType?), string principalName = null, string userPrincipalName = null, Azure.ResourceManager.Authorization.Models.AccessReviewRecurrencePattern pattern = null, Azure.ResourceManager.Authorization.Models.AccessReviewRecurrenceRange range = null) { throw null; }
         public static Azure.ResourceManager.Authorization.Models.AccessReviewHistoryDefinitionProperties AccessReviewHistoryDefinitionProperties(string displayName = null, System.DateTimeOffset? reviewHistoryPeriodStartOn = default(System.DateTimeOffset?), System.DateTimeOffset? reviewHistoryPeriodEndOn = default(System.DateTimeOffset?), System.Collections.Generic.IEnumerable<Azure.ResourceManager.Authorization.Models.AccessReviewResult> decisions = null, Azure.ResourceManager.Authorization.Models.AccessReviewHistoryDefinitionStatus? status = default(Azure.ResourceManager.Authorization.Models.AccessReviewHistoryDefinitionStatus?), System.DateTimeOffset? createdOn = default(System.DateTimeOffset?), string principalId = null, Azure.ResourceManager.Authorization.Models.AccessReviewActorIdentityType? principalType = default(Azure.ResourceManager.Authorization.Models.AccessReviewActorIdentityType?), string principalName = null, string userPrincipalName = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Authorization.Models.AccessReviewScope> scopes = null, Azure.ResourceManager.Authorization.Models.AccessReviewRecurrencePattern pattern = null, Azure.ResourceManager.Authorization.Models.AccessReviewRecurrenceRange range = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Authorization.Models.AccessReviewHistoryInstance> instances = null) { throw null; }
         public static Azure.ResourceManager.Authorization.Models.AccessReviewHistoryInstance AccessReviewHistoryInstance(string id = null, string name = null, string type = null, System.DateTimeOffset? reviewHistoryPeriodStartOn = default(System.DateTimeOffset?), System.DateTimeOffset? reviewHistoryPeriodEndOn = default(System.DateTimeOffset?), string displayName = null, Azure.ResourceManager.Authorization.Models.AccessReviewHistoryDefinitionStatus? status = default(Azure.ResourceManager.Authorization.Models.AccessReviewHistoryDefinitionStatus?), System.DateTimeOffset? runOn = default(System.DateTimeOffset?), System.DateTimeOffset? fulfilledOn = default(System.DateTimeOffset?), string downloadUri = null, System.DateTimeOffset? expiration = default(System.DateTimeOffset?)) { throw null; }
@@ -2532,15 +2566,11 @@ namespace Azure.ResourceManager.Authorization.Models
         public static Azure.ResourceManager.Authorization.Models.AccessReviewRecurrencePattern AccessReviewRecurrencePattern(Azure.ResourceManager.Authorization.Models.AccessReviewRecurrencePatternType? type = default(Azure.ResourceManager.Authorization.Models.AccessReviewRecurrencePatternType?), int? interval = default(int?)) { throw null; }
         public static Azure.ResourceManager.Authorization.Models.AccessReviewRecurrenceRange AccessReviewRecurrenceRange(Azure.ResourceManager.Authorization.Models.AccessReviewRecurrenceRangeType? type = default(Azure.ResourceManager.Authorization.Models.AccessReviewRecurrenceRangeType?), int? numberOfOccurrences = default(int?), System.DateTimeOffset? startOn = default(System.DateTimeOffset?), System.DateTimeOffset? endOn = default(System.DateTimeOffset?)) { throw null; }
         public static Azure.ResourceManager.Authorization.Models.AccessReviewReviewer AccessReviewReviewer(string principalId = null, Azure.ResourceManager.Authorization.Models.AccessReviewReviewerType? principalType = default(Azure.ResourceManager.Authorization.Models.AccessReviewReviewerType?)) { throw null; }
-        public static Azure.ResourceManager.Authorization.AccessReviewScheduleDefinitionData AccessReviewScheduleDefinitionData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, string displayName = null, Azure.ResourceManager.Authorization.Models.AccessReviewScheduleDefinitionStatus? status = default(Azure.ResourceManager.Authorization.Models.AccessReviewScheduleDefinitionStatus?), string descriptionForAdmins = null, string descriptionForReviewers = null, Azure.ResourceManager.Authorization.Models.AccessReviewScope scope = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Authorization.Models.AccessReviewReviewer> reviewers = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Authorization.Models.AccessReviewReviewer> backupReviewers = null, Azure.ResourceManager.Authorization.Models.AccessReviewScheduleDefinitionReviewersType? reviewersType = default(Azure.ResourceManager.Authorization.Models.AccessReviewScheduleDefinitionReviewersType?), System.Collections.Generic.IEnumerable<Azure.ResourceManager.Authorization.AccessReviewInstanceData> instances = null, string principalId = null, Azure.ResourceManager.Authorization.Models.AccessReviewActorIdentityType? principalType = default(Azure.ResourceManager.Authorization.Models.AccessReviewActorIdentityType?), string principalName = null, string userPrincipalName = null, bool? mailNotificationsEnabled = default(bool?), bool? reminderNotificationsEnabled = default(bool?), bool? defaultDecisionEnabled = default(bool?), bool? justificationRequiredOnApproval = default(bool?), Azure.ResourceManager.Authorization.Models.DefaultDecisionType? defaultDecision = default(Azure.ResourceManager.Authorization.Models.DefaultDecisionType?), bool? autoApplyDecisionsEnabled = default(bool?), bool? recommendationsEnabled = default(bool?), System.TimeSpan? recommendationLookBackDuration = default(System.TimeSpan?), int? instanceDurationInDays = default(int?), Azure.ResourceManager.Authorization.Models.AccessReviewRecurrencePattern pattern = null, Azure.ResourceManager.Authorization.Models.AccessReviewRecurrenceRange range = null) { throw null; }
-        public static Azure.ResourceManager.Authorization.Models.AccessReviewScheduleDefinitionProperties AccessReviewScheduleDefinitionProperties(string displayName = null, Azure.ResourceManager.Authorization.Models.AccessReviewScheduleDefinitionStatus? status = default(Azure.ResourceManager.Authorization.Models.AccessReviewScheduleDefinitionStatus?), string descriptionForAdmins = null, string descriptionForReviewers = null, string principalId = null, Azure.ResourceManager.Authorization.Models.AccessReviewActorIdentityType? principalType = default(Azure.ResourceManager.Authorization.Models.AccessReviewActorIdentityType?), string principalName = null, string userPrincipalName = null, bool? mailNotificationsEnabled = default(bool?), bool? reminderNotificationsEnabled = default(bool?), bool? defaultDecisionEnabled = default(bool?), bool? justificationRequiredOnApproval = default(bool?), Azure.ResourceManager.Authorization.Models.DefaultDecisionType? defaultDecision = default(Azure.ResourceManager.Authorization.Models.DefaultDecisionType?), bool? autoApplyDecisionsEnabled = default(bool?), bool? recommendationsEnabled = default(bool?), System.TimeSpan? recommendationLookBackDuration = default(System.TimeSpan?), int? instanceDurationInDays = default(int?), Azure.ResourceManager.Authorization.Models.AccessReviewRecurrencePattern pattern = null, Azure.ResourceManager.Authorization.Models.AccessReviewRecurrenceRange range = null, Azure.ResourceManager.Authorization.Models.AccessReviewScope scope = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Authorization.Models.AccessReviewReviewer> reviewers = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Authorization.Models.AccessReviewReviewer> backupReviewers = null, Azure.ResourceManager.Authorization.Models.AccessReviewScheduleDefinitionReviewersType? reviewersType = default(Azure.ResourceManager.Authorization.Models.AccessReviewScheduleDefinitionReviewersType?), System.Collections.Generic.IEnumerable<Azure.ResourceManager.Authorization.AccessReviewInstanceData> instances = null) { throw null; }
-        public static Azure.ResourceManager.Authorization.Models.AccessReviewScheduleSettings AccessReviewScheduleSettings(bool? mailNotificationsEnabled = default(bool?), bool? reminderNotificationsEnabled = default(bool?), bool? defaultDecisionEnabled = default(bool?), bool? justificationRequiredOnApproval = default(bool?), Azure.ResourceManager.Authorization.Models.DefaultDecisionType? defaultDecision = default(Azure.ResourceManager.Authorization.Models.DefaultDecisionType?), bool? autoApplyDecisionsEnabled = default(bool?), bool? recommendationsEnabled = default(bool?), System.TimeSpan? recommendationLookBackDuration = default(System.TimeSpan?), int? instanceDurationInDays = default(int?), Azure.ResourceManager.Authorization.Models.AccessReviewRecurrencePattern pattern = null, Azure.ResourceManager.Authorization.Models.AccessReviewRecurrenceRange range = null) { throw null; }
-        public static Azure.ResourceManager.Authorization.Models.AccessReviewScope AccessReviewScope(string resourceId = null, string roleDefinitionId = null, Azure.ResourceManager.Authorization.Models.AccessReviewScopePrincipalType? principalType = default(Azure.ResourceManager.Authorization.Models.AccessReviewScopePrincipalType?), Azure.ResourceManager.Authorization.Models.AccessReviewScopeAssignmentState? assignmentState = default(Azure.ResourceManager.Authorization.Models.AccessReviewScopeAssignmentState?), System.TimeSpan? inactiveDuration = default(System.TimeSpan?), bool? expandNestedMemberships = default(bool?), bool? includeInheritedAccess = default(bool?), bool? includeAccessBelowResource = default(bool?), string excludeResourceId = null, string excludeRoleDefinitionId = null) { throw null; }
-        public static Azure.ResourceManager.Authorization.AlertConfigurationData AlertConfigurationData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, Azure.ResourceManager.Authorization.Models.AlertConfigurationProperties properties = null) { throw null; }
-        public static Azure.ResourceManager.Authorization.Models.AlertConfigurationProperties AlertConfigurationProperties(string alertDefinitionId = null, string scope = null, bool? isEnabled = default(bool?), string alertConfigurationType = null, Azure.ResourceManager.Authorization.AlertDefinitionData alertDefinition = null) { throw null; }
-        public static Azure.ResourceManager.Authorization.AlertData AlertData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, string scope = null, bool? isActive = default(bool?), int? incidentCount = default(int?), System.DateTimeOffset? lastModifiedOn = default(System.DateTimeOffset?), System.DateTimeOffset? lastScannedOn = default(System.DateTimeOffset?), Azure.ResourceManager.Authorization.AlertDefinitionData alertDefinition = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Authorization.AlertIncidentData> alertIncidents = null, Azure.ResourceManager.Authorization.AlertConfigurationData alertConfiguration = null) { throw null; }
-        public static Azure.ResourceManager.Authorization.AlertDefinitionData AlertDefinitionData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, string displayName = null, string scope = null, string description = null, Azure.ResourceManager.Authorization.Models.SeverityLevel? severityLevel = default(Azure.ResourceManager.Authorization.Models.SeverityLevel?), string securityImpact = null, string mitigationSteps = null, string howToPrevent = null, bool? isRemediatable = default(bool?), bool? isConfigurable = default(bool?)) { throw null; }
-        public static Azure.ResourceManager.Authorization.AlertIncidentData AlertIncidentData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, Azure.ResourceManager.Authorization.Models.AlertIncidentProperties properties = null) { throw null; }
+        public static Azure.ResourceManager.Authorization.AccessReviewScheduleDefinitionData AccessReviewScheduleDefinitionData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, string displayName = null, Azure.ResourceManager.Authorization.Models.AccessReviewScheduleDefinitionStatus? status = default(Azure.ResourceManager.Authorization.Models.AccessReviewScheduleDefinitionStatus?), string descriptionForAdmins = null, string descriptionForReviewers = null, Azure.ResourceManager.Authorization.Models.AccessReviewScope scope = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Authorization.Models.AccessReviewReviewer> reviewers = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Authorization.Models.AccessReviewReviewer> backupReviewers = null, Azure.ResourceManager.Authorization.Models.AccessReviewScheduleDefinitionReviewersType? reviewersType = default(Azure.ResourceManager.Authorization.Models.AccessReviewScheduleDefinitionReviewersType?), System.Collections.Generic.IEnumerable<Azure.ResourceManager.Authorization.AccessReviewInstanceData> instances = null, string principalId = null, Azure.ResourceManager.Authorization.Models.AccessReviewActorIdentityType? principalType = default(Azure.ResourceManager.Authorization.Models.AccessReviewActorIdentityType?), string principalName = null, string userPrincipalName = null, bool? isMailNotificationsEnabled = default(bool?), bool? isReminderNotificationsEnabled = default(bool?), bool? isDefaultDecisionEnabled = default(bool?), bool? isJustificationRequiredOnApproval = default(bool?), Azure.ResourceManager.Authorization.Models.AccessReviewDefaultDecisionType? defaultDecision = default(Azure.ResourceManager.Authorization.Models.AccessReviewDefaultDecisionType?), bool? isAutoApplyDecisionsEnabled = default(bool?), bool? isRecommendationsEnabled = default(bool?), System.TimeSpan? recommendationLookBackDuration = default(System.TimeSpan?), int? instanceDurationInDays = default(int?), Azure.ResourceManager.Authorization.Models.AccessReviewRecurrencePattern pattern = null, Azure.ResourceManager.Authorization.Models.AccessReviewRecurrenceRange range = null) { throw null; }
+        public static Azure.ResourceManager.Authorization.Models.AccessReviewScheduleDefinitionProperties AccessReviewScheduleDefinitionProperties(string displayName = null, Azure.ResourceManager.Authorization.Models.AccessReviewScheduleDefinitionStatus? status = default(Azure.ResourceManager.Authorization.Models.AccessReviewScheduleDefinitionStatus?), string descriptionForAdmins = null, string descriptionForReviewers = null, string principalId = null, Azure.ResourceManager.Authorization.Models.AccessReviewActorIdentityType? principalType = default(Azure.ResourceManager.Authorization.Models.AccessReviewActorIdentityType?), string principalName = null, string userPrincipalName = null, bool? isMailNotificationsEnabled = default(bool?), bool? isReminderNotificationsEnabled = default(bool?), bool? isDefaultDecisionEnabled = default(bool?), bool? isJustificationRequiredOnApproval = default(bool?), Azure.ResourceManager.Authorization.Models.AccessReviewDefaultDecisionType? defaultDecision = default(Azure.ResourceManager.Authorization.Models.AccessReviewDefaultDecisionType?), bool? isAutoApplyDecisionsEnabled = default(bool?), bool? isRecommendationsEnabled = default(bool?), System.TimeSpan? recommendationLookBackDuration = default(System.TimeSpan?), int? instanceDurationInDays = default(int?), Azure.ResourceManager.Authorization.Models.AccessReviewRecurrencePattern pattern = null, Azure.ResourceManager.Authorization.Models.AccessReviewRecurrenceRange range = null, Azure.ResourceManager.Authorization.Models.AccessReviewScope scope = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Authorization.Models.AccessReviewReviewer> reviewers = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Authorization.Models.AccessReviewReviewer> backupReviewers = null, Azure.ResourceManager.Authorization.Models.AccessReviewScheduleDefinitionReviewersType? reviewersType = default(Azure.ResourceManager.Authorization.Models.AccessReviewScheduleDefinitionReviewersType?), System.Collections.Generic.IEnumerable<Azure.ResourceManager.Authorization.AccessReviewInstanceData> instances = null) { throw null; }
+        public static Azure.ResourceManager.Authorization.Models.AccessReviewScheduleSettings AccessReviewScheduleSettings(bool? isMailNotificationsEnabled = default(bool?), bool? isReminderNotificationsEnabled = default(bool?), bool? isDefaultDecisionEnabled = default(bool?), bool? isJustificationRequiredOnApproval = default(bool?), Azure.ResourceManager.Authorization.Models.AccessReviewDefaultDecisionType? defaultDecision = default(Azure.ResourceManager.Authorization.Models.AccessReviewDefaultDecisionType?), bool? isAutoApplyDecisionsEnabled = default(bool?), bool? isRecommendationsEnabled = default(bool?), System.TimeSpan? recommendationLookBackDuration = default(System.TimeSpan?), int? instanceDurationInDays = default(int?), Azure.ResourceManager.Authorization.Models.AccessReviewRecurrencePattern pattern = null, Azure.ResourceManager.Authorization.Models.AccessReviewRecurrenceRange range = null) { throw null; }
+        public static Azure.ResourceManager.Authorization.Models.AccessReviewScope AccessReviewScope(string resourceId = null, string roleDefinitionId = null, Azure.ResourceManager.Authorization.Models.AccessReviewScopePrincipalType? principalType = default(Azure.ResourceManager.Authorization.Models.AccessReviewScopePrincipalType?), Azure.ResourceManager.Authorization.Models.AccessReviewScopeAssignmentState? assignmentState = default(Azure.ResourceManager.Authorization.Models.AccessReviewScopeAssignmentState?), System.TimeSpan? inactiveDuration = default(System.TimeSpan?), bool? isExpandNestedMemberships = default(bool?), bool? isIncludeInheritedAccess = default(bool?), bool? isIncludeAccessBelowResource = default(bool?), string excludeResourceId = null, string excludeRoleDefinitionId = null) { throw null; }
+        public static Azure.ResourceManager.Authorization.Models.AlertConfigurationProperties AlertConfigurationProperties(string alertDefinitionId = null, string scope = null, bool? isEnabled = default(bool?), string alertConfigurationType = null, Azure.ResourceManager.Authorization.RoleManagementAlertDefinitionData alertDefinition = null) { throw null; }
         public static Azure.ResourceManager.Authorization.Models.AlertIncidentProperties AlertIncidentProperties(string alertIncidentType = null) { throw null; }
         public static Azure.ResourceManager.Authorization.Models.AlertOperationResult AlertOperationResult(string id = null, string status = null, string statusDetail = null, System.DateTimeOffset? createdOn = default(System.DateTimeOffset?), System.DateTimeOffset? lastActionOn = default(System.DateTimeOffset?), string resourceLocation = null) { throw null; }
         public static Azure.ResourceManager.Authorization.Models.AttributeNamespaceCreateContent AttributeNamespaceCreateContent(string namespaceOwnerPrincipalId = null) { throw null; }
@@ -2551,15 +2581,15 @@ namespace Azure.ResourceManager.Authorization.Models
         public static Azure.ResourceManager.Authorization.Models.AuthorizationProviderResourceType AuthorizationProviderResourceType(string name = null, string displayName = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Authorization.Models.AuthorizationProviderOperationInfo> operations = null) { throw null; }
         public static Azure.ResourceManager.Authorization.AuthorizationRoleDefinitionData AuthorizationRoleDefinitionData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, string roleName = null, string description = null, Azure.ResourceManager.Authorization.Models.AuthorizationRoleType? roleType = default(Azure.ResourceManager.Authorization.Models.AuthorizationRoleType?), System.Collections.Generic.IEnumerable<Azure.ResourceManager.Authorization.Models.RoleDefinitionPermission> permissions = null, System.Collections.Generic.IEnumerable<string> assignableScopes = null) { throw null; }
         public static Azure.ResourceManager.Authorization.AuthorizationRoleDefinitionData AuthorizationRoleDefinitionData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, string roleName = null, string description = null, Azure.ResourceManager.Authorization.Models.AuthorizationRoleType? roleType = default(Azure.ResourceManager.Authorization.Models.AuthorizationRoleType?), System.Collections.Generic.IEnumerable<Azure.ResourceManager.Authorization.Models.RoleDefinitionPermission> permissions = null, System.Collections.Generic.IEnumerable<string> assignableScopes = null, System.DateTimeOffset? createdOn = default(System.DateTimeOffset?), System.DateTimeOffset? updatedOn = default(System.DateTimeOffset?), string createdBy = null, string updatedBy = null) { throw null; }
-        public static Azure.ResourceManager.Authorization.Models.AzureRolesAssignedOutsidePimAlertConfigurationProperties AzureRolesAssignedOutsidePimAlertConfigurationProperties(string alertDefinitionId = null, string scope = null, bool? isEnabled = default(bool?), Azure.ResourceManager.Authorization.AlertDefinitionData alertDefinition = null) { throw null; }
+        public static Azure.ResourceManager.Authorization.Models.AzureRolesAssignedOutsidePimAlertConfigurationProperties AzureRolesAssignedOutsidePimAlertConfigurationProperties(string alertDefinitionId = null, string scope = null, bool? isEnabled = default(bool?), Azure.ResourceManager.Authorization.RoleManagementAlertDefinitionData alertDefinition = null) { throw null; }
         public static Azure.ResourceManager.Authorization.Models.AzureRolesAssignedOutsidePimAlertIncidentProperties AzureRolesAssignedOutsidePimAlertIncidentProperties(string assigneeDisplayName = null, string assigneeUserPrincipalName = null, string assigneeId = null, string roleDisplayName = null, string roleTemplateId = null, string roleDefinitionId = null, System.DateTimeOffset? assignmentActivatedOn = default(System.DateTimeOffset?), string requestorId = null, string requestorDisplayName = null, string requestorUserPrincipalName = null) { throw null; }
         public static Azure.ResourceManager.Authorization.DenyAssignmentData DenyAssignmentData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, string denyAssignmentName = null, string description = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Authorization.Models.DenyAssignmentPermission> permissions = null, string scope = null, bool? isAppliedToChildScopes = default(bool?), System.Collections.Generic.IEnumerable<Azure.ResourceManager.Authorization.Models.RoleManagementPrincipal> principals = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Authorization.Models.RoleManagementPrincipal> excludePrincipals = null, bool? isSystemProtected = default(bool?)) { throw null; }
         public static Azure.ResourceManager.Authorization.DenyAssignmentData DenyAssignmentData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, string denyAssignmentName = null, string description = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Authorization.Models.DenyAssignmentPermission> deniedPermissions = null, string scope = null, bool? isAppliedToChildScopes = default(bool?), System.Collections.Generic.IEnumerable<Azure.ResourceManager.Authorization.Models.RoleManagementPrincipal> deniedPrincipals = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Authorization.Models.RoleManagementPrincipal> excludedPrincipals = null, bool? isSystemProtected = default(bool?), Azure.ResourceManager.Authorization.Models.DenyAssignmentEffect? denyAssignmentEffect = default(Azure.ResourceManager.Authorization.Models.DenyAssignmentEffect?), string condition = null, string conditionVersion = null, System.DateTimeOffset? createdOn = default(System.DateTimeOffset?), System.DateTimeOffset? updatedOn = default(System.DateTimeOffset?), string createdBy = null, string updatedBy = null) { throw null; }
         public static Azure.ResourceManager.Authorization.Models.DenyAssignmentPermission DenyAssignmentPermission(System.Collections.Generic.IEnumerable<string> actions = null, System.Collections.Generic.IEnumerable<string> notActions = null, System.Collections.Generic.IEnumerable<string> dataActions = null, System.Collections.Generic.IEnumerable<string> notDataActions = null, string condition = null, string conditionVersion = null) { throw null; }
-        public static Azure.ResourceManager.Authorization.Models.DuplicateRoleCreatedAlertConfigurationProperties DuplicateRoleCreatedAlertConfigurationProperties(string alertDefinitionId = null, string scope = null, bool? isEnabled = default(bool?), Azure.ResourceManager.Authorization.AlertDefinitionData alertDefinition = null) { throw null; }
+        public static Azure.ResourceManager.Authorization.Models.DuplicateRoleCreatedAlertConfigurationProperties DuplicateRoleCreatedAlertConfigurationProperties(string alertDefinitionId = null, string scope = null, bool? isEnabled = default(bool?), Azure.ResourceManager.Authorization.RoleManagementAlertDefinitionData alertDefinition = null) { throw null; }
         public static Azure.ResourceManager.Authorization.Models.DuplicateRoleCreatedAlertIncidentProperties DuplicateRoleCreatedAlertIncidentProperties(string roleName = null, string duplicateRoles = null, string reason = null) { throw null; }
         public static Azure.ResourceManager.Authorization.Models.EligibleChildResource EligibleChildResource(string id = null, string name = null, string resourceType = null) { throw null; }
-        public static Azure.ResourceManager.Authorization.Models.PIMOnlyModeSettings PIMOnlyModeSettings(Azure.ResourceManager.Authorization.Models.PIMOnlyMode? mode = default(Azure.ResourceManager.Authorization.Models.PIMOnlyMode?), System.Collections.Generic.IEnumerable<Azure.ResourceManager.Authorization.Models.UsersOrServicePrincipalSet> excludes = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Authorization.Models.ExcludedPrincipalTypes> excludedAssignmentTypes = null) { throw null; }
+        public static Azure.ResourceManager.Authorization.Models.PimOnlyModeSettings PimOnlyModeSettings(Azure.ResourceManager.Authorization.Models.PimOnlyMode? mode = default(Azure.ResourceManager.Authorization.Models.PimOnlyMode?), System.Collections.Generic.IEnumerable<Azure.ResourceManager.Authorization.Models.UsersOrServicePrincipalSet> excludes = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Authorization.Models.ExcludedPrincipalType> excludedAssignmentTypes = null) { throw null; }
         public static Azure.ResourceManager.Authorization.Models.PolicyAssignmentProperties PolicyAssignmentProperties(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, Azure.Core.ResourceIdentifier policyId = null, Azure.ResourceManager.Authorization.Models.RoleManagementPrincipal lastModifiedBy = null, System.DateTimeOffset? lastModifiedOn = default(System.DateTimeOffset?), Azure.Core.ResourceIdentifier roleDefinitionId = null, string roleDefinitionDisplayName = null, Azure.ResourceManager.Authorization.Models.AuthorizationRoleType? roleType = default(Azure.ResourceManager.Authorization.Models.AuthorizationRoleType?), Azure.Core.ResourceIdentifier scopeId = null, string scopeDisplayName = null, Azure.ResourceManager.Authorization.Models.RoleManagementScopeType? scopeType = default(Azure.ResourceManager.Authorization.Models.RoleManagementScopeType?)) { throw null; }
         public static Azure.ResourceManager.Authorization.Models.PolicyAssignmentProperties PolicyAssignmentProperties(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, Azure.Core.ResourceIdentifier scopeId = null, string scopeDisplayName = null, Azure.ResourceManager.Authorization.Models.RoleManagementScopeType? scopeType = default(Azure.ResourceManager.Authorization.Models.RoleManagementScopeType?), Azure.Core.ResourceIdentifier roleDefinitionId = null, string roleDefinitionDisplayName = null, Azure.ResourceManager.Authorization.Models.AuthorizationRoleType? roleType = default(Azure.ResourceManager.Authorization.Models.AuthorizationRoleType?), Azure.Core.ResourceIdentifier policyId = null, Azure.ResourceManager.Authorization.Models.RoleManagementPrincipal lastModifiedBy = null, System.DateTimeOffset? lastModifiedOn = default(System.DateTimeOffset?)) { throw null; }
         public static Azure.ResourceManager.Authorization.Models.RecordAllDecisionsProperties RecordAllDecisionsProperties(string principalId = null, string resourceId = null, Azure.ResourceManager.Authorization.Models.RecordAllDecisionsResult? decision = default(Azure.ResourceManager.Authorization.Models.RecordAllDecisionsResult?), string justification = null) { throw null; }
@@ -2574,6 +2604,10 @@ namespace Azure.ResourceManager.Authorization.Models
         public static Azure.ResourceManager.Authorization.RoleEligibilityScheduleInstanceData RoleEligibilityScheduleInstanceData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, string scope = null, Azure.Core.ResourceIdentifier roleDefinitionId = null, System.Guid? principalId = default(System.Guid?), Azure.ResourceManager.Authorization.Models.RoleManagementPrincipalType? principalType = default(Azure.ResourceManager.Authorization.Models.RoleManagementPrincipalType?), Azure.Core.ResourceIdentifier roleEligibilityScheduleId = null, Azure.ResourceManager.Authorization.Models.RoleManagementScheduleStatus? status = default(Azure.ResourceManager.Authorization.Models.RoleManagementScheduleStatus?), System.DateTimeOffset? startOn = default(System.DateTimeOffset?), System.DateTimeOffset? endOn = default(System.DateTimeOffset?), Azure.ResourceManager.Authorization.Models.RoleManagementScheduleMemberType? memberType = default(Azure.ResourceManager.Authorization.Models.RoleManagementScheduleMemberType?), string condition = null, string conditionVersion = null, System.DateTimeOffset? createdOn = default(System.DateTimeOffset?), Azure.ResourceManager.Authorization.Models.RoleManagementExpandedProperties expandedProperties = null) { throw null; }
         public static Azure.ResourceManager.Authorization.RoleEligibilityScheduleRequestData RoleEligibilityScheduleRequestData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, string scope = null, Azure.Core.ResourceIdentifier roleDefinitionId = null, System.Guid? principalId = default(System.Guid?), Azure.ResourceManager.Authorization.Models.RoleManagementPrincipalType? principalType = default(Azure.ResourceManager.Authorization.Models.RoleManagementPrincipalType?), Azure.ResourceManager.Authorization.Models.RoleManagementScheduleRequestType? requestType = default(Azure.ResourceManager.Authorization.Models.RoleManagementScheduleRequestType?), Azure.ResourceManager.Authorization.Models.RoleManagementScheduleStatus? status = default(Azure.ResourceManager.Authorization.Models.RoleManagementScheduleStatus?), string approvalId = null, Azure.Core.ResourceIdentifier targetRoleEligibilityScheduleId = null, Azure.Core.ResourceIdentifier targetRoleEligibilityScheduleInstanceId = null, string justification = null, Azure.ResourceManager.Authorization.Models.RoleEligibilityScheduleRequestPropertiesTicketInfo ticketInfo = null, string condition = null, string conditionVersion = null, System.DateTimeOffset? createdOn = default(System.DateTimeOffset?), System.Guid? requestorId = default(System.Guid?), Azure.ResourceManager.Authorization.Models.RoleManagementExpandedProperties expandedProperties = null, System.DateTimeOffset? startOn = default(System.DateTimeOffset?), Azure.ResourceManager.Authorization.Models.RoleManagementScheduleExpirationType? expirationType = default(Azure.ResourceManager.Authorization.Models.RoleManagementScheduleExpirationType?), System.DateTimeOffset? endOn = default(System.DateTimeOffset?), System.TimeSpan? duration = default(System.TimeSpan?)) { throw null; }
         public static Azure.ResourceManager.Authorization.Models.RoleEligibilityScheduleRequestPropertiesTicketInfo RoleEligibilityScheduleRequestPropertiesTicketInfo(string ticketNumber = null, string ticketSystem = null) { throw null; }
+        public static Azure.ResourceManager.Authorization.RoleManagementAlertConfigurationData RoleManagementAlertConfigurationData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, Azure.ResourceManager.Authorization.Models.AlertConfigurationProperties properties = null) { throw null; }
+        public static Azure.ResourceManager.Authorization.RoleManagementAlertData RoleManagementAlertData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, string scope = null, bool? isActive = default(bool?), int? incidentCount = default(int?), System.DateTimeOffset? lastModifiedOn = default(System.DateTimeOffset?), System.DateTimeOffset? lastScannedOn = default(System.DateTimeOffset?), Azure.ResourceManager.Authorization.RoleManagementAlertDefinitionData alertDefinition = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Authorization.RoleManagementAlertIncidentData> alertIncidents = null, Azure.ResourceManager.Authorization.RoleManagementAlertConfigurationData alertConfiguration = null) { throw null; }
+        public static Azure.ResourceManager.Authorization.RoleManagementAlertDefinitionData RoleManagementAlertDefinitionData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, string displayName = null, string scope = null, string description = null, Azure.ResourceManager.Authorization.Models.RoleManagementAlertSeverityLevel? severityLevel = default(Azure.ResourceManager.Authorization.Models.RoleManagementAlertSeverityLevel?), string securityImpact = null, string mitigationSteps = null, string howToPrevent = null, bool? isRemediatable = default(bool?), bool? isConfigurable = default(bool?)) { throw null; }
+        public static Azure.ResourceManager.Authorization.RoleManagementAlertIncidentData RoleManagementAlertIncidentData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, Azure.ResourceManager.Authorization.Models.AlertIncidentProperties properties = null) { throw null; }
         public static Azure.ResourceManager.Authorization.Models.RoleManagementApprovalSettings RoleManagementApprovalSettings(bool? isApprovalRequired = default(bool?), bool? isApprovalRequiredForExtension = default(bool?), bool? isRequestorJustificationRequired = default(bool?), Azure.ResourceManager.Authorization.Models.RoleManagementApprovalMode? approvalMode = default(Azure.ResourceManager.Authorization.Models.RoleManagementApprovalMode?), System.Collections.Generic.IEnumerable<Azure.ResourceManager.Authorization.Models.RoleManagementApprovalStage> approvalStages = null) { throw null; }
         public static Azure.ResourceManager.Authorization.Models.RoleManagementApprovalStage RoleManagementApprovalStage(int? approvalStageTimeOutInDays = default(int?), bool? isApproverJustificationRequired = default(bool?), int? escalationTimeInMinutes = default(int?), System.Collections.Generic.IEnumerable<Azure.ResourceManager.Authorization.Models.RoleManagementUserInfo> primaryApprovers = null, bool? isEscalationEnabled = default(bool?), System.Collections.Generic.IEnumerable<Azure.ResourceManager.Authorization.Models.RoleManagementUserInfo> escalationApprovers = null) { throw null; }
         public static Azure.ResourceManager.Authorization.Models.RoleManagementExpandedProperties RoleManagementExpandedProperties(Azure.Core.ResourceIdentifier scopeId = null, string scopeDisplayName = null, Azure.ResourceManager.Authorization.Models.RoleManagementScopeType? scopeType = default(Azure.ResourceManager.Authorization.Models.RoleManagementScopeType?), Azure.Core.ResourceIdentifier roleDefinitionId = null, string roleDefinitionDisplayName = null, Azure.ResourceManager.Authorization.Models.AuthorizationRoleType? roleType = default(Azure.ResourceManager.Authorization.Models.AuthorizationRoleType?), System.Guid? principalId = default(System.Guid?), string principalDisplayName = null, string email = null, Azure.ResourceManager.Authorization.Models.RoleManagementPrincipalType? principalType = default(Azure.ResourceManager.Authorization.Models.RoleManagementPrincipalType?)) { throw null; }
@@ -2585,15 +2619,15 @@ namespace Azure.ResourceManager.Authorization.Models
         public static Azure.ResourceManager.Authorization.Models.RoleManagementPolicyEnablementRule RoleManagementPolicyEnablementRule(string id = null, Azure.ResourceManager.Authorization.Models.RoleManagementPolicyRuleTarget target = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Authorization.Models.RoleAssignmentEnablementRuleType> enablementRules = null) { throw null; }
         public static Azure.ResourceManager.Authorization.Models.RoleManagementPolicyExpirationRule RoleManagementPolicyExpirationRule(string id = null, Azure.ResourceManager.Authorization.Models.RoleManagementPolicyRuleTarget target = null, bool? isExpirationRequired = default(bool?), System.TimeSpan? maximumDuration = default(System.TimeSpan?), System.Collections.Generic.IEnumerable<Azure.ResourceManager.Authorization.Models.RoleManagementUserInfo> exceptionMembers = null) { throw null; }
         public static Azure.ResourceManager.Authorization.Models.RoleManagementPolicyNotificationRule RoleManagementPolicyNotificationRule(string id = null, Azure.ResourceManager.Authorization.Models.RoleManagementPolicyRuleTarget target = null, Azure.ResourceManager.Authorization.Models.NotificationDeliveryType? notificationDeliveryType = default(Azure.ResourceManager.Authorization.Models.NotificationDeliveryType?), Azure.ResourceManager.Authorization.Models.RoleManagementPolicyNotificationLevel? notificationLevel = default(Azure.ResourceManager.Authorization.Models.RoleManagementPolicyNotificationLevel?), Azure.ResourceManager.Authorization.Models.RoleManagementPolicyRecipientType? recipientType = default(Azure.ResourceManager.Authorization.Models.RoleManagementPolicyRecipientType?), System.Collections.Generic.IEnumerable<string> notificationRecipients = null, bool? areDefaultRecipientsEnabled = default(bool?)) { throw null; }
-        public static Azure.ResourceManager.Authorization.Models.RoleManagementPolicyPimOnlyModeRule RoleManagementPolicyPimOnlyModeRule(string id = null, Azure.ResourceManager.Authorization.Models.RoleManagementPolicyRuleTarget target = null, Azure.ResourceManager.Authorization.Models.PIMOnlyModeSettings pimOnlyModeSettings = null) { throw null; }
+        public static Azure.ResourceManager.Authorization.Models.RoleManagementPolicyPimOnlyModeRule RoleManagementPolicyPimOnlyModeRule(string id = null, Azure.ResourceManager.Authorization.Models.RoleManagementPolicyRuleTarget target = null, Azure.ResourceManager.Authorization.Models.PimOnlyModeSettings pimOnlyModeSettings = null) { throw null; }
         public static Azure.ResourceManager.Authorization.Models.RoleManagementPolicyProperties RoleManagementPolicyProperties(Azure.Core.ResourceIdentifier scopeId = null, string scopeDisplayName = null, Azure.ResourceManager.Authorization.Models.RoleManagementScopeType? scopeType = default(Azure.ResourceManager.Authorization.Models.RoleManagementScopeType?)) { throw null; }
         public static Azure.ResourceManager.Authorization.Models.RoleManagementPolicyRule RoleManagementPolicyRule(string id = null, string ruleType = null, Azure.ResourceManager.Authorization.Models.RoleManagementPolicyRuleTarget target = null) { throw null; }
         public static Azure.ResourceManager.Authorization.Models.RoleManagementPolicyRuleTarget RoleManagementPolicyRuleTarget(string caller = null, System.Collections.Generic.IEnumerable<string> operations = null, Azure.ResourceManager.Authorization.Models.RoleManagementAssignmentLevel? level = default(Azure.ResourceManager.Authorization.Models.RoleManagementAssignmentLevel?), System.Collections.Generic.IEnumerable<string> targetObjects = null, System.Collections.Generic.IEnumerable<string> inheritableSettings = null, System.Collections.Generic.IEnumerable<string> enforcedSettings = null) { throw null; }
         public static Azure.ResourceManager.Authorization.Models.RoleManagementPrincipal RoleManagementPrincipal(string id = null, string displayName = null, Azure.ResourceManager.Authorization.Models.RoleManagementPrincipalType? principalType = default(Azure.ResourceManager.Authorization.Models.RoleManagementPrincipalType?), string email = null) { throw null; }
         public static Azure.ResourceManager.Authorization.Models.RoleManagementUserInfo RoleManagementUserInfo(Azure.ResourceManager.Authorization.Models.RoleManagementUserType? userType = default(Azure.ResourceManager.Authorization.Models.RoleManagementUserType?), bool? isBackup = default(bool?), string id = null, string description = null) { throw null; }
-        public static Azure.ResourceManager.Authorization.Models.TooManyOwnersAssignedToResourceAlertConfigurationProperties TooManyOwnersAssignedToResourceAlertConfigurationProperties(string alertDefinitionId = null, string scope = null, bool? isEnabled = default(bool?), Azure.ResourceManager.Authorization.AlertDefinitionData alertDefinition = null, int? thresholdNumberOfOwners = default(int?), int? thresholdPercentageOfOwnersOutOfAllRoleMembers = default(int?)) { throw null; }
+        public static Azure.ResourceManager.Authorization.Models.TooManyOwnersAssignedToResourceAlertConfigurationProperties TooManyOwnersAssignedToResourceAlertConfigurationProperties(string alertDefinitionId = null, string scope = null, bool? isEnabled = default(bool?), Azure.ResourceManager.Authorization.RoleManagementAlertDefinitionData alertDefinition = null, int? thresholdNumberOfOwners = default(int?), int? thresholdPercentageOfOwnersOutOfAllRoleMembers = default(int?)) { throw null; }
         public static Azure.ResourceManager.Authorization.Models.TooManyOwnersAssignedToResourceAlertIncidentProperties TooManyOwnersAssignedToResourceAlertIncidentProperties(string assigneeName = null, string assigneeType = null) { throw null; }
-        public static Azure.ResourceManager.Authorization.Models.TooManyPermanentOwnersAssignedToResourceAlertConfigurationProperties TooManyPermanentOwnersAssignedToResourceAlertConfigurationProperties(string alertDefinitionId = null, string scope = null, bool? isEnabled = default(bool?), Azure.ResourceManager.Authorization.AlertDefinitionData alertDefinition = null, int? thresholdNumberOfPermanentOwners = default(int?), int? thresholdPercentageOfPermanentOwnersOutOfAllOwners = default(int?)) { throw null; }
+        public static Azure.ResourceManager.Authorization.Models.TooManyPermanentOwnersAssignedToResourceAlertConfigurationProperties TooManyPermanentOwnersAssignedToResourceAlertConfigurationProperties(string alertDefinitionId = null, string scope = null, bool? isEnabled = default(bool?), Azure.ResourceManager.Authorization.RoleManagementAlertDefinitionData alertDefinition = null, int? thresholdNumberOfPermanentOwners = default(int?), int? thresholdPercentageOfPermanentOwnersOutOfAllOwners = default(int?)) { throw null; }
         public static Azure.ResourceManager.Authorization.Models.TooManyPermanentOwnersAssignedToResourceAlertIncidentProperties TooManyPermanentOwnersAssignedToResourceAlertIncidentProperties(string assigneeName = null, string assigneeType = null) { throw null; }
         public static Azure.ResourceManager.Authorization.Models.UsersOrServicePrincipalSet UsersOrServicePrincipalSet(Azure.ResourceManager.Authorization.Models.UsersOrServicePrincipalSetUserType? type = default(Azure.ResourceManager.Authorization.Models.UsersOrServicePrincipalSetUserType?), string id = null, string displayName = null) { throw null; }
     }
@@ -2715,40 +2749,6 @@ namespace Azure.ResourceManager.Authorization.Models
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Authorization.Models.AzureRolesAssignedOutsidePimAlertIncidentProperties>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
-    public readonly partial struct DecisionResourceType : System.IEquatable<Azure.ResourceManager.Authorization.Models.DecisionResourceType>
-    {
-        private readonly object _dummy;
-        private readonly int _dummyPrimitive;
-        public DecisionResourceType(string value) { throw null; }
-        public static Azure.ResourceManager.Authorization.Models.DecisionResourceType AzureRole { get { throw null; } }
-        public bool Equals(Azure.ResourceManager.Authorization.Models.DecisionResourceType other) { throw null; }
-        public override bool Equals(object obj) { throw null; }
-        public override int GetHashCode() { throw null; }
-        public static bool operator ==(Azure.ResourceManager.Authorization.Models.DecisionResourceType left, Azure.ResourceManager.Authorization.Models.DecisionResourceType right) { throw null; }
-        public static implicit operator Azure.ResourceManager.Authorization.Models.DecisionResourceType (string value) { throw null; }
-        public static implicit operator Azure.ResourceManager.Authorization.Models.DecisionResourceType? (string value) { throw null; }
-        public static bool operator !=(Azure.ResourceManager.Authorization.Models.DecisionResourceType left, Azure.ResourceManager.Authorization.Models.DecisionResourceType right) { throw null; }
-        public override string ToString() { throw null; }
-    }
-    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
-    public readonly partial struct DefaultDecisionType : System.IEquatable<Azure.ResourceManager.Authorization.Models.DefaultDecisionType>
-    {
-        private readonly object _dummy;
-        private readonly int _dummyPrimitive;
-        public DefaultDecisionType(string value) { throw null; }
-        public static Azure.ResourceManager.Authorization.Models.DefaultDecisionType Approve { get { throw null; } }
-        public static Azure.ResourceManager.Authorization.Models.DefaultDecisionType Deny { get { throw null; } }
-        public static Azure.ResourceManager.Authorization.Models.DefaultDecisionType Recommendation { get { throw null; } }
-        public bool Equals(Azure.ResourceManager.Authorization.Models.DefaultDecisionType other) { throw null; }
-        public override bool Equals(object obj) { throw null; }
-        public override int GetHashCode() { throw null; }
-        public static bool operator ==(Azure.ResourceManager.Authorization.Models.DefaultDecisionType left, Azure.ResourceManager.Authorization.Models.DefaultDecisionType right) { throw null; }
-        public static implicit operator Azure.ResourceManager.Authorization.Models.DefaultDecisionType (string value) { throw null; }
-        public static implicit operator Azure.ResourceManager.Authorization.Models.DefaultDecisionType? (string value) { throw null; }
-        public static bool operator !=(Azure.ResourceManager.Authorization.Models.DefaultDecisionType left, Azure.ResourceManager.Authorization.Models.DefaultDecisionType right) { throw null; }
-        public override string ToString() { throw null; }
-    }
-    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct DenyAssignmentEffect : System.IEquatable<Azure.ResourceManager.Authorization.Models.DenyAssignmentEffect>
     {
         private readonly object _dummy;
@@ -2830,20 +2830,20 @@ namespace Azure.ResourceManager.Authorization.Models
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Authorization.Models.EligibleChildResource>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
-    public readonly partial struct ExcludedPrincipalTypes : System.IEquatable<Azure.ResourceManager.Authorization.Models.ExcludedPrincipalTypes>
+    public readonly partial struct ExcludedPrincipalType : System.IEquatable<Azure.ResourceManager.Authorization.Models.ExcludedPrincipalType>
     {
         private readonly object _dummy;
         private readonly int _dummyPrimitive;
-        public ExcludedPrincipalTypes(string value) { throw null; }
-        public static Azure.ResourceManager.Authorization.Models.ExcludedPrincipalTypes ServicePrincipalsAsRequestor { get { throw null; } }
-        public static Azure.ResourceManager.Authorization.Models.ExcludedPrincipalTypes ServicePrincipalsAsTarget { get { throw null; } }
-        public bool Equals(Azure.ResourceManager.Authorization.Models.ExcludedPrincipalTypes other) { throw null; }
+        public ExcludedPrincipalType(string value) { throw null; }
+        public static Azure.ResourceManager.Authorization.Models.ExcludedPrincipalType ServicePrincipalsAsRequestor { get { throw null; } }
+        public static Azure.ResourceManager.Authorization.Models.ExcludedPrincipalType ServicePrincipalsAsTarget { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.Authorization.Models.ExcludedPrincipalType other) { throw null; }
         public override bool Equals(object obj) { throw null; }
         public override int GetHashCode() { throw null; }
-        public static bool operator ==(Azure.ResourceManager.Authorization.Models.ExcludedPrincipalTypes left, Azure.ResourceManager.Authorization.Models.ExcludedPrincipalTypes right) { throw null; }
-        public static implicit operator Azure.ResourceManager.Authorization.Models.ExcludedPrincipalTypes (string value) { throw null; }
-        public static implicit operator Azure.ResourceManager.Authorization.Models.ExcludedPrincipalTypes? (string value) { throw null; }
-        public static bool operator !=(Azure.ResourceManager.Authorization.Models.ExcludedPrincipalTypes left, Azure.ResourceManager.Authorization.Models.ExcludedPrincipalTypes right) { throw null; }
+        public static bool operator ==(Azure.ResourceManager.Authorization.Models.ExcludedPrincipalType left, Azure.ResourceManager.Authorization.Models.ExcludedPrincipalType right) { throw null; }
+        public static implicit operator Azure.ResourceManager.Authorization.Models.ExcludedPrincipalType (string value) { throw null; }
+        public static implicit operator Azure.ResourceManager.Authorization.Models.ExcludedPrincipalType? (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.Authorization.Models.ExcludedPrincipalType left, Azure.ResourceManager.Authorization.Models.ExcludedPrincipalType right) { throw null; }
         public override string ToString() { throw null; }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
@@ -2863,38 +2863,38 @@ namespace Azure.ResourceManager.Authorization.Models
         public override string ToString() { throw null; }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
-    public readonly partial struct PIMOnlyMode : System.IEquatable<Azure.ResourceManager.Authorization.Models.PIMOnlyMode>
+    public readonly partial struct PimOnlyMode : System.IEquatable<Azure.ResourceManager.Authorization.Models.PimOnlyMode>
     {
         private readonly object _dummy;
         private readonly int _dummyPrimitive;
-        public PIMOnlyMode(string value) { throw null; }
-        public static Azure.ResourceManager.Authorization.Models.PIMOnlyMode Disabled { get { throw null; } }
-        public static Azure.ResourceManager.Authorization.Models.PIMOnlyMode Enabled { get { throw null; } }
-        public static Azure.ResourceManager.Authorization.Models.PIMOnlyMode ReportOnly { get { throw null; } }
-        public bool Equals(Azure.ResourceManager.Authorization.Models.PIMOnlyMode other) { throw null; }
+        public PimOnlyMode(string value) { throw null; }
+        public static Azure.ResourceManager.Authorization.Models.PimOnlyMode Disabled { get { throw null; } }
+        public static Azure.ResourceManager.Authorization.Models.PimOnlyMode Enabled { get { throw null; } }
+        public static Azure.ResourceManager.Authorization.Models.PimOnlyMode ReportOnly { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.Authorization.Models.PimOnlyMode other) { throw null; }
         public override bool Equals(object obj) { throw null; }
         public override int GetHashCode() { throw null; }
-        public static bool operator ==(Azure.ResourceManager.Authorization.Models.PIMOnlyMode left, Azure.ResourceManager.Authorization.Models.PIMOnlyMode right) { throw null; }
-        public static implicit operator Azure.ResourceManager.Authorization.Models.PIMOnlyMode (string value) { throw null; }
-        public static implicit operator Azure.ResourceManager.Authorization.Models.PIMOnlyMode? (string value) { throw null; }
-        public static bool operator !=(Azure.ResourceManager.Authorization.Models.PIMOnlyMode left, Azure.ResourceManager.Authorization.Models.PIMOnlyMode right) { throw null; }
+        public static bool operator ==(Azure.ResourceManager.Authorization.Models.PimOnlyMode left, Azure.ResourceManager.Authorization.Models.PimOnlyMode right) { throw null; }
+        public static implicit operator Azure.ResourceManager.Authorization.Models.PimOnlyMode (string value) { throw null; }
+        public static implicit operator Azure.ResourceManager.Authorization.Models.PimOnlyMode? (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.Authorization.Models.PimOnlyMode left, Azure.ResourceManager.Authorization.Models.PimOnlyMode right) { throw null; }
         public override string ToString() { throw null; }
     }
-    public partial class PIMOnlyModeSettings : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Authorization.Models.PIMOnlyModeSettings>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Authorization.Models.PIMOnlyModeSettings>
+    public partial class PimOnlyModeSettings : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Authorization.Models.PimOnlyModeSettings>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Authorization.Models.PimOnlyModeSettings>
     {
-        public PIMOnlyModeSettings() { }
-        public System.Collections.Generic.IList<Azure.ResourceManager.Authorization.Models.ExcludedPrincipalTypes> ExcludedAssignmentTypes { get { throw null; } }
+        public PimOnlyModeSettings() { }
+        public System.Collections.Generic.IList<Azure.ResourceManager.Authorization.Models.ExcludedPrincipalType> ExcludedAssignmentTypes { get { throw null; } }
         public System.Collections.Generic.IList<Azure.ResourceManager.Authorization.Models.UsersOrServicePrincipalSet> Excludes { get { throw null; } }
-        public Azure.ResourceManager.Authorization.Models.PIMOnlyMode? Mode { get { throw null; } set { } }
-        protected virtual Azure.ResourceManager.Authorization.Models.PIMOnlyModeSettings JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        public Azure.ResourceManager.Authorization.Models.PimOnlyMode? Mode { get { throw null; } set { } }
+        protected virtual Azure.ResourceManager.Authorization.Models.PimOnlyModeSettings JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        protected virtual Azure.ResourceManager.Authorization.Models.PIMOnlyModeSettings PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual Azure.ResourceManager.Authorization.Models.PimOnlyModeSettings PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        Azure.ResourceManager.Authorization.Models.PIMOnlyModeSettings System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Authorization.Models.PIMOnlyModeSettings>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Authorization.Models.PIMOnlyModeSettings>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        Azure.ResourceManager.Authorization.Models.PIMOnlyModeSettings System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Authorization.Models.PIMOnlyModeSettings>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Authorization.Models.PIMOnlyModeSettings>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Authorization.Models.PIMOnlyModeSettings>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        Azure.ResourceManager.Authorization.Models.PimOnlyModeSettings System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Authorization.Models.PimOnlyModeSettings>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Authorization.Models.PimOnlyModeSettings>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.Authorization.Models.PimOnlyModeSettings System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Authorization.Models.PimOnlyModeSettings>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Authorization.Models.PimOnlyModeSettings>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Authorization.Models.PimOnlyModeSettings>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
     public partial class PolicyAssignmentProperties : Azure.ResourceManager.Models.ResourceData, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Authorization.Models.PolicyAssignmentProperties>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Authorization.Models.PolicyAssignmentProperties>
     {
@@ -3060,6 +3060,24 @@ namespace Azure.ResourceManager.Authorization.Models
         Azure.ResourceManager.Authorization.Models.RoleEligibilityScheduleRequestPropertiesTicketInfo System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Authorization.Models.RoleEligibilityScheduleRequestPropertiesTicketInfo>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Authorization.Models.RoleEligibilityScheduleRequestPropertiesTicketInfo>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Authorization.Models.RoleEligibilityScheduleRequestPropertiesTicketInfo>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct RoleManagementAlertSeverityLevel : System.IEquatable<Azure.ResourceManager.Authorization.Models.RoleManagementAlertSeverityLevel>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public RoleManagementAlertSeverityLevel(string value) { throw null; }
+        public static Azure.ResourceManager.Authorization.Models.RoleManagementAlertSeverityLevel High { get { throw null; } }
+        public static Azure.ResourceManager.Authorization.Models.RoleManagementAlertSeverityLevel Low { get { throw null; } }
+        public static Azure.ResourceManager.Authorization.Models.RoleManagementAlertSeverityLevel Medium { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.Authorization.Models.RoleManagementAlertSeverityLevel other) { throw null; }
+        public override bool Equals(object obj) { throw null; }
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.ResourceManager.Authorization.Models.RoleManagementAlertSeverityLevel left, Azure.ResourceManager.Authorization.Models.RoleManagementAlertSeverityLevel right) { throw null; }
+        public static implicit operator Azure.ResourceManager.Authorization.Models.RoleManagementAlertSeverityLevel (string value) { throw null; }
+        public static implicit operator Azure.ResourceManager.Authorization.Models.RoleManagementAlertSeverityLevel? (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.Authorization.Models.RoleManagementAlertSeverityLevel left, Azure.ResourceManager.Authorization.Models.RoleManagementAlertSeverityLevel right) { throw null; }
+        public override string ToString() { throw null; }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct RoleManagementApprovalMode : System.IEquatable<Azure.ResourceManager.Authorization.Models.RoleManagementApprovalMode>
@@ -3255,7 +3273,7 @@ namespace Azure.ResourceManager.Authorization.Models
     public partial class RoleManagementPolicyPimOnlyModeRule : Azure.ResourceManager.Authorization.Models.RoleManagementPolicyRule, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Authorization.Models.RoleManagementPolicyPimOnlyModeRule>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Authorization.Models.RoleManagementPolicyPimOnlyModeRule>
     {
         public RoleManagementPolicyPimOnlyModeRule() { }
-        public Azure.ResourceManager.Authorization.Models.PIMOnlyModeSettings PimOnlyModeSettings { get { throw null; } set { } }
+        public Azure.ResourceManager.Authorization.Models.PimOnlyModeSettings PimOnlyModeSettings { get { throw null; } set { } }
         protected override Azure.ResourceManager.Authorization.Models.RoleManagementPolicyRule JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         protected override Azure.ResourceManager.Authorization.Models.RoleManagementPolicyRule PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -3518,24 +3536,6 @@ namespace Azure.ResourceManager.Authorization.Models
         public static implicit operator Azure.ResourceManager.Authorization.Models.RoleManagementUserType (string value) { throw null; }
         public static implicit operator Azure.ResourceManager.Authorization.Models.RoleManagementUserType? (string value) { throw null; }
         public static bool operator !=(Azure.ResourceManager.Authorization.Models.RoleManagementUserType left, Azure.ResourceManager.Authorization.Models.RoleManagementUserType right) { throw null; }
-        public override string ToString() { throw null; }
-    }
-    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
-    public readonly partial struct SeverityLevel : System.IEquatable<Azure.ResourceManager.Authorization.Models.SeverityLevel>
-    {
-        private readonly object _dummy;
-        private readonly int _dummyPrimitive;
-        public SeverityLevel(string value) { throw null; }
-        public static Azure.ResourceManager.Authorization.Models.SeverityLevel High { get { throw null; } }
-        public static Azure.ResourceManager.Authorization.Models.SeverityLevel Low { get { throw null; } }
-        public static Azure.ResourceManager.Authorization.Models.SeverityLevel Medium { get { throw null; } }
-        public bool Equals(Azure.ResourceManager.Authorization.Models.SeverityLevel other) { throw null; }
-        public override bool Equals(object obj) { throw null; }
-        public override int GetHashCode() { throw null; }
-        public static bool operator ==(Azure.ResourceManager.Authorization.Models.SeverityLevel left, Azure.ResourceManager.Authorization.Models.SeverityLevel right) { throw null; }
-        public static implicit operator Azure.ResourceManager.Authorization.Models.SeverityLevel (string value) { throw null; }
-        public static implicit operator Azure.ResourceManager.Authorization.Models.SeverityLevel? (string value) { throw null; }
-        public static bool operator !=(Azure.ResourceManager.Authorization.Models.SeverityLevel left, Azure.ResourceManager.Authorization.Models.SeverityLevel right) { throw null; }
         public override string ToString() { throw null; }
     }
     public partial class TooManyOwnersAssignedToResourceAlertConfigurationProperties : Azure.ResourceManager.Authorization.Models.AlertConfigurationProperties, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Authorization.Models.TooManyOwnersAssignedToResourceAlertConfigurationProperties>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Authorization.Models.TooManyOwnersAssignedToResourceAlertConfigurationProperties>

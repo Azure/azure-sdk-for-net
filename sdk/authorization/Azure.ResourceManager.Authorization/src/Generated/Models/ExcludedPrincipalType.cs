@@ -12,7 +12,7 @@ using Azure.ResourceManager.Authorization;
 namespace Azure.ResourceManager.Authorization.Models
 {
     /// <summary></summary>
-    public readonly partial struct ExcludedPrincipalTypes : IEquatable<ExcludedPrincipalTypes>
+    public readonly partial struct ExcludedPrincipalType : IEquatable<ExcludedPrincipalType>
     {
         private readonly string _value;
         /// <summary> ServicePrincipalsAsTarget. </summary>
@@ -20,10 +20,10 @@ namespace Azure.ResourceManager.Authorization.Models
         /// <summary> ServicePrincipalsAsRequestor. </summary>
         private const string ServicePrincipalsAsRequestorValue = "ServicePrincipalsAsRequestor";
 
-        /// <summary> Initializes a new instance of <see cref="ExcludedPrincipalTypes"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="ExcludedPrincipalType"/>. </summary>
         /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        public ExcludedPrincipalTypes(string value)
+        public ExcludedPrincipalType(string value)
         {
             Argument.AssertNotNull(value, nameof(value));
 
@@ -31,35 +31,35 @@ namespace Azure.ResourceManager.Authorization.Models
         }
 
         /// <summary> ServicePrincipalsAsTarget. </summary>
-        public static ExcludedPrincipalTypes ServicePrincipalsAsTarget { get; } = new ExcludedPrincipalTypes(ServicePrincipalsAsTargetValue);
+        public static ExcludedPrincipalType ServicePrincipalsAsTarget { get; } = new ExcludedPrincipalType(ServicePrincipalsAsTargetValue);
 
         /// <summary> ServicePrincipalsAsRequestor. </summary>
-        public static ExcludedPrincipalTypes ServicePrincipalsAsRequestor { get; } = new ExcludedPrincipalTypes(ServicePrincipalsAsRequestorValue);
+        public static ExcludedPrincipalType ServicePrincipalsAsRequestor { get; } = new ExcludedPrincipalType(ServicePrincipalsAsRequestorValue);
 
-        /// <summary> Determines if two <see cref="ExcludedPrincipalTypes"/> values are the same. </summary>
+        /// <summary> Determines if two <see cref="ExcludedPrincipalType"/> values are the same. </summary>
         /// <param name="left"> The left value to compare. </param>
         /// <param name="right"> The right value to compare. </param>
-        public static bool operator ==(ExcludedPrincipalTypes left, ExcludedPrincipalTypes right) => left.Equals(right);
+        public static bool operator ==(ExcludedPrincipalType left, ExcludedPrincipalType right) => left.Equals(right);
 
-        /// <summary> Determines if two <see cref="ExcludedPrincipalTypes"/> values are not the same. </summary>
+        /// <summary> Determines if two <see cref="ExcludedPrincipalType"/> values are not the same. </summary>
         /// <param name="left"> The left value to compare. </param>
         /// <param name="right"> The right value to compare. </param>
-        public static bool operator !=(ExcludedPrincipalTypes left, ExcludedPrincipalTypes right) => !left.Equals(right);
+        public static bool operator !=(ExcludedPrincipalType left, ExcludedPrincipalType right) => !left.Equals(right);
 
-        /// <summary> Converts a string to a <see cref="ExcludedPrincipalTypes"/>. </summary>
+        /// <summary> Converts a string to a <see cref="ExcludedPrincipalType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator ExcludedPrincipalTypes(string value) => new ExcludedPrincipalTypes(value);
+        public static implicit operator ExcludedPrincipalType(string value) => new ExcludedPrincipalType(value);
 
-        /// <summary> Converts a string to a <see cref="ExcludedPrincipalTypes"/>. </summary>
+        /// <summary> Converts a string to a <see cref="ExcludedPrincipalType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator ExcludedPrincipalTypes?(string value) => value == null ? null : new ExcludedPrincipalTypes(value);
+        public static implicit operator ExcludedPrincipalType?(string value) => value == null ? null : new ExcludedPrincipalType(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public override bool Equals(object obj) => obj is ExcludedPrincipalTypes other && Equals(other);
+        public override bool Equals(object obj) => obj is ExcludedPrincipalType other && Equals(other);
 
         /// <inheritdoc/>
-        public bool Equals(ExcludedPrincipalTypes other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
+        public bool Equals(ExcludedPrincipalType other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

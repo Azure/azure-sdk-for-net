@@ -12,24 +12,24 @@ using Azure.ResourceManager.Authorization;
 namespace Azure.ResourceManager.Authorization.Models
 {
     /// <summary> The PIM Only Mode settings. </summary>
-    public partial class PIMOnlyModeSettings
+    public partial class PimOnlyModeSettings
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="PIMOnlyModeSettings"/>. </summary>
-        public PIMOnlyModeSettings()
+        /// <summary> Initializes a new instance of <see cref="PimOnlyModeSettings"/>. </summary>
+        public PimOnlyModeSettings()
         {
             Excludes = new ChangeTrackingList<UsersOrServicePrincipalSet>();
-            ExcludedAssignmentTypes = new ChangeTrackingList<ExcludedPrincipalTypes>();
+            ExcludedAssignmentTypes = new ChangeTrackingList<ExcludedPrincipalType>();
         }
 
-        /// <summary> Initializes a new instance of <see cref="PIMOnlyModeSettings"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="PimOnlyModeSettings"/>. </summary>
         /// <param name="mode"> Determines whether the setting is enabled, disabled or report only. </param>
         /// <param name="excludes"> The list of excluded entities that the rule does not apply to. </param>
         /// <param name="excludedAssignmentTypes"> The list of excluded assignment types allowed. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal PIMOnlyModeSettings(PIMOnlyMode? mode, IList<UsersOrServicePrincipalSet> excludes, IList<ExcludedPrincipalTypes> excludedAssignmentTypes, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal PimOnlyModeSettings(PimOnlyMode? mode, IList<UsersOrServicePrincipalSet> excludes, IList<ExcludedPrincipalType> excludedAssignmentTypes, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Mode = mode;
             Excludes = excludes;
@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.Authorization.Models
 
         /// <summary> Determines whether the setting is enabled, disabled or report only. </summary>
         [WirePath("mode")]
-        public PIMOnlyMode? Mode { get; set; }
+        public PimOnlyMode? Mode { get; set; }
 
         /// <summary> The list of excluded entities that the rule does not apply to. </summary>
         [WirePath("excludes")]
@@ -47,6 +47,6 @@ namespace Azure.ResourceManager.Authorization.Models
 
         /// <summary> The list of excluded assignment types allowed. </summary>
         [WirePath("excludedAssignmentTypes")]
-        public IList<ExcludedPrincipalTypes> ExcludedAssignmentTypes { get; }
+        public IList<ExcludedPrincipalType> ExcludedAssignmentTypes { get; }
     }
 }

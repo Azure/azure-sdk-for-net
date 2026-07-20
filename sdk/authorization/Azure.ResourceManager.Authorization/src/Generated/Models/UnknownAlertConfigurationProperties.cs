@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.Authorization.Models
         /// <param name="alertConfigurationType"> The alert configuration type. </param>
         /// <param name="alertDefinition"> The alert definition. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal UnknownAlertConfigurationProperties(string alertDefinitionId, string scope, bool? isEnabled, string alertConfigurationType, AlertDefinitionData alertDefinition, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(alertDefinitionId, scope, isEnabled, alertConfigurationType ?? "unknown", alertDefinition, additionalBinaryDataProperties)
+        internal UnknownAlertConfigurationProperties(string alertDefinitionId, string scope, bool? isEnabled, string alertConfigurationType, RoleManagementAlertDefinitionData alertDefinition, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(alertDefinitionId, scope, isEnabled, alertConfigurationType ?? "unknown", alertDefinition, additionalBinaryDataProperties)
         {
         }
     }
