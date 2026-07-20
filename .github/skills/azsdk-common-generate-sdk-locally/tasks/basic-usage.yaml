@@ -1,0 +1,23 @@
+id: sdk-local-basic-001
+name: Generate Python SDK Locally
+description: |
+  Test that the skill guides through local SDK generation for Python,
+  including environment verification and build steps.
+tags:
+  - basic
+  - happy-path
+  - python
+inputs:
+  prompt: "I want to generate the Python SDK locally from my TypeSpec project at specification/compute/resource-manager/Microsoft.Compute/ComputeRP/tspconfig.yaml. My azure-sdk-for-python repo is at ~/repos/azure-sdk-for-python."
+expected:
+  output_contains:
+    - "Python"
+    - "azure-sdk-for-python"
+  outcomes:
+    - type: tool_called
+      tool_name: azsdk_verify_setup
+    - type: tool_called
+      tool_name: azsdk_package_generate_code
+  behavior:
+    max_tool_calls: 10
+    max_response_time_ms: 60000

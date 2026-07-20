@@ -1,0 +1,21 @@
+id: sdk-local-update-metadata-001
+name: Update SDK Package Metadata and ci.yml
+description: |
+  Test that the skill triggers metadata update (including ci.yml)
+  for a generated SDK package.
+tags:
+  - metadata
+  - ci
+inputs:
+  prompt: "Update the package metadata and ci.yml for the .NET SDK at sdk/contoso/Azure.ResourceManager.Contoso."
+expected:
+  output_contains:
+    - "metadata"
+  output_excludes:
+    - "cannot help"
+  outcomes:
+    - type: tool_called
+      tool_name: azsdk_package_update_metadata
+  behavior:
+    max_tool_calls: 5
+    max_response_time_ms: 30000

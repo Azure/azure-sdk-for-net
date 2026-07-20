@@ -489,7 +489,7 @@ namespace Azure.ResourceManager.AppConfiguration.Models
         /// <param name="size"> The size in bytes of the snapshot. </param>
         /// <param name="itemsCount"> The amount of key-values in the snapshot. </param>
         /// <param name="tags"> The tags of the snapshot. NOTE: These are data plane tags, not ARM tags. </param>
-        /// <param name="etag"> A value representing the current state of the snapshot. </param>
+        /// <param name="eTag"> A value representing the current state of the snapshot. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="filters"/> is null. </exception>
         /// <returns> A new <see cref="AppConfiguration.AppConfigurationSnapshotData"/> instance for mocking. </returns>
         public static AppConfigurationSnapshotData AppConfigurationSnapshotData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, AppConfigurationProvisioningState? provisioningState = default, AppConfigurationSnapshotStatus? status = default, IEnumerable<SnapshotKeyValueFilter> filters = default, SnapshotCompositionType? compositionType = default, DateTimeOffset? createdOn = default, DateTimeOffset? expireOn = default, long? retentionPeriod = default, long? size = default, long? itemsCount = default, IDictionary<string, string> tags = default, ETag? eTag = default)

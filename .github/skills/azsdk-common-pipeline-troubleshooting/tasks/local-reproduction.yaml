@@ -1,0 +1,17 @@
+id: pipeline-repro-001
+name: Reproduce Pipeline Failure Locally
+description: |
+  Test that the skill guides through local reproduction of a pipeline failure.
+tags:
+  - basic
+  - local-repro
+inputs:
+  prompt: "The CI pipeline for my Go SDK PR is failing with a compilation error. I want to reproduce this locally to debug it."
+expected:
+  output_contains:
+    - "local"
+    - "Go"
+    - "build"
+  behavior:
+    max_tool_calls: 5
+    max_response_time_ms: 30000

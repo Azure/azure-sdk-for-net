@@ -1,0 +1,30 @@
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.5.2.0
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Azure.ResourceManager.EdgeActions", "src\Azure.ResourceManager.EdgeActions.csproj", "{A7713F8D-7EAC-A280-674C-70D5EAF2E4EB}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Azure.ResourceManager.EdgeActions.Tests", "tests\Azure.ResourceManager.EdgeActions.Tests.csproj", "{4F6888F1-F21F-AD57-1D05-575E8AC6A863}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{A7713F8D-7EAC-A280-674C-70D5EAF2E4EB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A7713F8D-7EAC-A280-674C-70D5EAF2E4EB}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A7713F8D-7EAC-A280-674C-70D5EAF2E4EB}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A7713F8D-7EAC-A280-674C-70D5EAF2E4EB}.Release|Any CPU.Build.0 = Release|Any CPU
+		{4F6888F1-F21F-AD57-1D05-575E8AC6A863}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4F6888F1-F21F-AD57-1D05-575E8AC6A863}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4F6888F1-F21F-AD57-1D05-575E8AC6A863}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4F6888F1-F21F-AD57-1D05-575E8AC6A863}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {A3A1CDA1-B561-4DA9-A33D-681BAF23E472}
+	EndGlobalSection
+EndGlobal

@@ -1,0 +1,19 @@
+id: pipeline-edge-001
+name: Multiple Languages Failed
+description: |
+  Test that the skill handles failures across multiple languages
+  and prioritizes troubleshooting.
+tags:
+  - edge-case
+  - multi-language
+inputs:
+  prompt: "My SDK generation pipeline failed for both Python and Java but succeeded for .NET and JavaScript. How do I fix the failing languages?"
+expected:
+  output_contains:
+    - "Python"
+    - "Java"
+  output_excludes:
+    - "cannot help"
+  behavior:
+    max_tool_calls: 5
+    max_response_time_ms: 30000

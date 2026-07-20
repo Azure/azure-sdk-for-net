@@ -1,0 +1,23 @@
+skill: azsdk-common-prepare-release-plan
+should_trigger_prompts:
+  - prompt: "prepare a release plan"
+    reason: "Should activate skill"
+  - prompt: "plan the next SDK release"
+    reason: "Should activate skill"
+  - prompt: "create release plan for my package"
+    reason: "Should activate skill"
+  - prompt: "what goes in a release plan"
+    reason: "Should activate skill"
+  - prompt: "help me prepare for SDK release"
+    reason: "Should activate skill"
+should_not_trigger_prompts:
+  - prompt: "deploy my Azure Function"
+    reason: "Unrelated to skill scope"
+  - prompt: "fix my pipeline build error"
+    reason: "Unrelated to skill scope"
+  - prompt: "create a new TypeSpec definition"
+    reason: "Unrelated to skill scope"
+  - prompt: "configure Azure logging"
+    reason: "Unrelated to skill scope"
+  - prompt: "resolve APIView feedback"
+    reason: "Unrelated to skill scope"

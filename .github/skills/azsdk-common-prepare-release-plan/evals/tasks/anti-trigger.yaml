@@ -1,0 +1,14 @@
+id: anti-trigger
+name: anti-trigger
+description: Should not trigger on unrelated prompts
+inputs:
+  prompt: "How do I configure logging in my Azure Function?"
+expected:
+  skill_activated: false
+graders:
+  - type: text
+    name: no-release-advice
+    config:
+      not_contains:
+        - "release plan"
+        - "changelog"

@@ -1,0 +1,14 @@
+id: release-negative-001
+name: Should Not Trigger - Unrelated Request
+description: |
+  Test that the skill does NOT trigger for non-release requests.
+tags:
+  - negative
+inputs:
+  prompt: "I need to validate my CODEOWNERS file for the Python SDK repo."
+expected:
+  output_contains:
+    - "CODEOWNERS"
+  behavior:
+    max_tool_calls: 2
+    max_response_time_ms: 30000

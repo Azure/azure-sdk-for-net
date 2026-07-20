@@ -1,0 +1,17 @@
+id: release-plan-basic-001
+name: Create New Release Plan
+description: |
+  Test that the skill guides creation of a new release plan
+  with all required information gathered from the user.
+tags:
+  - basic
+  - happy-path
+inputs:
+  prompt: "I need to create a release plan for my API spec PR https://github.com/Azure/azure-rest-api-specs/pull/12345. The API version is 2024-06-01 and it's a stable release."
+expected:
+  output_contains:
+    - "Service Tree"
+    - "release plan"
+  behavior:
+    max_tool_calls: 5
+    max_response_time_ms: 30000

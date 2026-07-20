@@ -1,0 +1,20 @@
+id: release-basic-001
+name: Release SDK Package - Full Flow
+description: |
+  Test that the skill guides through the full release flow:
+  readiness check then trigger.
+tags:
+  - basic
+  - happy-path
+inputs:
+  prompt: "I want to release my Azure Event Hubs Python SDK package."
+expected:
+  output_contains:
+    - "release"
+    - "azsdk_release_sdk"
+  outcomes:
+    - type: tool_called
+      tool_name: azsdk_release_sdk
+  behavior:
+    max_tool_calls: 5
+    max_response_time_ms: 30000

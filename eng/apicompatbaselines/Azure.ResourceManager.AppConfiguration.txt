@@ -1,0 +1,4 @@
+# The 2025-08-01-preview spec update changed AppConfigurationSnapshotData from a parameterless
+# constructor to one that requires an IEnumerable<SnapshotKeyValueFilter> filters argument.
+# This is a deliberate API change in the new preview API version.
+MembersMustExist : Member 'public void Azure.ResourceManager.AppConfiguration.AppConfigurationSnapshotData..ctor()' does not exist in the implementation but it does exist in the contract.

@@ -1,0 +1,13 @@
+id: url-trigger
+name: url-trigger
+description: Should trigger when user provides an APIView URL without explicitly saying APIView
+inputs:
+  prompt: "I have review comments on my SDK PR from this page: https://spa.apiview.dev/review/abc123?activeApiRevisionId=def456 — can you help me resolve them?"
+expected:
+  skill_activated: true
+graders:
+  - type: text
+    name: mentions-apiview-domain
+    config:
+      contains:
+        - "apiview"
