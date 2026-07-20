@@ -153,7 +153,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.SignalRService
         }
 
         /// <summary>
-        /// Releases the unmanaged resources used by the <see cref="ServerlessHub"/> and optionally releases the managed resources.
+        /// Releases the resources used by the <see cref="ServerlessHub"/>.
         /// </summary>
         /// <param name="disposing"><see langword="true"/> to release both managed and unmanaged resources; <see langword="false"/> to release only unmanaged resources.</param>
         protected virtual void Dispose(bool disposing)
