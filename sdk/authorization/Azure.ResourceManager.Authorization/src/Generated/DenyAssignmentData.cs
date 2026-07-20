@@ -77,20 +77,6 @@ namespace Azure.ResourceManager.Authorization
             }
         }
 
-        /// <summary> An array of permissions that are denied by the deny assignment. </summary>
-        [WirePath("properties.permissions")]
-        public IList<DenyAssignmentPermission> Permissions
-        {
-            get
-            {
-                if (Properties is null)
-                {
-                    Properties = new DenyAssignmentProperties();
-                }
-                return Properties.Permissions;
-            }
-        }
-
         /// <summary> The deny assignment scope. </summary>
         [WirePath("properties.scope")]
         public string Scope
@@ -116,34 +102,6 @@ namespace Azure.ResourceManager.Authorization
                     Properties = new DenyAssignmentProperties();
                 }
                 Properties.IsAppliedToChildScopes = value;
-            }
-        }
-
-        /// <summary> Array of principals to which the deny assignment applies. </summary>
-        [WirePath("properties.principals")]
-        public IList<RoleManagementPrincipal> Principals
-        {
-            get
-            {
-                if (Properties is null)
-                {
-                    Properties = new DenyAssignmentProperties();
-                }
-                return Properties.Principals;
-            }
-        }
-
-        /// <summary> Array of principals to which the deny assignment does not apply. </summary>
-        [WirePath("properties.excludePrincipals")]
-        public IList<RoleManagementPrincipal> ExcludePrincipals
-        {
-            get
-            {
-                if (Properties is null)
-                {
-                    Properties = new DenyAssignmentProperties();
-                }
-                return Properties.ExcludePrincipals;
             }
         }
 
