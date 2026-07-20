@@ -1,8 +1,14 @@
 # Release History
 
-## 1.5.0-beta.2 (Unreleased)
+## 1.5.0-beta.2 (2026-07-20)
 
 ### Features Added
+
+- Added Network Security Perimeter (NSP) configuration support with new operations on `AppConfigurationStoreResource`:
+  - `Get(string networkSecurityPerimeterConfigurationName)` — retrieves an NSP configuration.
+  - `GetByConfigurationStore()` — lists all NSP configurations for a store.
+  - `Reconcile(WaitUntil, string networkSecurityPerimeterConfigurationName)` — reconciles an NSP configuration.
+- Added new models: `NetworkSecurityPerimeterConfiguration`, `NetworkSecurityPerimeterConfigurationProperties`, `NetworkSecurityPerimeter`, `NetworkSecurityProfile`, `AccessRule`, `AccessRuleProperties`, `AccessRuleDirection`, `ProvisioningIssue`, `ProvisioningIssueProperties`, `ResourceAssociation`, `ResourceAssociationAccessMode`, `IssueType`, `Severity`.
 
 ### Breaking Changes
 
