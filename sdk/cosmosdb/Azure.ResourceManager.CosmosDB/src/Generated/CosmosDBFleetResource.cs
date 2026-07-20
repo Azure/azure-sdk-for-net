@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.CosmosDB
         {
             TryGetApiVersion(ResourceType, out string cosmosDBFleetApiVersion);
             _fleetClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.CosmosDB", ResourceType.Namespace, Diagnostics);
-            _fleetRestClient = new Fleet(_fleetClientDiagnostics, Pipeline, Endpoint, cosmosDBFleetApiVersion ?? "2026-04-01-preview");
+            _fleetRestClient = new Fleet(_fleetClientDiagnostics, Pipeline, Endpoint, cosmosDBFleetApiVersion ?? "2026-03-15");
             ValidateResourceId(id);
         }
 
@@ -106,7 +106,7 @@ namespace Azure.ResourceManager.CosmosDB
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-04-01-preview. </description>
+        /// <description> 2026-03-15. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -154,7 +154,7 @@ namespace Azure.ResourceManager.CosmosDB
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-04-01-preview. </description>
+        /// <description> 2026-03-15. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -202,7 +202,7 @@ namespace Azure.ResourceManager.CosmosDB
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-04-01-preview. </description>
+        /// <description> 2026-03-15. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -254,7 +254,7 @@ namespace Azure.ResourceManager.CosmosDB
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-04-01-preview. </description>
+        /// <description> 2026-03-15. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -306,7 +306,7 @@ namespace Azure.ResourceManager.CosmosDB
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-04-01-preview. </description>
+        /// <description> 2026-03-15. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -355,7 +355,7 @@ namespace Azure.ResourceManager.CosmosDB
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-04-01-preview. </description>
+        /// <description> 2026-03-15. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -663,39 +663,6 @@ namespace Azure.ResourceManager.CosmosDB
                 scope.Failed(e);
                 throw;
             }
-        }
-
-        /// <summary> Gets a collection of FleetAnalytics in the <see cref="CosmosDBFleetResource"/>. </summary>
-        /// <returns> An object representing collection of FleetAnalytics and their operations over a FleetAnalyticsResource. </returns>
-        public virtual FleetAnalyticsCollection GetAllFleetAnalytics()
-        {
-            return GetCachedClient(client => new FleetAnalyticsCollection(client, Id));
-        }
-
-        /// <summary> Retrieves the properties of an existing Azure Cosmos DB FleetAnalytics under a fleet. </summary>
-        /// <param name="fleetAnalyticsName"> Cosmos DB fleetAnalytics name. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="fleetAnalyticsName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="fleetAnalyticsName"/> is an empty string, and was expected to be non-empty. </exception>
-        [ForwardsClientCalls]
-        public virtual async Task<Response<FleetAnalyticsResource>> GetFleetAnalyticsAsync(string fleetAnalyticsName, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(fleetAnalyticsName, nameof(fleetAnalyticsName));
-
-            return await GetAllFleetAnalytics().GetAsync(fleetAnalyticsName, cancellationToken).ConfigureAwait(false);
-        }
-
-        /// <summary> Retrieves the properties of an existing Azure Cosmos DB FleetAnalytics under a fleet. </summary>
-        /// <param name="fleetAnalyticsName"> Cosmos DB fleetAnalytics name. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="fleetAnalyticsName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="fleetAnalyticsName"/> is an empty string, and was expected to be non-empty. </exception>
-        [ForwardsClientCalls]
-        public virtual Response<FleetAnalyticsResource> GetFleetAnalytics(string fleetAnalyticsName, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(fleetAnalyticsName, nameof(fleetAnalyticsName));
-
-            return GetAllFleetAnalytics().Get(fleetAnalyticsName, cancellationToken);
         }
 
         /// <summary> Gets a collection of CosmosDBFleetspaces in the <see cref="CosmosDBFleetResource"/>. </summary>
