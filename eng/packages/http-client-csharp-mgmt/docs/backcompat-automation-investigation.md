@@ -219,7 +219,7 @@ type corresponds to which last-GA type, not applying the rename once that corres
 is the hard part, and even the discriminator fallbacks depend on first mapping their base type
 rather than on any reconstructable naming convention.
 
-### 2. Restore a removed base type (`: ResourceData`, other bases) — ✅ Automatable
+### 2. Restore a removed base type (`: ResourceData`, other bases) — 🟡 Partially automatable
 
 **What the custom code does:** re-declares a partial with a base type that TypeSpec generation
 dropped (most often `Azure.ResourceManager.Models.ResourceData`, sometimes another model). The
@@ -231,12 +231,22 @@ generator strips the inherited `id`/`name`/`type` from the wrapper.
 - `sdk/hybridcompute/Azure.ResourceManager.HybridCompute/src/Custom/Models/ArcSettings.cs`
 - `sdk/sqlmanagement/Azure.ResourceManager.Sql/src/Custom/Models/ManagedInstanceQuery.cs:19`
 
-**Automation approach:** the old contract records the previous base type. Combined with the
-existing `InheritableSystemObjectModelVisitor` (whose header notes it is a temporary bridge
-until MTG supports inheritable system-model replacement), the base could be re-applied from the
-old contract without a hand-written partial.
+**Automation approach:** the old contract records the *name* of the previous base type, and for a
+base that only contributes already-satisfied members (e.g. `ResourceData` re-supplying
+`id`/`name`/`type` that the model still carries) the existing `InheritableSystemObjectModelVisitor`
+(whose header notes it is a temporary bridge until MTG supports inheritable system-model
+replacement) can re-apply the base from the old contract without a hand-written partial.
 
-### 3. Renamed-type "alias" that inherits the new type — ✅ Automatable
+**Why only partial:** re-adding a base is *not* uniformly mechanical. Restoring inheritance can
+require the derived type to *implement several of the base's members* — a base may be abstract, may
+declare abstract/virtual members the derived type must override, or may pull in an interface whose
+members now need real implementations. The generator can re-declare the `: Base` relationship and
+forward members that map 1:1, but it cannot synthesize the *behavior* of arbitrary base members it
+did not generate; those implementations remain hand-written. The verdict is therefore ✅ only for
+the `ResourceData`-style "restore a base that contributes members the type already has" case, and
+🟡 (boilerplate-generable, implementation still manual) for bases that introduce new members.
+
+### 3. Renamed-type "alias" that inherits the new type — 🟡 Partially automatable
 
 **What the custom code does:** for a *renamed resource/collection/resource-data* type, keeps
 the old type name as an `[Obsolete]` + `[EditorBrowsable(Never)]` subclass of the new type
@@ -248,10 +258,19 @@ the old type name as an `[Obsolete]` + `[EditorBrowsable(Never)]` subclass of th
 - `sdk/servicenetworking/Azure.ResourceManager.ServiceNetworking/src/Custom/FrontendResource.cs:27`
 
 **Automation approach:** when the generator renames a type, it can additionally emit the
-deprecated alias subclass + forwarding/throwing stubs from a template. The rename source and
-Obsolete-message template are the only inputs.
+deprecated alias subclass and forward the members that map 1:1 onto the new type from a template.
+The rename source and the Obsolete-message template are the inputs for that mechanical part.
 
-### 4. Renamed property shim (`[Obsolete]` alias forwarding to new name) — ✅ Automatable
+**Why only partial:** the alias is not always an empty subclass. Where the previously shipped type
+exposed a surface the new base type does *not* provide — extra members, or interface stubs that
+must be re-declared (the citations above literally hand-write `NotSupportedException` throwers) —
+the generator would have to *implement several members* it never generated. It can emit stubs for
+the members named in the old contract, but choosing the correct behavior (throw vs. forward vs.
+real implementation) is a judgment the generator cannot make reliably, so those members stay
+hand-written. Deterministic for the pure "old name → subclass of new type" rename; partial once the
+old type's surface diverges from the new base.
+
+### 4. Renamed property shim (`[Obsolete]` alias forwarding to new name) — 🟡 Partially automatable
 
 **What the custom code does:** adds a property under the old name marked `[Obsolete]` +
 `[EditorBrowsable(Never)]` whose getter/setter forwards to the renamed property.
@@ -261,16 +280,23 @@ Obsolete-message template are the only inputs.
 - `sdk/artifactsigning/Azure.ResourceManager.ArtifactSigning/src/Custom/ArtifactSigningCertificateProfileData.cs`
 - `sdk/lambdatesthyperexecute/Azure.ResourceManager.LambdaTestHyperExecute/src/Custom/LambdaTestHyperExecuteOfferPartnerProperties.cs:14` — `LicensesSubscribed` forwards to `SubscribedLicensesCount`
 
-**Automation approach:** a `@clientName`-style rename that also emits an obsolete forwarding
-shim (rather than a hard rename) makes this automatic. Requires only old-name → new-name.
-The Obsolete message follows the repo template ("This property is deprecated … Please use XXX
-instead").
+**How the old name is known / why only partial:** the *previous* property name is recorded in the
+frozen last-GA API contract (`api/*.cs`) that CI diffs for breaking changes, so it is never
+guessed. As with the type rename in scenario 1,
+the residual difficulty is not the old name itself but knowing which *current* property it maps to
+once the name changed. For a property the owning model is preserved and the serialized wire name
+usually survives a client-side rename, so the old→new correspondence is normally recoverable by
+matching the JSON property name (a stable structural anchor). Where that anchor is ambiguous (the
+wire name also changed, or two properties collapsed) a per-property hint — effectively today's
+hand-written forwarder — is unavoidable. Emitting the forwarding shim once the mapping is known is
+mechanical; the Obsolete message follows the repo template ("This property is deprecated … Please
+use XXX instead").
 
 **Base generator today:** ❌ not covered. The base generator preserves a renamed *parameter*
 name and a property's *type*, but does not keep a renamed **property** under its old name as an
 `[Obsolete]` forwarding shim — that remains an Azure-specific automation opportunity.
 
-### 5. Method rename shim / overload forwarding (`[EditorBrowsable(Never)]`) — ✅ Automatable
+### 5. Method rename shim / overload forwarding (`[EditorBrowsable(Never)]`) — 🟡 Partially automatable
 
 **What the custom code does:** keeps an old method name or an old parameter arity as a hidden
 overload that forwards to the new method (e.g. an overload without `WaitUntil`, or without a
@@ -282,9 +308,19 @@ newly added optional parameter, calling the canonical method with a default).
 - `sdk/edgeorder/Azure.ResourceManager.EdgeOrder/src/Custom/EdgeOrderItemCollection.cs:40`
 - `sdk/durabletask/Azure.ResourceManager.DurableTask/src/Custom/DurableTaskSchedulerResource.cs:22`
 
-**Automation approach:** deterministic when the new method is a superset of the old signature
-(added optional/`WaitUntil` parameter) or a pure rename. The old contract supplies the missing
-overloads to synthesize as hidden forwarders.
+**Automation approach:** deterministic for the *arity* case — when the new method is a superset of
+the old signature (an added optional/`WaitUntil` parameter), the old contract supplies the exact
+overload to synthesize as a hidden forwarder with no ambiguity.
+
+**How the old name is known / why only partial:** for a genuine method **rename** the old method
+name is recorded in the frozen last-GA API contract, so it is not guessed. The open question — the
+same one raised for type renames in scenario 1 — is which
+*current* method the old name corresponds to. A method is anchored by its operation identity (HTTP
+verb + path / operationId), which normally survives a client-side rename, so the old→new mapping is
+usually recoverable by matching that operation identity rather than the name. Where two operations
+were merged or the operation identity also changed, the mapping is ambiguous and a per-method hint
+(today's hand-written forwarder) is required. So the boilerplate is generable once the mapping is
+established, but recovering a pure name-only rename is not inferable from the current name alone.
 
 **Base generator today:** ⚠️ partial. The base generator already emits a hidden
 `[EditorBrowsable(Never)]` overload when the spec adds a new **optional non-body** parameter, and
@@ -313,16 +349,24 @@ removals). The citations here are **extensible enums** (`readonly partial struct
 base generator's fixed-enum path does not cover — so re-adding removed extensible-enum values is
 still the residual gap.
 
-### 7. Collection initialization in the parameterless constructor — ✅ Automatable
+### 7. Collection initialization in the parameterless constructor — ✅ Already handled for required collections
 
 **What the custom code does:** adds a constructor that initializes `ChangeTrackingList` /
-`ChangeTrackingDictionary` collection properties that the generator did not initialize.
+`ChangeTrackingDictionary` collection properties.
 
 **Citations:**
 - `sdk/appcomplianceautomation/Azure.ResourceManager.AppComplianceAutomation/src/Custom/Models/AppComplianceReportSnapshotProperties.cs:17`
 
-**Automation approach:** standard, non-semantic pattern; the generator can initialize
-change-tracking collections in the default constructor.
+**Already covered:** for a model that has a public initialization constructor, the generator
+**already** initializes required collection properties there (the standard
+`Foo = new ChangeTrackingList<T>()` pattern), so no custom code is needed for the common case. The
+one citation here is a narrower situation: the model is *output-only* (its generated constructor is
+`internal`, and `ComplianceResults` is a read-only `IReadOnlyList<T>` with no public ctor), so the
+custom code re-adds a **public parameterless constructor** that the current generation no longer
+emits and initializes the collection inside it. The residual gap is therefore not "initialize a
+required collection" — that is already done — but "restore a previously shipped public constructor
+on a now output-only model," which is the same last-contract-driven constructor restoration covered
+by scenario 13. The collection initialization within such a restored constructor is mechanical.
 
 ### 8. Read-only collection / immutable surface preservation — ✅ Automatable
 
@@ -343,19 +387,7 @@ preservation — when the last contract shipped `IReadOnlyList<T>`/`IReadOnlyDic
 the current spec would produce a mutable collection, it preserves the previous read-only type.
 Given a `LastContractView` assembly this scenario should no longer need hand-written code.
 
-### 9. `IJsonModel<TData>` forwarding on resources — ✅ Automatable
-
-**What the custom code does:** implements `IJsonModel<FooData>` on `FooResource` by delegating
-to the resource's `Data`, restoring the prior ability to serialize a resource as its data type.
-
-**Citations:**
-- `sdk/servicenetworking/Azure.ResourceManager.ServiceNetworking/src/Custom/FrontendResource.Serialization.cs`
-- `sdk/servicenetworking/Azure.ResourceManager.ServiceNetworking/src/Custom/AssociationResource.Serialization.cs`
-
-**Automation approach:** a uniform template keyed on the resource → data relationship the
-generator already knows; no per-library logic.
-
-### 10. `[assembly: CodeGenSuppressType]` for shared/common types — 🟡 Partially
+### 9. `[assembly: CodeGenSuppressType]` for shared/common types — 🟡 Partially
 
 **What the custom code does:** suppresses generation of a type that is owned by a shared
 package (e.g. `SubResource`) to avoid duplicate/conflicting definitions.
@@ -367,7 +399,7 @@ package (e.g. `SubResource`) to avoid duplicate/conflicting definitions.
 common-types, but *ownership* (which package provides the canonical type) is a cross-package
 decision that needs a curated allowlist.
 
-### 11. `[CodeGenSuppress]` of a specific overload + custom replacement — 🟡 Partially
+### 10. `[CodeGenSuppress]` of a specific overload + custom replacement — 🟡 Partially
 
 **What the custom code does:** suppresses one generated method/constructor signature and
 supplies a hand-written replacement with the old signature/behavior.
@@ -380,14 +412,14 @@ supplies a hand-written replacement with the old signature/behavior.
 **Why not fully automatable:** the generator can emit the suppression + a forwarding skeleton
 when the change is a pure signature superset, but replacements that change behavior need human
 intent. Where the replacement is only "call the new method with defaults," this collapses into
-scenario 5 (automatable).
+scenario 5 (the deterministic arity case).
 
 **Base generator today:** ⚠️ partial. When the "replacement" is only a hidden overload for a
 newly added optional non-body parameter, the base generator now emits it directly, so the
 `[CodeGenSuppress]` + hand-written forwarder is unnecessary. Behavior-changing replacements are
 still out of scope.
 
-### 12. Property flatten/unflatten wrapper (custom get/set over nested model) — 🟡 Partially
+### 11. Property flatten/unflatten wrapper (custom get/set over nested model) — 🟡 Partially
 
 **What the custom code does:** re-exposes a property at the level the old API had it, wrapping a
 now-nested (or now-flattened) generated property via custom get/set, sometimes lazily creating
@@ -403,7 +435,7 @@ common single-level flatten. The residual custom code handles nullability nuance
 allocation, and multi-hop paths where the exact projection must be specified. A per-property
 "flatten path" hint would move most of these to automatable.
 
-### 13. Model-factory overload with parameter adaptation — 🟡 Partially
+### 12. Model-factory overload with parameter adaptation — 🟡 Partially
 
 **What the custom code does:** adds an `ArmXxxModelFactory` overload matching the old parameter
 list (fewer params, `int?` vs `int`, `string` vs `ResourceIdentifier`, different order) that
@@ -425,7 +457,7 @@ the last contract (the mgmt `ModelFactoryVisitor` builds on the same `LastContra
 residual gap is exactly the non-trivial **type coercion** overloads (`string` ↔
 `ResourceIdentifier`, `int?` ↔ `int`) that require a conversion rule.
 
-### 14. Back-compat constructor with an old signature — 🟡 Partially
+### 13. Back-compat constructor with an old signature — 🟡 Partially
 
 **What the custom code does:** provides a constructor whose parameters match a previously
 shipped signature, converting to the new field shape (e.g. `WritableSubResource` → `SubResource`,
@@ -446,7 +478,7 @@ on an **abstract base type** when the last contract shipped one (vs. a generated
 type shapes (`WritableSubResource` → `SubResource`, adding a required `AzureLocation`) remain the
 residual gap.
 
-### 15. Wire-name preservation via `[WirePath]` / `[CodeGenSerialization]` name-only — 🟡 Partially
+### 14. Wire-name preservation via `[WirePath]` / `[CodeGenSerialization]` name-only — 🟡 Partially
 
 **What the custom code does:** pins a property's JSON wire name (or `etag`/casing) so the wire
 format is unchanged after a C# property rename.
@@ -458,7 +490,7 @@ format is unchanged after a C# property rename.
 **Why not fully automatable:** a name-only wire mapping is mechanical *if* a rename decorator
 also records the original wire name; today it is separated into a manual attribute.
 
-### 16. Custom serialization transform hooks — ❌ Not automatable
+### 15. Custom serialization transform hooks — ❌ Not automatable
 
 **What the custom code does:** `[CodeGenSerialization(..., SerializationValueHook, DeserializationValueHook)]`
 with hand-written hook methods, or a full `JsonModelWriteCore` / `IJsonModel<T>` override, to
@@ -472,7 +504,7 @@ reshape the payload (nested restructuring, type coercion) for the old wire contr
 **Why not automatable:** the transform is domain logic; the generator cannot infer how to map
 old ↔ new payload shapes.
 
-### 17. Type-conversion helpers between incompatible types — ❌ Not automatable
+### 16. Type-conversion helpers between incompatible types — ❌ Not automatable
 
 **What the custom code does:** hand-written converters between fundamentally different types
 that a property changed to (e.g. `ManagedServiceIdentity` ↔ legacy `Identity`).
@@ -482,7 +514,7 @@ that a property changed to (e.g. `ManagedServiceIdentity` ↔ legacy `Identity`)
 
 **Why not automatable:** requires knowledge of the semantic equivalence between the two types.
 
-### 18. `NotSupportedException` shims for fully removed APIs — ❌ Not automatable (as behavior)
+### 17. `NotSupportedException` shims for fully removed APIs — ❌ Not automatable (as behavior)
 
 **What the custom code does:** keeps a removed type/property present for source compatibility
 but throws `NotSupportedException` at runtime (removed from the service, so no valid behavior
@@ -540,7 +572,7 @@ structural anchor (serialized shape / graph position) or a per-type hint. The da
 has no known-type/rename visitor at all, so this is a net-new automation opportunity for
 `Azure.Generator`.
 
-### D2. Model-factory rename back-compat shims — ✅ Automatable (same as scenarios 5 / 13)
+### D2. Model-factory rename back-compat shims — ✅ Automatable (same as scenarios 5 / 12)
 
 **What the custom code does:** the generated model factory is renamed (by
 `ModelFactoryRenamerVisitor`) from the previously shipped `*ModelFactory` name to
@@ -578,7 +610,7 @@ but the new emitter internalized or dropped.
 **Automation:** deterministic given the previous contract (the shipped members are known);
 mirrors management scenario 6.
 
-### D4. Property-type shims via `[CodeGenSuppress]` + restore — 🟡 Partially (same as scenario 12)
+### D4. Property-type shims via `[CodeGenSuppress]` + restore — 🟡 Partially (same as scenario 11)
 
 **What the custom code does:** suppresses a generated `string` property and restores the
 previously shipped extensible-enum-typed property.
@@ -588,9 +620,9 @@ previously shipped extensible-enum-typed property.
   `[CodeGenSuppress("Type")]` + restored `AzureFunctionBindingType Type` property.
 
 **Automation:** the suppression + property skeleton is boilerplate the generator could emit, but
-the string→enum mapping is a per-property hint. Same verdict as management scenario 12.
+the string→enum mapping is a per-property hint. Same verdict as management scenario 11.
 
-### D5. Parameter-type back-compat overloads — 🟡 Partially (same as scenarios 5 / 11)
+### D5. Parameter-type back-compat overloads — 🟡 Partially (same as scenarios 5 / 10)
 
 **What the custom code does:** the new generator changed a parameter type (e.g.
 `IReadOnlyDictionary<string,string>` → `IDictionary<string,string>`); a hidden overload keeps
@@ -601,9 +633,9 @@ the old signature and delegates.
   `CreateAgent`/`CreateAgentAsync` overloads accepting the old `IReadOnlyDictionary` signature.
 
 **Automation:** the generator can emit the overload skeleton, but the parameter-type adaptation
-(the `ToDict` conversion) is a per-parameter hint. Same verdict as management scenario 11.
+(the `ToDict` conversion) is a per-parameter hint. Same verdict as management scenario 10.
 
-### D6. Restored constructor signatures — 🟡 Partially (same as scenario 14)
+### D6. Restored constructor signatures — 🟡 Partially (same as scenario 13)
 
 **What the custom code does:** suppresses the generated private-protected discriminator ctor and
 restores the previously shipped parameterless `protected` constructor.
@@ -614,7 +646,7 @@ restores the previously shipped parameterless `protected` constructor.
 
 **Automation:** the suppression + ctor skeleton is boilerplate, but the delegated argument
 (`this((string)null)` vs `this(default(MessageBlockType))`) is a per-type hint. Same verdict as
-management scenario 14.
+management scenario 13.
 
 **Data-plane takeaway:** every data-plane back-compat scenario observed maps onto an existing
 management-plane scenario; none are unique to the data plane. The distinguishing fact is that
@@ -630,23 +662,22 @@ generator-caused.
 | # | Scenario | Mechanism | Automatable? | Base generator today |
 |---|----------|-----------|--------------|----------------------|
 | 1 | Type rename to old name | `[CodeGenType]` | 🟡 | ❌ not covered |
-| 2 | Restore removed base type | `partial : ResourceData` | ✅ | ❌ not covered |
-| 3 | Renamed-type deprecated alias | subclass + `[Obsolete]` | ✅ | ❌ not covered |
-| 4 | Renamed property shim | forwarding `[Obsolete]` property | ✅ | ❌ not covered |
-| 5 | Method rename / overload forwarder | hidden forwarding overload | ✅ | ⚠️ optional-param + param-rename covered |
+| 2 | Restore removed base type | `partial : ResourceData` | 🟡 | ❌ not covered |
+| 3 | Renamed-type deprecated alias | subclass + `[Obsolete]` | 🟡 | ❌ not covered |
+| 4 | Renamed property shim | forwarding `[Obsolete]` property | 🟡 | ❌ not covered |
+| 5 | Method rename / overload forwarder | hidden forwarding overload | 🟡 | ⚠️ optional-param + param-rename covered |
 | 6 | Enum / extensible-enum value re-add | static members | ✅ | ⚠️ fixed enums covered; extensible not |
-| 7 | Collection init in ctor | `ChangeTrackingList` init | ✅ | ❌ not covered |
+| 7 | Collection init in ctor | `ChangeTrackingList` init | ✅ already done for required collections | ✅ required collections initialized in generated ctor |
 | 8 | Read-only collection surface | `IReadOnly*` facade | ✅ | ✅ covered (property type preservation) |
-| 9 | `IJsonModel<TData>` forwarding | delegate to `Data` | ✅ | ❌ not covered |
-| 10 | Suppress shared/common type | `[assembly: CodeGenSuppressType]` | 🟡 | ❌ not covered |
-| 11 | Suppress overload + replacement | `[CodeGenSuppress]` | 🟡 | ⚠️ optional-param overload covered |
-| 12 | Flatten/unflatten wrapper | custom get/set | 🟡 | ❌ not covered |
-| 13 | Model-factory overload adaptation | `ArmXxxModelFactory` overload | 🟡 | ⚠️ additive/reorder/rename covered; coercion not |
-| 14 | Back-compat constructor | old-signature ctor | 🟡 | ⚠️ abstract-base ctor accessibility covered |
-| 15 | Wire-name preservation | `[WirePath]` / `[CodeGenSerialization]` name | 🟡 | ❌ not covered |
-| 16 | Custom serialization transform | serialization hooks / overrides | ❌ | ❌ not covered |
-| 17 | Incompatible type converters | hand-written converters | ❌ | ❌ not covered |
-| 18 | Removed-API throwing shims | `NotSupportedException` stubs | ❌ | ❌ not covered |
+| 9 | Suppress shared/common type | `[assembly: CodeGenSuppressType]` | 🟡 | ❌ not covered |
+| 10 | Suppress overload + replacement | `[CodeGenSuppress]` | 🟡 | ⚠️ optional-param overload covered |
+| 11 | Flatten/unflatten wrapper | custom get/set | 🟡 | ❌ not covered |
+| 12 | Model-factory overload adaptation | `ArmXxxModelFactory` overload | 🟡 | ⚠️ additive/reorder/rename covered; coercion not |
+| 13 | Back-compat constructor | old-signature ctor | 🟡 | ⚠️ abstract-base ctor accessibility covered |
+| 14 | Wire-name preservation | `[WirePath]` / `[CodeGenSerialization]` name | 🟡 | ❌ not covered |
+| 15 | Custom serialization transform | serialization hooks / overrides | ❌ | ❌ not covered |
+| 16 | Incompatible type converters | hand-written converters | ❌ | ❌ not covered |
+| 17 | Removed-API throwing shims | `NotSupportedException` stubs | ❌ | ❌ not covered |
 
 > The *Base generator today* column reflects what
 > [`Microsoft.TypeSpec.Generator`](https://github.com/microsoft/typespec/blob/main/packages/http-client-csharp/generator/docs/backward-compatibility.md)
@@ -656,38 +687,46 @@ generator-caused.
 > enum preservation, non-abstract base models, and content-type/body parameter ordering — none of
 > which surfaced as hand-written custom code in this survey.
 
-**Valid cases (candidates for generator automation):** scenarios 2–9 are deterministic and are
-among the highest-value targets, because they are also some of the most frequent custom-code
-patterns in the survey. Scenario 1 (type rename) is the single most frequent pattern but is only
-*partially* automatable, and none of it is inferable from the current-generation name alone. Even
-the discriminator `Unknown*` fallbacks are not reconstructable from `Unknown{Base}` — the base type
-can itself be renamed across the migration (e.g. CosmosDB's `BackupPolicy` →
-`CosmosDBAccountBackupPolicy`), and a library can rename the fallback directly via custom code or
-`client.tsp`. They are automatable only *conditionally*: after the discriminated base has been
-identity-matched to the last-GA contract, and only when no explicit author rename overrides it.
-Arbitrary spec-driven renames similarly require matching the newly generated type to a last-GA type
-by a structural anchor (graph position + serialized shape + discriminated-base identity) and fall
-back to a per-type hint when that anchor is ambiguous. These cases
-share a single enabler: the generator (or an emitter step) consuming the **previous public
-contract** that CI already tracks for breaking-change detection, plus a small
-set of rename/flatten hints, to emit renames, deprecated aliases/forwarders, restored bases,
-read-only facades, and re-added enum values automatically. Notably, that same "previous
-contract" is precisely the base generator's `LastContractView` input — so scenario 8 (read-only
-surface) is **already produced today** when the last contract is supplied, and scenarios 5, 6,
-11, 13, and 14 are **partly** produced already (see the *Base generator today* column). The
-remaining Azure-specific gaps (anchor-matched type renames, `ResourceData` base restore, deprecated type
-aliases, obsolete property forwarders, extensible-enum re-add, `IJsonModel<TData>` forwarding)
-are the net-new automation opportunities.
+**Valid cases (candidates for generator automation):** the fully deterministic scenarios are 6
+(enum / extensible-enum value re-add) and 8 (read-only collection surface); scenario 7 (required
+collection init) is **already done today** by the generator for models with a public constructor.
+The remaining early scenarios are only *partially* automatable, because the reviewer feedback made
+clear that emitting boilerplate is the easy part while three things resist full automation:
 
-Scenarios 10–15 are partially automatable: the generator can emit the boilerplate, but a
+- **Recovering a new→old *identity* when a name changed.** Scenario 1 (type rename), scenario 4
+  (renamed property), and scenario 5 (renamed method) all record the *previous* name in the frozen
+  last-GA contract, so the old name is never guessed. What is not inferable from the current name
+  alone is which current member the old name maps to. Types must be matched by a structural anchor
+  (graph position + serialized shape + discriminated-base identity); properties by their stable
+  serialized wire name; methods by their operation identity — falling back to a per-item hint when
+  the anchor is ambiguous or an explicit author rename overrides it. Even the discriminator
+  `Unknown*` fallbacks are not reconstructable from `Unknown{Base}`, because the base type can
+  itself be renamed across the migration (e.g. CosmosDB's `BackupPolicy` →
+  `CosmosDBAccountBackupPolicy`) or the fallback renamed directly via custom code or `client.tsp`.
+- **Reproducing an inherited surface.** Scenarios 2 (restore a removed base) and 3 (renamed-type
+  alias) can re-declare the `: Base` relationship mechanically, but restoring inheritance can
+  require *implementing several members* — abstract/virtual overrides or interface stubs the new
+  base does not supply — whose behavior the generator did not produce and cannot synthesize
+  reliably. Those implementations stay hand-written, so the verdict is partial rather than ✅.
+
+These cases share a single enabler: the generator (or an emitter step) consuming the **previous
+public contract** that CI already tracks for breaking-change detection, plus a small set of
+rename/flatten hints. That same "previous contract" is precisely the base generator's
+`LastContractView` input — so scenario 8 (read-only surface) is **already produced today** when the
+last contract is supplied, and scenarios 5, 6, 10, 12, and 13 are **partly** produced already (see
+the *Base generator today* column). The remaining Azure-specific gaps (anchor-matched type renames,
+base restore, deprecated type aliases, obsolete property forwarders, and extensible-enum re-add) are
+the net-new automation opportunities.
+
+Scenarios 9–14 are partially automatable: the generator can emit the boilerplate, but a
 per-item hint (ownership allowlist, flatten path, or type-conversion rule) is required.
 
-Scenarios 16–18 remain hand-written because they encode domain logic or breaking-change policy
+Scenarios 15–17 remain hand-written because they encode domain logic or breaking-change policy
 that cannot be derived from the spec.
 
 **Data plane:** the data-plane survey (see [Data-plane libraries](#data-plane-libraries))
 surfaced no scenarios outside this taxonomy — every data-plane shift maps onto one of the
-scenarios above (D1→1, D2→5/13, D3→6, D4→12, D5→5/11, D6→14). The difference is coverage: the
+scenarios above (D1→1, D2→5/12, D3→6, D4→11, D5→5/10, D6→13). The difference is coverage: the
 data-plane generator (`Azure.Generator`) has not yet adopted the management generator's
 automation, so renames (D1), model-factory forwarders (D2), and re-added enums (D3) are still
 hand-written there and are the highest-value data-plane automation targets. D2 is the strongest
