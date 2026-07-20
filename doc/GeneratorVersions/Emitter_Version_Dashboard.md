@@ -1,6 +1,6 @@
 # Emitter Version Dashboard
 
-> **Auto-generated** by `Emitter_Version_Dashboard` on 2026-07-20 15:54:40 UTC.
+> **Auto-generated** by `Emitter_Version_Dashboard` on 2026-07-20 16:30:37 UTC.
 > Run that script to refresh this file after dependency version changes.
 
 ## Latest Published Version Chain
@@ -17,8 +17,8 @@
 | Emitter | Depends On | Dependency Version | Latest on npm | Dependency Commit |
 |---|---|---|---|---|
 | `@azure-typespec/http-client-csharp` | `@typespec/http-client-csharp` | [1.0.0-alpha.20260717.7](https://www.npmjs.com/package/@typespec/http-client-csharp/v/1.0.0-alpha.20260717.7) | [1.0.0-alpha.20260717.13](https://www.npmjs.com/package/@typespec/http-client-csharp/v/1.0.0-alpha.20260717.13) | unknown |
-| `@azure-typespec/http-client-csharp-mgmt` | `@azure-typespec/http-client-csharp` | [1.0.0-alpha.20260716.2](https://www.npmjs.com/package/@azure-typespec/http-client-csharp/v/1.0.0-alpha.20260716.2) | [1.0.0-alpha.20260717.3](https://www.npmjs.com/package/@azure-typespec/http-client-csharp/v/1.0.0-alpha.20260717.3) | [8357011](https://github.com/Azure/azure-sdk-for-net/commit/8357011b432511f15d7ab93a01b2bdcb0ac9e11a) |
-| `@azure-typespec/http-client-csharp-provisioning` | `@azure-typespec/http-client-csharp-mgmt` | 1.0.0-alpha.20260707.4 | [1.0.0-alpha.20260719.1](https://www.npmjs.com/package/@azure-typespec/http-client-csharp-mgmt/v/1.0.0-alpha.20260719.1) | [a4bc486](https://github.com/Azure/azure-sdk-for-net/commit/a4bc4861b25bda05408e30756e49a4785511f308) |
+| `@azure-typespec/http-client-csharp-mgmt` | `@azure-typespec/http-client-csharp` | 1.0.0-alpha.20260719.1 | [1.0.0-alpha.20260717.3](https://www.npmjs.com/package/@azure-typespec/http-client-csharp/v/1.0.0-alpha.20260717.3) | [d3f236d](https://github.com/Azure/azure-sdk-for-net/commit/d3f236d83e486785e7400b43de96e36218c576b2) |
+| `@azure-typespec/http-client-csharp-provisioning` | `@azure-typespec/http-client-csharp-mgmt` | 1.0.0-alpha.20260707.4 | [1.0.0-alpha.20260719.1](https://www.npmjs.com/package/@azure-typespec/http-client-csharp-mgmt/v/1.0.0-alpha.20260719.1) | unknown |
 
 ## Source Files
 
