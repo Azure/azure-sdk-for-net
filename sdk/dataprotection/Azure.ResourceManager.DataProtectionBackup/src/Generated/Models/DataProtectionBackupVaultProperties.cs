@@ -8,6 +8,7 @@
 using System;
 using System.Collections.Generic;
 using Azure.Core;
+using Azure.ResourceManager.DataProtectionBackup;
 
 namespace Azure.ResourceManager.DataProtectionBackup.Models
 {
@@ -16,6 +17,14 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+
+        /// <summary> Initializes a new instance of <see cref="DataProtectionBackupVaultProperties"/>. </summary>
+        public DataProtectionBackupVaultProperties()
+        {
+            StorageSettings = new ChangeTrackingList<DataProtectionBackupStorageSetting>();
+            ResourceGuardOperationRequests = new ChangeTrackingList<string>();
+            ReplicatedRegions = new ChangeTrackingList<AzureLocation>();
+        }
 
         /// <summary> Initializes a new instance of <see cref="DataProtectionBackupVaultProperties"/>. </summary>
         /// <param name="monitoringSettings"> Monitoring Settings. </param>

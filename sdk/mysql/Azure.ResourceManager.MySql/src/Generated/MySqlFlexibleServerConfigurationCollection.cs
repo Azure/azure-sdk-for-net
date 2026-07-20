@@ -93,12 +93,12 @@ namespace Azure.ResourceManager.MySql.FlexibleServers
                 HttpMessage message = _configurationsRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, configurationName, MySqlFlexibleServerConfigurationData.ToRequestContent(data), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 FlexibleServersArmOperation<MySqlFlexibleServerConfigurationResource> operation = new FlexibleServersArmOperation<MySqlFlexibleServerConfigurationResource>(
-                    new MySqlFlexibleServerConfigurationOperationSource(Client),
+                    new MySqlFlexibleServerConfigurationResourceOperationSource(Client),
                     _configurationsClientDiagnostics,
                     Pipeline,
                     message.Request,
                     response,
-                    OperationFinalStateVia.Location);
+                    OperationFinalStateVia.OriginalUri);
                 if (waitUntil == WaitUntil.Completed)
                 {
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
@@ -151,12 +151,12 @@ namespace Azure.ResourceManager.MySql.FlexibleServers
                 HttpMessage message = _configurationsRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, configurationName, MySqlFlexibleServerConfigurationData.ToRequestContent(data), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 FlexibleServersArmOperation<MySqlFlexibleServerConfigurationResource> operation = new FlexibleServersArmOperation<MySqlFlexibleServerConfigurationResource>(
-                    new MySqlFlexibleServerConfigurationOperationSource(Client),
+                    new MySqlFlexibleServerConfigurationResourceOperationSource(Client),
                     _configurationsClientDiagnostics,
                     Pipeline,
                     message.Request,
                     response,
-                    OperationFinalStateVia.Location);
+                    OperationFinalStateVia.OriginalUri);
                 if (waitUntil == WaitUntil.Completed)
                 {
                     operation.WaitForCompletion(cancellationToken);

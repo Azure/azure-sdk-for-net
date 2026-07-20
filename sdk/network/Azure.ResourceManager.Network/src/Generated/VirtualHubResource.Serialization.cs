@@ -11,19 +11,29 @@ using System.Text.Json;
 
 namespace Azure.ResourceManager.Network
 {
+    /// <summary></summary>
     public partial class VirtualHubResource : IJsonModel<VirtualHubData>
     {
-        private static VirtualHubData s_dataDeserializationInstance;
-        private static VirtualHubData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+        private static IJsonModel<VirtualHubData> s_dataDeserializationInstance;
 
+        private static IJsonModel<VirtualHubData> DataDeserializationInstance => s_dataDeserializationInstance ??= new VirtualHubData();
+
+        /// <param name="writer"> The writer to serialize the model to. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<VirtualHubData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<VirtualHubData>)Data).Write(writer, options);
 
-        VirtualHubData IJsonModel<VirtualHubData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<VirtualHubData>)DataDeserializationInstance).Create(ref reader, options);
+        /// <param name="reader"> The reader for deserializing the model. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        VirtualHubData IJsonModel<VirtualHubData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => DataDeserializationInstance.Create(ref reader, options);
 
+        /// <param name="options"> The client options for reading and writing models. </param>
         BinaryData IPersistableModel<VirtualHubData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<VirtualHubData>(Data, options, AzureResourceManagerNetworkContext.Default);
 
+        /// <param name="data"> The binary data to be processed. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         VirtualHubData IPersistableModel<VirtualHubData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<VirtualHubData>(data, options, AzureResourceManagerNetworkContext.Default);
 
-        string IPersistableModel<VirtualHubData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<VirtualHubData>)DataDeserializationInstance).GetFormatFromOptions(options);
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<VirtualHubData>.GetFormatFromOptions(ModelReaderWriterOptions options) => DataDeserializationInstance.GetFormatFromOptions(options);
     }
 }

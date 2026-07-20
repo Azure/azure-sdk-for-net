@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.ArtifactSigning
         {
             TryGetApiVersion(ArtifactSigningCertificateProfileResource.ResourceType, out string artifactSigningCertificateProfileApiVersion);
             _certificateProfilesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ArtifactSigning", ArtifactSigningCertificateProfileResource.ResourceType.Namespace, Diagnostics);
-            _certificateProfilesRestClient = new CertificateProfiles(_certificateProfilesClientDiagnostics, Pipeline, Endpoint, artifactSigningCertificateProfileApiVersion ?? "2025-10-13");
+            _certificateProfilesRestClient = new CertificateProfiles(_certificateProfilesClientDiagnostics, Pipeline, Endpoint, artifactSigningCertificateProfileApiVersion ?? "2026-05-15-preview");
             ValidateResourceId(id);
         }
 
@@ -67,7 +67,7 @@ namespace Azure.ResourceManager.ArtifactSigning
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-10-13. </description>
+        /// <description> 2026-05-15-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -93,7 +93,7 @@ namespace Azure.ResourceManager.ArtifactSigning
                 HttpMessage message = _certificateProfilesRestClient.CreateCreateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, profileName, ArtifactSigningCertificateProfileData.ToRequestContent(data), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 ArtifactSigningArmOperation<ArtifactSigningCertificateProfileResource> operation = new ArtifactSigningArmOperation<ArtifactSigningCertificateProfileResource>(
-                    new ArtifactSigningCertificateProfileOperationSource(Client),
+                    new ArtifactSigningCertificateProfileResourceOperationSource(Client),
                     _certificateProfilesClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -125,7 +125,7 @@ namespace Azure.ResourceManager.ArtifactSigning
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-10-13. </description>
+        /// <description> 2026-05-15-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -151,7 +151,7 @@ namespace Azure.ResourceManager.ArtifactSigning
                 HttpMessage message = _certificateProfilesRestClient.CreateCreateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, profileName, ArtifactSigningCertificateProfileData.ToRequestContent(data), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 ArtifactSigningArmOperation<ArtifactSigningCertificateProfileResource> operation = new ArtifactSigningArmOperation<ArtifactSigningCertificateProfileResource>(
-                    new ArtifactSigningCertificateProfileOperationSource(Client),
+                    new ArtifactSigningCertificateProfileResourceOperationSource(Client),
                     _certificateProfilesClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -183,7 +183,7 @@ namespace Azure.ResourceManager.ArtifactSigning
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-10-13. </description>
+        /// <description> 2026-05-15-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -232,7 +232,7 @@ namespace Azure.ResourceManager.ArtifactSigning
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-10-13. </description>
+        /// <description> 2026-05-15-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -281,7 +281,7 @@ namespace Azure.ResourceManager.ArtifactSigning
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-10-13. </description>
+        /// <description> 2026-05-15-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -315,7 +315,7 @@ namespace Azure.ResourceManager.ArtifactSigning
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-10-13. </description>
+        /// <description> 2026-05-15-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -349,7 +349,7 @@ namespace Azure.ResourceManager.ArtifactSigning
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-10-13. </description>
+        /// <description> 2026-05-15-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -406,7 +406,7 @@ namespace Azure.ResourceManager.ArtifactSigning
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-10-13. </description>
+        /// <description> 2026-05-15-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -463,7 +463,7 @@ namespace Azure.ResourceManager.ArtifactSigning
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-10-13. </description>
+        /// <description> 2026-05-15-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -524,7 +524,7 @@ namespace Azure.ResourceManager.ArtifactSigning
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-10-13. </description>
+        /// <description> 2026-05-15-preview. </description>
         /// </item>
         /// </list>
         /// </summary>

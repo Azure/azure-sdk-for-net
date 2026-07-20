@@ -11,6 +11,7 @@ namespace Azure.Storage.Files.Shares.Models
 {
     internal static partial class ListSharesIncludeTypeExtensions
     {
+        /// <param name="value"> The value to serialize. </param>
         public static string ToSerialString(this ListSharesIncludeType value) => value switch
         {
             ListSharesIncludeType.Snapshots => "snapshots",
@@ -19,11 +20,21 @@ namespace Azure.Storage.Files.Shares.Models
             _ => throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown ListSharesIncludeType value.")
         };
 
+        /// <param name="value"> The value to deserialize. </param>
         public static ListSharesIncludeType ToListSharesIncludeType(this string value)
         {
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "snapshots")) return ListSharesIncludeType.Snapshots;
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "metadata")) return ListSharesIncludeType.Metadata;
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "deleted")) return ListSharesIncludeType.Deleted;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "snapshots"))
+            {
+                return ListSharesIncludeType.Snapshots;
+            }
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "metadata"))
+            {
+                return ListSharesIncludeType.Metadata;
+            }
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "deleted"))
+            {
+                return ListSharesIncludeType.Deleted;
+            }
             throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown ListSharesIncludeType value.");
         }
     }

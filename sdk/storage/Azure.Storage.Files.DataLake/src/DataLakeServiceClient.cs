@@ -1262,8 +1262,8 @@ namespace Azure.Storage.Files.DataLake
         #region Undelete File System
         /// <summary>
         /// Restores a previously deleted file system.
-        /// This API is only functional is Container Soft Delete is enabled
-        /// for the storage account associated with the filesystem.
+        /// This API is only functional if Container Soft Delete is enabled
+        /// for the storage account associated with the file system.
         /// </summary>
         /// <param name="deletedFileSystemName">
         /// The name of the previously deleted file system.
@@ -1321,8 +1321,8 @@ namespace Azure.Storage.Files.DataLake
 
         /// <summary>
         /// Restores a previously deleted file system.
-        /// This API is only functional is Container Soft Delete is enabled
-        /// for the storage account associated with the filesystem.
+        /// This API is only functional if Container Soft Delete is enabled
+        /// for the storage account associated with the file system.
         /// </summary>
         /// <param name="deletedFileSystemName">
         /// The name of the previously deleted file system.

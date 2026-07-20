@@ -68,6 +68,7 @@ namespace Azure.ResourceManager.EventHubs
     [ModelReaderWriterBuildable(typeof(EventHubsNamespaceResource))]
     [ModelReaderWriterBuildable(typeof(EventHubsNetworkRuleSetData))]
     [ModelReaderWriterBuildable(typeof(EventHubsNetworkRuleSetIPRules))]
+    [ModelReaderWriterBuildable(typeof(EventHubsNetworkRuleSetListResult))]
     [ModelReaderWriterBuildable(typeof(EventHubsNetworkRuleSetResource))]
     [ModelReaderWriterBuildable(typeof(EventHubsNetworkRuleSetVirtualNetworkRules))]
     [ModelReaderWriterBuildable(typeof(EventHubsNetworkSecurityPerimeter))]

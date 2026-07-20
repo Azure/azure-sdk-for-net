@@ -1,14 +1,22 @@
 # Release History
 
-## 1.2.0-beta.2 (Unreleased)
+## 1.2.0 (2026-07-17)
 
 ### Features Added
 
+- Added support for the `2026-01-01` API version.
+- Added the `IPAddressType` property using `ServiceBusIPAddressType` (`IPv4` / `DualStack`) to `ServiceBusNamespaceData`, enabling IPv4-only or dual-stack (IPv4 and IPv6) namespaces.
 ### Breaking Changes
 
-### Bugs Fixed
+- Removed the `ClusterArmId` property from `ServiceBusNamespaceReplicaLocation`. This property had no effect for Service Bus namespaces.
+- The namespace update (PATCH) operation is now synchronous in API version `2026-01-01`. The long-running `Update(WaitUntil, ServiceBusNamespacePatch, CancellationToken)` and `UpdateAsync(WaitUntil, ServiceBusNamespacePatch, CancellationToken)` overloads on `ServiceBusNamespaceResource` have been removed; use `Update(ServiceBusNamespacePatch, CancellationToken)` / `UpdateAsync(ServiceBusNamespacePatch, CancellationToken)` instead.
+
+## 1.2.0-beta.2 (2026-06-30)
 
 ### Other Changes
+
+- Upgraded dependent Azure.Core to 1.59.0.
+- Upgraded dependent Azure.ResourceManager to 1.14.0.
 
 ## 1.2.0-beta.1 (2025-11-27)
 

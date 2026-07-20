@@ -28,8 +28,6 @@ namespace Azure.ResourceManager.Support
     {
         private readonly ClientDiagnostics _tenantSupportTicketClientDiagnostics;
         private readonly TenantSupportTicket _tenantSupportTicketRestClient;
-        private readonly ClientDiagnostics _supportTicketNoSubCommunicationClientDiagnostics;
-        private readonly SupportTicketNoSubCommunication _supportTicketNoSubCommunicationRestClient;
 
         /// <summary> Initializes a new instance of TenantSupportTicketCollection for mocking. </summary>
         protected TenantSupportTicketCollection()
@@ -44,8 +42,6 @@ namespace Azure.ResourceManager.Support
             TryGetApiVersion(TenantSupportTicketResource.ResourceType, out string tenantSupportTicketApiVersion);
             _tenantSupportTicketClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Support", TenantSupportTicketResource.ResourceType.Namespace, Diagnostics);
             _tenantSupportTicketRestClient = new TenantSupportTicket(_tenantSupportTicketClientDiagnostics, Pipeline, Endpoint, tenantSupportTicketApiVersion ?? "2025-06-01-preview");
-            _supportTicketNoSubCommunicationClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Support", TenantSupportTicketResource.ResourceType.Namespace, Diagnostics);
-            _supportTicketNoSubCommunicationRestClient = new SupportTicketNoSubCommunication(_supportTicketNoSubCommunicationClientDiagnostics, Pipeline, Endpoint, tenantSupportTicketApiVersion ?? "2025-06-01-preview");
             ValidateResourceId(id);
         }
 
@@ -98,7 +94,7 @@ namespace Azure.ResourceManager.Support
                 HttpMessage message = _tenantSupportTicketRestClient.CreateCreateRequest(supportTicketName, SupportTicketData.ToRequestContent(data), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 SupportArmOperation<TenantSupportTicketResource> operation = new SupportArmOperation<TenantSupportTicketResource>(
-                    new TenantSupportTicketOperationSource(Client),
+                    new TenantSupportTicketResourceOperationSource(Client),
                     _tenantSupportTicketClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -156,7 +152,7 @@ namespace Azure.ResourceManager.Support
                 HttpMessage message = _tenantSupportTicketRestClient.CreateCreateRequest(supportTicketName, SupportTicketData.ToRequestContent(data), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 SupportArmOperation<TenantSupportTicketResource> operation = new SupportArmOperation<TenantSupportTicketResource>(
-                    new TenantSupportTicketOperationSource(Client),
+                    new TenantSupportTicketResourceOperationSource(Client),
                     _tenantSupportTicketClientDiagnostics,
                     Pipeline,
                     message.Request,

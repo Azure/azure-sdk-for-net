@@ -1,0 +1,111 @@
+name: azsdk-common-sdk-release-trigger-eval
+description: Trigger and anti-trigger tests for the azsdk-common-sdk-release skill
+type: capability
+
+environment: azsdk-mcp-mock
+
+tags:
+  area: azsdk-common-sdk-release
+  type: ci-gate
+
+config:
+  runs: 1
+  timeout: "90s"
+  model: claude-opus-4.6
+  executor: copilot-sdk
+
+scoring:
+  threshold: 0.8
+
+stimuli:
+  - name: trigger-release-my-sdk-package
+    prompt: "release my SDK package"
+    environment:
+      skills:
+        - ..
+    graders:
+      - type: skill-invocation
+        config:
+          required: ["azsdk-common-sdk-release"]
+  - name: trigger-how-to-publish-a-new-sdk-version
+    prompt: "how to publish a new SDK version"
+    environment:
+      skills:
+        - ..
+    graders:
+      - type: skill-invocation
+        config:
+          required: ["azsdk-common-sdk-release"]
+  - name: trigger-walk-me-through-sdk-release-process
+    prompt: "walk me through SDK release process"
+    environment:
+      skills:
+        - ..
+    graders:
+      - type: skill-invocation
+        config:
+          required: ["azsdk-common-sdk-release"]
+  - name: trigger-release-a-new-version-of-azure-sdk
+    prompt: "release a new version of azure-sdk"
+    environment:
+      skills:
+        - ..
+    graders:
+      - type: skill-invocation
+        config:
+          required: ["azsdk-common-sdk-release"]
+  - name: trigger-sdk-release-checklist
+    prompt: "SDK release checklist"
+    environment:
+      skills:
+        - ..
+    graders:
+      - type: skill-invocation
+        config:
+          required: ["azsdk-common-sdk-release"]
+
+  - name: anti-trigger-write-unit-tests
+    prompt: "write unit tests"
+    environment:
+      skills:
+        - ..
+    graders:
+      - type: skill-invocation
+        config:
+          disallowed: ["azsdk-common-sdk-release"]
+  - name: anti-trigger-fix-my-pipeline-build-error
+    prompt: "fix my pipeline build error"
+    environment:
+      skills:
+        - ..
+    graders:
+      - type: skill-invocation
+        config:
+          disallowed: ["azsdk-common-sdk-release"]
+  - name: anti-trigger-create-a-new-typespec-definition
+    prompt: "create a new TypeSpec definition"
+    environment:
+      skills:
+        - ..
+    graders:
+      - type: skill-invocation
+        config:
+          disallowed: ["azsdk-common-sdk-release"]
+  - name: anti-trigger-optimize-markdown-tokens
+    prompt: "optimize markdown tokens"
+    environment:
+      skills:
+        - ..
+    graders:
+      - type: skill-invocation
+        config:
+          disallowed: ["azsdk-common-sdk-release"]
+  - name: anti-trigger-resolve-apiview-feedback
+    prompt: "resolve APIView feedback"
+    environment:
+      skills:
+        - ..
+    graders:
+      - type: skill-invocation
+        config:
+          disallowed: ["azsdk-common-sdk-release"]

@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.ContainerService.Models
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="ContainerServiceMachineNetworkProperties"/>. </summary>
-        internal ContainerServiceMachineNetworkProperties()
+        public ContainerServiceMachineNetworkProperties()
         {
             IPAddresses = new ChangeTrackingList<ContainerServiceMachineIPAddress>();
             NodePublicIPTags = new ChangeTrackingList<ContainerServiceIPTag>();
@@ -50,19 +50,19 @@ namespace Azure.ResourceManager.ContainerService.Models
 
         /// <summary> The ID of the subnet which node and optionally pods will join on startup. If this is not specified, a VNET and subnet will be generated and used. If no podSubnetID is specified, this applies to nodes and pods, otherwise it applies to just nodes. This is of the form: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/virtualNetworks/{virtualNetworkName}/subnets/{subnetName}. </summary>
         [WirePath("vnetSubnetID")]
-        public ResourceIdentifier VnetSubnetId { get; }
+        public ResourceIdentifier VnetSubnetId { get; set; }
 
         /// <summary> The ID of the subnet which pods will join when launched. If omitted, pod IPs are statically assigned on the node subnet (see vnetSubnetID for more details). This is of the form: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/virtualNetworks/{virtualNetworkName}/subnets/{subnetName}. </summary>
         [WirePath("podSubnetID")]
-        public ResourceIdentifier PodSubnetId { get; }
+        public ResourceIdentifier PodSubnetId { get; set; }
 
         /// <summary> Whether the machine is allocated its own public IP. Some scenarios may require the machine to receive their own dedicated public IP addresses. A common scenario is for gaming workloads, where a console needs to make a direct connection to a cloud virtual machine to minimize hops. The default is false. </summary>
         [WirePath("enableNodePublicIP")]
-        public bool? IsNodePublicIpEnabled { get; }
+        public bool? IsNodePublicIpEnabled { get; set; }
 
         /// <summary> The public IP prefix ID which VM node should use IPs from. This is of the form: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/publicIPPrefixes/{publicIPPrefixName}. </summary>
         [WirePath("nodePublicIPPrefixID")]
-        public ResourceIdentifier NodePublicIpPrefixId { get; }
+        public ResourceIdentifier NodePublicIpPrefixId { get; set; }
 
         /// <summary> IPTags of instance-level public IPs. </summary>
         [WirePath("nodePublicIPTags")]

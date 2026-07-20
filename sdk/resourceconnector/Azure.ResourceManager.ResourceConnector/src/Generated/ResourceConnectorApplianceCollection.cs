@@ -94,7 +94,7 @@ namespace Azure.ResourceManager.ResourceConnector
                 HttpMessage message = _appliancesRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, resourceName, ResourceConnectorApplianceData.ToRequestContent(data), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 ResourceConnectorArmOperation<ResourceConnectorApplianceResource> operation = new ResourceConnectorArmOperation<ResourceConnectorApplianceResource>(
-                    new ResourceConnectorApplianceOperationSource(Client),
+                    new ResourceConnectorApplianceResourceOperationSource(Client),
                     _appliancesClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -152,7 +152,7 @@ namespace Azure.ResourceManager.ResourceConnector
                 HttpMessage message = _appliancesRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, resourceName, ResourceConnectorApplianceData.ToRequestContent(data), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 ResourceConnectorArmOperation<ResourceConnectorApplianceResource> operation = new ResourceConnectorArmOperation<ResourceConnectorApplianceResource>(
-                    new ResourceConnectorApplianceOperationSource(Client),
+                    new ResourceConnectorApplianceResourceOperationSource(Client),
                     _appliancesClientDiagnostics,
                     Pipeline,
                     message.Request,

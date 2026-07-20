@@ -24,7 +24,7 @@ namespace Azure.Provisioning.ContainerService
         {
         }
 
-        /// <summary> Gets or sets the ResourceId. </summary>
+        /// <summary> Gets the ResourceId. </summary>
         public BicepValue<ResourceIdentifier> ResourceId
         {
             get
@@ -32,14 +32,9 @@ namespace Azure.Provisioning.ContainerService
                 Initialize();
                 return _resourceId;
             }
-            set
-            {
-                Initialize();
-                _resourceId.Assign(value);
-            }
         }
 
-        /// <summary> Gets or sets the ClientId. </summary>
+        /// <summary> Gets the ClientId. </summary>
         public BicepValue<Guid> ClientId
         {
             get
@@ -47,25 +42,15 @@ namespace Azure.Provisioning.ContainerService
                 Initialize();
                 return _clientId;
             }
-            set
-            {
-                Initialize();
-                _clientId.Assign(value);
-            }
         }
 
-        /// <summary> Gets or sets the ObjectId. </summary>
+        /// <summary> Gets the ObjectId. </summary>
         public BicepValue<Guid> ObjectId
         {
             get
             {
                 Initialize();
                 return _objectId;
-            }
-            set
-            {
-                Initialize();
-                _objectId.Assign(value);
             }
         }
 
@@ -76,6 +61,10 @@ namespace Azure.Provisioning.ContainerService
             _resourceId = DefineProperty<ResourceIdentifier>(nameof(ResourceId), new string[] { "resourceId" });
             _clientId = DefineProperty<Guid>(nameof(ClientId), new string[] { "clientId" });
             _objectId = DefineProperty<Guid>(nameof(ObjectId), new string[] { "objectId" });
+            DefineAdditionalProperties();
         }
+
+        /// <summary> Define additional provisionable properties for ManagedClusterAddonProfileIdentity that are not part of the generated code. </summary>
+        partial void DefineAdditionalProperties();
     }
 }

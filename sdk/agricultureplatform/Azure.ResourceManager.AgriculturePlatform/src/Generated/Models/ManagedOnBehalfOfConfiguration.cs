@@ -34,6 +34,6 @@ namespace Azure.ResourceManager.AgriculturePlatform.Models
         }
 
         /// <summary> Associated MoboBrokerResources. </summary>
-        public IReadOnlyList<SubResource> MoboBrokerResources { get; }
+        public IReadOnlyList<SubResource> MoboBrokerResources { get; } = new ChangeTrackingList<SubResource>();
     }
 }

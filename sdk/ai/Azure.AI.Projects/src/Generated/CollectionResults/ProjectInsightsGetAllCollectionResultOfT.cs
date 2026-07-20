@@ -6,10 +6,12 @@ using System;
 using System.ClientModel;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 using Azure.Core;
 
 namespace Azure.AI.Projects.Evaluation
 {
+    [Experimental("AAIP001")]
     internal partial class ProjectInsightsGetAllCollectionResultOfT : CollectionResult<ProjectsInsight>
     {
         private readonly ProjectInsights _client;
@@ -50,7 +52,7 @@ namespace Azure.AI.Projects.Evaluation
             Uri nextPageUri = null;
             while (true)
             {
-                ClientResult result = ClientResult.FromResponse(_client.Pipeline.ProcessMessage(message, _options));
+                ClientResult result = GetNextResponse(message);
                 yield return result;
 
                 nextPageUri = ((PagedInsight)result).NextLink;
@@ -84,6 +86,23 @@ namespace Azure.AI.Projects.Evaluation
         protected override IEnumerable<ProjectsInsight> GetValuesFromPage(ClientResult page)
         {
             return ((PagedInsight)page).Value;
+        }
+
+        /// <summary> Sends the request in the pipeline message and returns the response. </summary>
+        /// <param name="message"> The pipeline message containing the request to send. </param>
+        private ClientResult GetNextResponse(PipelineMessage message)
+        {
+            using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope("ProjectInsights.GetAll");
+            scope.Start();
+            try
+            {
+                return ClientResult.FromResponse(_client.Pipeline.ProcessMessage(message, _options));
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
     }
 }

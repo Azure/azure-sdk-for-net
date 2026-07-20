@@ -10,7 +10,7 @@ using OpenAI;
 
 namespace Azure.AI.Projects.Agents
 {
-    /// <summary> The FabricIQPreviewTool. </summary>
+    /// <summary> A FabricIQ server-side tool. </summary>
     public partial class FabricIQPreviewTool : ProjectsAgentTool, IJsonModel<FabricIQPreviewTool>
     {
         /// <summary> Initializes a new instance of <see cref="FabricIQPreviewTool"/> for deserialization. </summary>
@@ -77,8 +77,30 @@ namespace Azure.AI.Projects.Agents
                 throw new FormatException($"The model {nameof(FabricIQPreviewTool)} does not support writing '{format}' format.");
             }
             base.JsonModelWriteCore(writer, options);
-            writer.WritePropertyName("fabric_iq_preview"u8);
-            writer.WriteObjectValue(FabricIqPreview, options);
+            writer.WritePropertyName("project_connection_id"u8);
+            writer.WriteStringValue(ProjectConnectionId);
+            if (Optional.IsDefined(ServerLabel))
+            {
+                writer.WritePropertyName("server_label"u8);
+                writer.WriteStringValue(ServerLabel);
+            }
+            if (Optional.IsDefined(ServerUri))
+            {
+                writer.WritePropertyName("server_url"u8);
+                writer.WriteStringValue(ServerUri.AbsoluteUri);
+            }
+            if (Optional.IsDefined(RequireApprovalInternal))
+            {
+                writer.WritePropertyName("require_approval"u8);
+#if NET6_0_OR_GREATER
+                writer.WriteRawValue(RequireApprovalInternal);
+#else
+                using (JsonDocument document = JsonDocument.Parse(RequireApprovalInternal))
+                {
+                    JsonSerializer.Serialize(writer, document.RootElement);
+                }
+#endif
+            }
         }
 
         /// <param name="reader"> The JSON reader. </param>
@@ -108,7 +130,10 @@ namespace Azure.AI.Projects.Agents
             }
             ToolType @type = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
-            FabricIQPreviewToolParameters fabricIqPreview = default;
+            string projectConnectionId = default;
+            string serverLabel = default;
+            Uri serverUri = default;
+            BinaryData requireApprovalInternal = default;
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("type"u8))
@@ -116,9 +141,33 @@ namespace Azure.AI.Projects.Agents
                     @type = new ToolType(prop.Value.GetString());
                     continue;
                 }
-                if (prop.NameEquals("fabric_iq_preview"u8))
+                if (prop.NameEquals("project_connection_id"u8))
                 {
-                    fabricIqPreview = FabricIQPreviewToolParameters.DeserializeFabricIQPreviewToolParameters(prop.Value, options);
+                    projectConnectionId = prop.Value.GetString();
+                    continue;
+                }
+                if (prop.NameEquals("server_label"u8))
+                {
+                    serverLabel = prop.Value.GetString();
+                    continue;
+                }
+                if (prop.NameEquals("server_url"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    serverUri = string.IsNullOrEmpty(prop.Value.GetString()) ? null : new Uri(prop.Value.GetString(), UriKind.RelativeOrAbsolute);
+                    continue;
+                }
+                if (prop.NameEquals("require_approval"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        requireApprovalInternal = null;
+                        continue;
+                    }
+                    requireApprovalInternal = BinaryData.FromString(prop.Value.GetRawText());
                     continue;
                 }
                 if (options.Format != "W")
@@ -126,7 +175,13 @@ namespace Azure.AI.Projects.Agents
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new FabricIQPreviewTool(@type, additionalBinaryDataProperties, fabricIqPreview);
+            return new FabricIQPreviewTool(
+                @type,
+                additionalBinaryDataProperties,
+                projectConnectionId,
+                serverLabel,
+                serverUri,
+                requireApprovalInternal);
         }
     }
 }

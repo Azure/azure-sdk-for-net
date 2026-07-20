@@ -1,0 +1,31 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <RequiredTargetFrameworks>net10.0</RequiredTargetFrameworks>
+    <TargetFrameworks>$(RequiredTargetFrameworks)</TargetFrameworks>
+    <!--Ensure all dependencies are copied to the output directory so that they can be packaged up for npm.-->
+    <CopyLocalLockFileAssemblies>true</CopyLocalLockFileAssemblies>
+    <IsGeneratorLibrary>true</IsGeneratorLibrary>
+    <IncludeOperationsSharedSource>true</IncludeOperationsSharedSource>
+    <NoWarn>$(NoWarn);IDT002</NoWarn>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.TypeSpec.Generator.ClientModel" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <EmbeddedResource Include="Azure.AI.Projects.Agents_experimental.csv" LogicalName="Azure.AI.Projects.Agents_experimental.csv" />
+    <EmbeddedResource Include="Azure.AI.Projects_experimental.csv" LogicalName="Azure.AI.Projects_experimental.csv" />
+    <EmbeddedResource Include="Azure.AI.Extensions.OpenAI_experimental.csv" LogicalName="Azure.AI.Extensions.OpenAI_experimental.csv" />
+  </ItemGroup>
+
+  <!-- Copy output to package dist path for npm package consumption -->
+  <Target Name="CopyForNpmPackage" AfterTargets="Build">
+    <Message Text="Copying Extensions.Plugin output to dist path" Importance="high" />
+    <ItemGroup>
+      <SourceDir Include="$(OutputPath)**\*.*" />
+    </ItemGroup>
+    <Copy SourceFiles="@(SourceDir)" DestinationFolder="$(MSBuildThisFileDirectory)..\dist\%(RecursiveDir)" />
+  </Target>
+</Project>

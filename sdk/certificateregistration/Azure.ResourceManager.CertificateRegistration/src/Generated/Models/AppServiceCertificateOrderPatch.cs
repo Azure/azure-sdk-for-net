@@ -28,16 +28,21 @@ namespace Azure.ResourceManager.CertificateRegistration.Models
         /// <param name="name"> The name of the resource. </param>
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
         /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
-        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="properties"> AppServiceCertificateOrderPatchResource resource specific properties. </param>
-        internal AppServiceCertificateOrderPatch(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, BinaryData> additionalBinaryDataProperties, AppServiceCertificateOrderPatchResourceProperties properties) : base(id, name, resourceType, systemData)
+        /// <param name="kind"> Kind of resource. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal AppServiceCertificateOrderPatch(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, AppServiceCertificateOrderPatchResourceProperties properties, string kind, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(id, name, resourceType, systemData)
         {
-            _additionalBinaryDataProperties = additionalBinaryDataProperties;
             Properties = properties;
+            Kind = kind;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> AppServiceCertificateOrderPatchResource resource specific properties. </summary>
         internal AppServiceCertificateOrderPatchResourceProperties Properties { get; set; }
+
+        /// <summary> Kind of resource. </summary>
+        public string Kind { get; set; }
 
         /// <summary> State of the Key Vault secret. </summary>
         public IDictionary<string, AppServiceCertificateProperties> Certificates

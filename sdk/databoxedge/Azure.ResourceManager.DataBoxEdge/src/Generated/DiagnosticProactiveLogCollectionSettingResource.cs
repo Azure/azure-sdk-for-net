@@ -112,7 +112,7 @@ namespace Azure.ResourceManager.DataBoxEdge
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="data"> The proactive log collection settings. </param>
+        /// <param name="data"></param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
         public virtual async Task<ArmOperation<DiagnosticProactiveLogCollectionSettingResource>> CreateOrUpdateAsync(WaitUntil waitUntil, DiagnosticProactiveLogCollectionSettingData data, CancellationToken cancellationToken = default)
@@ -130,7 +130,7 @@ namespace Azure.ResourceManager.DataBoxEdge
                 HttpMessage message = _diagnosticSettingsRestClient.CreateUpdateDiagnosticProactiveLogCollectionSettingsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, DiagnosticProactiveLogCollectionSettingData.ToRequestContent(data), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 DataBoxEdgeArmOperation<DiagnosticProactiveLogCollectionSettingResource> operation = new DataBoxEdgeArmOperation<DiagnosticProactiveLogCollectionSettingResource>(
-                    new DiagnosticProactiveLogCollectionSettingOperationSource(Client),
+                    new DiagnosticProactiveLogCollectionSettingResourceOperationSource(Client),
                     _diagnosticSettingsClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -171,7 +171,7 @@ namespace Azure.ResourceManager.DataBoxEdge
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="data"> The proactive log collection settings. </param>
+        /// <param name="data"></param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
         public virtual ArmOperation<DiagnosticProactiveLogCollectionSettingResource> CreateOrUpdate(WaitUntil waitUntil, DiagnosticProactiveLogCollectionSettingData data, CancellationToken cancellationToken = default)
@@ -189,7 +189,7 @@ namespace Azure.ResourceManager.DataBoxEdge
                 HttpMessage message = _diagnosticSettingsRestClient.CreateUpdateDiagnosticProactiveLogCollectionSettingsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, DiagnosticProactiveLogCollectionSettingData.ToRequestContent(data), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 DataBoxEdgeArmOperation<DiagnosticProactiveLogCollectionSettingResource> operation = new DataBoxEdgeArmOperation<DiagnosticProactiveLogCollectionSettingResource>(
-                    new DiagnosticProactiveLogCollectionSettingOperationSource(Client),
+                    new DiagnosticProactiveLogCollectionSettingResourceOperationSource(Client),
                     _diagnosticSettingsClientDiagnostics,
                     Pipeline,
                     message.Request,

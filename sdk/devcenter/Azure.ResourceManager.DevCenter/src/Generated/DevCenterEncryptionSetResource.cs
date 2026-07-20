@@ -230,7 +230,7 @@ namespace Azure.ResourceManager.DevCenter
                 HttpMessage message = _encryptionSetsRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, DevCenterEncryptionSetPatch.ToRequestContent(patch), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 DevCenterArmOperation<DevCenterEncryptionSetResource> operation = new DevCenterArmOperation<DevCenterEncryptionSetResource>(
-                    new DevCenterEncryptionSetOperationSource(Client),
+                    new DevCenterEncryptionSetResourceOperationSource(Client),
                     _encryptionSetsClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -289,7 +289,7 @@ namespace Azure.ResourceManager.DevCenter
                 HttpMessage message = _encryptionSetsRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, DevCenterEncryptionSetPatch.ToRequestContent(patch), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 DevCenterArmOperation<DevCenterEncryptionSetResource> operation = new DevCenterArmOperation<DevCenterEncryptionSetResource>(
-                    new DevCenterEncryptionSetOperationSource(Client),
+                    new DevCenterEncryptionSetResourceOperationSource(Client),
                     _encryptionSetsClientDiagnostics,
                     Pipeline,
                     message.Request,

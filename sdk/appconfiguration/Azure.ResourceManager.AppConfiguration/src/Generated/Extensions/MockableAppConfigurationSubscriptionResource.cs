@@ -172,6 +172,62 @@ namespace Azure.ResourceManager.AppConfiguration.Mocking
         }
 
         /// <summary>
+        /// Gets information about the deleted configuration stores in a subscription.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.AppConfiguration/deletedConfigurationStores. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> ConfigurationStoresOperationGroup_ListDeleted. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-06-01-preview. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> A collection of <see cref="DeletedAppConfigurationStoreResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<DeletedAppConfigurationStoreResource> GetDeletedAppConfigurationStoresAsync(CancellationToken cancellationToken = default)
+        {
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new AsyncPageableWrapper<DeletedAppConfigurationStoreData, DeletedAppConfigurationStoreResource>(new ConfigurationStoresGetDeletedAppConfigurationStoresAsyncCollectionResultOfT(ConfigurationStoresRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableAppConfigurationSubscriptionResource.GetDeletedAppConfigurationStores"), data => new DeletedAppConfigurationStoreResource(Client, data));
+        }
+
+        /// <summary>
+        /// Gets information about the deleted configuration stores in a subscription.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.AppConfiguration/deletedConfigurationStores. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> ConfigurationStoresOperationGroup_ListDeleted. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-06-01-preview. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> A collection of <see cref="DeletedAppConfigurationStoreResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<DeletedAppConfigurationStoreResource> GetDeletedAppConfigurationStores(CancellationToken cancellationToken = default)
+        {
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new PageableWrapper<DeletedAppConfigurationStoreData, DeletedAppConfigurationStoreResource>(new ConfigurationStoresGetDeletedAppConfigurationStoresCollectionResultOfT(ConfigurationStoresRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableAppConfigurationSubscriptionResource.GetDeletedAppConfigurationStores"), data => new DeletedAppConfigurationStoreResource(Client, data));
+        }
+
+        /// <summary>
         /// Checks whether the configuration store name is available for use.
         /// <list type="bullet">
         /// <item>

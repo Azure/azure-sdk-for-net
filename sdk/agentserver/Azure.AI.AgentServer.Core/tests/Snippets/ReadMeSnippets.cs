@@ -34,5 +34,21 @@ namespace Azure.AI.AgentServer.Core.Tests.Snippets
 
             #endregion
         }
+
+        [Test]
+        public void Tier3Setup()
+        {
+            #region Snippet:Core_ReadMe_Tier3Setup
+
+            var builder = WebApplication.CreateBuilder();
+            builder.Services.AddAgentServerCore();
+
+            var app = builder.Build();
+            app.UseAgentServerCore();
+            app.MapGet("/hello", () => "Hello!");
+            app.Run();
+
+            #endregion
+        }
     }
 }

@@ -91,7 +91,7 @@ namespace Azure.ResourceManager.AppConfiguration
                 HttpMessage message = _snapshotsRestClient.CreateCreateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, snapshotName, AppConfigurationSnapshotData.ToRequestContent(data), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 AppConfigurationArmOperation<AppConfigurationSnapshotResource> operation = new AppConfigurationArmOperation<AppConfigurationSnapshotResource>(
-                    new AppConfigurationSnapshotOperationSource(Client),
+                    new AppConfigurationSnapshotResourceOperationSource(Client),
                     _snapshotsClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -149,7 +149,7 @@ namespace Azure.ResourceManager.AppConfiguration
                 HttpMessage message = _snapshotsRestClient.CreateCreateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, snapshotName, AppConfigurationSnapshotData.ToRequestContent(data), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 AppConfigurationArmOperation<AppConfigurationSnapshotResource> operation = new AppConfigurationArmOperation<AppConfigurationSnapshotResource>(
-                    new AppConfigurationSnapshotOperationSource(Client),
+                    new AppConfigurationSnapshotResourceOperationSource(Client),
                     _snapshotsClientDiagnostics,
                     Pipeline,
                     message.Request,

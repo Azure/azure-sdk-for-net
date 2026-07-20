@@ -233,7 +233,7 @@ namespace Azure.ResourceManager.ElasticSan
                 HttpMessage message = _elasticSansRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, ElasticSanPatch.ToRequestContent(patch), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 ElasticSanArmOperation<ElasticSanResource> operation = new ElasticSanArmOperation<ElasticSanResource>(
-                    new ElasticSanOperationSource(Client),
+                    new ElasticSanResourceOperationSource(Client),
                     _elasticSansClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -292,7 +292,7 @@ namespace Azure.ResourceManager.ElasticSan
                 HttpMessage message = _elasticSansRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, ElasticSanPatch.ToRequestContent(patch), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 ElasticSanArmOperation<ElasticSanResource> operation = new ElasticSanArmOperation<ElasticSanResource>(
-                    new ElasticSanOperationSource(Client),
+                    new ElasticSanResourceOperationSource(Client),
                     _elasticSansClientDiagnostics,
                     Pipeline,
                     message.Request,

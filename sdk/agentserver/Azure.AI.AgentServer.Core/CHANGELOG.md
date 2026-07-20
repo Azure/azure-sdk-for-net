@@ -1,6 +1,6 @@
 # Release History
 
-## 1.0.0-beta.24 (Unreleased)
+## 1.0.0-beta.27 (Unreleased)
 
 ### Features Added
 
@@ -10,7 +10,49 @@
 
 ### Other Changes
 
+## 1.0.0-beta.26 (2026-06-28)
+
+### Features Added
+- Container protocol version `2.0.0` support: added the platform identity header constants `PlatformHeaders.UserId` (`x-agent-user-id`) and `PlatformHeaders.FoundryCallId` (`x-agent-foundry-call-id`).
+- Added `FoundryEnvironment.AgentId` exposing the agent's stable GUID from the `FOUNDRY_AGENT_ID` environment variable.
+- Added the request-scoped `FoundryAgentRequestContext` (`AsyncLocal`-backed, never-null `Current`) that captures the inbound `x-agent-foundry-call-id` / `x-agent-user-id` via an SDK middleware, and `FoundryCallIdHandler` (a `DelegatingHandler`) that echoes **only** the call ID on outbound Foundry-bound `HttpClient` calls (`x-agent-user-id` is never echoed). The .NET analogue of the Python SDK's `get_request_context()`.
+
+### Breaking Changes
+- Renamed `IsolationContext` to `PlatformContext`. Its members are now `UserIdKey` (from `x-agent-user-id`) and `CallId` (from `x-agent-foundry-call-id`), replacing `UserIsolationKey` / `ChatIsolationKey`.
+- Replaced the `PlatformHeaders.UserIsolationKey` / `PlatformHeaders.ChatIsolationKey` constants with `PlatformHeaders.UserId` and `PlatformHeaders.FoundryCallId` per container protocol version `2.0.0`.
+
+## 1.0.0-beta.25 (2026-05-25)
+
+### Bugs Fixed
+
+- Corrected `FoundryEnrichmentProcessor` to emit the Agent365 blueprint telemetry key as `microsoft.a365.agent.blueprint.id` (previously emitted as `gen_ai.agent.blueprint.id` in this code path).
+
+## 1.0.0-beta.24 (2026-05-21)
+
+### Features Added
+
+- Added Agent365 tracing export support with managed identity token acquisition when `FOUNDRY_AGENT365_TRACING_ENABLED` is set.
+- Added `AgentInstanceClientId`, `AgentBlueprintClientId`, `AgentTenantId`, and `IsAgent365TracingEnabled` properties to `FoundryEnvironment`.
+- Added `FoundryEnrichmentProcessor` attributes: `microsoft.a365.agent.blueprint.id`, `microsoft.tenant.id`, and `microsoft.foundry.agent.type` on telemetry spans.
+- Added `W3CBaggagePropagator` middleware that parses the W3C `baggage` header into `Activity.Baggage` on all target frameworks (net8.0, net9.0, net10.0).
+- Configured W3C Trace Context and Baggage propagators via `Sdk.SetDefaultTextMapPropagator` for outgoing request propagation.
+- Added conditional exporter registration: Azure Monitor, OTLP, and Agent365 exporters activate only when their respective environment variables are set.
+- Added `PlatformHeaders.ErrorSource` (`x-platform-error-source`), `PlatformHeaders.ErrorDetail`
+  (`x-platform-error-detail`), and error source value constants (`ErrorSourceUser`,
+  `ErrorSourcePlatform`, `ErrorSourceUpstream`) for error classification per container-image-spec §8.
 - Replaced `Azure.Monitor.OpenTelemetry.AspNetCore` with the unified `Microsoft.OpenTelemetry` distro for telemetry. The new distro auto-detects Azure Monitor and OTLP exporters from environment variables and eliminates the need for duplicate-instrumentation guards.
+- Added `FoundryEnvironment.WebSocketKeepAliveInterval` (sourced from the
+  `WS_KEEPALIVE_INTERVAL` environment variable) for the new
+  `invocations_ws` (WebSocket) protocol. Wired through
+  `AgentHostMiddlewareExtensions.UseAgentServerCore` into Kestrel's
+  `WebSocketOptions.KeepAliveInterval`, so a positive value emits RFC 6455
+  protocol-level Ping frames (opcode `0x9`) that keep idle WebSocket
+  connections alive across upstream proxy / load-balancer idle timeouts.
+  Disabled by default (`Timeout.InfiniteTimeSpan`).
+- `UseAgentServerCore` now also calls `IApplicationBuilder.UseWebSockets`,
+  so any protocol library that hosts WebSocket endpoints (e.g., the
+  Invocations `/invocations_ws` endpoint) works out of the box without
+  the consumer having to wire `UseWebSockets` themselves.
 
 ## 1.0.0-beta.23 (2026-04-22)
 

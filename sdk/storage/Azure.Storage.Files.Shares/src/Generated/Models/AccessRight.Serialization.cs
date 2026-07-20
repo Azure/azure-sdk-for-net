@@ -11,6 +11,7 @@ namespace Azure.Storage.Files.Shares.Models
 {
     internal static partial class AccessRightExtensions
     {
+        /// <param name="value"> The value to serialize. </param>
         public static string ToSerialString(this AccessRight value) => value switch
         {
             AccessRight.Read => "Read",
@@ -19,11 +20,21 @@ namespace Azure.Storage.Files.Shares.Models
             _ => throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown AccessRight value.")
         };
 
+        /// <param name="value"> The value to deserialize. </param>
         public static AccessRight ToAccessRight(this string value)
         {
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Read")) return AccessRight.Read;
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Write")) return AccessRight.Write;
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Delete")) return AccessRight.Delete;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Read"))
+            {
+                return AccessRight.Read;
+            }
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Write"))
+            {
+                return AccessRight.Write;
+            }
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Delete"))
+            {
+                return AccessRight.Delete;
+            }
             throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown AccessRight value.");
         }
     }

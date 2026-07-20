@@ -11,8 +11,8 @@ namespace Azure.Provisioning.KeyVault
     public enum ManagedHsmSkuFamily
     {
         /// <summary> B. </summary>
-        B,
+        B = 0,
         /// <summary> C. </summary>
-        C
+        C = 1
     }
 }

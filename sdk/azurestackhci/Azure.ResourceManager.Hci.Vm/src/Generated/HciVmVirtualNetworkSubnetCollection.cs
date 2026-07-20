@@ -93,7 +93,7 @@ namespace Azure.ResourceManager.Hci.Vm
                 HttpMessage message = _virtualNetworkSubnetsRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, subnetName, HciVmVirtualNetworkSubnetData.ToRequestContent(data), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 VmArmOperation<HciVmVirtualNetworkSubnetResource> operation = new VmArmOperation<HciVmVirtualNetworkSubnetResource>(
-                    new HciVmVirtualNetworkSubnetOperationSource(Client),
+                    new HciVmVirtualNetworkSubnetResourceOperationSource(Client),
                     _virtualNetworkSubnetsClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -151,7 +151,7 @@ namespace Azure.ResourceManager.Hci.Vm
                 HttpMessage message = _virtualNetworkSubnetsRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, subnetName, HciVmVirtualNetworkSubnetData.ToRequestContent(data), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 VmArmOperation<HciVmVirtualNetworkSubnetResource> operation = new VmArmOperation<HciVmVirtualNetworkSubnetResource>(
-                    new HciVmVirtualNetworkSubnetOperationSource(Client),
+                    new HciVmVirtualNetworkSubnetResourceOperationSource(Client),
                     _virtualNetworkSubnetsClientDiagnostics,
                     Pipeline,
                     message.Request,

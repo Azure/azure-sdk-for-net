@@ -58,8 +58,8 @@ namespace Azure.AI.Language.QuestionAnswering.Authoring
                     yield break;
                 }
                 PagedWordAlterations result = (PagedWordAlterations)response;
-                yield return Page<WordAlterations>.FromValues((IReadOnlyList<WordAlterations>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 nextPage = result.NextLink;
+                yield return Page<WordAlterations>.FromValues((IReadOnlyList<WordAlterations>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 if (nextPage == null)
                 {
                     yield break;

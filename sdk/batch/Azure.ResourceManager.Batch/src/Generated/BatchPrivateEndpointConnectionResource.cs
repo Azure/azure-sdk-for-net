@@ -230,7 +230,7 @@ namespace Azure.ResourceManager.Batch
                 HttpMessage message = _privateEndpointConnectionRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, BatchPrivateEndpointConnectionData.ToRequestContent(data), ifMatch, context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 BatchArmOperation<BatchPrivateEndpointConnectionResource> operation = new BatchArmOperation<BatchPrivateEndpointConnectionResource>(
-                    new BatchPrivateEndpointConnectionOperationSource(Client),
+                    new BatchPrivateEndpointConnectionResourceOperationSource(Client),
                     _privateEndpointConnectionClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -290,7 +290,7 @@ namespace Azure.ResourceManager.Batch
                 HttpMessage message = _privateEndpointConnectionRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, BatchPrivateEndpointConnectionData.ToRequestContent(data), ifMatch, context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 BatchArmOperation<BatchPrivateEndpointConnectionResource> operation = new BatchArmOperation<BatchPrivateEndpointConnectionResource>(
-                    new BatchPrivateEndpointConnectionOperationSource(Client),
+                    new BatchPrivateEndpointConnectionResourceOperationSource(Client),
                     _privateEndpointConnectionClientDiagnostics,
                     Pipeline,
                     message.Request,

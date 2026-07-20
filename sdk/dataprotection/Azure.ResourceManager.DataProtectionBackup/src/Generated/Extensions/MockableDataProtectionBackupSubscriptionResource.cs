@@ -42,15 +42,15 @@ namespace Azure.ResourceManager.DataProtectionBackup.Mocking
 
         private ClientDiagnostics BackupVaultResourcesClientDiagnostics => _backupVaultResourcesClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.DataProtectionBackup.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private BackupVaultResources BackupVaultResourcesRestClient => _backupVaultResourcesRestClient ??= new BackupVaultResources(BackupVaultResourcesClientDiagnostics, Pipeline, Endpoint, "2025-09-01");
+        private BackupVaultResources BackupVaultResourcesRestClient => _backupVaultResourcesRestClient ??= new BackupVaultResources(BackupVaultResourcesClientDiagnostics, Pipeline, Endpoint, "2026-03-01");
 
         private ClientDiagnostics ResourceGuardResourcesClientDiagnostics => _resourceGuardResourcesClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.DataProtectionBackup.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private ResourceGuardResources ResourceGuardResourcesRestClient => _resourceGuardResourcesRestClient ??= new ResourceGuardResources(ResourceGuardResourcesClientDiagnostics, Pipeline, Endpoint, "2025-09-01");
+        private ResourceGuardResources ResourceGuardResourcesRestClient => _resourceGuardResourcesRestClient ??= new ResourceGuardResources(ResourceGuardResourcesClientDiagnostics, Pipeline, Endpoint, "2026-03-01");
 
         private ClientDiagnostics DataProtectionOperationGroupClientDiagnostics => _dataProtectionOperationGroupClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.DataProtectionBackup.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private DataProtectionOperationGroup DataProtectionOperationGroupRestClient => _dataProtectionOperationGroupRestClient ??= new DataProtectionOperationGroup(DataProtectionOperationGroupClientDiagnostics, Pipeline, Endpoint, "2025-09-01");
+        private DataProtectionOperationGroup DataProtectionOperationGroupRestClient => _dataProtectionOperationGroupRestClient ??= new DataProtectionOperationGroup(DataProtectionOperationGroupClientDiagnostics, Pipeline, Endpoint, "2026-03-01");
 
         /// <summary> Gets a collection of DataProtectionDeletedBackupVaults in the <see cref="SubscriptionResource"/>. </summary>
         /// <param name="location"> The location for the resource. </param>
@@ -73,7 +73,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-09-01. </description>
+        /// <description> 2026-03-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -103,7 +103,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-09-01. </description>
+        /// <description> 2026-03-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -133,7 +133,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-09-01. </description>
+        /// <description> 2026-03-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -161,7 +161,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-09-01. </description>
+        /// <description> 2026-03-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -189,7 +189,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-09-01. </description>
+        /// <description> 2026-03-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -217,7 +217,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-09-01. </description>
+        /// <description> 2026-03-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -245,7 +245,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-09-01. </description>
+        /// <description> 2026-03-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -294,7 +294,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-09-01. </description>
+        /// <description> 2026-03-01. </description>
         /// </item>
         /// </list>
         /// </summary>

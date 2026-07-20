@@ -1,4 +1,4 @@
-﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
 using System.ComponentModel;
@@ -23,7 +23,17 @@ public abstract class ClientSettings
     /// <summary>
     /// Gets or sets the credential provider.
     /// </summary>
-    public AuthenticationTokenProvider? CredentialProvider { get; set; }
+    public AuthenticationTokenProvider? CredentialProvider
+    {
+        get => Credential?.TokenProvider;
+        set
+        {
+            if (Credential is not null)
+            {
+                Credential.TokenProvider = value;
+            }
+        }
+    }
 
     /// <summary>
     /// Binds the values from the <see cref="IConfigurationSection"/> to the properties of the <see cref="ClientSettings"/>.
@@ -37,9 +47,7 @@ public abstract class ClientSettings
         }
 
         _section = section;
-
         Credential ??= new CredentialSettings(section.GetSection("Credential"));
-
         BindCore(section);
     }
 

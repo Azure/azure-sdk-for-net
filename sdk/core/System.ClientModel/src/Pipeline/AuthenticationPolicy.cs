@@ -32,7 +32,12 @@ public abstract class AuthenticationPolicy : PipelinePolicy
             throw new ArgumentNullException("settings.Credential.CredentialSource");
         }
 
-        string? scope = settings.Credential.AdditionalProperties?["Scope"];
+        // Read Scope from either the root of the credential section (forward-looking
+        // shape) or the legacy AdditionalProperties subsection (current shape written
+        // by Azure.Core's AddDefaultScope). Reading both lets writers migrate to the
+        // flat shape without breaking SCM consumers.
+        string? scope = settings.Credential["Scope"]
+            ?? settings.Credential.AdditionalProperties?["Scope"];
 
         return settings.Credential.CredentialSource switch
         {
@@ -50,12 +55,13 @@ public abstract class AuthenticationPolicy : PipelinePolicy
                 $"Scope must be provided in configuration for '{settings.Credential!.CredentialSource}' authentication.");
         }
 
-        if (settings.CredentialProvider is null)
+        AuthenticationTokenProvider? provider = settings.Credential?.TokenProvider;
+        if (provider is null)
         {
             throw new InvalidOperationException("No AuthenticationTokenProvider was provided.");
         }
 
-        return new BearerTokenPolicy(settings.CredentialProvider, scope);
+        return new BearerTokenPolicy(provider, scope);
     }
 
     [Experimental("SCME0002")]
@@ -63,13 +69,14 @@ public abstract class AuthenticationPolicy : PipelinePolicy
     {
         string apiKey;
 
-        if (settings.CredentialProvider is AuthenticationTokenProvider apiKeyProvider)
+        AuthenticationTokenProvider? provider = settings.Credential?.TokenProvider;
+        if (provider is AuthenticationTokenProvider apiKeyProvider)
         {
-            if (scope is not null)
-            {
-                throw new InvalidOperationException("Scope is not applicable for API key authentication.");
-            }
-
+            // Scope is meaningless for API-key auth; silently ignore any value
+            // present on the credential section so that callers who set
+            // TokenProvider for an ApiKey configuration (for example, via
+            // a custom CredentialResolver that fetches a refreshable key) are
+            // not rejected just because Scope happens to also be set.
             GetTokenOptions options = new(new Dictionary<string, object>
             {
                 // TokenCredential requires at least one scope, so we provide a dummy value

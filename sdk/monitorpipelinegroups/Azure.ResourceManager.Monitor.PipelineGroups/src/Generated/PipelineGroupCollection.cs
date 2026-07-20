@@ -94,7 +94,7 @@ namespace Azure.ResourceManager.Monitor.PipelineGroups
                 HttpMessage message = _pipelineGroupOperationsRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, pipelineGroupName, PipelineGroupData.ToRequestContent(data), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 PipelineGroupsArmOperation<PipelineGroupResource> operation = new PipelineGroupsArmOperation<PipelineGroupResource>(
-                    new PipelineGroupOperationSource(Client),
+                    new PipelineGroupResourceOperationSource(Client),
                     _pipelineGroupOperationsClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -152,7 +152,7 @@ namespace Azure.ResourceManager.Monitor.PipelineGroups
                 HttpMessage message = _pipelineGroupOperationsRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, pipelineGroupName, PipelineGroupData.ToRequestContent(data), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 PipelineGroupsArmOperation<PipelineGroupResource> operation = new PipelineGroupsArmOperation<PipelineGroupResource>(
-                    new PipelineGroupOperationSource(Client),
+                    new PipelineGroupResourceOperationSource(Client),
                     _pipelineGroupOperationsClientDiagnostics,
                     Pipeline,
                     message.Request,

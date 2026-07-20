@@ -13,6 +13,7 @@ using NUnit.Framework;
 
 namespace Azure.ResourceManager.Nginx.Tests.Scenario
 {
+    [Ignore("Blocked by Azure.ResourceManager.Network MPG migration playback mismatch; see https://github.com/Azure/azure-sdk-for-net/issues/59918.")]
     internal class NginxDeploymentResourceTests : NginxManagementTestBase
     {
         protected ResourceGroupResource ResGroup { get; set; }

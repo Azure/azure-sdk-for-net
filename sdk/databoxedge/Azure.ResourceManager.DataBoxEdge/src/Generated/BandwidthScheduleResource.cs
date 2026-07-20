@@ -325,7 +325,7 @@ namespace Azure.ResourceManager.DataBoxEdge
                 HttpMessage message = _bandwidthSchedulesRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, BandwidthScheduleData.ToRequestContent(data), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 DataBoxEdgeArmOperation<BandwidthScheduleResource> operation = new DataBoxEdgeArmOperation<BandwidthScheduleResource>(
-                    new BandwidthScheduleOperationSource(Client),
+                    new BandwidthScheduleResourceOperationSource(Client),
                     _bandwidthSchedulesClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -384,7 +384,7 @@ namespace Azure.ResourceManager.DataBoxEdge
                 HttpMessage message = _bandwidthSchedulesRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, BandwidthScheduleData.ToRequestContent(data), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 DataBoxEdgeArmOperation<BandwidthScheduleResource> operation = new DataBoxEdgeArmOperation<BandwidthScheduleResource>(
-                    new BandwidthScheduleOperationSource(Client),
+                    new BandwidthScheduleResourceOperationSource(Client),
                     _bandwidthSchedulesClientDiagnostics,
                     Pipeline,
                     message.Request,

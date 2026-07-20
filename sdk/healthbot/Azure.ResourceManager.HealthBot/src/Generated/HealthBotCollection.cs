@@ -94,7 +94,7 @@ namespace Azure.ResourceManager.HealthBot
                 HttpMessage message = _botsRestClient.CreateCreateRequest(Id.SubscriptionId, Id.ResourceGroupName, botName, HealthBotData.ToRequestContent(data), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 HealthBotArmOperation<HealthBotResource> operation = new HealthBotArmOperation<HealthBotResource>(
-                    new HealthBotOperationSource(Client),
+                    new HealthBotResourceOperationSource(Client),
                     _botsClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -152,7 +152,7 @@ namespace Azure.ResourceManager.HealthBot
                 HttpMessage message = _botsRestClient.CreateCreateRequest(Id.SubscriptionId, Id.ResourceGroupName, botName, HealthBotData.ToRequestContent(data), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 HealthBotArmOperation<HealthBotResource> operation = new HealthBotArmOperation<HealthBotResource>(
-                    new HealthBotOperationSource(Client),
+                    new HealthBotResourceOperationSource(Client),
                     _botsClientDiagnostics,
                     Pipeline,
                     message.Request,

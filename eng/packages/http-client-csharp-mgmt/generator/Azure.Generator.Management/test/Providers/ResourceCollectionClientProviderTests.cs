@@ -31,6 +31,62 @@ namespace Azure.Generator.Management.Tests.Providers
         }
 
         [TestCase]
+        public void Verify_ExtensionChildCollectionValidateResourceIdUsesParentResource()
+        {
+            var (parentClient, childClient, models) = InputResourceData.ClientWithNestedExtensionChildResource();
+            var plugin = ManagementMockHelpers.LoadMockPlugin(
+                inputModels: () => models,
+                clients: () => [parentClient, childClient]);
+
+            var collection = plugin.Object.OutputLibrary.TypeProviders
+                .OfType<ResourceCollectionClientProvider>()
+                .SingleOrDefault(p => p.Name == "WatchlistItemCollection");
+            Assert.That(collection, Is.Not.Null);
+
+            var validateResourceId = collection!.Methods.SingleOrDefault(m => m.Signature.Name == "ValidateResourceId");
+            Assert.That(validateResourceId, Is.Not.Null);
+
+            var bodyStatements = validateResourceId!.BodyStatements?.ToDisplayString();
+            Assert.That(bodyStatements, Does.Contain("global::Samples.WatchlistResource.ResourceType"));
+            Assert.That(bodyStatements, Does.Not.Contain("\"Microsoft.OperationalInsights/workspaces\""));
+
+            var constructor = collection.Constructors.SingleOrDefault(c => c.Signature.Parameters.Any(p => p.Name == "id"));
+            Assert.That(constructor, Is.Not.Null);
+            Assert.That(constructor!.BodyStatements?.ToDisplayString(), Does.Contain("global::Samples.WatchlistItemCollection.ValidateResourceId(id);"));
+        }
+
+        [TestCase]
+        public void Verify_FixedChildResourceTypeIsNotPublicCollectionParameter()
+        {
+            var (parentClient, childClient, models) = InputResourceData.ClientWithFixedChildResourceType();
+            var plugin = ManagementMockHelpers.LoadMockPlugin(
+                inputModels: () => models,
+                clients: () => [parentClient, childClient]);
+
+            var collection = plugin.Object.OutputLibrary.TypeProviders
+                .OfType<ResourceCollectionClientProvider>()
+                .SingleOrDefault(p => p.Name == "AzureEndpointCollection");
+            Assert.That(collection, Is.Not.Null);
+            var azureEndpointCollection = collection!;
+
+            var getMethod = azureEndpointCollection.Methods.Single(m => m.Signature.Name == "Get");
+            Assert.That(getMethod.Signature.Parameters.Select(p => p.Name), Does.Not.Contain("endpointType"));
+            Assert.That(getMethod.Signature.Parameters.Select(p => p.Name), Does.Contain("endpointName"));
+            Assert.That(getMethod.BodyStatements?.ToDisplayString(), Does.Contain("\"AzureEndpoints\""));
+            Assert.That(getMethod.BodyStatements?.ToDisplayString(), Does.Not.Contain("endpointType"));
+
+            var createMethod = azureEndpointCollection.Methods.Single(m => m.Signature.Name == "CreateOrUpdate");
+            Assert.That(createMethod.Signature.Parameters.Select(p => p.Name), Does.Not.Contain("endpointType"));
+
+            var parentResource = plugin.Object.OutputLibrary.TypeProviders
+                .OfType<ResourceClientProvider>()
+                .SingleOrDefault(p => p.Name == "ProfileResource");
+            Assert.That(parentResource, Is.Not.Null);
+            var parentGetMethod = parentResource!.Methods.Single(m => m.Signature.Name == "GetAzureEndpoint");
+            Assert.That(parentGetMethod.Signature.Parameters.Select(p => p.Name), Does.Not.Contain("endpointType"));
+        }
+
+        [TestCase]
         public void Verify_GetOperationMethod()
         {
             MethodProvider getMethod = GetResourceCollectionClientProviderMethodByName("Get");
@@ -325,6 +381,73 @@ namespace Azure.Generator.Management.Tests.Providers
             Assert.That(signature.Parameters[1].Type.FrameworkType, Is.EqualTo(typeof(CancellationToken)));
             Assert.That(signature.Parameters.Any(p => p.Type.Equals(typeof(WaitUntil))), Is.False,
                 "GetIfExistsAsync should not have a WaitUntil parameter even when Get is an LRO");
+        }
+
+        // Regression test for https://github.com/Azure/azure-sdk-for-net/issues/59242
+        // The collection class must only declare REST client / diagnostics fields for operation
+        // groups whose methods are actually emitted on the collection. Methods whose operation
+        // group only contributes to the resource class (e.g. Actions) must not leak fields onto
+        // the collection.
+        [TestCase]
+        public void CollectionDoesNotEmitFieldsForActionOnlyOperationGroup()
+        {
+            var (mainClient, actionClient, models) = InputResourceData.ClientWithResourceActionInDifferentClient();
+            var plugin = ManagementMockHelpers.LoadMockPlugin(inputModels: () => models, clients: () => [mainClient, actionClient]);
+
+            var collection = plugin.Object.OutputLibrary.TypeProviders.OfType<ResourceCollectionClientProvider>().FirstOrDefault();
+            Assert.That(collection, Is.Not.Null);
+
+            // ActionClient's REST client type is named "ActionClient" -> field name "_actionClientRestClient".
+            // The bug being guarded against would have emitted this field on the collection because
+            // CreateClientInfosMap iterated the full resource metadata methods list, including the
+            // action method.
+            var fieldNames = collection!.Fields.Select(f => f.Name).ToArray();
+            Assert.That(fieldNames, Does.Not.Contain("_actionClientRestClient"),
+                "Collection must not declare a REST client field for an operation group whose methods are only emitted on the resource class.");
+            Assert.That(fieldNames, Does.Not.Contain("_actionClientClientDiagnostics"),
+                "Collection must not declare a diagnostics field for an operation group whose methods are only emitted on the resource class.");
+        }
+
+        [TestCase]
+        public void ResourceStillEmitsFieldsForActionOnlyOperationGroup()
+        {
+            // Companion to CollectionDoesNotEmitFieldsForActionOnlyOperationGroup: the resource
+            // class IS allowed (and required) to keep the ActionClient field, since the action
+            // method is emitted on the resource.
+            var (mainClient, actionClient, models) = InputResourceData.ClientWithResourceActionInDifferentClient();
+            var plugin = ManagementMockHelpers.LoadMockPlugin(inputModels: () => models, clients: () => [mainClient, actionClient]);
+
+            var resource = plugin.Object.OutputLibrary.TypeProviders.OfType<ResourceClientProvider>().FirstOrDefault();
+            Assert.That(resource, Is.Not.Null);
+
+            var fieldNames = resource!.Fields.Select(f => f.Name).ToArray();
+            Assert.That(fieldNames, Does.Contain("_actionClientRestClient"),
+                "Resource must declare a REST client field for the action's operation group.");
+            Assert.That(fieldNames, Does.Contain("_actionClientClientDiagnostics"),
+                "Resource must declare a diagnostics field for the action's operation group.");
+        }
+
+        [TestCase]
+        public void CollectionEmitsCollectionActionFromSeparateOperationGroup()
+        {
+            var (mainClient, actionClient, models) = InputResourceData.ClientWithResourceCollectionActionInDifferentClient();
+            var plugin = ManagementMockHelpers.LoadMockPlugin(inputModels: () => models, clients: () => [mainClient, actionClient]);
+
+            var collection = plugin.Object.OutputLibrary.TypeProviders.OfType<ResourceCollectionClientProvider>().FirstOrDefault();
+            Assert.That(collection, Is.Not.Null);
+
+            var methodNames = collection!.Methods.Select(m => m.Signature.Name).ToArray();
+            Assert.That(methodNames, Does.Contain("DoAction"));
+            Assert.That(methodNames, Does.Contain("DoActionAsync"));
+
+            var fieldNames = collection.Fields.Select(f => f.Name).ToArray();
+            Assert.That(fieldNames, Does.Contain("_actionClientRestClient"));
+            Assert.That(fieldNames, Does.Contain("_actionClientClientDiagnostics"));
+
+            var resource = plugin.Object.OutputLibrary.TypeProviders.OfType<ResourceClientProvider>().FirstOrDefault();
+            Assert.That(resource, Is.Not.Null);
+            Assert.That(resource!.Methods.Select(m => m.Signature.Name), Does.Not.Contain("DoAction"));
+            Assert.That(resource.Methods.Select(m => m.Signature.Name), Does.Not.Contain("DoActionAsync"));
         }
     }
 }

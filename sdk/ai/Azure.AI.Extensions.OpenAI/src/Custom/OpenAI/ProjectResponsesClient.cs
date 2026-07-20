@@ -16,6 +16,7 @@ namespace Azure.AI.Extensions.OpenAI;
 
 #pragma warning disable SCME0001
 
+/// <summary> Provides response operations for an Azure AI project through the OpenAI responses API. </summary>
 public partial class ProjectResponsesClient : ResponsesClient
 {
     private readonly string _defaultModelName;
@@ -27,35 +28,33 @@ public partial class ProjectResponsesClient : ResponsesClient
     /// Creates a new instance of <see cref="ProjectResponsesClient"/>.
     /// </summary>
     /// <remarks>
-    /// This constructor will automatically construct the base URI for requests from the supplied <paramref name="projectEndpoint"/>
+    /// This constructor automatically constructs the base URI for requests from the supplied <paramref name="projectEndpoint"/>
     /// value. To use a base URI directly, use the alternative constructor and set <see cref="OpenAIClientOptions.Endpoint"/> on the
-    /// options supplied.
+    /// supplied options.
     /// </remarks>
-    /// <param name="projectEndpoint"></param>
-    /// <param name="tokenProvider"></param>
-    /// <param name="options"></param>
+    /// <param name="projectEndpoint"> The Azure AI project endpoint. </param>
+    /// <param name="tokenProvider"> The token provider used to authenticate requests. </param>
+    /// <param name="options"> The options used to configure the client. </param>
     public ProjectResponsesClient(Uri projectEndpoint, AuthenticationTokenProvider tokenProvider, ProjectResponsesClientOptions options = null)
         : this(projectEndpoint, tokenProvider, defaultAgent: null, defaultConversationId: null, options)
     { }
 
     /// <summary>
-    /// Creates a new instance of <see cref="ProjectResponsesClient"/>.
+    /// Creates a new instance of <see cref="ProjectResponsesClient"/> with default agent settings.
     /// </summary>
-    /// <remarks>
-    /// </remarks>
-    /// <param name="projectEndpoint"></param>
-    /// <param name="tokenProvider"></param>
-    /// <param name="defaultAgent"></param>
-    /// <param name="defaultConversationId"></param>
-    /// <param name="options"></param>
+    /// <param name="projectEndpoint"> The Azure AI project endpoint. </param>
+    /// <param name="tokenProvider"> The token provider used to authenticate requests. </param>
+    /// <param name="defaultAgent"> The default agent used for response requests. </param>
+    /// <param name="defaultConversationId"> The default conversation ID used for response requests. </param>
+    /// <param name="options"> The options used to configure the client. </param>
     public ProjectResponsesClient(Uri projectEndpoint, AuthenticationTokenProvider tokenProvider, AgentReference defaultAgent, string defaultConversationId = null, ProjectResponsesClientOptions options = null)
         : this(
               pipeline: ProjectOpenAIClient.CreatePipeline(
                   ProjectOpenAIClient.CreateAuthenticationPolicy(
                       tokenProvider,
-                      ProjectOpenAIClient.GetMergedOptions(projectEndpoint, options)),
-                  ProjectOpenAIClient.GetMergedOptions(projectEndpoint, options)),
-              options: ProjectOpenAIClient.GetMergedOptions(projectEndpoint, options),
+                      ProjectOpenAIClient.GetMergedOptions(projectEndpoint, tokenProvider, options)),
+                  ProjectOpenAIClient.GetMergedOptions(projectEndpoint, tokenProvider, options)),
+              options: ProjectOpenAIClient.GetMergedOptions(projectEndpoint, tokenProvider, options),
               defaultAgent: defaultAgent,
               defaultConversationId: defaultConversationId)
     { }
@@ -64,15 +63,20 @@ public partial class ProjectResponsesClient : ResponsesClient
     /// Creates a new instance of <see cref="ProjectResponsesClient"/>.
     /// </summary>
     /// <remarks>
-    /// This constructor will directly use the supplied value from the provided <see cref="OpenAIClientOptions.Endpoint"/>
-    /// and will perform no additional automatic resolution.
+    /// This constructor directly uses the supplied value from the provided <see cref="OpenAIClientOptions.Endpoint"/>
+    /// and performs no additional automatic resolution.
     /// </remarks>
-    /// <param name="tokenProvider"></param>
-    /// <param name="options"></param>
+    /// <param name="tokenProvider"> The token provider used to authenticate requests. </param>
+    /// <param name="options"> The options used to configure the client. </param>
     public ProjectResponsesClient(AuthenticationTokenProvider tokenProvider, ProjectResponsesClientOptions options)
         : this(projectEndpoint: null, tokenProvider, defaultAgent: null, defaultConversationId: null, options)
     { }
 
+    /// <summary> Initializes a new instance of <see cref="ProjectResponsesClient"/>. </summary>
+    /// <param name="tokenProvider"> The token provider used to authenticate requests. </param>
+    /// <param name="options"> The options used to configure the client. </param>
+    /// <param name="defaultAgent"> The default agent used for response requests. </param>
+    /// <param name="defaultConversationId"> The default conversation ID used for response requests. </param>
     public ProjectResponsesClient(AuthenticationTokenProvider tokenProvider, ProjectResponsesClientOptions options = null, AgentReference defaultAgent = null, string defaultConversationId = null)
         : this(projectEndpoint: null, tokenProvider, defaultAgent, defaultConversationId, options)
     { }
@@ -92,9 +96,14 @@ public partial class ProjectResponsesClient : ResponsesClient
         _defaultConversationId = defaultConversationId;
     }
 
+    /// <summary> Initializes a new instance of <see cref="ProjectResponsesClient"/> for mocking. </summary>
     protected ProjectResponsesClient()
     { }
 
+    /// <summary> Creates a response using the supplied response options. </summary>
+    /// <param name="options"> The options used to create the response. </param>
+    /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
+    /// <returns> The created response result. </returns>
     public override ClientResult<ResponseResult> CreateResponse(CreateResponseOptions options, CancellationToken cancellationToken = default)
     {
         Argument.AssertNotNull(options, nameof(options));
@@ -113,11 +122,22 @@ public partial class ProjectResponsesClient : ResponsesClient
         }
     }
 
+    /// <summary> Creates a response from the supplied input items. </summary>
+    /// <param name="inputItems"> The input items used to create the response. </param>
+    /// <param name="previousResponseId"> The ID of the previous response to continue. </param>
+    /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
+    /// <returns> The created response result. </returns>
     public virtual ClientResult<ResponseResult> CreateResponse(IEnumerable<ResponseItem> inputItems, string previousResponseId = null, CancellationToken cancellationToken = default)
     {
         return CreateResponse(null, inputItems, previousResponseId, cancellationToken);
     }
 
+    /// <summary> Creates a response for the specified model from the supplied input items. </summary>
+    /// <param name="model"> The model used to create the response. </param>
+    /// <param name="inputItems"> The input items used to create the response. </param>
+    /// <param name="previousResponseId"> The ID of the previous response to continue. </param>
+    /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
+    /// <returns> The created response result. </returns>
     public override ClientResult<ResponseResult> CreateResponse(string model, IEnumerable<ResponseItem> inputItems, string previousResponseId = null, CancellationToken cancellationToken = default)
     {
         Argument.AssertNotNull(inputItems, nameof(inputItems));
@@ -134,11 +154,22 @@ public partial class ProjectResponsesClient : ResponsesClient
         return base.CreateResponse(options, cancellationToken);
     }
 
+    /// <summary> Creates a response from user input text. </summary>
+    /// <param name="userInputText"> The user input text used to create the response. </param>
+    /// <param name="previousResponseId"> The ID of the previous response to continue. </param>
+    /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
+    /// <returns> The created response result. </returns>
     public virtual ClientResult<ResponseResult> CreateResponse(string userInputText, string previousResponseId = null, CancellationToken cancellationToken = default)
     {
         return CreateResponse(null, userInputText, previousResponseId, cancellationToken);
     }
 
+    /// <summary> Creates a response for the specified model from user input text. </summary>
+    /// <param name="model"> The model used to create the response. </param>
+    /// <param name="userInputText"> The user input text used to create the response. </param>
+    /// <param name="previousResponseId"> The ID of the previous response to continue. </param>
+    /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
+    /// <returns> The created response result. </returns>
     public override ClientResult<ResponseResult> CreateResponse(string model, string userInputText, string previousResponseId = null, CancellationToken cancellationToken = default)
     {
         Argument.AssertNotNullOrEmpty(userInputText, nameof(userInputText));
@@ -163,6 +194,10 @@ public partial class ProjectResponsesClient : ResponsesClient
         }
     }
 
+    /// <summary> Asynchronously creates a response using the supplied response options. </summary>
+    /// <param name="options"> The options used to create the response. </param>
+    /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
+    /// <returns> The created response result. </returns>
     public override async Task<ClientResult<ResponseResult>> CreateResponseAsync(CreateResponseOptions options, CancellationToken cancellationToken = default)
     {
         Argument.AssertNotNull(options, nameof(options));
@@ -181,11 +216,22 @@ public partial class ProjectResponsesClient : ResponsesClient
         }
     }
 
+    /// <summary> Asynchronously creates a response from the supplied input items. </summary>
+    /// <param name="inputItems"> The input items used to create the response. </param>
+    /// <param name="previousResponseId"> The ID of the previous response to continue. </param>
+    /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
+    /// <returns> The created response result. </returns>
     public virtual async Task<ClientResult<ResponseResult>> CreateResponseAsync(IEnumerable<ResponseItem> inputItems, string previousResponseId = null, CancellationToken cancellationToken = default)
     {
         return await CreateResponseAsync(null, inputItems, previousResponseId, cancellationToken).ConfigureAwait(false);
     }
 
+    /// <summary> Asynchronously creates a response for the specified model from the supplied input items. </summary>
+    /// <param name="model"> The model used to create the response. </param>
+    /// <param name="inputItems"> The input items used to create the response. </param>
+    /// <param name="previousResponseId"> The ID of the previous response to continue. </param>
+    /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
+    /// <returns> The created response result. </returns>
     public override async Task<ClientResult<ResponseResult>> CreateResponseAsync(string model, IEnumerable<ResponseItem> inputItems, string previousResponseId = null, CancellationToken cancellationToken = default)
     {
         Argument.AssertNotNull(inputItems, nameof(inputItems));
@@ -214,10 +260,21 @@ public partial class ProjectResponsesClient : ResponsesClient
         }
     }
 
+    /// <summary> Asynchronously creates a response from user input text. </summary>
+    /// <param name="userInputText"> The user input text used to create the response. </param>
+    /// <param name="previousResponseId"> The ID of the previous response to continue. </param>
+    /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
+    /// <returns> The created response result. </returns>
     public async virtual Task<ClientResult<ResponseResult>> CreateResponseAsync(string userInputText, string previousResponseId = null, CancellationToken cancellationToken = default)
     {
         return await CreateResponseAsync(null, userInputText, previousResponseId, cancellationToken).ConfigureAwait(false);
     }
+    /// <summary> Asynchronously creates a response for the specified model from user input text. </summary>
+    /// <param name="model"> The model used to create the response. </param>
+    /// <param name="userInputText"> The user input text used to create the response. </param>
+    /// <param name="previousResponseId"> The ID of the previous response to continue. </param>
+    /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
+    /// <returns> The created response result. </returns>
     public async override Task<ClientResult<ResponseResult>> CreateResponseAsync(string model, string userInputText, string previousResponseId = null, CancellationToken cancellationToken = default)
     {
         Argument.AssertNotNullOrEmpty(userInputText, nameof(userInputText));
@@ -242,6 +299,10 @@ public partial class ProjectResponsesClient : ResponsesClient
         }
     }
 
+    /// <summary> Creates a streaming response using the supplied response options. </summary>
+    /// <param name="options"> The options used to create the streaming response. </param>
+    /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
+    /// <returns> The streaming response updates. </returns>
     public override CollectionResult<StreamingResponseUpdate> CreateResponseStreaming(CreateResponseOptions options, CancellationToken cancellationToken = default)
     {
         Argument.AssertNotNull(options, nameof(options));
@@ -268,11 +329,22 @@ public partial class ProjectResponsesClient : ResponsesClient
         }
     }
 
+    /// <summary> Creates a streaming response from the supplied input items. </summary>
+    /// <param name="inputItems"> The input items used to create the streaming response. </param>
+    /// <param name="previousResponseId"> The ID of the previous response to continue. </param>
+    /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
+    /// <returns> The streaming response updates. </returns>
     public virtual CollectionResult<StreamingResponseUpdate> CreateResponseStreaming(IEnumerable<ResponseItem> inputItems, string previousResponseId = null, CancellationToken cancellationToken = default)
     {
         return CreateResponseStreaming(null, inputItems, previousResponseId, cancellationToken);
     }
 
+    /// <summary> Creates a streaming response for the specified model from the supplied input items. </summary>
+    /// <param name="model"> The model used to create the streaming response. </param>
+    /// <param name="inputItems"> The input items used to create the streaming response. </param>
+    /// <param name="previousResponseId"> The ID of the previous response to continue. </param>
+    /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
+    /// <returns> The streaming response updates. </returns>
     public override CollectionResult<StreamingResponseUpdate> CreateResponseStreaming(string model, IEnumerable<ResponseItem> inputItems, string previousResponseId = null, CancellationToken cancellationToken = default)
     {
         Argument.AssertNotNull(inputItems, nameof(inputItems));
@@ -290,11 +362,22 @@ public partial class ProjectResponsesClient : ResponsesClient
         return CreateResponseStreaming(options, cancellationToken);
     }
 
+    /// <summary> Creates a streaming response from user input text. </summary>
+    /// <param name="userInputText"> The user input text used to create the streaming response. </param>
+    /// <param name="previousResponseId"> The ID of the previous response to continue. </param>
+    /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
+    /// <returns> The streaming response updates. </returns>
     public virtual CollectionResult<StreamingResponseUpdate> CreateResponseStreaming(string userInputText, string previousResponseId = null, CancellationToken cancellationToken = default)
     {
         return CreateResponseStreaming(null, userInputText, previousResponseId, cancellationToken);
     }
 
+    /// <summary> Creates a streaming response for the specified model from user input text. </summary>
+    /// <param name="model"> The model used to create the streaming response. </param>
+    /// <param name="userInputText"> The user input text used to create the streaming response. </param>
+    /// <param name="previousResponseId"> The ID of the previous response to continue. </param>
+    /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
+    /// <returns> The streaming response updates. </returns>
     public override CollectionResult<StreamingResponseUpdate> CreateResponseStreaming(string model, string userInputText, string previousResponseId = null, CancellationToken cancellationToken = default)
     {
         Argument.AssertNotNullOrEmpty(userInputText, nameof(userInputText));
@@ -309,6 +392,10 @@ public partial class ProjectResponsesClient : ResponsesClient
         return CreateResponseStreaming(options, cancellationToken);
     }
 
+    /// <summary> Asynchronously creates a streaming response using the supplied response options. </summary>
+    /// <param name="options"> The options used to create the streaming response. </param>
+    /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
+    /// <returns> The streaming response updates. </returns>
     public override AsyncCollectionResult<StreamingResponseUpdate> CreateResponseStreamingAsync(CreateResponseOptions options, CancellationToken cancellationToken = default)
     {
         Argument.AssertNotNull(options, nameof(options));
@@ -335,11 +422,22 @@ public partial class ProjectResponsesClient : ResponsesClient
         }
     }
 
+    /// <summary> Asynchronously creates a streaming response from the supplied input items. </summary>
+    /// <param name="inputItems"> The input items used to create the streaming response. </param>
+    /// <param name="previousResponseId"> The ID of the previous response to continue. </param>
+    /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
+    /// <returns> The streaming response updates. </returns>
     public virtual AsyncCollectionResult<StreamingResponseUpdate> CreateResponseStreamingAsync(IEnumerable<ResponseItem> inputItems, string previousResponseId = null, CancellationToken cancellationToken = default)
     {
         return CreateResponseStreamingAsync(null, inputItems, previousResponseId, cancellationToken);
     }
 
+    /// <summary> Asynchronously creates a streaming response for the specified model from the supplied input items. </summary>
+    /// <param name="model"> The model used to create the streaming response. </param>
+    /// <param name="inputItems"> The input items used to create the streaming response. </param>
+    /// <param name="previousResponseId"> The ID of the previous response to continue. </param>
+    /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
+    /// <returns> The streaming response updates. </returns>
     public override AsyncCollectionResult<StreamingResponseUpdate> CreateResponseStreamingAsync(string model, IEnumerable<ResponseItem> inputItems, string previousResponseId = null, CancellationToken cancellationToken = default)
     {
         Argument.AssertNotNull(inputItems, nameof(inputItems));
@@ -357,10 +455,21 @@ public partial class ProjectResponsesClient : ResponsesClient
         return CreateResponseStreamingAsync(options, cancellationToken);
     }
 
+    /// <summary> Asynchronously creates a streaming response from user input text. </summary>
+    /// <param name="userInputText"> The user input text used to create the streaming response. </param>
+    /// <param name="previousResponseId"> The ID of the previous response to continue. </param>
+    /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
+    /// <returns> The streaming response updates. </returns>
     public virtual AsyncCollectionResult<StreamingResponseUpdate> CreateResponseStreamingAsync(string userInputText, string previousResponseId = null, CancellationToken cancellationToken = default)
     {
         return CreateResponseStreamingAsync(null, userInputText, previousResponseId, cancellationToken);
     }
+    /// <summary> Asynchronously creates a streaming response for the specified model from user input text. </summary>
+    /// <param name="model"> The model used to create the streaming response. </param>
+    /// <param name="userInputText"> The user input text used to create the streaming response. </param>
+    /// <param name="previousResponseId"> The ID of the previous response to continue. </param>
+    /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
+    /// <returns> The streaming response updates. </returns>
     public override AsyncCollectionResult<StreamingResponseUpdate> CreateResponseStreamingAsync(string model, string userInputText, string previousResponseId = null, CancellationToken cancellationToken = default)
     {
         Argument.AssertNotNullOrEmpty(userInputText, nameof(userInputText));
@@ -375,6 +484,15 @@ public partial class ProjectResponsesClient : ResponsesClient
         return CreateResponseStreamingAsync(options, cancellationToken);
     }
 
+    /// <summary> Gets project responses, optionally filtered by agent or conversation. </summary>
+    /// <param name="agent"> The agent used to filter the returned responses. </param>
+    /// <param name="conversationId"> The conversation ID used to filter the returned responses. </param>
+    /// <param name="limit"> The maximum number of responses to return. </param>
+    /// <param name="order"> The order used to sort returned responses. </param>
+    /// <param name="after"> The response ID after which results should be returned. </param>
+    /// <param name="before"> The response ID before which results should be returned. </param>
+    /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
+    /// <returns> The project responses. </returns>
     public virtual CollectionResult<ResponseResult> GetProjectResponses(AgentReference agent = null, string conversationId = null, int? limit = default, string order = null, string after = default, string before = default, CancellationToken cancellationToken = default)
     {
         Dictionary<string, string> extraQueryForProtocol = new()
@@ -401,6 +519,15 @@ public partial class ProjectResponsesClient : ResponsesClient
             cancellationToken.ToRequestOptions());
     }
 
+    /// <summary> Asynchronously gets project responses, optionally filtered by agent or conversation. </summary>
+    /// <param name="agent"> The agent used to filter the returned responses. </param>
+    /// <param name="conversationId"> The conversation ID used to filter the returned responses. </param>
+    /// <param name="limit"> The maximum number of responses to return. </param>
+    /// <param name="order"> The order used to sort returned responses. </param>
+    /// <param name="after"> The response ID after which results should be returned. </param>
+    /// <param name="before"> The response ID before which results should be returned. </param>
+    /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
+    /// <returns> The project responses. </returns>
     public virtual AsyncCollectionResult<ResponseResult> GetProjectResponsesAsync(AgentReference agent = null, string conversationId = null, int? limit = default, string order = null, string after = default, string before = default, CancellationToken cancellationToken = default)
     {
         Dictionary<string, string> extraQueryForProtocol = new()

@@ -14,46 +14,14 @@ namespace Azure.ResourceManager.NetApp.Models
     /// Specifies the Azure Key Vault settings. These are used when
     /// a) retrieving the bucket server certificate, and
     /// b) storing the bucket credentials
-    ///
     /// Notes:
-    ///
-    /// 1. If a bucket certificate was previously provided directly using the certificateObject property, it is possible to subsequently use the Azure Key Vault for certificate management by using these 'akvDetails' properties. However, once Azure Key Vault is configured, it is no longer possible to provide the certificate directly via the certificateObject property.
-    ///
-    /// 2. These properties are mutually exclusive with the server.certificateObject property.
+    /// <list type="number"><item><description>If a bucket certificate was previously provided directly using the certificateObject property, it is possible to subsequently use the Azure Key Vault for certificate management by using these 'akvDetails' properties. However, once Azure Key Vault is configured, it is no longer possible to provide the certificate directly via the certificateObject property.</description></item></list>
+    /// <list type="number"><item><description>These properties are mutually exclusive with the server.certificateObject property.</description></item></list>
     /// </summary>
     public partial class NetAppKeyVaultDetails
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="NetAppKeyVaultDetails"/>. </summary>
         public NetAppKeyVaultDetails()
@@ -63,16 +31,17 @@ namespace Azure.ResourceManager.NetApp.Models
         /// <summary> Initializes a new instance of <see cref="NetAppKeyVaultDetails"/>. </summary>
         /// <param name="certificateKeyVaultDetails"> Specifies the Azure Key Vault settings for retrieving the bucket server certificate. </param>
         /// <param name="credentialsKeyVaultDetails"> Specifies the Azure Key Vault settings for storing the bucket credentials. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal NetAppKeyVaultDetails(CertificateKeyVaultDetails certificateKeyVaultDetails, CredentialsKeyVaultDetails credentialsKeyVaultDetails, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal NetAppKeyVaultDetails(CertificateKeyVaultDetails certificateKeyVaultDetails, CredentialsKeyVaultDetails credentialsKeyVaultDetails, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             CertificateKeyVaultDetails = certificateKeyVaultDetails;
             CredentialsKeyVaultDetails = credentialsKeyVaultDetails;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> Specifies the Azure Key Vault settings for retrieving the bucket server certificate. </summary>
         public CertificateKeyVaultDetails CertificateKeyVaultDetails { get; set; }
+
         /// <summary> Specifies the Azure Key Vault settings for storing the bucket credentials. </summary>
         public CredentialsKeyVaultDetails CredentialsKeyVaultDetails { get; set; }
     }

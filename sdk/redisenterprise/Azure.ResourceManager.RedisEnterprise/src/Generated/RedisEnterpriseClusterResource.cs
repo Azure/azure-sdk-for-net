@@ -233,7 +233,7 @@ namespace Azure.ResourceManager.RedisEnterprise
                 HttpMessage message = _redisEnterpriseClusterRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, RedisEnterpriseClusterPatch.ToRequestContent(patch), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 RedisEnterpriseArmOperation<RedisEnterpriseClusterResource> operation = new RedisEnterpriseArmOperation<RedisEnterpriseClusterResource>(
-                    new RedisEnterpriseClusterOperationSource(Client),
+                    new RedisEnterpriseClusterResourceOperationSource(Client),
                     _redisEnterpriseClusterClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -292,7 +292,7 @@ namespace Azure.ResourceManager.RedisEnterprise
                 HttpMessage message = _redisEnterpriseClusterRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, RedisEnterpriseClusterPatch.ToRequestContent(patch), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 RedisEnterpriseArmOperation<RedisEnterpriseClusterResource> operation = new RedisEnterpriseArmOperation<RedisEnterpriseClusterResource>(
-                    new RedisEnterpriseClusterOperationSource(Client),
+                    new RedisEnterpriseClusterResourceOperationSource(Client),
                     _redisEnterpriseClusterClientDiagnostics,
                     Pipeline,
                     message.Request,

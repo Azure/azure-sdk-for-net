@@ -46,7 +46,7 @@ namespace Azure.ResourceManager.Network.Samples
                 Routes = { new HubRoute("route1", "CIDR", new string[] { "10.0.0.0/8", "20.0.0.0/8", "30.0.0.0/8" }, "ResourceId", "/subscriptions/subid/resourceGroups/rg1/providers/Microsoft.Network/azureFirewalls/azureFirewall1") },
                 Labels = { "label1", "label2" },
             };
-            ArmOperation<HubRouteTableResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, routeTableName, data);
+            ArmOperation<HubRouteTableResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, routeTableName, data, cancellationToken: System.Threading.CancellationToken.None);
             HubRouteTableResource result = lro.Value;
 
             // the variable result is a resource, you could call other operations on this instance as well

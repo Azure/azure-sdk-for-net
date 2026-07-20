@@ -6,8 +6,9 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure.AI.Projects;
 
-namespace Azure.AI.Projects
+namespace Azure.AI.Projects.Evaluation
 {
     /// <summary> Token consumption summary for an evaluator generation job. Populated when the job reaches a terminal state. </summary>
     public partial class EvaluatorGenerationTokenUsage : IJsonModel<EvaluatorGenerationTokenUsage>

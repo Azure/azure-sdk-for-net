@@ -79,7 +79,7 @@ namespace Azure.ResourceManager.Relationships
                 HttpMessage message = _dependencyOfRelationshipsRestClient.CreateCreateOrUpdateRequest(Id.ToString(), name, DependencyOfRelationshipData.ToRequestContent(data), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 RelationshipsArmOperation<DependencyOfRelationshipResource> operation = new RelationshipsArmOperation<DependencyOfRelationshipResource>(
-                    new DependencyOfRelationshipOperationSource(Client),
+                    new DependencyOfRelationshipResourceOperationSource(Client),
                     _dependencyOfRelationshipsClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -137,7 +137,7 @@ namespace Azure.ResourceManager.Relationships
                 HttpMessage message = _dependencyOfRelationshipsRestClient.CreateCreateOrUpdateRequest(Id.ToString(), name, DependencyOfRelationshipData.ToRequestContent(data), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 RelationshipsArmOperation<DependencyOfRelationshipResource> operation = new RelationshipsArmOperation<DependencyOfRelationshipResource>(
-                    new DependencyOfRelationshipOperationSource(Client),
+                    new DependencyOfRelationshipResourceOperationSource(Client),
                     _dependencyOfRelationshipsClientDiagnostics,
                     Pipeline,
                     message.Request,

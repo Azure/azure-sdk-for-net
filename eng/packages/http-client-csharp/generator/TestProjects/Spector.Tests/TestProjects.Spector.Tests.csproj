@@ -24,6 +24,7 @@
     <ProjectReference Include="..\Spector\http\azure\client-generator-core\client-initialization\default\src\Specs.Azure.Tcgc.ClientInit.Default.csproj" />
     <ProjectReference Include="..\Spector\http\azure\client-generator-core\client-initialization\individually\src\Specs.Azure.Tcgc.ClientInit.Individually.csproj" />
     <ProjectReference Include="..\Spector\http\azure\client-generator-core\client-initialization\individuallyParent\src\Specs.Azure.Tcgc.ClientInit.Both.csproj" />
+    <ProjectReference Include="..\Spector\http\azure\client-generator-core\exact-name\src\_Specs_.Azure.ClientGenerator.Core.ExactName.csproj" />
     <ProjectReference Include="..\Spector\http\azure\client-generator-core\next-link-verb\src\_Specs_.Azure.ClientGenerator.Core.NextLinkVerb.csproj" />
     <ProjectReference Include="..\Spector\http\azure\client-generator-core\response-as-bool\src\_Specs_.Azure.ClientGenerator.Core.ResponseAsBool.csproj" />
     <ProjectReference Include="..\Spector\http\azure\client-generator-core\usage\src\_Specs_.Azure.ClientGenerator.Core.Usage.csproj" />
@@ -88,6 +89,7 @@
     <ProjectReference Include="..\Spector\http\server\versions\not-versioned\src\Server.Versions.NotVersioned.csproj" />
     <ProjectReference Include="..\Spector\http\server\versions\versioned\src\Server.Versions.Versioned.csproj" />
     <ProjectReference Include="..\Spector\http\service\multi-service\src\Service.MultiService.Combined.csproj" />
+    <ProjectReference Include="..\Spector\http\service\multiple-services\src\Service.MultipleServices.csproj" />
     <ProjectReference Include="..\Spector\http\special-headers\conditional-request\src\SpecialHeaders.ConditionalRequest.csproj" />
     <ProjectReference Include="..\Spector\http\special-headers\repeatability\src\SpecialHeaders.Repeatability.csproj" />
     <ProjectReference Include="..\Spector\http\special-words\src\SpecialWords.csproj" />

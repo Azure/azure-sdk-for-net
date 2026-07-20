@@ -7,47 +7,37 @@
 
 using System;
 using System.Collections.Generic;
-using System.Globalization;
+using System.Diagnostics;
 using System.Threading;
 using System.Threading.Tasks;
+using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
+using Azure.ResourceManager;
 using Azure.ResourceManager.Resources;
 using Azure.ResourceManager.StorageCache.Models;
 
 namespace Azure.ResourceManager.StorageCache
 {
     /// <summary>
-    /// A Class representing an AmlFileSystem along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier"/> you can construct an <see cref="AmlFileSystemResource"/>
-    /// from an instance of <see cref="ArmClient"/> using the GetAmlFileSystemResource method.
-    /// Otherwise you can get one from its parent resource <see cref="ResourceGroupResource"/> using the GetAmlFileSystem method.
+    /// A class representing a AmlFileSystem along with the instance operations that can be performed on it.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="AmlFileSystemResource"/> from an instance of <see cref="ArmClient"/> using the GetResource method.
+    /// Otherwise you can get one from its parent resource <see cref="ResourceGroupResource"/> using the GetAmlFileSystems method.
     /// </summary>
     public partial class AmlFileSystemResource : ArmResource
     {
-        /// <summary> Generate the resource identifier of a <see cref="AmlFileSystemResource"/> instance. </summary>
-        /// <param name="subscriptionId"> The subscriptionId. </param>
-        /// <param name="resourceGroupName"> The resourceGroupName. </param>
-        /// <param name="amlFileSystemName"> The amlFileSystemName. </param>
-        public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string amlFileSystemName)
-        {
-            var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.StorageCache/amlFilesystems/{amlFileSystemName}";
-            return new ResourceIdentifier(resourceId);
-        }
-
-        private readonly ClientDiagnostics _amlFileSystemamlFilesystemsClientDiagnostics;
-        private readonly AmlFilesystemsRestOperations _amlFileSystemamlFilesystemsRestClient;
+        private readonly ClientDiagnostics _amlFilesystemsClientDiagnostics;
+        private readonly AmlFilesystems _amlFilesystemsRestClient;
         private readonly AmlFileSystemData _data;
-
         /// <summary> Gets the resource type for the operations. </summary>
         public static readonly ResourceType ResourceType = "Microsoft.StorageCache/amlFilesystems";
 
-        /// <summary> Initializes a new instance of the <see cref="AmlFileSystemResource"/> class for mocking. </summary>
+        /// <summary> Initializes a new instance of AmlFileSystemResource for mocking. </summary>
         protected AmlFileSystemResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref="AmlFileSystemResource"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="AmlFileSystemResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal AmlFileSystemResource(ArmClient client, AmlFileSystemData data) : this(client, data.Id)
@@ -56,347 +46,92 @@ namespace Azure.ResourceManager.StorageCache
             _data = data;
         }
 
-        /// <summary> Initializes a new instance of the <see cref="AmlFileSystemResource"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="AmlFileSystemResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal AmlFileSystemResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _amlFileSystemamlFilesystemsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.StorageCache", ResourceType.Namespace, Diagnostics);
-            TryGetApiVersion(ResourceType, out string amlFileSystemamlFilesystemsApiVersion);
-            _amlFileSystemamlFilesystemsRestClient = new AmlFilesystemsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, amlFileSystemamlFilesystemsApiVersion);
-#if DEBUG
-			ValidateResourceId(Id);
-#endif
+            TryGetApiVersion(ResourceType, out string amlFileSystemApiVersion);
+            _amlFilesystemsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.StorageCache", ResourceType.Namespace, Diagnostics);
+            _amlFilesystemsRestClient = new AmlFilesystems(_amlFilesystemsClientDiagnostics, Pipeline, Endpoint, amlFileSystemApiVersion ?? "2026-01-01");
+            ValidateResourceId(id);
         }
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }
 
         /// <summary> Gets the data representing this Feature. </summary>
-        /// <exception cref="InvalidOperationException"> Throws if there is no data loaded in the current instance. </exception>
         public virtual AmlFileSystemData Data
         {
             get
             {
                 if (!HasData)
+                {
                     throw new InvalidOperationException("The current instance does not have data, you must call Get first.");
+                }
                 return _data;
             }
         }
 
+        /// <summary> Generate the resource identifier for this resource. </summary>
+        /// <param name="subscriptionId"> The subscriptionId. </param>
+        /// <param name="resourceGroupName"> The resourceGroupName. </param>
+        /// <param name="amlFilesystemName"> The amlFilesystemName. </param>
+        public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string amlFilesystemName)
+        {
+            string resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.StorageCache/amlFilesystems/{amlFilesystemName}";
+            return new ResourceIdentifier(resourceId);
+        }
+
+        /// <param name="id"></param>
+        [Conditional("DEBUG")]
         internal static void ValidateResourceId(ResourceIdentifier id)
         {
             if (id.ResourceType != ResourceType)
-                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), nameof(id));
-        }
-
-        /// <summary> Gets a collection of AutoExportJobResources in the AmlFileSystem. </summary>
-        /// <returns> An object representing collection of AutoExportJobResources and their operations over a AutoExportJobResource. </returns>
-        public virtual AutoExportJobCollection GetAutoExportJobs()
-        {
-            return GetCachedClient(client => new AutoExportJobCollection(client, Id));
-        }
-
-        /// <summary>
-        /// Returns an auto export job.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.StorageCache/amlFilesystems/{amlFilesystemName}/autoExportJobs/{autoExportJobName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>autoExportJobs_Get</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2026-01-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="AutoExportJobResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="autoExportJobName"> Name for the auto export job. Allows alphanumerics, underscores, and hyphens. Start and end with alphanumeric. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="autoExportJobName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="autoExportJobName"/> is an empty string, and was expected to be non-empty. </exception>
-        [ForwardsClientCalls]
-        public virtual async Task<Response<AutoExportJobResource>> GetAutoExportJobAsync(string autoExportJobName, CancellationToken cancellationToken = default)
-        {
-            return await GetAutoExportJobs().GetAsync(autoExportJobName, cancellationToken).ConfigureAwait(false);
-        }
-
-        /// <summary>
-        /// Returns an auto export job.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.StorageCache/amlFilesystems/{amlFilesystemName}/autoExportJobs/{autoExportJobName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>autoExportJobs_Get</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2026-01-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="AutoExportJobResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="autoExportJobName"> Name for the auto export job. Allows alphanumerics, underscores, and hyphens. Start and end with alphanumeric. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="autoExportJobName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="autoExportJobName"/> is an empty string, and was expected to be non-empty. </exception>
-        [ForwardsClientCalls]
-        public virtual Response<AutoExportJobResource> GetAutoExportJob(string autoExportJobName, CancellationToken cancellationToken = default)
-        {
-            return GetAutoExportJobs().Get(autoExportJobName, cancellationToken);
-        }
-
-        /// <summary> Gets a collection of StorageCacheImportJobResources in the AmlFileSystem. </summary>
-        /// <returns> An object representing collection of StorageCacheImportJobResources and their operations over a StorageCacheImportJobResource. </returns>
-        public virtual StorageCacheImportJobCollection GetStorageCacheImportJobs()
-        {
-            return GetCachedClient(client => new StorageCacheImportJobCollection(client, Id));
-        }
-
-        /// <summary>
-        /// Returns an import job.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.StorageCache/amlFilesystems/{amlFilesystemName}/importJobs/{importJobName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>importJobs_Get</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2026-01-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="StorageCacheImportJobResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="importJobName"> Name for the import job. Allows alphanumerics, underscores, and hyphens. Start and end with alphanumeric. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="importJobName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="importJobName"/> is an empty string, and was expected to be non-empty. </exception>
-        [ForwardsClientCalls]
-        public virtual async Task<Response<StorageCacheImportJobResource>> GetStorageCacheImportJobAsync(string importJobName, CancellationToken cancellationToken = default)
-        {
-            return await GetStorageCacheImportJobs().GetAsync(importJobName, cancellationToken).ConfigureAwait(false);
-        }
-
-        /// <summary>
-        /// Returns an import job.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.StorageCache/amlFilesystems/{amlFilesystemName}/importJobs/{importJobName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>importJobs_Get</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2026-01-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="StorageCacheImportJobResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="importJobName"> Name for the import job. Allows alphanumerics, underscores, and hyphens. Start and end with alphanumeric. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="importJobName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="importJobName"/> is an empty string, and was expected to be non-empty. </exception>
-        [ForwardsClientCalls]
-        public virtual Response<StorageCacheImportJobResource> GetStorageCacheImportJob(string importJobName, CancellationToken cancellationToken = default)
-        {
-            return GetStorageCacheImportJobs().Get(importJobName, cancellationToken);
-        }
-
-        /// <summary> Gets a collection of AutoImportJobResources in the AmlFileSystem. </summary>
-        /// <returns> An object representing collection of AutoImportJobResources and their operations over a AutoImportJobResource. </returns>
-        public virtual AutoImportJobCollection GetAutoImportJobs()
-        {
-            return GetCachedClient(client => new AutoImportJobCollection(client, Id));
-        }
-
-        /// <summary>
-        /// Returns an auto import job.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.StorageCache/amlFilesystems/{amlFilesystemName}/autoImportJobs/{autoImportJobName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>autoImportJobs_Get</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2026-01-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="AutoImportJobResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="autoImportJobName"> Name for the auto import job. Allows alphanumerics, underscores, and hyphens. Start and end with alphanumeric. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="autoImportJobName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="autoImportJobName"/> is an empty string, and was expected to be non-empty. </exception>
-        [ForwardsClientCalls]
-        public virtual async Task<Response<AutoImportJobResource>> GetAutoImportJobAsync(string autoImportJobName, CancellationToken cancellationToken = default)
-        {
-            return await GetAutoImportJobs().GetAsync(autoImportJobName, cancellationToken).ConfigureAwait(false);
-        }
-
-        /// <summary>
-        /// Returns an auto import job.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.StorageCache/amlFilesystems/{amlFilesystemName}/autoImportJobs/{autoImportJobName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>autoImportJobs_Get</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2026-01-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="AutoImportJobResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="autoImportJobName"> Name for the auto import job. Allows alphanumerics, underscores, and hyphens. Start and end with alphanumeric. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="autoImportJobName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="autoImportJobName"/> is an empty string, and was expected to be non-empty. </exception>
-        [ForwardsClientCalls]
-        public virtual Response<AutoImportJobResource> GetAutoImportJob(string autoImportJobName, CancellationToken cancellationToken = default)
-        {
-            return GetAutoImportJobs().Get(autoImportJobName, cancellationToken);
-        }
-
-        /// <summary> Gets a collection of ExpansionJobResources in the AmlFileSystem. </summary>
-        /// <returns> An object representing collection of ExpansionJobResources and their operations over a ExpansionJobResource. </returns>
-        public virtual ExpansionJobCollection GetExpansionJobs()
-        {
-            return GetCachedClient(client => new ExpansionJobCollection(client, Id));
-        }
-
-        /// <summary>
-        /// Returns an expansion job.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.StorageCache/amlFilesystems/{amlFilesystemName}/expansionJobs/{expansionJobName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>expansionJobs_Get</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2026-01-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ExpansionJobResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="expansionJobName"> Name for the expansion job. Allows alphanumerics, underscores, and hyphens. Start and end with alphanumeric. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="expansionJobName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="expansionJobName"/> is an empty string, and was expected to be non-empty. </exception>
-        [ForwardsClientCalls]
-        public virtual async Task<Response<ExpansionJobResource>> GetExpansionJobAsync(string expansionJobName, CancellationToken cancellationToken = default)
-        {
-            return await GetExpansionJobs().GetAsync(expansionJobName, cancellationToken).ConfigureAwait(false);
-        }
-
-        /// <summary>
-        /// Returns an expansion job.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.StorageCache/amlFilesystems/{amlFilesystemName}/expansionJobs/{expansionJobName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>expansionJobs_Get</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2026-01-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ExpansionJobResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="expansionJobName"> Name for the expansion job. Allows alphanumerics, underscores, and hyphens. Start and end with alphanumeric. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="expansionJobName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="expansionJobName"/> is an empty string, and was expected to be non-empty. </exception>
-        [ForwardsClientCalls]
-        public virtual Response<ExpansionJobResource> GetExpansionJob(string expansionJobName, CancellationToken cancellationToken = default)
-        {
-            return GetExpansionJobs().Get(expansionJobName, cancellationToken);
+            {
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), nameof(id));
+            }
         }
 
         /// <summary>
         /// Returns an AML file system.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.StorageCache/amlFilesystems/{amlFilesystemName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.StorageCache/amlFilesystems/{amlFilesystemName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>amlFilesystems_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> AmlFilesystems_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2026-01-01</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-01-01. </description>
         /// </item>
         /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="AmlFileSystemResource"/></description>
+        /// <term> Resource. </term>
+        /// <description> <see cref="AmlFileSystemResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<Response<AmlFileSystemResource>> GetAsync(CancellationToken cancellationToken = default)
         {
-            using var scope = _amlFileSystemamlFilesystemsClientDiagnostics.CreateScope("AmlFileSystemResource.Get");
+            using DiagnosticScope scope = _amlFilesystemsClientDiagnostics.CreateScope("AmlFileSystemResource.Get");
             scope.Start();
             try
             {
-                var response = await _amlFileSystemamlFilesystemsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _amlFilesystemsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, context);
+                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                Response<AmlFileSystemData> response = Response.FromValue(AmlFileSystemData.FromResponse(result), result);
                 if (response.Value == null)
+                {
                     throw new RequestFailedException(response.GetRawResponse());
+                }
                 return Response.FromValue(new AmlFileSystemResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -410,118 +145,42 @@ namespace Azure.ResourceManager.StorageCache
         /// Returns an AML file system.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.StorageCache/amlFilesystems/{amlFilesystemName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.StorageCache/amlFilesystems/{amlFilesystemName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>amlFilesystems_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> AmlFilesystems_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2026-01-01</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-01-01. </description>
         /// </item>
         /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="AmlFileSystemResource"/></description>
+        /// <term> Resource. </term>
+        /// <description> <see cref="AmlFileSystemResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response<AmlFileSystemResource> Get(CancellationToken cancellationToken = default)
         {
-            using var scope = _amlFileSystemamlFilesystemsClientDiagnostics.CreateScope("AmlFileSystemResource.Get");
+            using DiagnosticScope scope = _amlFilesystemsClientDiagnostics.CreateScope("AmlFileSystemResource.Get");
             scope.Start();
             try
             {
-                var response = _amlFileSystemamlFilesystemsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _amlFilesystemsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, context);
+                Response result = Pipeline.ProcessMessage(message, context);
+                Response<AmlFileSystemData> response = Response.FromValue(AmlFileSystemData.FromResponse(result), result);
                 if (response.Value == null)
+                {
                     throw new RequestFailedException(response.GetRawResponse());
+                }
                 return Response.FromValue(new AmlFileSystemResource(Client, response.Value), response.GetRawResponse());
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// Schedules an AML file system for deletion.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.StorageCache/amlFilesystems/{amlFilesystemName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>amlFilesystems_Delete</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2026-01-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="AmlFileSystemResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<ArmOperation> DeleteAsync(WaitUntil waitUntil, CancellationToken cancellationToken = default)
-        {
-            using var scope = _amlFileSystemamlFilesystemsClientDiagnostics.CreateScope("AmlFileSystemResource.Delete");
-            scope.Start();
-            try
-            {
-                var response = await _amlFileSystemamlFilesystemsRestClient.DeleteAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
-                var operation = new StorageCacheArmOperation(_amlFileSystemamlFilesystemsClientDiagnostics, Pipeline, _amlFileSystemamlFilesystemsRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response, OperationFinalStateVia.Location);
-                if (waitUntil == WaitUntil.Completed)
-                    await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
-                return operation;
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// Schedules an AML file system for deletion.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.StorageCache/amlFilesystems/{amlFilesystemName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>amlFilesystems_Delete</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2026-01-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="AmlFileSystemResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual ArmOperation Delete(WaitUntil waitUntil, CancellationToken cancellationToken = default)
-        {
-            using var scope = _amlFileSystemamlFilesystemsClientDiagnostics.CreateScope("AmlFileSystemResource.Delete");
-            scope.Start();
-            try
-            {
-                var response = _amlFileSystemamlFilesystemsRestClient.Delete(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
-                var operation = new StorageCacheArmOperation(_amlFileSystemamlFilesystemsClientDiagnostics, Pipeline, _amlFileSystemamlFilesystemsRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response, OperationFinalStateVia.Location);
-                if (waitUntil == WaitUntil.Completed)
-                    operation.WaitForCompletionResponse(cancellationToken);
-                return operation;
             }
             catch (Exception e)
             {
@@ -534,20 +193,20 @@ namespace Azure.ResourceManager.StorageCache
         /// Update an AML file system instance.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.StorageCache/amlFilesystems/{amlFilesystemName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.StorageCache/amlFilesystems/{amlFilesystemName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>amlFilesystems_Update</description>
+        /// <term> Operation Id. </term>
+        /// <description> AmlFilesystems_Update. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2026-01-01</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-01-01. </description>
         /// </item>
         /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="AmlFileSystemResource"/></description>
+        /// <term> Resource. </term>
+        /// <description> <see cref="AmlFileSystemResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -559,14 +218,27 @@ namespace Azure.ResourceManager.StorageCache
         {
             Argument.AssertNotNull(patch, nameof(patch));
 
-            using var scope = _amlFileSystemamlFilesystemsClientDiagnostics.CreateScope("AmlFileSystemResource.Update");
+            using DiagnosticScope scope = _amlFilesystemsClientDiagnostics.CreateScope("AmlFileSystemResource.Update");
             scope.Start();
             try
             {
-                var response = await _amlFileSystemamlFilesystemsRestClient.UpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, patch, cancellationToken).ConfigureAwait(false);
-                var operation = new StorageCacheArmOperation<AmlFileSystemResource>(new AmlFileSystemOperationSource(Client), _amlFileSystemamlFilesystemsClientDiagnostics, Pipeline, _amlFileSystemamlFilesystemsRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, patch).Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _amlFilesystemsRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, AmlFileSystemPatch.ToRequestContent(patch), context);
+                Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                StorageCacheArmOperation<AmlFileSystemResource> operation = new StorageCacheArmOperation<AmlFileSystemResource>(
+                    new AmlFileSystemResourceOperationSource(Client),
+                    _amlFilesystemsClientDiagnostics,
+                    Pipeline,
+                    message.Request,
+                    response,
+                    OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
+                {
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
+                }
                 return operation;
             }
             catch (Exception e)
@@ -580,20 +252,20 @@ namespace Azure.ResourceManager.StorageCache
         /// Update an AML file system instance.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.StorageCache/amlFilesystems/{amlFilesystemName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.StorageCache/amlFilesystems/{amlFilesystemName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>amlFilesystems_Update</description>
+        /// <term> Operation Id. </term>
+        /// <description> AmlFilesystems_Update. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2026-01-01</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-01-01. </description>
         /// </item>
         /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="AmlFileSystemResource"/></description>
+        /// <term> Resource. </term>
+        /// <description> <see cref="AmlFileSystemResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -605,14 +277,125 @@ namespace Azure.ResourceManager.StorageCache
         {
             Argument.AssertNotNull(patch, nameof(patch));
 
-            using var scope = _amlFileSystemamlFilesystemsClientDiagnostics.CreateScope("AmlFileSystemResource.Update");
+            using DiagnosticScope scope = _amlFilesystemsClientDiagnostics.CreateScope("AmlFileSystemResource.Update");
             scope.Start();
             try
             {
-                var response = _amlFileSystemamlFilesystemsRestClient.Update(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, patch, cancellationToken);
-                var operation = new StorageCacheArmOperation<AmlFileSystemResource>(new AmlFileSystemOperationSource(Client), _amlFileSystemamlFilesystemsClientDiagnostics, Pipeline, _amlFileSystemamlFilesystemsRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, patch).Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _amlFilesystemsRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, AmlFileSystemPatch.ToRequestContent(patch), context);
+                Response response = Pipeline.ProcessMessage(message, context);
+                StorageCacheArmOperation<AmlFileSystemResource> operation = new StorageCacheArmOperation<AmlFileSystemResource>(
+                    new AmlFileSystemResourceOperationSource(Client),
+                    _amlFilesystemsClientDiagnostics,
+                    Pipeline,
+                    message.Request,
+                    response,
+                    OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
+                {
                     operation.WaitForCompletion(cancellationToken);
+                }
+                return operation;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Schedules an AML file system for deletion.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.StorageCache/amlFilesystems/{amlFilesystemName}. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> AmlFilesystems_Delete. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-01-01. </description>
+        /// </item>
+        /// <item>
+        /// <term> Resource. </term>
+        /// <description> <see cref="AmlFileSystemResource"/>. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual async Task<ArmOperation> DeleteAsync(WaitUntil waitUntil, CancellationToken cancellationToken = default)
+        {
+            using DiagnosticScope scope = _amlFilesystemsClientDiagnostics.CreateScope("AmlFileSystemResource.Delete");
+            scope.Start();
+            try
+            {
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _amlFilesystemsRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, context);
+                Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                StorageCacheArmOperation operation = new StorageCacheArmOperation(_amlFilesystemsClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
+                if (waitUntil == WaitUntil.Completed)
+                {
+                    await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
+                }
+                return operation;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Schedules an AML file system for deletion.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.StorageCache/amlFilesystems/{amlFilesystemName}. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> AmlFilesystems_Delete. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-01-01. </description>
+        /// </item>
+        /// <item>
+        /// <term> Resource. </term>
+        /// <description> <see cref="AmlFileSystemResource"/>. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual ArmOperation Delete(WaitUntil waitUntil, CancellationToken cancellationToken = default)
+        {
+            using DiagnosticScope scope = _amlFilesystemsClientDiagnostics.CreateScope("AmlFileSystemResource.Delete");
+            scope.Start();
+            try
+            {
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _amlFilesystemsRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, context);
+                Response response = Pipeline.ProcessMessage(message, context);
+                StorageCacheArmOperation operation = new StorageCacheArmOperation(_amlFilesystemsClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
+                if (waitUntil == WaitUntil.Completed)
+                {
+                    operation.WaitForCompletionResponse(cancellationToken);
+                }
                 return operation;
             }
             catch (Exception e)
@@ -626,32 +409,37 @@ namespace Azure.ResourceManager.StorageCache
         /// Archive data from the AML file system.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.StorageCache/amlFilesystems/{amlFilesystemName}/archive</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.StorageCache/amlFilesystems/{amlFilesystemName}/archive. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>amlFilesystems_Archive</description>
+        /// <term> Operation Id. </term>
+        /// <description> AmlFilesystems_Archive. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2026-01-01</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-01-01. </description>
         /// </item>
         /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="AmlFileSystemResource"/></description>
+        /// <term> Resource. </term>
+        /// <description> <see cref="AmlFileSystemResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="content"> Information about the archive operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response> ArchiveAsync(AmlFileSystemArchiveContent content = null, CancellationToken cancellationToken = default)
+        public virtual async Task<Response> ArchiveAsync(AmlFileSystemArchiveContent content = default, CancellationToken cancellationToken = default)
         {
-            using var scope = _amlFileSystemamlFilesystemsClientDiagnostics.CreateScope("AmlFileSystemResource.Archive");
+            using DiagnosticScope scope = _amlFilesystemsClientDiagnostics.CreateScope("AmlFileSystemResource.Archive");
             scope.Start();
             try
             {
-                var response = await _amlFileSystemamlFilesystemsRestClient.ArchiveAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content, cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _amlFilesystemsRestClient.CreateArchiveRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, AmlFileSystemArchiveContent.ToRequestContent(content), context);
+                Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 return response;
             }
             catch (Exception e)
@@ -665,32 +453,37 @@ namespace Azure.ResourceManager.StorageCache
         /// Archive data from the AML file system.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.StorageCache/amlFilesystems/{amlFilesystemName}/archive</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.StorageCache/amlFilesystems/{amlFilesystemName}/archive. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>amlFilesystems_Archive</description>
+        /// <term> Operation Id. </term>
+        /// <description> AmlFilesystems_Archive. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2026-01-01</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-01-01. </description>
         /// </item>
         /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="AmlFileSystemResource"/></description>
+        /// <term> Resource. </term>
+        /// <description> <see cref="AmlFileSystemResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="content"> Information about the archive operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response Archive(AmlFileSystemArchiveContent content = null, CancellationToken cancellationToken = default)
+        public virtual Response Archive(AmlFileSystemArchiveContent content = default, CancellationToken cancellationToken = default)
         {
-            using var scope = _amlFileSystemamlFilesystemsClientDiagnostics.CreateScope("AmlFileSystemResource.Archive");
+            using DiagnosticScope scope = _amlFilesystemsClientDiagnostics.CreateScope("AmlFileSystemResource.Archive");
             scope.Start();
             try
             {
-                var response = _amlFileSystemamlFilesystemsRestClient.Archive(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content, cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _amlFilesystemsRestClient.CreateArchiveRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, AmlFileSystemArchiveContent.ToRequestContent(content), context);
+                Response response = Pipeline.ProcessMessage(message, context);
                 return response;
             }
             catch (Exception e)
@@ -704,31 +497,36 @@ namespace Azure.ResourceManager.StorageCache
         /// Cancel archiving data from the AML file system.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.StorageCache/amlFilesystems/{amlFilesystemName}/cancelArchive</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.StorageCache/amlFilesystems/{amlFilesystemName}/cancelArchive. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>amlFilesystems_CancelArchive</description>
+        /// <term> Operation Id. </term>
+        /// <description> AmlFilesystems_CancelArchive. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2026-01-01</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-01-01. </description>
         /// </item>
         /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="AmlFileSystemResource"/></description>
+        /// <term> Resource. </term>
+        /// <description> <see cref="AmlFileSystemResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<Response> CancelArchiveAsync(CancellationToken cancellationToken = default)
         {
-            using var scope = _amlFileSystemamlFilesystemsClientDiagnostics.CreateScope("AmlFileSystemResource.CancelArchive");
+            using DiagnosticScope scope = _amlFilesystemsClientDiagnostics.CreateScope("AmlFileSystemResource.CancelArchive");
             scope.Start();
             try
             {
-                var response = await _amlFileSystemamlFilesystemsRestClient.CancelArchiveAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _amlFilesystemsRestClient.CreateCancelArchiveRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, context);
+                Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 return response;
             }
             catch (Exception e)
@@ -742,31 +540,36 @@ namespace Azure.ResourceManager.StorageCache
         /// Cancel archiving data from the AML file system.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.StorageCache/amlFilesystems/{amlFilesystemName}/cancelArchive</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.StorageCache/amlFilesystems/{amlFilesystemName}/cancelArchive. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>amlFilesystems_CancelArchive</description>
+        /// <term> Operation Id. </term>
+        /// <description> AmlFilesystems_CancelArchive. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2026-01-01</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-01-01. </description>
         /// </item>
         /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="AmlFileSystemResource"/></description>
+        /// <term> Resource. </term>
+        /// <description> <see cref="AmlFileSystemResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response CancelArchive(CancellationToken cancellationToken = default)
         {
-            using var scope = _amlFileSystemamlFilesystemsClientDiagnostics.CreateScope("AmlFileSystemResource.CancelArchive");
+            using DiagnosticScope scope = _amlFilesystemsClientDiagnostics.CreateScope("AmlFileSystemResource.CancelArchive");
             scope.Start();
             try
             {
-                var response = _amlFileSystemamlFilesystemsRestClient.CancelArchive(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _amlFilesystemsRestClient.CreateCancelArchiveRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, context);
+                Response response = Pipeline.ProcessMessage(message, context);
                 return response;
             }
             catch (Exception e)
@@ -776,27 +579,7 @@ namespace Azure.ResourceManager.StorageCache
             }
         }
 
-        /// <summary>
-        /// Add a tag to the current resource.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.StorageCache/amlFilesystems/{amlFilesystemName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>amlFilesystems_Get</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2026-01-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="AmlFileSystemResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
+        /// <summary> Add a tag to the current resource. </summary>
         /// <param name="key"> The key for the tag. </param>
         /// <param name="value"> The value for the tag. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -806,28 +589,34 @@ namespace Azure.ResourceManager.StorageCache
             Argument.AssertNotNull(key, nameof(key));
             Argument.AssertNotNull(value, nameof(value));
 
-            using var scope = _amlFileSystemamlFilesystemsClientDiagnostics.CreateScope("AmlFileSystemResource.AddTag");
+            using DiagnosticScope scope = _amlFilesystemsClientDiagnostics.CreateScope("AmlFileSystemResource.AddTag");
             scope.Start();
             try
             {
-                if (await CanUseTagResourceAsync(cancellationToken: cancellationToken).ConfigureAwait(false))
+                if (await CanUseTagResourceAsync(cancellationToken).ConfigureAwait(false))
                 {
-                    var originalTags = await GetTagResource().GetAsync(cancellationToken).ConfigureAwait(false);
+                    Response<TagResource> originalTags = await GetTagResource().GetAsync(cancellationToken).ConfigureAwait(false);
                     originalTags.Value.Data.TagValues[key] = value;
-                    await GetTagResource().CreateOrUpdateAsync(WaitUntil.Completed, originalTags.Value.Data, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    var originalResponse = await _amlFileSystemamlFilesystemsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
-                    return Response.FromValue(new AmlFileSystemResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
+                    await GetTagResource().CreateOrUpdateAsync(WaitUntil.Completed, originalTags.Value.Data, cancellationToken).ConfigureAwait(false);
+                    RequestContext context = new RequestContext
+                    {
+                        CancellationToken = cancellationToken
+                    };
+                    HttpMessage message = _amlFilesystemsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, context);
+                    Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                    Response<AmlFileSystemData> response = Response.FromValue(AmlFileSystemData.FromResponse(result), result);
+                    return Response.FromValue(new AmlFileSystemResource(Client, response.Value), response.GetRawResponse());
                 }
                 else
                 {
-                    var current = (await GetAsync(cancellationToken: cancellationToken).ConfigureAwait(false)).Value.Data;
-                    var patch = new AmlFileSystemPatch();
-                    foreach (var tag in current.Tags)
+                    AmlFileSystemData current = (await GetAsync(cancellationToken: cancellationToken).ConfigureAwait(false)).Value.Data;
+                    AmlFileSystemPatch patch = new AmlFileSystemPatch();
+                    foreach (KeyValuePair<string, string> tag in current.Tags)
                     {
                         patch.Tags.Add(tag);
                     }
                     patch.Tags[key] = value;
-                    var result = await UpdateAsync(WaitUntil.Completed, patch, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    ArmOperation<AmlFileSystemResource> result = await UpdateAsync(WaitUntil.Completed, patch, cancellationToken: cancellationToken).ConfigureAwait(false);
                     return Response.FromValue(result.Value, result.GetRawResponse());
                 }
             }
@@ -838,27 +627,7 @@ namespace Azure.ResourceManager.StorageCache
             }
         }
 
-        /// <summary>
-        /// Add a tag to the current resource.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.StorageCache/amlFilesystems/{amlFilesystemName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>amlFilesystems_Get</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2026-01-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="AmlFileSystemResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
+        /// <summary> Add a tag to the current resource. </summary>
         /// <param name="key"> The key for the tag. </param>
         /// <param name="value"> The value for the tag. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -868,28 +637,34 @@ namespace Azure.ResourceManager.StorageCache
             Argument.AssertNotNull(key, nameof(key));
             Argument.AssertNotNull(value, nameof(value));
 
-            using var scope = _amlFileSystemamlFilesystemsClientDiagnostics.CreateScope("AmlFileSystemResource.AddTag");
+            using DiagnosticScope scope = _amlFilesystemsClientDiagnostics.CreateScope("AmlFileSystemResource.AddTag");
             scope.Start();
             try
             {
-                if (CanUseTagResource(cancellationToken: cancellationToken))
+                if (CanUseTagResource(cancellationToken))
                 {
-                    var originalTags = GetTagResource().Get(cancellationToken);
+                    Response<TagResource> originalTags = GetTagResource().Get(cancellationToken);
                     originalTags.Value.Data.TagValues[key] = value;
-                    GetTagResource().CreateOrUpdate(WaitUntil.Completed, originalTags.Value.Data, cancellationToken: cancellationToken);
-                    var originalResponse = _amlFileSystemamlFilesystemsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
-                    return Response.FromValue(new AmlFileSystemResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
+                    GetTagResource().CreateOrUpdate(WaitUntil.Completed, originalTags.Value.Data, cancellationToken);
+                    RequestContext context = new RequestContext
+                    {
+                        CancellationToken = cancellationToken
+                    };
+                    HttpMessage message = _amlFilesystemsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, context);
+                    Response result = Pipeline.ProcessMessage(message, context);
+                    Response<AmlFileSystemData> response = Response.FromValue(AmlFileSystemData.FromResponse(result), result);
+                    return Response.FromValue(new AmlFileSystemResource(Client, response.Value), response.GetRawResponse());
                 }
                 else
                 {
-                    var current = Get(cancellationToken: cancellationToken).Value.Data;
-                    var patch = new AmlFileSystemPatch();
-                    foreach (var tag in current.Tags)
+                    AmlFileSystemData current = Get(cancellationToken: cancellationToken).Value.Data;
+                    AmlFileSystemPatch patch = new AmlFileSystemPatch();
+                    foreach (KeyValuePair<string, string> tag in current.Tags)
                     {
                         patch.Tags.Add(tag);
                     }
                     patch.Tags[key] = value;
-                    var result = Update(WaitUntil.Completed, patch, cancellationToken: cancellationToken);
+                    ArmOperation<AmlFileSystemResource> result = Update(WaitUntil.Completed, patch, cancellationToken: cancellationToken);
                     return Response.FromValue(result.Value, result.GetRawResponse());
                 }
             }
@@ -900,53 +675,39 @@ namespace Azure.ResourceManager.StorageCache
             }
         }
 
-        /// <summary>
-        /// Replace the tags on the resource with the given set.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.StorageCache/amlFilesystems/{amlFilesystemName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>amlFilesystems_Get</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2026-01-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="AmlFileSystemResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="tags"> The set of tags to use as replacement. </param>
+        /// <summary> Replace the tags on the resource with the given set. </summary>
+        /// <param name="tags"> The tags to set on the resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="tags"/> is null. </exception>
         public virtual async Task<Response<AmlFileSystemResource>> SetTagsAsync(IDictionary<string, string> tags, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(tags, nameof(tags));
 
-            using var scope = _amlFileSystemamlFilesystemsClientDiagnostics.CreateScope("AmlFileSystemResource.SetTags");
+            using DiagnosticScope scope = _amlFilesystemsClientDiagnostics.CreateScope("AmlFileSystemResource.SetTags");
             scope.Start();
             try
             {
-                if (await CanUseTagResourceAsync(cancellationToken: cancellationToken).ConfigureAwait(false))
+                if (await CanUseTagResourceAsync(cancellationToken).ConfigureAwait(false))
                 {
-                    await GetTagResource().DeleteAsync(WaitUntil.Completed, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    var originalTags = await GetTagResource().GetAsync(cancellationToken).ConfigureAwait(false);
+                    await GetTagResource().DeleteAsync(WaitUntil.Completed, cancellationToken).ConfigureAwait(false);
+                    Response<TagResource> originalTags = await GetTagResource().GetAsync(cancellationToken).ConfigureAwait(false);
                     originalTags.Value.Data.TagValues.ReplaceWith(tags);
-                    await GetTagResource().CreateOrUpdateAsync(WaitUntil.Completed, originalTags.Value.Data, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    var originalResponse = await _amlFileSystemamlFilesystemsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
-                    return Response.FromValue(new AmlFileSystemResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
+                    await GetTagResource().CreateOrUpdateAsync(WaitUntil.Completed, originalTags.Value.Data, cancellationToken).ConfigureAwait(false);
+                    RequestContext context = new RequestContext
+                    {
+                        CancellationToken = cancellationToken
+                    };
+                    HttpMessage message = _amlFilesystemsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, context);
+                    Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                    Response<AmlFileSystemData> response = Response.FromValue(AmlFileSystemData.FromResponse(result), result);
+                    return Response.FromValue(new AmlFileSystemResource(Client, response.Value), response.GetRawResponse());
                 }
                 else
                 {
-                    var current = (await GetAsync(cancellationToken: cancellationToken).ConfigureAwait(false)).Value.Data;
-                    var patch = new AmlFileSystemPatch();
+                    AmlFileSystemData current = (await GetAsync(cancellationToken: cancellationToken).ConfigureAwait(false)).Value.Data;
+                    AmlFileSystemPatch patch = new AmlFileSystemPatch();
                     patch.Tags.ReplaceWith(tags);
-                    var result = await UpdateAsync(WaitUntil.Completed, patch, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    ArmOperation<AmlFileSystemResource> result = await UpdateAsync(WaitUntil.Completed, patch, cancellationToken: cancellationToken).ConfigureAwait(false);
                     return Response.FromValue(result.Value, result.GetRawResponse());
                 }
             }
@@ -957,53 +718,39 @@ namespace Azure.ResourceManager.StorageCache
             }
         }
 
-        /// <summary>
-        /// Replace the tags on the resource with the given set.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.StorageCache/amlFilesystems/{amlFilesystemName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>amlFilesystems_Get</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2026-01-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="AmlFileSystemResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="tags"> The set of tags to use as replacement. </param>
+        /// <summary> Replace the tags on the resource with the given set. </summary>
+        /// <param name="tags"> The tags to set on the resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="tags"/> is null. </exception>
         public virtual Response<AmlFileSystemResource> SetTags(IDictionary<string, string> tags, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(tags, nameof(tags));
 
-            using var scope = _amlFileSystemamlFilesystemsClientDiagnostics.CreateScope("AmlFileSystemResource.SetTags");
+            using DiagnosticScope scope = _amlFilesystemsClientDiagnostics.CreateScope("AmlFileSystemResource.SetTags");
             scope.Start();
             try
             {
-                if (CanUseTagResource(cancellationToken: cancellationToken))
+                if (CanUseTagResource(cancellationToken))
                 {
-                    GetTagResource().Delete(WaitUntil.Completed, cancellationToken: cancellationToken);
-                    var originalTags = GetTagResource().Get(cancellationToken);
+                    GetTagResource().Delete(WaitUntil.Completed, cancellationToken);
+                    Response<TagResource> originalTags = GetTagResource().Get(cancellationToken);
                     originalTags.Value.Data.TagValues.ReplaceWith(tags);
-                    GetTagResource().CreateOrUpdate(WaitUntil.Completed, originalTags.Value.Data, cancellationToken: cancellationToken);
-                    var originalResponse = _amlFileSystemamlFilesystemsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
-                    return Response.FromValue(new AmlFileSystemResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
+                    GetTagResource().CreateOrUpdate(WaitUntil.Completed, originalTags.Value.Data, cancellationToken);
+                    RequestContext context = new RequestContext
+                    {
+                        CancellationToken = cancellationToken
+                    };
+                    HttpMessage message = _amlFilesystemsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, context);
+                    Response result = Pipeline.ProcessMessage(message, context);
+                    Response<AmlFileSystemData> response = Response.FromValue(AmlFileSystemData.FromResponse(result), result);
+                    return Response.FromValue(new AmlFileSystemResource(Client, response.Value), response.GetRawResponse());
                 }
                 else
                 {
-                    var current = Get(cancellationToken: cancellationToken).Value.Data;
-                    var patch = new AmlFileSystemPatch();
+                    AmlFileSystemData current = Get(cancellationToken: cancellationToken).Value.Data;
+                    AmlFileSystemPatch patch = new AmlFileSystemPatch();
                     patch.Tags.ReplaceWith(tags);
-                    var result = Update(WaitUntil.Completed, patch, cancellationToken: cancellationToken);
+                    ArmOperation<AmlFileSystemResource> result = Update(WaitUntil.Completed, patch, cancellationToken: cancellationToken);
                     return Response.FromValue(result.Value, result.GetRawResponse());
                 }
             }
@@ -1014,27 +761,7 @@ namespace Azure.ResourceManager.StorageCache
             }
         }
 
-        /// <summary>
-        /// Removes a tag by key from the resource.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.StorageCache/amlFilesystems/{amlFilesystemName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>amlFilesystems_Get</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2026-01-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="AmlFileSystemResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
+        /// <summary> Removes a tag by key from the resource. </summary>
         /// <param name="key"> The key for the tag. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> is null. </exception>
@@ -1042,28 +769,34 @@ namespace Azure.ResourceManager.StorageCache
         {
             Argument.AssertNotNull(key, nameof(key));
 
-            using var scope = _amlFileSystemamlFilesystemsClientDiagnostics.CreateScope("AmlFileSystemResource.RemoveTag");
+            using DiagnosticScope scope = _amlFilesystemsClientDiagnostics.CreateScope("AmlFileSystemResource.RemoveTag");
             scope.Start();
             try
             {
-                if (await CanUseTagResourceAsync(cancellationToken: cancellationToken).ConfigureAwait(false))
+                if (await CanUseTagResourceAsync(cancellationToken).ConfigureAwait(false))
                 {
-                    var originalTags = await GetTagResource().GetAsync(cancellationToken).ConfigureAwait(false);
+                    Response<TagResource> originalTags = await GetTagResource().GetAsync(cancellationToken).ConfigureAwait(false);
                     originalTags.Value.Data.TagValues.Remove(key);
-                    await GetTagResource().CreateOrUpdateAsync(WaitUntil.Completed, originalTags.Value.Data, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    var originalResponse = await _amlFileSystemamlFilesystemsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
-                    return Response.FromValue(new AmlFileSystemResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
+                    await GetTagResource().CreateOrUpdateAsync(WaitUntil.Completed, originalTags.Value.Data, cancellationToken).ConfigureAwait(false);
+                    RequestContext context = new RequestContext
+                    {
+                        CancellationToken = cancellationToken
+                    };
+                    HttpMessage message = _amlFilesystemsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, context);
+                    Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                    Response<AmlFileSystemData> response = Response.FromValue(AmlFileSystemData.FromResponse(result), result);
+                    return Response.FromValue(new AmlFileSystemResource(Client, response.Value), response.GetRawResponse());
                 }
                 else
                 {
-                    var current = (await GetAsync(cancellationToken: cancellationToken).ConfigureAwait(false)).Value.Data;
-                    var patch = new AmlFileSystemPatch();
-                    foreach (var tag in current.Tags)
+                    AmlFileSystemData current = (await GetAsync(cancellationToken: cancellationToken).ConfigureAwait(false)).Value.Data;
+                    AmlFileSystemPatch patch = new AmlFileSystemPatch();
+                    foreach (KeyValuePair<string, string> tag in current.Tags)
                     {
                         patch.Tags.Add(tag);
                     }
                     patch.Tags.Remove(key);
-                    var result = await UpdateAsync(WaitUntil.Completed, patch, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    ArmOperation<AmlFileSystemResource> result = await UpdateAsync(WaitUntil.Completed, patch, cancellationToken: cancellationToken).ConfigureAwait(false);
                     return Response.FromValue(result.Value, result.GetRawResponse());
                 }
             }
@@ -1074,27 +807,7 @@ namespace Azure.ResourceManager.StorageCache
             }
         }
 
-        /// <summary>
-        /// Removes a tag by key from the resource.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.StorageCache/amlFilesystems/{amlFilesystemName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>amlFilesystems_Get</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2026-01-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="AmlFileSystemResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
+        /// <summary> Removes a tag by key from the resource. </summary>
         /// <param name="key"> The key for the tag. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> is null. </exception>
@@ -1102,28 +815,34 @@ namespace Azure.ResourceManager.StorageCache
         {
             Argument.AssertNotNull(key, nameof(key));
 
-            using var scope = _amlFileSystemamlFilesystemsClientDiagnostics.CreateScope("AmlFileSystemResource.RemoveTag");
+            using DiagnosticScope scope = _amlFilesystemsClientDiagnostics.CreateScope("AmlFileSystemResource.RemoveTag");
             scope.Start();
             try
             {
-                if (CanUseTagResource(cancellationToken: cancellationToken))
+                if (CanUseTagResource(cancellationToken))
                 {
-                    var originalTags = GetTagResource().Get(cancellationToken);
+                    Response<TagResource> originalTags = GetTagResource().Get(cancellationToken);
                     originalTags.Value.Data.TagValues.Remove(key);
-                    GetTagResource().CreateOrUpdate(WaitUntil.Completed, originalTags.Value.Data, cancellationToken: cancellationToken);
-                    var originalResponse = _amlFileSystemamlFilesystemsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
-                    return Response.FromValue(new AmlFileSystemResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
+                    GetTagResource().CreateOrUpdate(WaitUntil.Completed, originalTags.Value.Data, cancellationToken);
+                    RequestContext context = new RequestContext
+                    {
+                        CancellationToken = cancellationToken
+                    };
+                    HttpMessage message = _amlFilesystemsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, context);
+                    Response result = Pipeline.ProcessMessage(message, context);
+                    Response<AmlFileSystemData> response = Response.FromValue(AmlFileSystemData.FromResponse(result), result);
+                    return Response.FromValue(new AmlFileSystemResource(Client, response.Value), response.GetRawResponse());
                 }
                 else
                 {
-                    var current = Get(cancellationToken: cancellationToken).Value.Data;
-                    var patch = new AmlFileSystemPatch();
-                    foreach (var tag in current.Tags)
+                    AmlFileSystemData current = Get(cancellationToken: cancellationToken).Value.Data;
+                    AmlFileSystemPatch patch = new AmlFileSystemPatch();
+                    foreach (KeyValuePair<string, string> tag in current.Tags)
                     {
                         patch.Tags.Add(tag);
                     }
                     patch.Tags.Remove(key);
-                    var result = Update(WaitUntil.Completed, patch, cancellationToken: cancellationToken);
+                    ArmOperation<AmlFileSystemResource> result = Update(WaitUntil.Completed, patch, cancellationToken: cancellationToken);
                     return Response.FromValue(result.Value, result.GetRawResponse());
                 }
             }
@@ -1132,6 +851,138 @@ namespace Azure.ResourceManager.StorageCache
                 scope.Failed(e);
                 throw;
             }
+        }
+
+        /// <summary> Gets a collection of AutoExportJobs in the <see cref="AmlFileSystemResource"/>. </summary>
+        /// <returns> An object representing collection of AutoExportJobs and their operations over a AutoExportJobResource. </returns>
+        public virtual AutoExportJobCollection GetAutoExportJobs()
+        {
+            return GetCachedClient(client => new AutoExportJobCollection(client, Id));
+        }
+
+        /// <summary> Returns an auto export job. </summary>
+        /// <param name="autoExportJobName"> Name for the auto export job. Allows alphanumerics, underscores, and hyphens. Start and end with alphanumeric. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="autoExportJobName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="autoExportJobName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual async Task<Response<AutoExportJobResource>> GetAutoExportJobAsync(string autoExportJobName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(autoExportJobName, nameof(autoExportJobName));
+
+            return await GetAutoExportJobs().GetAsync(autoExportJobName, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary> Returns an auto export job. </summary>
+        /// <param name="autoExportJobName"> Name for the auto export job. Allows alphanumerics, underscores, and hyphens. Start and end with alphanumeric. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="autoExportJobName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="autoExportJobName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual Response<AutoExportJobResource> GetAutoExportJob(string autoExportJobName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(autoExportJobName, nameof(autoExportJobName));
+
+            return GetAutoExportJobs().Get(autoExportJobName, cancellationToken);
+        }
+
+        /// <summary> Gets a collection of StorageCacheImportJobs in the <see cref="AmlFileSystemResource"/>. </summary>
+        /// <returns> An object representing collection of StorageCacheImportJobs and their operations over a StorageCacheImportJobResource. </returns>
+        public virtual StorageCacheImportJobCollection GetStorageCacheImportJobs()
+        {
+            return GetCachedClient(client => new StorageCacheImportJobCollection(client, Id));
+        }
+
+        /// <summary> Returns an import job. </summary>
+        /// <param name="importJobName"> Name for the import job. Allows alphanumerics, underscores, and hyphens. Start and end with alphanumeric. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="importJobName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="importJobName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual async Task<Response<StorageCacheImportJobResource>> GetStorageCacheImportJobAsync(string importJobName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(importJobName, nameof(importJobName));
+
+            return await GetStorageCacheImportJobs().GetAsync(importJobName, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary> Returns an import job. </summary>
+        /// <param name="importJobName"> Name for the import job. Allows alphanumerics, underscores, and hyphens. Start and end with alphanumeric. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="importJobName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="importJobName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual Response<StorageCacheImportJobResource> GetStorageCacheImportJob(string importJobName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(importJobName, nameof(importJobName));
+
+            return GetStorageCacheImportJobs().Get(importJobName, cancellationToken);
+        }
+
+        /// <summary> Gets a collection of AutoImportJobs in the <see cref="AmlFileSystemResource"/>. </summary>
+        /// <returns> An object representing collection of AutoImportJobs and their operations over a AutoImportJobResource. </returns>
+        public virtual AutoImportJobCollection GetAutoImportJobs()
+        {
+            return GetCachedClient(client => new AutoImportJobCollection(client, Id));
+        }
+
+        /// <summary> Returns an auto import job. </summary>
+        /// <param name="autoImportJobName"> Name for the auto import job. Allows alphanumerics, underscores, and hyphens. Start and end with alphanumeric. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="autoImportJobName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="autoImportJobName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual async Task<Response<AutoImportJobResource>> GetAutoImportJobAsync(string autoImportJobName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(autoImportJobName, nameof(autoImportJobName));
+
+            return await GetAutoImportJobs().GetAsync(autoImportJobName, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary> Returns an auto import job. </summary>
+        /// <param name="autoImportJobName"> Name for the auto import job. Allows alphanumerics, underscores, and hyphens. Start and end with alphanumeric. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="autoImportJobName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="autoImportJobName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual Response<AutoImportJobResource> GetAutoImportJob(string autoImportJobName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(autoImportJobName, nameof(autoImportJobName));
+
+            return GetAutoImportJobs().Get(autoImportJobName, cancellationToken);
+        }
+
+        /// <summary> Gets a collection of AmlFileSystemExpansionJobs in the <see cref="AmlFileSystemResource"/>. </summary>
+        /// <returns> An object representing collection of AmlFileSystemExpansionJobs and their operations over a AmlFileSystemExpansionJobResource. </returns>
+        public virtual AmlFileSystemExpansionJobCollection GetAmlFileSystemExpansionJobs()
+        {
+            return GetCachedClient(client => new AmlFileSystemExpansionJobCollection(client, Id));
+        }
+
+        /// <summary> Returns an expansion job. </summary>
+        /// <param name="expansionJobName"> Name for the expansion job. Allows alphanumerics, underscores, and hyphens. Start and end with alphanumeric. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="expansionJobName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="expansionJobName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual async Task<Response<AmlFileSystemExpansionJobResource>> GetAmlFileSystemExpansionJobAsync(string expansionJobName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(expansionJobName, nameof(expansionJobName));
+
+            return await GetAmlFileSystemExpansionJobs().GetAsync(expansionJobName, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary> Returns an expansion job. </summary>
+        /// <param name="expansionJobName"> Name for the expansion job. Allows alphanumerics, underscores, and hyphens. Start and end with alphanumeric. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="expansionJobName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="expansionJobName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual Response<AmlFileSystemExpansionJobResource> GetAmlFileSystemExpansionJob(string expansionJobName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(expansionJobName, nameof(expansionJobName));
+
+            return GetAmlFileSystemExpansionJobs().Get(expansionJobName, cancellationToken);
         }
     }
 }

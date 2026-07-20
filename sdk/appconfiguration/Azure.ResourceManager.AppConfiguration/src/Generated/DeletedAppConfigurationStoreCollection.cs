@@ -6,8 +6,6 @@
 #nullable disable
 
 using System;
-using System.Collections;
-using System.Collections.Generic;
 using System.Diagnostics;
 using System.Threading;
 using System.Threading.Tasks;
@@ -24,7 +22,7 @@ namespace Azure.ResourceManager.AppConfiguration
     /// Each <see cref="DeletedAppConfigurationStoreResource"/> in the collection will belong to the same instance of <see cref="SubscriptionResource"/>.
     /// To get a <see cref="DeletedAppConfigurationStoreCollection"/> instance call the GetDeletedAppConfigurationStores method from an instance of <see cref="SubscriptionResource"/>.
     /// </summary>
-    public partial class DeletedAppConfigurationStoreCollection : ArmCollection, IEnumerable<DeletedAppConfigurationStoreResource>, IAsyncEnumerable<DeletedAppConfigurationStoreResource>
+    public partial class DeletedAppConfigurationStoreCollection : ArmCollection
     {
         private readonly ClientDiagnostics _configurationStoresClientDiagnostics;
         private readonly ConfigurationStores _configurationStoresRestClient;
@@ -449,22 +447,6 @@ namespace Azure.ResourceManager.AppConfiguration
                 scope.Failed(e);
                 throw;
             }
-        }
-
-        IEnumerator<DeletedAppConfigurationStoreResource> IEnumerable<DeletedAppConfigurationStoreResource>.GetEnumerator()
-        {
-            return GetAll().GetEnumerator();
-        }
-
-        IEnumerator IEnumerable.GetEnumerator()
-        {
-            return GetAll().GetEnumerator();
-        }
-
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        IAsyncEnumerator<DeletedAppConfigurationStoreResource> IAsyncEnumerable<DeletedAppConfigurationStoreResource>.GetAsyncEnumerator(CancellationToken cancellationToken)
-        {
-            return GetAllAsync(cancellationToken: cancellationToken).GetAsyncEnumerator(cancellationToken);
         }
     }
 }

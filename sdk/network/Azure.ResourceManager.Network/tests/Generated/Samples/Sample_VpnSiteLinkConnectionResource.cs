@@ -70,7 +70,7 @@ namespace Azure.ResourceManager.Network.Samples
             VpnSiteLinkConnectionResource vpnSiteLinkConnection = client.GetVpnSiteLinkConnectionResource(vpnSiteLinkConnectionResourceId);
 
             // invoke the operation
-            await vpnSiteLinkConnection.ResetConnectionVpnLinkConnectionAsync(WaitUntil.Completed);
+            await vpnSiteLinkConnection.ResetConnectionVpnLinkConnectionAsync(WaitUntil.Completed, cancellationToken: System.Threading.CancellationToken.None);
 
             Console.WriteLine("Succeeded");
         }
@@ -98,7 +98,7 @@ namespace Azure.ResourceManager.Network.Samples
             VpnSiteLinkConnectionResource vpnSiteLinkConnection = client.GetVpnSiteLinkConnectionResource(vpnSiteLinkConnectionResourceId);
 
             // invoke the operation
-            ArmOperation<string> lro = await vpnSiteLinkConnection.GetIkeSasVpnLinkConnectionAsync(WaitUntil.Completed);
+            ArmOperation<string> lro = await vpnSiteLinkConnection.GetIkeSasVpnLinkConnectionAsync(WaitUntil.Completed, cancellationToken: System.Threading.CancellationToken.None);
             string result = lro.Value;
 
             Console.WriteLine($"Succeeded: {result}");

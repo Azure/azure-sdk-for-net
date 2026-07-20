@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.SecurityInsights;
 
 namespace Azure.ResourceManager.SecurityInsights.Models
 {
@@ -14,41 +15,62 @@ namespace Azure.ResourceManager.SecurityInsights.Models
     public readonly partial struct SecurityInsightsSupportTier : IEquatable<SecurityInsightsSupportTier>
     {
         private readonly string _value;
+        /// <summary> Microsoft. </summary>
+        private const string MicrosoftValue = "Microsoft";
+        /// <summary> Partner. </summary>
+        private const string PartnerValue = "Partner";
+        /// <summary> Community. </summary>
+        private const string CommunityValue = "Community";
 
         /// <summary> Initializes a new instance of <see cref="SecurityInsightsSupportTier"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public SecurityInsightsSupportTier(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string MicrosoftValue = "Microsoft";
-        private const string PartnerValue = "Partner";
-        private const string CommunityValue = "Community";
+            _value = value;
+        }
 
         /// <summary> Microsoft. </summary>
         public static SecurityInsightsSupportTier Microsoft { get; } = new SecurityInsightsSupportTier(MicrosoftValue);
+
         /// <summary> Partner. </summary>
         public static SecurityInsightsSupportTier Partner { get; } = new SecurityInsightsSupportTier(PartnerValue);
+
         /// <summary> Community. </summary>
         public static SecurityInsightsSupportTier Community { get; } = new SecurityInsightsSupportTier(CommunityValue);
+
         /// <summary> Determines if two <see cref="SecurityInsightsSupportTier"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(SecurityInsightsSupportTier left, SecurityInsightsSupportTier right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="SecurityInsightsSupportTier"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(SecurityInsightsSupportTier left, SecurityInsightsSupportTier right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="SecurityInsightsSupportTier"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="SecurityInsightsSupportTier"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator SecurityInsightsSupportTier(string value) => new SecurityInsightsSupportTier(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="SecurityInsightsSupportTier"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator SecurityInsightsSupportTier?(string value) => value == null ? null : new SecurityInsightsSupportTier(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is SecurityInsightsSupportTier other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(SecurityInsightsSupportTier other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

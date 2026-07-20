@@ -325,7 +325,7 @@ namespace Azure.ResourceManager.WebPubSub
                 HttpMessage message = _webPubSubSharedPrivateLinkResourcesRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, WebPubSubSharedPrivateLinkData.ToRequestContent(data), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 WebPubSubArmOperation<WebPubSubSharedPrivateLinkResource> operation = new WebPubSubArmOperation<WebPubSubSharedPrivateLinkResource>(
-                    new WebPubSubSharedPrivateLinkOperationSource(Client),
+                    new WebPubSubSharedPrivateLinkResourceOperationSource(Client),
                     _webPubSubSharedPrivateLinkResourcesClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -384,7 +384,7 @@ namespace Azure.ResourceManager.WebPubSub
                 HttpMessage message = _webPubSubSharedPrivateLinkResourcesRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, WebPubSubSharedPrivateLinkData.ToRequestContent(data), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 WebPubSubArmOperation<WebPubSubSharedPrivateLinkResource> operation = new WebPubSubArmOperation<WebPubSubSharedPrivateLinkResource>(
-                    new WebPubSubSharedPrivateLinkOperationSource(Client),
+                    new WebPubSubSharedPrivateLinkResourceOperationSource(Client),
                     _webPubSubSharedPrivateLinkResourcesClientDiagnostics,
                     Pipeline,
                     message.Request,

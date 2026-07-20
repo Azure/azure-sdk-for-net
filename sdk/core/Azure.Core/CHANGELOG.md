@@ -1,6 +1,6 @@
 # Release History
 
-## 1.56.0-beta.1 (Unreleased)
+## 1.61.0-beta.1 (Unreleased)
 
 ### Features Added
 
@@ -8,7 +8,69 @@
 
 ### Bugs Fixed
 
+- Fixed an issue where `RequestFailedException` could throw a secondary `ArgumentNullException` while formatting a failed response that had a text content-type header but an empty body, masking the actual service failure. The exception now preserves the original HTTP status, reason phrase, and headers, and no longer formats empty response content.
+- Fixed `AzureCliCredential` to not pass both `--tenant` and `--subscription` flags to the Azure CLI, as the CLI rejects this combination. When a tenant is requested (for example, via challenge-based authentication) it now takes precedence and `--subscription` is omitted; `--subscription` is used only when no tenant is requested. ([#58949](https://github.com/Azure/azure-sdk-for-net/issues/58949))
+
 ### Other Changes
+
+## 1.60.0 (2026-06-30)
+
+### Features Added
+
+- Added experimental (`AZID0004`) `DisableMtlsProofOfPossession` property to `ManagedIdentityCredentialOptions` to allow explicit opt-out of mTLS proof-of-possession token acquisition when the underlying requirements are met.
+- Simplified mTLS token binding integration for Managed Identity by moving to an optional, runtime-resolved attestation model using lazy reflection-based resolution of the `Microsoft.Identity.Client.KeyAttestation` extension package.
+
+### Bugs Fixed
+
+- Fixed a regression (introduced with managed identity host capability detection) where `DefaultAzureCredential` could throw an `AuthenticationFailedException` and stop evaluating the credential chain on hosts without a managed identity — for example, a developer machine running in Visual Studio where the IMDS endpoint (169.254.169.254) is unreachable. When `ManagedIdentityCredential` is part of a chain, a failure to detect the managed identity source/capabilities is now surfaced as a `CredentialUnavailableException`, allowing the chain to continue to the next credential.
+- Fixed a related case where `DefaultAzureCredential` could still abort the credential chain with an `AuthenticationFailedException` when managed identity source detection succeeded but the subsequent token acquisition reported that all managed identity sources were unavailable (MSAL `managed_identity_all_sources_unavailable`). When `ManagedIdentityCredential` is part of a chain, this is now surfaced as a `CredentialUnavailableException` so the chain continues to the next credential.
+
+## 1.59.0 (2026-06-09)
+
+### Features Added
+
+- Added experimental (`AZID0004`) mTLS Proof-of-Possession token binding support for managed identity scenarios, including dynamic host capability detection via MSAL and transport certificate rotation APIs on `BearerTokenAuthenticationPolicy`.
+
+### Bugs Fixed
+
+- Fixed `BearerTokenAuthenticationPolicy` so that the `Authorization` header is no longer re-attached to a request that has been redirected to a different host. Previously, `RedirectPolicy` would strip the `Authorization` header before following a redirect, but the per-retry `BearerTokenAuthenticationPolicy` would re-add the cached bearer token to the redirected request — including when the redirect target was a different host. The policy now detects when the request URI authority has changed since it last authorized the message, defensively strips any `Authorization` header, and skips both re-authorization and the `WWW-Authenticate` (CAE) `401` handler so that no bearer token is sent to — or fetched in response to a challenge from — the redirect target. Same-host redirects, normal (non-redirected) requests, and CAE handling against the original host are unchanged. Callers who explicitly enabled auto-redirect (via `HttpPipelineTransportOptions.IsClientRedirectEnabled = true` or `RedirectPolicy.SetAllowAutoRedirect(message, true)`) and depended on the bearer token being re-attached on cross-host redirects should construct a separate client targeting the redirect-target host with a credential bound to that host's resource.
+
+### Other Changes
+
+- Updated `Microsoft.Identity.Client` dependency to `4.84.2`.
+
+## 1.58.0 (2026-06-04)
+
+### Features Added
+
+- Adopt System.ClientModel 1.14.0
+
+### Bugs Fixed
+
+- Fixed `NullReferenceException` thrown by `Operation.RehydrateAsync` / `ArmOperation.RehydrateAsync` (and the resulting operation's `UpdateStatusAsync` / `Value`) when the rehydrated long-running operation has completed with a failure. `OperationState.Failure` and `OperationState<T>.Failure` now honor their documented contract and materialize a default `RequestFailedException` from the raw response when the caller passes `null`, matching the behavior of the non-rehydration polling path.
+- Fixed `DiagnosticScope` to mark the parent `ActivityContext` as remote (`IsRemote = true`) when a traceparent is provided via `SetTraceContext` or `AddLink`. The traceparent in these paths is always extracted from an external source (e.g. a messaging broker's application properties), so samplers that distinguish local vs. remote parents — such as the `RateLimitedSampler` used by the Azure Monitor OpenTelemetry exporter — can now make correct decisions for activities started from incoming messages.
+
+## 1.57.0 (2026-05-21)
+
+### Features Added
+
+- Added `RequestContent.Create(BinaryContent)` overload that adapts a `System.ClientModel.BinaryContent` instance into a `Azure.Core.RequestContent` instance.
+- Added experimental (`SCME0002`) `AzureCredentialResolver` that resolves Azure token credential sections (e.g. `AzureCliCredential`, `ManagedIdentityCredential`, `ChainedTokenCredential`) into `TokenCredential` instances. `ApiKeyCredential` sections are not claimed — clients dispatch on `Credential.CredentialSource` themselves.
+- Added experimental (`SCME0002`) extensions on `Azure.Identity.ConfigurationExtensions`:
+  - `AddAzureCredentialResolver()` on `IServiceCollection` and `IHostApplicationBuilder` — idempotent DI registration.
+  - `IConfiguration.GetAzureCredentialSettings(sectionName, ...)` — returns `CredentialSettings?` with `TokenProvider` populated for token sources and `Key` populated for inline ApiKey sources, so a single call site can dispatch on either shape without binding a `ClientSettings`.
+  - `IConfiguration.GetAzureClientSettings<T>(sectionName, params CredentialResolver[] resolvers)` — resolver-aware overload.
+- The Azure OpenAI default-scope quirk now writes `Credential:Scope` at the credential-section root (the canonical SCM 1.12.0+ location) instead of `Credential:AdditionalProperties:Scope`. SCM 1.12.0 reads both locations so existing configs continue to work.
+
+### Breaking Changes
+
+- Removed experimental (`SCME0002`) `WithAzureCredential` extension methods on `ClientSettings` and `IClientBuilder`. For DI, use `AddAzureClient<TClient, TSettings>` / `AddKeyedAzureClient<TClient, TSettings>` (which register `AzureCredentialResolver` automatically), or call `AddAzureCredentialResolver()` followed by `AddClient<TClient, TSettings>` / `AddKeyedClient<TClient, TSettings>`. For standalone scenarios, use `IConfiguration.GetAzureClientSettings<T>(...)` or `IConfiguration.GetAzureCredentialSettings(...)`.
+
+## 1.56.0 (2026-05-14)
+
+### Features Added
+
+- Added experimental `TokenRequestCallback` property and `TokenRequestCallbackContext` type to MSAL-backed credential options to allow customizing token request body parameters before they are sent to the identity provider.
 
 ## 1.55.0 (2026-05-05)
 

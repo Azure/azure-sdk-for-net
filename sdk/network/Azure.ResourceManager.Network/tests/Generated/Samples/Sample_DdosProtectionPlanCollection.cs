@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.Network.Samples
             // invoke the operation
             string ddosProtectionPlanName = "test-plan";
             DdosProtectionPlanData data = new DdosProtectionPlanData(new AzureLocation("westus"));
-            ArmOperation<DdosProtectionPlanResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, ddosProtectionPlanName, data);
+            ArmOperation<DdosProtectionPlanResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, ddosProtectionPlanName, data, cancellationToken: System.Threading.CancellationToken.None);
             DdosProtectionPlanResource result = lro.Value;
 
             // the variable result is a resource, you could call other operations on this instance as well

@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.Network.Samples
             ConnectionMonitorResource connectionMonitor = client.GetConnectionMonitorResource(connectionMonitorResourceId);
 
             // invoke the operation
-            await connectionMonitor.DeleteAsync(WaitUntil.Completed);
+            await connectionMonitor.DeleteAsync(WaitUntil.Completed, cancellationToken: System.Threading.CancellationToken.None);
 
             Console.WriteLine("Succeeded");
         }
@@ -135,7 +135,7 @@ namespace Azure.ResourceManager.Network.Samples
             ConnectionMonitorResource connectionMonitor = client.GetConnectionMonitorResource(connectionMonitorResourceId);
 
             // invoke the operation
-            await connectionMonitor.StopAsync(WaitUntil.Completed);
+            await connectionMonitor.StopAsync(WaitUntil.Completed, cancellationToken: System.Threading.CancellationToken.None);
 
             Console.WriteLine("Succeeded");
         }

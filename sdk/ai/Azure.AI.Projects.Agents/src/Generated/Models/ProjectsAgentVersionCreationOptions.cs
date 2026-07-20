@@ -35,13 +35,15 @@ namespace Azure.AI.Projects.Agents
         /// <param name="description"> A human-readable description of the agent. </param>
         /// <param name="definition"> The agent definition. This can be a workflow, hosted agent, or a simple agent definition. </param>
         /// <param name="blueprintReference"> The blueprint reference for the agent. </param>
+        /// <param name="draft"> (Preview) Whether this agent version is a draft (candidate) rather than a release. The service defaults to `false` if a value is not specified by the caller. Draft versions are recorded but excluded from default 'latest' resolution and are not auto-promoted. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ProjectsAgentVersionCreationOptions(IDictionary<string, string> metadata, string description, ProjectsAgentDefinition definition, AgentBlueprintReference blueprintReference, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ProjectsAgentVersionCreationOptions(IDictionary<string, string> metadata, string description, ProjectsAgentDefinition definition, AgentBlueprintReference blueprintReference, bool? draft, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Metadata = metadata;
             Description = description;
             Definition = definition;
             BlueprintReference = blueprintReference;
+            Draft = draft;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
@@ -56,5 +58,8 @@ namespace Azure.AI.Projects.Agents
 
         /// <summary> The blueprint reference for the agent. </summary>
         public AgentBlueprintReference BlueprintReference { get; set; }
+
+        /// <summary> (Preview) Whether this agent version is a draft (candidate) rather than a release. The service defaults to `false` if a value is not specified by the caller. Draft versions are recorded but excluded from default 'latest' resolution and are not auto-promoted. </summary>
+        public bool? Draft { get; set; }
     }
 }

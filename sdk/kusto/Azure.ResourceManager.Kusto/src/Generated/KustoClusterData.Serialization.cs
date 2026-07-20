@@ -8,19 +8,82 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
-using System.Linq;
 using System.Text;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
 using Azure.ResourceManager.Kusto.Models;
 using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.Kusto
 {
-    public partial class KustoClusterData : IUtf8JsonSerializable, IJsonModel<KustoClusterData>
+    /// <summary> Class representing a Kusto cluster. </summary>
+    public partial class KustoClusterData : TrackedResourceData, IJsonModel<KustoClusterData>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<KustoClusterData>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        /// <summary> Initializes a new instance of <see cref="KustoClusterData"/> for deserialization. </summary>
+        internal KustoClusterData()
+        {
+        }
 
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual ResourceData PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<KustoClusterData>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    {
+                        return DeserializeKustoClusterData(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(KustoClusterData)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<KustoClusterData>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerKustoContext.Default);
+                default:
+                    throw new FormatException($"The model {nameof(KustoClusterData)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<KustoClusterData>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        KustoClusterData IPersistableModel<KustoClusterData>.Create(BinaryData data, ModelReaderWriterOptions options) => (KustoClusterData)PersistableModelCreateCore(data, options);
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<KustoClusterData>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
+        /// <param name="kustoClusterData"> The <see cref="KustoClusterData"/> to serialize into <see cref="RequestContent"/>. </param>
+        internal static RequestContent ToRequestContent(KustoClusterData kustoClusterData)
+        {
+            if (kustoClusterData == null)
+            {
+                return null;
+            }
+            return RequestContent.Create(kustoClusterData, ModelSerializationExtensions.WireOptions);
+        }
+
+        /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="KustoClusterData"/> from. </param>
+        internal static KustoClusterData FromResponse(Response response)
+        {
+            using JsonDocument document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
+            return DeserializeKustoClusterData(document.RootElement, ModelSerializationExtensions.WireOptions);
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<KustoClusterData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
@@ -32,21 +95,30 @@ namespace Azure.ResourceManager.Kusto
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<KustoClusterData>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<KustoClusterData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(KustoClusterData)} does not support writing '{format}' format.");
             }
-
             base.JsonModelWriteCore(writer, options);
+            if (Optional.IsDefined(Properties))
+            {
+                writer.WritePropertyName("properties"u8);
+                writer.WriteObjectValue(Properties, options);
+            }
             writer.WritePropertyName("sku"u8);
             writer.WriteObjectValue(Sku, options);
             if (Optional.IsCollectionDefined(Zones))
             {
                 writer.WritePropertyName("zones"u8);
                 writer.WriteStartArray();
-                foreach (var item in Zones)
+                foreach (string item in Zones)
                 {
+                    if (item == null)
+                    {
+                        writer.WriteNullValue();
+                        continue;
+                    }
                     writer.WriteStringValue(item);
                 }
                 writer.WriteEndArray();
@@ -54,1385 +126,198 @@ namespace Azure.ResourceManager.Kusto
             if (Optional.IsDefined(Identity))
             {
                 writer.WritePropertyName("identity"u8);
-                ((IJsonModel<ManagedServiceIdentity>)Identity).Write(writer, options);
+                ((IJsonModel<ManagedServiceIdentity>)Identity).Write(writer, options.Format == "W" ? ModelSerializationExtensions.WireV3Options : ModelSerializationExtensions.JsonV3Options);
             }
             if (options.Format != "W" && Optional.IsDefined(ETag))
             {
                 writer.WritePropertyName("etag"u8);
                 writer.WriteStringValue(ETag.Value.ToString());
             }
-            writer.WritePropertyName("properties"u8);
-            writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsDefined(State))
+            if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
-                writer.WritePropertyName("state"u8);
-                writer.WriteStringValue(State.Value.ToString());
-            }
-            if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
-            {
-                writer.WritePropertyName("provisioningState"u8);
-                writer.WriteStringValue(ProvisioningState.Value.ToString());
-            }
-            if (options.Format != "W" && Optional.IsDefined(ClusterUri))
-            {
-                writer.WritePropertyName("uri"u8);
-                writer.WriteStringValue(ClusterUri.AbsoluteUri);
-            }
-            if (options.Format != "W" && Optional.IsDefined(DataIngestionUri))
-            {
-                writer.WritePropertyName("dataIngestionUri"u8);
-                writer.WriteStringValue(DataIngestionUri.AbsoluteUri);
-            }
-            if (options.Format != "W" && Optional.IsDefined(StateReason))
-            {
-                writer.WritePropertyName("stateReason"u8);
-                writer.WriteStringValue(StateReason);
-            }
-            if (Optional.IsCollectionDefined(TrustedExternalTenants))
-            {
-                writer.WritePropertyName("trustedExternalTenants"u8);
-                writer.WriteStartArray();
-                foreach (var item in TrustedExternalTenants)
+                foreach (var item in _additionalBinaryDataProperties)
                 {
-                    writer.WriteObjectValue(item, options);
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+                    writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
                 }
-                writer.WriteEndArray();
             }
-            if (Optional.IsDefined(OptimizedAutoscale))
-            {
-                writer.WritePropertyName("optimizedAutoscale"u8);
-                writer.WriteObjectValue(OptimizedAutoscale, options);
-            }
-            if (Optional.IsDefined(IsDiskEncryptionEnabled))
-            {
-                writer.WritePropertyName("enableDiskEncryption"u8);
-                writer.WriteBooleanValue(IsDiskEncryptionEnabled.Value);
-            }
-            if (Optional.IsDefined(IsStreamingIngestEnabled))
-            {
-                writer.WritePropertyName("enableStreamingIngest"u8);
-                writer.WriteBooleanValue(IsStreamingIngestEnabled.Value);
-            }
-            if (Optional.IsDefined(VirtualNetworkConfiguration))
-            {
-                writer.WritePropertyName("virtualNetworkConfiguration"u8);
-                writer.WriteObjectValue(VirtualNetworkConfiguration, options);
-            }
-            if (Optional.IsDefined(KeyVaultProperties))
-            {
-                writer.WritePropertyName("keyVaultProperties"u8);
-                writer.WriteObjectValue(KeyVaultProperties, options);
-            }
-            if (Optional.IsDefined(IsPurgeEnabled))
-            {
-                writer.WritePropertyName("enablePurge"u8);
-                writer.WriteBooleanValue(IsPurgeEnabled.Value);
-            }
-            if (Optional.IsDefined(LanguageExtensions))
-            {
-                writer.WritePropertyName("languageExtensions"u8);
-                writer.WriteObjectValue(LanguageExtensions, options);
-            }
-            if (Optional.IsDefined(IsDoubleEncryptionEnabled))
-            {
-                writer.WritePropertyName("enableDoubleEncryption"u8);
-                writer.WriteBooleanValue(IsDoubleEncryptionEnabled.Value);
-            }
-            if (Optional.IsDefined(PublicNetworkAccess))
-            {
-                writer.WritePropertyName("publicNetworkAccess"u8);
-                writer.WriteStringValue(PublicNetworkAccess.Value.ToString());
-            }
-            if (Optional.IsCollectionDefined(AllowedIPRangeList))
-            {
-                writer.WritePropertyName("allowedIpRangeList"u8);
-                writer.WriteStartArray();
-                foreach (var item in AllowedIPRangeList)
-                {
-                    writer.WriteStringValue(item);
-                }
-                writer.WriteEndArray();
-            }
-            if (Optional.IsDefined(EngineType))
-            {
-                writer.WritePropertyName("engineType"u8);
-                writer.WriteStringValue(EngineType.Value.ToString());
-            }
-            if (Optional.IsCollectionDefined(AcceptedAudiences))
-            {
-                writer.WritePropertyName("acceptedAudiences"u8);
-                writer.WriteStartArray();
-                foreach (var item in AcceptedAudiences)
-                {
-                    writer.WriteObjectValue(item, options);
-                }
-                writer.WriteEndArray();
-            }
-            if (Optional.IsDefined(IsAutoStopEnabled))
-            {
-                writer.WritePropertyName("enableAutoStop"u8);
-                writer.WriteBooleanValue(IsAutoStopEnabled.Value);
-            }
-            if (Optional.IsDefined(RestrictOutboundNetworkAccess))
-            {
-                writer.WritePropertyName("restrictOutboundNetworkAccess"u8);
-                writer.WriteStringValue(RestrictOutboundNetworkAccess.Value.ToString());
-            }
-            if (Optional.IsCollectionDefined(AllowedFqdnList))
-            {
-                writer.WritePropertyName("allowedFqdnList"u8);
-                writer.WriteStartArray();
-                foreach (var item in AllowedFqdnList)
-                {
-                    writer.WriteStringValue(item);
-                }
-                writer.WriteEndArray();
-            }
-            if (Optional.IsCollectionDefined(CalloutPolicies))
-            {
-                writer.WritePropertyName("calloutPolicies"u8);
-                writer.WriteStartArray();
-                foreach (var item in CalloutPolicies)
-                {
-                    writer.WriteObjectValue(item, options);
-                }
-                writer.WriteEndArray();
-            }
-            if (Optional.IsDefined(PublicIPType))
-            {
-                writer.WritePropertyName("publicIPType"u8);
-                writer.WriteStringValue(PublicIPType.Value.ToString());
-            }
-            if (Optional.IsDefined(VirtualClusterGraduationProperties))
-            {
-                writer.WritePropertyName("virtualClusterGraduationProperties"u8);
-                writer.WriteStringValue(VirtualClusterGraduationProperties);
-            }
-            if (options.Format != "W" && Optional.IsCollectionDefined(PrivateEndpointConnections))
-            {
-                writer.WritePropertyName("privateEndpointConnections"u8);
-                writer.WriteStartArray();
-                foreach (var item in PrivateEndpointConnections)
-                {
-                    writer.WriteObjectValue(item, options);
-                }
-                writer.WriteEndArray();
-            }
-            if (options.Format != "W" && Optional.IsDefined(MigrationCluster))
-            {
-                writer.WritePropertyName("migrationCluster"u8);
-                writer.WriteObjectValue(MigrationCluster, options);
-            }
-            if (options.Format != "W" && Optional.IsDefined(ZoneStatus))
-            {
-                writer.WritePropertyName("zoneStatus"u8);
-                writer.WriteStringValue(ZoneStatus.Value.ToString());
-            }
-            writer.WriteEndObject();
         }
 
-        KustoClusterData IJsonModel<KustoClusterData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        KustoClusterData IJsonModel<KustoClusterData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => (KustoClusterData)JsonModelCreateCore(ref reader, options);
+
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual ResourceData JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<KustoClusterData>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<KustoClusterData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(KustoClusterData)} does not support reading '{format}' format.");
             }
-
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
             return DeserializeKustoClusterData(document.RootElement, options);
         }
 
-        internal static KustoClusterData DeserializeKustoClusterData(JsonElement element, ModelReaderWriterOptions options = null)
+        /// <param name="element"> The JSON element to deserialize. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        internal static KustoClusterData DeserializeKustoClusterData(JsonElement element, ModelReaderWriterOptions options)
         {
-            options ??= ModelSerializationExtensions.WireOptions;
-
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
+            ResourceIdentifier id = default;
+            string name = default;
+            ResourceType resourceType = default;
+            SystemData systemData = default;
+            IDictionary<string, string> tags = default;
+            AzureLocation location = default;
+            ClusterProperties properties = default;
             KustoSku sku = default;
             IList<string> zones = default;
             ManagedServiceIdentity identity = default;
-            ETag? etag = default;
-            IDictionary<string, string> tags = default;
-            AzureLocation location = default;
-            ResourceIdentifier id = default;
-            string name = default;
-            ResourceType type = default;
-            SystemData systemData = default;
-            KustoClusterState? state = default;
-            KustoProvisioningState? provisioningState = default;
-            Uri uri = default;
-            Uri dataIngestionUri = default;
-            string stateReason = default;
-            IList<KustoClusterTrustedExternalTenant> trustedExternalTenants = default;
-            OptimizedAutoscale optimizedAutoscale = default;
-            bool? enableDiskEncryption = default;
-            bool? enableStreamingIngest = default;
-            KustoClusterVirtualNetworkConfiguration virtualNetworkConfiguration = default;
-            KustoKeyVaultProperties keyVaultProperties = default;
-            bool? enablePurge = default;
-            KustoLanguageExtensionList languageExtensions = default;
-            bool? enableDoubleEncryption = default;
-            KustoClusterPublicNetworkAccess? publicNetworkAccess = default;
-            IList<string> allowedIPRangeList = default;
-            KustoClusterEngineType? engineType = default;
-            IList<AcceptedAudience> acceptedAudiences = default;
-            bool? enableAutoStop = default;
-            KustoClusterNetworkAccessFlag? restrictOutboundNetworkAccess = default;
-            IList<string> allowedFqdnList = default;
-            IList<KustoCalloutPolicy> calloutPolicies = default;
-            KustoClusterPublicIPType? publicIPType = default;
-            string virtualClusterGraduationProperties = default;
-            IReadOnlyList<KustoPrivateEndpointConnectionData> privateEndpointConnections = default;
-            MigrationClusterProperties migrationCluster = default;
-            KustoClusterZoneStatus? zoneStatus = default;
-            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
-            foreach (var property in element.EnumerateObject())
+            ETag? eTag = default;
+            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            foreach (var prop in element.EnumerateObject())
             {
-                if (property.NameEquals("sku"u8))
+                if (prop.NameEquals("id"u8))
                 {
-                    sku = KustoSku.DeserializeKustoSku(property.Value, options);
-                    continue;
-                }
-                if (property.NameEquals("zones"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    List<string> array = new List<string>();
-                    foreach (var item in property.Value.EnumerateArray())
-                    {
-                        array.Add(item.GetString());
-                    }
-                    zones = array;
+                    id = new ResourceIdentifier(prop.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("identity"u8))
+                if (prop.NameEquals("name"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    identity = ModelReaderWriter.Read<ManagedServiceIdentity>(new BinaryData(Encoding.UTF8.GetBytes(property.Value.GetRawText())), options, AzureResourceManagerKustoContext.Default);
+                    name = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("etag"u8))
+                if (prop.NameEquals("type"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    etag = new ETag(property.Value.GetString());
+                    resourceType = new ResourceType(prop.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("tags"u8))
+                if (prop.NameEquals("systemData"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    systemData = ModelReaderWriter.Read<SystemData>(new BinaryData(Encoding.UTF8.GetBytes(prop.Value.GetRawText())), ModelSerializationExtensions.WireOptions, AzureResourceManagerKustoContext.Default);
+                    continue;
+                }
+                if (prop.NameEquals("tags"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
                     Dictionary<string, string> dictionary = new Dictionary<string, string>();
-                    foreach (var property0 in property.Value.EnumerateObject())
+                    foreach (var prop0 in prop.Value.EnumerateObject())
                     {
-                        dictionary.Add(property0.Name, property0.Value.GetString());
+                        if (prop0.Value.ValueKind == JsonValueKind.Null)
+                        {
+                            dictionary.Add(prop0.Name, null);
+                        }
+                        else
+                        {
+                            dictionary.Add(prop0.Name, prop0.Value.GetString());
+                        }
                     }
                     tags = dictionary;
                     continue;
                 }
-                if (property.NameEquals("location"u8))
+                if (prop.NameEquals("location"u8))
                 {
-                    location = new AzureLocation(property.Value.GetString());
+                    location = new AzureLocation(prop.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("id"u8))
+                if (prop.NameEquals("properties"u8))
                 {
-                    id = new ResourceIdentifier(property.Value.GetString());
-                    continue;
-                }
-                if (property.NameEquals("name"u8))
-                {
-                    name = property.Value.GetString();
-                    continue;
-                }
-                if (property.NameEquals("type"u8))
-                {
-                    type = new ResourceType(property.Value.GetString());
-                    continue;
-                }
-                if (property.NameEquals("systemData"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    systemData = ModelReaderWriter.Read<SystemData>(new BinaryData(Encoding.UTF8.GetBytes(property.Value.GetRawText())), ModelSerializationExtensions.WireOptions, AzureResourceManagerKustoContext.Default);
+                    properties = ClusterProperties.DeserializeClusterProperties(prop.Value, options);
                     continue;
                 }
-                if (property.NameEquals("properties"u8))
+                if (prop.NameEquals("sku"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    sku = KustoSku.DeserializeKustoSku(prop.Value, options);
+                    continue;
+                }
+                if (prop.NameEquals("zones"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    foreach (var property0 in property.Value.EnumerateObject())
+                    List<string> array = new List<string>();
+                    foreach (var item in prop.Value.EnumerateArray())
                     {
-                        if (property0.NameEquals("state"u8))
+                        if (item.ValueKind == JsonValueKind.Null)
                         {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            state = new KustoClusterState(property0.Value.GetString());
-                            continue;
+                            array.Add(null);
                         }
-                        if (property0.NameEquals("provisioningState"u8))
+                        else
                         {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            provisioningState = new KustoProvisioningState(property0.Value.GetString());
-                            continue;
-                        }
-                        if (property0.NameEquals("uri"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            uri = new Uri(property0.Value.GetString());
-                            continue;
-                        }
-                        if (property0.NameEquals("dataIngestionUri"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            dataIngestionUri = new Uri(property0.Value.GetString());
-                            continue;
-                        }
-                        if (property0.NameEquals("stateReason"u8))
-                        {
-                            stateReason = property0.Value.GetString();
-                            continue;
-                        }
-                        if (property0.NameEquals("trustedExternalTenants"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            List<KustoClusterTrustedExternalTenant> array = new List<KustoClusterTrustedExternalTenant>();
-                            foreach (var item in property0.Value.EnumerateArray())
-                            {
-                                array.Add(KustoClusterTrustedExternalTenant.DeserializeKustoClusterTrustedExternalTenant(item, options));
-                            }
-                            trustedExternalTenants = array;
-                            continue;
-                        }
-                        if (property0.NameEquals("optimizedAutoscale"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            optimizedAutoscale = OptimizedAutoscale.DeserializeOptimizedAutoscale(property0.Value, options);
-                            continue;
-                        }
-                        if (property0.NameEquals("enableDiskEncryption"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            enableDiskEncryption = property0.Value.GetBoolean();
-                            continue;
-                        }
-                        if (property0.NameEquals("enableStreamingIngest"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            enableStreamingIngest = property0.Value.GetBoolean();
-                            continue;
-                        }
-                        if (property0.NameEquals("virtualNetworkConfiguration"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            virtualNetworkConfiguration = KustoClusterVirtualNetworkConfiguration.DeserializeKustoClusterVirtualNetworkConfiguration(property0.Value, options);
-                            continue;
-                        }
-                        if (property0.NameEquals("keyVaultProperties"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            keyVaultProperties = KustoKeyVaultProperties.DeserializeKustoKeyVaultProperties(property0.Value, options);
-                            continue;
-                        }
-                        if (property0.NameEquals("enablePurge"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            enablePurge = property0.Value.GetBoolean();
-                            continue;
-                        }
-                        if (property0.NameEquals("languageExtensions"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            languageExtensions = KustoLanguageExtensionList.DeserializeKustoLanguageExtensionList(property0.Value, options);
-                            continue;
-                        }
-                        if (property0.NameEquals("enableDoubleEncryption"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            enableDoubleEncryption = property0.Value.GetBoolean();
-                            continue;
-                        }
-                        if (property0.NameEquals("publicNetworkAccess"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            publicNetworkAccess = new KustoClusterPublicNetworkAccess(property0.Value.GetString());
-                            continue;
-                        }
-                        if (property0.NameEquals("allowedIpRangeList"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            List<string> array = new List<string>();
-                            foreach (var item in property0.Value.EnumerateArray())
-                            {
-                                array.Add(item.GetString());
-                            }
-                            allowedIPRangeList = array;
-                            continue;
-                        }
-                        if (property0.NameEquals("engineType"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            engineType = new KustoClusterEngineType(property0.Value.GetString());
-                            continue;
-                        }
-                        if (property0.NameEquals("acceptedAudiences"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            List<AcceptedAudience> array = new List<AcceptedAudience>();
-                            foreach (var item in property0.Value.EnumerateArray())
-                            {
-                                array.Add(AcceptedAudience.DeserializeAcceptedAudience(item, options));
-                            }
-                            acceptedAudiences = array;
-                            continue;
-                        }
-                        if (property0.NameEquals("enableAutoStop"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            enableAutoStop = property0.Value.GetBoolean();
-                            continue;
-                        }
-                        if (property0.NameEquals("restrictOutboundNetworkAccess"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            restrictOutboundNetworkAccess = new KustoClusterNetworkAccessFlag(property0.Value.GetString());
-                            continue;
-                        }
-                        if (property0.NameEquals("allowedFqdnList"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            List<string> array = new List<string>();
-                            foreach (var item in property0.Value.EnumerateArray())
-                            {
-                                array.Add(item.GetString());
-                            }
-                            allowedFqdnList = array;
-                            continue;
-                        }
-                        if (property0.NameEquals("calloutPolicies"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            List<KustoCalloutPolicy> array = new List<KustoCalloutPolicy>();
-                            foreach (var item in property0.Value.EnumerateArray())
-                            {
-                                array.Add(KustoCalloutPolicy.DeserializeKustoCalloutPolicy(item, options));
-                            }
-                            calloutPolicies = array;
-                            continue;
-                        }
-                        if (property0.NameEquals("publicIPType"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            publicIPType = new KustoClusterPublicIPType(property0.Value.GetString());
-                            continue;
-                        }
-                        if (property0.NameEquals("virtualClusterGraduationProperties"u8))
-                        {
-                            virtualClusterGraduationProperties = property0.Value.GetString();
-                            continue;
-                        }
-                        if (property0.NameEquals("privateEndpointConnections"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            List<KustoPrivateEndpointConnectionData> array = new List<KustoPrivateEndpointConnectionData>();
-                            foreach (var item in property0.Value.EnumerateArray())
-                            {
-                                array.Add(KustoPrivateEndpointConnectionData.DeserializeKustoPrivateEndpointConnectionData(item, options));
-                            }
-                            privateEndpointConnections = array;
-                            continue;
-                        }
-                        if (property0.NameEquals("migrationCluster"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            migrationCluster = MigrationClusterProperties.DeserializeMigrationClusterProperties(property0.Value, options);
-                            continue;
-                        }
-                        if (property0.NameEquals("zoneStatus"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            zoneStatus = new KustoClusterZoneStatus(property0.Value.GetString());
-                            continue;
+                            array.Add(item.GetString());
                         }
                     }
+                    zones = array;
+                    continue;
+                }
+                if (prop.NameEquals("identity"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    identity = ModelReaderWriter.Read<ManagedServiceIdentity>(new BinaryData(Encoding.UTF8.GetBytes(prop.Value.GetRawText())), options.Format == "W" ? ModelSerializationExtensions.WireV3Options : ModelSerializationExtensions.JsonV3Options, AzureResourceManagerKustoContext.Default);
+                    continue;
+                }
+                if (prop.NameEquals("etag"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    eTag = new ETag(prop.Value.GetString());
                     continue;
                 }
                 if (options.Format != "W")
                 {
-                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = rawDataDictionary;
             return new KustoClusterData(
                 id,
                 name,
-                type,
+                resourceType,
                 systemData,
                 tags ?? new ChangeTrackingDictionary<string, string>(),
                 location,
+                properties,
                 sku,
                 zones ?? new ChangeTrackingList<string>(),
                 identity,
-                etag,
-                state,
-                provisioningState,
-                uri,
-                dataIngestionUri,
-                stateReason,
-                trustedExternalTenants ?? new ChangeTrackingList<KustoClusterTrustedExternalTenant>(),
-                optimizedAutoscale,
-                enableDiskEncryption,
-                enableStreamingIngest,
-                virtualNetworkConfiguration,
-                keyVaultProperties,
-                enablePurge,
-                languageExtensions,
-                enableDoubleEncryption,
-                publicNetworkAccess,
-                allowedIPRangeList ?? new ChangeTrackingList<string>(),
-                engineType,
-                acceptedAudiences ?? new ChangeTrackingList<AcceptedAudience>(),
-                enableAutoStop,
-                restrictOutboundNetworkAccess,
-                allowedFqdnList ?? new ChangeTrackingList<string>(),
-                calloutPolicies ?? new ChangeTrackingList<KustoCalloutPolicy>(),
-                publicIPType,
-                virtualClusterGraduationProperties,
-                privateEndpointConnections ?? new ChangeTrackingList<KustoPrivateEndpointConnectionData>(),
-                migrationCluster,
-                zoneStatus,
-                serializedAdditionalRawData);
+                eTag,
+                additionalBinaryDataProperties);
         }
-
-        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
-        {
-            StringBuilder builder = new StringBuilder();
-            BicepModelReaderWriterOptions bicepOptions = options as BicepModelReaderWriterOptions;
-            IDictionary<string, string> propertyOverrides = null;
-            bool hasObjectOverride = bicepOptions != null && bicepOptions.PropertyOverrides.TryGetValue(this, out propertyOverrides);
-            bool hasPropertyOverride = false;
-            string propertyOverride = null;
-
-            builder.AppendLine("{");
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Name), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  name: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(Name))
-                {
-                    builder.Append("  name: ");
-                    if (Name.Contains(Environment.NewLine))
-                    {
-                        builder.AppendLine("'''");
-                        builder.AppendLine($"{Name}'''");
-                    }
-                    else
-                    {
-                        builder.AppendLine($"'{Name}'");
-                    }
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Location), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  location: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                builder.Append("  location: ");
-                builder.AppendLine($"'{Location.ToString()}'");
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Tags), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  tags: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsCollectionDefined(Tags))
-                {
-                    if (Tags.Any())
-                    {
-                        builder.Append("  tags: ");
-                        builder.AppendLine("{");
-                        foreach (var item in Tags)
-                        {
-                            builder.Append($"    '{item.Key}': ");
-                            if (item.Value == null)
-                            {
-                                builder.Append("null");
-                                continue;
-                            }
-                            if (item.Value.Contains(Environment.NewLine))
-                            {
-                                builder.AppendLine("'''");
-                                builder.AppendLine($"{item.Value}'''");
-                            }
-                            else
-                            {
-                                builder.AppendLine($"'{item.Value}'");
-                            }
-                        }
-                        builder.AppendLine("  }");
-                    }
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Sku), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  sku: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(Sku))
-                {
-                    builder.Append("  sku: ");
-                    BicepSerializationHelpers.AppendChildObject(builder, Sku, options, 2, false, "  sku: ");
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Zones), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  zones: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsCollectionDefined(Zones))
-                {
-                    if (Zones.Any())
-                    {
-                        builder.Append("  zones: ");
-                        builder.AppendLine("[");
-                        foreach (var item in Zones)
-                        {
-                            if (item == null)
-                            {
-                                builder.Append("null");
-                                continue;
-                            }
-                            if (item.Contains(Environment.NewLine))
-                            {
-                                builder.AppendLine("    '''");
-                                builder.AppendLine($"{item}'''");
-                            }
-                            else
-                            {
-                                builder.AppendLine($"    '{item}'");
-                            }
-                        }
-                        builder.AppendLine("  ]");
-                    }
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Identity), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  identity: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(Identity))
-                {
-                    builder.Append("  identity: ");
-                    BicepSerializationHelpers.AppendChildObject(builder, Identity, options, 2, false, "  identity: ");
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ETag), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  etag: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(ETag))
-                {
-                    builder.Append("  etag: ");
-                    builder.AppendLine($"'{ETag.Value.ToString()}'");
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Id), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  id: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(Id))
-                {
-                    builder.Append("  id: ");
-                    builder.AppendLine($"'{Id.ToString()}'");
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(SystemData), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  systemData: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(SystemData))
-                {
-                    builder.Append("  systemData: ");
-                    builder.AppendLine($"'{SystemData.ToString()}'");
-                }
-            }
-
-            builder.Append("  properties:");
-            builder.AppendLine(" {");
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(State), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("    state: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(State))
-                {
-                    builder.Append("    state: ");
-                    builder.AppendLine($"'{State.Value.ToString()}'");
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ProvisioningState), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("    provisioningState: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(ProvisioningState))
-                {
-                    builder.Append("    provisioningState: ");
-                    builder.AppendLine($"'{ProvisioningState.Value.ToString()}'");
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ClusterUri), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("    uri: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(ClusterUri))
-                {
-                    builder.Append("    uri: ");
-                    builder.AppendLine($"'{ClusterUri.AbsoluteUri}'");
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(DataIngestionUri), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("    dataIngestionUri: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(DataIngestionUri))
-                {
-                    builder.Append("    dataIngestionUri: ");
-                    builder.AppendLine($"'{DataIngestionUri.AbsoluteUri}'");
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(StateReason), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("    stateReason: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(StateReason))
-                {
-                    builder.Append("    stateReason: ");
-                    if (StateReason.Contains(Environment.NewLine))
-                    {
-                        builder.AppendLine("'''");
-                        builder.AppendLine($"{StateReason}'''");
-                    }
-                    else
-                    {
-                        builder.AppendLine($"'{StateReason}'");
-                    }
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(TrustedExternalTenants), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("    trustedExternalTenants: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsCollectionDefined(TrustedExternalTenants))
-                {
-                    if (TrustedExternalTenants.Any())
-                    {
-                        builder.Append("    trustedExternalTenants: ");
-                        builder.AppendLine("[");
-                        foreach (var item in TrustedExternalTenants)
-                        {
-                            BicepSerializationHelpers.AppendChildObject(builder, item, options, 6, true, "    trustedExternalTenants: ");
-                        }
-                        builder.AppendLine("    ]");
-                    }
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(OptimizedAutoscale), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("    optimizedAutoscale: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(OptimizedAutoscale))
-                {
-                    builder.Append("    optimizedAutoscale: ");
-                    BicepSerializationHelpers.AppendChildObject(builder, OptimizedAutoscale, options, 4, false, "    optimizedAutoscale: ");
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(IsDiskEncryptionEnabled), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("    enableDiskEncryption: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(IsDiskEncryptionEnabled))
-                {
-                    builder.Append("    enableDiskEncryption: ");
-                    var boolValue = IsDiskEncryptionEnabled.Value == true ? "true" : "false";
-                    builder.AppendLine($"{boolValue}");
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(IsStreamingIngestEnabled), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("    enableStreamingIngest: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(IsStreamingIngestEnabled))
-                {
-                    builder.Append("    enableStreamingIngest: ");
-                    var boolValue = IsStreamingIngestEnabled.Value == true ? "true" : "false";
-                    builder.AppendLine($"{boolValue}");
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(VirtualNetworkConfiguration), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("    virtualNetworkConfiguration: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(VirtualNetworkConfiguration))
-                {
-                    builder.Append("    virtualNetworkConfiguration: ");
-                    BicepSerializationHelpers.AppendChildObject(builder, VirtualNetworkConfiguration, options, 4, false, "    virtualNetworkConfiguration: ");
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(KeyVaultProperties), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("    keyVaultProperties: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(KeyVaultProperties))
-                {
-                    builder.Append("    keyVaultProperties: ");
-                    BicepSerializationHelpers.AppendChildObject(builder, KeyVaultProperties, options, 4, false, "    keyVaultProperties: ");
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(IsPurgeEnabled), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("    enablePurge: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(IsPurgeEnabled))
-                {
-                    builder.Append("    enablePurge: ");
-                    var boolValue = IsPurgeEnabled.Value == true ? "true" : "false";
-                    builder.AppendLine($"{boolValue}");
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue("LanguageExtensionsValue", out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("    languageExtensions: ");
-                builder.AppendLine("{");
-                builder.AppendLine("      languageExtensions: {");
-                builder.Append("        value: ");
-                builder.AppendLine(propertyOverride);
-                builder.AppendLine("      }");
-                builder.AppendLine("    }");
-            }
-            else
-            {
-                if (Optional.IsDefined(LanguageExtensions))
-                {
-                    builder.Append("    languageExtensions: ");
-                    BicepSerializationHelpers.AppendChildObject(builder, LanguageExtensions, options, 4, false, "    languageExtensions: ");
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(IsDoubleEncryptionEnabled), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("    enableDoubleEncryption: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(IsDoubleEncryptionEnabled))
-                {
-                    builder.Append("    enableDoubleEncryption: ");
-                    var boolValue = IsDoubleEncryptionEnabled.Value == true ? "true" : "false";
-                    builder.AppendLine($"{boolValue}");
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(PublicNetworkAccess), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("    publicNetworkAccess: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(PublicNetworkAccess))
-                {
-                    builder.Append("    publicNetworkAccess: ");
-                    builder.AppendLine($"'{PublicNetworkAccess.Value.ToString()}'");
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(AllowedIPRangeList), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("    allowedIpRangeList: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsCollectionDefined(AllowedIPRangeList))
-                {
-                    if (AllowedIPRangeList.Any())
-                    {
-                        builder.Append("    allowedIpRangeList: ");
-                        builder.AppendLine("[");
-                        foreach (var item in AllowedIPRangeList)
-                        {
-                            if (item == null)
-                            {
-                                builder.Append("null");
-                                continue;
-                            }
-                            if (item.Contains(Environment.NewLine))
-                            {
-                                builder.AppendLine("      '''");
-                                builder.AppendLine($"{item}'''");
-                            }
-                            else
-                            {
-                                builder.AppendLine($"      '{item}'");
-                            }
-                        }
-                        builder.AppendLine("    ]");
-                    }
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(EngineType), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("    engineType: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(EngineType))
-                {
-                    builder.Append("    engineType: ");
-                    builder.AppendLine($"'{EngineType.Value.ToString()}'");
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(AcceptedAudiences), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("    acceptedAudiences: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsCollectionDefined(AcceptedAudiences))
-                {
-                    if (AcceptedAudiences.Any())
-                    {
-                        builder.Append("    acceptedAudiences: ");
-                        builder.AppendLine("[");
-                        foreach (var item in AcceptedAudiences)
-                        {
-                            BicepSerializationHelpers.AppendChildObject(builder, item, options, 6, true, "    acceptedAudiences: ");
-                        }
-                        builder.AppendLine("    ]");
-                    }
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(IsAutoStopEnabled), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("    enableAutoStop: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(IsAutoStopEnabled))
-                {
-                    builder.Append("    enableAutoStop: ");
-                    var boolValue = IsAutoStopEnabled.Value == true ? "true" : "false";
-                    builder.AppendLine($"{boolValue}");
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(RestrictOutboundNetworkAccess), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("    restrictOutboundNetworkAccess: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(RestrictOutboundNetworkAccess))
-                {
-                    builder.Append("    restrictOutboundNetworkAccess: ");
-                    builder.AppendLine($"'{RestrictOutboundNetworkAccess.Value.ToString()}'");
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(AllowedFqdnList), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("    allowedFqdnList: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsCollectionDefined(AllowedFqdnList))
-                {
-                    if (AllowedFqdnList.Any())
-                    {
-                        builder.Append("    allowedFqdnList: ");
-                        builder.AppendLine("[");
-                        foreach (var item in AllowedFqdnList)
-                        {
-                            if (item == null)
-                            {
-                                builder.Append("null");
-                                continue;
-                            }
-                            if (item.Contains(Environment.NewLine))
-                            {
-                                builder.AppendLine("      '''");
-                                builder.AppendLine($"{item}'''");
-                            }
-                            else
-                            {
-                                builder.AppendLine($"      '{item}'");
-                            }
-                        }
-                        builder.AppendLine("    ]");
-                    }
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(CalloutPolicies), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("    calloutPolicies: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsCollectionDefined(CalloutPolicies))
-                {
-                    if (CalloutPolicies.Any())
-                    {
-                        builder.Append("    calloutPolicies: ");
-                        builder.AppendLine("[");
-                        foreach (var item in CalloutPolicies)
-                        {
-                            BicepSerializationHelpers.AppendChildObject(builder, item, options, 6, true, "    calloutPolicies: ");
-                        }
-                        builder.AppendLine("    ]");
-                    }
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(PublicIPType), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("    publicIPType: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(PublicIPType))
-                {
-                    builder.Append("    publicIPType: ");
-                    builder.AppendLine($"'{PublicIPType.Value.ToString()}'");
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(VirtualClusterGraduationProperties), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("    virtualClusterGraduationProperties: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(VirtualClusterGraduationProperties))
-                {
-                    builder.Append("    virtualClusterGraduationProperties: ");
-                    if (VirtualClusterGraduationProperties.Contains(Environment.NewLine))
-                    {
-                        builder.AppendLine("'''");
-                        builder.AppendLine($"{VirtualClusterGraduationProperties}'''");
-                    }
-                    else
-                    {
-                        builder.AppendLine($"'{VirtualClusterGraduationProperties}'");
-                    }
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(PrivateEndpointConnections), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("    privateEndpointConnections: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsCollectionDefined(PrivateEndpointConnections))
-                {
-                    if (PrivateEndpointConnections.Any())
-                    {
-                        builder.Append("    privateEndpointConnections: ");
-                        builder.AppendLine("[");
-                        foreach (var item in PrivateEndpointConnections)
-                        {
-                            BicepSerializationHelpers.AppendChildObject(builder, item, options, 6, true, "    privateEndpointConnections: ");
-                        }
-                        builder.AppendLine("    ]");
-                    }
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(MigrationCluster), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("    migrationCluster: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(MigrationCluster))
-                {
-                    builder.Append("    migrationCluster: ");
-                    BicepSerializationHelpers.AppendChildObject(builder, MigrationCluster, options, 4, false, "    migrationCluster: ");
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ZoneStatus), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("    zoneStatus: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(ZoneStatus))
-                {
-                    builder.Append("    zoneStatus: ");
-                    builder.AppendLine($"'{ZoneStatus.Value.ToString()}'");
-                }
-            }
-
-            builder.AppendLine("  }");
-            builder.AppendLine("}");
-            return BinaryData.FromString(builder.ToString());
-        }
-
-        BinaryData IPersistableModel<KustoClusterData>.Write(ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<KustoClusterData>)this).GetFormatFromOptions(options) : options.Format;
-
-            switch (format)
-            {
-                case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerKustoContext.Default);
-                case "bicep":
-                    return SerializeBicep(options);
-                default:
-                    throw new FormatException($"The model {nameof(KustoClusterData)} does not support writing '{options.Format}' format.");
-            }
-        }
-
-        KustoClusterData IPersistableModel<KustoClusterData>.Create(BinaryData data, ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<KustoClusterData>)this).GetFormatFromOptions(options) : options.Format;
-
-            switch (format)
-            {
-                case "J":
-                    {
-                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
-                        return DeserializeKustoClusterData(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(KustoClusterData)} does not support reading '{options.Format}' format.");
-            }
-        }
-
-        string IPersistableModel<KustoClusterData>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

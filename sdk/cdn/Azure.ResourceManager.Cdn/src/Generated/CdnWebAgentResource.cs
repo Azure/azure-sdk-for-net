@@ -229,7 +229,7 @@ namespace Azure.ResourceManager.Cdn
                 HttpMessage message = _webAgentsRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, CdnWebAgentPatch.ToRequestContent(patch), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 CdnArmOperation<CdnWebAgentResource> operation = new CdnArmOperation<CdnWebAgentResource>(
-                    new CdnWebAgentOperationSource(Client),
+                    new CdnWebAgentResourceOperationSource(Client),
                     _webAgentsClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -288,7 +288,7 @@ namespace Azure.ResourceManager.Cdn
                 HttpMessage message = _webAgentsRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, CdnWebAgentPatch.ToRequestContent(patch), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 CdnArmOperation<CdnWebAgentResource> operation = new CdnArmOperation<CdnWebAgentResource>(
-                    new CdnWebAgentOperationSource(Client),
+                    new CdnWebAgentResourceOperationSource(Client),
                     _webAgentsClientDiagnostics,
                     Pipeline,
                     message.Request,

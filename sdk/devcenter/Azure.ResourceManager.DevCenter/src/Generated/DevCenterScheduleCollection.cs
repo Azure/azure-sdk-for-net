@@ -94,7 +94,7 @@ namespace Azure.ResourceManager.DevCenter
                 HttpMessage message = _schedulesRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, scheduleName, DevCenterScheduleData.ToRequestContent(data), top, context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 DevCenterArmOperation<DevCenterScheduleResource> operation = new DevCenterArmOperation<DevCenterScheduleResource>(
-                    new DevCenterScheduleOperationSource(Client),
+                    new DevCenterScheduleResourceOperationSource(Client),
                     _schedulesClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -153,7 +153,7 @@ namespace Azure.ResourceManager.DevCenter
                 HttpMessage message = _schedulesRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, scheduleName, DevCenterScheduleData.ToRequestContent(data), top, context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 DevCenterArmOperation<DevCenterScheduleResource> operation = new DevCenterArmOperation<DevCenterScheduleResource>(
-                    new DevCenterScheduleOperationSource(Client),
+                    new DevCenterScheduleResourceOperationSource(Client),
                     _schedulesClientDiagnostics,
                     Pipeline,
                     message.Request,

@@ -130,7 +130,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
                 HttpMessage message = _metricsObjectFirewallRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, MetricsObjectFirewallData.ToRequestContent(data), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 NgfwArmOperation<MetricsObjectFirewallResource> operation = new NgfwArmOperation<MetricsObjectFirewallResource>(
-                    new MetricsObjectFirewallOperationSource(Client),
+                    new MetricsObjectFirewallResourceOperationSource(Client),
                     _metricsObjectFirewallClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -189,7 +189,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
                 HttpMessage message = _metricsObjectFirewallRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, MetricsObjectFirewallData.ToRequestContent(data), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 NgfwArmOperation<MetricsObjectFirewallResource> operation = new NgfwArmOperation<MetricsObjectFirewallResource>(
-                    new MetricsObjectFirewallOperationSource(Client),
+                    new MetricsObjectFirewallResourceOperationSource(Client),
                     _metricsObjectFirewallClientDiagnostics,
                     Pipeline,
                     message.Request,

@@ -30,13 +30,14 @@ namespace Azure.ResourceManager.Storage.Models
 
         // Prior GA property name was "Enabled"; generated code renamed it.
         // Hidden alias preserves the old name for binary compat.
+        /// <summary> Indicates whether the storage task assignment is enabled. </summary>
         [EditorBrowsable(EditorBrowsableState.Never)]
         [WirePath("enabled")]
         public bool IsEnabled { get; set; }
 
         /// <summary> Initializes a new instance of <see cref="StorageTaskAssignmentProperties"/>. </summary>
-        /// <param name="taskId"> Id of the corresponding storage task. </param>
-        /// <param name="isEnabled"> Whether the storage task assignment is enabled or not. </param>
+        /// <param name="taskId"> The ID of the corresponding storage task. </param>
+        /// <param name="isEnabled"> Indicates whether the storage task assignment is enabled. </param>
         /// <param name="description"> Text that describes the purpose of the storage task assignment. </param>
         /// <param name="executionContext"> The storage task assignment execution context. </param>
         /// <param name="report"> The storage task assignment report. </param>

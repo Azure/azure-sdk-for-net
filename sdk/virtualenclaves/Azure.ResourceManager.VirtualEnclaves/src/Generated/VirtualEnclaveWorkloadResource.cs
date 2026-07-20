@@ -230,7 +230,7 @@ namespace Azure.ResourceManager.VirtualEnclaves
                 HttpMessage message = _workloadRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, VirtualEnclaveWorkloadPatch.ToRequestContent(patch), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 VirtualEnclavesArmOperation<VirtualEnclaveWorkloadResource> operation = new VirtualEnclavesArmOperation<VirtualEnclaveWorkloadResource>(
-                    new VirtualEnclaveWorkloadOperationSource(Client),
+                    new VirtualEnclaveWorkloadResourceOperationSource(Client),
                     _workloadClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -289,7 +289,7 @@ namespace Azure.ResourceManager.VirtualEnclaves
                 HttpMessage message = _workloadRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, VirtualEnclaveWorkloadPatch.ToRequestContent(patch), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 VirtualEnclavesArmOperation<VirtualEnclaveWorkloadResource> operation = new VirtualEnclavesArmOperation<VirtualEnclaveWorkloadResource>(
-                    new VirtualEnclaveWorkloadOperationSource(Client),
+                    new VirtualEnclaveWorkloadResourceOperationSource(Client),
                     _workloadClientDiagnostics,
                     Pipeline,
                     message.Request,

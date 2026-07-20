@@ -25,8 +25,6 @@ namespace Azure.ResourceManager.ApiCenter
     {
         private readonly ClientDiagnostics _apiVersionsClientDiagnostics;
         private readonly ApiVersions _apiVersionsRestClient;
-        private readonly ClientDiagnostics _apiDefinitionsClientDiagnostics;
-        private readonly ApiDefinitions _apiDefinitionsRestClient;
         private readonly ApiCenterApiVersionData _data;
         /// <summary> Gets the resource type for the operations. </summary>
         public static readonly ResourceType ResourceType = "Microsoft.ApiCenter/services/workspaces/apis/versions";
@@ -53,8 +51,6 @@ namespace Azure.ResourceManager.ApiCenter
             TryGetApiVersion(ResourceType, out string apiCenterApiVersionApiVersion);
             _apiVersionsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ApiCenter", ResourceType.Namespace, Diagnostics);
             _apiVersionsRestClient = new ApiVersions(_apiVersionsClientDiagnostics, Pipeline, Endpoint, apiCenterApiVersionApiVersion ?? "2024-06-01-preview");
-            _apiDefinitionsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ApiCenter", ResourceType.Namespace, Diagnostics);
-            _apiDefinitionsRestClient = new ApiDefinitions(_apiDefinitionsClientDiagnostics, Pipeline, Endpoint, apiCenterApiVersionApiVersion ?? "2024-06-01-preview");
             ValidateResourceId(id);
         }
 
@@ -287,102 +283,6 @@ namespace Azure.ResourceManager.ApiCenter
                     operation.WaitForCompletionResponse(cancellationToken);
                 }
                 return operation;
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// Checks if specified API definition exists.
-        /// <list type="bullet">
-        /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiCenter/services/{serviceName}/workspaces/{workspaceName}/apis/{apiName}/versions/{versionName}/definitions/{definitionName}. </description>
-        /// </item>
-        /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> ApiDefinitions_Head. </description>
-        /// </item>
-        /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2024-06-01-preview. </description>
-        /// </item>
-        /// <item>
-        /// <term> Resource. </term>
-        /// <description> <see cref="ApiCenterApiVersionResource"/>. </description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="definitionName"> The name of the API definition. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="definitionName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="definitionName"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual async Task<Response> HeadAsync(string definitionName, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(definitionName, nameof(definitionName));
-
-            using DiagnosticScope scope = _apiDefinitionsClientDiagnostics.CreateScope("ApiCenterApiVersionResource.Head");
-            scope.Start();
-            try
-            {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = _apiDefinitionsRestClient.CreateHeadRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, definitionName, context);
-                Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                return response;
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// Checks if specified API definition exists.
-        /// <list type="bullet">
-        /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiCenter/services/{serviceName}/workspaces/{workspaceName}/apis/{apiName}/versions/{versionName}/definitions/{definitionName}. </description>
-        /// </item>
-        /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> ApiDefinitions_Head. </description>
-        /// </item>
-        /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2024-06-01-preview. </description>
-        /// </item>
-        /// <item>
-        /// <term> Resource. </term>
-        /// <description> <see cref="ApiCenterApiVersionResource"/>. </description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="definitionName"> The name of the API definition. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="definitionName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="definitionName"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual Response Head(string definitionName, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(definitionName, nameof(definitionName));
-
-            using DiagnosticScope scope = _apiDefinitionsClientDiagnostics.CreateScope("ApiCenterApiVersionResource.Head");
-            scope.Start();
-            try
-            {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = _apiDefinitionsRestClient.CreateHeadRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, definitionName, context);
-                Response response = Pipeline.ProcessMessage(message, context);
-                return response;
             }
             catch (Exception e)
             {

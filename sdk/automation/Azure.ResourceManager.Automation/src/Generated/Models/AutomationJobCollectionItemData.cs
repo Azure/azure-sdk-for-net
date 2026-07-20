@@ -15,95 +15,144 @@ namespace Azure.ResourceManager.Automation.Models
     /// <summary> Job collection item properties. </summary>
     public partial class AutomationJobCollectionItemData : ResourceData
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="AutomationJobCollectionItemData"/>. </summary>
         public AutomationJobCollectionItemData()
         {
+
         }
 
         /// <summary> Initializes a new instance of <see cref="AutomationJobCollectionItemData"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="runbook"> The runbook association. </param>
-        /// <param name="jobId"> The id of the job. </param>
-        /// <param name="createdOn"> The creation time of the job. </param>
-        /// <param name="status"> The status of the job. </param>
-        /// <param name="startOn"> The start time of the job. </param>
-        /// <param name="endOn"> The end time of the job. </param>
-        /// <param name="lastModifiedOn"> The last modified time of the job. </param>
-        /// <param name="provisioningState"> The provisioning state of a resource. </param>
-        /// <param name="runOn"> Specifies the runOn group name where the job was executed. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal AutomationJobCollectionItemData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, RunbookAssociationProperty runbook, Guid? jobId, DateTimeOffset? createdOn, AutomationJobStatus? status, DateTimeOffset? startOn, DateTimeOffset? endOn, DateTimeOffset? lastModifiedOn, string provisioningState, string runOn, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="properties"> Job properties. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal AutomationJobCollectionItemData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, JobCollectionItemProperties properties, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(id, name, resourceType, systemData)
         {
-            Runbook = runbook;
-            JobId = jobId;
-            CreatedOn = createdOn;
-            Status = status;
-            StartOn = startOn;
-            EndOn = endOn;
-            LastModifiedOn = lastModifiedOn;
-            ProvisioningState = provisioningState;
-            RunOn = runOn;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            Properties = properties;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
-        /// <summary> The runbook association. </summary>
-        internal RunbookAssociationProperty Runbook { get; }
+        /// <summary> Job properties. </summary>
+        internal JobCollectionItemProperties Properties { get; set; }
+
+        /// <summary> The id of the job. </summary>
+        public Guid? JobId
+        {
+            get
+            {
+                return Properties is null ? default : Properties.JobId;
+            }
+        }
+
+        /// <summary> Gets or sets the job started by. </summary>
+        public string StartedBy
+        {
+            get
+            {
+                return Properties is null ? default : Properties.StartedBy;
+            }
+        }
+
+        /// <summary> The creation time of the job. </summary>
+        public DateTimeOffset? CreatedOn
+        {
+            get
+            {
+                return Properties is null ? default : Properties.CreatedOn;
+            }
+        }
+
+        /// <summary> The status of the job. </summary>
+        public AutomationJobStatus? Status
+        {
+            get
+            {
+                return Properties is null ? default : Properties.Status;
+            }
+        }
+
+        /// <summary> The start time of the job. </summary>
+        public DateTimeOffset? StartOn
+        {
+            get
+            {
+                return Properties is null ? default : Properties.StartOn;
+            }
+        }
+
+        /// <summary> The end time of the job. </summary>
+        public DateTimeOffset? EndOn
+        {
+            get
+            {
+                return Properties is null ? default : Properties.EndOn;
+            }
+        }
+
+        /// <summary> The last modified time of the job. </summary>
+        public DateTimeOffset? LastModifiedOn
+        {
+            get
+            {
+                return Properties is null ? default : Properties.LastModifiedOn;
+            }
+        }
+
+        /// <summary> The provisioning state of a resource. </summary>
+        public string ProvisioningState
+        {
+            get
+            {
+                return Properties is null ? default : Properties.ProvisioningState;
+            }
+        }
+
+        /// <summary> Specifies the runOn group name where the job was executed. </summary>
+        public string RunOn
+        {
+            get
+            {
+                return Properties is null ? default : Properties.RunOn;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new JobCollectionItemProperties();
+                }
+                Properties.RunOn = value;
+            }
+        }
+
         /// <summary> Gets or sets the name of the runbook. </summary>
         public string RunbookName
         {
-            get => Runbook?.Name;
+            get
+            {
+                return Properties is null ? default : Properties.RunbookName;
+            }
         }
 
-        /// <summary> The id of the job. </summary>
-        public Guid? JobId { get; }
-        /// <summary> The creation time of the job. </summary>
-        public DateTimeOffset? CreatedOn { get; }
-        /// <summary> The status of the job. </summary>
-        public AutomationJobStatus? Status { get; }
-        /// <summary> The start time of the job. </summary>
-        public DateTimeOffset? StartOn { get; }
-        /// <summary> The end time of the job. </summary>
-        public DateTimeOffset? EndOn { get; }
-        /// <summary> The last modified time of the job. </summary>
-        public DateTimeOffset? LastModifiedOn { get; }
-        /// <summary> The provisioning state of a resource. </summary>
-        public string ProvisioningState { get; }
-        /// <summary> Specifies the runOn group name where the job was executed. </summary>
-        public string RunOn { get; set; }
+        /// <summary> Name of Runtime Environment. </summary>
+        public string RuntimeEnvironmentName
+        {
+            get
+            {
+                return Properties is null ? default : Properties.RuntimeEnvironmentName;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new JobCollectionItemProperties();
+                }
+                Properties.RuntimeEnvironmentName = value;
+            }
+        }
     }
 }

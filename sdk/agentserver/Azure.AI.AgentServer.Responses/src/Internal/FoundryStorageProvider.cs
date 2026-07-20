@@ -33,6 +33,29 @@ internal sealed class FoundryStorageProvider : ResponsesProvider
     }
 
     /// <summary>
+    /// Sends an HTTP request through the pipeline and validates the response,
+    /// tagging any unhandled transport/auth exception as a platform error.
+    /// </summary>
+    private async Task SendStorageRequestAsync(HttpMessage message, CancellationToken cancellationToken)
+    {
+        try
+        {
+            await _pipeline.SendAsync(message, cancellationToken);
+        }
+        catch (Exception ex) when (!ex.Data.Contains(StorageErrorMapper.PlatformErrorDataKey))
+        {
+            // Transport, auth, or other pipeline exception that our code didn't throw —
+            // this is a platform infrastructure failure (storage unreachable, creds expired, etc.).
+            ex.Data[StorageErrorMapper.PlatformErrorDataKey] = true;
+            throw;
+        }
+
+        // Validate outside the platform-tagging try/catch so that mapped 4xx exceptions
+        // (BadRequest, NotFound) are not incorrectly tagged as platform errors.
+        StorageErrorMapper.ThrowIfError(message.Response);
+    }
+
+    /// <summary>
     /// Creates an <see cref="HttpMessage"/> with the given method and path,
     /// applying the <c>api-version</c> query parameter.
     /// </summary>
@@ -65,54 +88,50 @@ internal sealed class FoundryStorageProvider : ResponsesProvider
     }
 
     /// <summary>
-    /// Applies isolation key headers to an outbound HTTP request when present.
+    /// Forwards the per-request call ID on an outbound HTTP request when present.
+    /// Only <c>x-agent-foundry-call-id</c> is forwarded; the storage service
+    /// resolves the caller context server-side from it. <c>x-agent-user-id</c>
+    /// is not forwarded (not accepted/trusted by 1P services).
     /// </summary>
-    private static void ApplyIsolationHeaders(Request request, IsolationContext isolation)
+    private static void ApplyPlatformHeaders(Request request, PlatformContext context)
     {
-        if (ReferenceEquals(isolation, IsolationContext.Empty))
+        if (ReferenceEquals(context, PlatformContext.Empty))
         {
             return;
         }
 
-        if (isolation.UserIsolationKey is not null)
+        if (context.CallId is not null)
         {
-            request.Headers.SetValue(PlatformHeaders.UserIsolationKey, isolation.UserIsolationKey);
-        }
-
-        if (isolation.ChatIsolationKey is not null)
-        {
-            request.Headers.SetValue(PlatformHeaders.ChatIsolationKey, isolation.ChatIsolationKey);
+            request.Headers.SetValue(PlatformHeaders.FoundryCallId, context.CallId);
         }
     }
 
     /// <inheritdoc/>
     public override async Task CreateResponseAsync(
         CreateResponseRequest request,
-        IsolationContext isolation,
+        PlatformContext context,
         CancellationToken cancellationToken = default)
     {
         var body = StorageEnvelopeSerializer.SerializeCreateRequest(request);
         using var message = CreateRequest(RequestMethod.Post, "responses");
         message.Request.Content = RequestContent.Create(body);
         message.Request.Headers.SetValue("Content-Type", JsonContentType);
-        ApplyIsolationHeaders(message.Request, isolation);
+        ApplyPlatformHeaders(message.Request, context);
 
-        await _pipeline.SendAsync(message, cancellationToken);
-        StorageErrorMapper.ThrowIfError(message.Response);
+        await SendStorageRequestAsync(message, cancellationToken);
     }
 
     /// <inheritdoc/>
     public override async Task<Models.ResponseObject> GetResponseAsync(
         string responseId,
-        IsolationContext isolation,
+        PlatformContext context,
         CancellationToken cancellationToken = default)
     {
         using var message = CreateRequest(RequestMethod.Get, $"responses/{Uri.EscapeDataString(responseId)}");
         message.Request.Headers.SetValue("Accept", "application/json");
-        ApplyIsolationHeaders(message.Request, isolation);
+        ApplyPlatformHeaders(message.Request, context);
 
-        await _pipeline.SendAsync(message, cancellationToken);
-        StorageErrorMapper.ThrowIfError(message.Response);
+        await SendStorageRequestAsync(message, cancellationToken);
 
         var body = message.Response.Content.ToString();
         return StorageEnvelopeSerializer.DeserializeResponse(body);
@@ -121,36 +140,34 @@ internal sealed class FoundryStorageProvider : ResponsesProvider
     /// <inheritdoc/>
     public override async Task UpdateResponseAsync(
         Models.ResponseObject response,
-        IsolationContext isolation,
+        PlatformContext context,
         CancellationToken cancellationToken = default)
     {
         var body = StorageEnvelopeSerializer.SerializeResponse(response);
         using var message = CreateRequest(RequestMethod.Post, $"responses/{Uri.EscapeDataString(response.Id)}");
         message.Request.Content = RequestContent.Create(body);
         message.Request.Headers.SetValue("Content-Type", JsonContentType);
-        ApplyIsolationHeaders(message.Request, isolation);
+        ApplyPlatformHeaders(message.Request, context);
 
-        await _pipeline.SendAsync(message, cancellationToken);
-        StorageErrorMapper.ThrowIfError(message.Response);
+        await SendStorageRequestAsync(message, cancellationToken);
     }
 
     /// <inheritdoc/>
     public override async Task DeleteResponseAsync(
         string responseId,
-        IsolationContext isolation,
+        PlatformContext context,
         CancellationToken cancellationToken = default)
     {
         using var message = CreateRequest(RequestMethod.Delete, $"responses/{Uri.EscapeDataString(responseId)}");
-        ApplyIsolationHeaders(message.Request, isolation);
+        ApplyPlatformHeaders(message.Request, context);
 
-        await _pipeline.SendAsync(message, cancellationToken);
-        StorageErrorMapper.ThrowIfError(message.Response);
+        await SendStorageRequestAsync(message, cancellationToken);
     }
 
     /// <inheritdoc/>
     public override async Task<AgentsPagedResultOutputItem> GetInputItemsAsync(
         string responseId,
-        IsolationContext isolation,
+        PlatformContext context,
         int limit = 20,
         bool ascending = false,
         string? after = null,
@@ -166,10 +183,9 @@ internal sealed class FoundryStorageProvider : ResponsesProvider
 
         using var message = CreateRequest(RequestMethod.Get, $"responses/{Uri.EscapeDataString(responseId)}/input_items", query);
         message.Request.Headers.SetValue("Accept", "application/json");
-        ApplyIsolationHeaders(message.Request, isolation);
+        ApplyPlatformHeaders(message.Request, context);
 
-        await _pipeline.SendAsync(message, cancellationToken);
-        StorageErrorMapper.ThrowIfError(message.Response);
+        await SendStorageRequestAsync(message, cancellationToken);
 
         var body = message.Response.Content.ToString();
         return StorageEnvelopeSerializer.DeserializePagedItems(body);
@@ -178,7 +194,7 @@ internal sealed class FoundryStorageProvider : ResponsesProvider
     /// <inheritdoc/>
     public override async Task<IEnumerable<OutputItem?>> GetItemsAsync(
         IEnumerable<string> itemIds,
-        IsolationContext isolation,
+        PlatformContext context,
         CancellationToken cancellationToken = default)
     {
         var ids = itemIds.ToList();
@@ -187,10 +203,9 @@ internal sealed class FoundryStorageProvider : ResponsesProvider
         message.Request.Content = RequestContent.Create(content);
         message.Request.Headers.SetValue("Content-Type", JsonContentType);
         message.Request.Headers.SetValue("Accept", "application/json");
-        ApplyIsolationHeaders(message.Request, isolation);
+        ApplyPlatformHeaders(message.Request, context);
 
-        await _pipeline.SendAsync(message, cancellationToken);
-        StorageErrorMapper.ThrowIfError(message.Response);
+        await SendStorageRequestAsync(message, cancellationToken);
 
         var body = message.Response.Content.ToString();
         return StorageEnvelopeSerializer.DeserializeItemsArray(body);
@@ -201,7 +216,7 @@ internal sealed class FoundryStorageProvider : ResponsesProvider
         string? previousResponseId,
         string? conversationId,
         int limit,
-        IsolationContext isolation,
+        PlatformContext context,
         CancellationToken cancellationToken = default)
     {
         var query = $"limit={limit}";
@@ -212,10 +227,9 @@ internal sealed class FoundryStorageProvider : ResponsesProvider
 
         using var message = CreateRequest(RequestMethod.Get, "history/item_ids", query);
         message.Request.Headers.SetValue("Accept", "application/json");
-        ApplyIsolationHeaders(message.Request, isolation);
+        ApplyPlatformHeaders(message.Request, context);
 
-        await _pipeline.SendAsync(message, cancellationToken);
-        StorageErrorMapper.ThrowIfError(message.Response);
+        await SendStorageRequestAsync(message, cancellationToken);
 
         var body = message.Response.Content.ToString();
         return StorageEnvelopeSerializer.DeserializeHistoryIds(body);

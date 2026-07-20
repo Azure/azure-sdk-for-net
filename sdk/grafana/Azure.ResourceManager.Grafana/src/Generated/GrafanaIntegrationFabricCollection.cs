@@ -93,7 +93,7 @@ namespace Azure.ResourceManager.Grafana
                 HttpMessage message = _integrationFabricsRestClient.CreateCreateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, integrationFabricName, GrafanaIntegrationFabricData.ToRequestContent(data), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 GrafanaArmOperation<GrafanaIntegrationFabricResource> operation = new GrafanaArmOperation<GrafanaIntegrationFabricResource>(
-                    new GrafanaIntegrationFabricOperationSource(Client),
+                    new GrafanaIntegrationFabricResourceOperationSource(Client),
                     _integrationFabricsClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -151,7 +151,7 @@ namespace Azure.ResourceManager.Grafana
                 HttpMessage message = _integrationFabricsRestClient.CreateCreateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, integrationFabricName, GrafanaIntegrationFabricData.ToRequestContent(data), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 GrafanaArmOperation<GrafanaIntegrationFabricResource> operation = new GrafanaArmOperation<GrafanaIntegrationFabricResource>(
-                    new GrafanaIntegrationFabricOperationSource(Client),
+                    new GrafanaIntegrationFabricResourceOperationSource(Client),
                     _integrationFabricsClientDiagnostics,
                     Pipeline,
                     message.Request,

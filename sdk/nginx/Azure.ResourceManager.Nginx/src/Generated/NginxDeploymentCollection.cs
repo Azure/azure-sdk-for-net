@@ -93,7 +93,7 @@ namespace Azure.ResourceManager.Nginx
                 HttpMessage message = _nginxDeploymentsRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, deploymentName, NginxDeploymentData.ToRequestContent(data), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 NginxArmOperation<NginxDeploymentResource> operation = new NginxArmOperation<NginxDeploymentResource>(
-                    new NginxDeploymentOperationSource(Client),
+                    new NginxDeploymentResourceOperationSource(Client),
                     _nginxDeploymentsClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -150,7 +150,7 @@ namespace Azure.ResourceManager.Nginx
                 HttpMessage message = _nginxDeploymentsRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, deploymentName, NginxDeploymentData.ToRequestContent(data), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 NginxArmOperation<NginxDeploymentResource> operation = new NginxArmOperation<NginxDeploymentResource>(
-                    new NginxDeploymentOperationSource(Client),
+                    new NginxDeploymentResourceOperationSource(Client),
                     _nginxDeploymentsClientDiagnostics,
                     Pipeline,
                     message.Request,

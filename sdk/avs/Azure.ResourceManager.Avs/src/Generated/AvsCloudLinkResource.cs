@@ -325,7 +325,7 @@ namespace Azure.ResourceManager.Avs
                 HttpMessage message = _cloudLinksRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, AvsCloudLinkData.ToRequestContent(data), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 AvsArmOperation<AvsCloudLinkResource> operation = new AvsArmOperation<AvsCloudLinkResource>(
-                    new AvsCloudLinkOperationSource(Client),
+                    new AvsCloudLinkResourceOperationSource(Client),
                     _cloudLinksClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -384,7 +384,7 @@ namespace Azure.ResourceManager.Avs
                 HttpMessage message = _cloudLinksRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, AvsCloudLinkData.ToRequestContent(data), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 AvsArmOperation<AvsCloudLinkResource> operation = new AvsArmOperation<AvsCloudLinkResource>(
-                    new AvsCloudLinkOperationSource(Client),
+                    new AvsCloudLinkResourceOperationSource(Client),
                     _cloudLinksClientDiagnostics,
                     Pipeline,
                     message.Request,

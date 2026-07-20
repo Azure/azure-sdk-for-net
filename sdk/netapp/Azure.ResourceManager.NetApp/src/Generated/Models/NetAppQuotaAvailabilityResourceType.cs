@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.NetApp;
 
 namespace Azure.ResourceManager.NetApp.Models
 {
@@ -14,50 +15,73 @@ namespace Azure.ResourceManager.NetApp.Models
     public readonly partial struct NetAppQuotaAvailabilityResourceType : IEquatable<NetAppQuotaAvailabilityResourceType>
     {
         private readonly string _value;
-
-        /// <summary> Initializes a new instance of <see cref="NetAppQuotaAvailabilityResourceType"/>. </summary>
-        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        public NetAppQuotaAvailabilityResourceType(string value)
-        {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
-
         private const string MicrosoftNetAppNetAppAccountsValue = "Microsoft.NetApp/netAppAccounts";
         private const string MicrosoftNetAppNetAppAccountsCapacityPoolsValue = "Microsoft.NetApp/netAppAccounts/capacityPools";
         private const string MicrosoftNetAppNetAppAccountsCapacityPoolsVolumesValue = "Microsoft.NetApp/netAppAccounts/capacityPools/volumes";
         private const string MicrosoftNetAppNetAppAccountsCapacityPoolsVolumesSnapshotsValue = "Microsoft.NetApp/netAppAccounts/capacityPools/volumes/snapshots";
+        /// <summary> ANF Backup under a volume , deprecated, use `Microsoft.NetApp/netAppAccounts/backupVaults/backups` instead. </summary>
         private const string MicrosoftNetAppNetAppAccountsBackupVaultsBackupsValue = "Microsoft.NetApp/netAppAccounts/backupVaults/backups";
+        /// <summary> ANF Backup under a Backup Vault. </summary>
         private const string MicrosoftNetAppNetAppAccountsCapacityPoolsVolumesBackupsValue = "Microsoft.NetApp/netAppAccounts/capacityPools/volumes/backups";
 
-        /// <summary> Microsoft.NetApp/netAppAccounts. </summary>
+        /// <summary> Initializes a new instance of <see cref="NetAppQuotaAvailabilityResourceType"/>. </summary>
+        /// <param name="value"> The value. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
+        public NetAppQuotaAvailabilityResourceType(string value)
+        {
+            Argument.AssertNotNull(value, nameof(value));
+
+            _value = value;
+        }
+
+        /// <summary> Gets the MicrosoftNetAppNetAppAccounts. </summary>
         public static NetAppQuotaAvailabilityResourceType MicrosoftNetAppNetAppAccounts { get; } = new NetAppQuotaAvailabilityResourceType(MicrosoftNetAppNetAppAccountsValue);
-        /// <summary> Microsoft.NetApp/netAppAccounts/capacityPools. </summary>
+
+        /// <summary> Gets the MicrosoftNetAppNetAppAccountsCapacityPools. </summary>
         public static NetAppQuotaAvailabilityResourceType MicrosoftNetAppNetAppAccountsCapacityPools { get; } = new NetAppQuotaAvailabilityResourceType(MicrosoftNetAppNetAppAccountsCapacityPoolsValue);
-        /// <summary> Microsoft.NetApp/netAppAccounts/capacityPools/volumes. </summary>
+
+        /// <summary> Gets the MicrosoftNetAppNetAppAccountsCapacityPoolsVolumes. </summary>
         public static NetAppQuotaAvailabilityResourceType MicrosoftNetAppNetAppAccountsCapacityPoolsVolumes { get; } = new NetAppQuotaAvailabilityResourceType(MicrosoftNetAppNetAppAccountsCapacityPoolsVolumesValue);
-        /// <summary> Microsoft.NetApp/netAppAccounts/capacityPools/volumes/snapshots. </summary>
+
+        /// <summary> Gets the MicrosoftNetAppNetAppAccountsCapacityPoolsVolumesSnapshots. </summary>
         public static NetAppQuotaAvailabilityResourceType MicrosoftNetAppNetAppAccountsCapacityPoolsVolumesSnapshots { get; } = new NetAppQuotaAvailabilityResourceType(MicrosoftNetAppNetAppAccountsCapacityPoolsVolumesSnapshotsValue);
+
         /// <summary> ANF Backup under a volume , deprecated, use `Microsoft.NetApp/netAppAccounts/backupVaults/backups` instead. </summary>
         public static NetAppQuotaAvailabilityResourceType MicrosoftNetAppNetAppAccountsBackupVaultsBackups { get; } = new NetAppQuotaAvailabilityResourceType(MicrosoftNetAppNetAppAccountsBackupVaultsBackupsValue);
+
         /// <summary> ANF Backup under a Backup Vault. </summary>
         public static NetAppQuotaAvailabilityResourceType MicrosoftNetAppNetAppAccountsCapacityPoolsVolumesBackups { get; } = new NetAppQuotaAvailabilityResourceType(MicrosoftNetAppNetAppAccountsCapacityPoolsVolumesBackupsValue);
+
         /// <summary> Determines if two <see cref="NetAppQuotaAvailabilityResourceType"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(NetAppQuotaAvailabilityResourceType left, NetAppQuotaAvailabilityResourceType right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="NetAppQuotaAvailabilityResourceType"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(NetAppQuotaAvailabilityResourceType left, NetAppQuotaAvailabilityResourceType right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="NetAppQuotaAvailabilityResourceType"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="NetAppQuotaAvailabilityResourceType"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator NetAppQuotaAvailabilityResourceType(string value) => new NetAppQuotaAvailabilityResourceType(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="NetAppQuotaAvailabilityResourceType"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator NetAppQuotaAvailabilityResourceType?(string value) => value == null ? null : new NetAppQuotaAvailabilityResourceType(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is NetAppQuotaAvailabilityResourceType other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(NetAppQuotaAvailabilityResourceType other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

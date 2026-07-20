@@ -6,7 +6,9 @@
 #nullable disable
 
 using System;
+using System.ClientModel;
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 
 namespace Azure.Analytics.Purview.DataMap
@@ -55,7 +57,7 @@ namespace Azure.Analytics.Purview.DataMap
         /// <param name="version"> The version of the entity. </param>
         /// <param name="contacts"> The dictionary of contacts for entities. Key could be Expert or Owner. </param>
         /// <returns> A new <see cref="DataMap.AtlasEntity"/> instance for mocking. </returns>
-        public static AtlasEntity AtlasEntity(IDictionary<string, BinaryData> attributes = default, string typeName = default, string lastModifiedTS = default, IDictionary<string, BinaryData> businessAttributes = default, IEnumerable<AtlasClassification> classifications = default, long? createTime = default, string createdBy = default, IDictionary<string, string> customAttributes = default, string guid = default, string homeId = default, string collectionId = default, bool? isIncomplete = default, IEnumerable<string> labels = default, IEnumerable<AtlasTermAssignmentHeader> meanings = default, int? provenanceType = default, bool? proxy = default, IDictionary<string, BinaryData> relationshipAttributes = default, EntityStatus? status = default, long? updateTime = default, string updatedBy = default, long? version = default, IDictionary<string, IList<ContactInfo>> contacts = default)
+        public static AtlasEntity AtlasEntity(IDictionary<string, BinaryData> attributes = default, string typeName = default, string lastModifiedTS = default, IDictionary<string, BinaryData> businessAttributes = default, IEnumerable<AtlasClassification> classifications = default, long? createTime = default, string createdBy = default, IDictionary<string, string> customAttributes = default, string guid = default, string homeId = default, string collectionId = default, bool? isIncomplete = default, IEnumerable<string> labels = default, IEnumerable<AtlasTermAssignmentHeader> meanings = default, int? provenanceType = default, bool? proxy = default, IDictionary<string, BinaryData> relationshipAttributes = default, DataMapEntityStatus? status = default, long? updateTime = default, string updatedBy = default, long? version = default, IDictionary<string, IList<ContactInfo>> contacts = default)
         {
             attributes ??= new ChangeTrackingDictionary<string, BinaryData>();
             businessAttributes ??= new ChangeTrackingDictionary<string, BinaryData>();
@@ -107,7 +109,7 @@ namespace Azure.Analytics.Purview.DataMap
         /// <param name="removePropagationsOnEntityDelete"> Determines if propagations will be removed on entity deletion. </param>
         /// <param name="validityPeriods"> An array of time boundaries indicating validity periods. </param>
         /// <returns> A new <see cref="DataMap.AtlasClassification"/> instance for mocking. </returns>
-        public static AtlasClassification AtlasClassification(IDictionary<string, BinaryData> attributes = default, string typeName = default, string lastModifiedTS = default, string entityGuid = default, EntityStatus? entityStatus = default, bool? removePropagationsOnEntityDelete = default, IEnumerable<TimeBoundary> validityPeriods = default)
+        public static AtlasClassification AtlasClassification(IDictionary<string, BinaryData> attributes = default, string typeName = default, string lastModifiedTS = default, string entityGuid = default, DataMapEntityStatus? entityStatus = default, bool? removePropagationsOnEntityDelete = default, IEnumerable<TimeBoundary> validityPeriods = default)
         {
             attributes ??= new ChangeTrackingDictionary<string, BinaryData>();
             validityPeriods ??= new ChangeTrackingList<TimeBoundary>();
@@ -199,7 +201,7 @@ namespace Azure.Analytics.Purview.DataMap
         /// removed.
         /// </param>
         /// <returns> A new <see cref="DataMap.AtlasEntityHeader"/> instance for mocking. </returns>
-        public static AtlasEntityHeader AtlasEntityHeader(IDictionary<string, BinaryData> attributes = default, string typeName = default, string lastModifiedTS = default, IEnumerable<string> classificationNames = default, IEnumerable<AtlasClassification> classifications = default, string displayText = default, string guid = default, bool? isIncomplete = default, IEnumerable<string> labels = default, IEnumerable<string> meaningNames = default, IEnumerable<AtlasTermAssignmentHeader> meanings = default, EntityStatus? status = default)
+        public static AtlasEntityHeader AtlasEntityHeader(IDictionary<string, BinaryData> attributes = default, string typeName = default, string lastModifiedTS = default, IEnumerable<string> classificationNames = default, IEnumerable<AtlasClassification> classifications = default, string displayText = default, string guid = default, bool? isIncomplete = default, IEnumerable<string> labels = default, IEnumerable<string> meaningNames = default, IEnumerable<AtlasTermAssignmentHeader> meanings = default, DataMapEntityStatus? status = default)
         {
             attributes ??= new ChangeTrackingDictionary<string, BinaryData>();
             classificationNames ??= new ChangeTrackingList<string>();
@@ -288,9 +290,10 @@ namespace Azure.Analytics.Purview.DataMap
         /// <summary> Business metadata to send to the service. </summary>
         /// <param name="file"> InputStream of file. </param>
         /// <returns> A new <see cref="DataMap.BusinessMetadataOptions"/> instance for mocking. </returns>
-        public static BusinessMetadataOptions BusinessMetadataOptions(BinaryData @file = default)
+        [Experimental("SCME0004")]
+        public static BusinessMetadataOptions BusinessMetadataOptions(FileBinaryContent @file = default)
         {
-            return new BusinessMetadataOptions(@file, additionalBinaryDataProperties: null);
+            return new BusinessMetadataOptions(@file);
         }
 
         /// <summary> Bulk import result. </summary>
@@ -625,7 +628,7 @@ namespace Azure.Analytics.Purview.DataMap
         /// <param name="relationshipGuid"> The GUID of the relationship. </param>
         /// <param name="relationshipStatus"> The enum of relationship status. </param>
         /// <returns> A new <see cref="DataMap.AtlasRelatedObjectId"/> instance for mocking. </returns>
-        public static AtlasRelatedObjectId AtlasRelatedObjectId(string guid = default, string typeName = default, IDictionary<string, BinaryData> uniqueAttributes = default, string displayText = default, EntityStatus? entityStatus = default, string relationshipType = default, AtlasStruct relationshipAttributes = default, Guid? relationshipGuid = default, StatusAtlasRelationship? relationshipStatus = default)
+        public static AtlasRelatedObjectId AtlasRelatedObjectId(string guid = default, string typeName = default, IDictionary<string, BinaryData> uniqueAttributes = default, string displayText = default, DataMapEntityStatus? entityStatus = default, string relationshipType = default, AtlasStruct relationshipAttributes = default, Guid? relationshipGuid = default, StatusAtlasRelationship? relationshipStatus = default)
         {
             uniqueAttributes ??= new ChangeTrackingDictionary<string, BinaryData>();
 

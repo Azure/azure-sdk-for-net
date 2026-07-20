@@ -157,4 +157,5 @@ namespace OpenAI;
 [CodeGenType("WebSearchToolCallItemParam")] internal partial class InternalWebSearchToolCallItemParam { }
 [CodeGenType("WebSearchToolCallItemResource")] internal partial class InternalWebSearchToolCallItemResource { }
 [CodeGenType("WebSearchToolCallItemResourceStatus")] internal readonly partial struct WebSearchToolCallItemResourceStatus { }
+/// <summary> Discriminator value identifying the kind of agent object returned by the service. </summary>
 [CodeGenType("AgentObjectType")] public readonly partial struct AgentObjectType { }

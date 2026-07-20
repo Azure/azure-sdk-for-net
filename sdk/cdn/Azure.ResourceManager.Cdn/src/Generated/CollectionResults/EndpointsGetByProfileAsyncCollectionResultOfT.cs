@@ -56,8 +56,8 @@ namespace Azure.ResourceManager.Cdn
                     yield break;
                 }
                 EndpointListResult result = EndpointListResult.FromResponse(response);
-                yield return Page<CdnEndpointData>.FromValues((IReadOnlyList<CdnEndpointData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 nextPage = result.NextLink;
+                yield return Page<CdnEndpointData>.FromValues((IReadOnlyList<CdnEndpointData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 if (nextPage == null)
                 {
                     yield break;

@@ -110,6 +110,10 @@ namespace Azure.Provisioning.MySql
             _sid = DefineProperty<string>(nameof(Sid), new string[] { "sid" });
             _tenantId = DefineProperty<Guid>(nameof(TenantId), new string[] { "tenantId" });
             _identityResourceId = DefineProperty<ResourceIdentifier>(nameof(IdentityResourceId), new string[] { "identityResourceId" });
+            DefineAdditionalProperties();
         }
+
+        /// <summary> Define additional provisionable properties for AdministratorProperties that are not part of the generated code. </summary>
+        partial void DefineAdditionalProperties();
     }
 }

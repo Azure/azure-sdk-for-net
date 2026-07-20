@@ -127,113 +127,6 @@ namespace Azure.ResourceManager.AppService.Models
             return new CertificateOrderContact(email, nameFirst, nameLast, phone, serializedAdditionalRawData);
         }
 
-        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
-        {
-            StringBuilder builder = new StringBuilder();
-            BicepModelReaderWriterOptions bicepOptions = options as BicepModelReaderWriterOptions;
-            IDictionary<string, string> propertyOverrides = null;
-            bool hasObjectOverride = bicepOptions != null && bicepOptions.PropertyOverrides.TryGetValue(this, out propertyOverrides);
-            bool hasPropertyOverride = false;
-            string propertyOverride = null;
-
-            builder.AppendLine("{");
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Email), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  email: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(Email))
-                {
-                    builder.Append("  email: ");
-                    if (Email.Contains(Environment.NewLine))
-                    {
-                        builder.AppendLine("'''");
-                        builder.AppendLine($"{Email}'''");
-                    }
-                    else
-                    {
-                        builder.AppendLine($"'{Email}'");
-                    }
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(NameFirst), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  nameFirst: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(NameFirst))
-                {
-                    builder.Append("  nameFirst: ");
-                    if (NameFirst.Contains(Environment.NewLine))
-                    {
-                        builder.AppendLine("'''");
-                        builder.AppendLine($"{NameFirst}'''");
-                    }
-                    else
-                    {
-                        builder.AppendLine($"'{NameFirst}'");
-                    }
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(NameLast), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  nameLast: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(NameLast))
-                {
-                    builder.Append("  nameLast: ");
-                    if (NameLast.Contains(Environment.NewLine))
-                    {
-                        builder.AppendLine("'''");
-                        builder.AppendLine($"{NameLast}'''");
-                    }
-                    else
-                    {
-                        builder.AppendLine($"'{NameLast}'");
-                    }
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Phone), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  phone: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(Phone))
-                {
-                    builder.Append("  phone: ");
-                    if (Phone.Contains(Environment.NewLine))
-                    {
-                        builder.AppendLine("'''");
-                        builder.AppendLine($"{Phone}'''");
-                    }
-                    else
-                    {
-                        builder.AppendLine($"'{Phone}'");
-                    }
-                }
-            }
-
-            builder.AppendLine("}");
-            return BinaryData.FromString(builder.ToString());
-        }
-
         BinaryData IPersistableModel<CertificateOrderContact>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<CertificateOrderContact>)this).GetFormatFromOptions(options) : options.Format;
@@ -242,8 +135,6 @@ namespace Azure.ResourceManager.AppService.Models
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options, AzureResourceManagerAppServiceContext.Default);
-                case "bicep":
-                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(CertificateOrderContact)} does not support writing '{options.Format}' format.");
             }

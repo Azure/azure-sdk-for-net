@@ -7,43 +7,15 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.MachineLearning;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
     /// <summary> Describes the properties of a VM size. </summary>
     public partial class MachineLearningVmSize
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="MachineLearningVmSize"/>. </summary>
         internal MachineLearningVmSize()
@@ -54,62 +26,72 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// <summary> Initializes a new instance of <see cref="MachineLearningVmSize"/>. </summary>
         /// <param name="name"> The name of the virtual machine size. </param>
         /// <param name="family"> The family name of the virtual machine size. </param>
-        /// <param name="vCpus"> The number of vCPUs supported by the virtual machine size. </param>
+        /// <param name="vcpUs"> The number of vCPUs supported by the virtual machine size. </param>
         /// <param name="gpus"> The number of gPUs supported by the virtual machine size. </param>
         /// <param name="osVhdSizeMB"> The OS VHD disk size, in MB, allowed by the virtual machine size. </param>
         /// <param name="maxResourceVolumeMB"> The resource volume size, in MB, allowed by the virtual machine size. </param>
         /// <param name="memoryGB"> The amount of memory, in GB, supported by the virtual machine size. </param>
         /// <param name="lowPriorityCapable"> Specifies if the virtual machine size supports low priority VMs. </param>
-        /// <param name="isPremiumIOSupported"> Specifies if the virtual machine size supports premium IO. </param>
+        /// <param name="supportsPremiumIO"> Specifies if the virtual machine size supports premium IO. </param>
         /// <param name="estimatedVmPrices"> The estimated price information for using a VM. </param>
         /// <param name="supportedComputeTypes"> Specifies the compute types supported by the virtual machine size. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal MachineLearningVmSize(string name, string family, int? vCpus, int? gpus, int? osVhdSizeMB, int? maxResourceVolumeMB, double? memoryGB, bool? lowPriorityCapable, bool? isPremiumIOSupported, MachineLearningEstimatedVmPrices estimatedVmPrices, IReadOnlyList<string> supportedComputeTypes, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal MachineLearningVmSize(string name, string family, int? vcpUs, int? gpus, int? osVhdSizeMB, int? maxResourceVolumeMB, double? memoryGB, bool? lowPriorityCapable, bool? supportsPremiumIO, MachineLearningEstimatedVmPrices estimatedVmPrices, IReadOnlyList<string> supportedComputeTypes, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Name = name;
             Family = family;
-            VCpus = vCpus;
+            VCPUs = vcpUs;
             Gpus = gpus;
-            OSVhdSizeMB = osVhdSizeMB;
+            OsVhdSizeMB = osVhdSizeMB;
             MaxResourceVolumeMB = maxResourceVolumeMB;
             MemoryGB = memoryGB;
             LowPriorityCapable = lowPriorityCapable;
-            IsPremiumIOSupported = isPremiumIOSupported;
+            SupportsPremiumIO = supportsPremiumIO;
             EstimatedVmPrices = estimatedVmPrices;
             SupportedComputeTypes = supportedComputeTypes;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> The name of the virtual machine size. </summary>
         [WirePath("name")]
         public string Name { get; }
+
         /// <summary> The family name of the virtual machine size. </summary>
         [WirePath("family")]
         public string Family { get; }
+
         /// <summary> The number of vCPUs supported by the virtual machine size. </summary>
         [WirePath("vCPUs")]
-        public int? VCpus { get; }
+        public int? VCPUs { get; }
+
         /// <summary> The number of gPUs supported by the virtual machine size. </summary>
         [WirePath("gpus")]
         public int? Gpus { get; }
+
         /// <summary> The OS VHD disk size, in MB, allowed by the virtual machine size. </summary>
         [WirePath("osVhdSizeMB")]
-        public int? OSVhdSizeMB { get; }
+        public int? OsVhdSizeMB { get; }
+
         /// <summary> The resource volume size, in MB, allowed by the virtual machine size. </summary>
         [WirePath("maxResourceVolumeMB")]
         public int? MaxResourceVolumeMB { get; }
+
         /// <summary> The amount of memory, in GB, supported by the virtual machine size. </summary>
         [WirePath("memoryGB")]
         public double? MemoryGB { get; }
+
         /// <summary> Specifies if the virtual machine size supports low priority VMs. </summary>
         [WirePath("lowPriorityCapable")]
         public bool? LowPriorityCapable { get; }
+
         /// <summary> Specifies if the virtual machine size supports premium IO. </summary>
         [WirePath("premiumIO")]
-        public bool? IsPremiumIOSupported { get; }
+        public bool? SupportsPremiumIO { get; }
+
         /// <summary> The estimated price information for using a VM. </summary>
         [WirePath("estimatedVMPrices")]
         public MachineLearningEstimatedVmPrices EstimatedVmPrices { get; }
+
         /// <summary> Specifies the compute types supported by the virtual machine size. </summary>
         [WirePath("supportedComputeTypes")]
         public IReadOnlyList<string> SupportedComputeTypes { get; }

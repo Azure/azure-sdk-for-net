@@ -93,7 +93,7 @@ namespace Azure.ResourceManager.Redis
                 HttpMessage message = _privateEndpointConnectionsRestClient.CreatePutRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, privateEndpointConnectionName, RedisPrivateEndpointConnectionData.ToRequestContent(data), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 RedisArmOperation<RedisPrivateEndpointConnectionResource> operation = new RedisArmOperation<RedisPrivateEndpointConnectionResource>(
-                    new RedisPrivateEndpointConnectionOperationSource(Client),
+                    new RedisPrivateEndpointConnectionResourceOperationSource(Client),
                     _privateEndpointConnectionsClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -151,7 +151,7 @@ namespace Azure.ResourceManager.Redis
                 HttpMessage message = _privateEndpointConnectionsRestClient.CreatePutRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, privateEndpointConnectionName, RedisPrivateEndpointConnectionData.ToRequestContent(data), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 RedisArmOperation<RedisPrivateEndpointConnectionResource> operation = new RedisArmOperation<RedisPrivateEndpointConnectionResource>(
-                    new RedisPrivateEndpointConnectionOperationSource(Client),
+                    new RedisPrivateEndpointConnectionResourceOperationSource(Client),
                     _privateEndpointConnectionsClientDiagnostics,
                     Pipeline,
                     message.Request,

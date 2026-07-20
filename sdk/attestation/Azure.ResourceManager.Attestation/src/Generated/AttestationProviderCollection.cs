@@ -29,8 +29,6 @@ namespace Azure.ResourceManager.Attestation
     {
         private readonly ClientDiagnostics _attestationProvidersClientDiagnostics;
         private readonly AttestationProviders _attestationProvidersRestClient;
-        private readonly ClientDiagnostics _privateLinkResourcesClientDiagnostics;
-        private readonly PrivateLinkResources _privateLinkResourcesRestClient;
 
         /// <summary> Initializes a new instance of AttestationProviderCollection for mocking. </summary>
         protected AttestationProviderCollection()
@@ -45,8 +43,6 @@ namespace Azure.ResourceManager.Attestation
             TryGetApiVersion(AttestationProviderResource.ResourceType, out string attestationProviderApiVersion);
             _attestationProvidersClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Attestation", AttestationProviderResource.ResourceType.Namespace, Diagnostics);
             _attestationProvidersRestClient = new AttestationProviders(_attestationProvidersClientDiagnostics, Pipeline, Endpoint, attestationProviderApiVersion ?? "2021-06-01");
-            _privateLinkResourcesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Attestation", AttestationProviderResource.ResourceType.Namespace, Diagnostics);
-            _privateLinkResourcesRestClient = new PrivateLinkResources(_privateLinkResourcesClientDiagnostics, Pipeline, Endpoint, attestationProviderApiVersion ?? "2021-06-01");
             ValidateResourceId(id);
         }
 

@@ -4,32 +4,88 @@
 
 using System;
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
+using System.Text.Json;
 
 namespace Azure.AI.Extensions.OpenAI
 {
-    /// <summary> The ResponsesFabricIQPreviewTool. </summary>
+    /// <summary> A FabricIQ server-side tool. </summary>
+    [Experimental("AAIP001")]
     public partial class ResponsesFabricIQPreviewTool : ResponsesTool
     {
         /// <summary> Initializes a new instance of <see cref="ResponsesFabricIQPreviewTool"/>. </summary>
-        /// <param name="fabricIqPreview"> The FabricIQ tool parameters. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="fabricIqPreview"/> is null. </exception>
-        public ResponsesFabricIQPreviewTool(ResponsesFabricIQPreviewToolParameters fabricIqPreview) : base(ToolType.FabricIqPreview)
+        /// <param name="projectConnectionId"> The ID of the FabricIQ project connection. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="projectConnectionId"/> is null. </exception>
+        public ResponsesFabricIQPreviewTool(string projectConnectionId) : base(ToolType.FabricIqPreview)
         {
-            Argument.AssertNotNull(fabricIqPreview, nameof(fabricIqPreview));
+            Argument.AssertNotNull(projectConnectionId, nameof(projectConnectionId));
 
-            FabricIqPreview = fabricIqPreview;
+            ProjectConnectionId = projectConnectionId;
         }
 
         /// <summary> Initializes a new instance of <see cref="ResponsesFabricIQPreviewTool"/>. </summary>
         /// <param name="type"></param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        /// <param name="fabricIqPreview"> The FabricIQ tool parameters. </param>
-        internal ResponsesFabricIQPreviewTool(ToolType @type, IDictionary<string, BinaryData> additionalBinaryDataProperties, ResponsesFabricIQPreviewToolParameters fabricIqPreview) : base(@type, additionalBinaryDataProperties)
+        /// <param name="projectConnectionId"> The ID of the FabricIQ project connection. </param>
+        /// <param name="serverLabel"> (Optional) The label of the FabricIQ MCP server to connect to. </param>
+        /// <param name="serverUri"> (Optional) The URL of the FabricIQ MCP server. If not provided, the URL from the project connection will be used. </param>
+        /// <param name="requireApproval"> (Optional) Whether the agent requires approval before executing actions. Default is always. </param>
+        internal ResponsesFabricIQPreviewTool(ToolType @type, IDictionary<string, BinaryData> additionalBinaryDataProperties, string projectConnectionId, string serverLabel, Uri serverUri, BinaryData requireApproval) : base(@type, additionalBinaryDataProperties)
         {
-            FabricIqPreview = fabricIqPreview;
+            ProjectConnectionId = projectConnectionId;
+            ServerLabel = serverLabel;
+            ServerUri = serverUri;
+            RequireApproval = requireApproval;
         }
 
-        /// <summary> The FabricIQ tool parameters. </summary>
-        public ResponsesFabricIQPreviewToolParameters FabricIqPreview { get; set; }
+        /// <summary> The ID of the FabricIQ project connection. </summary>
+        public string ProjectConnectionId { get; set; }
+
+        /// <summary> (Optional) The label of the FabricIQ MCP server to connect to. </summary>
+        public string ServerLabel { get; set; }
+
+        /// <summary> (Optional) The URL of the FabricIQ MCP server. If not provided, the URL from the project connection will be used. </summary>
+        public Uri ServerUri { get; set; }
+
+        /// <summary>
+        /// (Optional) Whether the agent requires approval before executing actions. Default is always.
+        /// <para> To assign an object to this property use <see cref="BinaryData.FromObjectAsJson{T}(T, JsonSerializerOptions?)"/>. </para>
+        /// <para> To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>. </para>
+        /// <para>
+        /// <remarks>
+        /// Supported types:
+        /// <list type="bullet">
+        /// <item>
+        /// <description> <see cref="ResponsesMCPToolRequireApproval"/>. </description>
+        /// </item>
+        /// <item>
+        /// <description> <see cref="string"/>. </description>
+        /// </item>
+        /// </list>
+        /// </remarks>
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term> BinaryData.FromObjectAsJson("foo"). </term>
+        /// <description> Creates a payload of "foo". </description>
+        /// </item>
+        /// <item>
+        /// <term> BinaryData.FromString("\"foo\""). </term>
+        /// <description> Creates a payload of "foo". </description>
+        /// </item>
+        /// <item>
+        /// <term> BinaryData.FromObjectAsJson(new { key = "value" }). </term>
+        /// <description> Creates a payload of { "key": "value" }. </description>
+        /// </item>
+        /// <item>
+        /// <term> BinaryData.FromString("{\"key\": \"value\"}"). </term>
+        /// <description> Creates a payload of { "key": "value" }. </description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        public BinaryData RequireApproval { get; set; }
     }
 }

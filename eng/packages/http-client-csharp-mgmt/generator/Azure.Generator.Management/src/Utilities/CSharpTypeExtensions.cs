@@ -7,6 +7,7 @@ using Microsoft.TypeSpec.Generator.Primitives;
 using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using System.Threading.Tasks;
 
 namespace Azure.Generator.Management.Utilities
@@ -63,12 +64,66 @@ namespace Azure.Generator.Management.Utilities
 
         public static string GetXmlDocTypeName(this CSharpType type)
         {
+            // TODO: Remove this workaround when the base C# generator supports formatting generated methods as XML doc cref elements.
+            // https://github.com/microsoft/typespec/issues/11202
+            var typeName = GetTypeName(type);
+            if (type.Arguments.Count > 0)
+            {
+                typeName = $"{typeName}{{{string.Join(", ", type.Arguments.Select(GetXmlDocTypeName))}}}";
+            }
+
             // For nullable value types, we need to append '?' to the type name for XML documentation
             if (type.IsValueType && type.IsNullable)
             {
-                return $"{type.Name}?";
+                return $"{typeName}?";
             }
-            return type.Name;
+            return typeName;
         }
+
+        private static string GetTypeName(CSharpType type)
+        {
+            if (type.IsFrameworkType && GetFrameworkTypeAlias(type.FrameworkType) is { } frameworkTypeAlias)
+            {
+                return frameworkTypeAlias;
+            }
+
+            if (type.Arguments.Count > 0 && type.IsFrameworkType)
+            {
+                return StripGenericArity(type.FrameworkType.Name);
+            }
+
+            if (string.IsNullOrEmpty(type.Namespace))
+            {
+                return StripGenericArity(type.Name);
+            }
+
+            return $"{type.Namespace}.{StripGenericArity(type.Name)}";
+        }
+
+        private static string StripGenericArity(string typeName)
+        {
+            var arityIndex = typeName.IndexOf('`');
+            return arityIndex < 0 ? typeName : typeName[..arityIndex];
+        }
+
+        private static string? GetFrameworkTypeAlias(Type frameworkType) => frameworkType switch
+        {
+            _ when frameworkType == typeof(bool) => "bool",
+            _ when frameworkType == typeof(byte) => "byte",
+            _ when frameworkType == typeof(sbyte) => "sbyte",
+            _ when frameworkType == typeof(char) => "char",
+            _ when frameworkType == typeof(decimal) => "decimal",
+            _ when frameworkType == typeof(double) => "double",
+            _ when frameworkType == typeof(float) => "float",
+            _ when frameworkType == typeof(int) => "int",
+            _ when frameworkType == typeof(uint) => "uint",
+            _ when frameworkType == typeof(long) => "long",
+            _ when frameworkType == typeof(ulong) => "ulong",
+            _ when frameworkType == typeof(object) => "object",
+            _ when frameworkType == typeof(short) => "short",
+            _ when frameworkType == typeof(ushort) => "ushort",
+            _ when frameworkType == typeof(string) => "string",
+            _ => null
+        };
     }
 }

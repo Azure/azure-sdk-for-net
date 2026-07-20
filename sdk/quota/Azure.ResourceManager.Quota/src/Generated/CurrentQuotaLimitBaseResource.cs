@@ -226,7 +226,7 @@ namespace Azure.ResourceManager.Quota
                 HttpMessage message = _currentQuotaLimitBasesRestClient.CreateUpdateRequest(Id.Parent.ToString(), Id.Name, CurrentQuotaLimitBaseData.ToRequestContent(data), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 QuotaArmOperation<CurrentQuotaLimitBaseResource> operation = new QuotaArmOperation<CurrentQuotaLimitBaseResource>(
-                    new CurrentQuotaLimitBaseOperationSource(Client),
+                    new CurrentQuotaLimitBaseResourceOperationSource(Client),
                     _currentQuotaLimitBasesClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -286,7 +286,7 @@ namespace Azure.ResourceManager.Quota
                 HttpMessage message = _currentQuotaLimitBasesRestClient.CreateUpdateRequest(Id.Parent.ToString(), Id.Name, CurrentQuotaLimitBaseData.ToRequestContent(data), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 QuotaArmOperation<CurrentQuotaLimitBaseResource> operation = new QuotaArmOperation<CurrentQuotaLimitBaseResource>(
-                    new CurrentQuotaLimitBaseOperationSource(Client),
+                    new CurrentQuotaLimitBaseResourceOperationSource(Client),
                     _currentQuotaLimitBasesClientDiagnostics,
                     Pipeline,
                     message.Request,

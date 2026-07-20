@@ -6,10 +6,13 @@
 #nullable disable
 
 using System;
+using System.Diagnostics.CodeAnalysis;
+using System.Threading;
 using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
+using Payload.MultiPart;
 using Payload.MultiPart._FormData.HttpParts.ContentType;
 using Payload.MultiPart._FormData.HttpParts.NonString;
 
@@ -26,6 +29,12 @@ namespace Payload.MultiPart._FormData.HttpParts
         public virtual Response JsonArrayAndFileArray(RequestContent content, string contentType, RequestContext context = null) => throw null;
 
         public virtual Task<Response> JsonArrayAndFileArrayAsync(RequestContent content, string contentType, RequestContext context = null) => throw null;
+
+        [Experimental("SCME0004")]
+        public virtual Response JsonArrayAndFileArray(ComplexHttpPartsModelRequest body, CancellationToken cancellationToken = default) => throw null;
+
+        [Experimental("SCME0004")]
+        public virtual Task<Response> JsonArrayAndFileArrayAsync(ComplexHttpPartsModelRequest body, CancellationToken cancellationToken = default) => throw null;
 
         public virtual FormDataHttpPartsContentType GetFormDataHttpPartsContentTypeClient() => throw null;
 

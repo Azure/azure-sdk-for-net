@@ -9,14 +9,55 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure.Core;
+using Azure.ResourceManager.RecoveryServicesSiteRecovery;
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
-    public partial class SiteRecoveryInnerHealthError : IUtf8JsonSerializable, IJsonModel<SiteRecoveryInnerHealthError>
+    /// <summary> Implements InnerHealthError class. HealthError object has a list of InnerHealthErrors as child errors. InnerHealthError is used because this will prevent an infinite loop of structures when Hydra tries to auto-generate the contract. We are exposing the related health errors as inner health errors and all API consumers can utilize this in the same fashion as Exception -&gt; InnerException. </summary>
+    public partial class SiteRecoveryInnerHealthError : IJsonModel<SiteRecoveryInnerHealthError>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<SiteRecoveryInnerHealthError>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual SiteRecoveryInnerHealthError PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<SiteRecoveryInnerHealthError>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    {
+                        return DeserializeSiteRecoveryInnerHealthError(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(SiteRecoveryInnerHealthError)} does not support reading '{options.Format}' format.");
+            }
+        }
 
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<SiteRecoveryInnerHealthError>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerRecoveryServicesSiteRecoveryContext.Default);
+                default:
+                    throw new FormatException($"The model {nameof(SiteRecoveryInnerHealthError)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<SiteRecoveryInnerHealthError>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        SiteRecoveryInnerHealthError IPersistableModel<SiteRecoveryInnerHealthError>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<SiteRecoveryInnerHealthError>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<SiteRecoveryInnerHealthError>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
@@ -28,12 +69,11 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<SiteRecoveryInnerHealthError>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<SiteRecoveryInnerHealthError>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(SiteRecoveryInnerHealthError)} does not support writing '{format}' format.");
             }
-
             if (Optional.IsDefined(ErrorSource))
             {
                 writer.WritePropertyName("errorSource"u8);
@@ -104,15 +144,15 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 writer.WritePropertyName("customerResolvability"u8);
                 writer.WriteStringValue(CustomerResolvability.Value.ToString());
             }
-            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
-                foreach (var item in _serializedAdditionalRawData)
+                foreach (var item in _additionalBinaryDataProperties)
                 {
                     writer.WritePropertyName(item.Key);
 #if NET6_0_OR_GREATER
-				writer.WriteRawValue(item.Value);
+                    writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value, ModelSerializationExtensions.JsonDocumentOptions))
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
                     {
                         JsonSerializer.Serialize(writer, document.RootElement);
                     }
@@ -121,22 +161,27 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             }
         }
 
-        SiteRecoveryInnerHealthError IJsonModel<SiteRecoveryInnerHealthError>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        SiteRecoveryInnerHealthError IJsonModel<SiteRecoveryInnerHealthError>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual SiteRecoveryInnerHealthError JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<SiteRecoveryInnerHealthError>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<SiteRecoveryInnerHealthError>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(SiteRecoveryInnerHealthError)} does not support reading '{format}' format.");
             }
-
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
             return DeserializeSiteRecoveryInnerHealthError(document.RootElement, options);
         }
 
-        internal static SiteRecoveryInnerHealthError DeserializeSiteRecoveryInnerHealthError(JsonElement element, ModelReaderWriterOptions options = null)
+        /// <param name="element"> The JSON element to deserialize. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        internal static SiteRecoveryInnerHealthError DeserializeSiteRecoveryInnerHealthError(JsonElement element, ModelReaderWriterOptions options)
         {
-            options ??= ModelSerializationExtensions.WireOptions;
-
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -150,99 +195,97 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             string errorMessage = default;
             string possibleCauses = default;
             string recommendedAction = default;
-            DateTimeOffset? creationTimeUtc = default;
+            DateTimeOffset? createdOn = default;
             string recoveryProviderErrorMessage = default;
             string entityId = default;
             string errorId = default;
             HealthErrorCustomerResolvability? customerResolvability = default;
-            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
-            foreach (var property in element.EnumerateObject())
+            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            foreach (var prop in element.EnumerateObject())
             {
-                if (property.NameEquals("errorSource"u8))
+                if (prop.NameEquals("errorSource"u8))
                 {
-                    errorSource = property.Value.GetString();
+                    errorSource = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("errorType"u8))
+                if (prop.NameEquals("errorType"u8))
                 {
-                    errorType = property.Value.GetString();
+                    errorType = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("errorLevel"u8))
+                if (prop.NameEquals("errorLevel"u8))
                 {
-                    errorLevel = property.Value.GetString();
+                    errorLevel = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("errorCategory"u8))
+                if (prop.NameEquals("errorCategory"u8))
                 {
-                    errorCategory = property.Value.GetString();
+                    errorCategory = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("errorCode"u8))
+                if (prop.NameEquals("errorCode"u8))
                 {
-                    errorCode = property.Value.GetString();
+                    errorCode = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("summaryMessage"u8))
+                if (prop.NameEquals("summaryMessage"u8))
                 {
-                    summaryMessage = property.Value.GetString();
+                    summaryMessage = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("errorMessage"u8))
+                if (prop.NameEquals("errorMessage"u8))
                 {
-                    errorMessage = property.Value.GetString();
+                    errorMessage = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("possibleCauses"u8))
+                if (prop.NameEquals("possibleCauses"u8))
                 {
-                    possibleCauses = property.Value.GetString();
+                    possibleCauses = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("recommendedAction"u8))
+                if (prop.NameEquals("recommendedAction"u8))
                 {
-                    recommendedAction = property.Value.GetString();
+                    recommendedAction = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("creationTimeUtc"u8))
+                if (prop.NameEquals("creationTimeUtc"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    creationTimeUtc = property.Value.GetDateTimeOffset("O");
+                    createdOn = prop.Value.GetDateTimeOffset("O");
                     continue;
                 }
-                if (property.NameEquals("recoveryProviderErrorMessage"u8))
+                if (prop.NameEquals("recoveryProviderErrorMessage"u8))
                 {
-                    recoveryProviderErrorMessage = property.Value.GetString();
+                    recoveryProviderErrorMessage = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("entityId"u8))
+                if (prop.NameEquals("entityId"u8))
                 {
-                    entityId = property.Value.GetString();
+                    entityId = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("errorId"u8))
+                if (prop.NameEquals("errorId"u8))
                 {
-                    errorId = property.Value.GetString();
+                    errorId = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("customerResolvability"u8))
+                if (prop.NameEquals("customerResolvability"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    customerResolvability = new HealthErrorCustomerResolvability(property.Value.GetString());
+                    customerResolvability = new HealthErrorCustomerResolvability(prop.Value.GetString());
                     continue;
                 }
                 if (options.Format != "W")
                 {
-                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = rawDataDictionary;
             return new SiteRecoveryInnerHealthError(
                 errorSource,
                 errorType,
@@ -253,43 +296,12 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 errorMessage,
                 possibleCauses,
                 recommendedAction,
-                creationTimeUtc,
+                createdOn,
                 recoveryProviderErrorMessage,
                 entityId,
                 errorId,
                 customerResolvability,
-                serializedAdditionalRawData);
+                additionalBinaryDataProperties);
         }
-
-        BinaryData IPersistableModel<SiteRecoveryInnerHealthError>.Write(ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<SiteRecoveryInnerHealthError>)this).GetFormatFromOptions(options) : options.Format;
-
-            switch (format)
-            {
-                case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerRecoveryServicesSiteRecoveryContext.Default);
-                default:
-                    throw new FormatException($"The model {nameof(SiteRecoveryInnerHealthError)} does not support writing '{options.Format}' format.");
-            }
-        }
-
-        SiteRecoveryInnerHealthError IPersistableModel<SiteRecoveryInnerHealthError>.Create(BinaryData data, ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<SiteRecoveryInnerHealthError>)this).GetFormatFromOptions(options) : options.Format;
-
-            switch (format)
-            {
-                case "J":
-                    {
-                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
-                        return DeserializeSiteRecoveryInnerHealthError(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(SiteRecoveryInnerHealthError)} does not support reading '{options.Format}' format.");
-            }
-        }
-
-        string IPersistableModel<SiteRecoveryInnerHealthError>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

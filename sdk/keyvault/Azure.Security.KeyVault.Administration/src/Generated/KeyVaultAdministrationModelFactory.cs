@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -58,6 +59,48 @@ namespace Azure.Security.KeyVault.Administration
             settings ??= new ChangeTrackingList<KeyVaultSetting>();
 
             return new GetSettingsResult(settings.ToList(), additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> A EkmConnection model object. </summary>
+        /// <param name="hostName"> EKM proxy FQDN (Fully Qualified Domain Name). Only allowed characters are a-z, A-Z, 0-9, hyphen (-), dot (.), and colon (:). </param>
+        /// <param name="pathPrefix"> Optional path prefix for the EKM proxy (if any). </param>
+        /// <param name="serverCaCertificates"> The root CA certificate chain that issued the proxy server's certificate. An array of certificates in the certificate chain, each in DER format and base64 encoded. </param>
+        /// <param name="serverSubjectCommonName"> The subject common name of the server certificate of EKM Proxy. </param>
+        /// <returns> A new <see cref="Administration.KeyVaultEkmConnection"/> instance for mocking. </returns>
+        public static KeyVaultEkmConnection KeyVaultEkmConnection(string hostName = default, string pathPrefix = default, IEnumerable<BinaryData> serverCaCertificates = default, string serverSubjectCommonName = default)
+        {
+            serverCaCertificates ??= new ChangeTrackingList<BinaryData>();
+
+            return new KeyVaultEkmConnection(hostName, pathPrefix, serverCaCertificates.ToList(), serverSubjectCommonName, additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> EKM proxy client certificate information. </summary>
+        /// <param name="caCertificates"> The client root CA certificate chain to authenticate to the EKM proxy. An array of certificates in the certificate chain, each in DER format and base64 encoded. </param>
+        /// <param name="subjectCommonName"> The subject common name of the client certificate used to authenticate to the EKM proxy. </param>
+        /// <returns> A new <see cref="Administration.EkmProxyClientCertificateInfo"/> instance for mocking. </returns>
+        public static EkmProxyClientCertificateInfo EkmProxyClientCertificateInfo(IEnumerable<BinaryData> caCertificates = default, string subjectCommonName = default)
+        {
+            caCertificates ??= new ChangeTrackingList<BinaryData>();
+
+            return new EkmProxyClientCertificateInfo(caCertificates.ToList(), subjectCommonName, additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> EKM proxy information. </summary>
+        /// <param name="apiVersion"> The highest version of proxy interface API supported by the EKM Proxy. </param>
+        /// <param name="proxyVendor"> The name of the proxy vendor. </param>
+        /// <param name="proxyName"> The name of the proxy product and its version. </param>
+        /// <param name="ekmVendor"> The name of the EKM vendor. </param>
+        /// <param name="ekmProduct"> The name of the EKM product and its version. </param>
+        /// <returns> A new <see cref="Administration.EkmProxyInfo"/> instance for mocking. </returns>
+        public static EkmProxyInfo EkmProxyInfo(string apiVersion = default, string proxyVendor = default, string proxyName = default, string ekmVendor = default, string ekmProduct = default)
+        {
+            return new EkmProxyInfo(
+                apiVersion,
+                proxyVendor,
+                proxyName,
+                ekmVendor,
+                ekmProduct,
+                additionalBinaryDataProperties: null);
         }
     }
 }

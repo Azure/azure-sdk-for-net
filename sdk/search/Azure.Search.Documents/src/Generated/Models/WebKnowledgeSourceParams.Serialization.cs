@@ -131,8 +131,12 @@ namespace Azure.Search.Documents.KnowledgeBases.Models
             string knowledgeSourceName = default;
             bool? includeReferences = default;
             bool? includeReferenceSourceData = default;
+            bool? alwaysQuerySource = default;
+            bool? failOnError = default;
             float? rerankerThreshold = default;
+            int? maxOutputDocuments = default;
             KnowledgeSourceKind kind = default;
+            bool? enableImageServing = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             string language = default;
             string market = default;
@@ -163,6 +167,24 @@ namespace Azure.Search.Documents.KnowledgeBases.Models
                     includeReferenceSourceData = prop.Value.GetBoolean();
                     continue;
                 }
+                if (prop.NameEquals("alwaysQuerySource"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    alwaysQuerySource = prop.Value.GetBoolean();
+                    continue;
+                }
+                if (prop.NameEquals("failOnError"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    failOnError = prop.Value.GetBoolean();
+                    continue;
+                }
                 if (prop.NameEquals("rerankerThreshold"u8))
                 {
                     if (prop.Value.ValueKind == JsonValueKind.Null)
@@ -172,9 +194,27 @@ namespace Azure.Search.Documents.KnowledgeBases.Models
                     rerankerThreshold = prop.Value.GetSingle();
                     continue;
                 }
+                if (prop.NameEquals("maxOutputDocuments"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    maxOutputDocuments = prop.Value.GetInt32();
+                    continue;
+                }
                 if (prop.NameEquals("kind"u8))
                 {
                     kind = new KnowledgeSourceKind(prop.Value.GetString());
+                    continue;
+                }
+                if (prop.NameEquals("enableImageServing"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    enableImageServing = prop.Value.GetBoolean();
                     continue;
                 }
                 if (prop.NameEquals("language"u8))
@@ -210,8 +250,12 @@ namespace Azure.Search.Documents.KnowledgeBases.Models
                 knowledgeSourceName,
                 includeReferences,
                 includeReferenceSourceData,
+                alwaysQuerySource,
+                failOnError,
                 rerankerThreshold,
+                maxOutputDocuments,
                 kind,
+                enableImageServing,
                 additionalBinaryDataProperties,
                 language,
                 market,

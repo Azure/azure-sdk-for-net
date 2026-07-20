@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.HybridCompute;
 
 namespace Azure.ResourceManager.HybridCompute.Models
 {
@@ -14,41 +15,62 @@ namespace Azure.ResourceManager.HybridCompute.Models
     public readonly partial struct HybridComputeProgramYear : IEquatable<HybridComputeProgramYear>
     {
         private readonly string _value;
+        /// <summary> Year 1. </summary>
+        private const string Year1Value = "Year 1";
+        /// <summary> Year 2. </summary>
+        private const string Year2Value = "Year 2";
+        /// <summary> Year 3. </summary>
+        private const string Year3Value = "Year 3";
 
         /// <summary> Initializes a new instance of <see cref="HybridComputeProgramYear"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public HybridComputeProgramYear(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string Year1Value = "Year 1";
-        private const string Year2Value = "Year 2";
-        private const string Year3Value = "Year 3";
+            _value = value;
+        }
 
         /// <summary> Year 1. </summary>
         public static HybridComputeProgramYear Year1 { get; } = new HybridComputeProgramYear(Year1Value);
+
         /// <summary> Year 2. </summary>
         public static HybridComputeProgramYear Year2 { get; } = new HybridComputeProgramYear(Year2Value);
+
         /// <summary> Year 3. </summary>
         public static HybridComputeProgramYear Year3 { get; } = new HybridComputeProgramYear(Year3Value);
+
         /// <summary> Determines if two <see cref="HybridComputeProgramYear"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(HybridComputeProgramYear left, HybridComputeProgramYear right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="HybridComputeProgramYear"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(HybridComputeProgramYear left, HybridComputeProgramYear right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="HybridComputeProgramYear"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="HybridComputeProgramYear"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator HybridComputeProgramYear(string value) => new HybridComputeProgramYear(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="HybridComputeProgramYear"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator HybridComputeProgramYear?(string value) => value == null ? null : new HybridComputeProgramYear(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is HybridComputeProgramYear other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(HybridComputeProgramYear other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

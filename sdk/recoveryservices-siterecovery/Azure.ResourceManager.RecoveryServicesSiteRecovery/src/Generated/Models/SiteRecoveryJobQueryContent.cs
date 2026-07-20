@@ -14,37 +14,8 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
     /// <summary> Query parameter to enumerate jobs. </summary>
     public partial class SiteRecoveryJobQueryContent
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="SiteRecoveryJobQueryContent"/>. </summary>
         public SiteRecoveryJobQueryContent()
@@ -60,8 +31,8 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         /// <param name="jobOutputType"> The output type of the jobs. </param>
         /// <param name="jobName"> The job Name. </param>
         /// <param name="timezoneOffset"> The timezone offset for the location of the request (in minutes). </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal SiteRecoveryJobQueryContent(string startOn, string endOn, ResourceIdentifier fabricId, string affectedObjectTypes, string jobStatus, ExportJobOutputSerializationType? jobOutputType, string jobName, double? timezoneOffset, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal SiteRecoveryJobQueryContent(string startOn, string endOn, ResourceIdentifier fabricId, string affectedObjectTypes, string jobStatus, ExportJobOutputSerializationType? jobOutputType, string jobName, double? timezoneOffset, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             StartOn = startOn;
             EndOn = endOn;
@@ -71,23 +42,30 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             JobOutputType = jobOutputType;
             JobName = jobName;
             TimezoneOffset = timezoneOffset;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> Date time to get jobs from. </summary>
         public string StartOn { get; set; }
+
         /// <summary> Date time to get jobs upto. </summary>
         public string EndOn { get; set; }
+
         /// <summary> The Id of the fabric to search jobs under. </summary>
         public ResourceIdentifier FabricId { get; set; }
+
         /// <summary> The type of objects. </summary>
         public string AffectedObjectTypes { get; set; }
+
         /// <summary> The states of the job to be filtered can be in. </summary>
         public string JobStatus { get; set; }
+
         /// <summary> The output type of the jobs. </summary>
         public ExportJobOutputSerializationType? JobOutputType { get; set; }
+
         /// <summary> The job Name. </summary>
         public string JobName { get; set; }
+
         /// <summary> The timezone offset for the location of the request (in minutes). </summary>
         public double? TimezoneOffset { get; set; }
     }

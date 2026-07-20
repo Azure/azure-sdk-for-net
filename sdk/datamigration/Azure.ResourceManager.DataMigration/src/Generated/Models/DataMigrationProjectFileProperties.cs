@@ -13,37 +13,8 @@ namespace Azure.ResourceManager.DataMigration.Models
     /// <summary> Base class for file properties. </summary>
     public partial class DataMigrationProjectFileProperties
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="DataMigrationProjectFileProperties"/>. </summary>
         public DataMigrationProjectFileProperties()
@@ -56,25 +27,29 @@ namespace Azure.ResourceManager.DataMigration.Models
         /// <param name="lastModifiedOn"> Modification DateTime. </param>
         /// <param name="mediaType"> File content type. This property can be modified to reflect the file content type. </param>
         /// <param name="size"> File size. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal DataMigrationProjectFileProperties(string extension, string filePath, DateTimeOffset? lastModifiedOn, string mediaType, long? size, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal DataMigrationProjectFileProperties(string extension, string filePath, DateTimeOffset? lastModifiedOn, string mediaType, long? size, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Extension = extension;
             FilePath = filePath;
             LastModifiedOn = lastModifiedOn;
             MediaType = mediaType;
             Size = size;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> Optional File extension. If submitted it should not have a leading period and must match the extension from filePath. </summary>
         public string Extension { get; set; }
+
         /// <summary> Relative path of this file resource. This property can be set when creating or updating the file resource. </summary>
         public string FilePath { get; set; }
+
         /// <summary> Modification DateTime. </summary>
         public DateTimeOffset? LastModifiedOn { get; }
+
         /// <summary> File content type. This property can be modified to reflect the file content type. </summary>
         public string MediaType { get; set; }
+
         /// <summary> File size. </summary>
         public long? Size { get; }
     }

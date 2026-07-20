@@ -31,7 +31,7 @@ namespace Azure.AI.Projects.Evaluation
             Uri nextPageUri = null;
             while (true)
             {
-                ClientResult result = ClientResult.FromResponse(_client.Pipeline.ProcessMessage(message, _options));
+                ClientResult result = GetNextResponse(message);
                 yield return result;
 
                 nextPageUri = ((PagedRedTeam)result).NextLink;
@@ -56,6 +56,23 @@ namespace Azure.AI.Projects.Evaluation
             else
             {
                 return null;
+            }
+        }
+
+        /// <summary> Sends the request in the pipeline message and returns the response. </summary>
+        /// <param name="message"> The pipeline message containing the request to send. </param>
+        private ClientResult GetNextResponse(PipelineMessage message)
+        {
+            using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope("RedTeams.GetAll");
+            scope.Start();
+            try
+            {
+                return ClientResult.FromResponse(_client.Pipeline.ProcessMessage(message, _options));
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
             }
         }
     }
