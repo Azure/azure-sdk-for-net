@@ -20,11 +20,7 @@ Azure.AI.Inference
 Azure.AI.Language.QuestionAnswering.Inference
 Azure.AI.OpenAI
 Azure.AI.OpenAI.Assistants
-Azure.AI.TextAnalytics
 Azure.AI.VoiceLive.Snippets
-Azure.Analytics.Synapse.Artifacts
-Azure.Messaging.EventGrid
-Azure.Messaging.EventGrid.SystemEvents
 Azure.Messaging.ServiceBus
 Azure.Monitor.OpenTelemetry.AspNetCore
 Azure.Projects
