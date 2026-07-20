@@ -88,7 +88,7 @@ namespace Azure.AI.Projects.Agents
         /// <description> <see cref="string"/>. </description>
         /// </item>
         /// <item>
-        /// <description> <see cref="OpenAI.InternalToolChoiceParam"/>. </description>
+        /// <description> <c>InternalToolChoiceParam</c> (one of the tool choice types). </description>
         /// </item>
         /// </list>
         /// </remarks>
