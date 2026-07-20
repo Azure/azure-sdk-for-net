@@ -3,6 +3,8 @@
 
 // AutoRest mapped roleDefinitionId to ResourceIdentifier although the service parameter is a name string.
 // These hidden obsolete overloads preserve GA compatibility and forward to the generated string APIs.
+// The generator also places variable-resource permissions on this type with redundant scope components.
+// Targeted suppression removes those malformed virtual methods in favor of the shipped ResourceGroupResource surface.
 
 #nullable disable
 
@@ -11,9 +13,12 @@ using System.ComponentModel;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
+using Microsoft.TypeSpec.Generator.Customizations;
 
 namespace Azure.ResourceManager.Authorization.Mocking
 {
+    [CodeGenSuppress("GetAzurePermissionsForResource", typeof(ResourceIdentifier), typeof(string), typeof(string), typeof(string), typeof(string), typeof(string), typeof(string), typeof(CancellationToken))]
+    [CodeGenSuppress("GetAzurePermissionsForResourceAsync", typeof(ResourceIdentifier), typeof(string), typeof(string), typeof(string), typeof(string), typeof(string), typeof(string), typeof(CancellationToken))]
     public partial class MockableAuthorizationArmClient
     {
         /// <inheritdoc cref="GetAuthorizationRoleDefinition(ResourceIdentifier, string, CancellationToken)"/>

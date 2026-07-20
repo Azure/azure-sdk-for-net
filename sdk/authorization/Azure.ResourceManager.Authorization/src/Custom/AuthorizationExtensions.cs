@@ -11,13 +11,16 @@ using Azure.Core;
 using Azure.ResourceManager.Authorization.Mocking;
 using Azure.ResourceManager.Authorization.Models;
 using Azure.ResourceManager.Resources;
+using Microsoft.TypeSpec.Generator.Customizations;
 
 namespace Azure.ResourceManager.Authorization
 {
+    [CodeGenSuppress("GetAzurePermissionsForResource", typeof(ArmClient), typeof(ResourceIdentifier), typeof(string), typeof(string), typeof(string), typeof(string), typeof(string), typeof(string), typeof(CancellationToken))]
+    [CodeGenSuppress("GetAzurePermissionsForResourceAsync", typeof(ArmClient), typeof(ResourceIdentifier), typeof(string), typeof(string), typeof(string), typeof(string), typeof(string), typeof(string), typeof(CancellationToken))]
     public static partial class AuthorizationExtensions
     {
-        // TypeSpec places the variable-resource permissions operation on ArmClient and generates the singular name.
-        // These legacy extensions restore the shipped ResourceGroupResource methods and forward through their mockable surface.
+        // The generator places the variable-resource permissions operation on ArmClient with redundant scope components.
+        // Suppression removes that malformed surface; these extensions retain the shipped ResourceGroupResource API.
 
         /// <summary>
         /// Gets all permissions the caller has for a resource.
@@ -49,8 +52,6 @@ namespace Azure.ResourceManager.Authorization
         /// <exception cref="ArgumentException"> <paramref name="resourceName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/>, <paramref name="resourceProviderNamespace"/>, <paramref name="parentResourcePath"/>, <paramref name="resourceType"/> or <paramref name="resourceName"/> is null. </exception>
         /// <returns> An async collection of <see cref="RoleDefinitionPermission"/> that may take multiple service requests to iterate over. </returns>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        [Obsolete("this method is deprecated and will be removed in a future version, please use GetAzurePermissionsForResource instead.")]
         public static AsyncPageable<RoleDefinitionPermission> GetAzurePermissionsForResourcesAsync(this ResourceGroupResource resourceGroupResource, string resourceProviderNamespace, string parentResourcePath, string resourceType, string resourceName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
@@ -88,8 +89,6 @@ namespace Azure.ResourceManager.Authorization
         /// <exception cref="ArgumentException"> <paramref name="resourceName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/>, <paramref name="resourceProviderNamespace"/>, <paramref name="parentResourcePath"/>, <paramref name="resourceType"/> or <paramref name="resourceName"/> is null. </exception>
         /// <returns> A collection of <see cref="RoleDefinitionPermission"/> that may take multiple service requests to iterate over. </returns>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        [Obsolete("this method is deprecated and will be removed in a future version, please use GetAzurePermissionsForResource instead.")]
         public static Pageable<RoleDefinitionPermission> GetAzurePermissionsForResources(this ResourceGroupResource resourceGroupResource, string resourceProviderNamespace, string parentResourcePath, string resourceType, string resourceName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
