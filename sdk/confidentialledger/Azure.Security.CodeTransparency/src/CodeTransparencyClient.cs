@@ -38,6 +38,28 @@ namespace Azure.Security.CodeTransparency
         /// </summary>
         private bool _offlineKeysAllowNetworkFallback = true;
 
+        private CodeTransparencyTrustBoundary _entryTrustBoundary;
+
+        /// <summary> The endpoint this client targets. </summary>
+        internal Uri Endpoint => _endpoint;
+
+        /// <summary>
+        /// Trust boundary used to validate pending-entry (302) poll targets. Lazily built from the endpoint.
+        /// </summary>
+        internal CodeTransparencyTrustBoundary EntryTrustBoundary => _entryTrustBoundary ??= new CodeTransparencyTrustBoundary(_endpoint);
+
+        /// <summary>
+        /// Delay strategy used between entry-status polls when the server does not return a Retry-After
+        /// header. Overridable by tests to avoid real delays; a Retry-After header always takes precedence.
+        /// </summary>
+        internal DelayStrategy EntryPollingFallbackStrategy { get; set; } = DelayStrategy.CreateFixedDelayStrategy(TimeSpan.FromSeconds(1));
+
+        /// <summary>
+        /// Maximum number of pending (302 Found) polls of GET /entries/{id} before a create/get entry
+        /// operation fails with a clear timeout error. Overridable by tests.
+        /// </summary>
+        internal int MaxEntryPollingAttempts { get; set; } = 180;
+
         /// <summary>
         /// Initializes a new instance of CodeTransparencyClient. The client will download its own
         /// TLS CA cert to perform server cert authentication.
@@ -616,10 +638,18 @@ namespace Azure.Security.CodeTransparency
         public virtual async Task<Response> CreateEntryAsync(RequestContent content, bool? waitForCommit = default, RequestContext context = null) => await CreateEntryV09Async(content, waitForCommit, context).ConfigureAwait(false);
 
         /// <summary> Post an entry to be registered on the CodeTransparency instance. </summary>
-        public virtual Response<BinaryData> CreateEntry(BinaryData body, bool? waitForCommit = default, CancellationToken cancellationToken = default) => CreateEntryV09(body, waitForCommit, cancellationToken);
+        public virtual Response<BinaryData> CreateEntry(BinaryData body, bool? waitForCommit = default, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(body, nameof(body));
+            return CreateEntryAndWaitForReceiptAsync(RequestContent.Create(body), waitForCommit, async: false, cancellationToken).EnsureCompleted();
+        }
 
         /// <summary> Post an entry to be registered on the CodeTransparency instance. </summary>
-        public virtual async Task<Response<BinaryData>> CreateEntryAsync(BinaryData body, bool? waitForCommit = default, CancellationToken cancellationToken = default) => await CreateEntryV09Async(body, waitForCommit, cancellationToken).ConfigureAwait(false);
+        public virtual async Task<Response<BinaryData>> CreateEntryAsync(BinaryData body, bool? waitForCommit = default, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(body, nameof(body));
+            return await CreateEntryAndWaitForReceiptAsync(RequestContent.Create(body), waitForCommit, async: true, cancellationToken).ConfigureAwait(false);
+        }
 
         /// <summary> Get receipt. </summary>
         public virtual Response GetEntry(string entryId, RequestContext context) => GetEntryV09(entryId, context);
@@ -628,10 +658,18 @@ namespace Azure.Security.CodeTransparency
         public virtual async Task<Response> GetEntryAsync(string entryId, RequestContext context) => await GetEntryV09Async(entryId, context).ConfigureAwait(false);
 
         /// <summary> Get receipt. </summary>
-        public virtual Response<BinaryData> GetEntry(string entryId, CancellationToken cancellationToken = default) => GetEntryV09(entryId, cancellationToken);
+        public virtual Response<BinaryData> GetEntry(string entryId, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(entryId, nameof(entryId));
+            return WaitForEntryReceiptAsync(entryId, initialResponse: null, async: false, cancellationToken).EnsureCompleted();
+        }
 
         /// <summary> Get receipt. </summary>
-        public virtual async Task<Response<BinaryData>> GetEntryAsync(string entryId, CancellationToken cancellationToken = default) => await GetEntryV09Async(entryId, cancellationToken).ConfigureAwait(false);
+        public virtual async Task<Response<BinaryData>> GetEntryAsync(string entryId, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(entryId, nameof(entryId));
+            return await WaitForEntryReceiptAsync(entryId, initialResponse: null, async: true, cancellationToken).ConfigureAwait(false);
+        }
 
         /// <summary> Get the transparent statement. </summary>
         public virtual Response GetEntryStatement(string entryId, RequestContext context) => GetEntryStatementV09(entryId, context);
@@ -667,5 +705,86 @@ namespace Azure.Security.CodeTransparency
         private static ResponseClassifier ResponseClassifier201202 => _responseClassifier201202 ??= new StatusCodeClassifier(stackalloc ushort[] { 201, 202 });
         private static ResponseClassifier _responseClassifier200202;
         private static ResponseClassifier ResponseClassifier200202 => _responseClassifier200202 ??= new StatusCodeClassifier(stackalloc ushort[] { 200, 202 });
+
+        private static ResponseClassifier _createEntrySubmitClassifier;
+
+        // Async submit is treated as a success for 201 (waitForCommit), 303 (SCRAPI v09 async) and
+        // 202 (legacy async), so each can be inspected and handed off to the entry poller below.
+        private static ResponseClassifier CreateEntrySubmitClassifier => _createEntrySubmitClassifier ??= new StatusCodeClassifier(stackalloc ushort[] { 201, 202, 303 });
+
+        private async ValueTask<Response<BinaryData>> CreateEntryAndWaitForReceiptAsync(RequestContent content, bool? waitForCommit, bool async, CancellationToken cancellationToken)
+        {
+            Argument.AssertNotNull(content, nameof(content));
+
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("CodeTransparencyClient.CreateEntry");
+            scope.Start();
+            try
+            {
+                RequestContext context = new() { CancellationToken = cancellationToken };
+                using HttpMessage message = CreateCreateEntryV09Request(content, waitForCommit, context);
+
+                // Do not let the pipeline eagerly follow the async 303 See Other into GET /entries/{id}:
+                // the entry may still be pending (302), which must be polled with backoff below rather
+                // than surfaced as a redirect failure. Also accept the legacy 202 Accepted async response.
+                message.SetProperty(CodeTransparencyRedirectPolicy.SuppressSeeOtherRedirectPropertyName, true);
+                message.ResponseClassifier = CreateEntrySubmitClassifier;
+
+                Response submitResponse = async
+                    ? await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false)
+                    : Pipeline.ProcessMessage(message, context);
+
+                switch (submitResponse.Status)
+                {
+                    case 303:
+                        // SCRAPI v09 async submit: poll GET /entries/{id} for the receipt.
+                        return await WaitForEntryReceiptAsync(GetEntryIdFromLocation(submitResponse), submitResponse, async, cancellationToken).ConfigureAwait(false);
+
+                    case 202:
+                        // Legacy async submit: poll the operation for the entry id, then fetch the receipt.
+                        string operationId = CborUtils.GetStringValueFromCborMapByKey(submitResponse.Content?.ToArray(), "OperationId");
+                        if (string.IsNullOrEmpty(operationId))
+                        {
+                            throw new RequestFailedException(submitResponse);
+                        }
+
+                        string legacyEntryId = await WaitForLegacyOperationEntryIdAsync(operationId, async, cancellationToken).ConfigureAwait(false);
+                        return await WaitForEntryReceiptAsync(legacyEntryId, submitResponse, async, cancellationToken).ConfigureAwait(false);
+
+                    default:
+                        // 201 Created (waitForCommit=true): the receipt is already in the response body.
+                        return Response.FromValue(submitResponse.Content, submitResponse);
+                }
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        private async ValueTask<Response<BinaryData>> WaitForEntryReceiptAsync(string entryId, Response initialResponse, bool async, CancellationToken cancellationToken)
+        {
+            CreateEntryOperation operation = new(this, entryId, EntryTrustBoundary, MaxEntryPollingAttempts, EntryPollingFallbackStrategy, initialResponse);
+            Response finalResponse = async
+                ? await operation.WaitForReceiptResponseAsync(cancellationToken).ConfigureAwait(false)
+                : operation.WaitForReceiptResponse(cancellationToken);
+            return Response.FromValue(operation.Value, finalResponse);
+        }
+
+        private async ValueTask<string> WaitForLegacyOperationEntryIdAsync(string operationId, bool async, CancellationToken cancellationToken)
+        {
+            CreateEntryOperation operation = new(this, operationId);
+            Response finalResponse = async
+                ? await operation.WaitForReceiptResponseAsync(cancellationToken).ConfigureAwait(false)
+                : operation.WaitForReceiptResponse(cancellationToken);
+
+            string entryId = CborUtils.GetStringValueFromCborMapByKey(finalResponse.Content?.ToArray(), "EntryId");
+            if (string.IsNullOrEmpty(entryId))
+            {
+                throw new RequestFailedException(finalResponse);
+            }
+
+            return entryId;
+        }
     }
 }

@@ -8,6 +8,15 @@
 
 ### Bugs Fixed
 
+- Fixed asynchronous registration (`CreateEntry`/`CreateEntryAsync` without `waitForCommit`) so it
+  polls `GET /entries/{entryId}` through the SCRAPI v09 `302 Found` "still pending" response instead
+  of throwing `RequestFailedException`. The `302` is now handled as a bounded, backing-off poll that
+  honors `Retry-After`, and its `Location` is validated against the endpoint trust boundary so entry
+  polling can never be redirected to an untrusted host. `GetEntry`/`GetEntryAsync` likewise
+  transparently poll the transient `302` returned when reading a just-committed entry before it has
+  been indexed. `waitForCommit=true` (synchronous `201` + receipt), the legacy `202` +
+  `GET /operations/{id}` fallback, and the `303`/`307`/`308` redirect behavior are unchanged.
+
 ### Other Changes
 
 ## 1.0.0-beta.11 (2026-07-15)

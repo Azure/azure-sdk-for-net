@@ -41,6 +41,14 @@ namespace Azure.Security.CodeTransparency
         private const int SeeOtherStatusCode = 303;
 
         /// <summary>
+        /// Message property key. When set to <c>true</c> on a request, a <c>303 See Other</c> response
+        /// is returned to the caller instead of being followed. Entry creation uses this so the
+        /// subsequent pending <c>302 Found</c> from <c>GET /entries/{id}</c> can be polled with backoff
+        /// rather than eagerly followed as a redirect (which would surface the pending 302 as an error).
+        /// </summary>
+        internal const string SuppressSeeOtherRedirectPropertyName = "Azure.Security.CodeTransparency.CodeTransparencyRedirectPolicy.SuppressSeeOtherRedirect";
+
+        /// <summary>
         /// Status codes that must never cause a cache commit. Broader than
         /// <see cref="IsRedirectResponse"/> so a future widening of followed
         /// codes cannot poison the cache.
@@ -49,8 +57,7 @@ namespace Azure.Security.CodeTransparency
             new HashSet<int> { 300, 301, 302, 303, 307, 308 };
 
         private readonly object _primaryNodeLock = new object();
-        private readonly string _ledgerHostname;
-        private readonly int _ledgerPort;
+        private readonly CodeTransparencyTrustBoundary _trustBoundary;
         private Uri _primaryNodeBaseUri;
 
         /// <summary>
@@ -67,8 +74,7 @@ namespace Azure.Security.CodeTransparency
                 throw new ArgumentException("Endpoint must be an absolute URI.", nameof(endpoint));
             }
 
-            _ledgerHostname = CanonicalHostname(endpoint.IdnHost);
-            _ledgerPort = endpoint.IsDefaultPort ? GetDefaultPort(endpoint.Scheme) : endpoint.Port;
+            _trustBoundary = new CodeTransparencyTrustBoundary(endpoint);
         }
 
         /// <inheritdoc/>
@@ -126,6 +132,16 @@ namespace Azure.Security.CodeTransparency
 
             while (IsRedirectResponse(message.Response.Status))
             {
+                // Entry creation opts out of following the 303 See Other so it can extract the entry id
+                // and poll GET /entries/{id} itself, treating a pending 302 as a bounded backoff instead
+                // of a redirect. 307/308 primary-node routing is still followed for the write.
+                if (message.Response.Status == SeeOtherStatusCode
+                    && message.TryGetProperty(SuppressSeeOtherRedirectPropertyName, out object suppressValue)
+                    && suppressValue is true)
+                {
+                    break;
+                }
+
                 if (++redirectCount > MaxRedirects)
                 {
                     // Too many redirects; return the last redirect response as-is.
@@ -141,9 +157,9 @@ namespace Azure.Security.CodeTransparency
                 Uri redirectUri = BuildRedirectUri(message.Request.Uri.ToUri(), location);
 
                 // Validate trust before modifying the request URI or staging a cache write.
-                if (!IsTrustedRedirectTarget(redirectUri))
+                if (!_trustBoundary.IsTrusted(redirectUri))
                 {
-                    string origin = FormatOrigin(redirectUri);
+                    string origin = CodeTransparencyTrustBoundary.FormatOrigin(redirectUri);
                     InvalidateCachedPrimaryNode();
                     message.Response.Dispose();
                     throw new InvalidOperationException(
@@ -210,71 +226,6 @@ namespace Azure.Security.CodeTransparency
                 // Trusted chain ended in 5xx — invalidate any previously cached value.
                 InvalidateCachedPrimaryNode();
             }
-        }
-
-        private static string CanonicalHostname(string host)
-        {
-            if (string.IsNullOrEmpty(host))
-            {
-                return string.Empty;
-            }
-
-            if (host[host.Length - 1] == '.')
-            {
-                host = host.Substring(0, host.Length - 1);
-            }
-
-            return host.ToLowerInvariant();
-        }
-
-        private bool IsTrustedRedirectTarget(Uri target)
-        {
-            if (target == null || !target.IsAbsoluteUri)
-            {
-                return false;
-            }
-
-            if (!string.Equals(target.Scheme, Uri.UriSchemeHttps, StringComparison.Ordinal))
-            {
-                return false;
-            }
-
-            int targetPort = target.IsDefaultPort ? GetDefaultPort(target.Scheme) : target.Port;
-            if (targetPort != _ledgerPort)
-            {
-                return false;
-            }
-
-            string targetHost = CanonicalHostname(target.IdnHost);
-            return targetHost.Equals(_ledgerHostname, StringComparison.Ordinal)
-                || targetHost.EndsWith("." + _ledgerHostname, StringComparison.Ordinal);
-        }
-
-        private static int GetDefaultPort(string scheme)
-        {
-            if (string.Equals(scheme, Uri.UriSchemeHttps, StringComparison.OrdinalIgnoreCase))
-            {
-                return 443;
-            }
-
-            if (string.Equals(scheme, Uri.UriSchemeHttp, StringComparison.OrdinalIgnoreCase))
-            {
-                return 80;
-            }
-
-            return -1;
-        }
-
-        private static string FormatOrigin(Uri uri)
-        {
-            if (uri == null || !uri.IsAbsoluteUri)
-            {
-                return "<invalid>";
-            }
-
-            return uri.IsDefaultPort
-                ? $"{uri.Scheme}://{uri.Host}"
-                : $"{uri.Scheme}://{uri.Host}:{uri.Port}";
         }
 
         private static bool IsRedirectResponse(int statusCode)

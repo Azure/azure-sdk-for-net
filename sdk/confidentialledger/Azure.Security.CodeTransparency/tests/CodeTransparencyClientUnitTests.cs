@@ -3,6 +3,7 @@
 
 using System;
 using System.Collections.Concurrent;
+using System.Diagnostics;
 using System.Formats.Cbor;
 using System.IO;
 using System.Linq;
@@ -12,6 +13,7 @@ using System.Security.Cryptography.Cose;
 using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
+using Azure.Core;
 using Azure.Core.TestFramework;
 using NUnit.Framework;
 
@@ -305,6 +307,175 @@ namespace Azure.Security.CodeTransparency.Tests
             Assert.AreEqual(1, mockTransport.Requests.Count);
             Assert.IsTrue(result.HasCompleted);
             Assert.AreEqual("12.345", result.Id);
+        }
+
+        /// <summary>
+        /// Builds a client whose entry poller has no real delay between polls (so tests do not sleep)
+        /// while still honoring Retry-After headers, and an optional bounded polling attempt count.
+        /// </summary>
+        private CodeTransparencyClient CreatePollingClient(MockTransport transport, int? maxAttempts = null)
+        {
+            var options = new CodeTransparencyClientOptions
+            {
+                Transport = transport,
+                IdentityClientEndpoint = "https://some.identity.com"
+            };
+            var client = new CodeTransparencyClient(new Uri("https://foo.bar.com"), new AzureKeyCredential("token"), options)
+            {
+                EntryPollingFallbackStrategy = DelayStrategy.CreateFixedDelayStrategy(TimeSpan.Zero)
+            };
+            if (maxAttempts.HasValue)
+            {
+                client.MaxEntryPollingAttempts = maxAttempts.Value;
+            }
+            return client;
+        }
+
+        private async Task<Response<BinaryData>> SubmitEntryAsync(CodeTransparencyClient client, BinaryData body, bool? waitForCommit) =>
+            IsAsync ? await client.CreateEntryAsync(body, waitForCommit) : client.CreateEntry(body, waitForCommit);
+
+        private async Task<Response<BinaryData>> GetReceiptAsync(CodeTransparencyClient client, string entryId) =>
+            IsAsync ? await client.GetEntryAsync(entryId) : client.GetEntry(entryId);
+
+        [Test]
+        public async Task CreateEntryAsync_async_submit_polls_302_until_committed()
+        {
+            // SCRAPI v09 async submit: 303 See Other -> poll GET /entries/{id}, which returns
+            // 302 Found while pending and finally 200 OK with the COSE receipt.
+            byte[] receipt = { 0x0a, 0x0b, 0x0c };
+            var submit = new MockResponse(303);
+            submit.AddHeader("Location", "https://foo.bar.com/entries/2.13");
+            var pending1 = new MockResponse(302);
+            pending1.AddHeader("Location", "https://foo.bar.com/entries/2.13");
+            var pending2 = new MockResponse(302);
+            pending2.AddHeader("Location", "https://foo.bar.com/entries/2.13");
+            var committed = new MockResponse(200);
+            committed.AddHeader("Content-Type", "application/scitt-receipt+cose");
+            committed.SetContent(receipt);
+            var transport = new MockTransport(submit, pending1, pending2, committed);
+            CodeTransparencyClient client = CreatePollingClient(transport);
+
+            Response<BinaryData> response = await SubmitEntryAsync(client, BinaryData.FromString("statement"), waitForCommit: false);
+
+            Assert.AreEqual(4, transport.Requests.Count);
+            Assert.AreEqual(RequestMethod.Post, transport.Requests[0].Method);
+            StringAssert.Contains("waitForCommit=false", transport.Requests[0].Uri.ToString());
+            Assert.AreEqual("https://foo.bar.com/entries/2.13?api-version=2026-03-26", transport.Requests[1].Uri.ToString());
+            Assert.AreEqual("https://foo.bar.com/entries/2.13?api-version=2026-03-26", transport.Requests[2].Uri.ToString());
+            Assert.AreEqual("https://foo.bar.com/entries/2.13?api-version=2026-03-26", transport.Requests[3].Uri.ToString());
+            Assert.AreEqual(200, response.GetRawResponse().Status);
+            Assert.AreEqual(receipt, response.Value.ToArray());
+        }
+
+        [Test]
+        public async Task CreateEntryAsync_honors_retry_after_on_302()
+        {
+            var submit = new MockResponse(303);
+            submit.AddHeader("Location", "https://foo.bar.com/entries/9.9");
+            var pending = new MockResponse(302);
+            pending.AddHeader("Location", "https://foo.bar.com/entries/9.9");
+            pending.AddHeader("Retry-After", "1");
+            var committed = new MockResponse(200);
+            committed.AddHeader("Content-Type", "application/scitt-receipt+cose");
+            committed.SetContent(new byte[] { 0x01 });
+            var transport = new MockTransport(submit, pending, committed);
+            CodeTransparencyClient client = CreatePollingClient(transport);
+
+            var stopwatch = Stopwatch.StartNew();
+            Response<BinaryData> response = await SubmitEntryAsync(client, BinaryData.FromString("statement"), waitForCommit: false);
+            stopwatch.Stop();
+
+            Assert.AreEqual(3, transport.Requests.Count);
+            Assert.GreaterOrEqual(stopwatch.ElapsedMilliseconds, 900, "The pending 302 Retry-After delay was not honored.");
+            Assert.AreEqual(200, response.GetRawResponse().Status);
+        }
+
+        [Test]
+        public void CreateEntryAsync_refuses_untrusted_302_location()
+        {
+            // A pending 302 whose Location points outside the endpoint trust boundary must be
+            // refused, never polled - mirroring the untrusted-303 redirect behavior.
+            var submit = new MockResponse(303);
+            submit.AddHeader("Location", "https://foo.bar.com/entries/3.3");
+            var attacker = new MockResponse(302);
+            attacker.AddHeader("Location", "https://evil.example.com/entries/3.3");
+            var transport = new MockTransport(submit, attacker);
+            CodeTransparencyClient client = CreatePollingClient(transport);
+
+            var ex = Assert.ThrowsAsync<InvalidOperationException>(
+                async () => await SubmitEntryAsync(client, BinaryData.FromString("statement"), waitForCommit: false));
+
+            StringAssert.Contains("untrusted redirect target origin", ex.Message);
+            // Only the submit and the single (refused) poll were sent; the attacker host was never contacted.
+            Assert.AreEqual(2, transport.Requests.Count);
+        }
+
+        [Test]
+        public void CreateEntryAsync_bounded_polling_fails_when_never_committed()
+        {
+            // The entry never commits: every GET /entries/{id} returns a pending 302. Polling must
+            // stop after MaxEntryPollingAttempts and surface a RequestFailedException.
+            var transport = new MockTransport(req =>
+            {
+                if (req.Method == RequestMethod.Post)
+                {
+                    var s = new MockResponse(303);
+                    s.AddHeader("Location", "https://foo.bar.com/entries/7.7");
+                    return s;
+                }
+
+                var p = new MockResponse(302);
+                p.AddHeader("Location", "https://foo.bar.com/entries/7.7");
+                return p;
+            });
+            CodeTransparencyClient client = CreatePollingClient(transport, maxAttempts: 3);
+
+            var ex = Assert.ThrowsAsync<RequestFailedException>(
+                async () => await SubmitEntryAsync(client, BinaryData.FromString("statement"), waitForCommit: false));
+
+            StringAssert.Contains("after 3 poll attempts", ex.Message);
+            // 1 submit (POST) + 3 bounded polls.
+            Assert.AreEqual(4, transport.Requests.Count);
+        }
+
+        [Test]
+        public async Task CreateEntryAsync_waitForCommit_true_returns_receipt_without_polling()
+        {
+            byte[] receipt = { 0x09, 0x08, 0x07 };
+            var committed = new MockResponse(201);
+            committed.AddHeader("Content-Type", "application/scitt-receipt+cose");
+            committed.SetContent(receipt);
+            var transport = new MockTransport(committed);
+            CodeTransparencyClient client = CreatePollingClient(transport);
+
+            Response<BinaryData> response = await SubmitEntryAsync(client, BinaryData.FromString("statement"), waitForCommit: true);
+
+            Assert.AreEqual(1, transport.Requests.Count);
+            StringAssert.Contains("waitForCommit=true", transport.Requests[0].Uri.ToString());
+            Assert.AreEqual(201, response.GetRawResponse().Status);
+            Assert.AreEqual(receipt, response.Value.ToArray());
+        }
+
+        [Test]
+        public async Task GetEntryAsync_polls_transient_302_until_receipt()
+        {
+            // GET /entries/{id} can return a transient 302 (TransactionNotCached) before the indexer
+            // catches up; the poller retries until the 200 receipt is available.
+            byte[] receipt = { 0x01, 0x02 };
+            var pending = new MockResponse(302);
+            pending.AddHeader("Location", "https://foo.bar.com/entries/4.44");
+            var committed = new MockResponse(200);
+            committed.AddHeader("Content-Type", "application/scitt-receipt+cose");
+            committed.SetContent(receipt);
+            var transport = new MockTransport(pending, committed);
+            CodeTransparencyClient client = CreatePollingClient(transport);
+
+            Response<BinaryData> response = await GetReceiptAsync(client, "4.44");
+
+            Assert.AreEqual(2, transport.Requests.Count);
+            Assert.AreEqual("https://foo.bar.com/entries/4.44?api-version=2026-03-26", transport.Requests[0].Uri.ToString());
+            Assert.AreEqual(200, response.GetRawResponse().Status);
+            Assert.AreEqual(receipt, response.Value.ToArray());
         }
 
         [Test]
