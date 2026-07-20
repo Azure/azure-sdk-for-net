@@ -3,6 +3,7 @@
 ## 12.30.0-beta.1 (Unreleased)
 
 ### Features Added
+- Added support for service version 2026-10-06.
 - Added `AccessTier`, `AccessTierInferred`, `AccessTierChangedOn`, and `SmartAccessTier` to `BlobDownloadDetails`.
 - Added support for PUT blob operations returning both the existing MD5 content hash and the new CRC64 checksum.
 - Added support for Apache Arrow response format for `GetBlobs` and `GetBlobsByHierarchy`.
