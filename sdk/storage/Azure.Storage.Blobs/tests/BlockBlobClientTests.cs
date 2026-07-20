@@ -909,7 +909,7 @@ namespace Azure.Storage.Blobs.Test
             };
 
             // Act
-            Response<BlockInfo> reponse = await RetryAsync(
+            Response<BlockInfo> response = await RetryAsync(
                 async () => await destBlob.StageBlockFromUriAsync(
                     sourceUri: sourceBlob.GenerateSasUri(BlobSasPermissions.Read, Recording.UtcNow.AddHours(1)),
                     base64BlockId: ToBase64(GetNewBlockName()),
@@ -917,8 +917,8 @@ namespace Azure.Storage.Blobs.Test
                 _retryStageBlockFromUri);
 
             // Assert
-            Assert.IsNotNull(reponse.Value.ContentHash);
-            Assert.IsNotNull(reponse.Value.ContentCrc64);
+            Assert.IsNotNull(response.Value.ContentHash);
+            Assert.IsNotNull(response.Value.ContentCrc64);
         }
 
         [RecordedTest]
