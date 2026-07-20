@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.TestFramework
         [OneTimeSetUp]
         public void SetExceptionList()
         {
-            ExceptionList = new string[] { "EligibleChildResource" };
+            ExceptionList = new string[] { "Azure.ResourceManager.Authorization.Models.AccessReviewDecisionResource", "EligibleChildResource" };
         }
     }
 }

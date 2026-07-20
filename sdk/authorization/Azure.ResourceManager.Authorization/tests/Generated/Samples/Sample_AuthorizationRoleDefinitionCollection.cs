@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.Authorization.Samples
             AuthorizationRoleDefinitionCollection collection = client.GetAuthorizationRoleDefinitions(new ResourceIdentifier(scope));
 
             // invoke the operation
-            ResourceIdentifier roleDefinitionId = new ResourceIdentifier("roleDefinitionId");
+            string roleDefinitionId = "roleDefinitionId";
             AuthorizationRoleDefinitionData data = new AuthorizationRoleDefinitionData();
             ArmOperation<AuthorizationRoleDefinitionResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, roleDefinitionId, data);
             AuthorizationRoleDefinitionResource result = lro.Value;
@@ -61,7 +61,7 @@ namespace Azure.ResourceManager.Authorization.Samples
             AuthorizationRoleDefinitionCollection collection = client.GetAuthorizationRoleDefinitions(new ResourceIdentifier(scope));
 
             // invoke the operation
-            ResourceIdentifier roleDefinitionId = new ResourceIdentifier("roleDefinitionId");
+            string roleDefinitionId = "roleDefinitionId";
             AuthorizationRoleDefinitionResource result = await collection.GetAsync(roleDefinitionId);
 
             // the variable result is a resource, you could call other operations on this instance as well
@@ -117,7 +117,7 @@ namespace Azure.ResourceManager.Authorization.Samples
             AuthorizationRoleDefinitionCollection collection = client.GetAuthorizationRoleDefinitions(new ResourceIdentifier(scope));
 
             // invoke the operation
-            ResourceIdentifier roleDefinitionId = new ResourceIdentifier("roleDefinitionId");
+            string roleDefinitionId = "roleDefinitionId";
             bool result = await collection.ExistsAsync(roleDefinitionId);
 
             Console.WriteLine($"Succeeded: {result}");
@@ -140,7 +140,7 @@ namespace Azure.ResourceManager.Authorization.Samples
             AuthorizationRoleDefinitionCollection collection = client.GetAuthorizationRoleDefinitions(new ResourceIdentifier(scope));
 
             // invoke the operation
-            ResourceIdentifier roleDefinitionId = new ResourceIdentifier("roleDefinitionId");
+            string roleDefinitionId = "roleDefinitionId";
             NullableResponse<AuthorizationRoleDefinitionResource> response = await collection.GetIfExistsAsync(roleDefinitionId);
             AuthorizationRoleDefinitionResource result = response.HasValue ? response.Value : null;
 

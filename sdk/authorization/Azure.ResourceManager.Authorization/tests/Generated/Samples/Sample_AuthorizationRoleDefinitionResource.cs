@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.Authorization.Samples
             // this example assumes you already have this AuthorizationRoleDefinitionResource created on azure
             // for more information of creating AuthorizationRoleDefinitionResource, please refer to the document of AuthorizationRoleDefinitionResource
             string scope = "scope";
-            ResourceIdentifier roleDefinitionId = new ResourceIdentifier("roleDefinitionId");
+            string roleDefinitionId = "roleDefinitionId";
             ResourceIdentifier authorizationRoleDefinitionResourceId = AuthorizationRoleDefinitionResource.CreateResourceIdentifier(scope, roleDefinitionId);
             AuthorizationRoleDefinitionResource authorizationRoleDefinition = client.GetAuthorizationRoleDefinitionResource(authorizationRoleDefinitionResourceId);
 
@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.Authorization.Samples
             // this example assumes you already have this AuthorizationRoleDefinitionResource created on azure
             // for more information of creating AuthorizationRoleDefinitionResource, please refer to the document of AuthorizationRoleDefinitionResource
             string scope = "scope";
-            ResourceIdentifier roleDefinitionId = new ResourceIdentifier("roleDefinitionId");
+            string roleDefinitionId = "roleDefinitionId";
             ResourceIdentifier authorizationRoleDefinitionResourceId = AuthorizationRoleDefinitionResource.CreateResourceIdentifier(scope, roleDefinitionId);
             AuthorizationRoleDefinitionResource authorizationRoleDefinition = client.GetAuthorizationRoleDefinitionResource(authorizationRoleDefinitionResourceId);
 
@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.Authorization.Samples
             // this example assumes you already have this AuthorizationRoleDefinitionResource created on azure
             // for more information of creating AuthorizationRoleDefinitionResource, please refer to the document of AuthorizationRoleDefinitionResource
             string scope = "scope";
-            ResourceIdentifier roleDefinitionId = new ResourceIdentifier("roleDefinitionId");
+            string roleDefinitionId = "roleDefinitionId";
             ResourceIdentifier authorizationRoleDefinitionResourceId = AuthorizationRoleDefinitionResource.CreateResourceIdentifier(scope, roleDefinitionId);
             AuthorizationRoleDefinitionResource authorizationRoleDefinition = client.GetAuthorizationRoleDefinitionResource(authorizationRoleDefinitionResourceId);
 
