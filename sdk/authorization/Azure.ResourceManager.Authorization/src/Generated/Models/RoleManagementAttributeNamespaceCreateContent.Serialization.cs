@@ -15,66 +15,66 @@ using Azure.ResourceManager.Authorization;
 namespace Azure.ResourceManager.Authorization.Models
 {
     /// <summary> Request body for creating an attribute namespace. </summary>
-    public partial class AttributeNamespaceCreateContent : IJsonModel<AttributeNamespaceCreateContent>
+    public partial class RoleManagementAttributeNamespaceCreateContent : IJsonModel<RoleManagementAttributeNamespaceCreateContent>
     {
-        /// <summary> Initializes a new instance of <see cref="AttributeNamespaceCreateContent"/> for deserialization. </summary>
-        internal AttributeNamespaceCreateContent()
+        /// <summary> Initializes a new instance of <see cref="RoleManagementAttributeNamespaceCreateContent"/> for deserialization. </summary>
+        internal RoleManagementAttributeNamespaceCreateContent()
         {
         }
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual AttributeNamespaceCreateContent PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        protected virtual RoleManagementAttributeNamespaceCreateContent PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<AttributeNamespaceCreateContent>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<RoleManagementAttributeNamespaceCreateContent>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeAttributeNamespaceCreateContent(document.RootElement, options);
+                        return DeserializeRoleManagementAttributeNamespaceCreateContent(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(AttributeNamespaceCreateContent)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(RoleManagementAttributeNamespaceCreateContent)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<AttributeNamespaceCreateContent>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<RoleManagementAttributeNamespaceCreateContent>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options, AzureResourceManagerAuthorizationContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(AttributeNamespaceCreateContent)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(RoleManagementAttributeNamespaceCreateContent)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<AttributeNamespaceCreateContent>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<RoleManagementAttributeNamespaceCreateContent>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        AttributeNamespaceCreateContent IPersistableModel<AttributeNamespaceCreateContent>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+        RoleManagementAttributeNamespaceCreateContent IPersistableModel<RoleManagementAttributeNamespaceCreateContent>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<AttributeNamespaceCreateContent>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<RoleManagementAttributeNamespaceCreateContent>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
-        /// <param name="attributeNamespaceCreateContent"> The <see cref="AttributeNamespaceCreateContent"/> to serialize into <see cref="RequestContent"/>. </param>
-        internal static RequestContent ToRequestContent(AttributeNamespaceCreateContent attributeNamespaceCreateContent)
+        /// <param name="roleManagementAttributeNamespaceCreateContent"> The <see cref="RoleManagementAttributeNamespaceCreateContent"/> to serialize into <see cref="RequestContent"/>. </param>
+        internal static RequestContent ToRequestContent(RoleManagementAttributeNamespaceCreateContent roleManagementAttributeNamespaceCreateContent)
         {
-            if (attributeNamespaceCreateContent == null)
+            if (roleManagementAttributeNamespaceCreateContent == null)
             {
                 return null;
             }
-            return RequestContent.Create(attributeNamespaceCreateContent, ModelSerializationExtensions.WireOptions);
+            return RequestContent.Create(roleManagementAttributeNamespaceCreateContent, ModelSerializationExtensions.WireOptions);
         }
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<AttributeNamespaceCreateContent>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<RoleManagementAttributeNamespaceCreateContent>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -85,10 +85,10 @@ namespace Azure.ResourceManager.Authorization.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<AttributeNamespaceCreateContent>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<RoleManagementAttributeNamespaceCreateContent>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(AttributeNamespaceCreateContent)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(RoleManagementAttributeNamespaceCreateContent)} does not support writing '{format}' format.");
             }
             writer.WritePropertyName("namespaceOwnerPrincipalId"u8);
             writer.WriteStringValue(NamespaceOwnerPrincipalId);
@@ -111,24 +111,24 @@ namespace Azure.ResourceManager.Authorization.Models
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        AttributeNamespaceCreateContent IJsonModel<AttributeNamespaceCreateContent>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+        RoleManagementAttributeNamespaceCreateContent IJsonModel<RoleManagementAttributeNamespaceCreateContent>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual AttributeNamespaceCreateContent JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        protected virtual RoleManagementAttributeNamespaceCreateContent JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<AttributeNamespaceCreateContent>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<RoleManagementAttributeNamespaceCreateContent>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(AttributeNamespaceCreateContent)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(RoleManagementAttributeNamespaceCreateContent)} does not support reading '{format}' format.");
             }
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeAttributeNamespaceCreateContent(document.RootElement, options);
+            return DeserializeRoleManagementAttributeNamespaceCreateContent(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        internal static AttributeNamespaceCreateContent DeserializeAttributeNamespaceCreateContent(JsonElement element, ModelReaderWriterOptions options)
+        internal static RoleManagementAttributeNamespaceCreateContent DeserializeRoleManagementAttributeNamespaceCreateContent(JsonElement element, ModelReaderWriterOptions options)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -148,7 +148,7 @@ namespace Azure.ResourceManager.Authorization.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new AttributeNamespaceCreateContent(namespaceOwnerPrincipalId, additionalBinaryDataProperties);
+            return new RoleManagementAttributeNamespaceCreateContent(namespaceOwnerPrincipalId, additionalBinaryDataProperties);
         }
     }
 }

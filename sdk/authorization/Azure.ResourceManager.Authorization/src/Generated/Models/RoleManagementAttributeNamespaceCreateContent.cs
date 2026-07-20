@@ -12,25 +12,25 @@ using Azure.ResourceManager.Authorization;
 namespace Azure.ResourceManager.Authorization.Models
 {
     /// <summary> Request body for creating an attribute namespace. </summary>
-    public partial class AttributeNamespaceCreateContent
+    public partial class RoleManagementAttributeNamespaceCreateContent
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="AttributeNamespaceCreateContent"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="RoleManagementAttributeNamespaceCreateContent"/>. </summary>
         /// <param name="namespaceOwnerPrincipalId"> The principal ID of the namespace owner. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="namespaceOwnerPrincipalId"/> is null. </exception>
-        public AttributeNamespaceCreateContent(string namespaceOwnerPrincipalId)
+        public RoleManagementAttributeNamespaceCreateContent(string namespaceOwnerPrincipalId)
         {
             Argument.AssertNotNull(namespaceOwnerPrincipalId, nameof(namespaceOwnerPrincipalId));
 
             NamespaceOwnerPrincipalId = namespaceOwnerPrincipalId;
         }
 
-        /// <summary> Initializes a new instance of <see cref="AttributeNamespaceCreateContent"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="RoleManagementAttributeNamespaceCreateContent"/>. </summary>
         /// <param name="namespaceOwnerPrincipalId"> The principal ID of the namespace owner. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal AttributeNamespaceCreateContent(string namespaceOwnerPrincipalId, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal RoleManagementAttributeNamespaceCreateContent(string namespaceOwnerPrincipalId, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             NamespaceOwnerPrincipalId = namespaceOwnerPrincipalId;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;

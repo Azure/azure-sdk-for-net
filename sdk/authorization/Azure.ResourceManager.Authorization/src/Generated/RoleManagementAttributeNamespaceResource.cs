@@ -19,40 +19,40 @@ using Azure.ResourceManager.Resources;
 namespace Azure.ResourceManager.Authorization
 {
     /// <summary>
-    /// A class representing a AttributeNamespace along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="AttributeNamespaceResource"/> from an instance of <see cref="ArmClient"/> using the GetResource method.
-    /// Otherwise you can get one from its parent resource <see cref="TenantResource"/> using the GetAttributeNamespaces method.
+    /// A class representing a RoleManagementAttributeNamespace along with the instance operations that can be performed on it.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="RoleManagementAttributeNamespaceResource"/> from an instance of <see cref="ArmClient"/> using the GetResource method.
+    /// Otherwise you can get one from its parent resource <see cref="TenantResource"/> using the GetRoleManagementAttributeNamespaces method.
     /// </summary>
-    public partial class AttributeNamespaceResource : ArmResource
+    public partial class RoleManagementAttributeNamespaceResource : ArmResource
     {
         private readonly ClientDiagnostics _attributeNamespacesClientDiagnostics;
         private readonly AttributeNamespaces _attributeNamespacesRestClient;
-        private readonly AttributeNamespaceData _data;
+        private readonly RoleManagementAttributeNamespaceData _data;
         /// <summary> Gets the resource type for the operations. </summary>
         public static readonly ResourceType ResourceType = "Microsoft.Authorization/attributeNamespaces";
 
-        /// <summary> Initializes a new instance of AttributeNamespaceResource for mocking. </summary>
-        protected AttributeNamespaceResource()
+        /// <summary> Initializes a new instance of RoleManagementAttributeNamespaceResource for mocking. </summary>
+        protected RoleManagementAttributeNamespaceResource()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="AttributeNamespaceResource"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="RoleManagementAttributeNamespaceResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
-        internal AttributeNamespaceResource(ArmClient client, AttributeNamespaceData data) : this(client, data.Id)
+        internal RoleManagementAttributeNamespaceResource(ArmClient client, RoleManagementAttributeNamespaceData data) : this(client, data.Id)
         {
             HasData = true;
             _data = data;
         }
 
-        /// <summary> Initializes a new instance of <see cref="AttributeNamespaceResource"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="RoleManagementAttributeNamespaceResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
-        internal AttributeNamespaceResource(ArmClient client, ResourceIdentifier id) : base(client, id)
+        internal RoleManagementAttributeNamespaceResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            TryGetApiVersion(ResourceType, out string attributeNamespaceApiVersion);
+            TryGetApiVersion(ResourceType, out string roleManagementAttributeNamespaceApiVersion);
             _attributeNamespacesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Authorization", ResourceType.Namespace, Diagnostics);
-            _attributeNamespacesRestClient = new AttributeNamespaces(_attributeNamespacesClientDiagnostics, Pipeline, Endpoint, attributeNamespaceApiVersion ?? "2025-12-01-preview");
+            _attributeNamespacesRestClient = new AttributeNamespaces(_attributeNamespacesClientDiagnostics, Pipeline, Endpoint, roleManagementAttributeNamespaceApiVersion ?? "2025-12-01-preview");
             ValidateResourceId(id);
         }
 
@@ -60,7 +60,7 @@ namespace Azure.ResourceManager.Authorization
         public virtual bool HasData { get; }
 
         /// <summary> Gets the data representing this Feature. </summary>
-        public virtual AttributeNamespaceData Data
+        public virtual RoleManagementAttributeNamespaceData Data
         {
             get
             {
@@ -107,14 +107,14 @@ namespace Azure.ResourceManager.Authorization
         /// </item>
         /// <item>
         /// <term> Resource. </term>
-        /// <description> <see cref="AttributeNamespaceResource"/>. </description>
+        /// <description> <see cref="RoleManagementAttributeNamespaceResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<AttributeNamespaceResource>> GetAsync(CancellationToken cancellationToken = default)
+        public virtual async Task<Response<RoleManagementAttributeNamespaceResource>> GetAsync(CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _attributeNamespacesClientDiagnostics.CreateScope("AttributeNamespaceResource.Get");
+            using DiagnosticScope scope = _attributeNamespacesClientDiagnostics.CreateScope("RoleManagementAttributeNamespaceResource.Get");
             scope.Start();
             try
             {
@@ -124,12 +124,12 @@ namespace Azure.ResourceManager.Authorization
                 };
                 HttpMessage message = _attributeNamespacesRestClient.CreateGetRequest(Id.Name, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                Response<AttributeNamespaceData> response = Response.FromValue(AttributeNamespaceData.FromResponse(result), result);
+                Response<RoleManagementAttributeNamespaceData> response = Response.FromValue(RoleManagementAttributeNamespaceData.FromResponse(result), result);
                 if (response.Value == null)
                 {
                     throw new RequestFailedException(response.GetRawResponse());
                 }
-                return Response.FromValue(new AttributeNamespaceResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new RoleManagementAttributeNamespaceResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -155,14 +155,14 @@ namespace Azure.ResourceManager.Authorization
         /// </item>
         /// <item>
         /// <term> Resource. </term>
-        /// <description> <see cref="AttributeNamespaceResource"/>. </description>
+        /// <description> <see cref="RoleManagementAttributeNamespaceResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<AttributeNamespaceResource> Get(CancellationToken cancellationToken = default)
+        public virtual Response<RoleManagementAttributeNamespaceResource> Get(CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _attributeNamespacesClientDiagnostics.CreateScope("AttributeNamespaceResource.Get");
+            using DiagnosticScope scope = _attributeNamespacesClientDiagnostics.CreateScope("RoleManagementAttributeNamespaceResource.Get");
             scope.Start();
             try
             {
@@ -172,12 +172,12 @@ namespace Azure.ResourceManager.Authorization
                 };
                 HttpMessage message = _attributeNamespacesRestClient.CreateGetRequest(Id.Name, context);
                 Response result = Pipeline.ProcessMessage(message, context);
-                Response<AttributeNamespaceData> response = Response.FromValue(AttributeNamespaceData.FromResponse(result), result);
+                Response<RoleManagementAttributeNamespaceData> response = Response.FromValue(RoleManagementAttributeNamespaceData.FromResponse(result), result);
                 if (response.Value == null)
                 {
                     throw new RequestFailedException(response.GetRawResponse());
                 }
-                return Response.FromValue(new AttributeNamespaceResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new RoleManagementAttributeNamespaceResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -203,7 +203,7 @@ namespace Azure.ResourceManager.Authorization
         /// </item>
         /// <item>
         /// <term> Resource. </term>
-        /// <description> <see cref="AttributeNamespaceResource"/>. </description>
+        /// <description> <see cref="RoleManagementAttributeNamespaceResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -211,7 +211,7 @@ namespace Azure.ResourceManager.Authorization
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<ArmOperation> DeleteAsync(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _attributeNamespacesClientDiagnostics.CreateScope("AttributeNamespaceResource.Delete");
+            using DiagnosticScope scope = _attributeNamespacesClientDiagnostics.CreateScope("RoleManagementAttributeNamespaceResource.Delete");
             scope.Start();
             try
             {
@@ -254,7 +254,7 @@ namespace Azure.ResourceManager.Authorization
         /// </item>
         /// <item>
         /// <term> Resource. </term>
-        /// <description> <see cref="AttributeNamespaceResource"/>. </description>
+        /// <description> <see cref="RoleManagementAttributeNamespaceResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -262,7 +262,7 @@ namespace Azure.ResourceManager.Authorization
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual ArmOperation Delete(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _attributeNamespacesClientDiagnostics.CreateScope("AttributeNamespaceResource.Delete");
+            using DiagnosticScope scope = _attributeNamespacesClientDiagnostics.CreateScope("RoleManagementAttributeNamespaceResource.Delete");
             scope.Start();
             try
             {
@@ -305,18 +305,18 @@ namespace Azure.ResourceManager.Authorization
         /// </item>
         /// <item>
         /// <term> Resource. </term>
-        /// <description> <see cref="AttributeNamespaceResource"/>. </description>
+        /// <description> <see cref="RoleManagementAttributeNamespaceResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="content"> Parameters for creating the attribute namespace. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        public virtual async Task<Response<AttributeNamespaceResource>> CreateAsync(AttributeNamespaceCreateContent content, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<RoleManagementAttributeNamespaceResource>> CreateAsync(RoleManagementAttributeNamespaceCreateContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(content, nameof(content));
 
-            using DiagnosticScope scope = _attributeNamespacesClientDiagnostics.CreateScope("AttributeNamespaceResource.Create");
+            using DiagnosticScope scope = _attributeNamespacesClientDiagnostics.CreateScope("RoleManagementAttributeNamespaceResource.Create");
             scope.Start();
             try
             {
@@ -324,14 +324,14 @@ namespace Azure.ResourceManager.Authorization
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _attributeNamespacesRestClient.CreateCreateRequest(Id.Name, AttributeNamespaceCreateContent.ToRequestContent(content), context);
+                HttpMessage message = _attributeNamespacesRestClient.CreateCreateRequest(Id.Name, RoleManagementAttributeNamespaceCreateContent.ToRequestContent(content), context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                Response<AttributeNamespaceData> response = Response.FromValue(AttributeNamespaceData.FromResponse(result), result);
+                Response<RoleManagementAttributeNamespaceData> response = Response.FromValue(RoleManagementAttributeNamespaceData.FromResponse(result), result);
                 if (response.Value == null)
                 {
                     throw new RequestFailedException(response.GetRawResponse());
                 }
-                return Response.FromValue(new AttributeNamespaceResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new RoleManagementAttributeNamespaceResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -357,18 +357,18 @@ namespace Azure.ResourceManager.Authorization
         /// </item>
         /// <item>
         /// <term> Resource. </term>
-        /// <description> <see cref="AttributeNamespaceResource"/>. </description>
+        /// <description> <see cref="RoleManagementAttributeNamespaceResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="content"> Parameters for creating the attribute namespace. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        public virtual Response<AttributeNamespaceResource> Create(AttributeNamespaceCreateContent content, CancellationToken cancellationToken = default)
+        public virtual Response<RoleManagementAttributeNamespaceResource> Create(RoleManagementAttributeNamespaceCreateContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(content, nameof(content));
 
-            using DiagnosticScope scope = _attributeNamespacesClientDiagnostics.CreateScope("AttributeNamespaceResource.Create");
+            using DiagnosticScope scope = _attributeNamespacesClientDiagnostics.CreateScope("RoleManagementAttributeNamespaceResource.Create");
             scope.Start();
             try
             {
@@ -376,14 +376,14 @@ namespace Azure.ResourceManager.Authorization
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _attributeNamespacesRestClient.CreateCreateRequest(Id.Name, AttributeNamespaceCreateContent.ToRequestContent(content), context);
+                HttpMessage message = _attributeNamespacesRestClient.CreateCreateRequest(Id.Name, RoleManagementAttributeNamespaceCreateContent.ToRequestContent(content), context);
                 Response result = Pipeline.ProcessMessage(message, context);
-                Response<AttributeNamespaceData> response = Response.FromValue(AttributeNamespaceData.FromResponse(result), result);
+                Response<RoleManagementAttributeNamespaceData> response = Response.FromValue(RoleManagementAttributeNamespaceData.FromResponse(result), result);
                 if (response.Value == null)
                 {
                     throw new RequestFailedException(response.GetRawResponse());
                 }
-                return Response.FromValue(new AttributeNamespaceResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new RoleManagementAttributeNamespaceResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {

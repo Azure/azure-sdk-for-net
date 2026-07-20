@@ -69,13 +69,13 @@ namespace Azure.ResourceManager.Authorization.Mocking
 
         private AlertOperation AlertOperationRestClient => _alertOperationRestClient ??= new AlertOperation(AlertOperationClientDiagnostics, Pipeline, Endpoint, "2022-08-01-preview");
 
-        /// <summary> Gets an object representing a <see cref="AttributeNamespaceResource"/> along with the instance operations that can be performed on it but with no data. </summary>
+        /// <summary> Gets an object representing a <see cref="RoleManagementAttributeNamespaceResource"/> along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="AttributeNamespaceResource"/> object. </returns>
-        public virtual AttributeNamespaceResource GetAttributeNamespaceResource(ResourceIdentifier id)
+        /// <returns> Returns a <see cref="RoleManagementAttributeNamespaceResource"/> object. </returns>
+        public virtual RoleManagementAttributeNamespaceResource GetRoleManagementAttributeNamespaceResource(ResourceIdentifier id)
         {
-            AttributeNamespaceResource.ValidateResourceId(id);
-            return new AttributeNamespaceResource(Client, id);
+            RoleManagementAttributeNamespaceResource.ValidateResourceId(id);
+            return new RoleManagementAttributeNamespaceResource(Client, id);
         }
 
         /// <summary> Gets an object representing a <see cref="AccessReviewHistoryDefinitionResource"/> along with the instance operations that can be performed on it but with no data. </summary>

@@ -64,11 +64,11 @@ namespace Azure.ResourceManager.Authorization.Mocking
 
         private GlobalAdministrator GlobalAdministratorRestClient => _globalAdministratorRestClient ??= new GlobalAdministrator(GlobalAdministratorClientDiagnostics, Pipeline, Endpoint, "2015-07-01");
 
-        /// <summary> Gets a collection of AttributeNamespaces in the <see cref="TenantResource"/>. </summary>
-        /// <returns> An object representing collection of AttributeNamespaces and their operations over a AttributeNamespaceResource. </returns>
-        public virtual AttributeNamespaceCollection GetAttributeNamespaces()
+        /// <summary> Gets a collection of RoleManagementAttributeNamespaces in the <see cref="TenantResource"/>. </summary>
+        /// <returns> An object representing collection of RoleManagementAttributeNamespaces and their operations over a RoleManagementAttributeNamespaceResource. </returns>
+        public virtual RoleManagementAttributeNamespaceCollection GetRoleManagementAttributeNamespaces()
         {
-            return GetCachedClient(client => new AttributeNamespaceCollection(client, Id));
+            return GetCachedClient(client => new RoleManagementAttributeNamespaceCollection(client, Id));
         }
 
         /// <summary>
@@ -93,11 +93,11 @@ namespace Azure.ResourceManager.Authorization.Mocking
         /// <exception cref="ArgumentNullException"> <paramref name="attributeNamespace"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="attributeNamespace"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual async Task<Response<AttributeNamespaceResource>> GetAttributeNamespaceAsync(string attributeNamespace, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<RoleManagementAttributeNamespaceResource>> GetRoleManagementAttributeNamespaceAsync(string attributeNamespace, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(attributeNamespace, nameof(attributeNamespace));
 
-            return await GetAttributeNamespaces().GetAsync(attributeNamespace, cancellationToken).ConfigureAwait(false);
+            return await GetRoleManagementAttributeNamespaces().GetAsync(attributeNamespace, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -122,11 +122,11 @@ namespace Azure.ResourceManager.Authorization.Mocking
         /// <exception cref="ArgumentNullException"> <paramref name="attributeNamespace"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="attributeNamespace"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual Response<AttributeNamespaceResource> GetAttributeNamespace(string attributeNamespace, CancellationToken cancellationToken = default)
+        public virtual Response<RoleManagementAttributeNamespaceResource> GetRoleManagementAttributeNamespace(string attributeNamespace, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(attributeNamespace, nameof(attributeNamespace));
 
-            return GetAttributeNamespaces().Get(attributeNamespace, cancellationToken);
+            return GetRoleManagementAttributeNamespaces().Get(attributeNamespace, cancellationToken);
         }
 
         /// <summary> Gets a collection of AccessReviewInstancesAssignedForMyApprovals in the <see cref="TenantResource"/>. </summary>

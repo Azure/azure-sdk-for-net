@@ -45,21 +45,21 @@ namespace Azure.ResourceManager.Authorization
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="AttributeNamespaceResource"/> along with the instance operations that can be performed on it but with no data.
+        /// Gets an object representing a <see cref="RoleManagementAttributeNamespaceResource"/> along with the instance operations that can be performed on it but with no data.
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableAuthorizationArmClient.GetAttributeNamespaceResource(ResourceIdentifier)"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockableAuthorizationArmClient.GetRoleManagementAttributeNamespaceResource(ResourceIdentifier)"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient"/> the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
-        /// <returns> Returns a <see cref="AttributeNamespaceResource"/> object. </returns>
-        public static AttributeNamespaceResource GetAttributeNamespaceResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="RoleManagementAttributeNamespaceResource"/> object. </returns>
+        public static RoleManagementAttributeNamespaceResource GetRoleManagementAttributeNamespaceResource(this ArmClient client, ResourceIdentifier id)
         {
             Argument.AssertNotNull(client, nameof(client));
 
-            return GetMockableAuthorizationArmClient(client).GetAttributeNamespaceResource(id);
+            return GetMockableAuthorizationArmClient(client).GetRoleManagementAttributeNamespaceResource(id);
         }
 
         /// <summary>
@@ -2124,27 +2124,27 @@ namespace Azure.ResourceManager.Authorization
         }
 
         /// <summary>
-        /// Gets a collection of AttributeNamespaces in the <see cref="TenantResource"/>
+        /// Gets a collection of RoleManagementAttributeNamespaces in the <see cref="TenantResource"/>
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableAuthorizationTenantResource.GetAttributeNamespaces()"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockableAuthorizationTenantResource.GetRoleManagementAttributeNamespaces()"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="tenantResource"> The <see cref="TenantResource"/> the method will execute against. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="tenantResource"/> is null. </exception>
-        /// <returns> An object representing collection of AttributeNamespaces and their operations over a AttributeNamespaceResource. </returns>
-        public static AttributeNamespaceCollection GetAttributeNamespaces(this TenantResource tenantResource)
+        /// <returns> An object representing collection of RoleManagementAttributeNamespaces and their operations over a RoleManagementAttributeNamespaceResource. </returns>
+        public static RoleManagementAttributeNamespaceCollection GetRoleManagementAttributeNamespaces(this TenantResource tenantResource)
         {
             Argument.AssertNotNull(tenantResource, nameof(tenantResource));
 
-            return GetMockableAuthorizationTenantResource(tenantResource).GetAttributeNamespaces();
+            return GetMockableAuthorizationTenantResource(tenantResource).GetRoleManagementAttributeNamespaces();
         }
 
         /// <summary>
         /// Gets the specified attribute namespace.
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableAuthorizationTenantResource.GetAttributeNamespaceAsync(string, CancellationToken)"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockableAuthorizationTenantResource.GetRoleManagementAttributeNamespaceAsync(string, CancellationToken)"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="tenantResource"> The <see cref="TenantResource"/> the method will execute against. </param>
@@ -2152,18 +2152,18 @@ namespace Azure.ResourceManager.Authorization
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="tenantResource"/> is null. </exception>
         [ForwardsClientCalls]
-        public static async Task<Response<AttributeNamespaceResource>> GetAttributeNamespaceAsync(this TenantResource tenantResource, string attributeNamespace, CancellationToken cancellationToken = default)
+        public static async Task<Response<RoleManagementAttributeNamespaceResource>> GetRoleManagementAttributeNamespaceAsync(this TenantResource tenantResource, string attributeNamespace, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(tenantResource, nameof(tenantResource));
 
-            return await GetMockableAuthorizationTenantResource(tenantResource).GetAttributeNamespaceAsync(attributeNamespace, cancellationToken).ConfigureAwait(false);
+            return await GetMockableAuthorizationTenantResource(tenantResource).GetRoleManagementAttributeNamespaceAsync(attributeNamespace, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
         /// Gets the specified attribute namespace.
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableAuthorizationTenantResource.GetAttributeNamespace(string, CancellationToken)"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockableAuthorizationTenantResource.GetRoleManagementAttributeNamespace(string, CancellationToken)"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="tenantResource"> The <see cref="TenantResource"/> the method will execute against. </param>
@@ -2171,11 +2171,11 @@ namespace Azure.ResourceManager.Authorization
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="tenantResource"/> is null. </exception>
         [ForwardsClientCalls]
-        public static Response<AttributeNamespaceResource> GetAttributeNamespace(this TenantResource tenantResource, string attributeNamespace, CancellationToken cancellationToken = default)
+        public static Response<RoleManagementAttributeNamespaceResource> GetRoleManagementAttributeNamespace(this TenantResource tenantResource, string attributeNamespace, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(tenantResource, nameof(tenantResource));
 
-            return GetMockableAuthorizationTenantResource(tenantResource).GetAttributeNamespace(attributeNamespace, cancellationToken);
+            return GetMockableAuthorizationTenantResource(tenantResource).GetRoleManagementAttributeNamespace(attributeNamespace, cancellationToken);
         }
 
         /// <summary>

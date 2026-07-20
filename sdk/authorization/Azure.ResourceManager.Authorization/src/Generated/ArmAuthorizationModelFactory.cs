@@ -23,17 +23,17 @@ namespace Azure.ResourceManager.Authorization.Models
         /// <param name="name"> The name of the resource. </param>
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
         /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
-        /// <returns> A new <see cref="Authorization.AttributeNamespaceData"/> instance for mocking. </returns>
-        public static AttributeNamespaceData AttributeNamespaceData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default)
+        /// <returns> A new <see cref="Authorization.RoleManagementAttributeNamespaceData"/> instance for mocking. </returns>
+        public static RoleManagementAttributeNamespaceData RoleManagementAttributeNamespaceData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default)
         {
-            return new AttributeNamespaceData(id, name, resourceType, systemData, default);
+            return new RoleManagementAttributeNamespaceData(id, name, resourceType, systemData, default);
         }
 
         /// <param name="namespaceOwnerPrincipalId"> The principal ID of the namespace owner. </param>
-        /// <returns> A new <see cref="Models.AttributeNamespaceCreateContent"/> instance for mocking. </returns>
-        public static AttributeNamespaceCreateContent AttributeNamespaceCreateContent(string namespaceOwnerPrincipalId = default)
+        /// <returns> A new <see cref="Models.RoleManagementAttributeNamespaceCreateContent"/> instance for mocking. </returns>
+        public static RoleManagementAttributeNamespaceCreateContent RoleManagementAttributeNamespaceCreateContent(string namespaceOwnerPrincipalId = default)
         {
-            return new AttributeNamespaceCreateContent(namespaceOwnerPrincipalId, default);
+            return new RoleManagementAttributeNamespaceCreateContent(namespaceOwnerPrincipalId, default);
         }
 
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
