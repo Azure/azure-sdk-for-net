@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.CosmosDB
         {
             TryGetApiVersion(ResourceType, out string cassandraKeyspaceApiVersion);
             _cassandraResourcesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.CosmosDB", ResourceType.Namespace, Diagnostics);
-            _cassandraResourcesRestClient = new CassandraResources(_cassandraResourcesClientDiagnostics, Pipeline, Endpoint, cassandraKeyspaceApiVersion ?? "2026-04-01-preview");
+            _cassandraResourcesRestClient = new CassandraResources(_cassandraResourcesClientDiagnostics, Pipeline, Endpoint, cassandraKeyspaceApiVersion ?? "2026-03-15");
             ValidateResourceId(id);
         }
 
@@ -107,7 +107,7 @@ namespace Azure.ResourceManager.CosmosDB
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-04-01-preview. </description>
+        /// <description> 2026-03-15. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -155,7 +155,7 @@ namespace Azure.ResourceManager.CosmosDB
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-04-01-preview. </description>
+        /// <description> 2026-03-15. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -203,7 +203,7 @@ namespace Azure.ResourceManager.CosmosDB
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-04-01-preview. </description>
+        /// <description> 2026-03-15. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -252,7 +252,7 @@ namespace Azure.ResourceManager.CosmosDB
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-04-01-preview. </description>
+        /// <description> 2026-03-15. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -301,7 +301,7 @@ namespace Azure.ResourceManager.CosmosDB
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-04-01-preview. </description>
+        /// <description> 2026-03-15. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -360,7 +360,7 @@ namespace Azure.ResourceManager.CosmosDB
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-04-01-preview. </description>
+        /// <description> 2026-03-15. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -696,39 +696,6 @@ namespace Azure.ResourceManager.CosmosDB
             Argument.AssertNotNullOrEmpty(tableName, nameof(tableName));
 
             return GetCassandraTables().Get(tableName, cancellationToken);
-        }
-
-        /// <summary> Gets a collection of CassandraViews in the <see cref="CassandraKeyspaceResource"/>. </summary>
-        /// <returns> An object representing collection of CassandraViews and their operations over a CassandraViewResource. </returns>
-        public virtual CassandraViewCollection GetCassandraViews()
-        {
-            return GetCachedClient(client => new CassandraViewCollection(client, Id));
-        }
-
-        /// <summary> Gets the Cassandra view under an existing Azure Cosmos DB database account. </summary>
-        /// <param name="viewName"> Cosmos DB view name. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="viewName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="viewName"/> is an empty string, and was expected to be non-empty. </exception>
-        [ForwardsClientCalls]
-        public virtual async Task<Response<CassandraViewResource>> GetCassandraViewAsync(string viewName, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(viewName, nameof(viewName));
-
-            return await GetCassandraViews().GetAsync(viewName, cancellationToken).ConfigureAwait(false);
-        }
-
-        /// <summary> Gets the Cassandra view under an existing Azure Cosmos DB database account. </summary>
-        /// <param name="viewName"> Cosmos DB view name. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="viewName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="viewName"/> is an empty string, and was expected to be non-empty. </exception>
-        [ForwardsClientCalls]
-        public virtual Response<CassandraViewResource> GetCassandraView(string viewName, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(viewName, nameof(viewName));
-
-            return GetCassandraViews().Get(viewName, cancellationToken);
         }
     }
 }

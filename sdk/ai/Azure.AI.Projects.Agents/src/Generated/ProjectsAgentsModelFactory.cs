@@ -870,10 +870,11 @@ namespace Azure.AI.Projects.Agents
         /// <summary> The AgentIdentity. </summary>
         /// <param name="principalId"> The principal ID of the agent instance. </param>
         /// <param name="clientId"> The client ID of the agent instance. Also referred to as the instance ID. </param>
+        /// <param name="status"> The status of the agent identity. Present for both the agent instance identity and the agent blueprint. </param>
         /// <returns> A new <see cref="Agents.AgentIdentity"/> instance for mocking. </returns>
-        public static AgentIdentity AgentIdentity(string principalId = default, string clientId = default)
+        public static AgentIdentity AgentIdentity(string principalId = default, string clientId = default, AgentIdentityStatus? status = default)
         {
-            return new AgentIdentity(principalId, clientId, additionalBinaryDataProperties: null);
+            return new AgentIdentity(principalId, clientId, status, additionalBinaryDataProperties: null);
         }
 
         /// <summary>
@@ -1809,9 +1810,10 @@ namespace Azure.AI.Projects.Agents
         /// <param name="evalModel"> Model deployment used for evaluation. Defaults to server config (typically 'gpt-4o'). </param>
         /// <param name="optimizationModel"> Model deployment for optimization reasoning (must be gpt-5 family). Falls back to the default eval model when not set. </param>
         /// <param name="evaluationLevel"> Evaluation granularity. Null/omitted means per-item single-turn. Set to 'conversation' for per-conversation multi-turn simulation scoring. </param>
+        /// <param name="maxStalls"> Maximum number of consecutive reflective minibatch rejections before stopping early. A 'stall' occurs when the optimizer proposes a prompt change, evaluates it on a small subset, and the score does not improve — so no full validation-set evaluation is triggered. The counter resets whenever a minibatch passes and its full-validation score beats the current best. Only a sustained plateau of `max_stalls` consecutive minibatch failures triggers the stop. When omitted, the optimizer uses its internal default. Must be &gt;= 1 when set. </param>
         /// <returns> A new <see cref="Agents.OptimizationOptions"/> instance for mocking. </returns>
         [Experimental("AAIP001")]
-        public static OptimizationOptions OptimizationOptions(int? maxCandidates = default, IDictionary<string, BinaryData> optimizationConfig = default, string evalModel = default, string optimizationModel = default, AgentsEvaluationLevel? evaluationLevel = default)
+        public static OptimizationOptions OptimizationOptions(int? maxCandidates = default, IDictionary<string, BinaryData> optimizationConfig = default, string evalModel = default, string optimizationModel = default, AgentsEvaluationLevel? evaluationLevel = default, int? maxStalls = default)
         {
             optimizationConfig ??= new ChangeTrackingDictionary<string, BinaryData>();
 
@@ -1821,6 +1823,7 @@ namespace Azure.AI.Projects.Agents
                 evalModel,
                 optimizationModel,
                 evaluationLevel,
+                maxStalls,
                 additionalBinaryDataProperties: null);
         }
 

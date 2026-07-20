@@ -32,13 +32,15 @@ public class AgentsTestBase : RecordedTestBase<AgentsTestEnvironment>
     protected readonly int PAGE_SIZE = 3;
 
     protected const string FOUNDRY_HEADER = "Foundry-Features";
-    protected const string FOUNDRY_HEADER_VALUE = "MemoryStores=V1Preview,ContainerAgents=V1Preview,WorkflowAgents=V1Preview,Evaluations=V1Preview,Schedules=V1Preview,RedTeams=V1Preview,AgentEndpoints=V1Preview,Skills=V1Preview,Insights=V1Preview,DataGenerationJobs=V1Preview,Models=V1Preview,AgentsOptimization=V1Preview,Routines=V1Preview,ExternalAgents=V1Preview";
+    protected const string FOUNDRY_HEADER_VALUE = "MemoryStores=V1Preview,ContainerAgents=V1Preview,WorkflowAgents=V1Preview,Evaluations=V1Preview,Schedules=V1Preview,RedTeams=V1Preview,AgentEndpoints=V1Preview,Skills=V1Preview,Insights=V1Preview,DataGenerationJobs=V1Preview,Models=V1Preview,AgentsOptimization=V2Preview,Routines=V1Preview,ExternalAgents=V1Preview";
 
     public AgentsTestBase(bool isAsync, RecordedTestMode? testMode = null) : base(isAsync, testMode)
     {
         // Please note that in System.ClientModel, the recording mode is taken from CLIENTMODEL_TEST_MODE
         // environment variable as opposed to AZURE_TEST_MODE in Azure.Core.
         // Allowed values are: Playback, Live, Record.
+        // Uncomment this line to debug the connection to locally running test-proxy (the connection will be made to default port 5000).
+        // UseLocalDebugProxy = true;
         ProjectsTestSanitizers.ApplySanitizers(this);
     }
 
@@ -399,6 +401,12 @@ public class AgentsTestBase : RecordedTestBase<AgentsTestEnvironment>
         foreach (string skill in delete)
         {
             await skillsClient.DeleteSkillAsync(skill);
+        }
+        AgentOptimizationJobs jobsClient = agentsClient.GetAgentOptimizationJobs();
+        List<string> records = await jobsClient.GetAllAsync(limit: PAGE_SIZE, order: AgentListOrder.Ascending, agentName: AGENT_NAME).Select(x => x.Id).ToListAsync();
+        foreach (string record in records)
+        {
+            await jobsClient.DeleteAsync(record, cancellationToken: default);
         }
     }
     #endregion
