@@ -1,7 +1,0 @@
-emit:
-  - "@typespec/http-client-csharp"
-options:
-  "@typespec/http-client-csharp":
-    package-name: "Azure.AI.AgentServer.Core.Storage"
-    emitter-output-dir: "{project-root}/tsp-output"
-    unreferenced-types-handling: keepAll
