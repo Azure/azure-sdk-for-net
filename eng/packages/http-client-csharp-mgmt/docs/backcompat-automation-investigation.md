@@ -142,7 +142,7 @@ still needs an Azure-specific visitor or a per-item hint. The
 
 ## Scenarios
 
-### 1. Type rename back to the previously shipped name — 🟡 Partially automatable (✅ for discriminator `Unknown*` fallbacks)
+### 1. Type rename back to the previously shipped name — 🟡 Partially automatable
 
 **What the custom code does:** applies `[CodeGenType("NewGeneratedName")]` to a partial so the
 generated type keeps the name the library shipped previously. The attribute argument is the name
@@ -169,13 +169,27 @@ differently" is: *a name in the frozen last-GA contract that the current generat
 produces, whose replacement the author manually paired via `[CodeGenType]`.*
 
 **Feasibility — how would the generator know a new type maps to an old one when the names differ?**
-This is the crux, and it splits the scenario:
+This is the crux. There is **no** subset here that is automatable purely from the current-generation
+name; every case needs the frozen last-GA contract plus a stable anchor, and even then some cases
+stay ambiguous.
 
-- **Discriminator `Unknown*` fallbacks — deterministic, ✅.** The name is mechanically derived from
-  the (unchanged) discriminated base type: shipped `Unknown{Base}` vs. generated
-  `Unknown{Prefix}{Base}`. Because the base type name is preserved across the migration, the old
-  fallback name can be reconstructed from the base without any semantic guess. This subset is
-  genuinely automatable.
+- **Discriminator `Unknown*` fallbacks — 🟡, and *not* reconstructable from the name.** An earlier
+  revision of this doc claimed these were deterministic because the old name is "mechanically
+  `Unknown{Base}` and the base survives migration." That is wrong, and the CosmosDB citation is the
+  counter-example: 1.4.0 GA shipped the base as `BackupPolicy` (so the fallback was
+  `UnknownBackupPolicy`), but the migration renamed the base to `CosmosDBAccountBackupPolicy`, so
+  the current generation emits `UnknownCosmosDBAccountBackupPolicy`. The `Unknown{Base}` string did
+  **not** survive, precisely because the base itself was renamed. On top of that, a library can
+  rename the fallback directly — via custom `[CodeGenType]` or via `@clientName` in `client.tsp` —
+  so the shipped fallback name is not even guaranteed to follow the `Unknown{Base}` convention.
+  What *is* stable is the fallback's **identity in the discriminated hierarchy**: it is "the
+  synthetic fallback of discriminated base *B*." So the deterministic match is: identify the current
+  fallback by its base *B*, find the corresponding fallback in the last-GA contract by the same
+  base's identity, and take that name. This only works once *B itself* has been identity-matched
+  across the migration (the same rename problem one level up), and any explicit author rename
+  (custom code or `client.tsp`) must win as the authoritative source. So the fallback is automatable
+  **only conditionally** — given a base-type mapping and no conflicting explicit rename — never from
+  the `Unknown{Base}` name alone.
 
 - **Arbitrary spec-driven renames (`*UpdateProperties` and similar) — 🟡, needs an anchor.** By
   definition the .NET names differ, so name matching cannot recover the correspondence. Automation
@@ -195,12 +209,14 @@ This is the crux, and it splits the scenario:
   given a mapping*, not *mapping-inferable from names alone*.
 
 **Automation approach:** teach the emitter/generator to consume the frozen last-GA contract and
-match generated types to it by structural anchor (graph position + serialized shape), applying the
-old name via the existing `NameVisitor` when the match is unique; fall back to the deterministic
-`Unknown{Base}` reconstruction for discriminator fallbacks, and to an explicit per-type hint when
-the anchor is ambiguous. This is the single most frequent custom-code pattern in the survey, but the
-verdict is *partial* rather than fully automatable because recovering the new→old identity — not
-emitting the rename once known — is the hard part.
+match generated types to it by structural anchor (graph position + serialized shape + discriminated
+base identity), applying the old name via the existing `NameVisitor` when the match is unique. An
+explicit author rename (custom `[CodeGenType]` or `client.tsp` `@clientName`) always takes
+precedence over any inferred mapping, and an ambiguous anchor falls back to a per-type hint. This is
+the single most frequent custom-code pattern in the survey, but the verdict is *partial* — not
+✅ — because recovering the new→old identity (not emitting the rename once known) is the hard part,
+and even the discriminator fallbacks depend on first mapping their base type rather than on any
+reconstructable naming convention.
 
 ### 2. Restore a removed base type (`: ResourceData`, other bases) — ✅ Automatable
 
@@ -612,7 +628,7 @@ generator-caused.
 
 | # | Scenario | Mechanism | Automatable? | Base generator today |
 |---|----------|-----------|--------------|----------------------|
-| 1 | Type rename to old name | `[CodeGenType]` | 🟡 (✅ `Unknown*`) | ❌ not covered |
+| 1 | Type rename to old name | `[CodeGenType]` | 🟡 | ❌ not covered |
 | 2 | Restore removed base type | `partial : ResourceData` | ✅ | ❌ not covered |
 | 3 | Renamed-type deprecated alias | subclass + `[Obsolete]` | ✅ | ❌ not covered |
 | 4 | Renamed property shim | forwarding `[Obsolete]` property | ✅ | ❌ not covered |
@@ -642,10 +658,15 @@ generator-caused.
 **Valid cases (candidates for generator automation):** scenarios 2–9 are deterministic and are
 among the highest-value targets, because they are also some of the most frequent custom-code
 patterns in the survey. Scenario 1 (type rename) is the single most frequent pattern but is only
-*partially* automatable: the discriminator `Unknown*` fallback subset is deterministic (the old
-name reconstructs from the preserved base type), while arbitrary spec-driven renames require
-matching the newly generated type to a last-GA type by a structural anchor (graph position +
-serialized shape) and fall back to a per-type hint when that anchor is ambiguous. These cases
+*partially* automatable, and none of it is inferable from the current-generation name alone. Even
+the discriminator `Unknown*` fallbacks are not reconstructable from `Unknown{Base}` — the base type
+can itself be renamed across the migration (e.g. CosmosDB's `BackupPolicy` →
+`CosmosDBAccountBackupPolicy`), and a library can rename the fallback directly via custom code or
+`client.tsp`. They are automatable only *conditionally*: after the discriminated base has been
+identity-matched to the last-GA contract, and only when no explicit author rename overrides it.
+Arbitrary spec-driven renames similarly require matching the newly generated type to a last-GA type
+by a structural anchor (graph position + serialized shape + discriminated-base identity) and fall
+back to a per-type hint when that anchor is ambiguous. These cases
 share a single enabler: the generator (or an emitter step) consuming the **previous public
 contract** that CI already tracks for breaking-change detection, plus a small
 set of rename/flatten hints, to emit renames, deprecated aliases/forwarders, restored bases,
@@ -653,7 +674,7 @@ read-only facades, and re-added enum values automatically. Notably, that same "p
 contract" is precisely the base generator's `LastContractView` input — so scenario 8 (read-only
 surface) is **already produced today** when the last contract is supplied, and scenarios 5, 6,
 11, 13, and 14 are **partly** produced already (see the *Base generator today* column). The
-remaining Azure-specific gaps (`Unknown*`/anchored type renames, `ResourceData` base restore, deprecated type
+remaining Azure-specific gaps (anchor-matched type renames, `ResourceData` base restore, deprecated type
 aliases, obsolete property forwarders, extensible-enum re-add, `IJsonModel<TData>` forwarding)
 are the net-new automation opportunities.
 
