@@ -20,19 +20,19 @@ namespace Azure.ResourceManager.Authorization.Models
         /// <summary> Initializes a new instance of <see cref="DenyAssignmentProperties"/>. </summary>
         public DenyAssignmentProperties()
         {
-            Permissions = new ChangeTrackingList<DenyAssignmentPermission>();
-            Principals = new ChangeTrackingList<RoleManagementPrincipal>();
-            ExcludePrincipals = new ChangeTrackingList<RoleManagementPrincipal>();
+            DeniedPermissions = new ChangeTrackingList<DenyAssignmentPermission>();
+            DeniedPrincipals = new ChangeTrackingList<RoleManagementPrincipal>();
+            ExcludedPrincipals = new ChangeTrackingList<RoleManagementPrincipal>();
         }
 
         /// <summary> Initializes a new instance of <see cref="DenyAssignmentProperties"/>. </summary>
         /// <param name="denyAssignmentName"> The display name of the deny assignment. </param>
         /// <param name="description"> The description of the deny assignment. </param>
-        /// <param name="permissions"> An array of permissions that are denied by the deny assignment. </param>
+        /// <param name="deniedPermissions"> An array of permissions that are denied by the deny assignment. </param>
         /// <param name="scope"> The deny assignment scope. </param>
         /// <param name="isAppliedToChildScopes"> Determines if the deny assignment applies to child scopes. Default value is false. </param>
-        /// <param name="principals"> Array of principals to which the deny assignment applies. </param>
-        /// <param name="excludePrincipals"> Array of principals to which the deny assignment does not apply. </param>
+        /// <param name="deniedPrincipals"> Array of principals to which the deny assignment applies. </param>
+        /// <param name="excludedPrincipals"> Array of principals to which the deny assignment does not apply. </param>
         /// <param name="isSystemProtected"> Specifies whether this deny assignment was created by Azure and cannot be edited or deleted. </param>
         /// <param name="denyAssignmentEffect"> The effect of the deny assignment. 'enforced' blocks access, 'audit' logs without blocking. </param>
         /// <param name="condition"> The conditions on the deny assignment. This limits the resources it can be assigned to. e.g.: @Resource[Microsoft.Storage/storageAccounts/blobServices/containers:ContainerName] StringEqualsIgnoreCase 'foo_storage_container'. </param>
@@ -42,15 +42,15 @@ namespace Azure.ResourceManager.Authorization.Models
         /// <param name="createdBy"> Id of the user who created the assignment. </param>
         /// <param name="updatedBy"> Id of the user who updated the assignment. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal DenyAssignmentProperties(string denyAssignmentName, string description, IList<DenyAssignmentPermission> permissions, string scope, bool? isAppliedToChildScopes, IList<RoleManagementPrincipal> principals, IList<RoleManagementPrincipal> excludePrincipals, bool? isSystemProtected, DenyAssignmentEffect? denyAssignmentEffect, string condition, string conditionVersion, DateTimeOffset? createdOn, DateTimeOffset? updatedOn, string createdBy, string updatedBy, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal DenyAssignmentProperties(string denyAssignmentName, string description, IList<DenyAssignmentPermission> deniedPermissions, string scope, bool? isAppliedToChildScopes, IList<RoleManagementPrincipal> deniedPrincipals, IList<RoleManagementPrincipal> excludedPrincipals, bool? isSystemProtected, DenyAssignmentEffect? denyAssignmentEffect, string condition, string conditionVersion, DateTimeOffset? createdOn, DateTimeOffset? updatedOn, string createdBy, string updatedBy, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             DenyAssignmentName = denyAssignmentName;
             Description = description;
-            Permissions = permissions;
+            DeniedPermissions = deniedPermissions;
             Scope = scope;
             IsAppliedToChildScopes = isAppliedToChildScopes;
-            Principals = principals;
-            ExcludePrincipals = excludePrincipals;
+            DeniedPrincipals = deniedPrincipals;
+            ExcludedPrincipals = excludedPrincipals;
             IsSystemProtected = isSystemProtected;
             DenyAssignmentEffect = denyAssignmentEffect;
             Condition = condition;
@@ -72,7 +72,7 @@ namespace Azure.ResourceManager.Authorization.Models
 
         /// <summary> An array of permissions that are denied by the deny assignment. </summary>
         [WirePath("permissions")]
-        public IList<DenyAssignmentPermission> Permissions { get; } = new ChangeTrackingList<DenyAssignmentPermission>();
+        public IList<DenyAssignmentPermission> DeniedPermissions { get; } = new ChangeTrackingList<DenyAssignmentPermission>();
 
         /// <summary> The deny assignment scope. </summary>
         [WirePath("scope")]
@@ -84,11 +84,11 @@ namespace Azure.ResourceManager.Authorization.Models
 
         /// <summary> Array of principals to which the deny assignment applies. </summary>
         [WirePath("principals")]
-        public IList<RoleManagementPrincipal> Principals { get; } = new ChangeTrackingList<RoleManagementPrincipal>();
+        public IList<RoleManagementPrincipal> DeniedPrincipals { get; } = new ChangeTrackingList<RoleManagementPrincipal>();
 
         /// <summary> Array of principals to which the deny assignment does not apply. </summary>
         [WirePath("excludePrincipals")]
-        public IList<RoleManagementPrincipal> ExcludePrincipals { get; } = new ChangeTrackingList<RoleManagementPrincipal>();
+        public IList<RoleManagementPrincipal> ExcludedPrincipals { get; } = new ChangeTrackingList<RoleManagementPrincipal>();
 
         /// <summary> Specifies whether this deny assignment was created by Azure and cannot be edited or deleted. </summary>
         [WirePath("isSystemProtected")]

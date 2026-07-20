@@ -84,11 +84,11 @@ namespace Azure.ResourceManager.Authorization.Models
                 writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);
             }
-            if (Optional.IsCollectionDefined(Permissions))
+            if (Optional.IsCollectionDefined(DeniedPermissions))
             {
                 writer.WritePropertyName("permissions"u8);
                 writer.WriteStartArray();
-                foreach (DenyAssignmentPermission item in Permissions)
+                foreach (DenyAssignmentPermission item in DeniedPermissions)
                 {
                     writer.WriteObjectValue(item, options);
                 }
@@ -104,21 +104,21 @@ namespace Azure.ResourceManager.Authorization.Models
                 writer.WritePropertyName("doNotApplyToChildScopes"u8);
                 writer.WriteBooleanValue(IsAppliedToChildScopes.Value);
             }
-            if (Optional.IsCollectionDefined(Principals))
+            if (Optional.IsCollectionDefined(DeniedPrincipals))
             {
                 writer.WritePropertyName("principals"u8);
                 writer.WriteStartArray();
-                foreach (RoleManagementPrincipal item in Principals)
+                foreach (RoleManagementPrincipal item in DeniedPrincipals)
                 {
                     writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(ExcludePrincipals))
+            if (Optional.IsCollectionDefined(ExcludedPrincipals))
             {
                 writer.WritePropertyName("excludePrincipals"u8);
                 writer.WriteStartArray();
-                foreach (RoleManagementPrincipal item in ExcludePrincipals)
+                foreach (RoleManagementPrincipal item in ExcludedPrincipals)
                 {
                     writer.WriteObjectValue(item, options);
                 }
@@ -208,11 +208,11 @@ namespace Azure.ResourceManager.Authorization.Models
             }
             string denyAssignmentName = default;
             string description = default;
-            IList<DenyAssignmentPermission> permissions = default;
+            IList<DenyAssignmentPermission> deniedPermissions = default;
             string scope = default;
             bool? isAppliedToChildScopes = default;
-            IList<RoleManagementPrincipal> principals = default;
-            IList<RoleManagementPrincipal> excludePrincipals = default;
+            IList<RoleManagementPrincipal> deniedPrincipals = default;
+            IList<RoleManagementPrincipal> excludedPrincipals = default;
             bool? isSystemProtected = default;
             DenyAssignmentEffect? denyAssignmentEffect = default;
             string condition = default;
@@ -245,7 +245,7 @@ namespace Azure.ResourceManager.Authorization.Models
                     {
                         array.Add(DenyAssignmentPermission.DeserializeDenyAssignmentPermission(item, options));
                     }
-                    permissions = array;
+                    deniedPermissions = array;
                     continue;
                 }
                 if (prop.NameEquals("scope"u8))
@@ -273,7 +273,7 @@ namespace Azure.ResourceManager.Authorization.Models
                     {
                         array.Add(RoleManagementPrincipal.DeserializeRoleManagementPrincipal(item, options));
                     }
-                    principals = array;
+                    deniedPrincipals = array;
                     continue;
                 }
                 if (prop.NameEquals("excludePrincipals"u8))
@@ -287,7 +287,7 @@ namespace Azure.ResourceManager.Authorization.Models
                     {
                         array.Add(RoleManagementPrincipal.DeserializeRoleManagementPrincipal(item, options));
                     }
-                    excludePrincipals = array;
+                    excludedPrincipals = array;
                     continue;
                 }
                 if (prop.NameEquals("isSystemProtected"u8))
@@ -354,11 +354,11 @@ namespace Azure.ResourceManager.Authorization.Models
             return new DenyAssignmentProperties(
                 denyAssignmentName,
                 description,
-                permissions ?? new ChangeTrackingList<DenyAssignmentPermission>(),
+                deniedPermissions ?? new ChangeTrackingList<DenyAssignmentPermission>(),
                 scope,
                 isAppliedToChildScopes,
-                principals ?? new ChangeTrackingList<RoleManagementPrincipal>(),
-                excludePrincipals ?? new ChangeTrackingList<RoleManagementPrincipal>(),
+                deniedPrincipals ?? new ChangeTrackingList<RoleManagementPrincipal>(),
+                excludedPrincipals ?? new ChangeTrackingList<RoleManagementPrincipal>(),
                 isSystemProtected,
                 denyAssignmentEffect,
                 condition,

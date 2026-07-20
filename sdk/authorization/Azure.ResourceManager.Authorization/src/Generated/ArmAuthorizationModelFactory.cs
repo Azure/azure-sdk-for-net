@@ -1076,11 +1076,11 @@ namespace Azure.ResourceManager.Authorization.Models
         /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
         /// <param name="denyAssignmentName"> The display name of the deny assignment. </param>
         /// <param name="description"> The description of the deny assignment. </param>
-        /// <param name="permissions"> An array of permissions that are denied by the deny assignment. </param>
+        /// <param name="deniedPermissions"> An array of permissions that are denied by the deny assignment. </param>
         /// <param name="scope"> The deny assignment scope. </param>
         /// <param name="isAppliedToChildScopes"> Determines if the deny assignment applies to child scopes. Default value is false. </param>
-        /// <param name="principals"> Array of principals to which the deny assignment applies. </param>
-        /// <param name="excludePrincipals"> Array of principals to which the deny assignment does not apply. </param>
+        /// <param name="deniedPrincipals"> Array of principals to which the deny assignment applies. </param>
+        /// <param name="excludedPrincipals"> Array of principals to which the deny assignment does not apply. </param>
         /// <param name="isSystemProtected"> Specifies whether this deny assignment was created by Azure and cannot be edited or deleted. </param>
         /// <param name="denyAssignmentEffect"> The effect of the deny assignment. 'enforced' blocks access, 'audit' logs without blocking. </param>
         /// <param name="condition"> The conditions on the deny assignment. This limits the resources it can be assigned to. e.g.: @Resource[Microsoft.Storage/storageAccounts/blobServices/containers:ContainerName] StringEqualsIgnoreCase 'foo_storage_container'. </param>
@@ -1090,21 +1090,21 @@ namespace Azure.ResourceManager.Authorization.Models
         /// <param name="createdBy"> Id of the user who created the assignment. </param>
         /// <param name="updatedBy"> Id of the user who updated the assignment. </param>
         /// <returns> A new <see cref="Authorization.DenyAssignmentData"/> instance for mocking. </returns>
-        public static DenyAssignmentData DenyAssignmentData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, string denyAssignmentName = default, string description = default, IEnumerable<DenyAssignmentPermission> permissions = default, string scope = default, bool? isAppliedToChildScopes = default, IEnumerable<RoleManagementPrincipal> principals = default, IEnumerable<RoleManagementPrincipal> excludePrincipals = default, bool? isSystemProtected = default, DenyAssignmentEffect? denyAssignmentEffect = default, string condition = default, string conditionVersion = default, DateTimeOffset? createdOn = default, DateTimeOffset? updatedOn = default, string createdBy = default, string updatedBy = default)
+        public static DenyAssignmentData DenyAssignmentData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, string denyAssignmentName = default, string description = default, IEnumerable<DenyAssignmentPermission> deniedPermissions = default, string scope = default, bool? isAppliedToChildScopes = default, IEnumerable<RoleManagementPrincipal> deniedPrincipals = default, IEnumerable<RoleManagementPrincipal> excludedPrincipals = default, bool? isSystemProtected = default, DenyAssignmentEffect? denyAssignmentEffect = default, string condition = default, string conditionVersion = default, DateTimeOffset? createdOn = default, DateTimeOffset? updatedOn = default, string createdBy = default, string updatedBy = default)
         {
             return new DenyAssignmentData(
                 id,
                 name,
                 resourceType,
                 systemData,
-                denyAssignmentName is null && description is null && permissions is null && scope is null && isAppliedToChildScopes is null && principals is null && excludePrincipals is null && isSystemProtected is null && denyAssignmentEffect is null && condition is null && conditionVersion is null && createdOn is null && updatedOn is null && createdBy is null && updatedBy is null ? default : new DenyAssignmentProperties(
+                denyAssignmentName is null && description is null && deniedPermissions is null && scope is null && isAppliedToChildScopes is null && deniedPrincipals is null && excludedPrincipals is null && isSystemProtected is null && denyAssignmentEffect is null && condition is null && conditionVersion is null && createdOn is null && updatedOn is null && createdBy is null && updatedBy is null ? default : new DenyAssignmentProperties(
                     denyAssignmentName,
                     description,
-                    (permissions ?? new ChangeTrackingList<DenyAssignmentPermission>()).ToList(),
+                    (deniedPermissions ?? new ChangeTrackingList<DenyAssignmentPermission>()).ToList(),
                     scope,
                     isAppliedToChildScopes,
-                    (principals ?? new ChangeTrackingList<RoleManagementPrincipal>()).ToList(),
-                    (excludePrincipals ?? new ChangeTrackingList<RoleManagementPrincipal>()).ToList(),
+                    (deniedPrincipals ?? new ChangeTrackingList<RoleManagementPrincipal>()).ToList(),
+                    (excludedPrincipals ?? new ChangeTrackingList<RoleManagementPrincipal>()).ToList(),
                     isSystemProtected,
                     denyAssignmentEffect,
                     condition,
@@ -1804,14 +1804,14 @@ namespace Azure.ResourceManager.Authorization.Models
                 name,
                 resourceType,
                 systemData,
-                denyAssignmentName is null && description is null && permissions is null && scope is null && isAppliedToChildScopes is null && principals is null && excludePrincipals is null && isSystemProtected is null ? default : new DenyAssignmentProperties(
+                denyAssignmentName is null && description is null && scope is null && isAppliedToChildScopes is null && isSystemProtected is null ? default : new DenyAssignmentProperties(
                     denyAssignmentName,
                     description,
-                    (permissions ?? new ChangeTrackingList<DenyAssignmentPermission>()).ToList(),
+                    default,
                     scope,
                     isAppliedToChildScopes,
-                    (principals ?? new ChangeTrackingList<RoleManagementPrincipal>()).ToList(),
-                    (excludePrincipals ?? new ChangeTrackingList<RoleManagementPrincipal>()).ToList(),
+                    default,
+                    default,
                     isSystemProtected,
                     default,
                     default,
