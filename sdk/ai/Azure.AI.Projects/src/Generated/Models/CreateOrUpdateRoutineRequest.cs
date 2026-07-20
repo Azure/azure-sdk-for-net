@@ -42,9 +42,11 @@ namespace Azure.AI.Projects
         public bool? Enabled { get; }
 
         /// <summary> The triggers configured for the routine. In v1, exactly one trigger entry is supported. </summary>
+        [Experimental("AAIP001")]
         public IDictionary<string, RoutineTrigger> Triggers { get; }
 
         /// <summary> The action executed when the routine fires. </summary>
+        [Experimental("AAIP001")]
         public RoutineAction Action { get; }
     }
 }

@@ -39,7 +39,7 @@
   ],
   "dependencies": {
     "@azure-typespec/http-client-csharp": "1.0.0-alpha.20260719.1",
-    "@typespec/http-client-csharp": "1.0.0-alpha.20260717.7"
+    "@typespec/http-client-csharp": "1.0.0-alpha.20260717.13"
   },
   "devDependencies": {
     "@azure-tools/azure-http-specs": "0.1.0-alpha.43",

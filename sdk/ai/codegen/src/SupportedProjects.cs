@@ -90,7 +90,7 @@ internal class SupportedPackages
                    _experimentalEntity.Add(trimmed);
                     break;
                 case "field":
-                    _experimentalEntity.Add(ToCapitalizedCamelCase(trimmed));
+                    _experimentalEntity.Add(FormatFieldName(trimmed));
                     break;
                 default:
                     break;
@@ -98,14 +98,22 @@ internal class SupportedPackages
         }
     }
 
-    private static string ToCapitalizedCamelCase(string value)
+    private static string FormatFieldName(string value)
     {
-        string[] parts = value.Split('_');
-        StringBuilder sb = new();
+        // Field is separated from namespace.class by "::", replace by ".".
+        string[] typeField = value.Split("::");
+        if (typeField.Length != 2)
+        {
+            throw new InvalidOperationException("Invalid field format. Field entry must look like Name.Space.Type::FieldName");
+        }
+        // Convert snake_case to CapitalizedCamelCase.
+        string[] parts = typeField[1].Split('_');
+        StringBuilder sb = new(typeField[0]);
+        sb.Append('.');
         foreach (string part in parts)
         {
-            sb.Append(part.Substring(0, 1).ToUpper());
-            sb.Append(part.Substring(1, part.Length - 1));
+            sb.Append(part[0..1].ToUpper());
+            sb.Append(part.AsSpan(1, part.Length - 1));
         }
         return sb.ToString();
     }

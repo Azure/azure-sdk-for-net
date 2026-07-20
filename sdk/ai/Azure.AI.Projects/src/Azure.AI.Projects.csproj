@@ -11,11 +11,6 @@
     <GenerateAPIListing>true</GenerateAPIListing>
     <IncludeOperationsSharedSource>true</IncludeOperationsSharedSource>
   </PropertyGroup>
-  <ItemGroup>
-    <Compile Remove="Custom\EvaluationRules\**" />
-    <EmbeddedResource Remove="Custom\EvaluationRules\**" />
-    <None Remove="Custom\EvaluationRules\**" />
-  </ItemGroup>
 
   <PropertyGroup>
     <IncludeSystemClientModelSharedSourceForTracing>true</IncludeSystemClientModelSharedSourceForTracing>
