@@ -2,7 +2,8 @@
 // Licensed under the MIT License.
 
 // The TypeSpec management generator omits generic ArmResource extensions, while AutoRest mapped
-// roleDefinitionId to ResourceIdentifier although the service parameter is a name string; this partial preserves both GA compatibility surfaces.
+// roleDefinitionId to ResourceIdentifier although the service parameter is a name string. TypeSpec also
+// places the legacy variable-resource permissions route on ArmClient. This partial preserves the shipped surfaces.
 
 #nullable disable
 
@@ -12,11 +13,87 @@ using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
 using Azure.ResourceManager.Authorization.Mocking;
+using Azure.ResourceManager.Authorization.Models;
+using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.Authorization
 {
     public static partial class AuthorizationExtensions
     {
+        /// <summary>
+        /// Gets all permissions the caller has for a resource.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourcegroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{parentResourcePath}/{resourceType}/{resourceName}/providers/Microsoft.Authorization/permissions</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>AzurePermissionsForResource_List</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-04-01</description>
+        /// </item>
+        /// </list>
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableAuthorizationResourceGroupResource.GetAzurePermissionsForResources(string,string,string,string,CancellationToken)"/> instead.</description>
+        /// </item>
+        /// </summary>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
+        /// <param name="resourceProviderNamespace"> The namespace of the resource provider. </param>
+        /// <param name="parentResourcePath"> The parent resource identity. </param>
+        /// <param name="resourceType"> The resource type of the resource. </param>
+        /// <param name="resourceName"> The name of the resource to get the permissions for. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="resourceName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/>, <paramref name="resourceProviderNamespace"/>, <paramref name="parentResourcePath"/>, <paramref name="resourceType"/> or <paramref name="resourceName"/> is null. </exception>
+        /// <returns> An async collection of <see cref="RoleDefinitionPermission"/> that may take multiple service requests to iterate over. </returns>
+        public static AsyncPageable<RoleDefinitionPermission> GetAzurePermissionsForResourcesAsync(this ResourceGroupResource resourceGroupResource, string resourceProviderNamespace, string parentResourcePath, string resourceType, string resourceName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
+
+            return GetMockableAuthorizationResourceGroupResource(resourceGroupResource).GetAzurePermissionsForResourcesAsync(resourceProviderNamespace, parentResourcePath, resourceType, resourceName, cancellationToken);
+        }
+
+        /// <summary>
+        /// Gets all permissions the caller has for a resource.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourcegroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{parentResourcePath}/{resourceType}/{resourceName}/providers/Microsoft.Authorization/permissions</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>AzurePermissionsForResource_List</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-04-01</description>
+        /// </item>
+        /// </list>
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableAuthorizationResourceGroupResource.GetAzurePermissionsForResources(string,string,string,string,CancellationToken)"/> instead.</description>
+        /// </item>
+        /// </summary>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
+        /// <param name="resourceProviderNamespace"> The namespace of the resource provider. </param>
+        /// <param name="parentResourcePath"> The parent resource identity. </param>
+        /// <param name="resourceType"> The resource type of the resource. </param>
+        /// <param name="resourceName"> The name of the resource to get the permissions for. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="resourceName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/>, <paramref name="resourceProviderNamespace"/>, <paramref name="parentResourcePath"/>, <paramref name="resourceType"/> or <paramref name="resourceName"/> is null. </exception>
+        /// <returns> A collection of <see cref="RoleDefinitionPermission"/> that may take multiple service requests to iterate over. </returns>
+        public static Pageable<RoleDefinitionPermission> GetAzurePermissionsForResources(this ResourceGroupResource resourceGroupResource, string resourceProviderNamespace, string parentResourcePath, string resourceType, string resourceName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
+
+            return GetMockableAuthorizationResourceGroupResource(resourceGroupResource).GetAzurePermissionsForResources(resourceProviderNamespace, parentResourcePath, resourceType, resourceName, cancellationToken);
+        }
+
         /// <inheritdoc cref="GetAuthorizationRoleDefinition(ArmClient, ResourceIdentifier, string, CancellationToken)"/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         [Obsolete("this method is deprecated and will be removed in a future version, please use GetAuthorizationRoleDefinition(ResourceIdentifier scope, string roleDefinitionId, CancellationToken cancellationToken = default) instead.")]

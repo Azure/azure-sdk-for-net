@@ -1348,7 +1348,7 @@ namespace Azure.ResourceManager.Authorization.Mocking
         /// <exception cref="ArgumentNullException"> <paramref name="scope"/>, <paramref name="resourceGroupName"/>, <paramref name="resourceProviderNamespace"/>, <paramref name="parentResourcePath"/>, <paramref name="resourceType"/>, <paramref name="resourceName"/> or <paramref name="subscriptionId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="resourceGroupName"/>, <paramref name="resourceProviderNamespace"/>, <paramref name="parentResourcePath"/>, <paramref name="resourceType"/>, <paramref name="resourceName"/> or <paramref name="subscriptionId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <returns> A collection of <see cref="RoleDefinitionPermission"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<RoleDefinitionPermission> GetAzurePermissionsForResourcesAsync(ResourceIdentifier scope, string resourceGroupName, string resourceProviderNamespace, string parentResourcePath, string resourceType, string resourceName, string subscriptionId, CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<RoleDefinitionPermission> GetAzurePermissionsForResourceAsync(ResourceIdentifier scope, string resourceGroupName, string resourceProviderNamespace, string parentResourcePath, string resourceType, string resourceName, string subscriptionId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(scope, nameof(scope));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -1362,7 +1362,7 @@ namespace Azure.ResourceManager.Authorization.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new PermissionsGetAzurePermissionsForResourcesAsyncCollectionResultOfT(
+            return new PermissionsGetAzurePermissionsForResourceAsyncCollectionResultOfT(
                 PermissionsRestClient,
                 subscriptionId,
                 resourceGroupName,
@@ -1371,7 +1371,7 @@ namespace Azure.ResourceManager.Authorization.Mocking
                 resourceType,
                 resourceName,
                 context,
-                "MockableAuthorizationArmClient.GetAzurePermissionsForResources");
+                "MockableAuthorizationArmClient.GetAzurePermissionsForResource");
         }
 
         /// <summary>
@@ -1402,7 +1402,7 @@ namespace Azure.ResourceManager.Authorization.Mocking
         /// <exception cref="ArgumentNullException"> <paramref name="scope"/>, <paramref name="resourceGroupName"/>, <paramref name="resourceProviderNamespace"/>, <paramref name="parentResourcePath"/>, <paramref name="resourceType"/>, <paramref name="resourceName"/> or <paramref name="subscriptionId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="resourceGroupName"/>, <paramref name="resourceProviderNamespace"/>, <paramref name="parentResourcePath"/>, <paramref name="resourceType"/>, <paramref name="resourceName"/> or <paramref name="subscriptionId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <returns> A collection of <see cref="RoleDefinitionPermission"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<RoleDefinitionPermission> GetAzurePermissionsForResources(ResourceIdentifier scope, string resourceGroupName, string resourceProviderNamespace, string parentResourcePath, string resourceType, string resourceName, string subscriptionId, CancellationToken cancellationToken = default)
+        public virtual Pageable<RoleDefinitionPermission> GetAzurePermissionsForResource(ResourceIdentifier scope, string resourceGroupName, string resourceProviderNamespace, string parentResourcePath, string resourceType, string resourceName, string subscriptionId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(scope, nameof(scope));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -1416,7 +1416,7 @@ namespace Azure.ResourceManager.Authorization.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new PermissionsGetAzurePermissionsForResourcesCollectionResultOfT(
+            return new PermissionsGetAzurePermissionsForResourceCollectionResultOfT(
                 PermissionsRestClient,
                 subscriptionId,
                 resourceGroupName,
@@ -1425,7 +1425,7 @@ namespace Azure.ResourceManager.Authorization.Mocking
                 resourceType,
                 resourceName,
                 context,
-                "MockableAuthorizationArmClient.GetAzurePermissionsForResources");
+                "MockableAuthorizationArmClient.GetAzurePermissionsForResource");
         }
 
         /// <summary>

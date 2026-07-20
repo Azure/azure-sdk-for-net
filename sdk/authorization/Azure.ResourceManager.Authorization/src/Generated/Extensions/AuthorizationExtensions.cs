@@ -1758,7 +1758,7 @@ namespace Azure.ResourceManager.Authorization
         /// Gets all permissions the caller has for a resource.
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableAuthorizationArmClient.GetAzurePermissionsForResourcesAsync(ResourceIdentifier, string, string, string, string, string, string, CancellationToken)"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockableAuthorizationArmClient.GetAzurePermissionsForResourceAsync(ResourceIdentifier, string, string, string, string, string, string, CancellationToken)"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient"/> the method will execute against. </param>
@@ -1772,18 +1772,18 @@ namespace Azure.ResourceManager.Authorization
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
         /// <returns> A collection of <see cref="RoleDefinitionPermission"/> that may take multiple service requests to iterate over. </returns>
-        public static AsyncPageable<RoleDefinitionPermission> GetAzurePermissionsForResourcesAsync(this ArmClient client, ResourceIdentifier scope, string resourceGroupName, string resourceProviderNamespace, string parentResourcePath, string resourceType, string resourceName, string subscriptionId, CancellationToken cancellationToken = default)
+        public static AsyncPageable<RoleDefinitionPermission> GetAzurePermissionsForResourceAsync(this ArmClient client, ResourceIdentifier scope, string resourceGroupName, string resourceProviderNamespace, string parentResourcePath, string resourceType, string resourceName, string subscriptionId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(client, nameof(client));
 
-            return GetMockableAuthorizationArmClient(client).GetAzurePermissionsForResourcesAsync(scope, resourceGroupName, resourceProviderNamespace, parentResourcePath, resourceType, resourceName, subscriptionId, cancellationToken);
+            return GetMockableAuthorizationArmClient(client).GetAzurePermissionsForResourceAsync(scope, resourceGroupName, resourceProviderNamespace, parentResourcePath, resourceType, resourceName, subscriptionId, cancellationToken);
         }
 
         /// <summary>
         /// Gets all permissions the caller has for a resource.
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableAuthorizationArmClient.GetAzurePermissionsForResources(ResourceIdentifier, string, string, string, string, string, string, CancellationToken)"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockableAuthorizationArmClient.GetAzurePermissionsForResource(ResourceIdentifier, string, string, string, string, string, string, CancellationToken)"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient"/> the method will execute against. </param>
@@ -1797,11 +1797,11 @@ namespace Azure.ResourceManager.Authorization
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
         /// <returns> A collection of <see cref="RoleDefinitionPermission"/> that may take multiple service requests to iterate over. </returns>
-        public static Pageable<RoleDefinitionPermission> GetAzurePermissionsForResources(this ArmClient client, ResourceIdentifier scope, string resourceGroupName, string resourceProviderNamespace, string parentResourcePath, string resourceType, string resourceName, string subscriptionId, CancellationToken cancellationToken = default)
+        public static Pageable<RoleDefinitionPermission> GetAzurePermissionsForResource(this ArmClient client, ResourceIdentifier scope, string resourceGroupName, string resourceProviderNamespace, string parentResourcePath, string resourceType, string resourceName, string subscriptionId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(client, nameof(client));
 
-            return GetMockableAuthorizationArmClient(client).GetAzurePermissionsForResources(scope, resourceGroupName, resourceProviderNamespace, parentResourcePath, resourceType, resourceName, subscriptionId, cancellationToken);
+            return GetMockableAuthorizationArmClient(client).GetAzurePermissionsForResource(scope, resourceGroupName, resourceProviderNamespace, parentResourcePath, resourceType, resourceName, subscriptionId, cancellationToken);
         }
 
         /// <summary>
