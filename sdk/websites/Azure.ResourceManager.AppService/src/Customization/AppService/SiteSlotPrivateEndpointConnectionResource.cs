@@ -3,10 +3,14 @@
 
 #nullable disable
 
+using System;
 using System.ComponentModel;
 using System.Threading;
 using System.Threading.Tasks;
+using Azure;
+using Azure.Core;
 using Azure.ResourceManager.AppService.Models;
+using Microsoft.TypeSpec.Generator.Customizations;
 
 // ROOT CAUSE: GA 1.5.0 shipped Update overloads on private endpoint connection resource types
 // accepting the legacy PrivateLinkConnectionApprovalRequestInfo wrapper. The TypeSpec generator
@@ -16,8 +20,30 @@ using Azure.ResourceManager.AppService.Models;
 // would break the REST contract for other language SDKs.
 namespace Azure.ResourceManager.AppService
 {
+    [CodeGenSuppress("DeleteAsync", typeof(WaitUntil), typeof(CancellationToken))]
+    [CodeGenSuppress("Delete", typeof(WaitUntil), typeof(CancellationToken))]
     public partial class SiteSlotPrivateEndpointConnectionResource
     {
+        /// <summary> Description for Deletes a private endpoint connection (slot). </summary>
+        public virtual Task<ArmOperation<BinaryData>> DeleteAsync(WaitUntil waitUntil, CancellationToken cancellationToken = default)
+            => AppServiceBinaryDataDeleteOperation.DeleteWithLocationAsync(
+                _privateEndpointConnectionSlotOperationGroupClientDiagnostics,
+                Pipeline,
+                context => _privateEndpointConnectionSlotOperationGroupRestClient.CreateDeletePrivateEndpointConnectionSlotRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, context),
+                "SiteSlotPrivateEndpointConnectionResource.Delete",
+                waitUntil,
+                cancellationToken);
+
+        /// <summary> Description for Deletes a private endpoint connection (slot). </summary>
+        public virtual ArmOperation<BinaryData> Delete(WaitUntil waitUntil, CancellationToken cancellationToken = default)
+            => AppServiceBinaryDataDeleteOperation.DeleteWithLocation(
+                _privateEndpointConnectionSlotOperationGroupClientDiagnostics,
+                Pipeline,
+                context => _privateEndpointConnectionSlotOperationGroupRestClient.CreateDeletePrivateEndpointConnectionSlotRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, context),
+                "SiteSlotPrivateEndpointConnectionResource.Delete",
+                waitUntil,
+                cancellationToken);
+
         /// <summary> Description for Approves or rejects a private endpoint connection (slot). </summary>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public virtual Task<ArmOperation<SiteSlotPrivateEndpointConnectionResource>> UpdateAsync(WaitUntil waitUntil, PrivateLinkConnectionApprovalRequestInfo privateEndpointWrapper, CancellationToken cancellationToken = default)

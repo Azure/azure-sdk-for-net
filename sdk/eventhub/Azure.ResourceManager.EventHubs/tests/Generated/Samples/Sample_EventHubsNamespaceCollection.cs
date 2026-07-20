@@ -69,11 +69,11 @@ UserAssignedIdentity = "/subscriptions/SampleSubscription/resourceGroups/Resurce
                     Locations = {new EventHubsNamespaceReplicaLocation
 {
 LocationName = "eastus",
-RoleType = EventHubsNamespaceGeoDRRoleType.Primary,
+RoleType = EventHubsNamespaceGeoDrRoleType.Primary,
 }, new EventHubsNamespaceReplicaLocation
 {
 LocationName = "southcentralus",
-RoleType = EventHubsNamespaceGeoDRRoleType.Secondary,
+RoleType = EventHubsNamespaceGeoDrRoleType.Secondary,
 }},
                 },
             };
@@ -119,15 +119,15 @@ RoleType = EventHubsNamespaceGeoDRRoleType.Secondary,
                     Locations = {new EventHubsNamespaceReplicaLocation
 {
 LocationName = "eastus",
-RoleType = EventHubsNamespaceGeoDRRoleType.Primary,
+RoleType = EventHubsNamespaceGeoDrRoleType.Primary,
 }, new EventHubsNamespaceReplicaLocation
 {
 LocationName = "westus",
-RoleType = EventHubsNamespaceGeoDRRoleType.Secondary,
+RoleType = EventHubsNamespaceGeoDrRoleType.Secondary,
 }, new EventHubsNamespaceReplicaLocation
 {
 LocationName = "centralus",
-RoleType = EventHubsNamespaceGeoDRRoleType.Secondary,
+RoleType = EventHubsNamespaceGeoDrRoleType.Secondary,
 }},
                 },
             };

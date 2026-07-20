@@ -4,7 +4,7 @@ license: MIT
 metadata:
   version: "1.0.0"
   distribution: shared
-description: 'Create, get, update, abandon, and link SDK PRs to release plan work items for Azure SDK releases. **UTILITY SKILL**. USE FOR: "create release plan", "get release plan", "update release plan", "update API spec in release plan", "update SDK details in release plan", "abandon release plan", "link SDK PR to plan", "namespace approval", "check release plan status". DO NOT USE FOR: SDK code generation, pipeline troubleshooting, API review feedback. INVOKES: azure-sdk-mcp:azsdk_create_release_plan, azure-sdk-mcp:azsdk_get_release_plan, azure-sdk-mcp:azsdk_get_release_plan_for_spec_pr, azure-sdk-mcp:azsdk_update_release_plan, azure-sdk-mcp:azsdk_update_api_spec_pull_request_in_release_plan, azure-sdk-mcp:azsdk_update_sdk_details_in_release_plan, azure-sdk-mcp:azsdk_abandon_release_plan, azure-sdk-mcp:azsdk_link_sdk_pull_request_to_release_plan, azure-sdk-mcp:azsdk_link_namespace_approval_issue.'
+description: 'Manage Azure SDK release plans and associated SDK PRs. **UTILITY SKILL**. USE FOR: "prepare a release plan", "plan the next SDK release", "create release plan for my package", "get or update release plan", "update API spec or SDK details in release plan", "abandon release plan", "link SDK PR", "namespace approval", "check release plan status". DO NOT USE FOR: SDK generation, pipeline troubleshooting, API review. INVOKES: azure-sdk-mcp:azsdk_create_release_plan, azure-sdk-mcp:azsdk_get_release_plan, azure-sdk-mcp:azsdk_get_release_plan_for_spec_pr, azure-sdk-mcp:azsdk_update_release_plan, azure-sdk-mcp:azsdk_update_api_spec_pull_request_in_release_plan, azure-sdk-mcp:azsdk_update_sdk_details_in_release_plan, azure-sdk-mcp:azsdk_abandon_release_plan, azure-sdk-mcp:azsdk_link_sdk_pull_request_to_release_plan, azure-sdk-mcp:azsdk_link_namespace_approval_issue.'
 compatibility: "azure-sdk-mcp server, API spec PR in Azure/azure-rest-api-specs"
 ---
 
@@ -14,8 +14,8 @@ This skill creates, gets, updates, abandons, and links SDK PRs to release plan w
 
 ## Triggers
 
-USE FOR: create release plan, get release plan, update release plan, update API spec in release plan, update SDK details in release plan, abandon release plan, link SDK PR to plan, namespace approval, check release plan status
-WHEN: "create release plan", "get release plan", "update release plan", "abandon release plan", "link SDK PR to plan", "namespace approval", "check release plan status"
+USE FOR: prepare release plan, create release plan, get release plan, update release plan, update API spec in release plan, update SDK details in release plan, abandon release plan, link SDK PR to plan, namespace approval, check release plan status
+WHEN: "prepare a release plan", "plan the next SDK release", "create release plan for my package", "create a release plan for my new Azure SDK service", "help me prepare a release plan for my new Azure SDK package", "create release plan", "get release plan", "update release plan", "abandon release plan", "link SDK PR to plan", "namespace approval", "check release plan status"
 DO NOT USE FOR: SDK code generation, pipeline troubleshooting, API review feedback
 
 ## Rules

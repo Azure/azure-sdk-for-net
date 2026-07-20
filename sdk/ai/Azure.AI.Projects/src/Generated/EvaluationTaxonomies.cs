@@ -373,7 +373,7 @@ namespace Azure.AI.Projects.Evaluation
         }
 
         /// <summary>
-        /// [Protocol Method] Update an evaluation taxonomy.
+        /// [Protocol Method] Modifies the specified evaluation taxonomy with the provided changes.
         /// <list type="bullet">
         /// <item>
         /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
@@ -407,7 +407,7 @@ namespace Azure.AI.Projects.Evaluation
         }
 
         /// <summary>
-        /// [Protocol Method] Update an evaluation taxonomy.
+        /// [Protocol Method] Modifies the specified evaluation taxonomy with the provided changes.
         /// <list type="bullet">
         /// <item>
         /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>

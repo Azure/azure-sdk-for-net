@@ -14,9 +14,9 @@ namespace Azure.Provisioning.Search
     {
         /// <summary> Indicates that requests that failed authentication should be presented with an HTTP status code of 403 (Forbidden). </summary>
         [DataMember(Name = "http403")]
-        Http403,
+        Http403 = 0,
         /// <summary> Indicates that requests that failed authentication should be presented with an HTTP status code of 401 (Unauthorized) and present a Bearer Challenge. </summary>
         [DataMember(Name = "http401WithBearerChallenge")]
-        Http401WithBearerChallenge
+        Http401WithBearerChallenge = 1
     }
 }

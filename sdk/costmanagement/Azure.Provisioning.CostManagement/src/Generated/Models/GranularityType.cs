@@ -11,8 +11,8 @@ namespace Azure.Provisioning.CostManagement
     public enum GranularityType
     {
         /// <summary> Daily. </summary>
-        Daily,
+        Daily = 0,
         /// <summary> Monthly. </summary>
-        Monthly
+        Monthly = 1
     }
 }

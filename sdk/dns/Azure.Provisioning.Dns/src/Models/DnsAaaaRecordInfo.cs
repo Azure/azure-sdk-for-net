@@ -13,6 +13,9 @@ namespace Azure.Provisioning.Dns;
 /// </summary>
 public partial class DnsAaaaRecordInfo : ProvisionableConstruct
 {
+    /// <summary>
+    /// The IPv6 address of this AAAA record.
+    /// </summary>
     public BicepValue<IPAddress> Ipv6Address
     {
         get { Initialize(); return _ipv6Address!; }
