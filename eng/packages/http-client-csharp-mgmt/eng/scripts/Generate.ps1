@@ -16,39 +16,48 @@ if (-not $LaunchOnly) {
     Refresh-Mgmt-Build
 }
 
-if ($null -eq $filter -or $filter -eq "Mgmt-TypeSpec") {
-    Write-Host "Generating MgmtTypeSpec" -ForegroundColor Cyan
-    $testProjectsLocalDir = Join-Path $mgmtPackageRoot 'generator' 'TestProjects' 'Local'
+$testProjectsLocalDir = Join-Path $mgmtPackageRoot 'generator' 'TestProjects' 'Local'
 
-    $mgmtTypespecTestProject = Join-Path $testProjectsLocalDir "Mgmt-TypeSpec"
+# Each entry: FilterName, FolderName, EntryTspFile, CsprojName
+$testProjects = @(
+    @{ FilterName = "Mgmt-TypeSpec"; Folder = "Mgmt-TypeSpec"; EntryTsp = "main.tsp"; Csproj = "Azure.Generator.MgmtTypeSpec.Tests.csproj" },
+    @{ FilterName = "Mgmt-TypeSpec-MultiService"; Folder = "Mgmt-TypeSpec-MultiService"; EntryTsp = "client.tsp"; Csproj = "Azure.Generator.MgmtTypeSpec.MultiService.Tests.csproj" }
+)
 
-    Invoke (Get-Mgmt-TspCommand "$mgmtTypespecTestProject/main.tsp" $mgmtTypespecTestProject -debug:$Debug)
+foreach ($project in $testProjects) {
+    if ($null -eq $filter -or $filter -eq $project.FilterName) {
+        $projectDir = Join-Path $testProjectsLocalDir $project.Folder
+        $entryTsp = Join-Path $projectDir $project.EntryTsp
 
-    # exit if the generation failed
-    if ($LASTEXITCODE -ne 0) {
-        exit $LASTEXITCODE
-    }
+        Write-Host "Generating $($project.FilterName)" -ForegroundColor Cyan
+        Invoke (Get-Mgmt-TspCommand $entryTsp $projectDir -debug:$Debug)
 
-    Write-Host "Building MgmtTypeSpec" -ForegroundColor Cyan
-    Invoke "dotnet build $mgmtPackageRoot/generator/TestProjects/Local/Mgmt-TypeSpec/src/Azure.Generator.MgmtTypeSpec.Tests.csproj"
+        if ($LASTEXITCODE -ne 0) {
+            exit $LASTEXITCODE
+        }
 
-    # exit if the generation failed
-    if ($LASTEXITCODE -ne 0) {
-        exit $LASTEXITCODE
+        Write-Host "Building $($project.FilterName)" -ForegroundColor Cyan
+        Invoke "dotnet build $(Join-Path $projectDir 'src' $project.Csproj)"
+
+        if ($LASTEXITCODE -ne 0) {
+            exit $LASTEXITCODE
+        }
     }
 }
 
 # only write new launch settings if no filter was passed in
 if ($null -eq $filter) {
-    $mgmtSpec = "TestProjects/Local/Mgmt-TypeSpec"
-
     # Write the launch settings for Mgmt
     $mgmtLaunchSettings = @{}
     $mgmtLaunchSettings.Add("profiles", @{})
-    $mgmtLaunchSettings["profiles"].Add("Mgmt-TypeSpec", @{})
-    $mgmtLaunchSettings["profiles"]["Mgmt-TypeSpec"].Add("commandLineArgs", "`$(SolutionDir)/../dist/generator/Microsoft.TypeSpec.Generator.dll `$(SolutionDir)/$mgmtSpec -g MgmtClientGenerator")
-    $mgmtLaunchSettings["profiles"]["Mgmt-TypeSpec"].Add("commandName", "Executable")
-    $mgmtLaunchSettings["profiles"]["Mgmt-TypeSpec"].Add("executablePath", "dotnet")
+    foreach ($project in $testProjects) {
+        $specPath = "TestProjects/Local/$($project.Folder)"
+        $mgmtLaunchSettings["profiles"].Add($project.FilterName, @{
+            "commandLineArgs" = "`$(SolutionDir)/../dist/generator/Microsoft.TypeSpec.Generator.dll `$(SolutionDir)/$specPath -g MgmtClientGenerator"
+            "commandName" = "Executable"
+            "executablePath" = "dotnet"
+        })
+    }
 
     $mgmtSortedLaunchSettings = @{}
     $mgmtSortedLaunchSettings.Add("profiles", [ordered]@{})
@@ -70,4 +79,13 @@ if ($null -eq $filter) {
     $mgmtLaunchSettingsPath = Join-Path $mgmtSolutionDir "Azure.Generator.Management" "src" "Properties" "launchSettings.json"
     # Write the settings to JSON and normalize line endings to Unix style (LF)
     $mgmtSortedLaunchSettings | ConvertTo-Json | ForEach-Object { ($_ -replace "`r`n", "`n") + "`n" } | Set-Content -NoNewline $mgmtLaunchSettingsPath
+}
+
+if (-not $LaunchOnly) {
+    Write-Host "Regenerating emitter docs" -ForegroundColor Cyan
+    Invoke "npm run regen-docs:only" $mgmtPackageRoot
+
+    if ($LASTEXITCODE -ne 0) {
+        exit $LASTEXITCODE
+    }
 }

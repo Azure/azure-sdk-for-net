@@ -6,6 +6,5 @@
     <PackageId>Azure.ResourceManager.Communication</PackageId>
     <Description>Microsoft Azure management client SDK for Azure resource provider Communication.</Description>
     <PackageTags>azure;management;communication</PackageTags>
-    <IncludeAutorestDependency>true</IncludeAutorestDependency>
   </PropertyGroup>
 </Project>

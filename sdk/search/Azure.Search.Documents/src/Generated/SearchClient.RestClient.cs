@@ -39,7 +39,10 @@ namespace Azure.Search.Documents
             Request request = message.Request;
             request.Uri = uri;
             request.Method = RequestMethod.Get;
-            request.Headers.SetValue("Accept", "application/json;odata.metadata=none");
+            if ("application/json;odata.metadata=none" != null)
+            {
+                request.Headers.SetValue("Accept", "application/json;odata.metadata=none");
+            }
             return message;
         }
 
@@ -184,7 +187,10 @@ namespace Azure.Search.Documents
             Request request = message.Request;
             request.Uri = uri;
             request.Method = RequestMethod.Get;
-            request.Headers.SetValue("Accept", "application/json;odata.metadata=none");
+            if ("application/json;odata.metadata=none" != null)
+            {
+                request.Headers.SetValue("Accept", "application/json;odata.metadata=none");
+            }
             if (querySourceAuthorization != null)
             {
                 request.Headers.SetValue("x-ms-query-source-authorization", querySourceAuthorization);
@@ -211,7 +217,10 @@ namespace Azure.Search.Documents
             Request request = message.Request;
             request.Uri = uri;
             request.Method = RequestMethod.Post;
-            request.Headers.SetValue("Accept", "application/json;odata.metadata=none");
+            if ("application/json;odata.metadata=none" != null)
+            {
+                request.Headers.SetValue("Accept", "application/json;odata.metadata=none");
+            }
             if (querySourceAuthorization != null)
             {
                 request.Headers.SetValue("x-ms-query-source-authorization", querySourceAuthorization);
@@ -246,7 +255,10 @@ namespace Azure.Search.Documents
             Request request = message.Request;
             request.Uri = uri;
             request.Method = RequestMethod.Get;
-            request.Headers.SetValue("Accept", "application/json;odata.metadata=none");
+            if ("application/json;odata.metadata=none" != null)
+            {
+                request.Headers.SetValue("Accept", "application/json;odata.metadata=none");
+            }
             if (querySourceAuthorization != null)
             {
                 request.Headers.SetValue("x-ms-query-source-authorization", querySourceAuthorization);
@@ -311,7 +323,10 @@ namespace Azure.Search.Documents
             Request request = message.Request;
             request.Uri = uri;
             request.Method = RequestMethod.Get;
-            request.Headers.SetValue("Accept", "application/json;odata.metadata=none");
+            if ("application/json;odata.metadata=none" != null)
+            {
+                request.Headers.SetValue("Accept", "application/json;odata.metadata=none");
+            }
             return message;
         }
 
@@ -330,7 +345,10 @@ namespace Azure.Search.Documents
             Request request = message.Request;
             request.Uri = uri;
             request.Method = RequestMethod.Post;
-            request.Headers.SetValue("Accept", "application/json;odata.metadata=none");
+            if ("application/json;odata.metadata=none" != null)
+            {
+                request.Headers.SetValue("Accept", "application/json;odata.metadata=none");
+            }
             request.Headers.SetValue("Content-Type", "application/json");
             request.Content = content;
             return message;
@@ -351,7 +369,10 @@ namespace Azure.Search.Documents
             Request request = message.Request;
             request.Uri = uri;
             request.Method = RequestMethod.Post;
-            request.Headers.SetValue("Accept", "application/json;odata.metadata=none");
+            if ("application/json;odata.metadata=none" != null)
+            {
+                request.Headers.SetValue("Accept", "application/json;odata.metadata=none");
+            }
             request.Headers.SetValue("Content-Type", "application/json");
             request.Content = content;
             return message;
@@ -406,7 +427,10 @@ namespace Azure.Search.Documents
             Request request = message.Request;
             request.Uri = uri;
             request.Method = RequestMethod.Get;
-            request.Headers.SetValue("Accept", "application/json;odata.metadata=none");
+            if ("application/json;odata.metadata=none" != null)
+            {
+                request.Headers.SetValue("Accept", "application/json;odata.metadata=none");
+            }
             return message;
         }
 
@@ -425,7 +449,10 @@ namespace Azure.Search.Documents
             Request request = message.Request;
             request.Uri = uri;
             request.Method = RequestMethod.Post;
-            request.Headers.SetValue("Accept", "application/json;odata.metadata=none");
+            if ("application/json;odata.metadata=none" != null)
+            {
+                request.Headers.SetValue("Accept", "application/json;odata.metadata=none");
+            }
             request.Headers.SetValue("Content-Type", "application/json");
             request.Content = content;
             return message;

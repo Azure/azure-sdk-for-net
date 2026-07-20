@@ -95,9 +95,13 @@ PersistentThreadMessage message = await client.Messages.CreateMessageAsync(
 
 4. In our search we have used an index containing "embedding", "token", "category" and also "title" fields. This allowed us to get reference title and url. In the code below, we iterate messages in chronological order and replace the reference placeholders by url and title.
 
+**Note:** The Agent is not guaranteed to use the tool; in the code below, we force it by creating the `PersistentAgentsNamedToolChoice` object, serializing it as `BinaryData` and providing it th the `CreateRunStreaming` method.
+
 Synchronous sample:
 ```C# Snippet:AgentsAzureAISearchStreamingExample_PrintMessages
-foreach (StreamingUpdate streamingUpdate in client.Runs.CreateRunStreaming(thread.Id, agent.Id))
+PersistentAgentsNamedToolChoice toolChoice = new(PersistentAgentsNamedToolChoiceType.AzureAISearch);
+BinaryData toolChoiceBin = ((IJsonModel<PersistentAgentsNamedToolChoice>)toolChoice).Write(ModelReaderWriterOptions.Json);
+foreach (StreamingUpdate streamingUpdate in client.Runs.CreateRunStreaming(thread.Id, agent.Id, toolChoice: toolChoiceBin))
 {
     if (streamingUpdate.UpdateKind == StreamingUpdateReason.RunCreated)
     {
@@ -126,7 +130,9 @@ foreach (StreamingUpdate streamingUpdate in client.Runs.CreateRunStreaming(threa
 
 Asynchronous sample:
 ```C# Snippet:AgentsAzureAISearchStreamingExample_PrintMessages_Async
-await foreach (StreamingUpdate streamingUpdate in client.Runs.CreateRunStreamingAsync(thread.Id, agent.Id))
+PersistentAgentsNamedToolChoice toolChoice = new(PersistentAgentsNamedToolChoiceType.AzureAISearch);
+BinaryData toolChoiceBin = ((IJsonModel<PersistentAgentsNamedToolChoice>)toolChoice).Write(ModelReaderWriterOptions.Json);
+await foreach (StreamingUpdate streamingUpdate in client.Runs.CreateRunStreamingAsync(thread.Id, agent.Id, toolChoice: toolChoiceBin))
 {
     if (streamingUpdate.UpdateKind == StreamingUpdateReason.RunCreated)
     {

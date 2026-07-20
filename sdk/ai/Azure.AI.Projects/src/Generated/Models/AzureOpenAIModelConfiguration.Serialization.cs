@@ -6,8 +6,9 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure.AI.Projects;
 
-namespace Azure.AI.Projects
+namespace Azure.AI.Projects.Evaluation
 {
     /// <summary> Azure OpenAI model configuration. The API version would be selected by the service for querying the model. </summary>
     public partial class AzureOpenAIModelConfiguration : TargetConfig, IJsonModel<AzureOpenAIModelConfiguration>

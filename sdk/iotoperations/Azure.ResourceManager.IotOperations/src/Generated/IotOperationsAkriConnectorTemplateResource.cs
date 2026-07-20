@@ -87,7 +87,7 @@ namespace Azure.ResourceManager.IotOperations
         {
             if (id.ResourceType != ResourceType)
             {
-                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), id);
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), nameof(id));
             }
         }
 
@@ -325,7 +325,7 @@ namespace Azure.ResourceManager.IotOperations
                 HttpMessage message = _akriConnectorTemplateRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, IotOperationsAkriConnectorTemplateData.ToRequestContent(data), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 IotOperationsArmOperation<IotOperationsAkriConnectorTemplateResource> operation = new IotOperationsArmOperation<IotOperationsAkriConnectorTemplateResource>(
-                    new IotOperationsAkriConnectorTemplateOperationSource(Client),
+                    new IotOperationsAkriConnectorTemplateResourceOperationSource(Client),
                     _akriConnectorTemplateClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -384,7 +384,7 @@ namespace Azure.ResourceManager.IotOperations
                 HttpMessage message = _akriConnectorTemplateRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, IotOperationsAkriConnectorTemplateData.ToRequestContent(data), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 IotOperationsArmOperation<IotOperationsAkriConnectorTemplateResource> operation = new IotOperationsArmOperation<IotOperationsAkriConnectorTemplateResource>(
-                    new IotOperationsAkriConnectorTemplateOperationSource(Client),
+                    new IotOperationsAkriConnectorTemplateResourceOperationSource(Client),
                     _akriConnectorTemplateClientDiagnostics,
                     Pipeline,
                     message.Request,

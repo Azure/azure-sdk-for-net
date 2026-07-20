@@ -1,3 +1,5 @@
 {
-  "apiVersion": "2025-05-01-preview"
+  "apiVersions": {
+    "Microsoft.Mission": "2025-05-01-preview"
+  }
 }

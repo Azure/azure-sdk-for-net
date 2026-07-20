@@ -11,6 +11,7 @@ namespace Azure.ResourceManager.Batch.Models
 {
     internal static partial class BatchAutoStorageAuthenticationModeExtensions
     {
+        /// <param name="value"> The value to serialize. </param>
         public static string ToSerialString(this BatchAutoStorageAuthenticationMode value) => value switch
         {
             BatchAutoStorageAuthenticationMode.StorageKeys => "StorageKeys",
@@ -18,10 +19,17 @@ namespace Azure.ResourceManager.Batch.Models
             _ => throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown BatchAutoStorageAuthenticationMode value.")
         };
 
+        /// <param name="value"> The value to deserialize. </param>
         public static BatchAutoStorageAuthenticationMode ToBatchAutoStorageAuthenticationMode(this string value)
         {
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "StorageKeys")) return BatchAutoStorageAuthenticationMode.StorageKeys;
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "BatchAccountManagedIdentity")) return BatchAutoStorageAuthenticationMode.BatchAccountManagedIdentity;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "StorageKeys"))
+            {
+                return BatchAutoStorageAuthenticationMode.StorageKeys;
+            }
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "BatchAccountManagedIdentity"))
+            {
+                return BatchAutoStorageAuthenticationMode.BatchAccountManagedIdentity;
+            }
             throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown BatchAutoStorageAuthenticationMode value.");
         }
     }

@@ -88,7 +88,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
         {
             if (id.ResourceType != ResourceType)
             {
-                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), id);
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), nameof(id));
             }
         }
 
@@ -228,12 +228,13 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
                 HttpMessage message = _sapVirtualInstancesRestClient.CreateCreateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, SAPVirtualInstanceData.ToRequestContent(data), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 TestsArmOperation<SAPVirtualInstanceResource> operation = new TestsArmOperation<SAPVirtualInstanceResource>(
-                    new SAPVirtualInstanceOperationSource(Client),
+                    new SAPVirtualInstanceResourceOperationSource(Client),
                     _sapVirtualInstancesClientDiagnostics,
                     Pipeline,
                     message.Request,
                     response,
-                    OperationFinalStateVia.AzureAsyncOperation);
+                    OperationFinalStateVia.AzureAsyncOperation,
+                    true);
                 if (waitUntil == WaitUntil.Completed)
                 {
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
@@ -287,12 +288,13 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
                 HttpMessage message = _sapVirtualInstancesRestClient.CreateCreateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, SAPVirtualInstanceData.ToRequestContent(data), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 TestsArmOperation<SAPVirtualInstanceResource> operation = new TestsArmOperation<SAPVirtualInstanceResource>(
-                    new SAPVirtualInstanceOperationSource(Client),
+                    new SAPVirtualInstanceResourceOperationSource(Client),
                     _sapVirtualInstancesClientDiagnostics,
                     Pipeline,
                     message.Request,
                     response,
-                    OperationFinalStateVia.AzureAsyncOperation);
+                    OperationFinalStateVia.AzureAsyncOperation,
+                    true);
                 if (waitUntil == WaitUntil.Completed)
                 {
                     operation.WaitForCompletion(cancellationToken);

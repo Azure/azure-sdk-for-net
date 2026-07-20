@@ -18,8 +18,9 @@ Management-plane SDK code is generated from TypeSpec definitions in `azure-rest-
 ### Key Concepts
 
 - **`@@clientName(TypeSpecName, "CSharpName", "csharp")`** — renames a TypeSpec model/union/enum/property to a different name in the generated C# SDK. This is the primary tool for resolving naming comments.
-- **`@@clientName` only works on named types** — models, unions, enums, and interfaces. If a type is defined as an `alias`, `@@clientName` cannot target it. See "Handling Unsupported Cases" below.
-- **Only `client.tsp` may be changed** — do not modify any other `.tsp` files or config files. If resolving a comment would require changes to other files, skip that change and inform the user with the reason after processing all other comments. Since only `client.tsp` is modified, swagger regeneration is never needed.
+- **`@@clientName` only works on types defined in the service's TypeSpec** — you can only target models, unions, enums, and interfaces that are explicitly declared in the service's `.tsp` files. If a type is not defined there (e.g., it comes from ARM common types or TypeSpec templates), `@@clientName` cannot target it. See "Renaming via SDK Custom Code" below.
+- **`@@clientName` cannot target aliases** — if a type is defined as an `alias`, `@@clientName` cannot target it. See "Handling Unsupported Cases" below.
+- **Only `client.tsp` may be changed** in the spec repo — do not modify any other `.tsp` files or config files. If resolving a comment would require changes to other files, skip that change and inform the user with the reason after processing all other comments. Since only `client.tsp` is modified, swagger regeneration is never needed.
 
 ## Types of Review Comments
 
@@ -66,6 +67,9 @@ Fetch the PR's review comments using GitHub MCP tools. For each unresolved comme
 1. Identify what change is requested (rename type, rename property, change type, etc.)
 2. Find the corresponding TypeSpec type/property in the spec
 3. Determine the appropriate new name or change
+4. **Determine if the type is defined in the service's TypeSpec**: Search all `.tsp` files under the spec folder for a `model`, `union`, or `enum` declaration with the same name.
+   - If defined → the rename will use `@@clientName` in `client.tsp` (Step 3)
+   - If NOT defined → the rename must use SDK-side custom code (Step 3b)
 
 If a comment is ambiguous about what the new name should be, **ask the user** before proceeding.
 
@@ -84,7 +88,9 @@ If a comment is ambiguous about what the new name should be, **ask the user** be
    - `client.tsp` — where `@@clientName` and `@@alternateType` decorators go (this is the only `.tsp` file you should modify)
    - Other `.tsp` files — read-only reference for understanding models, unions, and aliases
 
-### Step 3: Apply Changes in the Spec Repo
+### Step 3: Apply Changes in the Spec Repo (for types defined in TypeSpec)
+
+This step applies only to types that are defined in the service's TypeSpec files. For types NOT defined in the service's TypeSpec, skip to **Step 3b**.
 
 Locate the spec repo. It may be:
 - A local clone (typically at `../azure-rest-api-specs` relative to the SDK repo)
@@ -100,6 +106,30 @@ Add `@@clientName` decorators to `client.tsp`. Read the existing `client.tsp` to
 ```
 
 Make sure the `using` statement for the service namespace is present so that type names resolve correctly. Check the `namespace` declaration in `main.tsp` or other `.tsp` files to find the correct namespace.
+
+### Step 3b: Apply Changes via SDK Custom Code (for types NOT defined in TypeSpec)
+
+Types that are not defined in the service's TypeSpec (e.g., from ARM common types or TypeSpec templates) cannot be renamed via `@@clientName`. Instead, create SDK-side customization files to rename them.
+
+1. Create a customization file in the SDK package's `src/Customize/Models/` directory (create the directory if it doesn't exist).
+2. Define a `partial class` (or `partial struct` for value types) with the **desired name**, and apply the `[CodeGenType("OriginalGeneratedName")]` attribute to map it to the generated type.
+
+**Example:** To rename `OptionalPropertiesUpdateableProperties` to `DurableTaskPrivateEndpointConnectionPatchProperties`:
+
+```csharp
+// src/Customize/Models/DurableTaskPrivateEndpointConnectionPatchProperties.cs
+using Azure.ResourceManager.DurableTask.Models;
+
+namespace Azure.ResourceManager.DurableTask.Models
+{
+    [CodeGenType("OptionalPropertiesUpdateableProperties")]
+    public partial class DurableTaskPrivateEndpointConnectionPatchProperties
+    {
+    }
+}
+```
+
+After creating customization files, proceed to **Step 6** (Regenerate the SDK) — Steps 4 and 5 (commit spec changes and update `tsp-location.yaml`) are only needed if `client.tsp` was also modified.
 
 ### Step 4: Commit and Push Spec Changes
 
@@ -150,7 +180,7 @@ Check the API surface file (`api/*.cs`) to confirm the review comments have been
 Some changes cannot be done purely through `@@clientName` or `@@alternateType` in `client.tsp`. When you encounter any of the following, **skip the change** and continue processing other comments. After all processable changes are done, inform the user about the skipped changes with the reason, and let them choose how to proceed:
 
 - **Aliases** — `@@clientName` cannot target TypeSpec aliases (e.g., `alias foo = "A" | "B" | string;`). Explain to the user that the alias needs to be converted to a named type (e.g., `union`) in the spec `.tsp` file first.
-- **Changes requiring other file modifications** — any change that cannot be expressed via `client.tsp` decorators alone (e.g., structural changes, flattening/unflattening models, adding/removing properties, or changing inheritance). Only `client.tsp` may be modified.
+- **Changes requiring spec file modifications beyond `client.tsp`** — any change that cannot be expressed via `client.tsp` decorators or SDK custom code alone (e.g., structural changes, flattening/unflattening models, adding/removing properties, or changing inheritance).
 - **Ambiguous naming** — if a review comment says "rename this" but doesn't specify the new name, ask the user what name they prefer.
 
 ## Common Pitfalls

@@ -8,54 +8,88 @@
 using System;
 using System.Threading;
 using System.Threading.Tasks;
-using Autorest.CSharp.Core;
+using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
+using Azure.ResourceManager;
+using Azure.ResourceManager.Network;
 using Azure.ResourceManager.Network.Models;
+using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.Network.Mocking
 {
-    /// <summary> A class to add extension methods to ResourceGroupResource. </summary>
+    /// <summary> A class to add extension methods to <see cref="ResourceGroupResource"/>. </summary>
     public partial class MockableNetworkResourceGroupResource : ArmResource
     {
-        private ClientDiagnostics _availableResourceGroupDelegationsClientDiagnostics;
-        private AvailableResourceGroupDelegationsRestOperations _availableResourceGroupDelegationsRestClient;
-        private ClientDiagnostics _availableServiceAliasesClientDiagnostics;
-        private AvailableServiceAliasesRestOperations _availableServiceAliasesRestClient;
-        private ClientDiagnostics _availablePrivateEndpointTypesClientDiagnostics;
-        private AvailablePrivateEndpointTypesRestOperations _availablePrivateEndpointTypesRestClient;
+        private ClientDiagnostics _networkInterfacesClientDiagnostics;
+        private NetworkInterfaces _networkInterfacesRestClient;
+        private ClientDiagnostics _publicIPAddressesClientDiagnostics;
+        private PublicIPAddresses _publicIPAddressesRestClient;
         private ClientDiagnostics _privateLinkServicesClientDiagnostics;
-        private PrivateLinkServicesRestOperations _privateLinkServicesRestClient;
+        private PrivateLinkServices _privateLinkServicesRestClient;
+        private ClientDiagnostics _expressRouteGatewaysClientDiagnostics;
+        private ExpressRouteGateways _expressRouteGatewaysRestClient;
+        private ClientDiagnostics _publicIPAddressesOperationGroupClientDiagnostics;
+        private PublicIPAddressesOperationGroup _publicIPAddressesOperationGroupRestClient;
+        private ClientDiagnostics _availableResourceGroupDelegationsClientDiagnostics;
+        private AvailableResourceGroupDelegations _availableResourceGroupDelegationsRestClient;
+        private ClientDiagnostics _availableServiceAliasesClientDiagnostics;
+        private AvailableServiceAliases _availableServiceAliasesRestClient;
+        private ClientDiagnostics _availablePrivateEndpointTypesClientDiagnostics;
+        private AvailablePrivateEndpointTypes _availablePrivateEndpointTypesRestClient;
+        private ClientDiagnostics _virtualMachineScaleSetNetworkClientDiagnostics;
+        private VirtualMachineScaleSetNetwork _virtualMachineScaleSetNetworkRestClient;
 
-        /// <summary> Initializes a new instance of the <see cref="MockableNetworkResourceGroupResource"/> class for mocking. </summary>
+        /// <summary> Initializes a new instance of MockableNetworkResourceGroupResource for mocking. </summary>
         protected MockableNetworkResourceGroupResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref="MockableNetworkResourceGroupResource"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="MockableNetworkResourceGroupResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal MockableNetworkResourceGroupResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
         }
 
-        private ClientDiagnostics AvailableResourceGroupDelegationsClientDiagnostics => _availableResourceGroupDelegationsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Network", ProviderConstants.DefaultProviderNamespace, Diagnostics);
-        private AvailableResourceGroupDelegationsRestOperations AvailableResourceGroupDelegationsRestClient => _availableResourceGroupDelegationsRestClient ??= new AvailableResourceGroupDelegationsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint);
-        private ClientDiagnostics AvailableServiceAliasesClientDiagnostics => _availableServiceAliasesClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Network", ProviderConstants.DefaultProviderNamespace, Diagnostics);
-        private AvailableServiceAliasesRestOperations AvailableServiceAliasesRestClient => _availableServiceAliasesRestClient ??= new AvailableServiceAliasesRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint);
-        private ClientDiagnostics AvailablePrivateEndpointTypesClientDiagnostics => _availablePrivateEndpointTypesClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Network", ProviderConstants.DefaultProviderNamespace, Diagnostics);
-        private AvailablePrivateEndpointTypesRestOperations AvailablePrivateEndpointTypesRestClient => _availablePrivateEndpointTypesRestClient ??= new AvailablePrivateEndpointTypesRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint);
-        private ClientDiagnostics PrivateLinkServicesClientDiagnostics => _privateLinkServicesClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Network", ProviderConstants.DefaultProviderNamespace, Diagnostics);
-        private PrivateLinkServicesRestOperations PrivateLinkServicesRestClient => _privateLinkServicesRestClient ??= new PrivateLinkServicesRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint);
+        private ClientDiagnostics NetworkInterfacesClientDiagnostics => _networkInterfacesClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Network.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private string GetApiVersionOrNull(ResourceType resourceType)
-        {
-            TryGetApiVersion(resourceType, out string apiVersion);
-            return apiVersion;
-        }
+        private NetworkInterfaces NetworkInterfacesRestClient => _networkInterfacesRestClient ??= new NetworkInterfaces(NetworkInterfacesClientDiagnostics, Pipeline, Endpoint, "2025-07-01");
 
-        /// <summary> Gets a collection of ApplicationGatewayResources in the ResourceGroupResource. </summary>
-        /// <returns> An object representing collection of ApplicationGatewayResources and their operations over a ApplicationGatewayResource. </returns>
+        private ClientDiagnostics PublicIPAddressesClientDiagnostics => _publicIPAddressesClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Network.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
+
+        private PublicIPAddresses PublicIPAddressesRestClient => _publicIPAddressesRestClient ??= new PublicIPAddresses(PublicIPAddressesClientDiagnostics, Pipeline, Endpoint, "2025-07-01");
+
+        private ClientDiagnostics PrivateLinkServicesClientDiagnostics => _privateLinkServicesClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Network.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
+
+        private PrivateLinkServices PrivateLinkServicesRestClient => _privateLinkServicesRestClient ??= new PrivateLinkServices(PrivateLinkServicesClientDiagnostics, Pipeline, Endpoint, "2025-07-01");
+
+        private ClientDiagnostics ExpressRouteGatewaysClientDiagnostics => _expressRouteGatewaysClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Network.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
+
+        private ExpressRouteGateways ExpressRouteGatewaysRestClient => _expressRouteGatewaysRestClient ??= new ExpressRouteGateways(ExpressRouteGatewaysClientDiagnostics, Pipeline, Endpoint, "2025-07-01");
+
+        private ClientDiagnostics PublicIPAddressesOperationGroupClientDiagnostics => _publicIPAddressesOperationGroupClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Network.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
+
+        private PublicIPAddressesOperationGroup PublicIPAddressesOperationGroupRestClient => _publicIPAddressesOperationGroupRestClient ??= new PublicIPAddressesOperationGroup(PublicIPAddressesOperationGroupClientDiagnostics, Pipeline, Endpoint, "2025-07-01");
+
+        private ClientDiagnostics AvailableResourceGroupDelegationsClientDiagnostics => _availableResourceGroupDelegationsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Network.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
+
+        private AvailableResourceGroupDelegations AvailableResourceGroupDelegationsRestClient => _availableResourceGroupDelegationsRestClient ??= new AvailableResourceGroupDelegations(AvailableResourceGroupDelegationsClientDiagnostics, Pipeline, Endpoint, "2025-07-01");
+
+        private ClientDiagnostics AvailableServiceAliasesClientDiagnostics => _availableServiceAliasesClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Network.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
+
+        private AvailableServiceAliases AvailableServiceAliasesRestClient => _availableServiceAliasesRestClient ??= new AvailableServiceAliases(AvailableServiceAliasesClientDiagnostics, Pipeline, Endpoint, "2025-07-01");
+
+        private ClientDiagnostics AvailablePrivateEndpointTypesClientDiagnostics => _availablePrivateEndpointTypesClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Network.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
+
+        private AvailablePrivateEndpointTypes AvailablePrivateEndpointTypesRestClient => _availablePrivateEndpointTypesRestClient ??= new AvailablePrivateEndpointTypes(AvailablePrivateEndpointTypesClientDiagnostics, Pipeline, Endpoint, "2025-07-01");
+
+        private ClientDiagnostics VirtualMachineScaleSetNetworkClientDiagnostics => _virtualMachineScaleSetNetworkClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Network.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
+
+        private VirtualMachineScaleSetNetwork VirtualMachineScaleSetNetworkRestClient => _virtualMachineScaleSetNetworkRestClient ??= new VirtualMachineScaleSetNetwork(VirtualMachineScaleSetNetworkClientDiagnostics, Pipeline, Endpoint, "2018-10-01");
+
+        /// <summary> Gets a collection of ApplicationGateways in the <see cref="ResourceGroupResource"/>. </summary>
+        /// <returns> An object representing collection of ApplicationGateways and their operations over a ApplicationGatewayResource. </returns>
         public virtual ApplicationGatewayCollection GetApplicationGateways()
         {
             return GetCachedClient(client => new ApplicationGatewayCollection(client, Id));
@@ -65,20 +99,16 @@ namespace Azure.ResourceManager.Network.Mocking
         /// Gets the specified application gateway.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/applicationGateways/{applicationGatewayName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/applicationGateways/{applicationGatewayName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ApplicationGateways_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> ApplicationGateways_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-05-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ApplicationGatewayResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-07-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -89,6 +119,8 @@ namespace Azure.ResourceManager.Network.Mocking
         [ForwardsClientCalls]
         public virtual async Task<Response<ApplicationGatewayResource>> GetApplicationGatewayAsync(string applicationGatewayName, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNullOrEmpty(applicationGatewayName, nameof(applicationGatewayName));
+
             return await GetApplicationGateways().GetAsync(applicationGatewayName, cancellationToken).ConfigureAwait(false);
         }
 
@@ -96,20 +128,16 @@ namespace Azure.ResourceManager.Network.Mocking
         /// Gets the specified application gateway.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/applicationGateways/{applicationGatewayName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/applicationGateways/{applicationGatewayName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ApplicationGateways_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> ApplicationGateways_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-05-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ApplicationGatewayResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-07-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -120,11 +148,13 @@ namespace Azure.ResourceManager.Network.Mocking
         [ForwardsClientCalls]
         public virtual Response<ApplicationGatewayResource> GetApplicationGateway(string applicationGatewayName, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNullOrEmpty(applicationGatewayName, nameof(applicationGatewayName));
+
             return GetApplicationGateways().Get(applicationGatewayName, cancellationToken);
         }
 
-        /// <summary> Gets a collection of ApplicationSecurityGroupResources in the ResourceGroupResource. </summary>
-        /// <returns> An object representing collection of ApplicationSecurityGroupResources and their operations over a ApplicationSecurityGroupResource. </returns>
+        /// <summary> Gets a collection of ApplicationSecurityGroups in the <see cref="ResourceGroupResource"/>. </summary>
+        /// <returns> An object representing collection of ApplicationSecurityGroups and their operations over a ApplicationSecurityGroupResource. </returns>
         public virtual ApplicationSecurityGroupCollection GetApplicationSecurityGroups()
         {
             return GetCachedClient(client => new ApplicationSecurityGroupCollection(client, Id));
@@ -134,20 +164,16 @@ namespace Azure.ResourceManager.Network.Mocking
         /// Gets information about the specified application security group.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/applicationSecurityGroups/{applicationSecurityGroupName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/applicationSecurityGroups/{applicationSecurityGroupName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ApplicationSecurityGroups_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> ApplicationSecurityGroups_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-05-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ApplicationSecurityGroupResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-07-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -158,6 +184,8 @@ namespace Azure.ResourceManager.Network.Mocking
         [ForwardsClientCalls]
         public virtual async Task<Response<ApplicationSecurityGroupResource>> GetApplicationSecurityGroupAsync(string applicationSecurityGroupName, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNullOrEmpty(applicationSecurityGroupName, nameof(applicationSecurityGroupName));
+
             return await GetApplicationSecurityGroups().GetAsync(applicationSecurityGroupName, cancellationToken).ConfigureAwait(false);
         }
 
@@ -165,20 +193,16 @@ namespace Azure.ResourceManager.Network.Mocking
         /// Gets information about the specified application security group.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/applicationSecurityGroups/{applicationSecurityGroupName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/applicationSecurityGroups/{applicationSecurityGroupName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ApplicationSecurityGroups_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> ApplicationSecurityGroups_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-05-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ApplicationSecurityGroupResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-07-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -189,11 +213,13 @@ namespace Azure.ResourceManager.Network.Mocking
         [ForwardsClientCalls]
         public virtual Response<ApplicationSecurityGroupResource> GetApplicationSecurityGroup(string applicationSecurityGroupName, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNullOrEmpty(applicationSecurityGroupName, nameof(applicationSecurityGroupName));
+
             return GetApplicationSecurityGroups().Get(applicationSecurityGroupName, cancellationToken);
         }
 
-        /// <summary> Gets a collection of AzureFirewallResources in the ResourceGroupResource. </summary>
-        /// <returns> An object representing collection of AzureFirewallResources and their operations over a AzureFirewallResource. </returns>
+        /// <summary> Gets a collection of AzureFirewalls in the <see cref="ResourceGroupResource"/>. </summary>
+        /// <returns> An object representing collection of AzureFirewalls and their operations over a AzureFirewallResource. </returns>
         public virtual AzureFirewallCollection GetAzureFirewalls()
         {
             return GetCachedClient(client => new AzureFirewallCollection(client, Id));
@@ -203,20 +229,16 @@ namespace Azure.ResourceManager.Network.Mocking
         /// Gets the specified Azure Firewall.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/azureFirewalls/{azureFirewallName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/azureFirewalls/{azureFirewallName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>AzureFirewalls_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> AzureFirewalls_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-05-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="AzureFirewallResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-07-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -227,6 +249,8 @@ namespace Azure.ResourceManager.Network.Mocking
         [ForwardsClientCalls]
         public virtual async Task<Response<AzureFirewallResource>> GetAzureFirewallAsync(string azureFirewallName, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNullOrEmpty(azureFirewallName, nameof(azureFirewallName));
+
             return await GetAzureFirewalls().GetAsync(azureFirewallName, cancellationToken).ConfigureAwait(false);
         }
 
@@ -234,20 +258,16 @@ namespace Azure.ResourceManager.Network.Mocking
         /// Gets the specified Azure Firewall.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/azureFirewalls/{azureFirewallName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/azureFirewalls/{azureFirewallName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>AzureFirewalls_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> AzureFirewalls_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-05-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="AzureFirewallResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-07-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -258,11 +278,13 @@ namespace Azure.ResourceManager.Network.Mocking
         [ForwardsClientCalls]
         public virtual Response<AzureFirewallResource> GetAzureFirewall(string azureFirewallName, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNullOrEmpty(azureFirewallName, nameof(azureFirewallName));
+
             return GetAzureFirewalls().Get(azureFirewallName, cancellationToken);
         }
 
-        /// <summary> Gets a collection of BastionHostResources in the ResourceGroupResource. </summary>
-        /// <returns> An object representing collection of BastionHostResources and their operations over a BastionHostResource. </returns>
+        /// <summary> Gets a collection of BastionHosts in the <see cref="ResourceGroupResource"/>. </summary>
+        /// <returns> An object representing collection of BastionHosts and their operations over a BastionHostResource. </returns>
         public virtual BastionHostCollection GetBastionHosts()
         {
             return GetCachedClient(client => new BastionHostCollection(client, Id));
@@ -272,20 +294,16 @@ namespace Azure.ResourceManager.Network.Mocking
         /// Gets the specified Bastion Host.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/bastionHosts/{bastionHostName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/bastionHosts/{bastionHostName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>BastionHosts_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> BastionHosts_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-05-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="BastionHostResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-07-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -296,6 +314,8 @@ namespace Azure.ResourceManager.Network.Mocking
         [ForwardsClientCalls]
         public virtual async Task<Response<BastionHostResource>> GetBastionHostAsync(string bastionHostName, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNullOrEmpty(bastionHostName, nameof(bastionHostName));
+
             return await GetBastionHosts().GetAsync(bastionHostName, cancellationToken).ConfigureAwait(false);
         }
 
@@ -303,20 +323,16 @@ namespace Azure.ResourceManager.Network.Mocking
         /// Gets the specified Bastion Host.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/bastionHosts/{bastionHostName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/bastionHosts/{bastionHostName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>BastionHosts_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> BastionHosts_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-05-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="BastionHostResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-07-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -327,154 +343,220 @@ namespace Azure.ResourceManager.Network.Mocking
         [ForwardsClientCalls]
         public virtual Response<BastionHostResource> GetBastionHost(string bastionHostName, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNullOrEmpty(bastionHostName, nameof(bastionHostName));
+
             return GetBastionHosts().Get(bastionHostName, cancellationToken);
         }
 
-        /// <summary> Gets a collection of CloudServiceSwapResources in the ResourceGroupResource. </summary>
-        /// <param name="resourceName"> The name of the cloud service. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="resourceName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <returns> An object representing collection of CloudServiceSwapResources and their operations over a CloudServiceSwapResource. </returns>
-        public virtual CloudServiceSwapCollection GetCloudServiceSwaps(string resourceName)
+        /// <summary> Gets a collection of NetworkInterfaces in the <see cref="ResourceGroupResource"/>. </summary>
+        /// <param name="cloudServiceName"> The cloudServiceName for the resource. </param>
+        /// <param name="roleInstanceName"> The roleInstanceName for the resource. </param>
+        /// <returns> An object representing collection of NetworkInterfaces and their operations over a NetworkInterfaceResource. </returns>
+        public virtual NetworkInterfaceCollection GetNetworkInterfaces(string cloudServiceName, string roleInstanceName)
         {
-            return new CloudServiceSwapCollection(Client, Id, resourceName);
+            return GetCachedClient(client => new NetworkInterfaceCollection(client, Id, cloudServiceName, roleInstanceName));
         }
 
         /// <summary>
-        /// Gets the SwapResource which identifies the slot type for the specified cloud service. The slot type on a cloud service can either be Staging or Production
+        /// Get the specified network interface in a cloud service.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{groupName}/providers/Microsoft.Compute/cloudServices/{resourceName}/providers/Microsoft.Network/cloudServiceSlots/{singletonResource}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/microsoft.Compute/cloudServices/{cloudServiceName}/roleInstances/{roleInstanceName}/networkInterfaces/{networkInterfaceName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>VipSwap_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> NetworkInterfaces_GetCloudServiceNetworkInterface. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-05-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="CloudServiceSwapResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-07-01. </description>
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="resourceName"> The name of the cloud service. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="resourceName"/> is an empty string, and was expected to be non-empty. </exception>
-        [ForwardsClientCalls]
-        public virtual async Task<Response<CloudServiceSwapResource>> GetCloudServiceSwapAsync(string resourceName, CancellationToken cancellationToken = default)
-        {
-            return await GetCloudServiceSwaps(resourceName).GetAsync(cancellationToken).ConfigureAwait(false);
-        }
-
-        /// <summary>
-        /// Gets the SwapResource which identifies the slot type for the specified cloud service. The slot type on a cloud service can either be Staging or Production
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{groupName}/providers/Microsoft.Compute/cloudServices/{resourceName}/providers/Microsoft.Network/cloudServiceSlots/{singletonResource}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>VipSwap_Get</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-05-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="CloudServiceSwapResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="resourceName"> The name of the cloud service. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="resourceName"/> is an empty string, and was expected to be non-empty. </exception>
-        [ForwardsClientCalls]
-        public virtual Response<CloudServiceSwapResource> GetCloudServiceSwap(string resourceName, CancellationToken cancellationToken = default)
-        {
-            return GetCloudServiceSwaps(resourceName).Get(cancellationToken);
-        }
-
-        /// <summary> Gets a collection of CustomIPPrefixResources in the ResourceGroupResource. </summary>
-        /// <returns> An object representing collection of CustomIPPrefixResources and their operations over a CustomIPPrefixResource. </returns>
-        public virtual CustomIPPrefixCollection GetCustomIPPrefixes()
-        {
-            return GetCachedClient(client => new CustomIPPrefixCollection(client, Id));
-        }
-
-        /// <summary>
-        /// Gets the specified custom IP prefix in a specified resource group.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/customIpPrefixes/{customIpPrefixName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>CustomIPPrefixes_Get</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-05-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="CustomIPPrefixResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="customIPPrefixName"> The name of the custom IP prefix. </param>
+        /// <param name="cloudServiceName"> The cloudServiceName for the resource. </param>
+        /// <param name="roleInstanceName"> The roleInstanceName for the resource. </param>
+        /// <param name="networkInterfaceName"> The name of the network interface. </param>
         /// <param name="expand"> Expands referenced resources. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="customIPPrefixName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="customIPPrefixName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="networkInterfaceName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="networkInterfaceName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual async Task<Response<CustomIPPrefixResource>> GetCustomIPPrefixAsync(string customIPPrefixName, string expand = null, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<NetworkInterfaceResource>> GetNetworkInterfaceAsync(string cloudServiceName, string roleInstanceName, string networkInterfaceName, string expand = default, CancellationToken cancellationToken = default)
         {
-            return await GetCustomIPPrefixes().GetAsync(customIPPrefixName, expand, cancellationToken).ConfigureAwait(false);
+            Argument.AssertNotNullOrEmpty(networkInterfaceName, nameof(networkInterfaceName));
+
+            return await GetNetworkInterfaces(cloudServiceName, roleInstanceName).GetAsync(networkInterfaceName, expand, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
-        /// Gets the specified custom IP prefix in a specified resource group.
+        /// Get the specified network interface in a cloud service.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/customIpPrefixes/{customIpPrefixName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/microsoft.Compute/cloudServices/{cloudServiceName}/roleInstances/{roleInstanceName}/networkInterfaces/{networkInterfaceName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>CustomIPPrefixes_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> NetworkInterfaces_GetCloudServiceNetworkInterface. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-05-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="CustomIPPrefixResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-07-01. </description>
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="customIPPrefixName"> The name of the custom IP prefix. </param>
+        /// <param name="cloudServiceName"> The cloudServiceName for the resource. </param>
+        /// <param name="roleInstanceName"> The roleInstanceName for the resource. </param>
+        /// <param name="networkInterfaceName"> The name of the network interface. </param>
         /// <param name="expand"> Expands referenced resources. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="customIPPrefixName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="customIPPrefixName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="networkInterfaceName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="networkInterfaceName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual Response<CustomIPPrefixResource> GetCustomIPPrefix(string customIPPrefixName, string expand = null, CancellationToken cancellationToken = default)
+        public virtual Response<NetworkInterfaceResource> GetNetworkInterface(string cloudServiceName, string roleInstanceName, string networkInterfaceName, string expand = default, CancellationToken cancellationToken = default)
         {
-            return GetCustomIPPrefixes().Get(customIPPrefixName, expand, cancellationToken);
+            Argument.AssertNotNullOrEmpty(networkInterfaceName, nameof(networkInterfaceName));
+
+            return GetNetworkInterfaces(cloudServiceName, roleInstanceName).Get(networkInterfaceName, expand, cancellationToken);
         }
 
-        /// <summary> Gets a collection of DdosCustomPolicyResources in the ResourceGroupResource. </summary>
-        /// <returns> An object representing collection of DdosCustomPolicyResources and their operations over a DdosCustomPolicyResource. </returns>
+        /// <summary> Gets a collection of NetworkInterfaces in the <see cref="ResourceGroupResource"/>. </summary>
+        /// <returns> An object representing collection of NetworkInterfaces and their operations over a NetworkInterfaceResource. </returns>
+        public virtual NetworkInterfaceCollection GetNetworkInterfaces()
+        {
+            return GetCachedClient(client => new NetworkInterfaceCollection(client, Id));
+        }
+
+        /// <summary>
+        /// Gets information about the specified network interface.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/networkInterfaces/{networkInterfaceName}. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> NetworkInterfaceOperationGroup_Get. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-07-01. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="networkInterfaceName"> The name of the network interface. </param>
+        /// <param name="expand"> Expands referenced resources. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="networkInterfaceName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="networkInterfaceName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual async Task<Response<NetworkInterfaceResource>> GetNetworkInterfaceAsync(string networkInterfaceName, string expand = default, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(networkInterfaceName, nameof(networkInterfaceName));
+
+            return await GetNetworkInterfaces().GetAsync(networkInterfaceName, expand, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Gets information about the specified network interface.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/networkInterfaces/{networkInterfaceName}. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> NetworkInterfaceOperationGroup_Get. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-07-01. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="networkInterfaceName"> The name of the network interface. </param>
+        /// <param name="expand"> Expands referenced resources. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="networkInterfaceName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="networkInterfaceName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual Response<NetworkInterfaceResource> GetNetworkInterface(string networkInterfaceName, string expand = default, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(networkInterfaceName, nameof(networkInterfaceName));
+
+            return GetNetworkInterfaces().Get(networkInterfaceName, expand, cancellationToken);
+        }
+
+        /// <summary> Gets a collection of PublicIPAddresses in the <see cref="ResourceGroupResource"/>. </summary>
+        /// <returns> An object representing collection of PublicIPAddresses and their operations over a PublicIPAddressResource. </returns>
+        public virtual PublicIPAddressCollection GetPublicIPAddresses()
+        {
+            return GetCachedClient(client => new PublicIPAddressCollection(client, Id));
+        }
+
+        /// <summary>
+        /// Gets the specified public IP address in a specified resource group.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/publicIPAddresses/{publicIpAddressName}. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> PublicIPAddressOperationGroup_Get. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-07-01. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="publicIpAddressName"> The name of the public IP address. </param>
+        /// <param name="expand"> Expands referenced resources. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="publicIpAddressName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="publicIpAddressName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual async Task<Response<PublicIPAddressResource>> GetPublicIPAddressAsync(string publicIpAddressName, string expand = default, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(publicIpAddressName, nameof(publicIpAddressName));
+
+            return await GetPublicIPAddresses().GetAsync(publicIpAddressName, expand, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Gets the specified public IP address in a specified resource group.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/publicIPAddresses/{publicIpAddressName}. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> PublicIPAddressOperationGroup_Get. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-07-01. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="publicIpAddressName"> The name of the public IP address. </param>
+        /// <param name="expand"> Expands referenced resources. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="publicIpAddressName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="publicIpAddressName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual Response<PublicIPAddressResource> GetPublicIPAddress(string publicIpAddressName, string expand = default, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(publicIpAddressName, nameof(publicIpAddressName));
+
+            return GetPublicIPAddresses().Get(publicIpAddressName, expand, cancellationToken);
+        }
+
+        /// <summary> Gets a collection of DdosCustomPolicies in the <see cref="ResourceGroupResource"/>. </summary>
+        /// <returns> An object representing collection of DdosCustomPolicies and their operations over a DdosCustomPolicyResource. </returns>
         public virtual DdosCustomPolicyCollection GetDdosCustomPolicies()
         {
             return GetCachedClient(client => new DdosCustomPolicyCollection(client, Id));
@@ -484,20 +566,16 @@ namespace Azure.ResourceManager.Network.Mocking
         /// Gets information about the specified DDoS custom policy.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/ddosCustomPolicies/{ddosCustomPolicyName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/ddosCustomPolicies/{ddosCustomPolicyName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>DdosCustomPolicies_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> DdosCustomPolicies_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-05-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="DdosCustomPolicyResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-07-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -508,6 +586,8 @@ namespace Azure.ResourceManager.Network.Mocking
         [ForwardsClientCalls]
         public virtual async Task<Response<DdosCustomPolicyResource>> GetDdosCustomPolicyAsync(string ddosCustomPolicyName, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNullOrEmpty(ddosCustomPolicyName, nameof(ddosCustomPolicyName));
+
             return await GetDdosCustomPolicies().GetAsync(ddosCustomPolicyName, cancellationToken).ConfigureAwait(false);
         }
 
@@ -515,20 +595,16 @@ namespace Azure.ResourceManager.Network.Mocking
         /// Gets information about the specified DDoS custom policy.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/ddosCustomPolicies/{ddosCustomPolicyName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/ddosCustomPolicies/{ddosCustomPolicyName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>DdosCustomPolicies_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> DdosCustomPolicies_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-05-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="DdosCustomPolicyResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-07-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -539,11 +615,13 @@ namespace Azure.ResourceManager.Network.Mocking
         [ForwardsClientCalls]
         public virtual Response<DdosCustomPolicyResource> GetDdosCustomPolicy(string ddosCustomPolicyName, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNullOrEmpty(ddosCustomPolicyName, nameof(ddosCustomPolicyName));
+
             return GetDdosCustomPolicies().Get(ddosCustomPolicyName, cancellationToken);
         }
 
-        /// <summary> Gets a collection of DdosProtectionPlanResources in the ResourceGroupResource. </summary>
-        /// <returns> An object representing collection of DdosProtectionPlanResources and their operations over a DdosProtectionPlanResource. </returns>
+        /// <summary> Gets a collection of DdosProtectionPlans in the <see cref="ResourceGroupResource"/>. </summary>
+        /// <returns> An object representing collection of DdosProtectionPlans and their operations over a DdosProtectionPlanResource. </returns>
         public virtual DdosProtectionPlanCollection GetDdosProtectionPlans()
         {
             return GetCachedClient(client => new DdosProtectionPlanCollection(client, Id));
@@ -553,20 +631,16 @@ namespace Azure.ResourceManager.Network.Mocking
         /// Gets information about the specified DDoS protection plan.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/ddosProtectionPlans/{ddosProtectionPlanName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/ddosProtectionPlans/{ddosProtectionPlanName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>DdosProtectionPlans_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> DdosProtectionPlans_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-05-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="DdosProtectionPlanResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-07-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -577,6 +651,8 @@ namespace Azure.ResourceManager.Network.Mocking
         [ForwardsClientCalls]
         public virtual async Task<Response<DdosProtectionPlanResource>> GetDdosProtectionPlanAsync(string ddosProtectionPlanName, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNullOrEmpty(ddosProtectionPlanName, nameof(ddosProtectionPlanName));
+
             return await GetDdosProtectionPlans().GetAsync(ddosProtectionPlanName, cancellationToken).ConfigureAwait(false);
         }
 
@@ -584,20 +660,16 @@ namespace Azure.ResourceManager.Network.Mocking
         /// Gets information about the specified DDoS protection plan.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/ddosProtectionPlans/{ddosProtectionPlanName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/ddosProtectionPlans/{ddosProtectionPlanName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>DdosProtectionPlans_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> DdosProtectionPlans_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-05-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="DdosProtectionPlanResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-07-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -608,80 +680,13 @@ namespace Azure.ResourceManager.Network.Mocking
         [ForwardsClientCalls]
         public virtual Response<DdosProtectionPlanResource> GetDdosProtectionPlan(string ddosProtectionPlanName, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNullOrEmpty(ddosProtectionPlanName, nameof(ddosProtectionPlanName));
+
             return GetDdosProtectionPlans().Get(ddosProtectionPlanName, cancellationToken);
         }
 
-        /// <summary> Gets a collection of DscpConfigurationResources in the ResourceGroupResource. </summary>
-        /// <returns> An object representing collection of DscpConfigurationResources and their operations over a DscpConfigurationResource. </returns>
-        public virtual DscpConfigurationCollection GetDscpConfigurations()
-        {
-            return GetCachedClient(client => new DscpConfigurationCollection(client, Id));
-        }
-
-        /// <summary>
-        /// Gets a DSCP Configuration.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/dscpConfigurations/{dscpConfigurationName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>DscpConfiguration_Get</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-05-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="DscpConfigurationResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="dscpConfigurationName"> The name of the resource. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="dscpConfigurationName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="dscpConfigurationName"/> is an empty string, and was expected to be non-empty. </exception>
-        [ForwardsClientCalls]
-        public virtual async Task<Response<DscpConfigurationResource>> GetDscpConfigurationAsync(string dscpConfigurationName, CancellationToken cancellationToken = default)
-        {
-            return await GetDscpConfigurations().GetAsync(dscpConfigurationName, cancellationToken).ConfigureAwait(false);
-        }
-
-        /// <summary>
-        /// Gets a DSCP Configuration.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/dscpConfigurations/{dscpConfigurationName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>DscpConfiguration_Get</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-05-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="DscpConfigurationResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="dscpConfigurationName"> The name of the resource. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="dscpConfigurationName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="dscpConfigurationName"/> is an empty string, and was expected to be non-empty. </exception>
-        [ForwardsClientCalls]
-        public virtual Response<DscpConfigurationResource> GetDscpConfiguration(string dscpConfigurationName, CancellationToken cancellationToken = default)
-        {
-            return GetDscpConfigurations().Get(dscpConfigurationName, cancellationToken);
-        }
-
-        /// <summary> Gets a collection of ExpressRouteCircuitResources in the ResourceGroupResource. </summary>
-        /// <returns> An object representing collection of ExpressRouteCircuitResources and their operations over a ExpressRouteCircuitResource. </returns>
+        /// <summary> Gets a collection of ExpressRouteCircuits in the <see cref="ResourceGroupResource"/>. </summary>
+        /// <returns> An object representing collection of ExpressRouteCircuits and their operations over a ExpressRouteCircuitResource. </returns>
         public virtual ExpressRouteCircuitCollection GetExpressRouteCircuits()
         {
             return GetCachedClient(client => new ExpressRouteCircuitCollection(client, Id));
@@ -691,20 +696,16 @@ namespace Azure.ResourceManager.Network.Mocking
         /// Gets information about the specified express route circuit.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/expressRouteCircuits/{circuitName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/expressRouteCircuits/{circuitName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ExpressRouteCircuits_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> ExpressRouteCircuits_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-05-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ExpressRouteCircuitResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-07-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -715,6 +716,8 @@ namespace Azure.ResourceManager.Network.Mocking
         [ForwardsClientCalls]
         public virtual async Task<Response<ExpressRouteCircuitResource>> GetExpressRouteCircuitAsync(string circuitName, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNullOrEmpty(circuitName, nameof(circuitName));
+
             return await GetExpressRouteCircuits().GetAsync(circuitName, cancellationToken).ConfigureAwait(false);
         }
 
@@ -722,20 +725,16 @@ namespace Azure.ResourceManager.Network.Mocking
         /// Gets information about the specified express route circuit.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/expressRouteCircuits/{circuitName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/expressRouteCircuits/{circuitName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ExpressRouteCircuits_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> ExpressRouteCircuits_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-05-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ExpressRouteCircuitResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-07-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -746,11 +745,13 @@ namespace Azure.ResourceManager.Network.Mocking
         [ForwardsClientCalls]
         public virtual Response<ExpressRouteCircuitResource> GetExpressRouteCircuit(string circuitName, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNullOrEmpty(circuitName, nameof(circuitName));
+
             return GetExpressRouteCircuits().Get(circuitName, cancellationToken);
         }
 
-        /// <summary> Gets a collection of ExpressRouteCrossConnectionResources in the ResourceGroupResource. </summary>
-        /// <returns> An object representing collection of ExpressRouteCrossConnectionResources and their operations over a ExpressRouteCrossConnectionResource. </returns>
+        /// <summary> Gets a collection of ExpressRouteCrossConnections in the <see cref="ResourceGroupResource"/>. </summary>
+        /// <returns> An object representing collection of ExpressRouteCrossConnections and their operations over a ExpressRouteCrossConnectionResource. </returns>
         public virtual ExpressRouteCrossConnectionCollection GetExpressRouteCrossConnections()
         {
             return GetCachedClient(client => new ExpressRouteCrossConnectionCollection(client, Id));
@@ -760,20 +761,16 @@ namespace Azure.ResourceManager.Network.Mocking
         /// Gets details about the specified ExpressRouteCrossConnection.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/expressRouteCrossConnections/{crossConnectionName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/expressRouteCrossConnections/{crossConnectionName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ExpressRouteCrossConnections_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> ExpressRouteCrossConnections_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-05-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ExpressRouteCrossConnectionResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-07-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -784,6 +781,8 @@ namespace Azure.ResourceManager.Network.Mocking
         [ForwardsClientCalls]
         public virtual async Task<Response<ExpressRouteCrossConnectionResource>> GetExpressRouteCrossConnectionAsync(string crossConnectionName, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNullOrEmpty(crossConnectionName, nameof(crossConnectionName));
+
             return await GetExpressRouteCrossConnections().GetAsync(crossConnectionName, cancellationToken).ConfigureAwait(false);
         }
 
@@ -791,20 +790,16 @@ namespace Azure.ResourceManager.Network.Mocking
         /// Gets details about the specified ExpressRouteCrossConnection.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/expressRouteCrossConnections/{crossConnectionName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/expressRouteCrossConnections/{crossConnectionName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ExpressRouteCrossConnections_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> ExpressRouteCrossConnections_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-05-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ExpressRouteCrossConnectionResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-07-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -815,11 +810,13 @@ namespace Azure.ResourceManager.Network.Mocking
         [ForwardsClientCalls]
         public virtual Response<ExpressRouteCrossConnectionResource> GetExpressRouteCrossConnection(string crossConnectionName, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNullOrEmpty(crossConnectionName, nameof(crossConnectionName));
+
             return GetExpressRouteCrossConnections().Get(crossConnectionName, cancellationToken);
         }
 
-        /// <summary> Gets a collection of ExpressRoutePortResources in the ResourceGroupResource. </summary>
-        /// <returns> An object representing collection of ExpressRoutePortResources and their operations over a ExpressRoutePortResource. </returns>
+        /// <summary> Gets a collection of ExpressRoutePorts in the <see cref="ResourceGroupResource"/>. </summary>
+        /// <returns> An object representing collection of ExpressRoutePorts and their operations over a ExpressRoutePortResource. </returns>
         public virtual ExpressRoutePortCollection GetExpressRoutePorts()
         {
             return GetCachedClient(client => new ExpressRoutePortCollection(client, Id));
@@ -829,20 +826,16 @@ namespace Azure.ResourceManager.Network.Mocking
         /// Retrieves the requested ExpressRoutePort resource.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/ExpressRoutePorts/{expressRoutePortName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/ExpressRoutePorts/{expressRoutePortName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ExpressRoutePorts_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> ExpressRoutePorts_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-05-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ExpressRoutePortResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-07-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -853,6 +846,8 @@ namespace Azure.ResourceManager.Network.Mocking
         [ForwardsClientCalls]
         public virtual async Task<Response<ExpressRoutePortResource>> GetExpressRoutePortAsync(string expressRoutePortName, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNullOrEmpty(expressRoutePortName, nameof(expressRoutePortName));
+
             return await GetExpressRoutePorts().GetAsync(expressRoutePortName, cancellationToken).ConfigureAwait(false);
         }
 
@@ -860,20 +855,16 @@ namespace Azure.ResourceManager.Network.Mocking
         /// Retrieves the requested ExpressRoutePort resource.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/ExpressRoutePorts/{expressRoutePortName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/ExpressRoutePorts/{expressRoutePortName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ExpressRoutePorts_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> ExpressRoutePorts_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-05-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ExpressRoutePortResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-07-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -884,11 +875,13 @@ namespace Azure.ResourceManager.Network.Mocking
         [ForwardsClientCalls]
         public virtual Response<ExpressRoutePortResource> GetExpressRoutePort(string expressRoutePortName, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNullOrEmpty(expressRoutePortName, nameof(expressRoutePortName));
+
             return GetExpressRoutePorts().Get(expressRoutePortName, cancellationToken);
         }
 
-        /// <summary> Gets a collection of FirewallPolicyResources in the ResourceGroupResource. </summary>
-        /// <returns> An object representing collection of FirewallPolicyResources and their operations over a FirewallPolicyResource. </returns>
+        /// <summary> Gets a collection of FirewallPolicies in the <see cref="ResourceGroupResource"/>. </summary>
+        /// <returns> An object representing collection of FirewallPolicies and their operations over a FirewallPolicyResource. </returns>
         public virtual FirewallPolicyCollection GetFirewallPolicies()
         {
             return GetCachedClient(client => new FirewallPolicyCollection(client, Id));
@@ -898,20 +891,16 @@ namespace Azure.ResourceManager.Network.Mocking
         /// Gets the specified Firewall Policy.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/firewallPolicies/{firewallPolicyName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/firewallPolicies/{firewallPolicyName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>FirewallPolicies_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> FirewallPolicies_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-05-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="FirewallPolicyResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-07-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -921,8 +910,10 @@ namespace Azure.ResourceManager.Network.Mocking
         /// <exception cref="ArgumentNullException"> <paramref name="firewallPolicyName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="firewallPolicyName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual async Task<Response<FirewallPolicyResource>> GetFirewallPolicyAsync(string firewallPolicyName, string expand = null, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<FirewallPolicyResource>> GetFirewallPolicyAsync(string firewallPolicyName, string expand = default, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNullOrEmpty(firewallPolicyName, nameof(firewallPolicyName));
+
             return await GetFirewallPolicies().GetAsync(firewallPolicyName, expand, cancellationToken).ConfigureAwait(false);
         }
 
@@ -930,20 +921,16 @@ namespace Azure.ResourceManager.Network.Mocking
         /// Gets the specified Firewall Policy.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/firewallPolicies/{firewallPolicyName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/firewallPolicies/{firewallPolicyName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>FirewallPolicies_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> FirewallPolicies_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-05-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="FirewallPolicyResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-07-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -953,368 +940,15 @@ namespace Azure.ResourceManager.Network.Mocking
         /// <exception cref="ArgumentNullException"> <paramref name="firewallPolicyName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="firewallPolicyName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual Response<FirewallPolicyResource> GetFirewallPolicy(string firewallPolicyName, string expand = null, CancellationToken cancellationToken = default)
+        public virtual Response<FirewallPolicyResource> GetFirewallPolicy(string firewallPolicyName, string expand = default, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNullOrEmpty(firewallPolicyName, nameof(firewallPolicyName));
+
             return GetFirewallPolicies().Get(firewallPolicyName, expand, cancellationToken);
         }
 
-        /// <summary> Gets a collection of IPAllocationResources in the ResourceGroupResource. </summary>
-        /// <returns> An object representing collection of IPAllocationResources and their operations over a IPAllocationResource. </returns>
-        public virtual IPAllocationCollection GetIPAllocations()
-        {
-            return GetCachedClient(client => new IPAllocationCollection(client, Id));
-        }
-
-        /// <summary>
-        /// Gets the specified IpAllocation by resource group.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/IpAllocations/{ipAllocationName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>IpAllocations_Get</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-05-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="IPAllocationResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="ipAllocationName"> The name of the IpAllocation. </param>
-        /// <param name="expand"> Expands referenced resources. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="ipAllocationName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="ipAllocationName"/> is an empty string, and was expected to be non-empty. </exception>
-        [ForwardsClientCalls]
-        public virtual async Task<Response<IPAllocationResource>> GetIPAllocationAsync(string ipAllocationName, string expand = null, CancellationToken cancellationToken = default)
-        {
-            return await GetIPAllocations().GetAsync(ipAllocationName, expand, cancellationToken).ConfigureAwait(false);
-        }
-
-        /// <summary>
-        /// Gets the specified IpAllocation by resource group.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/IpAllocations/{ipAllocationName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>IpAllocations_Get</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-05-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="IPAllocationResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="ipAllocationName"> The name of the IpAllocation. </param>
-        /// <param name="expand"> Expands referenced resources. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="ipAllocationName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="ipAllocationName"/> is an empty string, and was expected to be non-empty. </exception>
-        [ForwardsClientCalls]
-        public virtual Response<IPAllocationResource> GetIPAllocation(string ipAllocationName, string expand = null, CancellationToken cancellationToken = default)
-        {
-            return GetIPAllocations().Get(ipAllocationName, expand, cancellationToken);
-        }
-
-        /// <summary> Gets a collection of IPGroupResources in the ResourceGroupResource. </summary>
-        /// <returns> An object representing collection of IPGroupResources and their operations over a IPGroupResource. </returns>
-        public virtual IPGroupCollection GetIPGroups()
-        {
-            return GetCachedClient(client => new IPGroupCollection(client, Id));
-        }
-
-        /// <summary>
-        /// Gets the specified ipGroups.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/ipGroups/{ipGroupsName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>IpGroups_Get</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-05-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="IPGroupResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="ipGroupsName"> The name of the ipGroups. </param>
-        /// <param name="expand"> Expands resourceIds (of Firewalls/Network Security Groups etc.) back referenced by the IpGroups resource. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="ipGroupsName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="ipGroupsName"/> is an empty string, and was expected to be non-empty. </exception>
-        [ForwardsClientCalls]
-        public virtual async Task<Response<IPGroupResource>> GetIPGroupAsync(string ipGroupsName, string expand = null, CancellationToken cancellationToken = default)
-        {
-            return await GetIPGroups().GetAsync(ipGroupsName, expand, cancellationToken).ConfigureAwait(false);
-        }
-
-        /// <summary>
-        /// Gets the specified ipGroups.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/ipGroups/{ipGroupsName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>IpGroups_Get</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-05-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="IPGroupResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="ipGroupsName"> The name of the ipGroups. </param>
-        /// <param name="expand"> Expands resourceIds (of Firewalls/Network Security Groups etc.) back referenced by the IpGroups resource. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="ipGroupsName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="ipGroupsName"/> is an empty string, and was expected to be non-empty. </exception>
-        [ForwardsClientCalls]
-        public virtual Response<IPGroupResource> GetIPGroup(string ipGroupsName, string expand = null, CancellationToken cancellationToken = default)
-        {
-            return GetIPGroups().Get(ipGroupsName, expand, cancellationToken);
-        }
-
-        /// <summary> Gets a collection of LoadBalancerResources in the ResourceGroupResource. </summary>
-        /// <returns> An object representing collection of LoadBalancerResources and their operations over a LoadBalancerResource. </returns>
-        public virtual LoadBalancerCollection GetLoadBalancers()
-        {
-            return GetCachedClient(client => new LoadBalancerCollection(client, Id));
-        }
-
-        /// <summary>
-        /// Gets the specified load balancer.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/loadBalancers/{loadBalancerName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>LoadBalancers_Get</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-05-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="LoadBalancerResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="loadBalancerName"> The name of the load balancer. </param>
-        /// <param name="expand"> Expands referenced resources. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="loadBalancerName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="loadBalancerName"/> is an empty string, and was expected to be non-empty. </exception>
-        [ForwardsClientCalls]
-        public virtual async Task<Response<LoadBalancerResource>> GetLoadBalancerAsync(string loadBalancerName, string expand = null, CancellationToken cancellationToken = default)
-        {
-            return await GetLoadBalancers().GetAsync(loadBalancerName, expand, cancellationToken).ConfigureAwait(false);
-        }
-
-        /// <summary>
-        /// Gets the specified load balancer.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/loadBalancers/{loadBalancerName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>LoadBalancers_Get</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-05-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="LoadBalancerResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="loadBalancerName"> The name of the load balancer. </param>
-        /// <param name="expand"> Expands referenced resources. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="loadBalancerName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="loadBalancerName"/> is an empty string, and was expected to be non-empty. </exception>
-        [ForwardsClientCalls]
-        public virtual Response<LoadBalancerResource> GetLoadBalancer(string loadBalancerName, string expand = null, CancellationToken cancellationToken = default)
-        {
-            return GetLoadBalancers().Get(loadBalancerName, expand, cancellationToken);
-        }
-
-        /// <summary> Gets a collection of NatGatewayResources in the ResourceGroupResource. </summary>
-        /// <returns> An object representing collection of NatGatewayResources and their operations over a NatGatewayResource. </returns>
-        public virtual NatGatewayCollection GetNatGateways()
-        {
-            return GetCachedClient(client => new NatGatewayCollection(client, Id));
-        }
-
-        /// <summary>
-        /// Gets the specified nat gateway in a specified resource group.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/natGateways/{natGatewayName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>NatGateways_Get</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-05-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="NatGatewayResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="natGatewayName"> The name of the nat gateway. </param>
-        /// <param name="expand"> Expands referenced resources. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="natGatewayName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="natGatewayName"/> is an empty string, and was expected to be non-empty. </exception>
-        [ForwardsClientCalls]
-        public virtual async Task<Response<NatGatewayResource>> GetNatGatewayAsync(string natGatewayName, string expand = null, CancellationToken cancellationToken = default)
-        {
-            return await GetNatGateways().GetAsync(natGatewayName, expand, cancellationToken).ConfigureAwait(false);
-        }
-
-        /// <summary>
-        /// Gets the specified nat gateway in a specified resource group.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/natGateways/{natGatewayName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>NatGateways_Get</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-05-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="NatGatewayResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="natGatewayName"> The name of the nat gateway. </param>
-        /// <param name="expand"> Expands referenced resources. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="natGatewayName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="natGatewayName"/> is an empty string, and was expected to be non-empty. </exception>
-        [ForwardsClientCalls]
-        public virtual Response<NatGatewayResource> GetNatGateway(string natGatewayName, string expand = null, CancellationToken cancellationToken = default)
-        {
-            return GetNatGateways().Get(natGatewayName, expand, cancellationToken);
-        }
-
-        /// <summary> Gets a collection of NetworkInterfaceResources in the ResourceGroupResource. </summary>
-        /// <returns> An object representing collection of NetworkInterfaceResources and their operations over a NetworkInterfaceResource. </returns>
-        public virtual NetworkInterfaceCollection GetNetworkInterfaces()
-        {
-            return GetCachedClient(client => new NetworkInterfaceCollection(client, Id));
-        }
-
-        /// <summary>
-        /// Gets information about the specified network interface.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/networkInterfaces/{networkInterfaceName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>NetworkInterfaces_Get</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-05-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="NetworkInterfaceResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="networkInterfaceName"> The name of the network interface. </param>
-        /// <param name="expand"> Expands referenced resources. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="networkInterfaceName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="networkInterfaceName"/> is an empty string, and was expected to be non-empty. </exception>
-        [ForwardsClientCalls]
-        public virtual async Task<Response<NetworkInterfaceResource>> GetNetworkInterfaceAsync(string networkInterfaceName, string expand = null, CancellationToken cancellationToken = default)
-        {
-            return await GetNetworkInterfaces().GetAsync(networkInterfaceName, expand, cancellationToken).ConfigureAwait(false);
-        }
-
-        /// <summary>
-        /// Gets information about the specified network interface.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/networkInterfaces/{networkInterfaceName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>NetworkInterfaces_Get</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-05-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="NetworkInterfaceResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="networkInterfaceName"> The name of the network interface. </param>
-        /// <param name="expand"> Expands referenced resources. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="networkInterfaceName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="networkInterfaceName"/> is an empty string, and was expected to be non-empty. </exception>
-        [ForwardsClientCalls]
-        public virtual Response<NetworkInterfaceResource> GetNetworkInterface(string networkInterfaceName, string expand = null, CancellationToken cancellationToken = default)
-        {
-            return GetNetworkInterfaces().Get(networkInterfaceName, expand, cancellationToken);
-        }
-
-        /// <summary> Gets a collection of NetworkManagerResources in the ResourceGroupResource. </summary>
-        /// <returns> An object representing collection of NetworkManagerResources and their operations over a NetworkManagerResource. </returns>
+        /// <summary> Gets a collection of NetworkManagers in the <see cref="ResourceGroupResource"/>. </summary>
+        /// <returns> An object representing collection of NetworkManagers and their operations over a NetworkManagerResource. </returns>
         public virtual NetworkManagerCollection GetNetworkManagers()
         {
             return GetCachedClient(client => new NetworkManagerCollection(client, Id));
@@ -1324,20 +958,16 @@ namespace Azure.ResourceManager.Network.Mocking
         /// Gets the specified Network Manager.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/networkManagers/{networkManagerName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/networkManagers/{networkManagerName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>NetworkManagers_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> NetworkManagers_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-05-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="NetworkManagerResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-07-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -1348,6 +978,8 @@ namespace Azure.ResourceManager.Network.Mocking
         [ForwardsClientCalls]
         public virtual async Task<Response<NetworkManagerResource>> GetNetworkManagerAsync(string networkManagerName, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNullOrEmpty(networkManagerName, nameof(networkManagerName));
+
             return await GetNetworkManagers().GetAsync(networkManagerName, cancellationToken).ConfigureAwait(false);
         }
 
@@ -1355,20 +987,16 @@ namespace Azure.ResourceManager.Network.Mocking
         /// Gets the specified Network Manager.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/networkManagers/{networkManagerName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/networkManagers/{networkManagerName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>NetworkManagers_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> NetworkManagers_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-05-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="NetworkManagerResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-07-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -1379,11 +1007,283 @@ namespace Azure.ResourceManager.Network.Mocking
         [ForwardsClientCalls]
         public virtual Response<NetworkManagerResource> GetNetworkManager(string networkManagerName, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNullOrEmpty(networkManagerName, nameof(networkManagerName));
+
             return GetNetworkManagers().Get(networkManagerName, cancellationToken);
         }
 
-        /// <summary> Gets a collection of NetworkProfileResources in the ResourceGroupResource. </summary>
-        /// <returns> An object representing collection of NetworkProfileResources and their operations over a NetworkProfileResource. </returns>
+        /// <summary> Gets a collection of IPAllocations in the <see cref="ResourceGroupResource"/>. </summary>
+        /// <returns> An object representing collection of IPAllocations and their operations over a IPAllocationResource. </returns>
+        public virtual IPAllocationCollection GetIPAllocations()
+        {
+            return GetCachedClient(client => new IPAllocationCollection(client, Id));
+        }
+
+        /// <summary>
+        /// Gets the specified IpAllocation by resource group.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/IpAllocations/{ipAllocationName}. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> IpAllocations_Get. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-07-01. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="ipAllocationName"> The name of the IpAllocation. </param>
+        /// <param name="expand"> Expands referenced resources. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="ipAllocationName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="ipAllocationName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual async Task<Response<IPAllocationResource>> GetIPAllocationAsync(string ipAllocationName, string expand = default, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(ipAllocationName, nameof(ipAllocationName));
+
+            return await GetIPAllocations().GetAsync(ipAllocationName, expand, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Gets the specified IpAllocation by resource group.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/IpAllocations/{ipAllocationName}. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> IpAllocations_Get. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-07-01. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="ipAllocationName"> The name of the IpAllocation. </param>
+        /// <param name="expand"> Expands referenced resources. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="ipAllocationName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="ipAllocationName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual Response<IPAllocationResource> GetIPAllocation(string ipAllocationName, string expand = default, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(ipAllocationName, nameof(ipAllocationName));
+
+            return GetIPAllocations().Get(ipAllocationName, expand, cancellationToken);
+        }
+
+        /// <summary> Gets a collection of IPGroups in the <see cref="ResourceGroupResource"/>. </summary>
+        /// <returns> An object representing collection of IPGroups and their operations over a IPGroupResource. </returns>
+        public virtual IPGroupCollection GetIPGroups()
+        {
+            return GetCachedClient(client => new IPGroupCollection(client, Id));
+        }
+
+        /// <summary>
+        /// Gets the specified ipGroups.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/ipGroups/{ipGroupsName}. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> IpGroups_Get. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-07-01. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="ipGroupsName"> The name of the ipGroups. </param>
+        /// <param name="expand"> Expands resourceIds (of Firewalls/Network Security Groups etc.) back referenced by the IpGroups resource. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="ipGroupsName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="ipGroupsName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual async Task<Response<IPGroupResource>> GetIPGroupAsync(string ipGroupsName, string expand = default, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(ipGroupsName, nameof(ipGroupsName));
+
+            return await GetIPGroups().GetAsync(ipGroupsName, expand, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Gets the specified ipGroups.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/ipGroups/{ipGroupsName}. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> IpGroups_Get. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-07-01. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="ipGroupsName"> The name of the ipGroups. </param>
+        /// <param name="expand"> Expands resourceIds (of Firewalls/Network Security Groups etc.) back referenced by the IpGroups resource. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="ipGroupsName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="ipGroupsName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual Response<IPGroupResource> GetIPGroup(string ipGroupsName, string expand = default, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(ipGroupsName, nameof(ipGroupsName));
+
+            return GetIPGroups().Get(ipGroupsName, expand, cancellationToken);
+        }
+
+        /// <summary> Gets a collection of LoadBalancers in the <see cref="ResourceGroupResource"/>. </summary>
+        /// <returns> An object representing collection of LoadBalancers and their operations over a LoadBalancerResource. </returns>
+        public virtual LoadBalancerCollection GetLoadBalancers()
+        {
+            return GetCachedClient(client => new LoadBalancerCollection(client, Id));
+        }
+
+        /// <summary>
+        /// Gets the specified load balancer.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/loadBalancers/{loadBalancerName}. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> LoadBalancers_Get. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-07-01. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="loadBalancerName"> The name of the load balancer. </param>
+        /// <param name="expand"> Expands referenced resources. </param>
+        /// <param name="detailLevel"> Controls verbosity of the returned load balancer resource. When set to 'Reduced', read-only back-reference collections (e.g., rules referencing frontendIPConfigurations) are omitted from the response. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="loadBalancerName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="loadBalancerName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual async Task<Response<LoadBalancerResource>> GetLoadBalancerAsync(string loadBalancerName, string expand = default, LoadBalancerDetailLevel? detailLevel = default, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(loadBalancerName, nameof(loadBalancerName));
+
+            return await GetLoadBalancers().GetAsync(loadBalancerName, expand, detailLevel, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Gets the specified load balancer.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/loadBalancers/{loadBalancerName}. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> LoadBalancers_Get. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-07-01. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="loadBalancerName"> The name of the load balancer. </param>
+        /// <param name="expand"> Expands referenced resources. </param>
+        /// <param name="detailLevel"> Controls verbosity of the returned load balancer resource. When set to 'Reduced', read-only back-reference collections (e.g., rules referencing frontendIPConfigurations) are omitted from the response. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="loadBalancerName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="loadBalancerName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual Response<LoadBalancerResource> GetLoadBalancer(string loadBalancerName, string expand = default, LoadBalancerDetailLevel? detailLevel = default, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(loadBalancerName, nameof(loadBalancerName));
+
+            return GetLoadBalancers().Get(loadBalancerName, expand, detailLevel, cancellationToken);
+        }
+
+        /// <summary> Gets a collection of NatGateways in the <see cref="ResourceGroupResource"/>. </summary>
+        /// <returns> An object representing collection of NatGateways and their operations over a NatGatewayResource. </returns>
+        public virtual NatGatewayCollection GetNatGateways()
+        {
+            return GetCachedClient(client => new NatGatewayCollection(client, Id));
+        }
+
+        /// <summary>
+        /// Gets the specified nat gateway in a specified resource group.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/natGateways/{natGatewayName}. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> NatGateways_Get. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-07-01. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="natGatewayName"> The name of the nat gateway. </param>
+        /// <param name="expand"> Expands referenced resources. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="natGatewayName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="natGatewayName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual async Task<Response<NatGatewayResource>> GetNatGatewayAsync(string natGatewayName, string expand = default, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(natGatewayName, nameof(natGatewayName));
+
+            return await GetNatGateways().GetAsync(natGatewayName, expand, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Gets the specified nat gateway in a specified resource group.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/natGateways/{natGatewayName}. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> NatGateways_Get. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-07-01. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="natGatewayName"> The name of the nat gateway. </param>
+        /// <param name="expand"> Expands referenced resources. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="natGatewayName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="natGatewayName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual Response<NatGatewayResource> GetNatGateway(string natGatewayName, string expand = default, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(natGatewayName, nameof(natGatewayName));
+
+            return GetNatGateways().Get(natGatewayName, expand, cancellationToken);
+        }
+
+        /// <summary> Gets a collection of NetworkProfiles in the <see cref="ResourceGroupResource"/>. </summary>
+        /// <returns> An object representing collection of NetworkProfiles and their operations over a NetworkProfileResource. </returns>
         public virtual NetworkProfileCollection GetNetworkProfiles()
         {
             return GetCachedClient(client => new NetworkProfileCollection(client, Id));
@@ -1393,20 +1293,16 @@ namespace Azure.ResourceManager.Network.Mocking
         /// Gets the specified network profile in a specified resource group.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/networkProfiles/{networkProfileName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/networkProfiles/{networkProfileName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>NetworkProfiles_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> NetworkProfiles_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-05-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="NetworkProfileResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-07-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -1416,8 +1312,10 @@ namespace Azure.ResourceManager.Network.Mocking
         /// <exception cref="ArgumentNullException"> <paramref name="networkProfileName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="networkProfileName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual async Task<Response<NetworkProfileResource>> GetNetworkProfileAsync(string networkProfileName, string expand = null, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<NetworkProfileResource>> GetNetworkProfileAsync(string networkProfileName, string expand = default, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNullOrEmpty(networkProfileName, nameof(networkProfileName));
+
             return await GetNetworkProfiles().GetAsync(networkProfileName, expand, cancellationToken).ConfigureAwait(false);
         }
 
@@ -1425,20 +1323,16 @@ namespace Azure.ResourceManager.Network.Mocking
         /// Gets the specified network profile in a specified resource group.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/networkProfiles/{networkProfileName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/networkProfiles/{networkProfileName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>NetworkProfiles_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> NetworkProfiles_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-05-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="NetworkProfileResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-07-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -1448,13 +1342,15 @@ namespace Azure.ResourceManager.Network.Mocking
         /// <exception cref="ArgumentNullException"> <paramref name="networkProfileName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="networkProfileName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual Response<NetworkProfileResource> GetNetworkProfile(string networkProfileName, string expand = null, CancellationToken cancellationToken = default)
+        public virtual Response<NetworkProfileResource> GetNetworkProfile(string networkProfileName, string expand = default, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNullOrEmpty(networkProfileName, nameof(networkProfileName));
+
             return GetNetworkProfiles().Get(networkProfileName, expand, cancellationToken);
         }
 
-        /// <summary> Gets a collection of NetworkSecurityGroupResources in the ResourceGroupResource. </summary>
-        /// <returns> An object representing collection of NetworkSecurityGroupResources and their operations over a NetworkSecurityGroupResource. </returns>
+        /// <summary> Gets a collection of NetworkSecurityGroups in the <see cref="ResourceGroupResource"/>. </summary>
+        /// <returns> An object representing collection of NetworkSecurityGroups and their operations over a NetworkSecurityGroupResource. </returns>
         public virtual NetworkSecurityGroupCollection GetNetworkSecurityGroups()
         {
             return GetCachedClient(client => new NetworkSecurityGroupCollection(client, Id));
@@ -1464,20 +1360,16 @@ namespace Azure.ResourceManager.Network.Mocking
         /// Gets the specified network security group.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/networkSecurityGroups/{networkSecurityGroupName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/networkSecurityGroups/{networkSecurityGroupName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>NetworkSecurityGroups_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> NetworkSecurityGroups_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-05-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="NetworkSecurityGroupResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-07-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -1487,8 +1379,10 @@ namespace Azure.ResourceManager.Network.Mocking
         /// <exception cref="ArgumentNullException"> <paramref name="networkSecurityGroupName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="networkSecurityGroupName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual async Task<Response<NetworkSecurityGroupResource>> GetNetworkSecurityGroupAsync(string networkSecurityGroupName, string expand = null, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<NetworkSecurityGroupResource>> GetNetworkSecurityGroupAsync(string networkSecurityGroupName, string expand = default, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNullOrEmpty(networkSecurityGroupName, nameof(networkSecurityGroupName));
+
             return await GetNetworkSecurityGroups().GetAsync(networkSecurityGroupName, expand, cancellationToken).ConfigureAwait(false);
         }
 
@@ -1496,20 +1390,16 @@ namespace Azure.ResourceManager.Network.Mocking
         /// Gets the specified network security group.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/networkSecurityGroups/{networkSecurityGroupName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/networkSecurityGroups/{networkSecurityGroupName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>NetworkSecurityGroups_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> NetworkSecurityGroups_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-05-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="NetworkSecurityGroupResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-07-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -1519,13 +1409,15 @@ namespace Azure.ResourceManager.Network.Mocking
         /// <exception cref="ArgumentNullException"> <paramref name="networkSecurityGroupName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="networkSecurityGroupName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual Response<NetworkSecurityGroupResource> GetNetworkSecurityGroup(string networkSecurityGroupName, string expand = null, CancellationToken cancellationToken = default)
+        public virtual Response<NetworkSecurityGroupResource> GetNetworkSecurityGroup(string networkSecurityGroupName, string expand = default, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNullOrEmpty(networkSecurityGroupName, nameof(networkSecurityGroupName));
+
             return GetNetworkSecurityGroups().Get(networkSecurityGroupName, expand, cancellationToken);
         }
 
-        /// <summary> Gets a collection of NetworkSecurityPerimeterResources in the ResourceGroupResource. </summary>
-        /// <returns> An object representing collection of NetworkSecurityPerimeterResources and their operations over a NetworkSecurityPerimeterResource. </returns>
+        /// <summary> Gets a collection of NetworkSecurityPerimeters in the <see cref="ResourceGroupResource"/>. </summary>
+        /// <returns> An object representing collection of NetworkSecurityPerimeters and their operations over a NetworkSecurityPerimeterResource. </returns>
         public virtual NetworkSecurityPerimeterCollection GetNetworkSecurityPerimeters()
         {
             return GetCachedClient(client => new NetworkSecurityPerimeterCollection(client, Id));
@@ -1535,20 +1427,16 @@ namespace Azure.ResourceManager.Network.Mocking
         /// Gets the specified network security perimeter by the name.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/networkSecurityPerimeters/{networkSecurityPerimeterName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/networkSecurityPerimeters/{networkSecurityPerimeterName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>NetworkSecurityPerimeters_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> NetworkSecurityPerimeters_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-05-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="NetworkSecurityPerimeterResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-07-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -1559,6 +1447,8 @@ namespace Azure.ResourceManager.Network.Mocking
         [ForwardsClientCalls]
         public virtual async Task<Response<NetworkSecurityPerimeterResource>> GetNetworkSecurityPerimeterAsync(string networkSecurityPerimeterName, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNullOrEmpty(networkSecurityPerimeterName, nameof(networkSecurityPerimeterName));
+
             return await GetNetworkSecurityPerimeters().GetAsync(networkSecurityPerimeterName, cancellationToken).ConfigureAwait(false);
         }
 
@@ -1566,20 +1456,16 @@ namespace Azure.ResourceManager.Network.Mocking
         /// Gets the specified network security perimeter by the name.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/networkSecurityPerimeters/{networkSecurityPerimeterName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/networkSecurityPerimeters/{networkSecurityPerimeterName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>NetworkSecurityPerimeters_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> NetworkSecurityPerimeters_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-05-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="NetworkSecurityPerimeterResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-07-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -1590,11 +1476,13 @@ namespace Azure.ResourceManager.Network.Mocking
         [ForwardsClientCalls]
         public virtual Response<NetworkSecurityPerimeterResource> GetNetworkSecurityPerimeter(string networkSecurityPerimeterName, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNullOrEmpty(networkSecurityPerimeterName, nameof(networkSecurityPerimeterName));
+
             return GetNetworkSecurityPerimeters().Get(networkSecurityPerimeterName, cancellationToken);
         }
 
-        /// <summary> Gets a collection of NetworkVirtualApplianceResources in the ResourceGroupResource. </summary>
-        /// <returns> An object representing collection of NetworkVirtualApplianceResources and their operations over a NetworkVirtualApplianceResource. </returns>
+        /// <summary> Gets a collection of NetworkVirtualAppliances in the <see cref="ResourceGroupResource"/>. </summary>
+        /// <returns> An object representing collection of NetworkVirtualAppliances and their operations over a NetworkVirtualApplianceResource. </returns>
         public virtual NetworkVirtualApplianceCollection GetNetworkVirtualAppliances()
         {
             return GetCachedClient(client => new NetworkVirtualApplianceCollection(client, Id));
@@ -1604,20 +1492,16 @@ namespace Azure.ResourceManager.Network.Mocking
         /// Gets the specified Network Virtual Appliance.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/networkVirtualAppliances/{networkVirtualApplianceName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/networkVirtualAppliances/{networkVirtualApplianceName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>NetworkVirtualAppliances_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> NetworkVirtualAppliances_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-05-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="NetworkVirtualApplianceResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-07-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -1627,8 +1511,10 @@ namespace Azure.ResourceManager.Network.Mocking
         /// <exception cref="ArgumentNullException"> <paramref name="networkVirtualApplianceName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="networkVirtualApplianceName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual async Task<Response<NetworkVirtualApplianceResource>> GetNetworkVirtualApplianceAsync(string networkVirtualApplianceName, string expand = null, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<NetworkVirtualApplianceResource>> GetNetworkVirtualApplianceAsync(string networkVirtualApplianceName, string expand = default, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNullOrEmpty(networkVirtualApplianceName, nameof(networkVirtualApplianceName));
+
             return await GetNetworkVirtualAppliances().GetAsync(networkVirtualApplianceName, expand, cancellationToken).ConfigureAwait(false);
         }
 
@@ -1636,20 +1522,16 @@ namespace Azure.ResourceManager.Network.Mocking
         /// Gets the specified Network Virtual Appliance.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/networkVirtualAppliances/{networkVirtualApplianceName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/networkVirtualAppliances/{networkVirtualApplianceName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>NetworkVirtualAppliances_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> NetworkVirtualAppliances_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-05-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="NetworkVirtualApplianceResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-07-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -1659,13 +1541,15 @@ namespace Azure.ResourceManager.Network.Mocking
         /// <exception cref="ArgumentNullException"> <paramref name="networkVirtualApplianceName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="networkVirtualApplianceName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual Response<NetworkVirtualApplianceResource> GetNetworkVirtualAppliance(string networkVirtualApplianceName, string expand = null, CancellationToken cancellationToken = default)
+        public virtual Response<NetworkVirtualApplianceResource> GetNetworkVirtualAppliance(string networkVirtualApplianceName, string expand = default, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNullOrEmpty(networkVirtualApplianceName, nameof(networkVirtualApplianceName));
+
             return GetNetworkVirtualAppliances().Get(networkVirtualApplianceName, expand, cancellationToken);
         }
 
-        /// <summary> Gets a collection of NetworkWatcherResources in the ResourceGroupResource. </summary>
-        /// <returns> An object representing collection of NetworkWatcherResources and their operations over a NetworkWatcherResource. </returns>
+        /// <summary> Gets a collection of NetworkWatchers in the <see cref="ResourceGroupResource"/>. </summary>
+        /// <returns> An object representing collection of NetworkWatchers and their operations over a NetworkWatcherResource. </returns>
         public virtual NetworkWatcherCollection GetNetworkWatchers()
         {
             return GetCachedClient(client => new NetworkWatcherCollection(client, Id));
@@ -1675,20 +1559,16 @@ namespace Azure.ResourceManager.Network.Mocking
         /// Gets the specified network watcher by resource group.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/networkWatchers/{networkWatcherName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/networkWatchers/{networkWatcherName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>NetworkWatchers_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> NetworkWatchers_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-05-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="NetworkWatcherResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-07-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -1699,6 +1579,8 @@ namespace Azure.ResourceManager.Network.Mocking
         [ForwardsClientCalls]
         public virtual async Task<Response<NetworkWatcherResource>> GetNetworkWatcherAsync(string networkWatcherName, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNullOrEmpty(networkWatcherName, nameof(networkWatcherName));
+
             return await GetNetworkWatchers().GetAsync(networkWatcherName, cancellationToken).ConfigureAwait(false);
         }
 
@@ -1706,20 +1588,16 @@ namespace Azure.ResourceManager.Network.Mocking
         /// Gets the specified network watcher by resource group.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/networkWatchers/{networkWatcherName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/networkWatchers/{networkWatcherName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>NetworkWatchers_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> NetworkWatchers_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-05-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="NetworkWatcherResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-07-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -1730,11 +1608,13 @@ namespace Azure.ResourceManager.Network.Mocking
         [ForwardsClientCalls]
         public virtual Response<NetworkWatcherResource> GetNetworkWatcher(string networkWatcherName, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNullOrEmpty(networkWatcherName, nameof(networkWatcherName));
+
             return GetNetworkWatchers().Get(networkWatcherName, cancellationToken);
         }
 
-        /// <summary> Gets a collection of PrivateEndpointResources in the ResourceGroupResource. </summary>
-        /// <returns> An object representing collection of PrivateEndpointResources and their operations over a PrivateEndpointResource. </returns>
+        /// <summary> Gets a collection of PrivateEndpoints in the <see cref="ResourceGroupResource"/>. </summary>
+        /// <returns> An object representing collection of PrivateEndpoints and their operations over a PrivateEndpointResource. </returns>
         public virtual PrivateEndpointCollection GetPrivateEndpoints()
         {
             return GetCachedClient(client => new PrivateEndpointCollection(client, Id));
@@ -1744,20 +1624,16 @@ namespace Azure.ResourceManager.Network.Mocking
         /// Gets the specified private endpoint by resource group.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/privateEndpoints/{privateEndpointName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/privateEndpoints/{privateEndpointName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>PrivateEndpoints_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> PrivateEndpoints_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-05-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="PrivateEndpointResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-07-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -1767,8 +1643,10 @@ namespace Azure.ResourceManager.Network.Mocking
         /// <exception cref="ArgumentNullException"> <paramref name="privateEndpointName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="privateEndpointName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual async Task<Response<PrivateEndpointResource>> GetPrivateEndpointAsync(string privateEndpointName, string expand = null, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<PrivateEndpointResource>> GetPrivateEndpointAsync(string privateEndpointName, string expand = default, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNullOrEmpty(privateEndpointName, nameof(privateEndpointName));
+
             return await GetPrivateEndpoints().GetAsync(privateEndpointName, expand, cancellationToken).ConfigureAwait(false);
         }
 
@@ -1776,20 +1654,16 @@ namespace Azure.ResourceManager.Network.Mocking
         /// Gets the specified private endpoint by resource group.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/privateEndpoints/{privateEndpointName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/privateEndpoints/{privateEndpointName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>PrivateEndpoints_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> PrivateEndpoints_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-05-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="PrivateEndpointResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-07-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -1799,13 +1673,15 @@ namespace Azure.ResourceManager.Network.Mocking
         /// <exception cref="ArgumentNullException"> <paramref name="privateEndpointName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="privateEndpointName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual Response<PrivateEndpointResource> GetPrivateEndpoint(string privateEndpointName, string expand = null, CancellationToken cancellationToken = default)
+        public virtual Response<PrivateEndpointResource> GetPrivateEndpoint(string privateEndpointName, string expand = default, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNullOrEmpty(privateEndpointName, nameof(privateEndpointName));
+
             return GetPrivateEndpoints().Get(privateEndpointName, expand, cancellationToken);
         }
 
-        /// <summary> Gets a collection of PrivateLinkServiceResources in the ResourceGroupResource. </summary>
-        /// <returns> An object representing collection of PrivateLinkServiceResources and their operations over a PrivateLinkServiceResource. </returns>
+        /// <summary> Gets a collection of PrivateLinkServices in the <see cref="ResourceGroupResource"/>. </summary>
+        /// <returns> An object representing collection of PrivateLinkServices and their operations over a PrivateLinkServiceResource. </returns>
         public virtual PrivateLinkServiceCollection GetPrivateLinkServices()
         {
             return GetCachedClient(client => new PrivateLinkServiceCollection(client, Id));
@@ -1815,20 +1691,16 @@ namespace Azure.ResourceManager.Network.Mocking
         /// Gets the specified private link service by resource group.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/privateLinkServices/{serviceName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/privateLinkServices/{serviceName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>PrivateLinkServices_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> PrivateLinkServices_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-05-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="PrivateLinkServiceResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-07-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -1838,8 +1710,10 @@ namespace Azure.ResourceManager.Network.Mocking
         /// <exception cref="ArgumentNullException"> <paramref name="serviceName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="serviceName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual async Task<Response<PrivateLinkServiceResource>> GetPrivateLinkServiceAsync(string serviceName, string expand = null, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<PrivateLinkServiceResource>> GetPrivateLinkServiceAsync(string serviceName, string expand = default, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNullOrEmpty(serviceName, nameof(serviceName));
+
             return await GetPrivateLinkServices().GetAsync(serviceName, expand, cancellationToken).ConfigureAwait(false);
         }
 
@@ -1847,20 +1721,16 @@ namespace Azure.ResourceManager.Network.Mocking
         /// Gets the specified private link service by resource group.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/privateLinkServices/{serviceName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/privateLinkServices/{serviceName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>PrivateLinkServices_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> PrivateLinkServices_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-05-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="PrivateLinkServiceResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-07-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -1870,84 +1740,15 @@ namespace Azure.ResourceManager.Network.Mocking
         /// <exception cref="ArgumentNullException"> <paramref name="serviceName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="serviceName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual Response<PrivateLinkServiceResource> GetPrivateLinkService(string serviceName, string expand = null, CancellationToken cancellationToken = default)
+        public virtual Response<PrivateLinkServiceResource> GetPrivateLinkService(string serviceName, string expand = default, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNullOrEmpty(serviceName, nameof(serviceName));
+
             return GetPrivateLinkServices().Get(serviceName, expand, cancellationToken);
         }
 
-        /// <summary> Gets a collection of PublicIPAddressResources in the ResourceGroupResource. </summary>
-        /// <returns> An object representing collection of PublicIPAddressResources and their operations over a PublicIPAddressResource. </returns>
-        public virtual PublicIPAddressCollection GetPublicIPAddresses()
-        {
-            return GetCachedClient(client => new PublicIPAddressCollection(client, Id));
-        }
-
-        /// <summary>
-        /// Gets the specified public IP address in a specified resource group.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/publicIPAddresses/{publicIpAddressName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>PublicIPAddresses_Get</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-05-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="PublicIPAddressResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="publicIPAddressName"> The name of the public IP address. </param>
-        /// <param name="expand"> Expands referenced resources. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="publicIPAddressName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="publicIPAddressName"/> is an empty string, and was expected to be non-empty. </exception>
-        [ForwardsClientCalls]
-        public virtual async Task<Response<PublicIPAddressResource>> GetPublicIPAddressAsync(string publicIPAddressName, string expand = null, CancellationToken cancellationToken = default)
-        {
-            return await GetPublicIPAddresses().GetAsync(publicIPAddressName, expand, cancellationToken).ConfigureAwait(false);
-        }
-
-        /// <summary>
-        /// Gets the specified public IP address in a specified resource group.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/publicIPAddresses/{publicIpAddressName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>PublicIPAddresses_Get</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-05-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="PublicIPAddressResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="publicIPAddressName"> The name of the public IP address. </param>
-        /// <param name="expand"> Expands referenced resources. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="publicIPAddressName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="publicIPAddressName"/> is an empty string, and was expected to be non-empty. </exception>
-        [ForwardsClientCalls]
-        public virtual Response<PublicIPAddressResource> GetPublicIPAddress(string publicIPAddressName, string expand = null, CancellationToken cancellationToken = default)
-        {
-            return GetPublicIPAddresses().Get(publicIPAddressName, expand, cancellationToken);
-        }
-
-        /// <summary> Gets a collection of PublicIPPrefixResources in the ResourceGroupResource. </summary>
-        /// <returns> An object representing collection of PublicIPPrefixResources and their operations over a PublicIPPrefixResource. </returns>
+        /// <summary> Gets a collection of PublicIPPrefixes in the <see cref="ResourceGroupResource"/>. </summary>
+        /// <returns> An object representing collection of PublicIPPrefixes and their operations over a PublicIPPrefixResource. </returns>
         public virtual PublicIPPrefixCollection GetPublicIPPrefixes()
         {
             return GetCachedClient(client => new PublicIPPrefixCollection(client, Id));
@@ -1957,68 +1758,64 @@ namespace Azure.ResourceManager.Network.Mocking
         /// Gets the specified public IP prefix in a specified resource group.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/publicIPPrefixes/{publicIpPrefixName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/publicIPPrefixes/{publicIpPrefixName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>PublicIPPrefixes_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> PublicIPPrefixes_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-05-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="PublicIPPrefixResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-07-01. </description>
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="publicIPPrefixName"> The name of the public IP prefix. </param>
+        /// <param name="publicIpPrefixName"> The name of the public IP prefix. </param>
         /// <param name="expand"> Expands referenced resources. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="publicIPPrefixName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="publicIPPrefixName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="publicIpPrefixName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="publicIpPrefixName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual async Task<Response<PublicIPPrefixResource>> GetPublicIPPrefixAsync(string publicIPPrefixName, string expand = null, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<PublicIPPrefixResource>> GetPublicIPPrefixAsync(string publicIpPrefixName, string expand = default, CancellationToken cancellationToken = default)
         {
-            return await GetPublicIPPrefixes().GetAsync(publicIPPrefixName, expand, cancellationToken).ConfigureAwait(false);
+            Argument.AssertNotNullOrEmpty(publicIpPrefixName, nameof(publicIpPrefixName));
+
+            return await GetPublicIPPrefixes().GetAsync(publicIpPrefixName, expand, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
         /// Gets the specified public IP prefix in a specified resource group.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/publicIPPrefixes/{publicIpPrefixName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/publicIPPrefixes/{publicIpPrefixName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>PublicIPPrefixes_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> PublicIPPrefixes_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-05-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="PublicIPPrefixResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-07-01. </description>
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="publicIPPrefixName"> The name of the public IP prefix. </param>
+        /// <param name="publicIpPrefixName"> The name of the public IP prefix. </param>
         /// <param name="expand"> Expands referenced resources. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="publicIPPrefixName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="publicIPPrefixName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="publicIpPrefixName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="publicIpPrefixName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual Response<PublicIPPrefixResource> GetPublicIPPrefix(string publicIPPrefixName, string expand = null, CancellationToken cancellationToken = default)
+        public virtual Response<PublicIPPrefixResource> GetPublicIPPrefix(string publicIpPrefixName, string expand = default, CancellationToken cancellationToken = default)
         {
-            return GetPublicIPPrefixes().Get(publicIPPrefixName, expand, cancellationToken);
+            Argument.AssertNotNullOrEmpty(publicIpPrefixName, nameof(publicIpPrefixName));
+
+            return GetPublicIPPrefixes().Get(publicIpPrefixName, expand, cancellationToken);
         }
 
-        /// <summary> Gets a collection of RouteFilterResources in the ResourceGroupResource. </summary>
-        /// <returns> An object representing collection of RouteFilterResources and their operations over a RouteFilterResource. </returns>
+        /// <summary> Gets a collection of RouteFilters in the <see cref="ResourceGroupResource"/>. </summary>
+        /// <returns> An object representing collection of RouteFilters and their operations over a RouteFilterResource. </returns>
         public virtual RouteFilterCollection GetRouteFilters()
         {
             return GetCachedClient(client => new RouteFilterCollection(client, Id));
@@ -2028,20 +1825,16 @@ namespace Azure.ResourceManager.Network.Mocking
         /// Gets the specified route filter.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/routeFilters/{routeFilterName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/routeFilters/{routeFilterName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>RouteFilters_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> RouteFilters_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-05-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="RouteFilterResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-07-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -2051,8 +1844,10 @@ namespace Azure.ResourceManager.Network.Mocking
         /// <exception cref="ArgumentNullException"> <paramref name="routeFilterName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="routeFilterName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual async Task<Response<RouteFilterResource>> GetRouteFilterAsync(string routeFilterName, string expand = null, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<RouteFilterResource>> GetRouteFilterAsync(string routeFilterName, string expand = default, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNullOrEmpty(routeFilterName, nameof(routeFilterName));
+
             return await GetRouteFilters().GetAsync(routeFilterName, expand, cancellationToken).ConfigureAwait(false);
         }
 
@@ -2060,20 +1855,16 @@ namespace Azure.ResourceManager.Network.Mocking
         /// Gets the specified route filter.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/routeFilters/{routeFilterName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/routeFilters/{routeFilterName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>RouteFilters_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> RouteFilters_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-05-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="RouteFilterResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-07-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -2083,13 +1874,15 @@ namespace Azure.ResourceManager.Network.Mocking
         /// <exception cref="ArgumentNullException"> <paramref name="routeFilterName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="routeFilterName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual Response<RouteFilterResource> GetRouteFilter(string routeFilterName, string expand = null, CancellationToken cancellationToken = default)
+        public virtual Response<RouteFilterResource> GetRouteFilter(string routeFilterName, string expand = default, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNullOrEmpty(routeFilterName, nameof(routeFilterName));
+
             return GetRouteFilters().Get(routeFilterName, expand, cancellationToken);
         }
 
-        /// <summary> Gets a collection of RouteTableResources in the ResourceGroupResource. </summary>
-        /// <returns> An object representing collection of RouteTableResources and their operations over a RouteTableResource. </returns>
+        /// <summary> Gets a collection of RouteTables in the <see cref="ResourceGroupResource"/>. </summary>
+        /// <returns> An object representing collection of RouteTables and their operations over a RouteTableResource. </returns>
         public virtual RouteTableCollection GetRouteTables()
         {
             return GetCachedClient(client => new RouteTableCollection(client, Id));
@@ -2099,20 +1892,16 @@ namespace Azure.ResourceManager.Network.Mocking
         /// Gets the specified route table.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/routeTables/{routeTableName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/routeTables/{routeTableName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>RouteTables_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> RouteTables_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-05-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="RouteTableResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-07-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -2122,8 +1911,10 @@ namespace Azure.ResourceManager.Network.Mocking
         /// <exception cref="ArgumentNullException"> <paramref name="routeTableName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="routeTableName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual async Task<Response<RouteTableResource>> GetRouteTableAsync(string routeTableName, string expand = null, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<RouteTableResource>> GetRouteTableAsync(string routeTableName, string expand = default, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNullOrEmpty(routeTableName, nameof(routeTableName));
+
             return await GetRouteTables().GetAsync(routeTableName, expand, cancellationToken).ConfigureAwait(false);
         }
 
@@ -2131,20 +1922,16 @@ namespace Azure.ResourceManager.Network.Mocking
         /// Gets the specified route table.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/routeTables/{routeTableName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/routeTables/{routeTableName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>RouteTables_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> RouteTables_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-05-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="RouteTableResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-07-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -2154,13 +1941,15 @@ namespace Azure.ResourceManager.Network.Mocking
         /// <exception cref="ArgumentNullException"> <paramref name="routeTableName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="routeTableName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual Response<RouteTableResource> GetRouteTable(string routeTableName, string expand = null, CancellationToken cancellationToken = default)
+        public virtual Response<RouteTableResource> GetRouteTable(string routeTableName, string expand = default, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNullOrEmpty(routeTableName, nameof(routeTableName));
+
             return GetRouteTables().Get(routeTableName, expand, cancellationToken);
         }
 
-        /// <summary> Gets a collection of SecurityPartnerProviderResources in the ResourceGroupResource. </summary>
-        /// <returns> An object representing collection of SecurityPartnerProviderResources and their operations over a SecurityPartnerProviderResource. </returns>
+        /// <summary> Gets a collection of SecurityPartnerProviders in the <see cref="ResourceGroupResource"/>. </summary>
+        /// <returns> An object representing collection of SecurityPartnerProviders and their operations over a SecurityPartnerProviderResource. </returns>
         public virtual SecurityPartnerProviderCollection GetSecurityPartnerProviders()
         {
             return GetCachedClient(client => new SecurityPartnerProviderCollection(client, Id));
@@ -2170,20 +1959,16 @@ namespace Azure.ResourceManager.Network.Mocking
         /// Gets the specified Security Partner Provider.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/securityPartnerProviders/{securityPartnerProviderName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/securityPartnerProviders/{securityPartnerProviderName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>SecurityPartnerProviders_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> SecurityPartnerProviders_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-05-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="SecurityPartnerProviderResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-07-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -2194,6 +1979,8 @@ namespace Azure.ResourceManager.Network.Mocking
         [ForwardsClientCalls]
         public virtual async Task<Response<SecurityPartnerProviderResource>> GetSecurityPartnerProviderAsync(string securityPartnerProviderName, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNullOrEmpty(securityPartnerProviderName, nameof(securityPartnerProviderName));
+
             return await GetSecurityPartnerProviders().GetAsync(securityPartnerProviderName, cancellationToken).ConfigureAwait(false);
         }
 
@@ -2201,20 +1988,16 @@ namespace Azure.ResourceManager.Network.Mocking
         /// Gets the specified Security Partner Provider.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/securityPartnerProviders/{securityPartnerProviderName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/securityPartnerProviders/{securityPartnerProviderName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>SecurityPartnerProviders_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> SecurityPartnerProviders_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-05-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="SecurityPartnerProviderResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-07-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -2225,11 +2008,13 @@ namespace Azure.ResourceManager.Network.Mocking
         [ForwardsClientCalls]
         public virtual Response<SecurityPartnerProviderResource> GetSecurityPartnerProvider(string securityPartnerProviderName, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNullOrEmpty(securityPartnerProviderName, nameof(securityPartnerProviderName));
+
             return GetSecurityPartnerProviders().Get(securityPartnerProviderName, cancellationToken);
         }
 
-        /// <summary> Gets a collection of ServiceEndpointPolicyResources in the ResourceGroupResource. </summary>
-        /// <returns> An object representing collection of ServiceEndpointPolicyResources and their operations over a ServiceEndpointPolicyResource. </returns>
+        /// <summary> Gets a collection of ServiceEndpointPolicies in the <see cref="ResourceGroupResource"/>. </summary>
+        /// <returns> An object representing collection of ServiceEndpointPolicies and their operations over a ServiceEndpointPolicyResource. </returns>
         public virtual ServiceEndpointPolicyCollection GetServiceEndpointPolicies()
         {
             return GetCachedClient(client => new ServiceEndpointPolicyCollection(client, Id));
@@ -2239,20 +2024,16 @@ namespace Azure.ResourceManager.Network.Mocking
         /// Gets the specified service Endpoint Policies in a specified resource group.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/serviceEndpointPolicies/{serviceEndpointPolicyName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/serviceEndpointPolicies/{serviceEndpointPolicyName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ServiceEndpointPolicies_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> ServiceEndpointPolicies_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-05-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ServiceEndpointPolicyResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-07-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -2262,8 +2043,10 @@ namespace Azure.ResourceManager.Network.Mocking
         /// <exception cref="ArgumentNullException"> <paramref name="serviceEndpointPolicyName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="serviceEndpointPolicyName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual async Task<Response<ServiceEndpointPolicyResource>> GetServiceEndpointPolicyAsync(string serviceEndpointPolicyName, string expand = null, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<ServiceEndpointPolicyResource>> GetServiceEndpointPolicyAsync(string serviceEndpointPolicyName, string expand = default, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNullOrEmpty(serviceEndpointPolicyName, nameof(serviceEndpointPolicyName));
+
             return await GetServiceEndpointPolicies().GetAsync(serviceEndpointPolicyName, expand, cancellationToken).ConfigureAwait(false);
         }
 
@@ -2271,20 +2054,16 @@ namespace Azure.ResourceManager.Network.Mocking
         /// Gets the specified service Endpoint Policies in a specified resource group.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/serviceEndpointPolicies/{serviceEndpointPolicyName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/serviceEndpointPolicies/{serviceEndpointPolicyName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ServiceEndpointPolicies_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> ServiceEndpointPolicies_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-05-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ServiceEndpointPolicyResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-07-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -2294,82 +2073,15 @@ namespace Azure.ResourceManager.Network.Mocking
         /// <exception cref="ArgumentNullException"> <paramref name="serviceEndpointPolicyName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="serviceEndpointPolicyName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual Response<ServiceEndpointPolicyResource> GetServiceEndpointPolicy(string serviceEndpointPolicyName, string expand = null, CancellationToken cancellationToken = default)
+        public virtual Response<ServiceEndpointPolicyResource> GetServiceEndpointPolicy(string serviceEndpointPolicyName, string expand = default, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNullOrEmpty(serviceEndpointPolicyName, nameof(serviceEndpointPolicyName));
+
             return GetServiceEndpointPolicies().Get(serviceEndpointPolicyName, expand, cancellationToken);
         }
 
-        /// <summary> Gets a collection of ServiceGatewayResources in the ResourceGroupResource. </summary>
-        /// <returns> An object representing collection of ServiceGatewayResources and their operations over a ServiceGatewayResource. </returns>
-        public virtual ServiceGatewayCollection GetServiceGateways()
-        {
-            return GetCachedClient(client => new ServiceGatewayCollection(client, Id));
-        }
-
-        /// <summary>
-        /// Gets the specified service gateway.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/serviceGateways/{serviceGatewayName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ServiceGateways_Get</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-05-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ServiceGatewayResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="serviceGatewayName"> The name of the service gateway. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="serviceGatewayName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="serviceGatewayName"/> is an empty string, and was expected to be non-empty. </exception>
-        [ForwardsClientCalls]
-        public virtual async Task<Response<ServiceGatewayResource>> GetServiceGatewayAsync(string serviceGatewayName, CancellationToken cancellationToken = default)
-        {
-            return await GetServiceGateways().GetAsync(serviceGatewayName, cancellationToken).ConfigureAwait(false);
-        }
-
-        /// <summary>
-        /// Gets the specified service gateway.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/serviceGateways/{serviceGatewayName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ServiceGateways_Get</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-05-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ServiceGatewayResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="serviceGatewayName"> The name of the service gateway. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="serviceGatewayName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="serviceGatewayName"/> is an empty string, and was expected to be non-empty. </exception>
-        [ForwardsClientCalls]
-        public virtual Response<ServiceGatewayResource> GetServiceGateway(string serviceGatewayName, CancellationToken cancellationToken = default)
-        {
-            return GetServiceGateways().Get(serviceGatewayName, cancellationToken);
-        }
-
-        /// <summary> Gets a collection of VirtualNetworkResources in the ResourceGroupResource. </summary>
-        /// <returns> An object representing collection of VirtualNetworkResources and their operations over a VirtualNetworkResource. </returns>
+        /// <summary> Gets a collection of VirtualNetworks in the <see cref="ResourceGroupResource"/>. </summary>
+        /// <returns> An object representing collection of VirtualNetworks and their operations over a VirtualNetworkResource. </returns>
         public virtual VirtualNetworkCollection GetVirtualNetworks()
         {
             return GetCachedClient(client => new VirtualNetworkCollection(client, Id));
@@ -2379,20 +2091,16 @@ namespace Azure.ResourceManager.Network.Mocking
         /// Gets the specified virtual network by resource group.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/virtualNetworks/{virtualNetworkName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/virtualNetworks/{virtualNetworkName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>VirtualNetworks_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> VirtualNetworks_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-05-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="VirtualNetworkResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-07-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -2402,8 +2110,10 @@ namespace Azure.ResourceManager.Network.Mocking
         /// <exception cref="ArgumentNullException"> <paramref name="virtualNetworkName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="virtualNetworkName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual async Task<Response<VirtualNetworkResource>> GetVirtualNetworkAsync(string virtualNetworkName, string expand = null, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<VirtualNetworkResource>> GetVirtualNetworkAsync(string virtualNetworkName, string expand = default, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNullOrEmpty(virtualNetworkName, nameof(virtualNetworkName));
+
             return await GetVirtualNetworks().GetAsync(virtualNetworkName, expand, cancellationToken).ConfigureAwait(false);
         }
 
@@ -2411,20 +2121,16 @@ namespace Azure.ResourceManager.Network.Mocking
         /// Gets the specified virtual network by resource group.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/virtualNetworks/{virtualNetworkName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/virtualNetworks/{virtualNetworkName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>VirtualNetworks_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> VirtualNetworks_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-05-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="VirtualNetworkResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-07-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -2434,82 +2140,15 @@ namespace Azure.ResourceManager.Network.Mocking
         /// <exception cref="ArgumentNullException"> <paramref name="virtualNetworkName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="virtualNetworkName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual Response<VirtualNetworkResource> GetVirtualNetwork(string virtualNetworkName, string expand = null, CancellationToken cancellationToken = default)
+        public virtual Response<VirtualNetworkResource> GetVirtualNetwork(string virtualNetworkName, string expand = default, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNullOrEmpty(virtualNetworkName, nameof(virtualNetworkName));
+
             return GetVirtualNetworks().Get(virtualNetworkName, expand, cancellationToken);
         }
 
-        /// <summary> Gets a collection of VirtualNetworkApplianceResources in the ResourceGroupResource. </summary>
-        /// <returns> An object representing collection of VirtualNetworkApplianceResources and their operations over a VirtualNetworkApplianceResource. </returns>
-        public virtual VirtualNetworkApplianceCollection GetVirtualNetworkAppliances()
-        {
-            return GetCachedClient(client => new VirtualNetworkApplianceCollection(client, Id));
-        }
-
-        /// <summary>
-        /// Gets information about the specified virtual network appliance.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/virtualNetworkAppliances/{virtualNetworkApplianceName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>VirtualNetworkAppliances_Get</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-05-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="VirtualNetworkApplianceResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="virtualNetworkApplianceName"> The name of the virtual network appliance. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="virtualNetworkApplianceName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="virtualNetworkApplianceName"/> is an empty string, and was expected to be non-empty. </exception>
-        [ForwardsClientCalls]
-        public virtual async Task<Response<VirtualNetworkApplianceResource>> GetVirtualNetworkApplianceAsync(string virtualNetworkApplianceName, CancellationToken cancellationToken = default)
-        {
-            return await GetVirtualNetworkAppliances().GetAsync(virtualNetworkApplianceName, cancellationToken).ConfigureAwait(false);
-        }
-
-        /// <summary>
-        /// Gets information about the specified virtual network appliance.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/virtualNetworkAppliances/{virtualNetworkApplianceName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>VirtualNetworkAppliances_Get</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-05-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="VirtualNetworkApplianceResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="virtualNetworkApplianceName"> The name of the virtual network appliance. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="virtualNetworkApplianceName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="virtualNetworkApplianceName"/> is an empty string, and was expected to be non-empty. </exception>
-        [ForwardsClientCalls]
-        public virtual Response<VirtualNetworkApplianceResource> GetVirtualNetworkAppliance(string virtualNetworkApplianceName, CancellationToken cancellationToken = default)
-        {
-            return GetVirtualNetworkAppliances().Get(virtualNetworkApplianceName, cancellationToken);
-        }
-
-        /// <summary> Gets a collection of VirtualNetworkGatewayResources in the ResourceGroupResource. </summary>
-        /// <returns> An object representing collection of VirtualNetworkGatewayResources and their operations over a VirtualNetworkGatewayResource. </returns>
+        /// <summary> Gets a collection of VirtualNetworkGateways in the <see cref="ResourceGroupResource"/>. </summary>
+        /// <returns> An object representing collection of VirtualNetworkGateways and their operations over a VirtualNetworkGatewayResource. </returns>
         public virtual VirtualNetworkGatewayCollection GetVirtualNetworkGateways()
         {
             return GetCachedClient(client => new VirtualNetworkGatewayCollection(client, Id));
@@ -2519,20 +2158,16 @@ namespace Azure.ResourceManager.Network.Mocking
         /// Gets the specified virtual network gateway by resource group.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/virtualNetworkGateways/{virtualNetworkGatewayName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/virtualNetworkGateways/{virtualNetworkGatewayName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>VirtualNetworkGateways_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> VirtualNetworkGateways_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-05-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="VirtualNetworkGatewayResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-07-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -2543,6 +2178,8 @@ namespace Azure.ResourceManager.Network.Mocking
         [ForwardsClientCalls]
         public virtual async Task<Response<VirtualNetworkGatewayResource>> GetVirtualNetworkGatewayAsync(string virtualNetworkGatewayName, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNullOrEmpty(virtualNetworkGatewayName, nameof(virtualNetworkGatewayName));
+
             return await GetVirtualNetworkGateways().GetAsync(virtualNetworkGatewayName, cancellationToken).ConfigureAwait(false);
         }
 
@@ -2550,20 +2187,16 @@ namespace Azure.ResourceManager.Network.Mocking
         /// Gets the specified virtual network gateway by resource group.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/virtualNetworkGateways/{virtualNetworkGatewayName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/virtualNetworkGateways/{virtualNetworkGatewayName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>VirtualNetworkGateways_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> VirtualNetworkGateways_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-05-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="VirtualNetworkGatewayResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-07-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -2574,11 +2207,13 @@ namespace Azure.ResourceManager.Network.Mocking
         [ForwardsClientCalls]
         public virtual Response<VirtualNetworkGatewayResource> GetVirtualNetworkGateway(string virtualNetworkGatewayName, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNullOrEmpty(virtualNetworkGatewayName, nameof(virtualNetworkGatewayName));
+
             return GetVirtualNetworkGateways().Get(virtualNetworkGatewayName, cancellationToken);
         }
 
-        /// <summary> Gets a collection of VirtualNetworkGatewayConnectionResources in the ResourceGroupResource. </summary>
-        /// <returns> An object representing collection of VirtualNetworkGatewayConnectionResources and their operations over a VirtualNetworkGatewayConnectionResource. </returns>
+        /// <summary> Gets a collection of VirtualNetworkGatewayConnections in the <see cref="ResourceGroupResource"/>. </summary>
+        /// <returns> An object representing collection of VirtualNetworkGatewayConnections and their operations over a VirtualNetworkGatewayConnectionResource. </returns>
         public virtual VirtualNetworkGatewayConnectionCollection GetVirtualNetworkGatewayConnections()
         {
             return GetCachedClient(client => new VirtualNetworkGatewayConnectionCollection(client, Id));
@@ -2588,20 +2223,16 @@ namespace Azure.ResourceManager.Network.Mocking
         /// Gets the specified virtual network gateway connection by resource group.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/connections/{virtualNetworkGatewayConnectionName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/connections/{virtualNetworkGatewayConnectionName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>VirtualNetworkGatewayConnections_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> VirtualNetworkGatewayConnections_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-05-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="VirtualNetworkGatewayConnectionResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-07-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -2612,6 +2243,8 @@ namespace Azure.ResourceManager.Network.Mocking
         [ForwardsClientCalls]
         public virtual async Task<Response<VirtualNetworkGatewayConnectionResource>> GetVirtualNetworkGatewayConnectionAsync(string virtualNetworkGatewayConnectionName, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNullOrEmpty(virtualNetworkGatewayConnectionName, nameof(virtualNetworkGatewayConnectionName));
+
             return await GetVirtualNetworkGatewayConnections().GetAsync(virtualNetworkGatewayConnectionName, cancellationToken).ConfigureAwait(false);
         }
 
@@ -2619,20 +2252,16 @@ namespace Azure.ResourceManager.Network.Mocking
         /// Gets the specified virtual network gateway connection by resource group.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/connections/{virtualNetworkGatewayConnectionName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/connections/{virtualNetworkGatewayConnectionName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>VirtualNetworkGatewayConnections_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> VirtualNetworkGatewayConnections_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-05-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="VirtualNetworkGatewayConnectionResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-07-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -2643,11 +2272,13 @@ namespace Azure.ResourceManager.Network.Mocking
         [ForwardsClientCalls]
         public virtual Response<VirtualNetworkGatewayConnectionResource> GetVirtualNetworkGatewayConnection(string virtualNetworkGatewayConnectionName, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNullOrEmpty(virtualNetworkGatewayConnectionName, nameof(virtualNetworkGatewayConnectionName));
+
             return GetVirtualNetworkGatewayConnections().Get(virtualNetworkGatewayConnectionName, cancellationToken);
         }
 
-        /// <summary> Gets a collection of LocalNetworkGatewayResources in the ResourceGroupResource. </summary>
-        /// <returns> An object representing collection of LocalNetworkGatewayResources and their operations over a LocalNetworkGatewayResource. </returns>
+        /// <summary> Gets a collection of LocalNetworkGateways in the <see cref="ResourceGroupResource"/>. </summary>
+        /// <returns> An object representing collection of LocalNetworkGateways and their operations over a LocalNetworkGatewayResource. </returns>
         public virtual LocalNetworkGatewayCollection GetLocalNetworkGateways()
         {
             return GetCachedClient(client => new LocalNetworkGatewayCollection(client, Id));
@@ -2657,20 +2288,16 @@ namespace Azure.ResourceManager.Network.Mocking
         /// Gets the specified local network gateway in a resource group.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/localNetworkGateways/{localNetworkGatewayName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/localNetworkGateways/{localNetworkGatewayName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>LocalNetworkGateways_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> LocalNetworkGateways_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-05-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="LocalNetworkGatewayResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-07-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -2681,6 +2308,8 @@ namespace Azure.ResourceManager.Network.Mocking
         [ForwardsClientCalls]
         public virtual async Task<Response<LocalNetworkGatewayResource>> GetLocalNetworkGatewayAsync(string localNetworkGatewayName, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNullOrEmpty(localNetworkGatewayName, nameof(localNetworkGatewayName));
+
             return await GetLocalNetworkGateways().GetAsync(localNetworkGatewayName, cancellationToken).ConfigureAwait(false);
         }
 
@@ -2688,20 +2317,16 @@ namespace Azure.ResourceManager.Network.Mocking
         /// Gets the specified local network gateway in a resource group.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/localNetworkGateways/{localNetworkGatewayName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/localNetworkGateways/{localNetworkGatewayName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>LocalNetworkGateways_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> LocalNetworkGateways_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-05-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="LocalNetworkGatewayResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-07-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -2712,34 +2337,32 @@ namespace Azure.ResourceManager.Network.Mocking
         [ForwardsClientCalls]
         public virtual Response<LocalNetworkGatewayResource> GetLocalNetworkGateway(string localNetworkGatewayName, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNullOrEmpty(localNetworkGatewayName, nameof(localNetworkGatewayName));
+
             return GetLocalNetworkGateways().Get(localNetworkGatewayName, cancellationToken);
         }
 
-        /// <summary> Gets a collection of VirtualNetworkTapResources in the ResourceGroupResource. </summary>
-        /// <returns> An object representing collection of VirtualNetworkTapResources and their operations over a VirtualNetworkTapResource. </returns>
+        /// <summary> Gets a collection of VirtualNetworkTaps in the <see cref="ResourceGroupResource"/>. </summary>
+        /// <returns> An object representing collection of VirtualNetworkTaps and their operations over a VirtualNetworkTapResource. </returns>
         public virtual VirtualNetworkTapCollection GetVirtualNetworkTaps()
         {
             return GetCachedClient(client => new VirtualNetworkTapCollection(client, Id));
         }
 
         /// <summary>
-        /// Gets information about the specified virtual network tap.
+        /// Get a VirtualNetworkTap
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/virtualNetworkTaps/{tapName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/virtualNetworkTaps/{tapName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>VirtualNetworkTaps_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> VirtualNetworkTaps_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-05-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="VirtualNetworkTapResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-07-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -2750,27 +2373,25 @@ namespace Azure.ResourceManager.Network.Mocking
         [ForwardsClientCalls]
         public virtual async Task<Response<VirtualNetworkTapResource>> GetVirtualNetworkTapAsync(string tapName, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNullOrEmpty(tapName, nameof(tapName));
+
             return await GetVirtualNetworkTaps().GetAsync(tapName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
-        /// Gets information about the specified virtual network tap.
+        /// Get a VirtualNetworkTap
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/virtualNetworkTaps/{tapName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/virtualNetworkTaps/{tapName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>VirtualNetworkTaps_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> VirtualNetworkTaps_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-05-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="VirtualNetworkTapResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-07-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -2781,11 +2402,13 @@ namespace Azure.ResourceManager.Network.Mocking
         [ForwardsClientCalls]
         public virtual Response<VirtualNetworkTapResource> GetVirtualNetworkTap(string tapName, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNullOrEmpty(tapName, nameof(tapName));
+
             return GetVirtualNetworkTaps().Get(tapName, cancellationToken);
         }
 
-        /// <summary> Gets a collection of VirtualRouterResources in the ResourceGroupResource. </summary>
-        /// <returns> An object representing collection of VirtualRouterResources and their operations over a VirtualRouterResource. </returns>
+        /// <summary> Gets a collection of VirtualRouters in the <see cref="ResourceGroupResource"/>. </summary>
+        /// <returns> An object representing collection of VirtualRouters and their operations over a VirtualRouterResource. </returns>
         public virtual VirtualRouterCollection GetVirtualRouters()
         {
             return GetCachedClient(client => new VirtualRouterCollection(client, Id));
@@ -2795,20 +2418,16 @@ namespace Azure.ResourceManager.Network.Mocking
         /// Gets the specified Virtual Router.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/virtualRouters/{virtualRouterName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/virtualRouters/{virtualRouterName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>VirtualRouters_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> VirtualRouters_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-05-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="VirtualRouterResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-07-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -2818,8 +2437,10 @@ namespace Azure.ResourceManager.Network.Mocking
         /// <exception cref="ArgumentNullException"> <paramref name="virtualRouterName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="virtualRouterName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual async Task<Response<VirtualRouterResource>> GetVirtualRouterAsync(string virtualRouterName, string expand = null, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<VirtualRouterResource>> GetVirtualRouterAsync(string virtualRouterName, string expand = default, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNullOrEmpty(virtualRouterName, nameof(virtualRouterName));
+
             return await GetVirtualRouters().GetAsync(virtualRouterName, expand, cancellationToken).ConfigureAwait(false);
         }
 
@@ -2827,20 +2448,16 @@ namespace Azure.ResourceManager.Network.Mocking
         /// Gets the specified Virtual Router.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/virtualRouters/{virtualRouterName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/virtualRouters/{virtualRouterName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>VirtualRouters_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> VirtualRouters_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-05-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="VirtualRouterResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-07-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -2850,13 +2467,15 @@ namespace Azure.ResourceManager.Network.Mocking
         /// <exception cref="ArgumentNullException"> <paramref name="virtualRouterName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="virtualRouterName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual Response<VirtualRouterResource> GetVirtualRouter(string virtualRouterName, string expand = null, CancellationToken cancellationToken = default)
+        public virtual Response<VirtualRouterResource> GetVirtualRouter(string virtualRouterName, string expand = default, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNullOrEmpty(virtualRouterName, nameof(virtualRouterName));
+
             return GetVirtualRouters().Get(virtualRouterName, expand, cancellationToken);
         }
 
-        /// <summary> Gets a collection of VirtualWanResources in the ResourceGroupResource. </summary>
-        /// <returns> An object representing collection of VirtualWanResources and their operations over a VirtualWanResource. </returns>
+        /// <summary> Gets a collection of VirtualWans in the <see cref="ResourceGroupResource"/>. </summary>
+        /// <returns> An object representing collection of VirtualWans and their operations over a VirtualWanResource. </returns>
         public virtual VirtualWanCollection GetVirtualWans()
         {
             return GetCachedClient(client => new VirtualWanCollection(client, Id));
@@ -2866,66 +2485,62 @@ namespace Azure.ResourceManager.Network.Mocking
         /// Retrieves the details of a VirtualWAN.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/virtualWans/{VirtualWANName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/virtualWans/{VirtualWANName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>VirtualWans_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> VirtualWans_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-05-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="VirtualWanResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-07-01. </description>
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="virtualWanName"> The name of the VirtualWAN being retrieved. </param>
+        /// <param name="virtualWANName"> The name of the VirtualWAN being retrieved. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="virtualWanName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="virtualWanName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="virtualWANName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="virtualWANName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual async Task<Response<VirtualWanResource>> GetVirtualWanAsync(string virtualWanName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<VirtualWanResource>> GetVirtualWanAsync(string virtualWANName, CancellationToken cancellationToken = default)
         {
-            return await GetVirtualWans().GetAsync(virtualWanName, cancellationToken).ConfigureAwait(false);
+            Argument.AssertNotNullOrEmpty(virtualWANName, nameof(virtualWANName));
+
+            return await GetVirtualWans().GetAsync(virtualWANName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
         /// Retrieves the details of a VirtualWAN.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/virtualWans/{VirtualWANName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/virtualWans/{VirtualWANName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>VirtualWans_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> VirtualWans_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-05-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="VirtualWanResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-07-01. </description>
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="virtualWanName"> The name of the VirtualWAN being retrieved. </param>
+        /// <param name="virtualWANName"> The name of the VirtualWAN being retrieved. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="virtualWanName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="virtualWanName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="virtualWANName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="virtualWANName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual Response<VirtualWanResource> GetVirtualWan(string virtualWanName, CancellationToken cancellationToken = default)
+        public virtual Response<VirtualWanResource> GetVirtualWan(string virtualWANName, CancellationToken cancellationToken = default)
         {
-            return GetVirtualWans().Get(virtualWanName, cancellationToken);
+            Argument.AssertNotNullOrEmpty(virtualWANName, nameof(virtualWANName));
+
+            return GetVirtualWans().Get(virtualWANName, cancellationToken);
         }
 
-        /// <summary> Gets a collection of VpnSiteResources in the ResourceGroupResource. </summary>
-        /// <returns> An object representing collection of VpnSiteResources and their operations over a VpnSiteResource. </returns>
+        /// <summary> Gets a collection of VpnSites in the <see cref="ResourceGroupResource"/>. </summary>
+        /// <returns> An object representing collection of VpnSites and their operations over a VpnSiteResource. </returns>
         public virtual VpnSiteCollection GetVpnSites()
         {
             return GetCachedClient(client => new VpnSiteCollection(client, Id));
@@ -2935,20 +2550,16 @@ namespace Azure.ResourceManager.Network.Mocking
         /// Retrieves the details of a VPN site.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/vpnSites/{vpnSiteName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/vpnSites/{vpnSiteName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>VpnSites_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> VpnSites_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-05-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="VpnSiteResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-07-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -2959,6 +2570,8 @@ namespace Azure.ResourceManager.Network.Mocking
         [ForwardsClientCalls]
         public virtual async Task<Response<VpnSiteResource>> GetVpnSiteAsync(string vpnSiteName, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNullOrEmpty(vpnSiteName, nameof(vpnSiteName));
+
             return await GetVpnSites().GetAsync(vpnSiteName, cancellationToken).ConfigureAwait(false);
         }
 
@@ -2966,20 +2579,16 @@ namespace Azure.ResourceManager.Network.Mocking
         /// Retrieves the details of a VPN site.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/vpnSites/{vpnSiteName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/vpnSites/{vpnSiteName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>VpnSites_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> VpnSites_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-05-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="VpnSiteResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-07-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -2990,11 +2599,13 @@ namespace Azure.ResourceManager.Network.Mocking
         [ForwardsClientCalls]
         public virtual Response<VpnSiteResource> GetVpnSite(string vpnSiteName, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNullOrEmpty(vpnSiteName, nameof(vpnSiteName));
+
             return GetVpnSites().Get(vpnSiteName, cancellationToken);
         }
 
-        /// <summary> Gets a collection of VpnServerConfigurationResources in the ResourceGroupResource. </summary>
-        /// <returns> An object representing collection of VpnServerConfigurationResources and their operations over a VpnServerConfigurationResource. </returns>
+        /// <summary> Gets a collection of VpnServerConfigurations in the <see cref="ResourceGroupResource"/>. </summary>
+        /// <returns> An object representing collection of VpnServerConfigurations and their operations over a VpnServerConfigurationResource. </returns>
         public virtual VpnServerConfigurationCollection GetVpnServerConfigurations()
         {
             return GetCachedClient(client => new VpnServerConfigurationCollection(client, Id));
@@ -3004,30 +2615,28 @@ namespace Azure.ResourceManager.Network.Mocking
         /// Retrieves the details of a VpnServerConfiguration.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/vpnServerConfigurations/{vpnServerConfigurationName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/vpnServerConfigurations/{vpnServerConfigurationName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>VpnServerConfigurations_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> VpnServerConfigurations_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-05-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="VpnServerConfigurationResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-07-01. </description>
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="vpnServerConfigurationName"> The name of the VpnServerConfiguration being retrieved. </param>
+        /// <param name="vpnServerConfigurationName"> The name of the resource that is unique within a resource group. This name can be used to access the resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="vpnServerConfigurationName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="vpnServerConfigurationName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual async Task<Response<VpnServerConfigurationResource>> GetVpnServerConfigurationAsync(string vpnServerConfigurationName, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNullOrEmpty(vpnServerConfigurationName, nameof(vpnServerConfigurationName));
+
             return await GetVpnServerConfigurations().GetAsync(vpnServerConfigurationName, cancellationToken).ConfigureAwait(false);
         }
 
@@ -3035,35 +2644,33 @@ namespace Azure.ResourceManager.Network.Mocking
         /// Retrieves the details of a VpnServerConfiguration.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/vpnServerConfigurations/{vpnServerConfigurationName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/vpnServerConfigurations/{vpnServerConfigurationName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>VpnServerConfigurations_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> VpnServerConfigurations_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-05-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="VpnServerConfigurationResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-07-01. </description>
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="vpnServerConfigurationName"> The name of the VpnServerConfiguration being retrieved. </param>
+        /// <param name="vpnServerConfigurationName"> The name of the resource that is unique within a resource group. This name can be used to access the resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="vpnServerConfigurationName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="vpnServerConfigurationName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual Response<VpnServerConfigurationResource> GetVpnServerConfiguration(string vpnServerConfigurationName, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNullOrEmpty(vpnServerConfigurationName, nameof(vpnServerConfigurationName));
+
             return GetVpnServerConfigurations().Get(vpnServerConfigurationName, cancellationToken);
         }
 
-        /// <summary> Gets a collection of VirtualHubResources in the ResourceGroupResource. </summary>
-        /// <returns> An object representing collection of VirtualHubResources and their operations over a VirtualHubResource. </returns>
+        /// <summary> Gets a collection of VirtualHubs in the <see cref="ResourceGroupResource"/>. </summary>
+        /// <returns> An object representing collection of VirtualHubs and their operations over a VirtualHubResource. </returns>
         public virtual VirtualHubCollection GetVirtualHubs()
         {
             return GetCachedClient(client => new VirtualHubCollection(client, Id));
@@ -3073,20 +2680,16 @@ namespace Azure.ResourceManager.Network.Mocking
         /// Retrieves the details of a VirtualHub.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/virtualHubs/{virtualHubName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/virtualHubs/{virtualHubName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>VirtualHubs_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> VirtualHubs_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-05-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="VirtualHubResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-07-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -3097,6 +2700,8 @@ namespace Azure.ResourceManager.Network.Mocking
         [ForwardsClientCalls]
         public virtual async Task<Response<VirtualHubResource>> GetVirtualHubAsync(string virtualHubName, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNullOrEmpty(virtualHubName, nameof(virtualHubName));
+
             return await GetVirtualHubs().GetAsync(virtualHubName, cancellationToken).ConfigureAwait(false);
         }
 
@@ -3104,20 +2709,16 @@ namespace Azure.ResourceManager.Network.Mocking
         /// Retrieves the details of a VirtualHub.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/virtualHubs/{virtualHubName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/virtualHubs/{virtualHubName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>VirtualHubs_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> VirtualHubs_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-05-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="VirtualHubResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-07-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -3128,11 +2729,13 @@ namespace Azure.ResourceManager.Network.Mocking
         [ForwardsClientCalls]
         public virtual Response<VirtualHubResource> GetVirtualHub(string virtualHubName, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNullOrEmpty(virtualHubName, nameof(virtualHubName));
+
             return GetVirtualHubs().Get(virtualHubName, cancellationToken);
         }
 
-        /// <summary> Gets a collection of VpnGatewayResources in the ResourceGroupResource. </summary>
-        /// <returns> An object representing collection of VpnGatewayResources and their operations over a VpnGatewayResource. </returns>
+        /// <summary> Gets a collection of VpnGateways in the <see cref="ResourceGroupResource"/>. </summary>
+        /// <returns> An object representing collection of VpnGateways and their operations over a VpnGatewayResource. </returns>
         public virtual VpnGatewayCollection GetVpnGateways()
         {
             return GetCachedClient(client => new VpnGatewayCollection(client, Id));
@@ -3142,20 +2745,16 @@ namespace Azure.ResourceManager.Network.Mocking
         /// Retrieves the details of a virtual wan vpn gateway.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/vpnGateways/{gatewayName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/vpnGateways/{gatewayName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>VpnGateways_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> VpnGateways_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-05-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="VpnGatewayResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-07-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -3166,6 +2765,8 @@ namespace Azure.ResourceManager.Network.Mocking
         [ForwardsClientCalls]
         public virtual async Task<Response<VpnGatewayResource>> GetVpnGatewayAsync(string gatewayName, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNullOrEmpty(gatewayName, nameof(gatewayName));
+
             return await GetVpnGateways().GetAsync(gatewayName, cancellationToken).ConfigureAwait(false);
         }
 
@@ -3173,20 +2774,16 @@ namespace Azure.ResourceManager.Network.Mocking
         /// Retrieves the details of a virtual wan vpn gateway.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/vpnGateways/{gatewayName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/vpnGateways/{gatewayName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>VpnGateways_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> VpnGateways_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-05-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="VpnGatewayResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-07-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -3197,80 +2794,13 @@ namespace Azure.ResourceManager.Network.Mocking
         [ForwardsClientCalls]
         public virtual Response<VpnGatewayResource> GetVpnGateway(string gatewayName, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNullOrEmpty(gatewayName, nameof(gatewayName));
+
             return GetVpnGateways().Get(gatewayName, cancellationToken);
         }
 
-        /// <summary> Gets a collection of P2SVpnGatewayResources in the ResourceGroupResource. </summary>
-        /// <returns> An object representing collection of P2SVpnGatewayResources and their operations over a P2SVpnGatewayResource. </returns>
-        public virtual P2SVpnGatewayCollection GetP2SVpnGateways()
-        {
-            return GetCachedClient(client => new P2SVpnGatewayCollection(client, Id));
-        }
-
-        /// <summary>
-        /// Retrieves the details of a virtual wan p2s vpn gateway.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/p2svpnGateways/{gatewayName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>P2sVpnGateways_Get</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-05-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="P2SVpnGatewayResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="gatewayName"> The name of the gateway. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="gatewayName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="gatewayName"/> is an empty string, and was expected to be non-empty. </exception>
-        [ForwardsClientCalls]
-        public virtual async Task<Response<P2SVpnGatewayResource>> GetP2SVpnGatewayAsync(string gatewayName, CancellationToken cancellationToken = default)
-        {
-            return await GetP2SVpnGateways().GetAsync(gatewayName, cancellationToken).ConfigureAwait(false);
-        }
-
-        /// <summary>
-        /// Retrieves the details of a virtual wan p2s vpn gateway.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/p2svpnGateways/{gatewayName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>P2sVpnGateways_Get</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-05-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="P2SVpnGatewayResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="gatewayName"> The name of the gateway. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="gatewayName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="gatewayName"/> is an empty string, and was expected to be non-empty. </exception>
-        [ForwardsClientCalls]
-        public virtual Response<P2SVpnGatewayResource> GetP2SVpnGateway(string gatewayName, CancellationToken cancellationToken = default)
-        {
-            return GetP2SVpnGateways().Get(gatewayName, cancellationToken);
-        }
-
-        /// <summary> Gets a collection of ExpressRouteGatewayResources in the ResourceGroupResource. </summary>
-        /// <returns> An object representing collection of ExpressRouteGatewayResources and their operations over a ExpressRouteGatewayResource. </returns>
+        /// <summary> Gets a collection of ExpressRouteGateways in the <see cref="ResourceGroupResource"/>. </summary>
+        /// <returns> An object representing collection of ExpressRouteGateways and their operations over a ExpressRouteGatewayResource. </returns>
         public virtual ExpressRouteGatewayCollection GetExpressRouteGateways()
         {
             return GetCachedClient(client => new ExpressRouteGatewayCollection(client, Id));
@@ -3280,20 +2810,16 @@ namespace Azure.ResourceManager.Network.Mocking
         /// Fetches the details of a ExpressRoute gateway in a resource group.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/expressRouteGateways/{expressRouteGatewayName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/expressRouteGateways/{expressRouteGatewayName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ExpressRouteGateways_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> ExpressRouteGateways_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-05-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ExpressRouteGatewayResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-07-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -3304,6 +2830,8 @@ namespace Azure.ResourceManager.Network.Mocking
         [ForwardsClientCalls]
         public virtual async Task<Response<ExpressRouteGatewayResource>> GetExpressRouteGatewayAsync(string expressRouteGatewayName, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNullOrEmpty(expressRouteGatewayName, nameof(expressRouteGatewayName));
+
             return await GetExpressRouteGateways().GetAsync(expressRouteGatewayName, cancellationToken).ConfigureAwait(false);
         }
 
@@ -3311,20 +2839,16 @@ namespace Azure.ResourceManager.Network.Mocking
         /// Fetches the details of a ExpressRoute gateway in a resource group.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/expressRouteGateways/{expressRouteGatewayName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/expressRouteGateways/{expressRouteGatewayName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ExpressRouteGateways_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> ExpressRouteGateways_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-05-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ExpressRouteGatewayResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-07-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -3335,11 +2859,13 @@ namespace Azure.ResourceManager.Network.Mocking
         [ForwardsClientCalls]
         public virtual Response<ExpressRouteGatewayResource> GetExpressRouteGateway(string expressRouteGatewayName, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNullOrEmpty(expressRouteGatewayName, nameof(expressRouteGatewayName));
+
             return GetExpressRouteGateways().Get(expressRouteGatewayName, cancellationToken);
         }
 
-        /// <summary> Gets a collection of WebApplicationFirewallPolicyResources in the ResourceGroupResource. </summary>
-        /// <returns> An object representing collection of WebApplicationFirewallPolicyResources and their operations over a WebApplicationFirewallPolicyResource. </returns>
+        /// <summary> Gets a collection of WebApplicationFirewallPolicies in the <see cref="ResourceGroupResource"/>. </summary>
+        /// <returns> An object representing collection of WebApplicationFirewallPolicies and their operations over a WebApplicationFirewallPolicyResource. </returns>
         public virtual WebApplicationFirewallPolicyCollection GetWebApplicationFirewallPolicies()
         {
             return GetCachedClient(client => new WebApplicationFirewallPolicyCollection(client, Id));
@@ -3349,20 +2875,16 @@ namespace Azure.ResourceManager.Network.Mocking
         /// Retrieve protection policy with specified name within a resource group.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/ApplicationGatewayWebApplicationFirewallPolicies/{policyName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/ApplicationGatewayWebApplicationFirewallPolicies/{policyName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>WebApplicationFirewallPolicies_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> WebApplicationFirewallPolicies_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-05-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="WebApplicationFirewallPolicyResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-07-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -3373,6 +2895,8 @@ namespace Azure.ResourceManager.Network.Mocking
         [ForwardsClientCalls]
         public virtual async Task<Response<WebApplicationFirewallPolicyResource>> GetWebApplicationFirewallPolicyAsync(string policyName, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNullOrEmpty(policyName, nameof(policyName));
+
             return await GetWebApplicationFirewallPolicies().GetAsync(policyName, cancellationToken).ConfigureAwait(false);
         }
 
@@ -3380,20 +2904,16 @@ namespace Azure.ResourceManager.Network.Mocking
         /// Retrieve protection policy with specified name within a resource group.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/ApplicationGatewayWebApplicationFirewallPolicies/{policyName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/ApplicationGatewayWebApplicationFirewallPolicies/{policyName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>WebApplicationFirewallPolicies_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> WebApplicationFirewallPolicies_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-05-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="WebApplicationFirewallPolicyResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-07-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -3404,205 +2924,679 @@ namespace Azure.ResourceManager.Network.Mocking
         [ForwardsClientCalls]
         public virtual Response<WebApplicationFirewallPolicyResource> GetWebApplicationFirewallPolicy(string policyName, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNullOrEmpty(policyName, nameof(policyName));
+
             return GetWebApplicationFirewallPolicies().Get(policyName, cancellationToken);
         }
 
-        /// <summary>
-        /// Gets all of the available subnet delegations for this resource group in this region.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/locations/{location}/availableDelegations</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>AvailableResourceGroupDelegations_List</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-05-01</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="location"> The location of the domain name. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="AvailableDelegation"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<AvailableDelegation> GetAvailableResourceGroupDelegationsAsync(AzureLocation location, CancellationToken cancellationToken = default)
+        /// <summary> Gets a collection of VirtualNetworkAppliances in the <see cref="ResourceGroupResource"/>. </summary>
+        /// <returns> An object representing collection of VirtualNetworkAppliances and their operations over a VirtualNetworkApplianceResource. </returns>
+        public virtual VirtualNetworkApplianceCollection GetVirtualNetworkAppliances()
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => AvailableResourceGroupDelegationsRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, location);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => AvailableResourceGroupDelegationsRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, location);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => AvailableDelegation.DeserializeAvailableDelegation(e), AvailableResourceGroupDelegationsClientDiagnostics, Pipeline, "MockableNetworkResourceGroupResource.GetAvailableResourceGroupDelegations", "value", "nextLink", cancellationToken);
+            return GetCachedClient(client => new VirtualNetworkApplianceCollection(client, Id));
         }
 
         /// <summary>
-        /// Gets all of the available subnet delegations for this resource group in this region.
+        /// Gets information about the specified virtual network appliance.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/locations/{location}/availableDelegations</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/virtualNetworkAppliances/{virtualNetworkApplianceName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>AvailableResourceGroupDelegations_List</description>
+        /// <term> Operation Id. </term>
+        /// <description> VirtualNetworkAppliances_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-05-01</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-07-01. </description>
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="location"> The location of the domain name. </param>
+        /// <param name="virtualNetworkApplianceName"> The name of the virtual network appliance. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="AvailableDelegation"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<AvailableDelegation> GetAvailableResourceGroupDelegations(AzureLocation location, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="virtualNetworkApplianceName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="virtualNetworkApplianceName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual async Task<Response<VirtualNetworkApplianceResource>> GetVirtualNetworkApplianceAsync(string virtualNetworkApplianceName, CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => AvailableResourceGroupDelegationsRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, location);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => AvailableResourceGroupDelegationsRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, location);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => AvailableDelegation.DeserializeAvailableDelegation(e), AvailableResourceGroupDelegationsClientDiagnostics, Pipeline, "MockableNetworkResourceGroupResource.GetAvailableResourceGroupDelegations", "value", "nextLink", cancellationToken);
+            Argument.AssertNotNullOrEmpty(virtualNetworkApplianceName, nameof(virtualNetworkApplianceName));
+
+            return await GetVirtualNetworkAppliances().GetAsync(virtualNetworkApplianceName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
-        /// Gets all available service aliases for this resource group in this region.
+        /// Gets information about the specified virtual network appliance.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/locations/{location}/availableServiceAliases</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/virtualNetworkAppliances/{virtualNetworkApplianceName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>AvailableServiceAliases_ListByResourceGroup</description>
+        /// <term> Operation Id. </term>
+        /// <description> VirtualNetworkAppliances_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-05-01</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-07-01. </description>
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="location"> The location. </param>
+        /// <param name="virtualNetworkApplianceName"> The name of the virtual network appliance. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="AvailableServiceAlias"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<AvailableServiceAlias> GetAvailableServiceAliasesByResourceGroupAsync(AzureLocation location, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="virtualNetworkApplianceName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="virtualNetworkApplianceName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual Response<VirtualNetworkApplianceResource> GetVirtualNetworkAppliance(string virtualNetworkApplianceName, CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => AvailableServiceAliasesRestClient.CreateListByResourceGroupRequest(Id.SubscriptionId, Id.ResourceGroupName, location);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => AvailableServiceAliasesRestClient.CreateListByResourceGroupNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, location);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => AvailableServiceAlias.DeserializeAvailableServiceAlias(e), AvailableServiceAliasesClientDiagnostics, Pipeline, "MockableNetworkResourceGroupResource.GetAvailableServiceAliasesByResourceGroup", "value", "nextLink", cancellationToken);
+            Argument.AssertNotNullOrEmpty(virtualNetworkApplianceName, nameof(virtualNetworkApplianceName));
+
+            return GetVirtualNetworkAppliances().Get(virtualNetworkApplianceName, cancellationToken);
+        }
+
+        /// <summary> Gets a collection of ServiceGateways in the <see cref="ResourceGroupResource"/>. </summary>
+        /// <returns> An object representing collection of ServiceGateways and their operations over a ServiceGatewayResource. </returns>
+        public virtual ServiceGatewayCollection GetServiceGateways()
+        {
+            return GetCachedClient(client => new ServiceGatewayCollection(client, Id));
         }
 
         /// <summary>
-        /// Gets all available service aliases for this resource group in this region.
+        /// Gets the specified service gateway.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/locations/{location}/availableServiceAliases</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/serviceGateways/{serviceGatewayName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>AvailableServiceAliases_ListByResourceGroup</description>
+        /// <term> Operation Id. </term>
+        /// <description> ServiceGateways_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-05-01</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-07-01. </description>
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="location"> The location. </param>
+        /// <param name="serviceGatewayName"> The name of the service gateway. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="AvailableServiceAlias"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<AvailableServiceAlias> GetAvailableServiceAliasesByResourceGroup(AzureLocation location, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="serviceGatewayName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="serviceGatewayName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual async Task<Response<ServiceGatewayResource>> GetServiceGatewayAsync(string serviceGatewayName, CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => AvailableServiceAliasesRestClient.CreateListByResourceGroupRequest(Id.SubscriptionId, Id.ResourceGroupName, location);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => AvailableServiceAliasesRestClient.CreateListByResourceGroupNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, location);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => AvailableServiceAlias.DeserializeAvailableServiceAlias(e), AvailableServiceAliasesClientDiagnostics, Pipeline, "MockableNetworkResourceGroupResource.GetAvailableServiceAliasesByResourceGroup", "value", "nextLink", cancellationToken);
+            Argument.AssertNotNullOrEmpty(serviceGatewayName, nameof(serviceGatewayName));
+
+            return await GetServiceGateways().GetAsync(serviceGatewayName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
-        /// Returns all of the resource types that can be linked to a Private Endpoint in this subscription in this region.
+        /// Gets the specified service gateway.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/locations/{location}/availablePrivateEndpointTypes</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/serviceGateways/{serviceGatewayName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>AvailablePrivateEndpointTypes_ListByResourceGroup</description>
+        /// <term> Operation Id. </term>
+        /// <description> ServiceGateways_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-05-01</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-07-01. </description>
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="location"> The location of the domain name. </param>
+        /// <param name="serviceGatewayName"> The name of the service gateway. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="AvailablePrivateEndpointType"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<AvailablePrivateEndpointType> GetAvailablePrivateEndpointTypesByResourceGroupAsync(AzureLocation location, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="serviceGatewayName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="serviceGatewayName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual Response<ServiceGatewayResource> GetServiceGateway(string serviceGatewayName, CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => AvailablePrivateEndpointTypesRestClient.CreateListByResourceGroupRequest(Id.SubscriptionId, Id.ResourceGroupName, location);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => AvailablePrivateEndpointTypesRestClient.CreateListByResourceGroupNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, location);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => AvailablePrivateEndpointType.DeserializeAvailablePrivateEndpointType(e), AvailablePrivateEndpointTypesClientDiagnostics, Pipeline, "MockableNetworkResourceGroupResource.GetAvailablePrivateEndpointTypesByResourceGroup", "value", "nextLink", cancellationToken);
+            Argument.AssertNotNullOrEmpty(serviceGatewayName, nameof(serviceGatewayName));
+
+            return GetServiceGateways().Get(serviceGatewayName, cancellationToken);
+        }
+
+        /// <summary> Gets a collection of InterconnectGroups in the <see cref="ResourceGroupResource"/>. </summary>
+        /// <returns> An object representing collection of InterconnectGroups and their operations over a InterconnectGroupResource. </returns>
+        public virtual InterconnectGroupCollection GetInterconnectGroups()
+        {
+            return GetCachedClient(client => new InterconnectGroupCollection(client, Id));
         }
 
         /// <summary>
-        /// Returns all of the resource types that can be linked to a Private Endpoint in this subscription in this region.
+        /// Gets information about the specified interconnect group.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/locations/{location}/availablePrivateEndpointTypes</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/interconnectGroups/{interconnectGroupName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>AvailablePrivateEndpointTypes_ListByResourceGroup</description>
+        /// <term> Operation Id. </term>
+        /// <description> InterconnectGroups_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-05-01</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-07-01. </description>
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="location"> The location of the domain name. </param>
+        /// <param name="interconnectGroupName"> The name of the interconnect group. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="AvailablePrivateEndpointType"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<AvailablePrivateEndpointType> GetAvailablePrivateEndpointTypesByResourceGroup(AzureLocation location, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="interconnectGroupName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="interconnectGroupName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual async Task<Response<InterconnectGroupResource>> GetInterconnectGroupAsync(string interconnectGroupName, CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => AvailablePrivateEndpointTypesRestClient.CreateListByResourceGroupRequest(Id.SubscriptionId, Id.ResourceGroupName, location);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => AvailablePrivateEndpointTypesRestClient.CreateListByResourceGroupNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, location);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => AvailablePrivateEndpointType.DeserializeAvailablePrivateEndpointType(e), AvailablePrivateEndpointTypesClientDiagnostics, Pipeline, "MockableNetworkResourceGroupResource.GetAvailablePrivateEndpointTypesByResourceGroup", "value", "nextLink", cancellationToken);
+            Argument.AssertNotNullOrEmpty(interconnectGroupName, nameof(interconnectGroupName));
+
+            return await GetInterconnectGroups().GetAsync(interconnectGroupName, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Gets information about the specified interconnect group.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/interconnectGroups/{interconnectGroupName}. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> InterconnectGroups_Get. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-07-01. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="interconnectGroupName"> The name of the interconnect group. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="interconnectGroupName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="interconnectGroupName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual Response<InterconnectGroupResource> GetInterconnectGroup(string interconnectGroupName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(interconnectGroupName, nameof(interconnectGroupName));
+
+            return GetInterconnectGroups().Get(interconnectGroupName, cancellationToken);
+        }
+
+        /// <summary> Gets a collection of CustomIPPrefixes in the <see cref="ResourceGroupResource"/>. </summary>
+        /// <returns> An object representing collection of CustomIPPrefixes and their operations over a CustomIPPrefixResource. </returns>
+        public virtual CustomIPPrefixCollection GetCustomIPPrefixes()
+        {
+            return GetCachedClient(client => new CustomIPPrefixCollection(client, Id));
+        }
+
+        /// <summary>
+        /// Gets the specified custom IP prefix in a specified resource group.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/customIpPrefixes/{customIpPrefixName}. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> CustomIpPrefixes_Get. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-07-01. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="customIpPrefixName"> The name of the custom IP prefix. </param>
+        /// <param name="expand"> Expands referenced resources. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="customIpPrefixName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="customIpPrefixName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual async Task<Response<CustomIPPrefixResource>> GetCustomIPPrefixAsync(string customIpPrefixName, string expand = default, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(customIpPrefixName, nameof(customIpPrefixName));
+
+            return await GetCustomIPPrefixes().GetAsync(customIpPrefixName, expand, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Gets the specified custom IP prefix in a specified resource group.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/customIpPrefixes/{customIpPrefixName}. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> CustomIpPrefixes_Get. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-07-01. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="customIpPrefixName"> The name of the custom IP prefix. </param>
+        /// <param name="expand"> Expands referenced resources. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="customIpPrefixName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="customIpPrefixName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual Response<CustomIPPrefixResource> GetCustomIPPrefix(string customIpPrefixName, string expand = default, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(customIpPrefixName, nameof(customIpPrefixName));
+
+            return GetCustomIPPrefixes().Get(customIpPrefixName, expand, cancellationToken);
+        }
+
+        /// <summary> Gets a collection of DscpConfigurations in the <see cref="ResourceGroupResource"/>. </summary>
+        /// <returns> An object representing collection of DscpConfigurations and their operations over a DscpConfigurationResource. </returns>
+        public virtual DscpConfigurationCollection GetDscpConfigurations()
+        {
+            return GetCachedClient(client => new DscpConfigurationCollection(client, Id));
+        }
+
+        /// <summary>
+        /// Gets a DSCP Configuration.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/dscpConfigurations/{dscpConfigurationName}. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> DscpConfigurations_Get. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-07-01. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="dscpConfigurationName"> The name of the resource. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="dscpConfigurationName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="dscpConfigurationName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual async Task<Response<DscpConfigurationResource>> GetDscpConfigurationAsync(string dscpConfigurationName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(dscpConfigurationName, nameof(dscpConfigurationName));
+
+            return await GetDscpConfigurations().GetAsync(dscpConfigurationName, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Gets a DSCP Configuration.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/dscpConfigurations/{dscpConfigurationName}. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> DscpConfigurations_Get. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-07-01. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="dscpConfigurationName"> The name of the resource. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="dscpConfigurationName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="dscpConfigurationName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual Response<DscpConfigurationResource> GetDscpConfiguration(string dscpConfigurationName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(dscpConfigurationName, nameof(dscpConfigurationName));
+
+            return GetDscpConfigurations().Get(dscpConfigurationName, cancellationToken);
+        }
+
+        /// <summary> Gets a collection of P2SVpnGateways in the <see cref="ResourceGroupResource"/>. </summary>
+        /// <returns> An object representing collection of P2SVpnGateways and their operations over a P2SVpnGatewayResource. </returns>
+        public virtual P2SVpnGatewayCollection GetP2SVpnGateways()
+        {
+            return GetCachedClient(client => new P2SVpnGatewayCollection(client, Id));
+        }
+
+        /// <summary>
+        /// Retrieves the details of a virtual wan p2s vpn gateway.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/p2svpnGateways/{gatewayName}. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> P2SVpnGateways_Get. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-07-01. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="gatewayName"> The name of the gateway. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="gatewayName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="gatewayName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual async Task<Response<P2SVpnGatewayResource>> GetP2SVpnGatewayAsync(string gatewayName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(gatewayName, nameof(gatewayName));
+
+            return await GetP2SVpnGateways().GetAsync(gatewayName, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Retrieves the details of a virtual wan p2s vpn gateway.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/p2svpnGateways/{gatewayName}. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> P2SVpnGateways_Get. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-07-01. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="gatewayName"> The name of the gateway. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="gatewayName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="gatewayName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual Response<P2SVpnGatewayResource> GetP2SVpnGateway(string gatewayName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(gatewayName, nameof(gatewayName));
+
+            return GetP2SVpnGateways().Get(gatewayName, cancellationToken);
+        }
+
+        /// <summary> Gets a collection of VirtualMachineScaleSetNetworkInterfaces in the <see cref="ResourceGroupResource"/>. </summary>
+        /// <param name="virtualMachineScaleSetName"> The virtualMachineScaleSetName for the resource. </param>
+        /// <param name="virtualmachineIndex"> The virtualmachineIndex for the resource. </param>
+        /// <returns> An object representing collection of VirtualMachineScaleSetNetworkInterfaces and their operations over a VirtualMachineScaleSetNetworkInterfaceResource. </returns>
+        public virtual VirtualMachineScaleSetNetworkInterfaceCollection GetVirtualMachineScaleSetNetworkInterfaces(string virtualMachineScaleSetName, string virtualmachineIndex)
+        {
+            return GetCachedClient(client => new VirtualMachineScaleSetNetworkInterfaceCollection(client, Id, virtualMachineScaleSetName, virtualmachineIndex));
+        }
+
+        /// <summary>
+        /// Get the specified network interface in a virtual machine scale set.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/virtualMachineScaleSets/{virtualMachineScaleSetName}/virtualMachines/{virtualmachineIndex}/networkInterfaces/{networkInterfaceName}. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> NetworkInterfaces_GetVirtualMachineScaleSetNetworkInterface. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2018-10-01. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="virtualMachineScaleSetName"> The virtualMachineScaleSetName for the resource. </param>
+        /// <param name="virtualmachineIndex"> The virtualmachineIndex for the resource. </param>
+        /// <param name="networkInterfaceName"></param>
+        /// <param name="expand"> Expands referenced resources. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="networkInterfaceName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="networkInterfaceName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual async Task<Response<VirtualMachineScaleSetNetworkInterfaceResource>> GetVirtualMachineScaleSetNetworkInterfaceAsync(string virtualMachineScaleSetName, string virtualmachineIndex, string networkInterfaceName, string expand = default, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(networkInterfaceName, nameof(networkInterfaceName));
+
+            return await GetVirtualMachineScaleSetNetworkInterfaces(virtualMachineScaleSetName, virtualmachineIndex).GetAsync(networkInterfaceName, expand, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Get the specified network interface in a virtual machine scale set.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/virtualMachineScaleSets/{virtualMachineScaleSetName}/virtualMachines/{virtualmachineIndex}/networkInterfaces/{networkInterfaceName}. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> NetworkInterfaces_GetVirtualMachineScaleSetNetworkInterface. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2018-10-01. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="virtualMachineScaleSetName"> The virtualMachineScaleSetName for the resource. </param>
+        /// <param name="virtualmachineIndex"> The virtualmachineIndex for the resource. </param>
+        /// <param name="networkInterfaceName"></param>
+        /// <param name="expand"> Expands referenced resources. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="networkInterfaceName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="networkInterfaceName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual Response<VirtualMachineScaleSetNetworkInterfaceResource> GetVirtualMachineScaleSetNetworkInterface(string virtualMachineScaleSetName, string virtualmachineIndex, string networkInterfaceName, string expand = default, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(networkInterfaceName, nameof(networkInterfaceName));
+
+            return GetVirtualMachineScaleSetNetworkInterfaces(virtualMachineScaleSetName, virtualmachineIndex).Get(networkInterfaceName, expand, cancellationToken);
+        }
+
+        /// <summary>
+        /// Gets all network interfaces in a cloud service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/microsoft.Compute/cloudServices/{cloudServiceName}/networkInterfaces. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> NetworkInterfacesOperationGroup_ListCloudServiceNetworkInterfaces. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-07-01. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="cloudServiceName"> The name of the cloud service. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="cloudServiceName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="cloudServiceName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <returns> A collection of <see cref="NetworkInterfaceData"/> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<NetworkInterfaceData> GetCloudServiceNetworkInterfacesAsync(string cloudServiceName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(cloudServiceName, nameof(cloudServiceName));
+
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new NetworkInterfacesGetCloudServiceNetworkInterfacesAsyncCollectionResultOfT(
+                NetworkInterfacesRestClient,
+                Guid.Parse(Id.SubscriptionId),
+                Id.ResourceGroupName,
+                cloudServiceName,
+                context,
+                "MockableNetworkResourceGroupResource.GetCloudServiceNetworkInterfaces");
+        }
+
+        /// <summary>
+        /// Gets all network interfaces in a cloud service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/microsoft.Compute/cloudServices/{cloudServiceName}/networkInterfaces. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> NetworkInterfacesOperationGroup_ListCloudServiceNetworkInterfaces. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-07-01. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="cloudServiceName"> The name of the cloud service. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="cloudServiceName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="cloudServiceName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <returns> A collection of <see cref="NetworkInterfaceData"/> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<NetworkInterfaceData> GetCloudServiceNetworkInterfaces(string cloudServiceName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(cloudServiceName, nameof(cloudServiceName));
+
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new NetworkInterfacesGetCloudServiceNetworkInterfacesCollectionResultOfT(
+                NetworkInterfacesRestClient,
+                Guid.Parse(Id.SubscriptionId),
+                Id.ResourceGroupName,
+                cloudServiceName,
+                context,
+                "MockableNetworkResourceGroupResource.GetCloudServiceNetworkInterfaces");
+        }
+
+        /// <summary>
+        /// Gets information about all public IP addresses on a cloud service level.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/microsoft.Compute/cloudServices/{cloudServiceName}/publicipaddresses. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> PublicIPAddressesOperationGroup_ListCloudServicePublicIPAddresses. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-07-01. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="cloudServiceName"> The name of the cloud service. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="cloudServiceName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="cloudServiceName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <returns> A collection of <see cref="PublicIPAddressData"/> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<PublicIPAddressData> GetCloudServicePublicIPAddressesAsync(string cloudServiceName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(cloudServiceName, nameof(cloudServiceName));
+
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new PublicIPAddressesGetCloudServicePublicIPAddressesAsyncCollectionResultOfT(
+                PublicIPAddressesRestClient,
+                Guid.Parse(Id.SubscriptionId),
+                Id.ResourceGroupName,
+                cloudServiceName,
+                context,
+                "MockableNetworkResourceGroupResource.GetCloudServicePublicIPAddresses");
+        }
+
+        /// <summary>
+        /// Gets information about all public IP addresses on a cloud service level.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/microsoft.Compute/cloudServices/{cloudServiceName}/publicipaddresses. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> PublicIPAddressesOperationGroup_ListCloudServicePublicIPAddresses. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-07-01. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="cloudServiceName"> The name of the cloud service. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="cloudServiceName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="cloudServiceName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <returns> A collection of <see cref="PublicIPAddressData"/> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<PublicIPAddressData> GetCloudServicePublicIPAddresses(string cloudServiceName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(cloudServiceName, nameof(cloudServiceName));
+
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new PublicIPAddressesGetCloudServicePublicIPAddressesCollectionResultOfT(
+                PublicIPAddressesRestClient,
+                Guid.Parse(Id.SubscriptionId),
+                Id.ResourceGroupName,
+                cloudServiceName,
+                context,
+                "MockableNetworkResourceGroupResource.GetCloudServicePublicIPAddresses");
         }
 
         /// <summary>
         /// Checks whether the subscription is visible to private link service in the specified resource group.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/locations/{location}/checkPrivateLinkServiceVisibility</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/locations/{location}/checkPrivateLinkServiceVisibility. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>PrivateLinkServices_CheckPrivateLinkServiceVisibilityByResourceGroup</description>
+        /// <term> Operation Id. </term>
+        /// <description> PrivateLinkServicesOperationGroup_CheckPrivateLinkServiceVisibilityByResourceGroup. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-05-01</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-07-01. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="location"> The location of the domain name. </param>
-        /// <param name="checkPrivateLinkServiceVisibilityRequest"> The request body of CheckPrivateLinkService API call. </param>
+        /// <param name="location"> The location name. </param>
+        /// <param name="content"> The request body. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="checkPrivateLinkServiceVisibilityRequest"/> is null. </exception>
-        public virtual async Task<ArmOperation<PrivateLinkServiceVisibility>> CheckPrivateLinkServiceVisibilityByResourceGroupPrivateLinkServiceAsync(WaitUntil waitUntil, AzureLocation location, CheckPrivateLinkServiceVisibilityRequest checkPrivateLinkServiceVisibilityRequest, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        public virtual async Task<ArmOperation<PrivateLinkServiceVisibility>> CheckPrivateLinkServiceVisibilityByResourceGroupAsync(WaitUntil waitUntil, AzureLocation location, CheckPrivateLinkServiceVisibilityRequest content, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(checkPrivateLinkServiceVisibilityRequest, nameof(checkPrivateLinkServiceVisibilityRequest));
+            Argument.AssertNotNull(content, nameof(content));
 
-            using var scope = PrivateLinkServicesClientDiagnostics.CreateScope("MockableNetworkResourceGroupResource.CheckPrivateLinkServiceVisibilityByResourceGroupPrivateLinkService");
+            using DiagnosticScope scope = PrivateLinkServicesClientDiagnostics.CreateScope("MockableNetworkResourceGroupResource.CheckPrivateLinkServiceVisibilityByResourceGroup");
             scope.Start();
             try
             {
-                var response = await PrivateLinkServicesRestClient.CheckPrivateLinkServiceVisibilityByResourceGroupAsync(Id.SubscriptionId, Id.ResourceGroupName, location, checkPrivateLinkServiceVisibilityRequest, cancellationToken).ConfigureAwait(false);
-                var operation = new NetworkArmOperation<PrivateLinkServiceVisibility>(new PrivateLinkServiceVisibilityOperationSource(), PrivateLinkServicesClientDiagnostics, Pipeline, PrivateLinkServicesRestClient.CreateCheckPrivateLinkServiceVisibilityByResourceGroupRequest(Id.SubscriptionId, Id.ResourceGroupName, location, checkPrivateLinkServiceVisibilityRequest).Request, response, OperationFinalStateVia.Location);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = PrivateLinkServicesRestClient.CreateCheckPrivateLinkServiceVisibilityByResourceGroupRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, location, CheckPrivateLinkServiceVisibilityRequest.ToRequestContent(content), context);
+                Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                NetworkArmOperation<PrivateLinkServiceVisibility> operation = new NetworkArmOperation<PrivateLinkServiceVisibility>(
+                    new PrivateLinkServiceVisibilityOperationSource(),
+                    PrivateLinkServicesClientDiagnostics,
+                    Pipeline,
+                    message.Request,
+                    response,
+                    OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
+                {
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
+                }
                 return operation;
             }
             catch (Exception e)
@@ -3616,36 +3610,49 @@ namespace Azure.ResourceManager.Network.Mocking
         /// Checks whether the subscription is visible to private link service in the specified resource group.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/locations/{location}/checkPrivateLinkServiceVisibility</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/locations/{location}/checkPrivateLinkServiceVisibility. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>PrivateLinkServices_CheckPrivateLinkServiceVisibilityByResourceGroup</description>
+        /// <term> Operation Id. </term>
+        /// <description> PrivateLinkServicesOperationGroup_CheckPrivateLinkServiceVisibilityByResourceGroup. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-05-01</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-07-01. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="location"> The location of the domain name. </param>
-        /// <param name="checkPrivateLinkServiceVisibilityRequest"> The request body of CheckPrivateLinkService API call. </param>
+        /// <param name="location"> The location name. </param>
+        /// <param name="content"> The request body. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="checkPrivateLinkServiceVisibilityRequest"/> is null. </exception>
-        public virtual ArmOperation<PrivateLinkServiceVisibility> CheckPrivateLinkServiceVisibilityByResourceGroupPrivateLinkService(WaitUntil waitUntil, AzureLocation location, CheckPrivateLinkServiceVisibilityRequest checkPrivateLinkServiceVisibilityRequest, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        public virtual ArmOperation<PrivateLinkServiceVisibility> CheckPrivateLinkServiceVisibilityByResourceGroup(WaitUntil waitUntil, AzureLocation location, CheckPrivateLinkServiceVisibilityRequest content, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(checkPrivateLinkServiceVisibilityRequest, nameof(checkPrivateLinkServiceVisibilityRequest));
+            Argument.AssertNotNull(content, nameof(content));
 
-            using var scope = PrivateLinkServicesClientDiagnostics.CreateScope("MockableNetworkResourceGroupResource.CheckPrivateLinkServiceVisibilityByResourceGroupPrivateLinkService");
+            using DiagnosticScope scope = PrivateLinkServicesClientDiagnostics.CreateScope("MockableNetworkResourceGroupResource.CheckPrivateLinkServiceVisibilityByResourceGroup");
             scope.Start();
             try
             {
-                var response = PrivateLinkServicesRestClient.CheckPrivateLinkServiceVisibilityByResourceGroup(Id.SubscriptionId, Id.ResourceGroupName, location, checkPrivateLinkServiceVisibilityRequest, cancellationToken);
-                var operation = new NetworkArmOperation<PrivateLinkServiceVisibility>(new PrivateLinkServiceVisibilityOperationSource(), PrivateLinkServicesClientDiagnostics, Pipeline, PrivateLinkServicesRestClient.CreateCheckPrivateLinkServiceVisibilityByResourceGroupRequest(Id.SubscriptionId, Id.ResourceGroupName, location, checkPrivateLinkServiceVisibilityRequest).Request, response, OperationFinalStateVia.Location);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = PrivateLinkServicesRestClient.CreateCheckPrivateLinkServiceVisibilityByResourceGroupRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, location, CheckPrivateLinkServiceVisibilityRequest.ToRequestContent(content), context);
+                Response response = Pipeline.ProcessMessage(message, context);
+                NetworkArmOperation<PrivateLinkServiceVisibility> operation = new NetworkArmOperation<PrivateLinkServiceVisibility>(
+                    new PrivateLinkServiceVisibilityOperationSource(),
+                    PrivateLinkServicesClientDiagnostics,
+                    Pipeline,
+                    message.Request,
+                    response,
+                    OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
+                {
                     operation.WaitForCompletion(cancellationToken);
+                }
                 return operation;
             }
             catch (Exception e)
@@ -3659,54 +3666,556 @@ namespace Azure.ResourceManager.Network.Mocking
         /// Returns all of the private link service ids that can be linked to a Private Endpoint with auto approved in this subscription in this region.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/locations/{location}/autoApprovedPrivateLinkServices</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/locations/{location}/autoApprovedPrivateLinkServices. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>PrivateLinkServices_ListAutoApprovedPrivateLinkServicesByResourceGroup</description>
+        /// <term> Operation Id. </term>
+        /// <description> PrivateLinkServicesOperationGroup_ListAutoApprovedPrivateLinkServicesByResourceGroup. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-05-01</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-07-01. </description>
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="location"> The location of the domain name. </param>
+        /// <param name="location"> The location name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="AutoApprovedPrivateLinkService"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<AutoApprovedPrivateLinkService> GetAutoApprovedPrivateLinkServicesByResourceGroupPrivateLinkServicesAsync(AzureLocation location, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="location"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="location"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <returns> A collection of <see cref="AutoApprovedPrivateLinkService"/> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<AutoApprovedPrivateLinkService> GetAutoApprovedPrivateLinkServicesByResourceGroupAsync(string location, CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => PrivateLinkServicesRestClient.CreateListAutoApprovedPrivateLinkServicesByResourceGroupRequest(Id.SubscriptionId, Id.ResourceGroupName, location);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => PrivateLinkServicesRestClient.CreateListAutoApprovedPrivateLinkServicesByResourceGroupNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, location);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => AutoApprovedPrivateLinkService.DeserializeAutoApprovedPrivateLinkService(e), PrivateLinkServicesClientDiagnostics, Pipeline, "MockableNetworkResourceGroupResource.GetAutoApprovedPrivateLinkServicesByResourceGroupPrivateLinkServices", "value", "nextLink", cancellationToken);
+            Argument.AssertNotNullOrEmpty(location, nameof(location));
+
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new PrivateLinkServicesGetAutoApprovedPrivateLinkServicesByResourceGroupAsyncCollectionResultOfT(
+                PrivateLinkServicesRestClient,
+                Guid.Parse(Id.SubscriptionId),
+                Id.ResourceGroupName,
+                location,
+                context,
+                "MockableNetworkResourceGroupResource.GetAutoApprovedPrivateLinkServicesByResourceGroup");
         }
 
         /// <summary>
         /// Returns all of the private link service ids that can be linked to a Private Endpoint with auto approved in this subscription in this region.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/locations/{location}/autoApprovedPrivateLinkServices</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/locations/{location}/autoApprovedPrivateLinkServices. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>PrivateLinkServices_ListAutoApprovedPrivateLinkServicesByResourceGroup</description>
+        /// <term> Operation Id. </term>
+        /// <description> PrivateLinkServicesOperationGroup_ListAutoApprovedPrivateLinkServicesByResourceGroup. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-05-01</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-07-01. </description>
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="location"> The location of the domain name. </param>
+        /// <param name="location"> The location name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="location"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="location"/> is an empty string, and was expected to be non-empty. </exception>
         /// <returns> A collection of <see cref="AutoApprovedPrivateLinkService"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<AutoApprovedPrivateLinkService> GetAutoApprovedPrivateLinkServicesByResourceGroupPrivateLinkServices(AzureLocation location, CancellationToken cancellationToken = default)
+        public virtual Pageable<AutoApprovedPrivateLinkService> GetAutoApprovedPrivateLinkServicesByResourceGroup(string location, CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => PrivateLinkServicesRestClient.CreateListAutoApprovedPrivateLinkServicesByResourceGroupRequest(Id.SubscriptionId, Id.ResourceGroupName, location);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => PrivateLinkServicesRestClient.CreateListAutoApprovedPrivateLinkServicesByResourceGroupNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, location);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => AutoApprovedPrivateLinkService.DeserializeAutoApprovedPrivateLinkService(e), PrivateLinkServicesClientDiagnostics, Pipeline, "MockableNetworkResourceGroupResource.GetAutoApprovedPrivateLinkServicesByResourceGroupPrivateLinkServices", "value", "nextLink", cancellationToken);
+            Argument.AssertNotNullOrEmpty(location, nameof(location));
+
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new PrivateLinkServicesGetAutoApprovedPrivateLinkServicesByResourceGroupCollectionResultOfT(
+                PrivateLinkServicesRestClient,
+                Guid.Parse(Id.SubscriptionId),
+                Id.ResourceGroupName,
+                location,
+                context,
+                "MockableNetworkResourceGroupResource.GetAutoApprovedPrivateLinkServicesByResourceGroup");
+        }
+
+        /// <summary>
+        /// Lists ExpressRoute gateways in a given resource group.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/expressRouteGateways. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> ExpressRouteGateways_ListByResourceGroup. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-07-01. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual async Task<Response<ExpressRouteGatewayList>> GetByResourceGroupAsync(CancellationToken cancellationToken = default)
+        {
+            using DiagnosticScope scope = ExpressRouteGatewaysClientDiagnostics.CreateScope("MockableNetworkResourceGroupResource.GetByResourceGroup");
+            scope.Start();
+            try
+            {
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = ExpressRouteGatewaysRestClient.CreateGetByResourceGroupRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context);
+                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                Response<ExpressRouteGatewayList> response = Response.FromValue(ExpressRouteGatewayList.FromResponse(result), result);
+                if (response.Value == null)
+                {
+                    throw new RequestFailedException(response.GetRawResponse());
+                }
+                return response;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Lists ExpressRoute gateways in a given resource group.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/expressRouteGateways. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> ExpressRouteGateways_ListByResourceGroup. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-07-01. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual Response<ExpressRouteGatewayList> GetByResourceGroup(CancellationToken cancellationToken = default)
+        {
+            using DiagnosticScope scope = ExpressRouteGatewaysClientDiagnostics.CreateScope("MockableNetworkResourceGroupResource.GetByResourceGroup");
+            scope.Start();
+            try
+            {
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = ExpressRouteGatewaysRestClient.CreateGetByResourceGroupRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context);
+                Response result = Pipeline.ProcessMessage(message, context);
+                Response<ExpressRouteGatewayList> response = Response.FromValue(ExpressRouteGatewayList.FromResponse(result), result);
+                if (response.Value == null)
+                {
+                    throw new RequestFailedException(response.GetRawResponse());
+                }
+                return response;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Gets information about all public IP addresses on a virtual machine scale set level.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/virtualMachineScaleSets/{virtualMachineScaleSetName}/publicipaddresses. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> PublicIPAddressesOperationGroup_ListVirtualMachineScaleSetPublicIPAddresses. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2018-10-01. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="virtualMachineScaleSetName"> The name of the virtual machine scale set. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="virtualMachineScaleSetName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="virtualMachineScaleSetName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <returns> A collection of <see cref="PublicIPAddressData"/> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<PublicIPAddressData> GetVirtualMachineScaleSetPublicIPAddressesAsync(string virtualMachineScaleSetName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(virtualMachineScaleSetName, nameof(virtualMachineScaleSetName));
+
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new PublicIPAddressesOperationGroupGetVirtualMachineScaleSetPublicIPAddressesAsyncCollectionResultOfT(
+                PublicIPAddressesOperationGroupRestClient,
+                Guid.Parse(Id.SubscriptionId),
+                Id.ResourceGroupName,
+                virtualMachineScaleSetName,
+                context,
+                "MockableNetworkResourceGroupResource.GetVirtualMachineScaleSetPublicIPAddresses");
+        }
+
+        /// <summary>
+        /// Gets information about all public IP addresses on a virtual machine scale set level.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/virtualMachineScaleSets/{virtualMachineScaleSetName}/publicipaddresses. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> PublicIPAddressesOperationGroup_ListVirtualMachineScaleSetPublicIPAddresses. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2018-10-01. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="virtualMachineScaleSetName"> The name of the virtual machine scale set. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="virtualMachineScaleSetName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="virtualMachineScaleSetName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <returns> A collection of <see cref="PublicIPAddressData"/> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<PublicIPAddressData> GetVirtualMachineScaleSetPublicIPAddresses(string virtualMachineScaleSetName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(virtualMachineScaleSetName, nameof(virtualMachineScaleSetName));
+
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new PublicIPAddressesOperationGroupGetVirtualMachineScaleSetPublicIPAddressesCollectionResultOfT(
+                PublicIPAddressesOperationGroupRestClient,
+                Guid.Parse(Id.SubscriptionId),
+                Id.ResourceGroupName,
+                virtualMachineScaleSetName,
+                context,
+                "MockableNetworkResourceGroupResource.GetVirtualMachineScaleSetPublicIPAddresses");
+        }
+
+        /// <summary>
+        /// Gets all of the available subnet delegations for this resource group in this region.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/locations/{location}/availableDelegations. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> AvailableResourceGroupDelegationsOperationGroup_List. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-07-01. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="location"> The location name. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="location"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="location"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <returns> A collection of <see cref="AvailableDelegation"/> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<AvailableDelegation> GetAvailableResourceGroupDelegationsAsync(string location, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(location, nameof(location));
+
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new AvailableResourceGroupDelegationsGetAvailableResourceGroupDelegationsAsyncCollectionResultOfT(
+                AvailableResourceGroupDelegationsRestClient,
+                Guid.Parse(Id.SubscriptionId),
+                Id.ResourceGroupName,
+                location,
+                context,
+                "MockableNetworkResourceGroupResource.GetAvailableResourceGroupDelegations");
+        }
+
+        /// <summary>
+        /// Gets all of the available subnet delegations for this resource group in this region.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/locations/{location}/availableDelegations. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> AvailableResourceGroupDelegationsOperationGroup_List. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-07-01. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="location"> The location name. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="location"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="location"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <returns> A collection of <see cref="AvailableDelegation"/> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<AvailableDelegation> GetAvailableResourceGroupDelegations(string location, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(location, nameof(location));
+
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new AvailableResourceGroupDelegationsGetAvailableResourceGroupDelegationsCollectionResultOfT(
+                AvailableResourceGroupDelegationsRestClient,
+                Guid.Parse(Id.SubscriptionId),
+                Id.ResourceGroupName,
+                location,
+                context,
+                "MockableNetworkResourceGroupResource.GetAvailableResourceGroupDelegations");
+        }
+
+        /// <summary>
+        /// Gets all available service aliases for this resource group in this region.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/locations/{location}/availableServiceAliases. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> AvailableServiceAliasesOperationGroup_ListByResourceGroup. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-07-01. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="location"> The location name. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="location"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="location"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <returns> A collection of <see cref="AvailableServiceAlias"/> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<AvailableServiceAlias> GetAvailableServiceAliasesByResourceGroupAsync(string location, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(location, nameof(location));
+
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new AvailableServiceAliasesGetAvailableServiceAliasesByResourceGroupAsyncCollectionResultOfT(
+                AvailableServiceAliasesRestClient,
+                Guid.Parse(Id.SubscriptionId),
+                Id.ResourceGroupName,
+                location,
+                context,
+                "MockableNetworkResourceGroupResource.GetAvailableServiceAliasesByResourceGroup");
+        }
+
+        /// <summary>
+        /// Gets all available service aliases for this resource group in this region.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/locations/{location}/availableServiceAliases. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> AvailableServiceAliasesOperationGroup_ListByResourceGroup. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-07-01. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="location"> The location name. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="location"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="location"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <returns> A collection of <see cref="AvailableServiceAlias"/> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<AvailableServiceAlias> GetAvailableServiceAliasesByResourceGroup(string location, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(location, nameof(location));
+
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new AvailableServiceAliasesGetAvailableServiceAliasesByResourceGroupCollectionResultOfT(
+                AvailableServiceAliasesRestClient,
+                Guid.Parse(Id.SubscriptionId),
+                Id.ResourceGroupName,
+                location,
+                context,
+                "MockableNetworkResourceGroupResource.GetAvailableServiceAliasesByResourceGroup");
+        }
+
+        /// <summary>
+        /// Returns all of the resource types that can be linked to a Private Endpoint in this subscription in this region.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/locations/{location}/availablePrivateEndpointTypes. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> AvailablePrivateEndpointTypesOperationGroup_ListByResourceGroup. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-07-01. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="location"> The location name. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="location"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="location"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <returns> A collection of <see cref="AvailablePrivateEndpointType"/> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<AvailablePrivateEndpointType> GetAvailablePrivateEndpointTypesByResourceGroupAsync(string location, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(location, nameof(location));
+
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new AvailablePrivateEndpointTypesGetAvailablePrivateEndpointTypesByResourceGroupAsyncCollectionResultOfT(
+                AvailablePrivateEndpointTypesRestClient,
+                Guid.Parse(Id.SubscriptionId),
+                Id.ResourceGroupName,
+                location,
+                context,
+                "MockableNetworkResourceGroupResource.GetAvailablePrivateEndpointTypesByResourceGroup");
+        }
+
+        /// <summary>
+        /// Returns all of the resource types that can be linked to a Private Endpoint in this subscription in this region.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/locations/{location}/availablePrivateEndpointTypes. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> AvailablePrivateEndpointTypesOperationGroup_ListByResourceGroup. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-07-01. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="location"> The location name. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="location"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="location"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <returns> A collection of <see cref="AvailablePrivateEndpointType"/> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<AvailablePrivateEndpointType> GetAvailablePrivateEndpointTypesByResourceGroup(string location, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(location, nameof(location));
+
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new AvailablePrivateEndpointTypesGetAvailablePrivateEndpointTypesByResourceGroupCollectionResultOfT(
+                AvailablePrivateEndpointTypesRestClient,
+                Guid.Parse(Id.SubscriptionId),
+                Id.ResourceGroupName,
+                location,
+                context,
+                "MockableNetworkResourceGroupResource.GetAvailablePrivateEndpointTypesByResourceGroup");
+        }
+
+        /// <summary>
+        /// Gets all network interfaces in a virtual machine scale set.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/virtualMachineScaleSets/{virtualMachineScaleSetName}/networkInterfaces. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> NetworkInterfacesOperationGroup_ListVirtualMachineScaleSetNetworkInterfaces. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2018-10-01. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="virtualMachineScaleSetName"> The name of the virtual machine scale set. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="virtualMachineScaleSetName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="virtualMachineScaleSetName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <returns> A collection of <see cref="NetworkInterfaceData"/> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<NetworkInterfaceData> GetVirtualMachineScaleSetNetworkInterfacesAsync(string virtualMachineScaleSetName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(virtualMachineScaleSetName, nameof(virtualMachineScaleSetName));
+
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new VirtualMachineScaleSetNetworkGetVirtualMachineScaleSetNetworkInterfacesAsyncCollectionResultOfT(
+                VirtualMachineScaleSetNetworkRestClient,
+                Guid.Parse(Id.SubscriptionId),
+                Id.ResourceGroupName,
+                virtualMachineScaleSetName,
+                context,
+                "MockableNetworkResourceGroupResource.GetVirtualMachineScaleSetNetworkInterfaces");
+        }
+
+        /// <summary>
+        /// Gets all network interfaces in a virtual machine scale set.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/virtualMachineScaleSets/{virtualMachineScaleSetName}/networkInterfaces. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> NetworkInterfacesOperationGroup_ListVirtualMachineScaleSetNetworkInterfaces. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2018-10-01. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="virtualMachineScaleSetName"> The name of the virtual machine scale set. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="virtualMachineScaleSetName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="virtualMachineScaleSetName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <returns> A collection of <see cref="NetworkInterfaceData"/> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<NetworkInterfaceData> GetVirtualMachineScaleSetNetworkInterfaces(string virtualMachineScaleSetName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(virtualMachineScaleSetName, nameof(virtualMachineScaleSetName));
+
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new VirtualMachineScaleSetNetworkGetVirtualMachineScaleSetNetworkInterfacesCollectionResultOfT(
+                VirtualMachineScaleSetNetworkRestClient,
+                Guid.Parse(Id.SubscriptionId),
+                Id.ResourceGroupName,
+                virtualMachineScaleSetName,
+                context,
+                "MockableNetworkResourceGroupResource.GetVirtualMachineScaleSetNetworkInterfaces");
         }
     }
 }

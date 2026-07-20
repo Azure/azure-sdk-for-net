@@ -72,9 +72,7 @@ namespace Azure.ResourceManager.StorageActions
             {
                 return null;
             }
-            Utf8JsonRequestContent content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(storageTaskData, ModelSerializationExtensions.WireOptions);
-            return content;
+            return RequestContent.Create(storageTaskData, ModelSerializationExtensions.WireOptions);
         }
 
         /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="StorageTaskData"/> from. </param>
@@ -104,9 +102,24 @@ namespace Azure.ResourceManager.StorageActions
             }
             base.JsonModelWriteCore(writer, options);
             writer.WritePropertyName("identity"u8);
-            ((IJsonModel<ManagedServiceIdentity>)Identity).Write(writer, options);
+            ((IJsonModel<ManagedServiceIdentity>)Identity).Write(writer, options.Format == "W" ? ModelSerializationExtensions.WireV3Options : ModelSerializationExtensions.JsonV3Options);
             writer.WritePropertyName("properties"u8);
             writer.WriteObjectValue(Properties, options);
+            if (options.Format != "W" && _additionalBinaryDataProperties != null)
+            {
+                foreach (var item in _additionalBinaryDataProperties)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+                    writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
         }
 
         /// <param name="reader"> The JSON reader. </param>
@@ -138,11 +151,11 @@ namespace Azure.ResourceManager.StorageActions
             string name = default;
             ResourceType resourceType = default;
             SystemData systemData = default;
-            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             IDictionary<string, string> tags = default;
             AzureLocation location = default;
             ManagedServiceIdentity identity = default;
             StorageTaskProperties properties = default;
+            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("id"u8))
@@ -205,7 +218,7 @@ namespace Azure.ResourceManager.StorageActions
                 }
                 if (prop.NameEquals("identity"u8))
                 {
-                    identity = ModelReaderWriter.Read<ManagedServiceIdentity>(new BinaryData(Encoding.UTF8.GetBytes(prop.Value.GetRawText())), ModelSerializationExtensions.WireOptions, AzureResourceManagerStorageActionsContext.Default);
+                    identity = ModelReaderWriter.Read<ManagedServiceIdentity>(new BinaryData(Encoding.UTF8.GetBytes(prop.Value.GetRawText())), options.Format == "W" ? ModelSerializationExtensions.WireV3Options : ModelSerializationExtensions.JsonV3Options, AzureResourceManagerStorageActionsContext.Default);
                     continue;
                 }
                 if (prop.NameEquals("properties"u8))
@@ -223,11 +236,11 @@ namespace Azure.ResourceManager.StorageActions
                 name,
                 resourceType,
                 systemData,
-                additionalBinaryDataProperties,
                 tags ?? new ChangeTrackingDictionary<string, string>(),
                 location,
                 identity,
-                properties);
+                properties,
+                additionalBinaryDataProperties);
         }
     }
 }

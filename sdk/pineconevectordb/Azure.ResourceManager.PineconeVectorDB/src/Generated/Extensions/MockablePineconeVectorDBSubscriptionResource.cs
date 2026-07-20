@@ -63,7 +63,7 @@ namespace Azure.ResourceManager.PineconeVectorDB.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<PineconeVectorDBOrganizationData, PineconeVectorDBOrganizationResource>(new OrganizationsGetBySubscriptionAsyncCollectionResultOfT(OrganizationsRestClient, Guid.Parse(Id.SubscriptionId), context), data => new PineconeVectorDBOrganizationResource(Client, data));
+            return new AsyncPageableWrapper<PineconeVectorDBOrganizationData, PineconeVectorDBOrganizationResource>(new OrganizationsGetBySubscriptionAsyncCollectionResultOfT(OrganizationsRestClient, Guid.Parse(Id.SubscriptionId), context, "MockablePineconeVectorDBSubscriptionResource.GetPineconeVectorDBOrganizations"), data => new PineconeVectorDBOrganizationResource(Client, data));
         }
 
         /// <summary>
@@ -91,7 +91,7 @@ namespace Azure.ResourceManager.PineconeVectorDB.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<PineconeVectorDBOrganizationData, PineconeVectorDBOrganizationResource>(new OrganizationsGetBySubscriptionCollectionResultOfT(OrganizationsRestClient, Guid.Parse(Id.SubscriptionId), context), data => new PineconeVectorDBOrganizationResource(Client, data));
+            return new PageableWrapper<PineconeVectorDBOrganizationData, PineconeVectorDBOrganizationResource>(new OrganizationsGetBySubscriptionCollectionResultOfT(OrganizationsRestClient, Guid.Parse(Id.SubscriptionId), context, "MockablePineconeVectorDBSubscriptionResource.GetPineconeVectorDBOrganizations"), data => new PineconeVectorDBOrganizationResource(Client, data));
         }
     }
 }

@@ -9,3 +9,5 @@ extends:
     Artifacts:
     - name: Azure.ResourceManager.Redis
       safeName: AzureResourceManagerRedis
+    - name: Azure.Provisioning.Redis
+      safeName: AzureProvisioningRedis

@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.ContainerService;
 
 namespace Azure.ResourceManager.ContainerService.Models
 {
@@ -14,50 +15,77 @@ namespace Azure.ResourceManager.ContainerService.Models
     public readonly partial struct ManagedClusterNamespaceProvisioningState : IEquatable<ManagedClusterNamespaceProvisioningState>
     {
         private readonly string _value;
+        /// <summary> The namespace is being updated. </summary>
+        private const string UpdatingValue = "Updating";
+        /// <summary> The namespace is being deleted. </summary>
+        private const string DeletingValue = "Deleting";
+        /// <summary> The namespace is being created. </summary>
+        private const string CreatingValue = "Creating";
+        /// <summary> The namespace provisioning succeeded. </summary>
+        private const string SucceededValue = "Succeeded";
+        /// <summary> The namespace provisioning failed. </summary>
+        private const string FailedValue = "Failed";
+        /// <summary> The namespace provisioning was canceled. </summary>
+        private const string CanceledValue = "Canceled";
 
         /// <summary> Initializes a new instance of <see cref="ManagedClusterNamespaceProvisioningState"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public ManagedClusterNamespaceProvisioningState(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
+            Argument.AssertNotNull(value, nameof(value));
+
+            _value = value;
         }
 
-        private const string UpdatingValue = "Updating";
-        private const string DeletingValue = "Deleting";
-        private const string CreatingValue = "Creating";
-        private const string SucceededValue = "Succeeded";
-        private const string FailedValue = "Failed";
-        private const string CanceledValue = "Canceled";
-
-        /// <summary> Updating. </summary>
+        /// <summary> The namespace is being updated. </summary>
         public static ManagedClusterNamespaceProvisioningState Updating { get; } = new ManagedClusterNamespaceProvisioningState(UpdatingValue);
-        /// <summary> Deleting. </summary>
+
+        /// <summary> The namespace is being deleted. </summary>
         public static ManagedClusterNamespaceProvisioningState Deleting { get; } = new ManagedClusterNamespaceProvisioningState(DeletingValue);
-        /// <summary> Creating. </summary>
+
+        /// <summary> The namespace is being created. </summary>
         public static ManagedClusterNamespaceProvisioningState Creating { get; } = new ManagedClusterNamespaceProvisioningState(CreatingValue);
-        /// <summary> Succeeded. </summary>
+
+        /// <summary> The namespace provisioning succeeded. </summary>
         public static ManagedClusterNamespaceProvisioningState Succeeded { get; } = new ManagedClusterNamespaceProvisioningState(SucceededValue);
-        /// <summary> Failed. </summary>
+
+        /// <summary> The namespace provisioning failed. </summary>
         public static ManagedClusterNamespaceProvisioningState Failed { get; } = new ManagedClusterNamespaceProvisioningState(FailedValue);
-        /// <summary> Canceled. </summary>
+
+        /// <summary> The namespace provisioning was canceled. </summary>
         public static ManagedClusterNamespaceProvisioningState Canceled { get; } = new ManagedClusterNamespaceProvisioningState(CanceledValue);
+
         /// <summary> Determines if two <see cref="ManagedClusterNamespaceProvisioningState"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(ManagedClusterNamespaceProvisioningState left, ManagedClusterNamespaceProvisioningState right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="ManagedClusterNamespaceProvisioningState"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(ManagedClusterNamespaceProvisioningState left, ManagedClusterNamespaceProvisioningState right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="ManagedClusterNamespaceProvisioningState"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="ManagedClusterNamespaceProvisioningState"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator ManagedClusterNamespaceProvisioningState(string value) => new ManagedClusterNamespaceProvisioningState(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="ManagedClusterNamespaceProvisioningState"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator ManagedClusterNamespaceProvisioningState?(string value) => value == null ? null : new ManagedClusterNamespaceProvisioningState(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is ManagedClusterNamespaceProvisioningState other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(ManagedClusterNamespaceProvisioningState other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

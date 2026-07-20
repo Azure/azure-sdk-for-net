@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.Astro.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<AstroOrganizationData, AstroOrganizationResource>(new OrganizationsGetBySubscriptionAsyncCollectionResultOfT(OrganizationsRestClient, Id.SubscriptionId, context), data => new AstroOrganizationResource(Client, data));
+            return new AsyncPageableWrapper<AstroOrganizationData, AstroOrganizationResource>(new OrganizationsGetBySubscriptionAsyncCollectionResultOfT(OrganizationsRestClient, Id.SubscriptionId, context, "MockableAstroSubscriptionResource.GetAstroOrganizations"), data => new AstroOrganizationResource(Client, data));
         }
 
         /// <summary>
@@ -90,7 +90,7 @@ namespace Azure.ResourceManager.Astro.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<AstroOrganizationData, AstroOrganizationResource>(new OrganizationsGetBySubscriptionCollectionResultOfT(OrganizationsRestClient, Id.SubscriptionId, context), data => new AstroOrganizationResource(Client, data));
+            return new PageableWrapper<AstroOrganizationData, AstroOrganizationResource>(new OrganizationsGetBySubscriptionCollectionResultOfT(OrganizationsRestClient, Id.SubscriptionId, context, "MockableAstroSubscriptionResource.GetAstroOrganizations"), data => new AstroOrganizationResource(Client, data));
         }
     }
 }

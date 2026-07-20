@@ -7,45 +7,65 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.PostgreSql.FlexibleServers;
 
 namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
 {
-    /// <summary> Indicates if this location is restricted. 'Enabled' means location is restricted. 'Disabled' stands for location is not restricted. Will be deprecated in the future. Look to Supported Features for 'Restricted'. </summary>
+    /// <summary> Indicates if this location is restricted. Will be deprecated in the future. Look to Supported Features for 'Restricted'. </summary>
     public readonly partial struct PostgreSqlFlexibleServerZoneRedundantRestricted : IEquatable<PostgreSqlFlexibleServerZoneRedundantRestricted>
     {
         private readonly string _value;
+        /// <summary> Location is restricted. </summary>
+        private const string EnabledValue = "Enabled";
+        /// <summary> Location is not restricted. </summary>
+        private const string DisabledValue = "Disabled";
 
         /// <summary> Initializes a new instance of <see cref="PostgreSqlFlexibleServerZoneRedundantRestricted"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public PostgreSqlFlexibleServerZoneRedundantRestricted(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
+            Argument.AssertNotNull(value, nameof(value));
+
+            _value = value;
         }
 
-        private const string EnabledValue = "Enabled";
-        private const string DisabledValue = "Disabled";
-
-        /// <summary> Enabled. </summary>
+        /// <summary> Location is restricted. </summary>
         public static PostgreSqlFlexibleServerZoneRedundantRestricted Enabled { get; } = new PostgreSqlFlexibleServerZoneRedundantRestricted(EnabledValue);
-        /// <summary> Disabled. </summary>
+
+        /// <summary> Location is not restricted. </summary>
         public static PostgreSqlFlexibleServerZoneRedundantRestricted Disabled { get; } = new PostgreSqlFlexibleServerZoneRedundantRestricted(DisabledValue);
+
         /// <summary> Determines if two <see cref="PostgreSqlFlexibleServerZoneRedundantRestricted"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(PostgreSqlFlexibleServerZoneRedundantRestricted left, PostgreSqlFlexibleServerZoneRedundantRestricted right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="PostgreSqlFlexibleServerZoneRedundantRestricted"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(PostgreSqlFlexibleServerZoneRedundantRestricted left, PostgreSqlFlexibleServerZoneRedundantRestricted right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="PostgreSqlFlexibleServerZoneRedundantRestricted"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="PostgreSqlFlexibleServerZoneRedundantRestricted"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator PostgreSqlFlexibleServerZoneRedundantRestricted(string value) => new PostgreSqlFlexibleServerZoneRedundantRestricted(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="PostgreSqlFlexibleServerZoneRedundantRestricted"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator PostgreSqlFlexibleServerZoneRedundantRestricted?(string value) => value == null ? null : new PostgreSqlFlexibleServerZoneRedundantRestricted(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is PostgreSqlFlexibleServerZoneRedundantRestricted other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(PostgreSqlFlexibleServerZoneRedundantRestricted other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

@@ -6,49 +6,17 @@
 #nullable disable
 
 using System;
-using System.ComponentModel;
 
 namespace Azure.ResourceManager.NetApp.Models
 {
     /// <summary> Protocol types for elastic volume. </summary>
     public readonly partial struct ElasticProtocolType : IEquatable<ElasticProtocolType>
     {
-        private readonly string _value;
-
-        /// <summary> Initializes a new instance of <see cref="ElasticProtocolType"/>. </summary>
-        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        public ElasticProtocolType(string value)
-        {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
-
-        private const string NFSv3Value = "NFSv3";
-        private const string NFSv4Value = "NFSv4";
-        private const string SMBValue = "SMB";
-
         /// <summary> NFSv3 protocol type. </summary>
-        public static ElasticProtocolType NFSv3 { get; } = new ElasticProtocolType(NFSv3Value);
+        private const string Nfsv3Value = "NFSv3";
         /// <summary> NFSv4 protocol type. </summary>
-        public static ElasticProtocolType NFSv4 { get; } = new ElasticProtocolType(NFSv4Value);
+        private const string Nfsv4Value = "NFSv4";
         /// <summary> SMB/CIFS protocol type. </summary>
-        public static ElasticProtocolType SMB { get; } = new ElasticProtocolType(SMBValue);
-        /// <summary> Determines if two <see cref="ElasticProtocolType"/> values are the same. </summary>
-        public static bool operator ==(ElasticProtocolType left, ElasticProtocolType right) => left.Equals(right);
-        /// <summary> Determines if two <see cref="ElasticProtocolType"/> values are not the same. </summary>
-        public static bool operator !=(ElasticProtocolType left, ElasticProtocolType right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="ElasticProtocolType"/>. </summary>
-        public static implicit operator ElasticProtocolType(string value) => new ElasticProtocolType(value);
-
-        /// <inheritdoc />
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public override bool Equals(object obj) => obj is ElasticProtocolType other && Equals(other);
-        /// <inheritdoc />
-        public bool Equals(ElasticProtocolType other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
-
-        /// <inheritdoc />
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
-        public override string ToString() => _value;
+        private const string SMBValue = "SMB";
     }
 }

@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Diagnostics.CodeAnalysis;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure;
@@ -18,7 +19,12 @@ namespace _Type.Model.Inheritance.SingleDiscriminator
     {
         public SingleDiscriminatorClient() : this(new Uri("http://localhost:3000"), new SingleDiscriminatorClientOptions()) => throw null;
 
-        public SingleDiscriminatorClient(Uri endpoint, SingleDiscriminatorClientOptions options) => throw null;
+        internal SingleDiscriminatorClient(HttpPipelinePolicy authenticationPolicy, Uri endpoint, SingleDiscriminatorClientOptions options) => throw null;
+
+        public SingleDiscriminatorClient(Uri endpoint, SingleDiscriminatorClientOptions options) : this(null, endpoint, options) => throw null;
+
+        [Experimental("SCME0002")]
+        public SingleDiscriminatorClient(SingleDiscriminatorClientSettings settings) : this(null, settings?.Endpoint, settings?.Options) => throw null;
 
         public virtual HttpPipeline Pipeline => throw null;
 
@@ -77,5 +83,21 @@ namespace _Type.Model.Inheritance.SingleDiscriminator
         public virtual Response<Dinosaur> GetLegacyModel(CancellationToken cancellationToken = default) => throw null;
 
         public virtual Task<Response<Dinosaur>> GetLegacyModelAsync(CancellationToken cancellationToken = default) => throw null;
+
+        public virtual Response GetNoSubtypesModel(RequestContext context) => throw null;
+
+        public virtual Task<Response> GetNoSubtypesModelAsync(RequestContext context) => throw null;
+
+        public virtual Response<Fish> GetNoSubtypesModel(CancellationToken cancellationToken = default) => throw null;
+
+        public virtual Task<Response<Fish>> GetNoSubtypesModelAsync(CancellationToken cancellationToken = default) => throw null;
+
+        public virtual Response PutNoSubtypesModel(RequestContent content, RequestContext context = null) => throw null;
+
+        public virtual Task<Response> PutNoSubtypesModelAsync(RequestContent content, RequestContext context = null) => throw null;
+
+        public virtual Response PutNoSubtypesModel(Fish input, CancellationToken cancellationToken = default) => throw null;
+
+        public virtual Task<Response> PutNoSubtypesModelAsync(Fish input, CancellationToken cancellationToken = default) => throw null;
     }
 }

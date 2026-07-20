@@ -7,43 +7,15 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.Cdn;
 
 namespace Azure.ResourceManager.Cdn.Models
 {
     /// <summary> Customized cipher suite set object that will be used for Https when cipherSuiteSetType is Customized. </summary>
     public partial class FrontDoorCustomDomainHttpsCustomizedCipherSuiteSet
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="FrontDoorCustomDomainHttpsCustomizedCipherSuiteSet"/>. </summary>
         public FrontDoorCustomDomainHttpsCustomizedCipherSuiteSet()
@@ -55,17 +27,18 @@ namespace Azure.ResourceManager.Cdn.Models
         /// <summary> Initializes a new instance of <see cref="FrontDoorCustomDomainHttpsCustomizedCipherSuiteSet"/>. </summary>
         /// <param name="cipherSuiteSetForTls12"> Cipher suites for TLS 1.2. Required at least one in minimumTlsVersion TLS 1.2. </param>
         /// <param name="cipherSuiteSetForTls13"> Cipher suites for TLS 1.3. Required at least one in minimumTlsVersion TLS 1.2, TLS 1.3. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal FrontDoorCustomDomainHttpsCustomizedCipherSuiteSet(IList<AfdCustomizedCipherSuiteForTls12> cipherSuiteSetForTls12, IList<AfdCustomizedCipherSuiteForTls13> cipherSuiteSetForTls13, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal FrontDoorCustomDomainHttpsCustomizedCipherSuiteSet(IList<AfdCustomizedCipherSuiteForTls12> cipherSuiteSetForTls12, IList<AfdCustomizedCipherSuiteForTls13> cipherSuiteSetForTls13, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             CipherSuiteSetForTls12 = cipherSuiteSetForTls12;
             CipherSuiteSetForTls13 = cipherSuiteSetForTls13;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> Cipher suites for TLS 1.2. Required at least one in minimumTlsVersion TLS 1.2. </summary>
         [WirePath("cipherSuiteSetForTls12")]
         public IList<AfdCustomizedCipherSuiteForTls12> CipherSuiteSetForTls12 { get; }
+
         /// <summary> Cipher suites for TLS 1.3. Required at least one in minimumTlsVersion TLS 1.2, TLS 1.3. </summary>
         [WirePath("cipherSuiteSetForTls13")]
         public IList<AfdCustomizedCipherSuiteForTls13> CipherSuiteSetForTls13 { get; }

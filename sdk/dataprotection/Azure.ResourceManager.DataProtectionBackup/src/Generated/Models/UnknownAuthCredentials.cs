@@ -10,19 +10,12 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.DataProtectionBackup.Models
 {
-    /// <summary> Unknown version of AuthCredentials. </summary>
     internal partial class UnknownAuthCredentials : DataProtectionBackupAuthCredentials
     {
         /// <summary> Initializes a new instance of <see cref="UnknownAuthCredentials"/>. </summary>
         /// <param name="objectType"> Type of the specific object - used for deserializing. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal UnknownAuthCredentials(string objectType, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(objectType, serializedAdditionalRawData)
-        {
-            ObjectType = objectType ?? "Unknown";
-        }
-
-        /// <summary> Initializes a new instance of <see cref="UnknownAuthCredentials"/> for deserialization. </summary>
-        internal UnknownAuthCredentials()
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal UnknownAuthCredentials(string objectType, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(objectType ?? "unknown", additionalBinaryDataProperties)
         {
         }
     }

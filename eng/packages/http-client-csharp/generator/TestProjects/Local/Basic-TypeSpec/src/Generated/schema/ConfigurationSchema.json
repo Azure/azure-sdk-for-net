@@ -1,0 +1,40 @@
+{
+  "type": "object",
+  "properties": {
+    "AzureClients": {
+      "type": "object",
+      "properties": {
+        "BasicTypeSpecClient": {
+          "type": "object",
+          "description": "Configuration for BasicTypeSpecClient.",
+          "properties": {
+            "BasicTypeSpecUrl": {
+              "type": "string",
+              "format": "uri",
+              "description": "Gets or sets the BasicTypeSpecUrl."
+            },
+            "Credential": {
+              "$ref": "#/definitions/credential"
+            },
+            "Options": {
+              "$ref": "#/definitions/basicTypeSpecClientOptions"
+            }
+          }
+        }
+      },
+      "additionalProperties": {
+        "type": "object",
+        "description": "Configuration for a named client instance."
+      }
+    }
+  },
+  "definitions": {
+    "basicTypeSpecClientOptions": {
+      "allOf": [
+        {
+          "$ref": "#/definitions/azureOptions"
+        }
+      ]
+    }
+  }
+}

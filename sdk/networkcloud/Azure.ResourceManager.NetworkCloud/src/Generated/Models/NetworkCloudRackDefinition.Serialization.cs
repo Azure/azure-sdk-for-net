@@ -10,13 +10,60 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.NetworkCloud;
 
 namespace Azure.ResourceManager.NetworkCloud.Models
 {
-    public partial class NetworkCloudRackDefinition : IUtf8JsonSerializable, IJsonModel<NetworkCloudRackDefinition>
+    /// <summary> RackDefinition represents details regarding the rack. </summary>
+    public partial class NetworkCloudRackDefinition : IJsonModel<NetworkCloudRackDefinition>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<NetworkCloudRackDefinition>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        /// <summary> Initializes a new instance of <see cref="NetworkCloudRackDefinition"/> for deserialization. </summary>
+        internal NetworkCloudRackDefinition()
+        {
+        }
 
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual NetworkCloudRackDefinition PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<NetworkCloudRackDefinition>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    {
+                        return DeserializeNetworkCloudRackDefinition(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(NetworkCloudRackDefinition)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<NetworkCloudRackDefinition>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerNetworkCloudContext.Default);
+                default:
+                    throw new FormatException($"The model {nameof(NetworkCloudRackDefinition)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<NetworkCloudRackDefinition>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        NetworkCloudRackDefinition IPersistableModel<NetworkCloudRackDefinition>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<NetworkCloudRackDefinition>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<NetworkCloudRackDefinition>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
@@ -28,12 +75,11 @@ namespace Azure.ResourceManager.NetworkCloud.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<NetworkCloudRackDefinition>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<NetworkCloudRackDefinition>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(NetworkCloudRackDefinition)} does not support writing '{format}' format.");
             }
-
             if (Optional.IsDefined(AvailabilityZone))
             {
                 writer.WritePropertyName("availabilityZone"u8);
@@ -43,7 +89,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
             {
                 writer.WritePropertyName("bareMetalMachineConfigurationData"u8);
                 writer.WriteStartArray();
-                foreach (var item in BareMetalMachineConfigurationData)
+                foreach (BareMetalMachineConfiguration item in BareMetalMachineConfigurationData)
                 {
                     writer.WriteObjectValue(item, options);
                 }
@@ -64,21 +110,21 @@ namespace Azure.ResourceManager.NetworkCloud.Models
             {
                 writer.WritePropertyName("storageApplianceConfigurationData"u8);
                 writer.WriteStartArray();
-                foreach (var item in StorageApplianceConfigurationData)
+                foreach (StorageApplianceConfiguration item in StorageApplianceConfigurationData)
                 {
                     writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
-                foreach (var item in _serializedAdditionalRawData)
+                foreach (var item in _additionalBinaryDataProperties)
                 {
                     writer.WritePropertyName(item.Key);
 #if NET6_0_OR_GREATER
-				writer.WriteRawValue(item.Value);
+                    writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value, ModelSerializationExtensions.JsonDocumentOptions))
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
                     {
                         JsonSerializer.Serialize(writer, document.RootElement);
                     }
@@ -87,22 +133,27 @@ namespace Azure.ResourceManager.NetworkCloud.Models
             }
         }
 
-        NetworkCloudRackDefinition IJsonModel<NetworkCloudRackDefinition>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        NetworkCloudRackDefinition IJsonModel<NetworkCloudRackDefinition>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual NetworkCloudRackDefinition JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<NetworkCloudRackDefinition>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<NetworkCloudRackDefinition>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(NetworkCloudRackDefinition)} does not support reading '{format}' format.");
             }
-
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
             return DeserializeNetworkCloudRackDefinition(document.RootElement, options);
         }
 
-        internal static NetworkCloudRackDefinition DeserializeNetworkCloudRackDefinition(JsonElement element, ModelReaderWriterOptions options = null)
+        /// <param name="element"> The JSON element to deserialize. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        internal static NetworkCloudRackDefinition DeserializeNetworkCloudRackDefinition(JsonElement element, ModelReaderWriterOptions options)
         {
-            options ??= ModelSerializationExtensions.WireOptions;
-
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -114,57 +165,56 @@ namespace Azure.ResourceManager.NetworkCloud.Models
             string rackSerialNumber = default;
             ResourceIdentifier rackSkuId = default;
             IList<StorageApplianceConfiguration> storageApplianceConfigurationData = default;
-            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
-            foreach (var property in element.EnumerateObject())
+            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            foreach (var prop in element.EnumerateObject())
             {
-                if (property.NameEquals("availabilityZone"u8))
+                if (prop.NameEquals("availabilityZone"u8))
                 {
-                    availabilityZone = property.Value.GetString();
+                    availabilityZone = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("bareMetalMachineConfigurationData"u8))
+                if (prop.NameEquals("bareMetalMachineConfigurationData"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
                     List<BareMetalMachineConfiguration> array = new List<BareMetalMachineConfiguration>();
-                    foreach (var item in property.Value.EnumerateArray())
+                    foreach (var item in prop.Value.EnumerateArray())
                     {
                         array.Add(BareMetalMachineConfiguration.DeserializeBareMetalMachineConfiguration(item, options));
                     }
                     bareMetalMachineConfigurationData = array;
                     continue;
                 }
-                if (property.NameEquals("networkRackId"u8))
+                if (prop.NameEquals("networkRackId"u8))
                 {
-                    networkRackId = new ResourceIdentifier(property.Value.GetString());
+                    networkRackId = new ResourceIdentifier(prop.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("rackLocation"u8))
+                if (prop.NameEquals("rackLocation"u8))
                 {
-                    rackLocation = property.Value.GetString();
+                    rackLocation = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("rackSerialNumber"u8))
+                if (prop.NameEquals("rackSerialNumber"u8))
                 {
-                    rackSerialNumber = property.Value.GetString();
+                    rackSerialNumber = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("rackSkuId"u8))
+                if (prop.NameEquals("rackSkuId"u8))
                 {
-                    rackSkuId = new ResourceIdentifier(property.Value.GetString());
+                    rackSkuId = new ResourceIdentifier(prop.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("storageApplianceConfigurationData"u8))
+                if (prop.NameEquals("storageApplianceConfigurationData"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
                     List<StorageApplianceConfiguration> array = new List<StorageApplianceConfiguration>();
-                    foreach (var item in property.Value.EnumerateArray())
+                    foreach (var item in prop.Value.EnumerateArray())
                     {
                         array.Add(StorageApplianceConfiguration.DeserializeStorageApplianceConfiguration(item, options));
                     }
@@ -173,10 +223,9 @@ namespace Azure.ResourceManager.NetworkCloud.Models
                 }
                 if (options.Format != "W")
                 {
-                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = rawDataDictionary;
             return new NetworkCloudRackDefinition(
                 availabilityZone,
                 bareMetalMachineConfigurationData ?? new ChangeTrackingList<BareMetalMachineConfiguration>(),
@@ -185,38 +234,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
                 rackSerialNumber,
                 rackSkuId,
                 storageApplianceConfigurationData ?? new ChangeTrackingList<StorageApplianceConfiguration>(),
-                serializedAdditionalRawData);
+                additionalBinaryDataProperties);
         }
-
-        BinaryData IPersistableModel<NetworkCloudRackDefinition>.Write(ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<NetworkCloudRackDefinition>)this).GetFormatFromOptions(options) : options.Format;
-
-            switch (format)
-            {
-                case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerNetworkCloudContext.Default);
-                default:
-                    throw new FormatException($"The model {nameof(NetworkCloudRackDefinition)} does not support writing '{options.Format}' format.");
-            }
-        }
-
-        NetworkCloudRackDefinition IPersistableModel<NetworkCloudRackDefinition>.Create(BinaryData data, ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<NetworkCloudRackDefinition>)this).GetFormatFromOptions(options) : options.Format;
-
-            switch (format)
-            {
-                case "J":
-                    {
-                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
-                        return DeserializeNetworkCloudRackDefinition(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(NetworkCloudRackDefinition)} does not support reading '{options.Format}' format.");
-            }
-        }
-
-        string IPersistableModel<NetworkCloudRackDefinition>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

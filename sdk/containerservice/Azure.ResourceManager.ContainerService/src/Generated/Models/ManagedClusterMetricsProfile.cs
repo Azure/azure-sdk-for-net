@@ -7,43 +7,15 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.ContainerService;
 
 namespace Azure.ResourceManager.ContainerService.Models
 {
     /// <summary> The metrics profile for the ManagedCluster. </summary>
     internal partial class ManagedClusterMetricsProfile
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="ManagedClusterMetricsProfile"/>. </summary>
         public ManagedClusterMetricsProfile()
@@ -52,24 +24,31 @@ namespace Azure.ResourceManager.ContainerService.Models
 
         /// <summary> Initializes a new instance of <see cref="ManagedClusterMetricsProfile"/>. </summary>
         /// <param name="costAnalysis"> The configuration for detailed per-Kubernetes resource cost analysis. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ManagedClusterMetricsProfile(ManagedClusterCostAnalysis costAnalysis, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal ManagedClusterMetricsProfile(ManagedClusterCostAnalysis costAnalysis, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             CostAnalysis = costAnalysis;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> The configuration for detailed per-Kubernetes resource cost analysis. </summary>
+        [WirePath("costAnalysis")]
         internal ManagedClusterCostAnalysis CostAnalysis { get; set; }
+
         /// <summary> Whether to enable cost analysis. The Managed Cluster sku.tier must be set to 'Standard' or 'Premium' to enable this feature. Enabling this will add Kubernetes Namespace and Deployment details to the Cost Analysis views in the Azure portal. If not specified, the default is false. For more information see aka.ms/aks/docs/cost-analysis. </summary>
         [WirePath("costAnalysis.enabled")]
         public bool? IsCostAnalysisEnabled
         {
-            get => CostAnalysis is null ? default : CostAnalysis.IsCostAnalysisEnabled;
+            get
+            {
+                return CostAnalysis is null ? default : CostAnalysis.IsCostAnalysisEnabled;
+            }
             set
             {
                 if (CostAnalysis is null)
+                {
                     CostAnalysis = new ManagedClusterCostAnalysis();
+                }
                 CostAnalysis.IsCostAnalysisEnabled = value;
             }
         }

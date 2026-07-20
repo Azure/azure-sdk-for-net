@@ -63,7 +63,7 @@ namespace Azure.ResourceManager.WeightsAndBiases.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<WeightsAndBiasesInstanceData, WeightsAndBiasesInstanceResource>(new InstancesGetBySubscriptionAsyncCollectionResultOfT(InstancesRestClient, Guid.Parse(Id.SubscriptionId), context), data => new WeightsAndBiasesInstanceResource(Client, data));
+            return new AsyncPageableWrapper<WeightsAndBiasesInstanceData, WeightsAndBiasesInstanceResource>(new InstancesGetBySubscriptionAsyncCollectionResultOfT(InstancesRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableWeightsAndBiasesSubscriptionResource.GetWeightsAndBiasesInstances"), data => new WeightsAndBiasesInstanceResource(Client, data));
         }
 
         /// <summary>
@@ -91,7 +91,7 @@ namespace Azure.ResourceManager.WeightsAndBiases.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<WeightsAndBiasesInstanceData, WeightsAndBiasesInstanceResource>(new InstancesGetBySubscriptionCollectionResultOfT(InstancesRestClient, Guid.Parse(Id.SubscriptionId), context), data => new WeightsAndBiasesInstanceResource(Client, data));
+            return new PageableWrapper<WeightsAndBiasesInstanceData, WeightsAndBiasesInstanceResource>(new InstancesGetBySubscriptionCollectionResultOfT(InstancesRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableWeightsAndBiasesSubscriptionResource.GetWeightsAndBiasesInstances"), data => new WeightsAndBiasesInstanceResource(Client, data));
         }
     }
 }

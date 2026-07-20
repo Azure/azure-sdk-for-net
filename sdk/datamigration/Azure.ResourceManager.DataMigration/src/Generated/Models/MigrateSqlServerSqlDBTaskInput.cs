@@ -8,6 +8,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using Azure.ResourceManager.DataMigration;
 
 namespace Azure.ResourceManager.DataMigration.Models
 {
@@ -31,16 +32,16 @@ namespace Azure.ResourceManager.DataMigration.Models
         /// <summary> Initializes a new instance of <see cref="MigrateSqlServerSqlDBTaskInput"/>. </summary>
         /// <param name="sourceConnectionInfo"> Information for connecting to source. </param>
         /// <param name="targetConnectionInfo"> Information for connecting to target. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="selectedDatabases"> Databases to migrate. </param>
         /// <param name="validationOptions">
         /// Options for enabling various post migration validations. Available options,
-        ///  1.) Data Integrity Check: Performs a checksum based comparison on source and target tables after the migration to ensure the correctness of the data.
-        ///  2.) Schema Validation: Performs a thorough schema comparison between the source and target tables and provides a list of differences between the source and target database, 3.) Query Analysis: Executes a set of queries picked up automatically either from the Query Plan Cache or Query Store and execute them and compares the execution time between the source and target database.
+        /// 1.) Data Integrity Check: Performs a checksum based comparison on source and target tables after the migration to ensure the correctness of the data.
+        /// 2.) Schema Validation: Performs a thorough schema comparison between the source and target tables and provides a list of differences between the source and target database, 3.) Query Analysis: Executes a set of queries picked up automatically either from the Query Plan Cache or Query Store and execute them and compares the execution time between the source and target database.
         /// </param>
         /// <param name="startedOn"> Date and time relative to UTC when the migration was started on. </param>
         /// <param name="encryptedKeyForSecureFields"> encrypted key for secure fields. </param>
-        internal MigrateSqlServerSqlDBTaskInput(DataMigrationSqlConnectionInfo sourceConnectionInfo, DataMigrationSqlConnectionInfo targetConnectionInfo, IDictionary<string, BinaryData> serializedAdditionalRawData, IList<MigrateSqlServerSqlDBDatabaseInput> selectedDatabases, MigrationValidationOptions validationOptions, DateTimeOffset? startedOn, string encryptedKeyForSecureFields) : base(sourceConnectionInfo, targetConnectionInfo, serializedAdditionalRawData)
+        internal MigrateSqlServerSqlDBTaskInput(DataMigrationSqlConnectionInfo sourceConnectionInfo, DataMigrationSqlConnectionInfo targetConnectionInfo, IDictionary<string, BinaryData> additionalBinaryDataProperties, IList<MigrateSqlServerSqlDBDatabaseInput> selectedDatabases, MigrationValidationOptions validationOptions, DateTimeOffset? startedOn, string encryptedKeyForSecureFields) : base(sourceConnectionInfo, targetConnectionInfo, additionalBinaryDataProperties)
         {
             SelectedDatabases = selectedDatabases;
             ValidationOptions = validationOptions;
@@ -48,21 +49,19 @@ namespace Azure.ResourceManager.DataMigration.Models
             EncryptedKeyForSecureFields = encryptedKeyForSecureFields;
         }
 
-        /// <summary> Initializes a new instance of <see cref="MigrateSqlServerSqlDBTaskInput"/> for deserialization. </summary>
-        internal MigrateSqlServerSqlDBTaskInput()
-        {
-        }
-
         /// <summary> Databases to migrate. </summary>
         public IList<MigrateSqlServerSqlDBDatabaseInput> SelectedDatabases { get; }
+
         /// <summary>
         /// Options for enabling various post migration validations. Available options,
-        ///  1.) Data Integrity Check: Performs a checksum based comparison on source and target tables after the migration to ensure the correctness of the data.
-        ///  2.) Schema Validation: Performs a thorough schema comparison between the source and target tables and provides a list of differences between the source and target database, 3.) Query Analysis: Executes a set of queries picked up automatically either from the Query Plan Cache or Query Store and execute them and compares the execution time between the source and target database.
+        /// 1.) Data Integrity Check: Performs a checksum based comparison on source and target tables after the migration to ensure the correctness of the data.
+        /// 2.) Schema Validation: Performs a thorough schema comparison between the source and target tables and provides a list of differences between the source and target database, 3.) Query Analysis: Executes a set of queries picked up automatically either from the Query Plan Cache or Query Store and execute them and compares the execution time between the source and target database.
         /// </summary>
         public MigrationValidationOptions ValidationOptions { get; set; }
+
         /// <summary> Date and time relative to UTC when the migration was started on. </summary>
         public DateTimeOffset? StartedOn { get; set; }
+
         /// <summary> encrypted key for secure fields. </summary>
         public string EncryptedKeyForSecureFields { get; set; }
     }

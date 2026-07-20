@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.IotOperations
         {
             if (id.ResourceType != IotOperationsBrokerResource.ResourceType)
             {
-                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, IotOperationsBrokerResource.ResourceType), id);
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, IotOperationsBrokerResource.ResourceType), nameof(id));
             }
         }
 
@@ -93,7 +93,7 @@ namespace Azure.ResourceManager.IotOperations
                 HttpMessage message = _brokerAuthorizationRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, authorizationName, IotOperationsBrokerAuthorizationData.ToRequestContent(data), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 IotOperationsArmOperation<IotOperationsBrokerAuthorizationResource> operation = new IotOperationsArmOperation<IotOperationsBrokerAuthorizationResource>(
-                    new IotOperationsBrokerAuthorizationOperationSource(Client),
+                    new IotOperationsBrokerAuthorizationResourceOperationSource(Client),
                     _brokerAuthorizationClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -151,7 +151,7 @@ namespace Azure.ResourceManager.IotOperations
                 HttpMessage message = _brokerAuthorizationRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, authorizationName, IotOperationsBrokerAuthorizationData.ToRequestContent(data), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 IotOperationsArmOperation<IotOperationsBrokerAuthorizationResource> operation = new IotOperationsArmOperation<IotOperationsBrokerAuthorizationResource>(
-                    new IotOperationsBrokerAuthorizationOperationSource(Client),
+                    new IotOperationsBrokerAuthorizationResourceOperationSource(Client),
                     _brokerAuthorizationClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -299,7 +299,8 @@ namespace Azure.ResourceManager.IotOperations
                 Id.ResourceGroupName,
                 Id.Parent.Name,
                 Id.Name,
-                context), data => new IotOperationsBrokerAuthorizationResource(Client, data));
+                context,
+                "IotOperationsBrokerAuthorizationCollection.GetAll"), data => new IotOperationsBrokerAuthorizationResource(Client, data));
         }
 
         /// <summary>
@@ -333,7 +334,8 @@ namespace Azure.ResourceManager.IotOperations
                 Id.ResourceGroupName,
                 Id.Parent.Name,
                 Id.Name,
-                context), data => new IotOperationsBrokerAuthorizationResource(Client, data));
+                context,
+                "IotOperationsBrokerAuthorizationCollection.GetAll"), data => new IotOperationsBrokerAuthorizationResource(Client, data));
         }
 
         /// <summary>

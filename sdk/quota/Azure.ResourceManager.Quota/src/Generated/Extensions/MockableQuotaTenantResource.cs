@@ -63,7 +63,7 @@ namespace Azure.ResourceManager.Quota.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new QuotaOperationGetAllAsyncCollectionResultOfT(QuotaOperationRestClient, context);
+            return new QuotaOperationGetAllAsyncCollectionResultOfT(QuotaOperationRestClient, context, "MockableQuotaTenantResource.GetAll");
         }
 
         /// <summary>
@@ -91,7 +91,7 @@ namespace Azure.ResourceManager.Quota.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new QuotaOperationGetAllCollectionResultOfT(QuotaOperationRestClient, context);
+            return new QuotaOperationGetAllCollectionResultOfT(QuotaOperationRestClient, context, "MockableQuotaTenantResource.GetAll");
         }
     }
 }

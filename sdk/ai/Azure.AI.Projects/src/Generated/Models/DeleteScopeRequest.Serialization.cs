@@ -7,10 +7,10 @@ using System.ClientModel;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure.AI.Projects;
 
-namespace Azure.AI.Projects
+namespace Azure.AI.Projects.Memory
 {
-    /// <summary> The DeleteScopeRequest. </summary>
     internal partial class DeleteScopeRequest : IJsonModel<DeleteScopeRequest>
     {
         /// <summary> Initializes a new instance of <see cref="DeleteScopeRequest"/> for deserialization. </summary>

@@ -7,7 +7,6 @@ using System.ClientModel;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Threading.Tasks;
-using Azure.Core.Foundations;
 
 namespace Azure.AI.Projects
 {
@@ -20,8 +19,8 @@ namespace Azure.AI.Projects
 
         /// <summary> Initializes a new instance of AIProjectConnectionsOperationsGetConnectionsAsyncCollectionResultOfT, which is used to iterate over the pages of a collection. </summary>
         /// <param name="client"> The AIProjectConnectionsOperations client used to send requests. </param>
-        /// <param name="connectionType"> List connections of this specific type. </param>
-        /// <param name="defaultConnection"> List connections that are default connections. </param>
+        /// <param name="connectionType"> Lists connections of this specific type. </param>
+        /// <param name="defaultConnection"> Lists connections that are default connections. </param>
         /// <param name="options"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         public AIProjectConnectionsOperationsGetConnectionsAsyncCollectionResultOfT(AIProjectConnectionsOperations client, string connectionType, bool? defaultConnection, RequestOptions options)
         {
@@ -39,7 +38,7 @@ namespace Azure.AI.Projects
             Uri nextPageUri = null;
             while (true)
             {
-                ClientResult result = ClientResult.FromResponse(await _client.Pipeline.ProcessMessageAsync(message, _options).ConfigureAwait(false));
+                ClientResult result = await GetNextResponseAsync(message).ConfigureAwait(false);
                 yield return result;
 
                 nextPageUri = ((PagedConnection)result).NextLink;
@@ -76,6 +75,23 @@ namespace Azure.AI.Projects
             {
                 yield return item;
                 await Task.Yield();
+            }
+        }
+
+        /// <summary> Sends the request in the pipeline message and returns the response. </summary>
+        /// <param name="message"> The pipeline message containing the request to send. </param>
+        private async ValueTask<ClientResult> GetNextResponseAsync(PipelineMessage message)
+        {
+            using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope("AIProjectConnectionsOperations.GetConnections");
+            scope.Start();
+            try
+            {
+                return ClientResult.FromResponse(await _client.Pipeline.ProcessMessageAsync(message, _options).ConfigureAwait(false));
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
             }
         }
     }

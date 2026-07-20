@@ -1,0 +1,11 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <ItemGroup>
+    <Compile Include="..\..\..\..\common\ProvisioningTestShared\*.cs" LinkBase="Shared\ProvisioningTestShared" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\..\core\Azure.Core.TestFramework\src\Azure.Core.TestFramework.csproj" />
+    <ProjectReference Include="..\src\Azure.Provisioning.PrivateDns.csproj" />
+    <ProjectReference Include="..\..\..\network\Azure.Provisioning.Network\src\Azure.Provisioning.Network.csproj" />
+    <ProjectReference Include="..\..\..\provisioning\Azure.Provisioning.Deployment\src\Azure.Provisioning.Deployment.csproj" />
+  </ItemGroup>
+</Project>

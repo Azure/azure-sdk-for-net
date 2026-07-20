@@ -6,7 +6,9 @@
 #nullable disable
 
 using System;
+using System.Diagnostics.CodeAnalysis;
 using Azure.Core;
+using Microsoft.Extensions.Configuration;
 
 namespace Azure.Communication.JobRouter
 {
@@ -25,10 +27,31 @@ namespace Azure.Communication.JobRouter
                 ServiceVersion.V2024_01_18_Preview => "2024-01-18-preview",
                 _ => throw new NotSupportedException()
             };
+            ConfigureLogging();
+        }
+
+        /// <summary> Initializes a new instance of JobRouterAdministrationClientOptions from configuration. </summary>
+        /// <param name="section"> The configuration section. </param>
+        [Experimental("SCME0002")]
+        internal JobRouterClientOptions(IConfigurationSection section) : base(section, null)
+        {
+            Version = "2024-01-18-preview";
+            if (section is null || !section.Exists())
+            {
+                return;
+            }
+            if (section["Version"] is string version)
+            {
+                Version = version;
+            }
+            ConfigureLogging();
         }
 
         /// <summary> Gets the Version. </summary>
         internal string Version { get; }
+
+        /// <summary> Configures logging for the client options. </summary>
+        partial void ConfigureLogging();
 
         /// <summary> The version of the service to use. </summary>
         public enum ServiceVersion

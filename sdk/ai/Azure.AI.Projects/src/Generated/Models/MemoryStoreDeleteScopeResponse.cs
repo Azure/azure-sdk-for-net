@@ -4,11 +4,12 @@
 
 using System;
 using System.Collections.Generic;
-using OpenAI;
+using System.Diagnostics.CodeAnalysis;
 
-namespace Azure.AI.Projects
+namespace Azure.AI.Projects.Memory
 {
     /// <summary> Response for deleting memories from a scope. </summary>
+    [Experimental("AAIP001")]
     public partial class MemoryStoreDeleteScopeResponse
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
@@ -17,26 +18,26 @@ namespace Azure.AI.Projects
         /// <summary> Initializes a new instance of <see cref="MemoryStoreDeleteScopeResponse"/>. </summary>
         /// <param name="name"> The name of the memory store. </param>
         /// <param name="scope"> The scope from which memories were deleted. </param>
-        /// <param name="deleted"> Whether the deletion operation was successful. </param>
-        internal MemoryStoreDeleteScopeResponse(string name, string scope, bool deleted)
+        /// <param name="isDeleted"> Whether the deletion operation was successful. </param>
+        internal MemoryStoreDeleteScopeResponse(string name, string scope, bool isDeleted)
         {
             Name = name;
             Scope = scope;
-            Deleted = deleted;
+            IsDeleted = isDeleted;
         }
 
         /// <summary> Initializes a new instance of <see cref="MemoryStoreDeleteScopeResponse"/>. </summary>
         /// <param name="object"> The object type. Always 'memory_store.scope.deleted'. </param>
         /// <param name="name"> The name of the memory store. </param>
         /// <param name="scope"> The scope from which memories were deleted. </param>
-        /// <param name="deleted"> Whether the deletion operation was successful. </param>
+        /// <param name="isDeleted"> Whether the deletion operation was successful. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal MemoryStoreDeleteScopeResponse(MemoryStoreObjectType @object, string name, string scope, bool deleted, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal MemoryStoreDeleteScopeResponse(MemoryStoreObjectType @object, string name, string scope, bool isDeleted, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Object = @object;
             Name = name;
             Scope = scope;
-            Deleted = deleted;
+            IsDeleted = isDeleted;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
@@ -50,6 +51,6 @@ namespace Azure.AI.Projects
         public string Scope { get; }
 
         /// <summary> Whether the deletion operation was successful. </summary>
-        public bool Deleted { get; }
+        public bool IsDeleted { get; }
     }
 }

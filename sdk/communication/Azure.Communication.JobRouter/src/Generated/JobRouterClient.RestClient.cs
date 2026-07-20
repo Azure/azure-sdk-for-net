@@ -98,7 +98,7 @@ namespace Azure.Communication.JobRouter
             Request request = message.Request;
             request.Uri = uri;
             request.Method = RequestMethod.Post;
-            if ("application/json" != null)
+            if (content != null)
             {
                 request.Headers.SetValue("Content-Type", "application/json");
             }
@@ -122,7 +122,7 @@ namespace Azure.Communication.JobRouter
             Request request = message.Request;
             request.Uri = uri;
             request.Method = RequestMethod.Post;
-            if ("application/json" != null)
+            if (content != null)
             {
                 request.Headers.SetValue("Content-Type", "application/json");
             }
@@ -148,7 +148,7 @@ namespace Azure.Communication.JobRouter
             Request request = message.Request;
             request.Uri = uri;
             request.Method = RequestMethod.Post;
-            if ("application/json" != null)
+            if (content != null)
             {
                 request.Headers.SetValue("Content-Type", "application/json");
             }
@@ -174,7 +174,7 @@ namespace Azure.Communication.JobRouter
             Request request = message.Request;
             request.Uri = uri;
             request.Method = RequestMethod.Post;
-            if ("application/json" != null)
+            if (content != null)
             {
                 request.Headers.SetValue("Content-Type", "application/json");
             }
@@ -291,7 +291,7 @@ namespace Azure.Communication.JobRouter
             Request request = message.Request;
             request.Uri = uri;
             request.Method = RequestMethod.Post;
-            if ("application/json" != null)
+            if (content != null)
             {
                 request.Headers.SetValue("Content-Type", "application/json");
             }
@@ -338,7 +338,7 @@ namespace Azure.Communication.JobRouter
             Request request = message.Request;
             request.Uri = uri;
             request.Method = RequestMethod.Post;
-            if ("application/json" != null)
+            if (content != null)
             {
                 request.Headers.SetValue("Content-Type", "application/json");
             }

@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.EdgeActions
         {
             if (id.ResourceType != EdgeActionResource.ResourceType)
             {
-                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, EdgeActionResource.ResourceType), id);
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, EdgeActionResource.ResourceType), nameof(id));
             }
         }
 
@@ -93,7 +93,7 @@ namespace Azure.ResourceManager.EdgeActions
                 HttpMessage message = _edgeActionVersionsRestClient.CreateCreateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, version, EdgeActionVersionData.ToRequestContent(data), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 EdgeActionsArmOperation<EdgeActionVersionResource> operation = new EdgeActionsArmOperation<EdgeActionVersionResource>(
-                    new EdgeActionVersionOperationSource(Client),
+                    new EdgeActionVersionResourceOperationSource(Client),
                     _edgeActionVersionsClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -151,7 +151,7 @@ namespace Azure.ResourceManager.EdgeActions
                 HttpMessage message = _edgeActionVersionsRestClient.CreateCreateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, version, EdgeActionVersionData.ToRequestContent(data), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 EdgeActionsArmOperation<EdgeActionVersionResource> operation = new EdgeActionsArmOperation<EdgeActionVersionResource>(
-                    new EdgeActionVersionOperationSource(Client),
+                    new EdgeActionVersionResourceOperationSource(Client),
                     _edgeActionVersionsClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -293,7 +293,13 @@ namespace Azure.ResourceManager.EdgeActions
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<EdgeActionVersionData, EdgeActionVersionResource>(new EdgeActionVersionsGetByEdgeActionAsyncCollectionResultOfT(_edgeActionVersionsRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context), data => new EdgeActionVersionResource(Client, data));
+            return new AsyncPageableWrapper<EdgeActionVersionData, EdgeActionVersionResource>(new EdgeActionVersionsGetByEdgeActionAsyncCollectionResultOfT(
+                _edgeActionVersionsRestClient,
+                Guid.Parse(Id.SubscriptionId),
+                Id.ResourceGroupName,
+                Id.Name,
+                context,
+                "EdgeActionVersionCollection.GetAll"), data => new EdgeActionVersionResource(Client, data));
         }
 
         /// <summary>
@@ -321,7 +327,13 @@ namespace Azure.ResourceManager.EdgeActions
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<EdgeActionVersionData, EdgeActionVersionResource>(new EdgeActionVersionsGetByEdgeActionCollectionResultOfT(_edgeActionVersionsRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context), data => new EdgeActionVersionResource(Client, data));
+            return new PageableWrapper<EdgeActionVersionData, EdgeActionVersionResource>(new EdgeActionVersionsGetByEdgeActionCollectionResultOfT(
+                _edgeActionVersionsRestClient,
+                Guid.Parse(Id.SubscriptionId),
+                Id.ResourceGroupName,
+                Id.Name,
+                context,
+                "EdgeActionVersionCollection.GetAll"), data => new EdgeActionVersionResource(Client, data));
         }
 
         /// <summary>

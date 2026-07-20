@@ -16,6 +16,7 @@ using NUnit.Framework;
 
 namespace Azure.ResourceManager.BotService.Tests
 {
+    [Ignore("Blocked by Azure.ResourceManager.Network MPG migration playback mismatch; see https://github.com/Azure/azure-sdk-for-net/issues/59918.")]
     internal class ConnectionEndpointTest : BotServiceManagementTestBase
     {
         public ConnectionEndpointTest(bool isAsync)

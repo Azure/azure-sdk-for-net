@@ -70,6 +70,8 @@ namespace Azure.AI.Projects
             {
                 throw new FormatException($"The model {nameof(WebSearchApproximateLocation)} does not support writing '{format}' format.");
             }
+            writer.WritePropertyName("type"u8);
+            writer.WriteStringValue(Type);
             if (Optional.IsDefined(Country))
             {
                 writer.WritePropertyName("country"u8);
@@ -90,8 +92,6 @@ namespace Azure.AI.Projects
                 writer.WritePropertyName("timezone"u8);
                 writer.WriteStringValue(Timezone);
             }
-            writer.WritePropertyName("type"u8);
-            writer.WriteStringValue(Type);
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
                 foreach (var item in _additionalBinaryDataProperties)
@@ -134,14 +134,19 @@ namespace Azure.AI.Projects
             {
                 return null;
             }
+            string @type = default;
             string country = default;
             string region = default;
             string city = default;
             string timezone = default;
-            string @type = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
+                if (prop.NameEquals("type"u8))
+                {
+                    @type = prop.Value.GetString();
+                    continue;
+                }
                 if (prop.NameEquals("country"u8))
                 {
                     if (prop.Value.ValueKind == JsonValueKind.Null)
@@ -182,22 +187,17 @@ namespace Azure.AI.Projects
                     timezone = prop.Value.GetString();
                     continue;
                 }
-                if (prop.NameEquals("type"u8))
-                {
-                    @type = prop.Value.GetString();
-                    continue;
-                }
                 if (options.Format != "W")
                 {
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
             return new WebSearchApproximateLocation(
+                @type,
                 country,
                 region,
                 city,
                 timezone,
-                @type,
                 additionalBinaryDataProperties);
         }
     }

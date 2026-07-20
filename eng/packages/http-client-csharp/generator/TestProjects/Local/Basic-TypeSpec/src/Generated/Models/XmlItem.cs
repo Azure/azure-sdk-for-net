@@ -6,16 +6,12 @@
 #nullable disable
 
 using System;
-using System.Collections.Generic;
 
 namespace BasicTypeSpec
 {
     /// <summary> An item model for XML array testing. </summary>
     public partial class XmlItem
     {
-        /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
-
         /// <summary> Initializes a new instance of <see cref="XmlItem"/>. </summary>
         /// <param name="itemName"> The item name. </param>
         /// <param name="itemValue"> The item value. </param>
@@ -29,19 +25,6 @@ namespace BasicTypeSpec
             ItemName = itemName;
             ItemValue = itemValue;
             ItemId = itemId;
-        }
-
-        /// <summary> Initializes a new instance of <see cref="XmlItem"/>. </summary>
-        /// <param name="itemName"> The item name. </param>
-        /// <param name="itemValue"> The item value. </param>
-        /// <param name="itemId"> Item ID as attribute. </param>
-        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal XmlItem(string itemName, int itemValue, string itemId, IDictionary<string, BinaryData> additionalBinaryDataProperties)
-        {
-            ItemName = itemName;
-            ItemValue = itemValue;
-            ItemId = itemId;
-            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> The item name. </summary>

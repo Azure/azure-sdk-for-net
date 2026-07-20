@@ -85,7 +85,7 @@ namespace Azure.AI.Projects
             }
             writer.WritePropertyName("summary"u8);
             writer.WriteStartArray();
-            foreach (Summary item in Summary)
+            foreach (SummaryTextContent item in Summary)
             {
                 writer.WriteObjectValue(item, options);
             }
@@ -136,7 +136,7 @@ namespace Azure.AI.Projects
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             string id = default;
             string encryptedContent = default;
-            IList<Summary> summary = default;
+            IList<SummaryTextContent> summary = default;
             IList<ReasoningTextContent> content = default;
             InputItemReasoningItemStatus? status = default;
             foreach (var prop in element.EnumerateObject())
@@ -163,10 +163,10 @@ namespace Azure.AI.Projects
                 }
                 if (prop.NameEquals("summary"u8))
                 {
-                    List<Summary> array = new List<Summary>();
+                    List<SummaryTextContent> array = new List<SummaryTextContent>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(Projects.Summary.DeserializeSummary(item, options));
+                        array.Add(SummaryTextContent.DeserializeSummaryTextContent(item, options));
                     }
                     summary = array;
                     continue;

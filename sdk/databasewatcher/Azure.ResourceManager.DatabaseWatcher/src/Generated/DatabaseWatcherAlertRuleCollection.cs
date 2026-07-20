@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.DatabaseWatcher
         {
             if (id.ResourceType != DatabaseWatcherResource.ResourceType)
             {
-                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, DatabaseWatcherResource.ResourceType), id);
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, DatabaseWatcherResource.ResourceType), nameof(id));
             }
         }
 
@@ -287,7 +287,13 @@ namespace Azure.ResourceManager.DatabaseWatcher
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<DatabaseWatcherAlertRuleData, DatabaseWatcherAlertRuleResource>(new AlertRuleResourcesGetByParentAsyncCollectionResultOfT(_alertRuleResourcesRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context), data => new DatabaseWatcherAlertRuleResource(Client, data));
+            return new AsyncPageableWrapper<DatabaseWatcherAlertRuleData, DatabaseWatcherAlertRuleResource>(new AlertRuleResourcesGetByParentAsyncCollectionResultOfT(
+                _alertRuleResourcesRestClient,
+                Guid.Parse(Id.SubscriptionId),
+                Id.ResourceGroupName,
+                Id.Name,
+                context,
+                "DatabaseWatcherAlertRuleCollection.GetAll"), data => new DatabaseWatcherAlertRuleResource(Client, data));
         }
 
         /// <summary>
@@ -315,7 +321,13 @@ namespace Azure.ResourceManager.DatabaseWatcher
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<DatabaseWatcherAlertRuleData, DatabaseWatcherAlertRuleResource>(new AlertRuleResourcesGetByParentCollectionResultOfT(_alertRuleResourcesRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context), data => new DatabaseWatcherAlertRuleResource(Client, data));
+            return new PageableWrapper<DatabaseWatcherAlertRuleData, DatabaseWatcherAlertRuleResource>(new AlertRuleResourcesGetByParentCollectionResultOfT(
+                _alertRuleResourcesRestClient,
+                Guid.Parse(Id.SubscriptionId),
+                Id.ResourceGroupName,
+                Id.Name,
+                context,
+                "DatabaseWatcherAlertRuleCollection.GetAll"), data => new DatabaseWatcherAlertRuleResource(Client, data));
         }
 
         /// <summary>

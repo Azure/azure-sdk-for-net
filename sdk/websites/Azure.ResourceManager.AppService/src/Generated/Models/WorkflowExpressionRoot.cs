@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.AppService;
 
 namespace Azure.ResourceManager.AppService.Models
 {
@@ -23,9 +24,9 @@ namespace Azure.ResourceManager.AppService.Models
         /// <param name="value"> Anything. </param>
         /// <param name="subexpressions"> The sub expressions. </param>
         /// <param name="error"> The azure resource error info. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="path"> The path. </param>
-        internal WorkflowExpressionRoot(string text, BinaryData value, IReadOnlyList<WorkflowExpression> subexpressions, WorkflowExpressionResourceErrorInfo error, IDictionary<string, BinaryData> serializedAdditionalRawData, string path) : base(text, value, subexpressions, error, serializedAdditionalRawData)
+        internal WorkflowExpressionRoot(string text, BinaryData value, IReadOnlyList<WorkflowExpression> subexpressions, WorkflowExpressionResourceErrorInfo error, IDictionary<string, BinaryData> additionalBinaryDataProperties, string path) : base(text, value, subexpressions, error, additionalBinaryDataProperties)
         {
             Path = path;
         }

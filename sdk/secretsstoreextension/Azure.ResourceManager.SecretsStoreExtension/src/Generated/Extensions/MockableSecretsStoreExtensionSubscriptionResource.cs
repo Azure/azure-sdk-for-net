@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.SecretsStoreExtension.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<KeyVaultSecretProviderClassData, KeyVaultSecretProviderClassResource>(new AzureKeyVaultSecretProviderClassesGetBySubscriptionAsyncCollectionResultOfT(AzureKeyVaultSecretProviderClassesRestClient, Guid.Parse(Id.SubscriptionId), context), data => new KeyVaultSecretProviderClassResource(Client, data));
+            return new AsyncPageableWrapper<KeyVaultSecretProviderClassData, KeyVaultSecretProviderClassResource>(new AzureKeyVaultSecretProviderClassesGetBySubscriptionAsyncCollectionResultOfT(AzureKeyVaultSecretProviderClassesRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableSecretsStoreExtensionSubscriptionResource.GetKeyVaultSecretProviderClasses"), data => new KeyVaultSecretProviderClassResource(Client, data));
         }
 
         /// <summary>
@@ -97,7 +97,7 @@ namespace Azure.ResourceManager.SecretsStoreExtension.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<KeyVaultSecretProviderClassData, KeyVaultSecretProviderClassResource>(new AzureKeyVaultSecretProviderClassesGetBySubscriptionCollectionResultOfT(AzureKeyVaultSecretProviderClassesRestClient, Guid.Parse(Id.SubscriptionId), context), data => new KeyVaultSecretProviderClassResource(Client, data));
+            return new PageableWrapper<KeyVaultSecretProviderClassData, KeyVaultSecretProviderClassResource>(new AzureKeyVaultSecretProviderClassesGetBySubscriptionCollectionResultOfT(AzureKeyVaultSecretProviderClassesRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableSecretsStoreExtensionSubscriptionResource.GetKeyVaultSecretProviderClasses"), data => new KeyVaultSecretProviderClassResource(Client, data));
         }
 
         /// <summary>
@@ -125,7 +125,7 @@ namespace Azure.ResourceManager.SecretsStoreExtension.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<SecretSyncData, SecretSyncResource>(new SecretSyncsGetBySubscriptionAsyncCollectionResultOfT(SecretSyncsRestClient, Guid.Parse(Id.SubscriptionId), context), data => new SecretSyncResource(Client, data));
+            return new AsyncPageableWrapper<SecretSyncData, SecretSyncResource>(new SecretSyncsGetBySubscriptionAsyncCollectionResultOfT(SecretSyncsRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableSecretsStoreExtensionSubscriptionResource.GetSecretSyncs"), data => new SecretSyncResource(Client, data));
         }
 
         /// <summary>
@@ -153,7 +153,7 @@ namespace Azure.ResourceManager.SecretsStoreExtension.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<SecretSyncData, SecretSyncResource>(new SecretSyncsGetBySubscriptionCollectionResultOfT(SecretSyncsRestClient, Guid.Parse(Id.SubscriptionId), context), data => new SecretSyncResource(Client, data));
+            return new PageableWrapper<SecretSyncData, SecretSyncResource>(new SecretSyncsGetBySubscriptionCollectionResultOfT(SecretSyncsRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableSecretsStoreExtensionSubscriptionResource.GetSecretSyncs"), data => new SecretSyncResource(Client, data));
         }
     }
 }

@@ -97,6 +97,14 @@ namespace Azure.Storage.DataMovement.Files.Shares.Tests
             return await DestinationClientBuilder.GetTestShareAsync(oauthService, containerName, cancellationToken: cancellationToken);
         }
 
+        protected override async Task<IDisposingContainer<ShareClient>> GetDestinationDisposingContainerAzureSasCredentialAsync(
+            string containerName = default,
+            CancellationToken cancellationToken = default)
+        {
+            ShareServiceClient oauthService = DestinationClientBuilder.GetServiceClientFromAzureSasCredentialConfig(Tenants.TestConfigDefault, default);
+            return await DestinationClientBuilder.GetTestShareAsync(oauthService, containerName);
+        }
+
         protected override StorageResourceContainer GetDestinationStorageResourceContainer(
             ShareClient containerClient,
             string prefix,
@@ -110,6 +118,14 @@ namespace Azure.Storage.DataMovement.Files.Shares.Tests
             ShareClientOptions options = SourceClientBuilder.GetOptions();
             options.ShareTokenIntent = ShareTokenIntent.Backup;
             ShareServiceClient oauthService = SourceClientBuilder.GetServiceClientFromOauthConfig(Tenants.TestConfigOAuth, TestEnvironment.Credential, options);
+            return await SourceClientBuilder.GetTestShareAsync(oauthService, containerName, cancellationToken: cancellationToken);
+        }
+
+        protected override async Task<IDisposingContainer<ShareClient>> GetSourceDisposingContainerAzureSasCredentialAsync(
+            string containerName = default,
+            CancellationToken cancellationToken = default)
+        {
+            ShareServiceClient oauthService = SourceClientBuilder.GetServiceClientFromAzureSasCredentialConfig(Tenants.TestConfigDefault, default);
             return await SourceClientBuilder.GetTestShareAsync(oauthService, containerName, cancellationToken: cancellationToken);
         }
 
@@ -2393,5 +2409,126 @@ namespace Azure.Storage.DataMovement.Files.Shares.Tests
             Assert.AreEqual(originalBarProps.SmbProperties.FileCreatedOn, currentBarProps.SmbProperties.FileCreatedOn,
                 "Directory FileCreatedOn should not change when skipped");
         }
+
+        #region Snapshot Tests
+        /// <summary>
+        /// Test copying a directory from a share snapshot to verify snapshot data is transferred (not current data).
+        /// This is a share-level snapshot test specific to Azure Files - blobs don't support container-level snapshots.
+        /// </summary>
+        [RecordedTest]
+        public async Task StartTransfer_DirectoryFromShareSnapshot_Copy()
+        {
+            // Arrange
+            await using IDisposingContainer<ShareClient> source = await GetSourceDisposingContainerAsync();
+            await using IDisposingContainer<ShareClient> destination = await GetDestinationDisposingContainerAsync();
+
+            long size = DataMovementTestConstants.KB * 4;
+            int fileCount = 3;
+            string directoryName = GetNewObjectName();
+
+            // Create source directory with files
+            ShareDirectoryClient sourceDirectory = source.Container.GetDirectoryClient(directoryName);
+            await sourceDirectory.CreateAsync();
+
+            List<string> fileNames = new List<string>();
+            for (int i = 0; i < fileCount; i++)
+            {
+                string fileName = GetNewObjectName();
+                fileNames.Add(fileName);
+                ShareFileClient fileClient = sourceDirectory.GetFileClient(fileName);
+                await fileClient.CreateAsync(size);
+                using (Stream originalStream = await CreateLimitedMemoryStream(size))
+                {
+                    originalStream.Position = 0;
+                    await fileClient.UploadAsync(originalStream);
+                }
+            }
+
+            // Create a snapshot of the entire share
+            Response<ShareSnapshotInfo> snapshotResponse = await source.Container.CreateSnapshotAsync();
+            string snapshotId = snapshotResponse.Value.Snapshot;
+            Assert.IsNotNull(snapshotId);
+
+            // Modify files after snapshot to verify we get snapshot data, not current data
+            foreach (string fileName in fileNames)
+            {
+                ShareFileClient fileClient = sourceDirectory.GetFileClient(fileName);
+                using (Stream modifiedStream = await CreateLimitedMemoryStream(size))
+                {
+                    modifiedStream.Position = 0;
+                    await fileClient.UploadAsync(modifiedStream);
+                }
+            }
+
+            // Create source resource from snapshot directory
+            ShareClient snapshotShare = source.Container.WithSnapshot(snapshotId);
+            ShareDirectoryClient snapshotDirectory = snapshotShare.GetDirectoryClient(directoryName);
+            ShareFileStorageResourceOptions snapshotOptions = new ShareFileStorageResourceOptions
+            {
+                Snapshot = snapshotId
+            };
+            StorageResource sourceResource = ShareFilesStorageResourceProvider.FromClient(snapshotDirectory, snapshotOptions);
+
+            // Create destination resource
+            ShareDirectoryClient destinationDirectory = destination.Container.GetDirectoryClient(directoryName);
+            await destinationDirectory.CreateIfNotExistsAsync();
+            StorageResource destinationResource = ShareFilesStorageResourceProvider.FromClient(destinationDirectory);
+
+            // Create TransferManager and options
+            TransferManager transferManager = new TransferManager();
+            TransferOptions options = new TransferOptions();
+            TestEventsRaised testEventsRaised = new TestEventsRaised(options);
+
+            // Act - Start transfer from snapshot directory
+            TransferOperation transfer = await transferManager.StartTransferAsync(
+                sourceResource,
+                destinationResource,
+                options);
+
+            using CancellationTokenSource cancellationTokenSource = new CancellationTokenSource(TimeSpan.FromSeconds(30));
+            await TestTransferWithTimeout.WaitForCompletionAsync(
+                transfer,
+                testEventsRaised,
+                cancellationTokenSource.Token);
+
+            // Assert - transfer completed
+            await testEventsRaised.AssertContainerCompletedCheck(fileCount);
+            Assert.NotNull(transfer);
+            Assert.IsTrue(transfer.HasCompleted);
+            Assert.AreEqual(TransferState.Completed, transfer.Status.State);
+
+            // Verify all files were transferred
+            var destinationFiles = destinationDirectory.GetFilesAndDirectoriesAsync();
+            int destinationFileCount = 0;
+            await foreach (ShareFileItem fileItem in destinationFiles)
+            {
+                if (!fileItem.IsDirectory)
+                {
+                    destinationFileCount++;
+
+                    // Verify content matches the snapshot (not the modified file)
+                    ShareFileClient snapshotFile = snapshotDirectory.GetFileClient(fileItem.Name);
+                    ShareFileClient destinationFile = destinationDirectory.GetFileClient(fileItem.Name);
+
+                    using Stream snapshotStream = new MemoryStream();
+                    var snapshotDownload = await snapshotFile.DownloadAsync();
+                    await snapshotDownload.Value.Content.CopyToAsync(snapshotStream);
+                    snapshotStream.Position = 0;
+
+                    using Stream destinationStream = new MemoryStream();
+                    var destDownload = await destinationFile.DownloadAsync();
+                    await destDownload.Value.Content.CopyToAsync(destinationStream);
+                    destinationStream.Position = 0;
+
+                    Assert.AreEqual(snapshotStream.Length, destinationStream.Length);
+                    CollectionAssert.AreEqual(
+                        ((MemoryStream)snapshotStream).ToArray(),
+                        ((MemoryStream)destinationStream).ToArray(),
+                        $"File {fileItem.Name} content should match snapshot, not current version");
+                }
+            }
+            Assert.AreEqual(fileCount, destinationFileCount, "All files should be transferred");
+        }
+        #endregion
     }
 }

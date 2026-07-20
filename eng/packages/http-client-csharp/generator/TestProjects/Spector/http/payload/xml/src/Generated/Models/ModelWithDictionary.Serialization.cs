@@ -32,8 +32,6 @@ namespace Payload.Xml
 
         public static explicit operator ModelWithDictionary(Response response) => throw null;
 
-        protected virtual void XmlModelWriteCore(XmlWriter writer, ModelReaderWriterOptions options) => throw null;
-
         void IXmlSerializable.Write(XmlWriter writer, string nameHint) => throw null;
     }
 }

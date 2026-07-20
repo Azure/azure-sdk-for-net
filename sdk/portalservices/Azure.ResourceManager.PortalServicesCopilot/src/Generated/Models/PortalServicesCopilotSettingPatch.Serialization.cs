@@ -64,9 +64,7 @@ namespace Azure.ResourceManager.PortalServicesCopilot.Models
             {
                 return null;
             }
-            Utf8JsonRequestContent content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(portalServicesCopilotSettingPatch, ModelSerializationExtensions.WireOptions);
-            return content;
+            return RequestContent.Create(portalServicesCopilotSettingPatch, ModelSerializationExtensions.WireOptions);
         }
 
         /// <param name="writer"> The JSON writer. </param>

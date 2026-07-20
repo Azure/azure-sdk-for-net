@@ -6,8 +6,8 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.Globalization;
-using System.Linq;
+using System.ComponentModel;
+using System.Diagnostics;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure;
@@ -15,78 +15,149 @@ using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager;
 using Azure.ResourceManager.Dns.Models;
-
-[assembly: CodeGenSuppressType("DnsPtrRecordCollection")]
+using CodeGenSuppressAttribute = Microsoft.TypeSpec.Generator.Customizations.CodeGenSuppressAttribute;
 
 namespace Azure.ResourceManager.Dns
 {
     /// <summary>
-    /// A class representing a collection of <see cref="DnsPtrRecordResource" /> and their operations.
-    /// Each <see cref="DnsPtrRecordResource" /> in the collection will belong to the same instance of <see cref="DnsZoneResource" />.
-    /// To get a <see cref="DnsPtrRecordCollection" /> instance call the GetDnsPtrRecords method from an instance of <see cref="DnsZoneResource" />.
+    /// A class representing a collection of <see cref="DnsPtrRecordResource"/> and their operations.
+    /// Each <see cref="DnsPtrRecordResource"/> in the collection will belong to the same instance of <see cref="DnsZoneResource"/>.
+    /// To get a <see cref="DnsPtrRecordCollection"/> instance call the GetDnsPtrRecords method from an instance of <see cref="DnsZoneResource"/>.
     /// </summary>
+    [CodeGenSuppressAttribute("CreateOrUpdateAsync", typeof(WaitUntil), typeof(string), typeof(DnsRecordType), typeof(DnsPtrRecordData), typeof(MatchConditions), typeof(CancellationToken))]
+    [CodeGenSuppressAttribute("CreateOrUpdate", typeof(WaitUntil), typeof(string), typeof(DnsRecordType), typeof(DnsPtrRecordData), typeof(MatchConditions), typeof(CancellationToken))]
+    [CodeGenSuppressAttribute("GetAsync", typeof(string), typeof(DnsRecordType), typeof(CancellationToken))]
+    [CodeGenSuppressAttribute("Get", typeof(string), typeof(DnsRecordType), typeof(CancellationToken))]
+    [CodeGenSuppressAttribute("ExistsAsync", typeof(string), typeof(DnsRecordType), typeof(CancellationToken))]
+    [CodeGenSuppressAttribute("Exists", typeof(string), typeof(DnsRecordType), typeof(CancellationToken))]
+    [CodeGenSuppressAttribute("GetIfExistsAsync", typeof(string), typeof(DnsRecordType), typeof(CancellationToken))]
+    [CodeGenSuppressAttribute("GetIfExists", typeof(string), typeof(DnsRecordType), typeof(CancellationToken))]
     public partial class DnsPtrRecordCollection : ArmCollection, IEnumerable<DnsPtrRecordResource>, IAsyncEnumerable<DnsPtrRecordResource>
     {
-        private readonly ClientDiagnostics _ptrRecordInfoRecordSetsClientDiagnostics;
-        private readonly DnsPtrRecordRestOperations _ptrRecordInfoRecordSetsRestClient;
+        private readonly ClientDiagnostics _recordSetsClientDiagnostics;
+        private readonly RecordSets _recordSetsRestClient;
 
-        /// <summary> Initializes a new instance of the <see cref="DnsPtrRecordCollection"/> class for mocking. </summary>
+        /// <summary> Initializes a new instance of DnsPtrRecordCollection for mocking. </summary>
         protected DnsPtrRecordCollection()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref="DnsPtrRecordCollection"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="DnsPtrRecordCollection"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
-        /// <param name="id"> The identifier of the parent resource that is the target of operations. </param>
+        /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal DnsPtrRecordCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _ptrRecordInfoRecordSetsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Dns", DnsPtrRecordResource.ResourceType.Namespace, Diagnostics);
-            TryGetApiVersion(DnsPtrRecordResource.ResourceType, out string ptrRecordInfoRecordSetsApiVersion);
-            _ptrRecordInfoRecordSetsRestClient = new DnsPtrRecordRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, ptrRecordInfoRecordSetsApiVersion);
-#if DEBUG
-            ValidateResourceId(Id);
-#endif
+            TryGetApiVersion(DnsPtrRecordResource.ResourceType, out string dnsPtrRecordApiVersion);
+            _recordSetsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Dns", DnsPtrRecordResource.ResourceType.Namespace, Diagnostics);
+            _recordSetsRestClient = new RecordSets(_recordSetsClientDiagnostics, Pipeline, Endpoint, dnsPtrRecordApiVersion ?? "2023-07-01-preview");
+            ValidateResourceId(id);
         }
 
+        /// <param name="id"></param>
+        [Conditional("DEBUG")]
         internal static void ValidateResourceId(ResourceIdentifier id)
         {
             if (id.ResourceType != DnsZoneResource.ResourceType)
-                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, DnsZoneResource.ResourceType), nameof(id));
+            {
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, DnsZoneResource.ResourceType), nameof(id));
+            }
         }
 
+        /// <summary> Creates or updates a DNS PTR record set. </summary>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. </param>
+        /// <param name="ptrRecordName"> The name of the PTR record set. </param>
+        /// <param name="data"> Parameters supplied to the CreateOrUpdate operation. </param>
+        /// <param name="ifMatch"> The etag of the record set. Omit this value to always overwrite the current record set. Specify the last-seen etag value to prevent accidentally overwriting any concurrent changes. </param>
+        /// <param name="ifNoneMatch"> Set to '*' to allow a new record set to be created, but to prevent updating an existing record set. Other values will be ignored. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> An <see cref="ArmOperation{T}"/> that tracks the operation. </returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public virtual async Task<ArmOperation<DnsPtrRecordResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string ptrRecordName, DnsPtrRecordData data, ETag? ifMatch, string ifNoneMatch = null, CancellationToken cancellationToken = default)
+            => await CreateOrUpdateAsync(waitUntil, ptrRecordName, data, new MatchConditions() { IfMatch = ifMatch, IfNoneMatch = ifNoneMatch != null ? new ETag(ifNoneMatch) : default(ETag?) }, cancellationToken).ConfigureAwait(false);
+
+        /// <summary> Creates or updates a DNS PTR record set. </summary>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. </param>
+        /// <param name="ptrRecordName"> The name of the PTR record set. </param>
+        /// <param name="data"> Parameters supplied to the CreateOrUpdate operation. </param>
+        /// <param name="ifMatch"> The etag of the record set. Omit this value to always overwrite the current record set. Specify the last-seen etag value to prevent accidentally overwriting any concurrent changes. </param>
+        /// <param name="ifNoneMatch"> Set to '*' to allow a new record set to be created, but to prevent updating an existing record set. Other values will be ignored. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> An <see cref="ArmOperation{T}"/> that tracks the operation. </returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public virtual ArmOperation<DnsPtrRecordResource> CreateOrUpdate(WaitUntil waitUntil, string ptrRecordName, DnsPtrRecordData data, ETag? ifMatch, string ifNoneMatch = null, CancellationToken cancellationToken = default)
+            => CreateOrUpdate(waitUntil, ptrRecordName, data, new MatchConditions() { IfMatch = ifMatch, IfNoneMatch = ifNoneMatch != null ? new ETag(ifNoneMatch) : default(ETag?) }, cancellationToken);
+
+        /// <summary> Lists the PTR record sets in a DNS zone. </summary>
+        /// <param name="top"> The maximum number of record sets to return. </param>
+        /// <param name="recordsetnamesuffix"> The suffix label of the record set name used to filter record set enumerations. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> A collection of <see cref="DnsPtrRecordResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<DnsPtrRecordResource> GetAllAsync(int? top = default, string recordsetnamesuffix = null, CancellationToken cancellationToken = default)
+            => DnsRecordData.GetAllAsync(_recordSetsRestClient, Client, Id, "PTR", top, recordsetnamesuffix, cancellationToken, "DnsPtrRecordCollection.GetAll", (client, id) => new DnsPtrRecordResource(client, id));
+
+        /// <summary> Lists the PTR record sets in a DNS zone. </summary>
+        /// <param name="top"> The maximum number of record sets to return. </param>
+        /// <param name="recordsetnamesuffix"> The suffix label of the record set name used to filter record set enumerations. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> A collection of <see cref="DnsPtrRecordResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<DnsPtrRecordResource> GetAll(int? top = default, string recordsetnamesuffix = null, CancellationToken cancellationToken = default)
+            => DnsRecordData.GetAll(_recordSetsRestClient, Client, Id, "PTR", top, recordsetnamesuffix, cancellationToken, "DnsPtrRecordCollection.GetAll", (client, id) => new DnsPtrRecordResource(client, id));
+
+        IEnumerator<DnsPtrRecordResource> IEnumerable<DnsPtrRecordResource>.GetEnumerator() => GetAll().GetEnumerator();
+
+        IEnumerator IEnumerable.GetEnumerator() => GetAll().GetEnumerator();
+
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        IAsyncEnumerator<DnsPtrRecordResource> IAsyncEnumerable<DnsPtrRecordResource>.GetAsyncEnumerator(CancellationToken cancellationToken)
+            => GetAllAsync(cancellationToken: cancellationToken).GetAsyncEnumerator(cancellationToken);
+
         /// <summary>
-        /// Creates or updates a record set within a DNS zone.
+        /// Creates or updates a record set within a DNS zone. Record sets of type SOA can be updated but not created (they are created when the DNS zone is created).
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/dnsZones/{zoneName}/{recordType}/{ptrRecordName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/dnsZones/{zoneName}/{recordType}/{ptrRecordName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>RecordSets_CreateOrUpdate</description>
+        /// <term> Operation Id. </term>
+        /// <description> RecordSets_CreateOrUpdate. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2023-07-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="ptrRecordName"> The name of the record set, relative to the name of the zone. </param>
         /// <param name="data"> Parameters supplied to the CreateOrUpdate operation. </param>
-        /// <param name="ifMatch"> The etag of the record set. Omit this value to always overwrite the current record set. Specify the last-seen etag value to prevent accidentally overwriting any concurrent changes. </param>
-        /// <param name="ifNoneMatch"> Set to &apos;*&apos; to allow a new record set to be created, but to prevent updating an existing record set. Other values will be ignored. </param>
+        /// <param name="matchConditions"> The content to send as the request conditions of the request. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="ptrRecordName"/> or <paramref name="data"/> is null. </exception>
-        public virtual async Task<ArmOperation<DnsPtrRecordResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string ptrRecordName, DnsPtrRecordData data, ETag? ifMatch = null, string ifNoneMatch = null, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentException"> <paramref name="ptrRecordName"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual async Task<ArmOperation<DnsPtrRecordResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string ptrRecordName, DnsPtrRecordData data, MatchConditions matchConditions = default, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(ptrRecordName, nameof(ptrRecordName));
+            Argument.AssertNotNullOrEmpty(ptrRecordName, nameof(ptrRecordName));
             Argument.AssertNotNull(data, nameof(data));
 
-            using var scope = _ptrRecordInfoRecordSetsClientDiagnostics.CreateScope("DnsPtrRecordCollection.CreateOrUpdate");
+            using DiagnosticScope scope = _recordSetsClientDiagnostics.CreateScope("DnsPtrRecordCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                var response = await _ptrRecordInfoRecordSetsRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, "PTR".ToDnsRecordType(), ptrRecordName, data, ifMatch, ifNoneMatch, cancellationToken).ConfigureAwait(false);
-                var operation = new DnsArmOperation<DnsPtrRecordResource>(Response.FromValue(new DnsPtrRecordResource(Client, response), response.GetRawResponse()));
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _recordSetsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, ptrRecordName, "PTR", DnsPtrRecordData.ToRequestContent(data), matchConditions, context);
+                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                Response<DnsPtrRecordData> response = Response.FromValue(DnsPtrRecordData.FromResponse(result), result);
+                RequestUriBuilder uri = message.Request.Uri;
+                RehydrationToken rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
+                DnsArmOperation<DnsPtrRecordResource> operation = new DnsArmOperation<DnsPtrRecordResource>(Response.FromValue(new DnsPtrRecordResource(Client, response.Value), response.GetRawResponse()), rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
+                {
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
+                }
                 return operation;
             }
             catch (Exception e)
@@ -97,38 +168,52 @@ namespace Azure.ResourceManager.Dns
         }
 
         /// <summary>
-        /// Creates or updates a record set within a DNS zone.
+        /// Creates or updates a record set within a DNS zone. Record sets of type SOA can be updated but not created (they are created when the DNS zone is created).
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/dnsZones/{zoneName}/{recordType}/{ptrRecordName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/dnsZones/{zoneName}/{recordType}/{ptrRecordName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>RecordSets_CreateOrUpdate</description>
+        /// <term> Operation Id. </term>
+        /// <description> RecordSets_CreateOrUpdate. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2023-07-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="ptrRecordName"> The name of the record set, relative to the name of the zone. </param>
         /// <param name="data"> Parameters supplied to the CreateOrUpdate operation. </param>
-        /// <param name="ifMatch"> The etag of the record set. Omit this value to always overwrite the current record set. Specify the last-seen etag value to prevent accidentally overwriting any concurrent changes. </param>
-        /// <param name="ifNoneMatch"> Set to &apos;*&apos; to allow a new record set to be created, but to prevent updating an existing record set. Other values will be ignored. </param>
+        /// <param name="matchConditions"> The content to send as the request conditions of the request. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="ptrRecordName"/> or <paramref name="data"/> is null. </exception>
-        public virtual ArmOperation<DnsPtrRecordResource> CreateOrUpdate(WaitUntil waitUntil, string ptrRecordName, DnsPtrRecordData data, ETag? ifMatch = null, string ifNoneMatch = null, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentException"> <paramref name="ptrRecordName"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual ArmOperation<DnsPtrRecordResource> CreateOrUpdate(WaitUntil waitUntil, string ptrRecordName, DnsPtrRecordData data, MatchConditions matchConditions = default, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(ptrRecordName, nameof(ptrRecordName));
+            Argument.AssertNotNullOrEmpty(ptrRecordName, nameof(ptrRecordName));
             Argument.AssertNotNull(data, nameof(data));
 
-            using var scope = _ptrRecordInfoRecordSetsClientDiagnostics.CreateScope("DnsPtrRecordCollection.CreateOrUpdate");
+            using DiagnosticScope scope = _recordSetsClientDiagnostics.CreateScope("DnsPtrRecordCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                var response = _ptrRecordInfoRecordSetsRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, "PTR".ToDnsRecordType(), ptrRecordName, data, ifMatch, ifNoneMatch, cancellationToken);
-                var operation = new DnsArmOperation<DnsPtrRecordResource>(Response.FromValue(new DnsPtrRecordResource(Client, response), response.GetRawResponse()));
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _recordSetsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, ptrRecordName, "PTR", DnsPtrRecordData.ToRequestContent(data), matchConditions, context);
+                Response result = Pipeline.ProcessMessage(message, context);
+                Response<DnsPtrRecordData> response = Response.FromValue(DnsPtrRecordData.FromResponse(result), result);
+                RequestUriBuilder uri = message.Request.Uri;
+                RehydrationToken rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
+                DnsArmOperation<DnsPtrRecordResource> operation = new DnsArmOperation<DnsPtrRecordResource>(Response.FromValue(new DnsPtrRecordResource(Client, response.Value), response.GetRawResponse()), rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
+                {
                     operation.WaitForCompletion(cancellationToken);
+                }
                 return operation;
             }
             catch (Exception e)
@@ -142,29 +227,42 @@ namespace Azure.ResourceManager.Dns
         /// Gets a record set.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/dnsZones/{zoneName}/{recordType}/{ptrRecordName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/dnsZones/{zoneName}/{recordType}/{ptrRecordName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>RecordSets_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> RecordSets_Get. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2023-07-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="ptrRecordName"> The name of the record set, relative to the name of the zone. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="ptrRecordName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="ptrRecordName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual async Task<Response<DnsPtrRecordResource>> GetAsync(string ptrRecordName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(ptrRecordName, nameof(ptrRecordName));
+            Argument.AssertNotNullOrEmpty(ptrRecordName, nameof(ptrRecordName));
 
-            using var scope = _ptrRecordInfoRecordSetsClientDiagnostics.CreateScope("DnsPtrRecordCollection.Get");
+            using DiagnosticScope scope = _recordSetsClientDiagnostics.CreateScope("DnsPtrRecordCollection.Get");
             scope.Start();
             try
             {
-                var response = await _ptrRecordInfoRecordSetsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, "PTR".ToDnsRecordType(), ptrRecordName, cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _recordSetsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, ptrRecordName, "PTR", context);
+                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                Response<DnsPtrRecordData> response = Response.FromValue(DnsPtrRecordData.FromResponse(result), result);
                 if (response.Value == null)
+                {
                     throw new RequestFailedException(response.GetRawResponse());
+                }
                 return Response.FromValue(new DnsPtrRecordResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -178,29 +276,42 @@ namespace Azure.ResourceManager.Dns
         /// Gets a record set.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/dnsZones/{zoneName}/{recordType}/{ptrRecordName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/dnsZones/{zoneName}/{recordType}/{ptrRecordName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>RecordSets_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> RecordSets_Get. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2023-07-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="ptrRecordName"> The name of the record set, relative to the name of the zone. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="ptrRecordName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="ptrRecordName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual Response<DnsPtrRecordResource> Get(string ptrRecordName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(ptrRecordName, nameof(ptrRecordName));
+            Argument.AssertNotNullOrEmpty(ptrRecordName, nameof(ptrRecordName));
 
-            using var scope = _ptrRecordInfoRecordSetsClientDiagnostics.CreateScope("DnsPtrRecordCollection.Get");
+            using DiagnosticScope scope = _recordSetsClientDiagnostics.CreateScope("DnsPtrRecordCollection.Get");
             scope.Start();
             try
             {
-                var response = _ptrRecordInfoRecordSetsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, "PTR".ToDnsRecordType(), ptrRecordName, cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _recordSetsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, ptrRecordName, "PTR", context);
+                Response result = Pipeline.ProcessMessage(message, context);
+                Response<DnsPtrRecordData> response = Response.FromValue(DnsPtrRecordData.FromResponse(result), result);
                 if (response.Value == null)
+                {
                     throw new RequestFailedException(response.GetRawResponse());
+                }
                 return Response.FromValue(new DnsPtrRecordResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -211,134 +322,53 @@ namespace Azure.ResourceManager.Dns
         }
 
         /// <summary>
-        /// Lists the record sets of a specified type in a DNS zone.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/dnsZones/{zoneName}/{recordType}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>RecordSets_ListByType</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="top"> The maximum number of record sets to return. If not specified, returns up to 100 record sets. </param>
-        /// <param name="recordsetnamesuffix"> The suffix label of the record set name that has to be used to filter the record set enumerations. If this parameter is specified, Enumeration will return only records that end with .&lt;recordSetNameSuffix&gt;. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="DnsPtrRecordResource" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<DnsPtrRecordResource> GetAllAsync(int? top = null, string recordsetnamesuffix = null, CancellationToken cancellationToken = default)
-        {
-            async Task<Page<DnsPtrRecordResource>> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _ptrRecordInfoRecordSetsClientDiagnostics.CreateScope("DnsPtrRecordCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = await _ptrRecordInfoRecordSetsRestClient.ListByTypeAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, "PTR".ToDnsRecordType(), top, recordsetnamesuffix, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new DnsPtrRecordResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            async Task<Page<DnsPtrRecordResource>> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = _ptrRecordInfoRecordSetsClientDiagnostics.CreateScope("DnsPtrRecordCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = await _ptrRecordInfoRecordSetsRestClient.ListByTypeNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, "PTR".ToDnsRecordType(), top, recordsetnamesuffix, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new DnsPtrRecordResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
-        }
-
-        /// <summary>
-        /// Lists the record sets of a specified type in a DNS zone.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/dnsZones/{zoneName}/{recordType}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>RecordSets_ListByType</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="top"> The maximum number of record sets to return. If not specified, returns up to 100 record sets. </param>
-        /// <param name="recordsetnamesuffix"> The suffix label of the record set name that has to be used to filter the record set enumerations. If this parameter is specified, Enumeration will return only records that end with .&lt;recordSetNameSuffix&gt;. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="DnsPtrRecordResource" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<DnsPtrRecordResource> GetAll(int? top = null, string recordsetnamesuffix = null, CancellationToken cancellationToken = default)
-        {
-            Page<DnsPtrRecordResource> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _ptrRecordInfoRecordSetsClientDiagnostics.CreateScope("DnsPtrRecordCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = _ptrRecordInfoRecordSetsRestClient.ListByType(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, "PTR".ToDnsRecordType(), top, recordsetnamesuffix, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new DnsPtrRecordResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            Page<DnsPtrRecordResource> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = _ptrRecordInfoRecordSetsClientDiagnostics.CreateScope("DnsPtrRecordCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = _ptrRecordInfoRecordSetsRestClient.ListByTypeNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, "PTR".ToDnsRecordType(), top, recordsetnamesuffix, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new DnsPtrRecordResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
-        }
-
-        /// <summary>
         /// Checks to see if the resource exists in azure.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/dnsZones/{zoneName}/{recordType}/{ptrRecordName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/dnsZones/{zoneName}/{recordType}/{ptrRecordName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>RecordSets_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> RecordSets_Get. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2023-07-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="ptrRecordName"> The name of the record set, relative to the name of the zone. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="ptrRecordName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="ptrRecordName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual async Task<Response<bool>> ExistsAsync(string ptrRecordName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(ptrRecordName, nameof(ptrRecordName));
+            Argument.AssertNotNullOrEmpty(ptrRecordName, nameof(ptrRecordName));
 
-            using var scope = _ptrRecordInfoRecordSetsClientDiagnostics.CreateScope("DnsPtrRecordCollection.Exists");
+            using DiagnosticScope scope = _recordSetsClientDiagnostics.CreateScope("DnsPtrRecordCollection.Exists");
             scope.Start();
             try
             {
-                var response = await _ptrRecordInfoRecordSetsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, "PTR".ToDnsRecordType(), ptrRecordName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _recordSetsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, ptrRecordName, "PTR", context);
+                await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
+                Response result = message.Response;
+                Response<DnsPtrRecordData> response = default;
+                switch (result.Status)
+                {
+                    case 200:
+                        response = Response.FromValue(DnsPtrRecordData.FromResponse(result), result);
+                        break;
+                    case 404:
+                        response = Response.FromValue((DnsPtrRecordData)null, result);
+                        break;
+                    default:
+                        throw new RequestFailedException(result);
+                }
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -352,27 +382,50 @@ namespace Azure.ResourceManager.Dns
         /// Checks to see if the resource exists in azure.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/dnsZones/{zoneName}/{recordType}/{ptrRecordName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/dnsZones/{zoneName}/{recordType}/{ptrRecordName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>RecordSets_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> RecordSets_Get. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2023-07-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="ptrRecordName"> The name of the record set, relative to the name of the zone. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="ptrRecordName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="ptrRecordName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual Response<bool> Exists(string ptrRecordName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(ptrRecordName, nameof(ptrRecordName));
+            Argument.AssertNotNullOrEmpty(ptrRecordName, nameof(ptrRecordName));
 
-            using var scope = _ptrRecordInfoRecordSetsClientDiagnostics.CreateScope("DnsPtrRecordCollection.Exists");
+            using DiagnosticScope scope = _recordSetsClientDiagnostics.CreateScope("DnsPtrRecordCollection.Exists");
             scope.Start();
             try
             {
-                var response = _ptrRecordInfoRecordSetsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, "PTR".ToDnsRecordType(), ptrRecordName, cancellationToken: cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _recordSetsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, ptrRecordName, "PTR", context);
+                Pipeline.Send(message, context.CancellationToken);
+                Response result = message.Response;
+                Response<DnsPtrRecordData> response = default;
+                switch (result.Status)
+                {
+                    case 200:
+                        response = Response.FromValue(DnsPtrRecordData.FromResponse(result), result);
+                        break;
+                    case 404:
+                        response = Response.FromValue((DnsPtrRecordData)null, result);
+                        break;
+                    default:
+                        throw new RequestFailedException(result);
+                }
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -382,19 +435,126 @@ namespace Azure.ResourceManager.Dns
             }
         }
 
-        IEnumerator<DnsPtrRecordResource> IEnumerable<DnsPtrRecordResource>.GetEnumerator()
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/dnsZones/{zoneName}/{recordType}/{ptrRecordName}. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> RecordSets_Get. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2023-07-01-preview. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="ptrRecordName"> The name of the record set, relative to the name of the zone. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="ptrRecordName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="ptrRecordName"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual async Task<NullableResponse<DnsPtrRecordResource>> GetIfExistsAsync(string ptrRecordName, CancellationToken cancellationToken = default)
         {
-            return GetAll().GetEnumerator();
+            Argument.AssertNotNullOrEmpty(ptrRecordName, nameof(ptrRecordName));
+
+            using DiagnosticScope scope = _recordSetsClientDiagnostics.CreateScope("DnsPtrRecordCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _recordSetsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, ptrRecordName, "PTR", context);
+                await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
+                Response result = message.Response;
+                Response<DnsPtrRecordData> response = default;
+                switch (result.Status)
+                {
+                    case 200:
+                        response = Response.FromValue(DnsPtrRecordData.FromResponse(result), result);
+                        break;
+                    case 404:
+                        response = Response.FromValue((DnsPtrRecordData)null, result);
+                        break;
+                    default:
+                        throw new RequestFailedException(result);
+                }
+                if (response.Value == null)
+                {
+                    return new NoValueResponse<DnsPtrRecordResource>(response.GetRawResponse());
+                }
+                return Response.FromValue(new DnsPtrRecordResource(Client, response.Value), response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
 
-        IEnumerator IEnumerable.GetEnumerator()
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/dnsZones/{zoneName}/{recordType}/{ptrRecordName}. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> RecordSets_Get. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2023-07-01-preview. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="ptrRecordName"> The name of the record set, relative to the name of the zone. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="ptrRecordName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="ptrRecordName"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual NullableResponse<DnsPtrRecordResource> GetIfExists(string ptrRecordName, CancellationToken cancellationToken = default)
         {
-            return GetAll().GetEnumerator();
-        }
+            Argument.AssertNotNullOrEmpty(ptrRecordName, nameof(ptrRecordName));
 
-        IAsyncEnumerator<DnsPtrRecordResource> IAsyncEnumerable<DnsPtrRecordResource>.GetAsyncEnumerator(CancellationToken cancellationToken)
-        {
-            return GetAllAsync(cancellationToken: cancellationToken).GetAsyncEnumerator(cancellationToken);
+            using DiagnosticScope scope = _recordSetsClientDiagnostics.CreateScope("DnsPtrRecordCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _recordSetsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, ptrRecordName, "PTR", context);
+                Pipeline.Send(message, context.CancellationToken);
+                Response result = message.Response;
+                Response<DnsPtrRecordData> response = default;
+                switch (result.Status)
+                {
+                    case 200:
+                        response = Response.FromValue(DnsPtrRecordData.FromResponse(result), result);
+                        break;
+                    case 404:
+                        response = Response.FromValue((DnsPtrRecordData)null, result);
+                        break;
+                    default:
+                        throw new RequestFailedException(result);
+                }
+                if (response.Value == null)
+                {
+                    return new NoValueResponse<DnsPtrRecordResource>(response.GetRawResponse());
+                }
+                return Response.FromValue(new DnsPtrRecordResource(Client, response.Value), response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
     }
 }

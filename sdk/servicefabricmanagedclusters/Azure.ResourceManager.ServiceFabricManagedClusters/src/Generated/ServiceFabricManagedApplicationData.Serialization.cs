@@ -72,9 +72,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
             {
                 return null;
             }
-            Utf8JsonRequestContent content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(serviceFabricManagedApplicationData, ModelSerializationExtensions.WireOptions);
-            return content;
+            return RequestContent.Create(serviceFabricManagedApplicationData, ModelSerializationExtensions.WireOptions);
         }
 
         /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="ServiceFabricManagedApplicationData"/> from. </param>
@@ -111,7 +109,22 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
             if (Optional.IsDefined(Identity))
             {
                 writer.WritePropertyName("identity"u8);
-                ((IJsonModel<ManagedServiceIdentity>)Identity).Write(writer, options);
+                ((IJsonModel<ManagedServiceIdentity>)Identity).Write(writer, options.Format == "W" ? ModelSerializationExtensions.WireV3Options : ModelSerializationExtensions.JsonV3Options);
+            }
+            if (options.Format != "W" && _additionalBinaryDataProperties != null)
+            {
+                foreach (var item in _additionalBinaryDataProperties)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+                    writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
             }
         }
 
@@ -144,11 +157,11 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
             string name = default;
             ResourceType resourceType = default;
             SystemData systemData = default;
-            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            IDictionary<string, string> tags = default;
             AzureLocation location = default;
             ApplicationResourceProperties properties = default;
-            IDictionary<string, string> tags = default;
             ManagedServiceIdentity identity = default;
+            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("id"u8))
@@ -183,20 +196,6 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
                     systemData = ModelReaderWriter.Read<SystemData>(new BinaryData(Encoding.UTF8.GetBytes(prop.Value.GetRawText())), ModelSerializationExtensions.WireOptions, AzureResourceManagerServiceFabricManagedClustersContext.Default);
                     continue;
                 }
-                if (prop.NameEquals("location"u8))
-                {
-                    location = new AzureLocation(prop.Value.GetString());
-                    continue;
-                }
-                if (prop.NameEquals("properties"u8))
-                {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    properties = ApplicationResourceProperties.DeserializeApplicationResourceProperties(prop.Value, options);
-                    continue;
-                }
                 if (prop.NameEquals("tags"u8))
                 {
                     if (prop.Value.ValueKind == JsonValueKind.Null)
@@ -218,13 +217,27 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
                     tags = dictionary;
                     continue;
                 }
+                if (prop.NameEquals("location"u8))
+                {
+                    location = new AzureLocation(prop.Value.GetString());
+                    continue;
+                }
+                if (prop.NameEquals("properties"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    properties = ApplicationResourceProperties.DeserializeApplicationResourceProperties(prop.Value, options);
+                    continue;
+                }
                 if (prop.NameEquals("identity"u8))
                 {
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    identity = ModelReaderWriter.Read<ManagedServiceIdentity>(new BinaryData(Encoding.UTF8.GetBytes(prop.Value.GetRawText())), ModelSerializationExtensions.WireOptions, AzureResourceManagerServiceFabricManagedClustersContext.Default);
+                    identity = ModelReaderWriter.Read<ManagedServiceIdentity>(new BinaryData(Encoding.UTF8.GetBytes(prop.Value.GetRawText())), options.Format == "W" ? ModelSerializationExtensions.WireV3Options : ModelSerializationExtensions.JsonV3Options, AzureResourceManagerServiceFabricManagedClustersContext.Default);
                     continue;
                 }
                 if (options.Format != "W")
@@ -237,11 +250,11 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
                 name,
                 resourceType,
                 systemData,
-                additionalBinaryDataProperties,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
                 location,
                 properties,
-                tags ?? new ChangeTrackingDictionary<string, string>(),
-                identity);
+                identity,
+                additionalBinaryDataProperties);
         }
     }
 }

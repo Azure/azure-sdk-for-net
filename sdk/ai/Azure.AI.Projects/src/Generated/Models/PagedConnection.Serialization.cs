@@ -7,9 +7,8 @@ using System.ClientModel;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure.AI.Projects;
 
-namespace Azure.Core.Foundations
+namespace Azure.AI.Projects
 {
     /// <summary> Paged collection of Connection items. </summary>
     internal partial class PagedConnection : IJsonModel<PagedConnection>

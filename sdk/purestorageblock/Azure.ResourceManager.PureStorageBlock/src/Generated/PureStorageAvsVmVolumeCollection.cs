@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.PureStorageBlock
         {
             if (id.ResourceType != PureStorageAvsVmResource.ResourceType)
             {
-                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, PureStorageAvsVmResource.ResourceType), id);
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, PureStorageAvsVmResource.ResourceType), nameof(id));
             }
         }
 
@@ -183,7 +183,8 @@ namespace Azure.ResourceManager.PureStorageBlock
                 Id.ResourceGroupName,
                 Id.Parent.Name,
                 Id.Name,
-                context), data => new PureStorageAvsVmVolumeResource(Client, data));
+                context,
+                "PureStorageAvsVmVolumeCollection.GetAll"), data => new PureStorageAvsVmVolumeResource(Client, data));
         }
 
         /// <summary>
@@ -217,7 +218,8 @@ namespace Azure.ResourceManager.PureStorageBlock
                 Id.ResourceGroupName,
                 Id.Parent.Name,
                 Id.Name,
-                context), data => new PureStorageAvsVmVolumeResource(Client, data));
+                context,
+                "PureStorageAvsVmVolumeCollection.GetAll"), data => new PureStorageAvsVmVolumeResource(Client, data));
         }
 
         /// <summary>

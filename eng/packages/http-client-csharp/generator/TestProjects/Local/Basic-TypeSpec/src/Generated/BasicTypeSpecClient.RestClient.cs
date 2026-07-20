@@ -231,7 +231,7 @@ namespace BasicTypeSpec
             return message;
         }
 
-        internal HttpMessage CreateGetUnknownValueRequest(string accept, RequestContext context)
+        internal HttpMessage CreateGetUnknownValueRequest(RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -240,7 +240,7 @@ namespace BasicTypeSpec
             Request request = message.Request;
             request.Uri = uri;
             request.Method = RequestMethod.Get;
-            request.Headers.SetValue("Accept", accept);
+            request.Headers.SetValue("Accept", "text/plain");
             return message;
         }
 
@@ -578,6 +578,20 @@ namespace BasicTypeSpec
             request.Method = RequestMethod.Put;
             request.Headers.SetValue("Content-Type", "application/xml");
             request.Headers.SetValue("Accept", "application/xml");
+            request.Content = content;
+            return message;
+        }
+
+        internal HttpMessage CreateUploadCatRequest(RequestContent content, string contentType, RequestContext context)
+        {
+            RawRequestUriBuilder uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/cats", false);
+            HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier204);
+            Request request = message.Request;
+            request.Uri = uri;
+            request.Method = RequestMethod.Post;
+            request.Headers.SetValue("Content-Type", contentType);
             request.Content = content;
             return message;
         }

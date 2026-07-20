@@ -20,9 +20,9 @@ namespace Azure.ResourceManager.HybridNetwork.Models
 
         /// <summary> Initializes a new instance of <see cref="AzureArcKubernetesDeployMappingRuleProfile"/>. </summary>
         /// <param name="applicationEnablement"> The application enablement. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="helmMappingRuleProfile"> The helm mapping rule profile. </param>
-        internal AzureArcKubernetesDeployMappingRuleProfile(ApplicationEnablement? applicationEnablement, IDictionary<string, BinaryData> serializedAdditionalRawData, HelmMappingRuleProfile helmMappingRuleProfile) : base(applicationEnablement, serializedAdditionalRawData)
+        internal AzureArcKubernetesDeployMappingRuleProfile(ApplicationEnablement? applicationEnablement, IDictionary<string, BinaryData> additionalBinaryDataProperties, HelmMappingRuleProfile helmMappingRuleProfile) : base(applicationEnablement, additionalBinaryDataProperties)
         {
             HelmMappingRuleProfile = helmMappingRuleProfile;
         }

@@ -73,7 +73,7 @@ namespace Azure.ResourceManager.ArtifactSigning.Models
         {
             get
             {
-                return Revocation.RequestedOn;
+                return Revocation is null ? default : Revocation.RequestedOn;
             }
         }
 
@@ -82,7 +82,7 @@ namespace Azure.ResourceManager.ArtifactSigning.Models
         {
             get
             {
-                return Revocation.EffectiveOn;
+                return Revocation is null ? default : Revocation.EffectiveOn;
             }
         }
 
@@ -91,7 +91,7 @@ namespace Azure.ResourceManager.ArtifactSigning.Models
         {
             get
             {
-                return Revocation.Reason;
+                return Revocation is null ? default : Revocation.Reason;
             }
         }
 
@@ -100,7 +100,7 @@ namespace Azure.ResourceManager.ArtifactSigning.Models
         {
             get
             {
-                return Revocation.Remarks;
+                return Revocation is null ? default : Revocation.Remarks;
             }
         }
 
@@ -109,7 +109,7 @@ namespace Azure.ResourceManager.ArtifactSigning.Models
         {
             get
             {
-                return Revocation.RevocationStatus;
+                return Revocation is null ? default : Revocation.RevocationStatus;
             }
         }
 
@@ -118,7 +118,7 @@ namespace Azure.ResourceManager.ArtifactSigning.Models
         {
             get
             {
-                return Revocation.FailureReason;
+                return Revocation is null ? default : Revocation.FailureReason;
             }
         }
     }

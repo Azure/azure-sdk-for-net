@@ -10,21 +10,14 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.HybridNetwork.Models
 {
-    /// <summary> Unknown version of AzureCoreNetworkFunctionApplication. </summary>
     internal partial class UnknownAzureCoreNetworkFunctionApplication : AzureCoreNetworkFunctionApplication
     {
         /// <summary> Initializes a new instance of <see cref="UnknownAzureCoreNetworkFunctionApplication"/>. </summary>
         /// <param name="name"> The name of the network function application. </param>
         /// <param name="dependsOnProfile"> Depends on profile definition. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="artifactType"> The artifact type. </param>
-        internal UnknownAzureCoreNetworkFunctionApplication(string name, DependsOnProfile dependsOnProfile, IDictionary<string, BinaryData> serializedAdditionalRawData, AzureCoreArtifactType artifactType) : base(name, dependsOnProfile, serializedAdditionalRawData, artifactType)
-        {
-            ArtifactType = artifactType;
-        }
-
-        /// <summary> Initializes a new instance of <see cref="UnknownAzureCoreNetworkFunctionApplication"/> for deserialization. </summary>
-        internal UnknownAzureCoreNetworkFunctionApplication()
+        internal UnknownAzureCoreNetworkFunctionApplication(string name, DependsOnProfile dependsOnProfile, IDictionary<string, BinaryData> additionalBinaryDataProperties, AzureCoreArtifactType artifactType) : base(name, dependsOnProfile, additionalBinaryDataProperties, artifactType != default ? artifactType : "unknown")
         {
         }
     }

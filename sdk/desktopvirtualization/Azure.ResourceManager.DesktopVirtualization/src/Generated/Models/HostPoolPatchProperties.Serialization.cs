@@ -189,6 +189,11 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
                 writer.WritePropertyName("allowRDPShortPathWithPrivateLink"u8);
                 writer.WriteStringValue(AllowRdpShortPathWithPrivateLink.Value.ToString());
             }
+            if (Optional.IsDefined(ConditionalRdpProperty))
+            {
+                writer.WritePropertyName("conditionalRdpProperty"u8);
+                writer.WriteStringValue(ConditionalRdpProperty);
+            }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
                 foreach (var item in _additionalBinaryDataProperties)
@@ -253,7 +258,8 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
             DesktopVirtualizationDirectUdp? directUdp = default;
             DesktopVirtualizationPublicUdp? publicUdp = default;
             DesktopVirtualizationRelayUdp? relayUdp = default;
-            AllowRdpShortPathWithPrivateLink? allowRdpShortPathWithPrivateLink = default;
+            DesktopVirtualizationAllowRdpShortPathWithPrivateLink? allowRdpShortPathWithPrivateLink = default;
+            string conditionalRdpProperty = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -433,7 +439,12 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
                     {
                         continue;
                     }
-                    allowRdpShortPathWithPrivateLink = new AllowRdpShortPathWithPrivateLink(prop.Value.GetString());
+                    allowRdpShortPathWithPrivateLink = new DesktopVirtualizationAllowRdpShortPathWithPrivateLink(prop.Value.GetString());
+                    continue;
+                }
+                if (prop.NameEquals("conditionalRdpProperty"u8))
+                {
+                    conditionalRdpProperty = prop.Value.GetString();
                     continue;
                 }
                 if (options.Format != "W")
@@ -465,6 +476,7 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
                 publicUdp,
                 relayUdp,
                 allowRdpShortPathWithPrivateLink,
+                conditionalRdpProperty,
                 additionalBinaryDataProperties);
         }
     }

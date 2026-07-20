@@ -1,4 +1,4 @@
-﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 using System;
 using System.Collections.Generic;
@@ -15,7 +15,7 @@ namespace Azure.AI.Agents.Persistent
                     openApiAuthentication: openApiAuthentication,
                     defaultParams: defaultParams ?? [],
                     functions: new ChangeTrackingList<InternalFunctionDefinition>(),
-                    serializedAdditionalRawData: null
+                    additionalBinaryDataProperties: null
                     )
             )
         { }

@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.Peering
         {
             if (id.ResourceType != PeeringServiceResource.ResourceType)
             {
-                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, PeeringServiceResource.ResourceType), id);
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, PeeringServiceResource.ResourceType), nameof(id));
             }
         }
 
@@ -296,7 +296,8 @@ namespace Azure.ResourceManager.Peering
                 Id.ResourceGroupName,
                 Id.Name,
                 expand,
-                context), data => new PeeringServicePrefixResource(Client, data));
+                context,
+                "PeeringServicePrefixCollection.GetAll"), data => new PeeringServicePrefixResource(Client, data));
         }
 
         /// <summary>
@@ -331,7 +332,8 @@ namespace Azure.ResourceManager.Peering
                 Id.ResourceGroupName,
                 Id.Name,
                 expand,
-                context), data => new PeeringServicePrefixResource(Client, data));
+                context,
+                "PeeringServicePrefixCollection.GetAll"), data => new PeeringServicePrefixResource(Client, data));
         }
 
         /// <summary>

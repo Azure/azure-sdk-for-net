@@ -68,7 +68,7 @@ namespace Azure.ResourceManager.Grafana.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<ManagedGrafanaData, ManagedGrafanaResource>(new ManagedGrafanasGetAllAsyncCollectionResultOfT(ManagedGrafanasRestClient, Id.SubscriptionId, context), data => new ManagedGrafanaResource(Client, data));
+            return new AsyncPageableWrapper<ManagedGrafanaData, ManagedGrafanaResource>(new ManagedGrafanasGetAllAsyncCollectionResultOfT(ManagedGrafanasRestClient, Id.SubscriptionId, context, "MockableGrafanaSubscriptionResource.GetManagedGrafanas"), data => new ManagedGrafanaResource(Client, data));
         }
 
         /// <summary>
@@ -96,7 +96,7 @@ namespace Azure.ResourceManager.Grafana.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<ManagedGrafanaData, ManagedGrafanaResource>(new ManagedGrafanasGetAllCollectionResultOfT(ManagedGrafanasRestClient, Id.SubscriptionId, context), data => new ManagedGrafanaResource(Client, data));
+            return new PageableWrapper<ManagedGrafanaData, ManagedGrafanaResource>(new ManagedGrafanasGetAllCollectionResultOfT(ManagedGrafanasRestClient, Id.SubscriptionId, context, "MockableGrafanaSubscriptionResource.GetManagedGrafanas"), data => new ManagedGrafanaResource(Client, data));
         }
 
         /// <summary>
@@ -124,7 +124,7 @@ namespace Azure.ResourceManager.Grafana.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<ManagedDashboardData, ManagedDashboardResource>(new ManagedDashboardsGetBySubscriptionAsyncCollectionResultOfT(ManagedDashboardsRestClient, Id.SubscriptionId, context), data => new ManagedDashboardResource(Client, data));
+            return new AsyncPageableWrapper<ManagedDashboardData, ManagedDashboardResource>(new ManagedDashboardsGetBySubscriptionAsyncCollectionResultOfT(ManagedDashboardsRestClient, Id.SubscriptionId, context, "MockableGrafanaSubscriptionResource.GetManagedDashboards"), data => new ManagedDashboardResource(Client, data));
         }
 
         /// <summary>
@@ -152,7 +152,7 @@ namespace Azure.ResourceManager.Grafana.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<ManagedDashboardData, ManagedDashboardResource>(new ManagedDashboardsGetBySubscriptionCollectionResultOfT(ManagedDashboardsRestClient, Id.SubscriptionId, context), data => new ManagedDashboardResource(Client, data));
+            return new PageableWrapper<ManagedDashboardData, ManagedDashboardResource>(new ManagedDashboardsGetBySubscriptionCollectionResultOfT(ManagedDashboardsRestClient, Id.SubscriptionId, context, "MockableGrafanaSubscriptionResource.GetManagedDashboards"), data => new ManagedDashboardResource(Client, data));
         }
     }
 }

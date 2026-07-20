@@ -174,7 +174,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Tests.Helpers
         public static void AssertInstanceData(DataProtectionBackupInstanceData data1, DataProtectionBackupInstanceData data2)
         {
             AssertResource(data1, data2);
-            Assert.AreEqual(data1.Properties.ProtectionErrorDetails, data2.Properties.ProtectionErrorDetails);
+            Assert.AreEqual(data1.Properties.ResourceProtectionErrorDetails, data2.Properties.ResourceProtectionErrorDetails);
             Assert.AreEqual(data1.Properties.ObjectType, data2.Properties.ObjectType);
             Assert.AreEqual(data1.Properties.ValidationType, data2.Properties.ValidationType);
             Assert.AreEqual(data1.Properties.ProtectionStatus, data2.Properties.ProtectionStatus);

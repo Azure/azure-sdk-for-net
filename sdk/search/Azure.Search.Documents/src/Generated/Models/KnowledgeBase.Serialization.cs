@@ -71,9 +71,7 @@ namespace Azure.Search.Documents.Indexes.Models
             {
                 return null;
             }
-            Utf8JsonRequestContent content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(knowledgeBase, ModelSerializationExtensions.WireOptions);
-            return content;
+            return RequestContent.Create(knowledgeBase, ModelSerializationExtensions.WireOptions);
         }
 
         /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="KnowledgeBase"/> from. </param>
@@ -155,6 +153,11 @@ namespace Azure.Search.Documents.Indexes.Models
                 writer.WritePropertyName("answerInstructions"u8);
                 writer.WriteStringValue(AnswerInstructions);
             }
+            if (Optional.IsDefined(CorsOptions))
+            {
+                writer.WritePropertyName("corsOptions"u8);
+                writer.WriteObjectValue(CorsOptions, options);
+            }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
                 foreach (var item in _additionalBinaryDataProperties)
@@ -207,6 +210,7 @@ namespace Azure.Search.Documents.Indexes.Models
             string description = default;
             string retrievalInstructions = default;
             string answerInstructions = default;
+            CorsOptions corsOptions = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -291,6 +295,15 @@ namespace Azure.Search.Documents.Indexes.Models
                     answerInstructions = prop.Value.GetString();
                     continue;
                 }
+                if (prop.NameEquals("corsOptions"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    corsOptions = CorsOptions.DeserializeCorsOptions(prop.Value, options);
+                    continue;
+                }
                 if (options.Format != "W")
                 {
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
@@ -307,6 +320,7 @@ namespace Azure.Search.Documents.Indexes.Models
                 description,
                 retrievalInstructions,
                 answerInstructions,
+                corsOptions,
                 additionalBinaryDataProperties);
         }
     }

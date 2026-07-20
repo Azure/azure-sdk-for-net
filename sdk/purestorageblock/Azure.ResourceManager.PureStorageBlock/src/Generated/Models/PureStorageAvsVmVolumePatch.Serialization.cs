@@ -64,9 +64,7 @@ namespace Azure.ResourceManager.PureStorageBlock.Models
             {
                 return null;
             }
-            Utf8JsonRequestContent content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(pureStorageAvsVmVolumePatch, ModelSerializationExtensions.WireOptions);
-            return content;
+            return RequestContent.Create(pureStorageAvsVmVolumePatch, ModelSerializationExtensions.WireOptions);
         }
 
         /// <param name="writer"> The JSON writer. </param>

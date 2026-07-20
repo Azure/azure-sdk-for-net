@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.ConnectedCache
         {
             if (id.ResourceType != ResourceGroupResource.ResourceType)
             {
-                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ResourceGroupResource.ResourceType), id);
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ResourceGroupResource.ResourceType), nameof(id));
             }
         }
 
@@ -94,7 +94,7 @@ namespace Azure.ResourceManager.ConnectedCache
                 HttpMessage message = _ispCustomersRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, customerResourceName, IspCustomerData.ToRequestContent(data), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 ConnectedCacheArmOperation<IspCustomerResource> operation = new ConnectedCacheArmOperation<IspCustomerResource>(
-                    new IspCustomerOperationSource(Client),
+                    new IspCustomerResourceOperationSource(Client),
                     _ispCustomersClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -152,7 +152,7 @@ namespace Azure.ResourceManager.ConnectedCache
                 HttpMessage message = _ispCustomersRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, customerResourceName, IspCustomerData.ToRequestContent(data), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 ConnectedCacheArmOperation<IspCustomerResource> operation = new ConnectedCacheArmOperation<IspCustomerResource>(
-                    new IspCustomerOperationSource(Client),
+                    new IspCustomerResourceOperationSource(Client),
                     _ispCustomersClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -294,7 +294,7 @@ namespace Azure.ResourceManager.ConnectedCache
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<IspCustomerData, IspCustomerResource>(new IspCustomersGetByResourceGroupAsyncCollectionResultOfT(_ispCustomersRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context), data => new IspCustomerResource(Client, data));
+            return new AsyncPageableWrapper<IspCustomerData, IspCustomerResource>(new IspCustomersGetByResourceGroupAsyncCollectionResultOfT(_ispCustomersRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "IspCustomerCollection.GetAll"), data => new IspCustomerResource(Client, data));
         }
 
         /// <summary>
@@ -322,7 +322,7 @@ namespace Azure.ResourceManager.ConnectedCache
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<IspCustomerData, IspCustomerResource>(new IspCustomersGetByResourceGroupCollectionResultOfT(_ispCustomersRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context), data => new IspCustomerResource(Client, data));
+            return new PageableWrapper<IspCustomerData, IspCustomerResource>(new IspCustomersGetByResourceGroupCollectionResultOfT(_ispCustomersRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "IspCustomerCollection.GetAll"), data => new IspCustomerResource(Client, data));
         }
 
         /// <summary>

@@ -2,18 +2,17 @@
   <PropertyGroup>
     <Description>This is the Azure.AI.Agents.Persistent client library for developing .NET applications with rich experience.</Description>
     <AssemblyTitle>Microsoft Azure.AI.Agents.Persistent client library</AssemblyTitle>
-    <Version>1.2.0-beta.10</Version>
+    <Version>1.2.0-beta.11</Version>
     <!--The ApiCompatVersion is managed automatically and should not generally be modified manually.-->
     <ApiCompatVersion>1.0.0</ApiCompatVersion>
     <PackageTags>Azure.AI.Agents.Persistent</PackageTags>
     <DisableEnhancedAnalysis>true</DisableEnhancedAnalysis>
     <TargetFrameworks>$(RequiredTargetFrameworks)</TargetFrameworks>
     <GenerateAPIListing>true</GenerateAPIListing>
-    <NoWarn>$(NoWarn);CS1591;AZC0012;SA1649;SA1402;</NoWarn>
+    <NoWarn>$(NoWarn);CS1591;AZC0012;SA1649;SA1402;SCME0002;CS1574;CS0169;</NoWarn>
     <LangVersion>latest</LangVersion>
     <IncludeOperationsSharedSource>true</IncludeOperationsSharedSource>
     <IsAotCompatible Condition="$([MSBuild]::IsTargetFrameworkCompatible('$(TargetFramework)', 'net7.0'))">true</IsAotCompatible>
-    <IncludeAutorestDependency>true</IncludeAutorestDependency>
   </PropertyGroup>
 
   <ItemGroup>
@@ -27,8 +26,7 @@
     <Compile Include="$(AzureCoreSharedSources)ArrayBufferWriter.cs" LinkBase="Shared" />
     <Compile Include="$(AzureCoreSharedSources)AzureKeyCredentialPolicy.cs" LinkBase="Shared" />
     <Compile Include="$(AzureCoreSharedSources)AzureResourceProviderNamespaceAttribute.cs" LinkBase="Shared" />
-    <Compile Include="$(AzureCoreSharedSources)Multipart\MultipartContent.cs" LinkBase="Shared" />
-    <Compile Include="$(AzureCoreSharedSources)Multipart\MultipartFormDataContent.cs" LinkBase="Shared" />
+    <Compile Include="$(AzureCoreSharedSources)ExperimentalAttribute.cs" LinkBase="Shared" />
   </ItemGroup>
 
   <ItemGroup>

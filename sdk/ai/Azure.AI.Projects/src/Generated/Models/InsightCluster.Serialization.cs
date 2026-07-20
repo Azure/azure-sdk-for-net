@@ -6,8 +6,9 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure.AI.Projects;
 
-namespace Azure.AI.Projects
+namespace Azure.AI.Projects.Evaluation
 {
     /// <summary> A cluster of analysis samples. </summary>
     public partial class InsightCluster : IJsonModel<InsightCluster>

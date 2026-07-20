@@ -64,9 +64,7 @@ namespace Azure.ResourceManager.Grafana.Models
             {
                 return null;
             }
-            Utf8JsonRequestContent content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(grafanaIntegrationFabricPatch, ModelSerializationExtensions.WireOptions);
-            return content;
+            return RequestContent.Create(grafanaIntegrationFabricPatch, ModelSerializationExtensions.WireOptions);
         }
 
         /// <param name="writer"> The JSON writer. </param>

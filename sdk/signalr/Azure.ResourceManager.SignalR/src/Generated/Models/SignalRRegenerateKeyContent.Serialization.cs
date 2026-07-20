@@ -64,9 +64,7 @@ namespace Azure.ResourceManager.SignalR.Models
             {
                 return null;
             }
-            Utf8JsonRequestContent content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(signalRRegenerateKeyContent, ModelSerializationExtensions.WireOptions);
-            return content;
+            return RequestContent.Create(signalRRegenerateKeyContent, ModelSerializationExtensions.WireOptions);
         }
 
         /// <param name="writer"> The JSON writer. </param>

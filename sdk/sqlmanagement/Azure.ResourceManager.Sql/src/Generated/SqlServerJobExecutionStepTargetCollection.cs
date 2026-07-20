@@ -8,13 +8,13 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.Globalization;
+using System.Diagnostics;
 using System.Threading;
 using System.Threading.Tasks;
-using Autorest.CSharp.Core;
+using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager.Sql.Models;
+using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.Sql
 {
@@ -25,51 +25,49 @@ namespace Azure.ResourceManager.Sql
     /// </summary>
     public partial class SqlServerJobExecutionStepTargetCollection : ArmCollection, IEnumerable<SqlServerJobExecutionStepTargetResource>, IAsyncEnumerable<SqlServerJobExecutionStepTargetResource>
     {
-        private readonly ClientDiagnostics _sqlServerJobExecutionStepTargetJobTargetExecutionsClientDiagnostics;
-        private readonly JobTargetExecutionsRestOperations _sqlServerJobExecutionStepTargetJobTargetExecutionsRestClient;
+        private readonly ClientDiagnostics _jobTargetExecutionsClientDiagnostics;
+        private readonly JobTargetExecutions _jobTargetExecutionsRestClient;
 
-        /// <summary> Initializes a new instance of the <see cref="SqlServerJobExecutionStepTargetCollection"/> class for mocking. </summary>
+        /// <summary> Initializes a new instance of SqlServerJobExecutionStepTargetCollection for mocking. </summary>
         protected SqlServerJobExecutionStepTargetCollection()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref="SqlServerJobExecutionStepTargetCollection"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="SqlServerJobExecutionStepTargetCollection"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
-        /// <param name="id"> The identifier of the parent resource that is the target of operations. </param>
+        /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal SqlServerJobExecutionStepTargetCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _sqlServerJobExecutionStepTargetJobTargetExecutionsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Sql", SqlServerJobExecutionStepTargetResource.ResourceType.Namespace, Diagnostics);
-            TryGetApiVersion(SqlServerJobExecutionStepTargetResource.ResourceType, out string sqlServerJobExecutionStepTargetJobTargetExecutionsApiVersion);
-            _sqlServerJobExecutionStepTargetJobTargetExecutionsRestClient = new JobTargetExecutionsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, sqlServerJobExecutionStepTargetJobTargetExecutionsApiVersion);
-#if DEBUG
-			ValidateResourceId(Id);
-#endif
+            TryGetApiVersion(SqlServerJobExecutionStepTargetResource.ResourceType, out string sqlServerJobExecutionStepTargetApiVersion);
+            _jobTargetExecutionsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Sql", SqlServerJobExecutionStepTargetResource.ResourceType.Namespace, Diagnostics);
+            _jobTargetExecutionsRestClient = new JobTargetExecutions(_jobTargetExecutionsClientDiagnostics, Pipeline, Endpoint, sqlServerJobExecutionStepTargetApiVersion ?? "2025-02-01-preview");
+            ValidateResourceId(id);
         }
 
+        /// <param name="id"></param>
+        [Conditional("DEBUG")]
         internal static void ValidateResourceId(ResourceIdentifier id)
         {
             if (id.ResourceType != SqlServerJobExecutionStepResource.ResourceType)
-                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, SqlServerJobExecutionStepResource.ResourceType), nameof(id));
+            {
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, SqlServerJobExecutionStepResource.ResourceType), nameof(id));
+            }
         }
 
         /// <summary>
         /// Gets a target execution.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/jobAgents/{jobAgentName}/jobs/{jobName}/executions/{jobExecutionId}/steps/{stepName}/targets/{targetId}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/jobAgents/{jobAgentName}/jobs/{jobName}/executions/{jobExecutionId}/steps/{stepName}/targets/{targetId}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>JobTargetExecutions_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> JobTargetExecutions_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-11-01-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="SqlServerJobExecutionStepTargetResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-02-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -77,13 +75,21 @@ namespace Azure.ResourceManager.Sql
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<Response<SqlServerJobExecutionStepTargetResource>> GetAsync(Guid targetId, CancellationToken cancellationToken = default)
         {
-            using var scope = _sqlServerJobExecutionStepTargetJobTargetExecutionsClientDiagnostics.CreateScope("SqlServerJobExecutionStepTargetCollection.Get");
+            using DiagnosticScope scope = _jobTargetExecutionsClientDiagnostics.CreateScope("SqlServerJobExecutionStepTargetCollection.Get");
             scope.Start();
             try
             {
-                var response = await _sqlServerJobExecutionStepTargetJobTargetExecutionsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Parent.Parent.Name, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Guid.Parse(Id.Parent.Name), Id.Name, targetId, cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _jobTargetExecutionsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Parent.Parent.Name, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Guid.Parse(Id.Parent.Name), Id.Name, targetId, context);
+                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                Response<SqlServerJobExecutionData> response = Response.FromValue(SqlServerJobExecutionData.FromResponse(result), result);
                 if (response.Value == null)
+                {
                     throw new RequestFailedException(response.GetRawResponse());
+                }
                 return Response.FromValue(new SqlServerJobExecutionStepTargetResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -97,20 +103,16 @@ namespace Azure.ResourceManager.Sql
         /// Gets a target execution.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/jobAgents/{jobAgentName}/jobs/{jobName}/executions/{jobExecutionId}/steps/{stepName}/targets/{targetId}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/jobAgents/{jobAgentName}/jobs/{jobName}/executions/{jobExecutionId}/steps/{stepName}/targets/{targetId}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>JobTargetExecutions_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> JobTargetExecutions_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-11-01-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="SqlServerJobExecutionStepTargetResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-02-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -118,13 +120,21 @@ namespace Azure.ResourceManager.Sql
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response<SqlServerJobExecutionStepTargetResource> Get(Guid targetId, CancellationToken cancellationToken = default)
         {
-            using var scope = _sqlServerJobExecutionStepTargetJobTargetExecutionsClientDiagnostics.CreateScope("SqlServerJobExecutionStepTargetCollection.Get");
+            using DiagnosticScope scope = _jobTargetExecutionsClientDiagnostics.CreateScope("SqlServerJobExecutionStepTargetCollection.Get");
             scope.Start();
             try
             {
-                var response = _sqlServerJobExecutionStepTargetJobTargetExecutionsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Parent.Parent.Name, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Guid.Parse(Id.Parent.Name), Id.Name, targetId, cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _jobTargetExecutionsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Parent.Parent.Name, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Guid.Parse(Id.Parent.Name), Id.Name, targetId, context);
+                Response result = Pipeline.ProcessMessage(message, context);
+                Response<SqlServerJobExecutionData> response = Response.FromValue(SqlServerJobExecutionData.FromResponse(result), result);
                 if (response.Value == null)
+                {
                     throw new RequestFailedException(response.GetRawResponse());
+                }
                 return Response.FromValue(new SqlServerJobExecutionStepTargetResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -138,86 +148,120 @@ namespace Azure.ResourceManager.Sql
         /// Lists the target executions of a job step execution.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/jobAgents/{jobAgentName}/jobs/{jobName}/executions/{jobExecutionId}/steps/{stepName}/targets</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/jobAgents/{jobAgentName}/jobs/{jobName}/executions/{jobExecutionId}/steps/{stepName}/targets. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>JobTargetExecutions_ListByStep</description>
+        /// <term> Operation Id. </term>
+        /// <description> JobTargetExecutions_ListByStep. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-11-01-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="SqlServerJobExecutionStepTargetResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-02-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="options"> A property bag which contains all the parameters of this method except the LRO qualifier and request context parameter. </param>
+        /// <param name="createTimeMin"> If specified, only job executions created at or after the specified time are included. </param>
+        /// <param name="createTimeMax"> If specified, only job executions created before the specified time are included. </param>
+        /// <param name="endTimeMin"> If specified, only job executions completed at or after the specified time are included. </param>
+        /// <param name="endTimeMax"> If specified, only job executions completed before the specified time are included. </param>
+        /// <param name="isActive"> If specified, only active or only completed job executions are included. </param>
+        /// <param name="skip"> The number of elements in the collection to skip. </param>
+        /// <param name="top"> The number of elements to return from the collection. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="SqlServerJobExecutionStepTargetResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<SqlServerJobExecutionStepTargetResource> GetAllAsync(SqlServerJobExecutionStepTargetCollectionGetAllOptions options, CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="SqlServerJobExecutionStepTargetResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<SqlServerJobExecutionStepTargetResource> GetAllAsync(DateTimeOffset? createTimeMin = default, DateTimeOffset? createTimeMax = default, DateTimeOffset? endTimeMin = default, DateTimeOffset? endTimeMax = default, bool? isActive = default, long? skip = default, long? top = default, CancellationToken cancellationToken = default)
         {
-            options ??= new SqlServerJobExecutionStepTargetCollectionGetAllOptions();
-
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _sqlServerJobExecutionStepTargetJobTargetExecutionsRestClient.CreateListByStepRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Parent.Parent.Name, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Guid.Parse(Id.Parent.Name), Id.Name, options.CreateTimeMin, options.CreateTimeMax, options.EndTimeMin, options.EndTimeMax, options.IsActive, options.Skip, options.Top);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _sqlServerJobExecutionStepTargetJobTargetExecutionsRestClient.CreateListByStepNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Parent.Parent.Name, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Guid.Parse(Id.Parent.Name), Id.Name, options.CreateTimeMin, options.CreateTimeMax, options.EndTimeMin, options.EndTimeMax, options.IsActive, options.Skip, options.Top);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new SqlServerJobExecutionStepTargetResource(Client, SqlServerJobExecutionData.DeserializeSqlServerJobExecutionData(e)), _sqlServerJobExecutionStepTargetJobTargetExecutionsClientDiagnostics, Pipeline, "SqlServerJobExecutionStepTargetCollection.GetAll", "value", "nextLink", cancellationToken);
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new AsyncPageableWrapper<SqlServerJobExecutionData, SqlServerJobExecutionStepTargetResource>(new JobTargetExecutionsGetByStepAsyncCollectionResultOfT(
+                _jobTargetExecutionsRestClient,
+                Guid.Parse(Id.SubscriptionId),
+                Id.ResourceGroupName,
+                Id.Parent.Parent.Parent.Parent.Name,
+                Id.Parent.Parent.Parent.Name,
+                Id.Parent.Parent.Name,
+                Guid.Parse(Id.Parent.Name),
+                Id.Name,
+                createTimeMin,
+                createTimeMax,
+                endTimeMin,
+                endTimeMax,
+                isActive,
+                skip,
+                top,
+                context,
+                "SqlServerJobExecutionStepTargetCollection.GetAll"), data => new SqlServerJobExecutionStepTargetResource(Client, data));
         }
 
         /// <summary>
         /// Lists the target executions of a job step execution.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/jobAgents/{jobAgentName}/jobs/{jobName}/executions/{jobExecutionId}/steps/{stepName}/targets</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/jobAgents/{jobAgentName}/jobs/{jobName}/executions/{jobExecutionId}/steps/{stepName}/targets. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>JobTargetExecutions_ListByStep</description>
+        /// <term> Operation Id. </term>
+        /// <description> JobTargetExecutions_ListByStep. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-11-01-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="SqlServerJobExecutionStepTargetResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-02-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="options"> A property bag which contains all the parameters of this method except the LRO qualifier and request context parameter. </param>
+        /// <param name="createTimeMin"> If specified, only job executions created at or after the specified time are included. </param>
+        /// <param name="createTimeMax"> If specified, only job executions created before the specified time are included. </param>
+        /// <param name="endTimeMin"> If specified, only job executions completed at or after the specified time are included. </param>
+        /// <param name="endTimeMax"> If specified, only job executions completed before the specified time are included. </param>
+        /// <param name="isActive"> If specified, only active or only completed job executions are included. </param>
+        /// <param name="skip"> The number of elements in the collection to skip. </param>
+        /// <param name="top"> The number of elements to return from the collection. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="SqlServerJobExecutionStepTargetResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<SqlServerJobExecutionStepTargetResource> GetAll(SqlServerJobExecutionStepTargetCollectionGetAllOptions options, CancellationToken cancellationToken = default)
+        public virtual Pageable<SqlServerJobExecutionStepTargetResource> GetAll(DateTimeOffset? createTimeMin = default, DateTimeOffset? createTimeMax = default, DateTimeOffset? endTimeMin = default, DateTimeOffset? endTimeMax = default, bool? isActive = default, long? skip = default, long? top = default, CancellationToken cancellationToken = default)
         {
-            options ??= new SqlServerJobExecutionStepTargetCollectionGetAllOptions();
-
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _sqlServerJobExecutionStepTargetJobTargetExecutionsRestClient.CreateListByStepRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Parent.Parent.Name, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Guid.Parse(Id.Parent.Name), Id.Name, options.CreateTimeMin, options.CreateTimeMax, options.EndTimeMin, options.EndTimeMax, options.IsActive, options.Skip, options.Top);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _sqlServerJobExecutionStepTargetJobTargetExecutionsRestClient.CreateListByStepNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Parent.Parent.Name, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Guid.Parse(Id.Parent.Name), Id.Name, options.CreateTimeMin, options.CreateTimeMax, options.EndTimeMin, options.EndTimeMax, options.IsActive, options.Skip, options.Top);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new SqlServerJobExecutionStepTargetResource(Client, SqlServerJobExecutionData.DeserializeSqlServerJobExecutionData(e)), _sqlServerJobExecutionStepTargetJobTargetExecutionsClientDiagnostics, Pipeline, "SqlServerJobExecutionStepTargetCollection.GetAll", "value", "nextLink", cancellationToken);
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new PageableWrapper<SqlServerJobExecutionData, SqlServerJobExecutionStepTargetResource>(new JobTargetExecutionsGetByStepCollectionResultOfT(
+                _jobTargetExecutionsRestClient,
+                Guid.Parse(Id.SubscriptionId),
+                Id.ResourceGroupName,
+                Id.Parent.Parent.Parent.Parent.Name,
+                Id.Parent.Parent.Parent.Name,
+                Id.Parent.Parent.Name,
+                Guid.Parse(Id.Parent.Name),
+                Id.Name,
+                createTimeMin,
+                createTimeMax,
+                endTimeMin,
+                endTimeMax,
+                isActive,
+                skip,
+                top,
+                context,
+                "SqlServerJobExecutionStepTargetCollection.GetAll"), data => new SqlServerJobExecutionStepTargetResource(Client, data));
         }
 
         /// <summary>
         /// Checks to see if the resource exists in azure.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/jobAgents/{jobAgentName}/jobs/{jobName}/executions/{jobExecutionId}/steps/{stepName}/targets/{targetId}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/jobAgents/{jobAgentName}/jobs/{jobName}/executions/{jobExecutionId}/steps/{stepName}/targets/{targetId}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>JobTargetExecutions_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> JobTargetExecutions_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-11-01-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="SqlServerJobExecutionStepTargetResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-02-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -225,11 +269,29 @@ namespace Azure.ResourceManager.Sql
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<Response<bool>> ExistsAsync(Guid targetId, CancellationToken cancellationToken = default)
         {
-            using var scope = _sqlServerJobExecutionStepTargetJobTargetExecutionsClientDiagnostics.CreateScope("SqlServerJobExecutionStepTargetCollection.Exists");
+            using DiagnosticScope scope = _jobTargetExecutionsClientDiagnostics.CreateScope("SqlServerJobExecutionStepTargetCollection.Exists");
             scope.Start();
             try
             {
-                var response = await _sqlServerJobExecutionStepTargetJobTargetExecutionsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Parent.Parent.Name, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Guid.Parse(Id.Parent.Name), Id.Name, targetId, cancellationToken: cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _jobTargetExecutionsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Parent.Parent.Name, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Guid.Parse(Id.Parent.Name), Id.Name, targetId, context);
+                await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
+                Response result = message.Response;
+                Response<SqlServerJobExecutionData> response = default;
+                switch (result.Status)
+                {
+                    case 200:
+                        response = Response.FromValue(SqlServerJobExecutionData.FromResponse(result), result);
+                        break;
+                    case 404:
+                        response = Response.FromValue((SqlServerJobExecutionData)null, result);
+                        break;
+                    default:
+                        throw new RequestFailedException(result);
+                }
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -243,20 +305,16 @@ namespace Azure.ResourceManager.Sql
         /// Checks to see if the resource exists in azure.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/jobAgents/{jobAgentName}/jobs/{jobName}/executions/{jobExecutionId}/steps/{stepName}/targets/{targetId}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/jobAgents/{jobAgentName}/jobs/{jobName}/executions/{jobExecutionId}/steps/{stepName}/targets/{targetId}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>JobTargetExecutions_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> JobTargetExecutions_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-11-01-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="SqlServerJobExecutionStepTargetResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-02-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -264,11 +322,29 @@ namespace Azure.ResourceManager.Sql
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response<bool> Exists(Guid targetId, CancellationToken cancellationToken = default)
         {
-            using var scope = _sqlServerJobExecutionStepTargetJobTargetExecutionsClientDiagnostics.CreateScope("SqlServerJobExecutionStepTargetCollection.Exists");
+            using DiagnosticScope scope = _jobTargetExecutionsClientDiagnostics.CreateScope("SqlServerJobExecutionStepTargetCollection.Exists");
             scope.Start();
             try
             {
-                var response = _sqlServerJobExecutionStepTargetJobTargetExecutionsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Parent.Parent.Name, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Guid.Parse(Id.Parent.Name), Id.Name, targetId, cancellationToken: cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _jobTargetExecutionsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Parent.Parent.Name, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Guid.Parse(Id.Parent.Name), Id.Name, targetId, context);
+                Pipeline.Send(message, context.CancellationToken);
+                Response result = message.Response;
+                Response<SqlServerJobExecutionData> response = default;
+                switch (result.Status)
+                {
+                    case 200:
+                        response = Response.FromValue(SqlServerJobExecutionData.FromResponse(result), result);
+                        break;
+                    case 404:
+                        response = Response.FromValue((SqlServerJobExecutionData)null, result);
+                        break;
+                    default:
+                        throw new RequestFailedException(result);
+                }
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -282,20 +358,16 @@ namespace Azure.ResourceManager.Sql
         /// Tries to get details for this resource from the service.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/jobAgents/{jobAgentName}/jobs/{jobName}/executions/{jobExecutionId}/steps/{stepName}/targets/{targetId}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/jobAgents/{jobAgentName}/jobs/{jobName}/executions/{jobExecutionId}/steps/{stepName}/targets/{targetId}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>JobTargetExecutions_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> JobTargetExecutions_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-11-01-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="SqlServerJobExecutionStepTargetResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-02-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -303,13 +375,33 @@ namespace Azure.ResourceManager.Sql
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<NullableResponse<SqlServerJobExecutionStepTargetResource>> GetIfExistsAsync(Guid targetId, CancellationToken cancellationToken = default)
         {
-            using var scope = _sqlServerJobExecutionStepTargetJobTargetExecutionsClientDiagnostics.CreateScope("SqlServerJobExecutionStepTargetCollection.GetIfExists");
+            using DiagnosticScope scope = _jobTargetExecutionsClientDiagnostics.CreateScope("SqlServerJobExecutionStepTargetCollection.GetIfExists");
             scope.Start();
             try
             {
-                var response = await _sqlServerJobExecutionStepTargetJobTargetExecutionsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Parent.Parent.Name, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Guid.Parse(Id.Parent.Name), Id.Name, targetId, cancellationToken: cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _jobTargetExecutionsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Parent.Parent.Name, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Guid.Parse(Id.Parent.Name), Id.Name, targetId, context);
+                await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
+                Response result = message.Response;
+                Response<SqlServerJobExecutionData> response = default;
+                switch (result.Status)
+                {
+                    case 200:
+                        response = Response.FromValue(SqlServerJobExecutionData.FromResponse(result), result);
+                        break;
+                    case 404:
+                        response = Response.FromValue((SqlServerJobExecutionData)null, result);
+                        break;
+                    default:
+                        throw new RequestFailedException(result);
+                }
                 if (response.Value == null)
+                {
                     return new NoValueResponse<SqlServerJobExecutionStepTargetResource>(response.GetRawResponse());
+                }
                 return Response.FromValue(new SqlServerJobExecutionStepTargetResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -323,20 +415,16 @@ namespace Azure.ResourceManager.Sql
         /// Tries to get details for this resource from the service.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/jobAgents/{jobAgentName}/jobs/{jobName}/executions/{jobExecutionId}/steps/{stepName}/targets/{targetId}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/jobAgents/{jobAgentName}/jobs/{jobName}/executions/{jobExecutionId}/steps/{stepName}/targets/{targetId}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>JobTargetExecutions_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> JobTargetExecutions_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-11-01-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="SqlServerJobExecutionStepTargetResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-02-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -344,13 +432,33 @@ namespace Azure.ResourceManager.Sql
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual NullableResponse<SqlServerJobExecutionStepTargetResource> GetIfExists(Guid targetId, CancellationToken cancellationToken = default)
         {
-            using var scope = _sqlServerJobExecutionStepTargetJobTargetExecutionsClientDiagnostics.CreateScope("SqlServerJobExecutionStepTargetCollection.GetIfExists");
+            using DiagnosticScope scope = _jobTargetExecutionsClientDiagnostics.CreateScope("SqlServerJobExecutionStepTargetCollection.GetIfExists");
             scope.Start();
             try
             {
-                var response = _sqlServerJobExecutionStepTargetJobTargetExecutionsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Parent.Parent.Name, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Guid.Parse(Id.Parent.Name), Id.Name, targetId, cancellationToken: cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _jobTargetExecutionsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Parent.Parent.Name, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Guid.Parse(Id.Parent.Name), Id.Name, targetId, context);
+                Pipeline.Send(message, context.CancellationToken);
+                Response result = message.Response;
+                Response<SqlServerJobExecutionData> response = default;
+                switch (result.Status)
+                {
+                    case 200:
+                        response = Response.FromValue(SqlServerJobExecutionData.FromResponse(result), result);
+                        break;
+                    case 404:
+                        response = Response.FromValue((SqlServerJobExecutionData)null, result);
+                        break;
+                    default:
+                        throw new RequestFailedException(result);
+                }
                 if (response.Value == null)
+                {
                     return new NoValueResponse<SqlServerJobExecutionStepTargetResource>(response.GetRawResponse());
+                }
                 return Response.FromValue(new SqlServerJobExecutionStepTargetResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -362,17 +470,18 @@ namespace Azure.ResourceManager.Sql
 
         IEnumerator<SqlServerJobExecutionStepTargetResource> IEnumerable<SqlServerJobExecutionStepTargetResource>.GetEnumerator()
         {
-            return GetAll(options: null).GetEnumerator();
+            return GetAll().GetEnumerator();
         }
 
         IEnumerator IEnumerable.GetEnumerator()
         {
-            return GetAll(options: null).GetEnumerator();
+            return GetAll().GetEnumerator();
         }
 
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
         IAsyncEnumerator<SqlServerJobExecutionStepTargetResource> IAsyncEnumerable<SqlServerJobExecutionStepTargetResource>.GetAsyncEnumerator(CancellationToken cancellationToken)
         {
-            return GetAllAsync(options: null, cancellationToken: cancellationToken).GetAsyncEnumerator(cancellationToken);
+            return GetAllAsync(cancellationToken: cancellationToken).GetAsyncEnumerator(cancellationToken);
         }
     }
 }

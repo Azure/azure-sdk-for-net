@@ -11,19 +11,29 @@ using System.Text.Json;
 
 namespace Azure.ResourceManager.NetworkCloud
 {
+    /// <summary></summary>
     public partial class NetworkCloudL2NetworkResource : IJsonModel<NetworkCloudL2NetworkData>
     {
-        private static NetworkCloudL2NetworkData s_dataDeserializationInstance;
-        private static NetworkCloudL2NetworkData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+        private static IJsonModel<NetworkCloudL2NetworkData> s_dataDeserializationInstance;
 
+        private static IJsonModel<NetworkCloudL2NetworkData> DataDeserializationInstance => s_dataDeserializationInstance ??= new NetworkCloudL2NetworkData();
+
+        /// <param name="writer"> The writer to serialize the model to. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<NetworkCloudL2NetworkData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<NetworkCloudL2NetworkData>)Data).Write(writer, options);
 
-        NetworkCloudL2NetworkData IJsonModel<NetworkCloudL2NetworkData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<NetworkCloudL2NetworkData>)DataDeserializationInstance).Create(ref reader, options);
+        /// <param name="reader"> The reader for deserializing the model. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        NetworkCloudL2NetworkData IJsonModel<NetworkCloudL2NetworkData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => DataDeserializationInstance.Create(ref reader, options);
 
+        /// <param name="options"> The client options for reading and writing models. </param>
         BinaryData IPersistableModel<NetworkCloudL2NetworkData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<NetworkCloudL2NetworkData>(Data, options, AzureResourceManagerNetworkCloudContext.Default);
 
+        /// <param name="data"> The binary data to be processed. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         NetworkCloudL2NetworkData IPersistableModel<NetworkCloudL2NetworkData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<NetworkCloudL2NetworkData>(data, options, AzureResourceManagerNetworkCloudContext.Default);
 
-        string IPersistableModel<NetworkCloudL2NetworkData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<NetworkCloudL2NetworkData>)DataDeserializationInstance).GetFormatFromOptions(options);
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<NetworkCloudL2NetworkData>.GetFormatFromOptions(ModelReaderWriterOptions options) => DataDeserializationInstance.GetFormatFromOptions(options);
     }
 }

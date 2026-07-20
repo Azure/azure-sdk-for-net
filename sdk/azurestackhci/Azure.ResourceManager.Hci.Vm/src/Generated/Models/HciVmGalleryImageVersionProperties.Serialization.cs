@@ -16,11 +16,6 @@ namespace Azure.ResourceManager.Hci.Vm.Models
     /// <summary> Describes the properties of a gallery image version. </summary>
     internal partial class HciVmGalleryImageVersionProperties : IJsonModel<HciVmGalleryImageVersionProperties>
     {
-        /// <summary> Initializes a new instance of <see cref="HciVmGalleryImageVersionProperties"/> for deserialization. </summary>
-        internal HciVmGalleryImageVersionProperties()
-        {
-        }
-
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual HciVmGalleryImageVersionProperties PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)

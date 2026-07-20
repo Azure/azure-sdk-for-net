@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.SignalR
         {
             if (id.ResourceType != SignalRResource.ResourceType)
             {
-                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, SignalRResource.ResourceType), id);
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, SignalRResource.ResourceType), nameof(id));
             }
         }
 
@@ -93,7 +93,7 @@ namespace Azure.ResourceManager.SignalR
                 HttpMessage message = _replicasRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, replicaName, SignalRReplicaData.ToRequestContent(data), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 SignalRArmOperation<SignalRReplicaResource> operation = new SignalRArmOperation<SignalRReplicaResource>(
-                    new SignalRReplicaOperationSource(Client),
+                    new SignalRReplicaResourceOperationSource(Client),
                     _replicasClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -151,7 +151,7 @@ namespace Azure.ResourceManager.SignalR
                 HttpMessage message = _replicasRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, replicaName, SignalRReplicaData.ToRequestContent(data), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 SignalRArmOperation<SignalRReplicaResource> operation = new SignalRArmOperation<SignalRReplicaResource>(
-                    new SignalRReplicaOperationSource(Client),
+                    new SignalRReplicaResourceOperationSource(Client),
                     _replicasClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -293,7 +293,13 @@ namespace Azure.ResourceManager.SignalR
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<SignalRReplicaData, SignalRReplicaResource>(new ReplicasGetAllAsyncCollectionResultOfT(_replicasRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context), data => new SignalRReplicaResource(Client, data));
+            return new AsyncPageableWrapper<SignalRReplicaData, SignalRReplicaResource>(new ReplicasGetAllAsyncCollectionResultOfT(
+                _replicasRestClient,
+                Guid.Parse(Id.SubscriptionId),
+                Id.ResourceGroupName,
+                Id.Name,
+                context,
+                "SignalRReplicaCollection.GetAll"), data => new SignalRReplicaResource(Client, data));
         }
 
         /// <summary>
@@ -321,7 +327,13 @@ namespace Azure.ResourceManager.SignalR
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<SignalRReplicaData, SignalRReplicaResource>(new ReplicasGetAllCollectionResultOfT(_replicasRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context), data => new SignalRReplicaResource(Client, data));
+            return new PageableWrapper<SignalRReplicaData, SignalRReplicaResource>(new ReplicasGetAllCollectionResultOfT(
+                _replicasRestClient,
+                Guid.Parse(Id.SubscriptionId),
+                Id.ResourceGroupName,
+                Id.Name,
+                context,
+                "SignalRReplicaCollection.GetAll"), data => new SignalRReplicaResource(Client, data));
         }
 
         /// <summary>

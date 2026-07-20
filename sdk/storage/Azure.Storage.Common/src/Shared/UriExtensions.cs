@@ -66,31 +66,56 @@ namespace Azure.Storage
         }
 
         /// <summary>
-        /// Get the account name from the domain portion of a Uri.
+        /// Get the account name from the host portion of a Uri.
         /// </summary>
         /// <param name="uri">The Uri.</param>
         /// <param name="serviceSubDomain">The service subdomain used to validate that the
-        /// domain is in the expected format. This should be "blob" for blobs, "file" for files,
+        /// host is in the expected format. This should be "blob" for blobs, "file" for files,
         /// "queue" for queues, "blob" and "dfs" for datalake.</param>
         /// <returns>Account name or null if not able to be parsed.</returns>
-        public static string GetAccountNameFromDomain(this Uri uri, string serviceSubDomain) =>
-            GetAccountNameFromDomain(uri.Host, serviceSubDomain);
+        public static string GetAccountNameFromHost(this Uri uri, string serviceSubDomain) =>
+            GetAccountNameFromHost(uri.Host, serviceSubDomain);
 
         /// <summary>
         /// Get the account name from the host.
         /// </summary>
         /// <param name="host">Host.</param>
         /// <param name="serviceSubDomain">The service subdomain used to validate that the
-        /// domain is in the expected format. This should be "blob" for blobs, "file" for files,
+        /// host is in the expected format. This should be "blob" for blobs, "file" for files,
         /// "queue" for queues, "blob" and "dfs" for datalake.</param>
         /// <returns>Account name or null if not able to be parsed.</returns>
-        public static string GetAccountNameFromDomain(string host, string serviceSubDomain)
+        public static string GetAccountNameFromHost(string host, string serviceSubDomain)
         {
             var accountEndIndex = host.IndexOf(".", StringComparison.InvariantCulture);
             if (accountEndIndex >= 0)
             {
                 var serviceStartIndex = host.IndexOf(serviceSubDomain, accountEndIndex, StringComparison.InvariantCulture);
-                return serviceStartIndex > -1 ? host.Substring(0, accountEndIndex) : null;
+                if (serviceStartIndex > -1)
+                {
+                    string accountName = host.Substring(0, accountEndIndex);
+
+                    // Note: The suffixes are specifically checked/trimmed in this order to
+                    // take into account of cases with both "-secondary" and "-ipv6"/"-dualstack"
+                    // ie. "accountname-secondary-ipv6"
+
+                    // Remove "-ipv6" or "-dualstack" from end if present
+                    if (accountName.EndsWith("-ipv6", StringComparison.InvariantCulture))
+                    {
+                        accountName = accountName.Substring(0, accountName.Length - "-ipv6".Length);
+                    }
+                    else if (accountName.EndsWith("-dualstack", StringComparison.InvariantCulture))
+                    {
+                        accountName = accountName.Substring(0, accountName.Length - "-dualstack".Length);
+                    }
+
+                    // Remove "-secondary" from end if present
+                    if (accountName.EndsWith("-secondary", StringComparison.InvariantCulture))
+                    {
+                        accountName = accountName.Substring(0, accountName.Length - "-secondary".Length);
+                    }
+
+                    return accountName;
+                }
             }
             return null;
         }

@@ -1,6 +1,6 @@
 # Release History
 
-## 1.0.0-preview.23 (Unreleased)
+## 1.0.0-preview.24 (Unreleased)
 
 ### Features Added
 
@@ -9,6 +9,28 @@
 ### Bugs Fixed
 
 ### Other Changes
+
+## 1.0.0-preview.23 (2026-03-23)
+
+### Features Added
+- Model AzureDatabricksDeltaLakeLinkedService has a new parameter workspace_resource_id
+- Model HDInsightOnDemandLinkedService has a new parameter cluster_resource_group_auth_type
+- Added enum type HDInsightOndemandClusterResourceGroupAuthenticationType
+- Model JiraObjectDataset has a new parameter schema_type_properties_schema
+- Model JiraObjectDataset has a new parameter table
+- Model LookupActivity has a new parameter treat_decimal_as_string
+- Model NetezzaLinkedService has a new parameter database
+- Model NetezzaLinkedService has a new parameter port
+- Model NetezzaLinkedService has a new parameter security_level
+- Model NetezzaLinkedService has a new parameter server
+- Model NetezzaLinkedService has a new parameter uid
+- Added enum type NetezzaSecurityLevelType
+- Model SalesforceV2Source has a new parameter partition_option
+- Model ScriptActivity has a new parameter treat_decimal_as_string
+- Model SnowflakeV2LinkedService has a new parameter use_utc_timestamps
+
+### Breaking Changes
+- Model AzureDatabricksDeltaLakeLinkedService parameter access_token is no longer required in constructor
 
 ## 1.0.0-preview.22 (2025-09-05)
 

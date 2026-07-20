@@ -64,9 +64,7 @@ namespace Azure.ResourceManager.PowerBIDedicated.Models
             {
                 return null;
             }
-            Utf8JsonRequestContent content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(checkCapacityNameAvailabilityContent, ModelSerializationExtensions.WireOptions);
-            return content;
+            return RequestContent.Create(checkCapacityNameAvailabilityContent, ModelSerializationExtensions.WireOptions);
         }
 
         /// <param name="writer"> The JSON writer. </param>

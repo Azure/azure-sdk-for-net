@@ -64,9 +64,7 @@ namespace Azure.ResourceManager.Advisor.Models
             {
                 return null;
             }
-            Utf8JsonRequestContent content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(advisorPredictionContent, ModelSerializationExtensions.WireOptions);
-            return content;
+            return RequestContent.Create(advisorPredictionContent, ModelSerializationExtensions.WireOptions);
         }
 
         /// <param name="writer"> The JSON writer. </param>

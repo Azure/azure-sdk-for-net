@@ -11,19 +11,29 @@ using System.Text.Json;
 
 namespace Azure.ResourceManager.Communication
 {
+    /// <summary></summary>
     public partial class EmailSuppressionListResource : IJsonModel<EmailSuppressionListData>
     {
-        private static EmailSuppressionListData s_dataDeserializationInstance;
-        private static EmailSuppressionListData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+        private static IJsonModel<EmailSuppressionListData> s_dataDeserializationInstance;
 
+        private static IJsonModel<EmailSuppressionListData> DataDeserializationInstance => s_dataDeserializationInstance ??= new EmailSuppressionListData();
+
+        /// <param name="writer"> The writer to serialize the model to. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<EmailSuppressionListData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<EmailSuppressionListData>)Data).Write(writer, options);
 
-        EmailSuppressionListData IJsonModel<EmailSuppressionListData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<EmailSuppressionListData>)DataDeserializationInstance).Create(ref reader, options);
+        /// <param name="reader"> The reader for deserializing the model. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        EmailSuppressionListData IJsonModel<EmailSuppressionListData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => DataDeserializationInstance.Create(ref reader, options);
 
+        /// <param name="options"> The client options for reading and writing models. </param>
         BinaryData IPersistableModel<EmailSuppressionListData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<EmailSuppressionListData>(Data, options, AzureResourceManagerCommunicationContext.Default);
 
+        /// <param name="data"> The binary data to be processed. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         EmailSuppressionListData IPersistableModel<EmailSuppressionListData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<EmailSuppressionListData>(data, options, AzureResourceManagerCommunicationContext.Default);
 
-        string IPersistableModel<EmailSuppressionListData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<EmailSuppressionListData>)DataDeserializationInstance).GetFormatFromOptions(options);
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<EmailSuppressionListData>.GetFormatFromOptions(ModelReaderWriterOptions options) => DataDeserializationInstance.GetFormatFromOptions(options);
     }
 }

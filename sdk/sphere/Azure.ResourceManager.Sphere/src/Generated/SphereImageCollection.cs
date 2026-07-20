@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.Sphere
         {
             if (id.ResourceType != SphereCatalogResource.ResourceType)
             {
-                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, SphereCatalogResource.ResourceType), id);
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, SphereCatalogResource.ResourceType), nameof(id));
             }
         }
 
@@ -93,7 +93,7 @@ namespace Azure.ResourceManager.Sphere
                 HttpMessage message = _imagesRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, imageName, SphereImageData.ToRequestContent(data), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 SphereArmOperation<SphereImageResource> operation = new SphereArmOperation<SphereImageResource>(
-                    new SphereImageOperationSource(Client),
+                    new SphereImageResourceOperationSource(Client),
                     _imagesClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -151,7 +151,7 @@ namespace Azure.ResourceManager.Sphere
                 HttpMessage message = _imagesRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, imageName, SphereImageData.ToRequestContent(data), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 SphereArmOperation<SphereImageResource> operation = new SphereArmOperation<SphereImageResource>(
-                    new SphereImageOperationSource(Client),
+                    new SphereImageResourceOperationSource(Client),
                     _imagesClientDiagnostics,
                     Pipeline,
                     message.Request,

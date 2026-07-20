@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.PostgreSql.FlexibleServers;
 
 namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
 {
@@ -14,50 +15,77 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
     public readonly partial struct MigrationDbState : IEquatable<MigrationDbState>
     {
         private readonly string _value;
+        /// <summary> Migration is in progress for the database. </summary>
+        private const string InProgressValue = "InProgress";
+        /// <summary> Migration is waiting for cutover trigger for the database. </summary>
+        private const string WaitingForCutoverTriggerValue = "WaitingForCutoverTrigger";
+        /// <summary> Migration has failed for the database. </summary>
+        private const string FailedValue = "Failed";
+        /// <summary> Migration has been canceled for the database. </summary>
+        private const string CanceledValue = "Canceled";
+        /// <summary> Migration has succeeded for the database. </summary>
+        private const string SucceededValue = "Succeeded";
+        /// <summary> Migration is being canceled for the database. </summary>
+        private const string CancelingValue = "Canceling";
 
         /// <summary> Initializes a new instance of <see cref="MigrationDbState"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public MigrationDbState(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
+            Argument.AssertNotNull(value, nameof(value));
+
+            _value = value;
         }
 
-        private const string InProgressValue = "InProgress";
-        private const string WaitingForCutoverTriggerValue = "WaitingForCutoverTrigger";
-        private const string FailedValue = "Failed";
-        private const string CanceledValue = "Canceled";
-        private const string SucceededValue = "Succeeded";
-        private const string CancelingValue = "Canceling";
-
-        /// <summary> InProgress. </summary>
+        /// <summary> Migration is in progress for the database. </summary>
         public static MigrationDbState InProgress { get; } = new MigrationDbState(InProgressValue);
-        /// <summary> WaitingForCutoverTrigger. </summary>
+
+        /// <summary> Migration is waiting for cutover trigger for the database. </summary>
         public static MigrationDbState WaitingForCutoverTrigger { get; } = new MigrationDbState(WaitingForCutoverTriggerValue);
-        /// <summary> Failed. </summary>
+
+        /// <summary> Migration has failed for the database. </summary>
         public static MigrationDbState Failed { get; } = new MigrationDbState(FailedValue);
-        /// <summary> Canceled. </summary>
+
+        /// <summary> Migration has been canceled for the database. </summary>
         public static MigrationDbState Canceled { get; } = new MigrationDbState(CanceledValue);
-        /// <summary> Succeeded. </summary>
+
+        /// <summary> Migration has succeeded for the database. </summary>
         public static MigrationDbState Succeeded { get; } = new MigrationDbState(SucceededValue);
-        /// <summary> Canceling. </summary>
+
+        /// <summary> Migration is being canceled for the database. </summary>
         public static MigrationDbState Canceling { get; } = new MigrationDbState(CancelingValue);
+
         /// <summary> Determines if two <see cref="MigrationDbState"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(MigrationDbState left, MigrationDbState right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="MigrationDbState"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(MigrationDbState left, MigrationDbState right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="MigrationDbState"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="MigrationDbState"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator MigrationDbState(string value) => new MigrationDbState(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="MigrationDbState"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator MigrationDbState?(string value) => value == null ? null : new MigrationDbState(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is MigrationDbState other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(MigrationDbState other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

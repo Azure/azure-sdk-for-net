@@ -187,7 +187,7 @@ namespace Azure.Developer.LoadTesting
             return message;
         }
 
-        internal HttpMessage CreateGetMetricDimensionValuesRequest(string testRunId, string name, string metricname, string metricNamespace, string timespan, string interval, RequestContext context)
+        internal HttpMessage CreateGetMetricDimensionValuesRequest(string testRunId, string name, string metricName, string metricNamespace, string timespan, string interval, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -200,7 +200,7 @@ namespace Azure.Developer.LoadTesting
             {
                 uri.AppendQuery("api-version", _apiVersion, true);
             }
-            uri.AppendQuery("metricname", metricname, true);
+            uri.AppendQuery("metricname", metricName, true);
             if (interval != null)
             {
                 uri.AppendQuery("interval", interval, true);
@@ -215,7 +215,7 @@ namespace Azure.Developer.LoadTesting
             return message;
         }
 
-        internal HttpMessage CreateNextGetMetricDimensionValuesRequest(Uri nextPage, string testRunId, string name, string metricname, string metricNamespace, string timespan, string interval, RequestContext context)
+        internal HttpMessage CreateNextGetMetricDimensionValuesRequest(Uri nextPage, string testRunId, string name, string metricName, string metricNamespace, string timespan, string interval, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             if (nextPage.IsAbsoluteUri)
@@ -277,7 +277,7 @@ namespace Azure.Developer.LoadTesting
             return message;
         }
 
-        internal HttpMessage CreateGetMetricsRequest(string testRunId, string metricname, string metricNamespace, string timespan, RequestContent content, string aggregation, string interval, RequestContext context)
+        internal HttpMessage CreateGetMetricsRequest(string testRunId, string metricName, string metricNamespace, string timespan, RequestContent content, string aggregation, string interval, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -292,7 +292,7 @@ namespace Azure.Developer.LoadTesting
             {
                 uri.AppendQuery("aggregation", aggregation, true);
             }
-            uri.AppendQuery("metricname", metricname, true);
+            uri.AppendQuery("metricname", metricName, true);
             if (interval != null)
             {
                 uri.AppendQuery("interval", interval, true);
@@ -303,7 +303,7 @@ namespace Azure.Developer.LoadTesting
             Request request = message.Request;
             request.Uri = uri;
             request.Method = RequestMethod.Post;
-            if ("application/json" != null)
+            if (content != null)
             {
                 request.Headers.SetValue("Content-Type", "application/json");
             }
@@ -312,7 +312,7 @@ namespace Azure.Developer.LoadTesting
             return message;
         }
 
-        internal HttpMessage CreateNextGetMetricsRequest(Uri nextPage, string testRunId, string metricname, string metricNamespace, string timespan, RequestContent content, string aggregation, string interval, RequestContext context)
+        internal HttpMessage CreateNextGetMetricsRequest(Uri nextPage, string testRunId, string metricName, string metricNamespace, string timespan, RequestContent content, string aggregation, string interval, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             if (nextPage.IsAbsoluteUri)
@@ -608,6 +608,27 @@ namespace Azure.Developer.LoadTesting
             request.Uri = uri;
             request.Method = RequestMethod.Get;
             request.Headers.SetValue("Accept", "application/json");
+            return message;
+        }
+
+        internal HttpMessage CreateUpdateLatestTestRunInsightsRequest(string testRunId, RequestContent content, RequestContext context)
+        {
+            RawRequestUriBuilder uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/test-runs/", false);
+            uri.AppendPath(testRunId, true);
+            uri.AppendPath("/insights/latest", false);
+            if (_apiVersion != null)
+            {
+                uri.AppendQuery("api-version", _apiVersion, true);
+            }
+            HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier200);
+            Request request = message.Request;
+            request.Uri = uri;
+            request.Method = RequestMethod.Patch;
+            request.Headers.SetValue("Content-Type", "application/merge-patch+json");
+            request.Headers.SetValue("Accept", "application/json");
+            request.Content = content;
             return message;
         }
 

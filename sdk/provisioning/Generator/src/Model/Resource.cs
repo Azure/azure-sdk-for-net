@@ -56,6 +56,7 @@ public class Resource(Specification spec, Type armType)
                 if (FromExpression || GenerateRoleAssignment || GetKeysType is not null) { namespaces.Add("Azure.Provisioning.Expressions"); }
                 if (FromExpression || NameRequirements is not null || GetKeysType is not null || HiddenResourceVersions is not null) { namespaces.Add("System.ComponentModel"); }
                 if (GenerateRoleAssignment) { namespaces.Add("Azure.Provisioning.Authorization"); namespaces.Add("Azure.Provisioning.Roles"); }
+                if (IsExperimental) { namespaces.Add("System.Diagnostics.CodeAnalysis"); }
                 namespaces.Remove(Namespace!);
                 foreach (string ns in namespaces.Order())
                 {
@@ -68,6 +69,10 @@ public class Resource(Specification spec, Type armType)
                 writer.WriteLine($"/// <summary>");
                 writer.WriteWrapped(Description ?? (Name + "."));
                 writer.WriteLine($"/// </summary>");
+                if (IsExperimental)
+                {
+                    writer.WriteLine($"[Experimental(\"AZPROVISION001\")]");
+                }
                 writer.WriteLine($"public partial class {Name} : {(BaseType is not null ? BaseType.Name : "ProvisionableResource")}");
                 using (writer.Scope("{", "}"))
                 {

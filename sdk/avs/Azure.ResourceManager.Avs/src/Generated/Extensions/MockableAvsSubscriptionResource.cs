@@ -77,7 +77,7 @@ namespace Azure.ResourceManager.Avs.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<AvsPrivateCloudData, AvsPrivateCloudResource>(new PrivateCloudsGetInSubscriptionAsyncCollectionResultOfT(PrivateCloudsRestClient, Guid.Parse(Id.SubscriptionId), context), data => new AvsPrivateCloudResource(Client, data));
+            return new AsyncPageableWrapper<AvsPrivateCloudData, AvsPrivateCloudResource>(new PrivateCloudsGetInSubscriptionAsyncCollectionResultOfT(PrivateCloudsRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableAvsSubscriptionResource.GetAvsPrivateClouds"), data => new AvsPrivateCloudResource(Client, data));
         }
 
         /// <summary>
@@ -105,7 +105,7 @@ namespace Azure.ResourceManager.Avs.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<AvsPrivateCloudData, AvsPrivateCloudResource>(new PrivateCloudsGetInSubscriptionCollectionResultOfT(PrivateCloudsRestClient, Guid.Parse(Id.SubscriptionId), context), data => new AvsPrivateCloudResource(Client, data));
+            return new PageableWrapper<AvsPrivateCloudData, AvsPrivateCloudResource>(new PrivateCloudsGetInSubscriptionCollectionResultOfT(PrivateCloudsRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableAvsSubscriptionResource.GetAvsPrivateClouds"), data => new AvsPrivateCloudResource(Client, data));
         }
 
         /// <summary>
@@ -315,7 +315,7 @@ namespace Azure.ResourceManager.Avs.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new SkusGetAvsSkusAsyncCollectionResultOfT(SkusRestClient, Guid.Parse(Id.SubscriptionId), context);
+            return new SkusGetAvsSkusAsyncCollectionResultOfT(SkusRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableAvsSubscriptionResource.GetAvsSkus");
         }
 
         /// <summary>
@@ -343,7 +343,7 @@ namespace Azure.ResourceManager.Avs.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new SkusGetAvsSkusCollectionResultOfT(SkusRestClient, Guid.Parse(Id.SubscriptionId), context);
+            return new SkusGetAvsSkusCollectionResultOfT(SkusRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableAvsSubscriptionResource.GetAvsSkus");
         }
     }
 }

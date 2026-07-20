@@ -9,7 +9,8 @@ using System.ClientModel;
 using System.IO;
 using System.Text.Json;
 using System.Threading.Tasks;
-using Azure.AI.Projects.OpenAI;
+using Azure.AI.Extensions.OpenAI;
+using Azure.AI.Projects.Agents;
 using Azure.Identity;
 using NUnit.Framework;
 using OpenAI.Files;
@@ -30,10 +31,10 @@ public partial class Sample19_FineTuning_OSS : SamplesBase
         string trainingFilePath = Path.Combine(FineTuningHelpers.GetSamplesDataDirectory(), "sft_training_set.jsonl");
         string validationFilePath = Path.Combine(FineTuningHelpers.GetSamplesDataDirectory(), "sft_validation_set.jsonl");
 #endif
-        var endpoint = Environment.GetEnvironmentVariable("PROJECT_ENDPOINT");
-        var modelDeploymentName = Environment.GetEnvironmentVariable("MODEL_DEPLOYMENT_NAME");
+        var endpoint = Environment.GetEnvironmentVariable("FOUNDRY_PROJECT_ENDPOINT");
+        var modelDeploymentName = Environment.GetEnvironmentVariable("FOUNDRY_MODEL_NAME");
         AIProjectClient projectClient = new AIProjectClient(new Uri(endpoint), new DefaultAzureCredential());
-        ProjectOpenAIClient oaiClient = projectClient.OpenAI;
+        ProjectOpenAIClient oaiClient = projectClient.ProjectOpenAIClient;
         OpenAIFileClient fileClient = oaiClient.GetOpenAIFileClient();
         FineTuningClient fineTuningClient = oaiClient.GetFineTuningClient();
         #endregion
@@ -106,10 +107,10 @@ public partial class Sample19_FineTuning_OSS : SamplesBase
         string trainingFilePath = Path.Combine(FineTuningHelpers.GetSamplesDataDirectory(), "sft_training_set.jsonl");
         string validationFilePath = Path.Combine(FineTuningHelpers.GetSamplesDataDirectory(), "sft_validation_set.jsonl");
 #endif
-        var endpoint = Environment.GetEnvironmentVariable("PROJECT_ENDPOINT");
-        var modelDeploymentName = Environment.GetEnvironmentVariable("MODEL_DEPLOYMENT_NAME");
+        var endpoint = Environment.GetEnvironmentVariable("FOUNDRY_PROJECT_ENDPOINT");
+        var modelDeploymentName = Environment.GetEnvironmentVariable("FOUNDRY_MODEL_NAME");
         AIProjectClient projectClient = new AIProjectClient(new Uri(endpoint), new DefaultAzureCredential());
-        ProjectOpenAIClient oaiClient = projectClient.OpenAI;
+        ProjectOpenAIClient oaiClient = projectClient.ProjectOpenAIClient;
         OpenAIFileClient fileClient = oaiClient.GetOpenAIFileClient();
         FineTuningClient fineTuningClient = oaiClient.GetFineTuningClient();
         #endregion

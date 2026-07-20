@@ -67,7 +67,7 @@ namespace Azure.ResourceManager.Network.Samples
             FirewallPolicyResource firewallPolicy = client.GetFirewallPolicyResource(firewallPolicyResourceId);
 
             // invoke the operation
-            await firewallPolicy.DeleteAsync(WaitUntil.Completed);
+            await firewallPolicy.DeleteAsync(WaitUntil.Completed, cancellationToken: System.Threading.CancellationToken.None);
 
             Console.WriteLine("Succeeded");
         }
@@ -147,7 +147,7 @@ Values = {"Deny"},
                 ResultsPerPage = 20,
                 Skip = 0,
             };
-            IdpsSignatureListResult result = await firewallPolicy.GetFirewallPolicyIdpsSignatureAsync(content);
+            IdpsSignatureListResult result = await firewallPolicy.GetFirewallPolicyIdpsSignatureAsync(content, System.Threading.CancellationToken.None);
 
             Console.WriteLine($"Succeeded: {result}");
         }
@@ -177,7 +177,7 @@ Values = {"Deny"},
             {
                 FilterName = "severity",
             };
-            SignatureOverridesFilterValuesResult result = await firewallPolicy.GetFirewallPolicyIdpsSignaturesFilterValueAsync(content);
+            SignatureOverridesFilterValuesResult result = await firewallPolicy.GetFirewallPolicyIdpsSignaturesFilterValueAsync(content, System.Threading.CancellationToken.None);
 
             Console.WriteLine($"Succeeded: {result}");
         }
@@ -203,7 +203,7 @@ Values = {"Deny"},
             FirewallPolicyResource firewallPolicy = client.GetFirewallPolicyResource(firewallPolicyResourceId);
 
             // invoke the operation
-            await firewallPolicy.DeployFirewallPolicyDeploymentAsync(WaitUntil.Completed);
+            await firewallPolicy.DeployFirewallPolicyDeploymentAsync(WaitUntil.Completed, cancellationToken: System.Threading.CancellationToken.None);
 
             Console.WriteLine("Succeeded");
         }

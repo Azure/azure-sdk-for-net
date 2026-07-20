@@ -51,7 +51,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
         {
             if (id.ResourceType != ResourceGroupResource.ResourceType)
             {
-                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ResourceGroupResource.ResourceType), id);
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ResourceGroupResource.ResourceType), nameof(id));
             }
         }
 
@@ -264,11 +264,11 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
         }
 
         /// <summary>
-        /// List a TrafficProfile
+        /// List TrafficProfile resources by resource group
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/MgmtTypeSpec. </description>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/MgmtTypeSpec/trafficProfiles. </description>
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
@@ -288,15 +288,15 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<TrafficProfileData, TrafficProfileResource>(new TrafficProfilesGetAllAsyncCollectionResultOfT(_trafficProfilesRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context), data => new TrafficProfileResource(Client, data));
+            return new AsyncPageableWrapper<TrafficProfileData, TrafficProfileResource>(new TrafficProfilesGetAllAsyncCollectionResultOfT(_trafficProfilesRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "TrafficProfileCollection.GetAll"), data => new TrafficProfileResource(Client, data));
         }
 
         /// <summary>
-        /// List a TrafficProfile
+        /// List TrafficProfile resources by resource group
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/MgmtTypeSpec. </description>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/MgmtTypeSpec/trafficProfiles. </description>
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
@@ -316,7 +316,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<TrafficProfileData, TrafficProfileResource>(new TrafficProfilesGetAllCollectionResultOfT(_trafficProfilesRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context), data => new TrafficProfileResource(Client, data));
+            return new PageableWrapper<TrafficProfileData, TrafficProfileResource>(new TrafficProfilesGetAllCollectionResultOfT(_trafficProfilesRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "TrafficProfileCollection.GetAll"), data => new TrafficProfileResource(Client, data));
         }
 
         /// <summary>

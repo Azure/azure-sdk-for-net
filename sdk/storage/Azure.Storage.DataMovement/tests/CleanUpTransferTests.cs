@@ -94,6 +94,7 @@ namespace Azure.Storage.DataMovement.Tests
             source.Verify(b => b.ShouldItemTransferAsync(It.IsAny<CancellationToken>()));
             source.Verify(b => b.GetPropertiesAsync(It.IsAny<CancellationToken>()));
             source.Verify(b => b.GetCopyAuthorizationHeaderAsync(It.IsAny<CancellationToken>()));
+            source.Verify(b => b.GetSasWithUri(), Times.Once());
             source.VerifyNoOtherCalls();
         }
 

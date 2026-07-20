@@ -68,14 +68,14 @@ public class Sample_Deployment : SamplesBase
     {
         #region Snippet:AI_Projects_DeploymentExampleSync
 #if SNIPPET
-        var endpoint = System.Environment.GetEnvironmentVariable("PROJECT_ENDPOINT");
-        var modelDeploymentName = System.Environment.GetEnvironmentVariable("MODEL_DEPLOYMENT_NAME");
+        var endpoint = System.Environment.GetEnvironmentVariable("FOUNDRY_PROJECT_ENDPOINT");
+        var modelDeploymentName = System.Environment.GetEnvironmentVariable("FOUNDRY_MODEL_NAME");
         var modelPublisher = System.Environment.GetEnvironmentVariable("MODEL_PUBLISHER");
 
         AIProjectClient projectClient = new AIProjectClient(new Uri(endpoint), new DefaultAzureCredential());
 #else
-        var endpoint = TestEnvironment.PROJECT_ENDPOINT;
-        var modelDeploymentName = TestEnvironment.MODELDEPLOYMENTNAME;
+        var endpoint = TestEnvironment.FOUNDRY_PROJECT_ENDPOINT;
+        var modelDeploymentName = TestEnvironment.FOUNDRY_MODEL_NAME;
         var modelPublisher = TestEnvironment.MODELPUBLISHER;
 
         // Enable debugging for System.ClientModel
@@ -109,14 +109,14 @@ public class Sample_Deployment : SamplesBase
     {
         #region Snippet:AI_Projects_DeploymentExampleAsync
 #if SNIPPET
-        var endpoint = System.Environment.GetEnvironmentVariable("PROJECT_ENDPOINT");
-        var modelDeploymentName = System.Environment.GetEnvironmentVariable("MODEL_DEPLOYMENT_NAME");
+        var endpoint = System.Environment.GetEnvironmentVariable("FOUNDRY_PROJECT_ENDPOINT");
+        var modelDeploymentName = System.Environment.GetEnvironmentVariable("FOUNDRY_MODEL_NAME");
         var modelPublisher = System.Environment.GetEnvironmentVariable("MODEL_PUBLISHER");
 
         AIProjectClient projectClient = new AIProjectClient(new Uri(endpoint), new DefaultAzureCredential());
 #else
-        var endpoint = TestEnvironment.PROJECT_ENDPOINT;
-        var modelDeploymentName = TestEnvironment.MODELDEPLOYMENTNAME;
+        var endpoint = TestEnvironment.FOUNDRY_PROJECT_ENDPOINT;
+        var modelDeploymentName = TestEnvironment.FOUNDRY_MODEL_NAME;
         var modelPublisher = TestEnvironment.MODELPUBLISHER;
 
         // Enable debugging for System.ClientModel

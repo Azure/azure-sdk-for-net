@@ -178,7 +178,7 @@ namespace Azure.Storage.Queues
                 }
                 else
                 {
-                    AccountName = uri.GetAccountNameFromDomain(Constants.Queue.UriSubDomain) ?? string.Empty;
+                    AccountName = uri.GetAccountNameFromHost(Constants.Queue.UriSubDomain) ?? string.Empty;
                 }
 
                 // Find the next slash (if it exists)

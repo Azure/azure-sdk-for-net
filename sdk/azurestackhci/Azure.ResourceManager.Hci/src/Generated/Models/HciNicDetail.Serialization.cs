@@ -8,17 +8,56 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Text.Json;
-using Azure.Core;
+using Azure.ResourceManager.Hci;
 
 namespace Azure.ResourceManager.Hci.Models
 {
-    public partial class HciNicDetail : IUtf8JsonSerializable, IJsonModel<HciNicDetail>
+    /// <summary> The NIC Detail of a device. </summary>
+    public partial class HciNicDetail : IJsonModel<HciNicDetail>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<HciNicDetail>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual HciNicDetail PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<HciNicDetail>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    {
+                        return DeserializeHciNicDetail(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(HciNicDetail)} does not support reading '{options.Format}' format.");
+            }
+        }
 
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<HciNicDetail>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerHciContext.Default);
+                default:
+                    throw new FormatException($"The model {nameof(HciNicDetail)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<HciNicDetail>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        HciNicDetail IPersistableModel<HciNicDetail>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<HciNicDetail>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<HciNicDetail>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
@@ -30,12 +69,11 @@ namespace Azure.ResourceManager.Hci.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<HciNicDetail>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<HciNicDetail>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(HciNicDetail)} does not support writing '{format}' format.");
             }
-
             if (options.Format != "W" && Optional.IsDefined(AdapterName))
             {
                 writer.WritePropertyName("adapterName"u8);
@@ -75,8 +113,13 @@ namespace Azure.ResourceManager.Hci.Models
             {
                 writer.WritePropertyName("dnsServers"u8);
                 writer.WriteStartArray();
-                foreach (var item in DnsServers)
+                foreach (string item in DnsServers)
                 {
+                    if (item == null)
+                    {
+                        writer.WriteNullValue();
+                        continue;
+                    }
                     writer.WriteStringValue(item);
                 }
                 writer.WriteEndArray();
@@ -116,15 +159,20 @@ namespace Azure.ResourceManager.Hci.Models
                 writer.WritePropertyName("nicStatus"u8);
                 writer.WriteStringValue(NicStatus);
             }
-            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            if (options.Format != "W" && Optional.IsDefined(RdmaCapability))
             {
-                foreach (var item in _serializedAdditionalRawData)
+                writer.WritePropertyName("rdmaCapability"u8);
+                writer.WriteStringValue(RdmaCapability.Value.ToString());
+            }
+            if (options.Format != "W" && _additionalBinaryDataProperties != null)
+            {
+                foreach (var item in _additionalBinaryDataProperties)
                 {
                     writer.WritePropertyName(item.Key);
 #if NET6_0_OR_GREATER
-				writer.WriteRawValue(item.Value);
+                    writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value, ModelSerializationExtensions.JsonDocumentOptions))
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
                     {
                         JsonSerializer.Serialize(writer, document.RootElement);
                     }
@@ -133,22 +181,27 @@ namespace Azure.ResourceManager.Hci.Models
             }
         }
 
-        HciNicDetail IJsonModel<HciNicDetail>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        HciNicDetail IJsonModel<HciNicDetail>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual HciNicDetail JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<HciNicDetail>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<HciNicDetail>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(HciNicDetail)} does not support reading '{format}' format.");
             }
-
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
             return DeserializeHciNicDetail(document.RootElement, options);
         }
 
-        internal static HciNicDetail DeserializeHciNicDetail(JsonElement element, ModelReaderWriterOptions options = null)
+        /// <param name="element"> The JSON element to deserialize. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        internal static HciNicDetail DeserializeHciNicDetail(JsonElement element, ModelReaderWriterOptions options)
         {
-            options ??= ModelSerializationExtensions.WireOptions;
-
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -157,7 +210,7 @@ namespace Azure.ResourceManager.Hci.Models
             string interfaceDescription = default;
             string componentId = default;
             string driverVersion = default;
-            string ip4Address = default;
+            string iPv4Address = default;
             string subnetMask = default;
             string defaultGateway = default;
             IReadOnlyList<string> dnsServers = default;
@@ -168,106 +221,121 @@ namespace Azure.ResourceManager.Hci.Models
             string nicType = default;
             string vlanId = default;
             string nicStatus = default;
-            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
-            foreach (var property in element.EnumerateObject())
+            RdmaCapability? rdmaCapability = default;
+            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            foreach (var prop in element.EnumerateObject())
             {
-                if (property.NameEquals("adapterName"u8))
+                if (prop.NameEquals("adapterName"u8))
                 {
-                    adapterName = property.Value.GetString();
+                    adapterName = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("interfaceDescription"u8))
+                if (prop.NameEquals("interfaceDescription"u8))
                 {
-                    interfaceDescription = property.Value.GetString();
+                    interfaceDescription = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("componentId"u8))
+                if (prop.NameEquals("componentId"u8))
                 {
-                    componentId = property.Value.GetString();
+                    componentId = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("driverVersion"u8))
+                if (prop.NameEquals("driverVersion"u8))
                 {
-                    driverVersion = property.Value.GetString();
+                    driverVersion = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("ip4Address"u8))
+                if (prop.NameEquals("ip4Address"u8))
                 {
-                    ip4Address = property.Value.GetString();
+                    iPv4Address = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("subnetMask"u8))
+                if (prop.NameEquals("subnetMask"u8))
                 {
-                    subnetMask = property.Value.GetString();
+                    subnetMask = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("defaultGateway"u8))
+                if (prop.NameEquals("defaultGateway"u8))
                 {
-                    defaultGateway = property.Value.GetString();
+                    defaultGateway = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("dnsServers"u8))
+                if (prop.NameEquals("dnsServers"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
                     List<string> array = new List<string>();
-                    foreach (var item in property.Value.EnumerateArray())
+                    foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(item.GetString());
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(item.GetString());
+                        }
                     }
                     dnsServers = array;
                     continue;
                 }
-                if (property.NameEquals("defaultIsolationId"u8))
+                if (prop.NameEquals("defaultIsolationId"u8))
                 {
-                    defaultIsolationId = property.Value.GetString();
+                    defaultIsolationId = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("macAddress"u8))
+                if (prop.NameEquals("macAddress"u8))
                 {
-                    macAddress = property.Value.GetString();
+                    macAddress = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("slot"u8))
+                if (prop.NameEquals("slot"u8))
                 {
-                    slot = property.Value.GetString();
+                    slot = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("switchName"u8))
+                if (prop.NameEquals("switchName"u8))
                 {
-                    switchName = property.Value.GetString();
+                    switchName = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("nicType"u8))
+                if (prop.NameEquals("nicType"u8))
                 {
-                    nicType = property.Value.GetString();
+                    nicType = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("vlanId"u8))
+                if (prop.NameEquals("vlanId"u8))
                 {
-                    vlanId = property.Value.GetString();
+                    vlanId = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("nicStatus"u8))
+                if (prop.NameEquals("nicStatus"u8))
                 {
-                    nicStatus = property.Value.GetString();
+                    nicStatus = prop.Value.GetString();
+                    continue;
+                }
+                if (prop.NameEquals("rdmaCapability"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    rdmaCapability = new RdmaCapability(prop.Value.GetString());
                     continue;
                 }
                 if (options.Format != "W")
                 {
-                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = rawDataDictionary;
             return new HciNicDetail(
                 adapterName,
                 interfaceDescription,
                 componentId,
                 driverVersion,
-                ip4Address,
+                iPv4Address,
                 subnetMask,
                 defaultGateway,
                 dnsServers ?? new ChangeTrackingList<string>(),
@@ -278,413 +346,8 @@ namespace Azure.ResourceManager.Hci.Models
                 nicType,
                 vlanId,
                 nicStatus,
-                serializedAdditionalRawData);
+                rdmaCapability,
+                additionalBinaryDataProperties);
         }
-
-        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
-        {
-            StringBuilder builder = new StringBuilder();
-            BicepModelReaderWriterOptions bicepOptions = options as BicepModelReaderWriterOptions;
-            IDictionary<string, string> propertyOverrides = null;
-            bool hasObjectOverride = bicepOptions != null && bicepOptions.PropertyOverrides.TryGetValue(this, out propertyOverrides);
-            bool hasPropertyOverride = false;
-            string propertyOverride = null;
-
-            builder.AppendLine("{");
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(AdapterName), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  adapterName: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(AdapterName))
-                {
-                    builder.Append("  adapterName: ");
-                    if (AdapterName.Contains(Environment.NewLine))
-                    {
-                        builder.AppendLine("'''");
-                        builder.AppendLine($"{AdapterName}'''");
-                    }
-                    else
-                    {
-                        builder.AppendLine($"'{AdapterName}'");
-                    }
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(InterfaceDescription), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  interfaceDescription: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(InterfaceDescription))
-                {
-                    builder.Append("  interfaceDescription: ");
-                    if (InterfaceDescription.Contains(Environment.NewLine))
-                    {
-                        builder.AppendLine("'''");
-                        builder.AppendLine($"{InterfaceDescription}'''");
-                    }
-                    else
-                    {
-                        builder.AppendLine($"'{InterfaceDescription}'");
-                    }
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ComponentId), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  componentId: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(ComponentId))
-                {
-                    builder.Append("  componentId: ");
-                    if (ComponentId.Contains(Environment.NewLine))
-                    {
-                        builder.AppendLine("'''");
-                        builder.AppendLine($"{ComponentId}'''");
-                    }
-                    else
-                    {
-                        builder.AppendLine($"'{ComponentId}'");
-                    }
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(DriverVersion), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  driverVersion: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(DriverVersion))
-                {
-                    builder.Append("  driverVersion: ");
-                    if (DriverVersion.Contains(Environment.NewLine))
-                    {
-                        builder.AppendLine("'''");
-                        builder.AppendLine($"{DriverVersion}'''");
-                    }
-                    else
-                    {
-                        builder.AppendLine($"'{DriverVersion}'");
-                    }
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(IPv4Address), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  ip4Address: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(IPv4Address))
-                {
-                    builder.Append("  ip4Address: ");
-                    if (IPv4Address.Contains(Environment.NewLine))
-                    {
-                        builder.AppendLine("'''");
-                        builder.AppendLine($"{IPv4Address}'''");
-                    }
-                    else
-                    {
-                        builder.AppendLine($"'{IPv4Address}'");
-                    }
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(SubnetMask), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  subnetMask: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(SubnetMask))
-                {
-                    builder.Append("  subnetMask: ");
-                    if (SubnetMask.Contains(Environment.NewLine))
-                    {
-                        builder.AppendLine("'''");
-                        builder.AppendLine($"{SubnetMask}'''");
-                    }
-                    else
-                    {
-                        builder.AppendLine($"'{SubnetMask}'");
-                    }
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(DefaultGateway), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  defaultGateway: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(DefaultGateway))
-                {
-                    builder.Append("  defaultGateway: ");
-                    if (DefaultGateway.Contains(Environment.NewLine))
-                    {
-                        builder.AppendLine("'''");
-                        builder.AppendLine($"{DefaultGateway}'''");
-                    }
-                    else
-                    {
-                        builder.AppendLine($"'{DefaultGateway}'");
-                    }
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(DnsServers), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  dnsServers: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsCollectionDefined(DnsServers))
-                {
-                    if (DnsServers.Any())
-                    {
-                        builder.Append("  dnsServers: ");
-                        builder.AppendLine("[");
-                        foreach (var item in DnsServers)
-                        {
-                            if (item == null)
-                            {
-                                builder.Append("null");
-                                continue;
-                            }
-                            if (item.Contains(Environment.NewLine))
-                            {
-                                builder.AppendLine("    '''");
-                                builder.AppendLine($"{item}'''");
-                            }
-                            else
-                            {
-                                builder.AppendLine($"    '{item}'");
-                            }
-                        }
-                        builder.AppendLine("  ]");
-                    }
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(DefaultIsolationId), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  defaultIsolationId: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(DefaultIsolationId))
-                {
-                    builder.Append("  defaultIsolationId: ");
-                    if (DefaultIsolationId.Contains(Environment.NewLine))
-                    {
-                        builder.AppendLine("'''");
-                        builder.AppendLine($"{DefaultIsolationId}'''");
-                    }
-                    else
-                    {
-                        builder.AppendLine($"'{DefaultIsolationId}'");
-                    }
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(MacAddress), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  macAddress: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(MacAddress))
-                {
-                    builder.Append("  macAddress: ");
-                    if (MacAddress.Contains(Environment.NewLine))
-                    {
-                        builder.AppendLine("'''");
-                        builder.AppendLine($"{MacAddress}'''");
-                    }
-                    else
-                    {
-                        builder.AppendLine($"'{MacAddress}'");
-                    }
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Slot), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  slot: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(Slot))
-                {
-                    builder.Append("  slot: ");
-                    if (Slot.Contains(Environment.NewLine))
-                    {
-                        builder.AppendLine("'''");
-                        builder.AppendLine($"{Slot}'''");
-                    }
-                    else
-                    {
-                        builder.AppendLine($"'{Slot}'");
-                    }
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(SwitchName), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  switchName: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(SwitchName))
-                {
-                    builder.Append("  switchName: ");
-                    if (SwitchName.Contains(Environment.NewLine))
-                    {
-                        builder.AppendLine("'''");
-                        builder.AppendLine($"{SwitchName}'''");
-                    }
-                    else
-                    {
-                        builder.AppendLine($"'{SwitchName}'");
-                    }
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(NicType), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  nicType: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(NicType))
-                {
-                    builder.Append("  nicType: ");
-                    if (NicType.Contains(Environment.NewLine))
-                    {
-                        builder.AppendLine("'''");
-                        builder.AppendLine($"{NicType}'''");
-                    }
-                    else
-                    {
-                        builder.AppendLine($"'{NicType}'");
-                    }
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(VlanId), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  vlanId: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(VlanId))
-                {
-                    builder.Append("  vlanId: ");
-                    if (VlanId.Contains(Environment.NewLine))
-                    {
-                        builder.AppendLine("'''");
-                        builder.AppendLine($"{VlanId}'''");
-                    }
-                    else
-                    {
-                        builder.AppendLine($"'{VlanId}'");
-                    }
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(NicStatus), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  nicStatus: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(NicStatus))
-                {
-                    builder.Append("  nicStatus: ");
-                    if (NicStatus.Contains(Environment.NewLine))
-                    {
-                        builder.AppendLine("'''");
-                        builder.AppendLine($"{NicStatus}'''");
-                    }
-                    else
-                    {
-                        builder.AppendLine($"'{NicStatus}'");
-                    }
-                }
-            }
-
-            builder.AppendLine("}");
-            return BinaryData.FromString(builder.ToString());
-        }
-
-        BinaryData IPersistableModel<HciNicDetail>.Write(ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<HciNicDetail>)this).GetFormatFromOptions(options) : options.Format;
-
-            switch (format)
-            {
-                case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerHciContext.Default);
-                case "bicep":
-                    return SerializeBicep(options);
-                default:
-                    throw new FormatException($"The model {nameof(HciNicDetail)} does not support writing '{options.Format}' format.");
-            }
-        }
-
-        HciNicDetail IPersistableModel<HciNicDetail>.Create(BinaryData data, ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<HciNicDetail>)this).GetFormatFromOptions(options) : options.Format;
-
-            switch (format)
-            {
-                case "J":
-                    {
-                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
-                        return DeserializeHciNicDetail(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(HciNicDetail)} does not support reading '{options.Format}' format.");
-            }
-        }
-
-        string IPersistableModel<HciNicDetail>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

@@ -7,43 +7,15 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.ContainerService;
 
 namespace Azure.ResourceManager.ContainerService.Models
 {
     /// <summary> Properties of a namespace managed by ARM. </summary>
     public partial class ManagedClusterNamespaceProperties
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="ManagedClusterNamespaceProperties"/>. </summary>
         public ManagedClusterNamespaceProperties()
@@ -61,8 +33,8 @@ namespace Azure.ResourceManager.ContainerService.Models
         /// <param name="defaultNetworkPolicy"> The default network policy enforced upon the namespace. Customers can have other Kubernetes network policy objects under the namespace. Network policies are additive; if a policy or policies apply to a given pod for a given direction, the connections allowed in that direction for the pod is the union of what all applicable policies allow. </param>
         /// <param name="adoptionPolicy"> Action if Kubernetes namespace with same name already exists. </param>
         /// <param name="deletePolicy"> Delete options of a namespace. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ManagedClusterNamespaceProperties(ManagedClusterNamespaceProvisioningState? provisioningState, IDictionary<string, string> labels, IDictionary<string, string> annotations, string portalFqdn, NamespaceResourceQuota defaultResourceQuota, NamespaceNetworkPolicies defaultNetworkPolicy, NamespaceAdoptionPolicy? adoptionPolicy, NamespaceDeletePolicy? deletePolicy, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal ManagedClusterNamespaceProperties(ManagedClusterNamespaceProvisioningState? provisioningState, IDictionary<string, string> labels, IDictionary<string, string> annotations, string portalFqdn, NamespaceResourceQuota defaultResourceQuota, NamespaceNetworkPolicies defaultNetworkPolicy, NamespaceAdoptionPolicy? adoptionPolicy, NamespaceDeletePolicy? deletePolicy, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             ProvisioningState = provisioningState;
             Labels = labels;
@@ -72,30 +44,37 @@ namespace Azure.ResourceManager.ContainerService.Models
             DefaultNetworkPolicy = defaultNetworkPolicy;
             AdoptionPolicy = adoptionPolicy;
             DeletePolicy = deletePolicy;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> The current provisioning state of the namespace. </summary>
         [WirePath("provisioningState")]
         public ManagedClusterNamespaceProvisioningState? ProvisioningState { get; }
+
         /// <summary> The labels of managed namespace. </summary>
         [WirePath("labels")]
         public IDictionary<string, string> Labels { get; }
+
         /// <summary> The annotations of managed namespace. </summary>
         [WirePath("annotations")]
         public IDictionary<string, string> Annotations { get; }
+
         /// <summary> The special FQDN used by the Azure Portal to access the Managed Cluster. This FQDN is for use only by the Azure Portal and should not be used by other clients. The Azure Portal requires certain Cross-Origin Resource Sharing (CORS) headers to be sent in some responses, which Kubernetes APIServer doesn't handle by default. This special FQDN supports CORS, allowing the Azure Portal to function properly. </summary>
         [WirePath("portalFqdn")]
         public string PortalFqdn { get; }
+
         /// <summary> The default resource quota enforced upon the namespace. Customers can have other Kubernetes resource quota objects under the namespace. Resource quotas are additive; if multiple resource quotas are applied to a given namespace, then the effective limit will be one such that all quotas on the namespace can be satisfied. </summary>
         [WirePath("defaultResourceQuota")]
         public NamespaceResourceQuota DefaultResourceQuota { get; set; }
+
         /// <summary> The default network policy enforced upon the namespace. Customers can have other Kubernetes network policy objects under the namespace. Network policies are additive; if a policy or policies apply to a given pod for a given direction, the connections allowed in that direction for the pod is the union of what all applicable policies allow. </summary>
         [WirePath("defaultNetworkPolicy")]
         public NamespaceNetworkPolicies DefaultNetworkPolicy { get; set; }
+
         /// <summary> Action if Kubernetes namespace with same name already exists. </summary>
         [WirePath("adoptionPolicy")]
         public NamespaceAdoptionPolicy? AdoptionPolicy { get; set; }
+
         /// <summary> Delete options of a namespace. </summary>
         [WirePath("deletePolicy")]
         public NamespaceDeletePolicy? DeletePolicy { get; set; }

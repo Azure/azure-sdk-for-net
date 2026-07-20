@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.Quota
         {
             if (id.ResourceType != GroupQuotaEntityResource.ResourceType)
             {
-                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, GroupQuotaEntityResource.ResourceType), id);
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, GroupQuotaEntityResource.ResourceType), nameof(id));
             }
         }
 
@@ -87,7 +87,7 @@ namespace Azure.ResourceManager.Quota
                 HttpMessage message = _groupQuotaSubscriptionIdsRestClient.CreateCreateOrUpdateRequest(Id.Parent.Name, Id.Name, subscriptionId, context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 QuotaArmOperation<GroupQuotaSubscriptionResource> operation = new QuotaArmOperation<GroupQuotaSubscriptionResource>(
-                    new GroupQuotaSubscriptionOperationSource(Client),
+                    new GroupQuotaSubscriptionResourceOperationSource(Client),
                     _groupQuotaSubscriptionIdsClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -139,7 +139,7 @@ namespace Azure.ResourceManager.Quota
                 HttpMessage message = _groupQuotaSubscriptionIdsRestClient.CreateCreateOrUpdateRequest(Id.Parent.Name, Id.Name, subscriptionId, context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 QuotaArmOperation<GroupQuotaSubscriptionResource> operation = new QuotaArmOperation<GroupQuotaSubscriptionResource>(
-                    new GroupQuotaSubscriptionOperationSource(Client),
+                    new GroupQuotaSubscriptionResourceOperationSource(Client),
                     _groupQuotaSubscriptionIdsClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -281,7 +281,7 @@ namespace Azure.ResourceManager.Quota
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<GroupQuotaSubscriptionData, GroupQuotaSubscriptionResource>(new GroupQuotaSubscriptionIdsGetAllAsyncCollectionResultOfT(_groupQuotaSubscriptionIdsRestClient, Id.Parent.Name, Id.Name, context), data => new GroupQuotaSubscriptionResource(Client, data));
+            return new AsyncPageableWrapper<GroupQuotaSubscriptionData, GroupQuotaSubscriptionResource>(new GroupQuotaSubscriptionIdsGetAllAsyncCollectionResultOfT(_groupQuotaSubscriptionIdsRestClient, Id.Parent.Name, Id.Name, context, "GroupQuotaSubscriptionCollection.GetAll"), data => new GroupQuotaSubscriptionResource(Client, data));
         }
 
         /// <summary>
@@ -309,7 +309,7 @@ namespace Azure.ResourceManager.Quota
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<GroupQuotaSubscriptionData, GroupQuotaSubscriptionResource>(new GroupQuotaSubscriptionIdsGetAllCollectionResultOfT(_groupQuotaSubscriptionIdsRestClient, Id.Parent.Name, Id.Name, context), data => new GroupQuotaSubscriptionResource(Client, data));
+            return new PageableWrapper<GroupQuotaSubscriptionData, GroupQuotaSubscriptionResource>(new GroupQuotaSubscriptionIdsGetAllCollectionResultOfT(_groupQuotaSubscriptionIdsRestClient, Id.Parent.Name, Id.Name, context, "GroupQuotaSubscriptionCollection.GetAll"), data => new GroupQuotaSubscriptionResource(Client, data));
         }
 
         /// <summary>

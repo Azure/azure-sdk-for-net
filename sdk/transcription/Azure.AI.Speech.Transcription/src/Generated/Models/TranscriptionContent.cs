@@ -2,16 +2,13 @@
 
 #nullable disable
 
-using System;
-using System.Collections.Generic;
+using System.ClientModel;
+using System.Diagnostics.CodeAnalysis;
 
 namespace Azure.AI.Speech.Transcription
 {
     internal partial class TranscriptionContent
     {
-        /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
-
         /// <summary> Initializes a new instance of <see cref="TranscriptionContent"/>. </summary>
         /// <param name="options"> Metadata for a transcription request. This field contains a JSON-serialized object of type `TranscriptionOptions`. </param>
         public TranscriptionContent(TranscriptionOptions options)
@@ -22,33 +19,19 @@ namespace Azure.AI.Speech.Transcription
         /// <summary> Initializes a new instance of <see cref="TranscriptionContent"/>. </summary>
         /// <param name="options"> Metadata for a transcription request. This field contains a JSON-serialized object of type `TranscriptionOptions`. </param>
         /// <param name="audio"> The content of the audio file to be transcribed. The audio file must be shorter than 2 hours in audio duration and smaller than 250 MB in size. Optional if audioUrl is provided in the definition. </param>
-        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal TranscriptionContent(TranscriptionOptions options, BinaryData audio, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+#pragma warning disable SCME0004 // Type is for evaluation purposes only and is subject to change or removal in future updates.
+        internal TranscriptionContent(TranscriptionOptions options, FileBinaryContent audio)
         {
             Options = options;
             Audio = audio;
-            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
+#pragma warning restore SCME0004 // Type is for evaluation purposes only and is subject to change or removal in future updates.
 
         /// <summary> Metadata for a transcription request. This field contains a JSON-serialized object of type `TranscriptionOptions`. </summary>
         public TranscriptionOptions Options { get; }
 
-        /// <summary>
-        /// The content of the audio file to be transcribed. The audio file must be shorter than 2 hours in audio duration and smaller than 250 MB in size. Optional if audioUrl is provided in the definition.
-        /// <para>
-        /// To assign a byte[] to this property use <see cref="BinaryData.FromBytes(byte[])"/>.
-        /// The byte[] will be serialized to a Base64 encoded string.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term> BinaryData.FromBytes(new byte[] { 1, 2, 3 }). </term>
-        /// <description> Creates a payload of "AQID". </description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        public BinaryData Audio { get; set; }
+        /// <summary> The content of the audio file to be transcribed. The audio file must be shorter than 2 hours in audio duration and smaller than 250 MB in size. Optional if audioUrl is provided in the definition. </summary>
+        [Experimental("SCME0004")]
+        public FileBinaryContent Audio { get; set; }
     }
 }

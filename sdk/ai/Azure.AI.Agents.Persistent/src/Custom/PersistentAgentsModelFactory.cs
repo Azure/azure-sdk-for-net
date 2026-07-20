@@ -6,8 +6,8 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using Azure.Core;
 
+using Microsoft.TypeSpec.Generator.Customizations;
 namespace Azure.AI.Agents.Persistent;
 
 /*
@@ -16,7 +16,7 @@ namespace Azure.AI.Agents.Persistent;
  * This file restores substantial portions of generated model factory surface lost via type customization and
  * visibility adjustments.
  */
-[CodeGenClient("AIAgentsPersistentModelFactory")]
+[CodeGenType("AIAgentsPersistentModelFactory")]
 public static partial class PersistentAgentsModelFactory
 {
     /// <summary> Initializes a new instance of <see cref="Azure.AI.Agents.Persistent.PersistentAgent"/>. </summary>
@@ -66,7 +66,7 @@ public static partial class PersistentAgentsModelFactory
             topP,
             responseFormat,
             metadata,
-            serializedAdditionalRawData: null);
+            additionalBinaryDataProperties: null);
     }
 
     /// <summary> Initializes a new instance of <see cref="o:PersistentAgentThread"/>. </summary>
@@ -89,7 +89,7 @@ public static partial class PersistentAgentsModelFactory
             createdAt,
             toolResources,
             metadata,
-            serializedAdditionalRawData: null);
+            additionalBinaryDataProperties: null);
     }
 
     /// <summary> Initializes a new instance of <see cref="Azure.AI.Agents.Persistent.ThreadRun"/>. </summary>
@@ -134,7 +134,7 @@ public static partial class PersistentAgentsModelFactory
         tools ??= new List<ToolDefinition>();
         metadata ??= new Dictionary<string, string>();
 
-        return new ThreadRun(id, @object: null, threadId, agentId, status, requiredAction, lastError, model, instructions, tools.ToList(), createdAt, expiresAt, startedAt, completedAt, cancelledAt, failedAt, incompleteDetails, usage, temperature, topP, maxPromptTokens, maxCompletionTokens, truncationStrategy, toolChoice, responseFormat, metadata, toolResources, parallelToolCalls ?? true, serializedAdditionalRawData: null);
+        return new ThreadRun(id, @object: null, threadId, agentId, status, requiredAction, lastError, model, instructions, tools.ToList(), createdAt, expiresAt, startedAt, completedAt, cancelledAt, failedAt, incompleteDetails, usage, temperature, topP, maxPromptTokens, maxCompletionTokens, truncationStrategy, toolChoice, responseFormat, metadata, toolResources, parallelToolCalls ?? true, additionalBinaryDataProperties: null);
     }
 
     /// <summary> Initializes a new instance of <see cref="Azure.AI.Agents.Persistent.PersistentAgentFileInfo"/>. </summary>
@@ -170,7 +170,7 @@ public static partial class PersistentAgentsModelFactory
     {
         metadata ??= new Dictionary<string, string>();
 
-        return new RunStep(id, @object: null, type, agentId, threadId, runId, status, stepDetails, lastError, createdAt, expiredAt, completedAt, cancelledAt, failedAt, usage, metadata, serializedAdditionalRawData: null);
+        return new RunStep(id, @object: null, type, agentId, threadId, runId, status, stepDetails, lastError, createdAt, expiredAt, completedAt, cancelledAt, failedAt, usage, metadata, additionalBinaryDataProperties: null);
     }
 
     /// <summary> Initializes a new instance of <see cref="Azure.AI.Agents.Persistent.PersistentThreadMessage"/>. </summary>
@@ -194,7 +194,7 @@ public static partial class PersistentAgentsModelFactory
         attachments ??= new List<MessageAttachment>();
         metadata ??= new Dictionary<string, string>();
 
-        return new PersistentThreadMessage(id, @object: null, createdAt, threadId, status, incompleteDetails, completedAt, incompleteAt, role, contentItems?.ToList(), agentId, runId, attachments?.ToList(), (IReadOnlyDictionary<string, string>)metadata, serializedAdditionalRawData: null);
+        return new PersistentThreadMessage(id, @object: null, createdAt, threadId, status, incompleteDetails, completedAt, incompleteAt, role, contentItems?.ToList(), agentId, runId, attachments?.ToList(), (IReadOnlyDictionary<string, string>)metadata, additionalBinaryDataProperties: null);
     }
 
     public static RequiredFunctionToolCall RequiredFunctionToolCall(string toolCallId, string functionName, string functionArguments)

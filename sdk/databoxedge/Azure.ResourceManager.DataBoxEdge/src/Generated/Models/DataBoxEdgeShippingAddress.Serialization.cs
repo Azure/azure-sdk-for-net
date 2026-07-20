@@ -9,14 +9,60 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure.Core;
+using Azure.ResourceManager.DataBoxEdge;
 
 namespace Azure.ResourceManager.DataBoxEdge.Models
 {
-    public partial class DataBoxEdgeShippingAddress : IUtf8JsonSerializable, IJsonModel<DataBoxEdgeShippingAddress>
+    /// <summary> The shipping address of the customer. </summary>
+    public partial class DataBoxEdgeShippingAddress : IJsonModel<DataBoxEdgeShippingAddress>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<DataBoxEdgeShippingAddress>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        /// <summary> Initializes a new instance of <see cref="DataBoxEdgeShippingAddress"/> for deserialization. </summary>
+        internal DataBoxEdgeShippingAddress()
+        {
+        }
 
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual DataBoxEdgeShippingAddress PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<DataBoxEdgeShippingAddress>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    {
+                        return DeserializeDataBoxEdgeShippingAddress(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(DataBoxEdgeShippingAddress)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<DataBoxEdgeShippingAddress>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerDataBoxEdgeContext.Default);
+                default:
+                    throw new FormatException($"The model {nameof(DataBoxEdgeShippingAddress)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<DataBoxEdgeShippingAddress>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        DataBoxEdgeShippingAddress IPersistableModel<DataBoxEdgeShippingAddress>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<DataBoxEdgeShippingAddress>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<DataBoxEdgeShippingAddress>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
@@ -28,12 +74,11 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<DataBoxEdgeShippingAddress>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<DataBoxEdgeShippingAddress>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(DataBoxEdgeShippingAddress)} does not support writing '{format}' format.");
             }
-
             if (Optional.IsDefined(AddressLine1))
             {
                 writer.WritePropertyName("addressLine1"u8);
@@ -66,15 +111,15 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
             }
             writer.WritePropertyName("country"u8);
             writer.WriteStringValue(Country);
-            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
-                foreach (var item in _serializedAdditionalRawData)
+                foreach (var item in _additionalBinaryDataProperties)
                 {
                     writer.WritePropertyName(item.Key);
 #if NET6_0_OR_GREATER
-				writer.WriteRawValue(item.Value);
+                    writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value, ModelSerializationExtensions.JsonDocumentOptions))
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
                     {
                         JsonSerializer.Serialize(writer, document.RootElement);
                     }
@@ -83,22 +128,27 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
             }
         }
 
-        DataBoxEdgeShippingAddress IJsonModel<DataBoxEdgeShippingAddress>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        DataBoxEdgeShippingAddress IJsonModel<DataBoxEdgeShippingAddress>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual DataBoxEdgeShippingAddress JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<DataBoxEdgeShippingAddress>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<DataBoxEdgeShippingAddress>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(DataBoxEdgeShippingAddress)} does not support reading '{format}' format.");
             }
-
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
             return DeserializeDataBoxEdgeShippingAddress(document.RootElement, options);
         }
 
-        internal static DataBoxEdgeShippingAddress DeserializeDataBoxEdgeShippingAddress(JsonElement element, ModelReaderWriterOptions options = null)
+        /// <param name="element"> The JSON element to deserialize. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        internal static DataBoxEdgeShippingAddress DeserializeDataBoxEdgeShippingAddress(JsonElement element, ModelReaderWriterOptions options)
         {
-            options ??= ModelSerializationExtensions.WireOptions;
-
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -110,51 +160,49 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
             string city = default;
             string state = default;
             string country = default;
-            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
-            foreach (var property in element.EnumerateObject())
+            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            foreach (var prop in element.EnumerateObject())
             {
-                if (property.NameEquals("addressLine1"u8))
+                if (prop.NameEquals("addressLine1"u8))
                 {
-                    addressLine1 = property.Value.GetString();
+                    addressLine1 = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("addressLine2"u8))
+                if (prop.NameEquals("addressLine2"u8))
                 {
-                    addressLine2 = property.Value.GetString();
+                    addressLine2 = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("addressLine3"u8))
+                if (prop.NameEquals("addressLine3"u8))
                 {
-                    addressLine3 = property.Value.GetString();
+                    addressLine3 = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("postalCode"u8))
+                if (prop.NameEquals("postalCode"u8))
                 {
-                    postalCode = property.Value.GetString();
+                    postalCode = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("city"u8))
+                if (prop.NameEquals("city"u8))
                 {
-                    city = property.Value.GetString();
+                    city = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("state"u8))
+                if (prop.NameEquals("state"u8))
                 {
-                    state = property.Value.GetString();
+                    state = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("country"u8))
+                if (prop.NameEquals("country"u8))
                 {
-                    country = property.Value.GetString();
+                    country = prop.Value.GetString();
                     continue;
                 }
                 if (options.Format != "W")
                 {
-                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = rawDataDictionary;
             return new DataBoxEdgeShippingAddress(
                 addressLine1,
                 addressLine2,
@@ -163,38 +211,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
                 city,
                 state,
                 country,
-                serializedAdditionalRawData);
+                additionalBinaryDataProperties);
         }
-
-        BinaryData IPersistableModel<DataBoxEdgeShippingAddress>.Write(ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<DataBoxEdgeShippingAddress>)this).GetFormatFromOptions(options) : options.Format;
-
-            switch (format)
-            {
-                case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerDataBoxEdgeContext.Default);
-                default:
-                    throw new FormatException($"The model {nameof(DataBoxEdgeShippingAddress)} does not support writing '{options.Format}' format.");
-            }
-        }
-
-        DataBoxEdgeShippingAddress IPersistableModel<DataBoxEdgeShippingAddress>.Create(BinaryData data, ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<DataBoxEdgeShippingAddress>)this).GetFormatFromOptions(options) : options.Format;
-
-            switch (format)
-            {
-                case "J":
-                    {
-                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
-                        return DeserializeDataBoxEdgeShippingAddress(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(DataBoxEdgeShippingAddress)} does not support reading '{options.Format}' format.");
-            }
-        }
-
-        string IPersistableModel<DataBoxEdgeShippingAddress>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

@@ -7,6 +7,8 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.Core;
+using Azure.ResourceManager.ContainerService;
 using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.ContainerService.Models
@@ -14,37 +16,8 @@ namespace Azure.ResourceManager.ContainerService.Models
     /// <summary> Profile of the managed cluster NAT gateway. </summary>
     public partial class ManagedClusterNatGatewayProfile
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="ManagedClusterNatGatewayProfile"/>. </summary>
         public ManagedClusterNatGatewayProfile()
@@ -55,32 +28,62 @@ namespace Azure.ResourceManager.ContainerService.Models
         /// <summary> Initializes a new instance of <see cref="ManagedClusterNatGatewayProfile"/>. </summary>
         /// <param name="managedOutboundIPProfile"> Profile of the managed outbound IP resources of the cluster NAT gateway. </param>
         /// <param name="effectiveOutboundIPs"> The effective outbound IP resources of the cluster NAT gateway. </param>
+        /// <param name="outboundIPPrefixes"> Desired outbound IP Prefix resources for the managed NAT Gateway. Only compatible with NAT Gateway V2. </param>
+        /// <param name="outboundIPs"> Desired outbound IP resources for the managed NAT Gateway. </param>
         /// <param name="idleTimeoutInMinutes"> Desired outbound flow idle timeout in minutes. Allowed values are in the range of 4 to 120 (inclusive). The default value is 4 minutes. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ManagedClusterNatGatewayProfile(ManagedClusterManagedOutboundIPProfile managedOutboundIPProfile, IList<WritableSubResource> effectiveOutboundIPs, int? idleTimeoutInMinutes, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal ManagedClusterNatGatewayProfile(ManagedClusterManagedOutboundIPProfile managedOutboundIPProfile, IList<WritableSubResource> effectiveOutboundIPs, ManagedClusterNATGatewayProfileOutboundIpPrefixes outboundIPPrefixes, ManagedClusterNATGatewayProfileOutboundIPs outboundIPs, int? idleTimeoutInMinutes, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             ManagedOutboundIPProfile = managedOutboundIPProfile;
             EffectiveOutboundIPs = effectiveOutboundIPs;
+            OutboundIPPrefixes = outboundIPPrefixes;
+            OutboundIPs = outboundIPs;
             IdleTimeoutInMinutes = idleTimeoutInMinutes;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> Profile of the managed outbound IP resources of the cluster NAT gateway. </summary>
-        internal ManagedClusterManagedOutboundIPProfile ManagedOutboundIPProfile { get; set; }
-        /// <summary> The desired number of outbound IPs created/managed by Azure. Allowed values must be in the range of 1 to 16 (inclusive). The default value is 1. </summary>
-        [WirePath("managedOutboundIPProfile.count")]
-        public int? ManagedOutboundIPCount
-        {
-            get => ManagedOutboundIPProfile is null ? default : ManagedOutboundIPProfile.Count;
-            set
-            {
-                if (ManagedOutboundIPProfile is null)
-                    ManagedOutboundIPProfile = new ManagedClusterManagedOutboundIPProfile();
-                ManagedOutboundIPProfile.Count = value;
-            }
-        }
+        [WirePath("managedOutboundIPProfile")]
+        public ManagedClusterManagedOutboundIPProfile ManagedOutboundIPProfile { get; set; }
+
+        /// <summary> Desired outbound IP Prefix resources for the managed NAT Gateway. Only compatible with NAT Gateway V2. </summary>
+        [WirePath("outboundIPPrefixes")]
+        internal ManagedClusterNATGatewayProfileOutboundIpPrefixes OutboundIPPrefixes { get; set; }
+
+        /// <summary> Desired outbound IP resources for the managed NAT Gateway. </summary>
+        [WirePath("outboundIPs")]
+        internal ManagedClusterNATGatewayProfileOutboundIPs OutboundIPs { get; set; }
+
         /// <summary> Desired outbound flow idle timeout in minutes. Allowed values are in the range of 4 to 120 (inclusive). The default value is 4 minutes. </summary>
         [WirePath("idleTimeoutInMinutes")]
         public int? IdleTimeoutInMinutes { get; set; }
+
+        /// <summary> A list of public IP prefix resources. </summary>
+        [WirePath("outboundIPPrefixes.publicIPPrefixes")]
+        public IList<ResourceIdentifier> OutboundPublicIPPrefixes
+        {
+            get
+            {
+                if (OutboundIPPrefixes is null)
+                {
+                    OutboundIPPrefixes = new ManagedClusterNATGatewayProfileOutboundIpPrefixes();
+                }
+                return OutboundIPPrefixes.PublicIPPrefixes;
+            }
+        }
+
+        /// <summary> A list of public IP resources. </summary>
+        [WirePath("outboundIPs.publicIPs")]
+        public IList<ResourceIdentifier> OutboundPublicIPs
+        {
+            get
+            {
+                if (OutboundIPs is null)
+                {
+                    OutboundIPs = new ManagedClusterNATGatewayProfileOutboundIPs();
+                }
+                return OutboundIPs.PublicIPs;
+            }
+        }
     }
 }

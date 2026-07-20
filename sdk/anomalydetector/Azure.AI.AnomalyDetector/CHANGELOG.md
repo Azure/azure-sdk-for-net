@@ -6,8 +6,11 @@
 
 - Introduced model factory `Azure.AI.AnomalyDetector.AnomalyDetectorModelFactory` for mocking.
 - Exposed `JsonModelWriteCore` for model serialization procedure.
+- Added `AnomalyDetectorClientSettings` to support creating a `AnomalyDetectorClient` from `IConfiguration`, including configuration-based credential resolution and dependency injection registration.
 
 ### Breaking Changes
+
+- Renamed the `Univariate` and `Multivariate` sub-clients to `UnivariateDetector` and `MultivariateDetector` to comply with type-naming guidelines. The accessors were renamed accordingly: `GetUnivariateClient()`→`GetUnivariateDetectorClient()` and `GetMultivariateClient()`→`GetMultivariateDetectorClient()`.
 
 ### Bugs Fixed
 

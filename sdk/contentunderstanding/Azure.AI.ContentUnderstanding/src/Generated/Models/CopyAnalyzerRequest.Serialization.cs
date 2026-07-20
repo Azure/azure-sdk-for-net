@@ -68,9 +68,7 @@ namespace Azure.AI.ContentUnderstanding
             {
                 return null;
             }
-            Utf8JsonRequestContent content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(copyAnalyzerRequest, ModelSerializationExtensions.WireOptions);
-            return content;
+            return RequestContent.Create(copyAnalyzerRequest, ModelSerializationExtensions.WireOptions);
         }
 
         /// <param name="writer"> The JSON writer. </param>

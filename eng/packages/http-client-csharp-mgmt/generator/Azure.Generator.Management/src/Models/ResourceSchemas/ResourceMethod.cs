@@ -7,12 +7,17 @@ using System.Text.Json;
 
 namespace Azure.Generator.Management.Models;
 
-internal record ResourceMethod(
+/// <summary> Represents a method associated with an ARM resource. </summary>
+/// <param name="Kind"> The kind of resource operation. </param>
+/// <param name="InputMethod"> The input service method. </param>
+/// <param name="OperationPath"> The operation path. </param>
+/// <param name="Scope"> The scope information for this operation, including the scope kind, ID pattern, and resource type. </param>
+/// <param name="InputClient"> The input client. </param>
+public record ResourceMethod(
     ResourceOperationKind Kind,
     InputServiceMethod InputMethod,
-    string OperationPath,
-    ResourceScope OperationScope,
-    string? ResourceScope,
+    RequestPathPattern OperationPath,
+    ArmScopeInfo Scope,
     InputClient InputClient)
 {
     internal static ResourceMethod DeserializeResourceMethod(JsonElement element)
@@ -20,8 +25,7 @@ internal record ResourceMethod(
         string? methodId = null;
         ResourceOperationKind? operationKind = null;
         string? operationPath = null;
-        ResourceScope? operationScope = null;
-        string? resourceScope = null;
+        ArmScopeInfo? scope = null;
         foreach (var prop in element.EnumerateObject())
         {
             if (prop.NameEquals("methodId"u8))
@@ -37,13 +41,9 @@ internal record ResourceMethod(
             {
                 operationPath = prop.Value.GetString();
             }
-            if (prop.NameEquals("operationScope"u8))
+            if (prop.NameEquals("scope"u8))
             {
-                operationScope = Enum.Parse<ResourceScope>(prop.Value.GetString() ?? throw new JsonException("operationScope cannot be null"), true);
-            }
-            if (prop.NameEquals("resourceScope"u8))
-            {
-                resourceScope = prop.Value.GetString();
+                scope = ArmScopeInfo.Deserialize(prop.Value);
             }
         }
         var inputMethod = ManagementClientGenerator.Instance.InputLibrary.GetMethodByCrossLanguageDefinitionId(methodId ?? throw new JsonException("id cannot be null"));
@@ -52,9 +52,8 @@ internal record ResourceMethod(
         return new ResourceMethod(
             operationKind ?? throw new JsonException("operationKind cannot be null"),
             inputMethod,
-            operationPath ?? throw new JsonException("operationPath cannot be null"),
-            operationScope ?? throw new JsonException("operationScope cannot be null"),
-            resourceScope,
+            new RequestPathPattern(operationPath ?? throw new JsonException("operationPath cannot be null")),
+            scope ?? throw new JsonException("scope cannot be null"),
             inputClient ?? throw new JsonException($"cannot find method {inputMethod.CrossLanguageDefinitionId}'s client"));
     }
 }

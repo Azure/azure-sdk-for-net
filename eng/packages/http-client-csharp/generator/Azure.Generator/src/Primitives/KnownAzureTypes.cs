@@ -15,6 +15,8 @@ using System.Diagnostics.CodeAnalysis;
 using System.Net;
 using System.Text;
 using System.Text.Json;
+using System.Xml;
+using System.Xml.Linq;
 using static Microsoft.TypeSpec.Generator.Primitives.CSharpType;
 using static Microsoft.TypeSpec.Generator.Snippets.Snippet;
 
@@ -24,6 +26,8 @@ namespace Azure.Generator.Primitives
     {
         public delegate MethodBodyStatement SerializationExpression(CSharpType valueType, ValueExpression value, ScopedApi<Utf8JsonWriter> writer, ScopedApi<ModelReaderWriterOptions> options, SerializationFormat format);
         public delegate ValueExpression DeserializationExpression(CSharpType valueType, ScopedApi<JsonElement> element, ScopedApi<BinaryData> data, ScopedApi<ModelReaderWriterOptions> options, SerializationFormat format);
+        public delegate MethodBodyStatement XmlSerializationExpression(CSharpType valueType, ValueExpression value, ScopedApi<XmlWriter> writer, ScopedApi<ModelReaderWriterOptions> options, SerializationFormat format);
+        public delegate ValueExpression XmlDeserializationExpression(CSharpType valueType, ScopedApi<XElement> element, ScopedApi<ModelReaderWriterOptions> options, SerializationFormat format);
 
         private const string UuidId = "Azure.Core.uuid";
         private const string IPv4AddressId = "Azure.Core.ipV4Address";
@@ -107,10 +111,33 @@ namespace Azure.Generator.Primitives
             [typeof(ResponseError)] = DeserializeResponseError,
         };
 
+        private static MethodBodyStatement XmlSerializeTypeWithToString(CSharpType valueType, ValueExpression value, ScopedApi<XmlWriter> writer, ScopedApi<ModelReaderWriterOptions> options, SerializationFormat format)
+        {
+            value = value.NullableStructValue(valueType);
+            return writer.Invoke(nameof(XmlWriter.WriteValue), value.InvokeToString()).Terminate();
+        }
+
+        private static ValueExpression XmlDeserializeNewInstanceStringLikeType(CSharpType valueType, ScopedApi<XElement> element, ScopedApi<ModelReaderWriterOptions> options, SerializationFormat format)
+            => New.Instance(valueType, element.Property(nameof(XElement.Value)));
+
+        private static readonly IReadOnlyDictionary<CSharpType, XmlSerializationExpression> _typeToXmlSerializationExpression = new Dictionary<CSharpType, XmlSerializationExpression>(new CSharpTypeIgnoreNullableComparer())
+        {
+            [typeof(ETag)] = XmlSerializeTypeWithToString,
+        };
+
+        private static readonly IReadOnlyDictionary<CSharpType, XmlDeserializationExpression> _typeToXmlDeserializationExpression = new Dictionary<CSharpType, XmlDeserializationExpression>(new CSharpTypeIgnoreNullableComparer())
+        {
+            [typeof(ETag)] = XmlDeserializeNewInstanceStringLikeType,
+        };
+
         public static bool TryGetKnownType(string id, [MaybeNullWhen(false)] out Type type) => _idToTypes.TryGetValue(id, out type);
 
         public static bool TryGetJsonSerializationExpression(CSharpType type, [MaybeNullWhen(false)] out SerializationExpression expression) => _typeToSerializationExpression.TryGetValue(type, out expression);
 
         public static bool TryGetJsonDeserializationExpression(CSharpType type, [MaybeNullWhen(false)] out DeserializationExpression expression) => _typeToDeserializationExpression.TryGetValue(type, out expression);
+
+        public static bool TryGetXmlSerializationExpression(CSharpType type, [MaybeNullWhen(false)] out XmlSerializationExpression expression) => _typeToXmlSerializationExpression.TryGetValue(type, out expression);
+
+        public static bool TryGetXmlDeserializationExpression(CSharpType type, [MaybeNullWhen(false)] out XmlDeserializationExpression expression) => _typeToXmlDeserializationExpression.TryGetValue(type, out expression);
     }
 }

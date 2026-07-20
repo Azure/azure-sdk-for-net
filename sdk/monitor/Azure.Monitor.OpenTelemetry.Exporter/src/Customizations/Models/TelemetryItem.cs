@@ -17,6 +17,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Models
     {
         private static volatile string? s_cloudRoleNameOverride;
         private static volatile string? s_cloudRoleInstanceOverride;
+        private static volatile string? s_componentVersionOverride;
 
         public TelemetryItem(Activity activity, ref ActivityTagsProcessor activityTagsProcessor, AzureMonitorResource? resource, string instrumentationKey, float sampleRate) :
             this(activity.GetTelemetryType() == TelemetryType.Request ? "Request" : "RemoteDependency", FormatUtcTimestamp(activity.StartTimeUtc))
@@ -28,7 +29,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Models
 
             Tags[ContextTagKeys.AiOperationId.ToString()] = activity.TraceId.ToHexString();
 
-            string? microsoftClientIp = AzMonList.GetTagValue(ref activityTagsProcessor.MappedTags, "microsoft.client.ip")?.ToString();
+            string? microsoftClientIp = AzMonList.GetTagValue(ref activityTagsProcessor.MappedTags, SemanticConventions.AttributeMicrosoftClientIp)?.ToString();
 
             // Check for microsoft.operation_name override (applies to both request and dependency)
             string? overrideOperationName = activityTagsProcessor.HasOverrideAttributes
@@ -88,6 +89,12 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Models
             }
 
             SetUserIdAndAuthenticatedUserId(ref activityTagsProcessor);
+
+            if (activityTagsProcessor.HasOverrideAttributes)
+            {
+                SetOverrideContextTags(ref activityTagsProcessor);
+            }
+
             SetResourceSdkVersionAndIkey(resource, instrumentationKey);
 
             if (sampleRate != 100f)
@@ -102,6 +109,8 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Models
             Tags[ContextTagKeys.AiOperationParentId.ToString()] = activitySpanId.ToHexString();
             Tags[ContextTagKeys.AiOperationId.ToString()] = telemetryItem.Tags[ContextTagKeys.AiOperationId.ToString()];
 
+            // Copy user agent from the parent TelemetryItem created by the Activity constructor,
+            // where it was set from ActivityTagsProcessor.MappedTags.
             if (telemetryItem.Tags.TryGetValue("ai.user.userAgent", out string? userAgent))
             {
                 // todo: update swagger to include this key.
@@ -112,6 +121,13 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Models
             Tags[ContextTagKeys.AiCloudRoleInstance.ToString()] = telemetryItem.Tags[ContextTagKeys.AiCloudRoleInstance.ToString()].Truncate(SchemaConstants.Tags_AiCloudRoleInstance_MaxLength);
             Tags[ContextTagKeys.AiInternalSdkVersion.ToString()] = SdkVersionUtils.s_sdkVersion.Truncate(SchemaConstants.Tags_AiInternalSdkVersion_MaxLength);
             Tags[ContextTagKeys.AiApplicationVer.ToString()] = telemetryItem.Tags[ContextTagKeys.AiApplicationVer.ToString()].Truncate(SchemaConstants.Tags_AiApplicationVer_MaxLength);
+            CopyTagIfPresent(telemetryItem, ContextTagKeys.AiSessionId.ToString());
+            CopyTagIfPresent(telemetryItem, ContextTagKeys.AiDeviceId.ToString());
+            CopyTagIfPresent(telemetryItem, ContextTagKeys.AiDeviceModel.ToString());
+            CopyTagIfPresent(telemetryItem, ContextTagKeys.AiDeviceType.ToString());
+            CopyTagIfPresent(telemetryItem, ContextTagKeys.AiDeviceOSVersion.ToString());
+            CopyTagIfPresent(telemetryItem, ContextTagKeys.AiOperationSyntheticSource.ToString());
+            CopyTagIfPresent(telemetryItem, ContextTagKeys.AiUserAccountId.ToString());
             InstrumentationKey = telemetryItem.InstrumentationKey;
 
             if (telemetryItem.SampleRate != 100f)
@@ -121,7 +137,12 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Models
         }
 
         public TelemetryItem (string name, LogRecord logRecord, AzureMonitorResource? resource, string instrumentationKey, LogContextInfo logContext) :
-            this(name, FormatUtcTimestamp(logRecord.Timestamp))
+            this(name, FormatUtcTimestamp(logRecord.Timestamp), logRecord, resource, instrumentationKey, logContext)
+        {
+        }
+
+        public TelemetryItem(string name, DateTimeOffset envelopeTime, LogRecord logRecord, AzureMonitorResource? resource, string instrumentationKey, LogContextInfo logContext) :
+            this(name, envelopeTime)
         {
             if (logRecord.TraceId != default)
             {
@@ -160,6 +181,41 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Models
                 {
                     Tags[ContextTagKeys.AiOperationName.ToString()] = logContext.OperationName.Truncate(SchemaConstants.Tags_AiOperationName_MaxLength);
                 }
+
+                if (logContext.SessionId != null)
+                {
+                    Tags[ContextTagKeys.AiSessionId.ToString()] = logContext.SessionId.Truncate(SchemaConstants.Tags_AiSessionId_MaxLength);
+                }
+
+                if (logContext.DeviceId != null)
+                {
+                    Tags[ContextTagKeys.AiDeviceId.ToString()] = logContext.DeviceId.Truncate(SchemaConstants.Tags_AiDeviceId_MaxLength);
+                }
+
+                if (logContext.DeviceModel != null)
+                {
+                    Tags[ContextTagKeys.AiDeviceModel.ToString()] = logContext.DeviceModel.Truncate(SchemaConstants.Tags_AiDeviceModel_MaxLength);
+                }
+
+                if (logContext.DeviceType != null)
+                {
+                    Tags[ContextTagKeys.AiDeviceType.ToString()] = logContext.DeviceType.Truncate(SchemaConstants.Tags_AiDeviceType_MaxLength);
+                }
+
+                if (logContext.DeviceOsVersion != null)
+                {
+                    Tags[ContextTagKeys.AiDeviceOSVersion.ToString()] = logContext.DeviceOsVersion.Truncate(SchemaConstants.Tags_AiDeviceOsVersion_MaxLength);
+                }
+
+                if (logContext.SyntheticSource != null)
+                {
+                    Tags[ContextTagKeys.AiOperationSyntheticSource.ToString()] = logContext.SyntheticSource.Truncate(SchemaConstants.Tags_AiOperationSyntheticSource_MaxLength);
+                }
+
+                if (logContext.UserAccountId != null)
+                {
+                    Tags[ContextTagKeys.AiUserAccountId.ToString()] = logContext.UserAccountId.Truncate(SchemaConstants.Tags_AiUserAccountId_MaxLength);
+                }
             }
 
             InstrumentationKey = instrumentationKey;
@@ -196,6 +252,12 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Models
             {
                 Tags[ContextTagKeys.AiCloudRoleInstance.ToString()] = roleInstance.Truncate(SchemaConstants.Tags_AiCloudRoleInstance_MaxLength);
             }
+
+            var componentVersion = s_componentVersionOverride ?? (s_componentVersionOverride = Environment.GetEnvironmentVariable(EnvironmentVariableConstants.APPLICATIONINSIGHTS_COMPONENT_VERSION) ?? string.Empty);
+            if (componentVersion.Length > 0)
+            {
+                Tags[ContextTagKeys.AiApplicationVer.ToString()] = componentVersion.Truncate(SchemaConstants.Tags_AiApplicationVer_MaxLength);
+            }
         }
 
         /// <summary>
@@ -205,11 +267,21 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Models
         {
             s_cloudRoleNameOverride = null;
             s_cloudRoleInstanceOverride = null;
+            s_componentVersionOverride = null;
         }
 
         internal static DateTimeOffset FormatUtcTimestamp(System.DateTime utcTimestamp)
         {
             return DateTime.SpecifyKind(utcTimestamp, DateTimeKind.Utc);
+        }
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        private void CopyTagIfPresent(TelemetryItem source, string key)
+        {
+            if (source.Tags.TryGetValue(key, out string? value) && value != null)
+            {
+                Tags[key] = value;
+            }
         }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
@@ -223,6 +295,28 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Models
             if (activityTagsProcessor.EndUserPseudoId != null)
             {
                 Tags[ContextTagKeys.AiUserId.ToString()] = activityTagsProcessor.EndUserPseudoId.Truncate(SchemaConstants.Tags_AiUserId_MaxLength);
+            }
+        }
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        private void SetOverrideContextTags(ref ActivityTagsProcessor activityTagsProcessor)
+        {
+            SetTagFromMappedTags(ref activityTagsProcessor, SemanticConventions.AttributeMicrosoftSessionId, ContextTagKeys.AiSessionId, SchemaConstants.Tags_AiSessionId_MaxLength);
+            SetTagFromMappedTags(ref activityTagsProcessor, SemanticConventions.AttributeAiDeviceId, ContextTagKeys.AiDeviceId, SchemaConstants.Tags_AiDeviceId_MaxLength);
+            SetTagFromMappedTags(ref activityTagsProcessor, SemanticConventions.AttributeAiDeviceModel, ContextTagKeys.AiDeviceModel, SchemaConstants.Tags_AiDeviceModel_MaxLength);
+            SetTagFromMappedTags(ref activityTagsProcessor, SemanticConventions.AttributeAiDeviceType, ContextTagKeys.AiDeviceType, SchemaConstants.Tags_AiDeviceType_MaxLength);
+            SetTagFromMappedTags(ref activityTagsProcessor, SemanticConventions.AttributeAiDeviceOsVersion, ContextTagKeys.AiDeviceOSVersion, SchemaConstants.Tags_AiDeviceOsVersion_MaxLength);
+            SetTagFromMappedTags(ref activityTagsProcessor, SemanticConventions.AttributeMicrosoftSyntheticSource, ContextTagKeys.AiOperationSyntheticSource, SchemaConstants.Tags_AiOperationSyntheticSource_MaxLength);
+            SetTagFromMappedTags(ref activityTagsProcessor, SemanticConventions.AttributeMicrosoftUserAccountId, ContextTagKeys.AiUserAccountId, SchemaConstants.Tags_AiUserAccountId_MaxLength);
+        }
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        private void SetTagFromMappedTags(ref ActivityTagsProcessor activityTagsProcessor, string attributeKey, ContextTagKeys contextTagKey, int maxLength)
+        {
+            var value = AzMonList.GetTagValue(ref activityTagsProcessor.MappedTags, attributeKey)?.ToString();
+            if (value != null)
+            {
+                Tags[contextTagKey.ToString()] = value.Truncate(maxLength);
             }
         }
     }

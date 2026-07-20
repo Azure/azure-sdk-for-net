@@ -64,9 +64,7 @@ namespace Azure.ResourceManager.StorageMover.Models
             {
                 return null;
             }
-            Utf8JsonRequestContent content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(storageMoverAgentPatch, ModelSerializationExtensions.WireOptions);
-            return content;
+            return RequestContent.Create(storageMoverAgentPatch, ModelSerializationExtensions.WireOptions);
         }
 
         /// <param name="writer"> The JSON writer. </param>

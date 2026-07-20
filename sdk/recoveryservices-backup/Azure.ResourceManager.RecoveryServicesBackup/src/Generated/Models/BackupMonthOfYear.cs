@@ -7,7 +7,7 @@
 
 namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 {
-    /// <summary> The BackupMonthOfYear. </summary>
+    /// <summary></summary>
     public enum BackupMonthOfYear
     {
         /// <summary> Invalid. </summary>

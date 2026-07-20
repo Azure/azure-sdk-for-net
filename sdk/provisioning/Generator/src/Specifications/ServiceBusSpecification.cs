@@ -1,4 +1,4 @@
-﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
 using Azure.Provisioning.Generator.Model;
@@ -8,7 +8,7 @@ using Azure.ResourceManager.ServiceBus.Models;
 namespace Azure.Provisioning.Generator.Specifications;
 
 public class ServiceBusSpecification() :
-    Specification("ServiceBus", typeof(ServiceBusExtensions))
+    Specification("ServiceBus", typeof(ServiceBusExtensions), serviceDirectory: "servicebus")
 {
     protected override void Customize()
     {

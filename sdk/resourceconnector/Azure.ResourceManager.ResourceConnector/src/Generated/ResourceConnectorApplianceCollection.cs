@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.ResourceConnector
         {
             if (id.ResourceType != ResourceGroupResource.ResourceType)
             {
-                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ResourceGroupResource.ResourceType), id);
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ResourceGroupResource.ResourceType), nameof(id));
             }
         }
 
@@ -94,7 +94,7 @@ namespace Azure.ResourceManager.ResourceConnector
                 HttpMessage message = _appliancesRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, resourceName, ResourceConnectorApplianceData.ToRequestContent(data), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 ResourceConnectorArmOperation<ResourceConnectorApplianceResource> operation = new ResourceConnectorArmOperation<ResourceConnectorApplianceResource>(
-                    new ResourceConnectorApplianceOperationSource(Client),
+                    new ResourceConnectorApplianceResourceOperationSource(Client),
                     _appliancesClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -152,7 +152,7 @@ namespace Azure.ResourceManager.ResourceConnector
                 HttpMessage message = _appliancesRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, resourceName, ResourceConnectorApplianceData.ToRequestContent(data), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 ResourceConnectorArmOperation<ResourceConnectorApplianceResource> operation = new ResourceConnectorArmOperation<ResourceConnectorApplianceResource>(
-                    new ResourceConnectorApplianceOperationSource(Client),
+                    new ResourceConnectorApplianceResourceOperationSource(Client),
                     _appliancesClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -294,7 +294,7 @@ namespace Azure.ResourceManager.ResourceConnector
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<ResourceConnectorApplianceData, ResourceConnectorApplianceResource>(new AppliancesGetByResourceGroupAsyncCollectionResultOfT(_appliancesRestClient, Id.SubscriptionId, Id.ResourceGroupName, context), data => new ResourceConnectorApplianceResource(Client, data));
+            return new AsyncPageableWrapper<ResourceConnectorApplianceData, ResourceConnectorApplianceResource>(new AppliancesGetByResourceGroupAsyncCollectionResultOfT(_appliancesRestClient, Id.SubscriptionId, Id.ResourceGroupName, context, "ResourceConnectorApplianceCollection.GetAll"), data => new ResourceConnectorApplianceResource(Client, data));
         }
 
         /// <summary>
@@ -322,7 +322,7 @@ namespace Azure.ResourceManager.ResourceConnector
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<ResourceConnectorApplianceData, ResourceConnectorApplianceResource>(new AppliancesGetByResourceGroupCollectionResultOfT(_appliancesRestClient, Id.SubscriptionId, Id.ResourceGroupName, context), data => new ResourceConnectorApplianceResource(Client, data));
+            return new PageableWrapper<ResourceConnectorApplianceData, ResourceConnectorApplianceResource>(new AppliancesGetByResourceGroupCollectionResultOfT(_appliancesRestClient, Id.SubscriptionId, Id.ResourceGroupName, context, "ResourceConnectorApplianceCollection.GetAll"), data => new ResourceConnectorApplianceResource(Client, data));
         }
 
         /// <summary>

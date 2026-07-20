@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.Avs
         {
             if (id.ResourceType != AvsPrivateCloudResource.ResourceType)
             {
-                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, AvsPrivateCloudResource.ResourceType), id);
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, AvsPrivateCloudResource.ResourceType), nameof(id));
             }
         }
 
@@ -93,7 +93,7 @@ namespace Azure.ResourceManager.Avs
                 HttpMessage message = _globalReachConnectionsRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, globalReachConnectionName, GlobalReachConnectionData.ToRequestContent(data), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 AvsArmOperation<GlobalReachConnectionResource> operation = new AvsArmOperation<GlobalReachConnectionResource>(
-                    new GlobalReachConnectionOperationSource(Client),
+                    new GlobalReachConnectionResourceOperationSource(Client),
                     _globalReachConnectionsClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -151,7 +151,7 @@ namespace Azure.ResourceManager.Avs
                 HttpMessage message = _globalReachConnectionsRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, globalReachConnectionName, GlobalReachConnectionData.ToRequestContent(data), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 AvsArmOperation<GlobalReachConnectionResource> operation = new AvsArmOperation<GlobalReachConnectionResource>(
-                    new GlobalReachConnectionOperationSource(Client),
+                    new GlobalReachConnectionResourceOperationSource(Client),
                     _globalReachConnectionsClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -293,7 +293,13 @@ namespace Azure.ResourceManager.Avs
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<GlobalReachConnectionData, GlobalReachConnectionResource>(new GlobalReachConnectionsGetAllAsyncCollectionResultOfT(_globalReachConnectionsRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context), data => new GlobalReachConnectionResource(Client, data));
+            return new AsyncPageableWrapper<GlobalReachConnectionData, GlobalReachConnectionResource>(new GlobalReachConnectionsGetAllAsyncCollectionResultOfT(
+                _globalReachConnectionsRestClient,
+                Guid.Parse(Id.SubscriptionId),
+                Id.ResourceGroupName,
+                Id.Name,
+                context,
+                "GlobalReachConnectionCollection.GetAll"), data => new GlobalReachConnectionResource(Client, data));
         }
 
         /// <summary>
@@ -321,7 +327,13 @@ namespace Azure.ResourceManager.Avs
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<GlobalReachConnectionData, GlobalReachConnectionResource>(new GlobalReachConnectionsGetAllCollectionResultOfT(_globalReachConnectionsRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context), data => new GlobalReachConnectionResource(Client, data));
+            return new PageableWrapper<GlobalReachConnectionData, GlobalReachConnectionResource>(new GlobalReachConnectionsGetAllCollectionResultOfT(
+                _globalReachConnectionsRestClient,
+                Guid.Parse(Id.SubscriptionId),
+                Id.ResourceGroupName,
+                Id.Name,
+                context,
+                "GlobalReachConnectionCollection.GetAll"), data => new GlobalReachConnectionResource(Client, data));
         }
 
         /// <summary>

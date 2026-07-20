@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.Playwright
         {
             TryGetApiVersion(PlaywrightWorkspaceResource.ResourceType, out string playwrightWorkspaceApiVersion);
             _playwrightWorkspacesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Playwright", PlaywrightWorkspaceResource.ResourceType.Namespace, Diagnostics);
-            _playwrightWorkspacesRestClient = new PlaywrightWorkspaces(_playwrightWorkspacesClientDiagnostics, Pipeline, Endpoint, playwrightWorkspaceApiVersion ?? "2025-09-01");
+            _playwrightWorkspacesRestClient = new PlaywrightWorkspaces(_playwrightWorkspacesClientDiagnostics, Pipeline, Endpoint, playwrightWorkspaceApiVersion ?? "2026-02-01-preview");
             ValidateResourceId(id);
         }
 
@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.Playwright
         {
             if (id.ResourceType != ResourceGroupResource.ResourceType)
             {
-                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ResourceGroupResource.ResourceType), id);
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ResourceGroupResource.ResourceType), nameof(id));
             }
         }
 
@@ -68,7 +68,7 @@ namespace Azure.ResourceManager.Playwright
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-09-01. </description>
+        /// <description> 2026-02-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -94,7 +94,7 @@ namespace Azure.ResourceManager.Playwright
                 HttpMessage message = _playwrightWorkspacesRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, playwrightWorkspaceName, PlaywrightWorkspaceData.ToRequestContent(data), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 PlaywrightArmOperation<PlaywrightWorkspaceResource> operation = new PlaywrightArmOperation<PlaywrightWorkspaceResource>(
-                    new PlaywrightWorkspaceOperationSource(Client),
+                    new PlaywrightWorkspaceResourceOperationSource(Client),
                     _playwrightWorkspacesClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -126,7 +126,7 @@ namespace Azure.ResourceManager.Playwright
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-09-01. </description>
+        /// <description> 2026-02-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -152,7 +152,7 @@ namespace Azure.ResourceManager.Playwright
                 HttpMessage message = _playwrightWorkspacesRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, playwrightWorkspaceName, PlaywrightWorkspaceData.ToRequestContent(data), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 PlaywrightArmOperation<PlaywrightWorkspaceResource> operation = new PlaywrightArmOperation<PlaywrightWorkspaceResource>(
-                    new PlaywrightWorkspaceOperationSource(Client),
+                    new PlaywrightWorkspaceResourceOperationSource(Client),
                     _playwrightWorkspacesClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -184,7 +184,7 @@ namespace Azure.ResourceManager.Playwright
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-09-01. </description>
+        /// <description> 2026-02-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -233,7 +233,7 @@ namespace Azure.ResourceManager.Playwright
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-09-01. </description>
+        /// <description> 2026-02-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -282,7 +282,7 @@ namespace Azure.ResourceManager.Playwright
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-09-01. </description>
+        /// <description> 2026-02-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -294,7 +294,7 @@ namespace Azure.ResourceManager.Playwright
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<PlaywrightWorkspaceData, PlaywrightWorkspaceResource>(new PlaywrightWorkspacesGetByResourceGroupAsyncCollectionResultOfT(_playwrightWorkspacesRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context), data => new PlaywrightWorkspaceResource(Client, data));
+            return new AsyncPageableWrapper<PlaywrightWorkspaceData, PlaywrightWorkspaceResource>(new PlaywrightWorkspacesGetByResourceGroupAsyncCollectionResultOfT(_playwrightWorkspacesRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "PlaywrightWorkspaceCollection.GetAll"), data => new PlaywrightWorkspaceResource(Client, data));
         }
 
         /// <summary>
@@ -310,7 +310,7 @@ namespace Azure.ResourceManager.Playwright
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-09-01. </description>
+        /// <description> 2026-02-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -322,7 +322,7 @@ namespace Azure.ResourceManager.Playwright
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<PlaywrightWorkspaceData, PlaywrightWorkspaceResource>(new PlaywrightWorkspacesGetByResourceGroupCollectionResultOfT(_playwrightWorkspacesRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context), data => new PlaywrightWorkspaceResource(Client, data));
+            return new PageableWrapper<PlaywrightWorkspaceData, PlaywrightWorkspaceResource>(new PlaywrightWorkspacesGetByResourceGroupCollectionResultOfT(_playwrightWorkspacesRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "PlaywrightWorkspaceCollection.GetAll"), data => new PlaywrightWorkspaceResource(Client, data));
         }
 
         /// <summary>
@@ -338,7 +338,7 @@ namespace Azure.ResourceManager.Playwright
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-09-01. </description>
+        /// <description> 2026-02-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -395,7 +395,7 @@ namespace Azure.ResourceManager.Playwright
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-09-01. </description>
+        /// <description> 2026-02-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -452,7 +452,7 @@ namespace Azure.ResourceManager.Playwright
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-09-01. </description>
+        /// <description> 2026-02-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -513,7 +513,7 @@ namespace Azure.ResourceManager.Playwright
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-09-01. </description>
+        /// <description> 2026-02-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>

@@ -30,12 +30,12 @@ namespace Azure.Search.Documents.Models
         /// <param name="kind"> Type of query. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="url"> The URL of an image to be vectorized to perform a vector search query. </param>
-        internal VectorizableImageUrlQuery(int? kNearestNeighborsCount, string fieldsRaw, bool? exhaustive, double? oversampling, float? weight, VectorThreshold threshold, string filterOverride, int? perDocumentVectorLimit, VectorQueryKind kind, IDictionary<string, BinaryData> additionalBinaryDataProperties, string url) : base(kNearestNeighborsCount, fieldsRaw, exhaustive, oversampling, weight, threshold, filterOverride, perDocumentVectorLimit, kind, additionalBinaryDataProperties)
+        internal VectorizableImageUrlQuery(int? kNearestNeighborsCount, string fieldsRaw, bool? exhaustive, double? oversampling, float? weight, VectorThreshold threshold, string filterOverride, int? perDocumentVectorLimit, VectorQueryKind kind, IDictionary<string, BinaryData> additionalBinaryDataProperties, Uri url) : base(kNearestNeighborsCount, fieldsRaw, exhaustive, oversampling, weight, threshold, filterOverride, perDocumentVectorLimit, kind, additionalBinaryDataProperties)
         {
             Url = url;
         }
 
         /// <summary> The URL of an image to be vectorized to perform a vector search query. </summary>
-        public string Url { get; set; }
+        public Uri Url { get; set; }
     }
 }

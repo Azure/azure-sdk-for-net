@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.NetworkCloud;
 
 namespace Azure.ResourceManager.NetworkCloud.Models
 {
@@ -14,41 +15,62 @@ namespace Azure.ResourceManager.NetworkCloud.Models
     public readonly partial struct VirtualMachineDeviceModelType : IEquatable<VirtualMachineDeviceModelType>
     {
         private readonly string _value;
+        /// <summary> The T1 device model. </summary>
+        private const string T1Value = "T1";
+        /// <summary> The T2 device model. </summary>
+        private const string T2Value = "T2";
+        /// <summary> The T3 device model. </summary>
+        private const string T3Value = "T3";
 
         /// <summary> Initializes a new instance of <see cref="VirtualMachineDeviceModelType"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public VirtualMachineDeviceModelType(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
+            Argument.AssertNotNull(value, nameof(value));
+
+            _value = value;
         }
 
-        private const string T1Value = "T1";
-        private const string T2Value = "T2";
-        private const string T3Value = "T3";
-
-        /// <summary> Traditional and most compatible device virtualization interface. </summary>
+        /// <summary> The T1 device model. </summary>
         public static VirtualMachineDeviceModelType T1 { get; } = new VirtualMachineDeviceModelType(T1Value);
-        /// <summary> Modern and enhanced device virtualization interface. </summary>
+
+        /// <summary> The T2 device model. </summary>
         public static VirtualMachineDeviceModelType T2 { get; } = new VirtualMachineDeviceModelType(T2Value);
-        /// <summary> Improved security and functionality (including TPM and secure boot support). Required for windows 11 and server 2025. </summary>
+
+        /// <summary> The T3 device model. </summary>
         public static VirtualMachineDeviceModelType T3 { get; } = new VirtualMachineDeviceModelType(T3Value);
+
         /// <summary> Determines if two <see cref="VirtualMachineDeviceModelType"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(VirtualMachineDeviceModelType left, VirtualMachineDeviceModelType right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="VirtualMachineDeviceModelType"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(VirtualMachineDeviceModelType left, VirtualMachineDeviceModelType right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="VirtualMachineDeviceModelType"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="VirtualMachineDeviceModelType"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator VirtualMachineDeviceModelType(string value) => new VirtualMachineDeviceModelType(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="VirtualMachineDeviceModelType"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator VirtualMachineDeviceModelType?(string value) => value == null ? null : new VirtualMachineDeviceModelType(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is VirtualMachineDeviceModelType other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(VirtualMachineDeviceModelType other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

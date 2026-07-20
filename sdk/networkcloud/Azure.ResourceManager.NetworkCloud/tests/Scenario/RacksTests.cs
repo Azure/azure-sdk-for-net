@@ -2,13 +2,13 @@
 // Licensed under the MIT License.
 
 using System;
+using System.Collections.Generic;
+using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Core.TestFramework;
 using Azure.ResourceManager.NetworkCloud.Models;
 using Azure.ResourceManager.Resources;
 using NUnit.Framework;
-using System.Collections.Generic;
-using System.Threading.Tasks;
 
 namespace Azure.ResourceManager.NetworkCloud.Tests.ScenarioTests
 {
@@ -62,12 +62,12 @@ namespace Azure.ResourceManager.NetworkCloud.Tests.ScenarioTests
             patch.Tags.Add(testKey, testValue);
 
             NetworkCloudRackResource rack = Client.GetNetworkCloudRackResource(firstRack.Id);
-            var updateResult = await rack.UpdateAsync(WaitUntil.Completed, patch);
+            var updateResult = await rack.UpdateAsync(WaitUntil.Completed, patch, matchConditions: null);
             Assert.AreEqual(testValue, updateResult.Value.Data.Tags[testKey]);
 
             // Update: Remove patched Tags
             patch.Tags.Remove(testKey);
-            updateResult = await rack.UpdateAsync(WaitUntil.Completed, patch);
+            updateResult = await rack.UpdateAsync(WaitUntil.Completed, patch, matchConditions: null);
             try
             {
                 var shouldNotPass = updateResult.Value.Data.Tags[testKey];

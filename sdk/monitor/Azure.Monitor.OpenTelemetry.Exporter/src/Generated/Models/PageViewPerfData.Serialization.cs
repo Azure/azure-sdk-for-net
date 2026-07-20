@@ -5,16 +5,80 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel.Primitives;
+using System.Collections.Generic;
 using System.Text.Json;
-using Azure.Core;
+using Azure.Monitor.OpenTelemetry.Exporter;
 
 namespace Azure.Monitor.OpenTelemetry.Exporter.Models
 {
-    internal partial class PageViewPerfData : IUtf8JsonSerializable
+    internal partial class PageViewPerfData : MonitorDomain, IJsonModel<PageViewPerfData>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        /// <summary> Initializes a new instance of <see cref="PageViewPerfData"/> for deserialization. </summary>
+        internal PageViewPerfData()
+        {
+        }
+
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override MonitorDomain PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<PageViewPerfData>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    {
+                        return DeserializePageViewPerfData(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(PageViewPerfData)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<PageViewPerfData>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options, AzureMonitorOpenTelemetryExporterContext.Default);
+                default:
+                    throw new FormatException($"The model {nameof(PageViewPerfData)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<PageViewPerfData>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        PageViewPerfData IPersistableModel<PageViewPerfData>.Create(BinaryData data, ModelReaderWriterOptions options) => (PageViewPerfData)PersistableModelCreateCore(data, options);
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<PageViewPerfData>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        void IJsonModel<PageViewPerfData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<PageViewPerfData>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(PageViewPerfData)} does not support writing '{format}' format.");
+            }
+            base.JsonModelWriteCore(writer, options);
             writer.WritePropertyName("id"u8);
             writer.WriteStringValue(Id);
             writer.WritePropertyName("name"u8);
@@ -61,6 +125,11 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Models
                 foreach (var item in Properties)
                 {
                     writer.WritePropertyName(item.Key);
+                    if (item.Value == null)
+                    {
+                        writer.WriteNullValue();
+                        continue;
+                    }
                     writer.WriteStringValue(item.Value);
                 }
                 writer.WriteEndObject();
@@ -76,22 +145,156 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Models
                 }
                 writer.WriteEndObject();
             }
-            writer.WritePropertyName("ver"u8);
-            writer.WriteNumberValue(Version);
-            foreach (var item in AdditionalProperties)
-            {
-                writer.WritePropertyName(item.Key);
-                writer.WriteObjectValue<object>(item.Value);
-            }
-            writer.WriteEndObject();
         }
 
-        /// <summary> Convert into a <see cref="RequestContent"/>. </summary>
-        internal override RequestContent ToRequestContent()
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        PageViewPerfData IJsonModel<PageViewPerfData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => (PageViewPerfData)JsonModelCreateCore(ref reader, options);
+
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override MonitorDomain JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(this);
-            return content;
+            string format = options.Format == "W" ? ((IPersistableModel<PageViewPerfData>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(PageViewPerfData)} does not support reading '{format}' format.");
+            }
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializePageViewPerfData(document.RootElement, options);
+        }
+
+        /// <param name="element"> The JSON element to deserialize. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        internal static PageViewPerfData DeserializePageViewPerfData(JsonElement element, ModelReaderWriterOptions options)
+        {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
+            int version = default;
+            MonitorDomainKind kind = default;
+            IDictionary<string, BinaryData> additionalProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            string id = default;
+            string name = default;
+            string url = default;
+            string duration = default;
+            string perfTotal = default;
+            string networkConnect = default;
+            string sentRequest = default;
+            string receivedResponse = default;
+            string domProcessing = default;
+            IDictionary<string, string> properties = default;
+            IDictionary<string, double> measurements = default;
+            foreach (var prop in element.EnumerateObject())
+            {
+                if (prop.NameEquals("ver"u8))
+                {
+                    version = prop.Value.GetInt32();
+                    continue;
+                }
+                if (prop.NameEquals("kind"u8))
+                {
+                    kind = new MonitorDomainKind(prop.Value.GetString());
+                    continue;
+                }
+                if (prop.NameEquals("id"u8))
+                {
+                    id = prop.Value.GetString();
+                    continue;
+                }
+                if (prop.NameEquals("name"u8))
+                {
+                    name = prop.Value.GetString();
+                    continue;
+                }
+                if (prop.NameEquals("url"u8))
+                {
+                    url = prop.Value.GetString();
+                    continue;
+                }
+                if (prop.NameEquals("duration"u8))
+                {
+                    duration = prop.Value.GetString();
+                    continue;
+                }
+                if (prop.NameEquals("perfTotal"u8))
+                {
+                    perfTotal = prop.Value.GetString();
+                    continue;
+                }
+                if (prop.NameEquals("networkConnect"u8))
+                {
+                    networkConnect = prop.Value.GetString();
+                    continue;
+                }
+                if (prop.NameEquals("sentRequest"u8))
+                {
+                    sentRequest = prop.Value.GetString();
+                    continue;
+                }
+                if (prop.NameEquals("receivedResponse"u8))
+                {
+                    receivedResponse = prop.Value.GetString();
+                    continue;
+                }
+                if (prop.NameEquals("domProcessing"u8))
+                {
+                    domProcessing = prop.Value.GetString();
+                    continue;
+                }
+                if (prop.NameEquals("properties"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    Dictionary<string, string> dictionary = new Dictionary<string, string>();
+                    foreach (var prop0 in prop.Value.EnumerateObject())
+                    {
+                        if (prop0.Value.ValueKind == JsonValueKind.Null)
+                        {
+                            dictionary.Add(prop0.Name, null);
+                        }
+                        else
+                        {
+                            dictionary.Add(prop0.Name, prop0.Value.GetString());
+                        }
+                    }
+                    properties = dictionary;
+                    continue;
+                }
+                if (prop.NameEquals("measurements"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    Dictionary<string, double> dictionary = new Dictionary<string, double>();
+                    foreach (var prop0 in prop.Value.EnumerateObject())
+                    {
+                        dictionary.Add(prop0.Name, prop0.Value.GetDouble());
+                    }
+                    measurements = dictionary;
+                    continue;
+                }
+                additionalProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+            }
+            return new PageViewPerfData(
+                version,
+                kind,
+                additionalProperties,
+                id,
+                name,
+                url,
+                duration,
+                perfTotal,
+                networkConnect,
+                sentRequest,
+                receivedResponse,
+                domProcessing,
+                properties ?? new ChangeTrackingDictionary<string, string>(),
+                measurements ?? new ChangeTrackingDictionary<string, double>());
         }
     }
 }

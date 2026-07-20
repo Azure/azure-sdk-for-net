@@ -8,17 +8,75 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.ResourceManager.ContainerService;
 
 namespace Azure.ResourceManager.ContainerService.Models
 {
-    public partial class ContainerServicePrivateLinkResourceData : IUtf8JsonSerializable, IJsonModel<ContainerServicePrivateLinkResourceData>
+    /// <summary> A private link resource. </summary>
+    public partial class ContainerServicePrivateLinkResourceData : IJsonModel<ContainerServicePrivateLinkResourceData>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ContainerServicePrivateLinkResourceData>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual ContainerServicePrivateLinkResourceData PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<ContainerServicePrivateLinkResourceData>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    {
+                        return DeserializeContainerServicePrivateLinkResourceData(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(ContainerServicePrivateLinkResourceData)} does not support reading '{options.Format}' format.");
+            }
+        }
 
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<ContainerServicePrivateLinkResourceData>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerContainerServiceContext.Default);
+                default:
+                    throw new FormatException($"The model {nameof(ContainerServicePrivateLinkResourceData)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<ContainerServicePrivateLinkResourceData>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        ContainerServicePrivateLinkResourceData IPersistableModel<ContainerServicePrivateLinkResourceData>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<ContainerServicePrivateLinkResourceData>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
+        /// <param name="containerServicePrivateLinkResourceData"> The <see cref="ContainerServicePrivateLinkResourceData"/> to serialize into <see cref="RequestContent"/>. </param>
+        internal static RequestContent ToRequestContent(ContainerServicePrivateLinkResourceData containerServicePrivateLinkResourceData)
+        {
+            if (containerServicePrivateLinkResourceData == null)
+            {
+                return null;
+            }
+            return RequestContent.Create(containerServicePrivateLinkResourceData, ModelSerializationExtensions.WireOptions);
+        }
+
+        /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="ContainerServicePrivateLinkResourceData"/> from. </param>
+        internal static ContainerServicePrivateLinkResourceData FromResponse(Response response)
+        {
+            using JsonDocument document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
+            return DeserializeContainerServicePrivateLinkResourceData(document.RootElement, ModelSerializationExtensions.WireOptions);
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<ContainerServicePrivateLinkResourceData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
@@ -30,12 +88,11 @@ namespace Azure.ResourceManager.ContainerService.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<ContainerServicePrivateLinkResourceData>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<ContainerServicePrivateLinkResourceData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(ContainerServicePrivateLinkResourceData)} does not support writing '{format}' format.");
             }
-
             if (Optional.IsDefined(Id))
             {
                 writer.WritePropertyName("id"u8);
@@ -60,8 +117,13 @@ namespace Azure.ResourceManager.ContainerService.Models
             {
                 writer.WritePropertyName("requiredMembers"u8);
                 writer.WriteStartArray();
-                foreach (var item in RequiredMembers)
+                foreach (string item in RequiredMembers)
                 {
+                    if (item == null)
+                    {
+                        writer.WriteNullValue();
+                        continue;
+                    }
                     writer.WriteStringValue(item);
                 }
                 writer.WriteEndArray();
@@ -71,15 +133,15 @@ namespace Azure.ResourceManager.ContainerService.Models
                 writer.WritePropertyName("privateLinkServiceID"u8);
                 writer.WriteStringValue(PrivateLinkServiceId);
             }
-            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
-                foreach (var item in _serializedAdditionalRawData)
+                foreach (var item in _additionalBinaryDataProperties)
                 {
                     writer.WritePropertyName(item.Key);
 #if NET6_0_OR_GREATER
-				writer.WriteRawValue(item.Value);
+                    writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value, ModelSerializationExtensions.JsonDocumentOptions))
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
                     {
                         JsonSerializer.Serialize(writer, document.RootElement);
                     }
@@ -88,261 +150,111 @@ namespace Azure.ResourceManager.ContainerService.Models
             }
         }
 
-        ContainerServicePrivateLinkResourceData IJsonModel<ContainerServicePrivateLinkResourceData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        ContainerServicePrivateLinkResourceData IJsonModel<ContainerServicePrivateLinkResourceData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual ContainerServicePrivateLinkResourceData JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<ContainerServicePrivateLinkResourceData>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<ContainerServicePrivateLinkResourceData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(ContainerServicePrivateLinkResourceData)} does not support reading '{format}' format.");
             }
-
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
             return DeserializeContainerServicePrivateLinkResourceData(document.RootElement, options);
         }
 
-        internal static ContainerServicePrivateLinkResourceData DeserializeContainerServicePrivateLinkResourceData(JsonElement element, ModelReaderWriterOptions options = null)
+        /// <param name="element"> The JSON element to deserialize. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        internal static ContainerServicePrivateLinkResourceData DeserializeContainerServicePrivateLinkResourceData(JsonElement element, ModelReaderWriterOptions options)
         {
-            options ??= ModelSerializationExtensions.WireOptions;
-
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             ResourceIdentifier id = default;
             string name = default;
-            ResourceType? type = default;
+            ResourceType? resourceType = default;
             string groupId = default;
             IList<string> requiredMembers = default;
             ResourceIdentifier privateLinkServiceId = default;
-            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
-            foreach (var property in element.EnumerateObject())
+            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            foreach (var prop in element.EnumerateObject())
             {
-                if (property.NameEquals("id"u8))
+                if (prop.NameEquals("id"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    id = new ResourceIdentifier(property.Value.GetString());
+                    id = new ResourceIdentifier(prop.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("name"u8))
+                if (prop.NameEquals("name"u8))
                 {
-                    name = property.Value.GetString();
+                    name = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("type"u8))
+                if (prop.NameEquals("type"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    type = new ResourceType(property.Value.GetString());
+                    resourceType = new ResourceType(prop.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("groupId"u8))
+                if (prop.NameEquals("groupId"u8))
                 {
-                    groupId = property.Value.GetString();
+                    groupId = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("requiredMembers"u8))
+                if (prop.NameEquals("requiredMembers"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
                     List<string> array = new List<string>();
-                    foreach (var item in property.Value.EnumerateArray())
+                    foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(item.GetString());
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(item.GetString());
+                        }
                     }
                     requiredMembers = array;
                     continue;
                 }
-                if (property.NameEquals("privateLinkServiceID"u8))
+                if (prop.NameEquals("privateLinkServiceID"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    privateLinkServiceId = new ResourceIdentifier(property.Value.GetString());
+                    privateLinkServiceId = new ResourceIdentifier(prop.Value.GetString());
                     continue;
                 }
                 if (options.Format != "W")
                 {
-                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = rawDataDictionary;
             return new ContainerServicePrivateLinkResourceData(
                 id,
                 name,
-                type,
+                resourceType,
                 groupId,
                 requiredMembers ?? new ChangeTrackingList<string>(),
                 privateLinkServiceId,
-                serializedAdditionalRawData);
+                additionalBinaryDataProperties);
         }
-
-        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
-        {
-            StringBuilder builder = new StringBuilder();
-            BicepModelReaderWriterOptions bicepOptions = options as BicepModelReaderWriterOptions;
-            IDictionary<string, string> propertyOverrides = null;
-            bool hasObjectOverride = bicepOptions != null && bicepOptions.PropertyOverrides.TryGetValue(this, out propertyOverrides);
-            bool hasPropertyOverride = false;
-            string propertyOverride = null;
-
-            builder.AppendLine("{");
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Name), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  name: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(Name))
-                {
-                    builder.Append("  name: ");
-                    if (Name.Contains(Environment.NewLine))
-                    {
-                        builder.AppendLine("'''");
-                        builder.AppendLine($"{Name}'''");
-                    }
-                    else
-                    {
-                        builder.AppendLine($"'{Name}'");
-                    }
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Id), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  id: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(Id))
-                {
-                    builder.Append("  id: ");
-                    builder.AppendLine($"'{Id.ToString()}'");
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(GroupId), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  groupId: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(GroupId))
-                {
-                    builder.Append("  groupId: ");
-                    if (GroupId.Contains(Environment.NewLine))
-                    {
-                        builder.AppendLine("'''");
-                        builder.AppendLine($"{GroupId}'''");
-                    }
-                    else
-                    {
-                        builder.AppendLine($"'{GroupId}'");
-                    }
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(RequiredMembers), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  requiredMembers: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsCollectionDefined(RequiredMembers))
-                {
-                    if (RequiredMembers.Any())
-                    {
-                        builder.Append("  requiredMembers: ");
-                        builder.AppendLine("[");
-                        foreach (var item in RequiredMembers)
-                        {
-                            if (item == null)
-                            {
-                                builder.Append("null");
-                                continue;
-                            }
-                            if (item.Contains(Environment.NewLine))
-                            {
-                                builder.AppendLine("    '''");
-                                builder.AppendLine($"{item}'''");
-                            }
-                            else
-                            {
-                                builder.AppendLine($"    '{item}'");
-                            }
-                        }
-                        builder.AppendLine("  ]");
-                    }
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(PrivateLinkServiceId), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  privateLinkServiceID: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(PrivateLinkServiceId))
-                {
-                    builder.Append("  privateLinkServiceID: ");
-                    builder.AppendLine($"'{PrivateLinkServiceId.ToString()}'");
-                }
-            }
-
-            builder.AppendLine("}");
-            return BinaryData.FromString(builder.ToString());
-        }
-
-        BinaryData IPersistableModel<ContainerServicePrivateLinkResourceData>.Write(ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<ContainerServicePrivateLinkResourceData>)this).GetFormatFromOptions(options) : options.Format;
-
-            switch (format)
-            {
-                case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerContainerServiceContext.Default);
-                case "bicep":
-                    return SerializeBicep(options);
-                default:
-                    throw new FormatException($"The model {nameof(ContainerServicePrivateLinkResourceData)} does not support writing '{options.Format}' format.");
-            }
-        }
-
-        ContainerServicePrivateLinkResourceData IPersistableModel<ContainerServicePrivateLinkResourceData>.Create(BinaryData data, ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<ContainerServicePrivateLinkResourceData>)this).GetFormatFromOptions(options) : options.Format;
-
-            switch (format)
-            {
-                case "J":
-                    {
-                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
-                        return DeserializeContainerServicePrivateLinkResourceData(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(ContainerServicePrivateLinkResourceData)} does not support reading '{options.Format}' format.");
-            }
-        }
-
-        string IPersistableModel<ContainerServicePrivateLinkResourceData>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

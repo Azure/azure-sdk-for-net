@@ -4,13 +4,15 @@
 
 using System;
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 
-namespace Azure.AI.Projects
+namespace Azure.AI.Projects.Evaluation
 {
     /// <summary>
     /// Recurrence schedule model.
     /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="HourlyRecurrenceSchedule"/>, <see cref="DailyRecurrenceSchedule"/>, <see cref="WeeklyRecurrenceSchedule"/>, and <see cref="MonthlyRecurrenceSchedule"/>.
     /// </summary>
+    [Experimental("AAIP001")]
     public abstract partial class RecurrenceSchedule
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>

@@ -11,19 +11,29 @@ using System.Text.Json;
 
 namespace Azure.ResourceManager.Cdn
 {
+    /// <summary></summary>
     public partial class FrontDoorRuleResource : IJsonModel<FrontDoorRuleData>
     {
-        private static FrontDoorRuleData s_dataDeserializationInstance;
-        private static FrontDoorRuleData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+        private static IJsonModel<FrontDoorRuleData> s_dataDeserializationInstance;
 
+        private static IJsonModel<FrontDoorRuleData> DataDeserializationInstance => s_dataDeserializationInstance ??= new FrontDoorRuleData();
+
+        /// <param name="writer"> The writer to serialize the model to. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<FrontDoorRuleData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<FrontDoorRuleData>)Data).Write(writer, options);
 
-        FrontDoorRuleData IJsonModel<FrontDoorRuleData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<FrontDoorRuleData>)DataDeserializationInstance).Create(ref reader, options);
+        /// <param name="reader"> The reader for deserializing the model. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        FrontDoorRuleData IJsonModel<FrontDoorRuleData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => DataDeserializationInstance.Create(ref reader, options);
 
+        /// <param name="options"> The client options for reading and writing models. </param>
         BinaryData IPersistableModel<FrontDoorRuleData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<FrontDoorRuleData>(Data, options, AzureResourceManagerCdnContext.Default);
 
+        /// <param name="data"> The binary data to be processed. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         FrontDoorRuleData IPersistableModel<FrontDoorRuleData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<FrontDoorRuleData>(data, options, AzureResourceManagerCdnContext.Default);
 
-        string IPersistableModel<FrontDoorRuleData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<FrontDoorRuleData>)DataDeserializationInstance).GetFormatFromOptions(options);
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<FrontDoorRuleData>.GetFormatFromOptions(ModelReaderWriterOptions options) => DataDeserializationInstance.GetFormatFromOptions(options);
     }
 }

@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.Avs
         {
             if (id.ResourceType != AvsPrivateCloudResource.ResourceType)
             {
-                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, AvsPrivateCloudResource.ResourceType), id);
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, AvsPrivateCloudResource.ResourceType), nameof(id));
             }
         }
 
@@ -93,7 +93,7 @@ namespace Azure.ResourceManager.Avs
                 HttpMessage message = _addonsRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, addonName, AvsPrivateCloudAddonData.ToRequestContent(data), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 AvsArmOperation<AvsPrivateCloudAddonResource> operation = new AvsArmOperation<AvsPrivateCloudAddonResource>(
-                    new AvsPrivateCloudAddonOperationSource(Client),
+                    new AvsPrivateCloudAddonResourceOperationSource(Client),
                     _addonsClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -151,7 +151,7 @@ namespace Azure.ResourceManager.Avs
                 HttpMessage message = _addonsRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, addonName, AvsPrivateCloudAddonData.ToRequestContent(data), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 AvsArmOperation<AvsPrivateCloudAddonResource> operation = new AvsArmOperation<AvsPrivateCloudAddonResource>(
-                    new AvsPrivateCloudAddonOperationSource(Client),
+                    new AvsPrivateCloudAddonResourceOperationSource(Client),
                     _addonsClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -293,7 +293,13 @@ namespace Azure.ResourceManager.Avs
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<AvsPrivateCloudAddonData, AvsPrivateCloudAddonResource>(new AddonsGetAllAsyncCollectionResultOfT(_addonsRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context), data => new AvsPrivateCloudAddonResource(Client, data));
+            return new AsyncPageableWrapper<AvsPrivateCloudAddonData, AvsPrivateCloudAddonResource>(new AddonsGetAllAsyncCollectionResultOfT(
+                _addonsRestClient,
+                Guid.Parse(Id.SubscriptionId),
+                Id.ResourceGroupName,
+                Id.Name,
+                context,
+                "AvsPrivateCloudAddonCollection.GetAll"), data => new AvsPrivateCloudAddonResource(Client, data));
         }
 
         /// <summary>
@@ -321,7 +327,13 @@ namespace Azure.ResourceManager.Avs
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<AvsPrivateCloudAddonData, AvsPrivateCloudAddonResource>(new AddonsGetAllCollectionResultOfT(_addonsRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context), data => new AvsPrivateCloudAddonResource(Client, data));
+            return new PageableWrapper<AvsPrivateCloudAddonData, AvsPrivateCloudAddonResource>(new AddonsGetAllCollectionResultOfT(
+                _addonsRestClient,
+                Guid.Parse(Id.SubscriptionId),
+                Id.ResourceGroupName,
+                Id.Name,
+                context,
+                "AvsPrivateCloudAddonCollection.GetAll"), data => new AvsPrivateCloudAddonResource(Client, data));
         }
 
         /// <summary>

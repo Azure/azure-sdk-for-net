@@ -11,7 +11,7 @@ using System.Collections.Generic;
 namespace Azure.ResourceManager.CloudHealth.Models
 {
     /// <summary> HealthModel properties. </summary>
-    public partial class HealthModelProperties
+    internal partial class HealthModelProperties
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
@@ -22,25 +22,15 @@ namespace Azure.ResourceManager.CloudHealth.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="HealthModelProperties"/>. </summary>
-        /// <param name="dataplaneEndpoint"> The data plane endpoint for interacting with health data. </param>
         /// <param name="provisioningState"> The status of the last operation. </param>
-        /// <param name="discovery"> Configure to automatically discover entities from a given scope, such as a Service Group. The discovered entities will be linked to the root entity of the health model. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal HealthModelProperties(string dataplaneEndpoint, HealthModelProvisioningState? provisioningState, ModelDiscoverySettings discovery, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal HealthModelProperties(HealthModelProvisioningState? provisioningState, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
-            DataplaneEndpoint = dataplaneEndpoint;
             ProvisioningState = provisioningState;
-            Discovery = discovery;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
-        /// <summary> The data plane endpoint for interacting with health data. </summary>
-        public string DataplaneEndpoint { get; }
-
         /// <summary> The status of the last operation. </summary>
         public HealthModelProvisioningState? ProvisioningState { get; }
-
-        /// <summary> Configure to automatically discover entities from a given scope, such as a Service Group. The discovered entities will be linked to the root entity of the health model. </summary>
-        public ModelDiscoverySettings Discovery { get; set; }
     }
 }

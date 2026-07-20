@@ -7,7 +7,7 @@ using System.Collections.Generic;
 
 namespace Azure.AI.Projects
 {
-    internal partial class UnknownCustomToolParamFormat : CustomToolParamFormat
+    internal partial class UnknownCustomToolParamFormat : InternalCustomToolParamFormat
     {
         /// <summary> Initializes a new instance of <see cref="UnknownCustomToolParamFormat"/>. </summary>
         /// <param name="type"></param>

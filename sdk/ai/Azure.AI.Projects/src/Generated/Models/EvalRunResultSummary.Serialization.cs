@@ -6,8 +6,9 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure.AI.Projects;
 
-namespace Azure.AI.Projects
+namespace Azure.AI.Projects.Evaluation
 {
     /// <summary> Summary statistics of a metric in an evaluation run. </summary>
     public partial class EvalRunResultSummary : IJsonModel<EvalRunResultSummary>

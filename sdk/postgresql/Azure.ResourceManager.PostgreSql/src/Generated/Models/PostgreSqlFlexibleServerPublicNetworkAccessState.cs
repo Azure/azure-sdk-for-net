@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.PostgreSql.FlexibleServers;
 
 namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
 {
@@ -14,38 +15,57 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
     public readonly partial struct PostgreSqlFlexibleServerPublicNetworkAccessState : IEquatable<PostgreSqlFlexibleServerPublicNetworkAccessState>
     {
         private readonly string _value;
+        /// <summary> Public network access is enabled. This allows the server to be accessed from the public internet, provided the necessary firewall rule that allows incoming traffic originating from the connecting client is in place. This is compatible with the use of private endpoints to connect to this server. </summary>
+        private const string EnabledValue = "Enabled";
+        /// <summary> Public network access is disabled. This means the server cannot be accessed from the public internet, but only via private endpoints. </summary>
+        private const string DisabledValue = "Disabled";
 
         /// <summary> Initializes a new instance of <see cref="PostgreSqlFlexibleServerPublicNetworkAccessState"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public PostgreSqlFlexibleServerPublicNetworkAccessState(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
+            Argument.AssertNotNull(value, nameof(value));
+
+            _value = value;
         }
 
-        private const string EnabledValue = "Enabled";
-        private const string DisabledValue = "Disabled";
-
-        /// <summary> Enabled. </summary>
+        /// <summary> Public network access is enabled. This allows the server to be accessed from the public internet, provided the necessary firewall rule that allows incoming traffic originating from the connecting client is in place. This is compatible with the use of private endpoints to connect to this server. </summary>
         public static PostgreSqlFlexibleServerPublicNetworkAccessState Enabled { get; } = new PostgreSqlFlexibleServerPublicNetworkAccessState(EnabledValue);
-        /// <summary> Disabled. </summary>
+
+        /// <summary> Public network access is disabled. This means the server cannot be accessed from the public internet, but only via private endpoints. </summary>
         public static PostgreSqlFlexibleServerPublicNetworkAccessState Disabled { get; } = new PostgreSqlFlexibleServerPublicNetworkAccessState(DisabledValue);
+
         /// <summary> Determines if two <see cref="PostgreSqlFlexibleServerPublicNetworkAccessState"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(PostgreSqlFlexibleServerPublicNetworkAccessState left, PostgreSqlFlexibleServerPublicNetworkAccessState right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="PostgreSqlFlexibleServerPublicNetworkAccessState"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(PostgreSqlFlexibleServerPublicNetworkAccessState left, PostgreSqlFlexibleServerPublicNetworkAccessState right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="PostgreSqlFlexibleServerPublicNetworkAccessState"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="PostgreSqlFlexibleServerPublicNetworkAccessState"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator PostgreSqlFlexibleServerPublicNetworkAccessState(string value) => new PostgreSqlFlexibleServerPublicNetworkAccessState(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="PostgreSqlFlexibleServerPublicNetworkAccessState"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator PostgreSqlFlexibleServerPublicNetworkAccessState?(string value) => value == null ? null : new PostgreSqlFlexibleServerPublicNetworkAccessState(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is PostgreSqlFlexibleServerPublicNetworkAccessState other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(PostgreSqlFlexibleServerPublicNetworkAccessState other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

@@ -306,6 +306,8 @@ namespace Azure.AI.Language.QuestionAnswering.Inference
     public partial class QuestionAnsweringClient
     {
         protected QuestionAnsweringClient() { }
+        [System.Diagnostics.CodeAnalysis.ExperimentalAttribute("SCME0002")]
+        public QuestionAnsweringClient(Azure.AI.Language.QuestionAnswering.Inference.QuestionAnsweringClientSettings settings) { }
         public QuestionAnsweringClient(System.Uri endpoint, Azure.AzureKeyCredential credential) { }
         public QuestionAnsweringClient(System.Uri endpoint, Azure.AzureKeyCredential credential, Azure.AI.Language.QuestionAnswering.Inference.QuestionAnsweringClientOptions options) { }
         public QuestionAnsweringClient(System.Uri endpoint, Azure.Core.TokenCredential credential) { }
@@ -329,12 +331,13 @@ namespace Azure.AI.Language.QuestionAnswering.Inference
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.AI.Language.QuestionAnswering.Inference.AnswersFromTextResult>> GetAnswersFromTextAsync(string question, System.Collections.Generic.IEnumerable<Azure.AI.Language.QuestionAnswering.Inference.TextDocument> textDocuments, string language = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.AI.Language.QuestionAnswering.Inference.AnswersFromTextResult>> GetAnswersFromTextAsync(string question, System.Collections.Generic.IEnumerable<string> textDocuments, string language = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
-    public static partial class QuestionAnsweringClientBuilderExtensions
+    [System.Diagnostics.CodeAnalysis.ExperimentalAttribute("SCME0002")]
+    public static partial class QuestionAnsweringClientHostExtensions
     {
-        public static Azure.Core.Extensions.IAzureClientBuilder<Azure.AI.Language.QuestionAnswering.Inference.QuestionAnsweringClient, Azure.AI.Language.QuestionAnswering.Inference.QuestionAnsweringClientOptions> AddQuestionAnsweringClient<TBuilder>(this TBuilder builder, System.Uri endpoint) where TBuilder : Azure.Core.Extensions.IAzureClientFactoryBuilderWithCredential { throw null; }
-        public static Azure.Core.Extensions.IAzureClientBuilder<Azure.AI.Language.QuestionAnswering.Inference.QuestionAnsweringClient, Azure.AI.Language.QuestionAnswering.Inference.QuestionAnsweringClientOptions> AddQuestionAnsweringClient<TBuilder>(this TBuilder builder, System.Uri endpoint, Azure.AzureKeyCredential credential) where TBuilder : Azure.Core.Extensions.IAzureClientFactoryBuilder { throw null; }
-        [System.Diagnostics.CodeAnalysis.RequiresDynamicCodeAttribute("Requires unreferenced code until we opt into EnableConfigurationBindingGenerator.")]
-        public static Azure.Core.Extensions.IAzureClientBuilder<Azure.AI.Language.QuestionAnswering.Inference.QuestionAnsweringClient, Azure.AI.Language.QuestionAnswering.Inference.QuestionAnsweringClientOptions> AddQuestionAnsweringClient<TBuilder, TConfiguration>(this TBuilder builder, TConfiguration configuration) where TBuilder : Azure.Core.Extensions.IAzureClientFactoryBuilderWithConfiguration<TConfiguration> { throw null; }
+        public static System.ClientModel.Primitives.IClientBuilder AddKeyedQuestionAnsweringClient(this Microsoft.Extensions.Hosting.IHostApplicationBuilder host, string key, string sectionName) { throw null; }
+        public static System.ClientModel.Primitives.IClientBuilder AddKeyedQuestionAnsweringClient(this Microsoft.Extensions.Hosting.IHostApplicationBuilder host, string key, string sectionName, System.Action<Azure.AI.Language.QuestionAnswering.Inference.QuestionAnsweringClientSettings> configureSettings) { throw null; }
+        public static System.ClientModel.Primitives.IClientBuilder AddQuestionAnsweringClient(this Microsoft.Extensions.Hosting.IHostApplicationBuilder host, string sectionName) { throw null; }
+        public static System.ClientModel.Primitives.IClientBuilder AddQuestionAnsweringClient(this Microsoft.Extensions.Hosting.IHostApplicationBuilder host, string sectionName, System.Action<Azure.AI.Language.QuestionAnswering.Inference.QuestionAnsweringClientSettings> configureSettings) { throw null; }
     }
     public partial class QuestionAnsweringClientOptions : Azure.Core.ClientOptions
     {
@@ -346,6 +349,14 @@ namespace Azure.AI.Language.QuestionAnswering.Inference
             V2023_04_01 = 1,
             V2025_05_15_Preview = 2,
         }
+    }
+    [System.Diagnostics.CodeAnalysis.ExperimentalAttribute("SCME0002")]
+    public partial class QuestionAnsweringClientSettings : System.ClientModel.Primitives.ClientSettings
+    {
+        public QuestionAnsweringClientSettings() { }
+        public System.Uri Endpoint { get { throw null; } set { } }
+        public Azure.AI.Language.QuestionAnswering.Inference.QuestionAnsweringClientOptions Options { get { throw null; } set { } }
+        protected override void BindCore(Microsoft.Extensions.Configuration.IConfigurationSection section) { }
     }
     public static partial class QuestionAnsweringModelFactory
     {

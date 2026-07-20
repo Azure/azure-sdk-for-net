@@ -64,9 +64,7 @@ namespace Azure.ResourceManager.DeviceRegistry.Models
             {
                 return null;
             }
-            Utf8JsonRequestContent content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(policyPatch, ModelSerializationExtensions.WireOptions);
-            return content;
+            return RequestContent.Create(policyPatch, ModelSerializationExtensions.WireOptions);
         }
 
         /// <param name="writer"> The JSON writer. </param>
@@ -86,22 +84,6 @@ namespace Azure.ResourceManager.DeviceRegistry.Models
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(PolicyPatch)} does not support writing '{format}' format.");
-            }
-            if (Optional.IsCollectionDefined(Tags))
-            {
-                writer.WritePropertyName("tags"u8);
-                writer.WriteStartObject();
-                foreach (var item in Tags)
-                {
-                    writer.WritePropertyName(item.Key);
-                    if (item.Value == null)
-                    {
-                        writer.WriteNullValue();
-                        continue;
-                    }
-                    writer.WriteStringValue(item.Value);
-                }
-                writer.WriteEndObject();
             }
             if (Optional.IsDefined(Properties))
             {
@@ -150,32 +132,10 @@ namespace Azure.ResourceManager.DeviceRegistry.Models
             {
                 return null;
             }
-            IDictionary<string, string> tags = default;
             PolicyUpdateProperties properties = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
-                if (prop.NameEquals("tags"u8))
-                {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    Dictionary<string, string> dictionary = new Dictionary<string, string>();
-                    foreach (var prop0 in prop.Value.EnumerateObject())
-                    {
-                        if (prop0.Value.ValueKind == JsonValueKind.Null)
-                        {
-                            dictionary.Add(prop0.Name, null);
-                        }
-                        else
-                        {
-                            dictionary.Add(prop0.Name, prop0.Value.GetString());
-                        }
-                    }
-                    tags = dictionary;
-                    continue;
-                }
                 if (prop.NameEquals("properties"u8))
                 {
                     if (prop.Value.ValueKind == JsonValueKind.Null)
@@ -190,7 +150,7 @@ namespace Azure.ResourceManager.DeviceRegistry.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new PolicyPatch(tags ?? new ChangeTrackingDictionary<string, string>(), properties, additionalBinaryDataProperties);
+            return new PolicyPatch(properties, additionalBinaryDataProperties);
         }
     }
 }

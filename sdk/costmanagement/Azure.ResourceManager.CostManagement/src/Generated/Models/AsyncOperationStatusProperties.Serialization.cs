@@ -9,14 +9,55 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure.Core;
+using Azure.ResourceManager.CostManagement;
 
 namespace Azure.ResourceManager.CostManagement.Models
 {
-    public partial class AsyncOperationStatusProperties : IUtf8JsonSerializable, IJsonModel<AsyncOperationStatusProperties>
+    /// <summary> Object representing the report url and valid until date of the async report generated. </summary>
+    public partial class AsyncOperationStatusProperties : IJsonModel<AsyncOperationStatusProperties>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<AsyncOperationStatusProperties>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual AsyncOperationStatusProperties PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<AsyncOperationStatusProperties>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    {
+                        return DeserializeAsyncOperationStatusProperties(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(AsyncOperationStatusProperties)} does not support reading '{options.Format}' format.");
+            }
+        }
 
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<AsyncOperationStatusProperties>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerCostManagementContext.Default);
+                default:
+                    throw new FormatException($"The model {nameof(AsyncOperationStatusProperties)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<AsyncOperationStatusProperties>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        AsyncOperationStatusProperties IPersistableModel<AsyncOperationStatusProperties>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<AsyncOperationStatusProperties>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<AsyncOperationStatusProperties>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
@@ -28,12 +69,11 @@ namespace Azure.ResourceManager.CostManagement.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<AsyncOperationStatusProperties>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<AsyncOperationStatusProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(AsyncOperationStatusProperties)} does not support writing '{format}' format.");
             }
-
             if (Optional.IsDefined(ReportUri))
             {
                 writer.WritePropertyName("reportUrl"u8);
@@ -49,15 +89,15 @@ namespace Azure.ResourceManager.CostManagement.Models
                 writer.WritePropertyName("validUntil"u8);
                 writer.WriteStringValue(ValidUntil.Value, "O");
             }
-            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
-                foreach (var item in _serializedAdditionalRawData)
+                foreach (var item in _additionalBinaryDataProperties)
                 {
                     writer.WritePropertyName(item.Key);
 #if NET6_0_OR_GREATER
-				writer.WriteRawValue(item.Value);
+                    writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value, ModelSerializationExtensions.JsonDocumentOptions))
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
                     {
                         JsonSerializer.Serialize(writer, document.RootElement);
                     }
@@ -66,98 +106,70 @@ namespace Azure.ResourceManager.CostManagement.Models
             }
         }
 
-        AsyncOperationStatusProperties IJsonModel<AsyncOperationStatusProperties>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        AsyncOperationStatusProperties IJsonModel<AsyncOperationStatusProperties>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual AsyncOperationStatusProperties JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<AsyncOperationStatusProperties>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<AsyncOperationStatusProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(AsyncOperationStatusProperties)} does not support reading '{format}' format.");
             }
-
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
             return DeserializeAsyncOperationStatusProperties(document.RootElement, options);
         }
 
-        internal static AsyncOperationStatusProperties DeserializeAsyncOperationStatusProperties(JsonElement element, ModelReaderWriterOptions options = null)
+        /// <param name="element"> The JSON element to deserialize. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        internal static AsyncOperationStatusProperties DeserializeAsyncOperationStatusProperties(JsonElement element, ModelReaderWriterOptions options)
         {
-            options ??= ModelSerializationExtensions.WireOptions;
-
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            BenefitUtilizationSummaryReportSchema? reportUrl = default;
-            BenefitUtilizationSummaryReportSchema? secondaryReportUrl = default;
+            BenefitUtilizationSummaryReportSchema? reportUri = default;
+            BenefitUtilizationSummaryReportSchema? secondaryReportUri = default;
             DateTimeOffset? validUntil = default;
-            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
-            foreach (var property in element.EnumerateObject())
+            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            foreach (var prop in element.EnumerateObject())
             {
-                if (property.NameEquals("reportUrl"u8))
+                if (prop.NameEquals("reportUrl"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    reportUrl = new BenefitUtilizationSummaryReportSchema(property.Value.GetString());
+                    reportUri = new BenefitUtilizationSummaryReportSchema(prop.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("secondaryReportUrl"u8))
+                if (prop.NameEquals("secondaryReportUrl"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    secondaryReportUrl = new BenefitUtilizationSummaryReportSchema(property.Value.GetString());
+                    secondaryReportUri = new BenefitUtilizationSummaryReportSchema(prop.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("validUntil"u8))
+                if (prop.NameEquals("validUntil"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    validUntil = property.Value.GetDateTimeOffset("O");
+                    validUntil = prop.Value.GetDateTimeOffset("O");
                     continue;
                 }
                 if (options.Format != "W")
                 {
-                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = rawDataDictionary;
-            return new AsyncOperationStatusProperties(reportUrl, secondaryReportUrl, validUntil, serializedAdditionalRawData);
+            return new AsyncOperationStatusProperties(reportUri, secondaryReportUri, validUntil, additionalBinaryDataProperties);
         }
-
-        BinaryData IPersistableModel<AsyncOperationStatusProperties>.Write(ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<AsyncOperationStatusProperties>)this).GetFormatFromOptions(options) : options.Format;
-
-            switch (format)
-            {
-                case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerCostManagementContext.Default);
-                default:
-                    throw new FormatException($"The model {nameof(AsyncOperationStatusProperties)} does not support writing '{options.Format}' format.");
-            }
-        }
-
-        AsyncOperationStatusProperties IPersistableModel<AsyncOperationStatusProperties>.Create(BinaryData data, ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<AsyncOperationStatusProperties>)this).GetFormatFromOptions(options) : options.Format;
-
-            switch (format)
-            {
-                case "J":
-                    {
-                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
-                        return DeserializeAsyncOperationStatusProperties(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(AsyncOperationStatusProperties)} does not support reading '{options.Format}' format.");
-            }
-        }
-
-        string IPersistableModel<AsyncOperationStatusProperties>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

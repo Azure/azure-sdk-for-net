@@ -74,9 +74,7 @@ namespace Azure.Compute.Batch
             {
                 return null;
             }
-            Utf8JsonRequestContent content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(batchTask, ModelSerializationExtensions.WireOptions);
-            return content;
+            return RequestContent.Create(batchTask, ModelSerializationExtensions.WireOptions);
         }
 
         /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="BatchTask"/> from. </param>
@@ -254,11 +252,6 @@ namespace Azure.Compute.Batch
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && Optional.IsDefined(AuthenticationTokenSettings))
-            {
-                writer.WritePropertyName("authenticationTokenSettings"u8);
-                writer.WriteObjectValue(AuthenticationTokenSettings, options);
-            }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
                 foreach (var item in _additionalBinaryDataProperties)
@@ -327,7 +320,6 @@ namespace Azure.Compute.Batch
             BatchTaskStatistics taskStatistics = default;
             BatchTaskDependencies dependsOn = default;
             IReadOnlyList<BatchApplicationPackageReference> applicationPackageReferences = default;
-            AuthenticationTokenSettings authenticationTokenSettings = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -549,15 +541,6 @@ namespace Azure.Compute.Batch
                     applicationPackageReferences = array;
                     continue;
                 }
-                if (prop.NameEquals("authenticationTokenSettings"u8))
-                {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    authenticationTokenSettings = AuthenticationTokenSettings.DeserializeAuthenticationTokenSettings(prop.Value, options);
-                    continue;
-                }
                 if (options.Format != "W")
                 {
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
@@ -590,7 +573,6 @@ namespace Azure.Compute.Batch
                 taskStatistics,
                 dependsOn,
                 applicationPackageReferences ?? new ChangeTrackingList<BatchApplicationPackageReference>(),
-                authenticationTokenSettings,
                 additionalBinaryDataProperties);
         }
     }

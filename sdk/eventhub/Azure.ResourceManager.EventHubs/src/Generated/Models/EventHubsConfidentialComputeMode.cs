@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.EventHubs;
 
 namespace Azure.ResourceManager.EventHubs.Models
 {
@@ -14,38 +15,55 @@ namespace Azure.ResourceManager.EventHubs.Models
     public readonly partial struct EventHubsConfidentialComputeMode : IEquatable<EventHubsConfidentialComputeMode>
     {
         private readonly string _value;
-
-        /// <summary> Initializes a new instance of <see cref="EventHubsConfidentialComputeMode"/>. </summary>
-        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        public EventHubsConfidentialComputeMode(string value)
-        {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
-
         private const string DisabledValue = "Disabled";
         private const string EnabledValue = "Enabled";
 
-        /// <summary> Disabled. </summary>
+        /// <summary> Initializes a new instance of <see cref="EventHubsConfidentialComputeMode"/>. </summary>
+        /// <param name="value"> The value. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
+        public EventHubsConfidentialComputeMode(string value)
+        {
+            Argument.AssertNotNull(value, nameof(value));
+
+            _value = value;
+        }
+
+        /// <summary> Gets the Disabled. </summary>
         public static EventHubsConfidentialComputeMode Disabled { get; } = new EventHubsConfidentialComputeMode(DisabledValue);
-        /// <summary> Enabled. </summary>
+
+        /// <summary> Gets the Enabled. </summary>
         public static EventHubsConfidentialComputeMode Enabled { get; } = new EventHubsConfidentialComputeMode(EnabledValue);
+
         /// <summary> Determines if two <see cref="EventHubsConfidentialComputeMode"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(EventHubsConfidentialComputeMode left, EventHubsConfidentialComputeMode right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="EventHubsConfidentialComputeMode"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(EventHubsConfidentialComputeMode left, EventHubsConfidentialComputeMode right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="EventHubsConfidentialComputeMode"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="EventHubsConfidentialComputeMode"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator EventHubsConfidentialComputeMode(string value) => new EventHubsConfidentialComputeMode(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="EventHubsConfidentialComputeMode"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator EventHubsConfidentialComputeMode?(string value) => value == null ? null : new EventHubsConfidentialComputeMode(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is EventHubsConfidentialComputeMode other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(EventHubsConfidentialComputeMode other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.DesktopVirtualization
         {
             TryGetApiVersion(ScalingPlanPersonalScheduleResource.ResourceType, out string scalingPlanPersonalScheduleApiVersion);
             _scalingPlanPersonalSchedulesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.DesktopVirtualization", ScalingPlanPersonalScheduleResource.ResourceType.Namespace, Diagnostics);
-            _scalingPlanPersonalSchedulesRestClient = new ScalingPlanPersonalSchedules(_scalingPlanPersonalSchedulesClientDiagnostics, Pipeline, Endpoint, scalingPlanPersonalScheduleApiVersion ?? "2026-01-01-preview");
+            _scalingPlanPersonalSchedulesRestClient = new ScalingPlanPersonalSchedules(_scalingPlanPersonalSchedulesClientDiagnostics, Pipeline, Endpoint, scalingPlanPersonalScheduleApiVersion ?? "2026-03-01-preview");
             ValidateResourceId(id);
         }
 
@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.DesktopVirtualization
         {
             if (id.ResourceType != ScalingPlanResource.ResourceType)
             {
-                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ScalingPlanResource.ResourceType), id);
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ScalingPlanResource.ResourceType), nameof(id));
             }
         }
 
@@ -67,7 +67,7 @@ namespace Azure.ResourceManager.DesktopVirtualization
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-01-01-preview. </description>
+        /// <description> 2026-03-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -122,7 +122,7 @@ namespace Azure.ResourceManager.DesktopVirtualization
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-01-01-preview. </description>
+        /// <description> 2026-03-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -177,7 +177,7 @@ namespace Azure.ResourceManager.DesktopVirtualization
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-01-01-preview. </description>
+        /// <description> 2026-03-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -226,7 +226,7 @@ namespace Azure.ResourceManager.DesktopVirtualization
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-01-01-preview. </description>
+        /// <description> 2026-03-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -275,7 +275,7 @@ namespace Azure.ResourceManager.DesktopVirtualization
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-01-01-preview. </description>
+        /// <description> 2026-03-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -298,7 +298,8 @@ namespace Azure.ResourceManager.DesktopVirtualization
                 pageSize,
                 isDescending,
                 initialSkip,
-                context), data => new ScalingPlanPersonalScheduleResource(Client, data));
+                context,
+                "ScalingPlanPersonalScheduleCollection.GetAll"), data => new ScalingPlanPersonalScheduleResource(Client, data));
         }
 
         /// <summary>
@@ -314,7 +315,7 @@ namespace Azure.ResourceManager.DesktopVirtualization
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-01-01-preview. </description>
+        /// <description> 2026-03-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -337,7 +338,8 @@ namespace Azure.ResourceManager.DesktopVirtualization
                 pageSize,
                 isDescending,
                 initialSkip,
-                context), data => new ScalingPlanPersonalScheduleResource(Client, data));
+                context,
+                "ScalingPlanPersonalScheduleCollection.GetAll"), data => new ScalingPlanPersonalScheduleResource(Client, data));
         }
 
         /// <summary>
@@ -353,7 +355,7 @@ namespace Azure.ResourceManager.DesktopVirtualization
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-01-01-preview. </description>
+        /// <description> 2026-03-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -410,7 +412,7 @@ namespace Azure.ResourceManager.DesktopVirtualization
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-01-01-preview. </description>
+        /// <description> 2026-03-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -467,7 +469,7 @@ namespace Azure.ResourceManager.DesktopVirtualization
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-01-01-preview. </description>
+        /// <description> 2026-03-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -528,7 +530,7 @@ namespace Azure.ResourceManager.DesktopVirtualization
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-01-01-preview. </description>
+        /// <description> 2026-03-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>

@@ -2,11 +2,10 @@
 // Licensed under the MIT License.
 
 using System;
-using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Diagnostics;
 using System.Linq;
-using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
@@ -14,6 +13,7 @@ using Azure.Core.Pipeline;
 using Azure.Core.Serialization;
 using Azure.Search.Documents.Indexes.Models;
 using Azure.Search.Documents.Utilities;
+using Typespec = Microsoft.TypeSpec.Generator.Customizations;
 
 namespace Azure.Search.Documents.Indexes
 {
@@ -99,7 +99,6 @@ namespace Azure.Search.Documents.Indexes
 
             options ??= new SearchClientOptions();
             _endpoint = endpoint;
-            _keyCredential = credential;
             _serializer = options.Serializer;
             ClientDiagnostics = new ClientDiagnostics(options);
             Pipeline = options.Build(credential);
@@ -128,7 +127,6 @@ namespace Azure.Search.Documents.Indexes
 
             options ??= new SearchClientOptions();
             _endpoint = endpoint;
-            _tokenCredential = tokenCredential;
             _serializer = options.Serializer;
             ClientDiagnostics = new ClientDiagnostics(options);
             Pipeline = options.Build(tokenCredential);
@@ -177,6 +175,22 @@ namespace Azure.Search.Documents.Indexes
             ClientDiagnostics = diagnostics;
             Pipeline = pipeline;
             _apiVersion = version.ToVersionString();
+        }
+
+        /// <summary> Initializes a new instance of SearchIndexClient. </summary>
+        /// <param name="authenticationPolicy"> The authentication policy to use for pipeline creation. </param>
+        /// <param name="endpoint"> Service endpoint. </param>
+        /// <param name="options"> The options for configuring the client. </param>
+        internal SearchIndexClient(HttpPipelinePolicy authenticationPolicy, Uri endpoint, SearchClientOptions options)
+        {
+            Argument.AssertNotNull(endpoint, nameof(endpoint));
+
+            options ??= new SearchClientOptions();
+
+            _endpoint = endpoint;
+            Pipeline = HttpPipelineBuilder.Build(options, new HttpPipelinePolicy[] { authenticationPolicy });
+            _apiVersion = options.Version.ToVersionString();
+            ClientDiagnostics = new ClientDiagnostics(options, true);
         }
 
         /// <summary>
@@ -354,21 +368,13 @@ namespace Azure.Search.Documents.Indexes
         /// <exception cref="RequestFailedException">Thrown when a failure is returned by the Search service.</exception>
         [ForwardsClientCalls]
         public virtual Pageable<string> GetIndexNames(
-            CancellationToken cancellationToken = default)
-        {
-            return PageResponseEnumerator.CreateEnumerable((continuationToken) =>
-            {
-                if (continuationToken != null)
-                {
-                    throw new NotSupportedException("A continuation token is unsupported.");
-                }
-
-                // Get only names by specifying the select parameter
-                Pageable<SearchIndexResponse> result = GetIndexesWithSelectedProperties([Constants.NameKey], cancellationToken);
-                IReadOnlyList<string> names = [.. result.Select(value => value.Name)];
-                return Page<string>.FromValues(names, continuationToken: null, null);
-            });
-        }
+            CancellationToken cancellationToken = default) =>
+            new PageableWrapper<SearchIndexResponse, string>(
+                GetIndexesWithSelectedProperties([Constants.NameKey], cancellationToken: cancellationToken),
+                response => response.Name,
+                supportsContinuationToken: true,
+                ClientDiagnostics,
+                "SearchIndexClient.GetIndexNames");
 
         /// <summary>
         /// Gets a list of all index names.
@@ -378,25 +384,13 @@ namespace Azure.Search.Documents.Indexes
         /// <exception cref="RequestFailedException">Thrown when a failure is returned by the Search service.</exception>
         [ForwardsClientCalls]
         public virtual AsyncPageable<string> GetIndexNamesAsync(
-            CancellationToken cancellationToken = default)
-        {
-            return PageResponseEnumerator.CreateAsyncEnumerable(async (continuationToken) =>
-            {
-                if (continuationToken != null)
-                {
-                    throw new NotSupportedException("A continuation token is unsupported.");
-                }
-
-                // Get only names by specifying the select parameter
-                AsyncPageable<SearchIndexResponse> result = GetIndexesWithSelectedPropertiesAsync(new[] { Constants.NameKey }, cancellationToken);
-                List<string> names = new List<string>();
-                await foreach (SearchIndexResponse index in result.ConfigureAwait(false))
-                {
-                    names.Add(index.Name);
-                }
-                return Page<string>.FromValues(names, null, null);
-            });
-        }
+            CancellationToken cancellationToken = default) =>
+            new AsyncPageableWrapper<SearchIndexResponse, string>(
+                GetIndexesWithSelectedPropertiesAsync([Constants.NameKey], cancellationToken: cancellationToken),
+                response => response.Name,
+                supportsContinuationToken: true,
+                ClientDiagnostics,
+                "SearchIndexClient.GetIndexNames");
 
         /// <summary>
         /// Gets a list of all indexes.
@@ -405,34 +399,72 @@ namespace Azure.Search.Documents.Indexes
         /// <returns>The <see cref="Pageable{T}"/> from the server containing a list of <see cref="SearchIndex"/>.</returns>
         /// <exception cref="RequestFailedException">Thrown when a failure is returned by the Search service.</exception>
         [ForwardsClientCalls]
+#pragma warning disable AZC0002 // Backward compat overload; CancellationToken must be required to avoid ambiguity with generated overload
         public virtual Pageable<SearchIndex> GetIndexes(
-            CancellationToken cancellationToken = default)
-        {
-            return new PageableWrapper<BinaryData, SearchIndex>(
-                GetIndexes(cancellationToken.ToRequestContext()),
-                data => SearchIndex.DeserializeSearchIndex(JsonElement.Parse(data), ModelSerializationExtensions.WireOptions),
-                supportsContinuationToken: false,
-                ClientDiagnostics,
-                "SearchIndexClient.GetIndexes");
-        }
+            CancellationToken cancellationToken) =>
+            GetIndexes(top: null, skip: null, count: null, cancellationToken);
+#pragma warning restore AZC0002
 
         /// <summary>
         /// Gets a list of all indexes.
         /// </summary>
         /// <param name="cancellationToken">Optional <see cref="CancellationToken"/> to propagate notifications that the operation should be canceled.</param>
-        /// <returns>The <see cref="Response{T}"/> from the server containing a list of <see cref="SearchIndex"/>.</returns>
+        /// <returns>The <see cref="AsyncPageable{T}"/> from the server containing a list of <see cref="SearchIndex"/>.</returns>
         /// <exception cref="RequestFailedException">Thrown when a failure is returned by the Search service.</exception>
         [ForwardsClientCalls]
+#pragma warning disable AZC0002 // Backward compat overload; CancellationToken must be required to avoid ambiguity with generated overload
         public virtual AsyncPageable<SearchIndex> GetIndexesAsync(
-            CancellationToken cancellationToken = default)
-        {
-            return new AsyncPageableWrapper<BinaryData, SearchIndex>(
-                GetIndexesAsync(cancellationToken.ToRequestContext()),
-                data => SearchIndex.DeserializeSearchIndex(JsonElement.Parse(data), ModelSerializationExtensions.WireOptions),
-                supportsContinuationToken: false,
-                ClientDiagnostics,
-                "SearchIndexClient.GetIndexes");
-        }
+            CancellationToken cancellationToken) =>
+            GetIndexesAsync(top: null, skip: null, count: null, cancellationToken);
+#pragma warning restore AZC0002
+
+        /// <summary>
+        /// Gets a list of all indexes.
+        /// </summary>
+        /// <param name="context">The request context.</param>
+        /// <returns>The <see cref="Pageable{T}"/> from the server containing a list of <see cref="BinaryData"/>.</returns>
+        [ForwardsClientCalls]
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public virtual Pageable<BinaryData> GetIndexes(
+            RequestContext context) =>
+            GetIndexes(top: null, skip: null, count: null, context);
+
+        /// <summary>
+        /// Gets a list of all indexes.
+        /// </summary>
+        /// <param name="context">The request context.</param>
+        /// <returns>The <see cref="AsyncPageable{T}"/> from the server containing a list of <see cref="BinaryData"/>.</returns>
+        [ForwardsClientCalls]
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public virtual AsyncPageable<BinaryData> GetIndexesAsync(
+            RequestContext context) =>
+            GetIndexesAsync(top: null, skip: null, count: null, context);
+
+        /// <summary>
+        /// Gets a list of all indexes with selected properties.
+        /// </summary>
+        /// <param name="select">Selects which top-level properties to retrieve.</param>
+        /// <param name="context">The request context.</param>
+        /// <returns>The <see cref="Pageable{T}"/> from the server containing a list of <see cref="BinaryData"/>.</returns>
+        [ForwardsClientCalls]
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public virtual Pageable<BinaryData> GetIndexesWithSelectedProperties(
+            IEnumerable<string> @select,
+            RequestContext context) =>
+            GetIndexesWithSelectedProperties(@select, top: null, skip: null, count: null, context);
+
+        /// <summary>
+        /// Gets a list of all indexes with selected properties.
+        /// </summary>
+        /// <param name="select">Selects which top-level properties to retrieve.</param>
+        /// <param name="context">The request context.</param>
+        /// <returns>The <see cref="AsyncPageable{T}"/> from the server containing a list of <see cref="BinaryData"/>.</returns>
+        [ForwardsClientCalls]
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public virtual AsyncPageable<BinaryData> GetIndexesWithSelectedPropertiesAsync(
+            IEnumerable<string> @select,
+            RequestContext context) =>
+            GetIndexesWithSelectedPropertiesAsync(@select, top: null, skip: null, count: null, context);
 
         #endregion
 

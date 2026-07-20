@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.Sphere
         {
             if (id.ResourceType != SphereCatalogResource.ResourceType)
             {
-                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, SphereCatalogResource.ResourceType), id);
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, SphereCatalogResource.ResourceType), nameof(id));
             }
         }
 
@@ -93,7 +93,7 @@ namespace Azure.ResourceManager.Sphere
                 HttpMessage message = _productsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, productName, SphereProductData.ToRequestContent(data), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 SphereArmOperation<SphereProductResource> operation = new SphereArmOperation<SphereProductResource>(
-                    new SphereProductOperationSource(Client),
+                    new SphereProductResourceOperationSource(Client),
                     _productsClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -151,7 +151,7 @@ namespace Azure.ResourceManager.Sphere
                 HttpMessage message = _productsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, productName, SphereProductData.ToRequestContent(data), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 SphereArmOperation<SphereProductResource> operation = new SphereArmOperation<SphereProductResource>(
-                    new SphereProductOperationSource(Client),
+                    new SphereProductResourceOperationSource(Client),
                     _productsClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -293,7 +293,13 @@ namespace Azure.ResourceManager.Sphere
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<SphereProductData, SphereProductResource>(new ProductsGetByCatalogAsyncCollectionResultOfT(_productsRestClient, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, context), data => new SphereProductResource(Client, data));
+            return new AsyncPageableWrapper<SphereProductData, SphereProductResource>(new ProductsGetByCatalogAsyncCollectionResultOfT(
+                _productsRestClient,
+                Id.SubscriptionId,
+                Id.ResourceGroupName,
+                Id.Name,
+                context,
+                "SphereProductCollection.GetAll"), data => new SphereProductResource(Client, data));
         }
 
         /// <summary>
@@ -321,7 +327,13 @@ namespace Azure.ResourceManager.Sphere
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<SphereProductData, SphereProductResource>(new ProductsGetByCatalogCollectionResultOfT(_productsRestClient, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, context), data => new SphereProductResource(Client, data));
+            return new PageableWrapper<SphereProductData, SphereProductResource>(new ProductsGetByCatalogCollectionResultOfT(
+                _productsRestClient,
+                Id.SubscriptionId,
+                Id.ResourceGroupName,
+                Id.Name,
+                context,
+                "SphereProductCollection.GetAll"), data => new SphereProductResource(Client, data));
         }
 
         /// <summary>

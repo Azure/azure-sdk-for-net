@@ -5,11 +5,30 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using Azure.ResourceManager.Batch.Models;
+using Microsoft.TypeSpec.Generator.Customizations;
 
 namespace Azure.ResourceManager.Batch
 {
+    [CodeGenSuppress("DeploymentVmConfiguration")]
     public partial class BatchAccountPoolData
     {
+        /// <summary> The configuration for compute nodes in a pool based on the Azure Virtual Machines infrastructure. </summary>
+        public BatchVmConfiguration DeploymentVmConfiguration
+        {
+            get
+            {
+                return DeploymentConfiguration is null ? default : DeploymentConfiguration.VmConfiguration;
+            }
+            set
+            {
+                if (DeploymentConfiguration is null)
+                {
+                    DeploymentConfiguration = new BatchDeploymentConfiguration();
+                }
+                DeploymentConfiguration.VmConfiguration = value;
+            }
+        }
+
         /// <summary> Determines how a pool communicates with the Batch service. </summary>
         [Obsolete("This property is obsolete and will be removed in a future release. NodeCommunicationMode has been removed from the Batch service.", false)]
         [EditorBrowsable(EditorBrowsableState.Never)]

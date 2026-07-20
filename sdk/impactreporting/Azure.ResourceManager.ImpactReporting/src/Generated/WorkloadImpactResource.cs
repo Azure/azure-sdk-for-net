@@ -86,7 +86,7 @@ namespace Azure.ResourceManager.ImpactReporting
         {
             if (id.ResourceType != ResourceType)
             {
-                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), id);
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), nameof(id));
             }
         }
 
@@ -328,7 +328,7 @@ namespace Azure.ResourceManager.ImpactReporting
                 HttpMessage message = _workloadImpactsRestClient.CreateCreateRequest(Id.SubscriptionId, Id.Name, WorkloadImpactData.ToRequestContent(data), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 ImpactReportingArmOperation<WorkloadImpactResource> operation = new ImpactReportingArmOperation<WorkloadImpactResource>(
-                    new WorkloadImpactOperationSource(Client),
+                    new WorkloadImpactResourceOperationSource(Client),
                     _workloadImpactsClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -387,7 +387,7 @@ namespace Azure.ResourceManager.ImpactReporting
                 HttpMessage message = _workloadImpactsRestClient.CreateCreateRequest(Id.SubscriptionId, Id.Name, WorkloadImpactData.ToRequestContent(data), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 ImpactReportingArmOperation<WorkloadImpactResource> operation = new ImpactReportingArmOperation<WorkloadImpactResource>(
-                    new WorkloadImpactOperationSource(Client),
+                    new WorkloadImpactResourceOperationSource(Client),
                     _workloadImpactsClientDiagnostics,
                     Pipeline,
                     message.Request,

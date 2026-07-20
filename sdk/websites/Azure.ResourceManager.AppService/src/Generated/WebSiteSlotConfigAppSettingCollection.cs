@@ -8,12 +8,13 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.Globalization;
+using System.Diagnostics;
 using System.Threading;
 using System.Threading.Tasks;
-using Autorest.CSharp.Core;
+using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
+using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.AppService
 {
@@ -24,69 +25,75 @@ namespace Azure.ResourceManager.AppService
     /// </summary>
     public partial class WebSiteSlotConfigAppSettingCollection : ArmCollection, IEnumerable<WebSiteSlotConfigAppSettingResource>, IAsyncEnumerable<WebSiteSlotConfigAppSettingResource>
     {
-        private readonly ClientDiagnostics _webSiteSlotConfigAppSettingWebAppsClientDiagnostics;
-        private readonly WebAppsRestOperations _webSiteSlotConfigAppSettingWebAppsRestClient;
+        private readonly ClientDiagnostics _appSettingKeyVaultReferenceSlotClientDiagnostics;
+        private readonly AppSettingKeyVaultReferenceSlot _appSettingKeyVaultReferenceSlotRestClient;
 
-        /// <summary> Initializes a new instance of the <see cref="WebSiteSlotConfigAppSettingCollection"/> class for mocking. </summary>
+        /// <summary> Initializes a new instance of WebSiteSlotConfigAppSettingCollection for mocking. </summary>
         protected WebSiteSlotConfigAppSettingCollection()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref="WebSiteSlotConfigAppSettingCollection"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="WebSiteSlotConfigAppSettingCollection"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
-        /// <param name="id"> The identifier of the parent resource that is the target of operations. </param>
+        /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal WebSiteSlotConfigAppSettingCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _webSiteSlotConfigAppSettingWebAppsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.AppService", WebSiteSlotConfigAppSettingResource.ResourceType.Namespace, Diagnostics);
-            TryGetApiVersion(WebSiteSlotConfigAppSettingResource.ResourceType, out string webSiteSlotConfigAppSettingWebAppsApiVersion);
-            _webSiteSlotConfigAppSettingWebAppsRestClient = new WebAppsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, webSiteSlotConfigAppSettingWebAppsApiVersion);
-#if DEBUG
-			ValidateResourceId(Id);
-#endif
+            TryGetApiVersion(WebSiteSlotConfigAppSettingResource.ResourceType, out string webSiteSlotConfigAppSettingApiVersion);
+            _appSettingKeyVaultReferenceSlotClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.AppService", WebSiteSlotConfigAppSettingResource.ResourceType.Namespace, Diagnostics);
+            _appSettingKeyVaultReferenceSlotRestClient = new AppSettingKeyVaultReferenceSlot(_appSettingKeyVaultReferenceSlotClientDiagnostics, Pipeline, Endpoint, webSiteSlotConfigAppSettingApiVersion ?? "2026-03-15");
+            ValidateResourceId(id);
         }
 
+        /// <param name="id"></param>
+        [Conditional("DEBUG")]
         internal static void ValidateResourceId(ResourceIdentifier id)
         {
             if (id.ResourceType != WebSiteSlotResource.ResourceType)
-                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, WebSiteSlotResource.ResourceType), nameof(id));
+            {
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, WebSiteSlotResource.ResourceType), nameof(id));
+            }
         }
 
         /// <summary>
         /// Description for Gets the config reference and status of an app
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/slots/{slot}/config/configreferences/appsettings/{appSettingKey}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/slots/{slot}/config/configreferences/appsettings/{appSettingKey}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>WebApps_GetAppSettingKeyVaultReferenceSlot</description>
+        /// <term> Operation Id. </term>
+        /// <description> AppSettingKeyVaultReferenceSlot_GetAppSettingKeyVaultReferenceSlot. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-11-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="WebSiteSlotConfigAppSettingResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-03-15. </description>
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="appSettingKey"> App Setting key name. </param>
+        /// <param name="appSettingKey"></param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="appSettingKey"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="appSettingKey"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="appSettingKey"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual async Task<Response<WebSiteSlotConfigAppSettingResource>> GetAsync(string appSettingKey, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(appSettingKey, nameof(appSettingKey));
 
-            using var scope = _webSiteSlotConfigAppSettingWebAppsClientDiagnostics.CreateScope("WebSiteSlotConfigAppSettingCollection.Get");
+            using DiagnosticScope scope = _appSettingKeyVaultReferenceSlotClientDiagnostics.CreateScope("WebSiteSlotConfigAppSettingCollection.Get");
             scope.Start();
             try
             {
-                var response = await _webSiteSlotConfigAppSettingWebAppsRestClient.GetAppSettingKeyVaultReferenceSlotAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, appSettingKey, cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _appSettingKeyVaultReferenceSlotRestClient.CreateGetAppSettingKeyVaultReferenceSlotRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, appSettingKey, context);
+                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                Response<ApiKeyVaultReferenceData> response = Response.FromValue(ApiKeyVaultReferenceData.FromResponse(result), result);
                 if (response.Value == null)
+                {
                     throw new RequestFailedException(response.GetRawResponse());
+                }
                 return Response.FromValue(new WebSiteSlotConfigAppSettingResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -100,38 +107,42 @@ namespace Azure.ResourceManager.AppService
         /// Description for Gets the config reference and status of an app
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/slots/{slot}/config/configreferences/appsettings/{appSettingKey}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/slots/{slot}/config/configreferences/appsettings/{appSettingKey}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>WebApps_GetAppSettingKeyVaultReferenceSlot</description>
+        /// <term> Operation Id. </term>
+        /// <description> AppSettingKeyVaultReferenceSlot_GetAppSettingKeyVaultReferenceSlot. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-11-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="WebSiteSlotConfigAppSettingResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-03-15. </description>
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="appSettingKey"> App Setting key name. </param>
+        /// <param name="appSettingKey"></param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="appSettingKey"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="appSettingKey"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="appSettingKey"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual Response<WebSiteSlotConfigAppSettingResource> Get(string appSettingKey, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(appSettingKey, nameof(appSettingKey));
 
-            using var scope = _webSiteSlotConfigAppSettingWebAppsClientDiagnostics.CreateScope("WebSiteSlotConfigAppSettingCollection.Get");
+            using DiagnosticScope scope = _appSettingKeyVaultReferenceSlotClientDiagnostics.CreateScope("WebSiteSlotConfigAppSettingCollection.Get");
             scope.Start();
             try
             {
-                var response = _webSiteSlotConfigAppSettingWebAppsRestClient.GetAppSettingKeyVaultReferenceSlot(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, appSettingKey, cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _appSettingKeyVaultReferenceSlotRestClient.CreateGetAppSettingKeyVaultReferenceSlotRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, appSettingKey, context);
+                Response result = Pipeline.ProcessMessage(message, context);
+                Response<ApiKeyVaultReferenceData> response = Response.FromValue(ApiKeyVaultReferenceData.FromResponse(result), result);
                 if (response.Value == null)
+                {
                     throw new RequestFailedException(response.GetRawResponse());
+                }
                 return Response.FromValue(new WebSiteSlotConfigAppSettingResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -145,50 +156,51 @@ namespace Azure.ResourceManager.AppService
         /// Description for Gets the config reference app settings and status of an app
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/slots/{slot}/config/configreferences/appsettings</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/slots/{slot}/config/configreferences/appsettings. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>WebApps_GetAppSettingsKeyVaultReferencesSlot</description>
+        /// <term> Operation Id. </term>
+        /// <description> AppSettingKeyVaultReferenceSlot_GetAppSettingsKeyVaultReferencesSlot. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-11-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="WebSiteSlotConfigAppSettingResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-03-15. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="WebSiteSlotConfigAppSettingResource"/> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="WebSiteSlotConfigAppSettingResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<WebSiteSlotConfigAppSettingResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _webSiteSlotConfigAppSettingWebAppsRestClient.CreateGetAppSettingsKeyVaultReferencesSlotRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _webSiteSlotConfigAppSettingWebAppsRestClient.CreateGetAppSettingsKeyVaultReferencesSlotNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new WebSiteSlotConfigAppSettingResource(Client, ApiKeyVaultReferenceData.DeserializeApiKeyVaultReferenceData(e)), _webSiteSlotConfigAppSettingWebAppsClientDiagnostics, Pipeline, "WebSiteSlotConfigAppSettingCollection.GetAll", "value", "nextLink", cancellationToken);
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new AsyncPageableWrapper<ApiKeyVaultReferenceData, WebSiteSlotConfigAppSettingResource>(new AppSettingKeyVaultReferenceSlotGetAppSettingsKeyVaultReferencesSlotAsyncCollectionResultOfT(
+                _appSettingKeyVaultReferenceSlotRestClient,
+                Guid.Parse(Id.SubscriptionId),
+                Id.ResourceGroupName,
+                Id.Parent.Name,
+                Id.Name,
+                context,
+                "WebSiteSlotConfigAppSettingCollection.GetAll"), data => new WebSiteSlotConfigAppSettingResource(Client, data));
         }
 
         /// <summary>
         /// Description for Gets the config reference app settings and status of an app
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/slots/{slot}/config/configreferences/appsettings</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/slots/{slot}/config/configreferences/appsettings. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>WebApps_GetAppSettingsKeyVaultReferencesSlot</description>
+        /// <term> Operation Id. </term>
+        /// <description> AppSettingKeyVaultReferenceSlot_GetAppSettingsKeyVaultReferencesSlot. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-11-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="WebSiteSlotConfigAppSettingResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-03-15. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -196,45 +208,68 @@ namespace Azure.ResourceManager.AppService
         /// <returns> A collection of <see cref="WebSiteSlotConfigAppSettingResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<WebSiteSlotConfigAppSettingResource> GetAll(CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _webSiteSlotConfigAppSettingWebAppsRestClient.CreateGetAppSettingsKeyVaultReferencesSlotRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _webSiteSlotConfigAppSettingWebAppsRestClient.CreateGetAppSettingsKeyVaultReferencesSlotNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new WebSiteSlotConfigAppSettingResource(Client, ApiKeyVaultReferenceData.DeserializeApiKeyVaultReferenceData(e)), _webSiteSlotConfigAppSettingWebAppsClientDiagnostics, Pipeline, "WebSiteSlotConfigAppSettingCollection.GetAll", "value", "nextLink", cancellationToken);
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new PageableWrapper<ApiKeyVaultReferenceData, WebSiteSlotConfigAppSettingResource>(new AppSettingKeyVaultReferenceSlotGetAppSettingsKeyVaultReferencesSlotCollectionResultOfT(
+                _appSettingKeyVaultReferenceSlotRestClient,
+                Guid.Parse(Id.SubscriptionId),
+                Id.ResourceGroupName,
+                Id.Parent.Name,
+                Id.Name,
+                context,
+                "WebSiteSlotConfigAppSettingCollection.GetAll"), data => new WebSiteSlotConfigAppSettingResource(Client, data));
         }
 
         /// <summary>
         /// Checks to see if the resource exists in azure.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/slots/{slot}/config/configreferences/appsettings/{appSettingKey}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/slots/{slot}/config/configreferences/appsettings/{appSettingKey}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>WebApps_GetAppSettingKeyVaultReferenceSlot</description>
+        /// <term> Operation Id. </term>
+        /// <description> AppSettingKeyVaultReferenceSlot_GetAppSettingKeyVaultReferenceSlot. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-11-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="WebSiteSlotConfigAppSettingResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-03-15. </description>
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="appSettingKey"> App Setting key name. </param>
+        /// <param name="appSettingKey"></param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="appSettingKey"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="appSettingKey"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="appSettingKey"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual async Task<Response<bool>> ExistsAsync(string appSettingKey, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(appSettingKey, nameof(appSettingKey));
 
-            using var scope = _webSiteSlotConfigAppSettingWebAppsClientDiagnostics.CreateScope("WebSiteSlotConfigAppSettingCollection.Exists");
+            using DiagnosticScope scope = _appSettingKeyVaultReferenceSlotClientDiagnostics.CreateScope("WebSiteSlotConfigAppSettingCollection.Exists");
             scope.Start();
             try
             {
-                var response = await _webSiteSlotConfigAppSettingWebAppsRestClient.GetAppSettingKeyVaultReferenceSlotAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, appSettingKey, cancellationToken: cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _appSettingKeyVaultReferenceSlotRestClient.CreateGetAppSettingKeyVaultReferenceSlotRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, appSettingKey, context);
+                await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
+                Response result = message.Response;
+                Response<ApiKeyVaultReferenceData> response = default;
+                switch (result.Status)
+                {
+                    case 200:
+                        response = Response.FromValue(ApiKeyVaultReferenceData.FromResponse(result), result);
+                        break;
+                    case 404:
+                        response = Response.FromValue((ApiKeyVaultReferenceData)null, result);
+                        break;
+                    default:
+                        throw new RequestFailedException(result);
+                }
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -248,36 +283,50 @@ namespace Azure.ResourceManager.AppService
         /// Checks to see if the resource exists in azure.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/slots/{slot}/config/configreferences/appsettings/{appSettingKey}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/slots/{slot}/config/configreferences/appsettings/{appSettingKey}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>WebApps_GetAppSettingKeyVaultReferenceSlot</description>
+        /// <term> Operation Id. </term>
+        /// <description> AppSettingKeyVaultReferenceSlot_GetAppSettingKeyVaultReferenceSlot. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-11-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="WebSiteSlotConfigAppSettingResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-03-15. </description>
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="appSettingKey"> App Setting key name. </param>
+        /// <param name="appSettingKey"></param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="appSettingKey"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="appSettingKey"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="appSettingKey"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual Response<bool> Exists(string appSettingKey, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(appSettingKey, nameof(appSettingKey));
 
-            using var scope = _webSiteSlotConfigAppSettingWebAppsClientDiagnostics.CreateScope("WebSiteSlotConfigAppSettingCollection.Exists");
+            using DiagnosticScope scope = _appSettingKeyVaultReferenceSlotClientDiagnostics.CreateScope("WebSiteSlotConfigAppSettingCollection.Exists");
             scope.Start();
             try
             {
-                var response = _webSiteSlotConfigAppSettingWebAppsRestClient.GetAppSettingKeyVaultReferenceSlot(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, appSettingKey, cancellationToken: cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _appSettingKeyVaultReferenceSlotRestClient.CreateGetAppSettingKeyVaultReferenceSlotRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, appSettingKey, context);
+                Pipeline.Send(message, context.CancellationToken);
+                Response result = message.Response;
+                Response<ApiKeyVaultReferenceData> response = default;
+                switch (result.Status)
+                {
+                    case 200:
+                        response = Response.FromValue(ApiKeyVaultReferenceData.FromResponse(result), result);
+                        break;
+                    case 404:
+                        response = Response.FromValue((ApiKeyVaultReferenceData)null, result);
+                        break;
+                    default:
+                        throw new RequestFailedException(result);
+                }
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -291,38 +340,54 @@ namespace Azure.ResourceManager.AppService
         /// Tries to get details for this resource from the service.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/slots/{slot}/config/configreferences/appsettings/{appSettingKey}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/slots/{slot}/config/configreferences/appsettings/{appSettingKey}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>WebApps_GetAppSettingKeyVaultReferenceSlot</description>
+        /// <term> Operation Id. </term>
+        /// <description> AppSettingKeyVaultReferenceSlot_GetAppSettingKeyVaultReferenceSlot. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-11-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="WebSiteSlotConfigAppSettingResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-03-15. </description>
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="appSettingKey"> App Setting key name. </param>
+        /// <param name="appSettingKey"></param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="appSettingKey"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="appSettingKey"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="appSettingKey"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual async Task<NullableResponse<WebSiteSlotConfigAppSettingResource>> GetIfExistsAsync(string appSettingKey, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(appSettingKey, nameof(appSettingKey));
 
-            using var scope = _webSiteSlotConfigAppSettingWebAppsClientDiagnostics.CreateScope("WebSiteSlotConfigAppSettingCollection.GetIfExists");
+            using DiagnosticScope scope = _appSettingKeyVaultReferenceSlotClientDiagnostics.CreateScope("WebSiteSlotConfigAppSettingCollection.GetIfExists");
             scope.Start();
             try
             {
-                var response = await _webSiteSlotConfigAppSettingWebAppsRestClient.GetAppSettingKeyVaultReferenceSlotAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, appSettingKey, cancellationToken: cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _appSettingKeyVaultReferenceSlotRestClient.CreateGetAppSettingKeyVaultReferenceSlotRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, appSettingKey, context);
+                await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
+                Response result = message.Response;
+                Response<ApiKeyVaultReferenceData> response = default;
+                switch (result.Status)
+                {
+                    case 200:
+                        response = Response.FromValue(ApiKeyVaultReferenceData.FromResponse(result), result);
+                        break;
+                    case 404:
+                        response = Response.FromValue((ApiKeyVaultReferenceData)null, result);
+                        break;
+                    default:
+                        throw new RequestFailedException(result);
+                }
                 if (response.Value == null)
+                {
                     return new NoValueResponse<WebSiteSlotConfigAppSettingResource>(response.GetRawResponse());
+                }
                 return Response.FromValue(new WebSiteSlotConfigAppSettingResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -336,38 +401,54 @@ namespace Azure.ResourceManager.AppService
         /// Tries to get details for this resource from the service.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/slots/{slot}/config/configreferences/appsettings/{appSettingKey}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/slots/{slot}/config/configreferences/appsettings/{appSettingKey}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>WebApps_GetAppSettingKeyVaultReferenceSlot</description>
+        /// <term> Operation Id. </term>
+        /// <description> AppSettingKeyVaultReferenceSlot_GetAppSettingKeyVaultReferenceSlot. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-11-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="WebSiteSlotConfigAppSettingResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-03-15. </description>
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="appSettingKey"> App Setting key name. </param>
+        /// <param name="appSettingKey"></param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="appSettingKey"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="appSettingKey"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="appSettingKey"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual NullableResponse<WebSiteSlotConfigAppSettingResource> GetIfExists(string appSettingKey, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(appSettingKey, nameof(appSettingKey));
 
-            using var scope = _webSiteSlotConfigAppSettingWebAppsClientDiagnostics.CreateScope("WebSiteSlotConfigAppSettingCollection.GetIfExists");
+            using DiagnosticScope scope = _appSettingKeyVaultReferenceSlotClientDiagnostics.CreateScope("WebSiteSlotConfigAppSettingCollection.GetIfExists");
             scope.Start();
             try
             {
-                var response = _webSiteSlotConfigAppSettingWebAppsRestClient.GetAppSettingKeyVaultReferenceSlot(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, appSettingKey, cancellationToken: cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _appSettingKeyVaultReferenceSlotRestClient.CreateGetAppSettingKeyVaultReferenceSlotRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, appSettingKey, context);
+                Pipeline.Send(message, context.CancellationToken);
+                Response result = message.Response;
+                Response<ApiKeyVaultReferenceData> response = default;
+                switch (result.Status)
+                {
+                    case 200:
+                        response = Response.FromValue(ApiKeyVaultReferenceData.FromResponse(result), result);
+                        break;
+                    case 404:
+                        response = Response.FromValue((ApiKeyVaultReferenceData)null, result);
+                        break;
+                    default:
+                        throw new RequestFailedException(result);
+                }
                 if (response.Value == null)
+                {
                     return new NoValueResponse<WebSiteSlotConfigAppSettingResource>(response.GetRawResponse());
+                }
                 return Response.FromValue(new WebSiteSlotConfigAppSettingResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -387,6 +468,7 @@ namespace Azure.ResourceManager.AppService
             return GetAll().GetEnumerator();
         }
 
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
         IAsyncEnumerator<WebSiteSlotConfigAppSettingResource> IAsyncEnumerable<WebSiteSlotConfigAppSettingResource>.GetAsyncEnumerator(CancellationToken cancellationToken)
         {
             return GetAllAsync(cancellationToken: cancellationToken).GetAsyncEnumerator(cancellationToken);

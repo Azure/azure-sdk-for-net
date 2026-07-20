@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.DisconnectedOperations
         {
             TryGetApiVersion(DisconnectedOperationsImageResource.ResourceType, out string disconnectedOperationsImageApiVersion);
             _imagesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.DisconnectedOperations", DisconnectedOperationsImageResource.ResourceType.Namespace, Diagnostics);
-            _imagesRestClient = new Images(_imagesClientDiagnostics, Pipeline, Endpoint, disconnectedOperationsImageApiVersion ?? "2025-06-01-preview");
+            _imagesRestClient = new Images(_imagesClientDiagnostics, Pipeline, Endpoint, disconnectedOperationsImageApiVersion ?? "2026-03-15");
             ValidateResourceId(id);
         }
 
@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.DisconnectedOperations
         {
             if (id.ResourceType != DisconnectedOperationResource.ResourceType)
             {
-                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, DisconnectedOperationResource.ResourceType), id);
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, DisconnectedOperationResource.ResourceType), nameof(id));
             }
         }
 
@@ -67,7 +67,7 @@ namespace Azure.ResourceManager.DisconnectedOperations
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-06-01-preview. </description>
+        /// <description> 2026-03-15. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -116,7 +116,7 @@ namespace Azure.ResourceManager.DisconnectedOperations
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-06-01-preview. </description>
+        /// <description> 2026-03-15. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -165,7 +165,7 @@ namespace Azure.ResourceManager.DisconnectedOperations
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-06-01-preview. </description>
+        /// <description> 2026-03-15. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -188,7 +188,8 @@ namespace Azure.ResourceManager.DisconnectedOperations
                 filter,
                 maxCount,
                 skip,
-                context), data => new DisconnectedOperationsImageResource(Client, data));
+                context,
+                "DisconnectedOperationsImageCollection.GetAll"), data => new DisconnectedOperationsImageResource(Client, data));
         }
 
         /// <summary>
@@ -204,7 +205,7 @@ namespace Azure.ResourceManager.DisconnectedOperations
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-06-01-preview. </description>
+        /// <description> 2026-03-15. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -227,7 +228,8 @@ namespace Azure.ResourceManager.DisconnectedOperations
                 filter,
                 maxCount,
                 skip,
-                context), data => new DisconnectedOperationsImageResource(Client, data));
+                context,
+                "DisconnectedOperationsImageCollection.GetAll"), data => new DisconnectedOperationsImageResource(Client, data));
         }
 
         /// <summary>
@@ -243,7 +245,7 @@ namespace Azure.ResourceManager.DisconnectedOperations
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-06-01-preview. </description>
+        /// <description> 2026-03-15. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -300,7 +302,7 @@ namespace Azure.ResourceManager.DisconnectedOperations
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-06-01-preview. </description>
+        /// <description> 2026-03-15. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -357,7 +359,7 @@ namespace Azure.ResourceManager.DisconnectedOperations
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-06-01-preview. </description>
+        /// <description> 2026-03-15. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -418,7 +420,7 @@ namespace Azure.ResourceManager.DisconnectedOperations
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-06-01-preview. </description>
+        /// <description> 2026-03-15. </description>
         /// </item>
         /// </list>
         /// </summary>

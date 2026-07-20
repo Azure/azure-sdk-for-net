@@ -21,7 +21,7 @@ public class AIAgentsTest : ProjectsClientTestBase
     [RecordedTest]
     public async Task AgentsGetPersistentClient()
     {
-        AIProjectClient projectClient = new AIProjectClient(new(TestEnvironment.PROJECT_ENDPOINT), new MockTokenCredential());
+        AIProjectClient projectClient = new AIProjectClient(new(TestEnvironment.FOUNDRY_PROJECT_ENDPOINT), new MockTokenCredential());
         PersistentAgentsClient agentsClient = projectClient.GetPersistentAgentsClient();
         Assert.That(agentsClient, Is.Not.Null);
     }
@@ -32,7 +32,7 @@ public class AIAgentsTest : ProjectsClientTestBase
     [LiveOnly]
     public async Task AgentsTest()
     {
-        var modelDeploymentName = TestEnvironment.MODELDEPLOYMENTNAME;
+        var modelDeploymentName = TestEnvironment.FOUNDRY_MODEL_NAME;
 
         AIProjectClient projectClient = GetTestProjectClient();
         PersistentAgentsClient agentsClient = projectClient.GetPersistentAgentsClient();

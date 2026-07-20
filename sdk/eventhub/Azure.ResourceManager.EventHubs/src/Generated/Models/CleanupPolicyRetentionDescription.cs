@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.EventHubs;
 
 namespace Azure.ResourceManager.EventHubs.Models
 {
@@ -14,41 +15,59 @@ namespace Azure.ResourceManager.EventHubs.Models
     public readonly partial struct CleanupPolicyRetentionDescription : IEquatable<CleanupPolicyRetentionDescription>
     {
         private readonly string _value;
-
-        /// <summary> Initializes a new instance of <see cref="CleanupPolicyRetentionDescription"/>. </summary>
-        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        public CleanupPolicyRetentionDescription(string value)
-        {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
-
         private const string DeleteValue = "Delete";
         private const string CompactionValue = "Compact";
         private const string DeleteOrCompactValue = "DeleteOrCompact";
 
-        /// <summary> Delete. </summary>
+        /// <summary> Initializes a new instance of <see cref="CleanupPolicyRetentionDescription"/>. </summary>
+        /// <param name="value"> The value. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
+        public CleanupPolicyRetentionDescription(string value)
+        {
+            Argument.AssertNotNull(value, nameof(value));
+
+            _value = value;
+        }
+
+        /// <summary> Gets the Delete. </summary>
         public static CleanupPolicyRetentionDescription Delete { get; } = new CleanupPolicyRetentionDescription(DeleteValue);
-        /// <summary> Compact. </summary>
+
+        /// <summary> Gets the Compaction. </summary>
         public static CleanupPolicyRetentionDescription Compaction { get; } = new CleanupPolicyRetentionDescription(CompactionValue);
-        /// <summary> DeleteOrCompact. </summary>
+
+        /// <summary> Gets the DeleteOrCompact. </summary>
         public static CleanupPolicyRetentionDescription DeleteOrCompact { get; } = new CleanupPolicyRetentionDescription(DeleteOrCompactValue);
+
         /// <summary> Determines if two <see cref="CleanupPolicyRetentionDescription"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(CleanupPolicyRetentionDescription left, CleanupPolicyRetentionDescription right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="CleanupPolicyRetentionDescription"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(CleanupPolicyRetentionDescription left, CleanupPolicyRetentionDescription right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="CleanupPolicyRetentionDescription"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="CleanupPolicyRetentionDescription"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator CleanupPolicyRetentionDescription(string value) => new CleanupPolicyRetentionDescription(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="CleanupPolicyRetentionDescription"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator CleanupPolicyRetentionDescription?(string value) => value == null ? null : new CleanupPolicyRetentionDescription(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is CleanupPolicyRetentionDescription other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(CleanupPolicyRetentionDescription other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

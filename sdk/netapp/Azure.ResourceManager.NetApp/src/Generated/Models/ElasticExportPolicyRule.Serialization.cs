@@ -9,99 +9,17 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure.Core;
+using Azure.ResourceManager.NetApp;
 
 namespace Azure.ResourceManager.NetApp.Models
 {
-    public partial class ElasticExportPolicyRule : IUtf8JsonSerializable, IJsonModel<ElasticExportPolicyRule>
+    /// <summary> Elastic Volume Export Policy Rule. </summary>
+    public partial class ElasticExportPolicyRule : IJsonModel<ElasticExportPolicyRule>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ElasticExportPolicyRule>)this).Write(writer, ModelSerializationExtensions.WireOptions);
-
-        void IJsonModel<ElasticExportPolicyRule>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
-        {
-            writer.WriteStartObject();
-            JsonModelWriteCore(writer, options);
-            writer.WriteEndObject();
-        }
-
-        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        internal static ElasticExportPolicyRule DeserializeElasticExportPolicyRule(JsonElement element, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<ElasticExportPolicyRule>)this).GetFormatFromOptions(options) : options.Format;
-            if (format != "J")
-            {
-                throw new FormatException($"The model {nameof(ElasticExportPolicyRule)} does not support writing '{format}' format.");
-            }
-
-            if (Optional.IsDefined(RuleIndex))
-            {
-                writer.WritePropertyName("ruleIndex"u8);
-                writer.WriteNumberValue(RuleIndex.Value);
-            }
-            if (Optional.IsDefined(UnixAccessRule))
-            {
-                writer.WritePropertyName("unixAccessRule"u8);
-                writer.WriteStringValue(UnixAccessRule.Value.ToString());
-            }
-            if (Optional.IsDefined(Nfsv3))
-            {
-                writer.WritePropertyName("nfsv3"u8);
-                writer.WriteStringValue(Nfsv3.Value.ToString());
-            }
-            if (Optional.IsDefined(Nfsv4))
-            {
-                writer.WritePropertyName("nfsv4"u8);
-                writer.WriteStringValue(Nfsv4.Value.ToString());
-            }
-            if (Optional.IsCollectionDefined(AllowedClients))
-            {
-                writer.WritePropertyName("allowedClients"u8);
-                writer.WriteStartArray();
-                foreach (var item in AllowedClients)
-                {
-                    writer.WriteStringValue(item);
-                }
-                writer.WriteEndArray();
-            }
-            if (Optional.IsDefined(RootAccess))
-            {
-                writer.WritePropertyName("rootAccess"u8);
-                writer.WriteStringValue(RootAccess.Value.ToString());
-            }
-            if (options.Format != "W" && _serializedAdditionalRawData != null)
-            {
-                foreach (var item in _serializedAdditionalRawData)
-                {
-                    writer.WritePropertyName(item.Key);
-#if NET6_0_OR_GREATER
-				writer.WriteRawValue(item.Value);
-#else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value, ModelSerializationExtensions.JsonDocumentOptions))
-                    {
-                        JsonSerializer.Serialize(writer, document.RootElement);
-                    }
-#endif
-                }
-            }
-        }
-
-        ElasticExportPolicyRule IJsonModel<ElasticExportPolicyRule>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<ElasticExportPolicyRule>)this).GetFormatFromOptions(options) : options.Format;
-            if (format != "J")
-            {
-                throw new FormatException($"The model {nameof(ElasticExportPolicyRule)} does not support reading '{format}' format.");
-            }
-
-            using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeElasticExportPolicyRule(document.RootElement, options);
-        }
-
-        internal static ElasticExportPolicyRule DeserializeElasticExportPolicyRule(JsonElement element, ModelReaderWriterOptions options = null)
-        {
-            options ??= ModelSerializationExtensions.WireOptions;
-
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -112,75 +30,80 @@ namespace Azure.ResourceManager.NetApp.Models
             ElasticNfsv4Access? nfsv4 = default;
             IList<string> allowedClients = default;
             ElasticRootAccess? rootAccess = default;
-            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
-            foreach (var property in element.EnumerateObject())
+            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            foreach (var prop in element.EnumerateObject())
             {
-                if (property.NameEquals("ruleIndex"u8))
+                if (prop.NameEquals("ruleIndex"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    ruleIndex = property.Value.GetInt32();
+                    ruleIndex = prop.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("unixAccessRule"u8))
+                if (prop.NameEquals("unixAccessRule"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    unixAccessRule = new ElasticUnixAccessRule(property.Value.GetString());
+                    unixAccessRule = new ElasticUnixAccessRule(prop.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("nfsv3"u8))
+                if (prop.NameEquals("nfsv3"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    nfsv3 = new ElasticNfsv3Access(property.Value.GetString());
+                    nfsv3 = new ElasticNfsv3Access(prop.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("nfsv4"u8))
+                if (prop.NameEquals("nfsv4"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    nfsv4 = new ElasticNfsv4Access(property.Value.GetString());
+                    nfsv4 = new ElasticNfsv4Access(prop.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("allowedClients"u8))
+                if (prop.NameEquals("allowedClients"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
                     List<string> array = new List<string>();
-                    foreach (var item in property.Value.EnumerateArray())
+                    foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(item.GetString());
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(item.GetString());
+                        }
                     }
                     allowedClients = array;
                     continue;
                 }
-                if (property.NameEquals("rootAccess"u8))
+                if (prop.NameEquals("rootAccess"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    rootAccess = new ElasticRootAccess(property.Value.GetString());
+                    rootAccess = new ElasticRootAccess(prop.Value.GetString());
                     continue;
                 }
                 if (options.Format != "W")
                 {
-                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = rawDataDictionary;
             return new ElasticExportPolicyRule(
                 ruleIndex,
                 unixAccessRule,
@@ -188,38 +111,7 @@ namespace Azure.ResourceManager.NetApp.Models
                 nfsv4,
                 allowedClients ?? new ChangeTrackingList<string>(),
                 rootAccess,
-                serializedAdditionalRawData);
+                additionalBinaryDataProperties);
         }
-
-        BinaryData IPersistableModel<ElasticExportPolicyRule>.Write(ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<ElasticExportPolicyRule>)this).GetFormatFromOptions(options) : options.Format;
-
-            switch (format)
-            {
-                case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerNetAppContext.Default);
-                default:
-                    throw new FormatException($"The model {nameof(ElasticExportPolicyRule)} does not support writing '{options.Format}' format.");
-            }
-        }
-
-        ElasticExportPolicyRule IPersistableModel<ElasticExportPolicyRule>.Create(BinaryData data, ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<ElasticExportPolicyRule>)this).GetFormatFromOptions(options) : options.Format;
-
-            switch (format)
-            {
-                case "J":
-                    {
-                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
-                        return DeserializeElasticExportPolicyRule(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(ElasticExportPolicyRule)} does not support reading '{options.Format}' format.");
-            }
-        }
-
-        string IPersistableModel<ElasticExportPolicyRule>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

@@ -4,8 +4,9 @@
 
 using System;
 using System.ComponentModel;
+using Azure.AI.Projects;
 
-namespace Azure.AI.Projects
+namespace Azure.AI.Projects.Evaluation
 {
     /// <summary></summary>
     public readonly partial struct ListVersionsRequestType : IEquatable<ListVersionsRequestType>

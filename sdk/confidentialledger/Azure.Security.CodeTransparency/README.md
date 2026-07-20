@@ -15,6 +15,12 @@ Ensure you have access to the correct NuGet feed.
 Install the client library via NuGet:
 
 ```dotnetcli
+dotnet add package Azure.Security.CodeTransparency
+```
+
+To install a preview release, use the `--prerelease` flag:
+
+```dotnetcli
 dotnet add package Azure.Security.CodeTransparency --prerelease
 ```
 

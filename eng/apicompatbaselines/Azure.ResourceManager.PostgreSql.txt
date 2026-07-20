@@ -1,0 +1,1 @@
+CannotRemoveAttribute : Attribute 'Azure.ResourceManager.PostgreSql.FlexibleServers.WirePathAttribute' exists on 'Azure.ResourceManager.PostgreSql.FlexibleServers.Models.PostgreSqlMigrationPatch.SecretParameters' in the contract but not the implementation.

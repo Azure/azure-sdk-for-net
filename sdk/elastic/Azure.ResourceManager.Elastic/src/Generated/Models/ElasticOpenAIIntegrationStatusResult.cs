@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.Elastic.Models
         {
             get
             {
-                return Properties.Status;
+                return Properties is null ? default : Properties.Status;
             }
         }
     }

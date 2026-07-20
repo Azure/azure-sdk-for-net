@@ -13,37 +13,8 @@ namespace Azure.ResourceManager.CostManagement.Models
     /// <summary> The aggregation expression to be used in the forecast. </summary>
     public partial class ForecastAggregation
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="ForecastAggregation"/>. </summary>
         /// <param name="name"> The name of the column to aggregate. </param>
@@ -57,21 +28,17 @@ namespace Azure.ResourceManager.CostManagement.Models
         /// <summary> Initializes a new instance of <see cref="ForecastAggregation"/>. </summary>
         /// <param name="name"> The name of the column to aggregate. </param>
         /// <param name="function"> The name of the aggregation function to use. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ForecastAggregation(FunctionName name, FunctionType function, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal ForecastAggregation(FunctionName name, FunctionType function, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Name = name;
             Function = function;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
-        }
-
-        /// <summary> Initializes a new instance of <see cref="ForecastAggregation"/> for deserialization. </summary>
-        internal ForecastAggregation()
-        {
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> The name of the column to aggregate. </summary>
         public FunctionName Name { get; }
+
         /// <summary> The name of the aggregation function to use. </summary>
         public FunctionType Function { get; }
     }

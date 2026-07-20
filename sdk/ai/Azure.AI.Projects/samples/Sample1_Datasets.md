@@ -18,7 +18,7 @@ In this sample, we showcase some basic round trip handling for files with datase
 Start by instantiating expected environment variables, and the Project Client.
 
 ```C# Snippet:AI_Projects_DatasetRoundTripSample_ClientSetup
-var endpoint = System.Environment.GetEnvironmentVariable("PROJECT_ENDPOINT");
+var endpoint = System.Environment.GetEnvironmentVariable("FOUNDRY_PROJECT_ENDPOINT");
 var datasetName = System.Environment.GetEnvironmentVariable("DATASET_NAME");
 var datasetVersion = System.Environment.GetEnvironmentVariable("DATASET_VERSION") ?? "1.0";
 var filePath = System.Environment.GetEnvironmentVariable("SAMPLE_FILE_PATH") ?? "sample_folder/sample_file1.txt";
@@ -94,7 +94,7 @@ Console.WriteLine($"Downloaded blob '{blobClient.Name}' to '{downloadPath}' - Si
 ### Synchronous sample
 
 ```C# Snippet:AI_Projects_DatasetsExampleSync
-var endpoint = System.Environment.GetEnvironmentVariable("PROJECT_ENDPOINT");
+var endpoint = System.Environment.GetEnvironmentVariable("FOUNDRY_PROJECT_ENDPOINT");
 var connectionName = Environment.GetEnvironmentVariable("CONNECTION_NAME");
 var datasetName = System.Environment.GetEnvironmentVariable("DATASET_NAME");
 var datasetVersion1 = System.Environment.GetEnvironmentVariable("DATASET_VERSION_1") ?? "1.0";
@@ -153,7 +153,7 @@ projectClient.Datasets.Delete(datasetName, datasetVersion2);
 ### Asynchronous sample
 
 ```C# Snippet:AI_Projects_DatasetsExampleAsync
-var endpoint = System.Environment.GetEnvironmentVariable("PROJECT_ENDPOINT");
+var endpoint = System.Environment.GetEnvironmentVariable("FOUNDRY_PROJECT_ENDPOINT");
 var connectionName = Environment.GetEnvironmentVariable("CONNECTION_NAME");
 var datasetName = System.Environment.GetEnvironmentVariable("DATASET_NAME");
 var datasetVersion1 = System.Environment.GetEnvironmentVariable("DATASET_VERSION_1") ?? "1.0";

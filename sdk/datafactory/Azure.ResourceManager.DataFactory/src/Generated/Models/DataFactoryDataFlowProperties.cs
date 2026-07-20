@@ -7,51 +7,25 @@
 
 using System;
 using System.Collections.Generic;
+using System.Text.Json;
+using Azure.ResourceManager.DataFactory;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
     /// <summary>
     /// Azure Data Factory nested object which contains a flow with data movements and transformations.
-    /// Please note <see cref="DataFactoryDataFlowProperties"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-    /// The available derived classes include <see cref="DataFactoryFlowletProperties"/>, <see cref="DataFactoryMappingDataFlowProperties"/> and <see cref="DataFactoryWranglingDataFlowProperties"/>.
+    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="DataFactoryMappingDataFlowProperties"/>, <see cref="DataFactoryFlowletProperties"/>, and <see cref="DataFactoryWranglingDataFlowProperties"/>.
     /// </summary>
     public abstract partial class DataFactoryDataFlowProperties
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private protected IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="DataFactoryDataFlowProperties"/>. </summary>
-        protected DataFactoryDataFlowProperties()
+        /// <param name="dataFlowType"> Type of data flow. </param>
+        private protected DataFactoryDataFlowProperties(string dataFlowType)
         {
+            DataFlowType = dataFlowType;
             Annotations = new ChangeTrackingList<BinaryData>();
         }
 
@@ -60,61 +34,66 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <param name="description"> The description of the data flow. </param>
         /// <param name="annotations"> List of tags that can be used for describing the data flow. </param>
         /// <param name="folder"> The folder that this data flow is in. If not specified, Data flow will appear at the root level. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal DataFactoryDataFlowProperties(string dataFlowType, string description, IList<BinaryData> annotations, DataFlowFolder folder, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal DataFactoryDataFlowProperties(string dataFlowType, string description, IList<BinaryData> annotations, DataFlowFolder folder, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             DataFlowType = dataFlowType;
             Description = description;
             Annotations = annotations;
             Folder = folder;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> Type of data flow. </summary>
         internal string DataFlowType { get; set; }
+
         /// <summary> The description of the data flow. </summary>
         public string Description { get; set; }
+
         /// <summary>
         /// List of tags that can be used for describing the data flow.
-        /// <para>
-        /// To assign an object to the element of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
+        /// <para> To assign an object to the element of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, JsonSerializerOptions?)"/>. </para>
+        /// <para> To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>. </para>
         /// <para>
         /// Examples:
         /// <list type="bullet">
         /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
+        /// <term> BinaryData.FromObjectAsJson("foo"). </term>
+        /// <description> Creates a payload of "foo". </description>
         /// </item>
         /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
+        /// <term> BinaryData.FromString("\"foo\""). </term>
+        /// <description> Creates a payload of "foo". </description>
         /// </item>
         /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// <term> BinaryData.FromObjectAsJson(new { key = "value" }). </term>
+        /// <description> Creates a payload of { "key": "value" }. </description>
         /// </item>
         /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// <term> BinaryData.FromString("{\"key\": \"value\"}"). </term>
+        /// <description> Creates a payload of { "key": "value" }. </description>
         /// </item>
         /// </list>
         /// </para>
         /// </summary>
         public IList<BinaryData> Annotations { get; }
+
         /// <summary> The folder that this data flow is in. If not specified, Data flow will appear at the root level. </summary>
         internal DataFlowFolder Folder { get; set; }
+
         /// <summary> The name of the folder that this data flow is in. </summary>
         public string FolderName
         {
-            get => Folder is null ? default : Folder.Name;
+            get
+            {
+                return Folder is null ? default : Folder.Name;
+            }
             set
             {
                 if (Folder is null)
+                {
                     Folder = new DataFlowFolder();
+                }
                 Folder.Name = value;
             }
         }

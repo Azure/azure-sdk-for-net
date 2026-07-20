@@ -7,45 +7,65 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.Maps;
 
 namespace Azure.ResourceManager.Maps.Models
 {
-    /// <summary> Values are enabled and disabled. </summary>
+    /// <summary> (Optional) Discouraged to include in resource definition. Only needed where it is possible to disable platform (AKA infrastructure) encryption. Azure SQL TDE is an example of this. Values are enabled and disabled. </summary>
     public readonly partial struct MapsInfrastructureEncryption : IEquatable<MapsInfrastructureEncryption>
     {
         private readonly string _value;
+        /// <summary> Encryption is enabled. </summary>
+        private const string EnabledValue = "enabled";
+        /// <summary> Encryption is disabled. </summary>
+        private const string DisabledValue = "disabled";
 
         /// <summary> Initializes a new instance of <see cref="MapsInfrastructureEncryption"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public MapsInfrastructureEncryption(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
+            Argument.AssertNotNull(value, nameof(value));
+
+            _value = value;
         }
 
-        private const string EnabledValue = "enabled";
-        private const string DisabledValue = "disabled";
-
-        /// <summary> enabled. </summary>
+        /// <summary> Encryption is enabled. </summary>
         public static MapsInfrastructureEncryption Enabled { get; } = new MapsInfrastructureEncryption(EnabledValue);
-        /// <summary> disabled. </summary>
+
+        /// <summary> Encryption is disabled. </summary>
         public static MapsInfrastructureEncryption Disabled { get; } = new MapsInfrastructureEncryption(DisabledValue);
+
         /// <summary> Determines if two <see cref="MapsInfrastructureEncryption"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(MapsInfrastructureEncryption left, MapsInfrastructureEncryption right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="MapsInfrastructureEncryption"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(MapsInfrastructureEncryption left, MapsInfrastructureEncryption right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="MapsInfrastructureEncryption"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="MapsInfrastructureEncryption"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator MapsInfrastructureEncryption(string value) => new MapsInfrastructureEncryption(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="MapsInfrastructureEncryption"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator MapsInfrastructureEncryption?(string value) => value == null ? null : new MapsInfrastructureEncryption(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is MapsInfrastructureEncryption other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(MapsInfrastructureEncryption other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

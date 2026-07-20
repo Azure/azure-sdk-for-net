@@ -4,10 +4,12 @@
 
 using System;
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 
 namespace Azure.AI.Projects
 {
     /// <summary> An agent implementing the A2A protocol. </summary>
+    [Experimental("AAIP001")]
     internal partial class A2APreviewTool : InternalTool
     {
         /// <summary> Initializes a new instance of <see cref="A2APreviewTool"/>. </summary>
@@ -27,11 +29,17 @@ namespace Azure.AI.Projects
         /// The connection ID in the project for the A2A server.
         /// The connection stores authentication and other connection details needed to connect to the A2A server.
         /// </param>
-        internal A2APreviewTool(ToolType @type, IDictionary<string, BinaryData> additionalBinaryDataProperties, Uri baseUrl, string agentCardPath, string projectConnectionId) : base(@type, additionalBinaryDataProperties)
+        /// <param name="sendCredentialsForAgentCard">
+        /// When `true`, Foundry sends its credentials when fetching the remote
+        /// agent's Agent Card. The service defaults to `false` if a value is not
+        /// specified by the caller (anonymous fetch).
+        /// </param>
+        internal A2APreviewTool(ToolType @type, IDictionary<string, BinaryData> additionalBinaryDataProperties, Uri baseUrl, string agentCardPath, string projectConnectionId, bool? sendCredentialsForAgentCard) : base(@type, additionalBinaryDataProperties)
         {
             BaseUrl = baseUrl;
             AgentCardPath = agentCardPath;
             ProjectConnectionId = projectConnectionId;
+            SendCredentialsForAgentCard = sendCredentialsForAgentCard;
         }
 
         /// <summary> Base URL of the agent. </summary>
@@ -48,5 +56,12 @@ namespace Azure.AI.Projects
         /// The connection stores authentication and other connection details needed to connect to the A2A server.
         /// </summary>
         public string ProjectConnectionId { get; set; }
+
+        /// <summary>
+        /// When `true`, Foundry sends its credentials when fetching the remote
+        /// agent's Agent Card. The service defaults to `false` if a value is not
+        /// specified by the caller (anonymous fetch).
+        /// </summary>
+        public bool? SendCredentialsForAgentCard { get; set; }
     }
 }

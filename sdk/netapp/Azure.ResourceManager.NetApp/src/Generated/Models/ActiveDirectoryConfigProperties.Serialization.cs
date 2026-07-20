@@ -8,145 +8,30 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Net;
 using System.Text.Json;
-using Azure.Core;
+using Azure.ResourceManager.NetApp;
 
 namespace Azure.ResourceManager.NetApp.Models
 {
-    public partial class ActiveDirectoryConfigProperties : IUtf8JsonSerializable, IJsonModel<ActiveDirectoryConfigProperties>
+    /// <summary> Active Directory Configuration properties. </summary>
+    public partial class ActiveDirectoryConfigProperties : IJsonModel<ActiveDirectoryConfigProperties>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ActiveDirectoryConfigProperties>)this).Write(writer, ModelSerializationExtensions.WireOptions);
-
-        void IJsonModel<ActiveDirectoryConfigProperties>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        /// <summary> Initializes a new instance of <see cref="ActiveDirectoryConfigProperties"/> for deserialization. </summary>
+        internal ActiveDirectoryConfigProperties()
         {
-            writer.WriteStartObject();
-            JsonModelWriteCore(writer, options);
-            writer.WriteEndObject();
         }
 
-        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        internal static ActiveDirectoryConfigProperties DeserializeActiveDirectoryConfigProperties(JsonElement element, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<ActiveDirectoryConfigProperties>)this).GetFormatFromOptions(options) : options.Format;
-            if (format != "J")
-            {
-                throw new FormatException($"The model {nameof(ActiveDirectoryConfigProperties)} does not support writing '{format}' format.");
-            }
-
-            if (Optional.IsDefined(UserName))
-            {
-                writer.WritePropertyName("userName"u8);
-                writer.WriteStringValue(UserName);
-            }
-            if (Optional.IsCollectionDefined(Dns))
-            {
-                writer.WritePropertyName("dns"u8);
-                writer.WriteStartArray();
-                foreach (var item in Dns)
-                {
-                    writer.WriteStringValue(item);
-                }
-                writer.WriteEndArray();
-            }
-            if (Optional.IsDefined(SmbServerName))
-            {
-                writer.WritePropertyName("smbServerName"u8);
-                writer.WriteStringValue(SmbServerName);
-            }
-            if (Optional.IsDefined(OrganizationalUnit))
-            {
-                writer.WritePropertyName("organizationalUnit"u8);
-                writer.WriteStringValue(OrganizationalUnit);
-            }
-            if (Optional.IsDefined(Site))
-            {
-                writer.WritePropertyName("site"u8);
-                writer.WriteStringValue(Site);
-            }
-            if (Optional.IsCollectionDefined(BackupOperators))
-            {
-                writer.WritePropertyName("backupOperators"u8);
-                writer.WriteStartArray();
-                foreach (var item in BackupOperators)
-                {
-                    writer.WriteStringValue(item);
-                }
-                writer.WriteEndArray();
-            }
-            if (Optional.IsCollectionDefined(Administrators))
-            {
-                writer.WritePropertyName("administrators"u8);
-                writer.WriteStartArray();
-                foreach (var item in Administrators)
-                {
-                    writer.WriteStringValue(item);
-                }
-                writer.WriteEndArray();
-            }
-            if (Optional.IsCollectionDefined(SecurityOperators))
-            {
-                writer.WritePropertyName("securityOperators"u8);
-                writer.WriteStartArray();
-                foreach (var item in SecurityOperators)
-                {
-                    writer.WriteStringValue(item);
-                }
-                writer.WriteEndArray();
-            }
-            if (options.Format != "W" && Optional.IsDefined(ActiveDirectoryStatus))
-            {
-                writer.WritePropertyName("activeDirectoryStatus"u8);
-                writer.WriteStringValue(ActiveDirectoryStatus.Value.ToString());
-            }
-            if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
-            {
-                writer.WritePropertyName("provisioningState"u8);
-                writer.WriteStringValue(ProvisioningState.Value.ToSerialString());
-            }
-            writer.WritePropertyName("domain"u8);
-            writer.WriteStringValue(Domain);
-            writer.WritePropertyName("secretPassword"u8);
-            writer.WriteObjectValue(SecretPassword, options);
-            if (options.Format != "W" && _serializedAdditionalRawData != null)
-            {
-                foreach (var item in _serializedAdditionalRawData)
-                {
-                    writer.WritePropertyName(item.Key);
-#if NET6_0_OR_GREATER
-				writer.WriteRawValue(item.Value);
-#else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value, ModelSerializationExtensions.JsonDocumentOptions))
-                    {
-                        JsonSerializer.Serialize(writer, document.RootElement);
-                    }
-#endif
-                }
-            }
-        }
-
-        ActiveDirectoryConfigProperties IJsonModel<ActiveDirectoryConfigProperties>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<ActiveDirectoryConfigProperties>)this).GetFormatFromOptions(options) : options.Format;
-            if (format != "J")
-            {
-                throw new FormatException($"The model {nameof(ActiveDirectoryConfigProperties)} does not support reading '{format}' format.");
-            }
-
-            using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeActiveDirectoryConfigProperties(document.RootElement, options);
-        }
-
-        internal static ActiveDirectoryConfigProperties DeserializeActiveDirectoryConfigProperties(JsonElement element, ModelReaderWriterOptions options = null)
-        {
-            options ??= ModelSerializationExtensions.WireOptions;
-
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             string userName = default;
-            IList<string> dns = default;
+            IList<IPAddress> dns = default;
             string smbServerName = default;
             string organizationalUnit = default;
             string site = default;
@@ -156,124 +41,146 @@ namespace Azure.ResourceManager.NetApp.Models
             NetAppAccountActiveDirectoryStatus? activeDirectoryStatus = default;
             NetAppProvisioningState? provisioningState = default;
             string domain = default;
-            SecretPassword secretPassword = default;
-            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
-            foreach (var property in element.EnumerateObject())
+            NetAppSecretPassword secretPassword = default;
+            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            foreach (var prop in element.EnumerateObject())
             {
-                if (property.NameEquals("userName"u8))
+                if (prop.NameEquals("userName"u8))
                 {
-                    userName = property.Value.GetString();
+                    userName = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("dns"u8))
+                if (prop.NameEquals("dns"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    List<string> array = new List<string>();
-                    foreach (var item in property.Value.EnumerateArray())
+                    List<IPAddress> array = new List<IPAddress>();
+                    foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(item.GetString());
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(IPAddress.Parse(item.GetString()));
+                        }
                     }
                     dns = array;
                     continue;
                 }
-                if (property.NameEquals("smbServerName"u8))
+                if (prop.NameEquals("smbServerName"u8))
                 {
-                    smbServerName = property.Value.GetString();
+                    smbServerName = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("organizationalUnit"u8))
+                if (prop.NameEquals("organizationalUnit"u8))
                 {
-                    organizationalUnit = property.Value.GetString();
+                    organizationalUnit = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("site"u8))
+                if (prop.NameEquals("site"u8))
                 {
-                    site = property.Value.GetString();
+                    site = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("backupOperators"u8))
+                if (prop.NameEquals("backupOperators"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
                     List<string> array = new List<string>();
-                    foreach (var item in property.Value.EnumerateArray())
+                    foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(item.GetString());
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(item.GetString());
+                        }
                     }
                     backupOperators = array;
                     continue;
                 }
-                if (property.NameEquals("administrators"u8))
+                if (prop.NameEquals("administrators"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
                     List<string> array = new List<string>();
-                    foreach (var item in property.Value.EnumerateArray())
+                    foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(item.GetString());
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(item.GetString());
+                        }
                     }
                     administrators = array;
                     continue;
                 }
-                if (property.NameEquals("securityOperators"u8))
+                if (prop.NameEquals("securityOperators"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
                     List<string> array = new List<string>();
-                    foreach (var item in property.Value.EnumerateArray())
+                    foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(item.GetString());
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(item.GetString());
+                        }
                     }
                     securityOperators = array;
                     continue;
                 }
-                if (property.NameEquals("activeDirectoryStatus"u8))
+                if (prop.NameEquals("activeDirectoryStatus"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    activeDirectoryStatus = new NetAppAccountActiveDirectoryStatus(property.Value.GetString());
+                    activeDirectoryStatus = new NetAppAccountActiveDirectoryStatus(prop.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("provisioningState"u8))
+                if (prop.NameEquals("provisioningState"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    provisioningState = property.Value.GetString().ToNetAppProvisioningState();
+                    provisioningState = new NetAppProvisioningState(prop.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("domain"u8))
+                if (prop.NameEquals("domain"u8))
                 {
-                    domain = property.Value.GetString();
+                    domain = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("secretPassword"u8))
+                if (prop.NameEquals("secretPassword"u8))
                 {
-                    secretPassword = SecretPassword.DeserializeSecretPassword(property.Value, options);
+                    secretPassword = NetAppSecretPassword.DeserializeNetAppSecretPassword(prop.Value, options);
                     continue;
-                }
-                if (options.Format != "W")
-                {
-                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = rawDataDictionary;
             return new ActiveDirectoryConfigProperties(
                 userName,
-                dns ?? new ChangeTrackingList<string>(),
+                dns ?? new ChangeTrackingList<IPAddress>(),
                 smbServerName,
                 organizationalUnit,
                 site,
@@ -284,38 +191,7 @@ namespace Azure.ResourceManager.NetApp.Models
                 provisioningState,
                 domain,
                 secretPassword,
-                serializedAdditionalRawData);
+                additionalBinaryDataProperties);
         }
-
-        BinaryData IPersistableModel<ActiveDirectoryConfigProperties>.Write(ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<ActiveDirectoryConfigProperties>)this).GetFormatFromOptions(options) : options.Format;
-
-            switch (format)
-            {
-                case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerNetAppContext.Default);
-                default:
-                    throw new FormatException($"The model {nameof(ActiveDirectoryConfigProperties)} does not support writing '{options.Format}' format.");
-            }
-        }
-
-        ActiveDirectoryConfigProperties IPersistableModel<ActiveDirectoryConfigProperties>.Create(BinaryData data, ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<ActiveDirectoryConfigProperties>)this).GetFormatFromOptions(options) : options.Format;
-
-            switch (format)
-            {
-                case "J":
-                    {
-                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
-                        return DeserializeActiveDirectoryConfigProperties(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(ActiveDirectoryConfigProperties)} does not support reading '{options.Format}' format.");
-            }
-        }
-
-        string IPersistableModel<ActiveDirectoryConfigProperties>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

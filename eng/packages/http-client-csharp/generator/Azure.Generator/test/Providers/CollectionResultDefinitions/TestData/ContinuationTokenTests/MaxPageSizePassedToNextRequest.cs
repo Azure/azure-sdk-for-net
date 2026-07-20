@@ -21,18 +21,21 @@ namespace Samples
         private readonly string _myToken;
         private readonly int? _maxPageSize;
         private readonly global::Azure.RequestContext _context;
+        private readonly string _diagnosticScope;
 
         /// <summary> Initializes a new instance of CatClientGetCatsCollectionResult, which is used to iterate over the pages of a collection. </summary>
         /// <param name="client"> The CatClient client used to send requests. </param>
         /// <param name="myToken"> myToken description. </param>
         /// <param name="maxPageSize"> maxpagesize description. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        public CatClientGetCatsCollectionResult(global::Samples.CatClient client, string myToken, int? maxPageSize, global::Azure.RequestContext context) : base((context?.CancellationToken ?? default))
+        /// <param name="diagnosticScope"> The diagnostic scope name. </param>
+        public CatClientGetCatsCollectionResult(global::Samples.CatClient client, string myToken, int? maxPageSize, global::Azure.RequestContext context, string diagnosticScope) : base((context?.CancellationToken ?? default))
         {
             _client = client;
             _myToken = myToken;
             _maxPageSize = maxPageSize;
             _context = context;
+            _diagnosticScope = diagnosticScope;
         }
 
         /// <summary> Gets the pages of CatClientGetCatsCollectionResult as an enumerable collection. </summary>
@@ -50,14 +53,14 @@ namespace Samples
                     yield break;
                 }
                 global::Samples.Models.Page result = ((global::Samples.Models.Page)response);
+                nextPage = result.NextPage;
                 global::System.Collections.Generic.List<global::System.BinaryData> items = new global::System.Collections.Generic.List<global::System.BinaryData>();
                 foreach (var item in result.Cats)
                 {
                     items.Add(global::System.ClientModel.Primitives.ModelReaderWriter.Write(item, global::Samples.ModelSerializationExtensions.WireOptions, global::Samples.SamplesContext.Default));
                 }
                 yield return global::Azure.Page<global::System.BinaryData>.FromValues(items, nextPage, response);
-                nextPage = result.NextPage;
-                if ((nextPage == null))
+                if (string.IsNullOrEmpty(nextPage))
                 {
                     yield break;
                 }
@@ -71,7 +74,7 @@ namespace Samples
         {
             int? pageSize = pageSizeHint.HasValue ? pageSizeHint.Value : _maxPageSize;
             global::Azure.Core.HttpMessage message = _client.CreateGetCatsRequest(continuationToken, pageSize, _context);
-            using global::Azure.Core.Pipeline.DiagnosticScope scope = _client.ClientDiagnostics.CreateScope("CatClient.GetCats");
+            using global::Azure.Core.Pipeline.DiagnosticScope scope = _client.ClientDiagnostics.CreateScope(_diagnosticScope);
             scope.Start();
             try
             {

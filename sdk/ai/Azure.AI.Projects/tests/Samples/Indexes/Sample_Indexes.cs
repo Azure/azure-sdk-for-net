@@ -55,7 +55,7 @@ public class Sample_Indexes : SamplesBase
     {
         #region Snippet:AI_Projects_IndexesExampleSync
 #if SNIPPET
-        var endpoint = Environment.GetEnvironmentVariable("PROJECT_ENDPOINT");
+        var endpoint = Environment.GetEnvironmentVariable("FOUNDRY_PROJECT_ENDPOINT");
         var indexName = Environment.GetEnvironmentVariable("INDEX_NAME") ?? "my-index";
         var indexVersion = Environment.GetEnvironmentVariable("INDEX_VERSION") ?? "1.0";
         var aiSearchConnectionName = Environment.GetEnvironmentVariable("AI_SEARCH_CONNECTION_NAME") ?? "my-ai-search-connection-name";
@@ -63,7 +63,7 @@ public class Sample_Indexes : SamplesBase
 
         AIProjectClient projectClient = new AIProjectClient(new Uri(endpoint), new DefaultAzureCredential());
 #else
-        var endpoint = TestEnvironment.PROJECT_ENDPOINT;
+        var endpoint = TestEnvironment.FOUNDRY_PROJECT_ENDPOINT;
         var indexName = TestEnvironment.INDEX_NAME ?? "my-index";
         var indexVersion = TestEnvironment.INDEX_VERSION ?? "1.0";
         var aiSearchConnectionName = TestEnvironment.AI_SEARCH_CONNECTION_NAME ?? "my-ai-search-connection-name";
@@ -112,7 +112,7 @@ public class Sample_Indexes : SamplesBase
     {
         #region Snippet:AI_Projects_IndexesExampleAsync
 #if SNIPPET
-        var endpoint = Environment.GetEnvironmentVariable("PROJECT_ENDPOINT");
+        var endpoint = Environment.GetEnvironmentVariable("FOUNDRY_PROJECT_ENDPOINT");
         var indexName = Environment.GetEnvironmentVariable("INDEX_NAME") ?? "my-index";
         var indexVersion = Environment.GetEnvironmentVariable("INDEX_VERSION") ?? "1.0";
         var aiSearchConnectionName = Environment.GetEnvironmentVariable("AI_SEARCH_CONNECTION_NAME") ?? "my-ai-search-connection-name";
@@ -120,7 +120,7 @@ public class Sample_Indexes : SamplesBase
 
         AIProjectClient projectClient = new(new Uri(endpoint), new DefaultAzureCredential());
 #else
-        var endpoint = TestEnvironment.PROJECT_ENDPOINT;
+        var endpoint = TestEnvironment.FOUNDRY_PROJECT_ENDPOINT;
         var indexName = TestEnvironment.INDEX_NAME ?? "my-index";
         var indexVersion = TestEnvironment.INDEX_VERSION ?? "1.0";
         var aiSearchConnectionName = TestEnvironment.AI_SEARCH_CONNECTION_NAME ?? "my-ai-search-connection-name";

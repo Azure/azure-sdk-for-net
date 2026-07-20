@@ -20,6 +20,7 @@ namespace Azure.AI.Projects
             Button = button;
             X = x;
             Y = y;
+            Keys = new ChangeTrackingList<string>();
         }
 
         /// <summary> Initializes a new instance of <see cref="ClickParam"/>. </summary>
@@ -28,11 +29,13 @@ namespace Azure.AI.Projects
         /// <param name="button"> Indicates which mouse button was pressed during the click. One of `left`, `right`, `wheel`, `back`, or `forward`. </param>
         /// <param name="x"> The x-coordinate where the click occurred. </param>
         /// <param name="y"> The y-coordinate where the click occurred. </param>
-        internal ClickParam(ComputerActionType @type, IDictionary<string, BinaryData> additionalBinaryDataProperties, ClickButtonType button, long x, long y) : base(@type, additionalBinaryDataProperties)
+        /// <param name="keys"></param>
+        internal ClickParam(ComputerActionType @type, IDictionary<string, BinaryData> additionalBinaryDataProperties, ClickButtonType button, long x, long y, IList<string> keys) : base(@type, additionalBinaryDataProperties)
         {
             Button = button;
             X = x;
             Y = y;
+            Keys = keys;
         }
 
         /// <summary> Indicates which mouse button was pressed during the click. One of `left`, `right`, `wheel`, `back`, or `forward`. </summary>
@@ -43,5 +46,8 @@ namespace Azure.AI.Projects
 
         /// <summary> The y-coordinate where the click occurred. </summary>
         public long Y { get; }
+
+        /// <summary> Gets or sets the Keys. </summary>
+        public IList<string> Keys { get; set; }
     }
 }

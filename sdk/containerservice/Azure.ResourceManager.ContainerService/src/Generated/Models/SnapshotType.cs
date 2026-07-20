@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.ContainerService;
 
 namespace Azure.ResourceManager.ContainerService.Models
 {
@@ -14,35 +15,57 @@ namespace Azure.ResourceManager.ContainerService.Models
     public readonly partial struct SnapshotType : IEquatable<SnapshotType>
     {
         private readonly string _value;
+        /// <summary> The snapshot is a snapshot of a node pool. </summary>
+        private const string NodePoolValue = "NodePool";
+        /// <summary> The snapshot is a snapshot of a managed cluster. </summary>
+        private const string ManagedClusterValue = "ManagedCluster";
 
         /// <summary> Initializes a new instance of <see cref="SnapshotType"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public SnapshotType(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string NodePoolValue = "NodePool";
+            _value = value;
+        }
 
         /// <summary> The snapshot is a snapshot of a node pool. </summary>
         public static SnapshotType NodePool { get; } = new SnapshotType(NodePoolValue);
+
+        /// <summary> The snapshot is a snapshot of a managed cluster. </summary>
+        public static SnapshotType ManagedCluster { get; } = new SnapshotType(ManagedClusterValue);
+
         /// <summary> Determines if two <see cref="SnapshotType"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(SnapshotType left, SnapshotType right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="SnapshotType"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(SnapshotType left, SnapshotType right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="SnapshotType"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="SnapshotType"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator SnapshotType(string value) => new SnapshotType(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="SnapshotType"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator SnapshotType?(string value) => value == null ? null : new SnapshotType(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is SnapshotType other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(SnapshotType other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

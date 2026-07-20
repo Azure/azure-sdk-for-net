@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.PostgreSql.FlexibleServers;
 
 namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
 {
@@ -14,44 +15,72 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
     public readonly partial struct PostgreSqlFlexibleServerRecommendationType : IEquatable<PostgreSqlFlexibleServerRecommendationType>
     {
         private readonly string _value;
+        /// <summary> Recommendation to create an index to improve query performance. </summary>
+        private const string CreateIndexValue = "CreateIndex";
+        /// <summary> Recommendation to drop an existing index because it's duplicate or unused. </summary>
+        private const string DropIndexValue = "DropIndex";
+        /// <summary> Recommendation to reindex an existing invalid index. </summary>
+        private const string ReIndexValue = "ReIndex";
+        /// <summary> Recommendation to analyze a table to update statistics for the query optimizer. </summary>
+        private const string AnalyzeTableValue = "AnalyzeTable";
+        /// <summary> Recommendation to vacuum a table to reclaim storage and optimize performance. </summary>
+        private const string VacuumTableValue = "VacuumTable";
 
         /// <summary> Initializes a new instance of <see cref="PostgreSqlFlexibleServerRecommendationType"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public PostgreSqlFlexibleServerRecommendationType(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
+            Argument.AssertNotNull(value, nameof(value));
+
+            _value = value;
         }
 
-        private const string CreateIndexValue = "CreateIndex";
-        private const string DropIndexValue = "DropIndex";
-        private const string ReIndexValue = "ReIndex";
-        private const string AnalyzeTableValue = "AnalyzeTable";
-
-        /// <summary> CreateIndex. </summary>
+        /// <summary> Recommendation to create an index to improve query performance. </summary>
         public static PostgreSqlFlexibleServerRecommendationType CreateIndex { get; } = new PostgreSqlFlexibleServerRecommendationType(CreateIndexValue);
-        /// <summary> DropIndex. </summary>
+
+        /// <summary> Recommendation to drop an existing index because it's duplicate or unused. </summary>
         public static PostgreSqlFlexibleServerRecommendationType DropIndex { get; } = new PostgreSqlFlexibleServerRecommendationType(DropIndexValue);
-        /// <summary> ReIndex. </summary>
+
+        /// <summary> Recommendation to reindex an existing invalid index. </summary>
         public static PostgreSqlFlexibleServerRecommendationType ReIndex { get; } = new PostgreSqlFlexibleServerRecommendationType(ReIndexValue);
-        /// <summary> AnalyzeTable. </summary>
+
+        /// <summary> Recommendation to analyze a table to update statistics for the query optimizer. </summary>
         public static PostgreSqlFlexibleServerRecommendationType AnalyzeTable { get; } = new PostgreSqlFlexibleServerRecommendationType(AnalyzeTableValue);
+
+        /// <summary> Recommendation to vacuum a table to reclaim storage and optimize performance. </summary>
+        public static PostgreSqlFlexibleServerRecommendationType VacuumTable { get; } = new PostgreSqlFlexibleServerRecommendationType(VacuumTableValue);
+
         /// <summary> Determines if two <see cref="PostgreSqlFlexibleServerRecommendationType"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(PostgreSqlFlexibleServerRecommendationType left, PostgreSqlFlexibleServerRecommendationType right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="PostgreSqlFlexibleServerRecommendationType"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(PostgreSqlFlexibleServerRecommendationType left, PostgreSqlFlexibleServerRecommendationType right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="PostgreSqlFlexibleServerRecommendationType"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="PostgreSqlFlexibleServerRecommendationType"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator PostgreSqlFlexibleServerRecommendationType(string value) => new PostgreSqlFlexibleServerRecommendationType(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="PostgreSqlFlexibleServerRecommendationType"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator PostgreSqlFlexibleServerRecommendationType?(string value) => value == null ? null : new PostgreSqlFlexibleServerRecommendationType(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is PostgreSqlFlexibleServerRecommendationType other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(PostgreSqlFlexibleServerRecommendationType other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.ServiceBus;
 
 namespace Azure.ResourceManager.ServiceBus.Models
 {
@@ -14,38 +15,55 @@ namespace Azure.ResourceManager.ServiceBus.Models
     public readonly partial struct ServiceBusNspAccessRuleDirection : IEquatable<ServiceBusNspAccessRuleDirection>
     {
         private readonly string _value;
-
-        /// <summary> Initializes a new instance of <see cref="ServiceBusNspAccessRuleDirection"/>. </summary>
-        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        public ServiceBusNspAccessRuleDirection(string value)
-        {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
-
         private const string InboundValue = "Inbound";
         private const string OutboundValue = "Outbound";
 
-        /// <summary> Inbound. </summary>
+        /// <summary> Initializes a new instance of <see cref="ServiceBusNspAccessRuleDirection"/>. </summary>
+        /// <param name="value"> The value. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
+        public ServiceBusNspAccessRuleDirection(string value)
+        {
+            Argument.AssertNotNull(value, nameof(value));
+
+            _value = value;
+        }
+
+        /// <summary> Gets the Inbound. </summary>
         public static ServiceBusNspAccessRuleDirection Inbound { get; } = new ServiceBusNspAccessRuleDirection(InboundValue);
-        /// <summary> Outbound. </summary>
+
+        /// <summary> Gets the Outbound. </summary>
         public static ServiceBusNspAccessRuleDirection Outbound { get; } = new ServiceBusNspAccessRuleDirection(OutboundValue);
+
         /// <summary> Determines if two <see cref="ServiceBusNspAccessRuleDirection"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(ServiceBusNspAccessRuleDirection left, ServiceBusNspAccessRuleDirection right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="ServiceBusNspAccessRuleDirection"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(ServiceBusNspAccessRuleDirection left, ServiceBusNspAccessRuleDirection right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="ServiceBusNspAccessRuleDirection"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="ServiceBusNspAccessRuleDirection"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator ServiceBusNspAccessRuleDirection(string value) => new ServiceBusNspAccessRuleDirection(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="ServiceBusNspAccessRuleDirection"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator ServiceBusNspAccessRuleDirection?(string value) => value == null ? null : new ServiceBusNspAccessRuleDirection(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is ServiceBusNspAccessRuleDirection other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(ServiceBusNspAccessRuleDirection other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

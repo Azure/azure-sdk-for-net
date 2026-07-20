@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.DevTestLabs
         {
             if (id.ResourceType != DevTestLabVmResource.ResourceType)
             {
-                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, DevTestLabVmResource.ResourceType), id);
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, DevTestLabVmResource.ResourceType), nameof(id));
             }
         }
 
@@ -303,7 +303,8 @@ namespace Azure.ResourceManager.DevTestLabs
                 filter,
                 top,
                 @orderby,
-                context), data => new DevTestLabVmScheduleResource(Client, data));
+                context,
+                "DevTestLabVmScheduleCollection.GetAll"), data => new DevTestLabVmScheduleResource(Client, data));
         }
 
         /// <summary>
@@ -345,7 +346,8 @@ namespace Azure.ResourceManager.DevTestLabs
                 filter,
                 top,
                 @orderby,
-                context), data => new DevTestLabVmScheduleResource(Client, data));
+                context,
+                "DevTestLabVmScheduleCollection.GetAll"), data => new DevTestLabVmScheduleResource(Client, data));
         }
 
         /// <summary>

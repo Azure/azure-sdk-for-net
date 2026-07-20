@@ -22,6 +22,7 @@ namespace Azure.ResourceManager.GuestConfiguration
         private readonly string _machineName;
         private readonly string _guestConfigurationAssignmentName;
         private readonly RequestContext _context;
+        private readonly string _diagnosticScope;
 
         /// <summary> Initializes a new instance of GuestConfigurationHCRPAssignmentReportsGetReportsCollectionResultOfT, which is used to iterate over the pages of a collection. </summary>
         /// <param name="client"> The GuestConfigurationHCRPAssignmentReports client used to send requests. </param>
@@ -30,7 +31,8 @@ namespace Azure.ResourceManager.GuestConfiguration
         /// <param name="machineName"> The name of the ARC machine. </param>
         /// <param name="guestConfigurationAssignmentName"> The guest configuration assignment name. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        public GuestConfigurationHCRPAssignmentReportsGetReportsCollectionResultOfT(GuestConfigurationHCRPAssignmentReports client, string subscriptionId, string resourceGroupName, string machineName, string guestConfigurationAssignmentName, RequestContext context) : base(context?.CancellationToken ?? default)
+        /// <param name="diagnosticScope"> The diagnostic scope name. </param>
+        public GuestConfigurationHCRPAssignmentReportsGetReportsCollectionResultOfT(GuestConfigurationHCRPAssignmentReports client, string subscriptionId, string resourceGroupName, string machineName, string guestConfigurationAssignmentName, RequestContext context, string diagnosticScope) : base(context?.CancellationToken ?? default)
         {
             _client = client;
             _subscriptionId = subscriptionId;
@@ -38,6 +40,7 @@ namespace Azure.ResourceManager.GuestConfiguration
             _machineName = machineName;
             _guestConfigurationAssignmentName = guestConfigurationAssignmentName;
             _context = context;
+            _diagnosticScope = diagnosticScope;
         }
 
         /// <summary> Gets the pages of GuestConfigurationHCRPAssignmentReportsGetReportsCollectionResultOfT as an enumerable collection. </summary>
@@ -57,7 +60,7 @@ namespace Azure.ResourceManager.GuestConfiguration
         private Response GetNextResponse(int? pageSizeHint, string continuationToken)
         {
             HttpMessage message = _client.CreateGetReportsRequest(_subscriptionId, _resourceGroupName, _machineName, _guestConfigurationAssignmentName, _context);
-            using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope("GuestConfigurationHcrpAssignmentResource.GetReports");
+            using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope(_diagnosticScope);
             scope.Start();
             try
             {

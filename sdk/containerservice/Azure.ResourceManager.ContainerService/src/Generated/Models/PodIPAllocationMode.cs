@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.ContainerService;
 
 namespace Azure.ResourceManager.ContainerService.Models
 {
@@ -14,38 +15,57 @@ namespace Azure.ResourceManager.ContainerService.Models
     public readonly partial struct PodIPAllocationMode : IEquatable<PodIPAllocationMode>
     {
         private readonly string _value;
+        /// <summary> Each node gets allocated with a non-contiguous list of IP addresses assignable to pods. This is better for maximizing a small to medium subnet of size /16 or smaller. The Azure CNI cluster with dynamic IP allocation defaults to this mode if the customer does not explicitly specify a podIPAllocationMode. </summary>
+        private const string DynamicIndividualValue = "DynamicIndividual";
+        /// <summary> Each node is statically allocated CIDR block(s) of size /28 = 16 IPs per block to satisfy the maxPods per node. Number of CIDR blocks &gt;= (maxPods / 16). The block, rather than a single IP, counts against the Azure Vnet Private IP limit of 65K. Therefore block mode is suitable for running larger workloads with more than the current limit of 65K pods in a cluster. This mode is better suited to scale with larger subnets of /15 or bigger. </summary>
+        private const string StaticBlockValue = "StaticBlock";
 
         /// <summary> Initializes a new instance of <see cref="PodIPAllocationMode"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public PodIPAllocationMode(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string DynamicIndividualValue = "DynamicIndividual";
-        private const string StaticBlockValue = "StaticBlock";
+            _value = value;
+        }
 
         /// <summary> Each node gets allocated with a non-contiguous list of IP addresses assignable to pods. This is better for maximizing a small to medium subnet of size /16 or smaller. The Azure CNI cluster with dynamic IP allocation defaults to this mode if the customer does not explicitly specify a podIPAllocationMode. </summary>
         public static PodIPAllocationMode DynamicIndividual { get; } = new PodIPAllocationMode(DynamicIndividualValue);
+
         /// <summary> Each node is statically allocated CIDR block(s) of size /28 = 16 IPs per block to satisfy the maxPods per node. Number of CIDR blocks &gt;= (maxPods / 16). The block, rather than a single IP, counts against the Azure Vnet Private IP limit of 65K. Therefore block mode is suitable for running larger workloads with more than the current limit of 65K pods in a cluster. This mode is better suited to scale with larger subnets of /15 or bigger. </summary>
         public static PodIPAllocationMode StaticBlock { get; } = new PodIPAllocationMode(StaticBlockValue);
+
         /// <summary> Determines if two <see cref="PodIPAllocationMode"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(PodIPAllocationMode left, PodIPAllocationMode right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="PodIPAllocationMode"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(PodIPAllocationMode left, PodIPAllocationMode right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="PodIPAllocationMode"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="PodIPAllocationMode"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator PodIPAllocationMode(string value) => new PodIPAllocationMode(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="PodIPAllocationMode"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator PodIPAllocationMode?(string value) => value == null ? null : new PodIPAllocationMode(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is PodIPAllocationMode other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(PodIPAllocationMode other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

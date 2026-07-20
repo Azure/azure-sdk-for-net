@@ -87,7 +87,7 @@ namespace Azure.ResourceManager.Elastic
         {
             if (id.ResourceType != ResourceType)
             {
-                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), id);
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), nameof(id));
             }
         }
 
@@ -211,7 +211,7 @@ namespace Azure.ResourceManager.Elastic
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="data"></param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<ArmOperation<ElasticMonitoredSubscriptionResource>> UpdateAsync(WaitUntil waitUntil, ElasticMonitoredSubscriptionData data = default, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation<ElasticMonitoredSubscriptionResource>> UpdateAsync(WaitUntil waitUntil, ElasticMonitoredSubscriptionData data, CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = _monitoredSubscriptionsClientDiagnostics.CreateScope("ElasticMonitoredSubscriptionResource.Update");
             scope.Start();
@@ -224,7 +224,7 @@ namespace Azure.ResourceManager.Elastic
                 HttpMessage message = _monitoredSubscriptionsRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, ElasticMonitoredSubscriptionData.ToRequestContent(data), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 ElasticArmOperation<ElasticMonitoredSubscriptionResource> operation = new ElasticArmOperation<ElasticMonitoredSubscriptionResource>(
-                    new ElasticMonitoredSubscriptionOperationSource(Client),
+                    new ElasticMonitoredSubscriptionResourceOperationSource(Client),
                     _monitoredSubscriptionsClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -267,7 +267,7 @@ namespace Azure.ResourceManager.Elastic
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="data"></param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual ArmOperation<ElasticMonitoredSubscriptionResource> Update(WaitUntil waitUntil, ElasticMonitoredSubscriptionData data = default, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<ElasticMonitoredSubscriptionResource> Update(WaitUntil waitUntil, ElasticMonitoredSubscriptionData data, CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = _monitoredSubscriptionsClientDiagnostics.CreateScope("ElasticMonitoredSubscriptionResource.Update");
             scope.Start();
@@ -280,7 +280,7 @@ namespace Azure.ResourceManager.Elastic
                 HttpMessage message = _monitoredSubscriptionsRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, ElasticMonitoredSubscriptionData.ToRequestContent(data), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 ElasticArmOperation<ElasticMonitoredSubscriptionResource> operation = new ElasticArmOperation<ElasticMonitoredSubscriptionResource>(
-                    new ElasticMonitoredSubscriptionOperationSource(Client),
+                    new ElasticMonitoredSubscriptionResourceOperationSource(Client),
                     _monitoredSubscriptionsClientDiagnostics,
                     Pipeline,
                     message.Request,

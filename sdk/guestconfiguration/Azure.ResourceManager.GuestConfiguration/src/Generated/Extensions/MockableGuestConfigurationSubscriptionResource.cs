@@ -55,14 +55,14 @@ namespace Azure.ResourceManager.GuestConfiguration.Mocking
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="GuestConfigurationVmAssignmentResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<GuestConfigurationVmAssignmentResource> GetGuestConfigurationVmAssignmentsAsync(CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="GuestConfigurationAssignmentData"/> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<GuestConfigurationAssignmentData> SubscriptionListAsync(CancellationToken cancellationToken = default)
         {
             RequestContext context = new RequestContext
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<GuestConfigurationAssignmentData, GuestConfigurationVmAssignmentResource>(new GuestConfigurationAssignmentsSubscriptionListAsyncCollectionResultOfT(GuestConfigurationAssignmentsRestClient, Id.SubscriptionId, context), data => new GuestConfigurationVmAssignmentResource(Client, data));
+            return new GuestConfigurationAssignmentsSubscriptionListAsyncCollectionResultOfT(GuestConfigurationAssignmentsRestClient, Id.SubscriptionId, context, "MockableGuestConfigurationSubscriptionResource.SubscriptionList");
         }
 
         /// <summary>
@@ -83,14 +83,14 @@ namespace Azure.ResourceManager.GuestConfiguration.Mocking
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="GuestConfigurationVmAssignmentResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<GuestConfigurationVmAssignmentResource> GetGuestConfigurationVmAssignments(CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="GuestConfigurationAssignmentData"/> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<GuestConfigurationAssignmentData> SubscriptionList(CancellationToken cancellationToken = default)
         {
             RequestContext context = new RequestContext
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<GuestConfigurationAssignmentData, GuestConfigurationVmAssignmentResource>(new GuestConfigurationAssignmentsSubscriptionListCollectionResultOfT(GuestConfigurationAssignmentsRestClient, Id.SubscriptionId, context), data => new GuestConfigurationVmAssignmentResource(Client, data));
+            return new GuestConfigurationAssignmentsSubscriptionListCollectionResultOfT(GuestConfigurationAssignmentsRestClient, Id.SubscriptionId, context, "MockableGuestConfigurationSubscriptionResource.SubscriptionList");
         }
     }
 }

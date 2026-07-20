@@ -63,7 +63,7 @@ namespace Azure.ResourceManager.HealthDataAIServices.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<DeidServiceData, DeidServiceResource>(new DeidServicesGetBySubscriptionAsyncCollectionResultOfT(DeidServicesRestClient, Guid.Parse(Id.SubscriptionId), context), data => new DeidServiceResource(Client, data));
+            return new AsyncPageableWrapper<DeidServiceData, DeidServiceResource>(new DeidServicesGetBySubscriptionAsyncCollectionResultOfT(DeidServicesRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableHealthDataAIServicesSubscriptionResource.GetDeidServices"), data => new DeidServiceResource(Client, data));
         }
 
         /// <summary>
@@ -91,7 +91,7 @@ namespace Azure.ResourceManager.HealthDataAIServices.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<DeidServiceData, DeidServiceResource>(new DeidServicesGetBySubscriptionCollectionResultOfT(DeidServicesRestClient, Guid.Parse(Id.SubscriptionId), context), data => new DeidServiceResource(Client, data));
+            return new PageableWrapper<DeidServiceData, DeidServiceResource>(new DeidServicesGetBySubscriptionCollectionResultOfT(DeidServicesRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableHealthDataAIServicesSubscriptionResource.GetDeidServices"), data => new DeidServiceResource(Client, data));
         }
     }
 }

@@ -22,6 +22,7 @@ namespace Azure.ResourceManager.GuestConfiguration
         private readonly string _vmName;
         private readonly string _guestConfigurationAssignmentName;
         private readonly RequestContext _context;
+        private readonly string _diagnosticScope;
 
         /// <summary> Initializes a new instance of GuestConfigurationAssignmentReportsGetReportsCollectionResultOfT, which is used to iterate over the pages of a collection. </summary>
         /// <param name="client"> The GuestConfigurationAssignmentReports client used to send requests. </param>
@@ -30,7 +31,8 @@ namespace Azure.ResourceManager.GuestConfiguration
         /// <param name="vmName"> The name of the virtual machine. </param>
         /// <param name="guestConfigurationAssignmentName"> The guest configuration assignment name. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        public GuestConfigurationAssignmentReportsGetReportsCollectionResultOfT(GuestConfigurationAssignmentReports client, string subscriptionId, string resourceGroupName, string vmName, string guestConfigurationAssignmentName, RequestContext context) : base(context?.CancellationToken ?? default)
+        /// <param name="diagnosticScope"> The diagnostic scope name. </param>
+        public GuestConfigurationAssignmentReportsGetReportsCollectionResultOfT(GuestConfigurationAssignmentReports client, string subscriptionId, string resourceGroupName, string vmName, string guestConfigurationAssignmentName, RequestContext context, string diagnosticScope) : base(context?.CancellationToken ?? default)
         {
             _client = client;
             _subscriptionId = subscriptionId;
@@ -38,6 +40,7 @@ namespace Azure.ResourceManager.GuestConfiguration
             _vmName = vmName;
             _guestConfigurationAssignmentName = guestConfigurationAssignmentName;
             _context = context;
+            _diagnosticScope = diagnosticScope;
         }
 
         /// <summary> Gets the pages of GuestConfigurationAssignmentReportsGetReportsCollectionResultOfT as an enumerable collection. </summary>
@@ -57,7 +60,7 @@ namespace Azure.ResourceManager.GuestConfiguration
         private Response GetNextResponse(int? pageSizeHint, string continuationToken)
         {
             HttpMessage message = _client.CreateGetReportsRequest(_subscriptionId, _resourceGroupName, _vmName, _guestConfigurationAssignmentName, _context);
-            using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope("GuestConfigurationVmAssignmentResource.GetReports");
+            using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope(_diagnosticScope);
             scope.Start();
             try
             {

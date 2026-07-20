@@ -5,6 +5,6 @@
     non-test dependency.
   -->
   <ItemGroup Condition="'$(IsTestProject)' != 'true'">
-    <PackageVersion Include="NUnit" Version="$(NUnitVersion)" />
+    <PackageVersion Include="NUnit" Version="3.14.0" />
   </ItemGroup>
 </Project>

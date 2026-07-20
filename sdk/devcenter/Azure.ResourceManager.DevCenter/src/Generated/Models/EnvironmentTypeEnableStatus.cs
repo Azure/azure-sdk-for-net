@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.DevCenter;
 
 namespace Azure.ResourceManager.DevCenter.Models
 {
@@ -14,38 +15,57 @@ namespace Azure.ResourceManager.DevCenter.Models
     public readonly partial struct EnvironmentTypeEnableStatus : IEquatable<EnvironmentTypeEnableStatus>
     {
         private readonly string _value;
+        /// <summary> Environment type is enabled. </summary>
+        private const string IsEnabledValue = "Enabled";
+        /// <summary> Environment type is disabled. </summary>
+        private const string IsDisabledValue = "Disabled";
 
         /// <summary> Initializes a new instance of <see cref="EnvironmentTypeEnableStatus"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public EnvironmentTypeEnableStatus(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
+            Argument.AssertNotNull(value, nameof(value));
+
+            _value = value;
         }
 
-        private const string IsEnabledValue = "Enabled";
-        private const string IsDisabledValue = "Disabled";
-
-        /// <summary> Enabled. </summary>
+        /// <summary> Environment type is enabled. </summary>
         public static EnvironmentTypeEnableStatus IsEnabled { get; } = new EnvironmentTypeEnableStatus(IsEnabledValue);
-        /// <summary> Disabled. </summary>
+
+        /// <summary> Environment type is disabled. </summary>
         public static EnvironmentTypeEnableStatus IsDisabled { get; } = new EnvironmentTypeEnableStatus(IsDisabledValue);
+
         /// <summary> Determines if two <see cref="EnvironmentTypeEnableStatus"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(EnvironmentTypeEnableStatus left, EnvironmentTypeEnableStatus right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="EnvironmentTypeEnableStatus"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(EnvironmentTypeEnableStatus left, EnvironmentTypeEnableStatus right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="EnvironmentTypeEnableStatus"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="EnvironmentTypeEnableStatus"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator EnvironmentTypeEnableStatus(string value) => new EnvironmentTypeEnableStatus(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="EnvironmentTypeEnableStatus"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator EnvironmentTypeEnableStatus?(string value) => value == null ? null : new EnvironmentTypeEnableStatus(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is EnvironmentTypeEnableStatus other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(EnvironmentTypeEnableStatus other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

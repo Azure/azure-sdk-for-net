@@ -1,21 +1,35 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using System;
 using System.ComponentModel;
+using Azure.Core;
 using Azure.ResourceManager.Resources;
+using Azure.ResourceManager.TrafficManager.Mocking;
 using Microsoft.TypeSpec.Generator.Customizations;
 
 namespace Azure.ResourceManager.TrafficManager
 {
-    [CodeGenSuppress("GetTrafficManagerUserMetrics", typeof(SubscriptionResource))]
+    [CodeGenSuppress("GetTrafficManagerUserMetric", typeof(SubscriptionResource))]
     public static partial class TrafficManagerExtensions
     {
-        /// <summary> Gets the TrafficManagerGeographicHierarchy. </summary>
-        /// <param name="tenantResource"> The <see cref="TenantResource"/> instance the method will execute against. </param>
+        /// <summary>
+        /// Gets an object representing a <see cref="TrafficManagerEndpointResource"/> along with the instance operations that can be performed on it but with no data.
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableTrafficManagerArmClient.GetTrafficManagerEndpointResource(ResourceIdentifier)"/> instead. </description>
+        /// </item>
+        /// </summary>
+        /// <param name="client"> The <see cref="ArmClient"/> the method will execute against. </param>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="TrafficManagerEndpointResource"/> object. </returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public static TrafficManagerGeographicHierarchyResource GetTrafficManagerGeographicHierarchy(this TenantResource tenantResource)
+        [Obsolete("This method is obsolete and will be removed in a future release. Use GetAzureEndpointTrafficManagerEndpointResource, GetExternalEndpointTrafficManagerEndpointResource, or GetNestedEndpointTrafficManagerEndpointResource instead.", false)]
+        public static TrafficManagerEndpointResource GetTrafficManagerEndpointResource(this ArmClient client, ResourceIdentifier id)
         {
-            return GetMockableTrafficManagerTenantResource(tenantResource).GetTrafficManagerGeographicHierarchy();
+            Argument.AssertNotNull(client, nameof(client));
+
+            return GetMockableTrafficManagerArmClient(client).GetTrafficManagerEndpointResource(id);
         }
 
         /// <summary> Gets the TrafficManagerUserMetricsResource. </summary>

@@ -3,12 +3,9 @@
 
 using System;
 using System.Collections.Generic;
-using System.Net.Http;
 using System.Threading.Tasks;
 using Azure.AI.Language.QuestionAnswering.Authoring;
 using Azure.Core;
-using Microsoft.Azure.CognitiveServices.Knowledge.QnAMaker;
-using Microsoft.Azure.CognitiveServices.Knowledge.QnAMaker.Models;
 
 #pragma warning disable IDE0051 // Remove unused private members
 
@@ -16,64 +13,6 @@ namespace Azure.AI.Language.QuestionAnswering.Tests.Samples
 {
     public partial class QuestionAnsweringClientSamples
     {
-        private async Task CognitiveServices_QnA_MigrationGuide_Authoring()
-        {
-            #region Snippet:CognitiveServices_QnA_Maker_Snippets_MigrationGuide_CreateClient
-            QnAMakerClient client = new QnAMakerClient(new ApiKeyServiceClientCredentials("{QnAMakerSubscriptionKey}"), new HttpClient(), false)
-            {
-                Endpoint = "{QnaMakerEndpoint}"
-            };
-            #endregion Snippet:CognitiveServices_QnA_Maker_Snippets_MigrationGuide_CreateClient
-
-            #region Snippet:CognitiveServices_QnA_Maker_Snippets_MigrationGuide_CreateKnowledgeBase
-            Microsoft.Azure.CognitiveServices.Knowledge.QnAMaker.Models.Operation createOp = await client.Knowledgebase.CreateAsync(new CreateKbDTO
-            {
-                Name = "{KnowledgeBaseName}",
-                QnaList = new List<QnADTO>
-                {
-                    new QnADTO
-                    {
-                        Questions = new List<string>
-                        {
-                            "{Question}"
-                        },
-                        Answer = "{Answer}"
-                    }
-                }
-            });
-            #endregion Snippet:CognitiveServices_QnA_Maker_Snippets_MigrationGuide_CreateKnowledgeBase
-
-            #region Snippet:CognitiveServices_QnA_Maker_Snippets_MigrationGuide_UpdateKnowledgeBase
-            Microsoft.Azure.CognitiveServices.Knowledge.QnAMaker.Models.Operation updateOp = await client.Knowledgebase.UpdateAsync("{KnowledgeBaseID}",
-                new UpdateKbOperationDTO
-                {
-                    Add = new UpdateKbOperationDTOAdd
-                    {
-                        QnaList = new List<QnADTO>
-                        {
-                            new QnADTO
-                            {
-                                Questions = new List<string>
-                                {
-                                    "{Question}"
-                                },
-                                Answer = "{Answer}"
-                            }
-                        }
-                    }
-                });
-            #endregion Snippet:CognitiveServices_QnA_Maker_Snippets_MigrationGuide_UpdateKnowledgeBase
-
-            #region Snippet:CognitiveServices_QnA_Maker_Snippets_MigrationGuide_DownloadKnowledgeBase
-            QnADocumentsDTO kbdata = await client.Knowledgebase.DownloadAsync("{KnowledgeBaseID}", EnvironmentType.Test);
-            #endregion Snippet:CognitiveServices_QnA_Maker_Snippets_MigrationGuide_UpdateKnowledgeBase
-
-            #region Snippet:CognitiveServices_QnA_Maker_Snippets_MigrationGuide_DeleteKnowledgeBase
-            await client.Knowledgebase.DeleteAsync("{KnowledgeBaseID}");
-            #endregion Snippet:CognitiveServices_QnA_Maker_Snippets_MigrationGuide_DeleteKnowledgeBase
-
-        }
-
         private async Task Language_QnA_MigrationGuide_Authoring()
         {
             #region Snippet:Language_QnA_Maker_Snippets_MigrationGuide_CreateClient
@@ -179,32 +118,6 @@ namespace Azure.AI.Language.QuestionAnswering.Tests.Samples
                 #endregion
             }
 #pragma warning restore SA1509 // Opening braces should not be preceded by blank line
-        }
-
-        private async Task CognitiveServices_QnA_MigrationGuide_Runtime()
-        {
-            #region Snippet:CognitiveServices_QnA_Maker_Snippets_MigrationGuide_CreateRuntimeClient
-            EndpointKeyServiceClientCredentials credential = new EndpointKeyServiceClientCredentials("{ApiKey}");
-
-            QnAMakerRuntimeClient client = new QnAMakerRuntimeClient(credential)
-            {
-                RuntimeEndpoint = "{QnaMakerEndpoint}"
-            };
-            #endregion Snippet:CognitiveServices_QnA_Maker_Snippets_MigrationGuide_CreateRuntimeClient
-
-            #region Snippet:CognitiveServices_QnA_Maker_Snippets_MigrationGuide_QueryKnowledgeBase
-            QueryDTO queryDTO = new QueryDTO();
-            queryDTO.Question = "{Question}";
-
-            QnASearchResultList response = await client.Runtime.GenerateAnswerAsync("{knowledgebase-id}", queryDTO);
-            #endregion Snippet:CognitiveServices_QnA_Maker_Snippets_MigrationGuide_QueryKnowledgeBase
-
-            #region Snippet:CognitiveServices_QnA_Maker_Snippets_MigrationGuide_Chat
-            QueryDTO queryDTOFollowUp = new QueryDTO();
-            queryDTOFollowUp.Context = new QueryDTOContext(previousQnaId: 1);
-
-            QnASearchResultList responseFollowUp = await client.Runtime.GenerateAnswerAsync("{knowledgebase-id}", queryDTO);
-            #endregion Snippet:CognitiveServices_QnA_Maker_Snippets_MigrationGuide_Chat
         }
     }
 }

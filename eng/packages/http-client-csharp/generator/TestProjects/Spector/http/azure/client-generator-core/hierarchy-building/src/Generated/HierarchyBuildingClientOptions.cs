@@ -5,11 +5,17 @@
 
 #nullable disable
 
+using System.Diagnostics.CodeAnalysis;
 using Azure.Core;
+using Microsoft.Extensions.Configuration;
 
 namespace Specs.Azure.ClientGenerator.Core.HierarchyBuilding
 {
     public partial class HierarchyBuildingClientOptions : ClientOptions
     {
+        public HierarchyBuildingClientOptions() => throw null;
+
+        [Experimental("SCME0002")]
+        internal HierarchyBuildingClientOptions(IConfigurationSection section) : base(section, null) => throw null;
     }
 }

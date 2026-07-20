@@ -11,19 +11,29 @@ using System.Text.Json;
 
 namespace Azure.ResourceManager.Storage
 {
+    /// <summary></summary>
     public partial class TableResource : IJsonModel<TableData>
     {
-        private static TableData s_dataDeserializationInstance;
-        private static TableData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+        private static IJsonModel<TableData> s_dataDeserializationInstance;
 
+        private static IJsonModel<TableData> DataDeserializationInstance => s_dataDeserializationInstance ??= new TableData();
+
+        /// <param name="writer"> The writer to serialize the model to. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<TableData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<TableData>)Data).Write(writer, options);
 
-        TableData IJsonModel<TableData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<TableData>)DataDeserializationInstance).Create(ref reader, options);
+        /// <param name="reader"> The reader for deserializing the model. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        TableData IJsonModel<TableData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => DataDeserializationInstance.Create(ref reader, options);
 
+        /// <param name="options"> The client options for reading and writing models. </param>
         BinaryData IPersistableModel<TableData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<TableData>(Data, options, AzureResourceManagerStorageContext.Default);
 
+        /// <param name="data"> The binary data to be processed. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         TableData IPersistableModel<TableData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<TableData>(data, options, AzureResourceManagerStorageContext.Default);
 
-        string IPersistableModel<TableData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<TableData>)DataDeserializationInstance).GetFormatFromOptions(options);
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<TableData>.GetFormatFromOptions(ModelReaderWriterOptions options) => DataDeserializationInstance.GetFormatFromOptions(options);
     }
 }

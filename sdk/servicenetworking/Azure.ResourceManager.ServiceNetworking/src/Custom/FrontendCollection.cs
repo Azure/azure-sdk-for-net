@@ -277,7 +277,7 @@ namespace Azure.ResourceManager.ServiceNetworking
         {
             var context = new RequestContext { CancellationToken = cancellationToken };
             return new AsyncPageableWrapper<TrafficControllerFrontendData, FrontendResource>(
-                new FrontendsInterfaceGetByTrafficControllerAsyncCollectionResultOfT(_frontendFrontendsInterfaceRestClient, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, context),
+                new FrontendsInterfaceGetByTrafficControllerAsyncCollectionResultOfT(_frontendFrontendsInterfaceRestClient, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, context, "FrontendCollection.GetAll"),
                 data => new FrontendResource(Client, new FrontendData(data)));
         }
 
@@ -308,7 +308,7 @@ namespace Azure.ResourceManager.ServiceNetworking
         {
             var context = new RequestContext { CancellationToken = cancellationToken };
             return new PageableWrapper<TrafficControllerFrontendData, FrontendResource>(
-                new FrontendsInterfaceGetByTrafficControllerCollectionResultOfT(_frontendFrontendsInterfaceRestClient, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, context),
+                new FrontendsInterfaceGetByTrafficControllerCollectionResultOfT(_frontendFrontendsInterfaceRestClient, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, context, "FrontendCollection.GetAll"),
                 data => new FrontendResource(Client, new FrontendData(data)));
         }
 

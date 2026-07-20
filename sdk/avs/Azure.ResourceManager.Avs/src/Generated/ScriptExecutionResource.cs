@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using System.Diagnostics;
 using System.Threading;
 using System.Threading.Tasks;
@@ -13,6 +14,7 @@ using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager;
+using Azure.ResourceManager.Avs.Models;
 
 namespace Azure.ResourceManager.Avs
 {
@@ -87,7 +89,7 @@ namespace Azure.ResourceManager.Avs
         {
             if (id.ResourceType != ResourceType)
             {
-                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), id);
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), nameof(id));
             }
         }
 
@@ -286,6 +288,104 @@ namespace Azure.ResourceManager.Avs
         }
 
         /// <summary>
+        /// Return the logs for a script execution resource
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AVS/privateClouds/{privateCloudName}/scriptExecutions/{scriptExecutionName}/getExecutionLogs. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> ScriptExecutions_GetExecutionLogs. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-09-01. </description>
+        /// </item>
+        /// <item>
+        /// <term> Resource. </term>
+        /// <description> <see cref="ScriptExecutionResource"/>. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="scriptOutputStreamType"> Name of the desired output stream to return. If not provided, will return all. An empty array will return nothing. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual async Task<Response<ScriptExecutionResource>> GetExecutionLogsAsync(IEnumerable<ScriptOutputStreamType> scriptOutputStreamType = default, CancellationToken cancellationToken = default)
+        {
+            using DiagnosticScope scope = _scriptExecutionsClientDiagnostics.CreateScope("ScriptExecutionResource.GetExecutionLogs");
+            scope.Start();
+            try
+            {
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _scriptExecutionsRestClient.CreateGetExecutionLogsRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, BinaryContentHelper.FromEnumerable(scriptOutputStreamType), context);
+                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                Response<ScriptExecutionData> response = Response.FromValue(ScriptExecutionData.FromResponse(result), result);
+                if (response.Value == null)
+                {
+                    throw new RequestFailedException(response.GetRawResponse());
+                }
+                return Response.FromValue(new ScriptExecutionResource(Client, response.Value), response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Return the logs for a script execution resource
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AVS/privateClouds/{privateCloudName}/scriptExecutions/{scriptExecutionName}/getExecutionLogs. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> ScriptExecutions_GetExecutionLogs. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-09-01. </description>
+        /// </item>
+        /// <item>
+        /// <term> Resource. </term>
+        /// <description> <see cref="ScriptExecutionResource"/>. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="scriptOutputStreamType"> Name of the desired output stream to return. If not provided, will return all. An empty array will return nothing. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual Response<ScriptExecutionResource> GetExecutionLogs(IEnumerable<ScriptOutputStreamType> scriptOutputStreamType = default, CancellationToken cancellationToken = default)
+        {
+            using DiagnosticScope scope = _scriptExecutionsClientDiagnostics.CreateScope("ScriptExecutionResource.GetExecutionLogs");
+            scope.Start();
+            try
+            {
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _scriptExecutionsRestClient.CreateGetExecutionLogsRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, BinaryContentHelper.FromEnumerable(scriptOutputStreamType), context);
+                Response result = Pipeline.ProcessMessage(message, context);
+                Response<ScriptExecutionData> response = Response.FromValue(ScriptExecutionData.FromResponse(result), result);
+                if (response.Value == null)
+                {
+                    throw new RequestFailedException(response.GetRawResponse());
+                }
+                return Response.FromValue(new ScriptExecutionResource(Client, response.Value), response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
         /// Update a ScriptExecution.
         /// <list type="bullet">
         /// <item>
@@ -325,7 +425,7 @@ namespace Azure.ResourceManager.Avs
                 HttpMessage message = _scriptExecutionsRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, ScriptExecutionData.ToRequestContent(data), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 AvsArmOperation<ScriptExecutionResource> operation = new AvsArmOperation<ScriptExecutionResource>(
-                    new ScriptExecutionOperationSource(Client),
+                    new ScriptExecutionResourceOperationSource(Client),
                     _scriptExecutionsClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -384,7 +484,7 @@ namespace Azure.ResourceManager.Avs
                 HttpMessage message = _scriptExecutionsRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, ScriptExecutionData.ToRequestContent(data), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 AvsArmOperation<ScriptExecutionResource> operation = new AvsArmOperation<ScriptExecutionResource>(
-                    new ScriptExecutionOperationSource(Client),
+                    new ScriptExecutionResourceOperationSource(Client),
                     _scriptExecutionsClientDiagnostics,
                     Pipeline,
                     message.Request,

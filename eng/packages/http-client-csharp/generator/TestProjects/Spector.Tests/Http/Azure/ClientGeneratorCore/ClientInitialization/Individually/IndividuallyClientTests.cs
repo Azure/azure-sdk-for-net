@@ -79,10 +79,9 @@ namespace TestProjects.Spector.Tests.Http.Azure.ClientGeneratorCore.ClientInitia
         });
 
         [SpectorTest]
-        [Ignore("https://github.com/microsoft/typespec/issues/9774")]
         public Task Azure_ClientGenerator_Core_ClientInitialization_IndividuallyClient_IndividuallyNestedWithParamAlias() => Test(async (host) =>
         {
-            var client = new IndividuallyNestedWithParamAliasClient(host, "sample-blob", "sample-blob", null);
+            var client = new IndividuallyNestedWithParamAliasClient(host, "sample-blob", null);
 
             await client.WithAliasedNameAsync();
 

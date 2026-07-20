@@ -7,69 +7,47 @@
 
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using Azure.Core;
 using Azure.ResourceManager.Models;
+using Azure.ResourceManager.PolicyInsights;
 
 namespace Azure.ResourceManager.PolicyInsights.Models
 {
     /// <summary> Component state details. </summary>
     public partial class ComponentStateDetails : ResourceData
     {
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+
         /// <summary> Initializes a new instance of <see cref="ComponentStateDetails"/>. </summary>
         internal ComponentStateDetails()
         {
-            AdditionalProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            _additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
         }
 
         /// <summary> Initializes a new instance of <see cref="ComponentStateDetails"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
         /// <param name="timestamp"> Component compliance evaluation timestamp. </param>
         /// <param name="complianceState"> Component compliance state. </param>
-        /// <param name="additionalProperties"> Additional Properties. </param>
+        /// <param name="additionalProperties"></param>
         internal ComponentStateDetails(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, DateTimeOffset? timestamp, string complianceState, IReadOnlyDictionary<string, BinaryData> additionalProperties) : base(id, name, resourceType, systemData)
         {
             Timestamp = timestamp;
             ComplianceState = complianceState;
-            AdditionalProperties = additionalProperties;
+            _additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>(additionalProperties);
         }
 
         /// <summary> Component compliance evaluation timestamp. </summary>
         public DateTimeOffset? Timestamp { get; }
+
         /// <summary> Component compliance state. </summary>
         public string ComplianceState { get; }
-        /// <summary>
-        /// Additional Properties
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        public IReadOnlyDictionary<string, BinaryData> AdditionalProperties { get; }
+
+        /// <summary> Gets the AdditionalProperties. </summary>
+        public IReadOnlyDictionary<string, BinaryData> AdditionalProperties => new ReadOnlyDictionary<string, BinaryData>(_additionalBinaryDataProperties);
     }
 }

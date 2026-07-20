@@ -8,7 +8,7 @@ using Azure.ResourceManager.OperationalInsights.Models;
 namespace Azure.Provisioning.Generator.Specifications;
 
 public class OperationalInsightsSpecification() :
-    Specification("OperationalInsights", typeof(OperationalInsightsExtensions))
+    Specification("OperationalInsights", typeof(OperationalInsightsExtensions), serviceDirectory: "operationalinsights")
 {
     protected override void Customize()
     {

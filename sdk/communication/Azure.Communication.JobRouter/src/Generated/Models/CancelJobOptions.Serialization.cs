@@ -63,9 +63,7 @@ namespace Azure.Communication.JobRouter
             {
                 return null;
             }
-            Utf8JsonRequestContent content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(cancelJobOptions, ModelSerializationExtensions.WireOptions);
-            return content;
+            return RequestContent.Create(cancelJobOptions, ModelSerializationExtensions.WireOptions);
         }
 
         /// <param name="writer"> The JSON writer. </param>

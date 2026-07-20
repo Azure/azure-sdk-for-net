@@ -5,8 +5,9 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Text.Json;
+using Azure.AI.Projects;
 
-namespace Azure.AI.Projects
+namespace Azure.AI.Projects.Evaluation
 {
     /// <summary>
     /// The request of the insights report.

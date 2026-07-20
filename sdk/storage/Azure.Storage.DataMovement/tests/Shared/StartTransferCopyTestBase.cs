@@ -9,6 +9,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Core.TestFramework;
+using Azure.Storage.Test;
 using Azure.Storage.Test.Shared;
 using NUnit.Framework;
 
@@ -84,6 +85,15 @@ namespace Azure.Storage.DataMovement.Tests
             string containerName = default);
 
         /// <summary>
+        /// Gets a service-specific disposing container for use with tests in this class.
+        /// </summary>
+        /// <param name="service">Optionally specified service client to get container from.</param>
+        /// <param name="containerName">Optional container name specification.</param>
+        protected abstract Task<IDisposingContainer<TSourceContainerClient>> GetSourceSasDisposingContainerAsync(
+            TSourceServiceClient service = default,
+            string containerName = default);
+
+        /// <summary>
         /// Gets a new service-specific child object client from a given container, e.g. a BlobClient from a
         /// TSourceContainerClient or a TSourceObjectClient from a ShareClient.
         /// </summary>
@@ -101,6 +111,7 @@ namespace Azure.Storage.DataMovement.Tests
             TSourceClientOptions options = default,
             Stream contents = default,
             TransferPropertiesTestType propertiesTestType = default,
+            bool useContainerCredentials = default,
             CancellationToken cancellationToken = default);
 
         /// <summary>
@@ -137,6 +148,15 @@ namespace Azure.Storage.DataMovement.Tests
             string containerName = default);
 
         /// <summary>
+        /// Gets a service-specific disposing container for use with tests in this class.
+        /// </summary>
+        /// <param name="service">Optionally specified service client to get container from.</param>
+        /// <param name="containerName">Optional container name specification.</param>
+        protected abstract Task<IDisposingContainer<TDestinationContainerClient>> GetDestinationSasDisposingContainerAsync(
+            TDestinationServiceClient service = default,
+            string containerName = default);
+
+        /// <summary>
         /// Gets a new service-specific child object client from a given container, e.g. a BlobClient from a
         /// TSourceContainerClient or a TDestinationObjectClient from a ShareClient.
         /// </summary>
@@ -153,6 +173,7 @@ namespace Azure.Storage.DataMovement.Tests
             string objectName = default,
             TDestinationClientOptions options = default,
             Stream contents = default,
+            bool useContainerCredentials = default,
             CancellationToken cancellationToken = default);
 
         /// <summary>
@@ -197,6 +218,54 @@ namespace Azure.Storage.DataMovement.Tests
             TSourceObjectClient sourceClient,
             TDestinationObjectClient destinationClient,
             CancellationToken cancellationToken = default);
+
+        /// <summary>
+        /// Creates a snapshot of the source object and returns the snapshot identifier.
+        /// For blobs, this creates a blob snapshot. For share files, this creates a share snapshot.
+        /// </summary>
+        /// <param name="containerClient">The container client to snapshot.</param>
+        /// <param name="objectClient">The object client to the snapshot</param>
+        /// <param name="cancellationToken">Cancellation token.</param>
+        /// <returns>Snapshot identifier string.</returns>
+        protected abstract Task<string> CreateSnapshotAsync(
+            TSourceContainerClient containerClient,
+            TSourceObjectClient objectClient,
+            CancellationToken cancellationToken = default);
+
+        /// <summary>
+        /// Gets an object client pointing to a specific snapshot.
+        /// </summary>
+        /// <param name="objectClient">The base object client.</param>
+        /// <param name="snapshotId">The snapshot identifier.</param>
+        /// <returns>Object client pointing to the snapshot.</returns>
+        protected abstract TSourceObjectClient GetSnapshotObjectClient(
+            TSourceObjectClient objectClient,
+            string snapshotId);
+
+        /// <summary>
+        /// Creates a new version of the source object by modifying it.
+        /// For blobs with versioning enabled, this returns the version ID of the current blob before modification.
+        /// For share files, this should throw NotSupportedException.
+        /// </summary>
+        /// <param name="containerClient">The container client (may be needed to enable versioning).</param>
+        /// <param name="objectClient">The object client to create a version for.</param>
+        /// <param name="cancellationToken">Cancellation token.</param>
+        /// <returns>Version identifier string of the version BEFORE modification.</returns>
+        protected abstract Task<string> CreateVersionAsync(
+            TSourceContainerClient containerClient,
+            TSourceObjectClient objectClient,
+            CancellationToken cancellationToken = default);
+
+        /// <summary>
+        /// Gets an object client pointing to a specific version.
+        /// For blobs, uses WithVersion(). For share files, throws NotSupportedException.
+        /// </summary>
+        /// <param name="objectClient">The base object client.</param>
+        /// <param name="versionId">The version identifier.</param>
+        /// <returns>Object client pointing to the version.</returns>
+        protected abstract TSourceObjectClient GetVersionObjectClient(
+            TSourceObjectClient objectClient,
+            string versionId);
         #endregion
 
         protected string GetNewObjectName()
@@ -837,20 +906,23 @@ namespace Azure.Storage.DataMovement.Tests
             TDestinationContainerClient destinationContainer,
             TransferPropertiesTestType propertiesType,
             long size = Constants.KB,
-            long? chunkSize = default)
+            long? chunkSize = default,
+            bool useContainerCredentials = false)
         {
             // Create blob with properties
             TSourceObjectClient sourceClient = await GetSourceObjectClientAsync(
                 container: sourceContainer,
                 objectLength: size,
-                createResource: true);
+                createResource: true,
+                useContainerCredentials: useContainerCredentials);
             // Set preserve properties
             StorageResourceItem sourceResource = GetSourceStorageResourceItem(sourceClient);
 
             // Destination client - Set Properties
             TDestinationObjectClient destinationClient = await GetDestinationObjectClientAsync(
                 container: destinationContainer,
-                createResource: false);
+                createResource: false,
+                useContainerCredentials: useContainerCredentials);
             StorageResourceItem destinationResource = GetDestinationStorageResourceItem(
                 destinationClient,
                 propertiesTestType: propertiesType);
@@ -952,5 +1024,175 @@ namespace Azure.Storage.DataMovement.Tests
                 size: Constants.KB,
                 chunkSize: Constants.KB / 2);
         }
+
+        [RecordedTest]
+        public virtual async Task SourceObjectToDestinationObject_AzureSasCredential()
+        {
+            // Arrange
+            await using IDisposingContainer<TSourceContainerClient> source = await GetSourceSasDisposingContainerAsync();
+            await using IDisposingContainer<TDestinationContainerClient> destination = await GetDestinationSasDisposingContainerAsync();
+
+            await CopyRemoteObjects_VerifyProperties(
+                source.Container,
+                destination.Container,
+                TransferPropertiesTestType.Default,
+                size: Constants.KB,
+                chunkSize: Constants.KB / 2,
+                useContainerCredentials: true);
+        }
+
+        #region Snapshot Tests
+        /// <summary>
+        /// Test copying from a snapshot to verify snapshot data is transferred (not current data).
+        /// </summary>
+        [RecordedTest]
+        public virtual async Task StartTransfer_FromSnapshot_Copy()
+        {
+            // Arrange
+            await using IDisposingContainer<TSourceContainerClient> source = await GetSourceDisposingContainerAsync();
+            await using IDisposingContainer<TDestinationContainerClient> destination = await GetDestinationDisposingContainerAsync();
+
+            long size = DataMovementTestConstants.KB * 4;
+            string objectName = GetNewObjectName();
+
+            // Create source object with original content
+            TSourceObjectClient sourceClient = await GetSourceObjectClientAsync(
+                container: source.Container,
+                objectName: objectName,
+                createResource: true,
+                objectLength: size);
+
+            // Create a snapshot of the object
+            string snapshotId = await CreateSnapshotAsync(source.Container, sourceClient);
+            Assert.IsNotNull(snapshotId);
+
+            // Modify the source object after snapshot
+            using (Stream modifiedStream = await CreateLimitedMemoryStream(size))
+            {
+                modifiedStream.Position = 0;
+                // Upload modified content to the current object
+                // The snapshot should still have original content
+                _ = await GetSourceObjectClientAsync(
+                    container: source.Container,
+                    objectName: objectName,
+                    createResource: false,
+                    objectLength: size,
+                    contents: modifiedStream,
+                    useContainerCredentials: true);
+            }
+
+            // Create source resource from snapshot
+            TSourceObjectClient snapshotClient = GetSnapshotObjectClient(sourceClient, snapshotId);
+            StorageResourceItem sourceResource = GetSourceStorageResourceItem(snapshotClient);
+
+            // Create destination resource
+            string destinationName = GetNewObjectName();
+            TDestinationObjectClient destinationClient = await GetDestinationObjectClientAsync(
+                container: destination.Container,
+                objectName: destinationName,
+                createResource: false,
+                objectLength: size);
+            StorageResourceItem destinationResource = GetDestinationStorageResourceItem(destinationClient);
+
+            // Create TransferManager and options
+            TransferManager transferManager = new TransferManager();
+            TransferOptions options = new TransferOptions();
+            TestEventsRaised testEventsRaised = new TestEventsRaised(options);
+
+            // Act - Start transfer from snapshot
+            TransferOperation transfer = await transferManager.StartTransferAsync(
+                sourceResource,
+                destinationResource,
+                options);
+
+            using CancellationTokenSource cancellationTokenSource = new CancellationTokenSource(TimeSpan.FromSeconds(30));
+            await TestTransferWithTimeout.WaitForCompletionAsync(
+                transfer,
+                testEventsRaised,
+                cancellationTokenSource.Token);
+
+            // Assert - transfer completed
+            await testEventsRaised.AssertSingleCompletedCheck();
+            Assert.NotNull(transfer);
+            Assert.IsTrue(transfer.HasCompleted);
+            Assert.AreEqual(TransferState.Completed, transfer.Status.State);
+
+            // Verify content matches the snapshot (not the modified object)
+            using Stream snapshotStream = await SourceOpenReadAsync(snapshotClient);
+            using Stream destinationStream = await DestinationOpenReadAsync(destinationClient);
+            Assert.That(snapshotStream.AsBytes(), Is.EqualTo(destinationStream.AsBytes()));
+        }
+
+        /// <summary>
+        /// Test copying from a specific version to verify version data is transferred (not current data).
+        /// Only applicable to blob storage which supports versioning.
+        /// </summary>
+        [RecordedTest]
+        public virtual async Task StartTransfer_FromVersion_Copy()
+        {
+            // Arrange
+            await using IDisposingContainer<TSourceContainerClient> source = await GetSourceDisposingContainerAsync();
+            await using IDisposingContainer<TDestinationContainerClient> destination = await GetDestinationDisposingContainerAsync();
+
+            long size = DataMovementTestConstants.KB * 4;
+            string objectName = GetNewObjectName();
+
+            // Create source object with original content
+            TSourceObjectClient sourceClient = await GetSourceObjectClientAsync(
+                container: source.Container,
+                objectName: objectName,
+                createResource: true,
+                objectLength: size,
+                useContainerCredentials: true);
+
+            // Create a version by modifying the object (returns version ID of content BEFORE modification)
+            string versionId = await CreateVersionAsync(source.Container, sourceClient);
+            Assert.IsNotNull(versionId);
+
+            // The object now has a new current version
+            // The versionId returned points to the original content
+
+            // Create source resource from the old version
+            TSourceObjectClient versionClient = GetVersionObjectClient(sourceClient, versionId);
+            StorageResourceItem sourceResource = GetSourceStorageResourceItem(versionClient);
+
+            // Create destination resource
+            string destinationName = GetNewObjectName();
+            TDestinationObjectClient destinationClient = await GetDestinationObjectClientAsync(
+                container: destination.Container,
+                objectName: destinationName,
+                createResource: false,
+                objectLength: size);
+            StorageResourceItem destinationResource = GetDestinationStorageResourceItem(destinationClient);
+
+            // Create TransferManager and options
+            TransferManager transferManager = new TransferManager();
+            TransferOptions options = new TransferOptions();
+            TestEventsRaised testEventsRaised = new TestEventsRaised(options);
+
+            // Act - Start transfer from version
+            TransferOperation transfer = await transferManager.StartTransferAsync(
+                sourceResource,
+                destinationResource,
+                options);
+
+            using CancellationTokenSource cancellationTokenSource = new CancellationTokenSource(TimeSpan.FromSeconds(30));
+            await TestTransferWithTimeout.WaitForCompletionAsync(
+                transfer,
+                testEventsRaised,
+                cancellationTokenSource.Token);
+
+            // Assert - transfer completed
+            await testEventsRaised.AssertSingleCompletedCheck();
+            Assert.NotNull(transfer);
+            Assert.IsTrue(transfer.HasCompleted);
+            Assert.AreEqual(TransferState.Completed, transfer.Status.State);
+
+            // Verify content matches the old version (not the current object)
+            using Stream versionStream = await SourceOpenReadAsync(versionClient);
+            using Stream destinationStream = await DestinationOpenReadAsync(destinationClient);
+            Assert.That(versionStream.AsBytes(), Is.EqualTo(destinationStream.AsBytes()));
+        }
+        #endregion
     }
 }

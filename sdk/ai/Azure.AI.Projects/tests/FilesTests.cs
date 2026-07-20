@@ -31,7 +31,7 @@ public class FilesTests : ProjectsClientTestBase
         var testFilePath = GetTestFineTuningFile("sft_training_set.jsonl");
 
         AIProjectClient projectClient = GetTestProjectClient();
-        OpenAIFileClient fileClient = projectClient.OpenAI.GetOpenAIFileClient();
+        OpenAIFileClient fileClient = projectClient.ProjectOpenAIClient.GetOpenAIFileClient();
 
         // Step 1: Upload a file
         OpenAIFile uploadedFile = await fileClient.UploadFileAsync(

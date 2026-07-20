@@ -8,3 +8,5 @@ extends:
     Artifacts:
     - name: Azure.ResourceManager.Communication
       safeName: AzureResourceManagerCommunication
+    - name: Azure.Provisioning.Communication
+      safeName: AzureProvisioningCommunication

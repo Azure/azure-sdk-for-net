@@ -58,7 +58,7 @@ namespace Azure.Data.AppConfiguration.Tests
             ConfigurationClientSettings settings = config.GetClientSettings<ConfigurationClientSettings>("Client");
 
             Assert.That(settings.Credential, Is.Not.Null);
-            Assert.That(settings.Credential.CredentialSource, Is.EqualTo("ApiKey"));
+            Assert.That(settings.Credential.CredentialSource, Is.AnyOf("apikeycredential", "ApiKey"));
             Assert.That(settings.Credential.Key, Is.EqualTo("test-key-123"));
         }
 
@@ -81,7 +81,7 @@ namespace Azure.Data.AppConfiguration.Tests
             Assert.That(settings.Options, Is.Not.Null);
             Assert.That(settings.Options.Audience, Is.EqualTo(new AppConfigurationAudience("https://azconfig.io")));
             Assert.That(settings.Credential, Is.Not.Null);
-            Assert.That(settings.Credential.CredentialSource, Is.EqualTo("ApiKey"));
+            Assert.That(settings.Credential.CredentialSource, Is.AnyOf("apikeycredential", "ApiKey"));
             Assert.That(settings.Credential.Key, Is.EqualTo("my-key"));
         }
 

@@ -13,37 +13,8 @@ namespace Azure.ResourceManager.ContainerInstance.Models
     /// <summary> The ContainerGroupFileShareProperties. </summary>
     public partial class ContainerGroupFileShareProperties
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="ContainerGroupFileShareProperties"/>. </summary>
         public ContainerGroupFileShareProperties()
@@ -53,16 +24,17 @@ namespace Azure.ResourceManager.ContainerInstance.Models
         /// <summary> Initializes a new instance of <see cref="ContainerGroupFileShareProperties"/>. </summary>
         /// <param name="shareAccessType"> Specifies how Container Groups can access the Azure file share i.e. all CG will share same Azure file share or going to have exclusive file share. </param>
         /// <param name="shareAccessTier"> Access tier for specific share. GpV2 account can choose between TransactionOptimized (default), Hot, and Cool. FileStorage account can choose Premium. Learn more at: https://learn.microsoft.com/en-us/rest/api/storagerp/file-shares/create?tabs=HTTP#shareaccesstier. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ContainerGroupFileShareProperties(AzureFileShareAccessType? shareAccessType, AzureFileShareAccessTier? shareAccessTier, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal ContainerGroupFileShareProperties(AzureFileShareAccessType? shareAccessType, AzureFileShareAccessTier? shareAccessTier, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             ShareAccessType = shareAccessType;
             ShareAccessTier = shareAccessTier;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> Specifies how Container Groups can access the Azure file share i.e. all CG will share same Azure file share or going to have exclusive file share. </summary>
         public AzureFileShareAccessType? ShareAccessType { get; set; }
+
         /// <summary> Access tier for specific share. GpV2 account can choose between TransactionOptimized (default), Hot, and Cool. FileStorage account can choose Premium. Learn more at: https://learn.microsoft.com/en-us/rest/api/storagerp/file-shares/create?tabs=HTTP#shareaccesstier. </summary>
         public AzureFileShareAccessTier? ShareAccessTier { get; set; }
     }

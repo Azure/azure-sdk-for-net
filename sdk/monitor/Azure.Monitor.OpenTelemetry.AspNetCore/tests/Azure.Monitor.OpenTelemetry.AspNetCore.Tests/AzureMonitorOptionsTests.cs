@@ -270,36 +270,36 @@ namespace Azure.Monitor.OpenTelemetry.AspNetCore.Tests
         }
 
         [Fact]
-        public void AzureMonitorOptions_EnablePerfCounters_DefaultValue_IsTrue()
+        public void AzureMonitorOptions_EnablePerformanceCounters_DefaultValue_IsTrue()
         {
             // Arrange & Act
             var options = new AzureMonitorOptions();
 
             // Assert
-            Assert.True(options.EnablePerfCounters);
+            Assert.True(options.EnablePerformanceCounters);
         }
 
         [Fact]
-        public void AzureMonitorOptions_EnablePerfCounters_CanBeDisabled()
+        public void AzureMonitorOptions_EnablePerformanceCounters_CanBeDisabled()
         {
             // Arrange & Act
             var options = new AzureMonitorOptions
             {
-                EnablePerfCounters = false
+                EnablePerformanceCounters = false
             };
 
             // Assert
-            Assert.False(options.EnablePerfCounters);
+            Assert.False(options.EnablePerformanceCounters);
         }
 
         [Fact]
-        public void AzureMonitorOptions_SetValueToExporterOptions_CopiesEnablePerfCounters()
+        public void AzureMonitorOptions_SetValueToExporterOptions_CopiesEnablePerformanceCounters()
         {
             // Arrange
             var azureMonitorOptions = new AzureMonitorOptions
             {
                 ConnectionString = TestConnectionString,
-                EnablePerfCounters = false
+                EnablePerformanceCounters = false
             };
 
             var exporterOptions = new AzureMonitorExporterOptions();
@@ -308,12 +308,12 @@ namespace Azure.Monitor.OpenTelemetry.AspNetCore.Tests
             azureMonitorOptions.SetValueToExporterOptions(exporterOptions);
 
             // Assert
-            Assert.False(exporterOptions.EnablePerfCounters);
+            Assert.False(exporterOptions.EnablePerformanceCounters);
             Assert.Equal(TestConnectionString, exporterOptions.ConnectionString);
         }
 
         [Fact]
-        public void UseAzureMonitor_DefaultEnablePerfCounters()
+        public void UseAzureMonitor_DefaultEnablePerformanceCounters()
         {
             // Arrange
             var serviceCollection = new ServiceCollection();
@@ -332,16 +332,16 @@ namespace Azure.Monitor.OpenTelemetry.AspNetCore.Tests
             var azureMonitorOptions = serviceProvider.GetRequiredService<IOptionsMonitor<AzureMonitorOptions>>()
                 .Get(Options.DefaultName);
 
-            Assert.True(azureMonitorOptions.EnablePerfCounters);
+            Assert.True(azureMonitorOptions.EnablePerformanceCounters);
 
             var exporterOptions = serviceProvider.GetRequiredService<IOptionsMonitor<AzureMonitorExporterOptions>>()
                 .Get(Options.DefaultName);
 
-            Assert.True(exporterOptions.EnablePerfCounters);
+            Assert.True(exporterOptions.EnablePerformanceCounters);
         }
 
         [Fact]
-        public void UseAzureMonitor_CanDisablePerfCounters()
+        public void UseAzureMonitor_CanDisablePerformanceCounters()
         {
             // Arrange
             var serviceCollection = new ServiceCollection();
@@ -351,7 +351,7 @@ namespace Azure.Monitor.OpenTelemetry.AspNetCore.Tests
                 .UseAzureMonitor(options =>
                 {
                     options.ConnectionString = TestConnectionString;
-                    options.EnablePerfCounters = false;
+                    options.EnablePerformanceCounters = false;
                     options.DisableOfflineStorage = true;
                 });
 
@@ -361,16 +361,16 @@ namespace Azure.Monitor.OpenTelemetry.AspNetCore.Tests
             var azureMonitorOptions = serviceProvider.GetRequiredService<IOptionsMonitor<AzureMonitorOptions>>()
                 .Get(Options.DefaultName);
 
-            Assert.False(azureMonitorOptions.EnablePerfCounters);
+            Assert.False(azureMonitorOptions.EnablePerformanceCounters);
 
             var exporterOptions = serviceProvider.GetRequiredService<IOptionsMonitor<AzureMonitorExporterOptions>>()
                 .Get(Options.DefaultName);
 
-            Assert.False(exporterOptions.EnablePerfCounters);
+            Assert.False(exporterOptions.EnablePerformanceCounters);
         }
 
         [Fact]
-        public void UseAzureMonitor_EnablePerfCounters_PropagatesCorrectly()
+        public void UseAzureMonitor_EnablePerformanceCounters_PropagatesCorrectly()
         {
             // Arrange
             var serviceCollection = new ServiceCollection();
@@ -380,7 +380,7 @@ namespace Azure.Monitor.OpenTelemetry.AspNetCore.Tests
                 .UseAzureMonitor(options =>
                 {
                     options.ConnectionString = TestConnectionString;
-                    options.EnablePerfCounters = true;
+                    options.EnablePerformanceCounters = true;
                     options.DisableOfflineStorage = true;
                 });
 
@@ -393,8 +393,8 @@ namespace Azure.Monitor.OpenTelemetry.AspNetCore.Tests
             var exporterOptions = serviceProvider.GetRequiredService<IOptionsMonitor<AzureMonitorExporterOptions>>()
                 .Get(Options.DefaultName);
 
-            Assert.Equal(azureMonitorOptions.EnablePerfCounters, exporterOptions.EnablePerfCounters);
-            Assert.True(exporterOptions.EnablePerfCounters);
+            Assert.Equal(azureMonitorOptions.EnablePerformanceCounters, exporterOptions.EnablePerformanceCounters);
+            Assert.True(exporterOptions.EnablePerformanceCounters);
         }
 
         [Fact]

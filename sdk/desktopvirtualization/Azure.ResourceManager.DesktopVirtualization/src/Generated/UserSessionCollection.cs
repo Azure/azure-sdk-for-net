@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.DesktopVirtualization
         {
             TryGetApiVersion(UserSessionResource.ResourceType, out string userSessionApiVersion);
             _userSessionsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.DesktopVirtualization", UserSessionResource.ResourceType.Namespace, Diagnostics);
-            _userSessionsRestClient = new UserSessions(_userSessionsClientDiagnostics, Pipeline, Endpoint, userSessionApiVersion ?? "2026-01-01-preview");
+            _userSessionsRestClient = new UserSessions(_userSessionsClientDiagnostics, Pipeline, Endpoint, userSessionApiVersion ?? "2026-03-01-preview");
             ValidateResourceId(id);
         }
 
@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.DesktopVirtualization
         {
             if (id.ResourceType != SessionHostResource.ResourceType)
             {
-                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, SessionHostResource.ResourceType), id);
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, SessionHostResource.ResourceType), nameof(id));
             }
         }
 
@@ -67,7 +67,7 @@ namespace Azure.ResourceManager.DesktopVirtualization
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-01-01-preview. </description>
+        /// <description> 2026-03-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -116,7 +116,7 @@ namespace Azure.ResourceManager.DesktopVirtualization
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-01-01-preview. </description>
+        /// <description> 2026-03-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -165,7 +165,7 @@ namespace Azure.ResourceManager.DesktopVirtualization
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-01-01-preview. </description>
+        /// <description> 2026-03-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -189,7 +189,8 @@ namespace Azure.ResourceManager.DesktopVirtualization
                 pageSize,
                 isDescending,
                 initialSkip,
-                context), data => new UserSessionResource(Client, data));
+                context,
+                "UserSessionCollection.GetAll"), data => new UserSessionResource(Client, data));
         }
 
         /// <summary>
@@ -205,7 +206,7 @@ namespace Azure.ResourceManager.DesktopVirtualization
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-01-01-preview. </description>
+        /// <description> 2026-03-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -229,7 +230,8 @@ namespace Azure.ResourceManager.DesktopVirtualization
                 pageSize,
                 isDescending,
                 initialSkip,
-                context), data => new UserSessionResource(Client, data));
+                context,
+                "UserSessionCollection.GetAll"), data => new UserSessionResource(Client, data));
         }
 
         /// <summary>
@@ -245,7 +247,7 @@ namespace Azure.ResourceManager.DesktopVirtualization
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-01-01-preview. </description>
+        /// <description> 2026-03-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -302,7 +304,7 @@ namespace Azure.ResourceManager.DesktopVirtualization
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-01-01-preview. </description>
+        /// <description> 2026-03-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -359,7 +361,7 @@ namespace Azure.ResourceManager.DesktopVirtualization
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-01-01-preview. </description>
+        /// <description> 2026-03-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -420,7 +422,7 @@ namespace Azure.ResourceManager.DesktopVirtualization
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-01-01-preview. </description>
+        /// <description> 2026-03-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>

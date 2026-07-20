@@ -13,10 +13,8 @@ namespace OpenAI
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="InternalWebSearchActionOpenPage"/>. </summary>
-        /// <param name="url"> The URL opened by the model. </param>
-        public InternalWebSearchActionOpenPage(Uri url)
+        public InternalWebSearchActionOpenPage()
         {
-            Url = url;
         }
 
         /// <summary> Initializes a new instance of <see cref="InternalWebSearchActionOpenPage"/>. </summary>
@@ -34,6 +32,6 @@ namespace OpenAI
         internal string Type { get; } = "open_page";
 
         /// <summary> The URL opened by the model. </summary>
-        public Uri Url { get; }
+        public Uri Url { get; set; }
     }
 }

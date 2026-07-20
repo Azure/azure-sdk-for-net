@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.KeyVault
         {
             TryGetApiVersion(ResourceType, out string keyVaultPrivateEndpointConnectionApiVersion);
             _privateEndpointConnectionsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.KeyVault", ResourceType.Namespace, Diagnostics);
-            _privateEndpointConnectionsRestClient = new PrivateEndpointConnections(_privateEndpointConnectionsClientDiagnostics, Pipeline, Endpoint, keyVaultPrivateEndpointConnectionApiVersion ?? "2025-05-01");
+            _privateEndpointConnectionsRestClient = new PrivateEndpointConnections(_privateEndpointConnectionsClientDiagnostics, Pipeline, Endpoint, keyVaultPrivateEndpointConnectionApiVersion ?? "2026-02-01");
             ValidateResourceId(id);
         }
 
@@ -87,7 +87,7 @@ namespace Azure.ResourceManager.KeyVault
         {
             if (id.ResourceType != ResourceType)
             {
-                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), id);
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), nameof(id));
             }
         }
 
@@ -104,7 +104,7 @@ namespace Azure.ResourceManager.KeyVault
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-05-01. </description>
+        /// <description> 2026-02-01. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -152,7 +152,7 @@ namespace Azure.ResourceManager.KeyVault
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-05-01. </description>
+        /// <description> 2026-02-01. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -188,116 +188,6 @@ namespace Azure.ResourceManager.KeyVault
         }
 
         /// <summary>
-        /// Deletes the specified private endpoint connection associated with the key vault.
-        /// <list type="bullet">
-        /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.KeyVault/vaults/{vaultName}/privateEndpointConnections/{privateEndpointConnectionName}. </description>
-        /// </item>
-        /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> PrivateEndpointConnections_Delete. </description>
-        /// </item>
-        /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2025-05-01. </description>
-        /// </item>
-        /// <item>
-        /// <term> Resource. </term>
-        /// <description> <see cref="KeyVaultPrivateEndpointConnectionResource"/>. </description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<ArmOperation<KeyVaultPrivateEndpointConnectionResource>> DeleteAsync(WaitUntil waitUntil, CancellationToken cancellationToken = default)
-        {
-            using DiagnosticScope scope = _privateEndpointConnectionsClientDiagnostics.CreateScope("KeyVaultPrivateEndpointConnectionResource.Delete");
-            scope.Start();
-            try
-            {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = _privateEndpointConnectionsRestClient.CreateDeleteRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
-                Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                KeyVaultArmOperation<KeyVaultPrivateEndpointConnectionResource> operation = new KeyVaultArmOperation<KeyVaultPrivateEndpointConnectionResource>(
-                    new KeyVaultPrivateEndpointConnectionOperationSource(Client),
-                    _privateEndpointConnectionsClientDiagnostics,
-                    Pipeline,
-                    message.Request,
-                    response,
-                    OperationFinalStateVia.Location);
-                if (waitUntil == WaitUntil.Completed)
-                {
-                    await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
-                }
-                return operation;
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// Deletes the specified private endpoint connection associated with the key vault.
-        /// <list type="bullet">
-        /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.KeyVault/vaults/{vaultName}/privateEndpointConnections/{privateEndpointConnectionName}. </description>
-        /// </item>
-        /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> PrivateEndpointConnections_Delete. </description>
-        /// </item>
-        /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2025-05-01. </description>
-        /// </item>
-        /// <item>
-        /// <term> Resource. </term>
-        /// <description> <see cref="KeyVaultPrivateEndpointConnectionResource"/>. </description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual ArmOperation<KeyVaultPrivateEndpointConnectionResource> Delete(WaitUntil waitUntil, CancellationToken cancellationToken = default)
-        {
-            using DiagnosticScope scope = _privateEndpointConnectionsClientDiagnostics.CreateScope("KeyVaultPrivateEndpointConnectionResource.Delete");
-            scope.Start();
-            try
-            {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = _privateEndpointConnectionsRestClient.CreateDeleteRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
-                Response response = Pipeline.ProcessMessage(message, context);
-                KeyVaultArmOperation<KeyVaultPrivateEndpointConnectionResource> operation = new KeyVaultArmOperation<KeyVaultPrivateEndpointConnectionResource>(
-                    new KeyVaultPrivateEndpointConnectionOperationSource(Client),
-                    _privateEndpointConnectionsClientDiagnostics,
-                    Pipeline,
-                    message.Request,
-                    response,
-                    OperationFinalStateVia.Location);
-                if (waitUntil == WaitUntil.Completed)
-                {
-                    operation.WaitForCompletion(cancellationToken);
-                }
-                return operation;
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
         /// Update a KeyVaultPrivateEndpointConnection.
         /// <list type="bullet">
         /// <item>
@@ -310,7 +200,7 @@ namespace Azure.ResourceManager.KeyVault
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-05-01. </description>
+        /// <description> 2026-02-01. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -366,7 +256,7 @@ namespace Azure.ResourceManager.KeyVault
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-05-01. </description>
+        /// <description> 2026-02-01. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>

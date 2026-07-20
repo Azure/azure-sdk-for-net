@@ -37,6 +37,16 @@ namespace Azure.Search.Documents.Indexes.Models
         private const string Gpt5MiniValue = "gpt-5-mini";
         /// <summary> Gpt5Nano model. </summary>
         private const string Gpt5NanoValue = "gpt-5-nano";
+        /// <summary> Gpt51 model. </summary>
+        private const string Gpt51Value = "gpt-5.1";
+        /// <summary> Gpt52 model. </summary>
+        private const string Gpt52Value = "gpt-5.2";
+        /// <summary> Gpt54 model. </summary>
+        private const string Gpt54Value = "gpt-5.4";
+        /// <summary> Gpt54Mini model. </summary>
+        private const string Gpt54MiniValue = "gpt-5.4-mini";
+        /// <summary> Gpt54Nano model. </summary>
+        private const string Gpt54NanoValue = "gpt-5.4-nano";
 
         /// <summary> Initializes a new instance of <see cref="AzureOpenAIModelName"/>. </summary>
         /// <param name="value"> The value. </param>
@@ -80,6 +90,21 @@ namespace Azure.Search.Documents.Indexes.Models
 
         /// <summary> Gpt5Nano model. </summary>
         public static AzureOpenAIModelName Gpt5Nano { get; } = new AzureOpenAIModelName(Gpt5NanoValue);
+
+        /// <summary> Gpt51 model. </summary>
+        public static AzureOpenAIModelName Gpt51 { get; } = new AzureOpenAIModelName(Gpt51Value);
+
+        /// <summary> Gpt52 model. </summary>
+        public static AzureOpenAIModelName Gpt52 { get; } = new AzureOpenAIModelName(Gpt52Value);
+
+        /// <summary> Gpt54 model. </summary>
+        public static AzureOpenAIModelName Gpt54 { get; } = new AzureOpenAIModelName(Gpt54Value);
+
+        /// <summary> Gpt54Mini model. </summary>
+        public static AzureOpenAIModelName Gpt54Mini { get; } = new AzureOpenAIModelName(Gpt54MiniValue);
+
+        /// <summary> Gpt54Nano model. </summary>
+        public static AzureOpenAIModelName Gpt54Nano { get; } = new AzureOpenAIModelName(Gpt54NanoValue);
 
         /// <summary> Determines if two <see cref="AzureOpenAIModelName"/> values are the same. </summary>
         /// <param name="left"> The left value to compare. </param>

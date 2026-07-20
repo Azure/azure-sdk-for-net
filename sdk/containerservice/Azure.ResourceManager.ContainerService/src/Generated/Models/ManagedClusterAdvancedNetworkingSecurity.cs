@@ -7,43 +7,15 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.ContainerService;
 
 namespace Azure.ResourceManager.ContainerService.Models
 {
     /// <summary> Security profile to enable security features on cilium based cluster. </summary>
     public partial class ManagedClusterAdvancedNetworkingSecurity
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="ManagedClusterAdvancedNetworkingSecurity"/>. </summary>
         public ManagedClusterAdvancedNetworkingSecurity()
@@ -53,19 +25,44 @@ namespace Azure.ResourceManager.ContainerService.Models
         /// <summary> Initializes a new instance of <see cref="ManagedClusterAdvancedNetworkingSecurity"/>. </summary>
         /// <param name="isEnabled"> This feature allows user to configure network policy based on DNS (FQDN) names. It can be enabled only on cilium based clusters. If not specified, the default is false. </param>
         /// <param name="advancedNetworkPolicies"> Enable advanced network policies. This allows users to configure Layer 7 network policies (FQDN, HTTP, Kafka). Policies themselves must be configured via the Cilium Network Policy resources, see https://docs.cilium.io/en/latest/security/policy/index.html. This can be enabled only on cilium-based clusters. If not specified, the default value is FQDN if security.enabled is set to true. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ManagedClusterAdvancedNetworkingSecurity(bool? isEnabled, ManagedClusterAdvancedNetworkPolicy? advancedNetworkPolicies, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="transitEncryption"> Encryption configuration for Cilium-based clusters. Once enabled all traffic between Cilium managed pods will be encrypted when it leaves the node boundary. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal ManagedClusterAdvancedNetworkingSecurity(bool? isEnabled, ManagedClusterAdvancedNetworkPolicy? advancedNetworkPolicies, AdvancedNetworkingSecurityTransitEncryption transitEncryption, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             IsEnabled = isEnabled;
             AdvancedNetworkPolicies = advancedNetworkPolicies;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            TransitEncryption = transitEncryption;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> This feature allows user to configure network policy based on DNS (FQDN) names. It can be enabled only on cilium based clusters. If not specified, the default is false. </summary>
         [WirePath("enabled")]
         public bool? IsEnabled { get; set; }
+
         /// <summary> Enable advanced network policies. This allows users to configure Layer 7 network policies (FQDN, HTTP, Kafka). Policies themselves must be configured via the Cilium Network Policy resources, see https://docs.cilium.io/en/latest/security/policy/index.html. This can be enabled only on cilium-based clusters. If not specified, the default value is FQDN if security.enabled is set to true. </summary>
         [WirePath("advancedNetworkPolicies")]
         public ManagedClusterAdvancedNetworkPolicy? AdvancedNetworkPolicies { get; set; }
+
+        /// <summary> Encryption configuration for Cilium-based clusters. Once enabled all traffic between Cilium managed pods will be encrypted when it leaves the node boundary. </summary>
+        [WirePath("transitEncryption")]
+        internal AdvancedNetworkingSecurityTransitEncryption TransitEncryption { get; set; }
+
+        /// <summary> Configures pod-to-pod encryption. This can be enabled only on Cilium-based clusters. If not specified, the default value is None. </summary>
+        [WirePath("transitEncryption.type")]
+        public TransitEncryptionType? TransitEncryptionType
+        {
+            get
+            {
+                return TransitEncryption is null ? default : TransitEncryption.Type;
+            }
+            set
+            {
+                if (TransitEncryption is null)
+                {
+                    TransitEncryption = new AdvancedNetworkingSecurityTransitEncryption();
+                }
+                TransitEncryption.Type = value;
+            }
+        }
     }
 }

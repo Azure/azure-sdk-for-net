@@ -202,7 +202,7 @@ namespace Azure.ResourceManager.GuestConfiguration
             return message;
         }
 
-        internal HttpMessage CreateRGListRequest(string resourceGroupName, string subscriptionId, RequestContext context)
+        internal HttpMessage CreateGetGuestConfigurationAssignmentsRequest(string resourceGroupName, string subscriptionId, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -223,7 +223,7 @@ namespace Azure.ResourceManager.GuestConfiguration
             return message;
         }
 
-        internal HttpMessage CreateNextRGListRequest(Uri nextPage, string resourceGroupName, string subscriptionId, RequestContext context)
+        internal HttpMessage CreateNextGetGuestConfigurationAssignmentsRequest(Uri nextPage, string resourceGroupName, string subscriptionId, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             if (nextPage.IsAbsoluteUri)

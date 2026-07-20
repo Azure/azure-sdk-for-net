@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.CostManagement;
 
 namespace Azure.ResourceManager.CostManagement.Models
 {
@@ -14,14 +15,6 @@ namespace Azure.ResourceManager.CostManagement.Models
     public readonly partial struct ScheduledActionDaysOfWeek : IEquatable<ScheduledActionDaysOfWeek>
     {
         private readonly string _value;
-
-        /// <summary> Initializes a new instance of <see cref="ScheduledActionDaysOfWeek"/>. </summary>
-        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        public ScheduledActionDaysOfWeek(string value)
-        {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
-
         private const string MondayValue = "Monday";
         private const string TuesdayValue = "Tuesday";
         private const string WednesdayValue = "Wednesday";
@@ -30,37 +23,67 @@ namespace Azure.ResourceManager.CostManagement.Models
         private const string SaturdayValue = "Saturday";
         private const string SundayValue = "Sunday";
 
-        /// <summary> Monday. </summary>
+        /// <summary> Initializes a new instance of <see cref="ScheduledActionDaysOfWeek"/>. </summary>
+        /// <param name="value"> The value. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
+        public ScheduledActionDaysOfWeek(string value)
+        {
+            Argument.AssertNotNull(value, nameof(value));
+
+            _value = value;
+        }
+
+        /// <summary> Gets the Monday. </summary>
         public static ScheduledActionDaysOfWeek Monday { get; } = new ScheduledActionDaysOfWeek(MondayValue);
-        /// <summary> Tuesday. </summary>
+
+        /// <summary> Gets the Tuesday. </summary>
         public static ScheduledActionDaysOfWeek Tuesday { get; } = new ScheduledActionDaysOfWeek(TuesdayValue);
-        /// <summary> Wednesday. </summary>
+
+        /// <summary> Gets the Wednesday. </summary>
         public static ScheduledActionDaysOfWeek Wednesday { get; } = new ScheduledActionDaysOfWeek(WednesdayValue);
-        /// <summary> Thursday. </summary>
+
+        /// <summary> Gets the Thursday. </summary>
         public static ScheduledActionDaysOfWeek Thursday { get; } = new ScheduledActionDaysOfWeek(ThursdayValue);
-        /// <summary> Friday. </summary>
+
+        /// <summary> Gets the Friday. </summary>
         public static ScheduledActionDaysOfWeek Friday { get; } = new ScheduledActionDaysOfWeek(FridayValue);
-        /// <summary> Saturday. </summary>
+
+        /// <summary> Gets the Saturday. </summary>
         public static ScheduledActionDaysOfWeek Saturday { get; } = new ScheduledActionDaysOfWeek(SaturdayValue);
-        /// <summary> Sunday. </summary>
+
+        /// <summary> Gets the Sunday. </summary>
         public static ScheduledActionDaysOfWeek Sunday { get; } = new ScheduledActionDaysOfWeek(SundayValue);
+
         /// <summary> Determines if two <see cref="ScheduledActionDaysOfWeek"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(ScheduledActionDaysOfWeek left, ScheduledActionDaysOfWeek right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="ScheduledActionDaysOfWeek"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(ScheduledActionDaysOfWeek left, ScheduledActionDaysOfWeek right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="ScheduledActionDaysOfWeek"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="ScheduledActionDaysOfWeek"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator ScheduledActionDaysOfWeek(string value) => new ScheduledActionDaysOfWeek(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="ScheduledActionDaysOfWeek"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator ScheduledActionDaysOfWeek?(string value) => value == null ? null : new ScheduledActionDaysOfWeek(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is ScheduledActionDaysOfWeek other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(ScheduledActionDaysOfWeek other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.Avs
         {
             if (id.ResourceType != AvsPrivateCloudResource.ResourceType)
             {
-                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, AvsPrivateCloudResource.ResourceType), id);
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, AvsPrivateCloudResource.ResourceType), nameof(id));
             }
         }
 
@@ -177,7 +177,13 @@ namespace Azure.ResourceManager.Avs
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<ScriptPackageData, ScriptPackageResource>(new ScriptPackagesGetAllAsyncCollectionResultOfT(_scriptPackagesRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context), data => new ScriptPackageResource(Client, data));
+            return new AsyncPageableWrapper<ScriptPackageData, ScriptPackageResource>(new ScriptPackagesGetAllAsyncCollectionResultOfT(
+                _scriptPackagesRestClient,
+                Guid.Parse(Id.SubscriptionId),
+                Id.ResourceGroupName,
+                Id.Name,
+                context,
+                "ScriptPackageCollection.GetAll"), data => new ScriptPackageResource(Client, data));
         }
 
         /// <summary>
@@ -205,7 +211,13 @@ namespace Azure.ResourceManager.Avs
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<ScriptPackageData, ScriptPackageResource>(new ScriptPackagesGetAllCollectionResultOfT(_scriptPackagesRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context), data => new ScriptPackageResource(Client, data));
+            return new PageableWrapper<ScriptPackageData, ScriptPackageResource>(new ScriptPackagesGetAllCollectionResultOfT(
+                _scriptPackagesRestClient,
+                Guid.Parse(Id.SubscriptionId),
+                Id.ResourceGroupName,
+                Id.Name,
+                context,
+                "ScriptPackageCollection.GetAll"), data => new ScriptPackageResource(Client, data));
         }
 
         /// <summary>

@@ -34,15 +34,17 @@ namespace Azure.ResourceManager.StorageMover.Models
         /// <param name="connectionStatus"> The connection status. </param>
         /// <param name="privateLinkServiceId"> The PrivateLinkServiceId for the connection. </param>
         /// <param name="privateEndpointName"> The PrivateEndpointName associated with the connection. </param>
+        /// <param name="privateEndpointResourceId"> The privateEndpoint resource Id. </param>
         /// <param name="jobList"> List of job definitions associated with this connection. </param>
         /// <param name="provisioningState"> The provisioning state of this resource. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal StorageMoverConnectionProperties(string description, StorageMoverConnectionStatus? connectionStatus, ResourceIdentifier privateLinkServiceId, string privateEndpointName, IList<ResourceIdentifier> jobList, StorageMoverProvisioningState? provisioningState, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal StorageMoverConnectionProperties(string description, StorageMoverConnectionStatus? connectionStatus, ResourceIdentifier privateLinkServiceId, string privateEndpointName, ResourceIdentifier privateEndpointResourceId, IList<ResourceIdentifier> jobList, StorageMoverProvisioningState? provisioningState, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Description = description;
             ConnectionStatus = connectionStatus;
             PrivateLinkServiceId = privateLinkServiceId;
             PrivateEndpointName = privateEndpointName;
+            PrivateEndpointResourceId = privateEndpointResourceId;
             JobList = jobList;
             ProvisioningState = provisioningState;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
@@ -59,6 +61,9 @@ namespace Azure.ResourceManager.StorageMover.Models
 
         /// <summary> The PrivateEndpointName associated with the connection. </summary>
         public string PrivateEndpointName { get; }
+
+        /// <summary> The privateEndpoint resource Id. </summary>
+        public ResourceIdentifier PrivateEndpointResourceId { get; }
 
         /// <summary> List of job definitions associated with this connection. </summary>
         public IList<ResourceIdentifier> JobList { get; }

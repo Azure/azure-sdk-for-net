@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
         }
 
         private readonly ClientDiagnostics _postgreSqlFlexibleServerActiveDirectoryAdministratorAdministratorsClientDiagnostics;
-        private readonly AdministratorsMicrosoftEntraRestOperations _postgreSqlFlexibleServerActiveDirectoryAdministratorAdministratorsRestClient;
+        private readonly AdministratorsMicrosoftEntra _postgreSqlFlexibleServerActiveDirectoryAdministratorAdministratorsRestClient;
         private readonly PostgreSqlFlexibleServerActiveDirectoryAdministratorData _data;
 
         /// <summary> Gets the resource type for the operations. </summary>
@@ -63,7 +63,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
         {
             _postgreSqlFlexibleServerActiveDirectoryAdministratorAdministratorsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.PostgreSql.FlexibleServers", ResourceType.Namespace, Diagnostics);
             TryGetApiVersion(ResourceType, out string postgreSqlFlexibleServerActiveDirectoryAdministratorAdministratorsApiVersion);
-            _postgreSqlFlexibleServerActiveDirectoryAdministratorAdministratorsRestClient = new AdministratorsMicrosoftEntraRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, postgreSqlFlexibleServerActiveDirectoryAdministratorAdministratorsApiVersion);
+            _postgreSqlFlexibleServerActiveDirectoryAdministratorAdministratorsRestClient = new AdministratorsMicrosoftEntra(_postgreSqlFlexibleServerActiveDirectoryAdministratorAdministratorsClientDiagnostics, Pipeline, Endpoint, postgreSqlFlexibleServerActiveDirectoryAdministratorAdministratorsApiVersion);
 #if DEBUG
             ValidateResourceId(Id);
 #endif

@@ -17,7 +17,7 @@ namespace Azure.Data.Tables.Tests
         {
             audience ??= TableAudience.AzurePublicCloud;
             var defaultScope = audience.Value.GetDefaultScope(isCosmosEndpoint);
-            Assert.AreEqual(expectedScope, defaultScope);
+            Assert.That(defaultScope, Is.EqualTo(expectedScope));
         }
 
         public static IEnumerable<TestCaseData> GetDefaultScopeTestCases

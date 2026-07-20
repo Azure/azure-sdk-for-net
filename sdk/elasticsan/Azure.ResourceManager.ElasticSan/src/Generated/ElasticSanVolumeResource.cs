@@ -78,7 +78,7 @@ namespace Azure.ResourceManager.ElasticSan
         {
             if (id.ResourceType != ResourceType)
             {
-                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), id);
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), nameof(id));
             }
         }
 
@@ -218,7 +218,7 @@ namespace Azure.ResourceManager.ElasticSan
                 HttpMessage message = _volumesRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, ElasticSanVolumePatch.ToRequestContent(patch), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 ElasticSanArmOperation<ElasticSanVolumeResource> operation = new ElasticSanArmOperation<ElasticSanVolumeResource>(
-                    new ElasticSanVolumeOperationSource(Client),
+                    new ElasticSanVolumeResourceOperationSource(Client),
                     _volumesClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -277,7 +277,7 @@ namespace Azure.ResourceManager.ElasticSan
                 HttpMessage message = _volumesRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, ElasticSanVolumePatch.ToRequestContent(patch), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 ElasticSanArmOperation<ElasticSanVolumeResource> operation = new ElasticSanArmOperation<ElasticSanVolumeResource>(
-                    new ElasticSanVolumeOperationSource(Client),
+                    new ElasticSanVolumeResourceOperationSource(Client),
                     _volumesClientDiagnostics,
                     Pipeline,
                     message.Request,

@@ -19,10 +19,10 @@ public class Sample_Connections : SamplesBase
     {
         #region Snippet:AI_Projects_ConnectionsExampleSync
 #if SNIPPET
-        var endpoint = Environment.GetEnvironmentVariable("PROJECT_ENDPOINT");
+        var endpoint = Environment.GetEnvironmentVariable("FOUNDRY_PROJECT_ENDPOINT");
         var connectionName = Environment.GetEnvironmentVariable("CONNECTION_NAME");
 #else
-        var endpoint = TestEnvironment.PROJECT_ENDPOINT;
+        var endpoint = TestEnvironment.FOUNDRY_PROJECT_ENDPOINT;
         var connectionName = TestEnvironment.STORAGECONNECTIONNAME;
 #endif
         AIProjectClient projectClient = new AIProjectClient(new Uri(endpoint), new DefaultAzureCredential());
@@ -64,10 +64,10 @@ public class Sample_Connections : SamplesBase
     {
         #region Snippet:AI_Projects_ConnectionsExampleAsync
 #if SNIPPET
-        var endpoint = Environment.GetEnvironmentVariable("PROJECT_ENDPOINT");
+        var endpoint = Environment.GetEnvironmentVariable("FOUNDRY_PROJECT_ENDPOINT");
         var connectionName = Environment.GetEnvironmentVariable("CONNECTION_NAME");
 #else
-        var endpoint = TestEnvironment.PROJECT_ENDPOINT;
+        var endpoint = TestEnvironment.FOUNDRY_PROJECT_ENDPOINT;
         var connectionName = TestEnvironment.STORAGECONNECTIONNAME;
 #endif
         AIProjectClient projectClient = new AIProjectClient(new Uri(endpoint), new DefaultAzureCredential());

@@ -6,7 +6,9 @@
 #nullable disable
 
 using System;
+using System.ClientModel;
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using Azure.Core.Expressions.DataFactory;
 
@@ -148,6 +150,14 @@ namespace BasicTypeSpec
             return new ReturnsAnonymousModelResponse(additionalBinaryDataProperties: null);
         }
 
+        /// <summary> The MultipartRequestRequest. </summary>
+        /// <param name="name"></param>
+        /// <returns> A new <see cref="BasicTypeSpec.MultipartRequestRequest"/> instance for mocking. </returns>
+        public static MultipartRequestRequest MultipartRequestRequest(string name = default)
+        {
+            return new MultipartRequestRequest(name);
+        }
+
         /// <summary> Model with DataFactoryElement properties. </summary>
         /// <param name="stringProperty"> String property with DFE pattern. </param>
         /// <param name="intProperty"> Int property with DFE pattern. </param>
@@ -259,8 +269,7 @@ namespace BasicTypeSpec
                 dictionaryFoo,
                 dictionaryOfDictionaryFoo,
                 dictionaryListFoo,
-                listOfDictionaryFoo.ToList(),
-                additionalBinaryDataProperties: null);
+                listOfDictionaryFoo.ToList());
         }
 
         /// <summary> An item model for XML array testing. </summary>
@@ -270,7 +279,7 @@ namespace BasicTypeSpec
         /// <returns> A new <see cref="BasicTypeSpec.XmlItem"/> instance for mocking. </returns>
         public static XmlItem XmlItem(string itemName = default, int itemValue = default, string itemId = default)
         {
-            return new XmlItem(itemName, itemValue, itemId, additionalBinaryDataProperties: null);
+            return new XmlItem(itemName, itemValue, itemId);
         }
 
         /// <summary> A nested model for XML testing. </summary>
@@ -279,7 +288,7 @@ namespace BasicTypeSpec
         /// <returns> A new <see cref="BasicTypeSpec.XmlNestedModel"/> instance for mocking. </returns>
         public static XmlNestedModel XmlNestedModel(string value = default, int nestedId = default)
         {
-            return new XmlNestedModel(value, nestedId, additionalBinaryDataProperties: null);
+            return new XmlNestedModel(value, nestedId);
         }
 
         /// <summary> The XmlModelWithNamespace. </summary>
@@ -287,7 +296,59 @@ namespace BasicTypeSpec
         /// <returns> A new <see cref="BasicTypeSpec.XmlModelWithNamespace"/> instance for mocking. </returns>
         public static XmlModelWithNamespace XmlModelWithNamespace(string foo = default)
         {
-            return new XmlModelWithNamespace(foo, additionalBinaryDataProperties: null);
+            return new XmlModelWithNamespace(foo);
+        }
+
+        /// <summary> The Cat. </summary>
+        /// <param name="id"></param>
+        /// <param name="boolPart"></param>
+        /// <param name="int32Part"></param>
+        /// <param name="int64Part"></param>
+        /// <param name="float32Part"></param>
+        /// <param name="float64Part"></param>
+        /// <param name="decimalPart"></param>
+        /// <param name="int8Part"></param>
+        /// <param name="uint8Part"></param>
+        /// <param name="dictionaryPart"></param>
+        /// <param name="dictionaryModelPart"></param>
+        /// <param name="listPart"></param>
+        /// <param name="listModelPart"></param>
+        /// <param name="multipleListPart"></param>
+        /// <param name="profileImage"></param>
+        /// <param name="extensibleEnumPart"></param>
+        /// <param name="fixedEnumPart"></param>
+        /// <param name="intExtensibleEnumPart"></param>
+        /// <param name="intFixedEnumPart"></param>
+        /// <returns> A new <see cref="BasicTypeSpec.Cat"/> instance for mocking. </returns>
+        [Experimental("SCME0004")]
+        public static Cat Cat(string id = default, bool boolPart = default, int int32Part = default, long int64Part = default, float float32Part = default, double float64Part = default, decimal decimalPart = default, sbyte int8Part = default, byte uint8Part = default, IDictionary<string, string> dictionaryPart = default, IDictionary<string, ThingModel> dictionaryModelPart = default, IEnumerable<string> listPart = default, IEnumerable<ThingModel> listModelPart = default, IEnumerable<string> multipleListPart = default, FileBinaryContent profileImage = default, StringExtensibleEnum extensibleEnumPart = default, StringFixedEnum fixedEnumPart = default, IntExtensibleEnum intExtensibleEnumPart = default, IntFixedEnum intFixedEnumPart = default)
+        {
+            dictionaryPart ??= new ChangeTrackingDictionary<string, string>();
+            dictionaryModelPart ??= new ChangeTrackingDictionary<string, ThingModel>();
+            listPart ??= new ChangeTrackingList<string>();
+            listModelPart ??= new ChangeTrackingList<ThingModel>();
+            multipleListPart ??= new ChangeTrackingList<string>();
+
+            return new Cat(
+                id,
+                boolPart,
+                int32Part,
+                int64Part,
+                float32Part,
+                float64Part,
+                decimalPart,
+                int8Part,
+                uint8Part,
+                dictionaryPart,
+                dictionaryModelPart,
+                listPart.ToList(),
+                listModelPart.ToList(),
+                multipleListPart.ToList(),
+                profileImage,
+                extensibleEnumPart,
+                fixedEnumPart,
+                intExtensibleEnumPart,
+                intFixedEnumPart);
         }
 
         /// <summary> Tree is a specific type of plant. </summary>

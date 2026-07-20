@@ -11,7 +11,7 @@ namespace Azure.Generator.Management.Utilities
     {
         public static MethodProvider GetConvenienceMethodByOperation(this ClientProvider clientProvider, InputOperation operation, bool isAsync)
         {
-            var methods = clientProvider.GetMethodCollectionByOperation(operation);
+            var methods = clientProvider.GetMethodCollectionByOperation(operation, clientProvider);
             return isAsync ? methods[^1] : methods[^2];
         }
 

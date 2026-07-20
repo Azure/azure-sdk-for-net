@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.DevTestLabs
         {
             if (id.ResourceType != DevTestLabUserResource.ResourceType)
             {
-                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, DevTestLabUserResource.ResourceType), id);
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, DevTestLabUserResource.ResourceType), nameof(id));
             }
         }
 
@@ -93,7 +93,7 @@ namespace Azure.ResourceManager.DevTestLabs
                 HttpMessage message = _serviceFabricsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, name, DevTestLabServiceFabricData.ToRequestContent(data), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 DevTestLabsArmOperation<DevTestLabServiceFabricResource> operation = new DevTestLabsArmOperation<DevTestLabServiceFabricResource>(
-                    new DevTestLabServiceFabricOperationSource(Client),
+                    new DevTestLabServiceFabricResourceOperationSource(Client),
                     _serviceFabricsClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -151,7 +151,7 @@ namespace Azure.ResourceManager.DevTestLabs
                 HttpMessage message = _serviceFabricsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, name, DevTestLabServiceFabricData.ToRequestContent(data), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 DevTestLabsArmOperation<DevTestLabServiceFabricResource> operation = new DevTestLabsArmOperation<DevTestLabServiceFabricResource>(
-                    new DevTestLabServiceFabricOperationSource(Client),
+                    new DevTestLabServiceFabricResourceOperationSource(Client),
                     _serviceFabricsClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -309,7 +309,8 @@ namespace Azure.ResourceManager.DevTestLabs
                 filter,
                 top,
                 @orderby,
-                context), data => new DevTestLabServiceFabricResource(Client, data));
+                context,
+                "DevTestLabServiceFabricCollection.GetAll"), data => new DevTestLabServiceFabricResource(Client, data));
         }
 
         /// <summary>
@@ -351,7 +352,8 @@ namespace Azure.ResourceManager.DevTestLabs
                 filter,
                 top,
                 @orderby,
-                context), data => new DevTestLabServiceFabricResource(Client, data));
+                context,
+                "DevTestLabServiceFabricCollection.GetAll"), data => new DevTestLabServiceFabricResource(Client, data));
         }
 
         /// <summary>

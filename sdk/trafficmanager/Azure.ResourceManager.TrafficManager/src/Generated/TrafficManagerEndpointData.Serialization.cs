@@ -65,9 +65,7 @@ namespace Azure.ResourceManager.TrafficManager
             {
                 return null;
             }
-            Utf8JsonRequestContent content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(trafficManagerEndpointData, ModelSerializationExtensions.WireOptions);
-            return content;
+            return RequestContent.Create(trafficManagerEndpointData, ModelSerializationExtensions.WireOptions);
         }
 
         /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="TrafficManagerEndpointData"/> from. </param>

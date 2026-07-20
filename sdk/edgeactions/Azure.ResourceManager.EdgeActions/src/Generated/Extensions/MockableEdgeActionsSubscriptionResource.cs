@@ -63,7 +63,7 @@ namespace Azure.ResourceManager.EdgeActions.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<EdgeActionData, EdgeActionResource>(new EdgeActionsMgmtClientGetBySubscriptionAsyncCollectionResultOfT(EdgeActionsMgmtClientRestClient, Guid.Parse(Id.SubscriptionId), context), data => new EdgeActionResource(Client, data));
+            return new AsyncPageableWrapper<EdgeActionData, EdgeActionResource>(new EdgeActionsMgmtClientGetBySubscriptionAsyncCollectionResultOfT(EdgeActionsMgmtClientRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableEdgeActionsSubscriptionResource.GetEdgeActions"), data => new EdgeActionResource(Client, data));
         }
 
         /// <summary>
@@ -91,7 +91,7 @@ namespace Azure.ResourceManager.EdgeActions.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<EdgeActionData, EdgeActionResource>(new EdgeActionsMgmtClientGetBySubscriptionCollectionResultOfT(EdgeActionsMgmtClientRestClient, Guid.Parse(Id.SubscriptionId), context), data => new EdgeActionResource(Client, data));
+            return new PageableWrapper<EdgeActionData, EdgeActionResource>(new EdgeActionsMgmtClientGetBySubscriptionCollectionResultOfT(EdgeActionsMgmtClientRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableEdgeActionsSubscriptionResource.GetEdgeActions"), data => new EdgeActionResource(Client, data));
         }
     }
 }

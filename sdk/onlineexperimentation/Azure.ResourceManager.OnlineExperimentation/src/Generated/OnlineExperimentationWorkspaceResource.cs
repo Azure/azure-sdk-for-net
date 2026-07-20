@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.OnlineExperimentation
         {
             if (id.ResourceType != ResourceType)
             {
-                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), id);
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), nameof(id));
             }
         }
 
@@ -229,7 +229,7 @@ namespace Azure.ResourceManager.OnlineExperimentation
                 HttpMessage message = _onlineExperimentationWorkspacesRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, OnlineExperimentationWorkspacePatch.ToRequestContent(patch), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 OnlineExperimentationArmOperation<OnlineExperimentationWorkspaceResource> operation = new OnlineExperimentationArmOperation<OnlineExperimentationWorkspaceResource>(
-                    new OnlineExperimentationWorkspaceOperationSource(Client),
+                    new OnlineExperimentationWorkspaceResourceOperationSource(Client),
                     _onlineExperimentationWorkspacesClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -288,7 +288,7 @@ namespace Azure.ResourceManager.OnlineExperimentation
                 HttpMessage message = _onlineExperimentationWorkspacesRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, OnlineExperimentationWorkspacePatch.ToRequestContent(patch), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 OnlineExperimentationArmOperation<OnlineExperimentationWorkspaceResource> operation = new OnlineExperimentationArmOperation<OnlineExperimentationWorkspaceResource>(
-                    new OnlineExperimentationWorkspaceOperationSource(Client),
+                    new OnlineExperimentationWorkspaceResourceOperationSource(Client),
                     _onlineExperimentationWorkspacesClientDiagnostics,
                     Pipeline,
                     message.Request,

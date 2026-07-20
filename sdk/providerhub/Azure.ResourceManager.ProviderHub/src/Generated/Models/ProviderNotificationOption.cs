@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.ProviderHub;
 
 namespace Azure.ResourceManager.ProviderHub.Models
 {
@@ -14,41 +15,59 @@ namespace Azure.ResourceManager.ProviderHub.Models
     public readonly partial struct ProviderNotificationOption : IEquatable<ProviderNotificationOption>
     {
         private readonly string _value;
-
-        /// <summary> Initializes a new instance of <see cref="ProviderNotificationOption"/>. </summary>
-        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        public ProviderNotificationOption(string value)
-        {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
-
         private const string NotSpecifiedValue = "NotSpecified";
         private const string NoneValue = "None";
         private const string EmitSpendingLimitValue = "EmitSpendingLimit";
 
-        /// <summary> NotSpecified. </summary>
+        /// <summary> Initializes a new instance of <see cref="ProviderNotificationOption"/>. </summary>
+        /// <param name="value"> The value. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
+        public ProviderNotificationOption(string value)
+        {
+            Argument.AssertNotNull(value, nameof(value));
+
+            _value = value;
+        }
+
+        /// <summary> Gets the NotSpecified. </summary>
         public static ProviderNotificationOption NotSpecified { get; } = new ProviderNotificationOption(NotSpecifiedValue);
-        /// <summary> None. </summary>
+
+        /// <summary> Gets the None. </summary>
         public static ProviderNotificationOption None { get; } = new ProviderNotificationOption(NoneValue);
-        /// <summary> EmitSpendingLimit. </summary>
+
+        /// <summary> Gets the EmitSpendingLimit. </summary>
         public static ProviderNotificationOption EmitSpendingLimit { get; } = new ProviderNotificationOption(EmitSpendingLimitValue);
+
         /// <summary> Determines if two <see cref="ProviderNotificationOption"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(ProviderNotificationOption left, ProviderNotificationOption right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="ProviderNotificationOption"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(ProviderNotificationOption left, ProviderNotificationOption right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="ProviderNotificationOption"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="ProviderNotificationOption"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator ProviderNotificationOption(string value) => new ProviderNotificationOption(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="ProviderNotificationOption"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator ProviderNotificationOption?(string value) => value == null ? null : new ProviderNotificationOption(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is ProviderNotificationOption other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(ProviderNotificationOption other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

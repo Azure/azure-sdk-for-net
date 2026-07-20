@@ -6,8 +6,9 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure.AI.Projects;
 
-namespace Azure.AI.Projects
+namespace Azure.AI.Projects.Evaluation
 {
     /// <summary> Evaluator Metric. </summary>
     public partial class EvaluatorMetric : IJsonModel<EvaluatorMetric>
@@ -90,6 +91,11 @@ namespace Azure.AI.Projects
                 writer.WritePropertyName("max_value"u8);
                 writer.WriteNumberValue(MaxValue.Value);
             }
+            if (Optional.IsDefined(Threshold))
+            {
+                writer.WritePropertyName("threshold"u8);
+                writer.WriteNumberValue(Threshold.Value);
+            }
             if (Optional.IsDefined(IsPrimary))
             {
                 writer.WritePropertyName("is_primary"u8);
@@ -141,6 +147,7 @@ namespace Azure.AI.Projects
             EvaluatorMetricDirection? desirableDirection = default;
             float? minValue = default;
             float? maxValue = default;
+            float? threshold = default;
             bool? isPrimary = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
@@ -181,6 +188,15 @@ namespace Azure.AI.Projects
                     maxValue = prop.Value.GetSingle();
                     continue;
                 }
+                if (prop.NameEquals("threshold"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    threshold = prop.Value.GetSingle();
+                    continue;
+                }
                 if (prop.NameEquals("is_primary"u8))
                 {
                     if (prop.Value.ValueKind == JsonValueKind.Null)
@@ -200,6 +216,7 @@ namespace Azure.AI.Projects
                 desirableDirection,
                 minValue,
                 maxValue,
+                threshold,
                 isPrimary,
                 additionalBinaryDataProperties);
         }

@@ -21,7 +21,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
         private AzureMonitorResource? _resource;
 
         private readonly bool _enableStandardMetrics;
-        private readonly bool _enablePerfCounters;
+        private readonly bool _enablePerformanceCounters;
 
         internal readonly Lazy<MeterProvider?> _meterProvider;
         private readonly Meter? _standardMetricMeter;
@@ -73,12 +73,12 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
         internal StandardMetricsExtractionProcessor(AzureMonitorMetricExporter metricExporter, AzureMonitorExporterOptions options)
         {
             _enableStandardMetrics = options.EnableStandardMetrics;
-            _enablePerfCounters = options.EnablePerfCounters;
+            _enablePerformanceCounters = options.EnablePerformanceCounters;
 
             // Initialize Lazy<T> for thread-safe lazy initialization of MeterProvider
             _meterProvider = new Lazy<MeterProvider?>(() =>
             {
-                if (!_enableStandardMetrics && !_enablePerfCounters)
+                if (!_enableStandardMetrics && !_enablePerformanceCounters)
                 {
                     return null;
                 }
@@ -90,7 +90,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
                     meterProviderBuilder.AddMeter(StandardMetricConstants.StandardMetricMeterName);
                 }
 
-                if (_enablePerfCounters)
+                if (_enablePerformanceCounters)
                 {
                     meterProviderBuilder.AddMeter(PerfCounterConstants.PerfCounterMeterName);
                 }
@@ -115,7 +115,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
                 _dependencyDuration = _standardMetricMeter.CreateHistogram<double>(StandardMetricConstants.DependencyDurationInstrumentName);
             }
 
-            if (_enablePerfCounters)
+            if (_enablePerformanceCounters)
             {
                 _process = Process.GetCurrentProcess();
                 _perfCounterMeter = new Meter(PerfCounterConstants.PerfCounterMeterName);
@@ -157,7 +157,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
                 }
 
                 // Increment request count for rate calculation
-                if (_enablePerfCounters)
+                if (_enablePerformanceCounters)
                 {
                     Interlocked.Increment(ref _requestCount);
                 }

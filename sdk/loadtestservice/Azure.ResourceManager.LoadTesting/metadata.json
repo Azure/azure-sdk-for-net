@@ -1,3 +1,5 @@
 {
-  "apiVersion": "2024-12-01-preview"
+  "apiVersions": {
+    "Microsoft.LoadTestService": "2024-12-01-preview"
+  }
 }

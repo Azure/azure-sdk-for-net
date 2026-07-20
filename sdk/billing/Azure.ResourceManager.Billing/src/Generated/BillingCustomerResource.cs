@@ -6,52 +6,42 @@
 #nullable disable
 
 using System;
-using System.Globalization;
+using System.Diagnostics;
 using System.Threading;
 using System.Threading.Tasks;
-using Autorest.CSharp.Core;
+using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
+using Azure.ResourceManager;
 using Azure.ResourceManager.Billing.Models;
 
 namespace Azure.ResourceManager.Billing
 {
     /// <summary>
-    /// A Class representing a BillingCustomer along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="BillingCustomerResource"/>
-    /// from an instance of <see cref="ArmClient"/> using the GetBillingCustomerResource method.
-    /// Otherwise you can get one from its parent resource <see cref="BillingAccountResource"/> using the GetBillingCustomer method.
+    /// A class representing a BillingCustomer along with the instance operations that can be performed on it.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="BillingCustomerResource"/> from an instance of <see cref="ArmClient"/> using the GetResource method.
+    /// Otherwise you can get one from its parent resource <see cref="BillingAccountResource"/> using the GetBillingCustomers method.
     /// </summary>
     public partial class BillingCustomerResource : ArmResource
     {
-        /// <summary> Generate the resource identifier of a <see cref="BillingCustomerResource"/> instance. </summary>
-        /// <param name="billingAccountName"> The billingAccountName. </param>
-        /// <param name="customerName"> The customerName. </param>
-        public static ResourceIdentifier CreateResourceIdentifier(string billingAccountName, string customerName)
-        {
-            var resourceId = $"/providers/Microsoft.Billing/billingAccounts/{billingAccountName}/customers/{customerName}";
-            return new ResourceIdentifier(resourceId);
-        }
-
-        private readonly ClientDiagnostics _billingCustomerCustomersClientDiagnostics;
-        private readonly CustomersRestOperations _billingCustomerCustomersRestClient;
-        private readonly ClientDiagnostics _billingPermissionsClientDiagnostics;
-        private readonly BillingPermissionsRestOperations _billingPermissionsRestClient;
+        private readonly ClientDiagnostics _customersClientDiagnostics;
+        private readonly Customers _customersRestClient;
         private readonly ClientDiagnostics _billingSubscriptionsClientDiagnostics;
-        private readonly BillingSubscriptionsRestOperations _billingSubscriptionsRestClient;
-        private readonly ClientDiagnostics _billingProductProductsClientDiagnostics;
-        private readonly ProductsRestOperations _billingProductProductsRestClient;
+        private readonly BillingSubscriptions _billingSubscriptionsRestClient;
+        private readonly ClientDiagnostics _productsClientDiagnostics;
+        private readonly Products _productsRestClient;
+        private readonly ClientDiagnostics _customerOperationGroupClientDiagnostics;
+        private readonly CustomerOperationGroup _customerOperationGroupRestClient;
         private readonly BillingCustomerData _data;
-
         /// <summary> Gets the resource type for the operations. </summary>
         public static readonly ResourceType ResourceType = "Microsoft.Billing/billingAccounts/customers";
 
-        /// <summary> Initializes a new instance of the <see cref="BillingCustomerResource"/> class for mocking. </summary>
+        /// <summary> Initializes a new instance of BillingCustomerResource for mocking. </summary>
         protected BillingCustomerResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref="BillingCustomerResource"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="BillingCustomerResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal BillingCustomerResource(ArmClient client, BillingCustomerData data) : this(client, data.Id)
@@ -60,85 +50,97 @@ namespace Azure.ResourceManager.Billing
             _data = data;
         }
 
-        /// <summary> Initializes a new instance of the <see cref="BillingCustomerResource"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="BillingCustomerResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal BillingCustomerResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _billingCustomerCustomersClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Billing", ResourceType.Namespace, Diagnostics);
-            TryGetApiVersion(ResourceType, out string billingCustomerCustomersApiVersion);
-            _billingCustomerCustomersRestClient = new CustomersRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, billingCustomerCustomersApiVersion);
-            _billingPermissionsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Billing", ProviderConstants.DefaultProviderNamespace, Diagnostics);
-            _billingPermissionsRestClient = new BillingPermissionsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint);
-            _billingSubscriptionsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Billing", ProviderConstants.DefaultProviderNamespace, Diagnostics);
-            _billingSubscriptionsRestClient = new BillingSubscriptionsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint);
-            _billingProductProductsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Billing", BillingProductResource.ResourceType.Namespace, Diagnostics);
-            TryGetApiVersion(BillingProductResource.ResourceType, out string billingProductProductsApiVersion);
-            _billingProductProductsRestClient = new ProductsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, billingProductProductsApiVersion);
-#if DEBUG
-			ValidateResourceId(Id);
-#endif
+            TryGetApiVersion(ResourceType, out string billingCustomerApiVersion);
+            _customersClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Billing", ResourceType.Namespace, Diagnostics);
+            _customersRestClient = new Customers(_customersClientDiagnostics, Pipeline, Endpoint, billingCustomerApiVersion ?? "2024-04-01");
+            _billingSubscriptionsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Billing", ResourceType.Namespace, Diagnostics);
+            _billingSubscriptionsRestClient = new BillingSubscriptions(_billingSubscriptionsClientDiagnostics, Pipeline, Endpoint, billingCustomerApiVersion ?? "2024-04-01");
+            _productsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Billing", ResourceType.Namespace, Diagnostics);
+            _productsRestClient = new Products(_productsClientDiagnostics, Pipeline, Endpoint, billingCustomerApiVersion ?? "2024-04-01");
+            _customerOperationGroupClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Billing", ResourceType.Namespace, Diagnostics);
+            _customerOperationGroupRestClient = new CustomerOperationGroup(_customerOperationGroupClientDiagnostics, Pipeline, Endpoint, billingCustomerApiVersion ?? "2024-04-01");
+            ValidateResourceId(id);
         }
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }
 
         /// <summary> Gets the data representing this Feature. </summary>
-        /// <exception cref="InvalidOperationException"> Throws if there is no data loaded in the current instance. </exception>
         public virtual BillingCustomerData Data
         {
             get
             {
                 if (!HasData)
+                {
                     throw new InvalidOperationException("The current instance does not have data, you must call Get first.");
+                }
                 return _data;
             }
         }
 
+        /// <summary> Generate the resource identifier for this resource. </summary>
+        /// <param name="billingAccountName"> The billingAccountName. </param>
+        /// <param name="customerName"> The customerName. </param>
+        public static ResourceIdentifier CreateResourceIdentifier(string billingAccountName, string customerName)
+        {
+            string resourceId = $"/providers/Microsoft.Billing/billingAccounts/{billingAccountName}/customers/{customerName}";
+            return new ResourceIdentifier(resourceId);
+        }
+
+        /// <param name="id"></param>
+        [Conditional("DEBUG")]
         internal static void ValidateResourceId(ResourceIdentifier id)
         {
             if (id.ResourceType != ResourceType)
-                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), nameof(id));
-        }
-
-        /// <summary> Gets an object representing a BillingCustomerPolicyResource along with the instance operations that can be performed on it in the BillingCustomer. </summary>
-        /// <returns> Returns a <see cref="BillingCustomerPolicyResource"/> object. </returns>
-        public virtual BillingCustomerPolicyResource GetBillingCustomerPolicy()
-        {
-            return new BillingCustomerPolicyResource(Client, Id.AppendChildResource("policies", "default"));
+            {
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), nameof(id));
+            }
         }
 
         /// <summary>
         /// Gets a customer by its ID at billing account level. The operation is supported only for billing accounts with agreement type Microsoft Partner Agreement.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/providers/Microsoft.Billing/billingAccounts/{billingAccountName}/customers/{customerName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /providers/Microsoft.Billing/billingAccounts/{billingAccountName}/customers/{customerName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Customers_GetByBillingAccount</description>
+        /// <term> Operation Id. </term>
+        /// <description> CustomerOperationGroup_GetByBillingAccount. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-04-01</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-04-01. </description>
         /// </item>
         /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="BillingCustomerResource"/></description>
+        /// <term> Resource. </term>
+        /// <description> <see cref="BillingCustomerResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<Response<BillingCustomerResource>> GetAsync(CancellationToken cancellationToken = default)
         {
-            using var scope = _billingCustomerCustomersClientDiagnostics.CreateScope("BillingCustomerResource.Get");
+            using DiagnosticScope scope = _customersClientDiagnostics.CreateScope("BillingCustomerResource.Get");
             scope.Start();
             try
             {
-                var response = await _billingCustomerCustomersRestClient.GetByBillingAccountAsync(Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _customersRestClient.CreateGetByBillingAccountRequest(Id.Parent.Name, Id.Name, context);
+                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                Response<BillingCustomerData> response = Response.FromValue(BillingCustomerData.FromResponse(result), result);
                 if (response.Value == null)
+                {
                     throw new RequestFailedException(response.GetRawResponse());
+                }
                 return Response.FromValue(new BillingCustomerResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -152,33 +154,41 @@ namespace Azure.ResourceManager.Billing
         /// Gets a customer by its ID at billing account level. The operation is supported only for billing accounts with agreement type Microsoft Partner Agreement.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/providers/Microsoft.Billing/billingAccounts/{billingAccountName}/customers/{customerName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /providers/Microsoft.Billing/billingAccounts/{billingAccountName}/customers/{customerName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Customers_GetByBillingAccount</description>
+        /// <term> Operation Id. </term>
+        /// <description> CustomerOperationGroup_GetByBillingAccount. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-04-01</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-04-01. </description>
         /// </item>
         /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="BillingCustomerResource"/></description>
+        /// <term> Resource. </term>
+        /// <description> <see cref="BillingCustomerResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response<BillingCustomerResource> Get(CancellationToken cancellationToken = default)
         {
-            using var scope = _billingCustomerCustomersClientDiagnostics.CreateScope("BillingCustomerResource.Get");
+            using DiagnosticScope scope = _customersClientDiagnostics.CreateScope("BillingCustomerResource.Get");
             scope.Start();
             try
             {
-                var response = _billingCustomerCustomersRestClient.GetByBillingAccount(Id.Parent.Name, Id.Name, cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _customersRestClient.CreateGetByBillingAccountRequest(Id.Parent.Name, Id.Name, context);
+                Response result = Pipeline.ProcessMessage(message, context);
+                Response<BillingCustomerData> response = Response.FromValue(BillingCustomerData.FromResponse(result), result);
                 if (response.Value == null)
+                {
                     throw new RequestFailedException(response.GetRawResponse());
+                }
                 return Response.FromValue(new BillingCustomerResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -189,45 +199,259 @@ namespace Azure.ResourceManager.Billing
         }
 
         /// <summary>
-        /// Lists the billing permissions the caller has for a customer at billing account level.
+        /// Lists the subscriptions for a customer at billing account level. The operation is supported only for billing accounts with agreement type Microsoft Partner Agreement.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/providers/Microsoft.Billing/billingAccounts/{billingAccountName}/customers/{customerName}/billingPermissions</description>
+        /// <term> Request Path. </term>
+        /// <description> /providers/Microsoft.Billing/billingAccounts/{billingAccountName}/customers/{customerName}/billingSubscriptions. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>BillingPermissions_ListByCustomerAtBillingAccount</description>
+        /// <term> Operation Id. </term>
+        /// <description> CustomerOperationGroup_BillingSubscriptionsListByCustomerAtBillingAccount. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-04-01</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-04-01. </description>
+        /// </item>
+        /// <item>
+        /// <term> Resource. </term>
+        /// <description> <see cref="BillingCustomerResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
+        /// <param name="includeDeleted"> Can be used to get deleted billing subscriptions. </param>
+        /// <param name="expand"> Can be used to expand `Reseller`, `ConsumptionCostCenter`, `LastMonthCharges` and `MonthToDateCharges`. </param>
+        /// <param name="filter"> The filter query option allows clients to filter a collection of resources that are addressed by a request URL. </param>
+        /// <param name="orderBy"> The orderby query option allows clients to request resources in a particular order. </param>
+        /// <param name="maxCount"> The top query option requests the number of items in the queried collection to be included in the result. The maximum supported value for top is 50. </param>
+        /// <param name="skip"> The skip query option requests the number of items in the queried collection that are to be skipped and not included in the result. </param>
+        /// <param name="count"> The count query option allows clients to request a count of the matching resources included with the resources in the response. </param>
+        /// <param name="search"> The search query option allows clients to request items within a collection matching a free-text search expression. search is only supported for string fields. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="BillingPermission"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<BillingPermission> GetBillingPermissionsByCustomerAtBillingAccountAsync(CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="BillingSubscriptionData"/> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<BillingSubscriptionData> GetByCustomerAtBillingAccountAsync(bool? includeDeleted = default, string expand = default, string filter = default, string orderBy = default, long? maxCount = default, long? skip = default, bool? count = default, string search = default, CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _billingPermissionsRestClient.CreateListByCustomerAtBillingAccountRequest(Id.Parent.Name, Id.Name);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _billingPermissionsRestClient.CreateListByCustomerAtBillingAccountNextPageRequest(nextLink, Id.Parent.Name, Id.Name);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => BillingPermission.DeserializeBillingPermission(e), _billingPermissionsClientDiagnostics, Pipeline, "BillingCustomerResource.GetBillingPermissionsByCustomerAtBillingAccount", "value", "nextLink", cancellationToken);
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new BillingSubscriptionsGetByCustomerAtBillingAccountAsyncCollectionResultOfT(
+                _billingSubscriptionsRestClient,
+                Id.Parent.Name,
+                Id.Name,
+                includeDeleted,
+                expand,
+                filter,
+                orderBy,
+                maxCount,
+                skip,
+                count,
+                search,
+                context,
+                "BillingCustomerResource.GetByCustomerAtBillingAccount");
+        }
+
+        /// <summary>
+        /// Lists the subscriptions for a customer at billing account level. The operation is supported only for billing accounts with agreement type Microsoft Partner Agreement.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /providers/Microsoft.Billing/billingAccounts/{billingAccountName}/customers/{customerName}/billingSubscriptions. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> CustomerOperationGroup_BillingSubscriptionsListByCustomerAtBillingAccount. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-04-01. </description>
+        /// </item>
+        /// <item>
+        /// <term> Resource. </term>
+        /// <description> <see cref="BillingCustomerResource"/>. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="includeDeleted"> Can be used to get deleted billing subscriptions. </param>
+        /// <param name="expand"> Can be used to expand `Reseller`, `ConsumptionCostCenter`, `LastMonthCharges` and `MonthToDateCharges`. </param>
+        /// <param name="filter"> The filter query option allows clients to filter a collection of resources that are addressed by a request URL. </param>
+        /// <param name="orderBy"> The orderby query option allows clients to request resources in a particular order. </param>
+        /// <param name="maxCount"> The top query option requests the number of items in the queried collection to be included in the result. The maximum supported value for top is 50. </param>
+        /// <param name="skip"> The skip query option requests the number of items in the queried collection that are to be skipped and not included in the result. </param>
+        /// <param name="count"> The count query option allows clients to request a count of the matching resources included with the resources in the response. </param>
+        /// <param name="search"> The search query option allows clients to request items within a collection matching a free-text search expression. search is only supported for string fields. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> A collection of <see cref="BillingSubscriptionData"/> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<BillingSubscriptionData> GetByCustomerAtBillingAccount(bool? includeDeleted = default, string expand = default, string filter = default, string orderBy = default, long? maxCount = default, long? skip = default, bool? count = default, string search = default, CancellationToken cancellationToken = default)
+        {
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new BillingSubscriptionsGetByCustomerAtBillingAccountCollectionResultOfT(
+                _billingSubscriptionsRestClient,
+                Id.Parent.Name,
+                Id.Name,
+                includeDeleted,
+                expand,
+                filter,
+                orderBy,
+                maxCount,
+                skip,
+                count,
+                search,
+                context,
+                "BillingCustomerResource.GetByCustomerAtBillingAccount");
+        }
+
+        /// <summary>
+        /// Lists the products for a customer. These don't include products billed based on usage.The operation is supported only for billing accounts with agreement type Microsoft Partner Agreement.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /providers/Microsoft.Billing/billingAccounts/{billingAccountName}/customers/{customerName}/products. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> CustomerOperationGroup_ListByCustomer. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-04-01. </description>
+        /// </item>
+        /// <item>
+        /// <term> Resource. </term>
+        /// <description> <see cref="BillingCustomerResource"/>. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="filter"> The filter query option allows clients to filter a collection of resources that are addressed by a request URL. </param>
+        /// <param name="orderBy"> The orderby query option allows clients to request resources in a particular order. </param>
+        /// <param name="maxCount"> The top query option requests the number of items in the queried collection to be included in the result. The maximum supported value for top is 50. </param>
+        /// <param name="skip"> The skip query option requests the number of items in the queried collection that are to be skipped and not included in the result. </param>
+        /// <param name="count"> The count query option allows clients to request a count of the matching resources included with the resources in the response. </param>
+        /// <param name="search"> The search query option allows clients to request items within a collection matching a free-text search expression. search is only supported for string fields. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> A collection of <see cref="BillingProductResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<BillingProductResource> GetByCustomerAsync(string filter = default, string orderBy = default, long? maxCount = default, long? skip = default, bool? count = default, string search = default, CancellationToken cancellationToken = default)
+        {
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new AsyncPageableWrapper<BillingProductData, BillingProductResource>(new ProductsGetByCustomerAsyncCollectionResultOfT(
+                _productsRestClient,
+                Id.Parent.Name,
+                Id.Name,
+                filter,
+                orderBy,
+                maxCount,
+                skip,
+                count,
+                search,
+                context,
+                "BillingCustomerResource.GetByCustomer"), data => new BillingProductResource(Client, data));
+        }
+
+        /// <summary>
+        /// Lists the products for a customer. These don't include products billed based on usage.The operation is supported only for billing accounts with agreement type Microsoft Partner Agreement.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /providers/Microsoft.Billing/billingAccounts/{billingAccountName}/customers/{customerName}/products. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> CustomerOperationGroup_ListByCustomer. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-04-01. </description>
+        /// </item>
+        /// <item>
+        /// <term> Resource. </term>
+        /// <description> <see cref="BillingCustomerResource"/>. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="filter"> The filter query option allows clients to filter a collection of resources that are addressed by a request URL. </param>
+        /// <param name="orderBy"> The orderby query option allows clients to request resources in a particular order. </param>
+        /// <param name="maxCount"> The top query option requests the number of items in the queried collection to be included in the result. The maximum supported value for top is 50. </param>
+        /// <param name="skip"> The skip query option requests the number of items in the queried collection that are to be skipped and not included in the result. </param>
+        /// <param name="count"> The count query option allows clients to request a count of the matching resources included with the resources in the response. </param>
+        /// <param name="search"> The search query option allows clients to request items within a collection matching a free-text search expression. search is only supported for string fields. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> A collection of <see cref="BillingProductResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<BillingProductResource> GetByCustomer(string filter = default, string orderBy = default, long? maxCount = default, long? skip = default, bool? count = default, string search = default, CancellationToken cancellationToken = default)
+        {
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new PageableWrapper<BillingProductData, BillingProductResource>(new ProductsGetByCustomerCollectionResultOfT(
+                _productsRestClient,
+                Id.Parent.Name,
+                Id.Name,
+                filter,
+                orderBy,
+                maxCount,
+                skip,
+                count,
+                search,
+                context,
+                "BillingCustomerResource.GetByCustomer"), data => new BillingProductResource(Client, data));
         }
 
         /// <summary>
         /// Lists the billing permissions the caller has for a customer at billing account level.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/providers/Microsoft.Billing/billingAccounts/{billingAccountName}/customers/{customerName}/billingPermissions</description>
+        /// <term> Request Path. </term>
+        /// <description> /providers/Microsoft.Billing/billingAccounts/{billingAccountName}/customers/{customerName}/billingPermissions. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>BillingPermissions_ListByCustomerAtBillingAccount</description>
+        /// <term> Operation Id. </term>
+        /// <description> CustomerOperationGroup_ListByCustomerAtBillingAccount. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-04-01</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-04-01. </description>
+        /// </item>
+        /// <item>
+        /// <term> Resource. </term>
+        /// <description> <see cref="BillingCustomerResource"/>. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> A collection of <see cref="BillingPermission"/> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<BillingPermission> GetBillingPermissionsByCustomerAtBillingAccountAsync(CancellationToken cancellationToken = default)
+        {
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new CustomerOperationGroupGetBillingPermissionsByCustomerAtBillingAccountAsyncCollectionResultOfT(_customerOperationGroupRestClient, Id.Parent.Name, Id.Name, context, "BillingCustomerResource.GetBillingPermissionsByCustomerAtBillingAccount");
+        }
+
+        /// <summary>
+        /// Lists the billing permissions the caller has for a customer at billing account level.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /providers/Microsoft.Billing/billingAccounts/{billingAccountName}/customers/{customerName}/billingPermissions. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> CustomerOperationGroup_ListByCustomerAtBillingAccount. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-04-01. </description>
+        /// </item>
+        /// <item>
+        /// <term> Resource. </term>
+        /// <description> <see cref="BillingCustomerResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -235,133 +459,18 @@ namespace Azure.ResourceManager.Billing
         /// <returns> A collection of <see cref="BillingPermission"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<BillingPermission> GetBillingPermissionsByCustomerAtBillingAccount(CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _billingPermissionsRestClient.CreateListByCustomerAtBillingAccountRequest(Id.Parent.Name, Id.Name);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _billingPermissionsRestClient.CreateListByCustomerAtBillingAccountNextPageRequest(nextLink, Id.Parent.Name, Id.Name);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => BillingPermission.DeserializeBillingPermission(e), _billingPermissionsClientDiagnostics, Pipeline, "BillingCustomerResource.GetBillingPermissionsByCustomerAtBillingAccount", "value", "nextLink", cancellationToken);
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new CustomerOperationGroupGetBillingPermissionsByCustomerAtBillingAccountCollectionResultOfT(_customerOperationGroupRestClient, Id.Parent.Name, Id.Name, context, "BillingCustomerResource.GetBillingPermissionsByCustomerAtBillingAccount");
         }
 
-        /// <summary>
-        /// Lists the subscriptions for a customer at billing account level. The operation is supported only for billing accounts with agreement type Microsoft Partner Agreement.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/providers/Microsoft.Billing/billingAccounts/{billingAccountName}/customers/{customerName}/billingSubscriptions</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>BillingSubscriptions_ListByCustomerAtBillingAccount</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-04-01</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="options"> A property bag which contains all the parameters of this method except the LRO qualifier and request context parameter. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="BillingSubscriptionData"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<BillingSubscriptionData> GetBillingSubscriptionsByCustomerAtBillingAccountAsync(BillingCustomerResourceGetBillingSubscriptionsByCustomerAtBillingAccountOptions options, CancellationToken cancellationToken = default)
+        /// <summary> Gets an object representing a <see cref="BillingCustomerPolicyResource"/> along with the instance operations that can be performed on it in the <see cref="BillingCustomerResource"/>. </summary>
+        /// <returns> Returns a <see cref="BillingCustomerPolicyResource"/> object. </returns>
+        public virtual BillingCustomerPolicyResource GetBillingCustomerPolicy()
         {
-            options ??= new BillingCustomerResourceGetBillingSubscriptionsByCustomerAtBillingAccountOptions();
-
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _billingSubscriptionsRestClient.CreateListByCustomerAtBillingAccountRequest(Id.Parent.Name, Id.Name, options.IncludeDeleted, options.Expand, options.Filter, options.OrderBy, options.Top, options.Skip, options.Count, options.Search);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _billingSubscriptionsRestClient.CreateListByCustomerAtBillingAccountNextPageRequest(nextLink, Id.Parent.Name, Id.Name, options.IncludeDeleted, options.Expand, options.Filter, options.OrderBy, options.Top, options.Skip, options.Count, options.Search);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => BillingSubscriptionData.DeserializeBillingSubscriptionData(e), _billingSubscriptionsClientDiagnostics, Pipeline, "BillingCustomerResource.GetBillingSubscriptionsByCustomerAtBillingAccount", "value", "nextLink", cancellationToken);
-        }
-
-        /// <summary>
-        /// Lists the subscriptions for a customer at billing account level. The operation is supported only for billing accounts with agreement type Microsoft Partner Agreement.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/providers/Microsoft.Billing/billingAccounts/{billingAccountName}/customers/{customerName}/billingSubscriptions</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>BillingSubscriptions_ListByCustomerAtBillingAccount</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-04-01</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="options"> A property bag which contains all the parameters of this method except the LRO qualifier and request context parameter. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="BillingSubscriptionData"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<BillingSubscriptionData> GetBillingSubscriptionsByCustomerAtBillingAccount(BillingCustomerResourceGetBillingSubscriptionsByCustomerAtBillingAccountOptions options, CancellationToken cancellationToken = default)
-        {
-            options ??= new BillingCustomerResourceGetBillingSubscriptionsByCustomerAtBillingAccountOptions();
-
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _billingSubscriptionsRestClient.CreateListByCustomerAtBillingAccountRequest(Id.Parent.Name, Id.Name, options.IncludeDeleted, options.Expand, options.Filter, options.OrderBy, options.Top, options.Skip, options.Count, options.Search);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _billingSubscriptionsRestClient.CreateListByCustomerAtBillingAccountNextPageRequest(nextLink, Id.Parent.Name, Id.Name, options.IncludeDeleted, options.Expand, options.Filter, options.OrderBy, options.Top, options.Skip, options.Count, options.Search);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => BillingSubscriptionData.DeserializeBillingSubscriptionData(e), _billingSubscriptionsClientDiagnostics, Pipeline, "BillingCustomerResource.GetBillingSubscriptionsByCustomerAtBillingAccount", "value", "nextLink", cancellationToken);
-        }
-
-        /// <summary>
-        /// Lists the products for a customer. These don't include products billed based on usage.The operation is supported only for billing accounts with agreement type Microsoft Partner Agreement.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/providers/Microsoft.Billing/billingAccounts/{billingAccountName}/customers/{customerName}/products</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Products_ListByCustomer</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-04-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="BillingProductResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="options"> A property bag which contains all the parameters of this method except the LRO qualifier and request context parameter. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="BillingProductResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<BillingProductResource> GetProductsAsync(BillingCustomerResourceGetProductsOptions options, CancellationToken cancellationToken = default)
-        {
-            options ??= new BillingCustomerResourceGetProductsOptions();
-
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _billingProductProductsRestClient.CreateListByCustomerRequest(Id.Parent.Name, Id.Name, options.Filter, options.OrderBy, options.Top, options.Skip, options.Count, options.Search);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _billingProductProductsRestClient.CreateListByCustomerNextPageRequest(nextLink, Id.Parent.Name, Id.Name, options.Filter, options.OrderBy, options.Top, options.Skip, options.Count, options.Search);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new BillingProductResource(Client, BillingProductData.DeserializeBillingProductData(e)), _billingProductProductsClientDiagnostics, Pipeline, "BillingCustomerResource.GetProducts", "value", "nextLink", cancellationToken);
-        }
-
-        /// <summary>
-        /// Lists the products for a customer. These don't include products billed based on usage.The operation is supported only for billing accounts with agreement type Microsoft Partner Agreement.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/providers/Microsoft.Billing/billingAccounts/{billingAccountName}/customers/{customerName}/products</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Products_ListByCustomer</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-04-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="BillingProductResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="options"> A property bag which contains all the parameters of this method except the LRO qualifier and request context parameter. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="BillingProductResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<BillingProductResource> GetProducts(BillingCustomerResourceGetProductsOptions options, CancellationToken cancellationToken = default)
-        {
-            options ??= new BillingCustomerResourceGetProductsOptions();
-
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _billingProductProductsRestClient.CreateListByCustomerRequest(Id.Parent.Name, Id.Name, options.Filter, options.OrderBy, options.Top, options.Skip, options.Count, options.Search);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _billingProductProductsRestClient.CreateListByCustomerNextPageRequest(nextLink, Id.Parent.Name, Id.Name, options.Filter, options.OrderBy, options.Top, options.Skip, options.Count, options.Search);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new BillingProductResource(Client, BillingProductData.DeserializeBillingProductData(e)), _billingProductProductsClientDiagnostics, Pipeline, "BillingCustomerResource.GetProducts", "value", "nextLink", cancellationToken);
+            return new BillingCustomerPolicyResource(Client, Id.AppendChildResource("policies", "default"));
         }
     }
 }

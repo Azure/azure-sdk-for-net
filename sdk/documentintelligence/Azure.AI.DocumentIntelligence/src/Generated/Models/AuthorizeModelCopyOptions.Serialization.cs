@@ -68,9 +68,7 @@ namespace Azure.AI.DocumentIntelligence
             {
                 return null;
             }
-            Utf8JsonRequestContent content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(authorizeModelCopyOptions, ModelSerializationExtensions.WireOptions);
-            return content;
+            return RequestContent.Create(authorizeModelCopyOptions, ModelSerializationExtensions.WireOptions);
         }
 
         /// <param name="writer"> The JSON writer. </param>

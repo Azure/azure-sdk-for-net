@@ -1,6 +1,7 @@
-﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using System.ComponentModel;
 using System.Diagnostics.CodeAnalysis;
 using Microsoft.Extensions.Configuration;
 
@@ -22,11 +23,22 @@ public abstract class ClientSettings
     /// <summary>
     /// Gets or sets the credential provider.
     /// </summary>
-    public AuthenticationTokenProvider? CredentialProvider { get; set; }
+    public AuthenticationTokenProvider? CredentialProvider
+    {
+        get => Credential?.TokenProvider;
+        set
+        {
+            if (Credential is not null)
+            {
+                Credential.TokenProvider = value;
+            }
+        }
+    }
 
     /// <summary>
     /// Binds the values from the <see cref="IConfigurationSection"/> to the properties of the <see cref="ClientSettings"/>.
     /// </summary>
+    [EditorBrowsable(EditorBrowsableState.Never)]
     public void Bind(IConfigurationSection section)
     {
         if (section is null)
@@ -35,9 +47,7 @@ public abstract class ClientSettings
         }
 
         _section = section;
-
         Credential ??= new CredentialSettings(section.GetSection("Credential"));
-
         BindCore(section);
     }
 
@@ -46,6 +56,9 @@ public abstract class ClientSettings
     /// </summary>
     protected abstract void BindCore(IConfigurationSection section);
 
+    // TODO (Phase 5a removal): Remove. Its only consumers (the Azure default-scope
+    // quirk + credential override) move into AzureCredentialResolver.TryResolve
+    // and IClientBuilder.ConfigureCredential.
     /// <summary>
     /// Allows for additional configuration using the <see cref="IConfigurationSection"/> after the initial binding.
     /// </summary>

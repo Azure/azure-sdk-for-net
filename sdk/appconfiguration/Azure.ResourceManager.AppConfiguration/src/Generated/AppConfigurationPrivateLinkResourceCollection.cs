@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.AppConfiguration
         {
             if (id.ResourceType != AppConfigurationStoreResource.ResourceType)
             {
-                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, AppConfigurationStoreResource.ResourceType), id);
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, AppConfigurationStoreResource.ResourceType), nameof(id));
             }
         }
 
@@ -177,7 +177,13 @@ namespace Azure.ResourceManager.AppConfiguration
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<AppConfigurationPrivateLinkResourceData, AppConfigurationPrivateLinkResource>(new AppConfigurationPrivateLinkGetByConfigurationStoreAsyncCollectionResultOfT(_appConfigurationPrivateLinkRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context), data => new AppConfigurationPrivateLinkResource(Client, data));
+            return new AsyncPageableWrapper<AppConfigurationPrivateLinkResourceData, AppConfigurationPrivateLinkResource>(new AppConfigurationPrivateLinkGetByConfigurationStoreAsyncCollectionResultOfT(
+                _appConfigurationPrivateLinkRestClient,
+                Guid.Parse(Id.SubscriptionId),
+                Id.ResourceGroupName,
+                Id.Name,
+                context,
+                "AppConfigurationPrivateLinkResourceCollection.GetAll"), data => new AppConfigurationPrivateLinkResource(Client, data));
         }
 
         /// <summary>
@@ -205,7 +211,13 @@ namespace Azure.ResourceManager.AppConfiguration
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<AppConfigurationPrivateLinkResourceData, AppConfigurationPrivateLinkResource>(new AppConfigurationPrivateLinkGetByConfigurationStoreCollectionResultOfT(_appConfigurationPrivateLinkRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context), data => new AppConfigurationPrivateLinkResource(Client, data));
+            return new PageableWrapper<AppConfigurationPrivateLinkResourceData, AppConfigurationPrivateLinkResource>(new AppConfigurationPrivateLinkGetByConfigurationStoreCollectionResultOfT(
+                _appConfigurationPrivateLinkRestClient,
+                Guid.Parse(Id.SubscriptionId),
+                Id.ResourceGroupName,
+                Id.Name,
+                context,
+                "AppConfigurationPrivateLinkResourceCollection.GetAll"), data => new AppConfigurationPrivateLinkResource(Client, data));
         }
 
         /// <summary>

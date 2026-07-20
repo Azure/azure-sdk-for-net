@@ -85,7 +85,7 @@ namespace Azure.ResourceManager.WorkloadOrchestration
         {
             if (id.ResourceType != ResourceType)
             {
-                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), id);
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), nameof(id));
             }
         }
 
@@ -121,7 +121,7 @@ namespace Azure.ResourceManager.WorkloadOrchestration
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _schemaReferencesRestClient.CreateGetRequest(Id.Parent, Id.Name, context);
+                HttpMessage message = _schemaReferencesRestClient.CreateGetRequest(Id.Parent.ToString(), Id.Name, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<EdgeSchemaReferenceData> response = Response.FromValue(EdgeSchemaReferenceData.FromResponse(result), result);
                 if (response.Value == null)
@@ -169,7 +169,7 @@ namespace Azure.ResourceManager.WorkloadOrchestration
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _schemaReferencesRestClient.CreateGetRequest(Id.Parent, Id.Name, context);
+                HttpMessage message = _schemaReferencesRestClient.CreateGetRequest(Id.Parent.ToString(), Id.Name, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<EdgeSchemaReferenceData> response = Response.FromValue(EdgeSchemaReferenceData.FromResponse(result), result);
                 if (response.Value == null)
@@ -221,7 +221,7 @@ namespace Azure.ResourceManager.WorkloadOrchestration
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _schemaReferencesRestClient.CreateUpdateRequest(Id.Parent, Id.Name, EdgeSchemaReferenceData.ToRequestContent(data), context);
+                HttpMessage message = _schemaReferencesRestClient.CreateUpdateRequest(Id.Parent.ToString(), Id.Name, EdgeSchemaReferenceData.ToRequestContent(data), context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<EdgeSchemaReferenceData> response = Response.FromValue(EdgeSchemaReferenceData.FromResponse(result), result);
                 if (response.Value == null)
@@ -273,7 +273,7 @@ namespace Azure.ResourceManager.WorkloadOrchestration
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _schemaReferencesRestClient.CreateUpdateRequest(Id.Parent, Id.Name, EdgeSchemaReferenceData.ToRequestContent(data), context);
+                HttpMessage message = _schemaReferencesRestClient.CreateUpdateRequest(Id.Parent.ToString(), Id.Name, EdgeSchemaReferenceData.ToRequestContent(data), context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<EdgeSchemaReferenceData> response = Response.FromValue(EdgeSchemaReferenceData.FromResponse(result), result);
                 if (response.Value == null)
@@ -322,7 +322,7 @@ namespace Azure.ResourceManager.WorkloadOrchestration
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _schemaReferencesRestClient.CreateDeleteRequest(Id.Parent, Id.Name, context);
+                HttpMessage message = _schemaReferencesRestClient.CreateDeleteRequest(Id.Parent.ToString(), Id.Name, context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 WorkloadOrchestrationArmOperation operation = new WorkloadOrchestrationArmOperation(_schemaReferencesClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
@@ -371,7 +371,7 @@ namespace Azure.ResourceManager.WorkloadOrchestration
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _schemaReferencesRestClient.CreateDeleteRequest(Id.Parent, Id.Name, context);
+                HttpMessage message = _schemaReferencesRestClient.CreateDeleteRequest(Id.Parent.ToString(), Id.Name, context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 WorkloadOrchestrationArmOperation operation = new WorkloadOrchestrationArmOperation(_schemaReferencesClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)

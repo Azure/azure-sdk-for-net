@@ -64,9 +64,7 @@ namespace Azure.ResourceManager.Peering.Models
             {
                 return null;
             }
-            Utf8JsonRequestContent content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(peeringResourceTagsPatch, ModelSerializationExtensions.WireOptions);
-            return content;
+            return RequestContent.Create(peeringResourceTagsPatch, ModelSerializationExtensions.WireOptions);
         }
 
         /// <param name="writer"> The JSON writer. </param>

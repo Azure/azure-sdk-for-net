@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.DesktopVirtualization
         {
             TryGetApiVersion(AppAttachPackageResource.ResourceType, out string appAttachPackageApiVersion);
             _appAttachPackageClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.DesktopVirtualization", AppAttachPackageResource.ResourceType.Namespace, Diagnostics);
-            _appAttachPackageRestClient = new AppAttachPackage(_appAttachPackageClientDiagnostics, Pipeline, Endpoint, appAttachPackageApiVersion ?? "2026-01-01-preview");
+            _appAttachPackageRestClient = new AppAttachPackage(_appAttachPackageClientDiagnostics, Pipeline, Endpoint, appAttachPackageApiVersion ?? "2026-03-01-preview");
             ValidateResourceId(id);
         }
 
@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.DesktopVirtualization
         {
             if (id.ResourceType != ResourceGroupResource.ResourceType)
             {
-                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ResourceGroupResource.ResourceType), id);
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ResourceGroupResource.ResourceType), nameof(id));
             }
         }
 
@@ -68,7 +68,7 @@ namespace Azure.ResourceManager.DesktopVirtualization
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-01-01-preview. </description>
+        /// <description> 2026-03-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -123,7 +123,7 @@ namespace Azure.ResourceManager.DesktopVirtualization
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-01-01-preview. </description>
+        /// <description> 2026-03-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -178,7 +178,7 @@ namespace Azure.ResourceManager.DesktopVirtualization
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-01-01-preview. </description>
+        /// <description> 2026-03-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -227,7 +227,7 @@ namespace Azure.ResourceManager.DesktopVirtualization
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-01-01-preview. </description>
+        /// <description> 2026-03-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -276,7 +276,7 @@ namespace Azure.ResourceManager.DesktopVirtualization
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-01-01-preview. </description>
+        /// <description> 2026-03-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -289,7 +289,13 @@ namespace Azure.ResourceManager.DesktopVirtualization
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<AppAttachPackageData, AppAttachPackageResource>(new AppAttachPackageGetByResourceGroupAsyncCollectionResultOfT(_appAttachPackageRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, filter, context), data => new AppAttachPackageResource(Client, data));
+            return new AsyncPageableWrapper<AppAttachPackageData, AppAttachPackageResource>(new AppAttachPackageGetByResourceGroupAsyncCollectionResultOfT(
+                _appAttachPackageRestClient,
+                Guid.Parse(Id.SubscriptionId),
+                Id.ResourceGroupName,
+                filter,
+                context,
+                "AppAttachPackageCollection.GetAll"), data => new AppAttachPackageResource(Client, data));
         }
 
         /// <summary>
@@ -305,7 +311,7 @@ namespace Azure.ResourceManager.DesktopVirtualization
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-01-01-preview. </description>
+        /// <description> 2026-03-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -318,7 +324,13 @@ namespace Azure.ResourceManager.DesktopVirtualization
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<AppAttachPackageData, AppAttachPackageResource>(new AppAttachPackageGetByResourceGroupCollectionResultOfT(_appAttachPackageRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, filter, context), data => new AppAttachPackageResource(Client, data));
+            return new PageableWrapper<AppAttachPackageData, AppAttachPackageResource>(new AppAttachPackageGetByResourceGroupCollectionResultOfT(
+                _appAttachPackageRestClient,
+                Guid.Parse(Id.SubscriptionId),
+                Id.ResourceGroupName,
+                filter,
+                context,
+                "AppAttachPackageCollection.GetAll"), data => new AppAttachPackageResource(Client, data));
         }
 
         /// <summary>
@@ -334,7 +346,7 @@ namespace Azure.ResourceManager.DesktopVirtualization
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-01-01-preview. </description>
+        /// <description> 2026-03-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -391,7 +403,7 @@ namespace Azure.ResourceManager.DesktopVirtualization
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-01-01-preview. </description>
+        /// <description> 2026-03-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -448,7 +460,7 @@ namespace Azure.ResourceManager.DesktopVirtualization
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-01-01-preview. </description>
+        /// <description> 2026-03-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -509,7 +521,7 @@ namespace Azure.ResourceManager.DesktopVirtualization
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-01-01-preview. </description>
+        /// <description> 2026-03-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>

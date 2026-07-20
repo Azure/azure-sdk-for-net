@@ -118,6 +118,16 @@ namespace Azure.ResourceManager.DisconnectedOperations.Models
                 writer.WritePropertyName("cloud"u8);
                 writer.WriteStringValue(Cloud);
             }
+            if (options.Format != "W" && Optional.IsDefined(BillingConfiguration))
+            {
+                writer.WritePropertyName("billingConfiguration"u8);
+                writer.WriteObjectValue(BillingConfiguration, options);
+            }
+            if (options.Format != "W" && Optional.IsDefined(BenefitPlans))
+            {
+                writer.WritePropertyName("benefitPlans"u8);
+                writer.WriteObjectValue(BenefitPlans, options);
+            }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
                 foreach (var item in _additionalBinaryDataProperties)
@@ -163,10 +173,12 @@ namespace Azure.ResourceManager.DisconnectedOperations.Models
             ResourceIdentifier resourceId = default;
             string resourceName = default;
             string stampId = default;
-            string location = default;
+            AzureLocation location = default;
             DisconnectedOperationsBillingModel billingModel = default;
             DisconnectedOperationsConnectionIntent connectionIntent = default;
             string cloud = default;
+            DisconnectedOperationsBillingConfiguration billingConfiguration = default;
+            DisconnectedOperationsBenefitPlans benefitPlans = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -187,7 +199,7 @@ namespace Azure.ResourceManager.DisconnectedOperations.Models
                 }
                 if (prop.NameEquals("location"u8))
                 {
-                    location = prop.Value.GetString();
+                    location = new AzureLocation(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("billingModel"u8))
@@ -205,6 +217,24 @@ namespace Azure.ResourceManager.DisconnectedOperations.Models
                     cloud = prop.Value.GetString();
                     continue;
                 }
+                if (prop.NameEquals("billingConfiguration"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    billingConfiguration = DisconnectedOperationsBillingConfiguration.DeserializeDisconnectedOperationsBillingConfiguration(prop.Value, options);
+                    continue;
+                }
+                if (prop.NameEquals("benefitPlans"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    benefitPlans = DisconnectedOperationsBenefitPlans.DeserializeDisconnectedOperationsBenefitPlans(prop.Value, options);
+                    continue;
+                }
                 if (options.Format != "W")
                 {
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
@@ -218,6 +248,8 @@ namespace Azure.ResourceManager.DisconnectedOperations.Models
                 billingModel,
                 connectionIntent,
                 cloud,
+                billingConfiguration,
+                benefitPlans,
                 additionalBinaryDataProperties);
         }
     }

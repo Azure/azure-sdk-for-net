@@ -66,9 +66,7 @@ namespace Azure.ResourceManager.ContainerServiceFleet.Models
             {
                 return null;
             }
-            Utf8JsonRequestContent content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(containerServiceFleetPatch, ModelSerializationExtensions.WireOptions);
-            return content;
+            return RequestContent.Create(containerServiceFleetPatch, ModelSerializationExtensions.WireOptions);
         }
 
         /// <param name="writer"> The JSON writer. </param>

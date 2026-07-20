@@ -64,9 +64,7 @@ namespace Azure.ResourceManager.EdgeActions.Models
             {
                 return null;
             }
-            Utf8JsonRequestContent content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(edgeActionExecutionFilterPatch, ModelSerializationExtensions.WireOptions);
-            return content;
+            return RequestContent.Create(edgeActionExecutionFilterPatch, ModelSerializationExtensions.WireOptions);
         }
 
         /// <param name="writer"> The JSON writer. </param>

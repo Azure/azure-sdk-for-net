@@ -2,12 +2,14 @@
 // Licensed under the MIT License.
 
 using System;
+using System.ClientModel.Primitives;
 using System.Diagnostics.CodeAnalysis;
 using System.Threading.Tasks;
 
-namespace Azure.AI.Projects;
+namespace Azure.AI.Projects.Evaluation;
 
 [Experimental("AAIP001")]
+[CodeGenType("RedTeams")]
 public partial class RedTeams
 {
     /// <summary>

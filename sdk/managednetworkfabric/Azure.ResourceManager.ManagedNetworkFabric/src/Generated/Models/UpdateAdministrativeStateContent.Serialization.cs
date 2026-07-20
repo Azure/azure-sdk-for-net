@@ -10,13 +10,65 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.ManagedNetworkFabric;
 
 namespace Azure.ResourceManager.ManagedNetworkFabric.Models
 {
-    public partial class UpdateAdministrativeStateContent : IUtf8JsonSerializable, IJsonModel<UpdateAdministrativeStateContent>
+    /// <summary> Update administrative state on list of resources. </summary>
+    public partial class UpdateAdministrativeStateContent : UpdateAdministrativeStateOnResources, IJsonModel<UpdateAdministrativeStateContent>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<UpdateAdministrativeStateContent>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override UpdateAdministrativeStateOnResources PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<UpdateAdministrativeStateContent>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    {
+                        return DeserializeUpdateAdministrativeStateContent(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(UpdateAdministrativeStateContent)} does not support reading '{options.Format}' format.");
+            }
+        }
 
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<UpdateAdministrativeStateContent>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerManagedNetworkFabricContext.Default);
+                default:
+                    throw new FormatException($"The model {nameof(UpdateAdministrativeStateContent)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<UpdateAdministrativeStateContent>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        UpdateAdministrativeStateContent IPersistableModel<UpdateAdministrativeStateContent>.Create(BinaryData data, ModelReaderWriterOptions options) => (UpdateAdministrativeStateContent)PersistableModelCreateCore(data, options);
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<UpdateAdministrativeStateContent>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
+        /// <param name="updateAdministrativeStateContent"> The <see cref="UpdateAdministrativeStateContent"/> to serialize into <see cref="RequestContent"/>. </param>
+        internal static RequestContent ToRequestContent(UpdateAdministrativeStateContent updateAdministrativeStateContent)
+        {
+            if (updateAdministrativeStateContent == null)
+            {
+                return null;
+            }
+            return RequestContent.Create(updateAdministrativeStateContent, ModelSerializationExtensions.WireOptions);
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<UpdateAdministrativeStateContent>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
@@ -28,12 +80,11 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<UpdateAdministrativeStateContent>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<UpdateAdministrativeStateContent>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(UpdateAdministrativeStateContent)} does not support writing '{format}' format.");
             }
-
             base.JsonModelWriteCore(writer, options);
             if (Optional.IsDefined(State))
             {
@@ -42,49 +93,44 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
             }
         }
 
-        UpdateAdministrativeStateContent IJsonModel<UpdateAdministrativeStateContent>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        UpdateAdministrativeStateContent IJsonModel<UpdateAdministrativeStateContent>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => (UpdateAdministrativeStateContent)JsonModelCreateCore(ref reader, options);
+
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override UpdateAdministrativeStateOnResources JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<UpdateAdministrativeStateContent>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<UpdateAdministrativeStateContent>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(UpdateAdministrativeStateContent)} does not support reading '{format}' format.");
             }
-
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
             return DeserializeUpdateAdministrativeStateContent(document.RootElement, options);
         }
 
-        internal static UpdateAdministrativeStateContent DeserializeUpdateAdministrativeStateContent(JsonElement element, ModelReaderWriterOptions options = null)
+        /// <param name="element"> The JSON element to deserialize. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        internal static UpdateAdministrativeStateContent DeserializeUpdateAdministrativeStateContent(JsonElement element, ModelReaderWriterOptions options)
         {
-            options ??= ModelSerializationExtensions.WireOptions;
-
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            AdministrativeEnableState? state = default;
             IList<ResourceIdentifier> resourceIds = default;
-            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
-            foreach (var property in element.EnumerateObject())
+            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            AdministrativeEnableState? state = default;
+            foreach (var prop in element.EnumerateObject())
             {
-                if (property.NameEquals("state"u8))
+                if (prop.NameEquals("resourceIds"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    state = new AdministrativeEnableState(property.Value.GetString());
-                    continue;
-                }
-                if (property.NameEquals("resourceIds"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
                     List<ResourceIdentifier> array = new List<ResourceIdentifier>();
-                    foreach (var item in property.Value.EnumerateArray())
+                    foreach (var item in prop.Value.EnumerateArray())
                     {
                         if (item.ValueKind == JsonValueKind.Null)
                         {
@@ -98,44 +144,21 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                     resourceIds = array;
                     continue;
                 }
+                if (prop.NameEquals("state"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    state = new AdministrativeEnableState(prop.Value.GetString());
+                    continue;
+                }
                 if (options.Format != "W")
                 {
-                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = rawDataDictionary;
-            return new UpdateAdministrativeStateContent(resourceIds ?? new ChangeTrackingList<ResourceIdentifier>(), serializedAdditionalRawData, state);
+            return new UpdateAdministrativeStateContent(resourceIds ?? new ChangeTrackingList<ResourceIdentifier>(), additionalBinaryDataProperties, state);
         }
-
-        BinaryData IPersistableModel<UpdateAdministrativeStateContent>.Write(ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<UpdateAdministrativeStateContent>)this).GetFormatFromOptions(options) : options.Format;
-
-            switch (format)
-            {
-                case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerManagedNetworkFabricContext.Default);
-                default:
-                    throw new FormatException($"The model {nameof(UpdateAdministrativeStateContent)} does not support writing '{options.Format}' format.");
-            }
-        }
-
-        UpdateAdministrativeStateContent IPersistableModel<UpdateAdministrativeStateContent>.Create(BinaryData data, ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<UpdateAdministrativeStateContent>)this).GetFormatFromOptions(options) : options.Format;
-
-            switch (format)
-            {
-                case "J":
-                    {
-                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
-                        return DeserializeUpdateAdministrativeStateContent(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(UpdateAdministrativeStateContent)} does not support reading '{options.Format}' format.");
-            }
-        }
-
-        string IPersistableModel<UpdateAdministrativeStateContent>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

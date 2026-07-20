@@ -7,43 +7,15 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.NetworkCloud;
 
 namespace Azure.ResourceManager.NetworkCloud.Models
 {
     /// <summary> ActionState represents the state of an action taken against a resource. This can be used to represent both explicitly and implicitly defined action types. </summary>
     public partial class NetworkCloudActionState
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="NetworkCloudActionState"/>. </summary>
         internal NetworkCloudActionState()
@@ -59,8 +31,8 @@ namespace Azure.ResourceManager.NetworkCloud.Models
         /// <param name="startTime"> The timestamp of when the action began, in ISO 8601 format. </param>
         /// <param name="status"> The status of the action. </param>
         /// <param name="stepStates"> The ordered list of the individual steps which make up the action. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal NetworkCloudActionState(string actionType, string correlationId, DateTimeOffset? endOn, string message, string startTime, NetworkCloudActionStateStatus? status, IReadOnlyList<NetworkCloudStepState> stepStates, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal NetworkCloudActionState(string actionType, string correlationId, DateTimeOffset? endOn, string message, string startTime, NetworkCloudActionStateStatus? status, IReadOnlyList<NetworkCloudStepState> stepStates, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             ActionType = actionType;
             CorrelationId = correlationId;
@@ -69,21 +41,27 @@ namespace Azure.ResourceManager.NetworkCloud.Models
             StartTime = startTime;
             Status = status;
             StepStates = stepStates;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> The representation of the action for which this is a status. Matches ARM resource action format when the action is an ARM-based action. </summary>
         public string ActionType { get; }
+
         /// <summary> The correlation ID for the original action request. Omitted if there is no related correlation ID. </summary>
         public string CorrelationId { get; }
+
         /// <summary> The timestamp of when the action reached its final, terminal state. Uses ISO 8601 format. </summary>
         public DateTimeOffset? EndOn { get; }
+
         /// <summary> The description providing additional context for the status value. May be empty or contain guidance in the case of a failure. </summary>
         public string Message { get; }
+
         /// <summary> The timestamp of when the action began, in ISO 8601 format. </summary>
         public string StartTime { get; }
+
         /// <summary> The status of the action. </summary>
         public NetworkCloudActionStateStatus? Status { get; }
+
         /// <summary> The ordered list of the individual steps which make up the action. </summary>
         public IReadOnlyList<NetworkCloudStepState> StepStates { get; }
     }

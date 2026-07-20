@@ -7,43 +7,15 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.NetApp;
 
 namespace Azure.ResourceManager.NetApp.Models
 {
     /// <summary> The full path to a volume that is to be migrated into ANF. Required for Migration volumes. </summary>
     public partial class RemotePath
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="RemotePath"/>. </summary>
         /// <param name="externalHostName"> The Path to a ONTAP Host. </param>
@@ -65,24 +37,21 @@ namespace Azure.ResourceManager.NetApp.Models
         /// <param name="externalHostName"> The Path to a ONTAP Host. </param>
         /// <param name="serverName"> The name of a server on the ONTAP Host. </param>
         /// <param name="volumeName"> The name of a volume on the server. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal RemotePath(string externalHostName, string serverName, string volumeName, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal RemotePath(string externalHostName, string serverName, string volumeName, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             ExternalHostName = externalHostName;
             ServerName = serverName;
             VolumeName = volumeName;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
-        }
-
-        /// <summary> Initializes a new instance of <see cref="RemotePath"/> for deserialization. </summary>
-        internal RemotePath()
-        {
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> The Path to a ONTAP Host. </summary>
         public string ExternalHostName { get; set; }
+
         /// <summary> The name of a server on the ONTAP Host. </summary>
         public string ServerName { get; set; }
+
         /// <summary> The name of a volume on the server. </summary>
         public string VolumeName { get; set; }
     }

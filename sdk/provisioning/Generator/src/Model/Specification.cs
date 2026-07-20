@@ -31,7 +31,27 @@ public abstract partial class Specification : ModelBase
 
     internal bool IgnorePropertiesWithoutPath { get; }
 
-    public Specification(string name, Type armEntryPoint, bool ignorePropertiesWithoutPath = false)
+    /// <summary>
+    /// Additional assemblies whose types are allowed to be generated as models.
+    /// Override in derived specifications when the ARM library depends on types
+    /// from external assemblies (e.g., Azure.Core.Expressions.DataFactory).
+    /// </summary>
+    protected virtual IReadOnlyList<Assembly> AdditionalAllowedAssemblies { get; } = [];
+
+    /// <summary>
+    /// Resolves a generic type from an external assembly to its inner type.
+    /// For example, <c>DataFactoryElement&lt;T&gt;</c> should be resolved to <c>T</c>.
+    /// Return null if the type should not be unwrapped.
+    /// </summary>
+    protected internal virtual Type? ResolveExternalGenericType(Type armType) => null;
+
+    /// <summary>
+    /// The service directory under sdk/ where the generated library is placed.
+    /// For example, "keyvault" places the library at sdk/keyvault/Azure.Provisioning.KeyVault/.
+    /// </summary>
+    internal string ServiceDirectory { get; }
+
+    public Specification(string name, Type armEntryPoint, string serviceDirectory, bool ignorePropertiesWithoutPath = false)
         : base(
             name: name,
             ns: $"Azure.Provisioning.{name}",
@@ -41,6 +61,7 @@ public abstract partial class Specification : ModelBase
         DocComments = new XmlDocCommentReader(armEntryPoint.Assembly);
         TypeRegistry.Register(this);
         IgnorePropertiesWithoutPath = ignorePropertiesWithoutPath;
+        ServiceDirectory = serviceDirectory;
     }
 
     public override string ToString() => $"<Specification {Name}>";
@@ -51,6 +72,7 @@ public abstract partial class Specification : ModelBase
         Customize();
         RemovePropertiesWithoutPath();
         ResolveVersions();
+        ResolveExperimentalFlags();
         Lint();
         ContextualException.WithContext(
             $"Generating all types for {Namespace}",
@@ -100,6 +122,85 @@ public abstract partial class Specification : ModelBase
                 {
                     model.Properties.RemoveAt(i);
                 }
+            }
+        }
+    }
+
+    /// <summary>
+    /// Mark resources whose default API version is preview and models used exclusively
+    /// by preview resources as experimental.
+    /// </summary>
+    private void ResolveExperimentalFlags()
+    {
+        // Mark resources whose default API version is a preview version as experimental
+        foreach (Resource resource in Resources)
+        {
+            if (resource.DefaultResourceVersion is not null &&
+                resource.DefaultResourceVersion.Contains("-preview", StringComparison.OrdinalIgnoreCase))
+            {
+                resource.IsExperimental = true;
+            }
+        }
+
+        // Collect all models reachable from stable (non-experimental) resources
+        HashSet<ModelBase> stableModels = [];
+        foreach (Resource resource in Resources.Where(r => !r.IsExperimental))
+        {
+            CollectReachableModels(resource, stableModels);
+        }
+
+        // Collect all models reachable from experimental resources
+        HashSet<ModelBase> experimentalModels = [];
+        foreach (Resource resource in Resources.Where(r => r.IsExperimental))
+        {
+            CollectReachableModels(resource, experimentalModels);
+        }
+
+        // A model is experimental only if it is reachable from an experimental
+        // resource and NOT reachable from any stable resource.
+        foreach (ModelBase model in ModelNameMapping.Values)
+        {
+            if (model is Resource) { continue; } // Resources are already handled above
+            if (experimentalModels.Contains(model) && !stableModels.Contains(model))
+            {
+                model.IsExperimental = true;
+            }
+        }
+    }
+
+    /// <summary>
+    /// Recursively collect all model types reachable from a type's properties.
+    /// </summary>
+    private static void CollectReachableModels(ModelBase type, HashSet<ModelBase> visited)
+    {
+        if (!visited.Add(type)) { return; }
+
+        if (type is TypeModel typeModel)
+        {
+            if (typeModel.BaseType is not null)
+            {
+                CollectReachableModels(typeModel.BaseType, visited);
+            }
+            foreach (Property property in typeModel.Properties)
+            {
+                if (property.PropertyType is not null)
+                {
+                    CollectReachableModels(property.PropertyType, visited);
+                }
+            }
+        }
+        else if (type is ListModel list)
+        {
+            if (list.ElementType is not null)
+            {
+                CollectReachableModels(list.ElementType, visited);
+            }
+        }
+        else if (type is DictionaryModel dict)
+        {
+            if (dict.ElementType is not null)
+            {
+                CollectReachableModels(dict.ElementType, visited);
             }
         }
     }

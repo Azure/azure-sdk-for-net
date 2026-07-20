@@ -6,45 +6,35 @@
 #nullable disable
 
 using System;
-using System.Globalization;
+using System.Diagnostics;
 using System.Threading;
 using System.Threading.Tasks;
+using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
+using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.DevCenter
 {
     /// <summary>
-    /// A Class representing a HealthCheckStatusDetail along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="HealthCheckStatusDetailResource"/>
-    /// from an instance of <see cref="ArmClient"/> using the GetHealthCheckStatusDetailResource method.
+    /// A class representing a HealthCheckStatusDetail along with the instance operations that can be performed on it.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="HealthCheckStatusDetailResource"/> from an instance of <see cref="ArmClient"/> using the GetResource method.
     /// Otherwise you can get one from its parent resource <see cref="DevCenterNetworkConnectionResource"/> using the GetHealthCheckStatusDetail method.
     /// </summary>
     public partial class HealthCheckStatusDetailResource : ArmResource
     {
-        /// <summary> Generate the resource identifier of a <see cref="HealthCheckStatusDetailResource"/> instance. </summary>
-        /// <param name="subscriptionId"> The subscriptionId. </param>
-        /// <param name="resourceGroupName"> The resourceGroupName. </param>
-        /// <param name="networkConnectionName"> The networkConnectionName. </param>
-        public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string networkConnectionName)
-        {
-            var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DevCenter/networkConnections/{networkConnectionName}/healthChecks/latest";
-            return new ResourceIdentifier(resourceId);
-        }
-
-        private readonly ClientDiagnostics _healthCheckStatusDetailNetworkConnectionsClientDiagnostics;
-        private readonly NetworkConnectionsRestOperations _healthCheckStatusDetailNetworkConnectionsRestClient;
+        private readonly ClientDiagnostics _networkConnectionsClientDiagnostics;
+        private readonly NetworkConnections _networkConnectionsRestClient;
         private readonly HealthCheckStatusDetailData _data;
-
         /// <summary> Gets the resource type for the operations. </summary>
         public static readonly ResourceType ResourceType = "Microsoft.DevCenter/networkConnections/healthChecks";
 
-        /// <summary> Initializes a new instance of the <see cref="HealthCheckStatusDetailResource"/> class for mocking. </summary>
+        /// <summary> Initializes a new instance of HealthCheckStatusDetailResource for mocking. </summary>
         protected HealthCheckStatusDetailResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref="HealthCheckStatusDetailResource"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="HealthCheckStatusDetailResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal HealthCheckStatusDetailResource(ArmClient client, HealthCheckStatusDetailData data) : this(client, data.Id)
@@ -53,71 +43,92 @@ namespace Azure.ResourceManager.DevCenter
             _data = data;
         }
 
-        /// <summary> Initializes a new instance of the <see cref="HealthCheckStatusDetailResource"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="HealthCheckStatusDetailResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal HealthCheckStatusDetailResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _healthCheckStatusDetailNetworkConnectionsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.DevCenter", ResourceType.Namespace, Diagnostics);
-            TryGetApiVersion(ResourceType, out string healthCheckStatusDetailNetworkConnectionsApiVersion);
-            _healthCheckStatusDetailNetworkConnectionsRestClient = new NetworkConnectionsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, healthCheckStatusDetailNetworkConnectionsApiVersion);
-#if DEBUG
-			ValidateResourceId(Id);
-#endif
+            TryGetApiVersion(ResourceType, out string healthCheckStatusDetailApiVersion);
+            _networkConnectionsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.DevCenter", ResourceType.Namespace, Diagnostics);
+            _networkConnectionsRestClient = new NetworkConnections(_networkConnectionsClientDiagnostics, Pipeline, Endpoint, healthCheckStatusDetailApiVersion ?? "2026-01-01-preview");
+            ValidateResourceId(id);
         }
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }
 
         /// <summary> Gets the data representing this Feature. </summary>
-        /// <exception cref="InvalidOperationException"> Throws if there is no data loaded in the current instance. </exception>
         public virtual HealthCheckStatusDetailData Data
         {
             get
             {
                 if (!HasData)
+                {
                     throw new InvalidOperationException("The current instance does not have data, you must call Get first.");
+                }
                 return _data;
             }
         }
 
+        /// <summary> Generate the resource identifier for this resource. </summary>
+        /// <param name="subscriptionId"> The subscriptionId. </param>
+        /// <param name="resourceGroupName"> The resourceGroupName. </param>
+        /// <param name="networkConnectionName"> The networkConnectionName. </param>
+        public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string networkConnectionName)
+        {
+            string resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DevCenter/networkConnections/{networkConnectionName}/healthChecks/latest";
+            return new ResourceIdentifier(resourceId);
+        }
+
+        /// <param name="id"></param>
+        [Conditional("DEBUG")]
         internal static void ValidateResourceId(ResourceIdentifier id)
         {
             if (id.ResourceType != ResourceType)
-                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), nameof(id));
+            {
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), nameof(id));
+            }
         }
 
         /// <summary>
         /// Gets health check status details.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DevCenter/networkConnections/{networkConnectionName}/healthChecks/latest</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DevCenter/networkConnections/{networkConnectionName}/healthChecks/latest. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>NetworkConnections_GetHealthDetails</description>
+        /// <term> Operation Id. </term>
+        /// <description> HealthCheckStatusDetailsOperationGroup_GetHealthDetails. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2023-04-01</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-01-01-preview. </description>
         /// </item>
         /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="HealthCheckStatusDetailResource"/></description>
+        /// <term> Resource. </term>
+        /// <description> <see cref="HealthCheckStatusDetailResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<Response<HealthCheckStatusDetailResource>> GetAsync(CancellationToken cancellationToken = default)
         {
-            using var scope = _healthCheckStatusDetailNetworkConnectionsClientDiagnostics.CreateScope("HealthCheckStatusDetailResource.Get");
+            using DiagnosticScope scope = _networkConnectionsClientDiagnostics.CreateScope("HealthCheckStatusDetailResource.Get");
             scope.Start();
             try
             {
-                var response = await _healthCheckStatusDetailNetworkConnectionsRestClient.GetHealthDetailsAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _networkConnectionsRestClient.CreateGetHealthDetailsRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, context);
+                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                Response<HealthCheckStatusDetailData> response = Response.FromValue(HealthCheckStatusDetailData.FromResponse(result), result);
                 if (response.Value == null)
+                {
                     throw new RequestFailedException(response.GetRawResponse());
+                }
                 return Response.FromValue(new HealthCheckStatusDetailResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -131,33 +142,41 @@ namespace Azure.ResourceManager.DevCenter
         /// Gets health check status details.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DevCenter/networkConnections/{networkConnectionName}/healthChecks/latest</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DevCenter/networkConnections/{networkConnectionName}/healthChecks/latest. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>NetworkConnections_GetHealthDetails</description>
+        /// <term> Operation Id. </term>
+        /// <description> HealthCheckStatusDetailsOperationGroup_GetHealthDetails. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2023-04-01</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-01-01-preview. </description>
         /// </item>
         /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="HealthCheckStatusDetailResource"/></description>
+        /// <term> Resource. </term>
+        /// <description> <see cref="HealthCheckStatusDetailResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response<HealthCheckStatusDetailResource> Get(CancellationToken cancellationToken = default)
         {
-            using var scope = _healthCheckStatusDetailNetworkConnectionsClientDiagnostics.CreateScope("HealthCheckStatusDetailResource.Get");
+            using DiagnosticScope scope = _networkConnectionsClientDiagnostics.CreateScope("HealthCheckStatusDetailResource.Get");
             scope.Start();
             try
             {
-                var response = _healthCheckStatusDetailNetworkConnectionsRestClient.GetHealthDetails(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _networkConnectionsRestClient.CreateGetHealthDetailsRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, context);
+                Response result = Pipeline.ProcessMessage(message, context);
+                Response<HealthCheckStatusDetailData> response = Response.FromValue(HealthCheckStatusDetailData.FromResponse(result), result);
                 if (response.Value == null)
+                {
                     throw new RequestFailedException(response.GetRawResponse());
+                }
                 return Response.FromValue(new HealthCheckStatusDetailResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)

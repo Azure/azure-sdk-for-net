@@ -13,150 +13,279 @@ using Azure.ResourceManager.SecurityCenter.Models;
 
 namespace Azure.ResourceManager.SecurityCenter
 {
-    /// <summary>
-    /// A class representing the GovernanceRule data model.
-    /// Governance rule over a given scope
-    /// </summary>
+    /// <summary> Governance rule over a given scope. </summary>
     public partial class GovernanceRuleData : ResourceData
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="GovernanceRuleData"/>. </summary>
         public GovernanceRuleData()
         {
-            ExcludedScopes = new ChangeTrackingList<string>();
-            ConditionSets = new ChangeTrackingList<BinaryData>();
         }
 
         /// <summary> Initializes a new instance of <see cref="GovernanceRuleData"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="tenantId"> The tenantId (GUID). </param>
-        /// <param name="displayName"> Display name of the governance rule. </param>
-        /// <param name="description"> Description of the governance rule. </param>
-        /// <param name="remediationTimeframe"> Governance rule remediation timeframe - this is the time that will affect on the grace-period duration e.g. 7.00:00:00 - means 7 days. </param>
-        /// <param name="isGracePeriod"> Defines whether there is a grace period on the governance rule. </param>
-        /// <param name="rulePriority"> The governance rule priority, priority to the lower number. Rules with the same priority on the same scope will not be allowed. </param>
-        /// <param name="isDisabled"> Defines whether the rule is active/inactive. </param>
-        /// <param name="ruleType"> The rule type of the governance rule, defines the source of the rule e.g. Integrated. </param>
-        /// <param name="sourceResourceType"> The governance rule source, what the rule affects, e.g. Assessments. </param>
-        /// <param name="excludedScopes"> Excluded scopes, filter out the descendants of the scope (on management scopes). </param>
-        /// <param name="conditionSets"> The governance rule conditionSets - see examples. </param>
-        /// <param name="includeMemberScopes"> Defines whether the rule is management scope rule (master connector as a single scope or management scope). </param>
-        /// <param name="ownerSource"> The owner source for the governance rule - e.g. Manually by user@contoso.com - see example. </param>
-        /// <param name="governanceEmailNotification"> The email notifications settings for the governance rule, states whether to disable notifications for mangers and owners. </param>
-        /// <param name="metadata"> The governance rule metadata. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal GovernanceRuleData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, Guid? tenantId, string displayName, string description, string remediationTimeframe, bool? isGracePeriod, int? rulePriority, bool? isDisabled, GovernanceRuleType? ruleType, GovernanceRuleSourceResourceType? sourceResourceType, IList<string> excludedScopes, IList<BinaryData> conditionSets, bool? includeMemberScopes, GovernanceRuleOwnerSource ownerSource, GovernanceRuleEmailNotification governanceEmailNotification, GovernanceRuleMetadata metadata, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="properties"> Properties of a governance rule. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal GovernanceRuleData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, GovernanceRuleProperties properties, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(id, name, resourceType, systemData)
         {
-            TenantId = tenantId;
-            DisplayName = displayName;
-            Description = description;
-            RemediationTimeframe = remediationTimeframe;
-            IsGracePeriod = isGracePeriod;
-            RulePriority = rulePriority;
-            IsDisabled = isDisabled;
-            RuleType = ruleType;
-            SourceResourceType = sourceResourceType;
-            ExcludedScopes = excludedScopes;
-            ConditionSets = conditionSets;
-            IncludeMemberScopes = includeMemberScopes;
-            OwnerSource = ownerSource;
-            GovernanceEmailNotification = governanceEmailNotification;
-            Metadata = metadata;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            Properties = properties;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
+        /// <summary> Properties of a governance rule. </summary>
+        internal GovernanceRuleProperties Properties { get; set; }
+
         /// <summary> The tenantId (GUID). </summary>
-        public Guid? TenantId { get; }
+        public string TenantId
+        {
+            get
+            {
+                return Properties is null ? default : Properties.TenantId;
+            }
+        }
+
         /// <summary> Display name of the governance rule. </summary>
-        public string DisplayName { get; set; }
+        public string DisplayName
+        {
+            get
+            {
+                return Properties is null ? default : Properties.DisplayName;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new GovernanceRuleProperties();
+                }
+                Properties.DisplayName = value;
+            }
+        }
+
         /// <summary> Description of the governance rule. </summary>
-        public string Description { get; set; }
+        public string Description
+        {
+            get
+            {
+                return Properties is null ? default : Properties.Description;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new GovernanceRuleProperties();
+                }
+                Properties.Description = value;
+            }
+        }
+
         /// <summary> Governance rule remediation timeframe - this is the time that will affect on the grace-period duration e.g. 7.00:00:00 - means 7 days. </summary>
-        public string RemediationTimeframe { get; set; }
+        public string RemediationTimeframe
+        {
+            get
+            {
+                return Properties is null ? default : Properties.RemediationTimeframe;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new GovernanceRuleProperties();
+                }
+                Properties.RemediationTimeframe = value;
+            }
+        }
+
         /// <summary> Defines whether there is a grace period on the governance rule. </summary>
-        public bool? IsGracePeriod { get; set; }
+        public bool? IsGracePeriod
+        {
+            get
+            {
+                return Properties is null ? default : Properties.IsGracePeriod;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new GovernanceRuleProperties();
+                }
+                Properties.IsGracePeriod = value;
+            }
+        }
+
         /// <summary> The governance rule priority, priority to the lower number. Rules with the same priority on the same scope will not be allowed. </summary>
-        public int? RulePriority { get; set; }
+        public int? RulePriority
+        {
+            get
+            {
+                return Properties is null ? default : Properties.RulePriority;
+            }
+            set
+            {
+                if (value.HasValue)
+                {
+                    if (Properties is null)
+                    {
+                        Properties = new GovernanceRuleProperties();
+                    }
+                    Properties.RulePriority = value.Value;
+                }
+            }
+        }
+
         /// <summary> Defines whether the rule is active/inactive. </summary>
-        public bool? IsDisabled { get; set; }
+        public bool? IsDisabled
+        {
+            get
+            {
+                return Properties is null ? default : Properties.IsDisabled;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new GovernanceRuleProperties();
+                }
+                Properties.IsDisabled = value;
+            }
+        }
+
         /// <summary> The rule type of the governance rule, defines the source of the rule e.g. Integrated. </summary>
-        public GovernanceRuleType? RuleType { get; set; }
+        public GovernanceRuleType? RuleType
+        {
+            get
+            {
+                return Properties is null ? default : Properties.RuleType;
+            }
+            set
+            {
+                if (value.HasValue)
+                {
+                    if (Properties is null)
+                    {
+                        Properties = new GovernanceRuleProperties();
+                    }
+                    Properties.RuleType = value.Value;
+                }
+            }
+        }
+
         /// <summary> The governance rule source, what the rule affects, e.g. Assessments. </summary>
-        public GovernanceRuleSourceResourceType? SourceResourceType { get; set; }
+        public GovernanceRuleSourceResourceType? SourceResourceType
+        {
+            get
+            {
+                return Properties is null ? default : Properties.SourceResourceType;
+            }
+            set
+            {
+                if (value.HasValue)
+                {
+                    if (Properties is null)
+                    {
+                        Properties = new GovernanceRuleProperties();
+                    }
+                    Properties.SourceResourceType = value.Value;
+                }
+            }
+        }
+
         /// <summary> Excluded scopes, filter out the descendants of the scope (on management scopes). </summary>
-        public IList<string> ExcludedScopes { get; }
-        /// <summary>
-        /// The governance rule conditionSets - see examples
-        /// <para>
-        /// To assign an object to the element of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        public IList<BinaryData> ConditionSets { get; }
+        public IList<string> ExcludedScopes
+        {
+            get
+            {
+                if (Properties is null)
+                {
+                    Properties = new GovernanceRuleProperties();
+                }
+                return Properties.ExcludedScopes;
+            }
+        }
+
+        /// <summary> The governance rule conditionSets - see examples. </summary>
+        public IList<BinaryData> ConditionSets
+        {
+            get
+            {
+                if (Properties is null)
+                {
+                    Properties = new GovernanceRuleProperties();
+                }
+                return Properties.ConditionSets;
+            }
+        }
+
         /// <summary> Defines whether the rule is management scope rule (master connector as a single scope or management scope). </summary>
-        public bool? IncludeMemberScopes { get; set; }
+        public bool? IsIncludeMemberScopes
+        {
+            get
+            {
+                return Properties is null ? default : Properties.IsIncludeMemberScopes;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new GovernanceRuleProperties();
+                }
+                Properties.IsIncludeMemberScopes = value;
+            }
+        }
+
         /// <summary> The owner source for the governance rule - e.g. Manually by user@contoso.com - see example. </summary>
-        public GovernanceRuleOwnerSource OwnerSource { get; set; }
+        public GovernanceRuleOwnerSource OwnerSource
+        {
+            get
+            {
+                return Properties is null ? default : Properties.OwnerSource;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new GovernanceRuleProperties();
+                }
+                Properties.OwnerSource = value;
+            }
+        }
+
         /// <summary> The email notifications settings for the governance rule, states whether to disable notifications for mangers and owners. </summary>
-        public GovernanceRuleEmailNotification GovernanceEmailNotification { get; set; }
+        public GovernanceRuleEmailNotification GovernanceEmailNotification
+        {
+            get
+            {
+                return Properties is null ? default : Properties.GovernanceEmailNotification;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new GovernanceRuleProperties();
+                }
+                Properties.GovernanceEmailNotification = value;
+            }
+        }
+
         /// <summary> The governance rule metadata. </summary>
-        public GovernanceRuleMetadata Metadata { get; set; }
+        public GovernanceRuleMetadata Metadata
+        {
+            get
+            {
+                return Properties is null ? default : Properties.Metadata;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new GovernanceRuleProperties();
+                }
+                Properties.Metadata = value;
+            }
+        }
     }
 }

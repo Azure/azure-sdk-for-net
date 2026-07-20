@@ -14,7 +14,7 @@ namespace Azure.Search.Documents.KnowledgeBases.Models
 {
     /// <summary>
     /// Base type for references.
-    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="KnowledgeBaseSearchIndexReference"/>, <see cref="KnowledgeBaseAzureBlobReference"/>, <see cref="KnowledgeBaseIndexedSharePointReference"/>, <see cref="KnowledgeBaseIndexedOneLakeReference"/>, <see cref="KnowledgeBaseWebReference"/>, and <see cref="KnowledgeBaseRemoteSharePointReference"/>.
+    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="KnowledgeBaseSearchIndexReference"/>, <see cref="KnowledgeBaseAzureBlobReference"/>, <see cref="KnowledgeBaseIndexedSharePointReference"/>, <see cref="KnowledgeBaseIndexedOneLakeReference"/>, <see cref="KnowledgeBaseWebReference"/>, <see cref="KnowledgeBaseRemoteSharePointReference"/>, <see cref="KnowledgeBaseWorkIQReference"/>, <see cref="KnowledgeBaseFabricDataAgentReference"/>, <see cref="KnowledgeBaseFabricOntologyReference"/>, <see cref="KnowledgeBaseMcpServerReference"/>, <see cref="KnowledgeBaseFileReference"/>, and <see cref="KnowledgeBaseIndexedSqlReference"/>.
     /// </summary>
     [PersistableModelProxy(typeof(UnknownKnowledgeBaseReference))]
     public abstract partial class KnowledgeBaseReference : IJsonModel<KnowledgeBaseReference>
@@ -174,6 +174,18 @@ namespace Azure.Search.Documents.KnowledgeBases.Models
                         return KnowledgeBaseWebReference.DeserializeKnowledgeBaseWebReference(element, options);
                     case "remoteSharePoint":
                         return KnowledgeBaseRemoteSharePointReference.DeserializeKnowledgeBaseRemoteSharePointReference(element, options);
+                    case "workIQ":
+                        return KnowledgeBaseWorkIQReference.DeserializeKnowledgeBaseWorkIQReference(element, options);
+                    case "fabricDataAgent":
+                        return KnowledgeBaseFabricDataAgentReference.DeserializeKnowledgeBaseFabricDataAgentReference(element, options);
+                    case "fabricOntology":
+                        return KnowledgeBaseFabricOntologyReference.DeserializeKnowledgeBaseFabricOntologyReference(element, options);
+                    case "mcpServer":
+                        return KnowledgeBaseMcpServerReference.DeserializeKnowledgeBaseMcpServerReference(element, options);
+                    case "file":
+                        return KnowledgeBaseFileReference.DeserializeKnowledgeBaseFileReference(element, options);
+                    case "indexedSql":
+                        return KnowledgeBaseIndexedSqlReference.DeserializeKnowledgeBaseIndexedSqlReference(element, options);
                 }
             }
             return UnknownKnowledgeBaseReference.DeserializeUnknownKnowledgeBaseReference(element, options);

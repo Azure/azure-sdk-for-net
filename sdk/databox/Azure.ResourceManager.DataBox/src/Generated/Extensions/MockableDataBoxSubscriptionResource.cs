@@ -72,7 +72,7 @@ namespace Azure.ResourceManager.DataBox.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<DataBoxJobData, DataBoxJobResource>(new JobResourcesGetAllAsyncCollectionResultOfT(JobResourcesRestClient, Id.SubscriptionId, skipToken, context), data => new DataBoxJobResource(Client, data));
+            return new AsyncPageableWrapper<DataBoxJobData, DataBoxJobResource>(new JobResourcesGetAllAsyncCollectionResultOfT(JobResourcesRestClient, Id.SubscriptionId, skipToken, context, "MockableDataBoxSubscriptionResource.GetDataBoxJobs"), data => new DataBoxJobResource(Client, data));
         }
 
         /// <summary>
@@ -101,7 +101,7 @@ namespace Azure.ResourceManager.DataBox.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<DataBoxJobData, DataBoxJobResource>(new JobResourcesGetAllCollectionResultOfT(JobResourcesRestClient, Id.SubscriptionId, skipToken, context), data => new DataBoxJobResource(Client, data));
+            return new PageableWrapper<DataBoxJobData, DataBoxJobResource>(new JobResourcesGetAllCollectionResultOfT(JobResourcesRestClient, Id.SubscriptionId, skipToken, context, "MockableDataBoxSubscriptionResource.GetDataBoxJobs"), data => new DataBoxJobResource(Client, data));
         }
 
         /// <summary>

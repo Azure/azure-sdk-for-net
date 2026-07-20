@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.ContainerServiceFleet
         {
             TryGetApiVersion(ResourceType, out string containerServiceFleetApiVersion);
             _fleetsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ContainerServiceFleet", ResourceType.Namespace, Diagnostics);
-            _fleetsRestClient = new Fleets(_fleetsClientDiagnostics, Pipeline, Endpoint, containerServiceFleetApiVersion ?? "2025-08-01-preview");
+            _fleetsRestClient = new Fleets(_fleetsClientDiagnostics, Pipeline, Endpoint, containerServiceFleetApiVersion ?? "2026-03-02-preview");
             ValidateResourceId(id);
         }
 
@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.ContainerServiceFleet
         {
             if (id.ResourceType != ResourceType)
             {
-                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), id);
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), nameof(id));
             }
         }
 
@@ -106,7 +106,7 @@ namespace Azure.ResourceManager.ContainerServiceFleet
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-08-01-preview. </description>
+        /// <description> 2026-03-02-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -154,7 +154,7 @@ namespace Azure.ResourceManager.ContainerServiceFleet
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-08-01-preview. </description>
+        /// <description> 2026-03-02-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -202,7 +202,7 @@ namespace Azure.ResourceManager.ContainerServiceFleet
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-08-01-preview. </description>
+        /// <description> 2026-03-02-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -230,12 +230,13 @@ namespace Azure.ResourceManager.ContainerServiceFleet
                 HttpMessage message = _fleetsRestClient.CreateUpdateAsyncRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, ContainerServiceFleetPatch.ToRequestContent(patch), ifMatch, context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 ContainerServiceFleetArmOperation<ContainerServiceFleetResource> operation = new ContainerServiceFleetArmOperation<ContainerServiceFleetResource>(
-                    new ContainerServiceFleetOperationSource(Client),
+                    new ContainerServiceFleetResourceOperationSource(Client),
                     _fleetsClientDiagnostics,
                     Pipeline,
                     message.Request,
                     response,
-                    OperationFinalStateVia.Location);
+                    OperationFinalStateVia.Location,
+                    true);
                 if (waitUntil == WaitUntil.Completed)
                 {
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
@@ -262,7 +263,7 @@ namespace Azure.ResourceManager.ContainerServiceFleet
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-08-01-preview. </description>
+        /// <description> 2026-03-02-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -290,12 +291,13 @@ namespace Azure.ResourceManager.ContainerServiceFleet
                 HttpMessage message = _fleetsRestClient.CreateUpdateAsyncRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, ContainerServiceFleetPatch.ToRequestContent(patch), ifMatch, context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 ContainerServiceFleetArmOperation<ContainerServiceFleetResource> operation = new ContainerServiceFleetArmOperation<ContainerServiceFleetResource>(
-                    new ContainerServiceFleetOperationSource(Client),
+                    new ContainerServiceFleetResourceOperationSource(Client),
                     _fleetsClientDiagnostics,
                     Pipeline,
                     message.Request,
                     response,
-                    OperationFinalStateVia.Location);
+                    OperationFinalStateVia.Location,
+                    true);
                 if (waitUntil == WaitUntil.Completed)
                 {
                     operation.WaitForCompletion(cancellationToken);
@@ -322,7 +324,7 @@ namespace Azure.ResourceManager.ContainerServiceFleet
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-08-01-preview. </description>
+        /// <description> 2026-03-02-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -345,7 +347,13 @@ namespace Azure.ResourceManager.ContainerServiceFleet
                 };
                 HttpMessage message = _fleetsRestClient.CreateDeleteRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, ifMatch, context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                ContainerServiceFleetArmOperation operation = new ContainerServiceFleetArmOperation(_fleetsClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
+                ContainerServiceFleetArmOperation operation = new ContainerServiceFleetArmOperation(
+                    _fleetsClientDiagnostics,
+                    Pipeline,
+                    message.Request,
+                    response,
+                    OperationFinalStateVia.Location,
+                    true);
                 if (waitUntil == WaitUntil.Completed)
                 {
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
@@ -372,7 +380,7 @@ namespace Azure.ResourceManager.ContainerServiceFleet
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-08-01-preview. </description>
+        /// <description> 2026-03-02-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -395,7 +403,13 @@ namespace Azure.ResourceManager.ContainerServiceFleet
                 };
                 HttpMessage message = _fleetsRestClient.CreateDeleteRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, ifMatch, context);
                 Response response = Pipeline.ProcessMessage(message, context);
-                ContainerServiceFleetArmOperation operation = new ContainerServiceFleetArmOperation(_fleetsClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
+                ContainerServiceFleetArmOperation operation = new ContainerServiceFleetArmOperation(
+                    _fleetsClientDiagnostics,
+                    Pipeline,
+                    message.Request,
+                    response,
+                    OperationFinalStateVia.Location,
+                    true);
                 if (waitUntil == WaitUntil.Completed)
                 {
                     operation.WaitForCompletionResponse(cancellationToken);
@@ -422,7 +436,7 @@ namespace Azure.ResourceManager.ContainerServiceFleet
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-08-01-preview. </description>
+        /// <description> 2026-03-02-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -470,7 +484,7 @@ namespace Azure.ResourceManager.ContainerServiceFleet
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-08-01-preview. </description>
+        /// <description> 2026-03-02-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -777,6 +791,39 @@ namespace Azure.ResourceManager.ContainerServiceFleet
                 scope.Failed(e);
                 throw;
             }
+        }
+
+        /// <summary> Gets a collection of ClusterMeshProfiles in the <see cref="ContainerServiceFleetResource"/>. </summary>
+        /// <returns> An object representing collection of ClusterMeshProfiles and their operations over a ClusterMeshProfileResource. </returns>
+        public virtual ClusterMeshProfileCollection GetClusterMeshProfiles()
+        {
+            return GetCachedClient(client => new ClusterMeshProfileCollection(client, Id));
+        }
+
+        /// <summary> Get a ClusterMeshProfile. </summary>
+        /// <param name="clusterMeshProfileName"> The name of the ClusterMeshProfile resource. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="clusterMeshProfileName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="clusterMeshProfileName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual async Task<Response<ClusterMeshProfileResource>> GetClusterMeshProfileAsync(string clusterMeshProfileName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(clusterMeshProfileName, nameof(clusterMeshProfileName));
+
+            return await GetClusterMeshProfiles().GetAsync(clusterMeshProfileName, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary> Get a ClusterMeshProfile. </summary>
+        /// <param name="clusterMeshProfileName"> The name of the ClusterMeshProfile resource. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="clusterMeshProfileName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="clusterMeshProfileName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual Response<ClusterMeshProfileResource> GetClusterMeshProfile(string clusterMeshProfileName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(clusterMeshProfileName, nameof(clusterMeshProfileName));
+
+            return GetClusterMeshProfiles().Get(clusterMeshProfileName, cancellationToken);
         }
 
         /// <summary> Gets a collection of ContainerServiceFleetMembers in the <see cref="ContainerServiceFleetResource"/>. </summary>

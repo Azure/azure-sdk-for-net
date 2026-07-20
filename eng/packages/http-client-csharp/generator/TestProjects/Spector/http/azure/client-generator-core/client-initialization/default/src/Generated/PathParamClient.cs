@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Diagnostics.CodeAnalysis;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure;
@@ -17,11 +18,16 @@ namespace Specs.Azure.ClientGenerator.Core.ClientInitialization.DefaultClient
     {
         protected PathParamClient() => throw null;
 
-        public PathParamClient(string blobName) : this(new Uri("http://localhost:3000"), blobName, new PathParamClientOptions()) => throw null;
+        public PathParamClient(string blobName) : this(new Uri("http://localhost:3000"), blobName, new SpecsAzureTcgcClientInitDefaultClientOptions()) => throw null;
 
-        public PathParamClient(string blobName, PathParamClientOptions options) : this(new Uri("http://localhost:3000"), blobName, options) => throw null;
+        public PathParamClient(string blobName, SpecsAzureTcgcClientInitDefaultClientOptions options) : this(new Uri("http://localhost:3000"), blobName, options) => throw null;
 
-        public PathParamClient(Uri endpoint, string blobName, PathParamClientOptions options) => throw null;
+        internal PathParamClient(HttpPipelinePolicy authenticationPolicy, Uri endpoint, string blobName, SpecsAzureTcgcClientInitDefaultClientOptions options) => throw null;
+
+        public PathParamClient(Uri endpoint, string blobName, SpecsAzureTcgcClientInitDefaultClientOptions options) : this(null, endpoint, blobName, options) => throw null;
+
+        [Experimental("SCME0002")]
+        public PathParamClient(PathParamClientSettings settings) : this(null, settings?.Endpoint, settings?.BlobName, settings?.Options) => throw null;
 
         public virtual HttpPipeline Pipeline => throw null;
 

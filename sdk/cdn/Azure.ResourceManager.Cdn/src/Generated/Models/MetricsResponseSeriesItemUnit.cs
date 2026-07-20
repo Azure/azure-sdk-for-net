@@ -7,51 +7,71 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.Cdn;
 
 namespace Azure.ResourceManager.Cdn.Models
 {
-    /// <summary> The MetricsResponseSeriesItemUnit. </summary>
+    /// <summary></summary>
     public readonly partial struct MetricsResponseSeriesItemUnit : IEquatable<MetricsResponseSeriesItemUnit>
     {
         private readonly string _value;
-
-        /// <summary> Initializes a new instance of <see cref="MetricsResponseSeriesItemUnit"/>. </summary>
-        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        public MetricsResponseSeriesItemUnit(string value)
-        {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
-
         private const string CountValue = "count";
         private const string BytesValue = "bytes";
         private const string BitsPerSecondValue = "bitsPerSecond";
         private const string MilliSecondsValue = "milliSeconds";
 
-        /// <summary> count. </summary>
+        /// <summary> Initializes a new instance of <see cref="MetricsResponseSeriesItemUnit"/>. </summary>
+        /// <param name="value"> The value. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
+        public MetricsResponseSeriesItemUnit(string value)
+        {
+            Argument.AssertNotNull(value, nameof(value));
+
+            _value = value;
+        }
+
+        /// <summary> Gets the Count. </summary>
         public static MetricsResponseSeriesItemUnit Count { get; } = new MetricsResponseSeriesItemUnit(CountValue);
-        /// <summary> bytes. </summary>
+
+        /// <summary> Gets the Bytes. </summary>
         public static MetricsResponseSeriesItemUnit Bytes { get; } = new MetricsResponseSeriesItemUnit(BytesValue);
-        /// <summary> bitsPerSecond. </summary>
+
+        /// <summary> Gets the BitsPerSecond. </summary>
         public static MetricsResponseSeriesItemUnit BitsPerSecond { get; } = new MetricsResponseSeriesItemUnit(BitsPerSecondValue);
-        /// <summary> milliSeconds. </summary>
+
+        /// <summary> Gets the MilliSeconds. </summary>
         public static MetricsResponseSeriesItemUnit MilliSeconds { get; } = new MetricsResponseSeriesItemUnit(MilliSecondsValue);
+
         /// <summary> Determines if two <see cref="MetricsResponseSeriesItemUnit"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(MetricsResponseSeriesItemUnit left, MetricsResponseSeriesItemUnit right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="MetricsResponseSeriesItemUnit"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(MetricsResponseSeriesItemUnit left, MetricsResponseSeriesItemUnit right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="MetricsResponseSeriesItemUnit"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="MetricsResponseSeriesItemUnit"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator MetricsResponseSeriesItemUnit(string value) => new MetricsResponseSeriesItemUnit(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="MetricsResponseSeriesItemUnit"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator MetricsResponseSeriesItemUnit?(string value) => value == null ? null : new MetricsResponseSeriesItemUnit(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is MetricsResponseSeriesItemUnit other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(MetricsResponseSeriesItemUnit other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

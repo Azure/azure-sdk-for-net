@@ -51,7 +51,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
         {
             if (id.ResourceType != ResourceGroupResource.ResourceType)
             {
-                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ResourceGroupResource.ResourceType), id);
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ResourceGroupResource.ResourceType), nameof(id));
             }
         }
 
@@ -94,12 +94,13 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
                 HttpMessage message = _sampleDatasRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, sampleDataName, SampleData.ToRequestContent(data), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 TestsArmOperation<SampleDataResource> operation = new TestsArmOperation<SampleDataResource>(
-                    new SampleDataOperationSource(Client),
+                    new SampleDataResourceOperationSource(Client),
                     _sampleDatasClientDiagnostics,
                     Pipeline,
                     message.Request,
                     response,
-                    OperationFinalStateVia.AzureAsyncOperation);
+                    OperationFinalStateVia.AzureAsyncOperation,
+                    true);
                 if (waitUntil == WaitUntil.Completed)
                 {
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
@@ -152,12 +153,13 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
                 HttpMessage message = _sampleDatasRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, sampleDataName, SampleData.ToRequestContent(data), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 TestsArmOperation<SampleDataResource> operation = new TestsArmOperation<SampleDataResource>(
-                    new SampleDataOperationSource(Client),
+                    new SampleDataResourceOperationSource(Client),
                     _sampleDatasClientDiagnostics,
                     Pipeline,
                     message.Request,
                     response,
-                    OperationFinalStateVia.AzureAsyncOperation);
+                    OperationFinalStateVia.AzureAsyncOperation,
+                    true);
                 if (waitUntil == WaitUntil.Completed)
                 {
                     operation.WaitForCompletion(cancellationToken);
@@ -294,7 +296,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<SampleData, SampleDataResource>(new SampleDatasGetAllAsyncCollectionResultOfT(_sampleDatasRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context), data => new SampleDataResource(Client, data));
+            return new AsyncPageableWrapper<SampleData, SampleDataResource>(new SampleDatasGetAllAsyncCollectionResultOfT(_sampleDatasRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "SampleDataCollection.GetAll"), data => new SampleDataResource(Client, data));
         }
 
         /// <summary>
@@ -322,7 +324,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<SampleData, SampleDataResource>(new SampleDatasGetAllCollectionResultOfT(_sampleDatasRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context), data => new SampleDataResource(Client, data));
+            return new PageableWrapper<SampleData, SampleDataResource>(new SampleDatasGetAllCollectionResultOfT(_sampleDatasRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "SampleDataCollection.GetAll"), data => new SampleDataResource(Client, data));
         }
 
         /// <summary>

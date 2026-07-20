@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.MongoDBAtlas
         {
             TryGetApiVersion(MongoDBAtlasOrganizationResource.ResourceType, out string mongoDBAtlasOrganizationApiVersion);
             _organizationsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.MongoDBAtlas", MongoDBAtlasOrganizationResource.ResourceType.Namespace, Diagnostics);
-            _organizationsRestClient = new Organizations(_organizationsClientDiagnostics, Pipeline, Endpoint, mongoDBAtlasOrganizationApiVersion ?? "2025-06-01");
+            _organizationsRestClient = new Organizations(_organizationsClientDiagnostics, Pipeline, Endpoint, mongoDBAtlasOrganizationApiVersion ?? "2026-03-01-preview");
             ValidateResourceId(id);
         }
 
@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.MongoDBAtlas
         {
             if (id.ResourceType != ResourceGroupResource.ResourceType)
             {
-                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ResourceGroupResource.ResourceType), id);
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ResourceGroupResource.ResourceType), nameof(id));
             }
         }
 
@@ -68,7 +68,7 @@ namespace Azure.ResourceManager.MongoDBAtlas
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-06-01. </description>
+        /// <description> 2026-03-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -94,7 +94,7 @@ namespace Azure.ResourceManager.MongoDBAtlas
                 HttpMessage message = _organizationsRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, organizationName, MongoDBAtlasOrganizationData.ToRequestContent(data), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 MongoDBAtlasArmOperation<MongoDBAtlasOrganizationResource> operation = new MongoDBAtlasArmOperation<MongoDBAtlasOrganizationResource>(
-                    new MongoDBAtlasOrganizationOperationSource(Client),
+                    new MongoDBAtlasOrganizationResourceOperationSource(Client),
                     _organizationsClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -126,7 +126,7 @@ namespace Azure.ResourceManager.MongoDBAtlas
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-06-01. </description>
+        /// <description> 2026-03-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -152,7 +152,7 @@ namespace Azure.ResourceManager.MongoDBAtlas
                 HttpMessage message = _organizationsRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, organizationName, MongoDBAtlasOrganizationData.ToRequestContent(data), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 MongoDBAtlasArmOperation<MongoDBAtlasOrganizationResource> operation = new MongoDBAtlasArmOperation<MongoDBAtlasOrganizationResource>(
-                    new MongoDBAtlasOrganizationOperationSource(Client),
+                    new MongoDBAtlasOrganizationResourceOperationSource(Client),
                     _organizationsClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -184,7 +184,7 @@ namespace Azure.ResourceManager.MongoDBAtlas
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-06-01. </description>
+        /// <description> 2026-03-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -233,7 +233,7 @@ namespace Azure.ResourceManager.MongoDBAtlas
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-06-01. </description>
+        /// <description> 2026-03-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -282,7 +282,7 @@ namespace Azure.ResourceManager.MongoDBAtlas
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-06-01. </description>
+        /// <description> 2026-03-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -294,7 +294,7 @@ namespace Azure.ResourceManager.MongoDBAtlas
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<MongoDBAtlasOrganizationData, MongoDBAtlasOrganizationResource>(new OrganizationsGetByResourceGroupAsyncCollectionResultOfT(_organizationsRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context), data => new MongoDBAtlasOrganizationResource(Client, data));
+            return new AsyncPageableWrapper<MongoDBAtlasOrganizationData, MongoDBAtlasOrganizationResource>(new OrganizationsGetByResourceGroupAsyncCollectionResultOfT(_organizationsRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "MongoDBAtlasOrganizationCollection.GetAll"), data => new MongoDBAtlasOrganizationResource(Client, data));
         }
 
         /// <summary>
@@ -310,7 +310,7 @@ namespace Azure.ResourceManager.MongoDBAtlas
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-06-01. </description>
+        /// <description> 2026-03-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -322,7 +322,7 @@ namespace Azure.ResourceManager.MongoDBAtlas
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<MongoDBAtlasOrganizationData, MongoDBAtlasOrganizationResource>(new OrganizationsGetByResourceGroupCollectionResultOfT(_organizationsRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context), data => new MongoDBAtlasOrganizationResource(Client, data));
+            return new PageableWrapper<MongoDBAtlasOrganizationData, MongoDBAtlasOrganizationResource>(new OrganizationsGetByResourceGroupCollectionResultOfT(_organizationsRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "MongoDBAtlasOrganizationCollection.GetAll"), data => new MongoDBAtlasOrganizationResource(Client, data));
         }
 
         /// <summary>
@@ -338,7 +338,7 @@ namespace Azure.ResourceManager.MongoDBAtlas
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-06-01. </description>
+        /// <description> 2026-03-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -395,7 +395,7 @@ namespace Azure.ResourceManager.MongoDBAtlas
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-06-01. </description>
+        /// <description> 2026-03-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -452,7 +452,7 @@ namespace Azure.ResourceManager.MongoDBAtlas
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-06-01. </description>
+        /// <description> 2026-03-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -513,7 +513,7 @@ namespace Azure.ResourceManager.MongoDBAtlas
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-06-01. </description>
+        /// <description> 2026-03-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>

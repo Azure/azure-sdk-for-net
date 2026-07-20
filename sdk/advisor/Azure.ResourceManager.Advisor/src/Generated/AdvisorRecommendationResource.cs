@@ -86,7 +86,7 @@ namespace Azure.ResourceManager.Advisor
         {
             if (id.ResourceType != ResourceType)
             {
-                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), id);
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), nameof(id));
             }
         }
 
@@ -122,7 +122,7 @@ namespace Azure.ResourceManager.Advisor
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _resourceRecommendationBasesRestClient.CreateGetRequest(Id.Parent, Id.Name, context);
+                HttpMessage message = _resourceRecommendationBasesRestClient.CreateGetRequest(Id.Parent.ToString(), Id.Name, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<AdvisorRecommendationData> response = Response.FromValue(AdvisorRecommendationData.FromResponse(result), result);
                 if (response.Value == null)
@@ -170,7 +170,7 @@ namespace Azure.ResourceManager.Advisor
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _resourceRecommendationBasesRestClient.CreateGetRequest(Id.Parent, Id.Name, context);
+                HttpMessage message = _resourceRecommendationBasesRestClient.CreateGetRequest(Id.Parent.ToString(), Id.Name, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<AdvisorRecommendationData> response = Response.FromValue(AdvisorRecommendationData.FromResponse(result), result);
                 if (response.Value == null)
@@ -222,7 +222,7 @@ namespace Azure.ResourceManager.Advisor
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _resourceRecommendationBasesRestClient.CreatePatchRequest(Id.Parent, Id.Name, AdvisorRecommendationPatch.ToRequestContent(patch), context);
+                HttpMessage message = _resourceRecommendationBasesRestClient.CreatePatchRequest(Id.Parent.ToString(), Id.Name, AdvisorRecommendationPatch.ToRequestContent(patch), context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<AdvisorRecommendationData> response = Response.FromValue(AdvisorRecommendationData.FromResponse(result), result);
                 if (response.Value == null)
@@ -274,7 +274,7 @@ namespace Azure.ResourceManager.Advisor
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _resourceRecommendationBasesRestClient.CreatePatchRequest(Id.Parent, Id.Name, AdvisorRecommendationPatch.ToRequestContent(patch), context);
+                HttpMessage message = _resourceRecommendationBasesRestClient.CreatePatchRequest(Id.Parent.ToString(), Id.Name, AdvisorRecommendationPatch.ToRequestContent(patch), context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<AdvisorRecommendationData> response = Response.FromValue(AdvisorRecommendationData.FromResponse(result), result);
                 if (response.Value == null)
@@ -290,7 +290,7 @@ namespace Azure.ResourceManager.Advisor
             }
         }
 
-        /// <summary> Gets a collection of AdvisorSuppressionContracts in the <see cref="ArmResource"/>. </summary>
+        /// <summary> Gets a collection of AdvisorSuppressionContracts in the <see cref="AdvisorRecommendationResource"/>. </summary>
         /// <returns> An object representing collection of AdvisorSuppressionContracts and their operations over a AdvisorSuppressionContractResource. </returns>
         public virtual AdvisorSuppressionContractCollection GetAdvisorSuppressionContracts()
         {

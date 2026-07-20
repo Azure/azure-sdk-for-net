@@ -9,14 +9,55 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure.Core;
+using Azure.ResourceManager.DataMigration;
 
 namespace Azure.ResourceManager.DataMigration.Models
 {
-    public partial class MigrateMySqlAzureDBForMySqlOfflineTaskOutputError : IUtf8JsonSerializable, IJsonModel<MigrateMySqlAzureDBForMySqlOfflineTaskOutputError>
+    /// <summary> The MigrateMySqlAzureDBForMySqlOfflineTaskOutputError. </summary>
+    public partial class MigrateMySqlAzureDBForMySqlOfflineTaskOutputError : MigrateMySqlAzureDBForMySqlOfflineTaskOutput, IJsonModel<MigrateMySqlAzureDBForMySqlOfflineTaskOutputError>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<MigrateMySqlAzureDBForMySqlOfflineTaskOutputError>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override MigrateMySqlAzureDBForMySqlOfflineTaskOutput PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<MigrateMySqlAzureDBForMySqlOfflineTaskOutputError>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    {
+                        return DeserializeMigrateMySqlAzureDBForMySqlOfflineTaskOutputError(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(MigrateMySqlAzureDBForMySqlOfflineTaskOutputError)} does not support reading '{options.Format}' format.");
+            }
+        }
 
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<MigrateMySqlAzureDBForMySqlOfflineTaskOutputError>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerDataMigrationContext.Default);
+                default:
+                    throw new FormatException($"The model {nameof(MigrateMySqlAzureDBForMySqlOfflineTaskOutputError)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<MigrateMySqlAzureDBForMySqlOfflineTaskOutputError>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        MigrateMySqlAzureDBForMySqlOfflineTaskOutputError IPersistableModel<MigrateMySqlAzureDBForMySqlOfflineTaskOutputError>.Create(BinaryData data, ModelReaderWriterOptions options) => (MigrateMySqlAzureDBForMySqlOfflineTaskOutputError)PersistableModelCreateCore(data, options);
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<MigrateMySqlAzureDBForMySqlOfflineTaskOutputError>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<MigrateMySqlAzureDBForMySqlOfflineTaskOutputError>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
@@ -28,12 +69,11 @@ namespace Azure.ResourceManager.DataMigration.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<MigrateMySqlAzureDBForMySqlOfflineTaskOutputError>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<MigrateMySqlAzureDBForMySqlOfflineTaskOutputError>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(MigrateMySqlAzureDBForMySqlOfflineTaskOutputError)} does not support writing '{format}' format.");
             }
-
             base.JsonModelWriteCore(writer, options);
             if (options.Format != "W" && Optional.IsDefined(Error))
             {
@@ -42,90 +82,62 @@ namespace Azure.ResourceManager.DataMigration.Models
             }
         }
 
-        MigrateMySqlAzureDBForMySqlOfflineTaskOutputError IJsonModel<MigrateMySqlAzureDBForMySqlOfflineTaskOutputError>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        MigrateMySqlAzureDBForMySqlOfflineTaskOutputError IJsonModel<MigrateMySqlAzureDBForMySqlOfflineTaskOutputError>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => (MigrateMySqlAzureDBForMySqlOfflineTaskOutputError)JsonModelCreateCore(ref reader, options);
+
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override MigrateMySqlAzureDBForMySqlOfflineTaskOutput JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<MigrateMySqlAzureDBForMySqlOfflineTaskOutputError>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<MigrateMySqlAzureDBForMySqlOfflineTaskOutputError>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(MigrateMySqlAzureDBForMySqlOfflineTaskOutputError)} does not support reading '{format}' format.");
             }
-
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
             return DeserializeMigrateMySqlAzureDBForMySqlOfflineTaskOutputError(document.RootElement, options);
         }
 
-        internal static MigrateMySqlAzureDBForMySqlOfflineTaskOutputError DeserializeMigrateMySqlAzureDBForMySqlOfflineTaskOutputError(JsonElement element, ModelReaderWriterOptions options = null)
+        /// <param name="element"> The JSON element to deserialize. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        internal static MigrateMySqlAzureDBForMySqlOfflineTaskOutputError DeserializeMigrateMySqlAzureDBForMySqlOfflineTaskOutputError(JsonElement element, ModelReaderWriterOptions options)
         {
-            options ??= ModelSerializationExtensions.WireOptions;
-
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            DataMigrationReportableException error = default;
             string id = default;
-            string resultType = default;
-            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
-            foreach (var property in element.EnumerateObject())
+            string resultType = "ErrorOutput";
+            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            DataMigrationReportableException error = default;
+            foreach (var prop in element.EnumerateObject())
             {
-                if (property.NameEquals("error"u8))
+                if (prop.NameEquals("id"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    id = prop.Value.GetString();
+                    continue;
+                }
+                if (prop.NameEquals("resultType"u8))
+                {
+                    resultType = prop.Value.GetString();
+                    continue;
+                }
+                if (prop.NameEquals("error"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    error = DataMigrationReportableException.DeserializeDataMigrationReportableException(property.Value, options);
-                    continue;
-                }
-                if (property.NameEquals("id"u8))
-                {
-                    id = property.Value.GetString();
-                    continue;
-                }
-                if (property.NameEquals("resultType"u8))
-                {
-                    resultType = property.Value.GetString();
+                    error = DataMigrationReportableException.DeserializeDataMigrationReportableException(prop.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
                 {
-                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = rawDataDictionary;
-            return new MigrateMySqlAzureDBForMySqlOfflineTaskOutputError(id, resultType, serializedAdditionalRawData, error);
+            return new MigrateMySqlAzureDBForMySqlOfflineTaskOutputError(id, resultType, additionalBinaryDataProperties, error);
         }
-
-        BinaryData IPersistableModel<MigrateMySqlAzureDBForMySqlOfflineTaskOutputError>.Write(ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<MigrateMySqlAzureDBForMySqlOfflineTaskOutputError>)this).GetFormatFromOptions(options) : options.Format;
-
-            switch (format)
-            {
-                case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerDataMigrationContext.Default);
-                default:
-                    throw new FormatException($"The model {nameof(MigrateMySqlAzureDBForMySqlOfflineTaskOutputError)} does not support writing '{options.Format}' format.");
-            }
-        }
-
-        MigrateMySqlAzureDBForMySqlOfflineTaskOutputError IPersistableModel<MigrateMySqlAzureDBForMySqlOfflineTaskOutputError>.Create(BinaryData data, ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<MigrateMySqlAzureDBForMySqlOfflineTaskOutputError>)this).GetFormatFromOptions(options) : options.Format;
-
-            switch (format)
-            {
-                case "J":
-                    {
-                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
-                        return DeserializeMigrateMySqlAzureDBForMySqlOfflineTaskOutputError(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(MigrateMySqlAzureDBForMySqlOfflineTaskOutputError)} does not support reading '{options.Format}' format.");
-            }
-        }
-
-        string IPersistableModel<MigrateMySqlAzureDBForMySqlOfflineTaskOutputError>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

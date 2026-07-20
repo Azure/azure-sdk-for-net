@@ -21,18 +21,21 @@ namespace Azure.ResourceManager.Peering
         private readonly string _subscriptionId;
         private readonly string _country;
         private readonly RequestContext _context;
+        private readonly string _diagnosticScope;
 
         /// <summary> Initializes a new instance of PeeringServiceLocationsGetPeeringServiceLocationsAsyncCollectionResultOfT, which is used to iterate over the pages of a collection. </summary>
         /// <param name="client"> The PeeringServiceLocations client used to send requests. </param>
         /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="country"> The country of interest, in which the locations are to be present. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        public PeeringServiceLocationsGetPeeringServiceLocationsAsyncCollectionResultOfT(PeeringServiceLocations client, string subscriptionId, string country, RequestContext context) : base(context?.CancellationToken ?? default)
+        /// <param name="diagnosticScope"> The diagnostic scope name. </param>
+        public PeeringServiceLocationsGetPeeringServiceLocationsAsyncCollectionResultOfT(PeeringServiceLocations client, string subscriptionId, string country, RequestContext context, string diagnosticScope) : base(context?.CancellationToken ?? default)
         {
             _client = client;
             _subscriptionId = subscriptionId;
             _country = country;
             _context = context;
+            _diagnosticScope = diagnosticScope;
         }
 
         /// <summary> Gets the pages of PeeringServiceLocationsGetPeeringServiceLocationsAsyncCollectionResultOfT as an enumerable collection. </summary>
@@ -50,8 +53,8 @@ namespace Azure.ResourceManager.Peering
                     yield break;
                 }
                 PeeringServiceLocationListResult result = PeeringServiceLocationListResult.FromResponse(response);
-                yield return Page<PeeringServiceLocation>.FromValues((IReadOnlyList<PeeringServiceLocation>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 nextPage = result.NextLink;
+                yield return Page<PeeringServiceLocation>.FromValues((IReadOnlyList<PeeringServiceLocation>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 if (nextPage == null)
                 {
                     yield break;
@@ -65,7 +68,7 @@ namespace Azure.ResourceManager.Peering
         private async ValueTask<Response> GetNextResponseAsync(int? pageSizeHint, Uri nextLink)
         {
             HttpMessage message = nextLink != null ? _client.CreateNextGetPeeringServiceLocationsRequest(nextLink, _subscriptionId, _country, _context) : _client.CreateGetPeeringServiceLocationsRequest(_subscriptionId, _country, _context);
-            using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope("MockablePeeringSubscriptionResource.GetPeeringServiceLocations");
+            using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope(_diagnosticScope);
             scope.Start();
             try
             {

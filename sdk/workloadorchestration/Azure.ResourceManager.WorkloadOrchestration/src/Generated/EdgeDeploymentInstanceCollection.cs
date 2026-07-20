@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.WorkloadOrchestration
         {
             if (id.ResourceType != EdgeSolutionResource.ResourceType)
             {
-                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, EdgeSolutionResource.ResourceType), id);
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, EdgeSolutionResource.ResourceType), nameof(id));
             }
         }
 
@@ -93,7 +93,7 @@ namespace Azure.ResourceManager.WorkloadOrchestration
                 HttpMessage message = _instancesRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, instanceName, EdgeDeploymentInstanceData.ToRequestContent(data), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 WorkloadOrchestrationArmOperation<EdgeDeploymentInstanceResource> operation = new WorkloadOrchestrationArmOperation<EdgeDeploymentInstanceResource>(
-                    new EdgeDeploymentInstanceOperationSource(Client),
+                    new EdgeDeploymentInstanceResourceOperationSource(Client),
                     _instancesClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -151,7 +151,7 @@ namespace Azure.ResourceManager.WorkloadOrchestration
                 HttpMessage message = _instancesRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, instanceName, EdgeDeploymentInstanceData.ToRequestContent(data), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 WorkloadOrchestrationArmOperation<EdgeDeploymentInstanceResource> operation = new WorkloadOrchestrationArmOperation<EdgeDeploymentInstanceResource>(
-                    new EdgeDeploymentInstanceOperationSource(Client),
+                    new EdgeDeploymentInstanceResourceOperationSource(Client),
                     _instancesClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -299,7 +299,8 @@ namespace Azure.ResourceManager.WorkloadOrchestration
                 Id.ResourceGroupName,
                 Id.Parent.Name,
                 Id.Name,
-                context), data => new EdgeDeploymentInstanceResource(Client, data));
+                context,
+                "EdgeDeploymentInstanceCollection.GetAll"), data => new EdgeDeploymentInstanceResource(Client, data));
         }
 
         /// <summary>
@@ -333,7 +334,8 @@ namespace Azure.ResourceManager.WorkloadOrchestration
                 Id.ResourceGroupName,
                 Id.Parent.Name,
                 Id.Name,
-                context), data => new EdgeDeploymentInstanceResource(Client, data));
+                context,
+                "EdgeDeploymentInstanceCollection.GetAll"), data => new EdgeDeploymentInstanceResource(Client, data));
         }
 
         /// <summary>

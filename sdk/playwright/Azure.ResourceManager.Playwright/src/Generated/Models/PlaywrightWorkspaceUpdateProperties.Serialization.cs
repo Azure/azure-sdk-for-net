@@ -84,6 +84,16 @@ namespace Azure.ResourceManager.Playwright.Models
                 writer.WritePropertyName("localAuth"u8);
                 writer.WriteStringValue(LocalAuth.Value.ToString());
             }
+            if (Optional.IsDefined(Reporting))
+            {
+                writer.WritePropertyName("reporting"u8);
+                writer.WriteStringValue(Reporting.Value.ToString());
+            }
+            if (Optional.IsDefined(StorageUri))
+            {
+                writer.WritePropertyName("storageUri"u8);
+                writer.WriteStringValue(StorageUri.AbsoluteUri);
+            }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
                 foreach (var item in _additionalBinaryDataProperties)
@@ -128,6 +138,8 @@ namespace Azure.ResourceManager.Playwright.Models
             }
             PlaywrightEnablementStatus? regionalAffinity = default;
             PlaywrightEnablementStatus? localAuth = default;
+            PlaywrightEnablementStatus? reporting = default;
+            Uri storageUri = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -149,12 +161,30 @@ namespace Azure.ResourceManager.Playwright.Models
                     localAuth = new PlaywrightEnablementStatus(prop.Value.GetString());
                     continue;
                 }
+                if (prop.NameEquals("reporting"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    reporting = new PlaywrightEnablementStatus(prop.Value.GetString());
+                    continue;
+                }
+                if (prop.NameEquals("storageUri"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    storageUri = string.IsNullOrEmpty(prop.Value.GetString()) ? null : new Uri(prop.Value.GetString(), UriKind.RelativeOrAbsolute);
+                    continue;
+                }
                 if (options.Format != "W")
                 {
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new PlaywrightWorkspaceUpdateProperties(regionalAffinity, localAuth, additionalBinaryDataProperties);
+            return new PlaywrightWorkspaceUpdateProperties(regionalAffinity, localAuth, reporting, storageUri, additionalBinaryDataProperties);
         }
     }
 }

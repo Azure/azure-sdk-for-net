@@ -5,11 +5,17 @@
 
 #nullable disable
 
+using System.Diagnostics.CodeAnalysis;
 using Azure.Core;
+using Microsoft.Extensions.Configuration;
 
 namespace Client.Structure.TwoOperationGroup
 {
     public partial class TwoOperationGroupClientOptions : ClientOptions
     {
+        public TwoOperationGroupClientOptions() => throw null;
+
+        [Experimental("SCME0002")]
+        internal TwoOperationGroupClientOptions(IConfigurationSection section) : base(section, null) => throw null;
     }
 }

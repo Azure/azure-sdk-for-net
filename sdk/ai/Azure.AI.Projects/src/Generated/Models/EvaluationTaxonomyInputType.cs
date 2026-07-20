@@ -4,10 +4,11 @@
 
 using System;
 using System.ComponentModel;
+using System.Diagnostics.CodeAnalysis;
 
-namespace Azure.AI.Projects
+namespace Azure.AI.Projects.Evaluation
 {
-    /// <summary> Type of the evaluation taxonomy input. </summary>
+    [Experimental("AAIP001")]
     internal readonly partial struct EvaluationTaxonomyInputType : IEquatable<EvaluationTaxonomyInputType>
     {
         private readonly string _value;
@@ -18,11 +19,8 @@ namespace Azure.AI.Projects
 
         /// <summary> Initializes a new instance of <see cref="EvaluationTaxonomyInputType"/>. </summary>
         /// <param name="value"> The value. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public EvaluationTaxonomyInputType(string value)
         {
-            Argument.AssertNotNull(value, nameof(value));
-
             _value = value;
         }
 

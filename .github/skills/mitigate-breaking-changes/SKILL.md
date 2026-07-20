@@ -1,6 +1,6 @@
 ---
 name: mitigate-breaking-changes
-description: Patterns and techniques for mitigating breaking changes during Azure management-plane SDK migration from Swagger/AutoRest to TypeSpec. Covers SDK-side customizations (partial classes, CodeGenType, CodeGenSuppress) and TypeSpec decorator customizations (clientName, access, markAsPageable, alternateType).
+description: Patterns and techniques for mitigating breaking changes during Azure management-plane SDK migration from Swagger/AutoRest to TypeSpec. Covers SDK-side customizations (partial classes, CodeGenType, CodeGenSuppress) and TypeSpec decorator customizations (clientName, access, markAsPageable, alternateType, hierarchyBuilding).
 ---
 # Skill: mitigate-breaking-changes
 
@@ -8,15 +8,22 @@ Patterns and techniques for mitigating breaking changes when migrating or regene
 
 ## When Invoked
 
-Trigger phrases: "mitigate breaking changes", "fix breaking change", "customization patterns", "how to keep backward compat", "CodeGenType", "CodeGenSuppress", "markAsPageable".
+Trigger phrases: "mitigate breaking changes", "fix breaking change", "customization patterns", "how to keep backward compat", "CodeGenType", "CodeGenSuppress", "markAsPageable", "hierarchyBuilding", "base type change".
 
 ## SDK-Side Customizations (in SDK repo)
 
 Use **Custom/*.cs** or **Customization/*.cs** partial classes (follow the package's existing structure) for .NET-side fixes.
 
+### Custom code file organization
+Keep custom code types split into separate files:
+- Put each custom type/partial type in its own `.cs` file.
+- Name the file after the class it contains, for example `src/Custom/Models/MyModel.cs` for `public partial class MyModel`.
+- Align the custom code folder structure with the generated code structure, such as using `Models/` for model customizations and `Extensions/` for extension customizations when those folders exist.
+- Do not group multiple compatibility types in a single broad file such as `Compatibility.cs`; split them so each file name aligns with the class name.
+
 ### Partial class (add members, suppress generated members)
 ```csharp
-// src/Custom/MyModel.cs (or src/Customization/MyModel.cs — follow the package's existing convention)
+// src/Custom/Models/MyModel.cs (or src/Customization/Models/MyModel.cs — follow the package's existing convention)
 namespace Azure.ResourceManager.<Service>.Models
 {
     public partial class MyModel
@@ -82,6 +89,75 @@ When the spec uses older common types that generate incorrect C# types (e.g., `s
 ```typespec
 @@alternateType(MyModel.resourceId, Azure.ResourceManager.CommonTypes.ArmResourceIdentifier, "csharp");
 ```
+
+### `@@hierarchyBuilding` Decorator — Legacy base-type override
+Do **not** use `@@hierarchyBuilding` for C# base-model/base-type compatibility during MPG migrations. Follow the `mpg-migration` skill instead: verify resource-hierarchy parity first, fix structural resource hierarchy issues in the TypeSpec resource shape, and use SDK-side custom code only for C# base-model/base-type compatibility after the generated surface is stable.
+
+`@@hierarchyBuilding` is a legacy escape hatch. Use it only when the migration owner explicitly approves it and no TypeSpec resource-shape fix or SDK-side customization is appropriate.
+
+**Syntax:**
+```typespec
+// Requires: using Azure.ClientGenerator.Core.Legacy;
+#suppress "@azure-tools/typespec-azure-core/no-legacy-usage" "Change the base type back to <TargetBase> for backward compatibility"
+@@Azure.ClientGenerator.Core.Legacy.hierarchyBuilding(MyResource,
+  Azure.ResourceManager.Foundations.TrackedResource,
+  "csharp"
+);
+```
+
+**Common target base types:**
+- `Azure.ResourceManager.Foundations.TrackedResource` — generates `TrackedResourceData` (for resources with location and tags)
+- `Azure.ResourceManager.Foundations.ProxyResource` — generates `ResourceData` (for proxy/child resources)
+- `Azure.ResourceManager.Foundations.Resource` — generates `ResourceData` (ARM resource base)
+
+**Legacy-only scenarios that require explicit approval:**
+- The old SDK had `MyData : ResourceData` or `MyData : TrackedResourceData`, the new TypeSpec-generated SDK produces `MyData : SomeOtherType` (e.g., a service-local `Resource` model), and the migration owner has explicitly rejected the normal MPG migration fix path.
+- The `CannotRemoveBaseTypeOrInterface` API compatibility violation remains after verifying resource-hierarchy parity and attempting the normal SDK-side customization approach.
+
+**Requirements:**
+1. Add `using Azure.ClientGenerator.Core.Legacy;` to the `client.tsp` imports
+2. Add `#suppress "@azure-tools/typespec-azure-core/no-legacy-usage" "..."` before each `@@hierarchyBuilding` call
+3. After adding the decorator, regenerate the SDK code
+
+**Legacy-approved example** (from KeyVault migration):
+```typespec
+import "@azure-tools/typespec-client-generator-core";
+using Azure.ClientGenerator.Core.Legacy;
+
+// Fix Vault resource to generate VaultData : TrackedResourceData
+#suppress "@azure-tools/typespec-azure-core/no-legacy-usage" "Change the base type back to TrackedResource for backward compatibility"
+@@Azure.ClientGenerator.Core.Legacy.hierarchyBuilding(Vault,
+  Azure.ResourceManager.Foundations.TrackedResource,
+  "csharp"
+);
+```
+
+## WirePathAttribute Breaking Changes [MPG only]
+
+When the previous SDK version included `WirePathAttribute` on model properties (used by Azure.Provisioning libraries), migrating to TypeSpec may produce ApiCompat `CannotRemoveAttribute` errors for the missing attribute — because the emitter defaults to **not** generating it.
+
+### How to detect
+
+- ApiCompat `CannotRemoveAttribute` errors referencing `WirePathAttribute` on model properties
+- These errors appear during `dotnet pack --no-restore` when the previous SDK release had `WirePathAttribute` on properties but the new generation does not
+
+### Fix
+
+Add `enable-wire-path-attribute: true` to the **mgmt emitter options** in `tspconfig.yaml` (in the spec repo):
+
+```yaml
+options:
+  "@azure-typespec/http-client-csharp-mgmt":
+    emitter-output-dir: "{output-dir}/{service-dir}/{namespace}"
+    namespace: "Azure.ResourceManager.<Service>"
+    enable-wire-path-attribute: true
+```
+
+Then regenerate the SDK.
+
+If the remaining ApiCompat diff is only `WirePathAttribute` removal, it is acceptable to add targeted entries to the centralized baseline file under `eng/apicompatbaselines/<Project>.txt`. Do not add SDK custom code just to restore `WirePathAttribute`; the maintenance cost is not worth it for this compatibility diff.
+
+Do not create a local `ApiCompatBaseline.txt`, do not baseline unrelated ApiCompat errors, and do not disable ApiCompat.
 
 ## Extension Resources
 

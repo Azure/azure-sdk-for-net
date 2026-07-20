@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.CognitiveServices;
 
 namespace Azure.ResourceManager.CognitiveServices.Models
 {
@@ -14,38 +15,71 @@ namespace Azure.ResourceManager.CognitiveServices.Models
     public readonly partial struct RaiPolicyContentSource : IEquatable<RaiPolicyContentSource>
     {
         private readonly string _value;
+        private const string PromptValue = "Prompt";
+        private const string CompletionValue = "Completion";
+        private const string PreToolCallValue = "PreToolCall";
+        private const string PostToolCallValue = "PostToolCall";
+        private const string PreRunValue = "PreRun";
+        private const string PostRunValue = "PostRun";
 
         /// <summary> Initializes a new instance of <see cref="RaiPolicyContentSource"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public RaiPolicyContentSource(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
+            Argument.AssertNotNull(value, nameof(value));
+
+            _value = value;
         }
 
-        private const string PromptValue = "Prompt";
-        private const string CompletionValue = "Completion";
-
-        /// <summary> Prompt. </summary>
+        /// <summary> Gets the Prompt. </summary>
         public static RaiPolicyContentSource Prompt { get; } = new RaiPolicyContentSource(PromptValue);
-        /// <summary> Completion. </summary>
+
+        /// <summary> Gets the Completion. </summary>
         public static RaiPolicyContentSource Completion { get; } = new RaiPolicyContentSource(CompletionValue);
+
+        /// <summary> Gets the PreToolCall. </summary>
+        public static RaiPolicyContentSource PreToolCall { get; } = new RaiPolicyContentSource(PreToolCallValue);
+
+        /// <summary> Gets the PostToolCall. </summary>
+        public static RaiPolicyContentSource PostToolCall { get; } = new RaiPolicyContentSource(PostToolCallValue);
+
+        /// <summary> Gets the PreRun. </summary>
+        public static RaiPolicyContentSource PreRun { get; } = new RaiPolicyContentSource(PreRunValue);
+
+        /// <summary> Gets the PostRun. </summary>
+        public static RaiPolicyContentSource PostRun { get; } = new RaiPolicyContentSource(PostRunValue);
+
         /// <summary> Determines if two <see cref="RaiPolicyContentSource"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(RaiPolicyContentSource left, RaiPolicyContentSource right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="RaiPolicyContentSource"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(RaiPolicyContentSource left, RaiPolicyContentSource right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="RaiPolicyContentSource"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="RaiPolicyContentSource"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator RaiPolicyContentSource(string value) => new RaiPolicyContentSource(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="RaiPolicyContentSource"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator RaiPolicyContentSource?(string value) => value == null ? null : new RaiPolicyContentSource(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is RaiPolicyContentSource other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(RaiPolicyContentSource other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

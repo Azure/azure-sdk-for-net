@@ -4,14 +4,23 @@
 
 ### Features Added
 
-- Enable the new model serialization by using the System.ClientModel, refer this [document](https://aka.ms/azsdk/net/mrw) for more details.
-- Exposed `JsonModelWriteCore` for model serialization procedure.
-
 ### Breaking Changes
 
 ### Bugs Fixed
 
 ### Other Changes
+
+## 1.2.1 (2026-04-27)
+
+### Features Added
+
+- Enable the new model serialization by using the System.ClientModel, refer this [document](https://aka.ms/azsdk/net/mrw) for more details.
+- Exposed `JsonModelWriteCore` for model serialization procedure.
+
+### Other Changes
+
+- Upgraded dependent `Azure.Core` to 1.54.0.
+- Upgraded dependent `Azure.ResourceManager` to 1.14.0.
 
 ## 1.2.0 (2023-11-29)
 

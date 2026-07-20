@@ -7,43 +7,15 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.ContainerService;
 
 namespace Azure.ResourceManager.ContainerService.Models
 {
     /// <summary> GPU settings for the Agent Pool. </summary>
-    internal partial class AgentPoolGpuProfile
+    public partial class AgentPoolGpuProfile
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="AgentPoolGpuProfile"/>. </summary>
         public AgentPoolGpuProfile()
@@ -52,15 +24,27 @@ namespace Azure.ResourceManager.ContainerService.Models
 
         /// <summary> Initializes a new instance of <see cref="AgentPoolGpuProfile"/>. </summary>
         /// <param name="driver"> Whether to install GPU drivers. When it's not specified, default is Install. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal AgentPoolGpuProfile(AgentPoolGpuDriver? driver, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="driverType"> Specify the type of GPU driver to install when creating Windows agent pools. If not provided, AKS selects the driver based on system compatibility. This cannot be changed once the AgentPool has been created. This cannot be set on Linux AgentPools. For Linux AgentPools, the driver is selected based on system compatibility. </param>
+        /// <param name="nvidia"> NVIDIA-specific GPU settings. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal AgentPoolGpuProfile(AgentPoolGpuDriver? driver, AgentPoolGpuDriverType? driverType, AgentPoolNvidiaGpuProfile nvidia, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Driver = driver;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            DriverType = driverType;
+            Nvidia = nvidia;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> Whether to install GPU drivers. When it's not specified, default is Install. </summary>
         [WirePath("driver")]
         public AgentPoolGpuDriver? Driver { get; set; }
+
+        /// <summary> Specify the type of GPU driver to install when creating Windows agent pools. If not provided, AKS selects the driver based on system compatibility. This cannot be changed once the AgentPool has been created. This cannot be set on Linux AgentPools. For Linux AgentPools, the driver is selected based on system compatibility. </summary>
+        [WirePath("driverType")]
+        public AgentPoolGpuDriverType? DriverType { get; set; }
+
+        /// <summary> NVIDIA-specific GPU settings. </summary>
+        [WirePath("nvidia")]
+        public AgentPoolNvidiaGpuProfile Nvidia { get; set; }
     }
 }

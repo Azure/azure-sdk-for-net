@@ -101,8 +101,7 @@ namespace Azure.ResourceManager.ServiceBus.Samples
 ["tag4"] = "value4"
 },
             };
-            ArmOperation<ServiceBusNamespaceResource> lro = await serviceBusNamespace.UpdateAsync(WaitUntil.Completed, patch);
-            ServiceBusNamespaceResource result = lro.Value;
+            ServiceBusNamespaceResource result = await serviceBusNamespace.UpdateAsync(patch);
 
             // the variable result is a resource, you could call other operations on this instance as well
             // but just for demo, we get its data from this resource instance
@@ -135,7 +134,7 @@ namespace Azure.ResourceManager.ServiceBus.Samples
             ServiceBusNamespaceFailOver serviceBusNamespaceFailOver = new ServiceBusNamespaceFailOver
             {
                 PrimaryLocation = "centralus",
-                Force = true,
+                IsForced = true,
             };
             ArmOperation<ServiceBusNamespaceFailOver> lro = await serviceBusNamespace.FailoverAsync(WaitUntil.Completed, serviceBusNamespaceFailOver);
             ServiceBusNamespaceFailOver result = lro.Value;
@@ -191,7 +190,7 @@ namespace Azure.ResourceManager.ServiceBus.Samples
             ServiceBusNamespaceResource serviceBusNamespace = client.GetServiceBusNamespaceResource(serviceBusNamespaceResourceId);
 
             // invoke the operation and iterate over the result
-            await foreach (ServiceBusNetworkSecurityPerimeterConfiguration item in serviceBusNamespace.GetNetworkSecurityPerimeterConfigurationsAsync())
+            await foreach (ServiceBusNetworkSecurityPerimeterConfigurationResource item in serviceBusNamespace.GetServiceBusNetworkSecurityPerimeterConfigurations().GetAllAsync())
             {
                 Console.WriteLine($"Succeeded: {item}");
             }
@@ -221,7 +220,7 @@ namespace Azure.ResourceManager.ServiceBus.Samples
 
             // invoke the operation
             string resourceAssociationName = "resourceAssociation1";
-            ServiceBusNetworkSecurityPerimeterConfiguration result = await serviceBusNamespace.GetNetworkSecurityPerimeterAssociationNameAsync(resourceAssociationName);
+            ServiceBusNetworkSecurityPerimeterConfigurationResource result = await serviceBusNamespace.GetServiceBusNetworkSecurityPerimeterConfigurationAsync(resourceAssociationName);
 
             Console.WriteLine($"Succeeded: {result}");
         }
@@ -248,7 +247,8 @@ namespace Azure.ResourceManager.ServiceBus.Samples
 
             // invoke the operation
             string resourceAssociationName = "resourceAssociation1";
-            await serviceBusNamespace.ReconcileNetworkSecurityPerimeterConfigurationAsync(resourceAssociationName);
+            ServiceBusNetworkSecurityPerimeterConfigurationResource nspResource = await serviceBusNamespace.GetServiceBusNetworkSecurityPerimeterConfigurationAsync(resourceAssociationName);
+            await nspResource.ReconcileAsync();
 
             Console.WriteLine("Succeeded");
         }

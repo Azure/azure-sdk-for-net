@@ -64,9 +64,7 @@ namespace Azure.ResourceManager.RecoveryServices.Models
             {
                 return null;
             }
-            Utf8JsonRequestContent content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(recoveryServicesNameAvailabilityContent, ModelSerializationExtensions.WireOptions);
-            return content;
+            return RequestContent.Create(recoveryServicesNameAvailabilityContent, ModelSerializationExtensions.WireOptions);
         }
 
         /// <param name="writer"> The JSON writer. </param>

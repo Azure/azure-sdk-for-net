@@ -8,33 +8,31 @@
 using System;
 using System.Threading;
 using System.Threading.Tasks;
+using Azure;
 using Azure.Core;
+using Azure.ResourceManager;
+using Azure.ResourceManager.ApiCenter;
+using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.ApiCenter.Mocking
 {
-    /// <summary> A class to add extension methods to ResourceGroupResource. </summary>
+    /// <summary> A class to add extension methods to <see cref="ResourceGroupResource"/>. </summary>
     public partial class MockableApiCenterResourceGroupResource : ArmResource
     {
-        /// <summary> Initializes a new instance of the <see cref="MockableApiCenterResourceGroupResource"/> class for mocking. </summary>
+        /// <summary> Initializes a new instance of MockableApiCenterResourceGroupResource for mocking. </summary>
         protected MockableApiCenterResourceGroupResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref="MockableApiCenterResourceGroupResource"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="MockableApiCenterResourceGroupResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal MockableApiCenterResourceGroupResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
         }
 
-        private string GetApiVersionOrNull(ResourceType resourceType)
-        {
-            TryGetApiVersion(resourceType, out string apiVersion);
-            return apiVersion;
-        }
-
-        /// <summary> Gets a collection of ApiCenterServiceResources in the ResourceGroupResource. </summary>
-        /// <returns> An object representing collection of ApiCenterServiceResources and their operations over a ApiCenterServiceResource. </returns>
+        /// <summary> Gets a collection of ApiCenterServices in the <see cref="ResourceGroupResource"/>. </summary>
+        /// <returns> An object representing collection of ApiCenterServices and their operations over a ApiCenterServiceResource. </returns>
         public virtual ApiCenterServiceCollection GetApiCenterServices()
         {
             return GetCachedClient(client => new ApiCenterServiceCollection(client, Id));
@@ -44,20 +42,16 @@ namespace Azure.ResourceManager.ApiCenter.Mocking
         /// Returns details of the service.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiCenter/services/{serviceName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiCenter/services/{serviceName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Services_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> Services_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-03-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ApiCenterServiceResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-06-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -68,6 +62,8 @@ namespace Azure.ResourceManager.ApiCenter.Mocking
         [ForwardsClientCalls]
         public virtual async Task<Response<ApiCenterServiceResource>> GetApiCenterServiceAsync(string serviceName, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNullOrEmpty(serviceName, nameof(serviceName));
+
             return await GetApiCenterServices().GetAsync(serviceName, cancellationToken).ConfigureAwait(false);
         }
 
@@ -75,20 +71,16 @@ namespace Azure.ResourceManager.ApiCenter.Mocking
         /// Returns details of the service.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiCenter/services/{serviceName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiCenter/services/{serviceName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Services_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> Services_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-03-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ApiCenterServiceResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-06-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -99,7 +91,74 @@ namespace Azure.ResourceManager.ApiCenter.Mocking
         [ForwardsClientCalls]
         public virtual Response<ApiCenterServiceResource> GetApiCenterService(string serviceName, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNullOrEmpty(serviceName, nameof(serviceName));
+
             return GetApiCenterServices().Get(serviceName, cancellationToken);
+        }
+
+        /// <summary> Gets a collection of ApiCenterDeletedServices in the <see cref="ResourceGroupResource"/>. </summary>
+        /// <returns> An object representing collection of ApiCenterDeletedServices and their operations over a ApiCenterDeletedServiceResource. </returns>
+        public virtual ApiCenterDeletedServiceCollection GetApiCenterDeletedServices()
+        {
+            return GetCachedClient(client => new ApiCenterDeletedServiceCollection(client, Id));
+        }
+
+        /// <summary>
+        /// Returns details of the soft-deleted service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiCenter/deletedServices/{deletedServiceName}. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> DeletedServices_Get. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-06-01-preview. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="deletedServiceName"> The name of the deleted service. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="deletedServiceName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="deletedServiceName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual async Task<Response<ApiCenterDeletedServiceResource>> GetApiCenterDeletedServiceAsync(string deletedServiceName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(deletedServiceName, nameof(deletedServiceName));
+
+            return await GetApiCenterDeletedServices().GetAsync(deletedServiceName, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Returns details of the soft-deleted service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiCenter/deletedServices/{deletedServiceName}. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> DeletedServices_Get. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-06-01-preview. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="deletedServiceName"> The name of the deleted service. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="deletedServiceName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="deletedServiceName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual Response<ApiCenterDeletedServiceResource> GetApiCenterDeletedService(string deletedServiceName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(deletedServiceName, nameof(deletedServiceName));
+
+            return GetApiCenterDeletedServices().Get(deletedServiceName, cancellationToken);
         }
     }
 }

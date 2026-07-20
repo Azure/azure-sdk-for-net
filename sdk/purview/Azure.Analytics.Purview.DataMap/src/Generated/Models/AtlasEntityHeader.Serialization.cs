@@ -252,7 +252,7 @@ namespace Azure.Analytics.Purview.DataMap
             IList<string> labels = default;
             IList<string> meaningNames = default;
             IList<AtlasTermAssignmentHeader> meanings = default;
-            EntityStatus? status = default;
+            DataMapEntityStatus? status = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -403,7 +403,7 @@ namespace Azure.Analytics.Purview.DataMap
                     {
                         continue;
                     }
-                    status = new EntityStatus(prop.Value.GetString());
+                    status = new DataMapEntityStatus(prop.Value.GetString());
                     continue;
                 }
                 if (options.Format != "W")

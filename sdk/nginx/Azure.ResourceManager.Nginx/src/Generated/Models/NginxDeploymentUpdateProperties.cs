@@ -123,7 +123,7 @@ namespace Azure.ResourceManager.Nginx.Models
                 {
                     NginxAppProtect = new NginxDeploymentUpdatePropertiesNginxAppProtect();
                 }
-                NginxAppProtect.WebApplicationFirewallActivationState = value.Value;
+                NginxAppProtect.WebApplicationFirewallActivationState = value;
             }
         }
     }

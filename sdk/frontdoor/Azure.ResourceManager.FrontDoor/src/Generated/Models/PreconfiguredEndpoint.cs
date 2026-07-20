@@ -7,7 +7,7 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.Core;
+using Azure.ResourceManager.FrontDoor;
 using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.FrontDoor.Models
@@ -15,81 +15,92 @@ namespace Azure.ResourceManager.FrontDoor.Models
     /// <summary> Defines the properties of a preconfigured endpoint. </summary>
     public partial class PreconfiguredEndpoint : TrackedResourceData
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="PreconfiguredEndpoint"/>. </summary>
-        /// <param name="location"> The location. </param>
-        public PreconfiguredEndpoint(AzureLocation location) : base(location)
+        /// <param name="properties"> The properties of a preconfiguredEndpoint. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal PreconfiguredEndpoint(PreconfiguredEndpointProperties properties, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
+            Properties = properties;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
-        /// <summary> Initializes a new instance of <see cref="PreconfiguredEndpoint"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="tags"> The tags. </param>
-        /// <param name="location"> The location. </param>
-        /// <param name="description"> The description of the endpoint. </param>
-        /// <param name="endpoint"> The endpoint that is preconfigured. </param>
-        /// <param name="endpointType"> The type of endpoint. </param>
-        /// <param name="backend"> The preconfigured endpoint backend. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal PreconfiguredEndpoint(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, string description, string endpoint, FrontDoorEndpointType? endpointType, string backend, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData, tags, location)
-        {
-            Description = description;
-            Endpoint = endpoint;
-            EndpointType = endpointType;
-            Backend = backend;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
-        }
-
-        /// <summary> Initializes a new instance of <see cref="PreconfiguredEndpoint"/> for deserialization. </summary>
-        internal PreconfiguredEndpoint()
-        {
-        }
+        /// <summary> The properties of a preconfiguredEndpoint. </summary>
+        [WirePath("properties")]
+        internal PreconfiguredEndpointProperties Properties { get; set; }
 
         /// <summary> The description of the endpoint. </summary>
         [WirePath("properties.description")]
-        public string Description { get; set; }
+        public string Description
+        {
+            get
+            {
+                return Properties is null ? default : Properties.Description;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new PreconfiguredEndpointProperties();
+                }
+                Properties.Description = value;
+            }
+        }
+
         /// <summary> The endpoint that is preconfigured. </summary>
         [WirePath("properties.endpoint")]
-        public string Endpoint { get; set; }
+        public string Endpoint
+        {
+            get
+            {
+                return Properties is null ? default : Properties.Endpoint;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new PreconfiguredEndpointProperties();
+                }
+                Properties.Endpoint = value;
+            }
+        }
+
         /// <summary> The type of endpoint. </summary>
         [WirePath("properties.endpointType")]
-        public FrontDoorEndpointType? EndpointType { get; set; }
+        public FrontDoorEndpointType? EndpointType
+        {
+            get
+            {
+                return Properties is null ? default : Properties.EndpointType;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new PreconfiguredEndpointProperties();
+                }
+                Properties.EndpointType = value;
+            }
+        }
+
         /// <summary> The preconfigured endpoint backend. </summary>
         [WirePath("properties.backend")]
-        public string Backend { get; set; }
+        public string Backend
+        {
+            get
+            {
+                return Properties is null ? default : Properties.Backend;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new PreconfiguredEndpointProperties();
+                }
+                Properties.Backend = value;
+            }
+        }
     }
 }

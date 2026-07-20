@@ -1,4 +1,4 @@
-﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
 using System;
@@ -14,7 +14,7 @@ namespace Azure.AI.Language.TextAnalytics.Tests.Samples
     {
         [Test]
         [SyncOnly]
-        public void HealthcareOperationAction()
+        public void HealthcareLROTask()
         {
             Uri endpoint = TestEnvironment.Endpoint;
             AzureKeyCredential credential = new(TestEnvironment.ApiKey);
@@ -60,20 +60,20 @@ namespace Azure.AI.Language.TextAnalytics.Tests.Samples
                 },
             };
 
-            Response<AnalyzeTextOperationState> response = client.AnalyzeTextOperation(multiLanguageTextInput, analyzeTextOperationActions);
+            Response<AnalyzeTextJobState> response = client.AnalyzeTextOperation(multiLanguageTextInput, analyzeTextOperationActions);
 
-            AnalyzeTextOperationState analyzeTextJobState = response.Value;
+            AnalyzeTextJobState analyzeTextJobState = response.Value;
 
-            foreach (AnalyzeTextOperationResult analyzeTextLROResult in analyzeTextJobState.Actions.Items)
+            foreach (AnalyzeTextOperationResult taskResult in analyzeTextJobState.Tasks.Items)
             {
-                if (analyzeTextLROResult is HealthcareOperationResult)
+                if (taskResult is HealthcareOperationResult)
                 {
-                    HealthcareOperationResult healthcareLROResult = (HealthcareOperationResult)analyzeTextLROResult;
-                    Console.WriteLine($"Analyze Healthcare Entities, model version: \"{healthcareLROResult.Results.ModelVersion}\"");
+                    HealthcareOperationResult healthcareOperationResult = (HealthcareOperationResult)taskResult;
+                    Console.WriteLine($"Analyze Healthcare Entities, model version: \"{healthcareOperationResult.Results.ModelVersion}\"");
                     Console.WriteLine();
 
                     // View the healthcare entities recognized in the input documents.
-                    foreach (HealthcareActionResult healthcareEntitiesDocument in healthcareLROResult.Results.Documents)
+                    foreach (HealthcareActionResult healthcareEntitiesDocument in healthcareOperationResult.Results.Documents)
                     {
                         Console.WriteLine($"Result for document with Id = \"{healthcareEntitiesDocument.Id}\":");
                         Console.WriteLine($"  Recognized the following {healthcareEntitiesDocument.Entities.Count} healthcare entities:");
@@ -137,7 +137,7 @@ namespace Azure.AI.Language.TextAnalytics.Tests.Samples
                         }
 
                         // View the errors in the document
-                        foreach (DocumentError error in healthcareLROResult.Results.Errors)
+                        foreach (DocumentError error in healthcareOperationResult.Results.Errors)
                         {
                             Console.WriteLine($"  Error in document: {error.Id}!");
                             Console.WriteLine($"  Document error code: {error.Error.Code}");

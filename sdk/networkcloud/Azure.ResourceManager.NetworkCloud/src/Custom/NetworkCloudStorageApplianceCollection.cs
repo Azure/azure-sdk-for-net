@@ -9,13 +9,9 @@ using System.ComponentModel;
 using System.Threading;
 using Azure.ResourceManager.Resources;
 
+// NOTE: The following customization is intentionally retained for backward compatibility.
 namespace Azure.ResourceManager.NetworkCloud
 {
-    /// <summary>
-    /// A class representing a collection of <see cref="NetworkCloudStorageApplianceResource"/> and their operations.
-    /// Each <see cref="NetworkCloudStorageApplianceResource"/> in the collection will belong to the same instance of <see cref="ResourceGroupResource"/>.
-    /// To get a <see cref="NetworkCloudStorageApplianceCollection"/> instance call the GetNetworkCloudStorageAppliances method from an instance of <see cref="ResourceGroupResource"/>.
-    /// </summary>
     public partial class NetworkCloudStorageApplianceCollection : ArmCollection, IEnumerable<NetworkCloudStorageApplianceResource>, IAsyncEnumerable<NetworkCloudStorageApplianceResource>
     {
         /// <summary>
@@ -28,10 +24,6 @@ namespace Azure.ResourceManager.NetworkCloud
         /// <item>
         /// <term>Operation Id</term>
         /// <description>StorageAppliances_ListByResourceGroup</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-07-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -55,10 +47,6 @@ namespace Azure.ResourceManager.NetworkCloud
         /// <item>
         /// <term>Operation Id</term>
         /// <description>StorageAppliances_ListByResourceGroup</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-07-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>

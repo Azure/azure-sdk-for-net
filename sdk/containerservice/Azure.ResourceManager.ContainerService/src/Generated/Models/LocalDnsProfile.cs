@@ -7,43 +7,15 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.ContainerService;
 
 namespace Azure.ResourceManager.ContainerService.Models
 {
     /// <summary> Configures the per-node local DNS, with VnetDNS and KubeDNS overrides. LocalDNS helps improve performance and reliability of DNS resolution in an AKS cluster. For more details see aka.ms/aks/localdns. </summary>
     public partial class LocalDnsProfile
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="LocalDnsProfile"/>. </summary>
         public LocalDnsProfile()
@@ -57,25 +29,28 @@ namespace Azure.ResourceManager.ContainerService.Models
         /// <param name="state"> System-generated state of localDNS. </param>
         /// <param name="vnetDnsOverrides"> VnetDNS overrides apply to DNS traffic from pods with dnsPolicy:default or kubelet (referred to as VnetDNS traffic). </param>
         /// <param name="kubeDnsOverrides"> KubeDNS overrides apply to DNS traffic from pods with dnsPolicy:ClusterFirst (referred to as KubeDNS traffic). </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal LocalDnsProfile(LocalDnsMode? mode, LocalDnsState? state, IDictionary<string, LocalDnsOverride> vnetDnsOverrides, IDictionary<string, LocalDnsOverride> kubeDnsOverrides, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal LocalDnsProfile(LocalDnsMode? mode, LocalDnsState? state, IDictionary<string, LocalDnsOverride> vnetDnsOverrides, IDictionary<string, LocalDnsOverride> kubeDnsOverrides, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Mode = mode;
             State = state;
             VnetDnsOverrides = vnetDnsOverrides;
             KubeDnsOverrides = kubeDnsOverrides;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> Mode of enablement for localDNS. </summary>
         [WirePath("mode")]
         public LocalDnsMode? Mode { get; set; }
+
         /// <summary> System-generated state of localDNS. </summary>
         [WirePath("state")]
         public LocalDnsState? State { get; }
+
         /// <summary> VnetDNS overrides apply to DNS traffic from pods with dnsPolicy:default or kubelet (referred to as VnetDNS traffic). </summary>
         [WirePath("vnetDNSOverrides")]
         public IDictionary<string, LocalDnsOverride> VnetDnsOverrides { get; }
+
         /// <summary> KubeDNS overrides apply to DNS traffic from pods with dnsPolicy:ClusterFirst (referred to as KubeDNS traffic). </summary>
         [WirePath("kubeDNSOverrides")]
         public IDictionary<string, LocalDnsOverride> KubeDnsOverrides { get; }

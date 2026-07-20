@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.ManagedNetworkFabric;
 
 namespace Azure.ResourceManager.ManagedNetworkFabric.Models
 {
@@ -14,38 +15,57 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
     public readonly partial struct NetworkFabricSkuType : IEquatable<NetworkFabricSkuType>
     {
         private readonly string _value;
+        /// <summary> FabricSkuType-SingleRack. </summary>
+        private const string SingleRackValue = "SingleRack";
+        /// <summary> FabricSkuType-MultiRack. </summary>
+        private const string MultiRackValue = "MultiRack";
 
         /// <summary> Initializes a new instance of <see cref="NetworkFabricSkuType"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public NetworkFabricSkuType(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
+            Argument.AssertNotNull(value, nameof(value));
+
+            _value = value;
         }
 
-        private const string SingleRackValue = "SingleRack";
-        private const string MultiRackValue = "MultiRack";
-
-        /// <summary> SingleRack. </summary>
+        /// <summary> FabricSkuType-SingleRack. </summary>
         public static NetworkFabricSkuType SingleRack { get; } = new NetworkFabricSkuType(SingleRackValue);
-        /// <summary> MultiRack. </summary>
+
+        /// <summary> FabricSkuType-MultiRack. </summary>
         public static NetworkFabricSkuType MultiRack { get; } = new NetworkFabricSkuType(MultiRackValue);
+
         /// <summary> Determines if two <see cref="NetworkFabricSkuType"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(NetworkFabricSkuType left, NetworkFabricSkuType right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="NetworkFabricSkuType"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(NetworkFabricSkuType left, NetworkFabricSkuType right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="NetworkFabricSkuType"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="NetworkFabricSkuType"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator NetworkFabricSkuType(string value) => new NetworkFabricSkuType(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="NetworkFabricSkuType"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator NetworkFabricSkuType?(string value) => value == null ? null : new NetworkFabricSkuType(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is NetworkFabricSkuType other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(NetworkFabricSkuType other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

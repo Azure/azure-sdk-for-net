@@ -6,39 +6,44 @@
 #nullable disable
 
 using System;
-using System.Text.Json;
-using System.Threading;
-using System.Threading.Tasks;
+using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager.DataBoxEdge.Models;
 
 namespace Azure.ResourceManager.DataBoxEdge
 {
-    internal partial class TriggersRestOperations
+    internal partial class Triggers
     {
-        private readonly TelemetryDetails _userAgent;
-        private readonly HttpPipeline _pipeline;
         private readonly Uri _endpoint;
         private readonly string _apiVersion;
 
-        /// <summary> Initializes a new instance of TriggersRestOperations. </summary>
+        /// <summary> Initializes a new instance of Triggers for mocking. </summary>
+        protected Triggers()
+        {
+        }
+
+        /// <summary> Initializes a new instance of Triggers. </summary>
+        /// <param name="clientDiagnostics"> The ClientDiagnostics is used to provide tracing support for the client library. </param>
         /// <param name="pipeline"> The HTTP pipeline for sending and receiving REST requests and responses. </param>
-        /// <param name="applicationId"> The application id to use for user agent. </param>
-        /// <param name="endpoint"> server parameter. </param>
-        /// <param name="apiVersion"> Api Version. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="pipeline"/> or <paramref name="apiVersion"/> is null. </exception>
-        public TriggersRestOperations(HttpPipeline pipeline, string applicationId, Uri endpoint = null, string apiVersion = default)
+        /// <param name="endpoint"> Service endpoint. </param>
+        /// <param name="apiVersion"></param>
+        internal Triggers(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Uri endpoint, string apiVersion)
         {
-            _pipeline = pipeline ?? throw new ArgumentNullException(nameof(pipeline));
-            _endpoint = endpoint ?? new Uri("https://management.azure.com");
-            _apiVersion = apiVersion ?? "2022-03-01";
-            _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
+            ClientDiagnostics = clientDiagnostics;
+            _endpoint = endpoint;
+            Pipeline = pipeline;
+            _apiVersion = apiVersion;
         }
 
-        internal RequestUriBuilder CreateListByDataBoxEdgeDeviceRequestUri(string subscriptionId, string resourceGroupName, string deviceName, string filter)
+        /// <summary> The HTTP pipeline for sending and receiving REST requests and responses. </summary>
+        public virtual HttpPipeline Pipeline { get; }
+
+        /// <summary> The ClientDiagnostics is used to provide tracing support for the client library. </summary>
+        internal ClientDiagnostics ClientDiagnostics { get; }
+
+        internal HttpMessage CreateGetRequest(string subscriptionId, string resourceGroupName, string deviceName, string name, RequestContext context)
         {
-            var uri = new RawRequestUriBuilder();
+            RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/subscriptions/", false);
             uri.AppendPath(subscriptionId, true);
@@ -46,103 +51,23 @@ namespace Azure.ResourceManager.DataBoxEdge
             uri.AppendPath(resourceGroupName, true);
             uri.AppendPath("/providers/Microsoft.DataBoxEdge/dataBoxEdgeDevices/", false);
             uri.AppendPath(deviceName, true);
-            uri.AppendPath("/triggers", false);
-            uri.AppendQuery("api-version", _apiVersion, true);
-            if (filter != null)
+            uri.AppendPath("/triggers/", false);
+            uri.AppendPath(name, true);
+            if (_apiVersion != null)
             {
-                uri.AppendQuery("$filter", filter, true);
+                uri.AppendQuery("api-version", _apiVersion, true);
             }
-            return uri;
-        }
-
-        internal HttpMessage CreateListByDataBoxEdgeDeviceRequest(string subscriptionId, string resourceGroupName, string deviceName, string filter)
-        {
-            var message = _pipeline.CreateMessage();
-            var request = message.Request;
-            request.Method = RequestMethod.Get;
-            var uri = new RawRequestUriBuilder();
-            uri.Reset(_endpoint);
-            uri.AppendPath("/subscriptions/", false);
-            uri.AppendPath(subscriptionId, true);
-            uri.AppendPath("/resourceGroups/", false);
-            uri.AppendPath(resourceGroupName, true);
-            uri.AppendPath("/providers/Microsoft.DataBoxEdge/dataBoxEdgeDevices/", false);
-            uri.AppendPath(deviceName, true);
-            uri.AppendPath("/triggers", false);
-            uri.AppendQuery("api-version", _apiVersion, true);
-            if (filter != null)
-            {
-                uri.AppendQuery("$filter", filter, true);
-            }
+            HttpMessage message = Pipeline.CreateMessage();
+            Request request = message.Request;
             request.Uri = uri;
-            request.Headers.Add("Accept", "application/json");
-            _userAgent.Apply(message);
+            request.Method = RequestMethod.Get;
+            request.Headers.SetValue("Accept", "application/json");
             return message;
         }
 
-        /// <summary> Lists all the triggers configured in the device. </summary>
-        /// <param name="subscriptionId"> The subscription ID. </param>
-        /// <param name="resourceGroupName"> The resource group name. </param>
-        /// <param name="deviceName"> The device name. </param>
-        /// <param name="filter"> Specify $filter='CustomContextTag eq &lt;tag&gt;' to filter on custom context tag property. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="deviceName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="deviceName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<TriggerList>> ListByDataBoxEdgeDeviceAsync(string subscriptionId, string resourceGroupName, string deviceName, string filter = null, CancellationToken cancellationToken = default)
+        internal HttpMessage CreateCreateOrUpdateRequest(string subscriptionId, string resourceGroupName, string deviceName, string name, RequestContent content, RequestContext context)
         {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(deviceName, nameof(deviceName));
-
-            using var message = CreateListByDataBoxEdgeDeviceRequest(subscriptionId, resourceGroupName, deviceName, filter);
-            await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
-            switch (message.Response.Status)
-            {
-                case 200:
-                    {
-                        TriggerList value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
-                        value = TriggerList.DeserializeTriggerList(document.RootElement);
-                        return Response.FromValue(value, message.Response);
-                    }
-                default:
-                    throw new RequestFailedException(message.Response);
-            }
-        }
-
-        /// <summary> Lists all the triggers configured in the device. </summary>
-        /// <param name="subscriptionId"> The subscription ID. </param>
-        /// <param name="resourceGroupName"> The resource group name. </param>
-        /// <param name="deviceName"> The device name. </param>
-        /// <param name="filter"> Specify $filter='CustomContextTag eq &lt;tag&gt;' to filter on custom context tag property. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="deviceName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="deviceName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<TriggerList> ListByDataBoxEdgeDevice(string subscriptionId, string resourceGroupName, string deviceName, string filter = null, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(deviceName, nameof(deviceName));
-
-            using var message = CreateListByDataBoxEdgeDeviceRequest(subscriptionId, resourceGroupName, deviceName, filter);
-            _pipeline.Send(message, cancellationToken);
-            switch (message.Response.Status)
-            {
-                case 200:
-                    {
-                        TriggerList value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
-                        value = TriggerList.DeserializeTriggerList(document.RootElement);
-                        return Response.FromValue(value, message.Response);
-                    }
-                default:
-                    throw new RequestFailedException(message.Response);
-            }
-        }
-
-        internal RequestUriBuilder CreateGetRequestUri(string subscriptionId, string resourceGroupName, string deviceName, string name)
-        {
-            var uri = new RawRequestUriBuilder();
+            RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/subscriptions/", false);
             uri.AppendPath(subscriptionId, true);
@@ -152,201 +77,23 @@ namespace Azure.ResourceManager.DataBoxEdge
             uri.AppendPath(deviceName, true);
             uri.AppendPath("/triggers/", false);
             uri.AppendPath(name, true);
-            uri.AppendQuery("api-version", _apiVersion, true);
-            return uri;
-        }
-
-        internal HttpMessage CreateGetRequest(string subscriptionId, string resourceGroupName, string deviceName, string name)
-        {
-            var message = _pipeline.CreateMessage();
-            var request = message.Request;
-            request.Method = RequestMethod.Get;
-            var uri = new RawRequestUriBuilder();
-            uri.Reset(_endpoint);
-            uri.AppendPath("/subscriptions/", false);
-            uri.AppendPath(subscriptionId, true);
-            uri.AppendPath("/resourceGroups/", false);
-            uri.AppendPath(resourceGroupName, true);
-            uri.AppendPath("/providers/Microsoft.DataBoxEdge/dataBoxEdgeDevices/", false);
-            uri.AppendPath(deviceName, true);
-            uri.AppendPath("/triggers/", false);
-            uri.AppendPath(name, true);
-            uri.AppendQuery("api-version", _apiVersion, true);
+            if (_apiVersion != null)
+            {
+                uri.AppendQuery("api-version", _apiVersion, true);
+            }
+            HttpMessage message = Pipeline.CreateMessage();
+            Request request = message.Request;
             request.Uri = uri;
-            request.Headers.Add("Accept", "application/json");
-            _userAgent.Apply(message);
-            return message;
-        }
-
-        /// <summary> Get a specific trigger by name. </summary>
-        /// <param name="subscriptionId"> The subscription ID. </param>
-        /// <param name="resourceGroupName"> The resource group name. </param>
-        /// <param name="deviceName"> The device name. </param>
-        /// <param name="name"> The trigger name. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="deviceName"/> or <paramref name="name"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="deviceName"/> or <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<DataBoxEdgeTriggerData>> GetAsync(string subscriptionId, string resourceGroupName, string deviceName, string name, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(deviceName, nameof(deviceName));
-            Argument.AssertNotNullOrEmpty(name, nameof(name));
-
-            using var message = CreateGetRequest(subscriptionId, resourceGroupName, deviceName, name);
-            await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
-            switch (message.Response.Status)
-            {
-                case 200:
-                    {
-                        DataBoxEdgeTriggerData value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
-                        value = DataBoxEdgeTriggerData.DeserializeDataBoxEdgeTriggerData(document.RootElement);
-                        return Response.FromValue(value, message.Response);
-                    }
-                case 404:
-                    return Response.FromValue((DataBoxEdgeTriggerData)null, message.Response);
-                default:
-                    throw new RequestFailedException(message.Response);
-            }
-        }
-
-        /// <summary> Get a specific trigger by name. </summary>
-        /// <param name="subscriptionId"> The subscription ID. </param>
-        /// <param name="resourceGroupName"> The resource group name. </param>
-        /// <param name="deviceName"> The device name. </param>
-        /// <param name="name"> The trigger name. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="deviceName"/> or <paramref name="name"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="deviceName"/> or <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<DataBoxEdgeTriggerData> Get(string subscriptionId, string resourceGroupName, string deviceName, string name, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(deviceName, nameof(deviceName));
-            Argument.AssertNotNullOrEmpty(name, nameof(name));
-
-            using var message = CreateGetRequest(subscriptionId, resourceGroupName, deviceName, name);
-            _pipeline.Send(message, cancellationToken);
-            switch (message.Response.Status)
-            {
-                case 200:
-                    {
-                        DataBoxEdgeTriggerData value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
-                        value = DataBoxEdgeTriggerData.DeserializeDataBoxEdgeTriggerData(document.RootElement);
-                        return Response.FromValue(value, message.Response);
-                    }
-                case 404:
-                    return Response.FromValue((DataBoxEdgeTriggerData)null, message.Response);
-                default:
-                    throw new RequestFailedException(message.Response);
-            }
-        }
-
-        internal RequestUriBuilder CreateCreateOrUpdateRequestUri(string subscriptionId, string resourceGroupName, string deviceName, string name, DataBoxEdgeTriggerData data)
-        {
-            var uri = new RawRequestUriBuilder();
-            uri.Reset(_endpoint);
-            uri.AppendPath("/subscriptions/", false);
-            uri.AppendPath(subscriptionId, true);
-            uri.AppendPath("/resourceGroups/", false);
-            uri.AppendPath(resourceGroupName, true);
-            uri.AppendPath("/providers/Microsoft.DataBoxEdge/dataBoxEdgeDevices/", false);
-            uri.AppendPath(deviceName, true);
-            uri.AppendPath("/triggers/", false);
-            uri.AppendPath(name, true);
-            uri.AppendQuery("api-version", _apiVersion, true);
-            return uri;
-        }
-
-        internal HttpMessage CreateCreateOrUpdateRequest(string subscriptionId, string resourceGroupName, string deviceName, string name, DataBoxEdgeTriggerData data)
-        {
-            var message = _pipeline.CreateMessage();
-            var request = message.Request;
             request.Method = RequestMethod.Put;
-            var uri = new RawRequestUriBuilder();
-            uri.Reset(_endpoint);
-            uri.AppendPath("/subscriptions/", false);
-            uri.AppendPath(subscriptionId, true);
-            uri.AppendPath("/resourceGroups/", false);
-            uri.AppendPath(resourceGroupName, true);
-            uri.AppendPath("/providers/Microsoft.DataBoxEdge/dataBoxEdgeDevices/", false);
-            uri.AppendPath(deviceName, true);
-            uri.AppendPath("/triggers/", false);
-            uri.AppendPath(name, true);
-            uri.AppendQuery("api-version", _apiVersion, true);
-            request.Uri = uri;
-            request.Headers.Add("Accept", "application/json");
-            request.Headers.Add("Content-Type", "application/json");
-            var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(data, ModelSerializationExtensions.WireOptions);
+            request.Headers.SetValue("Content-Type", "application/json");
+            request.Headers.SetValue("Accept", "application/json");
             request.Content = content;
-            _userAgent.Apply(message);
             return message;
         }
 
-        /// <summary> Creates or updates a trigger. </summary>
-        /// <param name="subscriptionId"> The subscription ID. </param>
-        /// <param name="resourceGroupName"> The resource group name. </param>
-        /// <param name="deviceName"> Creates or updates a trigger. </param>
-        /// <param name="name"> The trigger name. </param>
-        /// <param name="data"> The trigger. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="deviceName"/>, <paramref name="name"/> or <paramref name="data"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="deviceName"/> or <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response> CreateOrUpdateAsync(string subscriptionId, string resourceGroupName, string deviceName, string name, DataBoxEdgeTriggerData data, CancellationToken cancellationToken = default)
+        internal HttpMessage CreateDeleteRequest(string subscriptionId, string resourceGroupName, string deviceName, string name, RequestContext context)
         {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(deviceName, nameof(deviceName));
-            Argument.AssertNotNullOrEmpty(name, nameof(name));
-            Argument.AssertNotNull(data, nameof(data));
-
-            using var message = CreateCreateOrUpdateRequest(subscriptionId, resourceGroupName, deviceName, name, data);
-            await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
-            switch (message.Response.Status)
-            {
-                case 200:
-                case 202:
-                    return message.Response;
-                default:
-                    throw new RequestFailedException(message.Response);
-            }
-        }
-
-        /// <summary> Creates or updates a trigger. </summary>
-        /// <param name="subscriptionId"> The subscription ID. </param>
-        /// <param name="resourceGroupName"> The resource group name. </param>
-        /// <param name="deviceName"> Creates or updates a trigger. </param>
-        /// <param name="name"> The trigger name. </param>
-        /// <param name="data"> The trigger. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="deviceName"/>, <paramref name="name"/> or <paramref name="data"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="deviceName"/> or <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response CreateOrUpdate(string subscriptionId, string resourceGroupName, string deviceName, string name, DataBoxEdgeTriggerData data, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(deviceName, nameof(deviceName));
-            Argument.AssertNotNullOrEmpty(name, nameof(name));
-            Argument.AssertNotNull(data, nameof(data));
-
-            using var message = CreateCreateOrUpdateRequest(subscriptionId, resourceGroupName, deviceName, name, data);
-            _pipeline.Send(message, cancellationToken);
-            switch (message.Response.Status)
-            {
-                case 200:
-                case 202:
-                    return message.Response;
-                default:
-                    throw new RequestFailedException(message.Response);
-            }
-        }
-
-        internal RequestUriBuilder CreateDeleteRequestUri(string subscriptionId, string resourceGroupName, string deviceName, string name)
-        {
-            var uri = new RawRequestUriBuilder();
+            RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/subscriptions/", false);
             uri.AppendPath(subscriptionId, true);
@@ -356,16 +103,20 @@ namespace Azure.ResourceManager.DataBoxEdge
             uri.AppendPath(deviceName, true);
             uri.AppendPath("/triggers/", false);
             uri.AppendPath(name, true);
-            uri.AppendQuery("api-version", _apiVersion, true);
-            return uri;
-        }
-
-        internal HttpMessage CreateDeleteRequest(string subscriptionId, string resourceGroupName, string deviceName, string name)
-        {
-            var message = _pipeline.CreateMessage();
-            var request = message.Request;
+            if (_apiVersion != null)
+            {
+                uri.AppendQuery("api-version", _apiVersion, true);
+            }
+            HttpMessage message = Pipeline.CreateMessage();
+            Request request = message.Request;
+            request.Uri = uri;
             request.Method = RequestMethod.Delete;
-            var uri = new RawRequestUriBuilder();
+            return message;
+        }
+
+        internal HttpMessage CreateGetByDataBoxEdgeDeviceRequest(string subscriptionId, string resourceGroupName, string deviceName, string filter, RequestContext context)
+        {
+            RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/subscriptions/", false);
             uri.AppendPath(subscriptionId, true);
@@ -373,155 +124,44 @@ namespace Azure.ResourceManager.DataBoxEdge
             uri.AppendPath(resourceGroupName, true);
             uri.AppendPath("/providers/Microsoft.DataBoxEdge/dataBoxEdgeDevices/", false);
             uri.AppendPath(deviceName, true);
-            uri.AppendPath("/triggers/", false);
-            uri.AppendPath(name, true);
-            uri.AppendQuery("api-version", _apiVersion, true);
+            uri.AppendPath("/triggers", false);
+            if (_apiVersion != null)
+            {
+                uri.AppendQuery("api-version", _apiVersion, true);
+            }
+            if (filter != null)
+            {
+                uri.AppendQuery("$filter", filter, true);
+            }
+            HttpMessage message = Pipeline.CreateMessage();
+            Request request = message.Request;
             request.Uri = uri;
-            request.Headers.Add("Accept", "application/json");
-            _userAgent.Apply(message);
-            return message;
-        }
-
-        /// <summary> Deletes the trigger on the gateway device. </summary>
-        /// <param name="subscriptionId"> The subscription ID. </param>
-        /// <param name="resourceGroupName"> The resource group name. </param>
-        /// <param name="deviceName"> The device name. </param>
-        /// <param name="name"> The trigger name. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="deviceName"/> or <paramref name="name"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="deviceName"/> or <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response> DeleteAsync(string subscriptionId, string resourceGroupName, string deviceName, string name, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(deviceName, nameof(deviceName));
-            Argument.AssertNotNullOrEmpty(name, nameof(name));
-
-            using var message = CreateDeleteRequest(subscriptionId, resourceGroupName, deviceName, name);
-            await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
-            switch (message.Response.Status)
-            {
-                case 200:
-                case 202:
-                case 204:
-                    return message.Response;
-                default:
-                    throw new RequestFailedException(message.Response);
-            }
-        }
-
-        /// <summary> Deletes the trigger on the gateway device. </summary>
-        /// <param name="subscriptionId"> The subscription ID. </param>
-        /// <param name="resourceGroupName"> The resource group name. </param>
-        /// <param name="deviceName"> The device name. </param>
-        /// <param name="name"> The trigger name. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="deviceName"/> or <paramref name="name"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="deviceName"/> or <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response Delete(string subscriptionId, string resourceGroupName, string deviceName, string name, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(deviceName, nameof(deviceName));
-            Argument.AssertNotNullOrEmpty(name, nameof(name));
-
-            using var message = CreateDeleteRequest(subscriptionId, resourceGroupName, deviceName, name);
-            _pipeline.Send(message, cancellationToken);
-            switch (message.Response.Status)
-            {
-                case 200:
-                case 202:
-                case 204:
-                    return message.Response;
-                default:
-                    throw new RequestFailedException(message.Response);
-            }
-        }
-
-        internal RequestUriBuilder CreateListByDataBoxEdgeDeviceNextPageRequestUri(string nextLink, string subscriptionId, string resourceGroupName, string deviceName, string filter)
-        {
-            var uri = new RawRequestUriBuilder();
-            uri.Reset(_endpoint);
-            uri.AppendRawNextLink(nextLink, false);
-            return uri;
-        }
-
-        internal HttpMessage CreateListByDataBoxEdgeDeviceNextPageRequest(string nextLink, string subscriptionId, string resourceGroupName, string deviceName, string filter)
-        {
-            var message = _pipeline.CreateMessage();
-            var request = message.Request;
             request.Method = RequestMethod.Get;
-            var uri = new RawRequestUriBuilder();
-            uri.Reset(_endpoint);
-            uri.AppendRawNextLink(nextLink, false);
-            request.Uri = uri;
-            request.Headers.Add("Accept", "application/json");
-            _userAgent.Apply(message);
+            request.Headers.SetValue("Accept", "application/json");
             return message;
         }
 
-        /// <summary> Lists all the triggers configured in the device. </summary>
-        /// <param name="nextLink"> The URL to the next page of results. </param>
-        /// <param name="subscriptionId"> The subscription ID. </param>
-        /// <param name="resourceGroupName"> The resource group name. </param>
-        /// <param name="deviceName"> The device name. </param>
-        /// <param name="filter"> Specify $filter='CustomContextTag eq &lt;tag&gt;' to filter on custom context tag property. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="deviceName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="deviceName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<TriggerList>> ListByDataBoxEdgeDeviceNextPageAsync(string nextLink, string subscriptionId, string resourceGroupName, string deviceName, string filter = null, CancellationToken cancellationToken = default)
+        internal HttpMessage CreateNextGetByDataBoxEdgeDeviceRequest(Uri nextPage, string subscriptionId, string resourceGroupName, string deviceName, string filter, RequestContext context)
         {
-            Argument.AssertNotNull(nextLink, nameof(nextLink));
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(deviceName, nameof(deviceName));
-
-            using var message = CreateListByDataBoxEdgeDeviceNextPageRequest(nextLink, subscriptionId, resourceGroupName, deviceName, filter);
-            await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
-            switch (message.Response.Status)
+            RawRequestUriBuilder uri = new RawRequestUriBuilder();
+            if (nextPage.IsAbsoluteUri)
             {
-                case 200:
-                    {
-                        TriggerList value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
-                        value = TriggerList.DeserializeTriggerList(document.RootElement);
-                        return Response.FromValue(value, message.Response);
-                    }
-                default:
-                    throw new RequestFailedException(message.Response);
+                uri.Reset(nextPage);
             }
-        }
-
-        /// <summary> Lists all the triggers configured in the device. </summary>
-        /// <param name="nextLink"> The URL to the next page of results. </param>
-        /// <param name="subscriptionId"> The subscription ID. </param>
-        /// <param name="resourceGroupName"> The resource group name. </param>
-        /// <param name="deviceName"> The device name. </param>
-        /// <param name="filter"> Specify $filter='CustomContextTag eq &lt;tag&gt;' to filter on custom context tag property. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="deviceName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="deviceName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<TriggerList> ListByDataBoxEdgeDeviceNextPage(string nextLink, string subscriptionId, string resourceGroupName, string deviceName, string filter = null, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(nextLink, nameof(nextLink));
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(deviceName, nameof(deviceName));
-
-            using var message = CreateListByDataBoxEdgeDeviceNextPageRequest(nextLink, subscriptionId, resourceGroupName, deviceName, filter);
-            _pipeline.Send(message, cancellationToken);
-            switch (message.Response.Status)
+            else
             {
-                case 200:
-                    {
-                        TriggerList value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
-                        value = TriggerList.DeserializeTriggerList(document.RootElement);
-                        return Response.FromValue(value, message.Response);
-                    }
-                default:
-                    throw new RequestFailedException(message.Response);
+                uri.Reset(new Uri(_endpoint, nextPage));
             }
+            if (_apiVersion != null)
+            {
+                uri.UpdateQuery("api-version", _apiVersion);
+            }
+            HttpMessage message = Pipeline.CreateMessage();
+            Request request = message.Request;
+            request.Uri = uri;
+            request.Method = RequestMethod.Get;
+            request.Headers.SetValue("Accept", "application/json");
+            return message;
         }
     }
 }

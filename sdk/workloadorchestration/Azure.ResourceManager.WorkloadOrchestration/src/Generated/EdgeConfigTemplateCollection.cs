@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.WorkloadOrchestration
         {
             if (id.ResourceType != ResourceGroupResource.ResourceType)
             {
-                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ResourceGroupResource.ResourceType), id);
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ResourceGroupResource.ResourceType), nameof(id));
             }
         }
 
@@ -94,7 +94,7 @@ namespace Azure.ResourceManager.WorkloadOrchestration
                 HttpMessage message = _configTemplatesRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, configTemplateName, EdgeConfigTemplateData.ToRequestContent(data), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 WorkloadOrchestrationArmOperation<EdgeConfigTemplateResource> operation = new WorkloadOrchestrationArmOperation<EdgeConfigTemplateResource>(
-                    new EdgeConfigTemplateOperationSource(Client),
+                    new EdgeConfigTemplateResourceOperationSource(Client),
                     _configTemplatesClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -152,7 +152,7 @@ namespace Azure.ResourceManager.WorkloadOrchestration
                 HttpMessage message = _configTemplatesRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, configTemplateName, EdgeConfigTemplateData.ToRequestContent(data), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 WorkloadOrchestrationArmOperation<EdgeConfigTemplateResource> operation = new WorkloadOrchestrationArmOperation<EdgeConfigTemplateResource>(
-                    new EdgeConfigTemplateOperationSource(Client),
+                    new EdgeConfigTemplateResourceOperationSource(Client),
                     _configTemplatesClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -294,7 +294,7 @@ namespace Azure.ResourceManager.WorkloadOrchestration
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<EdgeConfigTemplateData, EdgeConfigTemplateResource>(new ConfigTemplatesGetByResourceGroupAsyncCollectionResultOfT(_configTemplatesRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context), data => new EdgeConfigTemplateResource(Client, data));
+            return new AsyncPageableWrapper<EdgeConfigTemplateData, EdgeConfigTemplateResource>(new ConfigTemplatesGetByResourceGroupAsyncCollectionResultOfT(_configTemplatesRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "EdgeConfigTemplateCollection.GetAll"), data => new EdgeConfigTemplateResource(Client, data));
         }
 
         /// <summary>
@@ -322,7 +322,7 @@ namespace Azure.ResourceManager.WorkloadOrchestration
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<EdgeConfigTemplateData, EdgeConfigTemplateResource>(new ConfigTemplatesGetByResourceGroupCollectionResultOfT(_configTemplatesRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context), data => new EdgeConfigTemplateResource(Client, data));
+            return new PageableWrapper<EdgeConfigTemplateData, EdgeConfigTemplateResource>(new ConfigTemplatesGetByResourceGroupCollectionResultOfT(_configTemplatesRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "EdgeConfigTemplateCollection.GetAll"), data => new EdgeConfigTemplateResource(Client, data));
         }
 
         /// <summary>

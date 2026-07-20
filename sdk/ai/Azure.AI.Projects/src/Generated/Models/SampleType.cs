@@ -4,10 +4,11 @@
 
 using System;
 using System.ComponentModel;
+using System.Diagnostics.CodeAnalysis;
 
-namespace Azure.AI.Projects
+namespace Azure.AI.Projects.Evaluation
 {
-    /// <summary> The type of sample used in the analysis. </summary>
+    [Experimental("AAIP001")]
     internal readonly partial struct SampleType : IEquatable<SampleType>
     {
         private readonly string _value;
@@ -16,11 +17,8 @@ namespace Azure.AI.Projects
 
         /// <summary> Initializes a new instance of <see cref="SampleType"/>. </summary>
         /// <param name="value"> The value. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public SampleType(string value)
         {
-            Argument.AssertNotNull(value, nameof(value));
-
             _value = value;
         }
 

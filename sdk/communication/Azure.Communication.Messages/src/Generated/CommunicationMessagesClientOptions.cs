@@ -6,33 +6,19 @@
 #nullable disable
 
 using System;
+using System.Diagnostics.CodeAnalysis;
 using Azure.Core;
+using Microsoft.Extensions.Configuration;
 
 namespace Azure.Communication.Messages
 {
-    /// <summary> Client options for Azure.Communication.Messages library clients. </summary>
+    /// <summary> Client options for clients in this library. </summary>
     public partial class CommunicationMessagesClientOptions : ClientOptions
     {
         private const ServiceVersion LatestVersion = ServiceVersion.V2025_09_01_Preview;
 
-        /// <summary> The version of the service to use. </summary>
-        public enum ServiceVersion
-        {
-            /// <summary> Service version "2024-02-01". </summary>
-            V2024_02_01 = 1,
-            /// <summary> Service version "2024-08-30". </summary>
-            V2024_08_30 = 2,
-            /// <summary> Service version "2025-01-15-preview". </summary>
-            V2025_01_15_Preview = 3,
-            /// <summary> Service version "2025-04-01-preview". </summary>
-            V2025_04_01_Preview = 4,
-            /// <summary> Service version "2025-09-01-preview". </summary>
-            V2025_09_01_Preview = 5,
-        }
-
-        internal string Version { get; }
-
-        /// <summary> Initializes new instance of CommunicationMessagesClientOptions. </summary>
+        /// <summary> Initializes a new instance of NotificationMessagesClientOptions. </summary>
+        /// <param name="version"> The service version. </param>
         public CommunicationMessagesClientOptions(ServiceVersion version = LatestVersion)
         {
             Version = version switch
@@ -44,6 +30,45 @@ namespace Azure.Communication.Messages
                 ServiceVersion.V2025_09_01_Preview => "2025-09-01-preview",
                 _ => throw new NotSupportedException()
             };
+            ConfigureLogging();
+        }
+
+        /// <summary> Initializes a new instance of NotificationMessagesClientOptions from configuration. </summary>
+        /// <param name="section"> The configuration section. </param>
+        [Experimental("SCME0002")]
+        internal CommunicationMessagesClientOptions(IConfigurationSection section) : base(section, null)
+        {
+            Version = "2025-09-01-preview";
+            if (section is null || !section.Exists())
+            {
+                return;
+            }
+            if (section["Version"] is string version)
+            {
+                Version = version;
+            }
+            ConfigureLogging();
+        }
+
+        /// <summary> Gets the Version. </summary>
+        internal string Version { get; }
+
+        /// <summary> Configures logging for the client options. </summary>
+        partial void ConfigureLogging();
+
+        /// <summary> The version of the service to use. </summary>
+        public enum ServiceVersion
+        {
+            /// <summary> Azure Communication Messages 2024-02-01 api version. </summary>
+            V2024_02_01 = 1,
+            /// <summary> Azure Communication Messages 2024-08-30 api version. </summary>
+            V2024_08_30 = 2,
+            /// <summary> Azure Communication Messages 2025-01-15-preview api version. </summary>
+            V2025_01_15_Preview = 3,
+            /// <summary> Azure Communication Messages 2025-04-01-preview api version. </summary>
+            V2025_04_01_Preview = 4,
+            /// <summary> Azure Communication Messages 2025-09-01-preview api version. </summary>
+            V2025_09_01_Preview = 5
         }
     }
 }

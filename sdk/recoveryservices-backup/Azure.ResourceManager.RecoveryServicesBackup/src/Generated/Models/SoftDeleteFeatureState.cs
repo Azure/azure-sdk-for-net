@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.RecoveryServicesBackup;
 
 namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 {
@@ -14,44 +15,63 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
     public readonly partial struct SoftDeleteFeatureState : IEquatable<SoftDeleteFeatureState>
     {
         private readonly string _value;
-
-        /// <summary> Initializes a new instance of <see cref="SoftDeleteFeatureState"/>. </summary>
-        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        public SoftDeleteFeatureState(string value)
-        {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
-
         private const string InvalidValue = "Invalid";
         private const string EnabledValue = "Enabled";
         private const string DisabledValue = "Disabled";
         private const string AlwaysONValue = "AlwaysON";
 
-        /// <summary> Invalid. </summary>
+        /// <summary> Initializes a new instance of <see cref="SoftDeleteFeatureState"/>. </summary>
+        /// <param name="value"> The value. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
+        public SoftDeleteFeatureState(string value)
+        {
+            Argument.AssertNotNull(value, nameof(value));
+
+            _value = value;
+        }
+
+        /// <summary> Gets the Invalid. </summary>
         public static SoftDeleteFeatureState Invalid { get; } = new SoftDeleteFeatureState(InvalidValue);
-        /// <summary> Enabled. </summary>
+
+        /// <summary> Gets the Enabled. </summary>
         public static SoftDeleteFeatureState Enabled { get; } = new SoftDeleteFeatureState(EnabledValue);
-        /// <summary> Disabled. </summary>
+
+        /// <summary> Gets the Disabled. </summary>
         public static SoftDeleteFeatureState Disabled { get; } = new SoftDeleteFeatureState(DisabledValue);
-        /// <summary> AlwaysON. </summary>
+
+        /// <summary> Gets the AlwaysON. </summary>
         public static SoftDeleteFeatureState AlwaysON { get; } = new SoftDeleteFeatureState(AlwaysONValue);
+
         /// <summary> Determines if two <see cref="SoftDeleteFeatureState"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(SoftDeleteFeatureState left, SoftDeleteFeatureState right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="SoftDeleteFeatureState"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(SoftDeleteFeatureState left, SoftDeleteFeatureState right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="SoftDeleteFeatureState"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="SoftDeleteFeatureState"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator SoftDeleteFeatureState(string value) => new SoftDeleteFeatureState(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="SoftDeleteFeatureState"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator SoftDeleteFeatureState?(string value) => value == null ? null : new SoftDeleteFeatureState(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is SoftDeleteFeatureState other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(SoftDeleteFeatureState other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

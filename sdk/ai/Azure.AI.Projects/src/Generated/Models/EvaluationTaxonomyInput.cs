@@ -4,13 +4,15 @@
 
 using System;
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 
-namespace Azure.AI.Projects
+namespace Azure.AI.Projects.Evaluation
 {
     /// <summary>
     /// Input configuration for the evaluation taxonomy.
     /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="AgentTaxonomyInput"/>.
     /// </summary>
+    [Experimental("AAIP001")]
     public abstract partial class EvaluationTaxonomyInput
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>

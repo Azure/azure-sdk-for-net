@@ -135,17 +135,29 @@ namespace Azure.ResourceManager.BillingBenefits.Tests
         public async Task TestValidateSavingsPlanOrderAliasPurchase()
         {
             _modelResource = _tenantResource.GetBillingBenefitsSavingsPlanOrderAliases();
-            var model = TestHelpers.CreateSavingsPlanOrderAliasPurchaseRequest(BillingBenefitsAppliedScopeType.Shared);
-            var requestContent = new SavingsPlanPurchaseValidateContent();
+            var model = ArmBillingBenefitsModelFactory.SavingsPlanValidateModel(
+                skuName: "Compute_Savings_Plan",
+                billingScopeId: new ResourceIdentifier("/subscriptions/eef82110-c91b-4395-9420-fcfcbefc5a47"),
+                term: new BillingBenefitsTerm("P3Y"),
+                appliedScopeType: BillingBenefitsAppliedScopeType.Shared,
+                displayName: "TestSPNameShared",
+                billingPlan: new BillingBenefitsBillingPlan("P1M"),
+                commitment: new BillingBenefitsCommitment
+                {
+                    Grain = "Hourly",
+                    CurrencyCode = "USD",
+                    Amount = 0.001
+                });
+            var requestContent = new BenefitValidateRequest();
             requestContent.Benefits.Add(model);
 
-            var response = await _tenantResource.ValidatePurchaseAsync(requestContent).ToEnumerableAsync();
+            var response = (await _tenantResource.ValidateAsync(requestContent)).Value;
 
             Assert.NotNull(response);
-            Assert.AreEqual(1, response.Count);
-            Assert.IsTrue(response[0].IsValid);
-            Assert.Null(response[0].Reason);
-            Assert.Null(response[0].ReasonCode);
+            Assert.AreEqual(1, response.Benefits.Count);
+            Assert.IsTrue(response.Benefits[0].IsValid);
+            Assert.Null(response.Benefits[0].Reason);
+            Assert.Null(response.Benefits[0].ReasonCode);
         }
 
         private void ValidateResponseProperties(BillingBenefitsSavingsPlanOrderAliasData Data, BillingBenefitsAppliedScopeType scope, bool isRG = false)

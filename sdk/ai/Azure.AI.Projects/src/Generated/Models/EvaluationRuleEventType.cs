@@ -4,8 +4,9 @@
 
 using System;
 using System.ComponentModel;
+using Azure.AI.Projects;
 
-namespace Azure.AI.Projects
+namespace Azure.AI.Projects.Evaluation
 {
     /// <summary> Type of the evaluation rule event. </summary>
     public readonly partial struct EvaluationRuleEventType : IEquatable<EvaluationRuleEventType>

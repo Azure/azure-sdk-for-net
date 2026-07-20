@@ -127,6 +127,10 @@ namespace Azure.Core.Pipeline
                             {
                                 currentRequest.Headers.Authorization = authHeader;
                             }
+                            else if (headerName == HttpHeader.Names.Host)
+                            {
+                                currentRequest.Headers.Host = stringValue;
+                            }
                             else if (!currentRequest.Headers.TryAddWithoutValidation(headerName, stringValue))
                             {
                                 if (currentContent != null && !currentContent.Headers.TryAddWithoutValidation(headerName, stringValue))

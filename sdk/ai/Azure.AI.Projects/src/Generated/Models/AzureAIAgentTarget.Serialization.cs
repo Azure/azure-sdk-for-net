@@ -6,11 +6,12 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure.AI.Projects;
 
-namespace Azure.AI.Projects
+namespace Azure.AI.Projects.Evaluation
 {
     /// <summary> Represents a target specifying an Azure AI agent. </summary>
-    public partial class AzureAIAgentTarget : Target, IJsonModel<AzureAIAgentTarget>
+    public partial class AzureAIAgentTarget : EvaluationTarget, IJsonModel<AzureAIAgentTarget>
     {
         /// <summary> Initializes a new instance of <see cref="AzureAIAgentTarget"/> for deserialization. </summary>
         internal AzureAIAgentTarget()
@@ -19,7 +20,7 @@ namespace Azure.AI.Projects
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected override Target PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        protected override EvaluationTarget PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
             string format = options.Format == "W" ? ((IPersistableModel<AzureAIAgentTarget>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
@@ -93,6 +94,16 @@ namespace Azure.AI.Projects
                 }
                 writer.WriteEndArray();
             }
+            if (Optional.IsCollectionDefined(InternalTools))
+            {
+                writer.WritePropertyName("tools"u8);
+                writer.WriteStartArray();
+                foreach (InternalTool item in InternalTools)
+                {
+                    writer.WriteObjectValue(item, options);
+                }
+                writer.WriteEndArray();
+            }
         }
 
         /// <param name="reader"> The JSON reader. </param>
@@ -101,7 +112,7 @@ namespace Azure.AI.Projects
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected override Target JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        protected override EvaluationTarget JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
             string format = options.Format == "W" ? ((IPersistableModel<AzureAIAgentTarget>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
@@ -125,6 +136,7 @@ namespace Azure.AI.Projects
             string name = default;
             string version = default;
             IList<ToolDescription> toolDescriptions = default;
+            IList<InternalTool> internalTools = default;
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("type"u8))
@@ -156,12 +168,32 @@ namespace Azure.AI.Projects
                     toolDescriptions = array;
                     continue;
                 }
+                if (prop.NameEquals("tools"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    List<InternalTool> array = new List<InternalTool>();
+                    foreach (var item in prop.Value.EnumerateArray())
+                    {
+                        array.Add(InternalTool.DeserializeInternalTool(item, options));
+                    }
+                    internalTools = array;
+                    continue;
+                }
                 if (options.Format != "W")
                 {
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new AzureAIAgentTarget(@type, additionalBinaryDataProperties, name, version, toolDescriptions ?? new ChangeTrackingList<ToolDescription>());
+            return new AzureAIAgentTarget(
+                @type,
+                additionalBinaryDataProperties,
+                name,
+                version,
+                toolDescriptions ?? new ChangeTrackingList<ToolDescription>(),
+                internalTools ?? new ChangeTrackingList<InternalTool>());
         }
     }
 }

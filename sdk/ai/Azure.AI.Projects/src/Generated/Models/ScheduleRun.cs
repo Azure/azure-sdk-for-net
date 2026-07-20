@@ -4,10 +4,13 @@
 
 using System;
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
+using Azure.AI.Projects;
 
-namespace Azure.AI.Projects
+namespace Azure.AI.Projects.Evaluation
 {
     /// <summary> Schedule run model. </summary>
+    [Experimental("AAIP001")]
     public partial class ScheduleRun
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
@@ -29,7 +32,7 @@ namespace Azure.AI.Projects
         /// <param name="error"> Error information for the schedule run. </param>
         /// <param name="properties"> Properties of the schedule run. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ScheduleRun(string runId, string scheduleId, bool success, string triggerTime, string error, IReadOnlyDictionary<string, string> properties, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ScheduleRun(string runId, string scheduleId, bool success, DateTimeOffset? triggerTime, string error, IReadOnlyDictionary<string, string> properties, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             RunId = runId;
             ScheduleId = scheduleId;
@@ -50,7 +53,7 @@ namespace Azure.AI.Projects
         public bool Success { get; }
 
         /// <summary> Trigger time of the schedule run. </summary>
-        public string TriggerTime { get; }
+        public DateTimeOffset? TriggerTime { get; }
 
         /// <summary> Error information for the schedule run. </summary>
         public string Error { get; }

@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.Attestation.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<AttestationProviderData, AttestationProviderResource>(new AttestationProvidersGetAllAsyncCollectionResultOfT(AttestationProvidersRestClient, Id.SubscriptionId, context), data => new AttestationProviderResource(Client, data));
+            return new AsyncPageableWrapper<AttestationProviderData, AttestationProviderResource>(new AttestationProvidersGetAllAsyncCollectionResultOfT(AttestationProvidersRestClient, Id.SubscriptionId, context, "MockableAttestationSubscriptionResource.GetAttestationProviders"), data => new AttestationProviderResource(Client, data));
         }
 
         /// <summary>
@@ -92,7 +92,7 @@ namespace Azure.ResourceManager.Attestation.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<AttestationProviderData, AttestationProviderResource>(new AttestationProvidersGetAllCollectionResultOfT(AttestationProvidersRestClient, Id.SubscriptionId, context), data => new AttestationProviderResource(Client, data));
+            return new PageableWrapper<AttestationProviderData, AttestationProviderResource>(new AttestationProvidersGetAllCollectionResultOfT(AttestationProvidersRestClient, Id.SubscriptionId, context, "MockableAttestationSubscriptionResource.GetAttestationProviders"), data => new AttestationProviderResource(Client, data));
         }
 
         /// <summary>
@@ -120,7 +120,7 @@ namespace Azure.ResourceManager.Attestation.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<AttestationProviderData, AttestationProviderResource>(new AttestationProvidersGetDefaultAttestationProviderAsyncCollectionResultOfT(AttestationProvidersRestClient, Id.SubscriptionId, context), data => new AttestationProviderResource(Client, data));
+            return new AsyncPageableWrapper<AttestationProviderData, AttestationProviderResource>(new AttestationProvidersGetDefaultAttestationProviderAsyncCollectionResultOfT(AttestationProvidersRestClient, Id.SubscriptionId, context, "MockableAttestationSubscriptionResource.GetDefaultAttestationProvider"), data => new AttestationProviderResource(Client, data));
         }
 
         /// <summary>
@@ -148,7 +148,7 @@ namespace Azure.ResourceManager.Attestation.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<AttestationProviderData, AttestationProviderResource>(new AttestationProvidersGetDefaultAttestationProviderCollectionResultOfT(AttestationProvidersRestClient, Id.SubscriptionId, context), data => new AttestationProviderResource(Client, data));
+            return new PageableWrapper<AttestationProviderData, AttestationProviderResource>(new AttestationProvidersGetDefaultAttestationProviderCollectionResultOfT(AttestationProvidersRestClient, Id.SubscriptionId, context, "MockableAttestationSubscriptionResource.GetDefaultAttestationProvider"), data => new AttestationProviderResource(Client, data));
         }
 
         /// <summary>

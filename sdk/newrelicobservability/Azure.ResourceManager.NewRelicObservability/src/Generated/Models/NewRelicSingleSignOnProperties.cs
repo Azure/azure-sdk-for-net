@@ -7,43 +7,15 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.NewRelicObservability;
 
 namespace Azure.ResourceManager.NewRelicObservability.Models
 {
     /// <summary> Single sign on Info of the NewRelic account. </summary>
     public partial class NewRelicSingleSignOnProperties
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="NewRelicSingleSignOnProperties"/>. </summary>
         public NewRelicSingleSignOnProperties()
@@ -55,25 +27,28 @@ namespace Azure.ResourceManager.NewRelicObservability.Models
         /// <param name="enterpriseAppId"> The Id of the Enterprise App used for Single sign-on. </param>
         /// <param name="singleSignOnUri"> The login URL specific to this NewRelic Organization. </param>
         /// <param name="provisioningState"> Provisioning state. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal NewRelicSingleSignOnProperties(NewRelicSingleSignOnState? singleSignOnState, string enterpriseAppId, Uri singleSignOnUri, NewRelicProvisioningState? provisioningState, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal NewRelicSingleSignOnProperties(NewRelicSingleSignOnState? singleSignOnState, string enterpriseAppId, Uri singleSignOnUri, NewRelicProvisioningState? provisioningState, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             SingleSignOnState = singleSignOnState;
             EnterpriseAppId = enterpriseAppId;
             SingleSignOnUri = singleSignOnUri;
             ProvisioningState = provisioningState;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> Single sign-on state. </summary>
         [WirePath("singleSignOnState")]
         public NewRelicSingleSignOnState? SingleSignOnState { get; set; }
+
         /// <summary> The Id of the Enterprise App used for Single sign-on. </summary>
         [WirePath("enterpriseAppId")]
         public string EnterpriseAppId { get; set; }
+
         /// <summary> The login URL specific to this NewRelic Organization. </summary>
         [WirePath("singleSignOnUrl")]
         public Uri SingleSignOnUri { get; set; }
+
         /// <summary> Provisioning state. </summary>
         [WirePath("provisioningState")]
         public NewRelicProvisioningState? ProvisioningState { get; set; }

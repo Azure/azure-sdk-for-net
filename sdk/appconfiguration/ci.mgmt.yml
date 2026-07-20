@@ -11,3 +11,5 @@ extends:
     Artifacts:
     - name: Azure.ResourceManager.AppConfiguration
       safeName: AzureResourceManagerAppConfiguration
+    - name: Azure.Provisioning.AppConfiguration
+      safeName: AzureProvisioningAppConfiguration

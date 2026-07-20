@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.Fabric
         {
             if (id.ResourceType != ResourceType)
             {
-                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), id);
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), nameof(id));
             }
         }
 
@@ -229,7 +229,7 @@ namespace Azure.ResourceManager.Fabric
                 HttpMessage message = _fabricCapacitiesRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, FabricCapacityPatch.ToRequestContent(patch), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 FabricArmOperation<FabricCapacityResource> operation = new FabricArmOperation<FabricCapacityResource>(
-                    new FabricCapacityOperationSource(Client),
+                    new FabricCapacityResourceOperationSource(Client),
                     _fabricCapacitiesClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -288,7 +288,7 @@ namespace Azure.ResourceManager.Fabric
                 HttpMessage message = _fabricCapacitiesRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, FabricCapacityPatch.ToRequestContent(patch), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 FabricArmOperation<FabricCapacityResource> operation = new FabricArmOperation<FabricCapacityResource>(
-                    new FabricCapacityOperationSource(Client),
+                    new FabricCapacityResourceOperationSource(Client),
                     _fabricCapacitiesClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -434,7 +434,13 @@ namespace Azure.ResourceManager.Fabric
             {
                 CancellationToken = cancellationToken
             };
-            return new FabricCapacitiesGetSkusForCapacityAsyncCollectionResultOfT(_fabricCapacitiesRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+            return new FabricCapacitiesGetSkusForCapacityAsyncCollectionResultOfT(
+                _fabricCapacitiesRestClient,
+                Guid.Parse(Id.SubscriptionId),
+                Id.ResourceGroupName,
+                Id.Name,
+                context,
+                "FabricCapacityResource.GetSkusForCapacity");
         }
 
         /// <summary>
@@ -466,7 +472,13 @@ namespace Azure.ResourceManager.Fabric
             {
                 CancellationToken = cancellationToken
             };
-            return new FabricCapacitiesGetSkusForCapacityCollectionResultOfT(_fabricCapacitiesRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+            return new FabricCapacitiesGetSkusForCapacityCollectionResultOfT(
+                _fabricCapacitiesRestClient,
+                Guid.Parse(Id.SubscriptionId),
+                Id.ResourceGroupName,
+                Id.Name,
+                context,
+                "FabricCapacityResource.GetSkusForCapacity");
         }
 
         /// <summary>

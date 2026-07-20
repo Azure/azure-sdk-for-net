@@ -67,6 +67,11 @@ namespace Azure.Storage.DataMovement.Blobs.Files.Shares.Tests
             string containerName = default)
             => await SourceClientBuilder.GetTestContainerAsync(service, containerName);
 
+        protected override async Task<IDisposingContainer<BlobContainerClient>> GetSourceSasDisposingContainerAsync(
+            BlobServiceClient service = default,
+            string containerName = default)
+            => await SourceClientBuilder.GetAzureSasCredentialTestContainerAsync(service, containerName);
+
         /// <summary>
         /// Gets the specific storage resource from the given client
         /// e.g. ShareFileClient to a ShareFileStorageResource, BlockBlobClient to a BlockBlobStorageResource.
@@ -104,6 +109,7 @@ namespace Azure.Storage.DataMovement.Blobs.Files.Shares.Tests
             BlobClientOptions options = null,
             Stream contents = default,
             TransferPropertiesTestType propertiesTestType = default,
+            bool useContainerCredentials = default,
             CancellationToken cancellationToken = default)
         {
             objectName ??= GetNewObjectName();
@@ -128,6 +134,10 @@ namespace Azure.Storage.DataMovement.Blobs.Files.Shares.Tests
                         await UploadAppendBlocksAsync(blobClient, stream, cancellationToken);
                     }
                 }
+            }
+            if (useContainerCredentials)
+            {
+                return blobClient;
             }
             Uri sourceUri = blobClient.GenerateSasUri(Sas.BlobSasPermissions.All, Recording.UtcNow.AddDays(1));
             return InstrumentClient(new AppendBlobClient(sourceUri, GetBlobOptions()));
@@ -162,8 +172,15 @@ namespace Azure.Storage.DataMovement.Blobs.Files.Shares.Tests
             }
         }
 
-        protected override async Task<IDisposingContainer<ShareClient>> GetDestinationDisposingContainerAsync(ShareServiceClient service = null, string containerName = null)
+        protected override async Task<IDisposingContainer<ShareClient>> GetDestinationDisposingContainerAsync(
+            ShareServiceClient service = null,
+            string containerName = null)
             => await DestinationClientBuilder.GetTestShareAsync(service, containerName);
+
+        protected override async Task<IDisposingContainer<ShareClient>> GetDestinationSasDisposingContainerAsync(
+            ShareServiceClient service = null,
+            string containerName = null)
+            => await DestinationClientBuilder.GetAzureSasCredentialTestShareAsync(service, containerName);
 
         protected override async Task<ShareFileClient> GetDestinationObjectClientAsync(
             ShareClient container,
@@ -172,6 +189,7 @@ namespace Azure.Storage.DataMovement.Blobs.Files.Shares.Tests
             string objectName = null,
             ShareClientOptions options = null,
             Stream contents = null,
+            bool useContainerCredentials = false,
             CancellationToken cancellationToken = default)
         {
             objectName ??= GetNewObjectName();
@@ -188,6 +206,10 @@ namespace Azure.Storage.DataMovement.Blobs.Files.Shares.Tests
                 {
                     await fileClient.UploadAsync(contents);
                 }
+            }
+            if (useContainerCredentials)
+            {
+                return fileClient;
             }
             Uri sourceUri = fileClient.GenerateSasUri(BaseShares::Azure.Storage.Sas.ShareFileSasPermissions.All, Recording.UtcNow.AddDays(1));
             return InstrumentClient(new ShareFileClient(sourceUri, GetShareOptions()));
@@ -343,6 +365,50 @@ namespace Azure.Storage.DataMovement.Blobs.Files.Shares.Tests
                 Assert.AreEqual(sourceProperties.ContentType, destinationProperties.ContentType);
                 Assert.AreEqual(sourceProperties.CreatedOn, destinationProperties.SmbProperties.FileCreatedOn);
             }
+        }
+
+        protected override async Task<string> CreateSnapshotAsync(
+            BlobContainerClient containerClient,
+            AppendBlobClient objectClient,
+            CancellationToken cancellationToken = default)
+        {
+            Response<BlobSnapshotInfo> snapshotResponse = await objectClient.CreateSnapshotAsync(cancellationToken: cancellationToken);
+            return snapshotResponse.Value.Snapshot;
+        }
+
+        protected override AppendBlobClient GetSnapshotObjectClient(
+            AppendBlobClient objectClient,
+            string snapshotId)
+            => objectClient.WithSnapshot(snapshotId);
+
+        protected override async Task<string> CreateVersionAsync(
+            BlobContainerClient containerClient,
+            AppendBlobClient objectClient,
+            CancellationToken cancellationToken = default)
+        {
+            // Get the current version ID before we modify the blob
+            Response<BlobProperties> propertiesResponse = await objectClient.GetPropertiesAsync(cancellationToken: cancellationToken);
+            string versionId = propertiesResponse.Value.VersionId;
+
+            // Modify the blob to create a new version
+            // Use 512-byte aligned size for PageBlob compatibility
+            byte[] newData = new byte[512];
+            using MemoryStream stream = new MemoryStream(newData);
+            await objectClient.AppendBlockAsync(stream, cancellationToken: cancellationToken);
+
+            // Return the version ID from before the modification
+            return versionId;
+        }
+
+        protected override AppendBlobClient GetVersionObjectClient(
+            AppendBlobClient objectClient,
+            string versionId)
+        {
+            AppendBlobClient versionClient = objectClient.WithVersion(versionId);
+            Uri versionSasUri = versionClient.GenerateSasUri(
+                Sas.BlobSasPermissions.Read,
+                Recording.UtcNow.AddDays(1));
+            return InstrumentClient(new AppendBlobClient(versionSasUri, GetBlobOptions()));
         }
     }
 }

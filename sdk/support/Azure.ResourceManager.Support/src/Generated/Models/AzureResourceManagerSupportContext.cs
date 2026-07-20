@@ -6,6 +6,7 @@
 #nullable disable
 
 using System.ClientModel.Primitives;
+using Azure;
 using Azure.ResourceManager.Models;
 using Azure.ResourceManager.Support.Models;
 
@@ -13,38 +14,55 @@ namespace Azure.ResourceManager.Support
 {
     /// <summary>
     /// Context class which will be filled in by the System.ClientModel.SourceGeneration.
-    /// For more information see 'https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/System.ClientModel/src/docs/ModelReaderWriterContext.md'
+    /// For more information <see href='https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/System.ClientModel/src/docs/ModelReaderWriterContext.md' />
     /// </summary>
     [ModelReaderWriterBuildable(typeof(ChatTranscriptDetailData))]
+    [ModelReaderWriterBuildable(typeof(ChatTranscriptDetailsProperties))]
     [ModelReaderWriterBuildable(typeof(ChatTranscriptMessageProperties))]
     [ModelReaderWriterBuildable(typeof(ChatTranscriptsListResult))]
+    [ModelReaderWriterBuildable(typeof(CommunicationDetailsProperties))]
     [ModelReaderWriterBuildable(typeof(CommunicationsListResult))]
+    [ModelReaderWriterBuildable(typeof(FileDetailsProperties))]
     [ModelReaderWriterBuildable(typeof(FilesListResult))]
     [ModelReaderWriterBuildable(typeof(FileWorkspaceDetailData))]
+    [ModelReaderWriterBuildable(typeof(FileWorkspaceDetailsProperties))]
     [ModelReaderWriterBuildable(typeof(ProblemClassificationData))]
+    [ModelReaderWriterBuildable(typeof(ProblemClassificationProperties))]
     [ModelReaderWriterBuildable(typeof(ProblemClassificationResource))]
+    [ModelReaderWriterBuildable(typeof(ProblemClassificationsClassificationInput))]
+    [ModelReaderWriterBuildable(typeof(ProblemClassificationsClassificationOutput))]
+    [ModelReaderWriterBuildable(typeof(ProblemClassificationsClassificationResult))]
     [ModelReaderWriterBuildable(typeof(ProblemClassificationsListResult))]
     [ModelReaderWriterBuildable(typeof(QuotaTicketDetails))]
     [ModelReaderWriterBuildable(typeof(ResponseError))]
     [ModelReaderWriterBuildable(typeof(SecondaryConsent))]
     [ModelReaderWriterBuildable(typeof(SecondaryConsentEnabled))]
+    [ModelReaderWriterBuildable(typeof(ServiceProperties))]
     [ModelReaderWriterBuildable(typeof(ServicesListResult))]
     [ModelReaderWriterBuildable(typeof(SubscriptionFileWorkspaceResource))]
     [ModelReaderWriterBuildable(typeof(SubscriptionSupportTicketResource))]
     [ModelReaderWriterBuildable(typeof(SupportAzureServiceData))]
     [ModelReaderWriterBuildable(typeof(SupportAzureServiceResource))]
+    [ModelReaderWriterBuildable(typeof(SupportClassificationService))]
     [ModelReaderWriterBuildable(typeof(SupportContactProfile))]
     [ModelReaderWriterBuildable(typeof(SupportContactProfileContent))]
+    [ModelReaderWriterBuildable(typeof(SupportDirectConnectEscalation))]
     [ModelReaderWriterBuildable(typeof(SupportEngineer))]
     [ModelReaderWriterBuildable(typeof(SupportFileDetailData))]
+    [ModelReaderWriterBuildable(typeof(SupportLookUpResourceIdContent))]
+    [ModelReaderWriterBuildable(typeof(SupportLookUpResourceIdResult))]
     [ModelReaderWriterBuildable(typeof(SupportNameAvailabilityContent))]
     [ModelReaderWriterBuildable(typeof(SupportNameAvailabilityResult))]
     [ModelReaderWriterBuildable(typeof(SupportQuotaChangeContent))]
+    [ModelReaderWriterBuildable(typeof(SupportServiceClassificationAnswer))]
+    [ModelReaderWriterBuildable(typeof(SupportServiceClassificationContent))]
+    [ModelReaderWriterBuildable(typeof(SupportServiceClassificationOutput))]
     [ModelReaderWriterBuildable(typeof(SupportServiceLevelAgreement))]
     [ModelReaderWriterBuildable(typeof(SupportTicketChatTranscriptResource))]
     [ModelReaderWriterBuildable(typeof(SupportTicketCommunicationData))]
     [ModelReaderWriterBuildable(typeof(SupportTicketCommunicationResource))]
     [ModelReaderWriterBuildable(typeof(SupportTicketData))]
+    [ModelReaderWriterBuildable(typeof(SupportTicketDetailsProperties))]
     [ModelReaderWriterBuildable(typeof(SupportTicketFileResource))]
     [ModelReaderWriterBuildable(typeof(SupportTicketNoSubChatTranscriptResource))]
     [ModelReaderWriterBuildable(typeof(SupportTicketNoSubCommunicationResource))]

@@ -5,14 +5,15 @@ using System;
 using System.ClientModel;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using Azure.AI.Projects.Evaluation;
 using Azure.Identity;
 using Microsoft.ClientModel.TestFramework;
 using NUnit.Framework;
-using OpenAI.Evals;
 
 namespace Azure.AI.Projects.Tests.Samples.Evaluation;
+#pragma warning disable AAIP001
 
-public class Sample_EvaluatorsCatalog : SamplesBase
+public class Sample_EvaluatorsCatalog : EvaluationSampleBase
 {
     #region Snippet:Sample_PromptEvaluator_EvaluatorsCatalog
     private static EvaluatorVersion GetPromptEvaluatorVersion()
@@ -138,7 +139,7 @@ public class Sample_EvaluatorsCatalog : SamplesBase
         Console.WriteLine("     Categories:");
         foreach (EvaluatorCategory category in evaluator.Categories)
         {
-            Console.WriteLine("         - ${category}");
+            Console.WriteLine($"         - {category}");
         }
     }
     #endregion
@@ -148,9 +149,9 @@ public class Sample_EvaluatorsCatalog : SamplesBase
     {
         #region Snippet:Sample_CreateClients_EvaluatorsCatalog
 #if SNIPPET
-        var endpoint = System.Environment.GetEnvironmentVariable("PROJECT_ENDPOINT");
+        var endpoint = System.Environment.GetEnvironmentVariable("FOUNDRY_PROJECT_ENDPOINT");
 #else
-        var endpoint = TestEnvironment.PROJECT_ENDPOINT;
+        var endpoint = TestEnvironment.FOUNDRY_PROJECT_ENDPOINT;
 #endif
         AIProjectClient projectClient = new(new Uri(endpoint), new DefaultAzureCredential());
         #endregion
@@ -224,9 +225,9 @@ public class Sample_EvaluatorsCatalog : SamplesBase
     public void EvaluatorsCatalogExampleSync()
     {
 #if SNIPPET
-        var endpoint = System.Environment.GetEnvironmentVariable("PROJECT_ENDPOINT");
+        var endpoint = System.Environment.GetEnvironmentVariable("FOUNDRY_PROJECT_ENDPOINT");
 #else
-        var endpoint = TestEnvironment.PROJECT_ENDPOINT;
+        var endpoint = TestEnvironment.FOUNDRY_PROJECT_ENDPOINT;
 #endif
         AIProjectClient projectClient = new(new Uri(endpoint), new DefaultAzureCredential());
         #region Snippet:Sample_CreatePromptEvaluator_EvaluatorsCatalog_Sync

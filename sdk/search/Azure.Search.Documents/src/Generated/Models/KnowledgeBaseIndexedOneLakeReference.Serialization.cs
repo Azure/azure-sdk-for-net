@@ -83,7 +83,12 @@ namespace Azure.Search.Documents.KnowledgeBases.Models
             if (Optional.IsDefined(DocUrl))
             {
                 writer.WritePropertyName("docUrl"u8);
-                writer.WriteStringValue(DocUrl);
+                writer.WriteStringValue(DocUrl.AbsoluteUri);
+            }
+            if (Optional.IsDefined(SearchSensitivityLabelInfo))
+            {
+                writer.WritePropertyName("searchSensitivityLabelInfo"u8);
+                writer.WriteObjectValue(SearchSensitivityLabelInfo, options);
             }
         }
 
@@ -118,7 +123,8 @@ namespace Azure.Search.Documents.KnowledgeBases.Models
             IDictionary<string, BinaryData> sourceData = default;
             float? rerankerScore = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
-            string docUrl = default;
+            Uri docUrl = default;
+            PurviewSensitivityLabelInfo searchSensitivityLabelInfo = default;
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("type"u8))
@@ -168,7 +174,20 @@ namespace Azure.Search.Documents.KnowledgeBases.Models
                 }
                 if (prop.NameEquals("docUrl"u8))
                 {
-                    docUrl = prop.Value.GetString();
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    docUrl = string.IsNullOrEmpty(prop.Value.GetString()) ? null : new Uri(prop.Value.GetString(), UriKind.RelativeOrAbsolute);
+                    continue;
+                }
+                if (prop.NameEquals("searchSensitivityLabelInfo"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    searchSensitivityLabelInfo = PurviewSensitivityLabelInfo.DeserializePurviewSensitivityLabelInfo(prop.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
@@ -183,7 +202,8 @@ namespace Azure.Search.Documents.KnowledgeBases.Models
                 sourceData ?? new ChangeTrackingDictionary<string, BinaryData>(),
                 rerankerScore,
                 additionalBinaryDataProperties,
-                docUrl);
+                docUrl,
+                searchSensitivityLabelInfo);
         }
     }
 }

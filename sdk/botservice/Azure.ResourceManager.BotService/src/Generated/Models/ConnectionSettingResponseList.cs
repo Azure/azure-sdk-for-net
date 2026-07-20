@@ -7,43 +7,15 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.BotService;
 
 namespace Azure.ResourceManager.BotService.Models
 {
     /// <summary> The list of bot service connection settings response. </summary>
     internal partial class ConnectionSettingResponseList
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="ConnectionSettingResponseList"/>. </summary>
         internal ConnectionSettingResponseList()
@@ -52,19 +24,20 @@ namespace Azure.ResourceManager.BotService.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="ConnectionSettingResponseList"/>. </summary>
-        /// <param name="nextLink"> The link used to get the next page of bot service connection setting resources. </param>
-        /// <param name="value"> Gets the list of bot service connection settings and their properties. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ConnectionSettingResponseList(string nextLink, IReadOnlyList<BotConnectionSettingData> value, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="value"> The ConnectionSetting items on this page. </param>
+        /// <param name="nextLink"> The link to the next page of items. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal ConnectionSettingResponseList(IReadOnlyList<BotConnectionSettingData> value, Uri nextLink, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
-            NextLink = nextLink;
             Value = value;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            NextLink = nextLink;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
-        /// <summary> The link used to get the next page of bot service connection setting resources. </summary>
-        public string NextLink { get; }
-        /// <summary> Gets the list of bot service connection settings and their properties. </summary>
+        /// <summary> The ConnectionSetting items on this page. </summary>
         public IReadOnlyList<BotConnectionSettingData> Value { get; }
+
+        /// <summary> The link to the next page of items. </summary>
+        public Uri NextLink { get; }
     }
 }

@@ -5,10 +5,10 @@
 using System;
 using System.Collections.Generic;
 
-namespace Azure.AI.Projects
+namespace Azure.AI.Projects.Evaluation
 {
     /// <summary> Represents a target specifying an Azure AI model for operations requiring model selection. </summary>
-    public partial class AzureAIModelTarget : Target
+    public partial class AzureAIModelTarget : EvaluationTarget
     {
         /// <summary> Initializes a new instance of <see cref="AzureAIModelTarget"/>. </summary>
         public AzureAIModelTarget() : base("azure_ai_model")

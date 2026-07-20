@@ -12,14 +12,14 @@ This sample demonstrates how to use the synchronous and asynchronous `GetImageEm
 ## Synchronous Sample
 
 ```C# Snippet:AI_Projects_ImageEmbeddingSync
-var projectEndpoint = new Uri(System.Environment.GetEnvironmentVariable("EMBEDDING_MODEL_DEPLOYMENT_NAME"));
-var modelDeploymentName = System.Environment.GetEnvironmentVariable("EMBEDDING_MODEL_DEPLOYMENT_NAME");
+var projectEndpoint = new Uri(System.Environment.GetEnvironmentVariable("FOUNDRY_PROJECT_ENDPOINT"));
+var modelDeploymentName = System.Environment.GetEnvironmentVariable("EMBEDDING_FOUNDRY_MODEL_NAME");
 var inferenceEndpoint = $"{projectEndpoint.GetLeftPart(UriPartial.Authority)}/models";
 
 AzureAIInferenceClientOptions clientOptions = new AzureAIInferenceClientOptions();
 
 var credential = new DefaultAzureCredential();
-BearerTokenAuthenticationPolicy tokenPolicy = new BearerTokenAuthenticationPolicy(credential, new string[] { "https://ai.azure.com/.default" });
+BearerTokenAuthenticationPolicy tokenPolicy = new BearerTokenAuthenticationPolicy(credential, "https://ai.azure.com/.default");
 clientOptions.AddPolicy(tokenPolicy, HttpPipelinePosition.PerRetry);
 
 ImageEmbeddingsClient imageEmbeddingsClient = new ImageEmbeddingsClient(new Uri(inferenceEndpoint), credential, clientOptions);
@@ -44,14 +44,14 @@ foreach (EmbeddingItem item in response.Value.Data)
 ## Asynchronous Sample
 
 ```C# Snippet:AI_Projects_ImageEmbeddingAsync
-var projectEndpoint = new Uri(System.Environment.GetEnvironmentVariable("PROJECT_ENDPOINT"));
-var modelDeploymentName = System.Environment.GetEnvironmentVariable("EMBEDDING_MODEL_DEPLOYMENT_NAME");
+var projectEndpoint = new Uri(System.Environment.GetEnvironmentVariable("FOUNDRY_PROJECT_ENDPOINT"));
+var modelDeploymentName = System.Environment.GetEnvironmentVariable("EMBEDDING_FOUNDRY_MODEL_NAME");
 var inferenceEndpoint = $"{projectEndpoint.GetLeftPart(UriPartial.Authority)}/models";
 
 AzureAIInferenceClientOptions clientOptions = new AzureAIInferenceClientOptions();
 
 var credential = new DefaultAzureCredential();
-BearerTokenAuthenticationPolicy tokenPolicy = new BearerTokenAuthenticationPolicy(credential, new string[] { "https://ai.azure.com/.default" });
+BearerTokenAuthenticationPolicy tokenPolicy = new BearerTokenAuthenticationPolicy(credential, "https://ai.azure.com/.default");
 clientOptions.AddPolicy(tokenPolicy, HttpPipelinePosition.PerRetry);
 
 ImageEmbeddingsClient imageEmbeddingsClient = new ImageEmbeddingsClient(new Uri(inferenceEndpoint), credential, clientOptions);

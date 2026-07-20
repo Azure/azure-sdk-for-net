@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.ContainerService;
 
 namespace Azure.ResourceManager.ContainerService.Models
 {
@@ -14,38 +15,57 @@ namespace Azure.ResourceManager.ContainerService.Models
     public readonly partial struct UndrainableNodeBehavior : IEquatable<UndrainableNodeBehavior>
     {
         private readonly string _value;
+        /// <summary> AKS will cordon the blocked nodes and replace them with surge nodes during upgrade. The blocked nodes will be cordoned and replaced by surge nodes. The blocked nodes will have label 'kubernetes.azure.com/upgrade-status:Quarantined'. A surge node will be retained for each blocked node. A best-effort attempt will be made to delete all other surge nodes. If there are enough surge nodes to replace blocked nodes, then the upgrade operation and the managed cluster will be in failed state. Otherwise, the upgrade operation and the managed cluster will be in canceled state. </summary>
+        private const string CordonValue = "Cordon";
+        /// <summary> AKS will mark the blocked nodes schedulable, but the blocked nodes are not upgraded. A best-effort attempt will be made to delete all surge nodes. The upgrade operation and the managed cluster will be in failed state if there are any blocked nodes. </summary>
+        private const string ScheduleValue = "Schedule";
 
         /// <summary> Initializes a new instance of <see cref="UndrainableNodeBehavior"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public UndrainableNodeBehavior(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string CordonValue = "Cordon";
-        private const string ScheduleValue = "Schedule";
+            _value = value;
+        }
 
         /// <summary> AKS will cordon the blocked nodes and replace them with surge nodes during upgrade. The blocked nodes will be cordoned and replaced by surge nodes. The blocked nodes will have label 'kubernetes.azure.com/upgrade-status:Quarantined'. A surge node will be retained for each blocked node. A best-effort attempt will be made to delete all other surge nodes. If there are enough surge nodes to replace blocked nodes, then the upgrade operation and the managed cluster will be in failed state. Otherwise, the upgrade operation and the managed cluster will be in canceled state. </summary>
         public static UndrainableNodeBehavior Cordon { get; } = new UndrainableNodeBehavior(CordonValue);
+
         /// <summary> AKS will mark the blocked nodes schedulable, but the blocked nodes are not upgraded. A best-effort attempt will be made to delete all surge nodes. The upgrade operation and the managed cluster will be in failed state if there are any blocked nodes. </summary>
         public static UndrainableNodeBehavior Schedule { get; } = new UndrainableNodeBehavior(ScheduleValue);
+
         /// <summary> Determines if two <see cref="UndrainableNodeBehavior"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(UndrainableNodeBehavior left, UndrainableNodeBehavior right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="UndrainableNodeBehavior"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(UndrainableNodeBehavior left, UndrainableNodeBehavior right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="UndrainableNodeBehavior"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="UndrainableNodeBehavior"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator UndrainableNodeBehavior(string value) => new UndrainableNodeBehavior(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="UndrainableNodeBehavior"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator UndrainableNodeBehavior?(string value) => value == null ? null : new UndrainableNodeBehavior(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is UndrainableNodeBehavior other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(UndrainableNodeBehavior other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

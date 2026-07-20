@@ -31,16 +31,16 @@ namespace Azure.ResourceManager.ContainerServiceFleet
         /// <param name="name"> The name of the resource. </param>
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
         /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
-        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="tags"> Resource tags. </param>
         /// <param name="location"> The geo-location where the resource lives. </param>
         /// <param name="properties"> The resource-specific properties for this resource. </param>
         /// <param name="eTag"> If eTag is provided in the response body, it may also be provided as a header per the normal etag convention.  Entity tags are used for comparing two or more entities from the same requested resource. HTTP/1.1 uses entity tags in the etag (section 14.19), If-Match (section 14.24), If-None-Match (section 14.26), and If-Range (section 14.27) header fields. </param>
-        internal ContainerServiceFleetManagedNamespaceData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, BinaryData> additionalBinaryDataProperties, IDictionary<string, string> tags, AzureLocation location, FleetManagedNamespaceProperties properties, ETag? eTag) : base(id, name, resourceType, systemData, tags, location)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal ContainerServiceFleetManagedNamespaceData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, FleetManagedNamespaceProperties properties, ETag? eTag, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(id, name, resourceType, systemData, tags, location)
         {
-            _additionalBinaryDataProperties = additionalBinaryDataProperties;
             Properties = properties;
             ETag = eTag;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> The resource-specific properties for this resource. </summary>
@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.ContainerServiceFleet
         }
 
         /// <summary> The namespace properties for the fleet managed namespace. </summary>
-        public ManagedNamespaceProperties ManagedNamespaceProperties
+        public ContainerServiceFleetManagedNamespaceProperties ManagedNamespaceProperties
         {
             get
             {
@@ -76,7 +76,7 @@ namespace Azure.ResourceManager.ContainerServiceFleet
         }
 
         /// <summary> Action if the managed namespace with the same name already exists. Default is Never. </summary>
-        public ContainerServiceFleetAdoptionPolicy AdoptionPolicy
+        public ContainerServiceFleetAdoptionPolicy? AdoptionPolicy
         {
             get
             {
@@ -84,16 +84,19 @@ namespace Azure.ResourceManager.ContainerServiceFleet
             }
             set
             {
-                if (Properties is null)
+                if (value.HasValue)
                 {
-                    Properties = new FleetManagedNamespaceProperties();
+                    if (Properties is null)
+                    {
+                        Properties = new FleetManagedNamespaceProperties();
+                    }
+                    Properties.AdoptionPolicy = value.Value;
                 }
-                Properties.AdoptionPolicy = value;
             }
         }
 
         /// <summary> Delete options of a fleet managed namespace. Default is Keep. </summary>
-        public ContainerServiceFleetDeletePolicy DeletePolicy
+        public ContainerServiceFleetDeletePolicy? DeletePolicy
         {
             get
             {
@@ -101,11 +104,14 @@ namespace Azure.ResourceManager.ContainerServiceFleet
             }
             set
             {
-                if (Properties is null)
+                if (value.HasValue)
                 {
-                    Properties = new FleetManagedNamespaceProperties();
+                    if (Properties is null)
+                    {
+                        Properties = new FleetManagedNamespaceProperties();
+                    }
+                    Properties.DeletePolicy = value.Value;
                 }
-                Properties.DeletePolicy = value;
             }
         }
 

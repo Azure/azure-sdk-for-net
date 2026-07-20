@@ -7,43 +7,15 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.ContainerService;
 
 namespace Azure.ResourceManager.ContainerService.Models
 {
     /// <summary> Istio egress gateway configuration. </summary>
     public partial class IstioEgressGateway
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="IstioEgressGateway"/>. </summary>
         /// <param name="isEnabled"> Whether to enable the egress gateway. </param>
@@ -62,30 +34,28 @@ namespace Azure.ResourceManager.ContainerService.Models
         /// <param name="name"> Name of the Istio add-on egress gateway. </param>
         /// <param name="namespace"> Namespace that the Istio add-on egress gateway should be deployed in. If unspecified, the default is aks-istio-egress. </param>
         /// <param name="gatewayConfigurationName"> Name of the gateway configuration custom resource for the Istio add-on egress gateway. Must be specified when enabling the Istio egress gateway. Must be deployed in the same namespace that the Istio egress gateway will be deployed in. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal IstioEgressGateway(bool isEnabled, string name, string @namespace, string gatewayConfigurationName, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal IstioEgressGateway(bool isEnabled, string name, string @namespace, string gatewayConfigurationName, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             IsEnabled = isEnabled;
             Name = name;
             Namespace = @namespace;
             GatewayConfigurationName = gatewayConfigurationName;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
-        }
-
-        /// <summary> Initializes a new instance of <see cref="IstioEgressGateway"/> for deserialization. </summary>
-        internal IstioEgressGateway()
-        {
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> Whether to enable the egress gateway. </summary>
         [WirePath("enabled")]
         public bool IsEnabled { get; set; }
+
         /// <summary> Name of the Istio add-on egress gateway. </summary>
         [WirePath("name")]
         public string Name { get; set; }
+
         /// <summary> Namespace that the Istio add-on egress gateway should be deployed in. If unspecified, the default is aks-istio-egress. </summary>
         [WirePath("namespace")]
         public string Namespace { get; set; }
+
         /// <summary> Name of the gateway configuration custom resource for the Istio add-on egress gateway. Must be specified when enabling the Istio egress gateway. Must be deployed in the same namespace that the Istio egress gateway will be deployed in. </summary>
         [WirePath("gatewayConfigurationName")]
         public string GatewayConfigurationName { get; set; }

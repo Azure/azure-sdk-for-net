@@ -7,6 +7,8 @@
 
 using System;
 using System.Collections.Generic;
+using Azure;
+using Azure.ResourceManager.CosmosDB;
 
 namespace Azure.ResourceManager.CosmosDB.Models
 {
@@ -19,6 +21,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
         public ExtendedCosmosDBSqlContainerResourceInfo(string containerName) : base(containerName)
         {
             Argument.AssertNotNull(containerName, nameof(containerName));
+
         }
 
         /// <summary> Initializes a new instance of <see cref="ExtendedCosmosDBSqlContainerResourceInfo"/>. </summary>
@@ -31,32 +34,29 @@ namespace Azure.ResourceManager.CosmosDB.Models
         /// <param name="clientEncryptionPolicy"> The client encryption policy for the container. </param>
         /// <param name="analyticalStorageTtl"> Analytical TTL. </param>
         /// <param name="restoreParameters"> Parameters to indicate the information about the restore. </param>
-        /// <param name="createMode"> Enum to indicate the mode of resource creation. </param>
+        /// <param name="createMode"> Enum to indicate the mode of account creation. </param>
         /// <param name="computedProperties"> List of computed properties. </param>
         /// <param name="vectorEmbeddingPolicy"> The vector embedding policy for the container. </param>
         /// <param name="fullTextPolicy"> The FullText policy for the container. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="rid"> A system generated property. A unique identifier. </param>
         /// <param name="timestamp"> A system generated property that denotes the last updated timestamp of the resource. </param>
-        /// <param name="etag"> A system generated property representing the resource etag required for optimistic concurrency control. </param>
-        internal ExtendedCosmosDBSqlContainerResourceInfo(string containerName, CosmosDBIndexingPolicy indexingPolicy, CosmosDBContainerPartitionKey partitionKey, int? defaultTtl, CosmosDBUniqueKeyPolicy uniqueKeyPolicy, ConflictResolutionPolicy conflictResolutionPolicy, CosmosDBClientEncryptionPolicy clientEncryptionPolicy, long? analyticalStorageTtl, ResourceRestoreParameters restoreParameters, CosmosDBAccountCreateMode? createMode, IList<ComputedProperty> computedProperties, VectorEmbeddingPolicy vectorEmbeddingPolicy, FullTextPolicy fullTextPolicy, IDictionary<string, BinaryData> serializedAdditionalRawData, string rid, float? timestamp, ETag? etag) : base(containerName, indexingPolicy, partitionKey, defaultTtl, uniqueKeyPolicy, conflictResolutionPolicy, clientEncryptionPolicy, analyticalStorageTtl, restoreParameters, createMode, computedProperties, vectorEmbeddingPolicy, fullTextPolicy, serializedAdditionalRawData)
+        /// <param name="eTag"> A system generated property representing the resource etag required for optimistic concurrency control. </param>
+        internal ExtendedCosmosDBSqlContainerResourceInfo(string containerName, CosmosDBIndexingPolicy indexingPolicy, CosmosDBContainerPartitionKey partitionKey, int? defaultTtl, CosmosDBUniqueKeyPolicy uniqueKeyPolicy, ConflictResolutionPolicy conflictResolutionPolicy, CosmosDBClientEncryptionPolicy clientEncryptionPolicy, long? analyticalStorageTtl, ResourceRestoreParameters restoreParameters, CosmosDBAccountCreateMode? createMode, IList<ComputedProperty> computedProperties, VectorEmbeddingPolicy vectorEmbeddingPolicy, FullTextPolicy fullTextPolicy, IDictionary<string, BinaryData> additionalBinaryDataProperties, string rid, float? timestamp, ETag? eTag) : base(containerName, indexingPolicy, partitionKey, defaultTtl, uniqueKeyPolicy, conflictResolutionPolicy, clientEncryptionPolicy, analyticalStorageTtl, restoreParameters, createMode, computedProperties, vectorEmbeddingPolicy, fullTextPolicy, additionalBinaryDataProperties)
         {
             Rid = rid;
             Timestamp = timestamp;
-            ETag = etag;
-        }
-
-        /// <summary> Initializes a new instance of <see cref="ExtendedCosmosDBSqlContainerResourceInfo"/> for deserialization. </summary>
-        internal ExtendedCosmosDBSqlContainerResourceInfo()
-        {
+            ETag = eTag;
         }
 
         /// <summary> A system generated property. A unique identifier. </summary>
         [WirePath("_rid")]
         public string Rid { get; }
+
         /// <summary> A system generated property that denotes the last updated timestamp of the resource. </summary>
         [WirePath("_ts")]
         public float? Timestamp { get; }
+
         /// <summary> A system generated property representing the resource etag required for optimistic concurrency control. </summary>
         [WirePath("_etag")]
         public ETag? ETag { get; }

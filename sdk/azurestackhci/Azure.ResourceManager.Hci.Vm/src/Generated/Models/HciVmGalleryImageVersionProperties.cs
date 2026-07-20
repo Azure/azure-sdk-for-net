@@ -17,6 +17,12 @@ namespace Azure.ResourceManager.Hci.Vm.Models
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="HciVmGalleryImageVersionProperties"/>. </summary>
+        public HciVmGalleryImageVersionProperties()
+        {
+
+        }
+
+        /// <summary> Initializes a new instance of <see cref="HciVmGalleryImageVersionProperties"/>. </summary>
         /// <param name="storageProfile"> This is the storage profile of a Gallery Image Version. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         internal HciVmGalleryImageVersionProperties(HciVmGalleryImageVersionStorageProfile storageProfile, IDictionary<string, BinaryData> additionalBinaryDataProperties)

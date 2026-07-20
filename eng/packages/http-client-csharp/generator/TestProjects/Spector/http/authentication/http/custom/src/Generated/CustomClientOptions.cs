@@ -5,11 +5,17 @@
 
 #nullable disable
 
+using System.Diagnostics.CodeAnalysis;
 using Azure.Core;
+using Microsoft.Extensions.Configuration;
 
 namespace Authentication.Http.Custom
 {
     public partial class CustomClientOptions : ClientOptions
     {
+        public CustomClientOptions() => throw null;
+
+        [Experimental("SCME0002")]
+        internal CustomClientOptions(IConfigurationSection section) : base(section, null) => throw null;
     }
 }

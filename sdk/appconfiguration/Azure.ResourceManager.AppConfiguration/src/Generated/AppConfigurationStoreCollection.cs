@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.AppConfiguration
         {
             if (id.ResourceType != ResourceGroupResource.ResourceType)
             {
-                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ResourceGroupResource.ResourceType), id);
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ResourceGroupResource.ResourceType), nameof(id));
             }
         }
 
@@ -94,7 +94,7 @@ namespace Azure.ResourceManager.AppConfiguration
                 HttpMessage message = _configurationStoresRestClient.CreateCreateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, configStoreName, AppConfigurationStoreData.ToRequestContent(data), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 AppConfigurationArmOperation<AppConfigurationStoreResource> operation = new AppConfigurationArmOperation<AppConfigurationStoreResource>(
-                    new AppConfigurationStoreOperationSource(Client),
+                    new AppConfigurationStoreResourceOperationSource(Client),
                     _configurationStoresClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -152,7 +152,7 @@ namespace Azure.ResourceManager.AppConfiguration
                 HttpMessage message = _configurationStoresRestClient.CreateCreateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, configStoreName, AppConfigurationStoreData.ToRequestContent(data), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 AppConfigurationArmOperation<AppConfigurationStoreResource> operation = new AppConfigurationArmOperation<AppConfigurationStoreResource>(
-                    new AppConfigurationStoreOperationSource(Client),
+                    new AppConfigurationStoreResourceOperationSource(Client),
                     _configurationStoresClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -295,7 +295,13 @@ namespace Azure.ResourceManager.AppConfiguration
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<AppConfigurationStoreData, AppConfigurationStoreResource>(new ConfigurationStoresGetByResourceGroupAsyncCollectionResultOfT(_configurationStoresRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, skipToken, context), data => new AppConfigurationStoreResource(Client, data));
+            return new AsyncPageableWrapper<AppConfigurationStoreData, AppConfigurationStoreResource>(new ConfigurationStoresGetByResourceGroupAsyncCollectionResultOfT(
+                _configurationStoresRestClient,
+                Guid.Parse(Id.SubscriptionId),
+                Id.ResourceGroupName,
+                skipToken,
+                context,
+                "AppConfigurationStoreCollection.GetAll"), data => new AppConfigurationStoreResource(Client, data));
         }
 
         /// <summary>
@@ -324,7 +330,13 @@ namespace Azure.ResourceManager.AppConfiguration
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<AppConfigurationStoreData, AppConfigurationStoreResource>(new ConfigurationStoresGetByResourceGroupCollectionResultOfT(_configurationStoresRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, skipToken, context), data => new AppConfigurationStoreResource(Client, data));
+            return new PageableWrapper<AppConfigurationStoreData, AppConfigurationStoreResource>(new ConfigurationStoresGetByResourceGroupCollectionResultOfT(
+                _configurationStoresRestClient,
+                Guid.Parse(Id.SubscriptionId),
+                Id.ResourceGroupName,
+                skipToken,
+                context,
+                "AppConfigurationStoreCollection.GetAll"), data => new AppConfigurationStoreResource(Client, data));
         }
 
         /// <summary>

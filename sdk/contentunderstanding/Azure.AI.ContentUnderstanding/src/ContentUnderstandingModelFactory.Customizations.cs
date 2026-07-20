@@ -85,5 +85,30 @@ namespace Azure.AI.ContentUnderstanding
             spans ??= new ChangeTrackingList<ContentSpan>();
             return new ContentObjectField(ContentFieldType.Object, spans.ToList(), confidence, source!, null!, value!);
         }
+
+        /// <summary> Creates a new <see cref="ContentUnderstanding.AnalyzeUsageDetails"/> for mocking. </summary>
+        /// <param name="documentPagesMinimal"> The number of document pages processed at the minimal level. </param>
+        /// <param name="documentPagesBasic"> The number of document pages processed at the basic level. </param>
+        /// <param name="documentPagesStandard"> The number of document pages processed at the standard level. </param>
+        /// <param name="audioHours"> The hours of audio processed. </param>
+        /// <param name="videoHours"> The hours of video processed. </param>
+        /// <param name="contextualizationTokens"> The number of contextualization tokens consumed. </param>
+        /// <param name="tokens"> The number of LLM and embedding tokens consumed, grouped by model and type. </param>
+        /// <returns> A new <see cref="ContentUnderstanding.AnalyzeUsageDetails"/> instance for mocking. </returns>
+        public static AnalyzeUsageDetails AnalyzeUsageDetails(int? documentPagesMinimal = default, int? documentPagesBasic = default, int? documentPagesStandard = default, float? audioHours = default, float? videoHours = default, int? contextualizationTokens = default, IDictionary<string, int>? tokens = default)
+        {
+            tokens ??= new ChangeTrackingDictionary<string, int>();
+            return new AnalyzeUsageDetails
+            {
+                DocumentPagesMinimal = documentPagesMinimal,
+                DocumentPagesBasic = documentPagesBasic,
+                DocumentPagesStandard = documentPagesStandard,
+                AudioHours = audioHours,
+                VideoHours = videoHours,
+                ContextualizationTokens = contextualizationTokens,
+                Tokens = new System.Collections.ObjectModel.ReadOnlyDictionary<string, int>(
+                    new Dictionary<string, int>(tokens))
+            };
+        }
     }
 }

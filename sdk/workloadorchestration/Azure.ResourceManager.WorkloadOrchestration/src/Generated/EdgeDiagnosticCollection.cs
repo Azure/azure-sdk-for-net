@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.WorkloadOrchestration
         {
             if (id.ResourceType != ResourceGroupResource.ResourceType)
             {
-                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ResourceGroupResource.ResourceType), id);
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ResourceGroupResource.ResourceType), nameof(id));
             }
         }
 
@@ -94,7 +94,7 @@ namespace Azure.ResourceManager.WorkloadOrchestration
                 HttpMessage message = _diagnosticsRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, diagnosticName, EdgeDiagnosticData.ToRequestContent(data), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 WorkloadOrchestrationArmOperation<EdgeDiagnosticResource> operation = new WorkloadOrchestrationArmOperation<EdgeDiagnosticResource>(
-                    new EdgeDiagnosticOperationSource(Client),
+                    new EdgeDiagnosticResourceOperationSource(Client),
                     _diagnosticsClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -152,7 +152,7 @@ namespace Azure.ResourceManager.WorkloadOrchestration
                 HttpMessage message = _diagnosticsRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, diagnosticName, EdgeDiagnosticData.ToRequestContent(data), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 WorkloadOrchestrationArmOperation<EdgeDiagnosticResource> operation = new WorkloadOrchestrationArmOperation<EdgeDiagnosticResource>(
-                    new EdgeDiagnosticOperationSource(Client),
+                    new EdgeDiagnosticResourceOperationSource(Client),
                     _diagnosticsClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -294,7 +294,7 @@ namespace Azure.ResourceManager.WorkloadOrchestration
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<EdgeDiagnosticData, EdgeDiagnosticResource>(new DiagnosticsGetByResourceGroupAsyncCollectionResultOfT(_diagnosticsRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context), data => new EdgeDiagnosticResource(Client, data));
+            return new AsyncPageableWrapper<EdgeDiagnosticData, EdgeDiagnosticResource>(new DiagnosticsGetByResourceGroupAsyncCollectionResultOfT(_diagnosticsRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "EdgeDiagnosticCollection.GetAll"), data => new EdgeDiagnosticResource(Client, data));
         }
 
         /// <summary>
@@ -322,7 +322,7 @@ namespace Azure.ResourceManager.WorkloadOrchestration
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<EdgeDiagnosticData, EdgeDiagnosticResource>(new DiagnosticsGetByResourceGroupCollectionResultOfT(_diagnosticsRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context), data => new EdgeDiagnosticResource(Client, data));
+            return new PageableWrapper<EdgeDiagnosticData, EdgeDiagnosticResource>(new DiagnosticsGetByResourceGroupCollectionResultOfT(_diagnosticsRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "EdgeDiagnosticCollection.GetAll"), data => new EdgeDiagnosticResource(Client, data));
         }
 
         /// <summary>

@@ -13,43 +13,11 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.AppService
 {
-    /// <summary>
-    /// A class representing the PublicCertificate data model.
-    /// Public certificate object
-    /// </summary>
+    /// <summary> Public certificate object. </summary>
     public partial class PublicCertificateData : ResourceData
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="PublicCertificateData"/>. </summary>
         public PublicCertificateData()
@@ -57,35 +25,54 @@ namespace Azure.ResourceManager.AppService
         }
 
         /// <summary> Initializes a new instance of <see cref="PublicCertificateData"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="blob"> Public Certificate byte array. </param>
-        /// <param name="publicCertificateLocation"> Public Certificate Location. </param>
-        /// <param name="thumbprintString"> Certificate Thumbprint. </param>
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="properties"> PublicCertificate resource specific properties. </param>
         /// <param name="kind"> Kind of resource. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal PublicCertificateData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, byte[] blob, PublicCertificateLocation? publicCertificateLocation, string thumbprintString, string kind, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal PublicCertificateData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, PublicCertificateProperties properties, string kind, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(id, name, resourceType, systemData)
         {
-            Blob = blob;
-            PublicCertificateLocation = publicCertificateLocation;
-            ThumbprintString = thumbprintString;
+            Properties = properties;
             Kind = kind;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
-        /// <summary> Public Certificate byte array. </summary>
-        [WirePath("properties.blob")]
-        public byte[] Blob { get; set; }
-        /// <summary> Public Certificate Location. </summary>
-        [WirePath("properties.publicCertificateLocation")]
-        public PublicCertificateLocation? PublicCertificateLocation { get; set; }
-        /// <summary> Certificate Thumbprint. </summary>
-        [WirePath("properties.thumbprint")]
-        public string ThumbprintString { get; }
+        /// <summary> PublicCertificate resource specific properties. </summary>
+        [WirePath("properties")]
+        internal PublicCertificateProperties Properties { get; set; }
+
         /// <summary> Kind of resource. </summary>
         [WirePath("kind")]
         public string Kind { get; set; }
+
+        /// <summary> Public Certificate Location. </summary>
+        [WirePath("properties.publicCertificateLocation")]
+        public PublicCertificateLocation? PublicCertificateLocation
+        {
+            get
+            {
+                return Properties is null ? default : Properties.PublicCertificateLocation;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new PublicCertificateProperties();
+                }
+                Properties.PublicCertificateLocation = value;
+            }
+        }
+
+        /// <summary> Certificate Thumbprint. </summary>
+        [WirePath("properties.thumbprint")]
+        public string ThumbprintString
+        {
+            get
+            {
+                return Properties is null ? default : Properties.ThumbprintString;
+            }
+        }
     }
 }

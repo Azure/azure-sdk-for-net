@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.ContainerService;
 
 namespace Azure.ResourceManager.ContainerService.Models
 {
@@ -14,38 +15,57 @@ namespace Azure.ResourceManager.ContainerService.Models
     public readonly partial struct AgentPoolNetworkPortProtocol : IEquatable<AgentPoolNetworkPortProtocol>
     {
         private readonly string _value;
+        /// <summary> TCP protocol. </summary>
+        private const string TcpValue = "TCP";
+        /// <summary> UDP protocol. </summary>
+        private const string UdpValue = "UDP";
 
         /// <summary> Initializes a new instance of <see cref="AgentPoolNetworkPortProtocol"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public AgentPoolNetworkPortProtocol(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string TcpValue = "TCP";
-        private const string UdpValue = "UDP";
+            _value = value;
+        }
 
         /// <summary> TCP protocol. </summary>
         public static AgentPoolNetworkPortProtocol Tcp { get; } = new AgentPoolNetworkPortProtocol(TcpValue);
+
         /// <summary> UDP protocol. </summary>
         public static AgentPoolNetworkPortProtocol Udp { get; } = new AgentPoolNetworkPortProtocol(UdpValue);
+
         /// <summary> Determines if two <see cref="AgentPoolNetworkPortProtocol"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(AgentPoolNetworkPortProtocol left, AgentPoolNetworkPortProtocol right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="AgentPoolNetworkPortProtocol"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(AgentPoolNetworkPortProtocol left, AgentPoolNetworkPortProtocol right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="AgentPoolNetworkPortProtocol"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="AgentPoolNetworkPortProtocol"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator AgentPoolNetworkPortProtocol(string value) => new AgentPoolNetworkPortProtocol(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="AgentPoolNetworkPortProtocol"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator AgentPoolNetworkPortProtocol?(string value) => value == null ? null : new AgentPoolNetworkPortProtocol(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is AgentPoolNetworkPortProtocol other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(AgentPoolNetworkPortProtocol other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

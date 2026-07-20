@@ -55,9 +55,9 @@ namespace Azure.ResourceManager.DesktopVirtualization
         {
             TryGetApiVersion(ResourceType, out string virtualApplicationGroupApiVersion);
             _applicationGroupsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.DesktopVirtualization", ResourceType.Namespace, Diagnostics);
-            _applicationGroupsRestClient = new ApplicationGroups(_applicationGroupsClientDiagnostics, Pipeline, Endpoint, virtualApplicationGroupApiVersion ?? "2026-01-01-preview");
+            _applicationGroupsRestClient = new ApplicationGroups(_applicationGroupsClientDiagnostics, Pipeline, Endpoint, virtualApplicationGroupApiVersion ?? "2026-03-01-preview");
             _startMenuItemsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.DesktopVirtualization", ResourceType.Namespace, Diagnostics);
-            _startMenuItemsRestClient = new StartMenuItems(_startMenuItemsClientDiagnostics, Pipeline, Endpoint, virtualApplicationGroupApiVersion ?? "2026-01-01-preview");
+            _startMenuItemsRestClient = new StartMenuItems(_startMenuItemsClientDiagnostics, Pipeline, Endpoint, virtualApplicationGroupApiVersion ?? "2026-03-01-preview");
             ValidateResourceId(id);
         }
 
@@ -93,7 +93,7 @@ namespace Azure.ResourceManager.DesktopVirtualization
         {
             if (id.ResourceType != ResourceType)
             {
-                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), id);
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), nameof(id));
             }
         }
 
@@ -110,7 +110,7 @@ namespace Azure.ResourceManager.DesktopVirtualization
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-01-01-preview. </description>
+        /// <description> 2026-03-01-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -158,7 +158,7 @@ namespace Azure.ResourceManager.DesktopVirtualization
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-01-01-preview. </description>
+        /// <description> 2026-03-01-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -206,7 +206,7 @@ namespace Azure.ResourceManager.DesktopVirtualization
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-01-01-preview. </description>
+        /// <description> 2026-03-01-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -216,7 +216,7 @@ namespace Azure.ResourceManager.DesktopVirtualization
         /// </summary>
         /// <param name="patch"> The AppGroup properties to be updated. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<VirtualApplicationGroupResource>> UpdateAsync(VirtualApplicationGroupPatch patch = default, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<VirtualApplicationGroupResource>> UpdateAsync(VirtualApplicationGroupPatch patch, CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = _applicationGroupsClientDiagnostics.CreateScope("VirtualApplicationGroupResource.Update");
             scope.Start();
@@ -255,7 +255,7 @@ namespace Azure.ResourceManager.DesktopVirtualization
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-01-01-preview. </description>
+        /// <description> 2026-03-01-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -265,7 +265,7 @@ namespace Azure.ResourceManager.DesktopVirtualization
         /// </summary>
         /// <param name="patch"> The AppGroup properties to be updated. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<VirtualApplicationGroupResource> Update(VirtualApplicationGroupPatch patch = default, CancellationToken cancellationToken = default)
+        public virtual Response<VirtualApplicationGroupResource> Update(VirtualApplicationGroupPatch patch, CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = _applicationGroupsClientDiagnostics.CreateScope("VirtualApplicationGroupResource.Update");
             scope.Start();
@@ -304,7 +304,7 @@ namespace Azure.ResourceManager.DesktopVirtualization
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-01-01-preview. </description>
+        /// <description> 2026-03-01-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -355,7 +355,7 @@ namespace Azure.ResourceManager.DesktopVirtualization
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-01-01-preview. </description>
+        /// <description> 2026-03-01-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -406,7 +406,7 @@ namespace Azure.ResourceManager.DesktopVirtualization
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-01-01-preview. </description>
+        /// <description> 2026-03-01-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -433,7 +433,8 @@ namespace Azure.ResourceManager.DesktopVirtualization
                 pageSize,
                 isDescending,
                 initialSkip,
-                context);
+                context,
+                "VirtualApplicationGroupResource.GetStartMenuItems");
         }
 
         /// <summary>
@@ -449,7 +450,7 @@ namespace Azure.ResourceManager.DesktopVirtualization
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-01-01-preview. </description>
+        /// <description> 2026-03-01-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -476,7 +477,8 @@ namespace Azure.ResourceManager.DesktopVirtualization
                 pageSize,
                 isDescending,
                 initialSkip,
-                context);
+                context,
+                "VirtualApplicationGroupResource.GetStartMenuItems");
         }
 
         /// <summary> Add a tag to the current resource. </summary>

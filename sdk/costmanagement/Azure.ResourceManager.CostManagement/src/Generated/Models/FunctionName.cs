@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.CostManagement;
 
 namespace Azure.ResourceManager.CostManagement.Models
 {
@@ -14,44 +15,63 @@ namespace Azure.ResourceManager.CostManagement.Models
     public readonly partial struct FunctionName : IEquatable<FunctionName>
     {
         private readonly string _value;
-
-        /// <summary> Initializes a new instance of <see cref="FunctionName"/>. </summary>
-        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        public FunctionName(string value)
-        {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
-
         private const string PreTaxCostUSDValue = "PreTaxCostUSD";
         private const string CostValue = "Cost";
         private const string CostUSDValue = "CostUSD";
         private const string PreTaxCostValue = "PreTaxCost";
 
-        /// <summary> PreTaxCostUSD. </summary>
+        /// <summary> Initializes a new instance of <see cref="FunctionName"/>. </summary>
+        /// <param name="value"> The value. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
+        public FunctionName(string value)
+        {
+            Argument.AssertNotNull(value, nameof(value));
+
+            _value = value;
+        }
+
+        /// <summary> Gets the PreTaxCostUSD. </summary>
         public static FunctionName PreTaxCostUSD { get; } = new FunctionName(PreTaxCostUSDValue);
-        /// <summary> Cost. </summary>
+
+        /// <summary> Gets the Cost. </summary>
         public static FunctionName Cost { get; } = new FunctionName(CostValue);
-        /// <summary> CostUSD. </summary>
+
+        /// <summary> Gets the CostUSD. </summary>
         public static FunctionName CostUSD { get; } = new FunctionName(CostUSDValue);
-        /// <summary> PreTaxCost. </summary>
+
+        /// <summary> Gets the PreTaxCost. </summary>
         public static FunctionName PreTaxCost { get; } = new FunctionName(PreTaxCostValue);
+
         /// <summary> Determines if two <see cref="FunctionName"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(FunctionName left, FunctionName right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="FunctionName"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(FunctionName left, FunctionName right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="FunctionName"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="FunctionName"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator FunctionName(string value) => new FunctionName(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="FunctionName"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator FunctionName?(string value) => value == null ? null : new FunctionName(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is FunctionName other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(FunctionName other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

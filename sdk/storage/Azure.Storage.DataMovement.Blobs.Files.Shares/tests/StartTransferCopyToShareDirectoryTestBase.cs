@@ -116,6 +116,14 @@ namespace Azure.Storage.DataMovement.Blobs.Files.Shares.Tests
             return await DestinationClientBuilder.GetTestShareAsync(oauthService, containerName);
         }
 
+        protected override async Task<IDisposingContainer<ShareClient>> GetDestinationDisposingContainerAzureSasCredentialAsync(
+            string containerName = default,
+            CancellationToken cancellationToken = default)
+        {
+            ShareServiceClient oauthService = DestinationClientBuilder.GetShareServiceClient_AzureSasCredential();
+            return await DestinationClientBuilder.GetTestShareAsync(oauthService, containerName);
+        }
+
         protected override async Task<IDisposingContainer<ShareClient>> GetDestinationDisposingContainerAsync(ShareServiceClient service = null, string containerName = null, CancellationToken cancellationToken = default)
             => await DestinationClientBuilder.GetTestShareAsync(service, containerName);
 
@@ -204,6 +212,14 @@ namespace Azure.Storage.DataMovement.Blobs.Files.Shares.Tests
         {
             BlobServiceClient oauthService = SourceClientBuilder.GetServiceClientFromOauthConfig(Tenants.TestConfigOAuth, TestEnvironment.Credential);
             return await SourceClientBuilder.GetTestContainerAsync(oauthService, containerName);
+        }
+
+        protected override async Task<IDisposingContainer<BlobContainerClient>> GetSourceDisposingContainerAzureSasCredentialAsync(
+            string containerName = default,
+            CancellationToken cancellationToken = default)
+        {
+            BlobServiceClient sasService = SourceClientBuilder.GetBlobServiceClient_AzureSasCredential();
+            return await SourceClientBuilder.GetTestContainerAsync(sasService, containerName);
         }
 
         // Blob to File always needs OAuth source container

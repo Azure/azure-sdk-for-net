@@ -11,10 +11,17 @@ namespace Azure.ResourceManager.BotService.Models
 {
     internal static partial class EmailChannelAuthMethodExtensions
     {
+        /// <param name="value"> The value to deserialize. </param>
         public static EmailChannelAuthMethod ToEmailChannelAuthMethod(this int value)
         {
-            if (value == 0) return EmailChannelAuthMethod.Password;
-            if (value == 1) return EmailChannelAuthMethod.Graph;
+            if (value == 0)
+            {
+                return EmailChannelAuthMethod.Password;
+            }
+            if (value == 1)
+            {
+                return EmailChannelAuthMethod.Graph;
+            }
             throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown EmailChannelAuthMethod value.");
         }
     }

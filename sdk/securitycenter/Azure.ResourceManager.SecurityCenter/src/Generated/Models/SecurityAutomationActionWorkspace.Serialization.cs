@@ -10,13 +10,55 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.SecurityCenter;
 
 namespace Azure.ResourceManager.SecurityCenter.Models
 {
-    public partial class SecurityAutomationActionWorkspace : IUtf8JsonSerializable, IJsonModel<SecurityAutomationActionWorkspace>
+    /// <summary> The Log Analytics Workspace to which event data will be exported. Security alerts data will reside in the 'SecurityAlert' table and the assessments data will reside in the 'SecurityRecommendation' table (under the 'Security'/'SecurityCenterFree' solutions). Note that in order to view the data in the workspace, the Security Center Log Analytics free/standard solution needs to be enabled on that workspace. To learn more about Microsoft Defender for Cloud continuous export capabilities, visit https://aka.ms/ASCExportLearnMore. </summary>
+    public partial class SecurityAutomationActionWorkspace : SecurityAutomationAction, IJsonModel<SecurityAutomationActionWorkspace>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<SecurityAutomationActionWorkspace>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override SecurityAutomationAction PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<SecurityAutomationActionWorkspace>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    {
+                        return DeserializeSecurityAutomationActionWorkspace(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(SecurityAutomationActionWorkspace)} does not support reading '{options.Format}' format.");
+            }
+        }
 
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<SecurityAutomationActionWorkspace>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerSecurityCenterContext.Default);
+                default:
+                    throw new FormatException($"The model {nameof(SecurityAutomationActionWorkspace)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<SecurityAutomationActionWorkspace>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        SecurityAutomationActionWorkspace IPersistableModel<SecurityAutomationActionWorkspace>.Create(BinaryData data, ModelReaderWriterOptions options) => (SecurityAutomationActionWorkspace)PersistableModelCreateCore(data, options);
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<SecurityAutomationActionWorkspace>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<SecurityAutomationActionWorkspace>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
@@ -28,12 +70,11 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<SecurityAutomationActionWorkspace>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<SecurityAutomationActionWorkspace>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(SecurityAutomationActionWorkspace)} does not support writing '{format}' format.");
             }
-
             base.JsonModelWriteCore(writer, options);
             if (Optional.IsDefined(WorkspaceResourceId))
             {
@@ -42,84 +83,56 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             }
         }
 
-        SecurityAutomationActionWorkspace IJsonModel<SecurityAutomationActionWorkspace>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        SecurityAutomationActionWorkspace IJsonModel<SecurityAutomationActionWorkspace>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => (SecurityAutomationActionWorkspace)JsonModelCreateCore(ref reader, options);
+
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override SecurityAutomationAction JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<SecurityAutomationActionWorkspace>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<SecurityAutomationActionWorkspace>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(SecurityAutomationActionWorkspace)} does not support reading '{format}' format.");
             }
-
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
             return DeserializeSecurityAutomationActionWorkspace(document.RootElement, options);
         }
 
-        internal static SecurityAutomationActionWorkspace DeserializeSecurityAutomationActionWorkspace(JsonElement element, ModelReaderWriterOptions options = null)
+        /// <param name="element"> The JSON element to deserialize. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        internal static SecurityAutomationActionWorkspace DeserializeSecurityAutomationActionWorkspace(JsonElement element, ModelReaderWriterOptions options)
         {
-            options ??= ModelSerializationExtensions.WireOptions;
-
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            ResourceIdentifier workspaceResourceId = default;
             ActionType actionType = default;
-            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
-            foreach (var property in element.EnumerateObject())
+            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            ResourceIdentifier workspaceResourceId = default;
+            foreach (var prop in element.EnumerateObject())
             {
-                if (property.NameEquals("workspaceResourceId"u8))
+                if (prop.NameEquals("actionType"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    actionType = new ActionType(prop.Value.GetString());
+                    continue;
+                }
+                if (prop.NameEquals("workspaceResourceId"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    workspaceResourceId = new ResourceIdentifier(property.Value.GetString());
-                    continue;
-                }
-                if (property.NameEquals("actionType"u8))
-                {
-                    actionType = new ActionType(property.Value.GetString());
+                    workspaceResourceId = new ResourceIdentifier(prop.Value.GetString());
                     continue;
                 }
                 if (options.Format != "W")
                 {
-                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = rawDataDictionary;
-            return new SecurityAutomationActionWorkspace(actionType, serializedAdditionalRawData, workspaceResourceId);
+            return new SecurityAutomationActionWorkspace(actionType, additionalBinaryDataProperties, workspaceResourceId);
         }
-
-        BinaryData IPersistableModel<SecurityAutomationActionWorkspace>.Write(ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<SecurityAutomationActionWorkspace>)this).GetFormatFromOptions(options) : options.Format;
-
-            switch (format)
-            {
-                case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerSecurityCenterContext.Default);
-                default:
-                    throw new FormatException($"The model {nameof(SecurityAutomationActionWorkspace)} does not support writing '{options.Format}' format.");
-            }
-        }
-
-        SecurityAutomationActionWorkspace IPersistableModel<SecurityAutomationActionWorkspace>.Create(BinaryData data, ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<SecurityAutomationActionWorkspace>)this).GetFormatFromOptions(options) : options.Format;
-
-            switch (format)
-            {
-                case "J":
-                    {
-                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
-                        return DeserializeSecurityAutomationActionWorkspace(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(SecurityAutomationActionWorkspace)} does not support reading '{options.Format}' format.");
-            }
-        }
-
-        string IPersistableModel<SecurityAutomationActionWorkspace>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

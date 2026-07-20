@@ -7,8 +7,9 @@ using System.ClientModel;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure.AI.Projects;
 
-namespace Azure.AI.Projects
+namespace Azure.AI.Projects.Evaluation
 {
     /// <summary> Evaluation Taxonomy Definition. </summary>
     public partial class EvaluationTaxonomy : IJsonModel<EvaluationTaxonomy>

@@ -7,43 +7,15 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.FrontDoor;
 
 namespace Azure.ResourceManager.FrontDoor.Models
 {
     /// <summary> One or more actions that will execute, modifying the request and/or response. </summary>
     public partial class RulesEngineAction
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="RulesEngineAction"/>. </summary>
         public RulesEngineAction()
@@ -55,31 +27,25 @@ namespace Azure.ResourceManager.FrontDoor.Models
         /// <summary> Initializes a new instance of <see cref="RulesEngineAction"/>. </summary>
         /// <param name="requestHeaderActions"> A list of header actions to apply from the request from AFD to the origin. </param>
         /// <param name="responseHeaderActions"> A list of header actions to apply from the response from AFD to the client. </param>
-        /// <param name="routeConfigurationOverride">
-        /// Override the route configuration.
-        /// Please note <see cref="RouteConfiguration"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="ForwardingConfiguration"/> and <see cref="RedirectConfiguration"/>.
-        /// </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal RulesEngineAction(IList<RulesEngineHeaderAction> requestHeaderActions, IList<RulesEngineHeaderAction> responseHeaderActions, RouteConfiguration routeConfigurationOverride, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="routeConfigurationOverride"> Override the route configuration. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal RulesEngineAction(IList<RulesEngineHeaderAction> requestHeaderActions, IList<RulesEngineHeaderAction> responseHeaderActions, RouteConfiguration routeConfigurationOverride, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             RequestHeaderActions = requestHeaderActions;
             ResponseHeaderActions = responseHeaderActions;
             RouteConfigurationOverride = routeConfigurationOverride;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> A list of header actions to apply from the request from AFD to the origin. </summary>
         [WirePath("requestHeaderActions")]
         public IList<RulesEngineHeaderAction> RequestHeaderActions { get; }
+
         /// <summary> A list of header actions to apply from the response from AFD to the client. </summary>
         [WirePath("responseHeaderActions")]
         public IList<RulesEngineHeaderAction> ResponseHeaderActions { get; }
-        /// <summary>
-        /// Override the route configuration.
-        /// Please note <see cref="RouteConfiguration"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="ForwardingConfiguration"/> and <see cref="RedirectConfiguration"/>.
-        /// </summary>
+
+        /// <summary> Override the route configuration. </summary>
         [WirePath("routeConfigurationOverride")]
         public RouteConfiguration RouteConfigurationOverride { get; set; }
     }

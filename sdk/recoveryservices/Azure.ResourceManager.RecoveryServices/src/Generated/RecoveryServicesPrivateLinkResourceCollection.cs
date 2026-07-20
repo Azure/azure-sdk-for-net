@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.RecoveryServices
         {
             TryGetApiVersion(RecoveryServicesPrivateLinkResource.ResourceType, out string recoveryServicesPrivateLinkResourceApiVersion);
             _privateLinkResourceOperationGroupClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.RecoveryServices", RecoveryServicesPrivateLinkResource.ResourceType.Namespace, Diagnostics);
-            _privateLinkResourceOperationGroupRestClient = new PrivateLinkResourceOperationGroup(_privateLinkResourceOperationGroupClientDiagnostics, Pipeline, Endpoint, recoveryServicesPrivateLinkResourceApiVersion ?? "2025-08-01");
+            _privateLinkResourceOperationGroupRestClient = new PrivateLinkResourceOperationGroup(_privateLinkResourceOperationGroupClientDiagnostics, Pipeline, Endpoint, recoveryServicesPrivateLinkResourceApiVersion ?? "2026-05-01");
             ValidateResourceId(id);
         }
 
@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.RecoveryServices
         {
             if (id.ResourceType != RecoveryServicesVaultResource.ResourceType)
             {
-                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, RecoveryServicesVaultResource.ResourceType), id);
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, RecoveryServicesVaultResource.ResourceType), nameof(id));
             }
         }
 
@@ -67,7 +67,7 @@ namespace Azure.ResourceManager.RecoveryServices
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-08-01. </description>
+        /// <description> 2026-05-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -116,7 +116,7 @@ namespace Azure.ResourceManager.RecoveryServices
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-08-01. </description>
+        /// <description> 2026-05-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -165,7 +165,7 @@ namespace Azure.ResourceManager.RecoveryServices
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-08-01. </description>
+        /// <description> 2026-05-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -177,7 +177,13 @@ namespace Azure.ResourceManager.RecoveryServices
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<RecoveryServicesPrivateLinkResourceData, RecoveryServicesPrivateLinkResource>(new PrivateLinkResourceOperationGroupGetAllAsyncCollectionResultOfT(_privateLinkResourceOperationGroupRestClient, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, context), data => new RecoveryServicesPrivateLinkResource(Client, data));
+            return new AsyncPageableWrapper<RecoveryServicesPrivateLinkResourceData, RecoveryServicesPrivateLinkResource>(new PrivateLinkResourceOperationGroupGetAllAsyncCollectionResultOfT(
+                _privateLinkResourceOperationGroupRestClient,
+                Id.SubscriptionId,
+                Id.ResourceGroupName,
+                Id.Name,
+                context,
+                "RecoveryServicesPrivateLinkResourceCollection.GetAll"), data => new RecoveryServicesPrivateLinkResource(Client, data));
         }
 
         /// <summary>
@@ -193,7 +199,7 @@ namespace Azure.ResourceManager.RecoveryServices
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-08-01. </description>
+        /// <description> 2026-05-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -205,7 +211,13 @@ namespace Azure.ResourceManager.RecoveryServices
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<RecoveryServicesPrivateLinkResourceData, RecoveryServicesPrivateLinkResource>(new PrivateLinkResourceOperationGroupGetAllCollectionResultOfT(_privateLinkResourceOperationGroupRestClient, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, context), data => new RecoveryServicesPrivateLinkResource(Client, data));
+            return new PageableWrapper<RecoveryServicesPrivateLinkResourceData, RecoveryServicesPrivateLinkResource>(new PrivateLinkResourceOperationGroupGetAllCollectionResultOfT(
+                _privateLinkResourceOperationGroupRestClient,
+                Id.SubscriptionId,
+                Id.ResourceGroupName,
+                Id.Name,
+                context,
+                "RecoveryServicesPrivateLinkResourceCollection.GetAll"), data => new RecoveryServicesPrivateLinkResource(Client, data));
         }
 
         /// <summary>
@@ -221,7 +233,7 @@ namespace Azure.ResourceManager.RecoveryServices
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-08-01. </description>
+        /// <description> 2026-05-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -278,7 +290,7 @@ namespace Azure.ResourceManager.RecoveryServices
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-08-01. </description>
+        /// <description> 2026-05-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -335,7 +347,7 @@ namespace Azure.ResourceManager.RecoveryServices
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-08-01. </description>
+        /// <description> 2026-05-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -396,7 +408,7 @@ namespace Azure.ResourceManager.RecoveryServices
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-08-01. </description>
+        /// <description> 2026-05-01. </description>
         /// </item>
         /// </list>
         /// </summary>

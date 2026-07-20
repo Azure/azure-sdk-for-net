@@ -176,6 +176,57 @@ namespace Azure.Generator.Tests.Visitors
             Assert.AreEqual(Helpers.GetExpectedFromFile(conditionName), file.Content);
         }
 
+        // Regression test ensuring that when the conditional header parameter uses the
+        // Azure.Core.eTag scalar (which is mapped to the ETag struct), the generated body
+        // accesses ".Value" on the ETag? parameter directly instead of incorrectly appending
+        // ".Value" to a wrapping expression like TypeFormatters.ConvertToString(ifMatch).Value.
+        [TestCase("ifMatch")]
+        [TestCase("If-Match")]
+        [TestCase("ifNoneMatch")]
+        [TestCase("If-None-Match")]
+        public void TestValidateCreateRequestMethod_SingleIfMatchETagScalarParameter(string conditionName)
+        {
+            var visitor = new TestMatchConditionsHeaderVisitor();
+            var eTagType = InputFactory.Primitive.String("eTag", "Azure.Core.eTag");
+            var parameters = new List<InputParameter>
+            {
+                CreateTestParameter(conditionName.ToVariableName(), conditionName, InputRequestLocation.Header, type: eTagType)
+            };
+            var methodParameters = new List<InputMethodParameter>
+            {
+                CreateTestMethodParameter(conditionName.ToVariableName(), conditionName, InputRequestLocation.Header, type: eTagType)
+            };
+            var responseModel = InputFactory.Model("foo");
+            var operation = InputFactory.Operation(
+                "foo",
+                parameters: parameters,
+                responses: [InputFactory.OperationResponse(bodytype: responseModel)]);
+            var serviceMethod = InputFactory.LongRunningServiceMethod(
+                "foo",
+                operation,
+                parameters: methodParameters,
+                response: InputFactory.ServiceMethodResponse(responseModel, ["result"]));
+            var inputClient = InputFactory.Client("TestClient", methods: [serviceMethod]);
+            MockHelpers.LoadMockGenerator(clients: () => [inputClient]);
+
+            var clientProvider = AzureClientGenerator.Instance.TypeFactory.CreateClient(inputClient);
+            Assert.IsNotNull(clientProvider);
+
+            var restClient = clientProvider!.RestClient;
+            var methods = restClient.Methods;
+            Assert.IsTrue(methods.Count > 0, "RestClient should have methods defined.");
+
+            // visit the method
+            _ = visitor.VisitCreateRequest(serviceMethod, restClient, methods[0]);
+
+            var writer = new TypeProviderWriter(clientProvider!.RestClient);
+            var file = writer.Write();
+
+            // The output for the Azure.Core.eTag scalar should generate ifMatch.Value, not the
+            // broken TypeFormatters.ConvertToString(ifMatch).Value.
+            Assert.AreEqual(Helpers.GetExpectedFromFile(conditionName), file.Content);
+        }
+
         [Test]
         public void TestValidateCreateRequestMethod_RequestConditionParameter()
         {
@@ -740,13 +791,15 @@ namespace Azure.Generator.Tests.Visitors
             string name,
             string nameInRequest,
             InputRequestLocation location,
-            bool isRequired = false)
+            bool isRequired = false,
+            InputType? type = null)
         {
+            type ??= InputPrimitiveType.String;
             if (location == InputRequestLocation.Header)
             {
                 return InputFactory.HeaderParameter(
                     name,
-                    type: InputPrimitiveType.String,
+                    type: type,
                     serializedName: nameInRequest,
                     isRequired: isRequired);
             }
@@ -754,14 +807,14 @@ namespace Azure.Generator.Tests.Visitors
             {
                 return InputFactory.QueryParameter(
                     name,
-                    type: InputPrimitiveType.String,
+                    type: type,
                     serializedName: nameInRequest,
                     isRequired: isRequired);
             }
 
             return InputFactory.BodyParameter(
                 name,
-                type: InputPrimitiveType.String,
+                type: type,
                 serializedName: nameInRequest,
                 isRequired: isRequired);
         }
@@ -770,11 +823,13 @@ namespace Azure.Generator.Tests.Visitors
             string name,
             string nameInRequest,
             InputRequestLocation location,
-            bool isRequired = false)
+            bool isRequired = false,
+            InputType? type = null)
         {
+            type ??= InputPrimitiveType.String;
             return InputFactory.MethodParameter(
                 name,
-                type: InputPrimitiveType.String,
+                type: type,
                 serializedName: nameInRequest,
                 location: location,
                 isRequired: isRequired);

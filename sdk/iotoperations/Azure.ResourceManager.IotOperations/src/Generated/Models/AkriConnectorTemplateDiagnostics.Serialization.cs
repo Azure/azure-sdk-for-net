@@ -16,11 +16,6 @@ namespace Azure.ResourceManager.IotOperations.Models
     /// <summary> AkriConnectorTemplateDiagnostics properties. </summary>
     public partial class AkriConnectorTemplateDiagnostics : IJsonModel<AkriConnectorTemplateDiagnostics>
     {
-        /// <summary> Initializes a new instance of <see cref="AkriConnectorTemplateDiagnostics"/> for deserialization. </summary>
-        internal AkriConnectorTemplateDiagnostics()
-        {
-        }
-
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual AkriConnectorTemplateDiagnostics PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)

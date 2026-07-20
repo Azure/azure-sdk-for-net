@@ -9,14 +9,55 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure.Core;
+using Azure.ResourceManager.RecoveryServicesBackup;
 
 namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 {
-    public partial class IaasVmHealthDetails : IUtf8JsonSerializable, IJsonModel<IaasVmHealthDetails>
+    /// <summary> Azure IaaS VM workload-specific Health Details. </summary>
+    public partial class IaasVmHealthDetails : ResourceHealthDetails, IJsonModel<IaasVmHealthDetails>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<IaasVmHealthDetails>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override ResourceHealthDetails PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<IaasVmHealthDetails>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    {
+                        return DeserializeIaasVmHealthDetails(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(IaasVmHealthDetails)} does not support reading '{options.Format}' format.");
+            }
+        }
 
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<IaasVmHealthDetails>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerRecoveryServicesBackupContext.Default);
+                default:
+                    throw new FormatException($"The model {nameof(IaasVmHealthDetails)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<IaasVmHealthDetails>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        IaasVmHealthDetails IPersistableModel<IaasVmHealthDetails>.Create(BinaryData data, ModelReaderWriterOptions options) => (IaasVmHealthDetails)PersistableModelCreateCore(data, options);
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<IaasVmHealthDetails>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<IaasVmHealthDetails>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
@@ -28,31 +69,35 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<IaasVmHealthDetails>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<IaasVmHealthDetails>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(IaasVmHealthDetails)} does not support writing '{format}' format.");
             }
-
             base.JsonModelWriteCore(writer, options);
         }
 
-        IaasVmHealthDetails IJsonModel<IaasVmHealthDetails>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        IaasVmHealthDetails IJsonModel<IaasVmHealthDetails>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => (IaasVmHealthDetails)JsonModelCreateCore(ref reader, options);
+
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override ResourceHealthDetails JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<IaasVmHealthDetails>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<IaasVmHealthDetails>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(IaasVmHealthDetails)} does not support reading '{format}' format.");
             }
-
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
             return DeserializeIaasVmHealthDetails(document.RootElement, options);
         }
 
-        internal static IaasVmHealthDetails DeserializeIaasVmHealthDetails(JsonElement element, ModelReaderWriterOptions options = null)
+        /// <param name="element"> The JSON element to deserialize. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        internal static IaasVmHealthDetails DeserializeIaasVmHealthDetails(JsonElement element, ModelReaderWriterOptions options)
         {
-            options ??= ModelSerializationExtensions.WireOptions;
-
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -61,81 +106,55 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             string title = default;
             string message = default;
             IReadOnlyList<string> recommendations = default;
-            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
-            foreach (var property in element.EnumerateObject())
+            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            foreach (var prop in element.EnumerateObject())
             {
-                if (property.NameEquals("code"u8))
+                if (prop.NameEquals("code"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    code = property.Value.GetInt32();
+                    code = prop.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("title"u8))
+                if (prop.NameEquals("title"u8))
                 {
-                    title = property.Value.GetString();
+                    title = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("message"u8))
+                if (prop.NameEquals("message"u8))
                 {
-                    message = property.Value.GetString();
+                    message = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("recommendations"u8))
+                if (prop.NameEquals("recommendations"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
                     List<string> array = new List<string>();
-                    foreach (var item in property.Value.EnumerateArray())
+                    foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(item.GetString());
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(item.GetString());
+                        }
                     }
                     recommendations = array;
                     continue;
                 }
                 if (options.Format != "W")
                 {
-                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = rawDataDictionary;
-            return new IaasVmHealthDetails(code, title, message, recommendations ?? new ChangeTrackingList<string>(), serializedAdditionalRawData);
+            return new IaasVmHealthDetails(code, title, message, recommendations ?? new ChangeTrackingList<string>(), additionalBinaryDataProperties);
         }
-
-        BinaryData IPersistableModel<IaasVmHealthDetails>.Write(ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<IaasVmHealthDetails>)this).GetFormatFromOptions(options) : options.Format;
-
-            switch (format)
-            {
-                case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerRecoveryServicesBackupContext.Default);
-                default:
-                    throw new FormatException($"The model {nameof(IaasVmHealthDetails)} does not support writing '{options.Format}' format.");
-            }
-        }
-
-        IaasVmHealthDetails IPersistableModel<IaasVmHealthDetails>.Create(BinaryData data, ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<IaasVmHealthDetails>)this).GetFormatFromOptions(options) : options.Format;
-
-            switch (format)
-            {
-                case "J":
-                    {
-                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
-                        return DeserializeIaasVmHealthDetails(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(IaasVmHealthDetails)} does not support reading '{options.Format}' format.");
-            }
-        }
-
-        string IPersistableModel<IaasVmHealthDetails>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

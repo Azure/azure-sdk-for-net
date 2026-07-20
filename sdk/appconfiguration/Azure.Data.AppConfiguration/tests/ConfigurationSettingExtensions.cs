@@ -19,6 +19,7 @@ namespace Azure.Data.AppConfiguration.Tests
             {
                 Label = setting.Label,
                 ContentType = setting.ContentType,
+                Description = setting.Description,
                 Tags = tags
             };
         }

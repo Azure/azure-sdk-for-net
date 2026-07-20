@@ -39,7 +39,8 @@ namespace Azure.AI.ContentUnderstanding.Samples
                 },
                 ["Invoice"] = new ContentCategoryDefinition
                 {
-                    Description = "Billing documents issued by sellers or service providers to request payment for goods or services, detailing items, prices, taxes, totals, and payment terms."
+                    Description = "Billing documents issued by sellers or service providers to request payment for goods or services, detailing items, prices, taxes, totals, and payment terms.",
+                    AnalyzerId = "prebuilt-invoice" // Route Invoice segments for field extraction
                 },
                 ["Bank_Statement"] = new ContentCategoryDefinition
                 {
@@ -72,7 +73,9 @@ namespace Azure.AI.ContentUnderstanding.Samples
             // Create the classifier
             string analyzerId = $"my_classifier_{DateTimeOffset.UtcNow.ToUnixTimeSeconds()}";
 #else
-            // Define content categories for classification
+            // Define content categories for classification.
+            // The Invoice category sets AnalyzerId = "prebuilt-invoice" so matched segments are
+            // routed to the prebuilt invoice analyzer for field extraction.
             var categories = new Dictionary<string, ContentCategoryDefinition>
             {
                 ["Loan_Application"] = new ContentCategoryDefinition
@@ -81,7 +84,8 @@ namespace Azure.AI.ContentUnderstanding.Samples
                 },
                 ["Invoice"] = new ContentCategoryDefinition
                 {
-                    Description = "Billing documents issued by sellers or service providers to request payment for goods or services, detailing items, prices, taxes, totals, and payment terms."
+                    Description = "Billing documents issued by sellers or service providers to request payment for goods or services, detailing items, prices, taxes, totals, and payment terms.",
+                    AnalyzerId = "prebuilt-invoice" // Route Invoice segments for field extraction
                 },
                 ["Bank_Statement"] = new ContentCategoryDefinition
                 {
@@ -410,6 +414,27 @@ namespace Azure.AI.ContentUnderstanding.Samples
                 }
 
                 Console.WriteLine("All category analysis with segmentation properties validated successfully");
+                #endregion
+
+                #region Snippet:ContentUnderstandingClassifierToLlmInput
+                // Convert classification results to LLM-friendly text.
+                // ToLlmInput automatically detects classification results: it expands the parent
+                // into per-segment blocks, each with its category label in the YAML front matter.
+                // Segments are separated by a ***** divider.
+                string llmText = analyzeResult.ToLlmInput();
+                Console.WriteLine(llmText);
+                #endregion
+
+                #region Assertion:ContentUnderstandingClassifierToLlmInput
+                Assert.IsNotNull(llmText, "LLM input text should not be null");
+                Assert.That(llmText, Does.StartWith("---\n"));
+                Assert.That(llmText, Does.Contain("contentType: document"));
+                if (documentContent.Segments != null && documentContent.Segments.Count > 1)
+                {
+                    Assert.That(llmText, Does.Contain("*****"));
+                    Assert.That(llmText, Does.Contain("category:"));
+                }
+                Console.WriteLine($"Classification LLM input text generated ({llmText.Length} characters)");
                 #endregion
             }
             finally

@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.DesktopVirtualization
         {
             TryGetApiVersion(ResourceType, out string activeSessionHostConfigurationApiVersion);
             _activeSessionHostConfigurationsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.DesktopVirtualization", ResourceType.Namespace, Diagnostics);
-            _activeSessionHostConfigurationsRestClient = new ActiveSessionHostConfigurations(_activeSessionHostConfigurationsClientDiagnostics, Pipeline, Endpoint, activeSessionHostConfigurationApiVersion ?? "2026-01-01-preview");
+            _activeSessionHostConfigurationsRestClient = new ActiveSessionHostConfigurations(_activeSessionHostConfigurationsClientDiagnostics, Pipeline, Endpoint, activeSessionHostConfigurationApiVersion ?? "2026-03-01-preview");
             ValidateResourceId(id);
         }
 
@@ -86,7 +86,7 @@ namespace Azure.ResourceManager.DesktopVirtualization
         {
             if (id.ResourceType != ResourceType)
             {
-                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), id);
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), nameof(id));
             }
         }
 
@@ -103,7 +103,7 @@ namespace Azure.ResourceManager.DesktopVirtualization
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-01-01-preview. </description>
+        /// <description> 2026-03-01-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -151,7 +151,7 @@ namespace Azure.ResourceManager.DesktopVirtualization
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-01-01-preview. </description>
+        /// <description> 2026-03-01-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>

@@ -29,12 +29,12 @@ namespace Azure.ResourceManager.MySql.FlexibleServers
         /// <param name="name"> The name of the resource. </param>
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
         /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
-        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="properties"> The properties of an administrator. </param>
-        internal MySqlFlexibleServerAadAdministratorData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, BinaryData> additionalBinaryDataProperties, AdministratorProperties properties) : base(id, name, resourceType, systemData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal MySqlFlexibleServerAadAdministratorData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, AdministratorProperties properties, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(id, name, resourceType, systemData)
         {
-            _additionalBinaryDataProperties = additionalBinaryDataProperties;
             Properties = properties;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> The properties of an administrator. </summary>
@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.MySql.FlexibleServers
                 {
                     Properties = new AdministratorProperties();
                 }
-                Properties.AdministratorType = value.Value;
+                Properties.AdministratorType = value;
             }
         }
 
@@ -104,7 +104,7 @@ namespace Azure.ResourceManager.MySql.FlexibleServers
                 {
                     Properties = new AdministratorProperties();
                 }
-                Properties.TenantId = value.Value;
+                Properties.TenantId = value;
             }
         }
 

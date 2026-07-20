@@ -9,14 +9,55 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure.Core;
+using Azure.ResourceManager.DataMigration;
 
 namespace Azure.ResourceManager.DataMigration.Models
 {
-    public partial class DataMigrationAvailableServiceSkuDetails : IUtf8JsonSerializable, IJsonModel<DataMigrationAvailableServiceSkuDetails>
+    /// <summary> SKU name, tier, etc. </summary>
+    public partial class DataMigrationAvailableServiceSkuDetails : IJsonModel<DataMigrationAvailableServiceSkuDetails>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<DataMigrationAvailableServiceSkuDetails>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual DataMigrationAvailableServiceSkuDetails PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<DataMigrationAvailableServiceSkuDetails>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    {
+                        return DeserializeDataMigrationAvailableServiceSkuDetails(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(DataMigrationAvailableServiceSkuDetails)} does not support reading '{options.Format}' format.");
+            }
+        }
 
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<DataMigrationAvailableServiceSkuDetails>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerDataMigrationContext.Default);
+                default:
+                    throw new FormatException($"The model {nameof(DataMigrationAvailableServiceSkuDetails)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<DataMigrationAvailableServiceSkuDetails>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        DataMigrationAvailableServiceSkuDetails IPersistableModel<DataMigrationAvailableServiceSkuDetails>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<DataMigrationAvailableServiceSkuDetails>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<DataMigrationAvailableServiceSkuDetails>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
@@ -28,12 +69,11 @@ namespace Azure.ResourceManager.DataMigration.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<DataMigrationAvailableServiceSkuDetails>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<DataMigrationAvailableServiceSkuDetails>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(DataMigrationAvailableServiceSkuDetails)} does not support writing '{format}' format.");
             }
-
             if (Optional.IsDefined(Name))
             {
                 writer.WritePropertyName("name"u8);
@@ -54,15 +94,15 @@ namespace Azure.ResourceManager.DataMigration.Models
                 writer.WritePropertyName("tier"u8);
                 writer.WriteStringValue(Tier);
             }
-            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
-                foreach (var item in _serializedAdditionalRawData)
+                foreach (var item in _additionalBinaryDataProperties)
                 {
                     writer.WritePropertyName(item.Key);
 #if NET6_0_OR_GREATER
-				writer.WriteRawValue(item.Value);
+                    writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value, ModelSerializationExtensions.JsonDocumentOptions))
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
                     {
                         JsonSerializer.Serialize(writer, document.RootElement);
                     }
@@ -71,22 +111,27 @@ namespace Azure.ResourceManager.DataMigration.Models
             }
         }
 
-        DataMigrationAvailableServiceSkuDetails IJsonModel<DataMigrationAvailableServiceSkuDetails>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        DataMigrationAvailableServiceSkuDetails IJsonModel<DataMigrationAvailableServiceSkuDetails>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual DataMigrationAvailableServiceSkuDetails JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<DataMigrationAvailableServiceSkuDetails>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<DataMigrationAvailableServiceSkuDetails>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(DataMigrationAvailableServiceSkuDetails)} does not support reading '{format}' format.");
             }
-
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
             return DeserializeDataMigrationAvailableServiceSkuDetails(document.RootElement, options);
         }
 
-        internal static DataMigrationAvailableServiceSkuDetails DeserializeDataMigrationAvailableServiceSkuDetails(JsonElement element, ModelReaderWriterOptions options = null)
+        /// <param name="element"> The JSON element to deserialize. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        internal static DataMigrationAvailableServiceSkuDetails DeserializeDataMigrationAvailableServiceSkuDetails(JsonElement element, ModelReaderWriterOptions options)
         {
-            options ??= ModelSerializationExtensions.WireOptions;
-
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -95,68 +140,35 @@ namespace Azure.ResourceManager.DataMigration.Models
             string family = default;
             string size = default;
             string tier = default;
-            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
-            foreach (var property in element.EnumerateObject())
+            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            foreach (var prop in element.EnumerateObject())
             {
-                if (property.NameEquals("name"u8))
+                if (prop.NameEquals("name"u8))
                 {
-                    name = property.Value.GetString();
+                    name = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("family"u8))
+                if (prop.NameEquals("family"u8))
                 {
-                    family = property.Value.GetString();
+                    family = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("size"u8))
+                if (prop.NameEquals("size"u8))
                 {
-                    size = property.Value.GetString();
+                    size = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("tier"u8))
+                if (prop.NameEquals("tier"u8))
                 {
-                    tier = property.Value.GetString();
+                    tier = prop.Value.GetString();
                     continue;
                 }
                 if (options.Format != "W")
                 {
-                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = rawDataDictionary;
-            return new DataMigrationAvailableServiceSkuDetails(name, family, size, tier, serializedAdditionalRawData);
+            return new DataMigrationAvailableServiceSkuDetails(name, family, size, tier, additionalBinaryDataProperties);
         }
-
-        BinaryData IPersistableModel<DataMigrationAvailableServiceSkuDetails>.Write(ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<DataMigrationAvailableServiceSkuDetails>)this).GetFormatFromOptions(options) : options.Format;
-
-            switch (format)
-            {
-                case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerDataMigrationContext.Default);
-                default:
-                    throw new FormatException($"The model {nameof(DataMigrationAvailableServiceSkuDetails)} does not support writing '{options.Format}' format.");
-            }
-        }
-
-        DataMigrationAvailableServiceSkuDetails IPersistableModel<DataMigrationAvailableServiceSkuDetails>.Create(BinaryData data, ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<DataMigrationAvailableServiceSkuDetails>)this).GetFormatFromOptions(options) : options.Format;
-
-            switch (format)
-            {
-                case "J":
-                    {
-                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
-                        return DeserializeDataMigrationAvailableServiceSkuDetails(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(DataMigrationAvailableServiceSkuDetails)} does not support reading '{options.Format}' format.");
-            }
-        }
-
-        string IPersistableModel<DataMigrationAvailableServiceSkuDetails>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

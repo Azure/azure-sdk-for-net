@@ -19,17 +19,17 @@ public class Sample_VectorStoreWithDatasets : SamplesBase
     {
         #region Snippet:AI_Projects_VectorStoreWithDatasetsInitializeProjectClient
 #if SNIPPET
-        var endpoint = System.Environment.GetEnvironmentVariable("PROJECT_ENDPOINT");
+        var endpoint = System.Environment.GetEnvironmentVariable("FOUNDRY_PROJECT_ENDPOINT");
         var datasetName = System.Environment.GetEnvironmentVariable("DATASET_NAME");
         var datasetVersion = System.Environment.GetEnvironmentVariable("DATASET_VERSION");
         var filePath = System.Environment.GetEnvironmentVariable("SAMPLE_FILE_PATH");
-        var modelDeploymentName = System.Environment.GetEnvironmentVariable("MODEL_DEPLOYMENT_NAME");
+        var modelDeploymentName = System.Environment.GetEnvironmentVariable("FOUNDRY_MODEL_NAME");
 #else
-        var endpoint = TestEnvironment.PROJECT_ENDPOINT;
+        var endpoint = TestEnvironment.FOUNDRY_PROJECT_ENDPOINT;
         var datasetName = String.Concat(TestEnvironment.DATASETNAME, "-", Guid.NewGuid().ToString("N").Substring(0, 8));
         var datasetVersion = "1.0";
         var filePath = TestEnvironment.SAMPLEFILEPATH;
-        var modelDeploymentName = TestEnvironment.MODELDEPLOYMENTNAME;
+        var modelDeploymentName = TestEnvironment.FOUNDRY_MODEL_NAME;
 #endif
 
         AIProjectClient projectClient = new AIProjectClient(new Uri(endpoint), new DefaultAzureCredential());

@@ -169,6 +169,27 @@ namespace Azure.Core.Tests
             Assert.AreEqual("example.org", host.ToString());
         }
 
+        [Test]
+        public async Task SettingHostHeaderWithSetValueIsReflectedOnServer()
+        {
+            HostString? host = null;
+            using TestServer testServer = new TestServer(
+                context =>
+                {
+                    host = context.Request.GetTypedHeaders().Host;
+                });
+
+            var transport = GetTransport();
+            Request request = transport.CreateRequest();
+            request.Method = RequestMethod.Get;
+            request.Uri.Reset(testServer.Address);
+            request.Headers.SetValue("Host", "custom.example.com");
+
+            await ExecuteRequest(request, transport);
+
+            Assert.AreEqual("custom.example.com", host.ToString());
+        }
+
         [Theory]
         [TestCase(200)]
         [TestCase(300)]
@@ -1170,10 +1191,13 @@ namespace Azure.Core.Tests
 
                 await ExecuteRequest(request, transport);
 
-                // Now set the client certificate and update the transport
-                options.ClientCertificates.Add(clientCert);
+                // Now set the client certificate and update the transport using a new options instance,
+                // mirroring the real code path where BearerTokenAuthenticationPolicy clones the options.
+                var updatedOptions = new HttpPipelineTransportOptions();
+                updatedOptions.ServerCertificateCustomValidationCallback = args => true;
+                updatedOptions.ClientCertificates.Add(clientCert);
 
-                transport.Update(options);
+                transport.Update(updatedOptions);
                 setClientCertificate = true;
 
                 request = transport.CreateRequest();

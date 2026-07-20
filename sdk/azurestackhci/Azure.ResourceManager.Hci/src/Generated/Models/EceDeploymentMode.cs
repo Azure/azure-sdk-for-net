@@ -7,45 +7,65 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.Hci;
 
 namespace Azure.ResourceManager.Hci.Models
 {
-    /// <summary> The deployment mode of EnterpriseCloudEngine(ECE) action for a cluster. </summary>
+    /// <summary> Deployment mode to trigger job. </summary>
     public readonly partial struct EceDeploymentMode : IEquatable<EceDeploymentMode>
     {
         private readonly string _value;
+        /// <summary> Validate ECE action deployment for a cluster. </summary>
+        private const string ValidateValue = "Validate";
+        /// <summary> Deploy ECE action deployment for a cluster. </summary>
+        private const string DeployValue = "Deploy";
 
         /// <summary> Initializes a new instance of <see cref="EceDeploymentMode"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public EceDeploymentMode(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string ValidateValue = "Validate";
-        private const string DeployValue = "Deploy";
+            _value = value;
+        }
 
         /// <summary> Validate ECE action deployment for a cluster. </summary>
         public static EceDeploymentMode Validate { get; } = new EceDeploymentMode(ValidateValue);
+
         /// <summary> Deploy ECE action deployment for a cluster. </summary>
         public static EceDeploymentMode Deploy { get; } = new EceDeploymentMode(DeployValue);
+
         /// <summary> Determines if two <see cref="EceDeploymentMode"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(EceDeploymentMode left, EceDeploymentMode right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="EceDeploymentMode"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(EceDeploymentMode left, EceDeploymentMode right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="EceDeploymentMode"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="EceDeploymentMode"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator EceDeploymentMode(string value) => new EceDeploymentMode(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="EceDeploymentMode"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator EceDeploymentMode?(string value) => value == null ? null : new EceDeploymentMode(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is EceDeploymentMode other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(EceDeploymentMode other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

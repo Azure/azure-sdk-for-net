@@ -18,8 +18,6 @@ namespace Azure.Security.KeyVault.Administration
     internal partial class KeyVaultRestClient
     {
         private readonly Uri _endpoint;
-        /// <summary> A credential used to authenticate to the service. </summary>
-        private readonly TokenCredential _tokenCredential;
         private static readonly string[] AuthorizationScopes = new string[] { "https://vault.azure.net/.default" };
         private readonly string _apiVersion;
 
@@ -67,7 +65,7 @@ namespace Azure.Security.KeyVault.Administration
             try
             {
                 using HttpMessage message = CreateFullBackupRequest(content, context);
-                return await ProtocolOperationHelpers.ProcessMessageAsync(Pipeline, message, ClientDiagnostics, "KeyVaultRestClient.FullBackupAsync", OperationFinalStateVia.AzureAsyncOperation, context, waitUntil).ConfigureAwait(false);
+                return await ProtocolOperationHelpers.ProcessMessageAsync(Pipeline, message, ClientDiagnostics, "KeyVaultRestClient.FullBackup", OperationFinalStateVia.AzureAsyncOperation, context, waitUntil).ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -93,7 +91,7 @@ namespace Azure.Security.KeyVault.Administration
         internal virtual async Task<Operation<FullBackupDetailsInternal>> FullBackupAsync(WaitUntil waitUntil, SASTokenParameter azureStorageBlobContainerUri, CancellationToken cancellationToken = default)
         {
             Operation<BinaryData> result = await FullBackupAsync(waitUntil, azureStorageBlobContainerUri, cancellationToken.ToRequestContext()).ConfigureAwait(false);
-            return ProtocolOperationHelpers.Convert(result, response => (FullBackupDetailsInternal)response, ClientDiagnostics, "KeyVaultRestClient.FullBackupAsync");
+            return ProtocolOperationHelpers.Convert(result, response => (FullBackupDetailsInternal)response, ClientDiagnostics, "KeyVaultRestClient.FullBackup");
         }
 
         /// <summary> Pre-backup operation for checking whether the customer can perform a full backup operation. </summary>
@@ -129,7 +127,7 @@ namespace Azure.Security.KeyVault.Administration
             try
             {
                 using HttpMessage message = CreatePreFullBackupRequest(content, context);
-                return await ProtocolOperationHelpers.ProcessMessageAsync(Pipeline, message, ClientDiagnostics, "KeyVaultRestClient.PreFullBackupAsync", OperationFinalStateVia.AzureAsyncOperation, context, waitUntil).ConfigureAwait(false);
+                return await ProtocolOperationHelpers.ProcessMessageAsync(Pipeline, message, ClientDiagnostics, "KeyVaultRestClient.PreFullBackup", OperationFinalStateVia.AzureAsyncOperation, context, waitUntil).ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -155,7 +153,7 @@ namespace Azure.Security.KeyVault.Administration
         internal virtual async Task<Operation<FullBackupDetailsInternal>> PreFullBackupAsync(WaitUntil waitUntil, PreBackupOperationParameters preBackupOperationParameters, CancellationToken cancellationToken = default)
         {
             Operation<BinaryData> result = await PreFullBackupAsync(waitUntil, preBackupOperationParameters, cancellationToken.ToRequestContext()).ConfigureAwait(false);
-            return ProtocolOperationHelpers.Convert(result, response => (FullBackupDetailsInternal)response, ClientDiagnostics, "KeyVaultRestClient.PreFullBackupAsync");
+            return ProtocolOperationHelpers.Convert(result, response => (FullBackupDetailsInternal)response, ClientDiagnostics, "KeyVaultRestClient.PreFullBackup");
         }
 
         /// <summary> Restores all key materials using the SAS token pointing to a previously stored Azure Blob storage backup folder. </summary>
@@ -191,7 +189,7 @@ namespace Azure.Security.KeyVault.Administration
             try
             {
                 using HttpMessage message = CreateFullRestoreOperationRequest(content, context);
-                return await ProtocolOperationHelpers.ProcessMessageAsync(Pipeline, message, ClientDiagnostics, "KeyVaultRestClient.FullRestoreOperationAsync", OperationFinalStateVia.AzureAsyncOperation, context, waitUntil).ConfigureAwait(false);
+                return await ProtocolOperationHelpers.ProcessMessageAsync(Pipeline, message, ClientDiagnostics, "KeyVaultRestClient.FullRestoreOperation", OperationFinalStateVia.AzureAsyncOperation, context, waitUntil).ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -217,7 +215,7 @@ namespace Azure.Security.KeyVault.Administration
         internal virtual async Task<Operation<RestoreDetailsInternal>> FullRestoreOperationAsync(WaitUntil waitUntil, RestoreOperationParameters restoreBlobDetails, CancellationToken cancellationToken = default)
         {
             Operation<BinaryData> result = await FullRestoreOperationAsync(waitUntil, restoreBlobDetails, cancellationToken.ToRequestContext()).ConfigureAwait(false);
-            return ProtocolOperationHelpers.Convert(result, response => (RestoreDetailsInternal)response, ClientDiagnostics, "KeyVaultRestClient.FullRestoreOperationAsync");
+            return ProtocolOperationHelpers.Convert(result, response => (RestoreDetailsInternal)response, ClientDiagnostics, "KeyVaultRestClient.FullRestoreOperation");
         }
 
         /// <summary> Pre-restore operation for checking whether the customer can perform a full restore operation. </summary>
@@ -253,7 +251,7 @@ namespace Azure.Security.KeyVault.Administration
             try
             {
                 using HttpMessage message = CreatePreFullRestoreOperationRequest(content, context);
-                return await ProtocolOperationHelpers.ProcessMessageAsync(Pipeline, message, ClientDiagnostics, "KeyVaultRestClient.PreFullRestoreOperationAsync", OperationFinalStateVia.AzureAsyncOperation, context, waitUntil).ConfigureAwait(false);
+                return await ProtocolOperationHelpers.ProcessMessageAsync(Pipeline, message, ClientDiagnostics, "KeyVaultRestClient.PreFullRestoreOperation", OperationFinalStateVia.AzureAsyncOperation, context, waitUntil).ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -279,7 +277,7 @@ namespace Azure.Security.KeyVault.Administration
         internal virtual async Task<Operation<RestoreDetailsInternal>> PreFullRestoreOperationAsync(WaitUntil waitUntil, PreRestoreOperationParameters preRestoreOperationParameters, CancellationToken cancellationToken = default)
         {
             Operation<BinaryData> result = await PreFullRestoreOperationAsync(waitUntil, preRestoreOperationParameters, cancellationToken.ToRequestContext()).ConfigureAwait(false);
-            return ProtocolOperationHelpers.Convert(result, response => (RestoreDetailsInternal)response, ClientDiagnostics, "KeyVaultRestClient.PreFullRestoreOperationAsync");
+            return ProtocolOperationHelpers.Convert(result, response => (RestoreDetailsInternal)response, ClientDiagnostics, "KeyVaultRestClient.PreFullRestoreOperation");
         }
 
         /// <summary>
@@ -545,7 +543,7 @@ namespace Azure.Security.KeyVault.Administration
             try
             {
                 using HttpMessage message = CreateSelectiveKeyRestoreOperationRequest(keyName, content, context);
-                return await ProtocolOperationHelpers.ProcessMessageAsync(Pipeline, message, ClientDiagnostics, "KeyVaultRestClient.SelectiveKeyRestoreOperationAsync", OperationFinalStateVia.AzureAsyncOperation, context, waitUntil).ConfigureAwait(false);
+                return await ProtocolOperationHelpers.ProcessMessageAsync(Pipeline, message, ClientDiagnostics, "KeyVaultRestClient.SelectiveKeyRestoreOperation", OperationFinalStateVia.AzureAsyncOperation, context, waitUntil).ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -573,7 +571,7 @@ namespace Azure.Security.KeyVault.Administration
         internal virtual async Task<Operation<SelectiveKeyRestoreDetailsInternal>> SelectiveKeyRestoreOperationAsync(WaitUntil waitUntil, string keyName, SelectiveKeyRestoreOperationParameters restoreBlobDetails, CancellationToken cancellationToken = default)
         {
             Operation<BinaryData> result = await SelectiveKeyRestoreOperationAsync(waitUntil, keyName, restoreBlobDetails, cancellationToken.ToRequestContext()).ConfigureAwait(false);
-            return ProtocolOperationHelpers.Convert(result, response => (SelectiveKeyRestoreDetailsInternal)response, ClientDiagnostics, "KeyVaultRestClient.SelectiveKeyRestoreOperationAsync");
+            return ProtocolOperationHelpers.Convert(result, response => (SelectiveKeyRestoreDetailsInternal)response, ClientDiagnostics, "KeyVaultRestClient.SelectiveKeyRestoreOperation");
         }
 
         /// <summary>

@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.RedisEnterprise;
 
 namespace Azure.ResourceManager.RedisEnterprise.Models
 {
@@ -14,41 +15,62 @@ namespace Azure.ResourceManager.RedisEnterprise.Models
     public readonly partial struct RedisEnterpriseClusteringPolicy : IEquatable<RedisEnterpriseClusteringPolicy>
     {
         private readonly string _value;
+        /// <summary> Enterprise clustering policy uses only the classic redis protocol, which does not support redis cluster commands. </summary>
+        private const string EnterpriseClusterValue = "EnterpriseCluster";
+        /// <summary> OSS clustering policy follows the redis cluster specification, and requires all clients to support redis clustering. </summary>
+        private const string OssClusterValue = "OSSCluster";
+        /// <summary> The NoCluster policy is used for non-clustered Redis instances that do not require clustering features. </summary>
+        private const string NoClusterValue = "NoCluster";
 
         /// <summary> Initializes a new instance of <see cref="RedisEnterpriseClusteringPolicy"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public RedisEnterpriseClusteringPolicy(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string EnterpriseClusterValue = "EnterpriseCluster";
-        private const string OssClusterValue = "OSSCluster";
-        private const string NoClusterValue = "NoCluster";
+            _value = value;
+        }
 
         /// <summary> Enterprise clustering policy uses only the classic redis protocol, which does not support redis cluster commands. </summary>
         public static RedisEnterpriseClusteringPolicy EnterpriseCluster { get; } = new RedisEnterpriseClusteringPolicy(EnterpriseClusterValue);
+
         /// <summary> OSS clustering policy follows the redis cluster specification, and requires all clients to support redis clustering. </summary>
         public static RedisEnterpriseClusteringPolicy OssCluster { get; } = new RedisEnterpriseClusteringPolicy(OssClusterValue);
+
         /// <summary> The NoCluster policy is used for non-clustered Redis instances that do not require clustering features. </summary>
         public static RedisEnterpriseClusteringPolicy NoCluster { get; } = new RedisEnterpriseClusteringPolicy(NoClusterValue);
+
         /// <summary> Determines if two <see cref="RedisEnterpriseClusteringPolicy"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(RedisEnterpriseClusteringPolicy left, RedisEnterpriseClusteringPolicy right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="RedisEnterpriseClusteringPolicy"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(RedisEnterpriseClusteringPolicy left, RedisEnterpriseClusteringPolicy right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="RedisEnterpriseClusteringPolicy"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="RedisEnterpriseClusteringPolicy"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator RedisEnterpriseClusteringPolicy(string value) => new RedisEnterpriseClusteringPolicy(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="RedisEnterpriseClusteringPolicy"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator RedisEnterpriseClusteringPolicy?(string value) => value == null ? null : new RedisEnterpriseClusteringPolicy(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is RedisEnterpriseClusteringPolicy other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(RedisEnterpriseClusteringPolicy other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

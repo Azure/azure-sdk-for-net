@@ -7,6 +7,7 @@ using System.IO;
 using System.Text;
 using Azure.Storage.Common;
 using Azure.Storage.Files.Shares.Models;
+using Azure.Storage.DataMovement;
 using Metadata = System.Collections.Generic.IDictionary<string, string>;
 
 namespace Azure.Storage.DataMovement.Files.Shares
@@ -177,7 +178,7 @@ namespace Azure.Storage.DataMovement.Files.Shares
             Argument.AssertNotNull(stream, nameof(stream));
 
             int currentVariableLengthIndex = DataMovementShareConstants.DestinationCheckpointDetails.VariableLengthStartIndex;
-            BinaryWriter writer = new(stream);
+            using BinaryWriter writer = new(stream, Encoding.UTF8, leaveOpen: true);
 
             // Version
             writer.Write(Version);
@@ -261,7 +262,8 @@ namespace Azure.Storage.DataMovement.Files.Shares
         {
             Argument.AssertNotNull(stream, nameof(stream));
 
-            BinaryReader reader = new BinaryReader(stream);
+            long streamLength = stream.Length;
+            using BinaryReader reader = new BinaryReader(stream, Encoding.UTF8, leaveOpen: true);
 
             // Version
             int version = reader.ReadInt32();
@@ -297,10 +299,15 @@ namespace Azure.Storage.DataMovement.Files.Shares
                 shareProtocol = (ShareProtocol)(reader.ReadByte());
             }
 
+            // Variable-length values
+            // A non-positive offset (e.g. -1) means the field is not present and can be skipped.
+            // The -1 (sentinel, field has no data) is written by WriteEmptyLengthOffset / WriteVariableLengthFieldInfo.
+
             // NtfsFileAttributes
             NtfsFileAttributes? ntfsFileAttributes = null;
             if (fileAttributesOffset > 0)
             {
+                CheckpointerExtensions.ValidateOffsetsAndLength(contentTypeOffset, contentTypeLength, streamLength);
                 reader.BaseStream.Position = fileAttributesOffset;
                 ntfsFileAttributes = (NtfsFileAttributes)reader.ReadInt32();
             }
@@ -309,6 +316,7 @@ namespace Azure.Storage.DataMovement.Files.Shares
             DateTimeOffset? fileCreatedOn = default;
             if (fileCreatedOnOffset > 0)
             {
+                CheckpointerExtensions.ValidateOffsetsAndLength(fileCreatedOnOffset, fileCreatedOnLength, streamLength);
                 reader.BaseStream.Position = fileCreatedOnOffset;
                 string dateTimeStr = Encoding.UTF8.GetString(reader.ReadBytes(fileCreatedOnLength));
                 fileCreatedOn = DateTimeOffset.Parse(dateTimeStr, CultureInfo.InvariantCulture, DateTimeStyles.RoundtripKind);
@@ -318,6 +326,7 @@ namespace Azure.Storage.DataMovement.Files.Shares
             DateTimeOffset? fileLastWrittenOn = default;
             if (fileLastWrittenOnOffset > 0)
             {
+                CheckpointerExtensions.ValidateOffsetsAndLength(fileLastWrittenOnOffset, fileLastWrittenOnLength, streamLength);
                 reader.BaseStream.Position = fileLastWrittenOnOffset;
                 string dateTimeStr = Encoding.UTF8.GetString(reader.ReadBytes(fileLastWrittenOnLength));
                 fileLastWrittenOn = DateTimeOffset.Parse(dateTimeStr, CultureInfo.InvariantCulture, DateTimeStyles.RoundtripKind);
@@ -327,6 +336,7 @@ namespace Azure.Storage.DataMovement.Files.Shares
             DateTimeOffset? fileChangedOn = default;
             if (fileChangedOnOffset > 0)
             {
+                CheckpointerExtensions.ValidateOffsetsAndLength(fileChangedOnOffset, fileChangedOnLength, streamLength);
                 reader.BaseStream.Position = fileChangedOnOffset;
                 string dateTimeStr = Encoding.UTF8.GetString(reader.ReadBytes(fileChangedOnLength));
                 fileChangedOn = DateTimeOffset.Parse(dateTimeStr, CultureInfo.InvariantCulture, DateTimeStyles.RoundtripKind);
@@ -336,6 +346,7 @@ namespace Azure.Storage.DataMovement.Files.Shares
             string contentType = null;
             if (contentTypeOffset > 0)
             {
+                CheckpointerExtensions.ValidateOffsetsAndLength(contentTypeOffset, contentTypeLength, streamLength);
                 reader.BaseStream.Position = contentTypeOffset;
                 contentType = Encoding.UTF8.GetString(reader.ReadBytes(contentTypeLength));
             }
@@ -344,6 +355,7 @@ namespace Azure.Storage.DataMovement.Files.Shares
             string contentEncoding = null;
             if (contentEncodingOffset > 0)
             {
+                CheckpointerExtensions.ValidateOffsetsAndLength(contentEncodingOffset, contentEncodingLength, streamLength);
                 reader.BaseStream.Position = contentEncodingOffset;
                 contentEncoding = Encoding.UTF8.GetString(reader.ReadBytes(contentEncodingLength));
             }
@@ -352,6 +364,7 @@ namespace Azure.Storage.DataMovement.Files.Shares
             string contentLanguage = null;
             if (contentLanguageOffset > 0)
             {
+                CheckpointerExtensions.ValidateOffsetsAndLength(contentLanguageOffset, contentLanguageLength, streamLength);
                 reader.BaseStream.Position = contentLanguageOffset;
                 contentLanguage = Encoding.UTF8.GetString(reader.ReadBytes(contentLanguageLength));
             }
@@ -360,6 +373,7 @@ namespace Azure.Storage.DataMovement.Files.Shares
             string contentDisposition = null;
             if (contentDispositionOffset > 0)
             {
+                CheckpointerExtensions.ValidateOffsetsAndLength(contentDispositionOffset, contentDispositionLength, streamLength);
                 reader.BaseStream.Position = contentDispositionOffset;
                 contentDisposition = Encoding.UTF8.GetString(reader.ReadBytes(contentDispositionLength));
             }
@@ -368,6 +382,7 @@ namespace Azure.Storage.DataMovement.Files.Shares
             string cacheControl = null;
             if (cacheControlOffset > 0)
             {
+                CheckpointerExtensions.ValidateOffsetsAndLength(cacheControlOffset, cacheControlLength, streamLength);
                 reader.BaseStream.Position = cacheControlOffset;
                 cacheControl = Encoding.UTF8.GetString(reader.ReadBytes(cacheControlLength));
             }
@@ -376,12 +391,14 @@ namespace Azure.Storage.DataMovement.Files.Shares
             string fileMetadataString = string.Empty;
             if (fileMetadataOffset > 0)
             {
+                CheckpointerExtensions.ValidateOffsetsAndLength(fileMetadataOffset, fileMetadataLength, streamLength);
                 reader.BaseStream.Position = fileMetadataOffset;
                 fileMetadataString = Encoding.UTF8.GetString(reader.ReadBytes(fileMetadataLength));
             }
             string directoryMetadataString = string.Empty;
             if (directoryMetadataOffset > 0)
             {
+                CheckpointerExtensions.ValidateOffsetsAndLength(directoryMetadataOffset, directoryMetadataLength, streamLength);
                 reader.BaseStream.Position = directoryMetadataOffset;
                 directoryMetadataString = Encoding.UTF8.GetString(reader.ReadBytes(directoryMetadataLength));
             }

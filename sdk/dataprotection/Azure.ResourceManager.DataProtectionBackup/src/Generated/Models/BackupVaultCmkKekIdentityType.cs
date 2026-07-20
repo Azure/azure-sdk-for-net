@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.DataProtectionBackup;
 
 namespace Azure.ResourceManager.DataProtectionBackup.Models
 {
@@ -14,38 +15,55 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
     public readonly partial struct BackupVaultCmkKekIdentityType : IEquatable<BackupVaultCmkKekIdentityType>
     {
         private readonly string _value;
-
-        /// <summary> Initializes a new instance of <see cref="BackupVaultCmkKekIdentityType"/>. </summary>
-        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        public BackupVaultCmkKekIdentityType(string value)
-        {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
-
         private const string SystemAssignedValue = "SystemAssigned";
         private const string UserAssignedValue = "UserAssigned";
 
-        /// <summary> SystemAssigned. </summary>
+        /// <summary> Initializes a new instance of <see cref="BackupVaultCmkKekIdentityType"/>. </summary>
+        /// <param name="value"> The value. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
+        public BackupVaultCmkKekIdentityType(string value)
+        {
+            Argument.AssertNotNull(value, nameof(value));
+
+            _value = value;
+        }
+
+        /// <summary> Gets the SystemAssigned. </summary>
         public static BackupVaultCmkKekIdentityType SystemAssigned { get; } = new BackupVaultCmkKekIdentityType(SystemAssignedValue);
-        /// <summary> UserAssigned. </summary>
+
+        /// <summary> Gets the UserAssigned. </summary>
         public static BackupVaultCmkKekIdentityType UserAssigned { get; } = new BackupVaultCmkKekIdentityType(UserAssignedValue);
+
         /// <summary> Determines if two <see cref="BackupVaultCmkKekIdentityType"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(BackupVaultCmkKekIdentityType left, BackupVaultCmkKekIdentityType right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="BackupVaultCmkKekIdentityType"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(BackupVaultCmkKekIdentityType left, BackupVaultCmkKekIdentityType right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="BackupVaultCmkKekIdentityType"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="BackupVaultCmkKekIdentityType"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator BackupVaultCmkKekIdentityType(string value) => new BackupVaultCmkKekIdentityType(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="BackupVaultCmkKekIdentityType"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator BackupVaultCmkKekIdentityType?(string value) => value == null ? null : new BackupVaultCmkKekIdentityType(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is BackupVaultCmkKekIdentityType other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(BackupVaultCmkKekIdentityType other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

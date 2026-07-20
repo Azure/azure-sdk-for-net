@@ -45,7 +45,8 @@ namespace Azure.ResourceManager.Sphere
                 top,
                 skip,
                 maxpagesize,
-                context), data => new SphereDeploymentResource(Client, data));
+                context,
+                "SphereCatalogResource.GetDeployments"), data => new SphereDeploymentResource(Client, data));
         }
 
         /// <summary> Lists deployments for catalog. </summary>
@@ -70,7 +71,8 @@ namespace Azure.ResourceManager.Sphere
                 top,
                 skip,
                 maxpagesize,
-                context), data => new SphereDeploymentResource(Client, data));
+                context,
+                "SphereCatalogResource.GetDeployments"), data => new SphereDeploymentResource(Client, data));
         }
 
         /// <summary> List the device groups for the catalog. </summary>
@@ -100,7 +102,8 @@ namespace Azure.ResourceManager.Sphere
                 top,
                 skip,
                 maxpagesize,
-                context), data => new SphereDeviceGroupResource(Client, data));
+                context,
+                "SphereCatalogResource.GetDeviceGroups"), data => new SphereDeviceGroupResource(Client, data));
         }
 
         /// <summary> List the device groups for the catalog. </summary>
@@ -130,7 +133,8 @@ namespace Azure.ResourceManager.Sphere
                 top,
                 skip,
                 maxpagesize,
-                context), data => new SphereDeviceGroupResource(Client, data));
+                context,
+                "SphereCatalogResource.GetDeviceGroups"), data => new SphereDeviceGroupResource(Client, data));
         }
 
         /// <summary> Lists device insights for catalog. </summary>
@@ -155,7 +159,8 @@ namespace Azure.ResourceManager.Sphere
                 top,
                 skip,
                 maxpagesize,
-                context);
+                context,
+                "SphereCatalogResource.GetDeviceInsights");
         }
 
         /// <summary> Lists device insights for catalog. </summary>
@@ -180,7 +185,8 @@ namespace Azure.ResourceManager.Sphere
                 top,
                 skip,
                 maxpagesize,
-                context);
+                context,
+                "SphereCatalogResource.GetDeviceInsights");
         }
 
         /// <summary> Lists devices for catalog. </summary>
@@ -205,7 +211,8 @@ namespace Azure.ResourceManager.Sphere
                 top,
                 skip,
                 maxpagesize,
-                context), data => new SphereDeviceResource(Client, data));
+                context,
+                "SphereCatalogResource.GetDevices"), data => new SphereDeviceResource(Client, data));
         }
 
         /// <summary> Lists devices for catalog. </summary>
@@ -230,7 +237,8 @@ namespace Azure.ResourceManager.Sphere
                 top,
                 skip,
                 maxpagesize,
-                context), data => new SphereDeviceResource(Client, data));
+                context,
+                "SphereCatalogResource.GetDevices"), data => new SphereDeviceResource(Client, data));
         }
     }
 }

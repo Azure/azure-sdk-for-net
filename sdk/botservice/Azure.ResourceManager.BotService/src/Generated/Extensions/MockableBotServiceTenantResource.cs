@@ -8,72 +8,77 @@
 using System;
 using System.Threading;
 using System.Threading.Tasks;
+using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
+using Azure.ResourceManager;
+using Azure.ResourceManager.BotService;
 using Azure.ResourceManager.BotService.Models;
+using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.BotService.Mocking
 {
-    /// <summary> A class to add extension methods to TenantResource. </summary>
+    /// <summary> A class to add extension methods to <see cref="TenantResource"/>. </summary>
     public partial class MockableBotServiceTenantResource : ArmResource
     {
-        private ClientDiagnostics _botClientDiagnostics;
-        private BotsRestOperations _botRestClient;
+        private ClientDiagnostics _botsOperationGroupClientDiagnostics;
+        private BotsOperationGroup _botsOperationGroupRestClient;
 
-        /// <summary> Initializes a new instance of the <see cref="MockableBotServiceTenantResource"/> class for mocking. </summary>
+        /// <summary> Initializes a new instance of MockableBotServiceTenantResource for mocking. </summary>
         protected MockableBotServiceTenantResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref="MockableBotServiceTenantResource"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="MockableBotServiceTenantResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal MockableBotServiceTenantResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
         }
 
-        private ClientDiagnostics BotClientDiagnostics => _botClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.BotService", BotResource.ResourceType.Namespace, Diagnostics);
-        private BotsRestOperations BotRestClient => _botRestClient ??= new BotsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, GetApiVersionOrNull(BotResource.ResourceType));
+        private ClientDiagnostics BotsOperationGroupClientDiagnostics => _botsOperationGroupClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.BotService.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private string GetApiVersionOrNull(ResourceType resourceType)
-        {
-            TryGetApiVersion(resourceType, out string apiVersion);
-            return apiVersion;
-        }
+        private BotsOperationGroup BotsOperationGroupRestClient => _botsOperationGroupRestClient ??= new BotsOperationGroup(BotsOperationGroupClientDiagnostics, Pipeline, Endpoint, "2023-09-15-preview");
 
         /// <summary>
         /// Check whether a bot name is available.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/providers/Microsoft.BotService/checkNameAvailability</description>
+        /// <term> Request Path. </term>
+        /// <description> /providers/Microsoft.BotService/checkNameAvailability. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Bots_GetCheckNameAvailability</description>
+        /// <term> Operation Id. </term>
+        /// <description> BotsOperationGroup_GetCheckNameAvailability. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2022-09-15</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="BotResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2023-09-15-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="content"> The request body parameters to provide for the check name availability request. </param>
+        /// <param name="content"> The request body. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         public virtual async Task<Response<BotServiceNameAvailabilityResult>> CheckBotServiceNameAvailabilityAsync(BotServiceNameAvailabilityContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(content, nameof(content));
 
-            using var scope = BotClientDiagnostics.CreateScope("MockableBotServiceTenantResource.CheckBotServiceNameAvailability");
+            using DiagnosticScope scope = BotsOperationGroupClientDiagnostics.CreateScope("MockableBotServiceTenantResource.CheckBotServiceNameAvailability");
             scope.Start();
             try
             {
-                var response = await BotRestClient.GetCheckNameAvailabilityAsync(content, cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = BotsOperationGroupRestClient.CreateCheckBotServiceNameAvailabilityRequest(BotServiceNameAvailabilityContent.ToRequestContent(content), context);
+                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                Response<BotServiceNameAvailabilityResult> response = Response.FromValue(BotServiceNameAvailabilityResult.FromResponse(result), result);
+                if (response.Value == null)
+                {
+                    throw new RequestFailedException(response.GetRawResponse());
+                }
                 return response;
             }
             catch (Exception e)
@@ -87,35 +92,41 @@ namespace Azure.ResourceManager.BotService.Mocking
         /// Check whether a bot name is available.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/providers/Microsoft.BotService/checkNameAvailability</description>
+        /// <term> Request Path. </term>
+        /// <description> /providers/Microsoft.BotService/checkNameAvailability. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Bots_GetCheckNameAvailability</description>
+        /// <term> Operation Id. </term>
+        /// <description> BotsOperationGroup_GetCheckNameAvailability. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2022-09-15</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="BotResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2023-09-15-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="content"> The request body parameters to provide for the check name availability request. </param>
+        /// <param name="content"> The request body. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         public virtual Response<BotServiceNameAvailabilityResult> CheckBotServiceNameAvailability(BotServiceNameAvailabilityContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(content, nameof(content));
 
-            using var scope = BotClientDiagnostics.CreateScope("MockableBotServiceTenantResource.CheckBotServiceNameAvailability");
+            using DiagnosticScope scope = BotsOperationGroupClientDiagnostics.CreateScope("MockableBotServiceTenantResource.CheckBotServiceNameAvailability");
             scope.Start();
             try
             {
-                var response = BotRestClient.GetCheckNameAvailability(content, cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = BotsOperationGroupRestClient.CreateCheckBotServiceNameAvailabilityRequest(BotServiceNameAvailabilityContent.ToRequestContent(content), context);
+                Response result = Pipeline.ProcessMessage(message, context);
+                Response<BotServiceNameAvailabilityResult> response = Response.FromValue(BotServiceNameAvailabilityResult.FromResponse(result), result);
+                if (response.Value == null)
+                {
+                    throw new RequestFailedException(response.GetRawResponse());
+                }
                 return response;
             }
             catch (Exception e)

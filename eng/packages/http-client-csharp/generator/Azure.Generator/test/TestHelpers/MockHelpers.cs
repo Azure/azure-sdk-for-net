@@ -1,6 +1,8 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using Microsoft.CodeAnalysis;
+using Microsoft.CodeAnalysis.CSharp;
 using Microsoft.TypeSpec.Generator;
 using Microsoft.TypeSpec.Generator.ClientModel;
 using Microsoft.TypeSpec.Generator.ClientModel.Providers;
@@ -14,6 +16,7 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Reflection;
+using System.Threading.Tasks;
 
 namespace Azure.Generator.Tests.TestHelpers
 {
@@ -21,6 +24,56 @@ namespace Azure.Generator.Tests.TestHelpers
     {
         private static readonly string _configFilePath = Path.Combine(AppContext.BaseDirectory, TestHelpersFolder);
         private const string TestHelpersFolder = "TestHelpers";
+
+        public static async Task<Mock<AzureClientGenerator>> LoadMockGeneratorAsync(
+            Func<InputType, TypeProvider, IReadOnlyList<TypeProvider>>? createSerializationsCore = null,
+            Func<InputType, CSharpType>? createCSharpTypeCore = null,
+            Func<InputApiKeyAuth>? apiKeyAuth = null,
+            Func<InputOAuth2Auth>? oauth2Auth = null,
+            Func<IReadOnlyList<string>>? apiVersions = null,
+            Func<IReadOnlyList<InputLiteralType>>? inputLiterals = null,
+            Func<IReadOnlyList<InputEnumType>>? inputEnums = null,
+            Func<IReadOnlyList<InputModelType>>? inputModels = null,
+            Func<IReadOnlyList<InputClient>>? clients = null,
+            Func<InputClient, ClientProvider?>? createClientCore = null,
+            Func<IReadOnlyList<ScmLibraryVisitor>>? visitors = null,
+            ClientResponseApi? clientResponseApi = null,
+            ClientPipelineApi? clientPipelineApi = null,
+            HttpMessageApi? httpMessageApi = null,
+            string? configurationJson = null,
+            string? inputNamespace = null,
+            Func<Task<Compilation>>? compilation = null,
+            Func<Task<Compilation>>? lastContractCompilation = null)
+        {
+            var mockGenerator = LoadMockGenerator(
+                createSerializationsCore,
+                createCSharpTypeCore,
+                apiKeyAuth,
+                oauth2Auth,
+                apiVersions,
+                inputLiterals,
+                inputEnums,
+                inputModels,
+                clients,
+                createClientCore,
+                visitors,
+                clientResponseApi,
+                clientPipelineApi,
+                httpMessageApi,
+                configurationJson,
+                inputNamespace);
+
+            var compilationResult = compilation is null ? null : await compilation();
+            var lastContractCompilationResult = lastContractCompilation is null ? null : await lastContractCompilation();
+            var sourceInputModel = new Mock<SourceInputModel>(
+                () => new SourceInputModel(compilationResult, lastContractCompilationResult))
+            {
+                CallBase = true
+            };
+            mockGenerator.Setup(p => p.SourceInputModel).Returns(sourceInputModel.Object);
+
+            return mockGenerator;
+        }
 
         public static Mock<AzureClientGenerator> LoadMockGenerator(
             Func<InputType, TypeProvider, IReadOnlyList<TypeProvider>>? createSerializationsCore = null,
@@ -38,7 +91,8 @@ namespace Azure.Generator.Tests.TestHelpers
             ClientPipelineApi? clientPipelineApi = null,
             HttpMessageApi? httpMessageApi = null,
             string? configurationJson = null,
-            string? inputNamespace = null)
+            string? inputNamespace = null,
+            IEnumerable<string>? lastContractSources = null)
         {
             IReadOnlyList<string> inputNsApiVersions = apiVersions?.Invoke() ?? [];
             IReadOnlyList<InputLiteralType> inputNsLiterals = inputLiterals?.Invoke() ?? [];
@@ -90,7 +144,7 @@ namespace Azure.Generator.Tests.TestHelpers
                 mockPluginInstance.SetupGet(p => p.TypeFactory).Returns(mockTypeFactory.Object);
             }
 
-            var sourceInputModel = new Mock<SourceInputModel>(() => new SourceInputModel(null, null)) { CallBase = true };
+            var sourceInputModel = new Mock<SourceInputModel>(() => new SourceInputModel(null, BuildLastContractCompilation(lastContractSources))) { CallBase = true };
             mockPluginInstance.Setup(p => p.SourceInputModel).Returns(sourceInputModel.Object);
 
             if (visitors != null)
@@ -119,6 +173,31 @@ namespace Azure.Generator.Tests.TestHelpers
                     "_customCodeView",
                     BindingFlags.NonPublic | BindingFlags.Instance)?
                 .SetValue(typeProvider, new Lazy<TypeProvider>(() => customCodeTypeProvider));
+        }
+
+        private static Compilation? BuildLastContractCompilation(IEnumerable<string>? sources)
+        {
+            if (sources is null)
+            {
+                return null;
+            }
+
+            var syntaxTrees = new List<SyntaxTree>();
+            foreach (var src in sources)
+            {
+                syntaxTrees.Add(CSharpSyntaxTree.ParseText(src));
+            }
+
+            var references = new[]
+            {
+                MetadataReference.CreateFromFile(typeof(object).Assembly.Location)
+            };
+
+            return CSharpCompilation.Create(
+                "LastContract",
+                syntaxTrees,
+                references,
+                new CSharpCompilationOptions(OutputKind.DynamicallyLinkedLibrary));
         }
     }
 }

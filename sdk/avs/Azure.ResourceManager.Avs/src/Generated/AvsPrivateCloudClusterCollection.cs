@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.Avs
         {
             if (id.ResourceType != AvsPrivateCloudResource.ResourceType)
             {
-                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, AvsPrivateCloudResource.ResourceType), id);
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, AvsPrivateCloudResource.ResourceType), nameof(id));
             }
         }
 
@@ -93,7 +93,7 @@ namespace Azure.ResourceManager.Avs
                 HttpMessage message = _clustersRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, clusterName, AvsPrivateCloudClusterData.ToRequestContent(data), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 AvsArmOperation<AvsPrivateCloudClusterResource> operation = new AvsArmOperation<AvsPrivateCloudClusterResource>(
-                    new AvsPrivateCloudClusterOperationSource(Client),
+                    new AvsPrivateCloudClusterResourceOperationSource(Client),
                     _clustersClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -151,7 +151,7 @@ namespace Azure.ResourceManager.Avs
                 HttpMessage message = _clustersRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, clusterName, AvsPrivateCloudClusterData.ToRequestContent(data), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 AvsArmOperation<AvsPrivateCloudClusterResource> operation = new AvsArmOperation<AvsPrivateCloudClusterResource>(
-                    new AvsPrivateCloudClusterOperationSource(Client),
+                    new AvsPrivateCloudClusterResourceOperationSource(Client),
                     _clustersClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -293,7 +293,13 @@ namespace Azure.ResourceManager.Avs
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<AvsPrivateCloudClusterData, AvsPrivateCloudClusterResource>(new ClustersGetAllAsyncCollectionResultOfT(_clustersRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context), data => new AvsPrivateCloudClusterResource(Client, data));
+            return new AsyncPageableWrapper<AvsPrivateCloudClusterData, AvsPrivateCloudClusterResource>(new ClustersGetAllAsyncCollectionResultOfT(
+                _clustersRestClient,
+                Guid.Parse(Id.SubscriptionId),
+                Id.ResourceGroupName,
+                Id.Name,
+                context,
+                "AvsPrivateCloudClusterCollection.GetAll"), data => new AvsPrivateCloudClusterResource(Client, data));
         }
 
         /// <summary>
@@ -321,7 +327,13 @@ namespace Azure.ResourceManager.Avs
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<AvsPrivateCloudClusterData, AvsPrivateCloudClusterResource>(new ClustersGetAllCollectionResultOfT(_clustersRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context), data => new AvsPrivateCloudClusterResource(Client, data));
+            return new PageableWrapper<AvsPrivateCloudClusterData, AvsPrivateCloudClusterResource>(new ClustersGetAllCollectionResultOfT(
+                _clustersRestClient,
+                Guid.Parse(Id.SubscriptionId),
+                Id.ResourceGroupName,
+                Id.Name,
+                context,
+                "AvsPrivateCloudClusterCollection.GetAll"), data => new AvsPrivateCloudClusterResource(Client, data));
         }
 
         /// <summary>

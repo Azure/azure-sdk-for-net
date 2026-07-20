@@ -7,42 +7,60 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.HDInsight;
 
 namespace Azure.ResourceManager.HDInsight.Models
 {
-    /// <summary> The HDInsightRoleName. </summary>
+    /// <summary></summary>
     public readonly partial struct HDInsightRoleName : IEquatable<HDInsightRoleName>
     {
         private readonly string _value;
+        /// <summary> workernode. </summary>
+        private const string WorkernodeValue = "workernode";
 
         /// <summary> Initializes a new instance of <see cref="HDInsightRoleName"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public HDInsightRoleName(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string WorkernodeValue = "workernode";
+            _value = value;
+        }
 
         /// <summary> workernode. </summary>
         public static HDInsightRoleName Workernode { get; } = new HDInsightRoleName(WorkernodeValue);
+
         /// <summary> Determines if two <see cref="HDInsightRoleName"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(HDInsightRoleName left, HDInsightRoleName right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="HDInsightRoleName"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(HDInsightRoleName left, HDInsightRoleName right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="HDInsightRoleName"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="HDInsightRoleName"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator HDInsightRoleName(string value) => new HDInsightRoleName(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="HDInsightRoleName"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator HDInsightRoleName?(string value) => value == null ? null : new HDInsightRoleName(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is HDInsightRoleName other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(HDInsightRoleName other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

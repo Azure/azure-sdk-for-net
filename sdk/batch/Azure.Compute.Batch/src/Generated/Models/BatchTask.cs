@@ -63,9 +63,8 @@ namespace Azure.Compute.Batch
         /// <param name="taskStatistics"> Resource usage statistics for the Task. </param>
         /// <param name="dependsOn"> The Tasks that this Task depends on. This Task will not be scheduled until all Tasks that it depends on have completed successfully. If any of those Tasks fail and exhaust their retry counts, this Task will never be scheduled. </param>
         /// <param name="applicationPackageReferences"> A list of Packages that the Batch service will deploy to the Compute Node before running the command line. Application packages are downloaded and deployed to a shared directory, not the Task working directory. Therefore, if a referenced package is already on the Node, and is up to date, then it is not re-downloaded; the existing copy on the Compute Node is used. If a referenced Package cannot be installed, for example because the package has been deleted or because download failed, the Task fails. </param>
-        /// <param name="authenticationTokenSettings"> The settings for an authentication token that the Task can use to perform Batch service operations. If this property is set, the Batch service provides the Task with an authentication token which can be used to authenticate Batch service operations without requiring an Account access key. The token is provided via the AZ_BATCH_AUTHENTICATION_TOKEN environment variable. The operations that the Task can carry out using the token depend on the settings. For example, a Task can request Job permissions in order to add other Tasks to the Job, or check the status of the Job or of other Tasks under the Job. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal BatchTask(string id, string displayName, Uri uri, ETag eTag, DateTimeOffset lastModified, DateTimeOffset creationTime, ExitConditions exitConditions, BatchTaskState state, DateTimeOffset stateTransitionTime, BatchTaskState? previousState, DateTimeOffset? previousStateTransitionTime, string commandLine, BatchTaskContainerSettings containerSettings, IReadOnlyList<ResourceFile> resourceFiles, IReadOnlyList<OutputFile> outputFiles, IReadOnlyList<EnvironmentSetting> environmentSettings, BatchAffinityInfo affinityInfo, BatchTaskConstraints constraints, int? requiredSlots, UserIdentity userIdentity, BatchTaskExecutionInfo executionInfo, BatchNodeInfo nodeInfo, MultiInstanceSettings multiInstanceSettings, BatchTaskStatistics taskStatistics, BatchTaskDependencies dependsOn, IReadOnlyList<BatchApplicationPackageReference> applicationPackageReferences, AuthenticationTokenSettings authenticationTokenSettings, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal BatchTask(string id, string displayName, Uri uri, ETag eTag, DateTimeOffset lastModified, DateTimeOffset creationTime, ExitConditions exitConditions, BatchTaskState state, DateTimeOffset stateTransitionTime, BatchTaskState? previousState, DateTimeOffset? previousStateTransitionTime, string commandLine, BatchTaskContainerSettings containerSettings, IReadOnlyList<ResourceFile> resourceFiles, IReadOnlyList<OutputFile> outputFiles, IReadOnlyList<EnvironmentSetting> environmentSettings, BatchAffinityInfo affinityInfo, BatchTaskConstraints constraints, int? requiredSlots, UserIdentity userIdentity, BatchTaskExecutionInfo executionInfo, BatchNodeInfo nodeInfo, MultiInstanceSettings multiInstanceSettings, BatchTaskStatistics taskStatistics, BatchTaskDependencies dependsOn, IReadOnlyList<BatchApplicationPackageReference> applicationPackageReferences, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Id = id;
             DisplayName = displayName;
@@ -93,7 +92,6 @@ namespace Azure.Compute.Batch
             TaskStatistics = taskStatistics;
             DependsOn = dependsOn;
             ApplicationPackageReferences = applicationPackageReferences;
-            AuthenticationTokenSettings = authenticationTokenSettings;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
@@ -174,8 +172,5 @@ namespace Azure.Compute.Batch
 
         /// <summary> A list of Packages that the Batch service will deploy to the Compute Node before running the command line. Application packages are downloaded and deployed to a shared directory, not the Task working directory. Therefore, if a referenced package is already on the Node, and is up to date, then it is not re-downloaded; the existing copy on the Compute Node is used. If a referenced Package cannot be installed, for example because the package has been deleted or because download failed, the Task fails. </summary>
         public IReadOnlyList<BatchApplicationPackageReference> ApplicationPackageReferences { get; }
-
-        /// <summary> The settings for an authentication token that the Task can use to perform Batch service operations. If this property is set, the Batch service provides the Task with an authentication token which can be used to authenticate Batch service operations without requiring an Account access key. The token is provided via the AZ_BATCH_AUTHENTICATION_TOKEN environment variable. The operations that the Task can carry out using the token depend on the settings. For example, a Task can request Job permissions in order to add other Tasks to the Job, or check the status of the Job or of other Tasks under the Job. </summary>
-        public AuthenticationTokenSettings AuthenticationTokenSettings { get; }
     }
 }

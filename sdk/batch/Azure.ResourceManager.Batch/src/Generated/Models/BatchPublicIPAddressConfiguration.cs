@@ -8,43 +8,15 @@
 using System;
 using System.Collections.Generic;
 using Azure.Core;
+using Azure.ResourceManager.Batch;
 
 namespace Azure.ResourceManager.Batch.Models
 {
     /// <summary> The public IP Address configuration of the networking configuration of a Pool. </summary>
     public partial class BatchPublicIPAddressConfiguration
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="BatchPublicIPAddressConfiguration"/>. </summary>
         public BatchPublicIPAddressConfiguration()
@@ -59,22 +31,25 @@ namespace Azure.ResourceManager.Batch.Models
         /// <param name="ipAddressIds"> The number of IPs specified here limits the maximum size of the Pool - 100 dedicated nodes or 100 Spot/low-priority nodes can be allocated for each public IP. For example, a pool needing 250 dedicated VMs would need at least 3 public IPs specified. Each element of this collection is of the form: /subscriptions/{subscription}/resourceGroups/{group}/providers/Microsoft.Network/publicIPAddresses/{ip}. </param>
         /// <param name="ipFamilies"> IP families are used to determine single-stack or dual-stack pools. For single-stack, the expected value is IPv4. For dual-stack, the expected values are IPv4 and IPv6. </param>
         /// <param name="ipTags"> IP Tags that will applied to new Public IPs that Batch creates. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal BatchPublicIPAddressConfiguration(BatchIPAddressProvisioningType? provision, IList<ResourceIdentifier> ipAddressIds, IList<BatchIPFamily> ipFamilies, IList<BatchIPTag> ipTags, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal BatchPublicIPAddressConfiguration(BatchIPAddressProvisioningType? provision, IList<ResourceIdentifier> ipAddressIds, IList<BatchIPFamily> ipFamilies, IList<BatchIPTag> ipTags, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Provision = provision;
             IPAddressIds = ipAddressIds;
             IPFamilies = ipFamilies;
             IPTags = ipTags;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> The default value is BatchManaged. </summary>
         public BatchIPAddressProvisioningType? Provision { get; set; }
+
         /// <summary> The number of IPs specified here limits the maximum size of the Pool - 100 dedicated nodes or 100 Spot/low-priority nodes can be allocated for each public IP. For example, a pool needing 250 dedicated VMs would need at least 3 public IPs specified. Each element of this collection is of the form: /subscriptions/{subscription}/resourceGroups/{group}/providers/Microsoft.Network/publicIPAddresses/{ip}. </summary>
         public IList<ResourceIdentifier> IPAddressIds { get; }
+
         /// <summary> IP families are used to determine single-stack or dual-stack pools. For single-stack, the expected value is IPv4. For dual-stack, the expected values are IPv4 and IPv6. </summary>
         public IList<BatchIPFamily> IPFamilies { get; }
+
         /// <summary> IP Tags that will applied to new Public IPs that Batch creates. </summary>
         public IList<BatchIPTag> IPTags { get; }
     }

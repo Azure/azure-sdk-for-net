@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication
         {
             if (id.ResourceType != ResourceGroupResource.ResourceType)
             {
-                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ResourceGroupResource.ResourceType), id);
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ResourceGroupResource.ResourceType), nameof(id));
             }
         }
 
@@ -94,7 +94,7 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication
                 HttpMessage message = _fabricRestClient.CreateCreateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, fabricName, DataReplicationFabricData.ToRequestContent(data), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 RecoveryServicesDataReplicationArmOperation<DataReplicationFabricResource> operation = new RecoveryServicesDataReplicationArmOperation<DataReplicationFabricResource>(
-                    new DataReplicationFabricOperationSource(Client),
+                    new DataReplicationFabricResourceOperationSource(Client),
                     _fabricClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -152,7 +152,7 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication
                 HttpMessage message = _fabricRestClient.CreateCreateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, fabricName, DataReplicationFabricData.ToRequestContent(data), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 RecoveryServicesDataReplicationArmOperation<DataReplicationFabricResource> operation = new RecoveryServicesDataReplicationArmOperation<DataReplicationFabricResource>(
-                    new DataReplicationFabricOperationSource(Client),
+                    new DataReplicationFabricResourceOperationSource(Client),
                     _fabricClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -295,7 +295,13 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<DataReplicationFabricData, DataReplicationFabricResource>(new FabricGetAllAsyncCollectionResultOfT(_fabricRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, continuationToken, context), data => new DataReplicationFabricResource(Client, data));
+            return new AsyncPageableWrapper<DataReplicationFabricData, DataReplicationFabricResource>(new FabricGetAllAsyncCollectionResultOfT(
+                _fabricRestClient,
+                Guid.Parse(Id.SubscriptionId),
+                Id.ResourceGroupName,
+                continuationToken,
+                context,
+                "DataReplicationFabricCollection.GetAll"), data => new DataReplicationFabricResource(Client, data));
         }
 
         /// <summary>
@@ -324,7 +330,13 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<DataReplicationFabricData, DataReplicationFabricResource>(new FabricGetAllCollectionResultOfT(_fabricRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, continuationToken, context), data => new DataReplicationFabricResource(Client, data));
+            return new PageableWrapper<DataReplicationFabricData, DataReplicationFabricResource>(new FabricGetAllCollectionResultOfT(
+                _fabricRestClient,
+                Guid.Parse(Id.SubscriptionId),
+                Id.ResourceGroupName,
+                continuationToken,
+                context,
+                "DataReplicationFabricCollection.GetAll"), data => new DataReplicationFabricResource(Client, data));
         }
 
         /// <summary>

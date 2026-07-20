@@ -54,7 +54,7 @@ namespace Azure.ResourceManager.Search.Tests
 
         protected async Task<ResourceGroupResource> CreateResourceGroupAsync()
         {
-            string rgName = Recording.GenerateAssetName("Search-SDK-Test");
+            string rgName = Recording.GenerateAssetName("SSS3PT_Search-SDK-Test");
             ResourceGroupData input = new ResourceGroupData(DefaultLocation);
             var lro = await DefaultLSubscription.GetResourceGroups().CreateOrUpdateAsync(WaitUntil.Completed, rgName, input);
             return lro.Value;

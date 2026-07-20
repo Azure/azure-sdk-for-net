@@ -7,7 +7,7 @@
 
 namespace Azure.ResourceManager.AppService.Models
 {
-    /// <summary> The FrontEndServiceType. </summary>
+    /// <summary></summary>
     public enum FrontEndServiceType
     {
         /// <summary> NodePort. </summary>

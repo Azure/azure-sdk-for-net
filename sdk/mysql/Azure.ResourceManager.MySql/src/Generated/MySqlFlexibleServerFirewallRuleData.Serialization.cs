@@ -73,9 +73,7 @@ namespace Azure.ResourceManager.MySql.FlexibleServers
             {
                 return null;
             }
-            Utf8JsonRequestContent content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(mySqlFlexibleServerFirewallRuleData, ModelSerializationExtensions.WireOptions);
-            return content;
+            return RequestContent.Create(mySqlFlexibleServerFirewallRuleData, ModelSerializationExtensions.WireOptions);
         }
 
         /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="MySqlFlexibleServerFirewallRuleData"/> from. </param>
@@ -106,6 +104,21 @@ namespace Azure.ResourceManager.MySql.FlexibleServers
             base.JsonModelWriteCore(writer, options);
             writer.WritePropertyName("properties"u8);
             writer.WriteObjectValue(Properties, options);
+            if (options.Format != "W" && _additionalBinaryDataProperties != null)
+            {
+                foreach (var item in _additionalBinaryDataProperties)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+                    writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
         }
 
         /// <param name="reader"> The JSON reader. </param>
@@ -137,8 +150,8 @@ namespace Azure.ResourceManager.MySql.FlexibleServers
             string name = default;
             ResourceType resourceType = default;
             SystemData systemData = default;
-            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             FirewallRuleProperties properties = default;
+            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("id"u8))
@@ -188,8 +201,8 @@ namespace Azure.ResourceManager.MySql.FlexibleServers
                 name,
                 resourceType,
                 systemData,
-                additionalBinaryDataProperties,
-                properties);
+                properties,
+                additionalBinaryDataProperties);
         }
     }
 }

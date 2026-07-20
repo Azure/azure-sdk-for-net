@@ -68,9 +68,7 @@ namespace Azure.Compute.Batch
             {
                 return null;
             }
-            Utf8JsonRequestContent content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(batchTaskGroup, ModelSerializationExtensions.WireOptions);
-            return content;
+            return RequestContent.Create(batchTaskGroup, ModelSerializationExtensions.WireOptions);
         }
 
         /// <param name="writer"> The JSON writer. </param>
@@ -93,7 +91,7 @@ namespace Azure.Compute.Batch
             }
             writer.WritePropertyName("value"u8);
             writer.WriteStartArray();
-            foreach (BatchTaskCreateOptions item in Values)
+            foreach (BatchTaskCreateOptions item in Tasks)
             {
                 writer.WriteObjectValue(item, options);
             }
@@ -140,7 +138,7 @@ namespace Azure.Compute.Batch
             {
                 return null;
             }
-            IList<BatchTaskCreateOptions> values = default;
+            IList<BatchTaskCreateOptions> tasks = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -151,7 +149,7 @@ namespace Azure.Compute.Batch
                     {
                         array.Add(BatchTaskCreateOptions.DeserializeBatchTaskCreateOptions(item, options));
                     }
-                    values = array;
+                    tasks = array;
                     continue;
                 }
                 if (options.Format != "W")
@@ -159,7 +157,7 @@ namespace Azure.Compute.Batch
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new BatchTaskGroup(values, additionalBinaryDataProperties);
+            return new BatchTaskGroup(tasks, additionalBinaryDataProperties);
         }
     }
 }

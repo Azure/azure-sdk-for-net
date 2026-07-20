@@ -108,9 +108,7 @@ namespace BasicTypeSpec
                     content.XmlWriter.WriteObjectValue(this, options, "Tree");
                     return content;
                 case "J":
-                    Utf8JsonRequestContent jsonContent = new Utf8JsonRequestContent();
-                    jsonContent.JsonWriter.WriteObjectValue(this, options);
-                    return jsonContent;
+                    return RequestContent.Create(this, options);
                 default:
                     return RequestContent.Create(this, options);
             }
@@ -238,7 +236,7 @@ namespace BasicTypeSpec
 
         /// <param name="writer"> The XML writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected override void XmlModelWriteCore(XmlWriter writer, ModelReaderWriterOptions options)
+        internal override void XmlModelWriteCore(XmlWriter writer, ModelReaderWriterOptions options)
         {
             string format = options.Format == "W" ? ((IPersistableModel<Tree>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "X")

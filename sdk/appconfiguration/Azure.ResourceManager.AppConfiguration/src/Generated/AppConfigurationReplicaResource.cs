@@ -87,7 +87,7 @@ namespace Azure.ResourceManager.AppConfiguration
         {
             if (id.ResourceType != ResourceType)
             {
-                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), id);
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), nameof(id));
             }
         }
 
@@ -325,7 +325,7 @@ namespace Azure.ResourceManager.AppConfiguration
                 HttpMessage message = _replicasRestClient.CreateCreateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, AppConfigurationReplicaData.ToRequestContent(data), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 AppConfigurationArmOperation<AppConfigurationReplicaResource> operation = new AppConfigurationArmOperation<AppConfigurationReplicaResource>(
-                    new AppConfigurationReplicaOperationSource(Client),
+                    new AppConfigurationReplicaResourceOperationSource(Client),
                     _replicasClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -384,7 +384,7 @@ namespace Azure.ResourceManager.AppConfiguration
                 HttpMessage message = _replicasRestClient.CreateCreateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, AppConfigurationReplicaData.ToRequestContent(data), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 AppConfigurationArmOperation<AppConfigurationReplicaResource> operation = new AppConfigurationArmOperation<AppConfigurationReplicaResource>(
-                    new AppConfigurationReplicaOperationSource(Client),
+                    new AppConfigurationReplicaResourceOperationSource(Client),
                     _replicasClientDiagnostics,
                     Pipeline,
                     message.Request,

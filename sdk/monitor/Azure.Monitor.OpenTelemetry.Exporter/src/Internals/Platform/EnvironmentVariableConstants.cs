@@ -19,6 +19,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals.Platform
             APPLICATIONINSIGHTS_SDKSTATS_EXPORT_INTERVAL,
             APPLICATIONINSIGHTS_CLOUD_ROLE_NAME,
             APPLICATIONINSIGHTS_CLOUD_ROLE_INSTANCE,
+            APPLICATIONINSIGHTS_COMPONENT_VERSION,
             FUNCTIONS_WORKER_RUNTIME,
             LOCALAPPDATA,
             TEMP,
@@ -154,5 +155,11 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals.Platform
         /// the cloud role instance after the OTel Resource has been built and is immutable.
         /// </summary>
         public const string APPLICATIONINSIGHTS_CLOUD_ROLE_INSTANCE = "APPLICATIONINSIGHTS_CLOUD_ROLE_INSTANCE";
+
+        /// <summary>
+        /// Set by the Application Insights shim (TelemetryClient.Context.Component.Version) to override
+        /// the application version after the OTel Resource has been built and is immutable.
+        /// </summary>
+        public const string APPLICATIONINSIGHTS_COMPONENT_VERSION = "APPLICATIONINSIGHTS_COMPONENT_VERSION";
     }
 }

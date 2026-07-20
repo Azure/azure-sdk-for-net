@@ -1,14 +1,14 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using System.Collections.Generic;
+using System.Threading;
+using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Core.TestFramework;
 using Azure.ResourceManager.NetworkCloud.Models;
 using Azure.ResourceManager.Resources;
 using NUnit.Framework;
-using System.Collections.Generic;
-using System.Threading;
-using System.Threading.Tasks;
 
 namespace Azure.ResourceManager.NetworkCloud.Tests.ScenarioTests
 {
@@ -43,7 +43,7 @@ namespace Azure.ResourceManager.NetworkCloud.Tests.ScenarioTests
                     ["key1"] = "myvalue1",
                 },
             };
-            ArmOperation<NetworkCloudClusterMetricsConfigurationResource> createResult = await collection.CreateOrUpdateAsync(WaitUntil.Completed, metricsConfigurationName, createData);
+            ArmOperation<NetworkCloudClusterMetricsConfigurationResource> createResult = await collection.CreateOrUpdateAsync(WaitUntil.Completed, metricsConfigurationName, createData, matchConditions: null);
             Assert.AreEqual(metricsConfigurationName, createResult.Value.Data.Name);
 
             // Get
@@ -60,7 +60,7 @@ namespace Azure.ResourceManager.NetworkCloud.Tests.ScenarioTests
                     ["key2"] = "myvalue2",
                 },
             };
-            ArmOperation<NetworkCloudClusterMetricsConfigurationResource> updateResult = await clusterMetricsConfiguration.UpdateAsync(WaitUntil.Completed, patch);
+            ArmOperation<NetworkCloudClusterMetricsConfigurationResource> updateResult = await clusterMetricsConfiguration.UpdateAsync(WaitUntil.Completed, patch, matchConditions: null);
 
             // List by cluster
             var listByCluster = new List<NetworkCloudClusterMetricsConfigurationResource>();

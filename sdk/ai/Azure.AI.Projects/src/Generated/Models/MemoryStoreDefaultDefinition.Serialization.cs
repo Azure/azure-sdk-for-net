@@ -6,8 +6,9 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure.AI.Projects;
 
-namespace Azure.AI.Projects
+namespace Azure.AI.Projects.Memory
 {
     /// <summary> Default memory store implementation. </summary>
     public partial class MemoryStoreDefaultDefinition : MemoryStoreDefinition, IJsonModel<MemoryStoreDefaultDefinition>

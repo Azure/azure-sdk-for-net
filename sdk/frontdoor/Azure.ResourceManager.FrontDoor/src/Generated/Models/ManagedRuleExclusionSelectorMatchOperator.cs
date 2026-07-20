@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.FrontDoor;
 
 namespace Azure.ResourceManager.FrontDoor.Models
 {
@@ -14,47 +15,72 @@ namespace Azure.ResourceManager.FrontDoor.Models
     public readonly partial struct ManagedRuleExclusionSelectorMatchOperator : IEquatable<ManagedRuleExclusionSelectorMatchOperator>
     {
         private readonly string _value;
+        /// <summary> Equals. </summary>
+        private const string EqualsValueValue = "Equals";
+        /// <summary> Contains. </summary>
+        private const string ContainsValue = "Contains";
+        /// <summary> StartsWith. </summary>
+        private const string StartsWithValue = "StartsWith";
+        /// <summary> EndsWith. </summary>
+        private const string EndsWithValue = "EndsWith";
+        /// <summary> EqualsAny. </summary>
+        private const string EqualsAnyValue = "EqualsAny";
 
         /// <summary> Initializes a new instance of <see cref="ManagedRuleExclusionSelectorMatchOperator"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public ManagedRuleExclusionSelectorMatchOperator(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string EqualsValueValue = "Equals";
-        private const string ContainsValue = "Contains";
-        private const string StartsWithValue = "StartsWith";
-        private const string EndsWithValue = "EndsWith";
-        private const string EqualsAnyValue = "EqualsAny";
+            _value = value;
+        }
 
         /// <summary> Equals. </summary>
         public static ManagedRuleExclusionSelectorMatchOperator EqualsValue { get; } = new ManagedRuleExclusionSelectorMatchOperator(EqualsValueValue);
+
         /// <summary> Contains. </summary>
         public static ManagedRuleExclusionSelectorMatchOperator Contains { get; } = new ManagedRuleExclusionSelectorMatchOperator(ContainsValue);
+
         /// <summary> StartsWith. </summary>
         public static ManagedRuleExclusionSelectorMatchOperator StartsWith { get; } = new ManagedRuleExclusionSelectorMatchOperator(StartsWithValue);
+
         /// <summary> EndsWith. </summary>
         public static ManagedRuleExclusionSelectorMatchOperator EndsWith { get; } = new ManagedRuleExclusionSelectorMatchOperator(EndsWithValue);
+
         /// <summary> EqualsAny. </summary>
         public static ManagedRuleExclusionSelectorMatchOperator EqualsAny { get; } = new ManagedRuleExclusionSelectorMatchOperator(EqualsAnyValue);
+
         /// <summary> Determines if two <see cref="ManagedRuleExclusionSelectorMatchOperator"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(ManagedRuleExclusionSelectorMatchOperator left, ManagedRuleExclusionSelectorMatchOperator right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="ManagedRuleExclusionSelectorMatchOperator"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(ManagedRuleExclusionSelectorMatchOperator left, ManagedRuleExclusionSelectorMatchOperator right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="ManagedRuleExclusionSelectorMatchOperator"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="ManagedRuleExclusionSelectorMatchOperator"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator ManagedRuleExclusionSelectorMatchOperator(string value) => new ManagedRuleExclusionSelectorMatchOperator(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="ManagedRuleExclusionSelectorMatchOperator"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator ManagedRuleExclusionSelectorMatchOperator?(string value) => value == null ? null : new ManagedRuleExclusionSelectorMatchOperator(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is ManagedRuleExclusionSelectorMatchOperator other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(ManagedRuleExclusionSelectorMatchOperator other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

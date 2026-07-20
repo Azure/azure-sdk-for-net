@@ -4,9 +4,7 @@
 #nullable disable
 
 using System.ComponentModel;
-using System.Linq;
 using System.Threading;
-using Azure.Core;
 
 namespace Azure.ResourceManager.GuestConfiguration.Mocking
 {
@@ -30,6 +28,55 @@ namespace Azure.ResourceManager.GuestConfiguration.Mocking
             return new AsyncPageableWrapper<GuestConfigurationVmAssignmentResource, GuestConfigurationAssignmentData>(
                 RGListAsync(cancellationToken),
                 resource => resource.Data);
+        }
+
+        // backward compatible for generator bug fixes
+        /// <summary>
+        /// List all guest configuration assignments for a resource group.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.GuestConfiguration/guestConfigurationAssignments. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> GuestConfigurationAssignmentsOperationGroup_RGList. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-04-05. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> A collection of <see cref="GuestConfigurationVmAssignmentResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<GuestConfigurationVmAssignmentResource> RGListAsync(CancellationToken cancellationToken = default)
+        {
+            return new AsyncPageableWrapper<GuestConfigurationAssignmentData, GuestConfigurationVmAssignmentResource>(GetGuestConfigurationAssignmentsAsync(cancellationToken), data => new GuestConfigurationVmAssignmentResource(Client, data));
+        }
+
+        /// <summary>
+        /// List all guest configuration assignments for a resource group.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.GuestConfiguration/guestConfigurationAssignments. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> GuestConfigurationAssignmentsOperationGroup_RGList. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-04-05. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> A collection of <see cref="GuestConfigurationVmAssignmentResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<GuestConfigurationVmAssignmentResource> RGList(CancellationToken cancellationToken = default)
+        {
+            return new PageableWrapper<GuestConfigurationAssignmentData, GuestConfigurationVmAssignmentResource>(GetGuestConfigurationAssignments(cancellationToken), data => new GuestConfigurationVmAssignmentResource(Client, data));
         }
     }
 }

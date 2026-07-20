@@ -10,13 +10,65 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.ApiManagement;
 
 namespace Azure.ResourceManager.ApiManagement.Models
 {
-    public partial class ApiManagementProductPatch : IUtf8JsonSerializable, IJsonModel<ApiManagementProductPatch>
+    /// <summary> Product Update parameters. </summary>
+    public partial class ApiManagementProductPatch : IJsonModel<ApiManagementProductPatch>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ApiManagementProductPatch>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual ApiManagementProductPatch PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<ApiManagementProductPatch>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    {
+                        return DeserializeApiManagementProductPatch(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(ApiManagementProductPatch)} does not support reading '{options.Format}' format.");
+            }
+        }
 
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<ApiManagementProductPatch>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerApiManagementContext.Default);
+                default:
+                    throw new FormatException($"The model {nameof(ApiManagementProductPatch)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<ApiManagementProductPatch>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        ApiManagementProductPatch IPersistableModel<ApiManagementProductPatch>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<ApiManagementProductPatch>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
+        /// <param name="apiManagementProductPatch"> The <see cref="ApiManagementProductPatch"/> to serialize into <see cref="RequestContent"/>. </param>
+        internal static RequestContent ToRequestContent(ApiManagementProductPatch apiManagementProductPatch)
+        {
+            if (apiManagementProductPatch == null)
+            {
+                return null;
+            }
+            return RequestContent.Create(apiManagementProductPatch, ModelSerializationExtensions.WireOptions);
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<ApiManagementProductPatch>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
@@ -28,59 +80,25 @@ namespace Azure.ResourceManager.ApiManagement.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<ApiManagementProductPatch>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<ApiManagementProductPatch>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(ApiManagementProductPatch)} does not support writing '{format}' format.");
             }
-
-            writer.WritePropertyName("properties"u8);
-            writer.WriteStartObject();
-            if (Optional.IsDefined(Description))
+            if (Optional.IsDefined(Properties))
             {
-                writer.WritePropertyName("description"u8);
-                writer.WriteStringValue(Description);
+                writer.WritePropertyName("properties"u8);
+                writer.WriteObjectValue(Properties, options);
             }
-            if (Optional.IsDefined(Terms))
+            if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
-                writer.WritePropertyName("terms"u8);
-                writer.WriteStringValue(Terms);
-            }
-            if (Optional.IsDefined(IsSubscriptionRequired))
-            {
-                writer.WritePropertyName("subscriptionRequired"u8);
-                writer.WriteBooleanValue(IsSubscriptionRequired.Value);
-            }
-            if (Optional.IsDefined(IsApprovalRequired))
-            {
-                writer.WritePropertyName("approvalRequired"u8);
-                writer.WriteBooleanValue(IsApprovalRequired.Value);
-            }
-            if (Optional.IsDefined(SubscriptionsLimit))
-            {
-                writer.WritePropertyName("subscriptionsLimit"u8);
-                writer.WriteNumberValue(SubscriptionsLimit.Value);
-            }
-            if (Optional.IsDefined(State))
-            {
-                writer.WritePropertyName("state"u8);
-                writer.WriteStringValue(State.Value.ToSerialString());
-            }
-            if (Optional.IsDefined(DisplayName))
-            {
-                writer.WritePropertyName("displayName"u8);
-                writer.WriteStringValue(DisplayName);
-            }
-            writer.WriteEndObject();
-            if (options.Format != "W" && _serializedAdditionalRawData != null)
-            {
-                foreach (var item in _serializedAdditionalRawData)
+                foreach (var item in _additionalBinaryDataProperties)
                 {
                     writer.WritePropertyName(item.Key);
 #if NET6_0_OR_GREATER
-				writer.WriteRawValue(item.Value);
+                    writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value, ModelSerializationExtensions.JsonDocumentOptions))
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
                     {
                         JsonSerializer.Serialize(writer, document.RootElement);
                     }
@@ -89,146 +107,50 @@ namespace Azure.ResourceManager.ApiManagement.Models
             }
         }
 
-        ApiManagementProductPatch IJsonModel<ApiManagementProductPatch>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        ApiManagementProductPatch IJsonModel<ApiManagementProductPatch>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual ApiManagementProductPatch JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<ApiManagementProductPatch>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<ApiManagementProductPatch>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(ApiManagementProductPatch)} does not support reading '{format}' format.");
             }
-
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
             return DeserializeApiManagementProductPatch(document.RootElement, options);
         }
 
-        internal static ApiManagementProductPatch DeserializeApiManagementProductPatch(JsonElement element, ModelReaderWriterOptions options = null)
+        /// <param name="element"> The JSON element to deserialize. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        internal static ApiManagementProductPatch DeserializeApiManagementProductPatch(JsonElement element, ModelReaderWriterOptions options)
         {
-            options ??= ModelSerializationExtensions.WireOptions;
-
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            string description = default;
-            string terms = default;
-            bool? subscriptionRequired = default;
-            bool? approvalRequired = default;
-            int? subscriptionsLimit = default;
-            ApiManagementProductState? state = default;
-            string displayName = default;
-            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
-            foreach (var property in element.EnumerateObject())
+            ProductUpdateProperties properties = default;
+            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            foreach (var prop in element.EnumerateObject())
             {
-                if (property.NameEquals("properties"u8))
+                if (prop.NameEquals("properties"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    foreach (var property0 in property.Value.EnumerateObject())
-                    {
-                        if (property0.NameEquals("description"u8))
-                        {
-                            description = property0.Value.GetString();
-                            continue;
-                        }
-                        if (property0.NameEquals("terms"u8))
-                        {
-                            terms = property0.Value.GetString();
-                            continue;
-                        }
-                        if (property0.NameEquals("subscriptionRequired"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            subscriptionRequired = property0.Value.GetBoolean();
-                            continue;
-                        }
-                        if (property0.NameEquals("approvalRequired"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            approvalRequired = property0.Value.GetBoolean();
-                            continue;
-                        }
-                        if (property0.NameEquals("subscriptionsLimit"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            subscriptionsLimit = property0.Value.GetInt32();
-                            continue;
-                        }
-                        if (property0.NameEquals("state"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            state = property0.Value.GetString().ToApiManagementProductState();
-                            continue;
-                        }
-                        if (property0.NameEquals("displayName"u8))
-                        {
-                            displayName = property0.Value.GetString();
-                            continue;
-                        }
-                    }
+                    properties = ProductUpdateProperties.DeserializeProductUpdateProperties(prop.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
                 {
-                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = rawDataDictionary;
-            return new ApiManagementProductPatch(
-                description,
-                terms,
-                subscriptionRequired,
-                approvalRequired,
-                subscriptionsLimit,
-                state,
-                displayName,
-                serializedAdditionalRawData);
+            return new ApiManagementProductPatch(properties, additionalBinaryDataProperties);
         }
-
-        BinaryData IPersistableModel<ApiManagementProductPatch>.Write(ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<ApiManagementProductPatch>)this).GetFormatFromOptions(options) : options.Format;
-
-            switch (format)
-            {
-                case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerApiManagementContext.Default);
-                default:
-                    throw new FormatException($"The model {nameof(ApiManagementProductPatch)} does not support writing '{options.Format}' format.");
-            }
-        }
-
-        ApiManagementProductPatch IPersistableModel<ApiManagementProductPatch>.Create(BinaryData data, ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<ApiManagementProductPatch>)this).GetFormatFromOptions(options) : options.Format;
-
-            switch (format)
-            {
-                case "J":
-                    {
-                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
-                        return DeserializeApiManagementProductPatch(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(ApiManagementProductPatch)} does not support reading '{options.Format}' format.");
-            }
-        }
-
-        string IPersistableModel<ApiManagementProductPatch>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

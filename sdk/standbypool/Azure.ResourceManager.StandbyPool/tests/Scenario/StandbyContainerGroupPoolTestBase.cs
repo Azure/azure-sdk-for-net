@@ -22,12 +22,13 @@ namespace Azure.ResourceManager.StandbyPool.Tests
         {
         }
 
-        protected async Task<StandbyContainerGroupPoolResource> CreateContainerGroupPoolResource(ResourceGroupResource resourceGroup, string standbyContainerGroupPoolName, long maxReadyCapacity, AzureLocation location, GenericResource containerGroupProfile, ResourceIdentifier subnetId)
+        protected async Task<StandbyContainerGroupPoolResource> CreateContainerGroupPoolResource(ResourceGroupResource resourceGroup, string standbyContainerGroupPoolName, long maxReadyCapacity, AzureLocation location, GenericResource containerGroupProfile, ResourceIdentifier subnetId, bool? dynamicSizingEnabled = null)
         {
             var ElasticityProfile = new StandbyContainerGroupPoolElasticityProfile()
             {
                 MaxReadyCapacity = maxReadyCapacity,
                 RefillPolicy = StandbyRefillPolicy.Always,
+                DynamicSizingEnabled = dynamicSizingEnabled,
             };
             var ContainerGroupProperties = new StandbyContainerGroupProperties(new StandbyContainerGroupProfile(containerGroupProfile.Id))
             {

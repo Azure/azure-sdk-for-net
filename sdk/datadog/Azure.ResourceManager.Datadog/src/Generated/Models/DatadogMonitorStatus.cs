@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.Datadog;
 
 namespace Azure.ResourceManager.Datadog.Models
 {
@@ -14,44 +15,63 @@ namespace Azure.ResourceManager.Datadog.Models
     public readonly partial struct DatadogMonitorStatus : IEquatable<DatadogMonitorStatus>
     {
         private readonly string _value;
-
-        /// <summary> Initializes a new instance of <see cref="DatadogMonitorStatus"/>. </summary>
-        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        public DatadogMonitorStatus(string value)
-        {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
-
         private const string InProgressValue = "InProgress";
         private const string ActiveValue = "Active";
         private const string FailedValue = "Failed";
         private const string DeletingValue = "Deleting";
 
-        /// <summary> InProgress. </summary>
+        /// <summary> Initializes a new instance of <see cref="DatadogMonitorStatus"/>. </summary>
+        /// <param name="value"> The value. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
+        public DatadogMonitorStatus(string value)
+        {
+            Argument.AssertNotNull(value, nameof(value));
+
+            _value = value;
+        }
+
+        /// <summary> Gets the InProgress. </summary>
         public static DatadogMonitorStatus InProgress { get; } = new DatadogMonitorStatus(InProgressValue);
-        /// <summary> Active. </summary>
+
+        /// <summary> Gets the Active. </summary>
         public static DatadogMonitorStatus Active { get; } = new DatadogMonitorStatus(ActiveValue);
-        /// <summary> Failed. </summary>
+
+        /// <summary> Gets the Failed. </summary>
         public static DatadogMonitorStatus Failed { get; } = new DatadogMonitorStatus(FailedValue);
-        /// <summary> Deleting. </summary>
+
+        /// <summary> Gets the Deleting. </summary>
         public static DatadogMonitorStatus Deleting { get; } = new DatadogMonitorStatus(DeletingValue);
+
         /// <summary> Determines if two <see cref="DatadogMonitorStatus"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(DatadogMonitorStatus left, DatadogMonitorStatus right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="DatadogMonitorStatus"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(DatadogMonitorStatus left, DatadogMonitorStatus right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="DatadogMonitorStatus"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="DatadogMonitorStatus"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator DatadogMonitorStatus(string value) => new DatadogMonitorStatus(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="DatadogMonitorStatus"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator DatadogMonitorStatus?(string value) => value == null ? null : new DatadogMonitorStatus(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is DatadogMonitorStatus other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(DatadogMonitorStatus other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

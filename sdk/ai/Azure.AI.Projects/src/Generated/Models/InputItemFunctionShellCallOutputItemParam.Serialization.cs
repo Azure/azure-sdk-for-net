@@ -90,6 +90,11 @@ namespace Azure.AI.Projects
                 writer.WriteObjectValue(item, options);
             }
             writer.WriteEndArray();
+            if (Optional.IsDefined(Status))
+            {
+                writer.WritePropertyName("status"u8);
+                writer.WriteStringValue(Status.Value.ToSerialString());
+            }
             if (Optional.IsDefined(MaxOutputLength))
             {
                 writer.WritePropertyName("max_output_length"u8);
@@ -127,6 +132,7 @@ namespace Azure.AI.Projects
             string id = default;
             string callId = default;
             IList<FunctionShellCallOutputContentParam> output = default;
+            FunctionShellCallItemStatus? status = default;
             long? maxOutputLength = default;
             foreach (var prop in element.EnumerateObject())
             {
@@ -160,6 +166,16 @@ namespace Azure.AI.Projects
                     output = array;
                     continue;
                 }
+                if (prop.NameEquals("status"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        status = null;
+                        continue;
+                    }
+                    status = prop.Value.GetString().ToFunctionShellCallItemStatus();
+                    continue;
+                }
                 if (prop.NameEquals("max_output_length"u8))
                 {
                     if (prop.Value.ValueKind == JsonValueKind.Null)
@@ -181,6 +197,7 @@ namespace Azure.AI.Projects
                 id,
                 callId,
                 output,
+                status,
                 maxOutputLength);
         }
     }

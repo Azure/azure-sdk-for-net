@@ -8,8 +8,10 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Models;
 using Azure.ResourceManager.Playwright;
 
 namespace Azure.ResourceManager.Playwright.Models
@@ -64,9 +66,7 @@ namespace Azure.ResourceManager.Playwright.Models
             {
                 return null;
             }
-            Utf8JsonRequestContent content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(playwrightWorkspacePatch, ModelSerializationExtensions.WireOptions);
-            return content;
+            return RequestContent.Create(playwrightWorkspacePatch, ModelSerializationExtensions.WireOptions);
         }
 
         /// <param name="writer"> The JSON writer. </param>
@@ -86,6 +86,11 @@ namespace Azure.ResourceManager.Playwright.Models
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(PlaywrightWorkspacePatch)} does not support writing '{format}' format.");
+            }
+            if (Optional.IsDefined(Identity))
+            {
+                writer.WritePropertyName("identity"u8);
+                ((IJsonModel<ManagedServiceIdentity>)Identity).Write(writer, options.Format == "W" ? ModelSerializationExtensions.WireV3Options : ModelSerializationExtensions.JsonV3Options);
             }
             if (Optional.IsCollectionDefined(Tags))
             {
@@ -150,11 +155,21 @@ namespace Azure.ResourceManager.Playwright.Models
             {
                 return null;
             }
+            ManagedServiceIdentity identity = default;
             IDictionary<string, string> tags = default;
             PlaywrightWorkspaceUpdateProperties properties = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
+                if (prop.NameEquals("identity"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    identity = ModelReaderWriter.Read<ManagedServiceIdentity>(new BinaryData(Encoding.UTF8.GetBytes(prop.Value.GetRawText())), options.Format == "W" ? ModelSerializationExtensions.WireV3Options : ModelSerializationExtensions.JsonV3Options, AzureResourceManagerPlaywrightContext.Default);
+                    continue;
+                }
                 if (prop.NameEquals("tags"u8))
                 {
                     if (prop.Value.ValueKind == JsonValueKind.Null)
@@ -190,7 +205,7 @@ namespace Azure.ResourceManager.Playwright.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new PlaywrightWorkspacePatch(tags ?? new ChangeTrackingDictionary<string, string>(), properties, additionalBinaryDataProperties);
+            return new PlaywrightWorkspacePatch(identity, tags ?? new ChangeTrackingDictionary<string, string>(), properties, additionalBinaryDataProperties);
         }
     }
 }

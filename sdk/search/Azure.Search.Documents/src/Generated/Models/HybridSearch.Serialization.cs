@@ -13,7 +13,7 @@ using Azure.Search.Documents;
 
 namespace Azure.Search.Documents.Models
 {
-    /// <summary> TThe query parameters to configure hybrid search behaviors. </summary>
+    /// <summary> The query parameters to configure hybrid search behaviors. </summary>
     public partial class HybridSearch : IJsonModel<HybridSearch>
     {
         /// <param name="data"> The data to parse. </param>

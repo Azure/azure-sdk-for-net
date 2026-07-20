@@ -8,17 +8,64 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Text.Json;
-using Azure.Core;
+using Azure;
+using Azure.ResourceManager.Cdn;
 
 namespace Azure.ResourceManager.Cdn.Models
 {
-    public partial class ResourcesResponse : IUtf8JsonSerializable, IJsonModel<ResourcesResponse>
+    /// <summary> Resources Response. </summary>
+    public partial class ResourcesResponse : IJsonModel<ResourcesResponse>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ResourcesResponse>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual ResourcesResponse PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<ResourcesResponse>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    {
+                        return DeserializeResourcesResponse(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(ResourcesResponse)} does not support reading '{options.Format}' format.");
+            }
+        }
 
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<ResourcesResponse>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerCdnContext.Default);
+                default:
+                    throw new FormatException($"The model {nameof(ResourcesResponse)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<ResourcesResponse>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        ResourcesResponse IPersistableModel<ResourcesResponse>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<ResourcesResponse>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
+        /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="ResourcesResponse"/> from. </param>
+        internal static ResourcesResponse FromResponse(Response response)
+        {
+            using JsonDocument document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
+            return DeserializeResourcesResponse(document.RootElement, ModelSerializationExtensions.WireOptions);
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<ResourcesResponse>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
@@ -30,17 +77,16 @@ namespace Azure.ResourceManager.Cdn.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<ResourcesResponse>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<ResourcesResponse>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(ResourcesResponse)} does not support writing '{format}' format.");
             }
-
             if (Optional.IsCollectionDefined(Endpoints))
             {
                 writer.WritePropertyName("endpoints"u8);
                 writer.WriteStartArray();
-                foreach (var item in Endpoints)
+                foreach (ResourcesResponseEndpointsItem item in Endpoints)
                 {
                     writer.WriteObjectValue(item, options);
                 }
@@ -50,21 +96,21 @@ namespace Azure.ResourceManager.Cdn.Models
             {
                 writer.WritePropertyName("customDomains"u8);
                 writer.WriteStartArray();
-                foreach (var item in CustomDomains)
+                foreach (ResourcesResponseCustomDomainsItem item in CustomDomains)
                 {
                     writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
-                foreach (var item in _serializedAdditionalRawData)
+                foreach (var item in _additionalBinaryDataProperties)
                 {
                     writer.WritePropertyName(item.Key);
 #if NET6_0_OR_GREATER
-				writer.WriteRawValue(item.Value);
+                    writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value, ModelSerializationExtensions.JsonDocumentOptions))
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
                     {
                         JsonSerializer.Serialize(writer, document.RootElement);
                     }
@@ -73,54 +119,58 @@ namespace Azure.ResourceManager.Cdn.Models
             }
         }
 
-        ResourcesResponse IJsonModel<ResourcesResponse>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        ResourcesResponse IJsonModel<ResourcesResponse>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual ResourcesResponse JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<ResourcesResponse>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<ResourcesResponse>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(ResourcesResponse)} does not support reading '{format}' format.");
             }
-
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
             return DeserializeResourcesResponse(document.RootElement, options);
         }
 
-        internal static ResourcesResponse DeserializeResourcesResponse(JsonElement element, ModelReaderWriterOptions options = null)
+        /// <param name="element"> The JSON element to deserialize. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        internal static ResourcesResponse DeserializeResourcesResponse(JsonElement element, ModelReaderWriterOptions options)
         {
-            options ??= ModelSerializationExtensions.WireOptions;
-
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             IReadOnlyList<ResourcesResponseEndpointsItem> endpoints = default;
             IReadOnlyList<ResourcesResponseCustomDomainsItem> customDomains = default;
-            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
-            foreach (var property in element.EnumerateObject())
+            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            foreach (var prop in element.EnumerateObject())
             {
-                if (property.NameEquals("endpoints"u8))
+                if (prop.NameEquals("endpoints"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
                     List<ResourcesResponseEndpointsItem> array = new List<ResourcesResponseEndpointsItem>();
-                    foreach (var item in property.Value.EnumerateArray())
+                    foreach (var item in prop.Value.EnumerateArray())
                     {
                         array.Add(ResourcesResponseEndpointsItem.DeserializeResourcesResponseEndpointsItem(item, options));
                     }
                     endpoints = array;
                     continue;
                 }
-                if (property.NameEquals("customDomains"u8))
+                if (prop.NameEquals("customDomains"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
                     List<ResourcesResponseCustomDomainsItem> array = new List<ResourcesResponseCustomDomainsItem>();
-                    foreach (var item in property.Value.EnumerateArray())
+                    foreach (var item in prop.Value.EnumerateArray())
                     {
                         array.Add(ResourcesResponseCustomDomainsItem.DeserializeResourcesResponseCustomDomainsItem(item, options));
                     }
@@ -129,105 +179,10 @@ namespace Azure.ResourceManager.Cdn.Models
                 }
                 if (options.Format != "W")
                 {
-                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = rawDataDictionary;
-            return new ResourcesResponse(endpoints ?? new ChangeTrackingList<ResourcesResponseEndpointsItem>(), customDomains ?? new ChangeTrackingList<ResourcesResponseCustomDomainsItem>(), serializedAdditionalRawData);
+            return new ResourcesResponse(endpoints ?? new ChangeTrackingList<ResourcesResponseEndpointsItem>(), customDomains ?? new ChangeTrackingList<ResourcesResponseCustomDomainsItem>(), additionalBinaryDataProperties);
         }
-
-        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
-        {
-            StringBuilder builder = new StringBuilder();
-            BicepModelReaderWriterOptions bicepOptions = options as BicepModelReaderWriterOptions;
-            IDictionary<string, string> propertyOverrides = null;
-            bool hasObjectOverride = bicepOptions != null && bicepOptions.PropertyOverrides.TryGetValue(this, out propertyOverrides);
-            bool hasPropertyOverride = false;
-            string propertyOverride = null;
-
-            builder.AppendLine("{");
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Endpoints), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  endpoints: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsCollectionDefined(Endpoints))
-                {
-                    if (Endpoints.Any())
-                    {
-                        builder.Append("  endpoints: ");
-                        builder.AppendLine("[");
-                        foreach (var item in Endpoints)
-                        {
-                            BicepSerializationHelpers.AppendChildObject(builder, item, options, 4, true, "  endpoints: ");
-                        }
-                        builder.AppendLine("  ]");
-                    }
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(CustomDomains), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  customDomains: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsCollectionDefined(CustomDomains))
-                {
-                    if (CustomDomains.Any())
-                    {
-                        builder.Append("  customDomains: ");
-                        builder.AppendLine("[");
-                        foreach (var item in CustomDomains)
-                        {
-                            BicepSerializationHelpers.AppendChildObject(builder, item, options, 4, true, "  customDomains: ");
-                        }
-                        builder.AppendLine("  ]");
-                    }
-                }
-            }
-
-            builder.AppendLine("}");
-            return BinaryData.FromString(builder.ToString());
-        }
-
-        BinaryData IPersistableModel<ResourcesResponse>.Write(ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<ResourcesResponse>)this).GetFormatFromOptions(options) : options.Format;
-
-            switch (format)
-            {
-                case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerCdnContext.Default);
-                case "bicep":
-                    return SerializeBicep(options);
-                default:
-                    throw new FormatException($"The model {nameof(ResourcesResponse)} does not support writing '{options.Format}' format.");
-            }
-        }
-
-        ResourcesResponse IPersistableModel<ResourcesResponse>.Create(BinaryData data, ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<ResourcesResponse>)this).GetFormatFromOptions(options) : options.Format;
-
-            switch (format)
-            {
-                case "J":
-                    {
-                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
-                        return DeserializeResourcesResponse(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(ResourcesResponse)} does not support reading '{options.Format}' format.");
-            }
-        }
-
-        string IPersistableModel<ResourcesResponse>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

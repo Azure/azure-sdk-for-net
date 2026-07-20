@@ -18,10 +18,10 @@ namespace Azure.ResourceManager.FileShares.Models
 
         /// <summary> Initializes a new instance of <see cref="FileShareProvisioningRecommendationContent"/>. </summary>
         /// <param name="fileShareProvisioningRecommendationInputProvisionedStorageInGiB"> The desired provisioned storage size of the share in GiB. Will be use to calculate the values of remaining provisioning parameters. </param>
-        public FileShareProvisioningRecommendationContent(int? fileShareProvisioningRecommendationInputProvisionedStorageInGiB)
+        public FileShareProvisioningRecommendationContent(int fileShareProvisioningRecommendationInputProvisionedStorageInGiB)
         {
 
-            Properties = fileShareProvisioningRecommendationInputProvisionedStorageInGiB is null ? default : new FileShareProvisioningRecommendationInputProperties(fileShareProvisioningRecommendationInputProvisionedStorageInGiB.Value);
+            Properties = new FileShareProvisioningRecommendationInputProperties(fileShareProvisioningRecommendationInputProvisionedStorageInGiB);
         }
 
         /// <summary> Initializes a new instance of <see cref="FileShareProvisioningRecommendationContent"/>. </summary>
@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.FileShares.Models
         internal FileShareProvisioningRecommendationInputProperties Properties { get; }
 
         /// <summary> The desired provisioned storage size of the share in GiB. Will be use to calculate the values of remaining provisioning parameters. </summary>
-        public int? FileShareProvisioningRecommendationInputProvisionedStorageInGiB
+        public int FileShareProvisioningRecommendationInputProvisionedStorageInGiB
         {
             get
             {

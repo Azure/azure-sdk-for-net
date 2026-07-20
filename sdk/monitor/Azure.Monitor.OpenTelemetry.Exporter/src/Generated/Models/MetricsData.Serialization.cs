@@ -5,21 +5,85 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel.Primitives;
+using System.Collections.Generic;
 using System.Text.Json;
-using Azure.Core;
+using Azure.Monitor.OpenTelemetry.Exporter;
 
 namespace Azure.Monitor.OpenTelemetry.Exporter.Models
 {
-    internal partial class MetricsData : IUtf8JsonSerializable
+    internal partial class MetricsData : MonitorDomain, IJsonModel<MetricsData>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        /// <summary> Initializes a new instance of <see cref="MetricsData"/> for deserialization. </summary>
+        internal MetricsData()
+        {
+        }
+
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override MonitorDomain PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<MetricsData>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    {
+                        return DeserializeMetricsData(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(MetricsData)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<MetricsData>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options, AzureMonitorOpenTelemetryExporterContext.Default);
+                default:
+                    throw new FormatException($"The model {nameof(MetricsData)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<MetricsData>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        MetricsData IPersistableModel<MetricsData>.Create(BinaryData data, ModelReaderWriterOptions options) => (MetricsData)PersistableModelCreateCore(data, options);
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<MetricsData>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        void IJsonModel<MetricsData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<MetricsData>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(MetricsData)} does not support writing '{format}' format.");
+            }
+            base.JsonModelWriteCore(writer, options);
             writer.WritePropertyName("metrics"u8);
             writer.WriteStartArray();
-            foreach (var item in Metrics)
+            foreach (MetricDataPoint item in Metrics)
             {
-                writer.WriteObjectValue(item);
+                writer.WriteObjectValue(item, options);
             }
             writer.WriteEndArray();
             if (Optional.IsCollectionDefined(Properties))
@@ -29,26 +93,93 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Models
                 foreach (var item in Properties)
                 {
                     writer.WritePropertyName(item.Key);
+                    if (item.Value == null)
+                    {
+                        writer.WriteNullValue();
+                        continue;
+                    }
                     writer.WriteStringValue(item.Value);
                 }
                 writer.WriteEndObject();
             }
-            writer.WritePropertyName("ver"u8);
-            writer.WriteNumberValue(Version);
-            foreach (var item in AdditionalProperties)
-            {
-                writer.WritePropertyName(item.Key);
-                writer.WriteObjectValue<object>(item.Value);
-            }
-            writer.WriteEndObject();
         }
 
-        /// <summary> Convert into a <see cref="RequestContent"/>. </summary>
-        internal override RequestContent ToRequestContent()
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        MetricsData IJsonModel<MetricsData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => (MetricsData)JsonModelCreateCore(ref reader, options);
+
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override MonitorDomain JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(this);
-            return content;
+            string format = options.Format == "W" ? ((IPersistableModel<MetricsData>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(MetricsData)} does not support reading '{format}' format.");
+            }
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeMetricsData(document.RootElement, options);
+        }
+
+        /// <param name="element"> The JSON element to deserialize. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        internal static MetricsData DeserializeMetricsData(JsonElement element, ModelReaderWriterOptions options)
+        {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
+            int version = default;
+            MonitorDomainKind kind = default;
+            IDictionary<string, BinaryData> additionalProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            IList<MetricDataPoint> metrics = default;
+            IDictionary<string, string> properties = default;
+            foreach (var prop in element.EnumerateObject())
+            {
+                if (prop.NameEquals("ver"u8))
+                {
+                    version = prop.Value.GetInt32();
+                    continue;
+                }
+                if (prop.NameEquals("kind"u8))
+                {
+                    kind = new MonitorDomainKind(prop.Value.GetString());
+                    continue;
+                }
+                if (prop.NameEquals("metrics"u8))
+                {
+                    List<MetricDataPoint> array = new List<MetricDataPoint>();
+                    foreach (var item in prop.Value.EnumerateArray())
+                    {
+                        array.Add(MetricDataPoint.DeserializeMetricDataPoint(item, options));
+                    }
+                    metrics = array;
+                    continue;
+                }
+                if (prop.NameEquals("properties"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    Dictionary<string, string> dictionary = new Dictionary<string, string>();
+                    foreach (var prop0 in prop.Value.EnumerateObject())
+                    {
+                        if (prop0.Value.ValueKind == JsonValueKind.Null)
+                        {
+                            dictionary.Add(prop0.Name, null);
+                        }
+                        else
+                        {
+                            dictionary.Add(prop0.Name, prop0.Value.GetString());
+                        }
+                    }
+                    properties = dictionary;
+                    continue;
+                }
+                additionalProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+            }
+            return new MetricsData(version, kind, additionalProperties, metrics, properties ?? new ChangeTrackingDictionary<string, string>());
         }
     }
 }

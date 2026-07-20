@@ -13,37 +13,8 @@ namespace Azure.ResourceManager.Confluent.Models
     /// <summary> Metadata of the data record. </summary>
     public partial class MetadataEntity
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="MetadataEntity"/>. </summary>
         internal MetadataEntity()
@@ -56,25 +27,29 @@ namespace Azure.ResourceManager.Confluent.Models
         /// <param name="createdOn"> Created Date Time. </param>
         /// <param name="updatedOn"> Updated Date time. </param>
         /// <param name="deletedOn"> Deleted Date time. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal MetadataEntity(string self, string resourceName, DateTimeOffset? createdOn, DateTimeOffset? updatedOn, DateTimeOffset? deletedOn, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal MetadataEntity(string self, string resourceName, DateTimeOffset? createdOn, DateTimeOffset? updatedOn, DateTimeOffset? deletedOn, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Self = self;
             ResourceName = resourceName;
             CreatedOn = createdOn;
             UpdatedOn = updatedOn;
             DeletedOn = deletedOn;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> Self lookup url. </summary>
         public string Self { get; }
+
         /// <summary> Resource name of the record. </summary>
         public string ResourceName { get; }
+
         /// <summary> Created Date Time. </summary>
         public DateTimeOffset? CreatedOn { get; }
+
         /// <summary> Updated Date time. </summary>
         public DateTimeOffset? UpdatedOn { get; }
+
         /// <summary> Deleted Date time. </summary>
         public DateTimeOffset? DeletedOn { get; }
     }

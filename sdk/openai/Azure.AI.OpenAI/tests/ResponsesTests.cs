@@ -39,10 +39,10 @@ public class ResponsesTests : AoaiTestBase<ResponsesClient>
     [TestCase(Gpt4oMiniDeployment)]
     public async Task FileSearch(string deploymentName)
     {
-        OpenAIClient topLevelClient = GetTestTopLevelClient(DefaultResponsesConfig);
+        AzureOpenAIClient topLevelClient = GetTestTopLevelClient(DefaultResponsesConfig);
         OpenAIFileClient fileClient = topLevelClient.GetOpenAIFileClient();
         VectorStoreClient vectorStoreClient = topLevelClient.GetVectorStoreClient();
-        ResponsesClient client = topLevelClient.GetResponsesClient(deploymentName);
+        ResponsesClient client = topLevelClient.GetResponsesClient();
 
         OpenAIFile testFile = await fileClient.UploadFileAsync(
             BinaryData.FromString("""
@@ -62,6 +62,7 @@ public class ResponsesTests : AoaiTestBase<ResponsesClient>
         ResponseResult response = await client.CreateResponseAsync(
             new CreateResponseOptions()
             {
+                Model = deploymentName,
                 InputItems =
                 {
                     ResponseItem.CreateUserMessageItem("Using the file search tool, what's Travis's favorite food?"),
@@ -97,11 +98,12 @@ public class ResponsesTests : AoaiTestBase<ResponsesClient>
     [RecordedTest]
     public async Task ComputerToolWithScreenshotRoundTrip()
     {
-        ResponsesClient client = GetResponseTestClientForDeployment(ComputerUseDeployment);
+        ResponsesClient client = GetResponseTestClient();
 
         ResponseTool computerTool = ResponseTool.CreateComputerTool(ComputerToolEnvironment.Windows, 1024, 768);
         CreateResponseOptions options = new()
         {
+            Model = ComputerUseDeployment,
             Tools = { computerTool },
             TruncationMode = ResponseTruncationMode.Auto,
             InputItems =
@@ -159,23 +161,26 @@ public class ResponsesTests : AoaiTestBase<ResponsesClient>
     }
 
     [RecordedTest]
-    public void WebSearchNotSupported()
+    public async Task WebSearch()
     {
-        ResponsesClient client = GetResponseTestClientForDeployment(Gpt4oMiniDeployment);
-        ClientResultException? expectedException = Assert.ThrowsAsync<ClientResultException>(() =>
-            client.CreateResponseAsync(
-                new CreateResponseOptions()
+        ResponsesClient client = GetResponseTestClient();
+        ResponseResult result = await client.CreateResponseAsync(
+            new CreateResponseOptions()
+            {
+                Model = Gpt4oMiniDeployment,
+                Tools =
                 {
-                    Tools =
-                    {
-                        ResponseTool.CreateWebSearchPreviewTool()
-                    },
-                    InputItems =
-                    {
-                        ResponseItem.CreateUserMessageItem("What was a positive news story from today?"),
-                    }
-                }));
-        Assert.That(expectedException, Is.Not.Null);
+                    ResponseTool.CreateWebSearchPreviewTool()
+                },
+                InputItems =
+                {
+                    ResponseItem.CreateUserMessageItem("What was a positive news story from today?"),
+                }
+            });
+        Assert.That(result.OutputItems, Is.Not.Null.And.Not.Empty);
+        WebSearchCallResponseItem? webSearchCall =
+            result.OutputItems!.OfType<WebSearchCallResponseItem>().FirstOrDefault();
+        Assert.That(webSearchCall, Is.Not.Null);
     }
 
     [RecordedTest]
@@ -183,10 +188,11 @@ public class ResponsesTests : AoaiTestBase<ResponsesClient>
     [TestCase(ComputerUseDeployment)]
     public async Task StreamingResponses(string deploymentName)
     {
-        ResponsesClient client = GetResponseTestClientForDeployment(deploymentName);
+        ResponsesClient client = GetResponseTestClient();
 
         CreateResponseOptions options = new()
         {
+            Model = deploymentName,
             InputItems = { ResponseItem.CreateUserMessageItem("Hello, world!") },
             StreamingEnabled = true
         };
@@ -223,10 +229,11 @@ public class ResponsesTests : AoaiTestBase<ResponsesClient>
     [TestCase(ComputerUseDeployment)]
     public async Task ResponsesHelloWorldWithTool(string deploymentName)
     {
-        ResponsesClient client = GetResponseTestClientForDeployment(deploymentName);
+        ResponsesClient client = GetResponseTestClient();
 
         CreateResponseOptions options = new()
         {
+            Model = deploymentName,
             Tools =
             {
                 ResponseTool.CreateFunctionTool(
@@ -273,10 +280,11 @@ public class ResponsesTests : AoaiTestBase<ResponsesClient>
     [RecordedTest]
     public async Task ResponsesWithReasoning()
     {
-        ResponsesClient client = GetTestClient("chat_o3-mini");
+        ResponsesClient client = GetResponseTestClient();
 
         CreateResponseOptions options = new()
         {
+            Model = "o3-mini",
             ReasoningOptions = new()
             {
                 ReasoningSummaryVerbosity = ResponseReasoningSummaryVerbosity.Detailed,
@@ -318,10 +326,11 @@ public class ResponsesTests : AoaiTestBase<ResponsesClient>
     [TestCase(ComputerUseDeployment)]
     public async Task HelloWorldStreaming(string deploymentName)
     {
-        ResponsesClient client = GetResponseTestClientForDeployment(deploymentName);
+        ResponsesClient client = GetResponseTestClient();
 
         CreateResponseOptions options = new()
         {
+            Model = deploymentName,
             InputItems =
             {
                 ResponseItem.CreateUserMessageItem(
@@ -347,10 +356,11 @@ public class ResponsesTests : AoaiTestBase<ResponsesClient>
     [TestCase(ComputerUseDeployment)]
     public async Task CanDeleteResponse(string deploymentName)
     {
-        ResponsesClient client = GetResponseTestClientForDeployment(deploymentName);
+        ResponsesClient client = GetResponseTestClient();
 
         CreateResponseOptions options = new()
         {
+            Model = deploymentName,
             InputItems = { ResponseItem.CreateUserMessageItem("Hello, model!") },
         };
         if (deploymentName == ComputerUseDeployment)
@@ -379,10 +389,11 @@ public class ResponsesTests : AoaiTestBase<ResponsesClient>
     [TestCase(ComputerUseDeployment)]
     public async Task CanOptOutOfStorage(string deploymentName)
     {
-        ResponsesClient client = GetResponseTestClientForDeployment(deploymentName);
+        ResponsesClient client = GetResponseTestClient();
 
         CreateResponseOptions options = new()
         {
+            Model = deploymentName,
             StoredOutputEnabled = false,
             InputItems = { ResponseItem.CreateUserMessageItem("Hello, model!") },
         };
@@ -402,9 +413,10 @@ public class ResponsesTests : AoaiTestBase<ResponsesClient>
     [TestCase(ComputerUseDeployment)]
     public async Task OutputTextProperty(string deploymentName)
     {
-        ResponsesClient client = GetResponseTestClientForDeployment(deploymentName);
+        ResponsesClient client = GetResponseTestClient();
         CreateResponseOptions options = new()
         {
+            Model = deploymentName,
             InputItems =
             {
                 ResponseItem.CreateUserMessageItem("Respond with only the word hello."),
@@ -422,6 +434,7 @@ public class ResponsesTests : AoaiTestBase<ResponsesClient>
         response = await client.CreateResponseAsync(
             new CreateResponseOptions()
             {
+                Model = deploymentName,
                 Tools = { ResponseTool.CreateFunctionTool("get_weather", functionDescription: "gets the weather", functionParameters: BinaryData.FromString("{}"), strictModeEnabled: false) },
                 ToolChoice = ResponseToolChoice.CreateRequiredChoice(),
                 TruncationMode = ResponseTruncationMode.Auto,
@@ -438,10 +451,11 @@ public class ResponsesTests : AoaiTestBase<ResponsesClient>
     [TestCase(ComputerUseDeployment)]
     public async Task MessageHistoryWorks(string deploymentName)
     {
-        ResponsesClient client = GetResponseTestClientForDeployment(deploymentName);
+        ResponsesClient client = GetResponseTestClient();
 
         CreateResponseOptions options = new()
         {
+            Model = deploymentName,
             InputItems =
             {
                 ResponseItem.CreateDeveloperMessageItem("You are a helpful assistant."),
@@ -463,21 +477,23 @@ public class ResponsesTests : AoaiTestBase<ResponsesClient>
     [RecordedTest]
     [TestCase(Gpt4oMiniDeployment)]
     [TestCase(ComputerUseDeployment, Ignore = "image input not currently supported")]
+    [Ignore("image input not currently supported")]
     public async Task ImageInputWorks(string deploymentName)
     {
-        ResponsesClient client = GetResponseTestClientForDeployment(deploymentName);
+        ResponsesClient client = GetResponseTestClient();
 
         string imagePath = Assets.DogAndCat.RelativePath;
         BinaryData imageBytes = BinaryData.FromBytes(File.ReadAllBytes(imagePath)!);
 
         CreateResponseOptions options = new()
         {
+            Model = deploymentName,
             InputItems =
             {
                 ResponseItem.CreateUserMessageItem(
                 [
                     ResponseContentPart.CreateInputTextPart("Please describe this picture for me"),
-                    ResponseContentPart.CreateInputImagePart(imageBytes, "image/png", ResponseImageDetailLevel.Low),
+                    // ResponseContentPart.CreateInputImagePart(imageBytes, "image/png", ResponseImageDetailLevel.Low),
                 ]),
             }
         };
@@ -521,7 +537,7 @@ public class ResponsesTests : AoaiTestBase<ResponsesClient>
         const string userMessage = "Hello, model!";
         messages.Add(ResponseItem.CreateUserMessageItem(userMessage));
 
-        CreateResponseOptions options = new(messages);
+        CreateResponseOptions options = new(deploymentName, messages);
         if (deploymentName == ComputerUseDeployment)
         {
             options.TruncationMode = ResponseTruncationMode.Auto;
@@ -532,7 +548,7 @@ public class ResponsesTests : AoaiTestBase<ResponsesClient>
             options.Instructions = instructions;
         }
 
-        ResponsesClient client = GetResponseTestClientForDeployment(deploymentName);
+        ResponsesClient client = GetResponseTestClient();
         ResponseResult response = await client.CreateResponseAsync(options);
 
         Assert.That(response, Is.Not.Null);
@@ -546,7 +562,12 @@ public class ResponsesTests : AoaiTestBase<ResponsesClient>
 
         if (instructionMethod == ResponsesTestInstructionMethod.InstructionsProperty)
         {
-            Assert.That(retrievedResponse?.Instructions, Is.EqualTo(instructions));
+            Assert.That(retrievedResponse?.Instructions, Has.Count.EqualTo(1));
+            MessageResponseItem responseInstructionsItem = retrievedResponse?.Instructions[0] as MessageResponseItem
+                ?? throw new AssertionException("Expected instructions item to be a MessageResponseItem");
+            Assert.That(responseInstructionsItem.Role, Is.EqualTo(MessageRole.Developer));
+            Assert.That(responseInstructionsItem.Content, Has.Count.EqualTo(1));
+            Assert.That(responseInstructionsItem.Content[0].Text, Is.EqualTo(instructions));
         }
         // The AzureOpenAI endpoint does not serve the path for
         // https://{Azure OpenAI endpoint}/responses/{response.Id}/input_items
@@ -580,18 +601,19 @@ public class ResponsesTests : AoaiTestBase<ResponsesClient>
     [RecordedTest]
     public async Task TwoTurnCrossModel()
     {
-        ResponsesClient client = GetResponseTestClientForDeployment(Gpt4oMiniDeployment);
-        ResponsesClient client2 = GetResponseTestClientForDeployment(ComputerUseDeployment);
+        ResponsesClient client = GetResponseTestClient();
 
         ResponseResult response = await client.CreateResponseAsync(
             new CreateResponseOptions()
             {
+                Model = Gpt4oMiniDeployment,
                 TruncationMode = ResponseTruncationMode.Auto,
                 InputItems = { ResponseItem.CreateUserMessageItem("Hello, Assistant! My name is Travis.") },
             });
-        ResponseResult response2 = await client2.CreateResponseAsync(
+        ResponseResult response2 = await client.CreateResponseAsync(
             new CreateResponseOptions()
             {
+                Model = ComputerUseDeployment,
                 TruncationMode = ResponseTruncationMode.Auto,
                 InputItems = { ResponseItem.CreateUserMessageItem("What's my name?") },
                 PreviousResponseId = response.Id,
@@ -603,10 +625,11 @@ public class ResponsesTests : AoaiTestBase<ResponsesClient>
     [TestCase(ComputerUseDeployment, Ignore = "Not yet supported with computer-use-preview")]
     public async Task StructuredOutputs(string deploymentName)
     {
-        ResponsesClient client = GetResponseTestClientForDeployment(deploymentName);
+        ResponsesClient client = GetResponseTestClient();
 
-        CreateResponseOptions options = new CreateResponseOptions()
+        CreateResponseOptions options = new()
         {
+            Model = deploymentName,
             TextOptions = new ResponseTextOptions()
             {
                 TextFormat = ResponseTextFormat.CreateJsonSchemaFormat(
@@ -660,10 +683,11 @@ public class ResponsesTests : AoaiTestBase<ResponsesClient>
     [TestCase(Gpt4oMiniDeployment)]
     public async Task FunctionCall(string deploymentName)
     {
-        ResponsesClient client = GetResponseTestClientForDeployment(deploymentName);
+        ResponsesClient client = GetResponseTestClient();
 
         CreateResponseOptions options = new()
         {
+            Model = deploymentName,
             Tools = { s_GetWeatherAtLocationTool },
             InputItems = { ResponseItem.CreateUserMessageItem("What should I wear for the weather in San Francisco, CA?") },
         };
@@ -704,10 +728,11 @@ public class ResponsesTests : AoaiTestBase<ResponsesClient>
     [TestCase(ComputerUseDeployment)]
     public async Task MaxTokens(string deploymentName)
     {
-        ResponsesClient client = GetResponseTestClientForDeployment(deploymentName);
+        ResponsesClient client = GetResponseTestClient();
 
         CreateResponseOptions options = new()
         {
+            Model = deploymentName,
             MaxOutputTokenCount = 20,
             InputItems =
             {
@@ -734,10 +759,11 @@ public class ResponsesTests : AoaiTestBase<ResponsesClient>
     [TestCase(ComputerUseDeployment)]
     public async Task FunctionCallStreaming(string deploymentName)
     {
-        ResponsesClient client = GetResponseTestClientForDeployment(deploymentName);
+        ResponsesClient client = GetResponseTestClient();
 
         CreateResponseOptions options = new()
         {
+            Model = deploymentName,
             Tools = { s_GetWeatherAtLocationTool },
             InputItems =
             {
@@ -769,13 +795,14 @@ public class ResponsesTests : AoaiTestBase<ResponsesClient>
     [TestCase(ComputerUseDeployment)]
     public async Task FunctionToolChoiceWorks(string deploymentName)
     {
-        ResponsesClient client = GetResponseTestClientForDeployment(deploymentName);
+        ResponsesClient client = GetResponseTestClient();
 
         ResponseToolChoice toolChoice
             = ResponseToolChoice.CreateFunctionChoice(s_GetWeatherAtLocationToolName);
 
         CreateResponseOptions options = new()
         {
+            Model = deploymentName,
             Tools = { s_GetWeatherAtLocationTool },
             ToolChoice = toolChoice,
             TruncationMode = ResponseTruncationMode.Auto,
@@ -908,19 +935,11 @@ public class ResponsesTests : AoaiTestBase<ResponsesClient>
 
     public override ResponsesClient GetTestClient(TestClientOptions? options = null, TokenCredential? tokenCredential = null, ApiKeyCredential? keyCredential = null)
     {
-        throw new NotImplementedException($"Please use the deployment-specific {nameof(GetResponseTestClientForDeployment)} for this fixture.");
+        throw new NotImplementedException($"Please use the deployment-specific {nameof(GetResponseTestClient)} for this fixture.");
     }
 
-    private ResponsesClient GetResponseTestClientForDeployment(string? deploymentName = null)
-    {
-        if (deploymentName is null)
-        {
-            return GetTestClient("responses");
-        }
-        AzureOpenAIClient toplevelClient = GetTestTopLevelClient(
-            TestConfig.GetConfig("responses"));
-        return toplevelClient.GetResponsesClient(deploymentName);
-    }
+    private ResponsesClient GetResponseTestClient()
+        => GetTestClient("responses");
 
     private static void AssertSerializationRoundTrip<T>(
         string serializedJson,

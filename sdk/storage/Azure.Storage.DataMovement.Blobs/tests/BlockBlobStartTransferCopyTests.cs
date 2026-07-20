@@ -58,11 +58,25 @@ namespace Azure.Storage.DataMovement.Blobs.Tests
         protected override async Task<bool> DestinationExistsAsync(BlockBlobClient objectClient)
             => await objectClient.ExistsAsync();
 
-        protected override async Task<IDisposingContainer<BlobContainerClient>> GetSourceDisposingContainerAsync(BlobServiceClient service = null, string containerName = null)
+        protected override async Task<IDisposingContainer<BlobContainerClient>> GetSourceDisposingContainerAsync(
+            BlobServiceClient service = null,
+            string containerName = null)
             => await SourceClientBuilder.GetTestContainerAsync(service, containerName);
 
-        protected override async Task<IDisposingContainer<BlobContainerClient>> GetDestinationDisposingContainerAsync(BlobServiceClient service = null, string containerName = null)
+        protected override async Task<IDisposingContainer<BlobContainerClient>> GetSourceSasDisposingContainerAsync(
+            BlobServiceClient service = null,
+            string containerName = null)
+            => await SourceClientBuilder.GetAzureSasCredentialTestContainerAsync(service, containerName);
+
+        protected override async Task<IDisposingContainer<BlobContainerClient>> GetDestinationDisposingContainerAsync(
+            BlobServiceClient service = null,
+            string containerName = null)
             => await DestinationClientBuilder.GetTestContainerAsync(service, containerName);
+
+        protected override async Task<IDisposingContainer<BlobContainerClient>> GetDestinationSasDisposingContainerAsync(
+            BlobServiceClient service = null,
+            string containerName = null)
+            => await DestinationClientBuilder.GetAzureSasCredentialTestContainerAsync(service, containerName);
 
         private async Task<BlockBlobClient> GetBlockBlobClientAsync(
             BlobContainerClient container,
@@ -71,7 +85,9 @@ namespace Azure.Storage.DataMovement.Blobs.Tests
             string objectName = null,
             BlobClientOptions options = null,
             Stream contents = default,
-            TransferPropertiesTestType propertiesTestType = default)
+            TransferPropertiesTestType propertiesTestType = default,
+            bool useContainerCredentials = false,
+            CancellationToken cancellationToken = default)
         {
             objectName ??= GetNewObjectName();
             BlockBlobClient blobClient = container.GetBlockBlobClient(objectName);
@@ -85,7 +101,7 @@ namespace Azure.Storage.DataMovement.Blobs.Tests
 
                 if (contents != default)
                 {
-                    await blobClient.UploadAsync(contents);
+                    await blobClient.UploadAsync(contents, default, cancellationToken);
                 }
                 else
                 {
@@ -104,8 +120,13 @@ namespace Azure.Storage.DataMovement.Blobs.Tests
                                 ContentDisposition = _defaultContentDisposition,
                                 CacheControl = _defaultCacheControl,
                             }
-                        });
+                        },
+                        cancellationToken);
                 }
+            }
+            if (useContainerCredentials)
+            {
+                return blobClient;
             }
             Uri sourceUri = blobClient.GenerateSasUri(BaseBlobs::Azure.Storage.Sas.BlobSasPermissions.All, Recording.UtcNow.AddDays(1));
             return InstrumentClient(new BlockBlobClient(sourceUri, GetOptions()));
@@ -119,6 +140,7 @@ namespace Azure.Storage.DataMovement.Blobs.Tests
             BlobClientOptions options = null,
             Stream contents = default,
             TransferPropertiesTestType propertiesTestType = default,
+            bool useContainerCredentials = false,
             CancellationToken cancellationToken = default)
             => GetBlockBlobClientAsync(
                 container,
@@ -126,7 +148,10 @@ namespace Azure.Storage.DataMovement.Blobs.Tests
                 createResource,
                 objectName,
                 options,
-                contents);
+                contents,
+                propertiesTestType,
+                useContainerCredentials,
+                cancellationToken);
 
         protected override StorageResourceItem GetSourceStorageResourceItem(BlockBlobClient objectClient)
             => new BlockBlobStorageResource(objectClient);
@@ -141,6 +166,7 @@ namespace Azure.Storage.DataMovement.Blobs.Tests
             string objectName = null,
             BlobClientOptions options = null,
             Stream contents = null,
+            bool useContainerCredentials = false,
             CancellationToken cancellationToken = default)
             => GetBlockBlobClientAsync(
                 container,
@@ -148,7 +174,10 @@ namespace Azure.Storage.DataMovement.Blobs.Tests
                 createResource,
                 objectName,
                 options,
-                contents);
+                contents,
+                default,
+                useContainerCredentials,
+                cancellationToken);
 
         protected override StorageResourceItem GetDestinationStorageResourceItem(
             BlockBlobClient objectClient,
@@ -264,6 +293,54 @@ namespace Azure.Storage.DataMovement.Blobs.Tests
             }
 
             return InstrumentClientOptions(options);
+        }
+
+        protected override async Task<string> CreateSnapshotAsync(
+            BlobContainerClient containerClient,
+            BlockBlobClient objectClient,
+            CancellationToken cancellationToken = default)
+        {
+            Response<BlobSnapshotInfo> snapshotResponse = await objectClient.CreateSnapshotAsync(cancellationToken: cancellationToken);
+            return snapshotResponse.Value.Snapshot;
+        }
+
+        protected override BlockBlobClient GetSnapshotObjectClient(
+            BlockBlobClient objectClient,
+            string snapshotId)
+            => objectClient.WithSnapshot(snapshotId);
+
+        protected override async Task<string> CreateVersionAsync(
+            BlobContainerClient containerClient,
+            BlockBlobClient objectClient,
+            CancellationToken cancellationToken = default)
+        {
+            // Get the current version ID before we modify the blob
+            Response<BlobProperties> propertiesResponse = await objectClient.GetPropertiesAsync(cancellationToken: cancellationToken);
+            string versionId = propertiesResponse.Value.VersionId;
+
+            // Modify the blob to create a new version
+            byte[] newData = new byte[1];
+            using MemoryStream stream = new MemoryStream(newData);
+            await objectClient.UploadAsync(stream, cancellationToken: cancellationToken);
+
+            // Return the version ID from before the modification
+            return versionId;
+        }
+
+        protected override BlockBlobClient GetVersionObjectClient(
+            BlockBlobClient objectClient,
+            string versionId)
+        {
+            // Create version client
+            BlockBlobClient versionClient = objectClient.WithVersion(versionId);
+
+            // Generate a new SAS token for the versioned blob
+            // The SAS must include the version in the signed resource
+            Uri versionSasUri = versionClient.GenerateSasUri(
+                BaseBlobs::Azure.Storage.Sas.BlobSasPermissions.Read,
+                Recording.UtcNow.AddDays(1));
+
+            return InstrumentClient(new BlockBlobClient(versionSasUri, GetOptions()));
         }
     }
 }

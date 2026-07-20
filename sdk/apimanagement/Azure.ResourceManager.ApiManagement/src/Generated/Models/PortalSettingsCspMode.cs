@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.ApiManagement;
 
 namespace Azure.ResourceManager.ApiManagement.Models
 {
@@ -14,41 +15,62 @@ namespace Azure.ResourceManager.ApiManagement.Models
     public readonly partial struct PortalSettingsCspMode : IEquatable<PortalSettingsCspMode>
     {
         private readonly string _value;
+        /// <summary> The browser will block requests not matching allowed origins. </summary>
+        private const string EnabledValue = "enabled";
+        /// <summary> The browser will not apply the origin restrictions. </summary>
+        private const string DisabledValue = "disabled";
+        /// <summary> The browser will report requests not matching allowed origins without blocking them. </summary>
+        private const string ReportOnlyValue = "reportOnly";
 
         /// <summary> Initializes a new instance of <see cref="PortalSettingsCspMode"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public PortalSettingsCspMode(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string EnabledValue = "enabled";
-        private const string DisabledValue = "disabled";
-        private const string ReportOnlyValue = "reportOnly";
+            _value = value;
+        }
 
         /// <summary> The browser will block requests not matching allowed origins. </summary>
         public static PortalSettingsCspMode Enabled { get; } = new PortalSettingsCspMode(EnabledValue);
+
         /// <summary> The browser will not apply the origin restrictions. </summary>
         public static PortalSettingsCspMode Disabled { get; } = new PortalSettingsCspMode(DisabledValue);
+
         /// <summary> The browser will report requests not matching allowed origins without blocking them. </summary>
         public static PortalSettingsCspMode ReportOnly { get; } = new PortalSettingsCspMode(ReportOnlyValue);
+
         /// <summary> Determines if two <see cref="PortalSettingsCspMode"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(PortalSettingsCspMode left, PortalSettingsCspMode right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="PortalSettingsCspMode"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(PortalSettingsCspMode left, PortalSettingsCspMode right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="PortalSettingsCspMode"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="PortalSettingsCspMode"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator PortalSettingsCspMode(string value) => new PortalSettingsCspMode(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="PortalSettingsCspMode"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator PortalSettingsCspMode?(string value) => value == null ? null : new PortalSettingsCspMode(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is PortalSettingsCspMode other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(PortalSettingsCspMode other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

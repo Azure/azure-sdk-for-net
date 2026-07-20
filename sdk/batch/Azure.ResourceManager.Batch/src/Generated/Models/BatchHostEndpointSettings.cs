@@ -14,37 +14,8 @@ namespace Azure.ResourceManager.Batch.Models
     /// <summary> Specifies particular host endpoint settings. </summary>
     public partial class BatchHostEndpointSettings
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="BatchHostEndpointSettings"/>. </summary>
         public BatchHostEndpointSettings()
@@ -54,16 +25,17 @@ namespace Azure.ResourceManager.Batch.Models
         /// <summary> Initializes a new instance of <see cref="BatchHostEndpointSettings"/>. </summary>
         /// <param name="mode"> Specifies the access control policy execution mode. </param>
         /// <param name="inVmAccessControlProfileReferenceId"> Specifies the reference to the InVMAccessControlProfileVersion resource id in the form of /subscriptions/{SubscriptionId}/resourceGroups/{ResourceGroupName}/providers/Microsoft.Compute/galleries/{galleryName}/inVMAccessControlProfiles/{profile}/versions/{version}. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal BatchHostEndpointSettings(BatchHostEndpointSettingsModeType? mode, ResourceIdentifier inVmAccessControlProfileReferenceId, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal BatchHostEndpointSettings(BatchHostEndpointSettingsModeType? mode, ResourceIdentifier inVmAccessControlProfileReferenceId, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Mode = mode;
             InVmAccessControlProfileReferenceId = inVmAccessControlProfileReferenceId;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> Specifies the access control policy execution mode. </summary>
         public BatchHostEndpointSettingsModeType? Mode { get; set; }
+
         /// <summary> Specifies the reference to the InVMAccessControlProfileVersion resource id in the form of /subscriptions/{SubscriptionId}/resourceGroups/{ResourceGroupName}/providers/Microsoft.Compute/galleries/{galleryName}/inVMAccessControlProfiles/{profile}/versions/{version}. </summary>
         public ResourceIdentifier InVmAccessControlProfileReferenceId { get; set; }
     }

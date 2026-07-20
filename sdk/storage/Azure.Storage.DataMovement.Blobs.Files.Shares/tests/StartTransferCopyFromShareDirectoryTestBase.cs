@@ -109,6 +109,14 @@ namespace Azure.Storage.DataMovement.Blobs.Files.Shares.Tests
             return await DestinationClientBuilder.GetTestContainerAsync(oauthService, containerName);
         }
 
+        protected override async Task<IDisposingContainer<BlobContainerClient>> GetDestinationDisposingContainerAzureSasCredentialAsync(
+            string containerName = default,
+            CancellationToken cancellationToken = default)
+        {
+            BlobServiceClient sasService = DestinationClientBuilder.GetBlobServiceClient_AzureSasCredential();
+            return await DestinationClientBuilder.GetTestContainerAsync(sasService, containerName);
+        }
+
         protected override async Task<IDisposingContainer<BlobContainerClient>> GetDestinationDisposingContainerAsync(BlobServiceClient service = null, string containerName = null, CancellationToken cancellationToken = default)
             => await DestinationClientBuilder.GetTestContainerAsync(service, containerName);
 
@@ -119,6 +127,16 @@ namespace Azure.Storage.DataMovement.Blobs.Files.Shares.Tests
             ShareClientOptions options = SourceClientBuilder.GetOptions();
             options.ShareTokenIntent = ShareTokenIntent.Backup;
             ShareServiceClient oauthService = SourceClientBuilder.GetServiceClientFromOauthConfig(Tenants.TestConfigOAuth, TestEnvironment.Credential, options);
+            return await SourceClientBuilder.GetTestShareAsync(oauthService, containerName);
+        }
+
+        protected override async Task<IDisposingContainer<ShareClient>> GetSourceDisposingContainerAzureSasCredentialAsync(
+            string containerName = default,
+            CancellationToken cancellationToken = default)
+        {
+            ShareClientOptions options = SourceClientBuilder.GetOptions();
+            options.ShareTokenIntent = ShareTokenIntent.Backup;
+            ShareServiceClient oauthService = SourceClientBuilder.GetShareServiceClient_AzureSasCredential(options);
             return await SourceClientBuilder.GetTestShareAsync(oauthService, containerName);
         }
 

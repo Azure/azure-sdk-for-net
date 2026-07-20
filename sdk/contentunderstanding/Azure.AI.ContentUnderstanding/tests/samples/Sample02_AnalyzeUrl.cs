@@ -28,12 +28,18 @@ namespace Azure.AI.ContentUnderstanding.Samples
 
             #region Snippet:ContentUnderstandingAnalyzeUrlAsync
             // You can replace this URL with your own publicly accessible document URL.
-            Uri uriSource = new Uri("https://raw.githubusercontent.com/Azure-Samples/azure-ai-content-understanding-assets/main/document/invoice.pdf");
+            Uri uriSource = new Uri("https://raw.githubusercontent.com/Azure-Samples/azure-ai-content-understanding-assets/main/document/mixed_financial_docs.pdf");
 
             Operation<AnalysisResult> operation = await client.AnalyzeAsync(
                 WaitUntil.Completed,
                 "prebuilt-documentSearch",
-                inputs: new[] { new AnalysisInput { Uri = uriSource } });
+                inputs: new[]
+                {
+                    new AnalysisInput
+                    {
+                        Uri = uriSource
+                    }
+                });
 
             AnalysisResult result = operation.Value;
             AnalysisContent content = result.Contents!.First();
@@ -170,6 +176,70 @@ namespace Azure.AI.ContentUnderstanding.Samples
         }
 
         [RecordedTest]
+        public async Task AnalyzeUrlWithPageContentRangesAsync()
+        {
+            string endpoint = TestEnvironment.Endpoint;
+            var options = InstrumentClientOptions(new ContentUnderstandingClientOptions());
+            var client = InstrumentClient(new ContentUnderstandingClient(new Uri(endpoint), TestEnvironment.Credential, options));
+
+            Uri uriSource = new Uri("https://raw.githubusercontent.com/Azure-Samples/azure-ai-content-understanding-assets/main/document/mixed_financial_docs.pdf");
+
+            // Full analysis for comparison
+            Operation<AnalysisResult> fullOperation = await client.AnalyzeAsync(
+                WaitUntil.Completed,
+                "prebuilt-documentSearch",
+                inputs: new[]
+                {
+                    new AnalysisInput
+                    {
+                        Uri = uriSource
+                    }
+                });
+            DocumentContent fullDoc = (DocumentContent)fullOperation.Value.Contents!.First();
+            Assert.AreEqual(4, fullDoc.Pages!.Count, "Full document should return all 4 pages");
+
+            #region Snippet:ContentUnderstandingAnalyzeUrlWithContentRangeAsync
+            // Extract only page 1 of the document.
+            Operation<AnalysisResult> rangeOperation = await client.AnalyzeAsync(
+                WaitUntil.Completed,
+                "prebuilt-documentSearch",
+                inputs: new[]
+                {
+                    new AnalysisInput
+                    {
+                        Uri = uriSource,
+                        ContentRange = ContentRange.Page(1)
+                    }
+                });
+
+            AnalysisResult rangeResult = rangeOperation.Value;
+            DocumentContent rangeDocContent = (DocumentContent)rangeResult.Contents!.First();
+            Console.WriteLine($"ContentRange analysis returned pages {rangeDocContent.StartPageNumber} - {rangeDocContent.EndPageNumber}");
+            #endregion
+
+            #region Assertion:ContentUnderstandingAnalyzeUrlWithContentRangeAsync
+            Assert.IsNotNull(rangeOperation);
+            Assert.IsTrue(rangeOperation.HasCompleted);
+            Assert.IsNotNull(rangeResult);
+            Assert.IsNotNull(rangeResult.Contents);
+
+            // Verify the range-limited result returns only page 1
+            Assert.AreEqual(1, rangeDocContent.Pages!.Count, "With ContentRange.Page(1), should return only 1 page");
+            Assert.AreEqual(1, rangeDocContent.StartPageNumber, "Page(1) should start at page 1");
+            Assert.AreEqual(1, rangeDocContent.EndPageNumber, "Page(1) should end at page 1");
+
+            // Compare full (4 pages) vs range-limited (1 page): full should have more content
+            Assert.IsTrue(fullDoc.Pages!.Count > rangeDocContent.Pages.Count,
+                $"Full document ({fullDoc.Pages.Count} pages) should have more pages than range-limited ({rangeDocContent.Pages.Count})");
+            Assert.IsTrue(fullDoc.Markdown!.Length > rangeDocContent.Markdown!.Length,
+                $"Full document markdown ({fullDoc.Markdown.Length} chars) should exceed range-limited ({rangeDocContent.Markdown.Length} chars)");
+
+            Console.WriteLine($"Full document: {fullDoc.Pages.Count} pages, {fullDoc.Markdown.Length} chars");
+            Console.WriteLine($"Range document: {rangeDocContent.Pages.Count} page(s), {rangeDocContent.Markdown.Length} chars (page {rangeDocContent.StartPageNumber})");
+            #endregion
+        }
+
+        [RecordedTest]
         public async Task AnalyzeVideoUrlAsync()
         {
             string endpoint = TestEnvironment.Endpoint;
@@ -178,10 +248,17 @@ namespace Azure.AI.ContentUnderstanding.Samples
 
             #region Snippet:ContentUnderstandingAnalyzeVideoUrlAsync
             Uri uriSource = new Uri("https://raw.githubusercontent.com/Azure-Samples/azure-ai-content-understanding-assets/main/videos/sdk_samples/FlightSimulator.mp4");
+
             Operation<AnalysisResult> operation = await client.AnalyzeAsync(
                 WaitUntil.Completed,
                 "prebuilt-videoSearch",
-                inputs: new[] { new AnalysisInput { Uri = uriSource } });
+                inputs: new[]
+                {
+                    new AnalysisInput
+                    {
+                        Uri = uriSource
+                    }
+                });
 
             AnalysisResult result = operation.Value;
 
@@ -219,6 +296,218 @@ namespace Azure.AI.ContentUnderstanding.Samples
             Assert.IsTrue(result.Contents.All(c => !string.IsNullOrWhiteSpace(c.Fields["Summary"].Value?.ToString())),
                 "All video segments should include a Summary field.");
             #endregion
+
+        }
+
+        [LiveOnly]
+        [RecordedTest]
+        public async Task AnalyzeVideoUrlWithTimeContentRangesAsync()
+        {
+            string endpoint = TestEnvironment.Endpoint;
+            var options = InstrumentClientOptions(new ContentUnderstandingClientOptions());
+            var client = InstrumentClient(new ContentUnderstandingClient(new Uri(endpoint), TestEnvironment.Credential, options));
+
+            Uri uriSource = new Uri("https://raw.githubusercontent.com/Azure-Samples/azure-ai-content-understanding-assets/main/videos/sdk_samples/FlightSimulator.mp4");
+
+            // Full analysis for comparison
+            Operation<AnalysisResult> fullOperation = await client.AnalyzeAsync(
+                WaitUntil.Completed,
+                "prebuilt-videoSearch",
+                inputs: new[]
+                {
+                    new AnalysisInput
+                    {
+                        Uri = uriSource
+                    }
+                });
+            AnalysisResult fullResult = fullOperation.Value;
+
+            #region Snippet:ContentUnderstandingAnalyzeVideoUrlWithContentRangeAsync
+            // Analyze only the first 5 seconds of the video.
+            Operation<AnalysisResult> rangeOperation = await client.AnalyzeAsync(
+                WaitUntil.Completed,
+                "prebuilt-videoSearch",
+                inputs: new[]
+                {
+                    new AnalysisInput
+                    {
+                        Uri = uriSource,
+                        ContentRange = ContentRange.TimeRange(
+                            TimeSpan.Zero,
+                            TimeSpan.FromSeconds(5))
+                    }
+                });
+
+            AnalysisResult rangeResult = rangeOperation.Value;
+            foreach (AnalysisContent rangeMedia in rangeResult.Contents!)
+            {
+                AudioVisualContent rangeVideoContent = (AudioVisualContent)rangeMedia;
+                Console.WriteLine($"ContentRange segment: {rangeVideoContent.StartTime.TotalMilliseconds} ms - {rangeVideoContent.EndTime.TotalMilliseconds} ms");
+            }
+            #endregion
+
+            #region Assertion:ContentUnderstandingAnalyzeVideoUrlWithContentRangeAsync
+            Assert.IsNotNull(rangeOperation);
+            Assert.IsTrue(rangeOperation.HasCompleted);
+            Assert.IsNotNull(rangeResult);
+            Assert.IsNotNull(rangeResult.Contents);
+            Assert.IsTrue(rangeResult.Contents.Count > 0, "ContentRange video analysis should return segments");
+            Assert.IsTrue(rangeResult.Contents.All(c => c is AudioVisualContent), "ContentRange video analysis should return audio/visual content.");
+
+            // Compare full vs range-limited: full analysis should cover more content
+            var fullSegments = fullResult.Contents!.Cast<AudioVisualContent>().ToList();
+            var rangeSegments = rangeResult.Contents.Cast<AudioVisualContent>().ToList();
+
+            // Segment counts and markdown lengths are not directly comparable due to
+            // service segmentation behavior, so we only verify both return valid content.
+
+            double fullTotalDurationMs = fullSegments.Sum(s => (s.EndTime - s.StartTime).TotalMilliseconds);
+            double rangeTotalDurationMs = rangeSegments.Sum(s => (s.EndTime - s.StartTime).TotalMilliseconds);
+            Assert.IsTrue(fullTotalDurationMs > 0, "Full video duration should be > 0");
+            Assert.IsTrue(rangeTotalDurationMs > 0, "Range video duration should be > 0");
+
+            int fullMarkdownLength = fullSegments.Sum(s => s.Markdown?.Length ?? 0);
+            int rangeMarkdownLength = rangeSegments.Sum(s => s.Markdown?.Length ?? 0);
+            Assert.IsTrue(fullMarkdownLength > 0, "Full video markdown should not be empty");
+            Assert.IsTrue(rangeMarkdownLength > 0, "Range video markdown should not be empty");
+
+            // TODO: Assert exact segment count after re-recording: Assert.AreEqual(N, rangeSegments.Count, "...");
+            Assert.AreEqual(TimeSpan.Zero, rangeSegments.First().StartTime,
+                $"TimeRange(0,5s) first segment should start at exactly 0 ms, actual: {rangeSegments.First().StartTime.TotalMilliseconds} ms");
+            // TODO: Assert exact last segment EndTime after re-recording
+
+            // Verify range segments are well-formed and fall within the requested 0-5s window
+            foreach (var seg in rangeSegments)
+            {
+                Assert.IsTrue(seg.EndTime > seg.StartTime,
+                    $"Range segment should have EndTime > StartTime");
+                Assert.IsTrue(seg.EndTime <= TimeSpan.FromSeconds(5),
+                    $"Range(0-5s) segment EndTime ({seg.EndTime.TotalMilliseconds} ms) should be <= 5000 ms");
+            }
+
+            Console.WriteLine($"Full video: {fullSegments.Count} segment(s), {fullTotalDurationMs} ms, {fullMarkdownLength} chars");
+            Console.WriteLine($"Range video: {rangeSegments.Count} segment(s), {rangeTotalDurationMs} ms, {rangeMarkdownLength} chars");
+            #endregion
+
+            // ContentRange.TimeRangeFrom(10s) — from 10 seconds onward (wire format: "10000-")
+            Operation<AnalysisResult> rangeFromOperation = await client.AnalyzeAsync(
+                WaitUntil.Completed,
+                "prebuilt-videoSearch",
+                inputs: new[]
+                {
+                    new AnalysisInput
+                    {
+                        Uri = uriSource,
+                        ContentRange = ContentRange.TimeRangeFrom(TimeSpan.FromSeconds(10))
+                    }
+                });
+            var rangeFromSegments = rangeFromOperation.Value.Contents!.Cast<AudioVisualContent>().ToList();
+            Assert.IsTrue(rangeFromSegments.Count > 0, "TimeRangeFrom(10s) should return segments");
+            // TODO: Assert exact segment count after re-recording: Assert.AreEqual(N, rangeFromSegments.Count, "...");
+            Assert.AreEqual(TimeSpan.FromSeconds(10), rangeFromSegments.First().StartTime,
+                $"TimeRangeFrom(10s) first segment should start at exactly 10000 ms, actual: {rangeFromSegments.First().StartTime.TotalMilliseconds} ms");
+            Assert.IsTrue(rangeFromSegments.All(s => s.EndTime > s.StartTime),
+                "TimeRangeFrom segments should have EndTime > StartTime");
+            Assert.IsTrue(rangeFromSegments.All(s => !string.IsNullOrEmpty(s.Markdown)),
+                "TimeRangeFrom segments should have markdown");
+            // TODO: Assert exact last segment EndTime after re-recording
+
+            // ContentRange.TimeRange with sub-second precision (wire format: "1200-3651")
+            Operation<AnalysisResult> subSecondOperation = await client.AnalyzeAsync(
+                WaitUntil.Completed,
+                "prebuilt-videoSearch",
+                inputs: new[]
+                {
+                    new AnalysisInput
+                    {
+                        Uri = uriSource,
+                        ContentRange = ContentRange.TimeRange(
+                            TimeSpan.FromMilliseconds(1200),
+                            TimeSpan.FromMilliseconds(3651))
+                    }
+                });
+            var subSecondSegments = subSecondOperation.Value.Contents!.Cast<AudioVisualContent>().ToList();
+            Assert.IsTrue(subSecondSegments.Count > 0, "Sub-second TimeRange should return segments");
+            // TODO: Assert exact segment count after re-recording: Assert.AreEqual(N, subSecondSegments.Count, "...");
+            Assert.AreEqual(TimeSpan.FromMilliseconds(1200), subSecondSegments.First().StartTime,
+                $"TimeRange(1.2s,3.651s) first segment should start at exactly 1200 ms, actual: {subSecondSegments.First().StartTime.TotalMilliseconds} ms");
+            Assert.IsTrue(subSecondSegments.All(s => s.EndTime > s.StartTime),
+                "Sub-second segments should have EndTime > StartTime");
+            Assert.IsTrue(subSecondSegments.All(s => s.EndTime <= TimeSpan.FromMilliseconds(3651)),
+                $"TimeRange(1.2s-3.651s) last segment should end at <= 3651 ms, actual: {subSecondSegments.Max(s => s.EndTime).TotalMilliseconds} ms");
+            // TODO: Assert exact last segment EndTime after re-recording
+
+            // ContentRange.Combine — combined time ranges (wire format: "0-3000,30000-")
+            Operation<AnalysisResult> combineVideoOperation = await client.AnalyzeAsync(
+                WaitUntil.Completed,
+                "prebuilt-videoSearch",
+                inputs: new[]
+                {
+                    new AnalysisInput
+                    {
+                        Uri = uriSource,
+                        ContentRange = ContentRange.Combine(
+                            ContentRange.TimeRange(TimeSpan.Zero, TimeSpan.FromSeconds(3)),
+                            ContentRange.TimeRangeFrom(TimeSpan.FromSeconds(30)))
+                    }
+                });
+            var combineVideoSegments = combineVideoOperation.Value.Contents!.Cast<AudioVisualContent>().ToList();
+            Assert.IsTrue(combineVideoSegments.Count > 0, "Combine time range should return segments");
+            // TODO: Assert exact segment count after re-recording: Assert.AreEqual(N, combineVideoSegments.Count, "...");
+            Assert.AreEqual(TimeSpan.Zero, combineVideoSegments.First().StartTime,
+                $"Combine(0-3s, 30s-) first segment should start at exactly 0 ms, actual: {combineVideoSegments.First().StartTime.TotalMilliseconds} ms");
+            Assert.IsTrue(combineVideoSegments.All(s => s.EndTime > s.StartTime),
+                "Combine segments should have EndTime > StartTime");
+            Assert.IsTrue(combineVideoSegments.All(s => !string.IsNullOrEmpty(s.Markdown)),
+                "Combine segments should have markdown");
+            // Each segment should fall within one of the combined ranges: 0-3s or 30s+
+            Assert.IsTrue(combineVideoSegments.All(s =>
+                    s.EndTime <= TimeSpan.FromSeconds(3) || s.StartTime >= TimeSpan.FromSeconds(30)),
+                "Combine(0-3s, 30s-) segments should fall within one of the combined ranges");
+
+            Console.WriteLine($"TimeRangeFrom(10s): {rangeFromSegments.Count} segment(s)");
+            Console.WriteLine($"TimeRange(1.2s, 3.651s): {subSecondSegments.Count} segment(s)");
+            Console.WriteLine($"Combine(0-3s, 30s-): {combineVideoSegments.Count} segment(s)");
+
+            #region Snippet:ContentUnderstandingAnalyzeVideoUrlWithRawContentRangeAsync
+            // Analyze the first 5 seconds using a raw range string (milliseconds).
+            // This is equivalent to: ContentRange.TimeRange(TimeSpan.Zero, TimeSpan.FromSeconds(5))
+            Operation<AnalysisResult> rawRangeOperation = await client.AnalyzeAsync(
+                WaitUntil.Completed,
+                "prebuilt-videoSearch",
+                inputs: new[]
+                {
+                    new AnalysisInput
+                    {
+                        Uri = uriSource,
+                        ContentRange = new ContentRange("0-5000")
+                    }
+                });
+
+            AnalysisResult rawRangeResult = rawRangeOperation.Value;
+            foreach (AnalysisContent rawMedia in rawRangeResult.Contents!)
+            {
+                AudioVisualContent rawVideoContent = (AudioVisualContent)rawMedia;
+                Console.WriteLine($"Raw ContentRange segment: {rawVideoContent.StartTime.TotalMilliseconds} ms - {rawVideoContent.EndTime.TotalMilliseconds} ms");
+            }
+            #endregion
+
+            #region Assertion:ContentUnderstandingAnalyzeVideoUrlWithRawContentRangeAsync
+            Assert.IsNotNull(rawRangeOperation, "Raw range video operation should not be null");
+            Assert.IsTrue(rawRangeOperation.HasCompleted, "Raw range video operation should be completed");
+            Assert.IsNotNull(rawRangeResult, "Raw range video result should not be null");
+            Assert.IsNotNull(rawRangeResult.Contents, "Raw range video result contents should not be null");
+            Assert.IsTrue(rawRangeResult.Contents.Count > 0, "Raw range video should return segments");
+
+            // The raw string "0-5000" should produce identical results to
+            // ContentRange.TimeRange(TimeSpan.Zero, TimeSpan.FromSeconds(5))
+            var rawVideoSegments = rawRangeResult.Contents.Cast<AudioVisualContent>().ToList();
+            Assert.AreEqual(rangeSegments.Count, rawVideoSegments.Count,
+                $"Raw ContentRange('0-5000') should return same segment count as TimeRange equivalent ({rangeSegments.Count})");
+            Assert.AreEqual(TimeSpan.Zero, rawVideoSegments.First().StartTime,
+                $"Raw ContentRange('0-5000') first segment should start at exactly 0 ms, actual: {rawVideoSegments.First().StartTime.TotalMilliseconds} ms");
+            Console.WriteLine($"Raw ContentRange('0-5000'): {rawVideoSegments.Count} segment(s)");
+            #endregion
         }
 
         [RecordedTest]
@@ -230,10 +519,17 @@ namespace Azure.AI.ContentUnderstanding.Samples
 
             #region Snippet:ContentUnderstandingAnalyzeAudioUrlAsync
             Uri uriSource = new Uri("https://raw.githubusercontent.com/Azure-Samples/azure-ai-content-understanding-assets/main/audio/callCenterRecording.mp3");
+
             Operation<AnalysisResult> operation = await client.AnalyzeAsync(
                 WaitUntil.Completed,
                 "prebuilt-audioSearch",
-                inputs: new[] { new AnalysisInput { Uri = uriSource } });
+                inputs: new[]
+                {
+                    new AnalysisInput
+                    {
+                        Uri = uriSource
+                    }
+                });
 
             AnalysisResult result = operation.Value;
 
@@ -269,6 +565,181 @@ namespace Azure.AI.ContentUnderstanding.Samples
             Assert.IsTrue(result.Contents.All(c => c is AudioVisualContent), "Audio analysis should return audio/visual content.");
             Assert.IsTrue(result.Contents.All(c => !string.IsNullOrWhiteSpace(c.Fields["Summary"].Value?.ToString())),
                 "Audio analysis should include a Summary field.");
+            #endregion
+
+        }
+
+        [LiveOnly]
+        [RecordedTest]
+        public async Task AnalyzeAudioUrlWithTimeContentRangesAsync()
+        {
+            string endpoint = TestEnvironment.Endpoint;
+            var options = InstrumentClientOptions(new ContentUnderstandingClientOptions());
+            var client = InstrumentClient(new ContentUnderstandingClient(new Uri(endpoint), TestEnvironment.Credential, options));
+
+            Uri uriSource = new Uri("https://raw.githubusercontent.com/Azure-Samples/azure-ai-content-understanding-assets/main/audio/callCenterRecording.mp3");
+
+            // Full analysis for comparison
+            Operation<AnalysisResult> fullOperation = await client.AnalyzeAsync(
+                WaitUntil.Completed,
+                "prebuilt-audioSearch",
+                inputs: new[]
+                {
+                    new AnalysisInput
+                    {
+                        Uri = uriSource
+                    }
+                });
+            AudioVisualContent audioContent = (AudioVisualContent)fullOperation.Value.Contents!.First();
+            double fullDurationMs = (audioContent.EndTime - audioContent.StartTime).TotalMilliseconds;
+            Assert.AreEqual(1, fullOperation.Value.Contents!.Count, "Full audio should return exactly 1 content");
+            Assert.AreEqual(TimeSpan.Zero, audioContent.StartTime, "Full audio should start at exactly 0 ms");
+            // TODO: Assert exact full audio EndTime after re-recording
+
+            #region Snippet:ContentUnderstandingAnalyzeAudioUrlWithContentRangeAsync
+            // Analyze audio from 5 seconds onward.
+            Operation<AnalysisResult> rangeOperation = await client.AnalyzeAsync(
+                WaitUntil.Completed,
+                "prebuilt-audioSearch",
+                inputs: new[]
+                {
+                    new AnalysisInput
+                    {
+                        Uri = uriSource,
+                        ContentRange = ContentRange.TimeRangeFrom(
+                            TimeSpan.FromSeconds(5))
+                    }
+                });
+
+            AnalysisResult rangeResult = rangeOperation.Value;
+            AudioVisualContent rangeAudioContent = (AudioVisualContent)rangeResult.Contents!.First();
+            Console.WriteLine($"ContentRange audio analysis: {rangeAudioContent.StartTime.TotalMilliseconds} ms onward");
+            Console.WriteLine($"Summary: {rangeAudioContent.Fields["Summary"].Value}");
+            #endregion
+
+            #region Assertion:ContentUnderstandingAnalyzeAudioUrlWithContentRangeAsync
+            Assert.IsNotNull(rangeOperation);
+            Assert.IsTrue(rangeOperation.HasCompleted);
+            Assert.IsNotNull(rangeResult);
+            Assert.IsNotNull(rangeResult.Contents);
+            Assert.AreEqual(1, rangeResult.Contents.Count, "TimeRangeFrom(5s) audio should return exactly 1 content");
+            Assert.IsInstanceOf<AudioVisualContent>(rangeAudioContent);
+
+            // Verify returned content starts at exactly the requested 5s offset
+            Assert.AreEqual(TimeSpan.FromSeconds(5), rangeAudioContent.StartTime,
+                $"TimeRangeFrom(5s) audio should start at exactly 5000 ms, actual: {rangeAudioContent.StartTime.TotalMilliseconds} ms");
+            // TODO: Assert exact EndTime after re-recording
+
+            Assert.IsTrue(audioContent.Markdown!.Length >= rangeAudioContent.Markdown!.Length,
+                $"Full audio markdown ({audioContent.Markdown.Length} chars) should be >= range-limited ({rangeAudioContent.Markdown.Length} chars)");
+
+            int fullPhraseCount = audioContent.TranscriptPhrases?.Count ?? 0;
+            int rangePhraseCount = rangeAudioContent.TranscriptPhrases?.Count ?? 0;
+            Assert.IsTrue(fullPhraseCount >= rangePhraseCount,
+                $"Full audio ({fullPhraseCount} phrases) should have >= phrases than range-limited ({rangePhraseCount} phrases)");
+
+            double rangeDurationMs = (rangeAudioContent.EndTime - rangeAudioContent.StartTime).TotalMilliseconds;
+            Assert.IsTrue(fullDurationMs >= rangeDurationMs,
+                $"Full audio duration ({fullDurationMs} ms) should be >= range-limited ({rangeDurationMs} ms)");
+
+            Console.WriteLine($"Full audio: {audioContent.Markdown.Length} chars, {fullPhraseCount} phrases, {fullDurationMs} ms");
+            Console.WriteLine($"Range audio: {rangeAudioContent.Markdown.Length} chars, {rangePhraseCount} phrases, {rangeDurationMs} ms, starts at {rangeAudioContent.StartTime}");
+            #endregion
+
+            // ContentRange.TimeRange(2s, 8s) — specific time window (wire format: "2000-8000")
+            Operation<AnalysisResult> audioWindowOperation = await client.AnalyzeAsync(
+                WaitUntil.Completed,
+                "prebuilt-audioSearch",
+                inputs: new[]
+                {
+                    new AnalysisInput
+                    {
+                        Uri = uriSource,
+                        ContentRange = ContentRange.TimeRange(
+                            TimeSpan.FromSeconds(2),
+                            TimeSpan.FromSeconds(8))
+                    }
+                });
+            Assert.AreEqual(1, audioWindowOperation.Value.Contents!.Count, "TimeRange(2s,8s) audio should return exactly 1 content");
+            AudioVisualContent audioWindowContent = (AudioVisualContent)audioWindowOperation.Value.Contents!.First();
+            Assert.IsTrue(audioWindowContent.EndTime > audioWindowContent.StartTime,
+                "TimeRange(2s,8s) should have EndTime > StartTime");
+            Assert.IsNotNull(audioWindowContent.Markdown, "TimeRange(2s,8s) should have markdown");
+            Assert.IsTrue(audioWindowContent.Markdown!.Length > 0, "TimeRange(2s,8s) markdown should not be empty");
+            Assert.AreEqual(TimeSpan.FromSeconds(2), audioWindowContent.StartTime,
+                $"TimeRange(2s,8s) audio should start at exactly 2000 ms, actual: {audioWindowContent.StartTime.TotalMilliseconds} ms");
+            Assert.AreEqual(TimeSpan.FromSeconds(8), audioWindowContent.EndTime,
+                $"TimeRange(2s,8s) audio should end at exactly 8000 ms, actual: {audioWindowContent.EndTime.TotalMilliseconds} ms");
+            Assert.IsTrue(fullDurationMs >= (audioWindowContent.EndTime - audioWindowContent.StartTime).TotalMilliseconds,
+                "Full audio duration should be >= time-windowed duration");
+
+            Console.WriteLine($"TimeRange(2s,8s): {audioWindowContent.Markdown.Length} chars, " +
+                $"{(audioWindowContent.EndTime - audioWindowContent.StartTime).TotalMilliseconds} ms");
+
+            // ContentRange.TimeRange with sub-second precision (wire format: "1200-3651")
+            Operation<AnalysisResult> audioSubSecondOperation = await client.AnalyzeAsync(
+                WaitUntil.Completed,
+                "prebuilt-audioSearch",
+                inputs: new[]
+                {
+                    new AnalysisInput
+                    {
+                        Uri = uriSource,
+                        ContentRange = ContentRange.TimeRange(
+                            TimeSpan.FromMilliseconds(1200),
+                            TimeSpan.FromMilliseconds(3651))
+                    }
+                });
+            Assert.AreEqual(1, audioSubSecondOperation.Value.Contents!.Count, "TimeRange(1.2s,3.651s) audio should return exactly 1 content");
+            AudioVisualContent audioSubSecondContent = (AudioVisualContent)audioSubSecondOperation.Value.Contents!.First();
+            Assert.IsTrue(audioSubSecondContent.EndTime > audioSubSecondContent.StartTime,
+                "TimeRange(1.2s,3.651s) should have EndTime > StartTime");
+            Assert.IsNotNull(audioSubSecondContent.Markdown, "TimeRange(1.2s,3.651s) should have markdown");
+            Assert.IsTrue(audioSubSecondContent.Markdown!.Length > 0, "TimeRange(1.2s,3.651s) markdown should not be empty");
+            Assert.AreEqual(TimeSpan.FromMilliseconds(1200), audioSubSecondContent.StartTime,
+                $"TimeRange(1.2s,3.651s) audio should start at exactly 1200 ms, actual: {audioSubSecondContent.StartTime.TotalMilliseconds} ms");
+            Assert.AreEqual(TimeSpan.FromMilliseconds(3651), audioSubSecondContent.EndTime,
+                $"TimeRange(1.2s,3.651s) audio should end at exactly 3651 ms, actual: {audioSubSecondContent.EndTime.TotalMilliseconds} ms");
+            Assert.IsTrue(fullDurationMs >= (audioSubSecondContent.EndTime - audioSubSecondContent.StartTime).TotalMilliseconds,
+                "Full audio duration should be >= sub-second time-windowed duration");
+
+            Console.WriteLine($"TimeRange(1.2s,3.651s): {audioSubSecondContent.Markdown.Length} chars, " +
+                $"{(audioSubSecondContent.EndTime - audioSubSecondContent.StartTime).TotalMilliseconds} ms");
+
+            #region Snippet:ContentUnderstandingAnalyzeAudioUrlWithRawContentRangeAsync
+            // Analyze audio from 5 seconds onward using a raw range string (milliseconds).
+            // This is equivalent to: ContentRange.TimeRangeFrom(TimeSpan.FromSeconds(5))
+            Operation<AnalysisResult> rawRangeOperation = await client.AnalyzeAsync(
+                WaitUntil.Completed,
+                "prebuilt-audioSearch",
+                inputs: new[]
+                {
+                    new AnalysisInput
+                    {
+                        Uri = uriSource,
+                        ContentRange = new ContentRange("5000-")
+                    }
+                });
+
+            AnalysisResult rawRangeResult = rawRangeOperation.Value;
+            AudioVisualContent rawAudioContent = (AudioVisualContent)rawRangeResult.Contents!.First();
+            Console.WriteLine($"Raw ContentRange audio analysis: {rawAudioContent.StartTime.TotalMilliseconds} ms onward");
+            #endregion
+
+            #region Assertion:ContentUnderstandingAnalyzeAudioUrlWithRawContentRangeAsync
+            Assert.IsNotNull(rawRangeOperation, "Raw range audio operation should not be null");
+            Assert.IsTrue(rawRangeOperation.HasCompleted, "Raw range audio operation should be completed");
+            Assert.IsNotNull(rawRangeResult, "Raw range audio result should not be null");
+            Assert.IsNotNull(rawRangeResult.Contents, "Raw range audio result contents should not be null");
+            Assert.AreEqual(1, rawRangeResult.Contents.Count, "Raw ContentRange('5000-') audio should return exactly 1 content");
+
+            // The raw string "5000-" should produce identical results to
+            // ContentRange.TimeRangeFrom(TimeSpan.FromSeconds(5))
+            Assert.AreEqual(TimeSpan.FromSeconds(5), rawAudioContent.StartTime,
+                $"Raw ContentRange('5000-') audio should start at exactly 5000 ms, actual: {rawAudioContent.StartTime.TotalMilliseconds} ms");
+            Assert.AreEqual(rangeAudioContent.Markdown!.Length, rawAudioContent.Markdown!.Length,
+                $"Raw ContentRange('5000-') should return same markdown length as TimeRangeFrom equivalent ({rangeAudioContent.Markdown.Length})");
+            Console.WriteLine($"Raw ContentRange('5000-'): {rawAudioContent.Markdown.Length} chars, starts at {rawAudioContent.StartTime.TotalMilliseconds} ms");
             #endregion
         }
 

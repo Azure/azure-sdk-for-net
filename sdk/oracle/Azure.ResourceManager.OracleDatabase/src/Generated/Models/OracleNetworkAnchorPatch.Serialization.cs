@@ -64,9 +64,7 @@ namespace Azure.ResourceManager.OracleDatabase.Models
             {
                 return null;
             }
-            Utf8JsonRequestContent content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(oracleNetworkAnchorPatch, ModelSerializationExtensions.WireOptions);
-            return content;
+            return RequestContent.Create(oracleNetworkAnchorPatch, ModelSerializationExtensions.WireOptions);
         }
 
         /// <param name="writer"> The JSON writer. </param>

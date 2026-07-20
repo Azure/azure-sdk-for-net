@@ -6,48 +6,35 @@
 #nullable disable
 
 using System;
-using System.Globalization;
+using System.Diagnostics;
 using System.Threading;
 using System.Threading.Tasks;
+using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
+using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.Network
 {
     /// <summary>
-    /// A Class representing a NetworkManagerRoutingRule along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="NetworkManagerRoutingRuleResource"/>
-    /// from an instance of <see cref="ArmClient"/> using the GetNetworkManagerRoutingRuleResource method.
-    /// Otherwise you can get one from its parent resource <see cref="NetworkManagerRoutingRulesResource"/> using the GetNetworkManagerRoutingRule method.
+    /// A class representing a NetworkManagerRoutingRule along with the instance operations that can be performed on it.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="NetworkManagerRoutingRuleResource"/> from an instance of <see cref="ArmClient"/> using the GetResource method.
+    /// Otherwise you can get one from its parent resource <see cref="NetworkManagerRoutingRulesResource"/> using the GetNetworkManagerRoutingRules method.
     /// </summary>
     public partial class NetworkManagerRoutingRuleResource : ArmResource
     {
-        /// <summary> Generate the resource identifier of a <see cref="NetworkManagerRoutingRuleResource"/> instance. </summary>
-        /// <param name="subscriptionId"> The subscriptionId. </param>
-        /// <param name="resourceGroupName"> The resourceGroupName. </param>
-        /// <param name="networkManagerName"> The networkManagerName. </param>
-        /// <param name="configurationName"> The configurationName. </param>
-        /// <param name="ruleCollectionName"> The ruleCollectionName. </param>
-        /// <param name="ruleName"> The ruleName. </param>
-        public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string networkManagerName, string configurationName, string ruleCollectionName, string ruleName)
-        {
-            var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/networkManagers/{networkManagerName}/routingConfigurations/{configurationName}/ruleCollections/{ruleCollectionName}/rules/{ruleName}";
-            return new ResourceIdentifier(resourceId);
-        }
-
-        private readonly ClientDiagnostics _networkManagerRoutingRuleRoutingRulesClientDiagnostics;
-        private readonly RoutingRulesRestOperations _networkManagerRoutingRuleRoutingRulesRestClient;
+        private readonly ClientDiagnostics _routingRulesClientDiagnostics;
+        private readonly RoutingRules _routingRulesRestClient;
         private readonly NetworkManagerRoutingRuleData _data;
-
         /// <summary> Gets the resource type for the operations. </summary>
         public static readonly ResourceType ResourceType = "Microsoft.Network/networkManagers/routingConfigurations/ruleCollections/rules";
 
-        /// <summary> Initializes a new instance of the <see cref="NetworkManagerRoutingRuleResource"/> class for mocking. </summary>
+        /// <summary> Initializes a new instance of NetworkManagerRoutingRuleResource for mocking. </summary>
         protected NetworkManagerRoutingRuleResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref="NetworkManagerRoutingRuleResource"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="NetworkManagerRoutingRuleResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal NetworkManagerRoutingRuleResource(ArmClient client, NetworkManagerRoutingRuleData data) : this(client, data.Id)
@@ -56,71 +43,95 @@ namespace Azure.ResourceManager.Network
             _data = data;
         }
 
-        /// <summary> Initializes a new instance of the <see cref="NetworkManagerRoutingRuleResource"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="NetworkManagerRoutingRuleResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal NetworkManagerRoutingRuleResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _networkManagerRoutingRuleRoutingRulesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Network", ResourceType.Namespace, Diagnostics);
-            TryGetApiVersion(ResourceType, out string networkManagerRoutingRuleRoutingRulesApiVersion);
-            _networkManagerRoutingRuleRoutingRulesRestClient = new RoutingRulesRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, networkManagerRoutingRuleRoutingRulesApiVersion);
-#if DEBUG
-			ValidateResourceId(Id);
-#endif
+            TryGetApiVersion(ResourceType, out string networkManagerRoutingRuleApiVersion);
+            _routingRulesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Network", ResourceType.Namespace, Diagnostics);
+            _routingRulesRestClient = new RoutingRules(_routingRulesClientDiagnostics, Pipeline, Endpoint, networkManagerRoutingRuleApiVersion ?? "2025-07-01");
+            ValidateResourceId(id);
         }
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }
 
         /// <summary> Gets the data representing this Feature. </summary>
-        /// <exception cref="InvalidOperationException"> Throws if there is no data loaded in the current instance. </exception>
         public virtual NetworkManagerRoutingRuleData Data
         {
             get
             {
                 if (!HasData)
+                {
                     throw new InvalidOperationException("The current instance does not have data, you must call Get first.");
+                }
                 return _data;
             }
         }
 
+        /// <summary> Generate the resource identifier for this resource. </summary>
+        /// <param name="subscriptionId"> The subscriptionId. </param>
+        /// <param name="resourceGroupName"> The resourceGroupName. </param>
+        /// <param name="networkManagerName"> The networkManagerName. </param>
+        /// <param name="configurationName"> The configurationName. </param>
+        /// <param name="ruleCollectionName"> The ruleCollectionName. </param>
+        /// <param name="ruleName"> The ruleName. </param>
+        public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string networkManagerName, string configurationName, string ruleCollectionName, string ruleName)
+        {
+            string resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/networkManagers/{networkManagerName}/routingConfigurations/{configurationName}/ruleCollections/{ruleCollectionName}/rules/{ruleName}";
+            return new ResourceIdentifier(resourceId);
+        }
+
+        /// <param name="id"></param>
+        [Conditional("DEBUG")]
         internal static void ValidateResourceId(ResourceIdentifier id)
         {
             if (id.ResourceType != ResourceType)
-                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), nameof(id));
+            {
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), nameof(id));
+            }
         }
 
         /// <summary>
         /// Gets a network manager routing configuration routing rule.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/networkManagers/{networkManagerName}/routingConfigurations/{configurationName}/ruleCollections/{ruleCollectionName}/rules/{ruleName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/networkManagers/{networkManagerName}/routingConfigurations/{configurationName}/ruleCollections/{ruleCollectionName}/rules/{ruleName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>RoutingRules_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> RoutingRules_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-05-01</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-07-01. </description>
         /// </item>
         /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="NetworkManagerRoutingRuleResource"/></description>
+        /// <term> Resource. </term>
+        /// <description> <see cref="NetworkManagerRoutingRuleResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<Response<NetworkManagerRoutingRuleResource>> GetAsync(CancellationToken cancellationToken = default)
         {
-            using var scope = _networkManagerRoutingRuleRoutingRulesClientDiagnostics.CreateScope("NetworkManagerRoutingRuleResource.Get");
+            using DiagnosticScope scope = _routingRulesClientDiagnostics.CreateScope("NetworkManagerRoutingRuleResource.Get");
             scope.Start();
             try
             {
-                var response = await _networkManagerRoutingRuleRoutingRulesRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _routingRulesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, context);
+                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                Response<NetworkManagerRoutingRuleData> response = Response.FromValue(NetworkManagerRoutingRuleData.FromResponse(result), result);
                 if (response.Value == null)
+                {
                     throw new RequestFailedException(response.GetRawResponse());
+                }
                 return Response.FromValue(new NetworkManagerRoutingRuleResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -134,33 +145,41 @@ namespace Azure.ResourceManager.Network
         /// Gets a network manager routing configuration routing rule.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/networkManagers/{networkManagerName}/routingConfigurations/{configurationName}/ruleCollections/{ruleCollectionName}/rules/{ruleName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/networkManagers/{networkManagerName}/routingConfigurations/{configurationName}/ruleCollections/{ruleCollectionName}/rules/{ruleName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>RoutingRules_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> RoutingRules_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-05-01</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-07-01. </description>
         /// </item>
         /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="NetworkManagerRoutingRuleResource"/></description>
+        /// <term> Resource. </term>
+        /// <description> <see cref="NetworkManagerRoutingRuleResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response<NetworkManagerRoutingRuleResource> Get(CancellationToken cancellationToken = default)
         {
-            using var scope = _networkManagerRoutingRuleRoutingRulesClientDiagnostics.CreateScope("NetworkManagerRoutingRuleResource.Get");
+            using DiagnosticScope scope = _routingRulesClientDiagnostics.CreateScope("NetworkManagerRoutingRuleResource.Get");
             scope.Start();
             try
             {
-                var response = _networkManagerRoutingRuleRoutingRulesRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _routingRulesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, context);
+                Response result = Pipeline.ProcessMessage(message, context);
+                Response<NetworkManagerRoutingRuleData> response = Response.FromValue(NetworkManagerRoutingRuleData.FromResponse(result), result);
                 if (response.Value == null)
+                {
                     throw new RequestFailedException(response.GetRawResponse());
+                }
                 return Response.FromValue(new NetworkManagerRoutingRuleResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -174,36 +193,43 @@ namespace Azure.ResourceManager.Network
         /// Deletes a routing rule.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/networkManagers/{networkManagerName}/routingConfigurations/{configurationName}/ruleCollections/{ruleCollectionName}/rules/{ruleName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/networkManagers/{networkManagerName}/routingConfigurations/{configurationName}/ruleCollections/{ruleCollectionName}/rules/{ruleName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>RoutingRules_Delete</description>
+        /// <term> Operation Id. </term>
+        /// <description> RoutingRules_Delete. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-05-01</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-07-01. </description>
         /// </item>
         /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="NetworkManagerRoutingRuleResource"/></description>
+        /// <term> Resource. </term>
+        /// <description> <see cref="NetworkManagerRoutingRuleResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="force"> Deletes the resource even if it is part of a deployed configuration. If the configuration has been deployed, the service will do a cleanup deployment in the background, prior to the delete. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<ArmOperation> DeleteAsync(WaitUntil waitUntil, bool? force = null, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation> DeleteAsync(WaitUntil waitUntil, bool? force = default, CancellationToken cancellationToken = default)
         {
-            using var scope = _networkManagerRoutingRuleRoutingRulesClientDiagnostics.CreateScope("NetworkManagerRoutingRuleResource.Delete");
+            using DiagnosticScope scope = _routingRulesClientDiagnostics.CreateScope("NetworkManagerRoutingRuleResource.Delete");
             scope.Start();
             try
             {
-                var response = await _networkManagerRoutingRuleRoutingRulesRestClient.DeleteAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, force, cancellationToken).ConfigureAwait(false);
-                var operation = new NetworkArmOperation(_networkManagerRoutingRuleRoutingRulesClientDiagnostics, Pipeline, _networkManagerRoutingRuleRoutingRulesRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, force).Request, response, OperationFinalStateVia.Location);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _routingRulesRestClient.CreateDeleteRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, force, context);
+                Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                NetworkArmOperation operation = new NetworkArmOperation(_routingRulesClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
+                {
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
+                }
                 return operation;
             }
             catch (Exception e)
@@ -217,36 +243,43 @@ namespace Azure.ResourceManager.Network
         /// Deletes a routing rule.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/networkManagers/{networkManagerName}/routingConfigurations/{configurationName}/ruleCollections/{ruleCollectionName}/rules/{ruleName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/networkManagers/{networkManagerName}/routingConfigurations/{configurationName}/ruleCollections/{ruleCollectionName}/rules/{ruleName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>RoutingRules_Delete</description>
+        /// <term> Operation Id. </term>
+        /// <description> RoutingRules_Delete. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-05-01</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-07-01. </description>
         /// </item>
         /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="NetworkManagerRoutingRuleResource"/></description>
+        /// <term> Resource. </term>
+        /// <description> <see cref="NetworkManagerRoutingRuleResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="force"> Deletes the resource even if it is part of a deployed configuration. If the configuration has been deployed, the service will do a cleanup deployment in the background, prior to the delete. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual ArmOperation Delete(WaitUntil waitUntil, bool? force = null, CancellationToken cancellationToken = default)
+        public virtual ArmOperation Delete(WaitUntil waitUntil, bool? force = default, CancellationToken cancellationToken = default)
         {
-            using var scope = _networkManagerRoutingRuleRoutingRulesClientDiagnostics.CreateScope("NetworkManagerRoutingRuleResource.Delete");
+            using DiagnosticScope scope = _routingRulesClientDiagnostics.CreateScope("NetworkManagerRoutingRuleResource.Delete");
             scope.Start();
             try
             {
-                var response = _networkManagerRoutingRuleRoutingRulesRestClient.Delete(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, force, cancellationToken);
-                var operation = new NetworkArmOperation(_networkManagerRoutingRuleRoutingRulesClientDiagnostics, Pipeline, _networkManagerRoutingRuleRoutingRulesRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, force).Request, response, OperationFinalStateVia.Location);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _routingRulesRestClient.CreateDeleteRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, force, context);
+                Response response = Pipeline.ProcessMessage(message, context);
+                NetworkArmOperation operation = new NetworkArmOperation(_routingRulesClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
+                {
                     operation.WaitForCompletionResponse(cancellationToken);
+                }
                 return operation;
             }
             catch (Exception e)
@@ -257,23 +290,23 @@ namespace Azure.ResourceManager.Network
         }
 
         /// <summary>
-        /// Creates or updates an routing rule.
+        /// Update a NetworkManagerRoutingRule.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/networkManagers/{networkManagerName}/routingConfigurations/{configurationName}/ruleCollections/{ruleCollectionName}/rules/{ruleName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/networkManagers/{networkManagerName}/routingConfigurations/{configurationName}/ruleCollections/{ruleCollectionName}/rules/{ruleName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>RoutingRules_CreateOrUpdate</description>
+        /// <term> Operation Id. </term>
+        /// <description> RoutingRules_CreateOrUpdate. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-05-01</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-07-01. </description>
         /// </item>
         /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="NetworkManagerRoutingRuleResource"/></description>
+        /// <term> Resource. </term>
+        /// <description> <see cref="NetworkManagerRoutingRuleResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -285,16 +318,24 @@ namespace Azure.ResourceManager.Network
         {
             Argument.AssertNotNull(data, nameof(data));
 
-            using var scope = _networkManagerRoutingRuleRoutingRulesClientDiagnostics.CreateScope("NetworkManagerRoutingRuleResource.Update");
+            using DiagnosticScope scope = _routingRulesClientDiagnostics.CreateScope("NetworkManagerRoutingRuleResource.Update");
             scope.Start();
             try
             {
-                var response = await _networkManagerRoutingRuleRoutingRulesRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, data, cancellationToken).ConfigureAwait(false);
-                var uri = _networkManagerRoutingRuleRoutingRulesRestClient.CreateCreateOrUpdateRequestUri(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, data);
-                var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
-                var operation = new NetworkArmOperation<NetworkManagerRoutingRuleResource>(Response.FromValue(new NetworkManagerRoutingRuleResource(Client, response), response.GetRawResponse()), rehydrationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _routingRulesRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, NetworkManagerRoutingRuleData.ToRequestContent(data), context);
+                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                Response<NetworkManagerRoutingRuleData> response = Response.FromValue(NetworkManagerRoutingRuleData.FromResponse(result), result);
+                RequestUriBuilder uri = message.Request.Uri;
+                RehydrationToken rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
+                NetworkArmOperation<NetworkManagerRoutingRuleResource> operation = new NetworkArmOperation<NetworkManagerRoutingRuleResource>(Response.FromValue(new NetworkManagerRoutingRuleResource(Client, response.Value), response.GetRawResponse()), rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
+                {
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
+                }
                 return operation;
             }
             catch (Exception e)
@@ -305,23 +346,23 @@ namespace Azure.ResourceManager.Network
         }
 
         /// <summary>
-        /// Creates or updates an routing rule.
+        /// Update a NetworkManagerRoutingRule.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/networkManagers/{networkManagerName}/routingConfigurations/{configurationName}/ruleCollections/{ruleCollectionName}/rules/{ruleName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/networkManagers/{networkManagerName}/routingConfigurations/{configurationName}/ruleCollections/{ruleCollectionName}/rules/{ruleName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>RoutingRules_CreateOrUpdate</description>
+        /// <term> Operation Id. </term>
+        /// <description> RoutingRules_CreateOrUpdate. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-05-01</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-07-01. </description>
         /// </item>
         /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="NetworkManagerRoutingRuleResource"/></description>
+        /// <term> Resource. </term>
+        /// <description> <see cref="NetworkManagerRoutingRuleResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -333,16 +374,24 @@ namespace Azure.ResourceManager.Network
         {
             Argument.AssertNotNull(data, nameof(data));
 
-            using var scope = _networkManagerRoutingRuleRoutingRulesClientDiagnostics.CreateScope("NetworkManagerRoutingRuleResource.Update");
+            using DiagnosticScope scope = _routingRulesClientDiagnostics.CreateScope("NetworkManagerRoutingRuleResource.Update");
             scope.Start();
             try
             {
-                var response = _networkManagerRoutingRuleRoutingRulesRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, data, cancellationToken);
-                var uri = _networkManagerRoutingRuleRoutingRulesRestClient.CreateCreateOrUpdateRequestUri(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, data);
-                var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
-                var operation = new NetworkArmOperation<NetworkManagerRoutingRuleResource>(Response.FromValue(new NetworkManagerRoutingRuleResource(Client, response), response.GetRawResponse()), rehydrationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _routingRulesRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, NetworkManagerRoutingRuleData.ToRequestContent(data), context);
+                Response result = Pipeline.ProcessMessage(message, context);
+                Response<NetworkManagerRoutingRuleData> response = Response.FromValue(NetworkManagerRoutingRuleData.FromResponse(result), result);
+                RequestUriBuilder uri = message.Request.Uri;
+                RehydrationToken rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
+                NetworkArmOperation<NetworkManagerRoutingRuleResource> operation = new NetworkArmOperation<NetworkManagerRoutingRuleResource>(Response.FromValue(new NetworkManagerRoutingRuleResource(Client, response.Value), response.GetRawResponse()), rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
+                {
                     operation.WaitForCompletion(cancellationToken);
+                }
                 return operation;
             }
             catch (Exception e)

@@ -101,5 +101,21 @@ namespace Azure.AI.Agents.Persistent
                 ((IPersistableModel<MCPApprovalPerTool>)new MCPApprovalPerTool()).Create(data, s_options)
             );
         }
+
+        internal static MCPApproval DeserializeMCPApproval(JsonElement element, ModelReaderWriterOptions options)
+        {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
+            if (element.ValueKind == JsonValueKind.String)
+            {
+                string value = element.GetString();
+                return new MCPApproval(value);
+            }
+            // It's an object representing MCPApprovalPerTool
+            var perTool = MCPApprovalPerTool.DeserializeMCPApprovalPerTool(element, options);
+            return new MCPApproval(perTool);
+        }
     }
 }

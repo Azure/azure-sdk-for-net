@@ -76,7 +76,7 @@ namespace OpenAI
                 throw new FormatException($"The model {nameof(InternalComparisonFilter)} does not support writing '{format}' format.");
             }
             writer.WritePropertyName("type"u8);
-            writer.WriteStringValue(Type.ToString());
+            writer.WriteStringValue(Type.ToSerialString());
             writer.WritePropertyName("key"u8);
             writer.WriteStringValue(Key);
             writer.WritePropertyName("value"u8);
@@ -130,7 +130,7 @@ namespace OpenAI
             {
                 return null;
             }
-            ComparisonFilterType @type = default;
+            FileSearchToolFiltersType @type = default;
             string key = default;
             BinaryData value = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
@@ -138,7 +138,7 @@ namespace OpenAI
             {
                 if (prop.NameEquals("type"u8))
                 {
-                    @type = new ComparisonFilterType(prop.Value.GetString());
+                    @type = prop.Value.GetString().ToFileSearchToolFiltersType();
                     continue;
                 }
                 if (prop.NameEquals("key"u8))

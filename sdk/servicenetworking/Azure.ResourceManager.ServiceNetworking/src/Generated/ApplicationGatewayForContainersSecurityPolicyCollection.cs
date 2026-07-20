@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.ServiceNetworking
         {
             if (id.ResourceType != TrafficControllerResource.ResourceType)
             {
-                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, TrafficControllerResource.ResourceType), id);
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, TrafficControllerResource.ResourceType), nameof(id));
             }
         }
 
@@ -93,7 +93,7 @@ namespace Azure.ResourceManager.ServiceNetworking
                 HttpMessage message = _securityPoliciesInterfaceRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, securityPolicyName, ApplicationGatewayForContainersSecurityPolicyData.ToRequestContent(data), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 ServiceNetworkingArmOperation<ApplicationGatewayForContainersSecurityPolicyResource> operation = new ServiceNetworkingArmOperation<ApplicationGatewayForContainersSecurityPolicyResource>(
-                    new ApplicationGatewayForContainersSecurityPolicyOperationSource(Client),
+                    new ApplicationGatewayForContainersSecurityPolicyResourceOperationSource(Client),
                     _securityPoliciesInterfaceClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -151,7 +151,7 @@ namespace Azure.ResourceManager.ServiceNetworking
                 HttpMessage message = _securityPoliciesInterfaceRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, securityPolicyName, ApplicationGatewayForContainersSecurityPolicyData.ToRequestContent(data), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 ServiceNetworkingArmOperation<ApplicationGatewayForContainersSecurityPolicyResource> operation = new ServiceNetworkingArmOperation<ApplicationGatewayForContainersSecurityPolicyResource>(
-                    new ApplicationGatewayForContainersSecurityPolicyOperationSource(Client),
+                    new ApplicationGatewayForContainersSecurityPolicyResourceOperationSource(Client),
                     _securityPoliciesInterfaceClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -293,7 +293,13 @@ namespace Azure.ResourceManager.ServiceNetworking
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<ApplicationGatewayForContainersSecurityPolicyData, ApplicationGatewayForContainersSecurityPolicyResource>(new SecurityPoliciesInterfaceGetByTrafficControllerAsyncCollectionResultOfT(_securityPoliciesInterfaceRestClient, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, context), data => new ApplicationGatewayForContainersSecurityPolicyResource(Client, data));
+            return new AsyncPageableWrapper<ApplicationGatewayForContainersSecurityPolicyData, ApplicationGatewayForContainersSecurityPolicyResource>(new SecurityPoliciesInterfaceGetByTrafficControllerAsyncCollectionResultOfT(
+                _securityPoliciesInterfaceRestClient,
+                Id.SubscriptionId,
+                Id.ResourceGroupName,
+                Id.Name,
+                context,
+                "ApplicationGatewayForContainersSecurityPolicyCollection.GetAll"), data => new ApplicationGatewayForContainersSecurityPolicyResource(Client, data));
         }
 
         /// <summary>
@@ -321,7 +327,13 @@ namespace Azure.ResourceManager.ServiceNetworking
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<ApplicationGatewayForContainersSecurityPolicyData, ApplicationGatewayForContainersSecurityPolicyResource>(new SecurityPoliciesInterfaceGetByTrafficControllerCollectionResultOfT(_securityPoliciesInterfaceRestClient, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, context), data => new ApplicationGatewayForContainersSecurityPolicyResource(Client, data));
+            return new PageableWrapper<ApplicationGatewayForContainersSecurityPolicyData, ApplicationGatewayForContainersSecurityPolicyResource>(new SecurityPoliciesInterfaceGetByTrafficControllerCollectionResultOfT(
+                _securityPoliciesInterfaceRestClient,
+                Id.SubscriptionId,
+                Id.ResourceGroupName,
+                Id.Name,
+                context,
+                "ApplicationGatewayForContainersSecurityPolicyCollection.GetAll"), data => new ApplicationGatewayForContainersSecurityPolicyResource(Client, data));
         }
 
         /// <summary>

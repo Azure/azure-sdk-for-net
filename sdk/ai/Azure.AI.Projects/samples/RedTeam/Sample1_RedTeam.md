@@ -12,11 +12,11 @@ In this example we will demonstrate how to create and get the Red team model sca
 
 ```C# Snippet:Sample_CreateClient_RedTeam
 // Sample : https://<account_name>.services.ai.azure.com/api/projects/<project_name>
-var projectEndpoint = System.Environment.GetEnvironmentVariable("PROJECT_ENDPOINT");
+var projectEndpoint = System.Environment.GetEnvironmentVariable("FOUNDRY_PROJECT_ENDPOINT");
 // Sample : https://<account_name>.services.ai.azure.com
 var modelEndpoint = System.Environment.GetEnvironmentVariable("MODEL_ENDPOINT");
 var modelApiKey = System.Environment.GetEnvironmentVariable("MODEL_API_KEY");
-var modelDeploymentName = System.Environment.GetEnvironmentVariable("MODEL_DEPLOYMENT_NAME");
+var modelDeploymentName = System.Environment.GetEnvironmentVariable("FOUNDRY_MODEL_NAME");
 AIProjectClient projectClient = new(endpoint: new Uri(projectEndpoint), tokenProvider: new DefaultAzureCredential());
 ```
 

@@ -1,14 +1,14 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using System.Collections.Generic;
+using System.Threading;
+using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Core.TestFramework;
 using Azure.ResourceManager.NetworkCloud.Models;
 using Azure.ResourceManager.Resources;
 using NUnit.Framework;
-using System.Collections.Generic;
-using System.Threading;
-using System.Threading.Tasks;
 
 namespace Azure.ResourceManager.NetworkCloud.Tests.ScenarioTests
 {
@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.NetworkCloud.Tests.ScenarioTests
                     ["key1"] = "myvalue1",
                 },
             };
-            ArmOperation<NetworkCloudBmcKeySetResource> createResult = await collection.CreateOrUpdateAsync(WaitUntil.Completed, bmcKeySetName, data);
+            ArmOperation<NetworkCloudBmcKeySetResource> createResult = await collection.CreateOrUpdateAsync(WaitUntil.Completed, bmcKeySetName, data, matchConditions: null);
             Assert.AreEqual(bmcKeySetName, createResult.Value.Data.Name);
 
             // Get
@@ -76,7 +76,7 @@ namespace Azure.ResourceManager.NetworkCloud.Tests.ScenarioTests
                     ["key2"] = "myvalue2",
                 },
             };
-            ArmOperation<NetworkCloudBmcKeySetResource> updateResult = await bmcKeySet.UpdateAsync(WaitUntil.Completed, patch);
+            ArmOperation<NetworkCloudBmcKeySetResource> updateResult = await bmcKeySet.UpdateAsync(WaitUntil.Completed, patch, matchConditions: null);
             Assert.AreEqual(patch.Tags, updateResult.Value.Data.Tags);
 
             // Delete

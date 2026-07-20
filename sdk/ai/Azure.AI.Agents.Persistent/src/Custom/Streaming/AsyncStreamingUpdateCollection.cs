@@ -5,6 +5,7 @@ using System;
 using System.ClientModel;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Net.ServerSentEvents;
 using System.Text.Json;
@@ -248,12 +249,16 @@ internal class AsyncStreamingUpdateCollection : AsyncCollectionResult<StreamingU
 
         private IAsyncEnumerator<SseItem<byte[]>> CreateEventEnumeratorAsync()
         {
-            if (_response.ContentStream is null)
+            // Fall back to Content when ContentStream is null (common in playback tests
+            // where the test framework populates Content but not ContentStream).
+            Stream? contentStream = _response.ContentStream ?? _response.Content?.ToStream();
+
+            if (contentStream is null)
             {
                 throw new InvalidOperationException("Unable to create result from response with null ContentStream");
             }
 
-            IAsyncEnumerable<SseItem<byte[]>> enumerable = SseParser.Create(_response.ContentStream, (_, bytes) => bytes.ToArray()).EnumerateAsync();
+            IAsyncEnumerable<SseItem<byte[]>> enumerable = SseParser.Create(contentStream, (_, bytes) => bytes.ToArray()).EnumerateAsync();
             return enumerable.GetAsyncEnumerator(_cancellationToken);
         }
 

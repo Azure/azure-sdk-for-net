@@ -7,7 +7,6 @@
 
 using System;
 using System.ClientModel.Primitives;
-using System.Collections.Generic;
 using System.IO;
 using System.Xml;
 using System.Xml.Linq;
@@ -97,7 +96,7 @@ namespace BasicTypeSpec
 
         /// <param name="writer"> The XML writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual void XmlModelWriteCore(XmlWriter writer, ModelReaderWriterOptions options)
+        internal virtual void XmlModelWriteCore(XmlWriter writer, ModelReaderWriterOptions options)
         {
             string format = options.Format == "W" ? ((IPersistableModel<XmlModelWithNamespace>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "X")
@@ -120,7 +119,6 @@ namespace BasicTypeSpec
             }
 
             string foo = default;
-            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
 
             foreach (var child in element.Elements())
             {
@@ -131,7 +129,7 @@ namespace BasicTypeSpec
                     continue;
                 }
             }
-            return new XmlModelWithNamespace(foo, additionalBinaryDataProperties);
+            return new XmlModelWithNamespace(foo);
         }
 
         /// <param name="writer"> The XML writer. </param>

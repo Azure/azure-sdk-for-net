@@ -15,9 +15,9 @@ namespace Azure.Search.Documents.Indexes.Models
     public readonly partial struct SearchIndexPermissionFilterOption : IEquatable<SearchIndexPermissionFilterOption>
     {
         private readonly string _value;
-        /// <summary> enabled. </summary>
+        /// <summary> Permission filtering is enabled for the index. </summary>
         private const string EnabledValue = "enabled";
-        /// <summary> disabled. </summary>
+        /// <summary> Permission filtering is disabled for the index. </summary>
         private const string DisabledValue = "disabled";
 
         /// <summary> Initializes a new instance of <see cref="SearchIndexPermissionFilterOption"/>. </summary>
@@ -30,10 +30,10 @@ namespace Azure.Search.Documents.Indexes.Models
             _value = value;
         }
 
-        /// <summary> enabled. </summary>
+        /// <summary> Permission filtering is enabled for the index. </summary>
         public static SearchIndexPermissionFilterOption Enabled { get; } = new SearchIndexPermissionFilterOption(EnabledValue);
 
-        /// <summary> disabled. </summary>
+        /// <summary> Permission filtering is disabled for the index. </summary>
         public static SearchIndexPermissionFilterOption Disabled { get; } = new SearchIndexPermissionFilterOption(DisabledValue);
 
         /// <summary> Determines if two <see cref="SearchIndexPermissionFilterOption"/> values are the same. </summary>

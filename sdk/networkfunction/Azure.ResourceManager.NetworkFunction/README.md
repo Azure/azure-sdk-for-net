@@ -19,7 +19,7 @@ This library follows the [new Azure SDK guidelines](https://azure.github.io/azur
 Install the Microsoft Azure Network Function management library for .NET with [NuGet](https://www.nuget.org/):
 
 ```dotnetcli
-dotnet add package Azure.ResourceManager.NetworkFunction --prerelease
+dotnet add package Azure.ResourceManager.NetworkFunction
 ```
 
 ### Prerequisites

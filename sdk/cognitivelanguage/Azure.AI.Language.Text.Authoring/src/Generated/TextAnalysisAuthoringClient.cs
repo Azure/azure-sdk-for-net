@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Diagnostics.CodeAnalysis;
 using System.Threading;
 using Azure;
 using Azure.Core;
@@ -17,11 +18,7 @@ namespace Azure.AI.Language.Text.Authoring
     public partial class TextAnalysisAuthoringClient
     {
         private readonly Uri _endpoint;
-        /// <summary> A credential used to authenticate to the service. </summary>
-        private readonly AzureKeyCredential _keyCredential;
         private const string AuthorizationHeader = "Ocp-Apim-Subscription-Key";
-        /// <summary> A credential used to authenticate to the service. </summary>
-        private readonly TokenCredential _tokenCredential;
         private static readonly string[] AuthorizationScopes = new string[] { "https://cognitiveservices.azure.com/.default" };
 
         /// <summary> Initializes a new instance of TextAnalysisAuthoringClient for mocking. </summary>
@@ -46,21 +43,41 @@ namespace Azure.AI.Language.Text.Authoring
         }
 
         /// <summary> Initializes a new instance of TextAnalysisAuthoringClient. </summary>
+        /// <param name="authenticationPolicy"> The authentication policy to use for pipeline creation. </param>
         /// <param name="endpoint"> Service endpoint. </param>
-        /// <param name="credential"> A credential used to authenticate to the service. </param>
         /// <param name="options"> The options for configuring the client. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="endpoint"/> or <paramref name="credential"/> is null. </exception>
-        public TextAnalysisAuthoringClient(Uri endpoint, TokenCredential credential, TextAnalysisAuthoringClientOptions options)
+        internal TextAnalysisAuthoringClient(HttpPipelinePolicy authenticationPolicy, Uri endpoint, TextAnalysisAuthoringClientOptions options)
         {
             Argument.AssertNotNull(endpoint, nameof(endpoint));
-            Argument.AssertNotNull(credential, nameof(credential));
 
             options ??= new TextAnalysisAuthoringClientOptions();
 
             _endpoint = endpoint;
-            _tokenCredential = credential;
-            Pipeline = HttpPipelineBuilder.Build(options, new HttpPipelinePolicy[] { new BearerTokenAuthenticationPolicy(_tokenCredential, AuthorizationScopes) });
+            if (authenticationPolicy != null)
+            {
+                Pipeline = HttpPipelineBuilder.Build(options, new HttpPipelinePolicy[] { authenticationPolicy });
+            }
+            else
+            {
+                Pipeline = HttpPipelineBuilder.Build(options, Array.Empty<HttpPipelinePolicy>());
+            }
             ClientDiagnostics = new ClientDiagnostics(options, true);
+        }
+
+        /// <summary> Initializes a new instance of TextAnalysisAuthoringClient. </summary>
+        /// <param name="endpoint"> Service endpoint. </param>
+        /// <param name="credential"> A credential used to authenticate to the service. </param>
+        /// <param name="options"> The options for configuring the client. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="endpoint"/> or <paramref name="credential"/> is null. </exception>
+        public TextAnalysisAuthoringClient(Uri endpoint, TokenCredential credential, TextAnalysisAuthoringClientOptions options) : this(new BearerTokenAuthenticationPolicy(credential, AuthorizationScopes), endpoint, options)
+        {
+        }
+
+        /// <summary> Initializes a new instance of TextAnalysisAuthoringClient from a <see cref="TextAnalysisAuthoringClientSettings"/>. </summary>
+        /// <param name="settings"> The settings for TextAnalysisAuthoringClient. </param>
+        [Experimental("SCME0002")]
+        public TextAnalysisAuthoringClient(TextAnalysisAuthoringClientSettings settings) : this(settings?.Endpoint, settings?.CredentialProvider as TokenCredential, settings?.Options)
+        {
         }
 
         /// <summary> The HTTP pipeline for sending and receiving REST requests and responses. </summary>
@@ -85,7 +102,13 @@ namespace Azure.AI.Language.Text.Authoring
         /// <returns> The response returned from the service. </returns>
         public virtual Pageable<BinaryData> GetProjects(int? maxCount, int? skip, int? maxPageSize, RequestContext context)
         {
-            return new TextAnalysisAuthoringClientGetProjectsCollectionResult(this, maxCount, skip, maxPageSize, context);
+            return new TextAnalysisAuthoringClientGetProjectsCollectionResult(
+                this,
+                maxCount,
+                skip,
+                maxPageSize,
+                context,
+                "TextAnalysisAuthoringClient.GetProjects");
         }
 
         /// <summary>
@@ -104,7 +127,13 @@ namespace Azure.AI.Language.Text.Authoring
         /// <returns> The response returned from the service. </returns>
         public virtual AsyncPageable<BinaryData> GetProjectsAsync(int? maxCount, int? skip, int? maxPageSize, RequestContext context)
         {
-            return new TextAnalysisAuthoringClientGetProjectsAsyncCollectionResult(this, maxCount, skip, maxPageSize, context);
+            return new TextAnalysisAuthoringClientGetProjectsAsyncCollectionResult(
+                this,
+                maxCount,
+                skip,
+                maxPageSize,
+                context,
+                "TextAnalysisAuthoringClient.GetProjects");
         }
 
         /// <summary> Lists the existing projects. </summary>
@@ -115,7 +144,13 @@ namespace Azure.AI.Language.Text.Authoring
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         public virtual Pageable<TextAuthoringProjectMetadata> GetProjects(int? maxCount = default, int? skip = default, int? maxPageSize = default, CancellationToken cancellationToken = default)
         {
-            return new TextAnalysisAuthoringClientGetProjectsCollectionResultOfT(this, maxCount, skip, maxPageSize, cancellationToken.ToRequestContext());
+            return new TextAnalysisAuthoringClientGetProjectsCollectionResultOfT(
+                this,
+                maxCount,
+                skip,
+                maxPageSize,
+                cancellationToken.ToRequestContext(),
+                "TextAnalysisAuthoringClient.GetProjects");
         }
 
         /// <summary> Lists the existing projects. </summary>
@@ -126,7 +161,13 @@ namespace Azure.AI.Language.Text.Authoring
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         public virtual AsyncPageable<TextAuthoringProjectMetadata> GetProjectsAsync(int? maxCount = default, int? skip = default, int? maxPageSize = default, CancellationToken cancellationToken = default)
         {
-            return new TextAnalysisAuthoringClientGetProjectsAsyncCollectionResultOfT(this, maxCount, skip, maxPageSize, cancellationToken.ToRequestContext());
+            return new TextAnalysisAuthoringClientGetProjectsAsyncCollectionResultOfT(
+                this,
+                maxCount,
+                skip,
+                maxPageSize,
+                cancellationToken.ToRequestContext(),
+                "TextAnalysisAuthoringClient.GetProjects");
         }
 
         /// <summary>
@@ -156,7 +197,8 @@ namespace Azure.AI.Language.Text.Authoring
                 maxCount,
                 skip,
                 maxPageSize,
-                context);
+                context,
+                "TextAnalysisAuthoringClient.GetDeployments");
         }
 
         /// <summary>
@@ -186,7 +228,8 @@ namespace Azure.AI.Language.Text.Authoring
                 maxCount,
                 skip,
                 maxPageSize,
-                context);
+                context,
+                "TextAnalysisAuthoringClient.GetDeployments");
         }
 
         /// <summary> Lists the deployments belonging to a project. </summary>
@@ -208,7 +251,8 @@ namespace Azure.AI.Language.Text.Authoring
                 maxCount,
                 skip,
                 maxPageSize,
-                cancellationToken.ToRequestContext());
+                cancellationToken.ToRequestContext(),
+                "TextAnalysisAuthoringClient.GetDeployments");
         }
 
         /// <summary> Lists the deployments belonging to a project. </summary>
@@ -230,7 +274,8 @@ namespace Azure.AI.Language.Text.Authoring
                 maxCount,
                 skip,
                 maxPageSize,
-                cancellationToken.ToRequestContext());
+                cancellationToken.ToRequestContext(),
+                "TextAnalysisAuthoringClient.GetDeployments");
         }
 
         /// <summary>
@@ -260,7 +305,8 @@ namespace Azure.AI.Language.Text.Authoring
                 maxCount,
                 skip,
                 maxPageSize,
-                context);
+                context,
+                "TextAnalysisAuthoringClient.GetExportedModels");
         }
 
         /// <summary>
@@ -290,7 +336,8 @@ namespace Azure.AI.Language.Text.Authoring
                 maxCount,
                 skip,
                 maxPageSize,
-                context);
+                context,
+                "TextAnalysisAuthoringClient.GetExportedModels");
         }
 
         /// <summary> Lists the exported models belonging to a project. </summary>
@@ -312,7 +359,8 @@ namespace Azure.AI.Language.Text.Authoring
                 maxCount,
                 skip,
                 maxPageSize,
-                cancellationToken.ToRequestContext());
+                cancellationToken.ToRequestContext(),
+                "TextAnalysisAuthoringClient.GetExportedModels");
         }
 
         /// <summary> Lists the exported models belonging to a project. </summary>
@@ -334,7 +382,8 @@ namespace Azure.AI.Language.Text.Authoring
                 maxCount,
                 skip,
                 maxPageSize,
-                cancellationToken.ToRequestContext());
+                cancellationToken.ToRequestContext(),
+                "TextAnalysisAuthoringClient.GetExportedModels");
         }
 
         /// <summary>
@@ -364,7 +413,8 @@ namespace Azure.AI.Language.Text.Authoring
                 maxCount,
                 skip,
                 maxPageSize,
-                context);
+                context,
+                "TextAnalysisAuthoringClient.GetTrainedModels");
         }
 
         /// <summary>
@@ -394,7 +444,8 @@ namespace Azure.AI.Language.Text.Authoring
                 maxCount,
                 skip,
                 maxPageSize,
-                context);
+                context,
+                "TextAnalysisAuthoringClient.GetTrainedModels");
         }
 
         /// <summary> Lists the trained models belonging to a project. </summary>
@@ -416,7 +467,8 @@ namespace Azure.AI.Language.Text.Authoring
                 maxCount,
                 skip,
                 maxPageSize,
-                cancellationToken.ToRequestContext());
+                cancellationToken.ToRequestContext(),
+                "TextAnalysisAuthoringClient.GetTrainedModels");
         }
 
         /// <summary> Lists the trained models belonging to a project. </summary>
@@ -438,7 +490,8 @@ namespace Azure.AI.Language.Text.Authoring
                 maxCount,
                 skip,
                 maxPageSize,
-                cancellationToken.ToRequestContext());
+                cancellationToken.ToRequestContext(),
+                "TextAnalysisAuthoringClient.GetTrainedModels");
         }
 
         /// <summary>
@@ -468,7 +521,8 @@ namespace Azure.AI.Language.Text.Authoring
                 maxCount,
                 skip,
                 maxPageSize,
-                context);
+                context,
+                "TextAnalysisAuthoringClient.GetDeploymentResources");
         }
 
         /// <summary>
@@ -498,7 +552,8 @@ namespace Azure.AI.Language.Text.Authoring
                 maxCount,
                 skip,
                 maxPageSize,
-                context);
+                context,
+                "TextAnalysisAuthoringClient.GetDeploymentResources");
         }
 
         /// <summary> Lists the deployments resources assigned to the project. </summary>
@@ -520,7 +575,8 @@ namespace Azure.AI.Language.Text.Authoring
                 maxCount,
                 skip,
                 maxPageSize,
-                cancellationToken.ToRequestContext());
+                cancellationToken.ToRequestContext(),
+                "TextAnalysisAuthoringClient.GetDeploymentResources");
         }
 
         /// <summary> Lists the deployments resources assigned to the project. </summary>
@@ -542,7 +598,8 @@ namespace Azure.AI.Language.Text.Authoring
                 maxCount,
                 skip,
                 maxPageSize,
-                cancellationToken.ToRequestContext());
+                cancellationToken.ToRequestContext(),
+                "TextAnalysisAuthoringClient.GetDeploymentResources");
         }
 
         /// <summary>
@@ -572,7 +629,8 @@ namespace Azure.AI.Language.Text.Authoring
                 maxCount,
                 skip,
                 maxPageSize,
-                context);
+                context,
+                "TextAnalysisAuthoringClient.GetTrainingJobs");
         }
 
         /// <summary>
@@ -602,7 +660,8 @@ namespace Azure.AI.Language.Text.Authoring
                 maxCount,
                 skip,
                 maxPageSize,
-                context);
+                context,
+                "TextAnalysisAuthoringClient.GetTrainingJobs");
         }
 
         /// <summary> Lists the non-expired training jobs created for a project. </summary>
@@ -624,7 +683,8 @@ namespace Azure.AI.Language.Text.Authoring
                 maxCount,
                 skip,
                 maxPageSize,
-                cancellationToken.ToRequestContext());
+                cancellationToken.ToRequestContext(),
+                "TextAnalysisAuthoringClient.GetTrainingJobs");
         }
 
         /// <summary> Lists the non-expired training jobs created for a project. </summary>
@@ -646,7 +706,8 @@ namespace Azure.AI.Language.Text.Authoring
                 maxCount,
                 skip,
                 maxPageSize,
-                cancellationToken.ToRequestContext());
+                cancellationToken.ToRequestContext(),
+                "TextAnalysisAuthoringClient.GetTrainingJobs");
         }
 
         /// <summary>
@@ -665,7 +726,13 @@ namespace Azure.AI.Language.Text.Authoring
         /// <returns> The response returned from the service. </returns>
         public virtual Pageable<BinaryData> GetAssignedResourceDeployments(int? maxCount, int? skip, int? maxPageSize, RequestContext context)
         {
-            return new TextAnalysisAuthoringClientGetAssignedResourceDeploymentsCollectionResult(this, maxCount, skip, maxPageSize, context);
+            return new TextAnalysisAuthoringClientGetAssignedResourceDeploymentsCollectionResult(
+                this,
+                maxCount,
+                skip,
+                maxPageSize,
+                context,
+                "TextAnalysisAuthoringClient.GetAssignedResourceDeployments");
         }
 
         /// <summary>
@@ -684,7 +751,13 @@ namespace Azure.AI.Language.Text.Authoring
         /// <returns> The response returned from the service. </returns>
         public virtual AsyncPageable<BinaryData> GetAssignedResourceDeploymentsAsync(int? maxCount, int? skip, int? maxPageSize, RequestContext context)
         {
-            return new TextAnalysisAuthoringClientGetAssignedResourceDeploymentsAsyncCollectionResult(this, maxCount, skip, maxPageSize, context);
+            return new TextAnalysisAuthoringClientGetAssignedResourceDeploymentsAsyncCollectionResult(
+                this,
+                maxCount,
+                skip,
+                maxPageSize,
+                context,
+                "TextAnalysisAuthoringClient.GetAssignedResourceDeployments");
         }
 
         /// <summary> Lists the deployments to which an Azure resource is assigned. This doesn't return deployments belonging to projects owned by this resource. It only returns deployments belonging to projects owned by other resources. </summary>
@@ -695,7 +768,13 @@ namespace Azure.AI.Language.Text.Authoring
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         public virtual Pageable<TextAuthoringAssignedProjectDeploymentsMetadata> GetAssignedResourceDeployments(int? maxCount = default, int? skip = default, int? maxPageSize = default, CancellationToken cancellationToken = default)
         {
-            return new TextAnalysisAuthoringClientGetAssignedResourceDeploymentsCollectionResultOfT(this, maxCount, skip, maxPageSize, cancellationToken.ToRequestContext());
+            return new TextAnalysisAuthoringClientGetAssignedResourceDeploymentsCollectionResultOfT(
+                this,
+                maxCount,
+                skip,
+                maxPageSize,
+                cancellationToken.ToRequestContext(),
+                "TextAnalysisAuthoringClient.GetAssignedResourceDeployments");
         }
 
         /// <summary> Lists the deployments to which an Azure resource is assigned. This doesn't return deployments belonging to projects owned by this resource. It only returns deployments belonging to projects owned by other resources. </summary>
@@ -706,7 +785,13 @@ namespace Azure.AI.Language.Text.Authoring
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         public virtual AsyncPageable<TextAuthoringAssignedProjectDeploymentsMetadata> GetAssignedResourceDeploymentsAsync(int? maxCount = default, int? skip = default, int? maxPageSize = default, CancellationToken cancellationToken = default)
         {
-            return new TextAnalysisAuthoringClientGetAssignedResourceDeploymentsAsyncCollectionResultOfT(this, maxCount, skip, maxPageSize, cancellationToken.ToRequestContext());
+            return new TextAnalysisAuthoringClientGetAssignedResourceDeploymentsAsyncCollectionResultOfT(
+                this,
+                maxCount,
+                skip,
+                maxPageSize,
+                cancellationToken.ToRequestContext(),
+                "TextAnalysisAuthoringClient.GetAssignedResourceDeployments");
         }
 
         /// <summary>
@@ -732,7 +817,8 @@ namespace Azure.AI.Language.Text.Authoring
                 maxCount,
                 skip,
                 maxPageSize,
-                context);
+                context,
+                "TextAnalysisAuthoringClient.GetSupportedLanguages");
         }
 
         /// <summary>
@@ -758,7 +844,8 @@ namespace Azure.AI.Language.Text.Authoring
                 maxCount,
                 skip,
                 maxPageSize,
-                context);
+                context,
+                "TextAnalysisAuthoringClient.GetSupportedLanguages");
         }
 
         /// <summary> Lists the supported languages. </summary>
@@ -776,7 +863,8 @@ namespace Azure.AI.Language.Text.Authoring
                 maxCount,
                 skip,
                 maxPageSize,
-                cancellationToken.ToRequestContext());
+                cancellationToken.ToRequestContext(),
+                "TextAnalysisAuthoringClient.GetSupportedLanguages");
         }
 
         /// <summary> Lists the supported languages. </summary>
@@ -794,7 +882,8 @@ namespace Azure.AI.Language.Text.Authoring
                 maxCount,
                 skip,
                 maxPageSize,
-                cancellationToken.ToRequestContext());
+                cancellationToken.ToRequestContext(),
+                "TextAnalysisAuthoringClient.GetSupportedLanguages");
         }
 
         /// <summary>
@@ -810,7 +899,7 @@ namespace Azure.AI.Language.Text.Authoring
         /// <returns> The response returned from the service. </returns>
         public virtual Pageable<BinaryData> GetSupportedPrebuiltEntities(RequestContext context)
         {
-            return new TextAnalysisAuthoringClientGetSupportedPrebuiltEntitiesCollectionResult(this, context);
+            return new TextAnalysisAuthoringClientGetSupportedPrebuiltEntitiesCollectionResult(this, context, "TextAnalysisAuthoringClient.GetSupportedPrebuiltEntities");
         }
 
         /// <summary>
@@ -826,7 +915,7 @@ namespace Azure.AI.Language.Text.Authoring
         /// <returns> The response returned from the service. </returns>
         public virtual AsyncPageable<BinaryData> GetSupportedPrebuiltEntitiesAsync(RequestContext context)
         {
-            return new TextAnalysisAuthoringClientGetSupportedPrebuiltEntitiesAsyncCollectionResult(this, context);
+            return new TextAnalysisAuthoringClientGetSupportedPrebuiltEntitiesAsyncCollectionResult(this, context, "TextAnalysisAuthoringClient.GetSupportedPrebuiltEntities");
         }
 
         /// <summary> Lists the supported prebuilt entities that can be used while creating composed entities. </summary>
@@ -834,7 +923,7 @@ namespace Azure.AI.Language.Text.Authoring
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         public virtual Pageable<TextAuthoringPrebuiltEntity> GetSupportedPrebuiltEntities(CancellationToken cancellationToken = default)
         {
-            return new TextAnalysisAuthoringClientGetSupportedPrebuiltEntitiesCollectionResultOfT(this, cancellationToken.ToRequestContext());
+            return new TextAnalysisAuthoringClientGetSupportedPrebuiltEntitiesCollectionResultOfT(this, cancellationToken.ToRequestContext(), "TextAnalysisAuthoringClient.GetSupportedPrebuiltEntities");
         }
 
         /// <summary> Lists the supported prebuilt entities that can be used while creating composed entities. </summary>
@@ -842,7 +931,7 @@ namespace Azure.AI.Language.Text.Authoring
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         public virtual AsyncPageable<TextAuthoringPrebuiltEntity> GetSupportedPrebuiltEntitiesAsync(CancellationToken cancellationToken = default)
         {
-            return new TextAnalysisAuthoringClientGetSupportedPrebuiltEntitiesAsyncCollectionResultOfT(this, cancellationToken.ToRequestContext());
+            return new TextAnalysisAuthoringClientGetSupportedPrebuiltEntitiesAsyncCollectionResultOfT(this, cancellationToken.ToRequestContext(), "TextAnalysisAuthoringClient.GetSupportedPrebuiltEntities");
         }
 
         /// <summary>
@@ -868,7 +957,8 @@ namespace Azure.AI.Language.Text.Authoring
                 maxCount,
                 skip,
                 maxPageSize,
-                context);
+                context,
+                "TextAnalysisAuthoringClient.GetTrainingConfigVersions");
         }
 
         /// <summary>
@@ -894,7 +984,8 @@ namespace Azure.AI.Language.Text.Authoring
                 maxCount,
                 skip,
                 maxPageSize,
-                context);
+                context,
+                "TextAnalysisAuthoringClient.GetTrainingConfigVersions");
         }
 
         /// <summary> Lists the support training config version for a given project type. </summary>
@@ -912,7 +1003,8 @@ namespace Azure.AI.Language.Text.Authoring
                 maxCount,
                 skip,
                 maxPageSize,
-                cancellationToken.ToRequestContext());
+                cancellationToken.ToRequestContext(),
+                "TextAnalysisAuthoringClient.GetTrainingConfigVersions");
         }
 
         /// <summary> Lists the support training config version for a given project type. </summary>
@@ -930,7 +1022,8 @@ namespace Azure.AI.Language.Text.Authoring
                 maxCount,
                 skip,
                 maxPageSize,
-                cancellationToken.ToRequestContext());
+                cancellationToken.ToRequestContext(),
+                "TextAnalysisAuthoringClient.GetTrainingConfigVersions");
         }
     }
 }

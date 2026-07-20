@@ -64,9 +64,7 @@ namespace Azure.ResourceManager.DevTestLabs.Models
             {
                 return null;
             }
-            Utf8JsonRequestContent content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(devTestLabArtifactGenerateArmTemplateContent, ModelSerializationExtensions.WireOptions);
-            return content;
+            return RequestContent.Create(devTestLabArtifactGenerateArmTemplateContent, ModelSerializationExtensions.WireOptions);
         }
 
         /// <param name="writer"> The JSON writer. </param>

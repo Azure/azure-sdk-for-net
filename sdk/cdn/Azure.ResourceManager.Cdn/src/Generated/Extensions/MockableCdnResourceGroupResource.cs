@@ -8,45 +8,46 @@
 using System;
 using System.Threading;
 using System.Threading.Tasks;
+using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
+using Azure.ResourceManager;
+using Azure.ResourceManager.Cdn;
 using Azure.ResourceManager.Cdn.Models;
+using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.Cdn.Mocking
 {
-    /// <summary> A class to add extension methods to ResourceGroupResource. </summary>
+    /// <summary> A class to add extension methods to <see cref="ResourceGroupResource"/>. </summary>
     public partial class MockableCdnResourceGroupResource : ArmResource
     {
-        private ClientDiagnostics _defaultClientDiagnostics;
-        private CdnManagementRestOperations _defaultRestClient;
-        private ClientDiagnostics _profileClientDiagnostics;
-        private ProfilesRestOperations _profileRestClient;
+        private ClientDiagnostics _cdnClientClientDiagnostics;
+        private CdnClient _cdnClientRestClient;
+        private ClientDiagnostics _profilesClientDiagnostics;
+        private Profiles _profilesRestClient;
 
-        /// <summary> Initializes a new instance of the <see cref="MockableCdnResourceGroupResource"/> class for mocking. </summary>
+        /// <summary> Initializes a new instance of MockableCdnResourceGroupResource for mocking. </summary>
         protected MockableCdnResourceGroupResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref="MockableCdnResourceGroupResource"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="MockableCdnResourceGroupResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal MockableCdnResourceGroupResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
         }
 
-        private ClientDiagnostics DefaultClientDiagnostics => _defaultClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Cdn", ProviderConstants.DefaultProviderNamespace, Diagnostics);
-        private CdnManagementRestOperations DefaultRestClient => _defaultRestClient ??= new CdnManagementRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint);
-        private ClientDiagnostics ProfileClientDiagnostics => _profileClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Cdn", ProfileResource.ResourceType.Namespace, Diagnostics);
-        private ProfilesRestOperations ProfileRestClient => _profileRestClient ??= new ProfilesRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, GetApiVersionOrNull(ProfileResource.ResourceType));
+        private ClientDiagnostics CdnClientClientDiagnostics => _cdnClientClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Cdn.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private string GetApiVersionOrNull(ResourceType resourceType)
-        {
-            TryGetApiVersion(resourceType, out string apiVersion);
-            return apiVersion;
-        }
+        private CdnClient CdnClientRestClient => _cdnClientRestClient ??= new CdnClient(CdnClientClientDiagnostics, Pipeline, Endpoint, "2025-09-01-preview");
 
-        /// <summary> Gets a collection of ProfileResources in the ResourceGroupResource. </summary>
-        /// <returns> An object representing collection of ProfileResources and their operations over a ProfileResource. </returns>
+        private ClientDiagnostics ProfilesClientDiagnostics => _profilesClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Cdn.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
+
+        private Profiles ProfilesRestClient => _profilesRestClient ??= new Profiles(ProfilesClientDiagnostics, Pipeline, Endpoint, "2025-09-01-preview");
+
+        /// <summary> Gets a collection of Profiles in the <see cref="ResourceGroupResource"/>. </summary>
+        /// <returns> An object representing collection of Profiles and their operations over a ProfileResource. </returns>
         public virtual ProfileCollection GetProfiles()
         {
             return GetCachedClient(client => new ProfileCollection(client, Id));
@@ -56,20 +57,16 @@ namespace Azure.ResourceManager.Cdn.Mocking
         /// Gets an Azure Front Door Standard or Azure Front Door Premium or CDN profile with the specified profile name under the specified subscription and resource group.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Cdn/profiles/{profileName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Cdn/profiles/{profileName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Profiles_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> Profiles_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-06-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ProfileResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-09-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -80,6 +77,8 @@ namespace Azure.ResourceManager.Cdn.Mocking
         [ForwardsClientCalls]
         public virtual async Task<Response<ProfileResource>> GetProfileAsync(string profileName, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNullOrEmpty(profileName, nameof(profileName));
+
             return await GetProfiles().GetAsync(profileName, cancellationToken).ConfigureAwait(false);
         }
 
@@ -87,20 +86,16 @@ namespace Azure.ResourceManager.Cdn.Mocking
         /// Gets an Azure Front Door Standard or Azure Front Door Premium or CDN profile with the specified profile name under the specified subscription and resource group.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Cdn/profiles/{profileName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Cdn/profiles/{profileName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Profiles_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> Profiles_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-06-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ProfileResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-09-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -111,11 +106,78 @@ namespace Azure.ResourceManager.Cdn.Mocking
         [ForwardsClientCalls]
         public virtual Response<ProfileResource> GetProfile(string profileName, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNullOrEmpty(profileName, nameof(profileName));
+
             return GetProfiles().Get(profileName, cancellationToken);
         }
 
-        /// <summary> Gets a collection of CdnWebApplicationFirewallPolicyResources in the ResourceGroupResource. </summary>
-        /// <returns> An object representing collection of CdnWebApplicationFirewallPolicyResources and their operations over a CdnWebApplicationFirewallPolicyResource. </returns>
+        /// <summary> Gets a collection of CdnWebAgents in the <see cref="ResourceGroupResource"/>. </summary>
+        /// <returns> An object representing collection of CdnWebAgents and their operations over a CdnWebAgentResource. </returns>
+        public virtual CdnWebAgentCollection GetCdnWebAgents()
+        {
+            return GetCachedClient(client => new CdnWebAgentCollection(client, Id));
+        }
+
+        /// <summary>
+        /// Gets a web agent with the specified name within a resource group.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Cdn/webAgents/{webAgentName}. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> WebAgents_Get. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-09-01-preview. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="webAgentName"> The name of the web agent. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="webAgentName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="webAgentName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual async Task<Response<CdnWebAgentResource>> GetCdnWebAgentAsync(string webAgentName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(webAgentName, nameof(webAgentName));
+
+            return await GetCdnWebAgents().GetAsync(webAgentName, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Gets a web agent with the specified name within a resource group.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Cdn/webAgents/{webAgentName}. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> WebAgents_Get. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-09-01-preview. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="webAgentName"> The name of the web agent. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="webAgentName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="webAgentName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual Response<CdnWebAgentResource> GetCdnWebAgent(string webAgentName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(webAgentName, nameof(webAgentName));
+
+            return GetCdnWebAgents().Get(webAgentName, cancellationToken);
+        }
+
+        /// <summary> Gets a collection of CdnWebApplicationFirewallPolicies in the <see cref="ResourceGroupResource"/>. </summary>
+        /// <returns> An object representing collection of CdnWebApplicationFirewallPolicies and their operations over a CdnWebApplicationFirewallPolicyResource. </returns>
         public virtual CdnWebApplicationFirewallPolicyCollection GetCdnWebApplicationFirewallPolicies()
         {
             return GetCachedClient(client => new CdnWebApplicationFirewallPolicyCollection(client, Id));
@@ -125,20 +187,16 @@ namespace Azure.ResourceManager.Cdn.Mocking
         /// Retrieve protection policy with specified name within a resource group.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Cdn/cdnWebApplicationFirewallPolicies/{policyName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Cdn/cdnWebApplicationFirewallPolicies/{policyName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Policies_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> CdnWebApplicationFirewallPolicies_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-06-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="CdnWebApplicationFirewallPolicyResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-09-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -149,6 +207,8 @@ namespace Azure.ResourceManager.Cdn.Mocking
         [ForwardsClientCalls]
         public virtual async Task<Response<CdnWebApplicationFirewallPolicyResource>> GetCdnWebApplicationFirewallPolicyAsync(string policyName, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNullOrEmpty(policyName, nameof(policyName));
+
             return await GetCdnWebApplicationFirewallPolicies().GetAsync(policyName, cancellationToken).ConfigureAwait(false);
         }
 
@@ -156,20 +216,16 @@ namespace Azure.ResourceManager.Cdn.Mocking
         /// Retrieve protection policy with specified name within a resource group.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Cdn/cdnWebApplicationFirewallPolicies/{policyName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Cdn/cdnWebApplicationFirewallPolicies/{policyName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Policies_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> CdnWebApplicationFirewallPolicies_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-06-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="CdnWebApplicationFirewallPolicyResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-09-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -180,6 +236,8 @@ namespace Azure.ResourceManager.Cdn.Mocking
         [ForwardsClientCalls]
         public virtual Response<CdnWebApplicationFirewallPolicyResource> GetCdnWebApplicationFirewallPolicy(string policyName, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNullOrEmpty(policyName, nameof(policyName));
+
             return GetCdnWebApplicationFirewallPolicies().Get(policyName, cancellationToken);
         }
 
@@ -187,16 +245,16 @@ namespace Azure.ResourceManager.Cdn.Mocking
         /// Check the availability of a resource name. This is needed for resources where name is globally unique, such as a afdx endpoint.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Cdn/checkEndpointNameAvailability</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Cdn/checkEndpointNameAvailability. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>CheckEndpointNameAvailability</description>
+        /// <term> Operation Id. </term>
+        /// <description> Cdn_CheckEndpointNameAvailability. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-06-01</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-09-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -207,11 +265,21 @@ namespace Azure.ResourceManager.Cdn.Mocking
         {
             Argument.AssertNotNull(content, nameof(content));
 
-            using var scope = DefaultClientDiagnostics.CreateScope("MockableCdnResourceGroupResource.CheckEndpointNameAvailability");
+            using DiagnosticScope scope = CdnClientClientDiagnostics.CreateScope("MockableCdnResourceGroupResource.CheckEndpointNameAvailability");
             scope.Start();
             try
             {
-                var response = await DefaultRestClient.CheckEndpointNameAvailabilityAsync(Id.SubscriptionId, Id.ResourceGroupName, content, cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = CdnClientRestClient.CreateCheckEndpointNameAvailabilityRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, EndpointNameAvailabilityContent.ToRequestContent(content), context);
+                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                Response<EndpointNameAvailabilityResult> response = Response.FromValue(EndpointNameAvailabilityResult.FromResponse(result), result);
+                if (response.Value == null)
+                {
+                    throw new RequestFailedException(response.GetRawResponse());
+                }
                 return response;
             }
             catch (Exception e)
@@ -225,16 +293,16 @@ namespace Azure.ResourceManager.Cdn.Mocking
         /// Check the availability of a resource name. This is needed for resources where name is globally unique, such as a afdx endpoint.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Cdn/checkEndpointNameAvailability</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Cdn/checkEndpointNameAvailability. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>CheckEndpointNameAvailability</description>
+        /// <term> Operation Id. </term>
+        /// <description> Cdn_CheckEndpointNameAvailability. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-06-01</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-09-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -245,11 +313,21 @@ namespace Azure.ResourceManager.Cdn.Mocking
         {
             Argument.AssertNotNull(content, nameof(content));
 
-            using var scope = DefaultClientDiagnostics.CreateScope("MockableCdnResourceGroupResource.CheckEndpointNameAvailability");
+            using DiagnosticScope scope = CdnClientClientDiagnostics.CreateScope("MockableCdnResourceGroupResource.CheckEndpointNameAvailability");
             scope.Start();
             try
             {
-                var response = DefaultRestClient.CheckEndpointNameAvailability(Id.SubscriptionId, Id.ResourceGroupName, content, cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = CdnClientRestClient.CreateCheckEndpointNameAvailabilityRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, EndpointNameAvailabilityContent.ToRequestContent(content), context);
+                Response result = Pipeline.ProcessMessage(message, context);
+                Response<EndpointNameAvailabilityResult> response = Response.FromValue(EndpointNameAvailabilityResult.FromResponse(result), result);
+                if (response.Value == null)
+                {
+                    throw new RequestFailedException(response.GetRawResponse());
+                }
                 return response;
             }
             catch (Exception e)
@@ -263,20 +341,16 @@ namespace Azure.ResourceManager.Cdn.Mocking
         /// Checks if CDN profile can be migrated to Azure Frontdoor(Standard/Premium) profile.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Cdn/canMigrate</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Cdn/canMigrate. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Profiles_CanMigrate</description>
+        /// <term> Operation Id. </term>
+        /// <description> ProfilesOperationGroup_CanMigrate. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-06-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ProfileResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-09-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -288,14 +362,27 @@ namespace Azure.ResourceManager.Cdn.Mocking
         {
             Argument.AssertNotNull(content, nameof(content));
 
-            using var scope = ProfileClientDiagnostics.CreateScope("MockableCdnResourceGroupResource.CanMigrateProfile");
+            using DiagnosticScope scope = ProfilesClientDiagnostics.CreateScope("MockableCdnResourceGroupResource.CanMigrateProfile");
             scope.Start();
             try
             {
-                var response = await ProfileRestClient.CanMigrateAsync(Id.SubscriptionId, Id.ResourceGroupName, content, cancellationToken).ConfigureAwait(false);
-                var operation = new CdnArmOperation<CanMigrateResult>(new CanMigrateResultOperationSource(), ProfileClientDiagnostics, Pipeline, ProfileRestClient.CreateCanMigrateRequest(Id.SubscriptionId, Id.ResourceGroupName, content).Request, response, OperationFinalStateVia.Location);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = ProfilesRestClient.CreateCanMigrateProfileRequest(Id.ResourceGroupName, Guid.Parse(Id.SubscriptionId), CanMigrateContent.ToRequestContent(content), context);
+                Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                CdnArmOperation<CanMigrateResult> operation = new CdnArmOperation<CanMigrateResult>(
+                    new CanMigrateResultOperationSource(),
+                    ProfilesClientDiagnostics,
+                    Pipeline,
+                    message.Request,
+                    response,
+                    OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
+                {
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
+                }
                 return operation;
             }
             catch (Exception e)
@@ -309,20 +396,16 @@ namespace Azure.ResourceManager.Cdn.Mocking
         /// Checks if CDN profile can be migrated to Azure Frontdoor(Standard/Premium) profile.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Cdn/canMigrate</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Cdn/canMigrate. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Profiles_CanMigrate</description>
+        /// <term> Operation Id. </term>
+        /// <description> ProfilesOperationGroup_CanMigrate. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-06-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ProfileResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-09-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -334,14 +417,27 @@ namespace Azure.ResourceManager.Cdn.Mocking
         {
             Argument.AssertNotNull(content, nameof(content));
 
-            using var scope = ProfileClientDiagnostics.CreateScope("MockableCdnResourceGroupResource.CanMigrateProfile");
+            using DiagnosticScope scope = ProfilesClientDiagnostics.CreateScope("MockableCdnResourceGroupResource.CanMigrateProfile");
             scope.Start();
             try
             {
-                var response = ProfileRestClient.CanMigrate(Id.SubscriptionId, Id.ResourceGroupName, content, cancellationToken);
-                var operation = new CdnArmOperation<CanMigrateResult>(new CanMigrateResultOperationSource(), ProfileClientDiagnostics, Pipeline, ProfileRestClient.CreateCanMigrateRequest(Id.SubscriptionId, Id.ResourceGroupName, content).Request, response, OperationFinalStateVia.Location);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = ProfilesRestClient.CreateCanMigrateProfileRequest(Id.ResourceGroupName, Guid.Parse(Id.SubscriptionId), CanMigrateContent.ToRequestContent(content), context);
+                Response response = Pipeline.ProcessMessage(message, context);
+                CdnArmOperation<CanMigrateResult> operation = new CdnArmOperation<CanMigrateResult>(
+                    new CanMigrateResultOperationSource(),
+                    ProfilesClientDiagnostics,
+                    Pipeline,
+                    message.Request,
+                    response,
+                    OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
+                {
                     operation.WaitForCompletion(cancellationToken);
+                }
                 return operation;
             }
             catch (Exception e)
@@ -355,20 +451,16 @@ namespace Azure.ResourceManager.Cdn.Mocking
         /// Migrate the CDN profile to Azure Frontdoor(Standard/Premium) profile. The change need to be committed after this.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Cdn/migrate</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Cdn/migrate. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Profiles_Migrate</description>
+        /// <term> Operation Id. </term>
+        /// <description> ProfilesOperationGroup_Migrate. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-06-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ProfileResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-09-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -380,14 +472,27 @@ namespace Azure.ResourceManager.Cdn.Mocking
         {
             Argument.AssertNotNull(content, nameof(content));
 
-            using var scope = ProfileClientDiagnostics.CreateScope("MockableCdnResourceGroupResource.MigrateProfile");
+            using DiagnosticScope scope = ProfilesClientDiagnostics.CreateScope("MockableCdnResourceGroupResource.MigrateProfile");
             scope.Start();
             try
             {
-                var response = await ProfileRestClient.MigrateAsync(Id.SubscriptionId, Id.ResourceGroupName, content, cancellationToken).ConfigureAwait(false);
-                var operation = new CdnArmOperation<MigrateResult>(new MigrateResultOperationSource(), ProfileClientDiagnostics, Pipeline, ProfileRestClient.CreateMigrateRequest(Id.SubscriptionId, Id.ResourceGroupName, content).Request, response, OperationFinalStateVia.Location);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = ProfilesRestClient.CreateMigrateProfileRequest(Id.ResourceGroupName, Guid.Parse(Id.SubscriptionId), MigrationContent.ToRequestContent(content), context);
+                Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                CdnArmOperation<MigrateResult> operation = new CdnArmOperation<MigrateResult>(
+                    new MigrateResultOperationSource(),
+                    ProfilesClientDiagnostics,
+                    Pipeline,
+                    message.Request,
+                    response,
+                    OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
+                {
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
+                }
                 return operation;
             }
             catch (Exception e)
@@ -401,20 +506,16 @@ namespace Azure.ResourceManager.Cdn.Mocking
         /// Migrate the CDN profile to Azure Frontdoor(Standard/Premium) profile. The change need to be committed after this.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Cdn/migrate</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Cdn/migrate. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Profiles_Migrate</description>
+        /// <term> Operation Id. </term>
+        /// <description> ProfilesOperationGroup_Migrate. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-06-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ProfileResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-09-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -426,14 +527,27 @@ namespace Azure.ResourceManager.Cdn.Mocking
         {
             Argument.AssertNotNull(content, nameof(content));
 
-            using var scope = ProfileClientDiagnostics.CreateScope("MockableCdnResourceGroupResource.MigrateProfile");
+            using DiagnosticScope scope = ProfilesClientDiagnostics.CreateScope("MockableCdnResourceGroupResource.MigrateProfile");
             scope.Start();
             try
             {
-                var response = ProfileRestClient.Migrate(Id.SubscriptionId, Id.ResourceGroupName, content, cancellationToken);
-                var operation = new CdnArmOperation<MigrateResult>(new MigrateResultOperationSource(), ProfileClientDiagnostics, Pipeline, ProfileRestClient.CreateMigrateRequest(Id.SubscriptionId, Id.ResourceGroupName, content).Request, response, OperationFinalStateVia.Location);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = ProfilesRestClient.CreateMigrateProfileRequest(Id.ResourceGroupName, Guid.Parse(Id.SubscriptionId), MigrationContent.ToRequestContent(content), context);
+                Response response = Pipeline.ProcessMessage(message, context);
+                CdnArmOperation<MigrateResult> operation = new CdnArmOperation<MigrateResult>(
+                    new MigrateResultOperationSource(),
+                    ProfilesClientDiagnostics,
+                    Pipeline,
+                    message.Request,
+                    response,
+                    OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
+                {
                     operation.WaitForCompletion(cancellationToken);
+                }
                 return operation;
             }
             catch (Exception e)

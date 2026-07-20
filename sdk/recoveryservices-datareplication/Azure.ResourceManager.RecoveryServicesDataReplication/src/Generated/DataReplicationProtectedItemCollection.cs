@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication
         {
             if (id.ResourceType != DataReplicationVaultResource.ResourceType)
             {
-                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, DataReplicationVaultResource.ResourceType), id);
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, DataReplicationVaultResource.ResourceType), nameof(id));
             }
         }
 
@@ -93,7 +93,7 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication
                 HttpMessage message = _protectedItemRestClient.CreateCreateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, protectedItemName, DataReplicationProtectedItemData.ToRequestContent(data), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 RecoveryServicesDataReplicationArmOperation<DataReplicationProtectedItemResource> operation = new RecoveryServicesDataReplicationArmOperation<DataReplicationProtectedItemResource>(
-                    new DataReplicationProtectedItemOperationSource(Client),
+                    new DataReplicationProtectedItemResourceOperationSource(Client),
                     _protectedItemClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -151,7 +151,7 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication
                 HttpMessage message = _protectedItemRestClient.CreateCreateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, protectedItemName, DataReplicationProtectedItemData.ToRequestContent(data), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 RecoveryServicesDataReplicationArmOperation<DataReplicationProtectedItemResource> operation = new RecoveryServicesDataReplicationArmOperation<DataReplicationProtectedItemResource>(
-                    new DataReplicationProtectedItemOperationSource(Client),
+                    new DataReplicationProtectedItemResourceOperationSource(Client),
                     _protectedItemClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -304,7 +304,8 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication
                 odataOptions,
                 continuationToken,
                 pageSize,
-                context), data => new DataReplicationProtectedItemResource(Client, data));
+                context,
+                "DataReplicationProtectedItemCollection.GetAll"), data => new DataReplicationProtectedItemResource(Client, data));
         }
 
         /// <summary>
@@ -343,7 +344,8 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication
                 odataOptions,
                 continuationToken,
                 pageSize,
-                context), data => new DataReplicationProtectedItemResource(Client, data));
+                context,
+                "DataReplicationProtectedItemCollection.GetAll"), data => new DataReplicationProtectedItemResource(Client, data));
         }
 
         /// <summary>

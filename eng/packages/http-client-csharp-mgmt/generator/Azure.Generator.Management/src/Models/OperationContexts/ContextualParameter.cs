@@ -27,16 +27,24 @@ namespace Azure.Generator.Management.Models;
 internal class ContextualParameter
 {
     private readonly Func<ScopedApi<ResourceIdentifier>, ValueExpression> _valueExpressionBuilder;
-    public ContextualParameter(string key, string variableName, Func<ScopedApi<ResourceIdentifier>, ValueExpression> valueExpressionBuilder)
+    public ContextualParameter(string key, string variableName, Func<ScopedApi<ResourceIdentifier>, ValueExpression> valueExpressionBuilder, Type? valueType = null)
     {
         Key = key;
         VariableName = variableName;
         _valueExpressionBuilder = valueExpressionBuilder;
+        ValueType = valueType ?? typeof(string);
     }
 
     public string Key { get; }
 
     public string VariableName { get; }
+
+    /// <summary>
+    /// The .NET type of the value produced by <see cref="BuildValueExpression"/>. Defaults to <see cref="string"/>.
+    /// Used by callers to determine whether a conversion (e.g., ToString()) is required when passing the value
+    /// as an argument whose declared parameter type differs.
+    /// </summary>
+    public Type ValueType { get; }
 
     public ValueExpression BuildValueExpression(ScopedApi<ResourceIdentifier> id)
         => _valueExpressionBuilder(id);

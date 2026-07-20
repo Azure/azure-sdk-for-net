@@ -66,6 +66,11 @@ namespace Azure.ResourceManager.DeviceRegistry.Tests.Scenario
             Assert.AreEqual(deviceCreateOrUpdateResponse.Value.Data.Properties.Endpoints.Inbound["myendpoint1"].EndpointType, deviceData.Properties.Endpoints.Inbound["myendpoint1"].EndpointType);
             Assert.AreEqual(deviceCreateOrUpdateResponse.Value.Data.Properties.Version, 1);
 
+            // Verify Policy property (new in 2026-03-01-preview)
+            // Device created without CMS credential/policy setup, so Policy ResourceId should be null
+            Assert.IsNull(deviceCreateOrUpdateResponse.Value.Data.Properties.ResourceId,
+                "Device without CMS should have null Policy ResourceId");
+
             // Read DeviceRegistry Device
             var deviceReadResponse = await devicesCollection.GetAsync(deviceName, CancellationToken.None);
             Assert.IsNotNull(deviceReadResponse.Value);

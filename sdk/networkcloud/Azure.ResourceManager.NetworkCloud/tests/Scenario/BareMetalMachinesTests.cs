@@ -1,13 +1,13 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using System.Collections.Generic;
+using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Core.TestFramework;
 using Azure.ResourceManager.NetworkCloud.Models;
 using Azure.ResourceManager.Resources;
 using NUnit.Framework;
-using System.Collections.Generic;
-using System.Threading.Tasks;
 
 namespace Azure.ResourceManager.NetworkCloud.Tests.ScenarioTests
 {
@@ -57,11 +57,11 @@ namespace Azure.ResourceManager.NetworkCloud.Tests.ScenarioTests
             {
                 patch.Tags.Add(key, firstBMM.Tags[key]);
             }
-            ArmOperation<NetworkCloudBareMetalMachineResource> updateResult = await bareMetalMachine.UpdateAsync(WaitUntil.Completed, patch);
+            ArmOperation<NetworkCloudBareMetalMachineResource> updateResult = await bareMetalMachine.UpdateAsync(WaitUntil.Completed, patch, matchConditions: null);
             Assert.AreEqual(patch.Tags, updateResult.Value.Data.Tags);
 
             patch.Tags.Remove(testKey);
-            updateResult = await bareMetalMachine.UpdateAsync(WaitUntil.Completed, patch);
+            updateResult = await bareMetalMachine.UpdateAsync(WaitUntil.Completed, patch, matchConditions: null);
             Assert.AreEqual(patch.Tags, updateResult.Value.Data.Tags, "tag reversion failed");
         }
     }

@@ -45,7 +45,7 @@ namespace Azure.ResourceManager.Chaos
             TryGetApiVersion(ChaosTargetMetadataResource.ResourceType, out string chaosTargetMetadataApiVersion);
             _location = location;
             _targetTypesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Chaos", ChaosTargetMetadataResource.ResourceType.Namespace, Diagnostics);
-            _targetTypesRestClient = new TargetTypes(_targetTypesClientDiagnostics, Pipeline, Endpoint, chaosTargetMetadataApiVersion ?? "2025-01-01");
+            _targetTypesRestClient = new TargetTypes(_targetTypesClientDiagnostics, Pipeline, Endpoint, chaosTargetMetadataApiVersion ?? "2026-05-01-preview");
             ValidateResourceId(id);
         }
 
@@ -55,7 +55,7 @@ namespace Azure.ResourceManager.Chaos
         {
             if (id.ResourceType != SubscriptionResource.ResourceType)
             {
-                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, SubscriptionResource.ResourceType), id);
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, SubscriptionResource.ResourceType), nameof(id));
             }
         }
 
@@ -72,7 +72,7 @@ namespace Azure.ResourceManager.Chaos
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-01-01. </description>
+        /// <description> 2026-05-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -121,7 +121,7 @@ namespace Azure.ResourceManager.Chaos
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-01-01. </description>
+        /// <description> 2026-05-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -170,7 +170,7 @@ namespace Azure.ResourceManager.Chaos
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-01-01. </description>
+        /// <description> 2026-05-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -183,7 +183,13 @@ namespace Azure.ResourceManager.Chaos
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<ChaosTargetMetadataData, ChaosTargetMetadataResource>(new TargetTypesGetAllAsyncCollectionResultOfT(_targetTypesRestClient, Guid.Parse(Id.SubscriptionId), _location, continuationToken, context), data => new ChaosTargetMetadataResource(Client, data));
+            return new AsyncPageableWrapper<ChaosTargetMetadataData, ChaosTargetMetadataResource>(new TargetTypesGetAllAsyncCollectionResultOfT(
+                _targetTypesRestClient,
+                Guid.Parse(Id.SubscriptionId),
+                _location,
+                continuationToken,
+                context,
+                "ChaosTargetMetadataCollection.GetAll"), data => new ChaosTargetMetadataResource(Client, data));
         }
 
         /// <summary>
@@ -199,7 +205,7 @@ namespace Azure.ResourceManager.Chaos
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-01-01. </description>
+        /// <description> 2026-05-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -212,7 +218,13 @@ namespace Azure.ResourceManager.Chaos
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<ChaosTargetMetadataData, ChaosTargetMetadataResource>(new TargetTypesGetAllCollectionResultOfT(_targetTypesRestClient, Guid.Parse(Id.SubscriptionId), _location, continuationToken, context), data => new ChaosTargetMetadataResource(Client, data));
+            return new PageableWrapper<ChaosTargetMetadataData, ChaosTargetMetadataResource>(new TargetTypesGetAllCollectionResultOfT(
+                _targetTypesRestClient,
+                Guid.Parse(Id.SubscriptionId),
+                _location,
+                continuationToken,
+                context,
+                "ChaosTargetMetadataCollection.GetAll"), data => new ChaosTargetMetadataResource(Client, data));
         }
 
         /// <summary>
@@ -228,7 +240,7 @@ namespace Azure.ResourceManager.Chaos
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-01-01. </description>
+        /// <description> 2026-05-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -285,7 +297,7 @@ namespace Azure.ResourceManager.Chaos
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-01-01. </description>
+        /// <description> 2026-05-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -342,7 +354,7 @@ namespace Azure.ResourceManager.Chaos
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-01-01. </description>
+        /// <description> 2026-05-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -403,7 +415,7 @@ namespace Azure.ResourceManager.Chaos
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-01-01. </description>
+        /// <description> 2026-05-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>

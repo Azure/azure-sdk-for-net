@@ -4,10 +4,12 @@
 
 using System;
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 
-namespace Azure.AI.Projects
+namespace Azure.AI.Projects.Evaluation
 {
     /// <summary> Summary of the error cluster analysis. </summary>
+    [Experimental("AAIP001")]
     public partial class InsightSummary
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
@@ -17,14 +19,14 @@ namespace Azure.AI.Projects
         /// <param name="sampleCount"> Total number of samples analyzed. </param>
         /// <param name="uniqueSubclusterCount"> Total number of unique subcluster labels. </param>
         /// <param name="uniqueClusterCount"> Total number of unique clusters. </param>
-        /// <param name="method"> Method used for clustering. </param>
+        /// <param name="methodName"> Method used for clustering. </param>
         /// <param name="usage"> Token usage while performing clustering analysis. </param>
-        internal InsightSummary(int sampleCount, int uniqueSubclusterCount, int uniqueClusterCount, string @method, ClusterTokenUsage usage)
+        internal InsightSummary(int sampleCount, int uniqueSubclusterCount, int uniqueClusterCount, string methodName, ClusterTokenUsage usage)
         {
             SampleCount = sampleCount;
             UniqueSubclusterCount = uniqueSubclusterCount;
             UniqueClusterCount = uniqueClusterCount;
-            Method = @method;
+            MethodName = methodName;
             Usage = usage;
         }
 
@@ -32,15 +34,15 @@ namespace Azure.AI.Projects
         /// <param name="sampleCount"> Total number of samples analyzed. </param>
         /// <param name="uniqueSubclusterCount"> Total number of unique subcluster labels. </param>
         /// <param name="uniqueClusterCount"> Total number of unique clusters. </param>
-        /// <param name="method"> Method used for clustering. </param>
+        /// <param name="methodName"> Method used for clustering. </param>
         /// <param name="usage"> Token usage while performing clustering analysis. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal InsightSummary(int sampleCount, int uniqueSubclusterCount, int uniqueClusterCount, string @method, ClusterTokenUsage usage, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal InsightSummary(int sampleCount, int uniqueSubclusterCount, int uniqueClusterCount, string methodName, ClusterTokenUsage usage, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             SampleCount = sampleCount;
             UniqueSubclusterCount = uniqueSubclusterCount;
             UniqueClusterCount = uniqueClusterCount;
-            Method = @method;
+            MethodName = methodName;
             Usage = usage;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
@@ -55,7 +57,7 @@ namespace Azure.AI.Projects
         public int UniqueClusterCount { get; }
 
         /// <summary> Method used for clustering. </summary>
-        public string Method { get; }
+        public string MethodName { get; }
 
         /// <summary> Token usage while performing clustering analysis. </summary>
         public ClusterTokenUsage Usage { get; }

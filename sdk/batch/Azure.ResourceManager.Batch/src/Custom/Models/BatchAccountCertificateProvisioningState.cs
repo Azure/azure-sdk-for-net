@@ -32,9 +32,6 @@ namespace Azure.ResourceManager.Batch.Models
         /// <summary> Failed. </summary>
         public static BatchAccountCertificateProvisioningState Failed => _Failed;
 
-        /// <summary> Converts a string to a <see cref="BatchAccountCertificateProvisioningState"/>. </summary>
-        public static implicit operator BatchAccountCertificateProvisioningState(string value) => new(value);
-
         /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is BatchAccountCertificateProvisioningState other && Equals(other);
@@ -48,10 +45,5 @@ namespace Azure.ResourceManager.Batch.Models
 
         /// <inheritdoc />
         public override string ToString() => _value;
-
-        /// <summary> Equality operator. </summary>
-        public static bool operator ==(BatchAccountCertificateProvisioningState left, BatchAccountCertificateProvisioningState right) => left.Equals(right);
-        /// <summary> Inequality operator. </summary>
-        public static bool operator !=(BatchAccountCertificateProvisioningState left, BatchAccountCertificateProvisioningState right) => !left.Equals(right);
     }
 }

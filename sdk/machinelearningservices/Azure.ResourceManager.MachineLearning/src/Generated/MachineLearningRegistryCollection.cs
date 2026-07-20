@@ -8,12 +8,13 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.Globalization;
+using System.Diagnostics;
 using System.Threading;
 using System.Threading.Tasks;
-using Autorest.CSharp.Core;
+using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
+using Azure.ResourceManager;
 using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.MachineLearning
@@ -25,51 +26,49 @@ namespace Azure.ResourceManager.MachineLearning
     /// </summary>
     public partial class MachineLearningRegistryCollection : ArmCollection, IEnumerable<MachineLearningRegistryResource>, IAsyncEnumerable<MachineLearningRegistryResource>
     {
-        private readonly ClientDiagnostics _machineLearningRegistryRegistriesClientDiagnostics;
-        private readonly RegistriesRestOperations _machineLearningRegistryRegistriesRestClient;
+        private readonly ClientDiagnostics _registriesClientDiagnostics;
+        private readonly Registries _registriesRestClient;
 
-        /// <summary> Initializes a new instance of the <see cref="MachineLearningRegistryCollection"/> class for mocking. </summary>
+        /// <summary> Initializes a new instance of MachineLearningRegistryCollection for mocking. </summary>
         protected MachineLearningRegistryCollection()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref="MachineLearningRegistryCollection"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="MachineLearningRegistryCollection"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
-        /// <param name="id"> The identifier of the parent resource that is the target of operations. </param>
+        /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal MachineLearningRegistryCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _machineLearningRegistryRegistriesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.MachineLearning", MachineLearningRegistryResource.ResourceType.Namespace, Diagnostics);
-            TryGetApiVersion(MachineLearningRegistryResource.ResourceType, out string machineLearningRegistryRegistriesApiVersion);
-            _machineLearningRegistryRegistriesRestClient = new RegistriesRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, machineLearningRegistryRegistriesApiVersion);
-#if DEBUG
-			ValidateResourceId(Id);
-#endif
+            TryGetApiVersion(MachineLearningRegistryResource.ResourceType, out string machineLearningRegistryApiVersion);
+            _registriesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.MachineLearning", MachineLearningRegistryResource.ResourceType.Namespace, Diagnostics);
+            _registriesRestClient = new Registries(_registriesClientDiagnostics, Pipeline, Endpoint, machineLearningRegistryApiVersion ?? "2026-03-15-preview");
+            ValidateResourceId(id);
         }
 
+        /// <param name="id"></param>
+        [Conditional("DEBUG")]
         internal static void ValidateResourceId(ResourceIdentifier id)
         {
             if (id.ResourceType != ResourceGroupResource.ResourceType)
-                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, ResourceGroupResource.ResourceType), nameof(id));
+            {
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ResourceGroupResource.ResourceType), nameof(id));
+            }
         }
 
         /// <summary>
         /// Create or update registry
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.MachineLearningServices/registries/{registryName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.MachineLearningServices/registries/{registryName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Registries_CreateOrUpdate</description>
+        /// <term> Operation Id. </term>
+        /// <description> Registries_CreateOrUpdate. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-04-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="MachineLearningRegistryResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-03-15-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -77,21 +76,34 @@ namespace Azure.ResourceManager.MachineLearning
         /// <param name="registryName"> Name of Azure Machine Learning registry. This is case-insensitive. </param>
         /// <param name="data"> Details required to create the registry. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="registryName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="registryName"/> or <paramref name="data"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="registryName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual async Task<ArmOperation<MachineLearningRegistryResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string registryName, MachineLearningRegistryData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(registryName, nameof(registryName));
             Argument.AssertNotNull(data, nameof(data));
 
-            using var scope = _machineLearningRegistryRegistriesClientDiagnostics.CreateScope("MachineLearningRegistryCollection.CreateOrUpdate");
+            using DiagnosticScope scope = _registriesClientDiagnostics.CreateScope("MachineLearningRegistryCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                var response = await _machineLearningRegistryRegistriesRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, registryName, data, cancellationToken).ConfigureAwait(false);
-                var operation = new MachineLearningArmOperation<MachineLearningRegistryResource>(new MachineLearningRegistryOperationSource(Client), _machineLearningRegistryRegistriesClientDiagnostics, Pipeline, _machineLearningRegistryRegistriesRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, registryName, data).Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _registriesRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, registryName, MachineLearningRegistryData.ToRequestContent(data), context);
+                Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                MachineLearningArmOperation<MachineLearningRegistryResource> operation = new MachineLearningArmOperation<MachineLearningRegistryResource>(
+                    new MachineLearningRegistryResourceOperationSource(Client),
+                    _registriesClientDiagnostics,
+                    Pipeline,
+                    message.Request,
+                    response,
+                    OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
+                {
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
+                }
                 return operation;
             }
             catch (Exception e)
@@ -105,20 +117,16 @@ namespace Azure.ResourceManager.MachineLearning
         /// Create or update registry
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.MachineLearningServices/registries/{registryName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.MachineLearningServices/registries/{registryName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Registries_CreateOrUpdate</description>
+        /// <term> Operation Id. </term>
+        /// <description> Registries_CreateOrUpdate. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-04-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="MachineLearningRegistryResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-03-15-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -126,21 +134,34 @@ namespace Azure.ResourceManager.MachineLearning
         /// <param name="registryName"> Name of Azure Machine Learning registry. This is case-insensitive. </param>
         /// <param name="data"> Details required to create the registry. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="registryName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="registryName"/> or <paramref name="data"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="registryName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual ArmOperation<MachineLearningRegistryResource> CreateOrUpdate(WaitUntil waitUntil, string registryName, MachineLearningRegistryData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(registryName, nameof(registryName));
             Argument.AssertNotNull(data, nameof(data));
 
-            using var scope = _machineLearningRegistryRegistriesClientDiagnostics.CreateScope("MachineLearningRegistryCollection.CreateOrUpdate");
+            using DiagnosticScope scope = _registriesClientDiagnostics.CreateScope("MachineLearningRegistryCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                var response = _machineLearningRegistryRegistriesRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, registryName, data, cancellationToken);
-                var operation = new MachineLearningArmOperation<MachineLearningRegistryResource>(new MachineLearningRegistryOperationSource(Client), _machineLearningRegistryRegistriesClientDiagnostics, Pipeline, _machineLearningRegistryRegistriesRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, registryName, data).Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _registriesRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, registryName, MachineLearningRegistryData.ToRequestContent(data), context);
+                Response response = Pipeline.ProcessMessage(message, context);
+                MachineLearningArmOperation<MachineLearningRegistryResource> operation = new MachineLearningArmOperation<MachineLearningRegistryResource>(
+                    new MachineLearningRegistryResourceOperationSource(Client),
+                    _registriesClientDiagnostics,
+                    Pipeline,
+                    message.Request,
+                    response,
+                    OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
+                {
                     operation.WaitForCompletion(cancellationToken);
+                }
                 return operation;
             }
             catch (Exception e)
@@ -154,38 +175,42 @@ namespace Azure.ResourceManager.MachineLearning
         /// Get registry
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.MachineLearningServices/registries/{registryName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.MachineLearningServices/registries/{registryName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Registries_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> Registries_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-04-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="MachineLearningRegistryResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-03-15-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="registryName"> Name of Azure Machine Learning registry. This is case-insensitive. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="registryName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="registryName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="registryName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual async Task<Response<MachineLearningRegistryResource>> GetAsync(string registryName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(registryName, nameof(registryName));
 
-            using var scope = _machineLearningRegistryRegistriesClientDiagnostics.CreateScope("MachineLearningRegistryCollection.Get");
+            using DiagnosticScope scope = _registriesClientDiagnostics.CreateScope("MachineLearningRegistryCollection.Get");
             scope.Start();
             try
             {
-                var response = await _machineLearningRegistryRegistriesRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, registryName, cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _registriesRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, registryName, context);
+                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                Response<MachineLearningRegistryData> response = Response.FromValue(MachineLearningRegistryData.FromResponse(result), result);
                 if (response.Value == null)
+                {
                     throw new RequestFailedException(response.GetRawResponse());
+                }
                 return Response.FromValue(new MachineLearningRegistryResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -199,38 +224,42 @@ namespace Azure.ResourceManager.MachineLearning
         /// Get registry
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.MachineLearningServices/registries/{registryName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.MachineLearningServices/registries/{registryName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Registries_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> Registries_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-04-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="MachineLearningRegistryResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-03-15-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="registryName"> Name of Azure Machine Learning registry. This is case-insensitive. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="registryName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="registryName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="registryName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual Response<MachineLearningRegistryResource> Get(string registryName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(registryName, nameof(registryName));
 
-            using var scope = _machineLearningRegistryRegistriesClientDiagnostics.CreateScope("MachineLearningRegistryCollection.Get");
+            using DiagnosticScope scope = _registriesClientDiagnostics.CreateScope("MachineLearningRegistryCollection.Get");
             scope.Start();
             try
             {
-                var response = _machineLearningRegistryRegistriesRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, registryName, cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _registriesRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, registryName, context);
+                Response result = Pipeline.ProcessMessage(message, context);
+                Response<MachineLearningRegistryData> response = Response.FromValue(MachineLearningRegistryData.FromResponse(result), result);
                 if (response.Value == null)
+                {
                     throw new RequestFailedException(response.GetRawResponse());
+                }
                 return Response.FromValue(new MachineLearningRegistryResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -244,50 +273,44 @@ namespace Azure.ResourceManager.MachineLearning
         /// List registries
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.MachineLearningServices/registries</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.MachineLearningServices/registries. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Registries_List</description>
+        /// <term> Operation Id. </term>
+        /// <description> Registries_List. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-04-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="MachineLearningRegistryResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-03-15-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="MachineLearningRegistryResource"/> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="MachineLearningRegistryResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<MachineLearningRegistryResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _machineLearningRegistryRegistriesRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _machineLearningRegistryRegistriesRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new MachineLearningRegistryResource(Client, MachineLearningRegistryData.DeserializeMachineLearningRegistryData(e)), _machineLearningRegistryRegistriesClientDiagnostics, Pipeline, "MachineLearningRegistryCollection.GetAll", "value", "nextLink", cancellationToken);
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new AsyncPageableWrapper<MachineLearningRegistryData, MachineLearningRegistryResource>(new RegistriesGetAllAsyncCollectionResultOfT(_registriesRestClient, Id.SubscriptionId, Id.ResourceGroupName, context, "MachineLearningRegistryCollection.GetAll"), data => new MachineLearningRegistryResource(Client, data));
         }
 
         /// <summary>
         /// List registries
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.MachineLearningServices/registries</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.MachineLearningServices/registries. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Registries_List</description>
+        /// <term> Operation Id. </term>
+        /// <description> Registries_List. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-04-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="MachineLearningRegistryResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-03-15-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -295,45 +318,61 @@ namespace Azure.ResourceManager.MachineLearning
         /// <returns> A collection of <see cref="MachineLearningRegistryResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<MachineLearningRegistryResource> GetAll(CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _machineLearningRegistryRegistriesRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _machineLearningRegistryRegistriesRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new MachineLearningRegistryResource(Client, MachineLearningRegistryData.DeserializeMachineLearningRegistryData(e)), _machineLearningRegistryRegistriesClientDiagnostics, Pipeline, "MachineLearningRegistryCollection.GetAll", "value", "nextLink", cancellationToken);
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new PageableWrapper<MachineLearningRegistryData, MachineLearningRegistryResource>(new RegistriesGetAllCollectionResultOfT(_registriesRestClient, Id.SubscriptionId, Id.ResourceGroupName, context, "MachineLearningRegistryCollection.GetAll"), data => new MachineLearningRegistryResource(Client, data));
         }
 
         /// <summary>
         /// Checks to see if the resource exists in azure.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.MachineLearningServices/registries/{registryName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.MachineLearningServices/registries/{registryName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Registries_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> Registries_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-04-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="MachineLearningRegistryResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-03-15-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="registryName"> Name of Azure Machine Learning registry. This is case-insensitive. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="registryName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="registryName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="registryName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual async Task<Response<bool>> ExistsAsync(string registryName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(registryName, nameof(registryName));
 
-            using var scope = _machineLearningRegistryRegistriesClientDiagnostics.CreateScope("MachineLearningRegistryCollection.Exists");
+            using DiagnosticScope scope = _registriesClientDiagnostics.CreateScope("MachineLearningRegistryCollection.Exists");
             scope.Start();
             try
             {
-                var response = await _machineLearningRegistryRegistriesRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, registryName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _registriesRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, registryName, context);
+                await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
+                Response result = message.Response;
+                Response<MachineLearningRegistryData> response = default;
+                switch (result.Status)
+                {
+                    case 200:
+                        response = Response.FromValue(MachineLearningRegistryData.FromResponse(result), result);
+                        break;
+                    case 404:
+                        response = Response.FromValue((MachineLearningRegistryData)null, result);
+                        break;
+                    default:
+                        throw new RequestFailedException(result);
+                }
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -347,36 +386,50 @@ namespace Azure.ResourceManager.MachineLearning
         /// Checks to see if the resource exists in azure.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.MachineLearningServices/registries/{registryName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.MachineLearningServices/registries/{registryName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Registries_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> Registries_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-04-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="MachineLearningRegistryResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-03-15-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="registryName"> Name of Azure Machine Learning registry. This is case-insensitive. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="registryName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="registryName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="registryName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual Response<bool> Exists(string registryName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(registryName, nameof(registryName));
 
-            using var scope = _machineLearningRegistryRegistriesClientDiagnostics.CreateScope("MachineLearningRegistryCollection.Exists");
+            using DiagnosticScope scope = _registriesClientDiagnostics.CreateScope("MachineLearningRegistryCollection.Exists");
             scope.Start();
             try
             {
-                var response = _machineLearningRegistryRegistriesRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, registryName, cancellationToken: cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _registriesRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, registryName, context);
+                Pipeline.Send(message, context.CancellationToken);
+                Response result = message.Response;
+                Response<MachineLearningRegistryData> response = default;
+                switch (result.Status)
+                {
+                    case 200:
+                        response = Response.FromValue(MachineLearningRegistryData.FromResponse(result), result);
+                        break;
+                    case 404:
+                        response = Response.FromValue((MachineLearningRegistryData)null, result);
+                        break;
+                    default:
+                        throw new RequestFailedException(result);
+                }
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -390,38 +443,54 @@ namespace Azure.ResourceManager.MachineLearning
         /// Tries to get details for this resource from the service.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.MachineLearningServices/registries/{registryName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.MachineLearningServices/registries/{registryName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Registries_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> Registries_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-04-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="MachineLearningRegistryResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-03-15-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="registryName"> Name of Azure Machine Learning registry. This is case-insensitive. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="registryName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="registryName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="registryName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual async Task<NullableResponse<MachineLearningRegistryResource>> GetIfExistsAsync(string registryName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(registryName, nameof(registryName));
 
-            using var scope = _machineLearningRegistryRegistriesClientDiagnostics.CreateScope("MachineLearningRegistryCollection.GetIfExists");
+            using DiagnosticScope scope = _registriesClientDiagnostics.CreateScope("MachineLearningRegistryCollection.GetIfExists");
             scope.Start();
             try
             {
-                var response = await _machineLearningRegistryRegistriesRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, registryName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _registriesRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, registryName, context);
+                await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
+                Response result = message.Response;
+                Response<MachineLearningRegistryData> response = default;
+                switch (result.Status)
+                {
+                    case 200:
+                        response = Response.FromValue(MachineLearningRegistryData.FromResponse(result), result);
+                        break;
+                    case 404:
+                        response = Response.FromValue((MachineLearningRegistryData)null, result);
+                        break;
+                    default:
+                        throw new RequestFailedException(result);
+                }
                 if (response.Value == null)
+                {
                     return new NoValueResponse<MachineLearningRegistryResource>(response.GetRawResponse());
+                }
                 return Response.FromValue(new MachineLearningRegistryResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -435,38 +504,54 @@ namespace Azure.ResourceManager.MachineLearning
         /// Tries to get details for this resource from the service.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.MachineLearningServices/registries/{registryName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.MachineLearningServices/registries/{registryName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Registries_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> Registries_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-04-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="MachineLearningRegistryResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-03-15-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="registryName"> Name of Azure Machine Learning registry. This is case-insensitive. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="registryName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="registryName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="registryName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual NullableResponse<MachineLearningRegistryResource> GetIfExists(string registryName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(registryName, nameof(registryName));
 
-            using var scope = _machineLearningRegistryRegistriesClientDiagnostics.CreateScope("MachineLearningRegistryCollection.GetIfExists");
+            using DiagnosticScope scope = _registriesClientDiagnostics.CreateScope("MachineLearningRegistryCollection.GetIfExists");
             scope.Start();
             try
             {
-                var response = _machineLearningRegistryRegistriesRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, registryName, cancellationToken: cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _registriesRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, registryName, context);
+                Pipeline.Send(message, context.CancellationToken);
+                Response result = message.Response;
+                Response<MachineLearningRegistryData> response = default;
+                switch (result.Status)
+                {
+                    case 200:
+                        response = Response.FromValue(MachineLearningRegistryData.FromResponse(result), result);
+                        break;
+                    case 404:
+                        response = Response.FromValue((MachineLearningRegistryData)null, result);
+                        break;
+                    default:
+                        throw new RequestFailedException(result);
+                }
                 if (response.Value == null)
+                {
                     return new NoValueResponse<MachineLearningRegistryResource>(response.GetRawResponse());
+                }
                 return Response.FromValue(new MachineLearningRegistryResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -486,6 +571,7 @@ namespace Azure.ResourceManager.MachineLearning
             return GetAll().GetEnumerator();
         }
 
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
         IAsyncEnumerator<MachineLearningRegistryResource> IAsyncEnumerable<MachineLearningRegistryResource>.GetAsyncEnumerator(CancellationToken cancellationToken)
         {
             return GetAllAsync(cancellationToken: cancellationToken).GetAsyncEnumerator(cancellationToken);

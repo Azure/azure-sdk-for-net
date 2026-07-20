@@ -64,9 +64,7 @@ namespace Azure.ResourceManager.InformaticaDataManagement.Models
             {
                 return null;
             }
-            Utf8JsonRequestContent content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(informaticaOrganizationPatch, ModelSerializationExtensions.WireOptions);
-            return content;
+            return RequestContent.Create(informaticaOrganizationPatch, ModelSerializationExtensions.WireOptions);
         }
 
         /// <param name="writer"> The JSON writer. </param>

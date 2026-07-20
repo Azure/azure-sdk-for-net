@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.Cdn;
 
 namespace Azure.ResourceManager.Cdn.Models
 {
@@ -14,14 +15,6 @@ namespace Azure.ResourceManager.Cdn.Models
     public readonly partial struct PostArgsOperator : IEquatable<PostArgsOperator>
     {
         private readonly string _value;
-
-        /// <summary> Initializes a new instance of <see cref="PostArgsOperator"/>. </summary>
-        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        public PostArgsOperator(string value)
-        {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
-
         private const string AnyValue = "Any";
         private const string EqualValue = "Equal";
         private const string ContainsValue = "Contains";
@@ -33,43 +26,76 @@ namespace Azure.ResourceManager.Cdn.Models
         private const string GreaterThanOrEqualValue = "GreaterThanOrEqual";
         private const string RegExValue = "RegEx";
 
-        /// <summary> Any. </summary>
+        /// <summary> Initializes a new instance of <see cref="PostArgsOperator"/>. </summary>
+        /// <param name="value"> The value. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
+        public PostArgsOperator(string value)
+        {
+            Argument.AssertNotNull(value, nameof(value));
+
+            _value = value;
+        }
+
+        /// <summary> Gets the Any. </summary>
         public static PostArgsOperator Any { get; } = new PostArgsOperator(AnyValue);
-        /// <summary> Equal. </summary>
+
+        /// <summary> Gets the Equal. </summary>
         public static PostArgsOperator Equal { get; } = new PostArgsOperator(EqualValue);
-        /// <summary> Contains. </summary>
+
+        /// <summary> Gets the Contains. </summary>
         public static PostArgsOperator Contains { get; } = new PostArgsOperator(ContainsValue);
-        /// <summary> BeginsWith. </summary>
+
+        /// <summary> Gets the BeginsWith. </summary>
         public static PostArgsOperator BeginsWith { get; } = new PostArgsOperator(BeginsWithValue);
-        /// <summary> EndsWith. </summary>
+
+        /// <summary> Gets the EndsWith. </summary>
         public static PostArgsOperator EndsWith { get; } = new PostArgsOperator(EndsWithValue);
-        /// <summary> LessThan. </summary>
+
+        /// <summary> Gets the LessThan. </summary>
         public static PostArgsOperator LessThan { get; } = new PostArgsOperator(LessThanValue);
-        /// <summary> LessThanOrEqual. </summary>
+
+        /// <summary> Gets the LessThanOrEqual. </summary>
         public static PostArgsOperator LessThanOrEqual { get; } = new PostArgsOperator(LessThanOrEqualValue);
-        /// <summary> GreaterThan. </summary>
+
+        /// <summary> Gets the GreaterThan. </summary>
         public static PostArgsOperator GreaterThan { get; } = new PostArgsOperator(GreaterThanValue);
-        /// <summary> GreaterThanOrEqual. </summary>
+
+        /// <summary> Gets the GreaterThanOrEqual. </summary>
         public static PostArgsOperator GreaterThanOrEqual { get; } = new PostArgsOperator(GreaterThanOrEqualValue);
-        /// <summary> RegEx. </summary>
+
+        /// <summary> Gets the RegEx. </summary>
         public static PostArgsOperator RegEx { get; } = new PostArgsOperator(RegExValue);
+
         /// <summary> Determines if two <see cref="PostArgsOperator"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(PostArgsOperator left, PostArgsOperator right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="PostArgsOperator"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(PostArgsOperator left, PostArgsOperator right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="PostArgsOperator"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="PostArgsOperator"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator PostArgsOperator(string value) => new PostArgsOperator(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="PostArgsOperator"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator PostArgsOperator?(string value) => value == null ? null : new PostArgsOperator(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is PostArgsOperator other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(PostArgsOperator other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

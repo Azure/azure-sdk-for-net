@@ -8,16 +8,56 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
-using System.Text;
 using System.Text.Json;
-using Azure.Core;
+using Azure.ResourceManager.Hci;
 
 namespace Azure.ResourceManager.Hci.Models
 {
-    public partial class DeploymentSettingObservability : IUtf8JsonSerializable, IJsonModel<DeploymentSettingObservability>
+    /// <summary> The Observability of AzureStackHCI Cluster. </summary>
+    public partial class DeploymentSettingObservability : IJsonModel<DeploymentSettingObservability>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<DeploymentSettingObservability>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual DeploymentSettingObservability PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<DeploymentSettingObservability>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    {
+                        return DeserializeDeploymentSettingObservability(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(DeploymentSettingObservability)} does not support reading '{options.Format}' format.");
+            }
+        }
 
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<DeploymentSettingObservability>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerHciContext.Default);
+                default:
+                    throw new FormatException($"The model {nameof(DeploymentSettingObservability)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<DeploymentSettingObservability>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        DeploymentSettingObservability IPersistableModel<DeploymentSettingObservability>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<DeploymentSettingObservability>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<DeploymentSettingObservability>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
@@ -29,12 +69,11 @@ namespace Azure.ResourceManager.Hci.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<DeploymentSettingObservability>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<DeploymentSettingObservability>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(DeploymentSettingObservability)} does not support writing '{format}' format.");
             }
-
             if (Optional.IsDefined(IsStreamingDataClientEnabled))
             {
                 writer.WritePropertyName("streamingDataClient"u8);
@@ -50,15 +89,15 @@ namespace Azure.ResourceManager.Hci.Models
                 writer.WritePropertyName("episodicDataUpload"u8);
                 writer.WriteBooleanValue(IsEpisodicDataUploadEnabled.Value);
             }
-            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
-                foreach (var item in _serializedAdditionalRawData)
+                foreach (var item in _additionalBinaryDataProperties)
                 {
                     writer.WritePropertyName(item.Key);
 #if NET6_0_OR_GREATER
-				writer.WriteRawValue(item.Value);
+                    writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value, ModelSerializationExtensions.JsonDocumentOptions))
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
                     {
                         JsonSerializer.Serialize(writer, document.RootElement);
                     }
@@ -67,163 +106,70 @@ namespace Azure.ResourceManager.Hci.Models
             }
         }
 
-        DeploymentSettingObservability IJsonModel<DeploymentSettingObservability>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        DeploymentSettingObservability IJsonModel<DeploymentSettingObservability>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual DeploymentSettingObservability JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<DeploymentSettingObservability>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<DeploymentSettingObservability>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(DeploymentSettingObservability)} does not support reading '{format}' format.");
             }
-
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
             return DeserializeDeploymentSettingObservability(document.RootElement, options);
         }
 
-        internal static DeploymentSettingObservability DeserializeDeploymentSettingObservability(JsonElement element, ModelReaderWriterOptions options = null)
+        /// <param name="element"> The JSON element to deserialize. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        internal static DeploymentSettingObservability DeserializeDeploymentSettingObservability(JsonElement element, ModelReaderWriterOptions options)
         {
-            options ??= ModelSerializationExtensions.WireOptions;
-
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            bool? streamingDataClient = default;
-            bool? euLocation = default;
-            bool? episodicDataUpload = default;
-            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
-            foreach (var property in element.EnumerateObject())
+            bool? isStreamingDataClientEnabled = default;
+            bool? isEULocation = default;
+            bool? isEpisodicDataUploadEnabled = default;
+            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            foreach (var prop in element.EnumerateObject())
             {
-                if (property.NameEquals("streamingDataClient"u8))
+                if (prop.NameEquals("streamingDataClient"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    streamingDataClient = property.Value.GetBoolean();
+                    isStreamingDataClientEnabled = prop.Value.GetBoolean();
                     continue;
                 }
-                if (property.NameEquals("euLocation"u8))
+                if (prop.NameEquals("euLocation"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    euLocation = property.Value.GetBoolean();
+                    isEULocation = prop.Value.GetBoolean();
                     continue;
                 }
-                if (property.NameEquals("episodicDataUpload"u8))
+                if (prop.NameEquals("episodicDataUpload"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    episodicDataUpload = property.Value.GetBoolean();
+                    isEpisodicDataUploadEnabled = prop.Value.GetBoolean();
                     continue;
                 }
                 if (options.Format != "W")
                 {
-                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = rawDataDictionary;
-            return new DeploymentSettingObservability(streamingDataClient, euLocation, episodicDataUpload, serializedAdditionalRawData);
+            return new DeploymentSettingObservability(isStreamingDataClientEnabled, isEULocation, isEpisodicDataUploadEnabled, additionalBinaryDataProperties);
         }
-
-        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
-        {
-            StringBuilder builder = new StringBuilder();
-            BicepModelReaderWriterOptions bicepOptions = options as BicepModelReaderWriterOptions;
-            IDictionary<string, string> propertyOverrides = null;
-            bool hasObjectOverride = bicepOptions != null && bicepOptions.PropertyOverrides.TryGetValue(this, out propertyOverrides);
-            bool hasPropertyOverride = false;
-            string propertyOverride = null;
-
-            builder.AppendLine("{");
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(IsStreamingDataClientEnabled), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  streamingDataClient: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(IsStreamingDataClientEnabled))
-                {
-                    builder.Append("  streamingDataClient: ");
-                    var boolValue = IsStreamingDataClientEnabled.Value == true ? "true" : "false";
-                    builder.AppendLine($"{boolValue}");
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(IsEULocation), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  euLocation: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(IsEULocation))
-                {
-                    builder.Append("  euLocation: ");
-                    var boolValue = IsEULocation.Value == true ? "true" : "false";
-                    builder.AppendLine($"{boolValue}");
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(IsEpisodicDataUploadEnabled), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  episodicDataUpload: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(IsEpisodicDataUploadEnabled))
-                {
-                    builder.Append("  episodicDataUpload: ");
-                    var boolValue = IsEpisodicDataUploadEnabled.Value == true ? "true" : "false";
-                    builder.AppendLine($"{boolValue}");
-                }
-            }
-
-            builder.AppendLine("}");
-            return BinaryData.FromString(builder.ToString());
-        }
-
-        BinaryData IPersistableModel<DeploymentSettingObservability>.Write(ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<DeploymentSettingObservability>)this).GetFormatFromOptions(options) : options.Format;
-
-            switch (format)
-            {
-                case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerHciContext.Default);
-                case "bicep":
-                    return SerializeBicep(options);
-                default:
-                    throw new FormatException($"The model {nameof(DeploymentSettingObservability)} does not support writing '{options.Format}' format.");
-            }
-        }
-
-        DeploymentSettingObservability IPersistableModel<DeploymentSettingObservability>.Create(BinaryData data, ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<DeploymentSettingObservability>)this).GetFormatFromOptions(options) : options.Format;
-
-            switch (format)
-            {
-                case "J":
-                    {
-                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
-                        return DeserializeDeploymentSettingObservability(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(DeploymentSettingObservability)} does not support reading '{options.Format}' format.");
-            }
-        }
-
-        string IPersistableModel<DeploymentSettingObservability>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

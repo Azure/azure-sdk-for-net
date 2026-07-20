@@ -4,10 +4,12 @@
 
 using System;
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 
-namespace Azure.AI.Projects
+namespace Azure.AI.Projects.Evaluation
 {
     /// <summary> Result of the evaluation. </summary>
+    [Experimental("AAIP001")]
     public partial class EvalResult
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
@@ -17,27 +19,27 @@ namespace Azure.AI.Projects
         /// <param name="name"> name of the check. </param>
         /// <param name="type"> type of the check. </param>
         /// <param name="score"> score. </param>
-        /// <param name="passed"> indicates if the check passed or failed. </param>
-        internal EvalResult(string name, string @type, float score, bool passed)
+        /// <param name="isPassed"> indicates if the check passed or failed. </param>
+        internal EvalResult(string name, string @type, float score, bool isPassed)
         {
             Name = name;
             Type = @type;
             Score = score;
-            Passed = passed;
+            IsPassed = isPassed;
         }
 
         /// <summary> Initializes a new instance of <see cref="EvalResult"/>. </summary>
         /// <param name="name"> name of the check. </param>
         /// <param name="type"> type of the check. </param>
         /// <param name="score"> score. </param>
-        /// <param name="passed"> indicates if the check passed or failed. </param>
+        /// <param name="isPassed"> indicates if the check passed or failed. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal EvalResult(string name, string @type, float score, bool passed, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal EvalResult(string name, string @type, float score, bool isPassed, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Name = name;
             Type = @type;
             Score = score;
-            Passed = passed;
+            IsPassed = isPassed;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
@@ -51,6 +53,6 @@ namespace Azure.AI.Projects
         public float Score { get; }
 
         /// <summary> indicates if the check passed or failed. </summary>
-        public bool Passed { get; }
+        public bool IsPassed { get; }
     }
 }

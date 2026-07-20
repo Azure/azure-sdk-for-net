@@ -20,7 +20,7 @@ internal partial class AzureResponsesClient : ResponsesClient
     private readonly string _apiVersion;
 
     internal AzureResponsesClient(ClientPipeline pipeline, string deploymentName, Uri endpoint, AzureOpenAIClientOptions options)
-        : base(pipeline, model: deploymentName, new OpenAIClientOptions() { Endpoint = endpoint })
+        : base(pipeline, new OpenAIClientOptions() { Endpoint = endpoint })
     {
         Argument.AssertNotNull(pipeline, nameof(pipeline));
         Argument.AssertNotNull(endpoint, nameof(endpoint));

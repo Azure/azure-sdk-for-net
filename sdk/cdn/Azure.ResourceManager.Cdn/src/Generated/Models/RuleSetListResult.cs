@@ -7,64 +7,41 @@
 
 using System;
 using System.Collections.Generic;
+using System.Linq;
+using Azure.ResourceManager.Cdn;
 
 namespace Azure.ResourceManager.Cdn.Models
 {
-    /// <summary> Result of the request to list rule sets. It contains a list of rule set objects and a URL link to get the next set of results. </summary>
+    /// <summary> The response of a RuleSet list operation. </summary>
     internal partial class RuleSetListResult
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="RuleSetListResult"/>. </summary>
-        internal RuleSetListResult()
+        /// <param name="value"> The RuleSet items on this page. </param>
+        internal RuleSetListResult(IEnumerable<FrontDoorRuleSetData> value)
         {
-            Value = new ChangeTrackingList<FrontDoorRuleSetData>();
+            Value = value.ToList();
         }
 
         /// <summary> Initializes a new instance of <see cref="RuleSetListResult"/>. </summary>
-        /// <param name="value"> List of AzureFrontDoor rule sets within a profile. </param>
-        /// <param name="nextLink"> URL to get the next set of rule set objects if there are any. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal RuleSetListResult(IReadOnlyList<FrontDoorRuleSetData> value, string nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="value"> The RuleSet items on this page. </param>
+        /// <param name="nextLink"> The link to the next page of items. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal RuleSetListResult(IList<FrontDoorRuleSetData> value, Uri nextLink, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Value = value;
             NextLink = nextLink;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
-        /// <summary> List of AzureFrontDoor rule sets within a profile. </summary>
-        public IReadOnlyList<FrontDoorRuleSetData> Value { get; }
-        /// <summary> URL to get the next set of rule set objects if there are any. </summary>
-        public string NextLink { get; }
+        /// <summary> The RuleSet items on this page. </summary>
+        [WirePath("value")]
+        public IList<FrontDoorRuleSetData> Value { get; }
+
+        /// <summary> The link to the next page of items. </summary>
+        [WirePath("nextLink")]
+        public Uri NextLink { get; }
     }
 }

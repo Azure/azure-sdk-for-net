@@ -5,7 +5,7 @@
 
 using System;
 using System.ComponentModel;
-using Azure.Core;
+using Microsoft.TypeSpec.Generator.Customizations;
 
 namespace Azure.ResourceManager.PostgreSql.Models
 {

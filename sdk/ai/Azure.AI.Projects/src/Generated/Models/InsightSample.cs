@@ -4,14 +4,16 @@
 
 using System;
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 using System.Text.Json;
 
-namespace Azure.AI.Projects
+namespace Azure.AI.Projects.Evaluation
 {
     /// <summary>
     /// A sample from the analysis.
     /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="EvaluationResultSample"/>.
     /// </summary>
+    [Experimental("AAIP001")]
     public abstract partial class InsightSample
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>

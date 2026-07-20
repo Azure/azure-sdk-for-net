@@ -9,14 +9,55 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure.Core;
+using Azure.ResourceManager.AppContainers;
 
 namespace Azure.ResourceManager.AppContainers.Models
 {
-    public partial class ContainerAppJobPatchProperties : IUtf8JsonSerializable, IJsonModel<ContainerAppJobPatchProperties>
+    /// <summary> Container Apps Job patch properties. </summary>
+    public partial class ContainerAppJobPatchProperties : IJsonModel<ContainerAppJobPatchProperties>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ContainerAppJobPatchProperties>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual ContainerAppJobPatchProperties PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<ContainerAppJobPatchProperties>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    {
+                        return DeserializeContainerAppJobPatchProperties(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(ContainerAppJobPatchProperties)} does not support reading '{options.Format}' format.");
+            }
+        }
 
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<ContainerAppJobPatchProperties>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerAppContainersContext.Default);
+                default:
+                    throw new FormatException($"The model {nameof(ContainerAppJobPatchProperties)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<ContainerAppJobPatchProperties>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        ContainerAppJobPatchProperties IPersistableModel<ContainerAppJobPatchProperties>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<ContainerAppJobPatchProperties>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<ContainerAppJobPatchProperties>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
@@ -28,12 +69,11 @@ namespace Azure.ResourceManager.AppContainers.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<ContainerAppJobPatchProperties>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<ContainerAppJobPatchProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(ContainerAppJobPatchProperties)} does not support writing '{format}' format.");
             }
-
             if (Optional.IsDefined(EnvironmentId))
             {
                 writer.WritePropertyName("environmentId"u8);
@@ -53,8 +93,13 @@ namespace Azure.ResourceManager.AppContainers.Models
             {
                 writer.WritePropertyName("outboundIpAddresses"u8);
                 writer.WriteStartArray();
-                foreach (var item in OutboundIPAddresses)
+                foreach (string item in OutboundIPAddresses)
                 {
+                    if (item == null)
+                    {
+                        writer.WriteNullValue();
+                        continue;
+                    }
                     writer.WriteStringValue(item);
                 }
                 writer.WriteEndArray();
@@ -64,15 +109,15 @@ namespace Azure.ResourceManager.AppContainers.Models
                 writer.WritePropertyName("eventStreamEndpoint"u8);
                 writer.WriteStringValue(EventStreamEndpoint);
             }
-            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
-                foreach (var item in _serializedAdditionalRawData)
+                foreach (var item in _additionalBinaryDataProperties)
                 {
                     writer.WritePropertyName(item.Key);
 #if NET6_0_OR_GREATER
-				writer.WriteRawValue(item.Value);
+                    writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value, ModelSerializationExtensions.JsonDocumentOptions))
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
                     {
                         JsonSerializer.Serialize(writer, document.RootElement);
                     }
@@ -81,22 +126,27 @@ namespace Azure.ResourceManager.AppContainers.Models
             }
         }
 
-        ContainerAppJobPatchProperties IJsonModel<ContainerAppJobPatchProperties>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        ContainerAppJobPatchProperties IJsonModel<ContainerAppJobPatchProperties>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual ContainerAppJobPatchProperties JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<ContainerAppJobPatchProperties>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<ContainerAppJobPatchProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(ContainerAppJobPatchProperties)} does not support reading '{format}' format.");
             }
-
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
             return DeserializeContainerAppJobPatchProperties(document.RootElement, options);
         }
 
-        internal static ContainerAppJobPatchProperties DeserializeContainerAppJobPatchProperties(JsonElement element, ModelReaderWriterOptions options = null)
+        /// <param name="element"> The JSON element to deserialize. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        internal static ContainerAppJobPatchProperties DeserializeContainerAppJobPatchProperties(JsonElement element, ModelReaderWriterOptions options)
         {
-            options ??= ModelSerializationExtensions.WireOptions;
-
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -106,96 +156,70 @@ namespace Azure.ResourceManager.AppContainers.Models
             ContainerAppJobTemplate template = default;
             IList<string> outboundIPAddresses = default;
             string eventStreamEndpoint = default;
-            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
-            foreach (var property in element.EnumerateObject())
+            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            foreach (var prop in element.EnumerateObject())
             {
-                if (property.NameEquals("environmentId"u8))
+                if (prop.NameEquals("environmentId"u8))
                 {
-                    environmentId = property.Value.GetString();
+                    environmentId = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("configuration"u8))
+                if (prop.NameEquals("configuration"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    configuration = ContainerAppJobConfiguration.DeserializeContainerAppJobConfiguration(property.Value, options);
+                    configuration = ContainerAppJobConfiguration.DeserializeContainerAppJobConfiguration(prop.Value, options);
                     continue;
                 }
-                if (property.NameEquals("template"u8))
+                if (prop.NameEquals("template"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    template = ContainerAppJobTemplate.DeserializeContainerAppJobTemplate(property.Value, options);
+                    template = ContainerAppJobTemplate.DeserializeContainerAppJobTemplate(prop.Value, options);
                     continue;
                 }
-                if (property.NameEquals("outboundIpAddresses"u8))
+                if (prop.NameEquals("outboundIpAddresses"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
                     List<string> array = new List<string>();
-                    foreach (var item in property.Value.EnumerateArray())
+                    foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(item.GetString());
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(item.GetString());
+                        }
                     }
                     outboundIPAddresses = array;
                     continue;
                 }
-                if (property.NameEquals("eventStreamEndpoint"u8))
+                if (prop.NameEquals("eventStreamEndpoint"u8))
                 {
-                    eventStreamEndpoint = property.Value.GetString();
+                    eventStreamEndpoint = prop.Value.GetString();
                     continue;
                 }
                 if (options.Format != "W")
                 {
-                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = rawDataDictionary;
             return new ContainerAppJobPatchProperties(
                 environmentId,
                 configuration,
                 template,
                 outboundIPAddresses ?? new ChangeTrackingList<string>(),
                 eventStreamEndpoint,
-                serializedAdditionalRawData);
+                additionalBinaryDataProperties);
         }
-
-        BinaryData IPersistableModel<ContainerAppJobPatchProperties>.Write(ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<ContainerAppJobPatchProperties>)this).GetFormatFromOptions(options) : options.Format;
-
-            switch (format)
-            {
-                case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerAppContainersContext.Default);
-                default:
-                    throw new FormatException($"The model {nameof(ContainerAppJobPatchProperties)} does not support writing '{options.Format}' format.");
-            }
-        }
-
-        ContainerAppJobPatchProperties IPersistableModel<ContainerAppJobPatchProperties>.Create(BinaryData data, ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<ContainerAppJobPatchProperties>)this).GetFormatFromOptions(options) : options.Format;
-
-            switch (format)
-            {
-                case "J":
-                    {
-                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
-                        return DeserializeContainerAppJobPatchProperties(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(ContainerAppJobPatchProperties)} does not support reading '{options.Format}' format.");
-            }
-        }
-
-        string IPersistableModel<ContainerAppJobPatchProperties>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

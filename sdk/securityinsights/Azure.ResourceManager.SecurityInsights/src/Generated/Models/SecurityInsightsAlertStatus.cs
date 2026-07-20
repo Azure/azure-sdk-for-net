@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.SecurityInsights;
 
 namespace Azure.ResourceManager.SecurityInsights.Models
 {
@@ -14,47 +15,72 @@ namespace Azure.ResourceManager.SecurityInsights.Models
     public readonly partial struct SecurityInsightsAlertStatus : IEquatable<SecurityInsightsAlertStatus>
     {
         private readonly string _value;
+        /// <summary> Unknown value. </summary>
+        private const string UnknownValue = "Unknown";
+        /// <summary> New alert. </summary>
+        private const string NewValue = "New";
+        /// <summary> Alert closed after handling. </summary>
+        private const string ResolvedValue = "Resolved";
+        /// <summary> Alert dismissed as false positive. </summary>
+        private const string DismissedValue = "Dismissed";
+        /// <summary> Alert is being handled. </summary>
+        private const string InProgressValue = "InProgress";
 
         /// <summary> Initializes a new instance of <see cref="SecurityInsightsAlertStatus"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public SecurityInsightsAlertStatus(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string UnknownValue = "Unknown";
-        private const string NewValue = "New";
-        private const string ResolvedValue = "Resolved";
-        private const string DismissedValue = "Dismissed";
-        private const string InProgressValue = "InProgress";
+            _value = value;
+        }
 
         /// <summary> Unknown value. </summary>
         public static SecurityInsightsAlertStatus Unknown { get; } = new SecurityInsightsAlertStatus(UnknownValue);
+
         /// <summary> New alert. </summary>
         public static SecurityInsightsAlertStatus New { get; } = new SecurityInsightsAlertStatus(NewValue);
+
         /// <summary> Alert closed after handling. </summary>
         public static SecurityInsightsAlertStatus Resolved { get; } = new SecurityInsightsAlertStatus(ResolvedValue);
+
         /// <summary> Alert dismissed as false positive. </summary>
         public static SecurityInsightsAlertStatus Dismissed { get; } = new SecurityInsightsAlertStatus(DismissedValue);
+
         /// <summary> Alert is being handled. </summary>
         public static SecurityInsightsAlertStatus InProgress { get; } = new SecurityInsightsAlertStatus(InProgressValue);
+
         /// <summary> Determines if two <see cref="SecurityInsightsAlertStatus"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(SecurityInsightsAlertStatus left, SecurityInsightsAlertStatus right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="SecurityInsightsAlertStatus"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(SecurityInsightsAlertStatus left, SecurityInsightsAlertStatus right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="SecurityInsightsAlertStatus"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="SecurityInsightsAlertStatus"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator SecurityInsightsAlertStatus(string value) => new SecurityInsightsAlertStatus(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="SecurityInsightsAlertStatus"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator SecurityInsightsAlertStatus?(string value) => value == null ? null : new SecurityInsightsAlertStatus(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is SecurityInsightsAlertStatus other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(SecurityInsightsAlertStatus other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

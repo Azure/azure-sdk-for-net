@@ -15,21 +15,18 @@ using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager;
-using Azure.ResourceManager.Resources;
 
 namespace Azure.Generator.MgmtTypeSpec.Tests
 {
     /// <summary>
     /// A class representing a collection of <see cref="PolicyArcAssignmentResource"/> and their operations.
-    /// Each <see cref="PolicyArcAssignmentResource"/> in the collection will belong to the same instance of <see cref="ResourceGroupResource"/>.
-    /// To get a <see cref="PolicyArcAssignmentCollection"/> instance call the GetPolicyArcAssignments method from an instance of <see cref="ResourceGroupResource"/>.
+    /// Each <see cref="PolicyArcAssignmentResource"/> in the collection will belong to the same instance of <see cref="ArmResource"/>.
+    /// To get a <see cref="PolicyArcAssignmentCollection"/> instance call the GetPolicyArcAssignments method from an instance of <see cref="ArmResource"/>.
     /// </summary>
     public partial class PolicyArcAssignmentCollection : ArmCollection, IEnumerable<PolicyArcAssignmentResource>, IAsyncEnumerable<PolicyArcAssignmentResource>
     {
         private readonly ClientDiagnostics _policyArcAssignmentsClientDiagnostics;
         private readonly PolicyArcAssignments _policyArcAssignmentsRestClient;
-        /// <summary> The machineName. </summary>
-        private readonly string _machineName;
 
         /// <summary> Initializes a new instance of PolicyArcAssignmentCollection for mocking. </summary>
         protected PolicyArcAssignmentCollection()
@@ -39,11 +36,9 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
         /// <summary> Initializes a new instance of <see cref="PolicyArcAssignmentCollection"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
-        /// <param name="machineName"> The machineName for the resource. </param>
-        internal PolicyArcAssignmentCollection(ArmClient client, ResourceIdentifier id, string machineName) : base(client, id)
+        internal PolicyArcAssignmentCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
             TryGetApiVersion(PolicyArcAssignmentResource.ResourceType, out string policyArcAssignmentApiVersion);
-            _machineName = machineName;
             _policyArcAssignmentsClientDiagnostics = new ClientDiagnostics("Azure.Generator.MgmtTypeSpec.Tests", PolicyArcAssignmentResource.ResourceType.Namespace, Diagnostics);
             _policyArcAssignmentsRestClient = new PolicyArcAssignments(_policyArcAssignmentsClientDiagnostics, Pipeline, Endpoint, policyArcAssignmentApiVersion ?? "2024-05-01");
             ValidateResourceId(id);
@@ -53,9 +48,9 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
         [Conditional("DEBUG")]
         internal static void ValidateResourceId(ResourceIdentifier id)
         {
-            if (id.ResourceType != ResourceGroupResource.ResourceType)
+            if (id.ResourceType != "Microsoft.HybridCompute/machines")
             {
-                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ResourceGroupResource.ResourceType), id);
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, "Microsoft.HybridCompute/machines"), nameof(id));
             }
         }
 
@@ -95,7 +90,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _policyArcAssignmentsRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, _machineName, policyAssignmentName, PolicyAssignmentData.ToRequestContent(data), context);
+                HttpMessage message = _policyArcAssignmentsRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, policyAssignmentName, PolicyAssignmentData.ToRequestContent(data), context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<PolicyAssignmentData> response = Response.FromValue(PolicyAssignmentData.FromResponse(result), result);
                 RequestUriBuilder uri = message.Request.Uri;
@@ -150,7 +145,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _policyArcAssignmentsRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, _machineName, policyAssignmentName, PolicyAssignmentData.ToRequestContent(data), context);
+                HttpMessage message = _policyArcAssignmentsRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, policyAssignmentName, PolicyAssignmentData.ToRequestContent(data), context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<PolicyAssignmentData> response = Response.FromValue(PolicyAssignmentData.FromResponse(result), result);
                 RequestUriBuilder uri = message.Request.Uri;
@@ -202,7 +197,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _policyArcAssignmentsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, _machineName, policyAssignmentName, context);
+                HttpMessage message = _policyArcAssignmentsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, policyAssignmentName, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<PolicyAssignmentData> response = Response.FromValue(PolicyAssignmentData.FromResponse(result), result);
                 if (response.Value == null)
@@ -251,7 +246,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _policyArcAssignmentsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, _machineName, policyAssignmentName, context);
+                HttpMessage message = _policyArcAssignmentsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, policyAssignmentName, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<PolicyAssignmentData> response = Response.FromValue(PolicyAssignmentData.FromResponse(result), result);
                 if (response.Value == null)
@@ -292,7 +287,13 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<PolicyAssignmentData, PolicyArcAssignmentResource>(new PolicyArcAssignmentsGetAllAsyncCollectionResultOfT(_policyArcAssignmentsRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, _machineName, context), data => new PolicyArcAssignmentResource(Client, data));
+            return new AsyncPageableWrapper<PolicyAssignmentData, PolicyArcAssignmentResource>(new PolicyArcAssignmentsGetAllAsyncCollectionResultOfT(
+                _policyArcAssignmentsRestClient,
+                Guid.Parse(Id.SubscriptionId),
+                Id.ResourceGroupName,
+                Id.Name,
+                context,
+                "PolicyArcAssignmentCollection.GetAll"), data => new PolicyArcAssignmentResource(Client, data));
         }
 
         /// <summary>
@@ -320,7 +321,13 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<PolicyAssignmentData, PolicyArcAssignmentResource>(new PolicyArcAssignmentsGetAllCollectionResultOfT(_policyArcAssignmentsRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, _machineName, context), data => new PolicyArcAssignmentResource(Client, data));
+            return new PageableWrapper<PolicyAssignmentData, PolicyArcAssignmentResource>(new PolicyArcAssignmentsGetAllCollectionResultOfT(
+                _policyArcAssignmentsRestClient,
+                Guid.Parse(Id.SubscriptionId),
+                Id.ResourceGroupName,
+                Id.Name,
+                context,
+                "PolicyArcAssignmentCollection.GetAll"), data => new PolicyArcAssignmentResource(Client, data));
         }
 
         /// <summary>
@@ -356,7 +363,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _policyArcAssignmentsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, _machineName, policyAssignmentName, context);
+                HttpMessage message = _policyArcAssignmentsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, policyAssignmentName, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<PolicyAssignmentData> response = default;
@@ -413,7 +420,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _policyArcAssignmentsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, _machineName, policyAssignmentName, context);
+                HttpMessage message = _policyArcAssignmentsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, policyAssignmentName, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<PolicyAssignmentData> response = default;
@@ -470,7 +477,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _policyArcAssignmentsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, _machineName, policyAssignmentName, context);
+                HttpMessage message = _policyArcAssignmentsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, policyAssignmentName, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<PolicyAssignmentData> response = default;
@@ -531,7 +538,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _policyArcAssignmentsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, _machineName, policyAssignmentName, context);
+                HttpMessage message = _policyArcAssignmentsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, policyAssignmentName, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<PolicyAssignmentData> response = default;

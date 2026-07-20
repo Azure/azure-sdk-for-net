@@ -8,33 +8,31 @@
 using System;
 using System.Threading;
 using System.Threading.Tasks;
+using Azure;
 using Azure.Core;
+using Azure.ResourceManager;
+using Azure.ResourceManager.DevCenter;
+using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.DevCenter.Mocking
 {
-    /// <summary> A class to add extension methods to ResourceGroupResource. </summary>
+    /// <summary> A class to add extension methods to <see cref="ResourceGroupResource"/>. </summary>
     public partial class MockableDevCenterResourceGroupResource : ArmResource
     {
-        /// <summary> Initializes a new instance of the <see cref="MockableDevCenterResourceGroupResource"/> class for mocking. </summary>
+        /// <summary> Initializes a new instance of MockableDevCenterResourceGroupResource for mocking. </summary>
         protected MockableDevCenterResourceGroupResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref="MockableDevCenterResourceGroupResource"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="MockableDevCenterResourceGroupResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal MockableDevCenterResourceGroupResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
         }
 
-        private string GetApiVersionOrNull(ResourceType resourceType)
-        {
-            TryGetApiVersion(resourceType, out string apiVersion);
-            return apiVersion;
-        }
-
-        /// <summary> Gets a collection of DevCenterResources in the ResourceGroupResource. </summary>
-        /// <returns> An object representing collection of DevCenterResources and their operations over a DevCenterResource. </returns>
+        /// <summary> Gets a collection of DevCenters in the <see cref="ResourceGroupResource"/>. </summary>
+        /// <returns> An object representing collection of DevCenters and their operations over a DevCenterResource. </returns>
         public virtual DevCenterCollection GetDevCenters()
         {
             return GetCachedClient(client => new DevCenterCollection(client, Id));
@@ -44,20 +42,16 @@ namespace Azure.ResourceManager.DevCenter.Mocking
         /// Gets a devcenter.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DevCenter/devcenters/{devCenterName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DevCenter/devcenters/{devCenterName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>DevCenters_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> DevCenters_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2023-04-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="DevCenterResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-01-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -68,6 +62,8 @@ namespace Azure.ResourceManager.DevCenter.Mocking
         [ForwardsClientCalls]
         public virtual async Task<Response<DevCenterResource>> GetDevCenterAsync(string devCenterName, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNullOrEmpty(devCenterName, nameof(devCenterName));
+
             return await GetDevCenters().GetAsync(devCenterName, cancellationToken).ConfigureAwait(false);
         }
 
@@ -75,20 +71,16 @@ namespace Azure.ResourceManager.DevCenter.Mocking
         /// Gets a devcenter.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DevCenter/devcenters/{devCenterName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DevCenter/devcenters/{devCenterName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>DevCenters_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> DevCenters_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2023-04-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="DevCenterResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-01-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -99,11 +91,13 @@ namespace Azure.ResourceManager.DevCenter.Mocking
         [ForwardsClientCalls]
         public virtual Response<DevCenterResource> GetDevCenter(string devCenterName, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNullOrEmpty(devCenterName, nameof(devCenterName));
+
             return GetDevCenters().Get(devCenterName, cancellationToken);
         }
 
-        /// <summary> Gets a collection of DevCenterProjectResources in the ResourceGroupResource. </summary>
-        /// <returns> An object representing collection of DevCenterProjectResources and their operations over a DevCenterProjectResource. </returns>
+        /// <summary> Gets a collection of DevCenterProjects in the <see cref="ResourceGroupResource"/>. </summary>
+        /// <returns> An object representing collection of DevCenterProjects and their operations over a DevCenterProjectResource. </returns>
         public virtual DevCenterProjectCollection GetDevCenterProjects()
         {
             return GetCachedClient(client => new DevCenterProjectCollection(client, Id));
@@ -113,20 +107,16 @@ namespace Azure.ResourceManager.DevCenter.Mocking
         /// Gets a specific project.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DevCenter/projects/{projectName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DevCenter/projects/{projectName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Projects_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> Projects_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2023-04-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="DevCenterProjectResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-01-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -137,6 +127,8 @@ namespace Azure.ResourceManager.DevCenter.Mocking
         [ForwardsClientCalls]
         public virtual async Task<Response<DevCenterProjectResource>> GetDevCenterProjectAsync(string projectName, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
+
             return await GetDevCenterProjects().GetAsync(projectName, cancellationToken).ConfigureAwait(false);
         }
 
@@ -144,20 +136,16 @@ namespace Azure.ResourceManager.DevCenter.Mocking
         /// Gets a specific project.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DevCenter/projects/{projectName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DevCenter/projects/{projectName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Projects_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> Projects_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2023-04-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="DevCenterProjectResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-01-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -168,34 +156,32 @@ namespace Azure.ResourceManager.DevCenter.Mocking
         [ForwardsClientCalls]
         public virtual Response<DevCenterProjectResource> GetDevCenterProject(string projectName, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
+
             return GetDevCenterProjects().Get(projectName, cancellationToken);
         }
 
-        /// <summary> Gets a collection of DevCenterNetworkConnectionResources in the ResourceGroupResource. </summary>
-        /// <returns> An object representing collection of DevCenterNetworkConnectionResources and their operations over a DevCenterNetworkConnectionResource. </returns>
+        /// <summary> Gets a collection of DevCenterNetworkConnections in the <see cref="ResourceGroupResource"/>. </summary>
+        /// <returns> An object representing collection of DevCenterNetworkConnections and their operations over a DevCenterNetworkConnectionResource. </returns>
         public virtual DevCenterNetworkConnectionCollection GetDevCenterNetworkConnections()
         {
             return GetCachedClient(client => new DevCenterNetworkConnectionCollection(client, Id));
         }
 
         /// <summary>
-        /// Gets a network connection resource
+        /// Gets a network connection resource.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DevCenter/networkConnections/{networkConnectionName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DevCenter/networkConnections/{networkConnectionName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>NetworkConnections_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> NetworkConnections_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2023-04-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="DevCenterNetworkConnectionResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-01-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -206,27 +192,25 @@ namespace Azure.ResourceManager.DevCenter.Mocking
         [ForwardsClientCalls]
         public virtual async Task<Response<DevCenterNetworkConnectionResource>> GetDevCenterNetworkConnectionAsync(string networkConnectionName, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNullOrEmpty(networkConnectionName, nameof(networkConnectionName));
+
             return await GetDevCenterNetworkConnections().GetAsync(networkConnectionName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
-        /// Gets a network connection resource
+        /// Gets a network connection resource.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DevCenter/networkConnections/{networkConnectionName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DevCenter/networkConnections/{networkConnectionName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>NetworkConnections_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> NetworkConnections_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2023-04-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="DevCenterNetworkConnectionResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-01-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -237,6 +221,8 @@ namespace Azure.ResourceManager.DevCenter.Mocking
         [ForwardsClientCalls]
         public virtual Response<DevCenterNetworkConnectionResource> GetDevCenterNetworkConnection(string networkConnectionName, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNullOrEmpty(networkConnectionName, nameof(networkConnectionName));
+
             return GetDevCenterNetworkConnections().Get(networkConnectionName, cancellationToken);
         }
     }

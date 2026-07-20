@@ -33,8 +33,10 @@ namespace Azure.Search.Documents.KnowledgeBases.Models
         /// <param name="ingestionPermissionOptions"> Optional list of permission types to ingest together with document content. If specified, it will set the indexer permission options for the data source. </param>
         /// <param name="contentExtractionMode"> Optional content extraction mode. Default is 'minimal'. </param>
         /// <param name="aiServices"> Optional AI Services configuration for content processing. </param>
+        /// <param name="assetStore"> Optional asset store configuration for storing extracted assets such as images. </param>
+        /// <param name="freshnessPolicy"> Optional freshness policy for biasing retrieval toward newer documents. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal KnowledgeSourceIngestionParameters(SearchIndexerDataIdentity identity, KnowledgeSourceVectorizer embeddingModel, KnowledgeBaseModel chatCompletionModel, bool? disableImageVerbalization, IndexingSchedule ingestionSchedule, IList<KnowledgeSourceIngestionPermissionOption> ingestionPermissionOptions, KnowledgeSourceContentExtractionMode? contentExtractionMode, AIServices aiServices, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal KnowledgeSourceIngestionParameters(SearchIndexerDataIdentity identity, KnowledgeSourceVectorizer embeddingModel, KnowledgeBaseModel chatCompletionModel, bool? disableImageVerbalization, IndexingSchedule ingestionSchedule, IList<KnowledgeSourceIngestionPermissionOption> ingestionPermissionOptions, KnowledgeSourceContentExtractionMode? contentExtractionMode, AIServices aiServices, AssetStore assetStore, FreshnessPolicy freshnessPolicy, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Identity = identity;
             EmbeddingModel = embeddingModel;
@@ -44,6 +46,8 @@ namespace Azure.Search.Documents.KnowledgeBases.Models
             IngestionPermissionOptions = ingestionPermissionOptions;
             ContentExtractionMode = contentExtractionMode;
             AiServices = aiServices;
+            AssetStore = assetStore;
+            FreshnessPolicy = freshnessPolicy;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
@@ -70,5 +74,11 @@ namespace Azure.Search.Documents.KnowledgeBases.Models
 
         /// <summary> Optional AI Services configuration for content processing. </summary>
         public AIServices AiServices { get; set; }
+
+        /// <summary> Optional asset store configuration for storing extracted assets such as images. </summary>
+        public AssetStore AssetStore { get; set; }
+
+        /// <summary> Optional freshness policy for biasing retrieval toward newer documents. </summary>
+        public FreshnessPolicy FreshnessPolicy { get; set; }
     }
 }

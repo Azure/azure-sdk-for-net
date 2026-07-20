@@ -96,6 +96,11 @@ namespace Azure.ResourceManager.ContainerServiceFleet.Models
                 writer.WritePropertyName("afterStageWaitInSeconds"u8);
                 writer.WriteNumberValue(AfterStageWaitInSeconds.Value);
             }
+            if (Optional.IsDefined(MaxConcurrency))
+            {
+                writer.WritePropertyName("maxConcurrency"u8);
+                writer.WriteStringValue(MaxConcurrency);
+            }
             if (Optional.IsCollectionDefined(BeforeGates))
             {
                 writer.WritePropertyName("beforeGates"u8);
@@ -161,6 +166,7 @@ namespace Azure.ResourceManager.ContainerServiceFleet.Models
             string name = default;
             IList<ContainerServiceFleetUpdateGroup> groups = default;
             int? afterStageWaitInSeconds = default;
+            string maxConcurrency = default;
             IList<ContainerServiceFleetGateConfiguration> beforeGates = default;
             IList<ContainerServiceFleetGateConfiguration> afterGates = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
@@ -192,6 +198,11 @@ namespace Azure.ResourceManager.ContainerServiceFleet.Models
                         continue;
                     }
                     afterStageWaitInSeconds = prop.Value.GetInt32();
+                    continue;
+                }
+                if (prop.NameEquals("maxConcurrency"u8))
+                {
+                    maxConcurrency = prop.Value.GetString();
                     continue;
                 }
                 if (prop.NameEquals("beforeGates"u8))
@@ -231,6 +242,7 @@ namespace Azure.ResourceManager.ContainerServiceFleet.Models
                 name,
                 groups ?? new ChangeTrackingList<ContainerServiceFleetUpdateGroup>(),
                 afterStageWaitInSeconds,
+                maxConcurrency,
                 beforeGates ?? new ChangeTrackingList<ContainerServiceFleetGateConfiguration>(),
                 afterGates ?? new ChangeTrackingList<ContainerServiceFleetGateConfiguration>(),
                 additionalBinaryDataProperties);

@@ -97,7 +97,7 @@ namespace Azure.ResourceManager.Peering
         {
             if (id.ResourceType != ResourceType)
             {
-                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), id);
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), nameof(id));
             }
         }
 
@@ -439,7 +439,8 @@ namespace Azure.ResourceManager.Peering
                 Id.ResourceGroupName,
                 Id.Name,
                 consolidate,
-                context);
+                context,
+                "PeeringResource.GetRpUnbilledPrefixes");
         }
 
         /// <summary>
@@ -478,7 +479,8 @@ namespace Azure.ResourceManager.Peering
                 Id.ResourceGroupName,
                 Id.Name,
                 consolidate,
-                context);
+                context,
+                "PeeringResource.GetRpUnbilledPrefixes");
         }
 
         /// <summary>
@@ -525,7 +527,8 @@ namespace Azure.ResourceManager.Peering
                 originAsValidationState,
                 rpkiValidationState,
                 skipToken,
-                context);
+                context,
+                "PeeringResource.GetReceivedRoutes");
         }
 
         /// <summary>
@@ -572,7 +575,8 @@ namespace Azure.ResourceManager.Peering
                 originAsValidationState,
                 rpkiValidationState,
                 skipToken,
-                context);
+                context,
+                "PeeringResource.GetReceivedRoutes");
         }
 
         /// <summary> Add a tag to the current resource. </summary>

@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.RecoveryServices
         {
             TryGetApiVersion(ResourceType, out string recoveryServicesVaultApiVersion);
             _vaultsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.RecoveryServices", ResourceType.Namespace, Diagnostics);
-            _vaultsRestClient = new Vaults(_vaultsClientDiagnostics, Pipeline, Endpoint, recoveryServicesVaultApiVersion ?? "2025-08-01");
+            _vaultsRestClient = new Vaults(_vaultsClientDiagnostics, Pipeline, Endpoint, recoveryServicesVaultApiVersion ?? "2026-05-01");
             ValidateResourceId(id);
         }
 
@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.RecoveryServices
         {
             if (id.ResourceType != ResourceType)
             {
-                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), id);
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), nameof(id));
             }
         }
 
@@ -106,7 +106,7 @@ namespace Azure.ResourceManager.RecoveryServices
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-08-01. </description>
+        /// <description> 2026-05-01. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -154,7 +154,7 @@ namespace Azure.ResourceManager.RecoveryServices
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-08-01. </description>
+        /// <description> 2026-05-01. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -202,7 +202,7 @@ namespace Azure.ResourceManager.RecoveryServices
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-08-01. </description>
+        /// <description> 2026-05-01. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -230,7 +230,7 @@ namespace Azure.ResourceManager.RecoveryServices
                 HttpMessage message = _vaultsRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, RecoveryServicesVaultPatch.ToRequestContent(patch), xMsAuthorizationAuxiliary, context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 RecoveryServicesArmOperation<RecoveryServicesVaultResource> operation = new RecoveryServicesArmOperation<RecoveryServicesVaultResource>(
-                    new RecoveryServicesVaultOperationSource(Client),
+                    new RecoveryServicesVaultResourceOperationSource(Client),
                     _vaultsClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -262,7 +262,7 @@ namespace Azure.ResourceManager.RecoveryServices
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-08-01. </description>
+        /// <description> 2026-05-01. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -290,7 +290,7 @@ namespace Azure.ResourceManager.RecoveryServices
                 HttpMessage message = _vaultsRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, RecoveryServicesVaultPatch.ToRequestContent(patch), xMsAuthorizationAuxiliary, context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 RecoveryServicesArmOperation<RecoveryServicesVaultResource> operation = new RecoveryServicesArmOperation<RecoveryServicesVaultResource>(
-                    new RecoveryServicesVaultOperationSource(Client),
+                    new RecoveryServicesVaultResourceOperationSource(Client),
                     _vaultsClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -322,7 +322,7 @@ namespace Azure.ResourceManager.RecoveryServices
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-08-01. </description>
+        /// <description> 2026-05-01. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -371,7 +371,7 @@ namespace Azure.ResourceManager.RecoveryServices
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-08-01. </description>
+        /// <description> 2026-05-01. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -420,7 +420,7 @@ namespace Azure.ResourceManager.RecoveryServices
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-08-01. </description>
+        /// <description> 2026-05-01. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -475,7 +475,7 @@ namespace Azure.ResourceManager.RecoveryServices
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-08-01. </description>
+        /// <description> 2026-05-01. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -530,7 +530,7 @@ namespace Azure.ResourceManager.RecoveryServices
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-08-01. </description>
+        /// <description> 2026-05-01. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -546,7 +546,13 @@ namespace Azure.ResourceManager.RecoveryServices
             {
                 CancellationToken = cancellationToken
             };
-            return new VaultsGetReplicationUsagesAsyncCollectionResultOfT(_vaultsRestClient, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, context);
+            return new VaultsGetReplicationUsagesAsyncCollectionResultOfT(
+                _vaultsRestClient,
+                Id.SubscriptionId,
+                Id.ResourceGroupName,
+                Id.Name,
+                context,
+                "RecoveryServicesVaultResource.GetReplicationUsages");
         }
 
         /// <summary>
@@ -562,7 +568,7 @@ namespace Azure.ResourceManager.RecoveryServices
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-08-01. </description>
+        /// <description> 2026-05-01. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -578,7 +584,13 @@ namespace Azure.ResourceManager.RecoveryServices
             {
                 CancellationToken = cancellationToken
             };
-            return new VaultsGetReplicationUsagesCollectionResultOfT(_vaultsRestClient, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, context);
+            return new VaultsGetReplicationUsagesCollectionResultOfT(
+                _vaultsRestClient,
+                Id.SubscriptionId,
+                Id.ResourceGroupName,
+                Id.Name,
+                context,
+                "RecoveryServicesVaultResource.GetReplicationUsages");
         }
 
         /// <summary>
@@ -594,7 +606,7 @@ namespace Azure.ResourceManager.RecoveryServices
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-08-01. </description>
+        /// <description> 2026-05-01. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -610,7 +622,13 @@ namespace Azure.ResourceManager.RecoveryServices
             {
                 CancellationToken = cancellationToken
             };
-            return new VaultsGetUsagesByVaultsAsyncCollectionResultOfT(_vaultsRestClient, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, context);
+            return new VaultsGetUsagesByVaultsAsyncCollectionResultOfT(
+                _vaultsRestClient,
+                Id.SubscriptionId,
+                Id.ResourceGroupName,
+                Id.Name,
+                context,
+                "RecoveryServicesVaultResource.GetUsagesByVaults");
         }
 
         /// <summary>
@@ -626,7 +644,7 @@ namespace Azure.ResourceManager.RecoveryServices
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-08-01. </description>
+        /// <description> 2026-05-01. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -642,7 +660,13 @@ namespace Azure.ResourceManager.RecoveryServices
             {
                 CancellationToken = cancellationToken
             };
-            return new VaultsGetUsagesByVaultsCollectionResultOfT(_vaultsRestClient, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, context);
+            return new VaultsGetUsagesByVaultsCollectionResultOfT(
+                _vaultsRestClient,
+                Id.SubscriptionId,
+                Id.ResourceGroupName,
+                Id.Name,
+                context,
+                "RecoveryServicesVaultResource.GetUsagesByVaults");
         }
 
         /// <summary>
@@ -658,7 +682,7 @@ namespace Azure.ResourceManager.RecoveryServices
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-08-01. </description>
+        /// <description> 2026-05-01. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -706,7 +730,7 @@ namespace Azure.ResourceManager.RecoveryServices
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-08-01. </description>
+        /// <description> 2026-05-01. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -772,7 +796,7 @@ namespace Azure.ResourceManager.RecoveryServices
                 else
                 {
                     RecoveryServicesVaultData current = (await GetAsync(cancellationToken: cancellationToken).ConfigureAwait(false)).Value.Data;
-                    RecoveryServicesVaultPatch patch = new RecoveryServicesVaultPatch();
+                    RecoveryServicesVaultPatch patch = new RecoveryServicesVaultPatch(current.Location);
                     foreach (KeyValuePair<string, string> tag in current.Tags)
                     {
                         patch.Tags.Add(tag);
@@ -820,7 +844,7 @@ namespace Azure.ResourceManager.RecoveryServices
                 else
                 {
                     RecoveryServicesVaultData current = Get(cancellationToken: cancellationToken).Value.Data;
-                    RecoveryServicesVaultPatch patch = new RecoveryServicesVaultPatch();
+                    RecoveryServicesVaultPatch patch = new RecoveryServicesVaultPatch(current.Location);
                     foreach (KeyValuePair<string, string> tag in current.Tags)
                     {
                         patch.Tags.Add(tag);
@@ -867,7 +891,7 @@ namespace Azure.ResourceManager.RecoveryServices
                 else
                 {
                     RecoveryServicesVaultData current = (await GetAsync(cancellationToken: cancellationToken).ConfigureAwait(false)).Value.Data;
-                    RecoveryServicesVaultPatch patch = new RecoveryServicesVaultPatch();
+                    RecoveryServicesVaultPatch patch = new RecoveryServicesVaultPatch(current.Location);
                     patch.Tags.ReplaceWith(tags);
                     ArmOperation<RecoveryServicesVaultResource> result = await UpdateAsync(WaitUntil.Completed, patch, cancellationToken: cancellationToken).ConfigureAwait(false);
                     return Response.FromValue(result.Value, result.GetRawResponse());
@@ -910,7 +934,7 @@ namespace Azure.ResourceManager.RecoveryServices
                 else
                 {
                     RecoveryServicesVaultData current = Get(cancellationToken: cancellationToken).Value.Data;
-                    RecoveryServicesVaultPatch patch = new RecoveryServicesVaultPatch();
+                    RecoveryServicesVaultPatch patch = new RecoveryServicesVaultPatch(current.Location);
                     patch.Tags.ReplaceWith(tags);
                     ArmOperation<RecoveryServicesVaultResource> result = Update(WaitUntil.Completed, patch, cancellationToken: cancellationToken);
                     return Response.FromValue(result.Value, result.GetRawResponse());
@@ -952,7 +976,7 @@ namespace Azure.ResourceManager.RecoveryServices
                 else
                 {
                     RecoveryServicesVaultData current = (await GetAsync(cancellationToken: cancellationToken).ConfigureAwait(false)).Value.Data;
-                    RecoveryServicesVaultPatch patch = new RecoveryServicesVaultPatch();
+                    RecoveryServicesVaultPatch patch = new RecoveryServicesVaultPatch(current.Location);
                     foreach (KeyValuePair<string, string> tag in current.Tags)
                     {
                         patch.Tags.Add(tag);
@@ -998,7 +1022,7 @@ namespace Azure.ResourceManager.RecoveryServices
                 else
                 {
                     RecoveryServicesVaultData current = Get(cancellationToken: cancellationToken).Value.Data;
-                    RecoveryServicesVaultPatch patch = new RecoveryServicesVaultPatch();
+                    RecoveryServicesVaultPatch patch = new RecoveryServicesVaultPatch(current.Location);
                     foreach (KeyValuePair<string, string> tag in current.Tags)
                     {
                         patch.Tags.Add(tag);

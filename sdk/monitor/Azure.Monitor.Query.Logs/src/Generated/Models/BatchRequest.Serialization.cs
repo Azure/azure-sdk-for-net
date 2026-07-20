@@ -69,9 +69,7 @@ namespace Azure.Monitor.Query.Logs.Models
             {
                 return null;
             }
-            Utf8JsonRequestContent content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(batchRequest, ModelSerializationExtensions.WireOptions);
-            return content;
+            return RequestContent.Create(batchRequest, ModelSerializationExtensions.WireOptions);
         }
 
         /// <param name="writer"> The JSON writer. </param>

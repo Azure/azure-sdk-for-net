@@ -8,7 +8,7 @@ using Azure.ResourceManager.CosmosDB.Models;
 namespace Azure.Provisioning.Generator.Specifications;
 
 public class CosmosDBSpecification() :
-    Specification("CosmosDB", typeof(CosmosDBExtensions))
+    Specification("CosmosDB", typeof(CosmosDBExtensions), serviceDirectory: "cosmosdb")
 {
     protected override void Customize()
     {

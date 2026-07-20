@@ -8,33 +8,31 @@
 using System;
 using System.Threading;
 using System.Threading.Tasks;
+using Azure;
 using Azure.Core;
+using Azure.ResourceManager;
+using Azure.ResourceManager.Resources;
+using Azure.ResourceManager.ServiceGroups;
 
 namespace Azure.ResourceManager.ServiceGroups.Mocking
 {
-    /// <summary> A class to add extension methods to TenantResource. </summary>
+    /// <summary> A class to add extension methods to <see cref="TenantResource"/>. </summary>
     public partial class MockableServiceGroupsTenantResource : ArmResource
     {
-        /// <summary> Initializes a new instance of the <see cref="MockableServiceGroupsTenantResource"/> class for mocking. </summary>
+        /// <summary> Initializes a new instance of MockableServiceGroupsTenantResource for mocking. </summary>
         protected MockableServiceGroupsTenantResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref="MockableServiceGroupsTenantResource"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="MockableServiceGroupsTenantResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal MockableServiceGroupsTenantResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
         }
 
-        private string GetApiVersionOrNull(ResourceType resourceType)
-        {
-            TryGetApiVersion(resourceType, out string apiVersion);
-            return apiVersion;
-        }
-
-        /// <summary> Gets a collection of ServiceGroupResources in the TenantResource. </summary>
-        /// <returns> An object representing collection of ServiceGroupResources and their operations over a ServiceGroupResource. </returns>
+        /// <summary> Gets a collection of ServiceGroups in the <see cref="TenantResource"/>. </summary>
+        /// <returns> An object representing collection of ServiceGroups and their operations over a ServiceGroupResource. </returns>
         public virtual ServiceGroupCollection GetServiceGroups()
         {
             return GetCachedClient(client => new ServiceGroupCollection(client, Id));
@@ -44,20 +42,16 @@ namespace Azure.ResourceManager.ServiceGroups.Mocking
         /// Get the details of the serviceGroup
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/providers/Microsoft.Management/serviceGroups/{serviceGroupName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /providers/Microsoft.Management/serviceGroups/{serviceGroupName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ServiceGroups_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> ServiceGroups_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-02-01-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ServiceGroupResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-02-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -68,6 +62,8 @@ namespace Azure.ResourceManager.ServiceGroups.Mocking
         [ForwardsClientCalls]
         public virtual async Task<Response<ServiceGroupResource>> GetServiceGroupAsync(string serviceGroupName, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNullOrEmpty(serviceGroupName, nameof(serviceGroupName));
+
             return await GetServiceGroups().GetAsync(serviceGroupName, cancellationToken).ConfigureAwait(false);
         }
 
@@ -75,20 +71,16 @@ namespace Azure.ResourceManager.ServiceGroups.Mocking
         /// Get the details of the serviceGroup
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/providers/Microsoft.Management/serviceGroups/{serviceGroupName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /providers/Microsoft.Management/serviceGroups/{serviceGroupName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ServiceGroups_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> ServiceGroups_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-02-01-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ServiceGroupResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-02-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -99,6 +91,8 @@ namespace Azure.ResourceManager.ServiceGroups.Mocking
         [ForwardsClientCalls]
         public virtual Response<ServiceGroupResource> GetServiceGroup(string serviceGroupName, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNullOrEmpty(serviceGroupName, nameof(serviceGroupName));
+
             return GetServiceGroups().Get(serviceGroupName, cancellationToken);
         }
     }

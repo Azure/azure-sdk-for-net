@@ -174,6 +174,12 @@ public abstract class ProvisionableResource(string bicepIdentifier, ResourceType
             resource = resource.Decorate("batchSize", BicepSyntax.Value(BicepMetadata.BatchSize.Value));
         }
 
+        // Apply condition if specified
+        if (!BicepMetadata.Condition.IsEmpty)
+        {
+            resource.Condition = BicepMetadata.Condition.Compile();
+        }
+
         yield return resource;
     }
 

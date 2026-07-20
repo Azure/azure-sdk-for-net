@@ -35,8 +35,11 @@ namespace Azure.Generator.Providers
             new("nextLink", $"The next link to use for the next page of results.", new CSharpType(typeof(Uri), isNullable: true));
         private static readonly ParameterProvider PageSizeHintParameter =
             new("pageSizeHint", $"The number of items per page.", new CSharpType(typeof(int?)));
+        private static readonly ParameterProvider ScopeParameter =
+            new("diagnosticScope", $"The diagnostic scope name.", new CSharpType(typeof(string)));
 
         private readonly bool _isProtocol;
+        private readonly FieldProvider _scopeField;
 
         protected override string RequestOptionsFieldName => "_context";
 
@@ -49,6 +52,11 @@ namespace Azure.Generator.Providers
             _isProtocol = itemModelType == null;
             _itemModelType = itemModelType ?? new CSharpType(typeof(BinaryData));
             _scopeName = Client.GetScopeName(_operation);
+            _scopeField = new FieldProvider(
+                FieldModifiers.Private | FieldModifiers.ReadOnly,
+                typeof(string),
+                "_diagnosticScope",
+                this);
         }
 
         private IReadOnlyList<ParameterProvider> CreateRequestParameters
@@ -56,6 +64,12 @@ namespace Azure.Generator.Providers
 
         private string CreateRequestMethodName
             => Client.RestClient.GetCreateRequestMethod(_operation).Signature.Name;
+
+        // We use "_diagnosticScope" rather than "_scope" to reduce collision risk with API parameters.
+        // If a collision does occur, the framework's CodeWriter dedup renames declarations but not
+        // AsValueExpression references, causing incorrect codegen. See: https://github.com/microsoft/typespec/issues/10130
+        protected override FieldProvider[] BuildFields()
+            => [.. base.BuildFields(), _scopeField];
 
         protected override TypeSignatureModifiers BuildDeclarationModifiers()
             => TypeSignatureModifiers.Internal | TypeSignatureModifiers.Partial | TypeSignatureModifiers.Class;
@@ -117,6 +131,11 @@ namespace Azure.Generator.Providers
                 Declare("result", ResponseModelType, responseVariable.CastTo(ResponseModelType), out var resultVariable),
             };
 
+            // Determine the next page link/token from the current response BEFORE yielding, so that the
+            // page's continuation token points to the NEXT page rather than the page just returned.
+            // See https://github.com/Azure/azure-sdk-for-net/issues/60274.
+            whileStatement.Add(AssignNextPageVariable(responseVariable, resultVariable, nextPageVariable));
+
             ValueExpression nextPageExpression = _paging.NextLink != null
                 ? new TernaryConditionalExpression(
                     nextPageVariable.NullConditional().Property(nameof(Uri.IsAbsoluteUri)).Equal(True),
@@ -137,11 +156,66 @@ namespace Azure.Generator.Providers
                 whileStatement.Add(YieldReturn(Static(new CSharpType(typeof(Page<>), [_itemModelType])).Invoke("FromValues", [BuildGetPropertyExpression(Paging.ItemPropertySegments, resultVariable).CastTo(new CSharpType(typeof(IReadOnlyList<>), _itemModelType)), nextPageExpression, responseVariable])));
             }
 
-            // Extract next page
-            whileStatement.Add(AssignAndCheckNextPageVariable(responseVariable.ToApi<ClientResponseApi>(), resultVariable, nextPageVariable));
+            // Stop paging once there is no next page. Checked AFTER the yield so the final page is still returned.
+            whileStatement.Add(CheckNextPageVariable(nextPageVariable));
 
             statements.Add(whileStatement);
             return [.. statements];
+        }
+
+        // Assigns the next page link/token from the current response into <paramref name="nextPageVariable"/>
+        // without breaking out of the paging loop. This mirrors the assignment portion of the base
+        // AssignAndCheckNextPageVariable, but the null check is performed separately (after the yield) by
+        // CheckNextPageVariable so that the continuation token of the current page reflects the next page.
+        private MethodBodyStatement[] AssignNextPageVariable(VariableExpression responseVariable, VariableExpression resultVariable, VariableExpression nextPageVariable)
+        {
+            switch (NextPageLocation)
+            {
+                case InputResponseLocation.Body:
+                    var resultExpression = BuildGetPropertyExpression(NextPagePropertySegments, resultVariable);
+                    if (Paging.ContinuationToken != null || NextPagePropertyType.Equals(typeof(Uri)))
+                    {
+                        // The next link (Uri) or continuation token can be assigned directly.
+                        return [nextPageVariable.Assign(resultExpression).Terminate()];
+                    }
+
+                    // The next link is a string property; materialize it into a Uri (or null when empty).
+                    return
+                    [
+                        Declare("nextPageString", resultExpression.As<string>(), out ScopedApi<string> nextPageString),
+                        nextPageVariable.Assign(
+                            new TernaryConditionalExpression(
+                                Static<string>().Invoke(nameof(string.IsNullOrEmpty), nextPageString),
+                                Null,
+                                New.Instance<Uri>(nextPageString, FrameworkEnumValue(UriKind.RelativeOrAbsolute)))).Terminate()
+                    ];
+                case InputResponseLocation.Header:
+                    return
+                    [
+                        new IfElseStatement(
+                            new IfStatement(responseVariable.ToApi<ClientResponseApi>().GetRawResponse()
+                                .TryGetHeader(NextPagePropertySegments[0], out var nextLinkHeader)
+                                .And(Not(Static<string>().Invoke(nameof(string.IsNullOrEmpty), nextLinkHeader!))))
+                            {
+                                nextPageVariable.Type.Equals(typeof(Uri))
+                                    ? nextPageVariable.Assign(New.Instance<Uri>(nextLinkHeader!, FrameworkEnumValue(UriKind.RelativeOrAbsolute))).Terminate()
+                                    : nextPageVariable.Assign(nextLinkHeader!).Terminate(),
+                            },
+                            nextPageVariable.Assign(Null).Terminate())
+                    ];
+                default:
+                    // Invalid location is logged by the emitter.
+                    return [];
+            }
+        }
+
+        // Breaks out of the paging loop when there is no next page. Performed after the page has been yielded.
+        private MethodBodyStatement CheckNextPageVariable(VariableExpression nextPageVariable)
+        {
+            ValueExpression condition = nextPageVariable.Type.Equals(typeof(Uri))
+                ? nextPageVariable.Equal(Null)
+                : Static<string>().Invoke(nameof(string.IsNullOrEmpty), nextPageVariable);
+            return new IfStatement(condition) { new YieldBreakStatement() };
         }
 
         private MethodBodyStatement[] ConvertItemsToListOfBinaryData(VariableExpression responseVariable, out VariableExpression itemsVariable)
@@ -214,7 +288,7 @@ namespace Azure.Generator.Providers
             }
 
             bodyStatements.Add(Declare("message", AzureClientGenerator.Instance.TypeFactory.HttpMessageApi.HttpMessageType, BuildCreateHttpMessageExpression(), out var messageVariable));
-            bodyStatements.Add(UsingDeclare("scope", typeof(DiagnosticScope), ClientField.Property("ClientDiagnostics").Invoke(nameof(ClientDiagnostics.CreateScope), [Literal(_scopeName)]), out var scopeVariable));
+            bodyStatements.Add(UsingDeclare("scope", typeof(DiagnosticScope), ClientField.Property("ClientDiagnostics").Invoke(nameof(ClientDiagnostics.CreateScope), [_scopeField]), out var scopeVariable));
             bodyStatements.Add(scopeVariable.Invoke(nameof(DiagnosticScope.Start)).Terminate());
             bodyStatements.Add(new TryCatchFinallyStatement
                 (BuildTryExpression(), Catch(Declare<Exception>("e", out var exceptionVariable), [scopeVariable.Invoke(nameof(DiagnosticScope.Failed), exceptionVariable).Terminate(), Throw()])));
@@ -285,10 +359,26 @@ namespace Azure.Generator.Providers
             var ctors = base.BuildConstructors();
             foreach (var ctor in ctors)
             {
-                ctor.Signature.Update(initializer: new ConstructorInitializer(
-                    true,
-                    // Pass the request context cancellation token to the base Pageable constructor
-                    [CreateRequestParameters[^1].NullConditional().Property("CancellationToken").NullCoalesce(Default)]));
+                ctor.Signature.Update(
+                    parameters: [.. ctor.Signature.Parameters, ScopeParameter],
+                    initializer: new ConstructorInitializer(
+                        true,
+                        // Pass the request context cancellation token to the base Pageable constructor
+                        [CreateRequestParameters[^1].NullConditional().Property("CancellationToken").NullCoalesce(Default)]));
+
+                // Add _scope = scope assignment to the constructor body
+                List<MethodBodyStatement> updatedBody = ctor.BodyStatements != null
+                    ? [ctor.BodyStatements, _scopeField.Assign(ScopeParameter).Terminate()]
+                    : [_scopeField.Assign(ScopeParameter).Terminate()];
+
+                // Add XML doc for the scope parameter
+                if (ctor.XmlDocs != null)
+                {
+                    List<XmlDocParamStatement> updatedParams = [.. ctor.XmlDocs.Parameters, new XmlDocParamStatement(ScopeParameter)];
+                    ctor.XmlDocs.Update(parameters: updatedParams);
+                }
+
+                ctor.Update(bodyStatements: updatedBody);
             }
 
             return ctors;

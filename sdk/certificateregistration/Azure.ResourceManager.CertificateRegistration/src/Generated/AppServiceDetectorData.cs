@@ -29,14 +29,14 @@ namespace Azure.ResourceManager.CertificateRegistration
         /// <param name="name"> The name of the resource. </param>
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
         /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
-        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="properties"> DetectorResponse resource specific properties. </param>
         /// <param name="kind"> Kind of resource. </param>
-        internal AppServiceDetectorData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, BinaryData> additionalBinaryDataProperties, DetectorResponseProperties properties, string kind) : base(id, name, resourceType, systemData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal AppServiceDetectorData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, DetectorResponseProperties properties, string kind, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(id, name, resourceType, systemData)
         {
-            _additionalBinaryDataProperties = additionalBinaryDataProperties;
             Properties = properties;
             Kind = kind;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> DetectorResponse resource specific properties. </summary>
@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.CertificateRegistration
         {
             get
             {
-                return Properties.Metadata;
+                return Properties is null ? default : Properties.Metadata;
             }
         }
 
@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.CertificateRegistration
         {
             get
             {
-                return Properties.Dataset;
+                return Properties is null ? default : Properties.Dataset;
             }
         }
 
@@ -68,7 +68,7 @@ namespace Azure.ResourceManager.CertificateRegistration
         {
             get
             {
-                return Properties.Status;
+                return Properties is null ? default : Properties.Status;
             }
         }
 
@@ -77,7 +77,7 @@ namespace Azure.ResourceManager.CertificateRegistration
         {
             get
             {
-                return Properties.DataProvidersMetadata;
+                return Properties is null ? default : Properties.DataProvidersMetadata;
             }
         }
 
@@ -86,7 +86,7 @@ namespace Azure.ResourceManager.CertificateRegistration
         {
             get
             {
-                return Properties.SuggestedUtterances;
+                return Properties is null ? default : Properties.SuggestedUtterances;
             }
         }
     }

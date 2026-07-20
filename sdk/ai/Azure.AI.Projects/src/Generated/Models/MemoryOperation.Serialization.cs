@@ -6,8 +6,9 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure.AI.Projects;
 
-namespace Azure.AI.Projects
+namespace Azure.AI.Projects.Memory
 {
     /// <summary> Represents a single memory operation (create, update, or delete) performed on a memory item. </summary>
     public partial class MemoryOperation : IJsonModel<MemoryOperation>

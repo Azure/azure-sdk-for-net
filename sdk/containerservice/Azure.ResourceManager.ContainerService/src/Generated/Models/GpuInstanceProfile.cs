@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.ContainerService;
 
 namespace Azure.ResourceManager.ContainerService.Models
 {
@@ -14,47 +15,72 @@ namespace Azure.ResourceManager.ContainerService.Models
     public readonly partial struct GpuInstanceProfile : IEquatable<GpuInstanceProfile>
     {
         private readonly string _value;
+        /// <summary> MIG 1g GPU instance profile. </summary>
+        private const string Mig1GValue = "MIG1g";
+        /// <summary> MIG 2g GPU instance profile. </summary>
+        private const string Mig2GValue = "MIG2g";
+        /// <summary> MIG 3g GPU instance profile. </summary>
+        private const string Mig3GValue = "MIG3g";
+        /// <summary> MIG 4g GPU instance profile. </summary>
+        private const string Mig4GValue = "MIG4g";
+        /// <summary> MIG 7g GPU instance profile. </summary>
+        private const string Mig7GValue = "MIG7g";
 
         /// <summary> Initializes a new instance of <see cref="GpuInstanceProfile"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public GpuInstanceProfile(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
+            Argument.AssertNotNull(value, nameof(value));
+
+            _value = value;
         }
 
-        private const string Mig1GValue = "MIG1g";
-        private const string Mig2GValue = "MIG2g";
-        private const string Mig3GValue = "MIG3g";
-        private const string Mig4GValue = "MIG4g";
-        private const string Mig7GValue = "MIG7g";
-
-        /// <summary> MIG1g. </summary>
+        /// <summary> MIG 1g GPU instance profile. </summary>
         public static GpuInstanceProfile Mig1G { get; } = new GpuInstanceProfile(Mig1GValue);
-        /// <summary> MIG2g. </summary>
+
+        /// <summary> MIG 2g GPU instance profile. </summary>
         public static GpuInstanceProfile Mig2G { get; } = new GpuInstanceProfile(Mig2GValue);
-        /// <summary> MIG3g. </summary>
+
+        /// <summary> MIG 3g GPU instance profile. </summary>
         public static GpuInstanceProfile Mig3G { get; } = new GpuInstanceProfile(Mig3GValue);
-        /// <summary> MIG4g. </summary>
+
+        /// <summary> MIG 4g GPU instance profile. </summary>
         public static GpuInstanceProfile Mig4G { get; } = new GpuInstanceProfile(Mig4GValue);
-        /// <summary> MIG7g. </summary>
+
+        /// <summary> MIG 7g GPU instance profile. </summary>
         public static GpuInstanceProfile Mig7G { get; } = new GpuInstanceProfile(Mig7GValue);
+
         /// <summary> Determines if two <see cref="GpuInstanceProfile"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(GpuInstanceProfile left, GpuInstanceProfile right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="GpuInstanceProfile"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(GpuInstanceProfile left, GpuInstanceProfile right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="GpuInstanceProfile"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="GpuInstanceProfile"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator GpuInstanceProfile(string value) => new GpuInstanceProfile(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="GpuInstanceProfile"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator GpuInstanceProfile?(string value) => value == null ? null : new GpuInstanceProfile(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is GpuInstanceProfile other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(GpuInstanceProfile other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

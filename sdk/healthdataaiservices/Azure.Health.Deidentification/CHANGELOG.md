@@ -4,6 +4,8 @@
 
 ### Features Added
 
+- Added `DeidentificationClientSettings` to support creating a `DeidentificationClient` from `IConfiguration`, including configuration-based credential resolution and dependency injection registration.
+
 ### Breaking Changes
 
 ### Bugs Fixed

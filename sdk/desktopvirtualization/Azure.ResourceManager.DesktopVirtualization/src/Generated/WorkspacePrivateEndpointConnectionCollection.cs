@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.DesktopVirtualization
         {
             TryGetApiVersion(WorkspacePrivateEndpointConnectionResource.ResourceType, out string workspacePrivateEndpointConnectionApiVersion);
             _privateEndpointConnectionsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.DesktopVirtualization", WorkspacePrivateEndpointConnectionResource.ResourceType.Namespace, Diagnostics);
-            _privateEndpointConnectionsRestClient = new PrivateEndpointConnections(_privateEndpointConnectionsClientDiagnostics, Pipeline, Endpoint, workspacePrivateEndpointConnectionApiVersion ?? "2026-01-01-preview");
+            _privateEndpointConnectionsRestClient = new PrivateEndpointConnections(_privateEndpointConnectionsClientDiagnostics, Pipeline, Endpoint, workspacePrivateEndpointConnectionApiVersion ?? "2026-03-01-preview");
             ValidateResourceId(id);
         }
 
@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.DesktopVirtualization
         {
             if (id.ResourceType != VirtualWorkspaceResource.ResourceType)
             {
-                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, VirtualWorkspaceResource.ResourceType), id);
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, VirtualWorkspaceResource.ResourceType), nameof(id));
             }
         }
 
@@ -68,7 +68,7 @@ namespace Azure.ResourceManager.DesktopVirtualization
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-01-01-preview. </description>
+        /// <description> 2026-03-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -123,7 +123,7 @@ namespace Azure.ResourceManager.DesktopVirtualization
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-01-01-preview. </description>
+        /// <description> 2026-03-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -178,7 +178,7 @@ namespace Azure.ResourceManager.DesktopVirtualization
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-01-01-preview. </description>
+        /// <description> 2026-03-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -227,7 +227,7 @@ namespace Azure.ResourceManager.DesktopVirtualization
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-01-01-preview. </description>
+        /// <description> 2026-03-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -276,7 +276,7 @@ namespace Azure.ResourceManager.DesktopVirtualization
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-01-01-preview. </description>
+        /// <description> 2026-03-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -288,7 +288,13 @@ namespace Azure.ResourceManager.DesktopVirtualization
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<DesktopVirtualizationPrivateEndpointConnectionDataData, WorkspacePrivateEndpointConnectionResource>(new PrivateEndpointConnectionsGetByWorkspaceAsyncCollectionResultOfT(_privateEndpointConnectionsRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context), data => new WorkspacePrivateEndpointConnectionResource(Client, data));
+            return new AsyncPageableWrapper<DesktopVirtualizationPrivateEndpointConnectionDataData, WorkspacePrivateEndpointConnectionResource>(new PrivateEndpointConnectionsGetByWorkspaceAsyncCollectionResultOfT(
+                _privateEndpointConnectionsRestClient,
+                Guid.Parse(Id.SubscriptionId),
+                Id.ResourceGroupName,
+                Id.Name,
+                context,
+                "WorkspacePrivateEndpointConnectionCollection.GetAll"), data => new WorkspacePrivateEndpointConnectionResource(Client, data));
         }
 
         /// <summary>
@@ -304,7 +310,7 @@ namespace Azure.ResourceManager.DesktopVirtualization
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-01-01-preview. </description>
+        /// <description> 2026-03-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -316,7 +322,13 @@ namespace Azure.ResourceManager.DesktopVirtualization
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<DesktopVirtualizationPrivateEndpointConnectionDataData, WorkspacePrivateEndpointConnectionResource>(new PrivateEndpointConnectionsGetByWorkspaceCollectionResultOfT(_privateEndpointConnectionsRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context), data => new WorkspacePrivateEndpointConnectionResource(Client, data));
+            return new PageableWrapper<DesktopVirtualizationPrivateEndpointConnectionDataData, WorkspacePrivateEndpointConnectionResource>(new PrivateEndpointConnectionsGetByWorkspaceCollectionResultOfT(
+                _privateEndpointConnectionsRestClient,
+                Guid.Parse(Id.SubscriptionId),
+                Id.ResourceGroupName,
+                Id.Name,
+                context,
+                "WorkspacePrivateEndpointConnectionCollection.GetAll"), data => new WorkspacePrivateEndpointConnectionResource(Client, data));
         }
 
         /// <summary>
@@ -332,7 +344,7 @@ namespace Azure.ResourceManager.DesktopVirtualization
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-01-01-preview. </description>
+        /// <description> 2026-03-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -389,7 +401,7 @@ namespace Azure.ResourceManager.DesktopVirtualization
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-01-01-preview. </description>
+        /// <description> 2026-03-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -446,7 +458,7 @@ namespace Azure.ResourceManager.DesktopVirtualization
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-01-01-preview. </description>
+        /// <description> 2026-03-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -507,7 +519,7 @@ namespace Azure.ResourceManager.DesktopVirtualization
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-01-01-preview. </description>
+        /// <description> 2026-03-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>

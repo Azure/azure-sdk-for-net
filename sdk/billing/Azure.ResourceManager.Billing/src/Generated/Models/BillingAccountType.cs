@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.Billing;
 
 namespace Azure.ResourceManager.Billing.Models
 {
@@ -14,59 +15,92 @@ namespace Azure.ResourceManager.Billing.Models
     public readonly partial struct BillingAccountType : IEquatable<BillingAccountType>
     {
         private readonly string _value;
+        /// <summary> Other. </summary>
+        private const string OtherValue = "Other";
+        /// <summary> Enterprise. </summary>
+        private const string EnterpriseValue = "Enterprise";
+        /// <summary> Individual. </summary>
+        private const string IndividualValue = "Individual";
+        /// <summary> Partner. </summary>
+        private const string PartnerValue = "Partner";
+        /// <summary> Reseller. </summary>
+        private const string ResellerValue = "Reseller";
+        /// <summary> ClassicPartner. </summary>
+        private const string ClassicPartnerValue = "ClassicPartner";
+        /// <summary> Internal. </summary>
+        private const string InternalValue = "Internal";
+        /// <summary> Tenant. </summary>
+        private const string TenantValue = "Tenant";
+        /// <summary> Business. </summary>
+        private const string BusinessValue = "Business";
 
         /// <summary> Initializes a new instance of <see cref="BillingAccountType"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public BillingAccountType(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string OtherValue = "Other";
-        private const string EnterpriseValue = "Enterprise";
-        private const string IndividualValue = "Individual";
-        private const string PartnerValue = "Partner";
-        private const string ResellerValue = "Reseller";
-        private const string ClassicPartnerValue = "ClassicPartner";
-        private const string InternalValue = "Internal";
-        private const string TenantValue = "Tenant";
-        private const string BusinessValue = "Business";
+            _value = value;
+        }
 
         /// <summary> Other. </summary>
         public static BillingAccountType Other { get; } = new BillingAccountType(OtherValue);
+
         /// <summary> Enterprise. </summary>
         public static BillingAccountType Enterprise { get; } = new BillingAccountType(EnterpriseValue);
+
         /// <summary> Individual. </summary>
         public static BillingAccountType Individual { get; } = new BillingAccountType(IndividualValue);
+
         /// <summary> Partner. </summary>
         public static BillingAccountType Partner { get; } = new BillingAccountType(PartnerValue);
+
         /// <summary> Reseller. </summary>
         public static BillingAccountType Reseller { get; } = new BillingAccountType(ResellerValue);
+
         /// <summary> ClassicPartner. </summary>
         public static BillingAccountType ClassicPartner { get; } = new BillingAccountType(ClassicPartnerValue);
+
         /// <summary> Internal. </summary>
         public static BillingAccountType Internal { get; } = new BillingAccountType(InternalValue);
+
         /// <summary> Tenant. </summary>
         public static BillingAccountType Tenant { get; } = new BillingAccountType(TenantValue);
+
         /// <summary> Business. </summary>
         public static BillingAccountType Business { get; } = new BillingAccountType(BusinessValue);
+
         /// <summary> Determines if two <see cref="BillingAccountType"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(BillingAccountType left, BillingAccountType right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="BillingAccountType"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(BillingAccountType left, BillingAccountType right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="BillingAccountType"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="BillingAccountType"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator BillingAccountType(string value) => new BillingAccountType(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="BillingAccountType"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator BillingAccountType?(string value) => value == null ? null : new BillingAccountType(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is BillingAccountType other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(BillingAccountType other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

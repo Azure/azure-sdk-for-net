@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
         /// <param name="provisioning"> Parameters that apply when session hosts are provisioned. </param>
         /// <param name="failedSessionHostCleanupPolicy"> The policy that should be applied when the Session Host provisioning operation fails. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal SessionHostManagementPatchProperties(string scheduledDateTimeZone, HostPoolUpdateConfigurationPatchProperties update, SessionHostProvisioningConfigurationPatchProperties provisioning, FailedSessionHostCleanupPolicySessionHostConfiguration? failedSessionHostCleanupPolicy, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal SessionHostManagementPatchProperties(string scheduledDateTimeZone, HostPoolUpdateConfigurationPatchProperties update, SessionHostProvisioningConfigurationPatchProperties provisioning, SessionHostConfigurationFailedSessionHostCleanupPolicy? failedSessionHostCleanupPolicy, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             ScheduledDateTimeZone = scheduledDateTimeZone;
             Update = update;
@@ -51,6 +51,6 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
 
         /// <summary> The policy that should be applied when the Session Host provisioning operation fails. </summary>
         [WirePath("failedSessionHostCleanupPolicy")]
-        public FailedSessionHostCleanupPolicySessionHostConfiguration? FailedSessionHostCleanupPolicy { get; set; }
+        public SessionHostConfigurationFailedSessionHostCleanupPolicy? FailedSessionHostCleanupPolicy { get; set; }
     }
 }

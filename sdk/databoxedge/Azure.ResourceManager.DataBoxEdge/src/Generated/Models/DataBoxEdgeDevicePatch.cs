@@ -8,6 +8,7 @@
 using System;
 using System.Collections.Generic;
 using Azure.Core;
+using Azure.ResourceManager.DataBoxEdge;
 using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.DataBoxEdge.Models
@@ -15,37 +16,8 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
     /// <summary> The Data Box Edge/Gateway device patch. </summary>
     public partial class DataBoxEdgeDevicePatch
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="DataBoxEdgeDevicePatch"/>. </summary>
         public DataBoxEdgeDevicePatch()
@@ -55,32 +27,40 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
 
         /// <summary> Initializes a new instance of <see cref="DataBoxEdgeDevicePatch"/>. </summary>
         /// <param name="tags"> The tags attached to the Data Box Edge/Gateway resource. </param>
-        /// <param name="identity"> Msi identity of the resource. Current supported identity types: None, SystemAssigned, UserAssigned. </param>
-        /// <param name="edgeProfile"> Edge Profile property of the Data Box Edge/Gateway device. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal DataBoxEdgeDevicePatch(IDictionary<string, string> tags, ManagedServiceIdentity identity, EdgeProfilePatch edgeProfile, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="identity"> Msi identity of the resource. </param>
+        /// <param name="properties"> The properties associated with the Data Box Edge/Gateway resource. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal DataBoxEdgeDevicePatch(IDictionary<string, string> tags, ManagedServiceIdentity identity, DataBoxEdgeDevicePropertiesPatch properties, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Tags = tags;
             Identity = identity;
-            EdgeProfile = edgeProfile;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            Properties = properties;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> The tags attached to the Data Box Edge/Gateway resource. </summary>
         public IDictionary<string, string> Tags { get; }
-        /// <summary> Msi identity of the resource. Current supported identity types: None, SystemAssigned, UserAssigned. </summary>
+
+        /// <summary> Msi identity of the resource. </summary>
         public ManagedServiceIdentity Identity { get; set; }
-        /// <summary> Edge Profile property of the Data Box Edge/Gateway device. </summary>
-        internal EdgeProfilePatch EdgeProfile { get; set; }
-        /// <summary> Gets or sets Id. </summary>
+
+        /// <summary> The properties associated with the Data Box Edge/Gateway resource. </summary>
+        internal DataBoxEdgeDevicePropertiesPatch Properties { get; set; }
+
+        /// <summary> The path ID that uniquely identifies the subscription of the edge profile. </summary>
         public ResourceIdentifier SubscriptionId
         {
-            get => EdgeProfile is null ? default : EdgeProfile.SubscriptionId;
+            get
+            {
+                return Properties is null ? default : Properties.SubscriptionId;
+            }
             set
             {
-                if (EdgeProfile is null)
-                    EdgeProfile = new EdgeProfilePatch();
-                EdgeProfile.SubscriptionId = value;
+                if (Properties is null)
+                {
+                    Properties = new DataBoxEdgeDevicePropertiesPatch();
+                }
+                Properties.SubscriptionId = value;
             }
         }
     }

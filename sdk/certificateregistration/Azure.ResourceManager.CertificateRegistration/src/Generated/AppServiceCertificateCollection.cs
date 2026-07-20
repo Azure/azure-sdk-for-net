@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.CertificateRegistration
         {
             if (id.ResourceType != AppServiceCertificateOrderResource.ResourceType)
             {
-                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, AppServiceCertificateOrderResource.ResourceType), id);
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, AppServiceCertificateOrderResource.ResourceType), nameof(id));
             }
         }
 
@@ -93,7 +93,7 @@ namespace Azure.ResourceManager.CertificateRegistration
                 HttpMessage message = _appServiceCertificateResourcesRestClient.CreateCreateOrUpdateCertificateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, name, AppServiceCertificateData.ToRequestContent(data), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 CertificateRegistrationArmOperation<AppServiceCertificateResource> operation = new CertificateRegistrationArmOperation<AppServiceCertificateResource>(
-                    new AppServiceCertificateOperationSource(Client),
+                    new AppServiceCertificateResourceOperationSource(Client),
                     _appServiceCertificateResourcesClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -151,7 +151,7 @@ namespace Azure.ResourceManager.CertificateRegistration
                 HttpMessage message = _appServiceCertificateResourcesRestClient.CreateCreateOrUpdateCertificateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, name, AppServiceCertificateData.ToRequestContent(data), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 CertificateRegistrationArmOperation<AppServiceCertificateResource> operation = new CertificateRegistrationArmOperation<AppServiceCertificateResource>(
-                    new AppServiceCertificateOperationSource(Client),
+                    new AppServiceCertificateResourceOperationSource(Client),
                     _appServiceCertificateResourcesClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -293,7 +293,13 @@ namespace Azure.ResourceManager.CertificateRegistration
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<AppServiceCertificateData, AppServiceCertificateResource>(new AppServiceCertificateResourcesGetCertificatesAsyncCollectionResultOfT(_appServiceCertificateResourcesRestClient, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, context), data => new AppServiceCertificateResource(Client, data));
+            return new AsyncPageableWrapper<AppServiceCertificateData, AppServiceCertificateResource>(new AppServiceCertificateResourcesGetCertificatesAsyncCollectionResultOfT(
+                _appServiceCertificateResourcesRestClient,
+                Id.SubscriptionId,
+                Id.ResourceGroupName,
+                Id.Name,
+                context,
+                "AppServiceCertificateCollection.GetAll"), data => new AppServiceCertificateResource(Client, data));
         }
 
         /// <summary>
@@ -321,7 +327,13 @@ namespace Azure.ResourceManager.CertificateRegistration
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<AppServiceCertificateData, AppServiceCertificateResource>(new AppServiceCertificateResourcesGetCertificatesCollectionResultOfT(_appServiceCertificateResourcesRestClient, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, context), data => new AppServiceCertificateResource(Client, data));
+            return new PageableWrapper<AppServiceCertificateData, AppServiceCertificateResource>(new AppServiceCertificateResourcesGetCertificatesCollectionResultOfT(
+                _appServiceCertificateResourcesRestClient,
+                Id.SubscriptionId,
+                Id.ResourceGroupName,
+                Id.Name,
+                context,
+                "AppServiceCertificateCollection.GetAll"), data => new AppServiceCertificateResource(Client, data));
         }
 
         /// <summary>

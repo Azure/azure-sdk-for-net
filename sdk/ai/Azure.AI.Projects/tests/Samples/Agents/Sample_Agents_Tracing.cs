@@ -3,7 +3,8 @@
 
 using System;
 using System.Threading.Tasks;
-using Azure.AI.Projects.OpenAI;
+using Azure.AI.Extensions.OpenAI;
+using Azure.AI.Projects.Agents;
 using Azure.Identity;
 using Azure.Monitor.OpenTelemetry.Exporter;
 using Microsoft.ClientModel.TestFramework;
@@ -21,11 +22,11 @@ public class Sample_Agents_Tracing : SamplesBase
     public async Task AgentTracingToConsoleAsync()
     {
 #if SNIPPET
-        var projectEndpoint = System.Environment.GetEnvironmentVariable("PROJECT_ENDPOINT");
-        var modelDeploymentName = System.Environment.GetEnvironmentVariable("MODEL_DEPLOYMENT_NAME");
+        var projectEndpoint = System.Environment.GetEnvironmentVariable("FOUNDRY_PROJECT_ENDPOINT");
+        var modelDeploymentName = System.Environment.GetEnvironmentVariable("FOUNDRY_MODEL_NAME");
 #else
-        var projectEndpoint = TestEnvironment.PROJECT_ENDPOINT;
-        var modelDeploymentName = TestEnvironment.MODELDEPLOYMENTNAME;
+        var projectEndpoint = TestEnvironment.FOUNDRY_PROJECT_ENDPOINT;
+        var modelDeploymentName = TestEnvironment.FOUNDRY_MODEL_NAME;
 #endif
 
         #region Snippet:Sample_EnableGenAITracing
@@ -43,16 +44,16 @@ public class Sample_Agents_Tracing : SamplesBase
 
         AIProjectClient projectClient = new(endpoint: new Uri(projectEndpoint), tokenProvider: new DefaultAzureCredential());
 
-        PromptAgentDefinition agentDefinition = new(model: modelDeploymentName)
+        DeclarativeAgentDefinition agentDefinition = new(model: modelDeploymentName)
         {
             Instructions = "You are a prompt agent."
         };
-        AgentVersion agentVersion1 = await projectClient.Agents.CreateAgentVersionAsync(
+        ProjectsAgentVersion agentVersion1 = await projectClient.AgentAdministrationClient.CreateAgentVersionAsync(
             agentName: "myAgent1",
             options: new(agentDefinition));
         Console.WriteLine($"Agent created (id: {agentVersion1.Id}, name: {agentVersion1.Name}, version: {agentVersion1.Version})");
 
-        projectClient.Agents.DeleteAgentVersion(agentName: agentVersion1.Name, agentVersion: agentVersion1.Version);
+        projectClient.AgentAdministrationClient.DeleteAgentVersion(agentName: agentVersion1.Name, agentVersion: agentVersion1.Version);
         Console.WriteLine($"Agent deleted (name: {agentVersion1.Name}, version: {agentVersion1.Version})");
     }
 
@@ -61,11 +62,11 @@ public class Sample_Agents_Tracing : SamplesBase
     public void AgentTelemetryToConsole()
     {
 #if SNIPPET
-        var projectEndpoint = System.Environment.GetEnvironmentVariable("PROJECT_ENDPOINT");
-        var modelDeploymentName = System.Environment.GetEnvironmentVariable("MODEL_DEPLOYMENT_NAME");
+        var projectEndpoint = System.Environment.GetEnvironmentVariable("FOUNDRY_PROJECT_ENDPOINT");
+        var modelDeploymentName = System.Environment.GetEnvironmentVariable("FOUNDRY_MODEL_NAME");
 #else
-        var projectEndpoint = TestEnvironment.PROJECT_ENDPOINT;
-        var modelDeploymentName = TestEnvironment.MODELDEPLOYMENTNAME;
+        var projectEndpoint = TestEnvironment.FOUNDRY_PROJECT_ENDPOINT;
+        var modelDeploymentName = TestEnvironment.FOUNDRY_MODEL_NAME;
 #endif
 
         AppContext.SetSwitch("Azure.Experimental.EnableGenAITracing", true);
@@ -80,16 +81,16 @@ public class Sample_Agents_Tracing : SamplesBase
         {
             AIProjectClient projectClient = new(endpoint: new Uri(projectEndpoint), tokenProvider: new DefaultAzureCredential());
 
-            PromptAgentDefinition agentDefinition = new(model: modelDeploymentName)
+            DeclarativeAgentDefinition agentDefinition = new(model: modelDeploymentName)
             {
                 Instructions = "You are a prompt agent."
             };
-            AgentVersion agentVersion1 = projectClient.Agents.CreateAgentVersion(
+            ProjectsAgentVersion agentVersion1 = projectClient.AgentAdministrationClient.CreateAgentVersion(
                 agentName: "myAgent1",
                 options: new(agentDefinition));
             Console.WriteLine($"Agent created (id: {agentVersion1.Id}, name: {agentVersion1.Name}, version: {agentVersion1.Version})");
 
-            projectClient.Agents.DeleteAgentVersion(agentName: agentVersion1.Name, agentVersion: agentVersion1.Version);
+            projectClient.AgentAdministrationClient.DeleteAgentVersion(agentName: agentVersion1.Name, agentVersion: agentVersion1.Version);
             Console.WriteLine($"Agent deleted (name: {agentVersion1.Name}, version: {agentVersion1.Version})");
         }
     }
@@ -99,11 +100,11 @@ public class Sample_Agents_Tracing : SamplesBase
     public async Task AgentTracingToAzureMonitorAsync()
     {
 #if SNIPPET
-        var projectEndpoint = System.Environment.GetEnvironmentVariable("PROJECT_ENDPOINT");
-        var modelDeploymentName = System.Environment.GetEnvironmentVariable("MODEL_DEPLOYMENT_NAME");
+        var projectEndpoint = System.Environment.GetEnvironmentVariable("FOUNDRY_PROJECT_ENDPOINT");
+        var modelDeploymentName = System.Environment.GetEnvironmentVariable("FOUNDRY_MODEL_NAME");
 #else
-        var projectEndpoint = TestEnvironment.PROJECT_ENDPOINT;
-        var modelDeploymentName = TestEnvironment.MODELDEPLOYMENTNAME;
+        var projectEndpoint = TestEnvironment.FOUNDRY_PROJECT_ENDPOINT;
+        var modelDeploymentName = TestEnvironment.FOUNDRY_MODEL_NAME;
 #endif
         AIProjectClient projectClient = new(endpoint: new Uri(projectEndpoint), tokenProvider: new DefaultAzureCredential());
 
@@ -124,16 +125,16 @@ public class Sample_Agents_Tracing : SamplesBase
 
         using (tracerProvider)
         {
-            PromptAgentDefinition agentDefinition = new(model: modelDeploymentName)
+            DeclarativeAgentDefinition agentDefinition = new(model: modelDeploymentName)
             {
                 Instructions = "You are a prompt agent."
             };
-            AgentVersion agentVersion1 = await projectClient.Agents.CreateAgentVersionAsync(
+            ProjectsAgentVersion agentVersion1 = await projectClient.AgentAdministrationClient.CreateAgentVersionAsync(
                 agentName: "myAgent1",
                 options: new(agentDefinition));
             Console.WriteLine($"Agent created (id: {agentVersion1.Id}, name: {agentVersion1.Name}, version: {agentVersion1.Version})");
 
-            projectClient.Agents.DeleteAgentVersion(agentName: agentVersion1.Name, agentVersion: agentVersion1.Version);
+            projectClient.AgentAdministrationClient.DeleteAgentVersion(agentName: agentVersion1.Name, agentVersion: agentVersion1.Version);
             Console.WriteLine($"Agent deleted (name: {agentVersion1.Name}, version: {agentVersion1.Version})");
         }
     }
@@ -143,11 +144,11 @@ public class Sample_Agents_Tracing : SamplesBase
     public void AgentTelemetryToAzureMonitor()
     {
 #if SNIPPET
-        var projectEndpoint = System.Environment.GetEnvironmentVariable("PROJECT_ENDPOINT");
-        var modelDeploymentName = System.Environment.GetEnvironmentVariable("MODEL_DEPLOYMENT_NAME");
+        var projectEndpoint = System.Environment.GetEnvironmentVariable("FOUNDRY_PROJECT_ENDPOINT");
+        var modelDeploymentName = System.Environment.GetEnvironmentVariable("FOUNDRY_MODEL_NAME");
 #else
-        var projectEndpoint = TestEnvironment.PROJECT_ENDPOINT;
-        var modelDeploymentName = TestEnvironment.MODELDEPLOYMENTNAME;
+        var projectEndpoint = TestEnvironment.FOUNDRY_PROJECT_ENDPOINT;
+        var modelDeploymentName = TestEnvironment.FOUNDRY_MODEL_NAME;
 #endif
         AIProjectClient projectClient = new(endpoint: new Uri(projectEndpoint), tokenProvider: new DefaultAzureCredential());
 
@@ -166,16 +167,16 @@ public class Sample_Agents_Tracing : SamplesBase
 
         using (tracerProvider)
         {
-            PromptAgentDefinition agentDefinition = new(model: modelDeploymentName)
+            DeclarativeAgentDefinition agentDefinition = new(model: modelDeploymentName)
             {
                 Instructions = "You are a prompt agent."
             };
-            AgentVersion agentVersion1 = projectClient.Agents.CreateAgentVersion(
+            ProjectsAgentVersion agentVersion1 = projectClient.AgentAdministrationClient.CreateAgentVersion(
                 agentName: "myAgent1",
                 options: new(agentDefinition));
             Console.WriteLine($"Agent created (id: {agentVersion1.Id}, name: {agentVersion1.Name}, version: {agentVersion1.Version})");
 
-            projectClient.Agents.DeleteAgentVersion(agentName: agentVersion1.Name, agentVersion: agentVersion1.Version);
+            projectClient.AgentAdministrationClient.DeleteAgentVersion(agentName: agentVersion1.Name, agentVersion: agentVersion1.Version);
             Console.WriteLine($"Agent deleted (name: {agentVersion1.Name}, version: {agentVersion1.Version})");
         }
     }

@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.RecoveryServices
         {
             TryGetApiVersion(ResourceType, out string recoveryServicesDeletedVaultApiVersion);
             _deletedVaultsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.RecoveryServices", ResourceType.Namespace, Diagnostics);
-            _deletedVaultsRestClient = new DeletedVaults(_deletedVaultsClientDiagnostics, Pipeline, Endpoint, recoveryServicesDeletedVaultApiVersion ?? "2025-08-01");
+            _deletedVaultsRestClient = new DeletedVaults(_deletedVaultsClientDiagnostics, Pipeline, Endpoint, recoveryServicesDeletedVaultApiVersion ?? "2026-05-01");
             ValidateResourceId(id);
         }
 
@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.RecoveryServices
         {
             if (id.ResourceType != ResourceType)
             {
-                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), id);
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), nameof(id));
             }
         }
 
@@ -105,7 +105,7 @@ namespace Azure.ResourceManager.RecoveryServices
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-08-01. </description>
+        /// <description> 2026-05-01. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -153,7 +153,7 @@ namespace Azure.ResourceManager.RecoveryServices
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-08-01. </description>
+        /// <description> 2026-05-01. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -201,7 +201,7 @@ namespace Azure.ResourceManager.RecoveryServices
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-08-01. </description>
+        /// <description> 2026-05-01. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -254,7 +254,7 @@ namespace Azure.ResourceManager.RecoveryServices
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-08-01. </description>
+        /// <description> 2026-05-01. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>

@@ -223,6 +223,7 @@ namespace Azure.AI.Projects.Tests.Utils
             testBase.JsonPathSanitizers.Add("$..connectionString");
             testBase.JsonPathSanitizers.Add("$..APPLICATIONINSIGHTS_CONNECTION_STRING");
             testBase.JsonPathSanitizers.Add("$.definition.image");
+            testBase.JsonPathSanitizers.Add("$.definition.tools[*].authorization");
 
             // Sanitize base64 encoded images
             testBase.BodyKeySanitizers.Add(new BodyKeySanitizer(new("$..url")
@@ -255,13 +256,24 @@ namespace Azure.AI.Projects.Tests.Utils
                 Value = AZURE_PROJECT_NAME_PATTERN.Value
             }));
 
-            // Sanitize Variables section PROJECT_ENDPOINT
-            testBase.BodyKeySanitizers.Add(new BodyKeySanitizer(new("$.Variables.PROJECT_ENDPOINT")
+            // Sanitize Variables section FOUNDRY_PROJECT_ENDPOINT
+            testBase.BodyKeySanitizers.Add(new BodyKeySanitizer(new("$.Variables.FOUNDRY_PROJECT_ENDPOINT")
             {
                 Regex = HOST_SUBDOMAIN_PATTERN.Regex,
                 Value = HOST_SUBDOMAIN_PATTERN.Value
             }));
-            testBase.BodyKeySanitizers.Add(new BodyKeySanitizer(new("$.Variables.PROJECT_ENDPOINT")
+            testBase.BodyKeySanitizers.Add(new BodyKeySanitizer(new("$.Variables.FOUNDRY_PROJECT_ENDPOINT")
+            {
+                Regex = AZURE_PROJECT_NAME_PATTERN.Regex,
+                Value = AZURE_PROJECT_NAME_PATTERN.Value
+            }));
+            // Toolbox endpoint
+            testBase.BodyKeySanitizers.Add(new BodyKeySanitizer(new("$..server_url")
+            {
+                Regex = HOST_SUBDOMAIN_PATTERN.Regex,
+                Value = HOST_SUBDOMAIN_PATTERN.Value
+            }));
+            testBase.BodyKeySanitizers.Add(new BodyKeySanitizer(new("$..server_url")
             {
                 Regex = AZURE_PROJECT_NAME_PATTERN.Regex,
                 Value = AZURE_PROJECT_NAME_PATTERN.Value

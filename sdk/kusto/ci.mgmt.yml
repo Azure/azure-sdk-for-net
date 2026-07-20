@@ -9,3 +9,5 @@ extends:
     Artifacts:
     - name: Azure.ResourceManager.Kusto
       safeName: AzureResourceManagerKusto
+    - name: Azure.Provisioning.Kusto
+      safeName: AzureProvisioningKusto

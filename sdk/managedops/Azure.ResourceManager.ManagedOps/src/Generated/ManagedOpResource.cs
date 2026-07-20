@@ -87,7 +87,7 @@ namespace Azure.ResourceManager.ManagedOps
         {
             if (id.ResourceType != ResourceType)
             {
-                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), id);
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), nameof(id));
             }
         }
 
@@ -227,7 +227,7 @@ namespace Azure.ResourceManager.ManagedOps
                 HttpMessage message = _managedOperationsRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.Name, ManagedOpPatch.ToRequestContent(patch), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 ManagedOpsArmOperation<ManagedOpResource> operation = new ManagedOpsArmOperation<ManagedOpResource>(
-                    new ManagedOpOperationSource(Client),
+                    new ManagedOpResourceOperationSource(Client),
                     _managedOperationsClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -286,7 +286,7 @@ namespace Azure.ResourceManager.ManagedOps
                 HttpMessage message = _managedOperationsRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.Name, ManagedOpPatch.ToRequestContent(patch), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 ManagedOpsArmOperation<ManagedOpResource> operation = new ManagedOpsArmOperation<ManagedOpResource>(
-                    new ManagedOpOperationSource(Client),
+                    new ManagedOpResourceOperationSource(Client),
                     _managedOperationsClientDiagnostics,
                     Pipeline,
                     message.Request,

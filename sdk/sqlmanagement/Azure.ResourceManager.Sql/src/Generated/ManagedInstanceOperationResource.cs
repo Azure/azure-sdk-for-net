@@ -6,46 +6,35 @@
 #nullable disable
 
 using System;
-using System.Globalization;
+using System.Diagnostics;
 using System.Threading;
 using System.Threading.Tasks;
+using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
+using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.Sql
 {
     /// <summary>
-    /// A Class representing a ManagedInstanceOperation along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="ManagedInstanceOperationResource"/>
-    /// from an instance of <see cref="ArmClient"/> using the GetManagedInstanceOperationResource method.
-    /// Otherwise you can get one from its parent resource <see cref="ManagedInstanceResource"/> using the GetManagedInstanceOperation method.
+    /// A class representing a ManagedInstanceOperation along with the instance operations that can be performed on it.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="ManagedInstanceOperationResource"/> from an instance of <see cref="ArmClient"/> using the GetResource method.
+    /// Otherwise you can get one from its parent resource <see cref="ManagedInstanceResource"/> using the GetManagedInstanceOperations method.
     /// </summary>
     public partial class ManagedInstanceOperationResource : ArmResource
     {
-        /// <summary> Generate the resource identifier of a <see cref="ManagedInstanceOperationResource"/> instance. </summary>
-        /// <param name="subscriptionId"> The subscriptionId. </param>
-        /// <param name="resourceGroupName"> The resourceGroupName. </param>
-        /// <param name="managedInstanceName"> The managedInstanceName. </param>
-        /// <param name="operationId"> The operationId. </param>
-        public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string managedInstanceName, Guid operationId)
-        {
-            var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/managedInstances/{managedInstanceName}/operations/{operationId}";
-            return new ResourceIdentifier(resourceId);
-        }
-
-        private readonly ClientDiagnostics _managedInstanceOperationClientDiagnostics;
-        private readonly ManagedInstanceRestOperations _managedInstanceOperationRestClient;
+        private readonly ClientDiagnostics _managedInstanceOperationsClientDiagnostics;
+        private readonly ManagedInstanceOperations _managedInstanceOperationsRestClient;
         private readonly ManagedInstanceOperationData _data;
-
         /// <summary> Gets the resource type for the operations. </summary>
         public static readonly ResourceType ResourceType = "Microsoft.Sql/managedInstances/operations";
 
-        /// <summary> Initializes a new instance of the <see cref="ManagedInstanceOperationResource"/> class for mocking. </summary>
+        /// <summary> Initializes a new instance of ManagedInstanceOperationResource for mocking. </summary>
         protected ManagedInstanceOperationResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref="ManagedInstanceOperationResource"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="ManagedInstanceOperationResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal ManagedInstanceOperationResource(ArmClient client, ManagedInstanceOperationData data) : this(client, data.Id)
@@ -54,71 +43,93 @@ namespace Azure.ResourceManager.Sql
             _data = data;
         }
 
-        /// <summary> Initializes a new instance of the <see cref="ManagedInstanceOperationResource"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="ManagedInstanceOperationResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal ManagedInstanceOperationResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _managedInstanceOperationClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Sql", ResourceType.Namespace, Diagnostics);
             TryGetApiVersion(ResourceType, out string managedInstanceOperationApiVersion);
-            _managedInstanceOperationRestClient = new ManagedInstanceRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, managedInstanceOperationApiVersion);
-#if DEBUG
-			ValidateResourceId(Id);
-#endif
+            _managedInstanceOperationsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Sql", ResourceType.Namespace, Diagnostics);
+            _managedInstanceOperationsRestClient = new ManagedInstanceOperations(_managedInstanceOperationsClientDiagnostics, Pipeline, Endpoint, managedInstanceOperationApiVersion ?? "2025-02-01-preview");
+            ValidateResourceId(id);
         }
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }
 
         /// <summary> Gets the data representing this Feature. </summary>
-        /// <exception cref="InvalidOperationException"> Throws if there is no data loaded in the current instance. </exception>
         public virtual ManagedInstanceOperationData Data
         {
             get
             {
                 if (!HasData)
+                {
                     throw new InvalidOperationException("The current instance does not have data, you must call Get first.");
+                }
                 return _data;
             }
         }
 
+        /// <summary> Generate the resource identifier for this resource. </summary>
+        /// <param name="subscriptionId"> The subscriptionId. </param>
+        /// <param name="resourceGroupName"> The resourceGroupName. </param>
+        /// <param name="managedInstanceName"> The managedInstanceName. </param>
+        /// <param name="operationId"> The operationId. </param>
+        public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string managedInstanceName, Guid operationId)
+        {
+            string resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/managedInstances/{managedInstanceName}/operations/{operationId}";
+            return new ResourceIdentifier(resourceId);
+        }
+
+        /// <param name="id"></param>
+        [Conditional("DEBUG")]
         internal static void ValidateResourceId(ResourceIdentifier id)
         {
             if (id.ResourceType != ResourceType)
-                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), nameof(id));
+            {
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), nameof(id));
+            }
         }
 
         /// <summary>
         /// Gets a management operation on a managed instance.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/managedInstances/{managedInstanceName}/operations/{operationId}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/managedInstances/{managedInstanceName}/operations/{operationId}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ManagedInstanceOperations_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> ManagedInstanceOperations_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-11-01-preview</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-02-01-preview. </description>
         /// </item>
         /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ManagedInstanceOperationResource"/></description>
+        /// <term> Resource. </term>
+        /// <description> <see cref="ManagedInstanceOperationResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<Response<ManagedInstanceOperationResource>> GetAsync(CancellationToken cancellationToken = default)
         {
-            using var scope = _managedInstanceOperationClientDiagnostics.CreateScope("ManagedInstanceOperationResource.Get");
+            using DiagnosticScope scope = _managedInstanceOperationsClientDiagnostics.CreateScope("ManagedInstanceOperationResource.Get");
             scope.Start();
             try
             {
-                var response = await _managedInstanceOperationRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Guid.Parse(Id.Name), cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _managedInstanceOperationsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Guid.Parse(Id.Name), context);
+                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                Response<ManagedInstanceOperationData> response = Response.FromValue(ManagedInstanceOperationData.FromResponse(result), result);
                 if (response.Value == null)
+                {
                     throw new RequestFailedException(response.GetRawResponse());
+                }
                 return Response.FromValue(new ManagedInstanceOperationResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -132,33 +143,41 @@ namespace Azure.ResourceManager.Sql
         /// Gets a management operation on a managed instance.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/managedInstances/{managedInstanceName}/operations/{operationId}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/managedInstances/{managedInstanceName}/operations/{operationId}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ManagedInstanceOperations_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> ManagedInstanceOperations_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-11-01-preview</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-02-01-preview. </description>
         /// </item>
         /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ManagedInstanceOperationResource"/></description>
+        /// <term> Resource. </term>
+        /// <description> <see cref="ManagedInstanceOperationResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response<ManagedInstanceOperationResource> Get(CancellationToken cancellationToken = default)
         {
-            using var scope = _managedInstanceOperationClientDiagnostics.CreateScope("ManagedInstanceOperationResource.Get");
+            using DiagnosticScope scope = _managedInstanceOperationsClientDiagnostics.CreateScope("ManagedInstanceOperationResource.Get");
             scope.Start();
             try
             {
-                var response = _managedInstanceOperationRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Guid.Parse(Id.Name), cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _managedInstanceOperationsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Guid.Parse(Id.Name), context);
+                Response result = Pipeline.ProcessMessage(message, context);
+                Response<ManagedInstanceOperationData> response = Response.FromValue(ManagedInstanceOperationData.FromResponse(result), result);
                 if (response.Value == null)
+                {
                     throw new RequestFailedException(response.GetRawResponse());
+                }
                 return Response.FromValue(new ManagedInstanceOperationResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -172,31 +191,36 @@ namespace Azure.ResourceManager.Sql
         /// Cancels the asynchronous operation on the managed instance.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/managedInstances/{managedInstanceName}/operations/{operationId}/cancel</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/managedInstances/{managedInstanceName}/operations/{operationId}/cancel. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ManagedInstanceOperations_Cancel</description>
+        /// <term> Operation Id. </term>
+        /// <description> ManagedInstanceOperations_Cancel. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-11-01-preview</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-02-01-preview. </description>
         /// </item>
         /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ManagedInstanceOperationResource"/></description>
+        /// <term> Resource. </term>
+        /// <description> <see cref="ManagedInstanceOperationResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<Response> CancelAsync(CancellationToken cancellationToken = default)
         {
-            using var scope = _managedInstanceOperationClientDiagnostics.CreateScope("ManagedInstanceOperationResource.Cancel");
+            using DiagnosticScope scope = _managedInstanceOperationsClientDiagnostics.CreateScope("ManagedInstanceOperationResource.Cancel");
             scope.Start();
             try
             {
-                var response = await _managedInstanceOperationRestClient.CancelAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Guid.Parse(Id.Name), cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _managedInstanceOperationsRestClient.CreateCancelRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Guid.Parse(Id.Name), context);
+                Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 return response;
             }
             catch (Exception e)
@@ -210,31 +234,36 @@ namespace Azure.ResourceManager.Sql
         /// Cancels the asynchronous operation on the managed instance.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/managedInstances/{managedInstanceName}/operations/{operationId}/cancel</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/managedInstances/{managedInstanceName}/operations/{operationId}/cancel. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ManagedInstanceOperations_Cancel</description>
+        /// <term> Operation Id. </term>
+        /// <description> ManagedInstanceOperations_Cancel. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-11-01-preview</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-02-01-preview. </description>
         /// </item>
         /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ManagedInstanceOperationResource"/></description>
+        /// <term> Resource. </term>
+        /// <description> <see cref="ManagedInstanceOperationResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response Cancel(CancellationToken cancellationToken = default)
         {
-            using var scope = _managedInstanceOperationClientDiagnostics.CreateScope("ManagedInstanceOperationResource.Cancel");
+            using DiagnosticScope scope = _managedInstanceOperationsClientDiagnostics.CreateScope("ManagedInstanceOperationResource.Cancel");
             scope.Start();
             try
             {
-                var response = _managedInstanceOperationRestClient.Cancel(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Guid.Parse(Id.Name), cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _managedInstanceOperationsRestClient.CreateCancelRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Guid.Parse(Id.Name), context);
+                Response response = Pipeline.ProcessMessage(message, context);
                 return response;
             }
             catch (Exception e)

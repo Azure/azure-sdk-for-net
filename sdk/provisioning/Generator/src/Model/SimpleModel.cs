@@ -33,6 +33,7 @@ public class SimpleModel(Specification spec, Type armType, string name, string? 
                 HashSet<string> namespaces = CollectNamespaces();
                 if (FromExpression) { namespaces.Add("Azure.Provisioning.Expressions"); }
                 if (FromExpression) { namespaces.Add("System.ComponentModel"); }
+                if (IsExperimental) { namespaces.Add("System.Diagnostics.CodeAnalysis"); }
                 foreach (string ns in namespaces.Order())
                 {
                     if (fence.RequiresSeparator) { /* Don't write anything here */ }
@@ -45,6 +46,10 @@ public class SimpleModel(Specification spec, Type armType, string name, string? 
                 writer.WriteLine($"/// <summary>");
                 writer.WriteWrapped(Description ?? (Name + "."));
                 writer.WriteLine($"/// </summary>");
+                if (IsExperimental)
+                {
+                    writer.WriteLine($"[Experimental(\"AZPROVISION001\")]");
+                }
                 writer.WriteLine($"public partial class {Name} : {(BaseType is not null ? BaseType.Name : "ProvisionableConstruct")}");
                 using (writer.Scope("{", "}"))
                 {

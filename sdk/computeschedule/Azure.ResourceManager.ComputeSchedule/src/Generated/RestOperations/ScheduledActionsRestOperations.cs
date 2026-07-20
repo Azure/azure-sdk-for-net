@@ -179,6 +179,29 @@ namespace Azure.ResourceManager.ComputeSchedule
             return message;
         }
 
+        internal HttpMessage CreateExecuteVirtualMachineCreateFlexOperationRequest(Guid subscriptionId, AzureLocation locationparameter, RequestContent content, RequestContext context)
+        {
+            RawRequestUriBuilder uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId.ToString(), true);
+            uri.AppendPath("/providers/Microsoft.ComputeSchedule/locations/", false);
+            uri.AppendPath(locationparameter.ToString(), true);
+            uri.AppendPath("/virtualMachinesExecuteCreateFlex", false);
+            if (_apiVersion != null)
+            {
+                uri.AppendQuery("api-version", _apiVersion, true);
+            }
+            HttpMessage message = Pipeline.CreateMessage();
+            Request request = message.Request;
+            request.Uri = uri;
+            request.Method = RequestMethod.Post;
+            request.Headers.SetValue("Content-Type", "application/json");
+            request.Headers.SetValue("Accept", "application/json");
+            request.Content = content;
+            return message;
+        }
+
         internal HttpMessage CreateExecuteVirtualMachineCreateOperationRequest(Guid subscriptionId, AzureLocation locationparameter, RequestContent content, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();

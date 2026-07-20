@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.AppComplianceAutomation
         {
             if (id.ResourceType != TenantResource.ResourceType)
             {
-                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, TenantResource.ResourceType), id);
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, TenantResource.ResourceType), nameof(id));
             }
         }
 
@@ -94,7 +94,7 @@ namespace Azure.ResourceManager.AppComplianceAutomation
                 HttpMessage message = _reportRestClient.CreateCreateOrUpdateRequest(reportName, AppComplianceReportData.ToRequestContent(data), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 AppComplianceAutomationArmOperation<AppComplianceReportResource> operation = new AppComplianceAutomationArmOperation<AppComplianceReportResource>(
-                    new AppComplianceReportOperationSource(Client),
+                    new AppComplianceReportResourceOperationSource(Client),
                     _reportClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -152,7 +152,7 @@ namespace Azure.ResourceManager.AppComplianceAutomation
                 HttpMessage message = _reportRestClient.CreateCreateOrUpdateRequest(reportName, AppComplianceReportData.ToRequestContent(data), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 AppComplianceAutomationArmOperation<AppComplianceReportResource> operation = new AppComplianceAutomationArmOperation<AppComplianceReportResource>(
-                    new AppComplianceReportOperationSource(Client),
+                    new AppComplianceReportResourceOperationSource(Client),
                     _reportClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -310,7 +310,8 @@ namespace Azure.ResourceManager.AppComplianceAutomation
                 @orderby,
                 offerGuid,
                 reportCreatorTenantId,
-                context), data => new AppComplianceReportResource(Client, data));
+                context,
+                "AppComplianceReportCollection.GetAll"), data => new AppComplianceReportResource(Client, data));
         }
 
         /// <summary>
@@ -354,7 +355,8 @@ namespace Azure.ResourceManager.AppComplianceAutomation
                 @orderby,
                 offerGuid,
                 reportCreatorTenantId,
-                context), data => new AppComplianceReportResource(Client, data));
+                context,
+                "AppComplianceReportCollection.GetAll"), data => new AppComplianceReportResource(Client, data));
         }
 
         /// <summary>

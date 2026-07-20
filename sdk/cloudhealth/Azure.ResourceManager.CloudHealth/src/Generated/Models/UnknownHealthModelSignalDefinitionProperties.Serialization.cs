@@ -55,7 +55,10 @@ namespace Azure.ResourceManager.CloudHealth.Models
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        HealthModelSignalDefinitionProperties IPersistableModel<HealthModelSignalDefinitionProperties>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+        HealthModelSignalDefinitionProperties IPersistableModel<HealthModelSignalDefinitionProperties>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            return PersistableModelCreateCore(data, options);
+        }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         string IPersistableModel<HealthModelSignalDefinitionProperties>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
@@ -83,7 +86,10 @@ namespace Azure.ResourceManager.CloudHealth.Models
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        HealthModelSignalDefinitionProperties IJsonModel<HealthModelSignalDefinitionProperties>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+        HealthModelSignalDefinitionProperties IJsonModel<HealthModelSignalDefinitionProperties>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            return JsonModelCreateCore(ref reader, options);
+        }
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
@@ -110,10 +116,9 @@ namespace Azure.ResourceManager.CloudHealth.Models
             string displayName = default;
             EntitySignalKind signalKind = default;
             EntitySignalRefreshInterval? refreshInterval = default;
-            IDictionary<string, string> labels = default;
+            IDictionary<string, string> tags = default;
             string dataUnit = default;
             EntitySignalEvaluationRule evaluationRules = default;
-            DateTimeOffset? deletedOn = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -145,7 +150,7 @@ namespace Azure.ResourceManager.CloudHealth.Models
                     refreshInterval = new EntitySignalRefreshInterval(prop.Value.GetString());
                     continue;
                 }
-                if (prop.NameEquals("labels"u8))
+                if (prop.NameEquals("tags"u8))
                 {
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -163,7 +168,7 @@ namespace Azure.ResourceManager.CloudHealth.Models
                             dictionary.Add(prop0.Name, prop0.Value.GetString());
                         }
                     }
-                    labels = dictionary;
+                    tags = dictionary;
                     continue;
                 }
                 if (prop.NameEquals("dataUnit"u8))
@@ -176,15 +181,6 @@ namespace Azure.ResourceManager.CloudHealth.Models
                     evaluationRules = EntitySignalEvaluationRule.DeserializeEntitySignalEvaluationRule(prop.Value, options);
                     continue;
                 }
-                if (prop.NameEquals("deletionDate"u8))
-                {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    deletedOn = prop.Value.GetDateTimeOffset("O");
-                    continue;
-                }
                 if (options.Format != "W")
                 {
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
@@ -195,10 +191,9 @@ namespace Azure.ResourceManager.CloudHealth.Models
                 displayName,
                 signalKind,
                 refreshInterval,
-                labels ?? new ChangeTrackingDictionary<string, string>(),
+                tags ?? new ChangeTrackingDictionary<string, string>(),
                 dataUnit,
                 evaluationRules,
-                deletedOn,
                 additionalBinaryDataProperties);
         }
     }

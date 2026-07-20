@@ -1,4 +1,4 @@
-﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
 using System;
@@ -17,7 +17,7 @@ public partial class MessageAttachment
         FileId = null;
         DataSource = ds;
         Tools = serializeJson(tools);
-        _serializedAdditionalRawData = null;
+        _additionalBinaryDataProperties = null;
     }
 
     public MessageAttachment(string fileId, List<ToolDefinition> tools)
@@ -25,7 +25,7 @@ public partial class MessageAttachment
         FileId = fileId;
         DataSource = null;
         Tools = serializeJson(tools);
-        _serializedAdditionalRawData = null;
+        _additionalBinaryDataProperties = null;
     }
 
     private static List<BinaryData> serializeJson<T>(List<T> definitions) where T : IJsonModel<T>

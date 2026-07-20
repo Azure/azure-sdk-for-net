@@ -64,9 +64,7 @@ namespace Azure.ResourceManager.Fabric.Models
             {
                 return null;
             }
-            Utf8JsonRequestContent content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(fabricCapacityPatch, ModelSerializationExtensions.WireOptions);
-            return content;
+            return RequestContent.Create(fabricCapacityPatch, ModelSerializationExtensions.WireOptions);
         }
 
         /// <param name="writer"> The JSON writer. </param>

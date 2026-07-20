@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.FileShares
         {
             TryGetApiVersion(ResourceType, out string fileShareSnapshotApiVersion);
             _fileShareSnapshotsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.FileShares", ResourceType.Namespace, Diagnostics);
-            _fileShareSnapshotsRestClient = new FileShareSnapshots(_fileShareSnapshotsClientDiagnostics, Pipeline, Endpoint, fileShareSnapshotApiVersion ?? "2025-09-01-preview");
+            _fileShareSnapshotsRestClient = new FileShareSnapshots(_fileShareSnapshotsClientDiagnostics, Pipeline, Endpoint, fileShareSnapshotApiVersion ?? "2026-06-01");
             ValidateResourceId(id);
         }
 
@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.FileShares
         {
             if (id.ResourceType != ResourceType)
             {
-                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), id);
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), nameof(id));
             }
         }
 
@@ -105,7 +105,7 @@ namespace Azure.ResourceManager.FileShares
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-09-01-preview. </description>
+        /// <description> 2026-06-01. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -153,7 +153,7 @@ namespace Azure.ResourceManager.FileShares
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-09-01-preview. </description>
+        /// <description> 2026-06-01. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -201,7 +201,7 @@ namespace Azure.ResourceManager.FileShares
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-09-01-preview. </description>
+        /// <description> 2026-06-01. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -228,7 +228,7 @@ namespace Azure.ResourceManager.FileShares
                 HttpMessage message = _fileShareSnapshotsRestClient.CreateUpdateFileShareSnapshotRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, FileShareSnapshotPatch.ToRequestContent(patch), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 FileSharesArmOperation<FileShareSnapshotResource> operation = new FileSharesArmOperation<FileShareSnapshotResource>(
-                    new FileShareSnapshotOperationSource(Client),
+                    new FileShareSnapshotResourceOperationSource(Client),
                     _fileShareSnapshotsClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -260,7 +260,7 @@ namespace Azure.ResourceManager.FileShares
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-09-01-preview. </description>
+        /// <description> 2026-06-01. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -287,7 +287,7 @@ namespace Azure.ResourceManager.FileShares
                 HttpMessage message = _fileShareSnapshotsRestClient.CreateUpdateFileShareSnapshotRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, FileShareSnapshotPatch.ToRequestContent(patch), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 FileSharesArmOperation<FileShareSnapshotResource> operation = new FileSharesArmOperation<FileShareSnapshotResource>(
-                    new FileShareSnapshotOperationSource(Client),
+                    new FileShareSnapshotResourceOperationSource(Client),
                     _fileShareSnapshotsClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -319,7 +319,7 @@ namespace Azure.ResourceManager.FileShares
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-09-01-preview. </description>
+        /// <description> 2026-06-01. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -368,7 +368,7 @@ namespace Azure.ResourceManager.FileShares
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-09-01-preview. </description>
+        /// <description> 2026-06-01. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>

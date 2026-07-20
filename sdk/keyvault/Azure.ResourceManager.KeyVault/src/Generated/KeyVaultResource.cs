@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.KeyVault
         {
             TryGetApiVersion(ResourceType, out string keyVaultApiVersion);
             _vaultsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.KeyVault", ResourceType.Namespace, Diagnostics);
-            _vaultsRestClient = new Vaults(_vaultsClientDiagnostics, Pipeline, Endpoint, keyVaultApiVersion ?? "2025-05-01");
+            _vaultsRestClient = new Vaults(_vaultsClientDiagnostics, Pipeline, Endpoint, keyVaultApiVersion ?? "2026-02-01");
             ValidateResourceId(id);
         }
 
@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.KeyVault
         {
             if (id.ResourceType != ResourceType)
             {
-                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), id);
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), nameof(id));
             }
         }
 
@@ -106,7 +106,7 @@ namespace Azure.ResourceManager.KeyVault
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-05-01. </description>
+        /// <description> 2026-02-01. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -154,7 +154,7 @@ namespace Azure.ResourceManager.KeyVault
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-05-01. </description>
+        /// <description> 2026-02-01. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -202,7 +202,7 @@ namespace Azure.ResourceManager.KeyVault
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-05-01. </description>
+        /// <description> 2026-02-01. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -254,7 +254,7 @@ namespace Azure.ResourceManager.KeyVault
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-05-01. </description>
+        /// <description> 2026-02-01. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -306,7 +306,7 @@ namespace Azure.ResourceManager.KeyVault
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-05-01. </description>
+        /// <description> 2026-02-01. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -357,7 +357,7 @@ namespace Azure.ResourceManager.KeyVault
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-05-01. </description>
+        /// <description> 2026-02-01. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -408,7 +408,7 @@ namespace Azure.ResourceManager.KeyVault
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-05-01. </description>
+        /// <description> 2026-02-01. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -424,7 +424,13 @@ namespace Azure.ResourceManager.KeyVault
             {
                 CancellationToken = cancellationToken
             };
-            return new VaultsGetPrivateLinkResourcesAsyncCollectionResultOfT(_vaultsRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+            return new VaultsGetPrivateLinkResourcesAsyncCollectionResultOfT(
+                _vaultsRestClient,
+                Guid.Parse(Id.SubscriptionId),
+                Id.ResourceGroupName,
+                Id.Name,
+                context,
+                "KeyVaultResource.GetPrivateLinkResources");
         }
 
         /// <summary>
@@ -440,7 +446,7 @@ namespace Azure.ResourceManager.KeyVault
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-05-01. </description>
+        /// <description> 2026-02-01. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -456,7 +462,13 @@ namespace Azure.ResourceManager.KeyVault
             {
                 CancellationToken = cancellationToken
             };
-            return new VaultsGetPrivateLinkResourcesCollectionResultOfT(_vaultsRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+            return new VaultsGetPrivateLinkResourcesCollectionResultOfT(
+                _vaultsRestClient,
+                Guid.Parse(Id.SubscriptionId),
+                Id.ResourceGroupName,
+                Id.Name,
+                context,
+                "KeyVaultResource.GetPrivateLinkResources");
         }
 
         /// <summary>
@@ -472,7 +484,7 @@ namespace Azure.ResourceManager.KeyVault
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-05-01. </description>
+        /// <description> 2026-02-01. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -496,7 +508,7 @@ namespace Azure.ResourceManager.KeyVault
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _vaultsRestClient.CreateUpdateAccessPolicyRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, operationKind.ToString(), KeyVaultAccessPolicyParameters.ToRequestContent(content), context);
+                HttpMessage message = _vaultsRestClient.CreateUpdateAccessPolicyRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, operationKind.ToSerialString(), KeyVaultAccessPolicyParameters.ToRequestContent(content), context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<KeyVaultAccessPolicyParameters> response = Response.FromValue(KeyVaultAccessPolicyParameters.FromResponse(result), result);
                 if (response.Value == null)
@@ -525,7 +537,7 @@ namespace Azure.ResourceManager.KeyVault
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-05-01. </description>
+        /// <description> 2026-02-01. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -549,7 +561,7 @@ namespace Azure.ResourceManager.KeyVault
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _vaultsRestClient.CreateUpdateAccessPolicyRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, operationKind.ToString(), KeyVaultAccessPolicyParameters.ToRequestContent(content), context);
+                HttpMessage message = _vaultsRestClient.CreateUpdateAccessPolicyRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, operationKind.ToSerialString(), KeyVaultAccessPolicyParameters.ToRequestContent(content), context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<KeyVaultAccessPolicyParameters> response = Response.FromValue(KeyVaultAccessPolicyParameters.FromResponse(result), result);
                 if (response.Value == null)

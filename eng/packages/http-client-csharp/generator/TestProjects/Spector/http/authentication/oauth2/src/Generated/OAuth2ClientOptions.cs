@@ -5,11 +5,17 @@
 
 #nullable disable
 
+using System.Diagnostics.CodeAnalysis;
 using Azure.Core;
+using Microsoft.Extensions.Configuration;
 
 namespace Authentication.OAuth2
 {
     public partial class OAuth2ClientOptions : ClientOptions
     {
+        public OAuth2ClientOptions() => throw null;
+
+        [Experimental("SCME0002")]
+        internal OAuth2ClientOptions(IConfigurationSection section) : base(section, null) => throw null;
     }
 }

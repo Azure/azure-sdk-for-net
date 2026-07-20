@@ -14,29 +14,29 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
     public partial class WorkloadBackupContent : BackupContent
     {
         /// <summary> Initializes a new instance of <see cref="WorkloadBackupContent"/>. </summary>
-        public WorkloadBackupContent()
+        public WorkloadBackupContent() : base("AzureWorkloadBackupRequest")
         {
-            ObjectType = "AzureWorkloadBackupRequest";
         }
 
         /// <summary> Initializes a new instance of <see cref="WorkloadBackupContent"/>. </summary>
         /// <param name="objectType"> This property will be used as the discriminator for deciding the specific types in the polymorphic chain of types. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="backupType"> Type of backup, viz. Full, Differential, Log or CopyOnlyFull. </param>
         /// <param name="enableCompression"> Bool for Compression setting. </param>
         /// <param name="recoveryPointExpireOn"> Backup copy will expire after the time specified (UTC). </param>
-        internal WorkloadBackupContent(string objectType, IDictionary<string, BinaryData> serializedAdditionalRawData, BackupType? backupType, bool? enableCompression, DateTimeOffset? recoveryPointExpireOn) : base(objectType, serializedAdditionalRawData)
+        internal WorkloadBackupContent(string objectType, IDictionary<string, BinaryData> additionalBinaryDataProperties, BackupType? backupType, bool? enableCompression, DateTimeOffset? recoveryPointExpireOn) : base(objectType, additionalBinaryDataProperties)
         {
             BackupType = backupType;
             EnableCompression = enableCompression;
             RecoveryPointExpireOn = recoveryPointExpireOn;
-            ObjectType = objectType ?? "AzureWorkloadBackupRequest";
         }
 
         /// <summary> Type of backup, viz. Full, Differential, Log or CopyOnlyFull. </summary>
         public BackupType? BackupType { get; set; }
+
         /// <summary> Bool for Compression setting. </summary>
         public bool? EnableCompression { get; set; }
+
         /// <summary> Backup copy will expire after the time specified (UTC). </summary>
         public DateTimeOffset? RecoveryPointExpireOn { get; set; }
     }

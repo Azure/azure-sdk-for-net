@@ -14,8 +14,8 @@ This sample demonstrates how to use the synchronous and asynchronous `persistent
 1. We need to create the agents client and read in some environment variables.
 
 ```C# Snippet:AI_Projects_ExtensionsAgentsBasicsAsync
-var endpoint = System.Environment.GetEnvironmentVariable("PROJECT_ENDPOINT");
-var modelDeploymentName = System.Environment.GetEnvironmentVariable("MODEL_DEPLOYMENT_NAME");
+var endpoint = System.Environment.GetEnvironmentVariable("FOUNDRY_PROJECT_ENDPOINT");
+var modelDeploymentName = System.Environment.GetEnvironmentVariable("FOUNDRY_MODEL_NAME");
 AIProjectClient projectClient = new(new Uri(endpoint), new DefaultAzureCredential());
 PersistentAgentsClient agentsClient = projectClient.GetPersistentAgentsClient();
 ```
@@ -107,8 +107,8 @@ await agentsClient.Administration.DeleteAgentAsync(agentId: agent.Id);
 ## Synchronous Sample
 
 ```C# Snippet:AI_Projects_ExtensionsAgentsBasicsSync
-var endpoint = System.Environment.GetEnvironmentVariable("PROJECT_ENDPOINT");
-var modelDeploymentName = System.Environment.GetEnvironmentVariable("MODEL_DEPLOYMENT_NAME");
+var endpoint = System.Environment.GetEnvironmentVariable("FOUNDRY_PROJECT_ENDPOINT");
+var modelDeploymentName = System.Environment.GetEnvironmentVariable("FOUNDRY_MODEL_NAME");
 AIProjectClient projectClient = new(new Uri(endpoint), new DefaultAzureCredential());
 PersistentAgentsClient agentsClient = projectClient.GetPersistentAgentsClient();
 

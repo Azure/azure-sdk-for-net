@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.SiteManager
         {
             if (id.ResourceType != ResourceGroupResource.ResourceType)
             {
-                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ResourceGroupResource.ResourceType), id);
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ResourceGroupResource.ResourceType), nameof(id));
             }
         }
 
@@ -94,7 +94,7 @@ namespace Azure.ResourceManager.SiteManager
                 HttpMessage message = _resourceGroupEdgeSiteRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, siteName, EdgeSiteData.ToRequestContent(data), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 SiteManagerArmOperation<ResourceGroupEdgeSiteResource> operation = new SiteManagerArmOperation<ResourceGroupEdgeSiteResource>(
-                    new ResourceGroupEdgeSiteOperationSource(Client),
+                    new ResourceGroupEdgeSiteResourceOperationSource(Client),
                     _resourceGroupEdgeSiteClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -152,7 +152,7 @@ namespace Azure.ResourceManager.SiteManager
                 HttpMessage message = _resourceGroupEdgeSiteRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, siteName, EdgeSiteData.ToRequestContent(data), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 SiteManagerArmOperation<ResourceGroupEdgeSiteResource> operation = new SiteManagerArmOperation<ResourceGroupEdgeSiteResource>(
-                    new ResourceGroupEdgeSiteOperationSource(Client),
+                    new ResourceGroupEdgeSiteResourceOperationSource(Client),
                     _resourceGroupEdgeSiteClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -294,7 +294,7 @@ namespace Azure.ResourceManager.SiteManager
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<EdgeSiteData, ResourceGroupEdgeSiteResource>(new ResourceGroupEdgeSiteGetByResourceGroupAsyncCollectionResultOfT(_resourceGroupEdgeSiteRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context), data => new ResourceGroupEdgeSiteResource(Client, data));
+            return new AsyncPageableWrapper<EdgeSiteData, ResourceGroupEdgeSiteResource>(new ResourceGroupEdgeSiteGetByResourceGroupAsyncCollectionResultOfT(_resourceGroupEdgeSiteRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "ResourceGroupEdgeSiteCollection.GetAll"), data => new ResourceGroupEdgeSiteResource(Client, data));
         }
 
         /// <summary>
@@ -322,7 +322,7 @@ namespace Azure.ResourceManager.SiteManager
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<EdgeSiteData, ResourceGroupEdgeSiteResource>(new ResourceGroupEdgeSiteGetByResourceGroupCollectionResultOfT(_resourceGroupEdgeSiteRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context), data => new ResourceGroupEdgeSiteResource(Client, data));
+            return new PageableWrapper<EdgeSiteData, ResourceGroupEdgeSiteResource>(new ResourceGroupEdgeSiteGetByResourceGroupCollectionResultOfT(_resourceGroupEdgeSiteRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "ResourceGroupEdgeSiteCollection.GetAll"), data => new ResourceGroupEdgeSiteResource(Client, data));
         }
 
         /// <summary>

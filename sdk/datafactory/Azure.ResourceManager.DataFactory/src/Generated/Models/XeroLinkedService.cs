@@ -15,9 +15,9 @@ namespace Azure.ResourceManager.DataFactory.Models
     public partial class XeroLinkedService : DataFactoryLinkedServiceProperties
     {
         /// <summary> Initializes a new instance of <see cref="XeroLinkedService"/>. </summary>
-        public XeroLinkedService()
+        public XeroLinkedService() : base("Xero")
         {
-            LinkedServiceType = "Xero";
+
         }
 
         /// <summary> Initializes a new instance of <see cref="XeroLinkedService"/>. </summary>
@@ -27,78 +27,116 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <param name="description"> Linked service description. </param>
         /// <param name="parameters"> Parameters for linked service. </param>
         /// <param name="annotations"> List of tags that can be used for describing the linked service. </param>
-        /// <param name="additionalProperties"> Additional Properties. </param>
-        /// <param name="connectionProperties"> Properties used to connect to Xero. It is mutually exclusive with any other properties in the linked service. Type: object. </param>
-        /// <param name="host"> The endpoint of the Xero server. (i.e. api.xero.com). </param>
-        /// <param name="consumerKey"> The consumer key associated with the Xero application. </param>
-        /// <param name="privateKey">
-        /// The private key from the .pem file that was generated for your Xero private application. You must include all the text from the .pem file, including the Unix line endings(
-        /// ).
-        /// </param>
-        /// <param name="useEncryptedEndpoints"> Specifies whether the data source endpoints are encrypted using HTTPS. The default value is true. </param>
-        /// <param name="useHostVerification"> Specifies whether to require the host name in the server's certificate to match the host name of the server when connecting over SSL. The default value is true. </param>
-        /// <param name="usePeerVerification"> Specifies whether to verify the identity of the server when connecting over SSL. The default value is true. </param>
-        /// <param name="encryptedCredential"> The encrypted credential used for authentication. Credentials are encrypted using the integration runtime credential manager. Type: string. </param>
-        internal XeroLinkedService(string linkedServiceType, string linkedServiceVersion, IntegrationRuntimeReference connectVia, string description, IDictionary<string, EntityParameterSpecification> parameters, IList<BinaryData> annotations, IDictionary<string, BinaryData> additionalProperties, BinaryData connectionProperties, DataFactoryElement<string> host, DataFactorySecret consumerKey, DataFactorySecret privateKey, DataFactoryElement<bool> useEncryptedEndpoints, DataFactoryElement<bool> useHostVerification, DataFactoryElement<bool> usePeerVerification, string encryptedCredential) : base(linkedServiceType, linkedServiceVersion, connectVia, description, parameters, annotations, additionalProperties)
+        /// <param name="additionalProperties"></param>
+        /// <param name="typeProperties"> Xero Service linked service properties. </param>
+        internal XeroLinkedService(string linkedServiceType, string linkedServiceVersion, IntegrationRuntimeReference connectVia, string description, IDictionary<string, EntityParameterSpecification> parameters, IList<BinaryData> annotations, IDictionary<string, BinaryData> additionalProperties, XeroLinkedServiceTypeProperties typeProperties) : base(linkedServiceType, linkedServiceVersion, connectVia, description, parameters, annotations, additionalProperties)
         {
-            ConnectionProperties = connectionProperties;
-            Host = host;
-            ConsumerKey = consumerKey;
-            PrivateKey = privateKey;
-            UseEncryptedEndpoints = useEncryptedEndpoints;
-            UseHostVerification = useHostVerification;
-            UsePeerVerification = usePeerVerification;
-            EncryptedCredential = encryptedCredential;
-            LinkedServiceType = linkedServiceType ?? "Xero";
+            TypeProperties = typeProperties;
         }
 
-        /// <summary>
-        /// Properties used to connect to Xero. It is mutually exclusive with any other properties in the linked service. Type: object.
-        /// <para>
-        /// To assign an object to this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        public BinaryData ConnectionProperties { get; set; }
+        /// <summary> Xero Service linked service properties. </summary>
+        internal XeroLinkedServiceTypeProperties TypeProperties { get; set; }
+
+        /// <summary> Properties used to connect to Xero. It is mutually exclusive with any other properties in the linked service. Type: object. </summary>
+        public BinaryData ConnectionProperties
+        {
+            get
+            {
+                return TypeProperties is null ? default : TypeProperties.ConnectionProperties;
+            }
+            set
+            {
+                if (TypeProperties is null)
+                {
+                    TypeProperties = new XeroLinkedServiceTypeProperties();
+                }
+                TypeProperties.ConnectionProperties = value;
+            }
+        }
+
         /// <summary> The endpoint of the Xero server. (i.e. api.xero.com). </summary>
-        public DataFactoryElement<string> Host { get; set; }
-        /// <summary> The consumer key associated with the Xero application. </summary>
-        public DataFactorySecret ConsumerKey { get; set; }
-        /// <summary>
-        /// The private key from the .pem file that was generated for your Xero private application. You must include all the text from the .pem file, including the Unix line endings(
-        /// ).
-        /// </summary>
-        public DataFactorySecret PrivateKey { get; set; }
+        public DataFactoryElement<string> Host
+        {
+            get
+            {
+                return TypeProperties is null ? default : TypeProperties.Host;
+            }
+            set
+            {
+                if (TypeProperties is null)
+                {
+                    TypeProperties = new XeroLinkedServiceTypeProperties();
+                }
+                TypeProperties.Host = value;
+            }
+        }
+
         /// <summary> Specifies whether the data source endpoints are encrypted using HTTPS. The default value is true. </summary>
-        public DataFactoryElement<bool> UseEncryptedEndpoints { get; set; }
+        public DataFactoryElement<bool> UseEncryptedEndpoints
+        {
+            get
+            {
+                return TypeProperties is null ? default : TypeProperties.UseEncryptedEndpoints;
+            }
+            set
+            {
+                if (TypeProperties is null)
+                {
+                    TypeProperties = new XeroLinkedServiceTypeProperties();
+                }
+                TypeProperties.UseEncryptedEndpoints = value;
+            }
+        }
+
         /// <summary> Specifies whether to require the host name in the server's certificate to match the host name of the server when connecting over SSL. The default value is true. </summary>
-        public DataFactoryElement<bool> UseHostVerification { get; set; }
+        public DataFactoryElement<bool> UseHostVerification
+        {
+            get
+            {
+                return TypeProperties is null ? default : TypeProperties.UseHostVerification;
+            }
+            set
+            {
+                if (TypeProperties is null)
+                {
+                    TypeProperties = new XeroLinkedServiceTypeProperties();
+                }
+                TypeProperties.UseHostVerification = value;
+            }
+        }
+
         /// <summary> Specifies whether to verify the identity of the server when connecting over SSL. The default value is true. </summary>
-        public DataFactoryElement<bool> UsePeerVerification { get; set; }
+        public DataFactoryElement<bool> UsePeerVerification
+        {
+            get
+            {
+                return TypeProperties is null ? default : TypeProperties.UsePeerVerification;
+            }
+            set
+            {
+                if (TypeProperties is null)
+                {
+                    TypeProperties = new XeroLinkedServiceTypeProperties();
+                }
+                TypeProperties.UsePeerVerification = value;
+            }
+        }
+
         /// <summary> The encrypted credential used for authentication. Credentials are encrypted using the integration runtime credential manager. Type: string. </summary>
-        public string EncryptedCredential { get; set; }
+        public string EncryptedCredential
+        {
+            get
+            {
+                return TypeProperties is null ? default : TypeProperties.EncryptedCredential;
+            }
+            set
+            {
+                if (TypeProperties is null)
+                {
+                    TypeProperties = new XeroLinkedServiceTypeProperties();
+                }
+                TypeProperties.EncryptedCredential = value;
+            }
+        }
     }
 }

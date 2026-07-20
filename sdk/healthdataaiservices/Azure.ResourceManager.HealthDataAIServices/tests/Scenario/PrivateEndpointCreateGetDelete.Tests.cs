@@ -12,6 +12,7 @@ using NUnit.Framework;
 namespace Azure.ResourceManager.HealthDataAIServices.Tests
 {
     [TestFixture]
+    [Ignore("Blocked by Azure.ResourceManager.Network MPG migration playback mismatch; see https://github.com/Azure/azure-sdk-for-net/issues/59918.")]
     public class PrivateEndpointCreateGetDelete : HealthDataAIServicesManagementTestBase
     {
         public PrivateEndpointCreateGetDelete() : base(true)

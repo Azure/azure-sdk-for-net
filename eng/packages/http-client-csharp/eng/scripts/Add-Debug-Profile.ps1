@@ -252,7 +252,7 @@ function Build-LocalGeneratorSolution {
         [bool]$IsMgmt = $false
     )
 
-    $solutionPath = Join-Path $PackageRoot "generator/Azure.Generator.sln"
+    $solutionPath = Join-Path $PackageRoot "generator/Azure.Generator.slnx"
 
     if (-not (Test-Path $solutionPath)) {
         Write-Warning "Solution file not found at: $solutionPath"
@@ -272,7 +272,7 @@ function Build-LocalGeneratorSolution {
         # If this is a management library, also build the mgmt generator
         if ($IsMgmt) {
             $mgmtPackageRoot = Join-Path (Split-Path $PackageRoot -Parent) "http-client-csharp-mgmt"
-            $mgmtSolutionPath = Join-Path $mgmtPackageRoot "generator/Azure.Generator.Management.sln"
+            $mgmtSolutionPath = Join-Path $mgmtPackageRoot "generator/Azure.Generator.Management.slnx"
 
             if (Test-Path $mgmtSolutionPath) {
                 Write-Host "Rebuilding management generator solution..." -ForegroundColor Yellow

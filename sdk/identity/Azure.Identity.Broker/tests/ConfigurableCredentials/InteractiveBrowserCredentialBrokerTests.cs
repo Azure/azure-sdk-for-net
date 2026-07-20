@@ -5,7 +5,7 @@ using System;
 using System.Reflection;
 using Azure.Core;
 using Azure.Core.TestFramework;
-using Azure.Identity.Tests.ConfigurableCredentials;
+using Azure.Core.Tests.Identity.ConfigurableCredentials;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Identity.Client;
 

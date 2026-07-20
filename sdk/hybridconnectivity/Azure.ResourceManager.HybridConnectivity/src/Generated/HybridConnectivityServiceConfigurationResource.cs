@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.HybridConnectivity
     /// <summary>
     /// A class representing a HybridConnectivityServiceConfiguration along with the instance operations that can be performed on it.
     /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="HybridConnectivityServiceConfigurationResource"/> from an instance of <see cref="ArmClient"/> using the GetResource method.
-    /// Otherwise you can get one from its parent resource <see cref="ArmResource"/> using the GetHybridConnectivityServiceConfigurations method.
+    /// Otherwise you can get one from its parent resource <see cref="HybridConnectivityEndpointResource"/> using the GetHybridConnectivityServiceConfigurations method.
     /// </summary>
     public partial class HybridConnectivityServiceConfigurationResource : ArmResource
     {
@@ -87,7 +87,7 @@ namespace Azure.ResourceManager.HybridConnectivity
         {
             if (id.ResourceType != ResourceType)
             {
-                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), id);
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), nameof(id));
             }
         }
 
@@ -123,7 +123,7 @@ namespace Azure.ResourceManager.HybridConnectivity
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _serviceConfigurationResourcesRestClient.CreateGetRequest(Id.Parent.Parent, Id.Parent.Name, Id.Name, context);
+                HttpMessage message = _serviceConfigurationResourcesRestClient.CreateGetRequest(Id.Parent.Parent.ToString(), Id.Parent.Name, Id.Name, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<HybridConnectivityServiceConfigurationData> response = Response.FromValue(HybridConnectivityServiceConfigurationData.FromResponse(result), result);
                 if (response.Value == null)
@@ -171,7 +171,7 @@ namespace Azure.ResourceManager.HybridConnectivity
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _serviceConfigurationResourcesRestClient.CreateGetRequest(Id.Parent.Parent, Id.Parent.Name, Id.Name, context);
+                HttpMessage message = _serviceConfigurationResourcesRestClient.CreateGetRequest(Id.Parent.Parent.ToString(), Id.Parent.Name, Id.Name, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<HybridConnectivityServiceConfigurationData> response = Response.FromValue(HybridConnectivityServiceConfigurationData.FromResponse(result), result);
                 if (response.Value == null)
@@ -223,7 +223,7 @@ namespace Azure.ResourceManager.HybridConnectivity
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _serviceConfigurationResourcesRestClient.CreateUpdateRequest(Id.Parent.Parent, Id.Parent.Name, Id.Name, HybridConnectivityServiceConfigurationPatch.ToRequestContent(patch), context);
+                HttpMessage message = _serviceConfigurationResourcesRestClient.CreateUpdateRequest(Id.Parent.Parent.ToString(), Id.Parent.Name, Id.Name, HybridConnectivityServiceConfigurationPatch.ToRequestContent(patch), context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<HybridConnectivityServiceConfigurationData> response = Response.FromValue(HybridConnectivityServiceConfigurationData.FromResponse(result), result);
                 if (response.Value == null)
@@ -275,7 +275,7 @@ namespace Azure.ResourceManager.HybridConnectivity
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _serviceConfigurationResourcesRestClient.CreateUpdateRequest(Id.Parent.Parent, Id.Parent.Name, Id.Name, HybridConnectivityServiceConfigurationPatch.ToRequestContent(patch), context);
+                HttpMessage message = _serviceConfigurationResourcesRestClient.CreateUpdateRequest(Id.Parent.Parent.ToString(), Id.Parent.Name, Id.Name, HybridConnectivityServiceConfigurationPatch.ToRequestContent(patch), context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<HybridConnectivityServiceConfigurationData> response = Response.FromValue(HybridConnectivityServiceConfigurationData.FromResponse(result), result);
                 if (response.Value == null)
@@ -324,7 +324,7 @@ namespace Azure.ResourceManager.HybridConnectivity
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _serviceConfigurationResourcesRestClient.CreateDeleteRequest(Id.Parent.Parent, Id.Parent.Name, Id.Name, context);
+                HttpMessage message = _serviceConfigurationResourcesRestClient.CreateDeleteRequest(Id.Parent.Parent.ToString(), Id.Parent.Name, Id.Name, context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 RequestUriBuilder uri = message.Request.Uri;
                 RehydrationToken rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Delete, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
@@ -375,7 +375,7 @@ namespace Azure.ResourceManager.HybridConnectivity
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _serviceConfigurationResourcesRestClient.CreateDeleteRequest(Id.Parent.Parent, Id.Parent.Name, Id.Name, context);
+                HttpMessage message = _serviceConfigurationResourcesRestClient.CreateDeleteRequest(Id.Parent.Parent.ToString(), Id.Parent.Name, Id.Name, context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 RequestUriBuilder uri = message.Request.Uri;
                 RehydrationToken rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Delete, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());

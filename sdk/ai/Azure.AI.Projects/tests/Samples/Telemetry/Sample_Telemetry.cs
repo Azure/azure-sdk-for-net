@@ -22,9 +22,9 @@ public class Sample_Telemetry : SamplesBase
     {
         #region Snippet:AI_Projects_TelemetryExampleSync
 #if SNIPPET
-        var endpoint = Environment.GetEnvironmentVariable("PROJECT_ENDPOINT");
+        var endpoint = Environment.GetEnvironmentVariable("FOUNDRY_PROJECT_ENDPOINT");
 #else
-        var endpoint = TestEnvironment.PROJECT_ENDPOINT;
+        var endpoint = TestEnvironment.FOUNDRY_PROJECT_ENDPOINT;
 #endif
         AIProjectClient projectClient = new AIProjectClient(new Uri(endpoint), new DefaultAzureCredential());
 
@@ -41,9 +41,9 @@ public class Sample_Telemetry : SamplesBase
     public async Task TelemetryExampleAsync()
     {
 #if SNIPPET
-        var endpoint = Environment.GetEnvironmentVariable("PROJECT_ENDPOINT");
+        var endpoint = Environment.GetEnvironmentVariable("FOUNDRY_PROJECT_ENDPOINT");
 #else
-        var endpoint = TestEnvironment.PROJECT_ENDPOINT;
+        var endpoint = TestEnvironment.FOUNDRY_PROJECT_ENDPOINT;
 #endif
         AIProjectClient projectClient = new AIProjectClient(new Uri(endpoint), new DefaultAzureCredential());
 
@@ -59,9 +59,9 @@ public class Sample_Telemetry : SamplesBase
     public void TracingToAzureMonitorExampleSync()
     {
 #if SNIPPET
-        var projectEndpoint = System.Environment.GetEnvironmentVariable("PROJECT_ENDPOINT");
+        var projectEndpoint = System.Environment.GetEnvironmentVariable("FOUNDRY_PROJECT_ENDPOINT");
 #else
-        var projectEndpoint = TestEnvironment.PROJECT_ENDPOINT;
+        var projectEndpoint = TestEnvironment.FOUNDRY_PROJECT_ENDPOINT;
 #endif
         #region Snippet:AI_Projects_TelemetrySetupTracingToAzureMonitor
         // Create a new tracer provider builder and add an Azure Monitor trace exporter to the tracer provider builder.

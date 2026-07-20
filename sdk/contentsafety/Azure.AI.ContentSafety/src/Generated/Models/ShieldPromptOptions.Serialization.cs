@@ -63,9 +63,7 @@ namespace Azure.AI.ContentSafety
             {
                 return null;
             }
-            Utf8JsonRequestContent content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(shieldPromptOptions, ModelSerializationExtensions.WireOptions);
-            return content;
+            return RequestContent.Create(shieldPromptOptions, ModelSerializationExtensions.WireOptions);
         }
 
         /// <param name="writer"> The JSON writer. </param>

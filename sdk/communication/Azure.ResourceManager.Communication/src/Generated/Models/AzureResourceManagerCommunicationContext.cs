@@ -6,6 +6,7 @@
 #nullable disable
 
 using System.ClientModel.Primitives;
+using Azure;
 using Azure.ResourceManager.Communication.Models;
 using Azure.ResourceManager.Models;
 
@@ -13,7 +14,7 @@ namespace Azure.ResourceManager.Communication
 {
     /// <summary>
     /// Context class which will be filled in by the System.ClientModel.SourceGeneration.
-    /// For more information see 'https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/System.ClientModel/src/docs/ModelReaderWriterContext.md'
+    /// For more information <see href='https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/System.ClientModel/src/docs/ModelReaderWriterContext.md' />
     /// </summary>
     [ModelReaderWriterBuildable(typeof(CommunicationAcceptTags))]
     [ModelReaderWriterBuildable(typeof(CommunicationDomainResource))]
@@ -23,17 +24,21 @@ namespace Azure.ResourceManager.Communication
     [ModelReaderWriterBuildable(typeof(CommunicationNameAvailabilityResult))]
     [ModelReaderWriterBuildable(typeof(CommunicationServiceKeys))]
     [ModelReaderWriterBuildable(typeof(CommunicationServiceNameAvailabilityContent))]
+    [ModelReaderWriterBuildable(typeof(CommunicationServiceProperties))]
     [ModelReaderWriterBuildable(typeof(CommunicationServiceResource))]
     [ModelReaderWriterBuildable(typeof(CommunicationServiceResourceData))]
     [ModelReaderWriterBuildable(typeof(CommunicationServiceResourceList))]
     [ModelReaderWriterBuildable(typeof(CommunicationServiceResourcePatch))]
+    [ModelReaderWriterBuildable(typeof(CommunicationServiceUpdateProperties))]
     [ModelReaderWriterBuildable(typeof(CommunicationSmtpUsernameData))]
     [ModelReaderWriterBuildable(typeof(CommunicationSmtpUsernameResource))]
+    [ModelReaderWriterBuildable(typeof(DomainProperties))]
     [ModelReaderWriterBuildable(typeof(DomainPropertiesVerificationRecords))]
     [ModelReaderWriterBuildable(typeof(DomainPropertiesVerificationStates))]
     [ModelReaderWriterBuildable(typeof(DomainResourceList))]
     [ModelReaderWriterBuildable(typeof(DomainsRecordVerificationContent))]
     [ModelReaderWriterBuildable(typeof(DomainVerificationStatusRecord))]
+    [ModelReaderWriterBuildable(typeof(EmailServiceProperties))]
     [ModelReaderWriterBuildable(typeof(EmailServiceResource))]
     [ModelReaderWriterBuildable(typeof(EmailServiceResourceData))]
     [ModelReaderWriterBuildable(typeof(EmailServiceResourceList))]
@@ -47,13 +52,18 @@ namespace Azure.ResourceManager.Communication
     [ModelReaderWriterBuildable(typeof(ManagedServiceIdentity))]
     [ModelReaderWriterBuildable(typeof(RegenerateCommunicationServiceKeyContent))]
     [ModelReaderWriterBuildable(typeof(ResponseError))]
+    [ModelReaderWriterBuildable(typeof(SenderUsernameProperties))]
     [ModelReaderWriterBuildable(typeof(SenderUsernameResource))]
-    [ModelReaderWriterBuildable(typeof(Models.SenderUsernameResourceCollection))]
     [ModelReaderWriterBuildable(typeof(SenderUsernameResourceData))]
+    [ModelReaderWriterBuildable(typeof(SenderUsernameResourceListResult))]
+    [ModelReaderWriterBuildable(typeof(SmtpUsernameProperties))]
     [ModelReaderWriterBuildable(typeof(SmtpUsernameResourceCollection))]
+    [ModelReaderWriterBuildable(typeof(SuppressionListAddressProperties))]
     [ModelReaderWriterBuildable(typeof(SuppressionListAddressResourceCollection))]
+    [ModelReaderWriterBuildable(typeof(SuppressionListProperties))]
     [ModelReaderWriterBuildable(typeof(SuppressionListResourceCollection))]
     [ModelReaderWriterBuildable(typeof(SystemData))]
+    [ModelReaderWriterBuildable(typeof(UpdateDomainProperties))]
     [ModelReaderWriterBuildable(typeof(UserAssignedIdentity))]
     [ModelReaderWriterBuildable(typeof(VerificationDnsRecord))]
     public partial class AzureResourceManagerCommunicationContext : ModelReaderWriterContext

@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication
         {
             if (id.ResourceType != DataReplicationVaultResource.ResourceType)
             {
-                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, DataReplicationVaultResource.ResourceType), id);
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, DataReplicationVaultResource.ResourceType), nameof(id));
             }
         }
 
@@ -177,7 +177,13 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<DataReplicationPrivateLinkResourceData, DataReplicationPrivateLinkResource>(new PrivateLinkResourcesGetAllAsyncCollectionResultOfT(_privateLinkResourcesRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context), data => new DataReplicationPrivateLinkResource(Client, data));
+            return new AsyncPageableWrapper<DataReplicationPrivateLinkResourceData, DataReplicationPrivateLinkResource>(new PrivateLinkResourcesGetAllAsyncCollectionResultOfT(
+                _privateLinkResourcesRestClient,
+                Guid.Parse(Id.SubscriptionId),
+                Id.ResourceGroupName,
+                Id.Name,
+                context,
+                "DataReplicationPrivateLinkResourceCollection.GetAll"), data => new DataReplicationPrivateLinkResource(Client, data));
         }
 
         /// <summary>
@@ -205,7 +211,13 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<DataReplicationPrivateLinkResourceData, DataReplicationPrivateLinkResource>(new PrivateLinkResourcesGetAllCollectionResultOfT(_privateLinkResourcesRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context), data => new DataReplicationPrivateLinkResource(Client, data));
+            return new PageableWrapper<DataReplicationPrivateLinkResourceData, DataReplicationPrivateLinkResource>(new PrivateLinkResourcesGetAllCollectionResultOfT(
+                _privateLinkResourcesRestClient,
+                Guid.Parse(Id.SubscriptionId),
+                Id.ResourceGroupName,
+                Id.Name,
+                context,
+                "DataReplicationPrivateLinkResourceCollection.GetAll"), data => new DataReplicationPrivateLinkResource(Client, data));
         }
 
         /// <summary>

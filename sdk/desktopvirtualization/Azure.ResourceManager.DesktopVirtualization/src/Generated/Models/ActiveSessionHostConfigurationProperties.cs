@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
         /// <param name="vmAdminCredentials"> Local Admin credentials for session hosts. </param>
         /// <param name="bootDiagnosticsInfo"> Boot Diagnostics information. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ActiveSessionHostConfigurationProperties(DateTimeOffset? version, string friendlyName, IDictionary<string, string> vmTags, AzureLocation? vmLocation, string vmResourceGroup, string vmNamePrefix, IList<int> availabilityZones, DesktopVirtualizationNetworkInfoProperties networkInfo, string vmSizeId, DesktopVirtualizationDiskInfoProperties diskInfo, Uri customConfigurationScriptUri, DesktopVirtualizationImageInfoProperties imageInfo, DesktopVirtualizationDomainInfoProperties domainInfo, DesktopVirtualizationSecurityInfoProperties securityInfo, DesktopVirtualizationKeyVaultCredentialsProperties vmAdminCredentials, BootDiagnosticsInfoProperties bootDiagnosticsInfo, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ActiveSessionHostConfigurationProperties(DateTimeOffset? version, string friendlyName, IDictionary<string, string> vmTags, AzureLocation? vmLocation, string vmResourceGroup, string vmNamePrefix, IList<int> availabilityZones, DesktopVirtualizationNetworkInfoProperties networkInfo, string vmSizeId, DesktopVirtualizationDiskInfoProperties diskInfo, Uri customConfigurationScriptUri, DesktopVirtualizationImageInfoProperties imageInfo, DesktopVirtualizationDomainInfoProperties domainInfo, DesktopVirtualizationSecurityInfoProperties securityInfo, DesktopVirtualizationKeyVaultCredentialsProperties vmAdminCredentials, DesktopVirtualizationBootDiagnosticsInfoProperties bootDiagnosticsInfo, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Version = version;
             FriendlyName = friendlyName;
@@ -140,6 +140,6 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
 
         /// <summary> Boot Diagnostics information. </summary>
         [WirePath("bootDiagnosticsInfo")]
-        public BootDiagnosticsInfoProperties BootDiagnosticsInfo { get; }
+        public DesktopVirtualizationBootDiagnosticsInfoProperties BootDiagnosticsInfo { get; }
     }
 }

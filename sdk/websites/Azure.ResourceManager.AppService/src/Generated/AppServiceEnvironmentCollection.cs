@@ -8,12 +8,13 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.Globalization;
+using System.Diagnostics;
 using System.Threading;
 using System.Threading.Tasks;
-using Autorest.CSharp.Core;
+using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
+using Azure.ResourceManager;
 using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.AppService
@@ -21,55 +22,53 @@ namespace Azure.ResourceManager.AppService
     /// <summary>
     /// A class representing a collection of <see cref="AppServiceEnvironmentResource"/> and their operations.
     /// Each <see cref="AppServiceEnvironmentResource"/> in the collection will belong to the same instance of <see cref="ResourceGroupResource"/>.
-    /// To get an <see cref="AppServiceEnvironmentCollection"/> instance call the GetAppServiceEnvironments method from an instance of <see cref="ResourceGroupResource"/>.
+    /// To get a <see cref="AppServiceEnvironmentCollection"/> instance call the GetAppServiceEnvironments method from an instance of <see cref="ResourceGroupResource"/>.
     /// </summary>
     public partial class AppServiceEnvironmentCollection : ArmCollection, IEnumerable<AppServiceEnvironmentResource>, IAsyncEnumerable<AppServiceEnvironmentResource>
     {
-        private readonly ClientDiagnostics _appServiceEnvironmentClientDiagnostics;
-        private readonly AppServiceEnvironmentsRestOperations _appServiceEnvironmentRestClient;
+        private readonly ClientDiagnostics _appServiceEnvironmentResourcesClientDiagnostics;
+        private readonly AppServiceEnvironmentResources _appServiceEnvironmentResourcesRestClient;
 
-        /// <summary> Initializes a new instance of the <see cref="AppServiceEnvironmentCollection"/> class for mocking. </summary>
+        /// <summary> Initializes a new instance of AppServiceEnvironmentCollection for mocking. </summary>
         protected AppServiceEnvironmentCollection()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref="AppServiceEnvironmentCollection"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="AppServiceEnvironmentCollection"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
-        /// <param name="id"> The identifier of the parent resource that is the target of operations. </param>
+        /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal AppServiceEnvironmentCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _appServiceEnvironmentClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.AppService", AppServiceEnvironmentResource.ResourceType.Namespace, Diagnostics);
             TryGetApiVersion(AppServiceEnvironmentResource.ResourceType, out string appServiceEnvironmentApiVersion);
-            _appServiceEnvironmentRestClient = new AppServiceEnvironmentsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, appServiceEnvironmentApiVersion);
-#if DEBUG
-			ValidateResourceId(Id);
-#endif
+            _appServiceEnvironmentResourcesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.AppService", AppServiceEnvironmentResource.ResourceType.Namespace, Diagnostics);
+            _appServiceEnvironmentResourcesRestClient = new AppServiceEnvironmentResources(_appServiceEnvironmentResourcesClientDiagnostics, Pipeline, Endpoint, appServiceEnvironmentApiVersion ?? "2026-03-15");
+            ValidateResourceId(id);
         }
 
+        /// <param name="id"></param>
+        [Conditional("DEBUG")]
         internal static void ValidateResourceId(ResourceIdentifier id)
         {
             if (id.ResourceType != ResourceGroupResource.ResourceType)
-                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, ResourceGroupResource.ResourceType), nameof(id));
+            {
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ResourceGroupResource.ResourceType), nameof(id));
+            }
         }
 
         /// <summary>
         /// Description for Create or update an App Service Environment.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/hostingEnvironments/{name}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/hostingEnvironments/{name}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>AppServiceEnvironments_CreateOrUpdate</description>
+        /// <term> Operation Id. </term>
+        /// <description> AppServiceEnvironmentResources_CreateOrUpdate. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-11-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="AppServiceEnvironmentResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-03-15. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -77,21 +76,34 @@ namespace Azure.ResourceManager.AppService
         /// <param name="name"> Name of the App Service Environment. </param>
         /// <param name="data"> Configuration details of the App Service Environment. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> or <paramref name="data"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual async Task<ArmOperation<AppServiceEnvironmentResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string name, AppServiceEnvironmentData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(name, nameof(name));
             Argument.AssertNotNull(data, nameof(data));
 
-            using var scope = _appServiceEnvironmentClientDiagnostics.CreateScope("AppServiceEnvironmentCollection.CreateOrUpdate");
+            using DiagnosticScope scope = _appServiceEnvironmentResourcesClientDiagnostics.CreateScope("AppServiceEnvironmentCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                var response = await _appServiceEnvironmentRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, name, data, cancellationToken).ConfigureAwait(false);
-                var operation = new AppServiceArmOperation<AppServiceEnvironmentResource>(new AppServiceEnvironmentOperationSource(Client), _appServiceEnvironmentClientDiagnostics, Pipeline, _appServiceEnvironmentRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, name, data).Request, response, OperationFinalStateVia.Location);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _appServiceEnvironmentResourcesRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, name, AppServiceEnvironmentData.ToRequestContent(data), context);
+                Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                AppServiceArmOperation<AppServiceEnvironmentResource> operation = new AppServiceArmOperation<AppServiceEnvironmentResource>(
+                    new AppServiceEnvironmentResourceOperationSource(Client),
+                    _appServiceEnvironmentResourcesClientDiagnostics,
+                    Pipeline,
+                    message.Request,
+                    response,
+                    OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
+                {
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
+                }
                 return operation;
             }
             catch (Exception e)
@@ -105,20 +117,16 @@ namespace Azure.ResourceManager.AppService
         /// Description for Create or update an App Service Environment.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/hostingEnvironments/{name}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/hostingEnvironments/{name}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>AppServiceEnvironments_CreateOrUpdate</description>
+        /// <term> Operation Id. </term>
+        /// <description> AppServiceEnvironmentResources_CreateOrUpdate. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-11-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="AppServiceEnvironmentResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-03-15. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -126,21 +134,34 @@ namespace Azure.ResourceManager.AppService
         /// <param name="name"> Name of the App Service Environment. </param>
         /// <param name="data"> Configuration details of the App Service Environment. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> or <paramref name="data"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual ArmOperation<AppServiceEnvironmentResource> CreateOrUpdate(WaitUntil waitUntil, string name, AppServiceEnvironmentData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(name, nameof(name));
             Argument.AssertNotNull(data, nameof(data));
 
-            using var scope = _appServiceEnvironmentClientDiagnostics.CreateScope("AppServiceEnvironmentCollection.CreateOrUpdate");
+            using DiagnosticScope scope = _appServiceEnvironmentResourcesClientDiagnostics.CreateScope("AppServiceEnvironmentCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                var response = _appServiceEnvironmentRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, name, data, cancellationToken);
-                var operation = new AppServiceArmOperation<AppServiceEnvironmentResource>(new AppServiceEnvironmentOperationSource(Client), _appServiceEnvironmentClientDiagnostics, Pipeline, _appServiceEnvironmentRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, name, data).Request, response, OperationFinalStateVia.Location);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _appServiceEnvironmentResourcesRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, name, AppServiceEnvironmentData.ToRequestContent(data), context);
+                Response response = Pipeline.ProcessMessage(message, context);
+                AppServiceArmOperation<AppServiceEnvironmentResource> operation = new AppServiceArmOperation<AppServiceEnvironmentResource>(
+                    new AppServiceEnvironmentResourceOperationSource(Client),
+                    _appServiceEnvironmentResourcesClientDiagnostics,
+                    Pipeline,
+                    message.Request,
+                    response,
+                    OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
+                {
                     operation.WaitForCompletion(cancellationToken);
+                }
                 return operation;
             }
             catch (Exception e)
@@ -154,38 +175,42 @@ namespace Azure.ResourceManager.AppService
         /// Description for Get the properties of an App Service Environment.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/hostingEnvironments/{name}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/hostingEnvironments/{name}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>AppServiceEnvironments_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> AppServiceEnvironmentResources_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-11-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="AppServiceEnvironmentResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-03-15. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="name"> Name of the App Service Environment. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual async Task<Response<AppServiceEnvironmentResource>> GetAsync(string name, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(name, nameof(name));
 
-            using var scope = _appServiceEnvironmentClientDiagnostics.CreateScope("AppServiceEnvironmentCollection.Get");
+            using DiagnosticScope scope = _appServiceEnvironmentResourcesClientDiagnostics.CreateScope("AppServiceEnvironmentCollection.Get");
             scope.Start();
             try
             {
-                var response = await _appServiceEnvironmentRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, name, cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _appServiceEnvironmentResourcesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, name, context);
+                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                Response<AppServiceEnvironmentData> response = Response.FromValue(AppServiceEnvironmentData.FromResponse(result), result);
                 if (response.Value == null)
+                {
                     throw new RequestFailedException(response.GetRawResponse());
+                }
                 return Response.FromValue(new AppServiceEnvironmentResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -199,38 +224,42 @@ namespace Azure.ResourceManager.AppService
         /// Description for Get the properties of an App Service Environment.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/hostingEnvironments/{name}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/hostingEnvironments/{name}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>AppServiceEnvironments_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> AppServiceEnvironmentResources_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-11-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="AppServiceEnvironmentResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-03-15. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="name"> Name of the App Service Environment. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual Response<AppServiceEnvironmentResource> Get(string name, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(name, nameof(name));
 
-            using var scope = _appServiceEnvironmentClientDiagnostics.CreateScope("AppServiceEnvironmentCollection.Get");
+            using DiagnosticScope scope = _appServiceEnvironmentResourcesClientDiagnostics.CreateScope("AppServiceEnvironmentCollection.Get");
             scope.Start();
             try
             {
-                var response = _appServiceEnvironmentRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, name, cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _appServiceEnvironmentResourcesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, name, context);
+                Response result = Pipeline.ProcessMessage(message, context);
+                Response<AppServiceEnvironmentData> response = Response.FromValue(AppServiceEnvironmentData.FromResponse(result), result);
                 if (response.Value == null)
+                {
                     throw new RequestFailedException(response.GetRawResponse());
+                }
                 return Response.FromValue(new AppServiceEnvironmentResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -244,50 +273,44 @@ namespace Azure.ResourceManager.AppService
         /// Description for Get all App Service Environments in a resource group.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/hostingEnvironments</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/hostingEnvironments. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>AppServiceEnvironments_ListByResourceGroup</description>
+        /// <term> Operation Id. </term>
+        /// <description> AppServiceEnvironmentResources_ListByResourceGroup. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-11-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="AppServiceEnvironmentResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-03-15. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="AppServiceEnvironmentResource"/> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="AppServiceEnvironmentResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<AppServiceEnvironmentResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _appServiceEnvironmentRestClient.CreateListByResourceGroupRequest(Id.SubscriptionId, Id.ResourceGroupName);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _appServiceEnvironmentRestClient.CreateListByResourceGroupNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new AppServiceEnvironmentResource(Client, AppServiceEnvironmentData.DeserializeAppServiceEnvironmentData(e)), _appServiceEnvironmentClientDiagnostics, Pipeline, "AppServiceEnvironmentCollection.GetAll", "value", "nextLink", cancellationToken);
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new AsyncPageableWrapper<AppServiceEnvironmentData, AppServiceEnvironmentResource>(new AppServiceEnvironmentResourcesGetByResourceGroupAsyncCollectionResultOfT(_appServiceEnvironmentResourcesRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "AppServiceEnvironmentCollection.GetAll"), data => new AppServiceEnvironmentResource(Client, data));
         }
 
         /// <summary>
         /// Description for Get all App Service Environments in a resource group.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/hostingEnvironments</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/hostingEnvironments. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>AppServiceEnvironments_ListByResourceGroup</description>
+        /// <term> Operation Id. </term>
+        /// <description> AppServiceEnvironmentResources_ListByResourceGroup. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-11-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="AppServiceEnvironmentResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-03-15. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -295,45 +318,61 @@ namespace Azure.ResourceManager.AppService
         /// <returns> A collection of <see cref="AppServiceEnvironmentResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<AppServiceEnvironmentResource> GetAll(CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _appServiceEnvironmentRestClient.CreateListByResourceGroupRequest(Id.SubscriptionId, Id.ResourceGroupName);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _appServiceEnvironmentRestClient.CreateListByResourceGroupNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new AppServiceEnvironmentResource(Client, AppServiceEnvironmentData.DeserializeAppServiceEnvironmentData(e)), _appServiceEnvironmentClientDiagnostics, Pipeline, "AppServiceEnvironmentCollection.GetAll", "value", "nextLink", cancellationToken);
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new PageableWrapper<AppServiceEnvironmentData, AppServiceEnvironmentResource>(new AppServiceEnvironmentResourcesGetByResourceGroupCollectionResultOfT(_appServiceEnvironmentResourcesRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "AppServiceEnvironmentCollection.GetAll"), data => new AppServiceEnvironmentResource(Client, data));
         }
 
         /// <summary>
         /// Checks to see if the resource exists in azure.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/hostingEnvironments/{name}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/hostingEnvironments/{name}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>AppServiceEnvironments_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> AppServiceEnvironmentResources_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-11-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="AppServiceEnvironmentResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-03-15. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="name"> Name of the App Service Environment. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual async Task<Response<bool>> ExistsAsync(string name, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(name, nameof(name));
 
-            using var scope = _appServiceEnvironmentClientDiagnostics.CreateScope("AppServiceEnvironmentCollection.Exists");
+            using DiagnosticScope scope = _appServiceEnvironmentResourcesClientDiagnostics.CreateScope("AppServiceEnvironmentCollection.Exists");
             scope.Start();
             try
             {
-                var response = await _appServiceEnvironmentRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, name, cancellationToken: cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _appServiceEnvironmentResourcesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, name, context);
+                await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
+                Response result = message.Response;
+                Response<AppServiceEnvironmentData> response = default;
+                switch (result.Status)
+                {
+                    case 200:
+                        response = Response.FromValue(AppServiceEnvironmentData.FromResponse(result), result);
+                        break;
+                    case 404:
+                        response = Response.FromValue((AppServiceEnvironmentData)null, result);
+                        break;
+                    default:
+                        throw new RequestFailedException(result);
+                }
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -347,36 +386,50 @@ namespace Azure.ResourceManager.AppService
         /// Checks to see if the resource exists in azure.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/hostingEnvironments/{name}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/hostingEnvironments/{name}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>AppServiceEnvironments_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> AppServiceEnvironmentResources_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-11-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="AppServiceEnvironmentResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-03-15. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="name"> Name of the App Service Environment. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual Response<bool> Exists(string name, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(name, nameof(name));
 
-            using var scope = _appServiceEnvironmentClientDiagnostics.CreateScope("AppServiceEnvironmentCollection.Exists");
+            using DiagnosticScope scope = _appServiceEnvironmentResourcesClientDiagnostics.CreateScope("AppServiceEnvironmentCollection.Exists");
             scope.Start();
             try
             {
-                var response = _appServiceEnvironmentRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, name, cancellationToken: cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _appServiceEnvironmentResourcesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, name, context);
+                Pipeline.Send(message, context.CancellationToken);
+                Response result = message.Response;
+                Response<AppServiceEnvironmentData> response = default;
+                switch (result.Status)
+                {
+                    case 200:
+                        response = Response.FromValue(AppServiceEnvironmentData.FromResponse(result), result);
+                        break;
+                    case 404:
+                        response = Response.FromValue((AppServiceEnvironmentData)null, result);
+                        break;
+                    default:
+                        throw new RequestFailedException(result);
+                }
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -390,38 +443,54 @@ namespace Azure.ResourceManager.AppService
         /// Tries to get details for this resource from the service.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/hostingEnvironments/{name}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/hostingEnvironments/{name}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>AppServiceEnvironments_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> AppServiceEnvironmentResources_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-11-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="AppServiceEnvironmentResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-03-15. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="name"> Name of the App Service Environment. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual async Task<NullableResponse<AppServiceEnvironmentResource>> GetIfExistsAsync(string name, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(name, nameof(name));
 
-            using var scope = _appServiceEnvironmentClientDiagnostics.CreateScope("AppServiceEnvironmentCollection.GetIfExists");
+            using DiagnosticScope scope = _appServiceEnvironmentResourcesClientDiagnostics.CreateScope("AppServiceEnvironmentCollection.GetIfExists");
             scope.Start();
             try
             {
-                var response = await _appServiceEnvironmentRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, name, cancellationToken: cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _appServiceEnvironmentResourcesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, name, context);
+                await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
+                Response result = message.Response;
+                Response<AppServiceEnvironmentData> response = default;
+                switch (result.Status)
+                {
+                    case 200:
+                        response = Response.FromValue(AppServiceEnvironmentData.FromResponse(result), result);
+                        break;
+                    case 404:
+                        response = Response.FromValue((AppServiceEnvironmentData)null, result);
+                        break;
+                    default:
+                        throw new RequestFailedException(result);
+                }
                 if (response.Value == null)
+                {
                     return new NoValueResponse<AppServiceEnvironmentResource>(response.GetRawResponse());
+                }
                 return Response.FromValue(new AppServiceEnvironmentResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -435,38 +504,54 @@ namespace Azure.ResourceManager.AppService
         /// Tries to get details for this resource from the service.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/hostingEnvironments/{name}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/hostingEnvironments/{name}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>AppServiceEnvironments_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> AppServiceEnvironmentResources_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-11-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="AppServiceEnvironmentResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-03-15. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="name"> Name of the App Service Environment. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual NullableResponse<AppServiceEnvironmentResource> GetIfExists(string name, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(name, nameof(name));
 
-            using var scope = _appServiceEnvironmentClientDiagnostics.CreateScope("AppServiceEnvironmentCollection.GetIfExists");
+            using DiagnosticScope scope = _appServiceEnvironmentResourcesClientDiagnostics.CreateScope("AppServiceEnvironmentCollection.GetIfExists");
             scope.Start();
             try
             {
-                var response = _appServiceEnvironmentRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, name, cancellationToken: cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _appServiceEnvironmentResourcesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, name, context);
+                Pipeline.Send(message, context.CancellationToken);
+                Response result = message.Response;
+                Response<AppServiceEnvironmentData> response = default;
+                switch (result.Status)
+                {
+                    case 200:
+                        response = Response.FromValue(AppServiceEnvironmentData.FromResponse(result), result);
+                        break;
+                    case 404:
+                        response = Response.FromValue((AppServiceEnvironmentData)null, result);
+                        break;
+                    default:
+                        throw new RequestFailedException(result);
+                }
                 if (response.Value == null)
+                {
                     return new NoValueResponse<AppServiceEnvironmentResource>(response.GetRawResponse());
+                }
                 return Response.FromValue(new AppServiceEnvironmentResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -486,6 +571,7 @@ namespace Azure.ResourceManager.AppService
             return GetAll().GetEnumerator();
         }
 
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
         IAsyncEnumerator<AppServiceEnvironmentResource> IAsyncEnumerable<AppServiceEnvironmentResource>.GetAsyncEnumerator(CancellationToken cancellationToken)
         {
             return GetAllAsync(cancellationToken: cancellationToken).GetAsyncEnumerator(cancellationToken);

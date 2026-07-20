@@ -4,9 +4,8 @@
 #nullable disable
 
 using System;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
-using System.Text.Json;
-using Azure.AI.Projects.OpenAI;
 using OpenAI;
 using OpenAI.Responses;
 
@@ -16,23 +15,6 @@ namespace Azure.AI.Projects;
 
 internal static partial class ResponseItemHelpers
 {
-    internal static void DeserializeItemsValue(JsonProperty property, ref IList<AgentResponseItem> items)
-    {
-        if (property.Value.ValueKind == JsonValueKind.Array)
-        {
-            List<AgentResponseItem> deserializedItems = [];
-            foreach (JsonElement serializedResponseItemElement in property.Value.EnumerateArray())
-            {
-                AgentResponseItem deserializedItem
-                    = CustomSerializationHelpers.DeserializeProjectOpenAIType<AgentResponseItem>(
-                        serializedResponseItemElement,
-                        ModelSerializationExtensions.WireOptions);
-                deserializedItems.Add(deserializedItem);
-            }
-            items = deserializedItems;
-        }
-    }
-
     internal static ChangeTrackingList<ResponseItem> GetPublicItemsFromInternalParams(IList<InternalItemParam> internalItems)
     {
         ChangeTrackingList<ResponseItem> result = new();

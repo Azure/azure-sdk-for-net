@@ -11,19 +11,29 @@ using System.Text.Json;
 
 namespace Azure.ResourceManager.FrontDoor
 {
+    /// <summary></summary>
     public partial class FrontDoorWebApplicationFirewallPolicyResource : IJsonModel<FrontDoorWebApplicationFirewallPolicyData>
     {
-        private static FrontDoorWebApplicationFirewallPolicyData s_dataDeserializationInstance;
-        private static FrontDoorWebApplicationFirewallPolicyData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+        private static IJsonModel<FrontDoorWebApplicationFirewallPolicyData> s_dataDeserializationInstance;
 
+        private static IJsonModel<FrontDoorWebApplicationFirewallPolicyData> DataDeserializationInstance => s_dataDeserializationInstance ??= new FrontDoorWebApplicationFirewallPolicyData();
+
+        /// <param name="writer"> The writer to serialize the model to. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<FrontDoorWebApplicationFirewallPolicyData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<FrontDoorWebApplicationFirewallPolicyData>)Data).Write(writer, options);
 
-        FrontDoorWebApplicationFirewallPolicyData IJsonModel<FrontDoorWebApplicationFirewallPolicyData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<FrontDoorWebApplicationFirewallPolicyData>)DataDeserializationInstance).Create(ref reader, options);
+        /// <param name="reader"> The reader for deserializing the model. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        FrontDoorWebApplicationFirewallPolicyData IJsonModel<FrontDoorWebApplicationFirewallPolicyData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => DataDeserializationInstance.Create(ref reader, options);
 
+        /// <param name="options"> The client options for reading and writing models. </param>
         BinaryData IPersistableModel<FrontDoorWebApplicationFirewallPolicyData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<FrontDoorWebApplicationFirewallPolicyData>(Data, options, AzureResourceManagerFrontDoorContext.Default);
 
+        /// <param name="data"> The binary data to be processed. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         FrontDoorWebApplicationFirewallPolicyData IPersistableModel<FrontDoorWebApplicationFirewallPolicyData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<FrontDoorWebApplicationFirewallPolicyData>(data, options, AzureResourceManagerFrontDoorContext.Default);
 
-        string IPersistableModel<FrontDoorWebApplicationFirewallPolicyData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<FrontDoorWebApplicationFirewallPolicyData>)DataDeserializationInstance).GetFormatFromOptions(options);
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<FrontDoorWebApplicationFirewallPolicyData>.GetFormatFromOptions(ModelReaderWriterOptions options) => DataDeserializationInstance.GetFormatFromOptions(options);
     }
 }

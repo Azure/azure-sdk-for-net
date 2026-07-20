@@ -6,8 +6,9 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure.AI.Projects;
 
-namespace Azure.AI.Projects
+namespace Azure.AI.Projects.Evaluation
 {
     /// <summary> Evaluation rule action for continuous evaluation. </summary>
     public partial class ContinuousEvaluationRuleAction : EvaluationRuleAction, IJsonModel<ContinuousEvaluationRuleAction>
@@ -83,6 +84,11 @@ namespace Azure.AI.Projects
                 writer.WritePropertyName("maxHourlyRuns"u8);
                 writer.WriteNumberValue(MaxHourlyRuns.Value);
             }
+            if (Optional.IsDefined(SamplingRate))
+            {
+                writer.WritePropertyName("samplingRate"u8);
+                writer.WriteNumberValue(SamplingRate.Value);
+            }
         }
 
         /// <param name="reader"> The JSON reader. </param>
@@ -114,6 +120,7 @@ namespace Azure.AI.Projects
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             string evalId = default;
             int? maxHourlyRuns = default;
+            double? samplingRate = default;
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("type"u8))
@@ -135,12 +142,21 @@ namespace Azure.AI.Projects
                     maxHourlyRuns = prop.Value.GetInt32();
                     continue;
                 }
+                if (prop.NameEquals("samplingRate"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    samplingRate = prop.Value.GetDouble();
+                    continue;
+                }
                 if (options.Format != "W")
                 {
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new ContinuousEvaluationRuleAction(@type, additionalBinaryDataProperties, evalId, maxHourlyRuns);
+            return new ContinuousEvaluationRuleAction(@type, additionalBinaryDataProperties, evalId, maxHourlyRuns, samplingRate);
         }
     }
 }

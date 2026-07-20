@@ -7,43 +7,15 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.Hci;
 
 namespace Azure.ResourceManager.Hci.Models
 {
     /// <summary> The device Configuration for edge device. </summary>
     public partial class HciEdgeDeviceConfiguration
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="HciEdgeDeviceConfiguration"/>. </summary>
         public HciEdgeDeviceConfiguration()
@@ -54,17 +26,18 @@ namespace Azure.ResourceManager.Hci.Models
         /// <summary> Initializes a new instance of <see cref="HciEdgeDeviceConfiguration"/>. </summary>
         /// <param name="nicDetails"> NIC Details of device. </param>
         /// <param name="deviceMetadata"> Device metadata details. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal HciEdgeDeviceConfiguration(IList<HciEdgeDeviceNicDetail> nicDetails, string deviceMetadata, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal HciEdgeDeviceConfiguration(IList<HciEdgeDeviceNicDetail> nicDetails, string deviceMetadata, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             NicDetails = nicDetails;
             DeviceMetadata = deviceMetadata;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> NIC Details of device. </summary>
         [WirePath("nicDetails")]
         public IList<HciEdgeDeviceNicDetail> NicDetails { get; }
+
         /// <summary> Device metadata details. </summary>
         [WirePath("deviceMetadata")]
         public string DeviceMetadata { get; set; }

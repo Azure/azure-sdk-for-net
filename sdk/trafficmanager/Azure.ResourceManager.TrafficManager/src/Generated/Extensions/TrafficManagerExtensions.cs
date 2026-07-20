@@ -45,24 +45,6 @@ namespace Azure.ResourceManager.TrafficManager
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="TrafficManagerEndpointResource"/> along with the instance operations that can be performed on it but with no data.
-        /// <item>
-        /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableTrafficManagerArmClient.GetTrafficManagerEndpointResource(ResourceIdentifier)"/> instead. </description>
-        /// </item>
-        /// </summary>
-        /// <param name="client"> The <see cref="ArmClient"/> the method will execute against. </param>
-        /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
-        /// <returns> Returns a <see cref="TrafficManagerEndpointResource"/> object. </returns>
-        public static TrafficManagerEndpointResource GetTrafficManagerEndpointResource(this ArmClient client, ResourceIdentifier id)
-        {
-            Argument.AssertNotNull(client, nameof(client));
-
-            return GetMockableTrafficManagerArmClient(client).GetTrafficManagerEndpointResource(id);
-        }
-
-        /// <summary>
         /// Gets an object representing a <see cref="TrafficManagerProfileResource"/> along with the instance operations that can be performed on it but with no data.
         /// <item>
         /// <term> Mocking. </term>
@@ -135,6 +117,60 @@ namespace Azure.ResourceManager.TrafficManager
         }
 
         /// <summary>
+        /// Gets an object representing a <see cref="AzureEndpointTrafficManagerEndpointResource"/> along with the instance operations that can be performed on it but with no data.
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableTrafficManagerArmClient.GetAzureEndpointTrafficManagerEndpointResource(ResourceIdentifier)"/> instead. </description>
+        /// </item>
+        /// </summary>
+        /// <param name="client"> The <see cref="ArmClient"/> the method will execute against. </param>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
+        /// <returns> Returns a <see cref="AzureEndpointTrafficManagerEndpointResource"/> object. </returns>
+        public static AzureEndpointTrafficManagerEndpointResource GetAzureEndpointTrafficManagerEndpointResource(this ArmClient client, ResourceIdentifier id)
+        {
+            Argument.AssertNotNull(client, nameof(client));
+
+            return GetMockableTrafficManagerArmClient(client).GetAzureEndpointTrafficManagerEndpointResource(id);
+        }
+
+        /// <summary>
+        /// Gets an object representing a <see cref="ExternalEndpointTrafficManagerEndpointResource"/> along with the instance operations that can be performed on it but with no data.
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableTrafficManagerArmClient.GetExternalEndpointTrafficManagerEndpointResource(ResourceIdentifier)"/> instead. </description>
+        /// </item>
+        /// </summary>
+        /// <param name="client"> The <see cref="ArmClient"/> the method will execute against. </param>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
+        /// <returns> Returns a <see cref="ExternalEndpointTrafficManagerEndpointResource"/> object. </returns>
+        public static ExternalEndpointTrafficManagerEndpointResource GetExternalEndpointTrafficManagerEndpointResource(this ArmClient client, ResourceIdentifier id)
+        {
+            Argument.AssertNotNull(client, nameof(client));
+
+            return GetMockableTrafficManagerArmClient(client).GetExternalEndpointTrafficManagerEndpointResource(id);
+        }
+
+        /// <summary>
+        /// Gets an object representing a <see cref="NestedEndpointTrafficManagerEndpointResource"/> along with the instance operations that can be performed on it but with no data.
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableTrafficManagerArmClient.GetNestedEndpointTrafficManagerEndpointResource(ResourceIdentifier)"/> instead. </description>
+        /// </item>
+        /// </summary>
+        /// <param name="client"> The <see cref="ArmClient"/> the method will execute against. </param>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
+        /// <returns> Returns a <see cref="NestedEndpointTrafficManagerEndpointResource"/> object. </returns>
+        public static NestedEndpointTrafficManagerEndpointResource GetNestedEndpointTrafficManagerEndpointResource(this ArmClient client, ResourceIdentifier id)
+        {
+            Argument.AssertNotNull(client, nameof(client));
+
+            return GetMockableTrafficManagerArmClient(client).GetNestedEndpointTrafficManagerEndpointResource(id);
+        }
+
+        /// <summary>
         /// Gets a collection of TrafficManagerProfiles in the <see cref="ResourceGroupResource"/>
         /// <item>
         /// <term> Mocking. </term>
@@ -187,42 +223,6 @@ namespace Azure.ResourceManager.TrafficManager
             Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
 
             return GetMockableTrafficManagerResourceGroupResource(resourceGroupResource).GetTrafficManagerProfile(profileName, cancellationToken);
-        }
-
-        /// <summary>
-        /// Get the subscription-level key used for Real User Metrics collection.
-        /// <item>
-        /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableTrafficManagerSubscriptionResource.GetTrafficManagerUserMetricAsync(CancellationToken)"/> instead. </description>
-        /// </item>
-        /// </summary>
-        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource"/> the method will execute against. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
-        [ForwardsClientCalls]
-        public static async Task<Response<TrafficManagerUserMetricsResource>> GetTrafficManagerUserMetricAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
-
-            return await GetMockableTrafficManagerSubscriptionResource(subscriptionResource).GetTrafficManagerUserMetricAsync(cancellationToken).ConfigureAwait(false);
-        }
-
-        /// <summary>
-        /// Get the subscription-level key used for Real User Metrics collection.
-        /// <item>
-        /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableTrafficManagerSubscriptionResource.GetTrafficManagerUserMetric(CancellationToken)"/> instead. </description>
-        /// </item>
-        /// </summary>
-        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource"/> the method will execute against. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
-        [ForwardsClientCalls]
-        public static Response<TrafficManagerUserMetricsResource> GetTrafficManagerUserMetric(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
-
-            return GetMockableTrafficManagerSubscriptionResource(subscriptionResource).GetTrafficManagerUserMetric(cancellationToken);
         }
 
         /// <summary>
@@ -298,56 +298,20 @@ namespace Azure.ResourceManager.TrafficManager
         }
 
         /// <summary>
-        /// Gets a collection of TrafficManagerGeographicHierarchies in the <see cref="TenantResource"/>
+        /// Gets an object representing a <see cref="TrafficManagerGeographicHierarchyResource"/> along with the instance operations that can be performed on it in the <see cref="TenantResource"/>.
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableTrafficManagerTenantResource.GetTrafficManagerGeographicHierarchies()"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockableTrafficManagerTenantResource.GetTrafficManagerGeographicHierarchy()"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="tenantResource"> The <see cref="TenantResource"/> the method will execute against. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="tenantResource"/> is null. </exception>
-        /// <returns> An object representing collection of TrafficManagerGeographicHierarchies and their operations over a TrafficManagerGeographicHierarchyResource. </returns>
-        public static TrafficManagerGeographicHierarchyCollection GetTrafficManagerGeographicHierarchies(this TenantResource tenantResource)
+        /// <returns> Returns a <see cref="TrafficManagerGeographicHierarchyResource"/> object. </returns>
+        public static TrafficManagerGeographicHierarchyResource GetTrafficManagerGeographicHierarchy(this TenantResource tenantResource)
         {
             Argument.AssertNotNull(tenantResource, nameof(tenantResource));
 
-            return GetMockableTrafficManagerTenantResource(tenantResource).GetTrafficManagerGeographicHierarchies();
-        }
-
-        /// <summary>
-        /// Gets the default Geographic Hierarchy used by the Geographic traffic routing method.
-        /// <item>
-        /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableTrafficManagerTenantResource.GetTrafficManagerGeographicHierarchyAsync(CancellationToken)"/> instead. </description>
-        /// </item>
-        /// </summary>
-        /// <param name="tenantResource"> The <see cref="TenantResource"/> the method will execute against. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="tenantResource"/> is null. </exception>
-        [ForwardsClientCalls]
-        public static async Task<Response<TrafficManagerGeographicHierarchyResource>> GetTrafficManagerGeographicHierarchyAsync(this TenantResource tenantResource, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(tenantResource, nameof(tenantResource));
-
-            return await GetMockableTrafficManagerTenantResource(tenantResource).GetTrafficManagerGeographicHierarchyAsync(cancellationToken).ConfigureAwait(false);
-        }
-
-        /// <summary>
-        /// Gets the default Geographic Hierarchy used by the Geographic traffic routing method.
-        /// <item>
-        /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableTrafficManagerTenantResource.GetTrafficManagerGeographicHierarchy(CancellationToken)"/> instead. </description>
-        /// </item>
-        /// </summary>
-        /// <param name="tenantResource"> The <see cref="TenantResource"/> the method will execute against. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="tenantResource"/> is null. </exception>
-        [ForwardsClientCalls]
-        public static Response<TrafficManagerGeographicHierarchyResource> GetTrafficManagerGeographicHierarchy(this TenantResource tenantResource, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(tenantResource, nameof(tenantResource));
-
-            return GetMockableTrafficManagerTenantResource(tenantResource).GetTrafficManagerGeographicHierarchy(cancellationToken);
+            return GetMockableTrafficManagerTenantResource(tenantResource).GetTrafficManagerGeographicHierarchy();
         }
 
         /// <summary>

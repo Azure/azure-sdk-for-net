@@ -66,9 +66,7 @@ namespace Azure.ResourceManager.Nginx.Models
             {
                 return null;
             }
-            Utf8JsonRequestContent content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(nginxDeploymentApiKeyCreateOrUpdateContent, ModelSerializationExtensions.WireOptions);
-            return content;
+            return RequestContent.Create(nginxDeploymentApiKeyCreateOrUpdateContent, ModelSerializationExtensions.WireOptions);
         }
 
         /// <param name="writer"> The JSON writer. </param>

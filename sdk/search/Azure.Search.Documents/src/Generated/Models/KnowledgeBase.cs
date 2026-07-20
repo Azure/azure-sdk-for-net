@@ -45,8 +45,9 @@ namespace Azure.Search.Documents.Indexes.Models
         /// <param name="description"> The description of the knowledge base. </param>
         /// <param name="retrievalInstructions"> Instructions considered by the knowledge base when developing query plan. </param>
         /// <param name="answerInstructions"> Instructions considered by the knowledge base when generating answers. </param>
+        /// <param name="corsOptions"> Options to control Cross-Origin Resource Sharing (CORS) for the knowledge base. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal KnowledgeBase(string name, IList<KnowledgeSourceReference> knowledgeSources, IList<KnowledgeBaseModel> models, KnowledgeRetrievalReasoningEffort retrievalReasoningEffort, KnowledgeRetrievalOutputMode? outputMode, ETag? eTag, SearchResourceEncryptionKey encryptionKey, string description, string retrievalInstructions, string answerInstructions, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal KnowledgeBase(string name, IList<KnowledgeSourceReference> knowledgeSources, IList<KnowledgeBaseModel> models, KnowledgeRetrievalReasoningEffort retrievalReasoningEffort, KnowledgeRetrievalOutputMode? outputMode, ETag? eTag, SearchResourceEncryptionKey encryptionKey, string description, string retrievalInstructions, string answerInstructions, CorsOptions corsOptions, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Name = name;
             KnowledgeSources = knowledgeSources;
@@ -58,6 +59,7 @@ namespace Azure.Search.Documents.Indexes.Models
             Description = description;
             RetrievalInstructions = retrievalInstructions;
             AnswerInstructions = answerInstructions;
+            CorsOptions = corsOptions;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
@@ -90,5 +92,8 @@ namespace Azure.Search.Documents.Indexes.Models
 
         /// <summary> Instructions considered by the knowledge base when generating answers. </summary>
         public string AnswerInstructions { get; set; }
+
+        /// <summary> Options to control Cross-Origin Resource Sharing (CORS) for the knowledge base. </summary>
+        public CorsOptions CorsOptions { get; set; }
     }
 }

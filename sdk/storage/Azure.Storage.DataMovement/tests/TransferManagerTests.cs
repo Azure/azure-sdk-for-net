@@ -600,6 +600,156 @@ public class TransferManagerTests
         Assert.That(transfer.Status.HasCompletedSuccessfully);
     }
 
+    #region Dispose Tests
+
+    [Test]
+    public async Task DisposeAsync_DisposesCheckpointer()
+    {
+        // Arrange
+        (var jobsProcessor, var partsProcessor, var chunksProcessor) = StepProcessors();
+        JobBuilder jobBuilder = new(ArrayPool<byte>.Shared, default, new ClientDiagnostics(ClientOptions.Default));
+        Mock<ITransferCheckpointer> checkpointerMock = new(MockBehavior.Loose);
+        checkpointerMock.As<IDisposable>();
+
+        TransferManager transferManager = new(
+            jobsProcessor,
+            partsProcessor,
+            chunksProcessor,
+            jobBuilder,
+            checkpointerMock.Object,
+            default);
+
+        // Act
+        await transferManager.DisposeAsync();
+
+        // Assert
+        checkpointerMock.As<IDisposable>().Verify(c => c.Dispose(), Times.Once);
+    }
+
+    [Test]
+    public async Task DisposeAsync_WithLocalTransferCheckpointer_DisposesCheckpointer()
+    {
+        // Arrange
+        string testPath = Path.Combine(Path.GetTempPath(), "TransferManagerDisposeTest_" + Guid.NewGuid().ToString());
+        Directory.CreateDirectory(testPath);
+
+        try
+        {
+            (var jobsProcessor, var partsProcessor, var chunksProcessor) = StepProcessors();
+            JobBuilder jobBuilder = new(ArrayPool<byte>.Shared, default, new ClientDiagnostics(ClientOptions.Default));
+            LocalTransferCheckpointer checkpointer = new(testPath);
+
+            TransferManager transferManager = new(
+                jobsProcessor,
+                partsProcessor,
+                chunksProcessor,
+                jobBuilder,
+                checkpointer,
+                default);
+
+            // Add a transfer to create checkpoint files
+            Uri srcUri = new("file:///foo/bar");
+            Uri dstUri = new("https://example.com/fizz/buzz");
+
+            Mock<StorageResourceItem> srcResource = new(MockBehavior.Strict);
+            Mock<StorageResourceItem> dstResource = new(MockBehavior.Strict);
+            (srcResource, dstResource).BasicSetup(srcUri, dstUri);
+
+            TransferOperation transfer = await transferManager.StartTransferAsync(srcResource.Object, dstResource.Object);
+
+            // Process the transfer to create checkpoint data
+            await jobsProcessor.StepAll();
+            await partsProcessor.StepAll();
+            await chunksProcessor.StepAll();
+
+            // Act
+            await transferManager.DisposeAsync();
+
+            // Assert - Verify we can access files after disposal (checkpointer released handles)
+            // If disposal didn't work properly, the semaphores would still be held
+            string[] files = Directory.GetFiles(testPath, "*", SearchOption.AllDirectories);
+            foreach (string file in files)
+            {
+                // This should not throw if handles were properly released
+                using FileStream fs = File.Open(file, FileMode.Open, FileAccess.Read, FileShare.None);
+            }
+        }
+        finally
+        {
+            // Cleanup
+            if (Directory.Exists(testPath))
+            {
+                Directory.Delete(testPath, true);
+            }
+        }
+    }
+
+    [Test]
+    public async Task DisposeAsync_MultipleDisposals_DoesNotThrow()
+    {
+        // Arrange
+        (var jobsProcessor, var partsProcessor, var chunksProcessor) = StepProcessors();
+        JobBuilder jobBuilder = new(ArrayPool<byte>.Shared, default, new ClientDiagnostics(ClientOptions.Default));
+        Mock<ITransferCheckpointer> checkpointerMock = new(MockBehavior.Loose);
+        checkpointerMock.As<IDisposable>();
+
+        TransferManager transferManager = new(
+            jobsProcessor,
+            partsProcessor,
+            chunksProcessor,
+            jobBuilder,
+            checkpointerMock.Object,
+            default);
+
+        // Act - Dispose multiple times
+        await transferManager.DisposeAsync();
+        await transferManager.DisposeAsync();
+
+        // Assert - Should have been called at least once per DisposeAsync call
+        // Note: The current implementation doesn't guard against multiple disposals,
+        // so Dispose will be called each time DisposeAsync is called
+        checkpointerMock.As<IDisposable>().Verify(c => c.Dispose(), Times.Exactly(2));
+    }
+
+    [Test]
+    public async Task DisposeAsync_ClearsTransfers()
+    {
+        // Arrange
+        Uri srcUri = new("file:///foo/bar");
+        Uri dstUri = new("https://example.com/fizz/buzz");
+
+        (var jobsProcessor, var partsProcessor, var chunksProcessor) = StepProcessors();
+        JobBuilder jobBuilder = new(ArrayPool<byte>.Shared, default, new ClientDiagnostics(ClientOptions.Default));
+        MemoryTransferCheckpointer checkpointer = new();
+
+        TransferManager transferManager = new(
+            jobsProcessor,
+            partsProcessor,
+            chunksProcessor,
+            jobBuilder,
+            checkpointer,
+            default);
+
+        Mock<StorageResourceItem> srcResource = new(MockBehavior.Strict);
+        Mock<StorageResourceItem> dstResource = new(MockBehavior.Strict);
+        (srcResource, dstResource).BasicSetup(srcUri, dstUri);
+
+        // Add a transfer
+        TransferOperation transfer = await transferManager.StartTransferAsync(srcResource.Object, dstResource.Object);
+
+        // Verify transfer was added to internal dictionary
+        Assert.That(transferManager._transfers.Count, Is.EqualTo(1), "Transfer should be tracked.");
+        Assert.That(transferManager._transfers.ContainsKey(transfer.Id), Is.True, "Transfer should be in dictionary.");
+
+        // Act
+        await transferManager.DisposeAsync();
+
+        // Assert - Internal transfers dictionary should be cleared after dispose
+        Assert.That(transferManager._transfers.Count, Is.EqualTo(0), "Transfers should be cleared after dispose.");
+    }
+
+    #endregion
+
     /// <summary>
     /// <see cref="TransferStatus"/> is stateful across transfer. This makes it difficult to verify mocks, as verifications
     /// are lazily performed. This captures deep copies of statuses for custom assertion.
@@ -674,6 +824,16 @@ internal static partial class MockExtensions
         items.Source.Setup(r => r.IsContainer).Returns(false);
 
         items.Source.Setup(r => r.ProviderId).Returns("mock");
+
+        // Setup checkpoint details for source and destination
+        items.Source.Setup(r => r.GetSourceCheckpointDetails())
+            .Returns(MockResourceCheckpointDetails.DefaultInstance);
+        items.Source.Setup(r => r.GetDestinationCheckpointDetails())
+            .Returns(MockResourceCheckpointDetails.DefaultInstance);
+        items.Destination.Setup(r => r.GetSourceCheckpointDetails())
+            .Returns(MockResourceCheckpointDetails.DefaultInstance);
+        items.Destination.Setup(r => r.GetDestinationCheckpointDetails())
+            .Returns(MockResourceCheckpointDetails.DefaultInstance);
 
         items.Destination.Setup(r => r.CopyFromStreamAsync(
             It.IsAny<Stream>(), It.IsAny<long>(), It.IsAny<bool>(), It.IsAny<long>(),

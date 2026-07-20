@@ -7,43 +7,15 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.Resources.Models
 {
     /// <summary> Specifies whether template expressions are evaluated within the scope of the parent template or nested template. </summary>
     internal partial class ExpressionEvaluationOptions
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="ExpressionEvaluationOptions"/>. </summary>
         public ExpressionEvaluationOptions()
@@ -51,16 +23,16 @@ namespace Azure.ResourceManager.Resources.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="ExpressionEvaluationOptions"/>. </summary>
-        /// <param name="scope"> The scope to be used for evaluation of parameters, variables and functions in a nested template. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ExpressionEvaluationOptions(ExpressionEvaluationScope? scope, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="expressionEvaluationScope"> The scope to be used for evaluation of parameters, variables and functions in a nested template. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal ExpressionEvaluationOptions(ExpressionEvaluationScope? expressionEvaluationScope, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
-            Scope = scope;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            ExpressionEvaluationScope = expressionEvaluationScope;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> The scope to be used for evaluation of parameters, variables and functions in a nested template. </summary>
         [WirePath("scope")]
-        public ExpressionEvaluationScope? Scope { get; set; }
+        public ExpressionEvaluationScope? ExpressionEvaluationScope { get; set; }
     }
 }

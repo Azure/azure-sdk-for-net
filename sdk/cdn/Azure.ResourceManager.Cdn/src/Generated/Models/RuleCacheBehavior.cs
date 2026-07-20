@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.Cdn;
 
 namespace Azure.ResourceManager.Cdn.Models
 {
@@ -14,41 +15,59 @@ namespace Azure.ResourceManager.Cdn.Models
     public readonly partial struct RuleCacheBehavior : IEquatable<RuleCacheBehavior>
     {
         private readonly string _value;
-
-        /// <summary> Initializes a new instance of <see cref="RuleCacheBehavior"/>. </summary>
-        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        public RuleCacheBehavior(string value)
-        {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
-
         private const string HonorOriginValue = "HonorOrigin";
         private const string OverrideAlwaysValue = "OverrideAlways";
         private const string OverrideIfOriginMissingValue = "OverrideIfOriginMissing";
 
-        /// <summary> HonorOrigin. </summary>
+        /// <summary> Initializes a new instance of <see cref="RuleCacheBehavior"/>. </summary>
+        /// <param name="value"> The value. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
+        public RuleCacheBehavior(string value)
+        {
+            Argument.AssertNotNull(value, nameof(value));
+
+            _value = value;
+        }
+
+        /// <summary> Gets the HonorOrigin. </summary>
         public static RuleCacheBehavior HonorOrigin { get; } = new RuleCacheBehavior(HonorOriginValue);
-        /// <summary> OverrideAlways. </summary>
+
+        /// <summary> Gets the OverrideAlways. </summary>
         public static RuleCacheBehavior OverrideAlways { get; } = new RuleCacheBehavior(OverrideAlwaysValue);
-        /// <summary> OverrideIfOriginMissing. </summary>
+
+        /// <summary> Gets the OverrideIfOriginMissing. </summary>
         public static RuleCacheBehavior OverrideIfOriginMissing { get; } = new RuleCacheBehavior(OverrideIfOriginMissingValue);
+
         /// <summary> Determines if two <see cref="RuleCacheBehavior"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(RuleCacheBehavior left, RuleCacheBehavior right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="RuleCacheBehavior"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(RuleCacheBehavior left, RuleCacheBehavior right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="RuleCacheBehavior"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="RuleCacheBehavior"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator RuleCacheBehavior(string value) => new RuleCacheBehavior(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="RuleCacheBehavior"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator RuleCacheBehavior?(string value) => value == null ? null : new RuleCacheBehavior(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is RuleCacheBehavior other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(RuleCacheBehavior other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

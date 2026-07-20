@@ -6,8 +6,9 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure.AI.Projects;
 
-namespace Azure.AI.Projects
+namespace Azure.AI.Projects.Evaluation
 {
     /// <summary> Insights on set of Evaluation Results. </summary>
     public partial class EvaluationRunClusterInsightRequest : InsightRequest, IJsonModel<EvaluationRunClusterInsightRequest>

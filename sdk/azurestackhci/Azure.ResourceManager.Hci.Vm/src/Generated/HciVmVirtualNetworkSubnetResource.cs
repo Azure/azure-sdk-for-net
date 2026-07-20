@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.Hci.Vm
         {
             if (id.ResourceType != ResourceType)
             {
-                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), id);
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), nameof(id));
             }
         }
 
@@ -228,7 +228,7 @@ namespace Azure.ResourceManager.Hci.Vm
                 HttpMessage message = _virtualNetworkSubnetsRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, HciVmVirtualNetworkSubnetPatch.ToRequestContent(patch), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 VmArmOperation<HciVmVirtualNetworkSubnetResource> operation = new VmArmOperation<HciVmVirtualNetworkSubnetResource>(
-                    new HciVmVirtualNetworkSubnetOperationSource(Client),
+                    new HciVmVirtualNetworkSubnetResourceOperationSource(Client),
                     _virtualNetworkSubnetsClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -287,7 +287,7 @@ namespace Azure.ResourceManager.Hci.Vm
                 HttpMessage message = _virtualNetworkSubnetsRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, HciVmVirtualNetworkSubnetPatch.ToRequestContent(patch), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 VmArmOperation<HciVmVirtualNetworkSubnetResource> operation = new VmArmOperation<HciVmVirtualNetworkSubnetResource>(
-                    new HciVmVirtualNetworkSubnetOperationSource(Client),
+                    new HciVmVirtualNetworkSubnetResourceOperationSource(Client),
                     _virtualNetworkSubnetsClientDiagnostics,
                     Pipeline,
                     message.Request,

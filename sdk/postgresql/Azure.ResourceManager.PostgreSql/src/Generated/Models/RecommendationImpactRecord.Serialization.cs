@@ -8,16 +8,57 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
-using System.Text;
 using System.Text.Json;
-using Azure.Core;
+using Azure.ResourceManager.PostgreSql;
+using Azure.ResourceManager.PostgreSql.FlexibleServers;
 
 namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
 {
-    public partial class RecommendationImpactRecord : IUtf8JsonSerializable, IJsonModel<RecommendationImpactRecord>
+    /// <summary> Impact on some metric if this recommended action is applied. </summary>
+    public partial class RecommendationImpactRecord : IJsonModel<RecommendationImpactRecord>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<RecommendationImpactRecord>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual RecommendationImpactRecord PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<RecommendationImpactRecord>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    {
+                        return DeserializeRecommendationImpactRecord(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(RecommendationImpactRecord)} does not support reading '{options.Format}' format.");
+            }
+        }
 
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<RecommendationImpactRecord>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerPostgreSqlContext.Default);
+                default:
+                    throw new FormatException($"The model {nameof(RecommendationImpactRecord)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<RecommendationImpactRecord>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        RecommendationImpactRecord IPersistableModel<RecommendationImpactRecord>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<RecommendationImpactRecord>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<RecommendationImpactRecord>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
@@ -29,12 +70,11 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<RecommendationImpactRecord>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<RecommendationImpactRecord>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(RecommendationImpactRecord)} does not support writing '{format}' format.");
             }
-
             if (Optional.IsDefined(DimensionName))
             {
                 writer.WritePropertyName("dimensionName"u8);
@@ -55,15 +95,15 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
                 writer.WritePropertyName("absoluteValue"u8);
                 writer.WriteNumberValue(AbsoluteValue.Value);
             }
-            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
-                foreach (var item in _serializedAdditionalRawData)
+                foreach (var item in _additionalBinaryDataProperties)
                 {
                     writer.WritePropertyName(item.Key);
 #if NET6_0_OR_GREATER
-				writer.WriteRawValue(item.Value);
+                    writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value, ModelSerializationExtensions.JsonDocumentOptions))
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
                     {
                         JsonSerializer.Serialize(writer, document.RootElement);
                     }
@@ -72,22 +112,27 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
             }
         }
 
-        RecommendationImpactRecord IJsonModel<RecommendationImpactRecord>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        RecommendationImpactRecord IJsonModel<RecommendationImpactRecord>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual RecommendationImpactRecord JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<RecommendationImpactRecord>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<RecommendationImpactRecord>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(RecommendationImpactRecord)} does not support reading '{format}' format.");
             }
-
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
             return DeserializeRecommendationImpactRecord(document.RootElement, options);
         }
 
-        internal static RecommendationImpactRecord DeserializeRecommendationImpactRecord(JsonElement element, ModelReaderWriterOptions options = null)
+        /// <param name="element"> The JSON element to deserialize. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        internal static RecommendationImpactRecord DeserializeRecommendationImpactRecord(JsonElement element, ModelReaderWriterOptions options)
         {
-            options ??= ModelSerializationExtensions.WireOptions;
-
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -96,169 +141,43 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
             string unit = default;
             long? queryId = default;
             double? absoluteValue = default;
-            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
-            foreach (var property in element.EnumerateObject())
+            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            foreach (var prop in element.EnumerateObject())
             {
-                if (property.NameEquals("dimensionName"u8))
+                if (prop.NameEquals("dimensionName"u8))
                 {
-                    dimensionName = property.Value.GetString();
+                    dimensionName = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("unit"u8))
+                if (prop.NameEquals("unit"u8))
                 {
-                    unit = property.Value.GetString();
+                    unit = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("queryId"u8))
+                if (prop.NameEquals("queryId"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    queryId = property.Value.GetInt64();
+                    queryId = prop.Value.GetInt64();
                     continue;
                 }
-                if (property.NameEquals("absoluteValue"u8))
+                if (prop.NameEquals("absoluteValue"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    absoluteValue = property.Value.GetDouble();
+                    absoluteValue = prop.Value.GetDouble();
                     continue;
                 }
                 if (options.Format != "W")
                 {
-                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = rawDataDictionary;
-            return new RecommendationImpactRecord(dimensionName, unit, queryId, absoluteValue, serializedAdditionalRawData);
+            return new RecommendationImpactRecord(dimensionName, unit, queryId, absoluteValue, additionalBinaryDataProperties);
         }
-
-        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
-        {
-            StringBuilder builder = new StringBuilder();
-            BicepModelReaderWriterOptions bicepOptions = options as BicepModelReaderWriterOptions;
-            IDictionary<string, string> propertyOverrides = null;
-            bool hasObjectOverride = bicepOptions != null && bicepOptions.PropertyOverrides.TryGetValue(this, out propertyOverrides);
-            bool hasPropertyOverride = false;
-            string propertyOverride = null;
-
-            builder.AppendLine("{");
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(DimensionName), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  dimensionName: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(DimensionName))
-                {
-                    builder.Append("  dimensionName: ");
-                    if (DimensionName.Contains(Environment.NewLine))
-                    {
-                        builder.AppendLine("'''");
-                        builder.AppendLine($"{DimensionName}'''");
-                    }
-                    else
-                    {
-                        builder.AppendLine($"'{DimensionName}'");
-                    }
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Unit), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  unit: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(Unit))
-                {
-                    builder.Append("  unit: ");
-                    if (Unit.Contains(Environment.NewLine))
-                    {
-                        builder.AppendLine("'''");
-                        builder.AppendLine($"{Unit}'''");
-                    }
-                    else
-                    {
-                        builder.AppendLine($"'{Unit}'");
-                    }
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(QueryId), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  queryId: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(QueryId))
-                {
-                    builder.Append("  queryId: ");
-                    builder.AppendLine($"'{QueryId.Value.ToString()}'");
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(AbsoluteValue), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  absoluteValue: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(AbsoluteValue))
-                {
-                    builder.Append("  absoluteValue: ");
-                    builder.AppendLine($"'{AbsoluteValue.Value.ToString()}'");
-                }
-            }
-
-            builder.AppendLine("}");
-            return BinaryData.FromString(builder.ToString());
-        }
-
-        BinaryData IPersistableModel<RecommendationImpactRecord>.Write(ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<RecommendationImpactRecord>)this).GetFormatFromOptions(options) : options.Format;
-
-            switch (format)
-            {
-                case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerPostgreSqlContext.Default);
-                case "bicep":
-                    return SerializeBicep(options);
-                default:
-                    throw new FormatException($"The model {nameof(RecommendationImpactRecord)} does not support writing '{options.Format}' format.");
-            }
-        }
-
-        RecommendationImpactRecord IPersistableModel<RecommendationImpactRecord>.Create(BinaryData data, ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<RecommendationImpactRecord>)this).GetFormatFromOptions(options) : options.Format;
-
-            switch (format)
-            {
-                case "J":
-                    {
-                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
-                        return DeserializeRecommendationImpactRecord(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(RecommendationImpactRecord)} does not support reading '{options.Format}' format.");
-            }
-        }
-
-        string IPersistableModel<RecommendationImpactRecord>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

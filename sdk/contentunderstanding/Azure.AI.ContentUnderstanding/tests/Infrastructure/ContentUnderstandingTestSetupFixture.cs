@@ -31,8 +31,8 @@ namespace Azure.AI.ContentUnderstanding.Tests
         /// </summary>
         public override async Task SetUp()
         {
-            // Only configure defaults in Live mode (not in Playback mode)
-            if (Environment.Mode == RecordedTestMode.Playback)
+            // Only configure defaults in Live mode (skip Playback and Record modes).
+            if (Environment.Mode != RecordedTestMode.Live)
             {
                 return;
             }

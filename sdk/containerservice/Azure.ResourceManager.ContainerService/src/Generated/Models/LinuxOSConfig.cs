@@ -7,43 +7,15 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.ContainerService;
 
 namespace Azure.ResourceManager.ContainerService.Models
 {
     /// <summary> OS configurations of Linux agent nodes. See [AKS custom node configuration](https://docs.microsoft.com/azure/aks/custom-node-configuration) for more details. </summary>
     public partial class LinuxOSConfig
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="LinuxOSConfig"/>. </summary>
         public LinuxOSConfig()
@@ -55,25 +27,28 @@ namespace Azure.ResourceManager.ContainerService.Models
         /// <param name="transparentHugePageEnabled"> Whether transparent hugepages are enabled. Valid values are 'always', 'madvise', and 'never'. The default is 'always'. For more information see [Transparent Hugepages](https://www.kernel.org/doc/html/latest/admin-guide/mm/transhuge.html#admin-guide-transhuge). </param>
         /// <param name="transparentHugePageDefrag"> Whether the kernel should make aggressive use of memory compaction to make more hugepages available. Valid values are 'always', 'defer', 'defer+madvise', 'madvise' and 'never'. The default is 'madvise'. For more information see [Transparent Hugepages](https://www.kernel.org/doc/html/latest/admin-guide/mm/transhuge.html#admin-guide-transhuge). </param>
         /// <param name="swapFileSizeInMB"> The size in MB of a swap file that will be created on each node. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal LinuxOSConfig(SysctlConfig sysctls, string transparentHugePageEnabled, string transparentHugePageDefrag, int? swapFileSizeInMB, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal LinuxOSConfig(SysctlConfig sysctls, string transparentHugePageEnabled, string transparentHugePageDefrag, int? swapFileSizeInMB, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Sysctls = sysctls;
             TransparentHugePageEnabled = transparentHugePageEnabled;
             TransparentHugePageDefrag = transparentHugePageDefrag;
             SwapFileSizeInMB = swapFileSizeInMB;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> Sysctl settings for Linux agent nodes. </summary>
         [WirePath("sysctls")]
         public SysctlConfig Sysctls { get; set; }
+
         /// <summary> Whether transparent hugepages are enabled. Valid values are 'always', 'madvise', and 'never'. The default is 'always'. For more information see [Transparent Hugepages](https://www.kernel.org/doc/html/latest/admin-guide/mm/transhuge.html#admin-guide-transhuge). </summary>
         [WirePath("transparentHugePageEnabled")]
         public string TransparentHugePageEnabled { get; set; }
+
         /// <summary> Whether the kernel should make aggressive use of memory compaction to make more hugepages available. Valid values are 'always', 'defer', 'defer+madvise', 'madvise' and 'never'. The default is 'madvise'. For more information see [Transparent Hugepages](https://www.kernel.org/doc/html/latest/admin-guide/mm/transhuge.html#admin-guide-transhuge). </summary>
         [WirePath("transparentHugePageDefrag")]
         public string TransparentHugePageDefrag { get; set; }
+
         /// <summary> The size in MB of a swap file that will be created on each node. </summary>
         [WirePath("swapFileSizeMB")]
         public int? SwapFileSizeInMB { get; set; }

@@ -7,43 +7,16 @@
 
 using System;
 using System.Collections.Generic;
+using System.Text.Json;
+using Azure.ResourceManager.ApiCenter;
 
 namespace Azure.ResourceManager.ApiCenter.Models
 {
     /// <summary> Environment properties entity. </summary>
     public partial class ApiCenterEnvironmentProperties
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="ApiCenterEnvironmentProperties"/>. </summary>
         /// <param name="title"> Environment title. </param>
@@ -64,8 +37,8 @@ namespace Azure.ResourceManager.ApiCenter.Models
         /// <param name="server"> Server information of the environment. </param>
         /// <param name="onboarding"> Environment onboarding information. </param>
         /// <param name="customProperties"> The custom metadata defined for API catalog entities. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ApiCenterEnvironmentProperties(string title, string description, ApiCenterEnvironmentKind kind, ApiCenterEnvironmentServer server, EnvironmentOnboardingInformation onboarding, BinaryData customProperties, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal ApiCenterEnvironmentProperties(string title, string description, ApiCenterEnvironmentKind kind, ApiCenterEnvironmentServer server, EnvironmentOnboardingInformation onboarding, BinaryData customProperties, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Title = title;
             Description = description;
@@ -73,50 +46,46 @@ namespace Azure.ResourceManager.ApiCenter.Models
             Server = server;
             Onboarding = onboarding;
             CustomProperties = customProperties;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
-        }
-
-        /// <summary> Initializes a new instance of <see cref="ApiCenterEnvironmentProperties"/> for deserialization. </summary>
-        internal ApiCenterEnvironmentProperties()
-        {
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> Environment title. </summary>
         public string Title { get; set; }
+
         /// <summary> The environment description. </summary>
         public string Description { get; set; }
+
         /// <summary> Environment kind. </summary>
         public ApiCenterEnvironmentKind Kind { get; set; }
+
         /// <summary> Server information of the environment. </summary>
         public ApiCenterEnvironmentServer Server { get; set; }
+
         /// <summary> Environment onboarding information. </summary>
         public EnvironmentOnboardingInformation Onboarding { get; set; }
+
         /// <summary>
         /// The custom metadata defined for API catalog entities.
-        /// <para>
-        /// To assign an object to this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
+        /// <para> To assign an object to this property use <see cref="BinaryData.FromObjectAsJson{T}(T, JsonSerializerOptions?)"/>. </para>
+        /// <para> To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>. </para>
         /// <para>
         /// Examples:
         /// <list type="bullet">
         /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
+        /// <term> BinaryData.FromObjectAsJson("foo"). </term>
+        /// <description> Creates a payload of "foo". </description>
         /// </item>
         /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
+        /// <term> BinaryData.FromString("\"foo\""). </term>
+        /// <description> Creates a payload of "foo". </description>
         /// </item>
         /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// <term> BinaryData.FromObjectAsJson(new { key = "value" }). </term>
+        /// <description> Creates a payload of { "key": "value" }. </description>
         /// </item>
         /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// <term> BinaryData.FromString("{\"key\": \"value\"}"). </term>
+        /// <description> Creates a payload of { "key": "value" }. </description>
         /// </item>
         /// </list>
         /// </para>

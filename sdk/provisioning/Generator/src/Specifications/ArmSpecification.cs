@@ -18,7 +18,7 @@ namespace Azure.Provisioning.Generator.Specifications;
 public class ArmSpecification : Specification
 {
     public ArmSpecification() :
-        base("Arm", typeof(ArmClient))
+        base("Arm", typeof(ArmClient), serviceDirectory: "provisioning")
     {
         Namespace = "Azure.Provisioning.Resources";
     }

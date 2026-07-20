@@ -69,9 +69,7 @@ namespace Azure.Analytics.Defender.Easm
             {
                 return null;
             }
-            Utf8JsonRequestContent content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(easmPolicy, ModelSerializationExtensions.WireOptions);
-            return content;
+            return RequestContent.Create(easmPolicy, ModelSerializationExtensions.WireOptions);
         }
 
         /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="EasmPolicy"/> from. </param>

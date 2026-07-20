@@ -10,13 +10,70 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.IotHub;
 
 namespace Azure.ResourceManager.IotHub.Models
 {
-    public partial class ExportDevicesContent : IUtf8JsonSerializable, IJsonModel<ExportDevicesContent>
+    /// <summary> Use to provide parameters when requesting an export of all devices in the IoT hub. </summary>
+    public partial class ExportDevicesContent : IJsonModel<ExportDevicesContent>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ExportDevicesContent>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        /// <summary> Initializes a new instance of <see cref="ExportDevicesContent"/> for deserialization. </summary>
+        internal ExportDevicesContent()
+        {
+        }
 
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual ExportDevicesContent PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<ExportDevicesContent>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    {
+                        return DeserializeExportDevicesContent(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(ExportDevicesContent)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<ExportDevicesContent>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerIotHubContext.Default);
+                default:
+                    throw new FormatException($"The model {nameof(ExportDevicesContent)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<ExportDevicesContent>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        ExportDevicesContent IPersistableModel<ExportDevicesContent>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<ExportDevicesContent>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
+        /// <param name="exportDevicesContent"> The <see cref="ExportDevicesContent"/> to serialize into <see cref="RequestContent"/>. </param>
+        internal static RequestContent ToRequestContent(ExportDevicesContent exportDevicesContent)
+        {
+            if (exportDevicesContent == null)
+            {
+                return null;
+            }
+            return RequestContent.Create(exportDevicesContent, ModelSerializationExtensions.WireOptions);
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<ExportDevicesContent>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
@@ -28,12 +85,11 @@ namespace Azure.ResourceManager.IotHub.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<ExportDevicesContent>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<ExportDevicesContent>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(ExportDevicesContent)} does not support writing '{format}' format.");
             }
-
             writer.WritePropertyName("exportBlobContainerUri"u8);
             writer.WriteStringValue(ExportBlobContainerUri.AbsoluteUri);
             writer.WritePropertyName("excludeKeys"u8);
@@ -63,15 +119,15 @@ namespace Azure.ResourceManager.IotHub.Models
                 writer.WritePropertyName("configurationsBlobName"u8);
                 writer.WriteStringValue(ConfigurationsBlobName);
             }
-            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
-                foreach (var item in _serializedAdditionalRawData)
+                foreach (var item in _additionalBinaryDataProperties)
                 {
                     writer.WritePropertyName(item.Key);
 #if NET6_0_OR_GREATER
-				writer.WriteRawValue(item.Value);
+                    writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value, ModelSerializationExtensions.JsonDocumentOptions))
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
                     {
                         JsonSerializer.Serialize(writer, document.RootElement);
                     }
@@ -80,22 +136,27 @@ namespace Azure.ResourceManager.IotHub.Models
             }
         }
 
-        ExportDevicesContent IJsonModel<ExportDevicesContent>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        ExportDevicesContent IJsonModel<ExportDevicesContent>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual ExportDevicesContent JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<ExportDevicesContent>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<ExportDevicesContent>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(ExportDevicesContent)} does not support reading '{format}' format.");
             }
-
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
             return DeserializeExportDevicesContent(document.RootElement, options);
         }
 
-        internal static ExportDevicesContent DeserializeExportDevicesContent(JsonElement element, ModelReaderWriterOptions options = null)
+        /// <param name="element"> The JSON element to deserialize. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        internal static ExportDevicesContent DeserializeExportDevicesContent(JsonElement element, ModelReaderWriterOptions options)
         {
-            options ??= ModelSerializationExtensions.WireOptions;
-
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -107,63 +168,61 @@ namespace Azure.ResourceManager.IotHub.Models
             ManagedIdentity identity = default;
             bool? includeConfigurations = default;
             string configurationsBlobName = default;
-            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
-            foreach (var property in element.EnumerateObject())
+            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            foreach (var prop in element.EnumerateObject())
             {
-                if (property.NameEquals("exportBlobContainerUri"u8))
+                if (prop.NameEquals("exportBlobContainerUri"u8))
                 {
-                    exportBlobContainerUri = new Uri(property.Value.GetString());
+                    exportBlobContainerUri = string.IsNullOrEmpty(prop.Value.GetString()) ? null : new Uri(prop.Value.GetString(), UriKind.RelativeOrAbsolute);
                     continue;
                 }
-                if (property.NameEquals("excludeKeys"u8))
+                if (prop.NameEquals("excludeKeys"u8))
                 {
-                    excludeKeys = property.Value.GetBoolean();
+                    excludeKeys = prop.Value.GetBoolean();
                     continue;
                 }
-                if (property.NameEquals("exportBlobName"u8))
+                if (prop.NameEquals("exportBlobName"u8))
                 {
-                    exportBlobName = property.Value.GetString();
+                    exportBlobName = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("authenticationType"u8))
+                if (prop.NameEquals("authenticationType"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    authenticationType = new IotHubAuthenticationType(property.Value.GetString());
+                    authenticationType = new IotHubAuthenticationType(prop.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("identity"u8))
+                if (prop.NameEquals("identity"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    identity = ManagedIdentity.DeserializeManagedIdentity(property.Value, options);
+                    identity = ManagedIdentity.DeserializeManagedIdentity(prop.Value, options);
                     continue;
                 }
-                if (property.NameEquals("includeConfigurations"u8))
+                if (prop.NameEquals("includeConfigurations"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    includeConfigurations = property.Value.GetBoolean();
+                    includeConfigurations = prop.Value.GetBoolean();
                     continue;
                 }
-                if (property.NameEquals("configurationsBlobName"u8))
+                if (prop.NameEquals("configurationsBlobName"u8))
                 {
-                    configurationsBlobName = property.Value.GetString();
+                    configurationsBlobName = prop.Value.GetString();
                     continue;
                 }
                 if (options.Format != "W")
                 {
-                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = rawDataDictionary;
             return new ExportDevicesContent(
                 exportBlobContainerUri,
                 excludeKeys,
@@ -172,38 +231,7 @@ namespace Azure.ResourceManager.IotHub.Models
                 identity,
                 includeConfigurations,
                 configurationsBlobName,
-                serializedAdditionalRawData);
+                additionalBinaryDataProperties);
         }
-
-        BinaryData IPersistableModel<ExportDevicesContent>.Write(ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<ExportDevicesContent>)this).GetFormatFromOptions(options) : options.Format;
-
-            switch (format)
-            {
-                case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerIotHubContext.Default);
-                default:
-                    throw new FormatException($"The model {nameof(ExportDevicesContent)} does not support writing '{options.Format}' format.");
-            }
-        }
-
-        ExportDevicesContent IPersistableModel<ExportDevicesContent>.Create(BinaryData data, ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<ExportDevicesContent>)this).GetFormatFromOptions(options) : options.Format;
-
-            switch (format)
-            {
-                case "J":
-                    {
-                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
-                        return DeserializeExportDevicesContent(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(ExportDevicesContent)} does not support reading '{options.Format}' format.");
-            }
-        }
-
-        string IPersistableModel<ExportDevicesContent>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

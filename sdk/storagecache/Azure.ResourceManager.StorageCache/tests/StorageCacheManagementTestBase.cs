@@ -114,7 +114,7 @@ namespace Azure.ResourceManager.StorageCache.Tests
             ResourceIdentifier storageCacheResourceId = AmlFileSystemResource.CreateResourceIdentifier(
                 this.DefaultSubscription.Id.SubscriptionId,
                 resourceGroupName: resourceGroupName,
-                amlFileSystemName: amlFSName);
+                 amlFSName);
             var amlFS = this.Client.GetAmlFileSystemResource(storageCacheResourceId);
             var importJobs = amlFS.GetStorageCacheImportJobs().GetAllAsync();
             await foreach (var job in importJobs)
@@ -200,7 +200,7 @@ namespace Azure.ResourceManager.StorageCache.Tests
             };
             ArmOperation<AmlFileSystemResource> lro = await amlFSCollectionVar.CreateOrUpdateAsync(
                 waitUntil: WaitUntil.Completed,
-                amlFileSystemName: amlFSName,
+                 amlFSName,
                 data: dataVar);
             this.CleanupActions.Push(async () => await lro.Value.DeleteAsync(WaitUntil.Completed));
             if (verifyResult)
@@ -302,6 +302,52 @@ namespace Azure.ResourceManager.StorageCache.Tests
             Assert.AreEqual(actual.Data.ConflictResolutionMode, expected.ConflictResolutionMode);
             Assert.AreEqual(actual.Data.MaximumErrors, expected.MaximumErrors);
             Assert.AreEqual(actual.Data.AdminStatus, expected.AdminStatus);
+        }
+
+        protected async Task<AmlFileSystemExpansionJobResource> CreateOrUpdateExpansionJob(AmlFileSystemResource amlFS, string name, AmlFileSystemExpansionJobData dataVar, bool verifyResult = false, bool deleteOnCleanup = false)
+        {
+            AmlFileSystemExpansionJobCollection expansionJobCollectionVar = amlFS.GetAmlFileSystemExpansionJobs();
+
+            string expansionJobName = name ?? Recording.GenerateAssetName("testexpansionjob");
+
+            // Check if the job already exists before creating
+            Console.WriteLine("Checking if an expansion job with the same name already exists...");
+            NullableResponse<AmlFileSystemExpansionJobResource> existingJob = await expansionJobCollectionVar.GetIfExistsAsync(expansionJobName);
+            if (existingJob.HasValue)
+            {
+                Console.WriteLine("Expansion job with the same name already exists. Returning the existing job.");
+                return existingJob.Value;
+            }
+
+            ArmOperation<AmlFileSystemExpansionJobResource> lro = await expansionJobCollectionVar.CreateOrUpdateAsync(
+                waitUntil: WaitUntil.Completed,
+                expansionJobName: expansionJobName,
+                data: dataVar);
+            if (deleteOnCleanup)
+            {
+                this.CleanupActions.Push(async () => await lro.Value.DeleteAsync(WaitUntil.Completed));
+            }
+            if (verifyResult)
+            {
+                this.VerifyExpansionJob(lro.Value, dataVar);
+            }
+            return lro.Value;
+        }
+
+        protected void VerifyExpansionJob(AmlFileSystemExpansionJobResource actual, AmlFileSystemExpansionJobData expected)
+        {
+            Assert.AreEqual(actual.Data.NewStorageCapacityTiB, expected.NewStorageCapacityTiB);
+        }
+
+        protected async Task<AmlFileSystemExpansionJobResource> WaitForExpansionJobCompletion(AmlFileSystemResource amlFS, string expansionJobName)
+        {
+            AmlFileSystemExpansionJobResource job = await amlFS.GetAmlFileSystemExpansionJobs().GetAsync(expansionJobName);
+            while (job.Data.State == AmlFileSystemExpansionJobStatusType.InProgress || job.Data.State == AmlFileSystemExpansionJobStatusType.RollingBack)
+            {
+                await Task.Delay(TimeSpan.FromSeconds(30));
+                job = await amlFS.GetAmlFileSystemExpansionJobs().GetAsync(expansionJobName);
+            }
+            return job;
         }
 
         protected async Task<GenericResource> CreateVirtualNetwork()

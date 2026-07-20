@@ -65,9 +65,7 @@ namespace Azure.AI.ContentUnderstanding
             {
                 return null;
             }
-            Utf8JsonRequestContent content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(contentAnalyzer, ModelSerializationExtensions.WireOptions);
-            return content;
+            return RequestContent.Create(contentAnalyzer, ModelSerializationExtensions.WireOptions);
         }
 
         /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="ContentAnalyzer"/> from. </param>

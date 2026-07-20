@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.Advisor
         {
             if (id.ResourceType != SubscriptionResource.ResourceType)
             {
-                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, SubscriptionResource.ResourceType), id);
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, SubscriptionResource.ResourceType), nameof(id));
             }
         }
 
@@ -290,7 +290,13 @@ namespace Azure.ResourceManager.Advisor
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<AdvisorAssessmentData, AdvisorAssessmentResource>(new AssessmentResultsGetAllAsyncCollectionResultOfT(_assessmentResultsRestClient, Guid.Parse(Id.SubscriptionId), top, skiptoken, context), data => new AdvisorAssessmentResource(Client, data));
+            return new AsyncPageableWrapper<AdvisorAssessmentData, AdvisorAssessmentResource>(new AssessmentResultsGetAllAsyncCollectionResultOfT(
+                _assessmentResultsRestClient,
+                Guid.Parse(Id.SubscriptionId),
+                top,
+                skiptoken,
+                context,
+                "AdvisorAssessmentCollection.GetAll"), data => new AdvisorAssessmentResource(Client, data));
         }
 
         /// <summary>
@@ -320,7 +326,13 @@ namespace Azure.ResourceManager.Advisor
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<AdvisorAssessmentData, AdvisorAssessmentResource>(new AssessmentResultsGetAllCollectionResultOfT(_assessmentResultsRestClient, Guid.Parse(Id.SubscriptionId), top, skiptoken, context), data => new AdvisorAssessmentResource(Client, data));
+            return new PageableWrapper<AdvisorAssessmentData, AdvisorAssessmentResource>(new AssessmentResultsGetAllCollectionResultOfT(
+                _assessmentResultsRestClient,
+                Guid.Parse(Id.SubscriptionId),
+                top,
+                skiptoken,
+                context,
+                "AdvisorAssessmentCollection.GetAll"), data => new AdvisorAssessmentResource(Client, data));
         }
 
         /// <summary>

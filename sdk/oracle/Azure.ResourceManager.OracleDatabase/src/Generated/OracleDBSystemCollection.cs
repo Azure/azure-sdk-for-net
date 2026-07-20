@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.OracleDatabase
         {
             if (id.ResourceType != ResourceGroupResource.ResourceType)
             {
-                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ResourceGroupResource.ResourceType), id);
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ResourceGroupResource.ResourceType), nameof(id));
             }
         }
 
@@ -94,7 +94,7 @@ namespace Azure.ResourceManager.OracleDatabase
                 HttpMessage message = _dbSystemsRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, dbSystemName, OracleDBSystemData.ToRequestContent(data), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 OracleDatabaseArmOperation<OracleDBSystemResource> operation = new OracleDatabaseArmOperation<OracleDBSystemResource>(
-                    new OracleDBSystemOperationSource(Client),
+                    new OracleDBSystemResourceOperationSource(Client),
                     _dbSystemsClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -152,7 +152,7 @@ namespace Azure.ResourceManager.OracleDatabase
                 HttpMessage message = _dbSystemsRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, dbSystemName, OracleDBSystemData.ToRequestContent(data), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 OracleDatabaseArmOperation<OracleDBSystemResource> operation = new OracleDatabaseArmOperation<OracleDBSystemResource>(
-                    new OracleDBSystemOperationSource(Client),
+                    new OracleDBSystemResourceOperationSource(Client),
                     _dbSystemsClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -294,7 +294,7 @@ namespace Azure.ResourceManager.OracleDatabase
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<OracleDBSystemData, OracleDBSystemResource>(new DbSystemsGetByResourceGroupAsyncCollectionResultOfT(_dbSystemsRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context), data => new OracleDBSystemResource(Client, data));
+            return new AsyncPageableWrapper<OracleDBSystemData, OracleDBSystemResource>(new DbSystemsGetByResourceGroupAsyncCollectionResultOfT(_dbSystemsRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "OracleDBSystemCollection.GetAll"), data => new OracleDBSystemResource(Client, data));
         }
 
         /// <summary>
@@ -322,7 +322,7 @@ namespace Azure.ResourceManager.OracleDatabase
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<OracleDBSystemData, OracleDBSystemResource>(new DbSystemsGetByResourceGroupCollectionResultOfT(_dbSystemsRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context), data => new OracleDBSystemResource(Client, data));
+            return new PageableWrapper<OracleDBSystemData, OracleDBSystemResource>(new DbSystemsGetByResourceGroupCollectionResultOfT(_dbSystemsRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "OracleDBSystemCollection.GetAll"), data => new OracleDBSystemResource(Client, data));
         }
 
         /// <summary>

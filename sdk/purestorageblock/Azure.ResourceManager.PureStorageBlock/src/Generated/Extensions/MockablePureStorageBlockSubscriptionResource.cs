@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.PureStorageBlock.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<PureStorageReservationData, PureStorageReservationResource>(new ReservationsGetBySubscriptionAsyncCollectionResultOfT(ReservationsRestClient, Guid.Parse(Id.SubscriptionId), context), data => new PureStorageReservationResource(Client, data));
+            return new AsyncPageableWrapper<PureStorageReservationData, PureStorageReservationResource>(new ReservationsGetBySubscriptionAsyncCollectionResultOfT(ReservationsRestClient, Guid.Parse(Id.SubscriptionId), context, "MockablePureStorageBlockSubscriptionResource.GetPureStorageReservations"), data => new PureStorageReservationResource(Client, data));
         }
 
         /// <summary>
@@ -97,7 +97,7 @@ namespace Azure.ResourceManager.PureStorageBlock.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<PureStorageReservationData, PureStorageReservationResource>(new ReservationsGetBySubscriptionCollectionResultOfT(ReservationsRestClient, Guid.Parse(Id.SubscriptionId), context), data => new PureStorageReservationResource(Client, data));
+            return new PageableWrapper<PureStorageReservationData, PureStorageReservationResource>(new ReservationsGetBySubscriptionCollectionResultOfT(ReservationsRestClient, Guid.Parse(Id.SubscriptionId), context, "MockablePureStorageBlockSubscriptionResource.GetPureStorageReservations"), data => new PureStorageReservationResource(Client, data));
         }
 
         /// <summary>
@@ -125,7 +125,7 @@ namespace Azure.ResourceManager.PureStorageBlock.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<PureStoragePoolData, PureStoragePoolResource>(new StoragePoolsGetBySubscriptionAsyncCollectionResultOfT(StoragePoolsRestClient, Guid.Parse(Id.SubscriptionId), context), data => new PureStoragePoolResource(Client, data));
+            return new AsyncPageableWrapper<PureStoragePoolData, PureStoragePoolResource>(new StoragePoolsGetBySubscriptionAsyncCollectionResultOfT(StoragePoolsRestClient, Guid.Parse(Id.SubscriptionId), context, "MockablePureStorageBlockSubscriptionResource.GetPureStoragePools"), data => new PureStoragePoolResource(Client, data));
         }
 
         /// <summary>
@@ -153,7 +153,7 @@ namespace Azure.ResourceManager.PureStorageBlock.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<PureStoragePoolData, PureStoragePoolResource>(new StoragePoolsGetBySubscriptionCollectionResultOfT(StoragePoolsRestClient, Guid.Parse(Id.SubscriptionId), context), data => new PureStoragePoolResource(Client, data));
+            return new PageableWrapper<PureStoragePoolData, PureStoragePoolResource>(new StoragePoolsGetBySubscriptionCollectionResultOfT(StoragePoolsRestClient, Guid.Parse(Id.SubscriptionId), context, "MockablePureStorageBlockSubscriptionResource.GetPureStoragePools"), data => new PureStoragePoolResource(Client, data));
         }
     }
 }

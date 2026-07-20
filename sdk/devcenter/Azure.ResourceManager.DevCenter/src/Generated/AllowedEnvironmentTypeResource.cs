@@ -6,46 +6,35 @@
 #nullable disable
 
 using System;
-using System.Globalization;
+using System.Diagnostics;
 using System.Threading;
 using System.Threading.Tasks;
+using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
+using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.DevCenter
 {
     /// <summary>
-    /// A Class representing an AllowedEnvironmentType along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier"/> you can construct an <see cref="AllowedEnvironmentTypeResource"/>
-    /// from an instance of <see cref="ArmClient"/> using the GetAllowedEnvironmentTypeResource method.
-    /// Otherwise you can get one from its parent resource <see cref="DevCenterProjectResource"/> using the GetAllowedEnvironmentType method.
+    /// A class representing a AllowedEnvironmentType along with the instance operations that can be performed on it.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="AllowedEnvironmentTypeResource"/> from an instance of <see cref="ArmClient"/> using the GetResource method.
+    /// Otherwise you can get one from its parent resource <see cref="DevCenterProjectResource"/> using the GetAllowedEnvironmentTypes method.
     /// </summary>
     public partial class AllowedEnvironmentTypeResource : ArmResource
     {
-        /// <summary> Generate the resource identifier of a <see cref="AllowedEnvironmentTypeResource"/> instance. </summary>
-        /// <param name="subscriptionId"> The subscriptionId. </param>
-        /// <param name="resourceGroupName"> The resourceGroupName. </param>
-        /// <param name="projectName"> The projectName. </param>
-        /// <param name="environmentTypeName"> The environmentTypeName. </param>
-        public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string projectName, string environmentTypeName)
-        {
-            var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DevCenter/projects/{projectName}/allowedEnvironmentTypes/{environmentTypeName}";
-            return new ResourceIdentifier(resourceId);
-        }
-
-        private readonly ClientDiagnostics _allowedEnvironmentTypeProjectAllowedEnvironmentTypesClientDiagnostics;
-        private readonly ProjectAllowedEnvironmentTypesRestOperations _allowedEnvironmentTypeProjectAllowedEnvironmentTypesRestClient;
+        private readonly ClientDiagnostics _projectAllowedEnvironmentTypesClientDiagnostics;
+        private readonly ProjectAllowedEnvironmentTypes _projectAllowedEnvironmentTypesRestClient;
         private readonly AllowedEnvironmentTypeData _data;
-
         /// <summary> Gets the resource type for the operations. </summary>
         public static readonly ResourceType ResourceType = "Microsoft.DevCenter/projects/allowedEnvironmentTypes";
 
-        /// <summary> Initializes a new instance of the <see cref="AllowedEnvironmentTypeResource"/> class for mocking. </summary>
+        /// <summary> Initializes a new instance of AllowedEnvironmentTypeResource for mocking. </summary>
         protected AllowedEnvironmentTypeResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref="AllowedEnvironmentTypeResource"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="AllowedEnvironmentTypeResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal AllowedEnvironmentTypeResource(ArmClient client, AllowedEnvironmentTypeData data) : this(client, data.Id)
@@ -54,71 +43,93 @@ namespace Azure.ResourceManager.DevCenter
             _data = data;
         }
 
-        /// <summary> Initializes a new instance of the <see cref="AllowedEnvironmentTypeResource"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="AllowedEnvironmentTypeResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal AllowedEnvironmentTypeResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _allowedEnvironmentTypeProjectAllowedEnvironmentTypesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.DevCenter", ResourceType.Namespace, Diagnostics);
-            TryGetApiVersion(ResourceType, out string allowedEnvironmentTypeProjectAllowedEnvironmentTypesApiVersion);
-            _allowedEnvironmentTypeProjectAllowedEnvironmentTypesRestClient = new ProjectAllowedEnvironmentTypesRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, allowedEnvironmentTypeProjectAllowedEnvironmentTypesApiVersion);
-#if DEBUG
-			ValidateResourceId(Id);
-#endif
+            TryGetApiVersion(ResourceType, out string allowedEnvironmentTypeApiVersion);
+            _projectAllowedEnvironmentTypesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.DevCenter", ResourceType.Namespace, Diagnostics);
+            _projectAllowedEnvironmentTypesRestClient = new ProjectAllowedEnvironmentTypes(_projectAllowedEnvironmentTypesClientDiagnostics, Pipeline, Endpoint, allowedEnvironmentTypeApiVersion ?? "2026-01-01-preview");
+            ValidateResourceId(id);
         }
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }
 
         /// <summary> Gets the data representing this Feature. </summary>
-        /// <exception cref="InvalidOperationException"> Throws if there is no data loaded in the current instance. </exception>
         public virtual AllowedEnvironmentTypeData Data
         {
             get
             {
                 if (!HasData)
+                {
                     throw new InvalidOperationException("The current instance does not have data, you must call Get first.");
+                }
                 return _data;
             }
         }
 
+        /// <summary> Generate the resource identifier for this resource. </summary>
+        /// <param name="subscriptionId"> The subscriptionId. </param>
+        /// <param name="resourceGroupName"> The resourceGroupName. </param>
+        /// <param name="projectName"> The projectName. </param>
+        /// <param name="environmentTypeName"> The environmentTypeName. </param>
+        public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string projectName, string environmentTypeName)
+        {
+            string resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DevCenter/projects/{projectName}/allowedEnvironmentTypes/{environmentTypeName}";
+            return new ResourceIdentifier(resourceId);
+        }
+
+        /// <param name="id"></param>
+        [Conditional("DEBUG")]
         internal static void ValidateResourceId(ResourceIdentifier id)
         {
             if (id.ResourceType != ResourceType)
-                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), nameof(id));
+            {
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), nameof(id));
+            }
         }
 
         /// <summary>
         /// Gets an allowed environment type.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DevCenter/projects/{projectName}/allowedEnvironmentTypes/{environmentTypeName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DevCenter/projects/{projectName}/allowedEnvironmentTypes/{environmentTypeName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ProjectAllowedEnvironmentTypes_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> AllowedEnvironmentTypes_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2023-04-01</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-01-01-preview. </description>
         /// </item>
         /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="AllowedEnvironmentTypeResource"/></description>
+        /// <term> Resource. </term>
+        /// <description> <see cref="AllowedEnvironmentTypeResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<Response<AllowedEnvironmentTypeResource>> GetAsync(CancellationToken cancellationToken = default)
         {
-            using var scope = _allowedEnvironmentTypeProjectAllowedEnvironmentTypesClientDiagnostics.CreateScope("AllowedEnvironmentTypeResource.Get");
+            using DiagnosticScope scope = _projectAllowedEnvironmentTypesClientDiagnostics.CreateScope("AllowedEnvironmentTypeResource.Get");
             scope.Start();
             try
             {
-                var response = await _allowedEnvironmentTypeProjectAllowedEnvironmentTypesRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _projectAllowedEnvironmentTypesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
+                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                Response<AllowedEnvironmentTypeData> response = Response.FromValue(AllowedEnvironmentTypeData.FromResponse(result), result);
                 if (response.Value == null)
+                {
                     throw new RequestFailedException(response.GetRawResponse());
+                }
                 return Response.FromValue(new AllowedEnvironmentTypeResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -132,33 +143,41 @@ namespace Azure.ResourceManager.DevCenter
         /// Gets an allowed environment type.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DevCenter/projects/{projectName}/allowedEnvironmentTypes/{environmentTypeName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DevCenter/projects/{projectName}/allowedEnvironmentTypes/{environmentTypeName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ProjectAllowedEnvironmentTypes_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> AllowedEnvironmentTypes_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2023-04-01</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-01-01-preview. </description>
         /// </item>
         /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="AllowedEnvironmentTypeResource"/></description>
+        /// <term> Resource. </term>
+        /// <description> <see cref="AllowedEnvironmentTypeResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response<AllowedEnvironmentTypeResource> Get(CancellationToken cancellationToken = default)
         {
-            using var scope = _allowedEnvironmentTypeProjectAllowedEnvironmentTypesClientDiagnostics.CreateScope("AllowedEnvironmentTypeResource.Get");
+            using DiagnosticScope scope = _projectAllowedEnvironmentTypesClientDiagnostics.CreateScope("AllowedEnvironmentTypeResource.Get");
             scope.Start();
             try
             {
-                var response = _allowedEnvironmentTypeProjectAllowedEnvironmentTypesRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _projectAllowedEnvironmentTypesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
+                Response result = Pipeline.ProcessMessage(message, context);
+                Response<AllowedEnvironmentTypeData> response = Response.FromValue(AllowedEnvironmentTypeData.FromResponse(result), result);
                 if (response.Value == null)
+                {
                     throw new RequestFailedException(response.GetRawResponse());
+                }
                 return Response.FromValue(new AllowedEnvironmentTypeResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)

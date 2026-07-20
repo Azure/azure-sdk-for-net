@@ -18,11 +18,11 @@ Welcome! This guide will help you set up your development environment and contri
 Before you begin, ensure you have the following installed:
 
 - [Node.js](https://nodejs.org/) (version 20 or higher)
-- [.NET 9.0 SDK](https://dotnet.microsoft.com/download/dotnet/9.0) (required - see global.json for exact version)
+- [.NET 10.0 SDK](https://dotnet.microsoft.com/download/dotnet/10.0) (required - see global.json for exact version)
 - [npm](https://docs.npmjs.com/downloading-and-installing-node-js-and-npm)
 - [Git](https://git-scm.com/)
-- [PowerShell](https://docs.microsoft.com/powershell/scripting/install/installing-powershell) (version 7.0 or higher, for advanced testing and code generation scenarios)
-- [Long Path Support](https://learn.microsoft.com/en-us/windows/win32/fileio/maximum-file-path-limitation?tabs=powershell#registry-setting-to-enable-long-paths) (Windows only required to avoid path length limitations during development)
+- [PowerShell](https://learn.microsoft.com/powershell/scripting/install/installing-powershell) (version 7.0 or higher, for advanced testing and code generation scenarios)
+- [Long Path Support](https://learn.microsoft.com/windows/win32/fileio/maximum-file-path-limitation?tabs=powershell#registry-setting-to-enable-long-paths) (Windows only required to avoid path length limitations during development)
 
 ## Getting Started
 
@@ -182,7 +182,7 @@ To regenerate Azure libraries using your local changes, run:
 ./eng/scripts/RegenPreview.ps1
 ```
 
-This will regenerate all the Azure libraries and allow you to view any potential diffs your changes may cause. For more information on the script's usage, see [RegenPreview](./eng/scripts/docs/RegenPreview.md).
+This will regenerate all the Azure libraries and allow you to view any potential diffs your changes may cause. For more information on the script's usage, see [RegenPreview](https://github.com/Azure/azure-sdk-for-net/blob/main/eng/packages/http-client-csharp/eng/scripts/docs/RegenPreview.md).
 
 ## Creating Pull Requests
 

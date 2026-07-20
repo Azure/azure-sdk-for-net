@@ -168,7 +168,6 @@ namespace Azure.Generator.Management.Providers
             var methodRef = $"{mockableType.Name}.{targetSignature.Name}({parameterTypeNames})";
 
             // Return a FormattableString that will be converted to: To mock this method, please mock <see cref="..."/> instead.
-            // The :C formatter on mockableType will create the <see cref> tag
             return $"To mock this method, please mock <see cref=\"{methodRef}\"/> instead.";
         }
 

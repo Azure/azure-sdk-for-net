@@ -219,6 +219,8 @@ public abstract partial class Specification
         {
             if (parameter.ParameterType == typeof(WaitUntil)) { continue; }
             if (parameter.ParameterType == typeof(CancellationToken)) { continue; }
+            if (parameter.ParameterType == typeof(Azure.MatchConditions)) { continue; }
+            if (parameter.ParameterType == typeof(Azure.RequestConditions)) { continue; }
             ContextualException.WithContext(
                 $"Analyzing parameter {parameter.ParameterType.Name} {parameter.Name} of creation method {creator.DeclaringType?.Name ?? "????"}::{creator.Name}",
                 () =>
@@ -312,7 +314,7 @@ public abstract partial class Specification
                 existing.ArmMember ??= property;
                 if (existing.Path is null)
                 {
-                    string? path = property.GetCustomAttributes().Where(a => a.GetType().Name == "WirePathAttribute").FirstOrDefault()?.ToString();
+                    string? path = property.GetCustomAttributes().Where(a => a.GetType().Name == "WirePathAttribute").Select(GetWirePathFromAttribute).FirstOrDefault();
                     if (path is not null)
                     {
                         existing.Path = path.Split('.');
@@ -337,7 +339,7 @@ public abstract partial class Specification
 
         // Fish out any path attributes
         var attributes = property.GetCustomAttributes();
-        string? path = attributes.Where(a => a.GetType().Name == "WirePathAttribute").FirstOrDefault()?.ToString();
+        string? path = attributes.Where(a => a.GetType().Name == "WirePathAttribute").Select(GetWirePathFromAttribute).FirstOrDefault();
 
         // Patch up the well known id/systemData property paths
         if (path is null)
@@ -379,11 +381,29 @@ public abstract partial class Specification
         return prop;
     }
 
+    private static string? GetWirePathFromAttribute(Attribute wirePathAttr)
+    {
+        // Try ToString() first — works for old AutoRest-generated WirePathAttribute
+        string? path = wirePathAttr.ToString();
+        if (path is not null && !path.Contains("WirePathAttribute"))
+        {
+            return path;
+        }
+        // Fall back to reading the _wirePath field — new TypeSpec-generated WirePathAttribute doesn't override ToString()
+        var field = wirePathAttr.GetType().GetField("_wirePath", BindingFlags.NonPublic | BindingFlags.Instance);
+        return field?.GetValue(wirePathAttr) as string;
+    }
+
     private static ModelBase GetOrCreateModelType(Type armType, Resource resource, bool ignorePropertiesWithoutPath)
     {
         ModelBase? type = TypeRegistry.Get(armType);
+        if (type is not null) { return type; }
+
+        // Allow specifications to unwrap external generic types (e.g., DataFactoryElement<T> → T)
+        Type? resolved = resource.Spec!.ResolveExternalGenericType(armType);
+        if (resolved is not null) { return GetOrCreateModelType(resolved, resource, ignorePropertiesWithoutPath); }
+
         return
-            type is not null ? type :
             armType.IsNullableOf(_ => true) ? GetOrCreateModelType(armType.GetGenericArguments()[0], resource, ignorePropertiesWithoutPath) :
             armType == typeof(byte[]) ? TypeRegistry.Get<BinaryData>()! : // do byte[] before IList<T>
             armType.IsListOf(_ => true) ? new ListModel(GetOrCreateModelType(armType.GetGenericArguments()[0], resource, ignorePropertiesWithoutPath)) :
@@ -394,9 +414,11 @@ public abstract partial class Specification
         ModelBase CreateEnum(Type armType)
         {
             // Fail if we're trying to generate a type from a different assembly
-            // (unless we're crossing boundaries in the combined base package)
+            // (unless we're crossing boundaries in the combined base package
+            // or in an explicitly allowed additional assembly)
             if (armType.Assembly != resource.Spec!.ArmAssembly &&
-                armType.Assembly != typeof(ArmClient).Assembly)
+                armType.Assembly != typeof(ArmClient).Assembly &&
+                !resource.Spec.AdditionalAllowedAssemblies.Contains(armType.Assembly))
             {
                 throw new InvalidOperationException($"Could not find enum {armType.FullName} while building {resource.Spec.Namespace}.");
             }
@@ -445,9 +467,11 @@ public abstract partial class Specification
         ModelBase CreateSimpleModel(Type armType)
         {
             // Fail if we're trying to generate a type from a different assembly
-            // (unless we're crossing boundaries in the combined base package)
+            // (unless we're crossing boundaries in the combined base package
+            // or in an explicitly allowed additional assembly)
             if (armType.Assembly != resource.Spec!.ArmAssembly &&
-                armType.Assembly != typeof(ArmClient).Assembly)
+                armType.Assembly != typeof(ArmClient).Assembly &&
+                !resource.Spec.AdditionalAllowedAssemblies.Contains(armType.Assembly))
             {
                 throw new InvalidOperationException($"Could not find model {armType.FullName} while building {resource.Spec.Namespace}.");
             }
@@ -642,9 +666,11 @@ public abstract partial class Specification
         // Extract the version after the marker - it follows after some whitespace/punctuation
         string rest = summary[(idx + marker.Length)..].Trim().TrimStart('.').Trim();
 
-        // Match YYYY-MM-DD, optionally followed by hyphenated suffix (e.g., "-preview", "-PREVIEW")
-        // The suffix must start with a hyphen to avoid greedily matching into subsequent text.
-        Match match = Regex.Match(rest, @"(\d{4}-\d{2}-\d{2}(?:-[a-zA-Z][\w.]*)*)");
+        // Match YYYY-MM-DD, optionally followed by a hyphenated suffix like "-preview".
+        // The suffix must start with a hyphen and contain only lowercase letters/digits.
+        // This avoids greedily matching into subsequent text like "Resource" or class names
+        // that immediately follow the version in flattened XML doc comments (no space separator).
+        Match match = Regex.Match(rest, @"(\d{4}-\d{2}-\d{2}(?:-[a-z][a-z0-9]*)?)");
         return match.Success ? match.Groups[1].Value.TrimEnd('.') : null;
     }
 

@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.ContainerService;
 
 namespace Azure.ResourceManager.ContainerService.Models
 {
@@ -14,38 +15,57 @@ namespace Azure.ResourceManager.ContainerService.Models
     public readonly partial struct NodeProvisioningDefaultNodePool : IEquatable<NodeProvisioningDefaultNodePool>
     {
         private readonly string _value;
+        /// <summary> No Karpenter NodePools are provisioned automatically. Automatic scaling will not happen unless the user creates one or more NodePool CRD instances. </summary>
+        private const string NoneValue = "None";
+        /// <summary> A standard set of Karpenter NodePools are provisioned. </summary>
+        private const string AutoValue = "Auto";
 
         /// <summary> Initializes a new instance of <see cref="NodeProvisioningDefaultNodePool"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public NodeProvisioningDefaultNodePool(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string NoneValue = "None";
-        private const string AutoValue = "Auto";
+            _value = value;
+        }
 
         /// <summary> No Karpenter NodePools are provisioned automatically. Automatic scaling will not happen unless the user creates one or more NodePool CRD instances. </summary>
         public static NodeProvisioningDefaultNodePool None { get; } = new NodeProvisioningDefaultNodePool(NoneValue);
+
         /// <summary> A standard set of Karpenter NodePools are provisioned. </summary>
         public static NodeProvisioningDefaultNodePool Auto { get; } = new NodeProvisioningDefaultNodePool(AutoValue);
+
         /// <summary> Determines if two <see cref="NodeProvisioningDefaultNodePool"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(NodeProvisioningDefaultNodePool left, NodeProvisioningDefaultNodePool right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="NodeProvisioningDefaultNodePool"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(NodeProvisioningDefaultNodePool left, NodeProvisioningDefaultNodePool right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="NodeProvisioningDefaultNodePool"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="NodeProvisioningDefaultNodePool"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator NodeProvisioningDefaultNodePool(string value) => new NodeProvisioningDefaultNodePool(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="NodeProvisioningDefaultNodePool"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator NodeProvisioningDefaultNodePool?(string value) => value == null ? null : new NodeProvisioningDefaultNodePool(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is NodeProvisioningDefaultNodePool other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(NodeProvisioningDefaultNodePool other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

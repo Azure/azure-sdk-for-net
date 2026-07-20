@@ -64,9 +64,7 @@ namespace Azure.ResourceManager.WorkloadsSapVirtualInstance.Models
             {
                 return null;
             }
-            Utf8JsonRequestContent content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(sapCentralServerInstancePatch, ModelSerializationExtensions.WireOptions);
-            return content;
+            return RequestContent.Create(sapCentralServerInstancePatch, ModelSerializationExtensions.WireOptions);
         }
 
         /// <param name="writer"> The JSON writer. </param>

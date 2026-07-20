@@ -6,8 +6,9 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure.AI.Projects;
 
-namespace Azure.AI.Projects
+namespace Azure.AI.Projects.Evaluation
 {
     /// <summary> Configuration of the model used in the insight generation. </summary>
     public partial class InsightModelConfiguration : IJsonModel<InsightModelConfiguration>

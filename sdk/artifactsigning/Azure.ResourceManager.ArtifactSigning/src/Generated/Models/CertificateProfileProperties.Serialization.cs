@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.ArtifactSigning.Models
                 throw new FormatException($"The model {nameof(CertificateProfileProperties)} does not support writing '{format}' format.");
             }
             writer.WritePropertyName("profileType"u8);
-            writer.WriteStringValue(ProfileType.ToString());
+            writer.WriteStringValue(CertificateProfileType.ToString());
             if (Optional.IsDefined(IncludeStreetAddress))
             {
                 writer.WritePropertyName("includeStreetAddress"u8);
@@ -108,6 +108,11 @@ namespace Azure.ResourceManager.ArtifactSigning.Models
             }
             writer.WritePropertyName("identityValidationId"u8);
             writer.WriteStringValue(IdentityValidationId);
+            if (Optional.IsDefined(ProgramType))
+            {
+                writer.WritePropertyName("programType"u8);
+                writer.WriteStringValue(ProgramType);
+            }
             if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
             {
                 writer.WritePropertyName("provisioningState"u8);
@@ -170,13 +175,14 @@ namespace Azure.ResourceManager.ArtifactSigning.Models
             {
                 return null;
             }
-            CertificateProfileType profileType = default;
+            CertificateProfileType certificateProfileType = default;
             bool? includeStreetAddress = default;
             bool? includeCity = default;
             bool? includeState = default;
             bool? includeCountry = default;
             bool? includePostalCode = default;
             string identityValidationId = default;
+            string programType = default;
             ArtifactSigningProvisioningState? provisioningState = default;
             CertificateProfileStatus? status = default;
             IReadOnlyList<ArtifactSigningCertificate> certificates = default;
@@ -185,7 +191,7 @@ namespace Azure.ResourceManager.ArtifactSigning.Models
             {
                 if (prop.NameEquals("profileType"u8))
                 {
-                    profileType = new CertificateProfileType(prop.Value.GetString());
+                    certificateProfileType = new CertificateProfileType(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("includeStreetAddress"u8))
@@ -238,6 +244,11 @@ namespace Azure.ResourceManager.ArtifactSigning.Models
                     identityValidationId = prop.Value.GetString();
                     continue;
                 }
+                if (prop.NameEquals("programType"u8))
+                {
+                    programType = prop.Value.GetString();
+                    continue;
+                }
                 if (prop.NameEquals("provisioningState"u8))
                 {
                     if (prop.Value.ValueKind == JsonValueKind.Null)
@@ -276,13 +287,14 @@ namespace Azure.ResourceManager.ArtifactSigning.Models
                 }
             }
             return new CertificateProfileProperties(
-                profileType,
+                certificateProfileType,
                 includeStreetAddress,
                 includeCity,
                 includeState,
                 includeCountry,
                 includePostalCode,
                 identityValidationId,
+                programType,
                 provisioningState,
                 status,
                 certificates ?? new ChangeTrackingList<ArtifactSigningCertificate>(),

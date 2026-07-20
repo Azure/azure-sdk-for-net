@@ -63,7 +63,7 @@ namespace Azure.ResourceManager.DatabaseWatcher.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<DatabaseWatcherData, DatabaseWatcherResource>(new WatchersGetBySubscriptionAsyncCollectionResultOfT(WatchersRestClient, Guid.Parse(Id.SubscriptionId), context), data => new DatabaseWatcherResource(Client, data));
+            return new AsyncPageableWrapper<DatabaseWatcherData, DatabaseWatcherResource>(new WatchersGetBySubscriptionAsyncCollectionResultOfT(WatchersRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableDatabaseWatcherSubscriptionResource.GetDatabaseWatchers"), data => new DatabaseWatcherResource(Client, data));
         }
 
         /// <summary>
@@ -91,7 +91,7 @@ namespace Azure.ResourceManager.DatabaseWatcher.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<DatabaseWatcherData, DatabaseWatcherResource>(new WatchersGetBySubscriptionCollectionResultOfT(WatchersRestClient, Guid.Parse(Id.SubscriptionId), context), data => new DatabaseWatcherResource(Client, data));
+            return new PageableWrapper<DatabaseWatcherData, DatabaseWatcherResource>(new WatchersGetBySubscriptionCollectionResultOfT(WatchersRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableDatabaseWatcherSubscriptionResource.GetDatabaseWatchers"), data => new DatabaseWatcherResource(Client, data));
         }
     }
 }

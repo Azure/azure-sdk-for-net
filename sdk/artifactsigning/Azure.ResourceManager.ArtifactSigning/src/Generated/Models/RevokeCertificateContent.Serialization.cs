@@ -9,7 +9,6 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure.Core;
 using Azure.ResourceManager.ArtifactSigning;
 
 namespace Azure.ResourceManager.ArtifactSigning.Models
@@ -61,18 +60,6 @@ namespace Azure.ResourceManager.ArtifactSigning.Models
 
         /// <param name="options"> The client options for reading and writing models. </param>
         string IPersistableModel<RevokeCertificateContent>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
-
-        /// <param name="revokeCertificateContent"> The <see cref="RevokeCertificateContent"/> to serialize into <see cref="RequestContent"/>. </param>
-        internal static RequestContent ToRequestContent(RevokeCertificateContent revokeCertificateContent)
-        {
-            if (revokeCertificateContent == null)
-            {
-                return null;
-            }
-            Utf8JsonRequestContent content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(revokeCertificateContent, ModelSerializationExtensions.WireOptions);
-            return content;
-        }
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>

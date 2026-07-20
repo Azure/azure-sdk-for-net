@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.IotOperations
         {
             if (id.ResourceType != ResourceType)
             {
-                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), id);
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), nameof(id));
             }
         }
 
@@ -326,7 +326,7 @@ namespace Azure.ResourceManager.IotOperations
                 HttpMessage message = _dataflowRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, IotOperationsDataflowData.ToRequestContent(data), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 IotOperationsArmOperation<IotOperationsDataflowResource> operation = new IotOperationsArmOperation<IotOperationsDataflowResource>(
-                    new IotOperationsDataflowOperationSource(Client),
+                    new IotOperationsDataflowResourceOperationSource(Client),
                     _dataflowClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -385,7 +385,7 @@ namespace Azure.ResourceManager.IotOperations
                 HttpMessage message = _dataflowRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, IotOperationsDataflowData.ToRequestContent(data), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 IotOperationsArmOperation<IotOperationsDataflowResource> operation = new IotOperationsArmOperation<IotOperationsDataflowResource>(
-                    new IotOperationsDataflowOperationSource(Client),
+                    new IotOperationsDataflowResourceOperationSource(Client),
                     _dataflowClientDiagnostics,
                     Pipeline,
                     message.Request,

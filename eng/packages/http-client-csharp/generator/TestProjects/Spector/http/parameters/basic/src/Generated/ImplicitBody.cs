@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure;
@@ -16,6 +17,8 @@ namespace Parameters.Basic._ImplicitBody
     public partial class ImplicitBody
     {
         protected ImplicitBody() => throw null;
+
+        internal ImplicitBody(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Uri endpoint) => throw null;
 
         public virtual HttpPipeline Pipeline => throw null;
 

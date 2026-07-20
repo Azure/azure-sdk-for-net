@@ -57,7 +57,7 @@ namespace Azure.Analytics.PlanetaryComputer.Tests
             }
 
             // Assert
-            Assert.IsNotNull(managedIdentities, "Managed identities list should not be null");
+            Assert.That(managedIdentities, Is.Not.Null, "Managed identities list should not be null");
             TestContext.WriteLine($"\n=== Total Identities Found: {managedIdentities.Count} ===");
 
             // Verify each identity has required properties
@@ -69,8 +69,8 @@ namespace Azure.Analytics.PlanetaryComputer.Tests
                 TestContext.WriteLine($"    - Resource ID: {identity.ResourceId}");
 
                 // Verify properties
-                Assert.AreNotEqual(Guid.Empty, identity.ObjectId, "Object ID should not be empty");
-                Assert.IsNotNull(identity.ResourceId, "Resource ID should not be null");
+                Assert.That(identity.ObjectId, Is.Not.EqualTo(Guid.Empty), "Object ID should not be empty");
+                Assert.That(identity.ResourceId, Is.Not.Null, "Resource ID should not be null");
             }
 
             TestContext.WriteLine($"Successfully listed {managedIdentities.Count} managed identities");
@@ -101,13 +101,13 @@ namespace Azure.Analytics.PlanetaryComputer.Tests
             }
 
             // Assert
-            Assert.IsNotNull(sources, "Sources list should not be null");
+            Assert.That(sources, Is.Not.Null, "Sources list should not be null");
             TestContext.WriteLine($"Found {sources.Count} ingestion sources");
 
             // Verify each source has required properties
             foreach (IngestionSourceSummary source in sources)
             {
-                Assert.IsNotNull(source.Id, "Source should have ID");
+                Assert.That(source.Id, Is.Not.Null, "Source should have ID");
                 TestContext.WriteLine($"  Source ID: {source.Id}");
 
                 TestContext.WriteLine($"    Kind: {source.Kind}");
@@ -141,7 +141,7 @@ namespace Azure.Analytics.PlanetaryComputer.Tests
             }
 
             // Assert
-            Assert.IsNotNull(sources, "Sources list should not be null");
+            Assert.That(sources, Is.Not.Null, "Sources list should not be null");
             TestContext.WriteLine($"Found {sources.Count} ingestion sources");
 
             // Verify each source has required properties
@@ -180,7 +180,7 @@ namespace Azure.Analytics.PlanetaryComputer.Tests
                 firstIdentity = identity;
                 break;
             }
-            Assert.IsNotNull(firstIdentity, "No managed identities found");
+            Assert.That(firstIdentity, Is.Not.Null, "No managed identities found");
 
             Guid objectId = firstIdentity.ObjectId;
             TestContext.WriteLine($"Using Managed Identity Object ID: {objectId}");
@@ -210,8 +210,8 @@ namespace Azure.Analytics.PlanetaryComputer.Tests
             Response<IngestionSource> createResponse = await ingestionClient.CreateSourceAsync(ingestionSource);
 
             // Assert
-            Assert.IsNotNull(createResponse, "Create response should not be null");
-            Assert.IsNotNull(createResponse.Value, "Created source should not be null");
+            Assert.That(createResponse, Is.Not.Null, "Create response should not be null");
+            Assert.That(createResponse.Value, Is.Not.Null, "Created source should not be null");
 
             TestContext.WriteLine($"Created ingestion source:");
             TestContext.WriteLine($"  - ID: {createResponse.Value.Id}");
@@ -262,8 +262,8 @@ namespace Azure.Analytics.PlanetaryComputer.Tests
             Response<IngestionSource> createResponse = await ingestionClient.CreateSourceAsync(sasIngestionSource);
 
             // Assert
-            Assert.IsNotNull(createResponse, "Create response should not be null");
-            Assert.IsNotNull(createResponse.Value, "Created source should not be null");
+            Assert.That(createResponse, Is.Not.Null, "Create response should not be null");
+            Assert.That(createResponse.Value, Is.Not.Null, "Created source should not be null");
 
             TestContext.WriteLine($"Created SAS token ingestion source:");
             TestContext.WriteLine($"  - ID: {createResponse.Value.Id}");
@@ -329,9 +329,9 @@ namespace Azure.Analytics.PlanetaryComputer.Tests
             Response<IngestionInformation> response = await ingestionClient.CreateAsync(collectionId, ingestionDefinition);
 
             // Assert
-            Assert.IsNotNull(response, "Ingestion response should not be null");
-            Assert.IsNotNull(response.Value, "Ingestion value should not be null");
-            Assert.IsNotNull(response.Value.Id, "Ingestion ID should not be null");
+            Assert.That(response, Is.Not.Null, "Ingestion response should not be null");
+            Assert.That(response.Value, Is.Not.Null, "Ingestion value should not be null");
+            Assert.That(response.Value.Id, Is.Not.Null, "Ingestion ID should not be null");
 
             TestContext.WriteLine($"Created ingestion: {response.Value.Id}");
         }
@@ -389,8 +389,8 @@ namespace Azure.Analytics.PlanetaryComputer.Tests
             TestContext.WriteLine($"  - Display Name: {updatedIngestion.DisplayName}");
             TestContext.WriteLine($"  - Import Type: {updatedIngestion.ImportType}");
 
-            Assert.AreEqual(ingestionId, updatedIngestion.Id, "Ingestion ID should remain the same");
-            Assert.AreEqual("Updated Ingestion Name", updatedIngestion.DisplayName, "Display name should be updated");
+            Assert.That(updatedIngestion.Id, Is.EqualTo(ingestionId), "Ingestion ID should remain the same");
+            Assert.That(updatedIngestion.DisplayName, Is.EqualTo("Updated Ingestion Name"), "Display name should be updated");
         }
 
         /// <summary>
@@ -428,10 +428,10 @@ namespace Azure.Analytics.PlanetaryComputer.Tests
             Response<IngestionRun> runResponse = await ingestionClient.CreateRunAsync(collectionId, ingestionId);
 
             // Assert
-            Assert.IsNotNull(runResponse, "Run response should not be null");
-            Assert.IsNotNull(runResponse.Value, "Run value should not be null");
-            Assert.IsNotNull(runResponse.Value.Id, "Run ID should not be null");
-            Assert.IsNotNull(runResponse.Value.Operation, "Operation should not be null");
+            Assert.That(runResponse, Is.Not.Null, "Run response should not be null");
+            Assert.That(runResponse.Value, Is.Not.Null, "Run value should not be null");
+            Assert.That(runResponse.Value.Id, Is.Not.Null, "Run ID should not be null");
+            Assert.That(runResponse.Value.Operation, Is.Not.Null, "Operation should not be null");
 
             TestContext.WriteLine($"Created ingestion run:");
             TestContext.WriteLine($"  - Run ID: {runResponse.Value.Id}");
@@ -477,8 +477,8 @@ namespace Azure.Analytics.PlanetaryComputer.Tests
             Response<IngestionRun> getRunResponse = await ingestionClient.GetRunAsync(collectionId, ingestionId, runId);
 
             // Assert
-            Assert.IsNotNull(getRunResponse, "Get run response should not be null");
-            Assert.IsNotNull(getRunResponse.Value, "Run should not be null");
+            Assert.That(getRunResponse, Is.Not.Null, "Get run response should not be null");
+            Assert.That(getRunResponse.Value, Is.Not.Null, "Run should not be null");
             IngestionRun run = getRunResponse.Value;
 
             TestContext.WriteLine("Run status:");
@@ -489,9 +489,9 @@ namespace Azure.Analytics.PlanetaryComputer.Tests
             TestContext.WriteLine($"  - Failed Items: {run.Operation.TotalFailedItems}");
             TestContext.WriteLine($"  - Pending Items: {run.Operation.TotalPendingItems}");
 
-            Assert.AreEqual(runId, run.Id, "Run ID should match");
-            Assert.IsNotNull(run.Operation, "Operation should not be null");
-            Assert.IsNotNull(run.Operation.Status, "Status should not be null");
+            Assert.That(run.Id, Is.EqualTo(runId), "Run ID should match");
+            Assert.That(run.Operation, Is.Not.Null, "Operation should not be null");
+            Assert.That(run.Operation.Status, Is.Not.Null, "Status should not be null");
         }
 
         /// <summary>
@@ -533,8 +533,8 @@ namespace Azure.Analytics.PlanetaryComputer.Tests
             Response<LongRunningOperation> operationResponse = await ingestionClient.GetOperationAsync(operationId);
 
             // Assert
-            Assert.IsNotNull(operationResponse, "Operation response should not be null");
-            Assert.IsNotNull(operationResponse.Value, "Operation should not be null");
+            Assert.That(operationResponse, Is.Not.Null, "Operation response should not be null");
+            Assert.That(operationResponse.Value, Is.Not.Null, "Operation should not be null");
             LongRunningOperation operation = operationResponse.Value;
 
             TestContext.WriteLine("Retrieved operation:");
@@ -542,8 +542,8 @@ namespace Azure.Analytics.PlanetaryComputer.Tests
             TestContext.WriteLine($"  - Status: {operation.Status}");
             TestContext.WriteLine($"  - Type: {operation.Type}");
 
-            Assert.AreEqual(operationId, operation.Id, "Operation ID should match");
-            Assert.IsNotNull(operation.Status, "Status should not be null");
+            Assert.That(operation.Id, Is.EqualTo(operationId), "Operation ID should match");
+            Assert.That(operation.Status, Is.Not.Null, "Status should not be null");
         }
 
         /// <summary>
@@ -751,8 +751,8 @@ namespace Azure.Analytics.PlanetaryComputer.Tests
             Response<IngestionSource> getResponse = await ingestionClient.GetSourceAsync(createdSourceId);
 
             // Assert
-            Assert.IsNotNull(getResponse, "Get source response should not be null");
-            Assert.IsNotNull(getResponse.Value, "Retrieved source should not be null");
+            Assert.That(getResponse, Is.Not.Null, "Get source response should not be null");
+            Assert.That(getResponse.Value, Is.Not.Null, "Retrieved source should not be null");
 
             TestContext.WriteLine("Retrieved source:");
             TestContext.WriteLine($"  - ID: {getResponse.Value.Id}");
@@ -912,8 +912,8 @@ namespace Azure.Analytics.PlanetaryComputer.Tests
             Response<IngestionInformation> getResponse = await ingestionClient.GetAsync(collectionId, ingestionId);
 
             // Assert
-            Assert.IsNotNull(getResponse, "Get response should not be null");
-            Assert.IsNotNull(getResponse.Value, "Retrieved ingestion should not be null");
+            Assert.That(getResponse, Is.Not.Null, "Get response should not be null");
+            Assert.That(getResponse.Value, Is.Not.Null, "Retrieved ingestion should not be null");
             IngestionInformation retrievedIngestion = getResponse.Value;
 
             TestContext.WriteLine("Retrieved ingestion:");
@@ -922,7 +922,7 @@ namespace Azure.Analytics.PlanetaryComputer.Tests
             TestContext.WriteLine($"  - Import Type: {retrievedIngestion.ImportType}");
             TestContext.WriteLine($"  - Source Catalog URL: {retrievedIngestion.SourceCatalogUrl}");
 
-            Assert.AreEqual(ingestionId, retrievedIngestion.Id, "Ingestion ID should match");
+            Assert.That(retrievedIngestion.Id, Is.EqualTo(ingestionId), "Ingestion ID should match");
         }
 
         /// <summary>

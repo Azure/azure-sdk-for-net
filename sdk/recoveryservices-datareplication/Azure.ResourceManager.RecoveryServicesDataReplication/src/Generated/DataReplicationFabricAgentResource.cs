@@ -87,7 +87,7 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication
         {
             if (id.ResourceType != ResourceType)
             {
-                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), id);
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), nameof(id));
             }
         }
 
@@ -325,7 +325,7 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication
                 HttpMessage message = _fabricAgentRestClient.CreateCreateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, DataReplicationFabricAgentData.ToRequestContent(data), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 RecoveryServicesDataReplicationArmOperation<DataReplicationFabricAgentResource> operation = new RecoveryServicesDataReplicationArmOperation<DataReplicationFabricAgentResource>(
-                    new DataReplicationFabricAgentOperationSource(Client),
+                    new DataReplicationFabricAgentResourceOperationSource(Client),
                     _fabricAgentClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -384,7 +384,7 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication
                 HttpMessage message = _fabricAgentRestClient.CreateCreateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, DataReplicationFabricAgentData.ToRequestContent(data), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 RecoveryServicesDataReplicationArmOperation<DataReplicationFabricAgentResource> operation = new RecoveryServicesDataReplicationArmOperation<DataReplicationFabricAgentResource>(
-                    new DataReplicationFabricAgentOperationSource(Client),
+                    new DataReplicationFabricAgentResourceOperationSource(Client),
                     _fabricAgentClientDiagnostics,
                     Pipeline,
                     message.Request,

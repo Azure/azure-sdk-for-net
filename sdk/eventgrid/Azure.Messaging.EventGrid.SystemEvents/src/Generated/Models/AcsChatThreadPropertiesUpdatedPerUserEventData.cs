@@ -36,12 +36,14 @@ namespace Azure.Messaging.EventGrid.SystemEvents
         /// <param name="editTime"> The time at which the properties of the thread were updated. </param>
         /// <param name="metadata"> The thread metadata. </param>
         /// <param name="properties"> The updated thread properties. </param>
-        internal AcsChatThreadPropertiesUpdatedPerUserEventData(CommunicationIdentifierModel recipientCommunicationIdentifier, string transactionId, string threadId, IDictionary<string, BinaryData> additionalBinaryDataProperties, DateTimeOffset? createTime, long? version, CommunicationIdentifierModel editedByCommunicationIdentifier, DateTimeOffset? editTime, IReadOnlyDictionary<string, string> metadata, IReadOnlyDictionary<string, object> properties) : base(recipientCommunicationIdentifier, transactionId, threadId, additionalBinaryDataProperties, createTime, version)
+        /// <param name="retentionPolicy"> The retention policy for the chat. </param>
+        internal AcsChatThreadPropertiesUpdatedPerUserEventData(CommunicationIdentifierModel recipientCommunicationIdentifier, string transactionId, string threadId, IDictionary<string, BinaryData> additionalBinaryDataProperties, DateTimeOffset? createTime, long? version, CommunicationIdentifierModel editedByCommunicationIdentifier, DateTimeOffset? editTime, IReadOnlyDictionary<string, string> metadata, IReadOnlyDictionary<string, object> properties, AcsChatRetentionPolicy retentionPolicy) : base(recipientCommunicationIdentifier, transactionId, threadId, additionalBinaryDataProperties, createTime, version)
         {
             EditedByCommunicationIdentifier = editedByCommunicationIdentifier;
             EditTime = editTime;
             Metadata = metadata;
             Properties = properties;
+            RetentionPolicy = retentionPolicy;
         }
 
         /// <summary> The communication identifier of the user who updated the thread properties. </summary>
@@ -52,5 +54,8 @@ namespace Azure.Messaging.EventGrid.SystemEvents
 
         /// <summary> The thread metadata. </summary>
         public IReadOnlyDictionary<string, string> Metadata { get; }
+
+        /// <summary> The retention policy for the chat. </summary>
+        public AcsChatRetentionPolicy RetentionPolicy { get; }
     }
 }

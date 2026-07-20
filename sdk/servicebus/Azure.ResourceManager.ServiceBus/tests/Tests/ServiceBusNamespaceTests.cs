@@ -79,6 +79,42 @@ namespace Azure.ResourceManager.ServiceBus.Tests
 
         [Test]
         [RecordedTest]
+        public async Task CreateNamespaceWithIPAddressType()
+        {
+            IgnoreTestInLiveMode();
+            // Validates the 2026-01-01 'ipAddressType' property (replaces the legacy 'ipV6Enabled' boolean).
+            // Mirrors the multi-enum-value coverage used for other properties (e.g. RetentionDescription.CleanupPolicy):
+            // exercise both DualStack (IPv4 + IPv6) and IPv4-only and assert each round-trips through the SDK.
+            _resourceGroup = await CreateResourceGroupAsync();
+            ServiceBusNamespaceCollection namespaceCollection = _resourceGroup.GetServiceBusNamespaces();
+
+            // 1) DualStack (IPv4 + IPv6)
+            string dualStackName = await CreateValidNamespaceName(namespacePrefix);
+            var dualStackParameters = new ServiceBusNamespaceData(DefaultLocation)
+            {
+                IPAddressType = ServiceBusIPAddressType.DualStack
+            };
+            ServiceBusNamespaceResource dualStackNamespace = (await namespaceCollection.CreateOrUpdateAsync(WaitUntil.Completed, dualStackName, dualStackParameters)).Value;
+            VerifyNamespaceProperties(dualStackNamespace, false);
+            Assert.AreEqual(ServiceBusIPAddressType.DualStack, dualStackNamespace.Data.IPAddressType);
+            // re-fetch to confirm the value is persisted on the service
+            dualStackNamespace = await namespaceCollection.GetAsync(dualStackName);
+            Assert.AreEqual(ServiceBusIPAddressType.DualStack, dualStackNamespace.Data.IPAddressType);
+            await dualStackNamespace.DeleteAsync(WaitUntil.Completed);
+
+            // 2) IPv4 (IPv4-only)
+            string ipv4Name = await CreateValidNamespaceName(namespacePrefix);
+            var ipv4Parameters = new ServiceBusNamespaceData(DefaultLocation)
+            {
+                IPAddressType = ServiceBusIPAddressType.IPv4
+            };
+            ServiceBusNamespaceResource ipv4Namespace = (await namespaceCollection.CreateOrUpdateAsync(WaitUntil.Completed, ipv4Name, ipv4Parameters)).Value;
+            Assert.AreEqual(ServiceBusIPAddressType.IPv4, ipv4Namespace.Data.IPAddressType);
+            await ipv4Namespace.DeleteAsync(WaitUntil.Completed);
+        }
+
+        [Test]
+        [RecordedTest]
         public async Task CreateNamespaceWithPremiumPartitionCount()
         {
             IgnoreTestInLiveMode();
@@ -121,7 +157,7 @@ namespace Azure.ResourceManager.ServiceBus.Tests
             ServiceBusNamespacePatch parameters = new ServiceBusNamespacePatch(DefaultLocation);
             parameters.Tags.Add("key1", "value1");
             parameters.Tags.Add("key2", "value2");
-            var serviceBusNamespace2 = await serviceBusNamespace.UpdateAsync(WaitUntil.Completed, parameters);
+            var serviceBusNamespace2 = await serviceBusNamespace.UpdateAsync(parameters);
 
             //validate
             Assert.AreEqual(serviceBusNamespace2.Value.Data.Tags.Count, 2);
@@ -233,25 +269,22 @@ namespace Azure.ResourceManager.ServiceBus.Tests
             string connectionName = Recording.GenerateAssetName("endpointconnection");
             ServiceBusPrivateEndpointConnectionData parameter = new ServiceBusPrivateEndpointConnectionData()
             {
-                PrivateEndpoint = new WritableSubResource()
-                {
-                    Id = serviceBusNamespace2.Id
-                }
+                PrivateEndpointId = serviceBusNamespace2.Id
             };
             ServiceBusPrivateEndpointConnectionResource privateEndpointConnection = (await privateEndpointConnectionCollection.CreateOrUpdateAsync(WaitUntil.Completed, connectionName, parameter)).Value;
             Assert.NotNull(privateEndpointConnection);
-            Assert.AreEqual(privateEndpointConnection.Data.PrivateEndpoint.Id, serviceBusNamespace2.Id.ToString());
+            Assert.AreEqual(privateEndpointConnection.Data.PrivateEndpointId.ToString(), serviceBusNamespace2.Id.ToString());
             connectionName = privateEndpointConnection.Id.Name;
 
             //get the endpoint connection and validate
             privateEndpointConnection = await privateEndpointConnectionCollection.GetAsync(connectionName);
             Assert.NotNull(privateEndpointConnection);
-            Assert.AreEqual(privateEndpointConnection.Data.PrivateEndpoint.Id, serviceBusNamespace2.Id.ToString());
+            Assert.AreEqual(privateEndpointConnection.Data.PrivateEndpointId.ToString(), serviceBusNamespace2.Id.ToString());
 
             //get all endpoint connections and validate
             List<ServiceBusPrivateEndpointConnectionResource> privateEndpointConnections = await privateEndpointConnectionCollection.GetAllAsync().ToEnumerableAsync();
             Assert.AreEqual(privateEndpointConnections, 1);
-            Assert.AreEqual(privateEndpointConnections.First().Data.PrivateEndpoint.Id, serviceBusNamespace2.Id.ToString());
+            Assert.AreEqual(privateEndpointConnections.First().Data.PrivateEndpointId.ToString(), serviceBusNamespace2.Id.ToString());
 
             //delete endpoint connection and validate
             await privateEndpointConnection.DeleteAsync(WaitUntil.Completed);
@@ -445,9 +478,9 @@ namespace Azure.ResourceManager.ServiceBus.Tests
                 DefaultAction = ServiceBusNetworkRuleSetDefaultAction.Deny,
                 VirtualNetworkRules =
                 {
-                    new ServiceBusNetworkRuleSetVirtualNetworkRules() { Subnet = new WritableSubResource(){ Id=subnetId1 } ,IgnoreMissingVnetServiceEndpoint = true},
-                    new ServiceBusNetworkRuleSetVirtualNetworkRules() { Subnet = new WritableSubResource(){ Id=subnetId2 } ,IgnoreMissingVnetServiceEndpoint = false},
-                    new ServiceBusNetworkRuleSetVirtualNetworkRules() { Subnet = new WritableSubResource(){ Id=subnetId3 } ,IgnoreMissingVnetServiceEndpoint = false}
+                    new ServiceBusNetworkRuleSetVirtualNetworkRules() { SubnetId = subnetId1 ,IgnoreMissingVnetServiceEndpoint = true},
+                    new ServiceBusNetworkRuleSetVirtualNetworkRules() { SubnetId = subnetId2 ,IgnoreMissingVnetServiceEndpoint = false},
+                    new ServiceBusNetworkRuleSetVirtualNetworkRules() { SubnetId = subnetId3 ,IgnoreMissingVnetServiceEndpoint = false}
                 },
                 IPRules =
                     {

@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.StandbyPool
         {
             if (id.ResourceType != ResourceGroupResource.ResourceType)
             {
-                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ResourceGroupResource.ResourceType), id);
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ResourceGroupResource.ResourceType), nameof(id));
             }
         }
 
@@ -94,7 +94,7 @@ namespace Azure.ResourceManager.StandbyPool
                 HttpMessage message = _standbyContainerGroupPoolsRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, standbyContainerGroupPoolName, StandbyContainerGroupPoolData.ToRequestContent(data), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 StandbyPoolArmOperation<StandbyContainerGroupPoolResource> operation = new StandbyPoolArmOperation<StandbyContainerGroupPoolResource>(
-                    new StandbyContainerGroupPoolOperationSource(Client),
+                    new StandbyContainerGroupPoolResourceOperationSource(Client),
                     _standbyContainerGroupPoolsClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -152,7 +152,7 @@ namespace Azure.ResourceManager.StandbyPool
                 HttpMessage message = _standbyContainerGroupPoolsRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, standbyContainerGroupPoolName, StandbyContainerGroupPoolData.ToRequestContent(data), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 StandbyPoolArmOperation<StandbyContainerGroupPoolResource> operation = new StandbyPoolArmOperation<StandbyContainerGroupPoolResource>(
-                    new StandbyContainerGroupPoolOperationSource(Client),
+                    new StandbyContainerGroupPoolResourceOperationSource(Client),
                     _standbyContainerGroupPoolsClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -294,7 +294,7 @@ namespace Azure.ResourceManager.StandbyPool
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<StandbyContainerGroupPoolData, StandbyContainerGroupPoolResource>(new StandbyContainerGroupPoolsGetByResourceGroupAsyncCollectionResultOfT(_standbyContainerGroupPoolsRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context), data => new StandbyContainerGroupPoolResource(Client, data));
+            return new AsyncPageableWrapper<StandbyContainerGroupPoolData, StandbyContainerGroupPoolResource>(new StandbyContainerGroupPoolsGetByResourceGroupAsyncCollectionResultOfT(_standbyContainerGroupPoolsRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "StandbyContainerGroupPoolCollection.GetAll"), data => new StandbyContainerGroupPoolResource(Client, data));
         }
 
         /// <summary>
@@ -322,7 +322,7 @@ namespace Azure.ResourceManager.StandbyPool
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<StandbyContainerGroupPoolData, StandbyContainerGroupPoolResource>(new StandbyContainerGroupPoolsGetByResourceGroupCollectionResultOfT(_standbyContainerGroupPoolsRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context), data => new StandbyContainerGroupPoolResource(Client, data));
+            return new PageableWrapper<StandbyContainerGroupPoolData, StandbyContainerGroupPoolResource>(new StandbyContainerGroupPoolsGetByResourceGroupCollectionResultOfT(_standbyContainerGroupPoolsRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "StandbyContainerGroupPoolCollection.GetAll"), data => new StandbyContainerGroupPoolResource(Client, data));
         }
 
         /// <summary>

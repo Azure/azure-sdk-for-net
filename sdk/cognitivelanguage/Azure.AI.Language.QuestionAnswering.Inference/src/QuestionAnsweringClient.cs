@@ -44,13 +44,12 @@ namespace Azure.AI.Language.QuestionAnswering.Inference
 
             ClientOptions = options;
             ClientDiagnostics = new ClientDiagnostics(options, true);
-            _keyCredential = credential;
             Pipeline = HttpPipelineBuilder.Build(
                 options,
                 Array.Empty<HttpPipelinePolicy>(),
                 new HttpPipelinePolicy[]
                 {
-                    new AzureKeyCredentialPolicy(_keyCredential, AuthorizationHeader)
+                    new AzureKeyCredentialPolicy(credential, AuthorizationHeader)
                 },
                 new ResponseClassifier()
             );
@@ -86,13 +85,12 @@ namespace Azure.AI.Language.QuestionAnswering.Inference
 
             ClientOptions = options;
             ClientDiagnostics = new ClientDiagnostics(options, true);
-            _tokenCredential = credential;
             Pipeline = HttpPipelineBuilder.Build(
                 options,
                 Array.Empty<HttpPipelinePolicy>(),
                 new HttpPipelinePolicy[]
                 {
-                    new BearerTokenAuthenticationPolicy(_tokenCredential, authorizationScope)
+                    new BearerTokenAuthenticationPolicy(credential, authorizationScope)
                 },
                 new ResponseClassifier()
             );

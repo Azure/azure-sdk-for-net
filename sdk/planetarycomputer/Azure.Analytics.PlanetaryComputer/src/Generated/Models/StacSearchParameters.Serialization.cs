@@ -67,9 +67,7 @@ namespace Azure.Analytics.PlanetaryComputer
             {
                 return null;
             }
-            Utf8JsonRequestContent content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(stacSearchParameters, ModelSerializationExtensions.WireOptions);
-            return content;
+            return RequestContent.Create(stacSearchParameters, ModelSerializationExtensions.WireOptions);
         }
 
         /// <param name="writer"> The JSON writer. </param>

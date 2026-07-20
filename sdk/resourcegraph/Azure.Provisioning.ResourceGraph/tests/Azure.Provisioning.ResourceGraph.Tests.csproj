@@ -1,0 +1,14 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <LangVersion>12</LangVersion>
+  </PropertyGroup>
+  <ItemGroup>
+    <Compile Include="..\..\..\..\common\ProvisioningTestShared\*.cs" LinkBase="Shared\ProvisioningTestShared" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\..\core\Azure.Core.TestFramework\src\Azure.Core.TestFramework.csproj" />
+    <ProjectReference Include="..\..\..\provisioning\Azure.Provisioning\src\Azure.Provisioning.csproj" />
+    <ProjectReference Include="..\src\Azure.Provisioning.ResourceGraph.csproj" />
+    <ProjectReference Include="..\..\..\provisioning\Azure.Provisioning.Deployment\src\Azure.Provisioning.Deployment.csproj" />
+  </ItemGroup>
+</Project>

@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.DatabaseWatcher
         {
             if (id.ResourceType != ResourceType)
             {
-                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), id);
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), nameof(id));
             }
         }
 
@@ -229,7 +229,7 @@ namespace Azure.ResourceManager.DatabaseWatcher
                 HttpMessage message = _watchersRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, DatabaseWatcherPatch.ToRequestContent(patch), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 DatabaseWatcherArmOperation<DatabaseWatcherResource> operation = new DatabaseWatcherArmOperation<DatabaseWatcherResource>(
-                    new DatabaseWatcherOperationSource(Client),
+                    new DatabaseWatcherResourceOperationSource(Client),
                     _watchersClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -288,7 +288,7 @@ namespace Azure.ResourceManager.DatabaseWatcher
                 HttpMessage message = _watchersRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, DatabaseWatcherPatch.ToRequestContent(patch), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 DatabaseWatcherArmOperation<DatabaseWatcherResource> operation = new DatabaseWatcherArmOperation<DatabaseWatcherResource>(
-                    new DatabaseWatcherOperationSource(Client),
+                    new DatabaseWatcherResourceOperationSource(Client),
                     _watchersClientDiagnostics,
                     Pipeline,
                     message.Request,

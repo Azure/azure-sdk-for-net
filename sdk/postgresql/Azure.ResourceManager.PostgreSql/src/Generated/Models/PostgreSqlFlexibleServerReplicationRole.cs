@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.PostgreSql.FlexibleServers;
 
 namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
 {
@@ -14,44 +15,67 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
     public readonly partial struct PostgreSqlFlexibleServerReplicationRole : IEquatable<PostgreSqlFlexibleServerReplicationRole>
     {
         private readonly string _value;
+        /// <summary> No replication role assigned; the server operates independently. </summary>
+        private const string NoneValue = "None";
+        /// <summary> Acts as the source server for replication to one or more replicas. </summary>
+        private const string PrimaryValue = "Primary";
+        /// <summary> Receives data asynchronously from a primary server within the same region. </summary>
+        private const string AsyncReplicaValue = "AsyncReplica";
+        /// <summary> Receives data asynchronously from a primary server in a different region for geographical redundancy. </summary>
+        private const string GeoAsyncReplicaValue = "GeoAsyncReplica";
 
         /// <summary> Initializes a new instance of <see cref="PostgreSqlFlexibleServerReplicationRole"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public PostgreSqlFlexibleServerReplicationRole(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
+            Argument.AssertNotNull(value, nameof(value));
+
+            _value = value;
         }
 
-        private const string NoneValue = "None";
-        private const string PrimaryValue = "Primary";
-        private const string AsyncReplicaValue = "AsyncReplica";
-        private const string GeoAsyncReplicaValue = "GeoAsyncReplica";
-
-        /// <summary> None. </summary>
+        /// <summary> No replication role assigned; the server operates independently. </summary>
         public static PostgreSqlFlexibleServerReplicationRole None { get; } = new PostgreSqlFlexibleServerReplicationRole(NoneValue);
-        /// <summary> Primary. </summary>
+
+        /// <summary> Acts as the source server for replication to one or more replicas. </summary>
         public static PostgreSqlFlexibleServerReplicationRole Primary { get; } = new PostgreSqlFlexibleServerReplicationRole(PrimaryValue);
-        /// <summary> AsyncReplica. </summary>
+
+        /// <summary> Receives data asynchronously from a primary server within the same region. </summary>
         public static PostgreSqlFlexibleServerReplicationRole AsyncReplica { get; } = new PostgreSqlFlexibleServerReplicationRole(AsyncReplicaValue);
-        /// <summary> GeoAsyncReplica. </summary>
+
+        /// <summary> Receives data asynchronously from a primary server in a different region for geographical redundancy. </summary>
         public static PostgreSqlFlexibleServerReplicationRole GeoAsyncReplica { get; } = new PostgreSqlFlexibleServerReplicationRole(GeoAsyncReplicaValue);
+
         /// <summary> Determines if two <see cref="PostgreSqlFlexibleServerReplicationRole"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(PostgreSqlFlexibleServerReplicationRole left, PostgreSqlFlexibleServerReplicationRole right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="PostgreSqlFlexibleServerReplicationRole"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(PostgreSqlFlexibleServerReplicationRole left, PostgreSqlFlexibleServerReplicationRole right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="PostgreSqlFlexibleServerReplicationRole"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="PostgreSqlFlexibleServerReplicationRole"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator PostgreSqlFlexibleServerReplicationRole(string value) => new PostgreSqlFlexibleServerReplicationRole(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="PostgreSqlFlexibleServerReplicationRole"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator PostgreSqlFlexibleServerReplicationRole?(string value) => value == null ? null : new PostgreSqlFlexibleServerReplicationRole(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is PostgreSqlFlexibleServerReplicationRole other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(PostgreSqlFlexibleServerReplicationRole other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

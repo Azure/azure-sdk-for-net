@@ -1,10 +1,20 @@
 # Release History
 
-## 1.5.0-beta.1 (Unreleased)
+## 1.6.0-beta.1 (Unreleased)
 
 ### Features Added
 
-* Add ability to specify EnableStandardMetrics and EnablePerfCounters
+### Breaking Changes
+
+### Bugs Fixed
+
+### Other Changes
+
+## 1.5.0 (2026-04-30)
+
+### Features Added
+
+* Add ability to specify EnableStandardMetrics and EnablePerformanceCounters
   ([#56438](https://github.com/Azure/azure-sdk-for-net/pull/56438))
 
 ### Breaking Changes
@@ -36,8 +46,6 @@
 * Fixed an issue where Azure Container Apps instances were showing VM instance GUIDs
   instead of replica names in the Role Instance field.
   ([#54586](https://github.com/Azure/azure-sdk-for-net/pull/54586))
-
-### Other Changes
 
 ## 1.4.0 (2025-11-14)
 

@@ -4,10 +4,11 @@
 
 using System;
 using System.ComponentModel;
+using System.Diagnostics.CodeAnalysis;
 
-namespace Azure.AI.Projects
+namespace Azure.AI.Projects.Evaluation
 {
-    /// <summary> Recurrence type. </summary>
+    [Experimental("AAIP001")]
     internal readonly partial struct RecurrenceType : IEquatable<RecurrenceType>
     {
         private readonly string _value;
@@ -22,11 +23,8 @@ namespace Azure.AI.Projects
 
         /// <summary> Initializes a new instance of <see cref="RecurrenceType"/>. </summary>
         /// <param name="value"> The value. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public RecurrenceType(string value)
         {
-            Argument.AssertNotNull(value, nameof(value));
-
             _value = value;
         }
 

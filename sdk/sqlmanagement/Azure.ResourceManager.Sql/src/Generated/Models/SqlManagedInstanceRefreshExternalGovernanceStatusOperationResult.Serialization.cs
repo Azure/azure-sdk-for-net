@@ -10,15 +10,65 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
 using Azure.ResourceManager.Models;
+using Azure.ResourceManager.Sql;
 
 namespace Azure.ResourceManager.Sql.Models
 {
-    public partial class SqlManagedInstanceRefreshExternalGovernanceStatusOperationResult : IUtf8JsonSerializable, IJsonModel<SqlManagedInstanceRefreshExternalGovernanceStatusOperationResult>
+    /// <summary> An RefreshExternalGovernanceStatus operation result resource. </summary>
+    public partial class SqlManagedInstanceRefreshExternalGovernanceStatusOperationResult : ResourceData, IJsonModel<SqlManagedInstanceRefreshExternalGovernanceStatusOperationResult>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<SqlManagedInstanceRefreshExternalGovernanceStatusOperationResult>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual ResourceData PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<SqlManagedInstanceRefreshExternalGovernanceStatusOperationResult>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    {
+                        return DeserializeSqlManagedInstanceRefreshExternalGovernanceStatusOperationResult(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(SqlManagedInstanceRefreshExternalGovernanceStatusOperationResult)} does not support reading '{options.Format}' format.");
+            }
+        }
 
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<SqlManagedInstanceRefreshExternalGovernanceStatusOperationResult>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerSqlContext.Default);
+                default:
+                    throw new FormatException($"The model {nameof(SqlManagedInstanceRefreshExternalGovernanceStatusOperationResult)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<SqlManagedInstanceRefreshExternalGovernanceStatusOperationResult>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        SqlManagedInstanceRefreshExternalGovernanceStatusOperationResult IPersistableModel<SqlManagedInstanceRefreshExternalGovernanceStatusOperationResult>.Create(BinaryData data, ModelReaderWriterOptions options) => (SqlManagedInstanceRefreshExternalGovernanceStatusOperationResult)PersistableModelCreateCore(data, options);
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<SqlManagedInstanceRefreshExternalGovernanceStatusOperationResult>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
+        /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="SqlManagedInstanceRefreshExternalGovernanceStatusOperationResult"/> from. </param>
+        internal static SqlManagedInstanceRefreshExternalGovernanceStatusOperationResult FromResponse(Response response)
+        {
+            using JsonDocument document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
+            return DeserializeSqlManagedInstanceRefreshExternalGovernanceStatusOperationResult(document.RootElement, ModelSerializationExtensions.WireOptions);
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<SqlManagedInstanceRefreshExternalGovernanceStatusOperationResult>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
@@ -30,404 +80,120 @@ namespace Azure.ResourceManager.Sql.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<SqlManagedInstanceRefreshExternalGovernanceStatusOperationResult>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<SqlManagedInstanceRefreshExternalGovernanceStatusOperationResult>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(SqlManagedInstanceRefreshExternalGovernanceStatusOperationResult)} does not support writing '{format}' format.");
             }
-
             base.JsonModelWriteCore(writer, options);
-            writer.WritePropertyName("properties"u8);
-            writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsDefined(RequestId))
+            if (Optional.IsDefined(Properties))
             {
-                writer.WritePropertyName("requestId"u8);
-                writer.WriteStringValue(RequestId.Value);
+                writer.WritePropertyName("properties"u8);
+                writer.WriteObjectValue(Properties, options);
             }
-            if (options.Format != "W" && Optional.IsDefined(RequestType))
+            if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
-                writer.WritePropertyName("requestType"u8);
-                writer.WriteStringValue(RequestType);
+                foreach (var item in _additionalBinaryDataProperties)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+                    writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
             }
-            if (options.Format != "W" && Optional.IsDefined(QueuedTime))
-            {
-                writer.WritePropertyName("queuedTime"u8);
-                writer.WriteStringValue(QueuedTime);
-            }
-            if (options.Format != "W" && Optional.IsDefined(ManagedInstanceName))
-            {
-                writer.WritePropertyName("managedInstanceName"u8);
-                writer.WriteStringValue(ManagedInstanceName);
-            }
-            if (options.Format != "W" && Optional.IsDefined(Status))
-            {
-                writer.WritePropertyName("status"u8);
-                writer.WriteStringValue(Status);
-            }
-            if (options.Format != "W" && Optional.IsDefined(ErrorMessage))
-            {
-                writer.WritePropertyName("errorMessage"u8);
-                writer.WriteStringValue(ErrorMessage);
-            }
-            writer.WriteEndObject();
         }
 
-        SqlManagedInstanceRefreshExternalGovernanceStatusOperationResult IJsonModel<SqlManagedInstanceRefreshExternalGovernanceStatusOperationResult>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        SqlManagedInstanceRefreshExternalGovernanceStatusOperationResult IJsonModel<SqlManagedInstanceRefreshExternalGovernanceStatusOperationResult>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => (SqlManagedInstanceRefreshExternalGovernanceStatusOperationResult)JsonModelCreateCore(ref reader, options);
+
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual ResourceData JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<SqlManagedInstanceRefreshExternalGovernanceStatusOperationResult>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<SqlManagedInstanceRefreshExternalGovernanceStatusOperationResult>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(SqlManagedInstanceRefreshExternalGovernanceStatusOperationResult)} does not support reading '{format}' format.");
             }
-
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
             return DeserializeSqlManagedInstanceRefreshExternalGovernanceStatusOperationResult(document.RootElement, options);
         }
 
-        internal static SqlManagedInstanceRefreshExternalGovernanceStatusOperationResult DeserializeSqlManagedInstanceRefreshExternalGovernanceStatusOperationResult(JsonElement element, ModelReaderWriterOptions options = null)
+        /// <param name="element"> The JSON element to deserialize. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        internal static SqlManagedInstanceRefreshExternalGovernanceStatusOperationResult DeserializeSqlManagedInstanceRefreshExternalGovernanceStatusOperationResult(JsonElement element, ModelReaderWriterOptions options)
         {
-            options ??= ModelSerializationExtensions.WireOptions;
-
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             ResourceIdentifier id = default;
             string name = default;
-            ResourceType type = default;
+            ResourceType resourceType = default;
             SystemData systemData = default;
-            Guid? requestId = default;
-            string requestType = default;
-            string queuedTime = default;
-            string managedInstanceName = default;
-            string status = default;
-            string errorMessage = default;
-            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
-            foreach (var property in element.EnumerateObject())
+            RefreshExternalGovernanceStatusOperationResultPropertiesMI properties = default;
+            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            foreach (var prop in element.EnumerateObject())
             {
-                if (property.NameEquals("id"u8))
+                if (prop.NameEquals("id"u8))
                 {
-                    id = new ResourceIdentifier(property.Value.GetString());
-                    continue;
-                }
-                if (property.NameEquals("name"u8))
-                {
-                    name = property.Value.GetString();
-                    continue;
-                }
-                if (property.NameEquals("type"u8))
-                {
-                    type = new ResourceType(property.Value.GetString());
-                    continue;
-                }
-                if (property.NameEquals("systemData"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    systemData = ModelReaderWriter.Read<SystemData>(new BinaryData(Encoding.UTF8.GetBytes(property.Value.GetRawText())), ModelSerializationExtensions.WireOptions, AzureResourceManagerSqlContext.Default);
+                    id = new ResourceIdentifier(prop.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("properties"u8))
+                if (prop.NameEquals("name"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    name = prop.Value.GetString();
+                    continue;
+                }
+                if (prop.NameEquals("type"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    foreach (var property0 in property.Value.EnumerateObject())
+                    resourceType = new ResourceType(prop.Value.GetString());
+                    continue;
+                }
+                if (prop.NameEquals("systemData"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
-                        if (property0.NameEquals("requestId"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            requestId = property0.Value.GetGuid();
-                            continue;
-                        }
-                        if (property0.NameEquals("requestType"u8))
-                        {
-                            requestType = property0.Value.GetString();
-                            continue;
-                        }
-                        if (property0.NameEquals("queuedTime"u8))
-                        {
-                            queuedTime = property0.Value.GetString();
-                            continue;
-                        }
-                        if (property0.NameEquals("managedInstanceName"u8))
-                        {
-                            managedInstanceName = property0.Value.GetString();
-                            continue;
-                        }
-                        if (property0.NameEquals("status"u8))
-                        {
-                            status = property0.Value.GetString();
-                            continue;
-                        }
-                        if (property0.NameEquals("errorMessage"u8))
-                        {
-                            errorMessage = property0.Value.GetString();
-                            continue;
-                        }
+                        continue;
                     }
+                    systemData = ModelReaderWriter.Read<SystemData>(new BinaryData(Encoding.UTF8.GetBytes(prop.Value.GetRawText())), ModelSerializationExtensions.WireOptions, AzureResourceManagerSqlContext.Default);
+                    continue;
+                }
+                if (prop.NameEquals("properties"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    properties = RefreshExternalGovernanceStatusOperationResultPropertiesMI.DeserializeRefreshExternalGovernanceStatusOperationResultPropertiesMI(prop.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
                 {
-                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = rawDataDictionary;
             return new SqlManagedInstanceRefreshExternalGovernanceStatusOperationResult(
                 id,
                 name,
-                type,
+                resourceType,
                 systemData,
-                requestId,
-                requestType,
-                queuedTime,
-                managedInstanceName,
-                status,
-                errorMessage,
-                serializedAdditionalRawData);
+                properties,
+                additionalBinaryDataProperties);
         }
-
-        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
-        {
-            StringBuilder builder = new StringBuilder();
-            BicepModelReaderWriterOptions bicepOptions = options as BicepModelReaderWriterOptions;
-            IDictionary<string, string> propertyOverrides = null;
-            bool hasObjectOverride = bicepOptions != null && bicepOptions.PropertyOverrides.TryGetValue(this, out propertyOverrides);
-            bool hasPropertyOverride = false;
-            string propertyOverride = null;
-
-            builder.AppendLine("{");
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Name), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  name: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(Name))
-                {
-                    builder.Append("  name: ");
-                    if (Name.Contains(Environment.NewLine))
-                    {
-                        builder.AppendLine("'''");
-                        builder.AppendLine($"{Name}'''");
-                    }
-                    else
-                    {
-                        builder.AppendLine($"'{Name}'");
-                    }
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Id), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  id: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(Id))
-                {
-                    builder.Append("  id: ");
-                    builder.AppendLine($"'{Id.ToString()}'");
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(SystemData), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  systemData: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(SystemData))
-                {
-                    builder.Append("  systemData: ");
-                    builder.AppendLine($"'{SystemData.ToString()}'");
-                }
-            }
-
-            builder.Append("  properties:");
-            builder.AppendLine(" {");
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(RequestId), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("    requestId: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(RequestId))
-                {
-                    builder.Append("    requestId: ");
-                    builder.AppendLine($"'{RequestId.Value.ToString()}'");
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(RequestType), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("    requestType: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(RequestType))
-                {
-                    builder.Append("    requestType: ");
-                    if (RequestType.Contains(Environment.NewLine))
-                    {
-                        builder.AppendLine("'''");
-                        builder.AppendLine($"{RequestType}'''");
-                    }
-                    else
-                    {
-                        builder.AppendLine($"'{RequestType}'");
-                    }
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(QueuedTime), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("    queuedTime: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(QueuedTime))
-                {
-                    builder.Append("    queuedTime: ");
-                    if (QueuedTime.Contains(Environment.NewLine))
-                    {
-                        builder.AppendLine("'''");
-                        builder.AppendLine($"{QueuedTime}'''");
-                    }
-                    else
-                    {
-                        builder.AppendLine($"'{QueuedTime}'");
-                    }
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ManagedInstanceName), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("    managedInstanceName: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(ManagedInstanceName))
-                {
-                    builder.Append("    managedInstanceName: ");
-                    if (ManagedInstanceName.Contains(Environment.NewLine))
-                    {
-                        builder.AppendLine("'''");
-                        builder.AppendLine($"{ManagedInstanceName}'''");
-                    }
-                    else
-                    {
-                        builder.AppendLine($"'{ManagedInstanceName}'");
-                    }
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Status), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("    status: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(Status))
-                {
-                    builder.Append("    status: ");
-                    if (Status.Contains(Environment.NewLine))
-                    {
-                        builder.AppendLine("'''");
-                        builder.AppendLine($"{Status}'''");
-                    }
-                    else
-                    {
-                        builder.AppendLine($"'{Status}'");
-                    }
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ErrorMessage), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("    errorMessage: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(ErrorMessage))
-                {
-                    builder.Append("    errorMessage: ");
-                    if (ErrorMessage.Contains(Environment.NewLine))
-                    {
-                        builder.AppendLine("'''");
-                        builder.AppendLine($"{ErrorMessage}'''");
-                    }
-                    else
-                    {
-                        builder.AppendLine($"'{ErrorMessage}'");
-                    }
-                }
-            }
-
-            builder.AppendLine("  }");
-            builder.AppendLine("}");
-            return BinaryData.FromString(builder.ToString());
-        }
-
-        BinaryData IPersistableModel<SqlManagedInstanceRefreshExternalGovernanceStatusOperationResult>.Write(ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<SqlManagedInstanceRefreshExternalGovernanceStatusOperationResult>)this).GetFormatFromOptions(options) : options.Format;
-
-            switch (format)
-            {
-                case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerSqlContext.Default);
-                case "bicep":
-                    return SerializeBicep(options);
-                default:
-                    throw new FormatException($"The model {nameof(SqlManagedInstanceRefreshExternalGovernanceStatusOperationResult)} does not support writing '{options.Format}' format.");
-            }
-        }
-
-        SqlManagedInstanceRefreshExternalGovernanceStatusOperationResult IPersistableModel<SqlManagedInstanceRefreshExternalGovernanceStatusOperationResult>.Create(BinaryData data, ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<SqlManagedInstanceRefreshExternalGovernanceStatusOperationResult>)this).GetFormatFromOptions(options) : options.Format;
-
-            switch (format)
-            {
-                case "J":
-                    {
-                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
-                        return DeserializeSqlManagedInstanceRefreshExternalGovernanceStatusOperationResult(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(SqlManagedInstanceRefreshExternalGovernanceStatusOperationResult)} does not support reading '{options.Format}' format.");
-            }
-        }
-
-        string IPersistableModel<SqlManagedInstanceRefreshExternalGovernanceStatusOperationResult>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

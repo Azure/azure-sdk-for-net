@@ -7,7 +7,7 @@ using System.Collections.Generic;
 
 namespace Azure.AI.Projects
 {
-    /// <summary> ReasoningTextContent. </summary>
+    /// <summary> Reasoning text. </summary>
     internal partial class ReasoningTextContent
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>

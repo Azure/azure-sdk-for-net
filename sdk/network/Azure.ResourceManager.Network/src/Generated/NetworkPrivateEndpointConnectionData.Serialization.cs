@@ -8,17 +8,75 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
-using System.Text;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
 using Azure.ResourceManager.Network.Models;
 
 namespace Azure.ResourceManager.Network
 {
-    public partial class NetworkPrivateEndpointConnectionData : IUtf8JsonSerializable, IJsonModel<NetworkPrivateEndpointConnectionData>
+    /// <summary> PrivateEndpointConnection resource. </summary>
+    public partial class NetworkPrivateEndpointConnectionData : NetworkResourceData, IJsonModel<NetworkPrivateEndpointConnectionData>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<NetworkPrivateEndpointConnectionData>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override NetworkSubResource PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<NetworkPrivateEndpointConnectionData>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    {
+                        return DeserializeNetworkPrivateEndpointConnectionData(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(NetworkPrivateEndpointConnectionData)} does not support reading '{options.Format}' format.");
+            }
+        }
 
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<NetworkPrivateEndpointConnectionData>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerNetworkContext.Default);
+                default:
+                    throw new FormatException($"The model {nameof(NetworkPrivateEndpointConnectionData)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<NetworkPrivateEndpointConnectionData>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        NetworkPrivateEndpointConnectionData IPersistableModel<NetworkPrivateEndpointConnectionData>.Create(BinaryData data, ModelReaderWriterOptions options) => (NetworkPrivateEndpointConnectionData)PersistableModelCreateCore(data, options);
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<NetworkPrivateEndpointConnectionData>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
+        /// <param name="networkPrivateEndpointConnectionData"> The <see cref="NetworkPrivateEndpointConnectionData"/> to serialize into <see cref="RequestContent"/>. </param>
+        internal static RequestContent ToRequestContent(NetworkPrivateEndpointConnectionData networkPrivateEndpointConnectionData)
+        {
+            if (networkPrivateEndpointConnectionData == null)
+            {
+                return null;
+            }
+            return RequestContent.Create(networkPrivateEndpointConnectionData, ModelSerializationExtensions.WireOptions);
+        }
+
+        /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="NetworkPrivateEndpointConnectionData"/> from. </param>
+        internal static NetworkPrivateEndpointConnectionData FromResponse(Response response)
+        {
+            using JsonDocument document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
+            return DeserializeNetworkPrivateEndpointConnectionData(document.RootElement, ModelSerializationExtensions.WireOptions);
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<NetworkPrivateEndpointConnectionData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
@@ -30,374 +88,106 @@ namespace Azure.ResourceManager.Network
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<NetworkPrivateEndpointConnectionData>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<NetworkPrivateEndpointConnectionData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(NetworkPrivateEndpointConnectionData)} does not support writing '{format}' format.");
             }
-
             base.JsonModelWriteCore(writer, options);
+            if (Optional.IsDefined(Properties))
+            {
+                writer.WritePropertyName("properties"u8);
+                writer.WriteObjectValue(Properties, options);
+            }
             if (options.Format != "W" && Optional.IsDefined(ETag))
             {
                 writer.WritePropertyName("etag"u8);
                 writer.WriteStringValue(ETag.Value.ToString());
             }
-            writer.WritePropertyName("properties"u8);
-            writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsDefined(PrivateEndpoint))
-            {
-                writer.WritePropertyName("privateEndpoint"u8);
-                writer.WriteObjectValue(PrivateEndpoint, options);
-            }
-            if (Optional.IsDefined(ConnectionState))
-            {
-                writer.WritePropertyName("privateLinkServiceConnectionState"u8);
-                writer.WriteObjectValue(ConnectionState, options);
-            }
-            if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
-            {
-                writer.WritePropertyName("provisioningState"u8);
-                writer.WriteStringValue(ProvisioningState.Value.ToString());
-            }
-            if (options.Format != "W" && Optional.IsDefined(LinkIdentifier))
-            {
-                writer.WritePropertyName("linkIdentifier"u8);
-                writer.WriteStringValue(LinkIdentifier);
-            }
-            if (options.Format != "W" && Optional.IsDefined(PrivateEndpointLocation))
-            {
-                writer.WritePropertyName("privateEndpointLocation"u8);
-                writer.WriteStringValue(PrivateEndpointLocation);
-            }
-            writer.WriteEndObject();
         }
 
-        NetworkPrivateEndpointConnectionData IJsonModel<NetworkPrivateEndpointConnectionData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        NetworkPrivateEndpointConnectionData IJsonModel<NetworkPrivateEndpointConnectionData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => (NetworkPrivateEndpointConnectionData)JsonModelCreateCore(ref reader, options);
+
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override NetworkSubResource JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<NetworkPrivateEndpointConnectionData>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<NetworkPrivateEndpointConnectionData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(NetworkPrivateEndpointConnectionData)} does not support reading '{format}' format.");
             }
-
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
             return DeserializeNetworkPrivateEndpointConnectionData(document.RootElement, options);
         }
 
-        internal static NetworkPrivateEndpointConnectionData DeserializeNetworkPrivateEndpointConnectionData(JsonElement element, ModelReaderWriterOptions options = null)
+        /// <param name="element"> The JSON element to deserialize. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        internal static NetworkPrivateEndpointConnectionData DeserializeNetworkPrivateEndpointConnectionData(JsonElement element, ModelReaderWriterOptions options)
         {
-            options ??= ModelSerializationExtensions.WireOptions;
-
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            ETag? etag = default;
             ResourceIdentifier id = default;
+            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             string name = default;
-            ResourceType? type = default;
-            PrivateEndpointData privateEndpoint = default;
-            NetworkPrivateLinkServiceConnectionState privateLinkServiceConnectionState = default;
-            NetworkProvisioningState? provisioningState = default;
-            string linkIdentifier = default;
-            string privateEndpointLocation = default;
-            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
-            foreach (var property in element.EnumerateObject())
+            string @type = default;
+            PrivateEndpointConnectionProperties properties = default;
+            ETag? eTag = default;
+            foreach (var prop in element.EnumerateObject())
             {
-                if (property.NameEquals("etag"u8))
+                if (prop.NameEquals("id"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    etag = new ETag(property.Value.GetString());
+                    id = new ResourceIdentifier(prop.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("id"u8))
+                if (prop.NameEquals("name"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    name = prop.Value.GetString();
+                    continue;
+                }
+                if (prop.NameEquals("type"u8))
+                {
+                    @type = prop.Value.GetString();
+                    continue;
+                }
+                if (prop.NameEquals("properties"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    id = new ResourceIdentifier(property.Value.GetString());
+                    properties = PrivateEndpointConnectionProperties.DeserializePrivateEndpointConnectionProperties(prop.Value, options);
                     continue;
                 }
-                if (property.NameEquals("name"u8))
+                if (prop.NameEquals("etag"u8))
                 {
-                    name = property.Value.GetString();
-                    continue;
-                }
-                if (property.NameEquals("type"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    type = new ResourceType(property.Value.GetString());
-                    continue;
-                }
-                if (property.NameEquals("properties"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        property.ThrowNonNullablePropertyIsNull();
-                        continue;
-                    }
-                    foreach (var property0 in property.Value.EnumerateObject())
-                    {
-                        if (property0.NameEquals("privateEndpoint"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            privateEndpoint = PrivateEndpointData.DeserializePrivateEndpointData(property0.Value, options);
-                            continue;
-                        }
-                        if (property0.NameEquals("privateLinkServiceConnectionState"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            privateLinkServiceConnectionState = NetworkPrivateLinkServiceConnectionState.DeserializeNetworkPrivateLinkServiceConnectionState(property0.Value, options);
-                            continue;
-                        }
-                        if (property0.NameEquals("provisioningState"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            provisioningState = new NetworkProvisioningState(property0.Value.GetString());
-                            continue;
-                        }
-                        if (property0.NameEquals("linkIdentifier"u8))
-                        {
-                            linkIdentifier = property0.Value.GetString();
-                            continue;
-                        }
-                        if (property0.NameEquals("privateEndpointLocation"u8))
-                        {
-                            privateEndpointLocation = property0.Value.GetString();
-                            continue;
-                        }
-                    }
+                    eTag = new ETag(prop.Value.GetString());
                     continue;
                 }
                 if (options.Format != "W")
                 {
-                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = rawDataDictionary;
             return new NetworkPrivateEndpointConnectionData(
                 id,
+                additionalBinaryDataProperties,
                 name,
-                type,
-                serializedAdditionalRawData,
-                etag,
-                privateEndpoint,
-                privateLinkServiceConnectionState,
-                provisioningState,
-                linkIdentifier,
-                privateEndpointLocation);
+                @type,
+                properties,
+                eTag);
         }
-
-        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
-        {
-            StringBuilder builder = new StringBuilder();
-            BicepModelReaderWriterOptions bicepOptions = options as BicepModelReaderWriterOptions;
-            IDictionary<string, string> propertyOverrides = null;
-            bool hasObjectOverride = bicepOptions != null && bicepOptions.PropertyOverrides.TryGetValue(this, out propertyOverrides);
-            bool hasPropertyOverride = false;
-            string propertyOverride = null;
-
-            builder.AppendLine("{");
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Name), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  name: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(Name))
-                {
-                    builder.Append("  name: ");
-                    if (Name.Contains(Environment.NewLine))
-                    {
-                        builder.AppendLine("'''");
-                        builder.AppendLine($"{Name}'''");
-                    }
-                    else
-                    {
-                        builder.AppendLine($"'{Name}'");
-                    }
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ETag), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  etag: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(ETag))
-                {
-                    builder.Append("  etag: ");
-                    builder.AppendLine($"'{ETag.Value.ToString()}'");
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Id), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  id: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(Id))
-                {
-                    builder.Append("  id: ");
-                    builder.AppendLine($"'{Id.ToString()}'");
-                }
-            }
-
-            builder.Append("  properties:");
-            builder.AppendLine(" {");
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(PrivateEndpoint), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("    privateEndpoint: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(PrivateEndpoint))
-                {
-                    builder.Append("    privateEndpoint: ");
-                    BicepSerializationHelpers.AppendChildObject(builder, PrivateEndpoint, options, 4, false, "    privateEndpoint: ");
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ConnectionState), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("    privateLinkServiceConnectionState: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(ConnectionState))
-                {
-                    builder.Append("    privateLinkServiceConnectionState: ");
-                    BicepSerializationHelpers.AppendChildObject(builder, ConnectionState, options, 4, false, "    privateLinkServiceConnectionState: ");
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ProvisioningState), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("    provisioningState: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(ProvisioningState))
-                {
-                    builder.Append("    provisioningState: ");
-                    builder.AppendLine($"'{ProvisioningState.Value.ToString()}'");
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(LinkIdentifier), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("    linkIdentifier: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(LinkIdentifier))
-                {
-                    builder.Append("    linkIdentifier: ");
-                    if (LinkIdentifier.Contains(Environment.NewLine))
-                    {
-                        builder.AppendLine("'''");
-                        builder.AppendLine($"{LinkIdentifier}'''");
-                    }
-                    else
-                    {
-                        builder.AppendLine($"'{LinkIdentifier}'");
-                    }
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(PrivateEndpointLocation), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("    privateEndpointLocation: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(PrivateEndpointLocation))
-                {
-                    builder.Append("    privateEndpointLocation: ");
-                    if (PrivateEndpointLocation.Contains(Environment.NewLine))
-                    {
-                        builder.AppendLine("'''");
-                        builder.AppendLine($"{PrivateEndpointLocation}'''");
-                    }
-                    else
-                    {
-                        builder.AppendLine($"'{PrivateEndpointLocation}'");
-                    }
-                }
-            }
-
-            builder.AppendLine("  }");
-            builder.AppendLine("}");
-            return BinaryData.FromString(builder.ToString());
-        }
-
-        BinaryData IPersistableModel<NetworkPrivateEndpointConnectionData>.Write(ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<NetworkPrivateEndpointConnectionData>)this).GetFormatFromOptions(options) : options.Format;
-
-            switch (format)
-            {
-                case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerNetworkContext.Default);
-                case "bicep":
-                    return SerializeBicep(options);
-                default:
-                    throw new FormatException($"The model {nameof(NetworkPrivateEndpointConnectionData)} does not support writing '{options.Format}' format.");
-            }
-        }
-
-        NetworkPrivateEndpointConnectionData IPersistableModel<NetworkPrivateEndpointConnectionData>.Create(BinaryData data, ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<NetworkPrivateEndpointConnectionData>)this).GetFormatFromOptions(options) : options.Format;
-
-            switch (format)
-            {
-                case "J":
-                    {
-                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
-                        return DeserializeNetworkPrivateEndpointConnectionData(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(NetworkPrivateEndpointConnectionData)} does not support reading '{options.Format}' format.");
-            }
-        }
-
-        string IPersistableModel<NetworkPrivateEndpointConnectionData>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

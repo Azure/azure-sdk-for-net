@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.CosmosDBForPostgreSql;
 
 namespace Azure.ResourceManager.CosmosDBForPostgreSql.Models
 {
@@ -14,38 +15,55 @@ namespace Azure.ResourceManager.CosmosDBForPostgreSql.Models
     public readonly partial struct CosmosDBForPostgreSqlServerRole : IEquatable<CosmosDBForPostgreSqlServerRole>
     {
         private readonly string _value;
-
-        /// <summary> Initializes a new instance of <see cref="CosmosDBForPostgreSqlServerRole"/>. </summary>
-        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        public CosmosDBForPostgreSqlServerRole(string value)
-        {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
-
         private const string CoordinatorValue = "Coordinator";
         private const string WorkerValue = "Worker";
 
-        /// <summary> Coordinator. </summary>
+        /// <summary> Initializes a new instance of <see cref="CosmosDBForPostgreSqlServerRole"/>. </summary>
+        /// <param name="value"> The value. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
+        public CosmosDBForPostgreSqlServerRole(string value)
+        {
+            Argument.AssertNotNull(value, nameof(value));
+
+            _value = value;
+        }
+
+        /// <summary> Gets the Coordinator. </summary>
         public static CosmosDBForPostgreSqlServerRole Coordinator { get; } = new CosmosDBForPostgreSqlServerRole(CoordinatorValue);
-        /// <summary> Worker. </summary>
+
+        /// <summary> Gets the Worker. </summary>
         public static CosmosDBForPostgreSqlServerRole Worker { get; } = new CosmosDBForPostgreSqlServerRole(WorkerValue);
+
         /// <summary> Determines if two <see cref="CosmosDBForPostgreSqlServerRole"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(CosmosDBForPostgreSqlServerRole left, CosmosDBForPostgreSqlServerRole right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="CosmosDBForPostgreSqlServerRole"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(CosmosDBForPostgreSqlServerRole left, CosmosDBForPostgreSqlServerRole right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="CosmosDBForPostgreSqlServerRole"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="CosmosDBForPostgreSqlServerRole"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator CosmosDBForPostgreSqlServerRole(string value) => new CosmosDBForPostgreSqlServerRole(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="CosmosDBForPostgreSqlServerRole"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator CosmosDBForPostgreSqlServerRole?(string value) => value == null ? null : new CosmosDBForPostgreSqlServerRole(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is CosmosDBForPostgreSqlServerRole other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(CosmosDBForPostgreSqlServerRole other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

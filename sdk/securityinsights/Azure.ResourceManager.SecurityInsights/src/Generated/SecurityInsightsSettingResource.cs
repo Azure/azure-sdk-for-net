@@ -6,46 +6,35 @@
 #nullable disable
 
 using System;
-using System.Globalization;
+using System.Diagnostics;
 using System.Threading;
 using System.Threading.Tasks;
+using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
+using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.SecurityInsights
 {
     /// <summary>
-    /// A Class representing a SecurityInsightsSetting along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="SecurityInsightsSettingResource"/>
-    /// from an instance of <see cref="ArmClient"/> using the GetSecurityInsightsSettingResource method.
-    /// Otherwise you can get one from its parent resource <see cref="OperationalInsightsWorkspaceSecurityInsightsResource"/> using the GetSecurityInsightsSetting method.
+    /// A class representing a SecurityInsightsSetting along with the instance operations that can be performed on it.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="SecurityInsightsSettingResource"/> from an instance of <see cref="ArmClient"/> using the GetResource method.
+    /// Otherwise you can get one from its parent resource <see cref="ArmResource"/> using the GetSecurityInsightsSettings method.
     /// </summary>
     public partial class SecurityInsightsSettingResource : ArmResource
     {
-        /// <summary> Generate the resource identifier of a <see cref="SecurityInsightsSettingResource"/> instance. </summary>
-        /// <param name="subscriptionId"> The subscriptionId. </param>
-        /// <param name="resourceGroupName"> The resourceGroupName. </param>
-        /// <param name="workspaceName"> The workspaceName. </param>
-        /// <param name="settingsName"> The settingsName. </param>
-        public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string workspaceName, string settingsName)
-        {
-            var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.OperationalInsights/workspaces/{workspaceName}/providers/Microsoft.SecurityInsights/settings/{settingsName}";
-            return new ResourceIdentifier(resourceId);
-        }
-
-        private readonly ClientDiagnostics _securityInsightsSettingProductSettingsClientDiagnostics;
-        private readonly ProductSettingsRestOperations _securityInsightsSettingProductSettingsRestClient;
+        private readonly ClientDiagnostics _productSettingsClientDiagnostics;
+        private readonly ProductSettings _productSettingsRestClient;
         private readonly SecurityInsightsSettingData _data;
-
         /// <summary> Gets the resource type for the operations. </summary>
         public static readonly ResourceType ResourceType = "Microsoft.SecurityInsights/settings";
 
-        /// <summary> Initializes a new instance of the <see cref="SecurityInsightsSettingResource"/> class for mocking. </summary>
+        /// <summary> Initializes a new instance of SecurityInsightsSettingResource for mocking. </summary>
         protected SecurityInsightsSettingResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref="SecurityInsightsSettingResource"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="SecurityInsightsSettingResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal SecurityInsightsSettingResource(ArmClient client, SecurityInsightsSettingData data) : this(client, data.Id)
@@ -54,71 +43,93 @@ namespace Azure.ResourceManager.SecurityInsights
             _data = data;
         }
 
-        /// <summary> Initializes a new instance of the <see cref="SecurityInsightsSettingResource"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="SecurityInsightsSettingResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal SecurityInsightsSettingResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _securityInsightsSettingProductSettingsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.SecurityInsights", ResourceType.Namespace, Diagnostics);
-            TryGetApiVersion(ResourceType, out string securityInsightsSettingProductSettingsApiVersion);
-            _securityInsightsSettingProductSettingsRestClient = new ProductSettingsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, securityInsightsSettingProductSettingsApiVersion);
-#if DEBUG
-			ValidateResourceId(Id);
-#endif
+            TryGetApiVersion(ResourceType, out string securityInsightsSettingApiVersion);
+            _productSettingsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.SecurityInsights", ResourceType.Namespace, Diagnostics);
+            _productSettingsRestClient = new ProductSettings(_productSettingsClientDiagnostics, Pipeline, Endpoint, securityInsightsSettingApiVersion ?? "2025-07-01-preview");
+            ValidateResourceId(id);
         }
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }
 
         /// <summary> Gets the data representing this Feature. </summary>
-        /// <exception cref="InvalidOperationException"> Throws if there is no data loaded in the current instance. </exception>
         public virtual SecurityInsightsSettingData Data
         {
             get
             {
                 if (!HasData)
+                {
                     throw new InvalidOperationException("The current instance does not have data, you must call Get first.");
+                }
                 return _data;
             }
         }
 
+        /// <summary> Generate the resource identifier for this resource. </summary>
+        /// <param name="subscriptionId"> The subscriptionId. </param>
+        /// <param name="resourceGroupName"> The resourceGroupName. </param>
+        /// <param name="workspaceName"> The workspaceName. </param>
+        /// <param name="settingsName"> The settingsName. </param>
+        public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string workspaceName, string settingsName)
+        {
+            string resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.OperationalInsights/workspaces/{workspaceName}/providers/Microsoft.SecurityInsights/settings/{settingsName}";
+            return new ResourceIdentifier(resourceId);
+        }
+
+        /// <param name="id"></param>
+        [Conditional("DEBUG")]
         internal static void ValidateResourceId(ResourceIdentifier id)
         {
             if (id.ResourceType != ResourceType)
-                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), nameof(id));
+            {
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), nameof(id));
+            }
         }
 
         /// <summary>
         /// Gets a setting.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.OperationalInsights/workspaces/{workspaceName}/providers/Microsoft.SecurityInsights/settings/{settingsName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.OperationalInsights/workspaces/{workspaceName}/providers/Microsoft.SecurityInsights/settings/{settingsName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ProductSettings_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> ProductSettings_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-01-01-preview</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-07-01-preview. </description>
         /// </item>
         /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="SecurityInsightsSettingResource"/></description>
+        /// <term> Resource. </term>
+        /// <description> <see cref="SecurityInsightsSettingResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<Response<SecurityInsightsSettingResource>> GetAsync(CancellationToken cancellationToken = default)
         {
-            using var scope = _securityInsightsSettingProductSettingsClientDiagnostics.CreateScope("SecurityInsightsSettingResource.Get");
+            using DiagnosticScope scope = _productSettingsClientDiagnostics.CreateScope("SecurityInsightsSettingResource.Get");
             scope.Start();
             try
             {
-                var response = await _securityInsightsSettingProductSettingsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _productSettingsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
+                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                Response<SecurityInsightsSettingData> response = Response.FromValue(SecurityInsightsSettingData.FromResponse(result), result);
                 if (response.Value == null)
+                {
                     throw new RequestFailedException(response.GetRawResponse());
+                }
                 return Response.FromValue(new SecurityInsightsSettingResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -132,33 +143,41 @@ namespace Azure.ResourceManager.SecurityInsights
         /// Gets a setting.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.OperationalInsights/workspaces/{workspaceName}/providers/Microsoft.SecurityInsights/settings/{settingsName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.OperationalInsights/workspaces/{workspaceName}/providers/Microsoft.SecurityInsights/settings/{settingsName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ProductSettings_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> ProductSettings_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-01-01-preview</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-07-01-preview. </description>
         /// </item>
         /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="SecurityInsightsSettingResource"/></description>
+        /// <term> Resource. </term>
+        /// <description> <see cref="SecurityInsightsSettingResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response<SecurityInsightsSettingResource> Get(CancellationToken cancellationToken = default)
         {
-            using var scope = _securityInsightsSettingProductSettingsClientDiagnostics.CreateScope("SecurityInsightsSettingResource.Get");
+            using DiagnosticScope scope = _productSettingsClientDiagnostics.CreateScope("SecurityInsightsSettingResource.Get");
             scope.Start();
             try
             {
-                var response = _securityInsightsSettingProductSettingsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _productSettingsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
+                Response result = Pipeline.ProcessMessage(message, context);
+                Response<SecurityInsightsSettingData> response = Response.FromValue(SecurityInsightsSettingData.FromResponse(result), result);
                 if (response.Value == null)
+                {
                     throw new RequestFailedException(response.GetRawResponse());
+                }
                 return Response.FromValue(new SecurityInsightsSettingResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -172,20 +191,20 @@ namespace Azure.ResourceManager.SecurityInsights
         /// Delete setting of the product.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.OperationalInsights/workspaces/{workspaceName}/providers/Microsoft.SecurityInsights/settings/{settingsName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.OperationalInsights/workspaces/{workspaceName}/providers/Microsoft.SecurityInsights/settings/{settingsName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ProductSettings_Delete</description>
+        /// <term> Operation Id. </term>
+        /// <description> ProductSettings_Delete. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-01-01-preview</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-07-01-preview. </description>
         /// </item>
         /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="SecurityInsightsSettingResource"/></description>
+        /// <term> Resource. </term>
+        /// <description> <see cref="SecurityInsightsSettingResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -193,16 +212,23 @@ namespace Azure.ResourceManager.SecurityInsights
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<ArmOperation> DeleteAsync(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
-            using var scope = _securityInsightsSettingProductSettingsClientDiagnostics.CreateScope("SecurityInsightsSettingResource.Delete");
+            using DiagnosticScope scope = _productSettingsClientDiagnostics.CreateScope("SecurityInsightsSettingResource.Delete");
             scope.Start();
             try
             {
-                var response = await _securityInsightsSettingProductSettingsRestClient.DeleteAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
-                var uri = _securityInsightsSettingProductSettingsRestClient.CreateDeleteRequestUri(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
-                var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Delete, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
-                var operation = new SecurityInsightsArmOperation(response, rehydrationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _productSettingsRestClient.CreateDeleteRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
+                Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                RequestUriBuilder uri = message.Request.Uri;
+                RehydrationToken rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Delete, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
+                SecurityInsightsArmOperation operation = new SecurityInsightsArmOperation(response, rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
+                {
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
+                }
                 return operation;
             }
             catch (Exception e)
@@ -216,20 +242,20 @@ namespace Azure.ResourceManager.SecurityInsights
         /// Delete setting of the product.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.OperationalInsights/workspaces/{workspaceName}/providers/Microsoft.SecurityInsights/settings/{settingsName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.OperationalInsights/workspaces/{workspaceName}/providers/Microsoft.SecurityInsights/settings/{settingsName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ProductSettings_Delete</description>
+        /// <term> Operation Id. </term>
+        /// <description> ProductSettings_Delete. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-01-01-preview</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-07-01-preview. </description>
         /// </item>
         /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="SecurityInsightsSettingResource"/></description>
+        /// <term> Resource. </term>
+        /// <description> <see cref="SecurityInsightsSettingResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -237,16 +263,23 @@ namespace Azure.ResourceManager.SecurityInsights
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual ArmOperation Delete(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
-            using var scope = _securityInsightsSettingProductSettingsClientDiagnostics.CreateScope("SecurityInsightsSettingResource.Delete");
+            using DiagnosticScope scope = _productSettingsClientDiagnostics.CreateScope("SecurityInsightsSettingResource.Delete");
             scope.Start();
             try
             {
-                var response = _securityInsightsSettingProductSettingsRestClient.Delete(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
-                var uri = _securityInsightsSettingProductSettingsRestClient.CreateDeleteRequestUri(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
-                var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Delete, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
-                var operation = new SecurityInsightsArmOperation(response, rehydrationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _productSettingsRestClient.CreateDeleteRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
+                Response response = Pipeline.ProcessMessage(message, context);
+                RequestUriBuilder uri = message.Request.Uri;
+                RehydrationToken rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Delete, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
+                SecurityInsightsArmOperation operation = new SecurityInsightsArmOperation(response, rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
+                {
                     operation.WaitForCompletionResponse(cancellationToken);
+                }
                 return operation;
             }
             catch (Exception e)
@@ -257,23 +290,23 @@ namespace Azure.ResourceManager.SecurityInsights
         }
 
         /// <summary>
-        /// Updates setting.
+        /// Update a SecurityInsightsSetting.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.OperationalInsights/workspaces/{workspaceName}/providers/Microsoft.SecurityInsights/settings/{settingsName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.OperationalInsights/workspaces/{workspaceName}/providers/Microsoft.SecurityInsights/settings/{settingsName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ProductSettings_Update</description>
+        /// <term> Operation Id. </term>
+        /// <description> ProductSettings_Update. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-01-01-preview</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-07-01-preview. </description>
         /// </item>
         /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="SecurityInsightsSettingResource"/></description>
+        /// <term> Resource. </term>
+        /// <description> <see cref="SecurityInsightsSettingResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -285,16 +318,24 @@ namespace Azure.ResourceManager.SecurityInsights
         {
             Argument.AssertNotNull(data, nameof(data));
 
-            using var scope = _securityInsightsSettingProductSettingsClientDiagnostics.CreateScope("SecurityInsightsSettingResource.Update");
+            using DiagnosticScope scope = _productSettingsClientDiagnostics.CreateScope("SecurityInsightsSettingResource.Update");
             scope.Start();
             try
             {
-                var response = await _securityInsightsSettingProductSettingsRestClient.UpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, data, cancellationToken).ConfigureAwait(false);
-                var uri = _securityInsightsSettingProductSettingsRestClient.CreateUpdateRequestUri(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, data);
-                var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
-                var operation = new SecurityInsightsArmOperation<SecurityInsightsSettingResource>(Response.FromValue(new SecurityInsightsSettingResource(Client, response), response.GetRawResponse()), rehydrationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _productSettingsRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, SecurityInsightsSettingData.ToRequestContent(data), context);
+                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                Response<SecurityInsightsSettingData> response = Response.FromValue(SecurityInsightsSettingData.FromResponse(result), result);
+                RequestUriBuilder uri = message.Request.Uri;
+                RehydrationToken rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
+                SecurityInsightsArmOperation<SecurityInsightsSettingResource> operation = new SecurityInsightsArmOperation<SecurityInsightsSettingResource>(Response.FromValue(new SecurityInsightsSettingResource(Client, response.Value), response.GetRawResponse()), rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
+                {
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
+                }
                 return operation;
             }
             catch (Exception e)
@@ -305,23 +346,23 @@ namespace Azure.ResourceManager.SecurityInsights
         }
 
         /// <summary>
-        /// Updates setting.
+        /// Update a SecurityInsightsSetting.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.OperationalInsights/workspaces/{workspaceName}/providers/Microsoft.SecurityInsights/settings/{settingsName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.OperationalInsights/workspaces/{workspaceName}/providers/Microsoft.SecurityInsights/settings/{settingsName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ProductSettings_Update</description>
+        /// <term> Operation Id. </term>
+        /// <description> ProductSettings_Update. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-01-01-preview</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-07-01-preview. </description>
         /// </item>
         /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="SecurityInsightsSettingResource"/></description>
+        /// <term> Resource. </term>
+        /// <description> <see cref="SecurityInsightsSettingResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -333,16 +374,24 @@ namespace Azure.ResourceManager.SecurityInsights
         {
             Argument.AssertNotNull(data, nameof(data));
 
-            using var scope = _securityInsightsSettingProductSettingsClientDiagnostics.CreateScope("SecurityInsightsSettingResource.Update");
+            using DiagnosticScope scope = _productSettingsClientDiagnostics.CreateScope("SecurityInsightsSettingResource.Update");
             scope.Start();
             try
             {
-                var response = _securityInsightsSettingProductSettingsRestClient.Update(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, data, cancellationToken);
-                var uri = _securityInsightsSettingProductSettingsRestClient.CreateUpdateRequestUri(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, data);
-                var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
-                var operation = new SecurityInsightsArmOperation<SecurityInsightsSettingResource>(Response.FromValue(new SecurityInsightsSettingResource(Client, response), response.GetRawResponse()), rehydrationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _productSettingsRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, SecurityInsightsSettingData.ToRequestContent(data), context);
+                Response result = Pipeline.ProcessMessage(message, context);
+                Response<SecurityInsightsSettingData> response = Response.FromValue(SecurityInsightsSettingData.FromResponse(result), result);
+                RequestUriBuilder uri = message.Request.Uri;
+                RehydrationToken rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
+                SecurityInsightsArmOperation<SecurityInsightsSettingResource> operation = new SecurityInsightsArmOperation<SecurityInsightsSettingResource>(Response.FromValue(new SecurityInsightsSettingResource(Client, response.Value), response.GetRawResponse()), rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
+                {
                     operation.WaitForCompletion(cancellationToken);
+                }
                 return operation;
             }
             catch (Exception e)

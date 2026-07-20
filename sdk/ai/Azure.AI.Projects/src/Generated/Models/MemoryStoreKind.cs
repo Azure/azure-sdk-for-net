@@ -4,10 +4,11 @@
 
 using System;
 using System.ComponentModel;
+using System.Diagnostics.CodeAnalysis;
 
-namespace Azure.AI.Projects
+namespace Azure.AI.Projects.Memory
 {
-    /// <summary> The type of memory store implementation to use. </summary>
+    [Experimental("AAIP001")]
     internal readonly partial struct MemoryStoreKind : IEquatable<MemoryStoreKind>
     {
         private readonly string _value;
@@ -16,11 +17,8 @@ namespace Azure.AI.Projects
 
         /// <summary> Initializes a new instance of <see cref="MemoryStoreKind"/>. </summary>
         /// <param name="value"> The value. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public MemoryStoreKind(string value)
         {
-            Argument.AssertNotNull(value, nameof(value));
-
             _value = value;
         }
 

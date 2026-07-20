@@ -11,19 +11,29 @@ using System.Text.Json;
 
 namespace Azure.ResourceManager.ContainerService
 {
+    /// <summary></summary>
     public partial class ManagedClusterNamespaceResource : IJsonModel<ManagedClusterNamespaceData>
     {
-        private static ManagedClusterNamespaceData s_dataDeserializationInstance;
-        private static ManagedClusterNamespaceData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+        private static IJsonModel<ManagedClusterNamespaceData> s_dataDeserializationInstance;
 
+        private static IJsonModel<ManagedClusterNamespaceData> DataDeserializationInstance => s_dataDeserializationInstance ??= new ManagedClusterNamespaceData();
+
+        /// <param name="writer"> The writer to serialize the model to. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<ManagedClusterNamespaceData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<ManagedClusterNamespaceData>)Data).Write(writer, options);
 
-        ManagedClusterNamespaceData IJsonModel<ManagedClusterNamespaceData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<ManagedClusterNamespaceData>)DataDeserializationInstance).Create(ref reader, options);
+        /// <param name="reader"> The reader for deserializing the model. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        ManagedClusterNamespaceData IJsonModel<ManagedClusterNamespaceData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => DataDeserializationInstance.Create(ref reader, options);
 
+        /// <param name="options"> The client options for reading and writing models. </param>
         BinaryData IPersistableModel<ManagedClusterNamespaceData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<ManagedClusterNamespaceData>(Data, options, AzureResourceManagerContainerServiceContext.Default);
 
+        /// <param name="data"> The binary data to be processed. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         ManagedClusterNamespaceData IPersistableModel<ManagedClusterNamespaceData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<ManagedClusterNamespaceData>(data, options, AzureResourceManagerContainerServiceContext.Default);
 
-        string IPersistableModel<ManagedClusterNamespaceData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<ManagedClusterNamespaceData>)DataDeserializationInstance).GetFormatFromOptions(options);
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<ManagedClusterNamespaceData>.GetFormatFromOptions(ModelReaderWriterOptions options) => DataDeserializationInstance.GetFormatFromOptions(options);
     }
 }

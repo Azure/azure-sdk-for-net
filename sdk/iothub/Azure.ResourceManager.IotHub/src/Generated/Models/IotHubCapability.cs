@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.IotHub;
 
 namespace Azure.ResourceManager.IotHub.Models
 {
@@ -14,38 +15,57 @@ namespace Azure.ResourceManager.IotHub.Models
     public readonly partial struct IotHubCapability : IEquatable<IotHubCapability>
     {
         private readonly string _value;
+        /// <summary> None. </summary>
+        private const string NoneValue = "None";
+        /// <summary> DeviceManagement. </summary>
+        private const string DeviceManagementValue = "DeviceManagement";
 
         /// <summary> Initializes a new instance of <see cref="IotHubCapability"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public IotHubCapability(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string NoneValue = "None";
-        private const string DeviceManagementValue = "DeviceManagement";
+            _value = value;
+        }
 
         /// <summary> None. </summary>
         public static IotHubCapability None { get; } = new IotHubCapability(NoneValue);
+
         /// <summary> DeviceManagement. </summary>
         public static IotHubCapability DeviceManagement { get; } = new IotHubCapability(DeviceManagementValue);
+
         /// <summary> Determines if two <see cref="IotHubCapability"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(IotHubCapability left, IotHubCapability right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="IotHubCapability"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(IotHubCapability left, IotHubCapability right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="IotHubCapability"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="IotHubCapability"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator IotHubCapability(string value) => new IotHubCapability(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="IotHubCapability"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator IotHubCapability?(string value) => value == null ? null : new IotHubCapability(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is IotHubCapability other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(IotHubCapability other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

@@ -139,6 +139,11 @@ namespace Azure.Storage.Blobs.Models
         public ArchiveStatus? ArchiveStatus { get; internal set; }
 
         /// <summary>
+        /// SmartAccessTier.
+        /// </summary>
+        public AccessTier? SmartAccessTier { get; internal set; }
+
+        /// <summary>
         /// CustomerProvidedKeySha256.
         /// </summary>
         public string CustomerProvidedKeySha256 { get; internal set; }

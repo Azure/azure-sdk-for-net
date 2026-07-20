@@ -93,7 +93,7 @@ namespace Azure.ResourceManager.DataBox
         {
             if (id.ResourceType != ResourceType)
             {
-                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), id);
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), nameof(id));
             }
         }
 
@@ -236,7 +236,7 @@ namespace Azure.ResourceManager.DataBox
                 HttpMessage message = _jobResourcesRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, DataBoxJobPatch.ToRequestContent(patch), ifMatch, context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 DataBoxArmOperation<DataBoxJobResource> operation = new DataBoxArmOperation<DataBoxJobResource>(
-                    new DataBoxJobOperationSource(Client),
+                    new DataBoxJobResourceOperationSource(Client),
                     _jobResourcesClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -296,7 +296,7 @@ namespace Azure.ResourceManager.DataBox
                 HttpMessage message = _jobResourcesRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, DataBoxJobPatch.ToRequestContent(patch), ifMatch, context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 DataBoxArmOperation<DataBoxJobResource> operation = new DataBoxArmOperation<DataBoxJobResource>(
-                    new DataBoxJobOperationSource(Client),
+                    new DataBoxJobResourceOperationSource(Client),
                     _jobResourcesClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -640,7 +640,13 @@ namespace Azure.ResourceManager.DataBox
             {
                 CancellationToken = cancellationToken
             };
-            return new JobResourcesGetCredentialsAsyncCollectionResultOfT(_jobResourcesRestClient, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, context);
+            return new JobResourcesGetCredentialsAsyncCollectionResultOfT(
+                _jobResourcesRestClient,
+                Id.SubscriptionId,
+                Id.ResourceGroupName,
+                Id.Name,
+                context,
+                "DataBoxJobResource.GetCredentials");
         }
 
         /// <summary>
@@ -672,7 +678,13 @@ namespace Azure.ResourceManager.DataBox
             {
                 CancellationToken = cancellationToken
             };
-            return new JobResourcesGetCredentialsCollectionResultOfT(_jobResourcesRestClient, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, context);
+            return new JobResourcesGetCredentialsCollectionResultOfT(
+                _jobResourcesRestClient,
+                Id.SubscriptionId,
+                Id.ResourceGroupName,
+                Id.Name,
+                context,
+                "DataBoxJobResource.GetCredentials");
         }
 
         /// <summary>

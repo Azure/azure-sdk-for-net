@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.StorageSync
         {
             if (id.ResourceType != StorageSyncServiceResource.ResourceType)
             {
-                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, StorageSyncServiceResource.ResourceType), id);
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, StorageSyncServiceResource.ResourceType), nameof(id));
             }
         }
 
@@ -92,7 +92,7 @@ namespace Azure.ResourceManager.StorageSync
                 HttpMessage message = _registeredServersRestClient.CreateCreateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, serverId, StorageSyncRegisteredServerCreateOrUpdateContent.ToRequestContent(content), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 StorageSyncArmOperation<StorageSyncRegisteredServerResource> operation = new StorageSyncArmOperation<StorageSyncRegisteredServerResource>(
-                    new StorageSyncRegisteredServerOperationSource(Client),
+                    new StorageSyncRegisteredServerResourceOperationSource(Client),
                     _registeredServersClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -148,7 +148,7 @@ namespace Azure.ResourceManager.StorageSync
                 HttpMessage message = _registeredServersRestClient.CreateCreateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, serverId, StorageSyncRegisteredServerCreateOrUpdateContent.ToRequestContent(content), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 StorageSyncArmOperation<StorageSyncRegisteredServerResource> operation = new StorageSyncArmOperation<StorageSyncRegisteredServerResource>(
-                    new StorageSyncRegisteredServerOperationSource(Client),
+                    new StorageSyncRegisteredServerResourceOperationSource(Client),
                     _registeredServersClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -282,7 +282,13 @@ namespace Azure.ResourceManager.StorageSync
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<StorageSyncRegisteredServerData, StorageSyncRegisteredServerResource>(new RegisteredServersGetByStorageSyncServiceAsyncCollectionResultOfT(_registeredServersRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context), data => new StorageSyncRegisteredServerResource(Client, data));
+            return new AsyncPageableWrapper<StorageSyncRegisteredServerData, StorageSyncRegisteredServerResource>(new RegisteredServersGetByStorageSyncServiceAsyncCollectionResultOfT(
+                _registeredServersRestClient,
+                Guid.Parse(Id.SubscriptionId),
+                Id.ResourceGroupName,
+                Id.Name,
+                context,
+                "StorageSyncRegisteredServerCollection.GetAll"), data => new StorageSyncRegisteredServerResource(Client, data));
         }
 
         /// <summary>
@@ -310,7 +316,13 @@ namespace Azure.ResourceManager.StorageSync
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<StorageSyncRegisteredServerData, StorageSyncRegisteredServerResource>(new RegisteredServersGetByStorageSyncServiceCollectionResultOfT(_registeredServersRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context), data => new StorageSyncRegisteredServerResource(Client, data));
+            return new PageableWrapper<StorageSyncRegisteredServerData, StorageSyncRegisteredServerResource>(new RegisteredServersGetByStorageSyncServiceCollectionResultOfT(
+                _registeredServersRestClient,
+                Guid.Parse(Id.SubscriptionId),
+                Id.ResourceGroupName,
+                Id.Name,
+                context,
+                "StorageSyncRegisteredServerCollection.GetAll"), data => new StorageSyncRegisteredServerResource(Client, data));
         }
 
         /// <summary>

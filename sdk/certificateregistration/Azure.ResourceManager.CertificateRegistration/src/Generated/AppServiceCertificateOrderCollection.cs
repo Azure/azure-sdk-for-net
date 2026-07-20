@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.CertificateRegistration
         {
             if (id.ResourceType != ResourceGroupResource.ResourceType)
             {
-                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ResourceGroupResource.ResourceType), id);
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ResourceGroupResource.ResourceType), nameof(id));
             }
         }
 
@@ -94,7 +94,7 @@ namespace Azure.ResourceManager.CertificateRegistration
                 HttpMessage message = _appServiceCertificateOrdersRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, certificateOrderName, AppServiceCertificateOrderData.ToRequestContent(data), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 CertificateRegistrationArmOperation<AppServiceCertificateOrderResource> operation = new CertificateRegistrationArmOperation<AppServiceCertificateOrderResource>(
-                    new AppServiceCertificateOrderOperationSource(Client),
+                    new AppServiceCertificateOrderResourceOperationSource(Client),
                     _appServiceCertificateOrdersClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -152,7 +152,7 @@ namespace Azure.ResourceManager.CertificateRegistration
                 HttpMessage message = _appServiceCertificateOrdersRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, certificateOrderName, AppServiceCertificateOrderData.ToRequestContent(data), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 CertificateRegistrationArmOperation<AppServiceCertificateOrderResource> operation = new CertificateRegistrationArmOperation<AppServiceCertificateOrderResource>(
-                    new AppServiceCertificateOrderOperationSource(Client),
+                    new AppServiceCertificateOrderResourceOperationSource(Client),
                     _appServiceCertificateOrdersClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -294,7 +294,7 @@ namespace Azure.ResourceManager.CertificateRegistration
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<AppServiceCertificateOrderData, AppServiceCertificateOrderResource>(new AppServiceCertificateOrdersGetByResourceGroupAsyncCollectionResultOfT(_appServiceCertificateOrdersRestClient, Id.SubscriptionId, Id.ResourceGroupName, context), data => new AppServiceCertificateOrderResource(Client, data));
+            return new AsyncPageableWrapper<AppServiceCertificateOrderData, AppServiceCertificateOrderResource>(new AppServiceCertificateOrdersGetByResourceGroupAsyncCollectionResultOfT(_appServiceCertificateOrdersRestClient, Id.SubscriptionId, Id.ResourceGroupName, context, "AppServiceCertificateOrderCollection.GetAll"), data => new AppServiceCertificateOrderResource(Client, data));
         }
 
         /// <summary>
@@ -322,7 +322,7 @@ namespace Azure.ResourceManager.CertificateRegistration
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<AppServiceCertificateOrderData, AppServiceCertificateOrderResource>(new AppServiceCertificateOrdersGetByResourceGroupCollectionResultOfT(_appServiceCertificateOrdersRestClient, Id.SubscriptionId, Id.ResourceGroupName, context), data => new AppServiceCertificateOrderResource(Client, data));
+            return new PageableWrapper<AppServiceCertificateOrderData, AppServiceCertificateOrderResource>(new AppServiceCertificateOrdersGetByResourceGroupCollectionResultOfT(_appServiceCertificateOrdersRestClient, Id.SubscriptionId, Id.ResourceGroupName, context, "AppServiceCertificateOrderCollection.GetAll"), data => new AppServiceCertificateOrderResource(Client, data));
         }
 
         /// <summary>

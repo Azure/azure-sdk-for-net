@@ -7,7 +7,7 @@ using Azure.ResourceManager.PrivateDns;
 namespace Azure.Provisioning.Generator.Specifications;
 
 public class PrivateDnsSpecification() :
-    Specification("PrivateDns", typeof(PrivateDnsExtensions), ignorePropertiesWithoutPath: true)
+    Specification("PrivateDns", typeof(PrivateDnsExtensions), ignorePropertiesWithoutPath: true, serviceDirectory: "privatedns")
 {
     protected override void Customize()
     { }

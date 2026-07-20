@@ -15,21 +15,8 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
     {
         /// <summary> Initializes a new instance of <see cref="PostgreSqlFlexibleServerLtrPreBackupContent"/>. </summary>
         /// <param name="backupSettings"> Backup Settings. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="backupSettings"/> is null. </exception>
-        public PostgreSqlFlexibleServerLtrPreBackupContent(PostgreSqlFlexibleServerBackupSettings backupSettings) : base(backupSettings)
-        {
-            Argument.AssertNotNull(backupSettings, nameof(backupSettings));
-        }
-
-        /// <summary> Initializes a new instance of <see cref="PostgreSqlFlexibleServerLtrPreBackupContent"/>. </summary>
-        /// <param name="backupSettings"> Backup Settings. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal PostgreSqlFlexibleServerLtrPreBackupContent(PostgreSqlFlexibleServerBackupSettings backupSettings, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(backupSettings, serializedAdditionalRawData)
-        {
-        }
-
-        /// <summary> Initializes a new instance of <see cref="PostgreSqlFlexibleServerLtrPreBackupContent"/> for deserialization. </summary>
-        internal PostgreSqlFlexibleServerLtrPreBackupContent()
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal PostgreSqlFlexibleServerLtrPreBackupContent(PostgreSqlFlexibleServerBackupSettings backupSettings, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(backupSettings, additionalBinaryDataProperties)
         {
         }
     }

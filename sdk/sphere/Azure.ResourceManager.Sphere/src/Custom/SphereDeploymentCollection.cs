@@ -39,7 +39,8 @@ namespace Azure.ResourceManager.Sphere
                 top,
                 skip,
                 maxpagesize,
-                context), data => new SphereDeploymentResource(Client, data));
+                context,
+                "SphereDeploymentCollection.GetAll"), data => new SphereDeploymentResource(Client, data));
         }
 
         /// <summary> List Deployment resources by DeviceGroup. </summary>
@@ -66,7 +67,8 @@ namespace Azure.ResourceManager.Sphere
                 top,
                 skip,
                 maxpagesize,
-                context), data => new SphereDeploymentResource(Client, data));
+                context,
+                "SphereDeploymentCollection.GetAll"), data => new SphereDeploymentResource(Client, data));
         }
     }
 }

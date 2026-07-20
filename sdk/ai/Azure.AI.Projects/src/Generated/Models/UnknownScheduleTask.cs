@@ -4,10 +4,13 @@
 
 using System;
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
+using Azure.AI.Projects;
 
-namespace Azure.AI.Projects
+namespace Azure.AI.Projects.Evaluation
 {
-    internal partial class UnknownScheduleTask : ScheduleTask
+    [Experimental("AAIP001")]
+    internal partial class UnknownScheduleTask : ProjectsScheduleTask
     {
         /// <summary> Initializes a new instance of <see cref="UnknownScheduleTask"/>. </summary>
         /// <param name="type"> Type of the task. </param>

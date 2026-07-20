@@ -67,9 +67,24 @@ namespace Azure.Security.KeyVault.Administration
             _diagnostics = new ClientDiagnostics(options, true);
             ClientDiagnostics = _diagnostics;
             Pipeline = pipeline;
-            _tokenCredential = credential;
             _endpoint = vaultUri;
             _apiVersion = apiVersion;
+        }
+
+        /// <summary> Initializes a new instance of KeyVaultAccessControlClient. </summary>
+        /// <param name="authenticationPolicy"> The authentication policy to use for pipeline creation. </param>
+        /// <param name="endpoint"> Service endpoint. </param>
+        /// <param name="options"> The options for configuring the client. </param>
+        internal KeyVaultAccessControlClient(HttpPipelinePolicy authenticationPolicy, Uri endpoint, KeyVaultAdministrationClientOptions options)
+        {
+            Argument.AssertNotNull(endpoint, nameof(endpoint));
+
+            options ??= new KeyVaultAdministrationClientOptions();
+
+            _endpoint = endpoint;
+            Pipeline = HttpPipelineBuilder.Build(options, new HttpPipelinePolicy[] { authenticationPolicy });
+            _apiVersion = options.GetVersionString();
+            ClientDiagnostics = new ClientDiagnostics(options, true);
         }
 
         /// <summary>

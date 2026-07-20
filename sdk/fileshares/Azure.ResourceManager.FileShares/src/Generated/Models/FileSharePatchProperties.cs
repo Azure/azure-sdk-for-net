@@ -50,30 +50,13 @@ namespace Azure.ResourceManager.FileShares.Models
         public int? ProvisionedThroughputMiBPerSec { get; set; }
 
         /// <summary> Protocol settings specific NFS. </summary>
-        internal NfsProtocolProperties NfsProtocolProperties { get; set; }
+        public NfsProtocolProperties NfsProtocolProperties { get; set; }
 
         /// <summary> The set of properties for control public access. </summary>
         internal PublicAccessProperties PublicAccessProperties { get; set; }
 
         /// <summary> Gets or sets allow or disallow public network access to azure managed file share. </summary>
         public FileSharePublicNetworkAccess? PublicNetworkAccess { get; set; }
-
-        /// <summary> Root squash defines how root users on clients are mapped to the NFS share. </summary>
-        public ShareRootSquash? NfsProtocolRootSquash
-        {
-            get
-            {
-                return NfsProtocolProperties is null ? default : NfsProtocolProperties.RootSquash;
-            }
-            set
-            {
-                if (NfsProtocolProperties is null)
-                {
-                    NfsProtocolProperties = new NfsProtocolProperties();
-                }
-                NfsProtocolProperties.RootSquash = value;
-            }
-        }
 
         /// <summary> The allowed set of subnets when access is restricted. </summary>
         public IList<string> PublicAccessAllowedSubnets

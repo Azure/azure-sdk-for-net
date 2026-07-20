@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.PostgreSql.FlexibleServers;
 
 namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
 {
@@ -14,44 +15,67 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
     public readonly partial struct PostgreSqlFlexibleServersPrivateEndpointConnectionProvisioningState : IEquatable<PostgreSqlFlexibleServersPrivateEndpointConnectionProvisioningState>
     {
         private readonly string _value;
+        /// <summary> Connection has been provisioned. </summary>
+        private const string SucceededValue = "Succeeded";
+        /// <summary> Connection is being created. </summary>
+        private const string CreatingValue = "Creating";
+        /// <summary> Connection is being deleted. </summary>
+        private const string DeletingValue = "Deleting";
+        /// <summary> Connection provisioning has failed. </summary>
+        private const string FailedValue = "Failed";
 
         /// <summary> Initializes a new instance of <see cref="PostgreSqlFlexibleServersPrivateEndpointConnectionProvisioningState"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public PostgreSqlFlexibleServersPrivateEndpointConnectionProvisioningState(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
+            Argument.AssertNotNull(value, nameof(value));
+
+            _value = value;
         }
 
-        private const string SucceededValue = "Succeeded";
-        private const string CreatingValue = "Creating";
-        private const string DeletingValue = "Deleting";
-        private const string FailedValue = "Failed";
-
-        /// <summary> Succeeded. </summary>
+        /// <summary> Connection has been provisioned. </summary>
         public static PostgreSqlFlexibleServersPrivateEndpointConnectionProvisioningState Succeeded { get; } = new PostgreSqlFlexibleServersPrivateEndpointConnectionProvisioningState(SucceededValue);
-        /// <summary> Creating. </summary>
+
+        /// <summary> Connection is being created. </summary>
         public static PostgreSqlFlexibleServersPrivateEndpointConnectionProvisioningState Creating { get; } = new PostgreSqlFlexibleServersPrivateEndpointConnectionProvisioningState(CreatingValue);
-        /// <summary> Deleting. </summary>
+
+        /// <summary> Connection is being deleted. </summary>
         public static PostgreSqlFlexibleServersPrivateEndpointConnectionProvisioningState Deleting { get; } = new PostgreSqlFlexibleServersPrivateEndpointConnectionProvisioningState(DeletingValue);
-        /// <summary> Failed. </summary>
+
+        /// <summary> Connection provisioning has failed. </summary>
         public static PostgreSqlFlexibleServersPrivateEndpointConnectionProvisioningState Failed { get; } = new PostgreSqlFlexibleServersPrivateEndpointConnectionProvisioningState(FailedValue);
+
         /// <summary> Determines if two <see cref="PostgreSqlFlexibleServersPrivateEndpointConnectionProvisioningState"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(PostgreSqlFlexibleServersPrivateEndpointConnectionProvisioningState left, PostgreSqlFlexibleServersPrivateEndpointConnectionProvisioningState right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="PostgreSqlFlexibleServersPrivateEndpointConnectionProvisioningState"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(PostgreSqlFlexibleServersPrivateEndpointConnectionProvisioningState left, PostgreSqlFlexibleServersPrivateEndpointConnectionProvisioningState right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="PostgreSqlFlexibleServersPrivateEndpointConnectionProvisioningState"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="PostgreSqlFlexibleServersPrivateEndpointConnectionProvisioningState"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator PostgreSqlFlexibleServersPrivateEndpointConnectionProvisioningState(string value) => new PostgreSqlFlexibleServersPrivateEndpointConnectionProvisioningState(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="PostgreSqlFlexibleServersPrivateEndpointConnectionProvisioningState"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator PostgreSqlFlexibleServersPrivateEndpointConnectionProvisioningState?(string value) => value == null ? null : new PostgreSqlFlexibleServersPrivateEndpointConnectionProvisioningState(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is PostgreSqlFlexibleServersPrivateEndpointConnectionProvisioningState other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(PostgreSqlFlexibleServersPrivateEndpointConnectionProvisioningState other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

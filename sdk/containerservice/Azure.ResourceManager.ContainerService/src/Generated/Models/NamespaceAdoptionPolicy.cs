@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.ContainerService;
 
 namespace Azure.ResourceManager.ContainerService.Models
 {
@@ -14,41 +15,62 @@ namespace Azure.ResourceManager.ContainerService.Models
     public readonly partial struct NamespaceAdoptionPolicy : IEquatable<NamespaceAdoptionPolicy>
     {
         private readonly string _value;
+        /// <summary> If the namespace already exists in Kubernetes, attempts to create that same namespace in ARM will fail. </summary>
+        private const string NeverValue = "Never";
+        /// <summary> Take over the existing namespace to be managed by ARM, if there is no difference. </summary>
+        private const string IfIdenticalValue = "IfIdentical";
+        /// <summary> Always take over the existing namespace to be managed by ARM, some fields might be overwritten. </summary>
+        private const string AlwaysValue = "Always";
 
         /// <summary> Initializes a new instance of <see cref="NamespaceAdoptionPolicy"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public NamespaceAdoptionPolicy(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string NeverValue = "Never";
-        private const string IfIdenticalValue = "IfIdentical";
-        private const string AlwaysValue = "Always";
+            _value = value;
+        }
 
         /// <summary> If the namespace already exists in Kubernetes, attempts to create that same namespace in ARM will fail. </summary>
         public static NamespaceAdoptionPolicy Never { get; } = new NamespaceAdoptionPolicy(NeverValue);
+
         /// <summary> Take over the existing namespace to be managed by ARM, if there is no difference. </summary>
         public static NamespaceAdoptionPolicy IfIdentical { get; } = new NamespaceAdoptionPolicy(IfIdenticalValue);
+
         /// <summary> Always take over the existing namespace to be managed by ARM, some fields might be overwritten. </summary>
         public static NamespaceAdoptionPolicy Always { get; } = new NamespaceAdoptionPolicy(AlwaysValue);
+
         /// <summary> Determines if two <see cref="NamespaceAdoptionPolicy"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(NamespaceAdoptionPolicy left, NamespaceAdoptionPolicy right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="NamespaceAdoptionPolicy"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(NamespaceAdoptionPolicy left, NamespaceAdoptionPolicy right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="NamespaceAdoptionPolicy"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="NamespaceAdoptionPolicy"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator NamespaceAdoptionPolicy(string value) => new NamespaceAdoptionPolicy(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="NamespaceAdoptionPolicy"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator NamespaceAdoptionPolicy?(string value) => value == null ? null : new NamespaceAdoptionPolicy(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is NamespaceAdoptionPolicy other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(NamespaceAdoptionPolicy other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

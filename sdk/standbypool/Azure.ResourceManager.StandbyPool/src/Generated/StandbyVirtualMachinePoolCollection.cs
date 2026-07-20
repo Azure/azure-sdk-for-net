@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.StandbyPool
         {
             if (id.ResourceType != ResourceGroupResource.ResourceType)
             {
-                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ResourceGroupResource.ResourceType), id);
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ResourceGroupResource.ResourceType), nameof(id));
             }
         }
 
@@ -94,7 +94,7 @@ namespace Azure.ResourceManager.StandbyPool
                 HttpMessage message = _standbyVirtualMachinePoolsRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, standbyVirtualMachinePoolName, StandbyVirtualMachinePoolData.ToRequestContent(data), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 StandbyPoolArmOperation<StandbyVirtualMachinePoolResource> operation = new StandbyPoolArmOperation<StandbyVirtualMachinePoolResource>(
-                    new StandbyVirtualMachinePoolOperationSource(Client),
+                    new StandbyVirtualMachinePoolResourceOperationSource(Client),
                     _standbyVirtualMachinePoolsClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -152,7 +152,7 @@ namespace Azure.ResourceManager.StandbyPool
                 HttpMessage message = _standbyVirtualMachinePoolsRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, standbyVirtualMachinePoolName, StandbyVirtualMachinePoolData.ToRequestContent(data), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 StandbyPoolArmOperation<StandbyVirtualMachinePoolResource> operation = new StandbyPoolArmOperation<StandbyVirtualMachinePoolResource>(
-                    new StandbyVirtualMachinePoolOperationSource(Client),
+                    new StandbyVirtualMachinePoolResourceOperationSource(Client),
                     _standbyVirtualMachinePoolsClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -294,7 +294,7 @@ namespace Azure.ResourceManager.StandbyPool
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<StandbyVirtualMachinePoolData, StandbyVirtualMachinePoolResource>(new StandbyVirtualMachinePoolsGetByResourceGroupAsyncCollectionResultOfT(_standbyVirtualMachinePoolsRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context), data => new StandbyVirtualMachinePoolResource(Client, data));
+            return new AsyncPageableWrapper<StandbyVirtualMachinePoolData, StandbyVirtualMachinePoolResource>(new StandbyVirtualMachinePoolsGetByResourceGroupAsyncCollectionResultOfT(_standbyVirtualMachinePoolsRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "StandbyVirtualMachinePoolCollection.GetAll"), data => new StandbyVirtualMachinePoolResource(Client, data));
         }
 
         /// <summary>
@@ -322,7 +322,7 @@ namespace Azure.ResourceManager.StandbyPool
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<StandbyVirtualMachinePoolData, StandbyVirtualMachinePoolResource>(new StandbyVirtualMachinePoolsGetByResourceGroupCollectionResultOfT(_standbyVirtualMachinePoolsRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context), data => new StandbyVirtualMachinePoolResource(Client, data));
+            return new PageableWrapper<StandbyVirtualMachinePoolData, StandbyVirtualMachinePoolResource>(new StandbyVirtualMachinePoolsGetByResourceGroupCollectionResultOfT(_standbyVirtualMachinePoolsRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "StandbyVirtualMachinePoolCollection.GetAll"), data => new StandbyVirtualMachinePoolResource(Client, data));
         }
 
         /// <summary>

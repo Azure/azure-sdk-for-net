@@ -24,12 +24,12 @@ namespace Azure.ResourceManager.Grafana
         /// <param name="name"> The name of the resource. </param>
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
         /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
-        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="properties"> Resource properties. </param>
-        internal GrafanaPrivateLinkResourceData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, BinaryData> additionalBinaryDataProperties, GrafanaPrivateLinkResourceProperties properties) : base(id, name, resourceType, systemData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal GrafanaPrivateLinkResourceData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, GrafanaPrivateLinkResourceProperties properties, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(id, name, resourceType, systemData)
         {
-            _additionalBinaryDataProperties = additionalBinaryDataProperties;
             Properties = properties;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> Resource properties. </summary>
@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.Grafana
         {
             get
             {
-                return Properties.ProvisioningState;
+                return Properties is null ? default : Properties.ProvisioningState;
             }
         }
 
@@ -49,7 +49,7 @@ namespace Azure.ResourceManager.Grafana
         {
             get
             {
-                return Properties.GroupId;
+                return Properties is null ? default : Properties.GroupId;
             }
         }
     }

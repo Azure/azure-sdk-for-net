@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.AppConfiguration
         {
             if (id.ResourceType != AppConfigurationStoreResource.ResourceType)
             {
-                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, AppConfigurationStoreResource.ResourceType), id);
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, AppConfigurationStoreResource.ResourceType), nameof(id));
             }
         }
 
@@ -93,7 +93,7 @@ namespace Azure.ResourceManager.AppConfiguration
                 HttpMessage message = _replicasRestClient.CreateCreateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, replicaName, AppConfigurationReplicaData.ToRequestContent(data), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 AppConfigurationArmOperation<AppConfigurationReplicaResource> operation = new AppConfigurationArmOperation<AppConfigurationReplicaResource>(
-                    new AppConfigurationReplicaOperationSource(Client),
+                    new AppConfigurationReplicaResourceOperationSource(Client),
                     _replicasClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -151,7 +151,7 @@ namespace Azure.ResourceManager.AppConfiguration
                 HttpMessage message = _replicasRestClient.CreateCreateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, replicaName, AppConfigurationReplicaData.ToRequestContent(data), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 AppConfigurationArmOperation<AppConfigurationReplicaResource> operation = new AppConfigurationArmOperation<AppConfigurationReplicaResource>(
-                    new AppConfigurationReplicaOperationSource(Client),
+                    new AppConfigurationReplicaResourceOperationSource(Client),
                     _replicasClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -300,7 +300,8 @@ namespace Azure.ResourceManager.AppConfiguration
                 Id.ResourceGroupName,
                 Id.Name,
                 skipToken,
-                context), data => new AppConfigurationReplicaResource(Client, data));
+                context,
+                "AppConfigurationReplicaCollection.GetAll"), data => new AppConfigurationReplicaResource(Client, data));
         }
 
         /// <summary>
@@ -335,7 +336,8 @@ namespace Azure.ResourceManager.AppConfiguration
                 Id.ResourceGroupName,
                 Id.Name,
                 skipToken,
-                context), data => new AppConfigurationReplicaResource(Client, data));
+                context,
+                "AppConfigurationReplicaCollection.GetAll"), data => new AppConfigurationReplicaResource(Client, data));
         }
 
         /// <summary>

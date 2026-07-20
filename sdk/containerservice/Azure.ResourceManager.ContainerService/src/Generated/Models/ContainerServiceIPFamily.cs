@@ -7,45 +7,65 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.ContainerService;
 
 namespace Azure.ResourceManager.ContainerService.Models
 {
-    /// <summary> The IP version to use for cluster networking and IP assignment. </summary>
+    /// <summary> To determine if address belongs IPv4 or IPv6 family. </summary>
     public readonly partial struct ContainerServiceIPFamily : IEquatable<ContainerServiceIPFamily>
     {
         private readonly string _value;
+        /// <summary> IPv4 family. </summary>
+        private const string IPv4Value = "IPv4";
+        /// <summary> IPv6 family. </summary>
+        private const string IPv6Value = "IPv6";
 
         /// <summary> Initializes a new instance of <see cref="ContainerServiceIPFamily"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public ContainerServiceIPFamily(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
+            Argument.AssertNotNull(value, nameof(value));
+
+            _value = value;
         }
 
-        private const string IPv4Value = "IPv4";
-        private const string IPv6Value = "IPv6";
-
-        /// <summary> IPv4. </summary>
+        /// <summary> IPv4 family. </summary>
         public static ContainerServiceIPFamily IPv4 { get; } = new ContainerServiceIPFamily(IPv4Value);
-        /// <summary> IPv6. </summary>
+
+        /// <summary> IPv6 family. </summary>
         public static ContainerServiceIPFamily IPv6 { get; } = new ContainerServiceIPFamily(IPv6Value);
+
         /// <summary> Determines if two <see cref="ContainerServiceIPFamily"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(ContainerServiceIPFamily left, ContainerServiceIPFamily right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="ContainerServiceIPFamily"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(ContainerServiceIPFamily left, ContainerServiceIPFamily right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="ContainerServiceIPFamily"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="ContainerServiceIPFamily"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator ContainerServiceIPFamily(string value) => new ContainerServiceIPFamily(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="ContainerServiceIPFamily"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator ContainerServiceIPFamily?(string value) => value == null ? null : new ContainerServiceIPFamily(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is ContainerServiceIPFamily other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(ContainerServiceIPFamily other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

@@ -11,19 +11,29 @@ using System.Text.Json;
 
 namespace Azure.ResourceManager.RedisEnterprise
 {
+    /// <summary></summary>
     public partial class RedisEnterpriseDatabaseResource : IJsonModel<RedisEnterpriseDatabaseData>
     {
-        private static RedisEnterpriseDatabaseData s_dataDeserializationInstance;
-        private static RedisEnterpriseDatabaseData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+        private static IJsonModel<RedisEnterpriseDatabaseData> s_dataDeserializationInstance;
 
+        private static IJsonModel<RedisEnterpriseDatabaseData> DataDeserializationInstance => s_dataDeserializationInstance ??= new RedisEnterpriseDatabaseData();
+
+        /// <param name="writer"> The writer to serialize the model to. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<RedisEnterpriseDatabaseData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<RedisEnterpriseDatabaseData>)Data).Write(writer, options);
 
-        RedisEnterpriseDatabaseData IJsonModel<RedisEnterpriseDatabaseData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<RedisEnterpriseDatabaseData>)DataDeserializationInstance).Create(ref reader, options);
+        /// <param name="reader"> The reader for deserializing the model. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        RedisEnterpriseDatabaseData IJsonModel<RedisEnterpriseDatabaseData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => DataDeserializationInstance.Create(ref reader, options);
 
+        /// <param name="options"> The client options for reading and writing models. </param>
         BinaryData IPersistableModel<RedisEnterpriseDatabaseData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<RedisEnterpriseDatabaseData>(Data, options, AzureResourceManagerRedisEnterpriseContext.Default);
 
+        /// <param name="data"> The binary data to be processed. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         RedisEnterpriseDatabaseData IPersistableModel<RedisEnterpriseDatabaseData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<RedisEnterpriseDatabaseData>(data, options, AzureResourceManagerRedisEnterpriseContext.Default);
 
-        string IPersistableModel<RedisEnterpriseDatabaseData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<RedisEnterpriseDatabaseData>)DataDeserializationInstance).GetFormatFromOptions(options);
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<RedisEnterpriseDatabaseData>.GetFormatFromOptions(ModelReaderWriterOptions options) => DataDeserializationInstance.GetFormatFromOptions(options);
     }
 }

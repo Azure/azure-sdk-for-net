@@ -9,68 +9,31 @@ using System;
 using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.Models;
+using Azure.ResourceManager.SecurityInsights;
 
 namespace Azure.ResourceManager.SecurityInsights.Models
 {
-    /// <summary>
-    /// A class representing the SecurityInsightsEntity data model.
-    /// Specific entity.
-    /// Please note <see cref="SecurityInsightsEntity"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-    /// The available derived classes include <see cref="SecurityInsightsAccountEntity"/>, <see cref="SecurityInsightsAzureResourceEntity"/>, <see cref="SecurityInsightsHuntingBookmark"/>, <see cref="SecurityInsightsCloudApplicationEntity"/>, <see cref="SecurityInsightsDnsEntity"/>, <see cref="SecurityInsightsFileEntity"/>, <see cref="SecurityInsightsFileHashEntity"/>, <see cref="SecurityInsightsHostEntity"/>, <see cref="SecurityInsightsIotDeviceEntity"/>, <see cref="SecurityInsightsIPEntity"/>, <see cref="SecurityInsightsMailboxEntity"/>, <see cref="SecurityInsightsMailClusterEntity"/>, <see cref="SecurityInsightsMailMessageEntity"/>, <see cref="SecurityInsightsMalwareEntity"/>, <see cref="NicEntity"/>, <see cref="SecurityInsightsProcessEntity"/>, <see cref="SecurityInsightsRegistryKeyEntity"/>, <see cref="SecurityInsightsRegistryValueEntity"/>, <see cref="SecurityInsightsAlert"/>, <see cref="SecurityInsightsGroupEntity"/>, <see cref="SecurityInsightsSubmissionMailEntity"/> and <see cref="SecurityInsightsUriEntity"/>.
-    /// </summary>
+    /// <summary> Specific entity. </summary>
     public partial class SecurityInsightsEntity : ResourceData
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private protected IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="SecurityInsightsEntity"/>. </summary>
-        public SecurityInsightsEntity()
-        {
-        }
-
-        /// <summary> Initializes a new instance of <see cref="SecurityInsightsEntity"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="kind"> The kind of the entity. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal SecurityInsightsEntity(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, SecurityInsightsEntityKind kind, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="kind"> Metadata used by portal/tooling/etc to render different UX experiences for resources of the same type; e.g. ApiApps are a kind of Microsoft.Web/sites type.  If supported, the resource provider must validate and persist this value. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal SecurityInsightsEntity(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, SecurityInsightsEntityKind kind, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(id, name, resourceType, systemData)
         {
             Kind = kind;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
-        /// <summary> The kind of the entity. </summary>
+        /// <summary> Metadata used by portal/tooling/etc to render different UX experiences for resources of the same type; e.g. ApiApps are a kind of Microsoft.Web/sites type.  If supported, the resource provider must validate and persist this value. </summary>
+        [WirePath("kind")]
         internal SecurityInsightsEntityKind Kind { get; set; }
     }
 }

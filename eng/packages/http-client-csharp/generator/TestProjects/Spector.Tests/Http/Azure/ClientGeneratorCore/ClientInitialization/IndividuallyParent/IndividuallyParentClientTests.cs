@@ -8,68 +8,67 @@ using Specs.Azure.ClientGenerator.Core.ClientInitialization._IndividuallyParentC
 
 namespace TestProjects.Spector.Tests.Http.Azure.ClientGeneratorCore.ClientInitialization.IndividuallyParent
 {
-    [Ignore("https://github.com/microsoft/typespec/issues/9775")]
     public class IndividuallyParentClientTests : SpectorTestBase
     {
         [SpectorTest]
-        public Task Azure_ClientGenerator_Core_ClientInitialization_IndividuallyParentClient_IndividuallyParentNestedWithPathClient() => Test(async (host) =>
+        public Task Azure_ClientGenerator_Core_ClientInitialization_IndividuallyParentClient_NestedWithPathClient() => Test(async (host) =>
         {
             var parentClient = new IndividuallyParentClient(host, null);
-            var childClient = parentClient.GetIndividuallyParentNestedWithPathClient();
+            var childClient = parentClient.GetNestedWithPathClient("test-blob");
             await PerformPathOperations(childClient);
 
-            var directClient = new IndividuallyParentNestedWithPathClient(host, "test-resource", null);
+            var directClient = new NestedWithPathClient(host, "test-blob", null);
             await PerformPathOperations(directClient);
 
-            async Task PerformPathOperations(IndividuallyParentNestedWithPathClient client)
-            {
-                await client.WithQueryAsync("text");
-
-                var response = await client.GetStandaloneAsync();
-                Assert.AreEqual("test-resource", response.Value.Name);
-                Assert.AreEqual(42, response.Value.Size);
-                Assert.AreEqual("text/plain", response.Value.ContentType);
-                Assert.AreEqual(new DateTimeOffset(2025, 4, 1, 12, 0, 0, TimeSpan.Zero), response.Value.CreatedOn);
-
-                await client.DeleteStandaloneAsync();
-            }
-        });
-
-        [SpectorTest]
-        public Task Azure_ClientGenerator_Core_ClientInitialization_IndividuallyParentClient_IndividuallyParentNestedWithQueryClient() => Test(async (host) =>
-        {
-            var parentClient = new IndividuallyParentClient(host, null);
-            var childClient = parentClient.GetIndividuallyParentNestedWithQueryClient();
-            await PerformQueryOperations(childClient);
-
-            var directClient = new IndividuallyParentNestedWithQueryClient(host, "test-blob", null);
-            await PerformQueryOperations(directClient);
-
-            async Task PerformQueryOperations(IndividuallyParentNestedWithQueryClient client)
+            async Task PerformPathOperations(NestedWithPathClient client)
             {
                 await client.WithQueryAsync("text");
 
                 var response = await client.GetStandaloneAsync();
                 Assert.AreEqual("test-blob", response.Value.Name);
-                Assert.AreEqual(42, response.Value.Size);
-                Assert.AreEqual("text/plain", response.Value.ContentType);
-                Assert.AreEqual(new DateTimeOffset(2025, 4, 1, 12, 0, 0, TimeSpan.Zero), response.Value.CreatedOn);
+                Assert.AreEqual(1024, response.Value.Size);
+                Assert.AreEqual("application/octet-stream", response.Value.ContentType);
+                Assert.AreEqual(new DateTimeOffset(2023, 1, 1, 12, 0, 0, TimeSpan.Zero), response.Value.CreatedOn);
 
                 await client.DeleteStandaloneAsync();
             }
         });
 
         [SpectorTest]
-        public Task Azure_ClientGenerator_Core_ClientInitialization_IndividuallyParentClient_IndividuallyParentNestedWithHeaderClient() => Test(async (host) =>
+        public Task Azure_ClientGenerator_Core_ClientInitialization_IndividuallyParentClient_NestedWithQueryClient() => Test(async (host) =>
         {
             var parentClient = new IndividuallyParentClient(host, null);
-            var childClient = parentClient.GetIndividuallyParentNestedWithHeaderClient();
+            var childClient = parentClient.GetNestedWithQueryClient("test-blob");
+            await PerformQueryOperations(childClient);
+
+            var directClient = new NestedWithQueryClient(host, "test-blob", null);
+            await PerformQueryOperations(directClient);
+
+            async Task PerformQueryOperations(NestedWithQueryClient client)
+            {
+                await client.WithQueryAsync("text");
+
+                var response = await client.GetStandaloneAsync();
+                Assert.AreEqual("test-blob", response.Value.Name);
+                Assert.AreEqual(1024, response.Value.Size);
+                Assert.AreEqual("application/octet-stream", response.Value.ContentType);
+                Assert.AreEqual(new DateTimeOffset(2023, 1, 1, 12, 0, 0, TimeSpan.Zero), response.Value.CreatedOn);
+
+                await client.DeleteStandaloneAsync();
+            }
+        });
+
+        [SpectorTest]
+        public Task Azure_ClientGenerator_Core_ClientInitialization_IndividuallyParentClient_NestedWithHeaderClient() => Test(async (host) =>
+        {
+            var parentClient = new IndividuallyParentClient(host, null);
+            var childClient = parentClient.GetNestedWithHeaderClient("test-name-value");
             await PerformHeaderOperations(childClient);
 
-            var directClient = new IndividuallyParentNestedWithHeaderClient(host, "test-name-value", null);
+            var directClient = new NestedWithHeaderClient(host, "test-name-value", null);
             await PerformHeaderOperations(directClient);
 
-            async Task PerformHeaderOperations(IndividuallyParentNestedWithHeaderClient client)
+            async Task PerformHeaderOperations(NestedWithHeaderClient client)
             {
                 await client.WithQueryAsync("text");
 
@@ -80,16 +79,16 @@ namespace TestProjects.Spector.Tests.Http.Azure.ClientGeneratorCore.ClientInitia
         });
 
         [SpectorTest]
-        public Task Azure_ClientGenerator_Core_ClientInitialization_IndividuallyParentClient_IndividuallyParentNestedWithMultipleClient() => Test(async (host) =>
+        public Task Azure_ClientGenerator_Core_ClientInitialization_IndividuallyParentClient_NestedWithMultipleClient() => Test(async (host) =>
         {
             var parentClient = new IndividuallyParentClient(host, null);
-            var childClient = parentClient.GetIndividuallyParentNestedWithMultipleClient();
+            var childClient = parentClient.GetNestedWithMultipleClient("test-name-value", "us-west");
             await PerformMultipleOperations(childClient);
 
-            var directClient = new IndividuallyParentNestedWithMultipleClient(host, "test-name-value", "us-west", null);
+            var directClient = new NestedWithMultipleClient(host, "test-name-value", "us-west", null);
             await PerformMultipleOperations(directClient);
 
-            async Task PerformMultipleOperations(IndividuallyParentNestedWithMultipleClient client)
+            async Task PerformMultipleOperations(NestedWithMultipleClient client)
             {
                 await client.WithQueryAsync("text");
 
@@ -100,16 +99,16 @@ namespace TestProjects.Spector.Tests.Http.Azure.ClientGeneratorCore.ClientInitia
         });
 
         [SpectorTest]
-        public Task Azure_ClientGenerator_Core_ClientInitialization_IndividuallyParentClient_IndividuallyParentNestedWithMixedClient() => Test(async (host) =>
+        public Task Azure_ClientGenerator_Core_ClientInitialization_IndividuallyParentClient_NestedWithMixedClient() => Test(async (host) =>
         {
             var parentClient = new IndividuallyParentClient(host, null);
-            var childClient = parentClient.GetIndividuallyParentNestedWithMixedClient();
+            var childClient = parentClient.GetNestedWithMixedClient("test-name-value");
             await PerformMixedOperations(childClient);
 
-            var directClient = new IndividuallyParentNestedWithMixedClient(host, "test-name-value", null);
+            var directClient = new NestedWithMixedClient(host, "test-name-value", null);
             await PerformMixedOperations(directClient);
 
-            async Task PerformMixedOperations(IndividuallyParentNestedWithMixedClient client)
+            async Task PerformMixedOperations(NestedWithMixedClient client)
             {
                 await client.WithQueryAsync("us-west", "text");
 
@@ -120,16 +119,16 @@ namespace TestProjects.Spector.Tests.Http.Azure.ClientGeneratorCore.ClientInitia
         });
 
         [SpectorTest]
-        public Task Azure_ClientGenerator_Core_ClientInitialization_IndividuallyParentClient_IndividuallyParentNestedWithParamAliasClient() => Test(async (host) =>
+        public Task Azure_ClientGenerator_Core_ClientInitialization_IndividuallyParentClient_NestedWithParamAliasClient() => Test(async (host) =>
         {
             var parentClient = new IndividuallyParentClient(host, null);
-            var childClient = parentClient.GetIndividuallyParentNestedWithParamAliasClient();
+            var childClient = parentClient.GetNestedWithParamAliasClient("sample-blob");
             await PerformParamAliasOperations(childClient);
 
-            var directClient = new IndividuallyParentNestedWithParamAliasClient(host, "sample-blob", "sample-blob", null);
+            var directClient = new NestedWithParamAliasClient(host, "sample-blob", null);
             await PerformParamAliasOperations(directClient);
 
-            async Task PerformParamAliasOperations(IndividuallyParentNestedWithParamAliasClient client)
+            async Task PerformParamAliasOperations(NestedWithParamAliasClient client)
             {
                 await client.WithAliasedNameAsync();
 

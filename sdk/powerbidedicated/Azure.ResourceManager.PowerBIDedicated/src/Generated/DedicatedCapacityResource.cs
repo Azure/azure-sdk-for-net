@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.PowerBIDedicated
         {
             if (id.ResourceType != ResourceType)
             {
-                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), id);
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), nameof(id));
             }
         }
 
@@ -229,7 +229,7 @@ namespace Azure.ResourceManager.PowerBIDedicated
                 HttpMessage message = _capacitiesRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, DedicatedCapacityPatch.ToRequestContent(patch), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 PowerBIDedicatedArmOperation<DedicatedCapacityResource> operation = new PowerBIDedicatedArmOperation<DedicatedCapacityResource>(
-                    new DedicatedCapacityOperationSource(Client),
+                    new DedicatedCapacityResourceOperationSource(Client),
                     _capacitiesClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -288,7 +288,7 @@ namespace Azure.ResourceManager.PowerBIDedicated
                 HttpMessage message = _capacitiesRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, DedicatedCapacityPatch.ToRequestContent(patch), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 PowerBIDedicatedArmOperation<DedicatedCapacityResource> operation = new PowerBIDedicatedArmOperation<DedicatedCapacityResource>(
-                    new DedicatedCapacityOperationSource(Client),
+                    new DedicatedCapacityResourceOperationSource(Client),
                     _capacitiesClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -434,7 +434,13 @@ namespace Azure.ResourceManager.PowerBIDedicated
             {
                 CancellationToken = cancellationToken
             };
-            return new CapacitiesGetSkusForCapacityAsyncCollectionResultOfT(_capacitiesRestClient, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, context);
+            return new CapacitiesGetSkusForCapacityAsyncCollectionResultOfT(
+                _capacitiesRestClient,
+                Id.SubscriptionId,
+                Id.ResourceGroupName,
+                Id.Name,
+                context,
+                "DedicatedCapacityResource.GetSkusForCapacity");
         }
 
         /// <summary>
@@ -466,7 +472,13 @@ namespace Azure.ResourceManager.PowerBIDedicated
             {
                 CancellationToken = cancellationToken
             };
-            return new CapacitiesGetSkusForCapacityCollectionResultOfT(_capacitiesRestClient, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, context);
+            return new CapacitiesGetSkusForCapacityCollectionResultOfT(
+                _capacitiesRestClient,
+                Id.SubscriptionId,
+                Id.ResourceGroupName,
+                Id.Name,
+                context,
+                "DedicatedCapacityResource.GetSkusForCapacity");
         }
 
         /// <summary>

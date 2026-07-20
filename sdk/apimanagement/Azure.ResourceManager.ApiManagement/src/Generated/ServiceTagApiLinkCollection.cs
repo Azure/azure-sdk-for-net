@@ -8,12 +8,13 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.Globalization;
+using System.Diagnostics;
 using System.Threading;
 using System.Threading.Tasks;
-using Autorest.CSharp.Core;
+using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
+using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.ApiManagement
 {
@@ -24,51 +25,49 @@ namespace Azure.ResourceManager.ApiManagement
     /// </summary>
     public partial class ServiceTagApiLinkCollection : ArmCollection, IEnumerable<ServiceTagApiLinkResource>, IAsyncEnumerable<ServiceTagApiLinkResource>
     {
-        private readonly ClientDiagnostics _serviceTagApiLinkTagApiLinkClientDiagnostics;
-        private readonly TagApiLinkRestOperations _serviceTagApiLinkTagApiLinkRestClient;
+        private readonly ClientDiagnostics _tagApiLinkClientDiagnostics;
+        private readonly TagApiLink _tagApiLinkRestClient;
 
-        /// <summary> Initializes a new instance of the <see cref="ServiceTagApiLinkCollection"/> class for mocking. </summary>
+        /// <summary> Initializes a new instance of ServiceTagApiLinkCollection for mocking. </summary>
         protected ServiceTagApiLinkCollection()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref="ServiceTagApiLinkCollection"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="ServiceTagApiLinkCollection"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
-        /// <param name="id"> The identifier of the parent resource that is the target of operations. </param>
+        /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal ServiceTagApiLinkCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _serviceTagApiLinkTagApiLinkClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ApiManagement", ServiceTagApiLinkResource.ResourceType.Namespace, Diagnostics);
-            TryGetApiVersion(ServiceTagApiLinkResource.ResourceType, out string serviceTagApiLinkTagApiLinkApiVersion);
-            _serviceTagApiLinkTagApiLinkRestClient = new TagApiLinkRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, serviceTagApiLinkTagApiLinkApiVersion);
-#if DEBUG
-			ValidateResourceId(Id);
-#endif
+            TryGetApiVersion(ServiceTagApiLinkResource.ResourceType, out string serviceTagApiLinkApiVersion);
+            _tagApiLinkClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ApiManagement", ServiceTagApiLinkResource.ResourceType.Namespace, Diagnostics);
+            _tagApiLinkRestClient = new TagApiLink(_tagApiLinkClientDiagnostics, Pipeline, Endpoint, serviceTagApiLinkApiVersion ?? "2025-09-01-preview");
+            ValidateResourceId(id);
         }
 
+        /// <param name="id"></param>
+        [Conditional("DEBUG")]
         internal static void ValidateResourceId(ResourceIdentifier id)
         {
             if (id.ResourceType != ApiManagementTagResource.ResourceType)
-                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, ApiManagementTagResource.ResourceType), nameof(id));
+            {
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ApiManagementTagResource.ResourceType), nameof(id));
+            }
         }
 
         /// <summary>
         /// Adds an API to the specified tag via link.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/tags/{tagId}/apiLinks/{apiLinkId}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/tags/{tagId}/apiLinks/{apiLinkId}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>TagApiLink_CreateOrUpdate</description>
+        /// <term> Operation Id. </term>
+        /// <description> TagApiLinkContracts_CreateOrUpdate. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-05-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ServiceTagApiLinkResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-09-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -76,23 +75,31 @@ namespace Azure.ResourceManager.ApiManagement
         /// <param name="apiLinkId"> Tag-API link identifier. Must be unique in the current API Management service instance. </param>
         /// <param name="data"> Create or update parameters. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="apiLinkId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="apiLinkId"/> or <paramref name="data"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="apiLinkId"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual async Task<ArmOperation<ServiceTagApiLinkResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string apiLinkId, TagApiLinkContractData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(apiLinkId, nameof(apiLinkId));
             Argument.AssertNotNull(data, nameof(data));
 
-            using var scope = _serviceTagApiLinkTagApiLinkClientDiagnostics.CreateScope("ServiceTagApiLinkCollection.CreateOrUpdate");
+            using DiagnosticScope scope = _tagApiLinkClientDiagnostics.CreateScope("ServiceTagApiLinkCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                var response = await _serviceTagApiLinkTagApiLinkRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, apiLinkId, data, cancellationToken).ConfigureAwait(false);
-                var uri = _serviceTagApiLinkTagApiLinkRestClient.CreateCreateOrUpdateRequestUri(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, apiLinkId, data);
-                var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
-                var operation = new ApiManagementArmOperation<ServiceTagApiLinkResource>(Response.FromValue(new ServiceTagApiLinkResource(Client, response), response.GetRawResponse()), rehydrationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _tagApiLinkRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, apiLinkId, TagApiLinkContractData.ToRequestContent(data), context);
+                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                Response<TagApiLinkContractData> response = Response.FromValue(TagApiLinkContractData.FromResponse(result), result);
+                RequestUriBuilder uri = message.Request.Uri;
+                RehydrationToken rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
+                ApiManagementArmOperation<ServiceTagApiLinkResource> operation = new ApiManagementArmOperation<ServiceTagApiLinkResource>(Response.FromValue(new ServiceTagApiLinkResource(Client, response.Value), response.GetRawResponse()), rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
+                {
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
+                }
                 return operation;
             }
             catch (Exception e)
@@ -106,20 +113,16 @@ namespace Azure.ResourceManager.ApiManagement
         /// Adds an API to the specified tag via link.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/tags/{tagId}/apiLinks/{apiLinkId}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/tags/{tagId}/apiLinks/{apiLinkId}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>TagApiLink_CreateOrUpdate</description>
+        /// <term> Operation Id. </term>
+        /// <description> TagApiLinkContracts_CreateOrUpdate. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-05-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ServiceTagApiLinkResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-09-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -127,23 +130,31 @@ namespace Azure.ResourceManager.ApiManagement
         /// <param name="apiLinkId"> Tag-API link identifier. Must be unique in the current API Management service instance. </param>
         /// <param name="data"> Create or update parameters. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="apiLinkId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="apiLinkId"/> or <paramref name="data"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="apiLinkId"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual ArmOperation<ServiceTagApiLinkResource> CreateOrUpdate(WaitUntil waitUntil, string apiLinkId, TagApiLinkContractData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(apiLinkId, nameof(apiLinkId));
             Argument.AssertNotNull(data, nameof(data));
 
-            using var scope = _serviceTagApiLinkTagApiLinkClientDiagnostics.CreateScope("ServiceTagApiLinkCollection.CreateOrUpdate");
+            using DiagnosticScope scope = _tagApiLinkClientDiagnostics.CreateScope("ServiceTagApiLinkCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                var response = _serviceTagApiLinkTagApiLinkRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, apiLinkId, data, cancellationToken);
-                var uri = _serviceTagApiLinkTagApiLinkRestClient.CreateCreateOrUpdateRequestUri(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, apiLinkId, data);
-                var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
-                var operation = new ApiManagementArmOperation<ServiceTagApiLinkResource>(Response.FromValue(new ServiceTagApiLinkResource(Client, response), response.GetRawResponse()), rehydrationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _tagApiLinkRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, apiLinkId, TagApiLinkContractData.ToRequestContent(data), context);
+                Response result = Pipeline.ProcessMessage(message, context);
+                Response<TagApiLinkContractData> response = Response.FromValue(TagApiLinkContractData.FromResponse(result), result);
+                RequestUriBuilder uri = message.Request.Uri;
+                RehydrationToken rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
+                ApiManagementArmOperation<ServiceTagApiLinkResource> operation = new ApiManagementArmOperation<ServiceTagApiLinkResource>(Response.FromValue(new ServiceTagApiLinkResource(Client, response.Value), response.GetRawResponse()), rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
+                {
                     operation.WaitForCompletion(cancellationToken);
+                }
                 return operation;
             }
             catch (Exception e)
@@ -157,38 +168,42 @@ namespace Azure.ResourceManager.ApiManagement
         /// Gets the API link for the tag.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/tags/{tagId}/apiLinks/{apiLinkId}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/tags/{tagId}/apiLinks/{apiLinkId}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>TagApiLink_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> TagApiLinkContracts_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-05-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ServiceTagApiLinkResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-09-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="apiLinkId"> Tag-API link identifier. Must be unique in the current API Management service instance. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="apiLinkId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="apiLinkId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="apiLinkId"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual async Task<Response<ServiceTagApiLinkResource>> GetAsync(string apiLinkId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(apiLinkId, nameof(apiLinkId));
 
-            using var scope = _serviceTagApiLinkTagApiLinkClientDiagnostics.CreateScope("ServiceTagApiLinkCollection.Get");
+            using DiagnosticScope scope = _tagApiLinkClientDiagnostics.CreateScope("ServiceTagApiLinkCollection.Get");
             scope.Start();
             try
             {
-                var response = await _serviceTagApiLinkTagApiLinkRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, apiLinkId, cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _tagApiLinkRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, apiLinkId, context);
+                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                Response<TagApiLinkContractData> response = Response.FromValue(TagApiLinkContractData.FromResponse(result), result);
                 if (response.Value == null)
+                {
                     throw new RequestFailedException(response.GetRawResponse());
+                }
                 return Response.FromValue(new ServiceTagApiLinkResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -202,38 +217,42 @@ namespace Azure.ResourceManager.ApiManagement
         /// Gets the API link for the tag.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/tags/{tagId}/apiLinks/{apiLinkId}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/tags/{tagId}/apiLinks/{apiLinkId}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>TagApiLink_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> TagApiLinkContracts_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-05-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ServiceTagApiLinkResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-09-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="apiLinkId"> Tag-API link identifier. Must be unique in the current API Management service instance. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="apiLinkId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="apiLinkId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="apiLinkId"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual Response<ServiceTagApiLinkResource> Get(string apiLinkId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(apiLinkId, nameof(apiLinkId));
 
-            using var scope = _serviceTagApiLinkTagApiLinkClientDiagnostics.CreateScope("ServiceTagApiLinkCollection.Get");
+            using DiagnosticScope scope = _tagApiLinkClientDiagnostics.CreateScope("ServiceTagApiLinkCollection.Get");
             scope.Start();
             try
             {
-                var response = _serviceTagApiLinkTagApiLinkRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, apiLinkId, cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _tagApiLinkRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, apiLinkId, context);
+                Response result = Pipeline.ProcessMessage(message, context);
+                Response<TagApiLinkContractData> response = Response.FromValue(TagApiLinkContractData.FromResponse(result), result);
                 if (response.Value == null)
+                {
                     throw new RequestFailedException(response.GetRawResponse());
+                }
                 return Response.FromValue(new ServiceTagApiLinkResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -247,53 +266,16 @@ namespace Azure.ResourceManager.ApiManagement
         /// Lists a collection of the API links associated with a tag.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/tags/{tagId}/apiLinks</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/tags/{tagId}/apiLinks. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>TagApiLink_ListByProduct</description>
+        /// <term> Operation Id. </term>
+        /// <description> TagApiLinkContracts_ListByProduct. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-05-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ServiceTagApiLinkResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="filter"> |     Field     |     Usage     |     Supported operators     |     Supported functions     |&lt;/br&gt;|-------------|-------------|-------------|-------------|&lt;/br&gt;| apiId | filter | ge, le, eq, ne, gt, lt | substringof, contains, startswith, endswith |&lt;/br&gt;. </param>
-        /// <param name="top"> Number of records to return. </param>
-        /// <param name="skip"> Number of records to skip. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="ServiceTagApiLinkResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<ServiceTagApiLinkResource> GetAllAsync(string filter = null, int? top = null, int? skip = null, CancellationToken cancellationToken = default)
-        {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _serviceTagApiLinkTagApiLinkRestClient.CreateListByProductRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, filter, top, skip);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _serviceTagApiLinkTagApiLinkRestClient.CreateListByProductNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, filter, top, skip);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new ServiceTagApiLinkResource(Client, TagApiLinkContractData.DeserializeTagApiLinkContractData(e)), _serviceTagApiLinkTagApiLinkClientDiagnostics, Pipeline, "ServiceTagApiLinkCollection.GetAll", "value", "nextLink", cancellationToken);
-        }
-
-        /// <summary>
-        /// Lists a collection of the API links associated with a tag.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/tags/{tagId}/apiLinks</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>TagApiLink_ListByProduct</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-05-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ServiceTagApiLinkResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-09-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -302,47 +284,114 @@ namespace Azure.ResourceManager.ApiManagement
         /// <param name="skip"> Number of records to skip. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="ServiceTagApiLinkResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<ServiceTagApiLinkResource> GetAll(string filter = null, int? top = null, int? skip = null, CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<ServiceTagApiLinkResource> GetAllAsync(string filter = default, int? top = default, int? skip = default, CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _serviceTagApiLinkTagApiLinkRestClient.CreateListByProductRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, filter, top, skip);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _serviceTagApiLinkTagApiLinkRestClient.CreateListByProductNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, filter, top, skip);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new ServiceTagApiLinkResource(Client, TagApiLinkContractData.DeserializeTagApiLinkContractData(e)), _serviceTagApiLinkTagApiLinkClientDiagnostics, Pipeline, "ServiceTagApiLinkCollection.GetAll", "value", "nextLink", cancellationToken);
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new AsyncPageableWrapper<TagApiLinkContractData, ServiceTagApiLinkResource>(new TagApiLinkGetByProductAsyncCollectionResultOfT(
+                _tagApiLinkRestClient,
+                Guid.Parse(Id.SubscriptionId),
+                Id.ResourceGroupName,
+                Id.Parent.Name,
+                Id.Name,
+                filter,
+                top,
+                skip,
+                context,
+                "ServiceTagApiLinkCollection.GetAll"), data => new ServiceTagApiLinkResource(Client, data));
+        }
+
+        /// <summary>
+        /// Lists a collection of the API links associated with a tag.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/tags/{tagId}/apiLinks. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> TagApiLinkContracts_ListByProduct. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-09-01-preview. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="filter"> |     Field     |     Usage     |     Supported operators     |     Supported functions     |&lt;/br&gt;|-------------|-------------|-------------|-------------|&lt;/br&gt;| apiId | filter | ge, le, eq, ne, gt, lt | substringof, contains, startswith, endswith |&lt;/br&gt;. </param>
+        /// <param name="top"> Number of records to return. </param>
+        /// <param name="skip"> Number of records to skip. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> A collection of <see cref="ServiceTagApiLinkResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<ServiceTagApiLinkResource> GetAll(string filter = default, int? top = default, int? skip = default, CancellationToken cancellationToken = default)
+        {
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new PageableWrapper<TagApiLinkContractData, ServiceTagApiLinkResource>(new TagApiLinkGetByProductCollectionResultOfT(
+                _tagApiLinkRestClient,
+                Guid.Parse(Id.SubscriptionId),
+                Id.ResourceGroupName,
+                Id.Parent.Name,
+                Id.Name,
+                filter,
+                top,
+                skip,
+                context,
+                "ServiceTagApiLinkCollection.GetAll"), data => new ServiceTagApiLinkResource(Client, data));
         }
 
         /// <summary>
         /// Checks to see if the resource exists in azure.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/tags/{tagId}/apiLinks/{apiLinkId}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/tags/{tagId}/apiLinks/{apiLinkId}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>TagApiLink_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> TagApiLinkContracts_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-05-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ServiceTagApiLinkResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-09-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="apiLinkId"> Tag-API link identifier. Must be unique in the current API Management service instance. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="apiLinkId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="apiLinkId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="apiLinkId"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual async Task<Response<bool>> ExistsAsync(string apiLinkId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(apiLinkId, nameof(apiLinkId));
 
-            using var scope = _serviceTagApiLinkTagApiLinkClientDiagnostics.CreateScope("ServiceTagApiLinkCollection.Exists");
+            using DiagnosticScope scope = _tagApiLinkClientDiagnostics.CreateScope("ServiceTagApiLinkCollection.Exists");
             scope.Start();
             try
             {
-                var response = await _serviceTagApiLinkTagApiLinkRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, apiLinkId, cancellationToken: cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _tagApiLinkRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, apiLinkId, context);
+                await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
+                Response result = message.Response;
+                Response<TagApiLinkContractData> response = default;
+                switch (result.Status)
+                {
+                    case 200:
+                        response = Response.FromValue(TagApiLinkContractData.FromResponse(result), result);
+                        break;
+                    case 404:
+                        response = Response.FromValue((TagApiLinkContractData)null, result);
+                        break;
+                    default:
+                        throw new RequestFailedException(result);
+                }
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -356,36 +405,50 @@ namespace Azure.ResourceManager.ApiManagement
         /// Checks to see if the resource exists in azure.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/tags/{tagId}/apiLinks/{apiLinkId}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/tags/{tagId}/apiLinks/{apiLinkId}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>TagApiLink_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> TagApiLinkContracts_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-05-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ServiceTagApiLinkResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-09-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="apiLinkId"> Tag-API link identifier. Must be unique in the current API Management service instance. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="apiLinkId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="apiLinkId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="apiLinkId"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual Response<bool> Exists(string apiLinkId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(apiLinkId, nameof(apiLinkId));
 
-            using var scope = _serviceTagApiLinkTagApiLinkClientDiagnostics.CreateScope("ServiceTagApiLinkCollection.Exists");
+            using DiagnosticScope scope = _tagApiLinkClientDiagnostics.CreateScope("ServiceTagApiLinkCollection.Exists");
             scope.Start();
             try
             {
-                var response = _serviceTagApiLinkTagApiLinkRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, apiLinkId, cancellationToken: cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _tagApiLinkRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, apiLinkId, context);
+                Pipeline.Send(message, context.CancellationToken);
+                Response result = message.Response;
+                Response<TagApiLinkContractData> response = default;
+                switch (result.Status)
+                {
+                    case 200:
+                        response = Response.FromValue(TagApiLinkContractData.FromResponse(result), result);
+                        break;
+                    case 404:
+                        response = Response.FromValue((TagApiLinkContractData)null, result);
+                        break;
+                    default:
+                        throw new RequestFailedException(result);
+                }
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -399,38 +462,54 @@ namespace Azure.ResourceManager.ApiManagement
         /// Tries to get details for this resource from the service.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/tags/{tagId}/apiLinks/{apiLinkId}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/tags/{tagId}/apiLinks/{apiLinkId}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>TagApiLink_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> TagApiLinkContracts_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-05-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ServiceTagApiLinkResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-09-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="apiLinkId"> Tag-API link identifier. Must be unique in the current API Management service instance. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="apiLinkId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="apiLinkId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="apiLinkId"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual async Task<NullableResponse<ServiceTagApiLinkResource>> GetIfExistsAsync(string apiLinkId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(apiLinkId, nameof(apiLinkId));
 
-            using var scope = _serviceTagApiLinkTagApiLinkClientDiagnostics.CreateScope("ServiceTagApiLinkCollection.GetIfExists");
+            using DiagnosticScope scope = _tagApiLinkClientDiagnostics.CreateScope("ServiceTagApiLinkCollection.GetIfExists");
             scope.Start();
             try
             {
-                var response = await _serviceTagApiLinkTagApiLinkRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, apiLinkId, cancellationToken: cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _tagApiLinkRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, apiLinkId, context);
+                await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
+                Response result = message.Response;
+                Response<TagApiLinkContractData> response = default;
+                switch (result.Status)
+                {
+                    case 200:
+                        response = Response.FromValue(TagApiLinkContractData.FromResponse(result), result);
+                        break;
+                    case 404:
+                        response = Response.FromValue((TagApiLinkContractData)null, result);
+                        break;
+                    default:
+                        throw new RequestFailedException(result);
+                }
                 if (response.Value == null)
+                {
                     return new NoValueResponse<ServiceTagApiLinkResource>(response.GetRawResponse());
+                }
                 return Response.FromValue(new ServiceTagApiLinkResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -444,38 +523,54 @@ namespace Azure.ResourceManager.ApiManagement
         /// Tries to get details for this resource from the service.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/tags/{tagId}/apiLinks/{apiLinkId}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/tags/{tagId}/apiLinks/{apiLinkId}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>TagApiLink_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> TagApiLinkContracts_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-05-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ServiceTagApiLinkResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-09-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="apiLinkId"> Tag-API link identifier. Must be unique in the current API Management service instance. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="apiLinkId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="apiLinkId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="apiLinkId"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual NullableResponse<ServiceTagApiLinkResource> GetIfExists(string apiLinkId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(apiLinkId, nameof(apiLinkId));
 
-            using var scope = _serviceTagApiLinkTagApiLinkClientDiagnostics.CreateScope("ServiceTagApiLinkCollection.GetIfExists");
+            using DiagnosticScope scope = _tagApiLinkClientDiagnostics.CreateScope("ServiceTagApiLinkCollection.GetIfExists");
             scope.Start();
             try
             {
-                var response = _serviceTagApiLinkTagApiLinkRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, apiLinkId, cancellationToken: cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _tagApiLinkRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, apiLinkId, context);
+                Pipeline.Send(message, context.CancellationToken);
+                Response result = message.Response;
+                Response<TagApiLinkContractData> response = default;
+                switch (result.Status)
+                {
+                    case 200:
+                        response = Response.FromValue(TagApiLinkContractData.FromResponse(result), result);
+                        break;
+                    case 404:
+                        response = Response.FromValue((TagApiLinkContractData)null, result);
+                        break;
+                    default:
+                        throw new RequestFailedException(result);
+                }
                 if (response.Value == null)
+                {
                     return new NoValueResponse<ServiceTagApiLinkResource>(response.GetRawResponse());
+                }
                 return Response.FromValue(new ServiceTagApiLinkResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -495,6 +590,7 @@ namespace Azure.ResourceManager.ApiManagement
             return GetAll().GetEnumerator();
         }
 
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
         IAsyncEnumerator<ServiceTagApiLinkResource> IAsyncEnumerable<ServiceTagApiLinkResource>.GetAsyncEnumerator(CancellationToken cancellationToken)
         {
             return GetAllAsync(cancellationToken: cancellationToken).GetAsyncEnumerator(cancellationToken);

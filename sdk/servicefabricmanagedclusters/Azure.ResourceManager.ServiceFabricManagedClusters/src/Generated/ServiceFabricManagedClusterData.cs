@@ -26,18 +26,18 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
         /// <param name="name"> The name of the resource. </param>
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
         /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
-        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="tags"> Resource tags. </param>
         /// <param name="location"> The geo-location where the resource lives. </param>
         /// <param name="properties"> The managed cluster resource properties. </param>
         /// <param name="eTag"> If eTag is provided in the response body, it may also be provided as a header per the normal etag convention.  Entity tags are used for comparing two or more entities from the same requested resource. HTTP/1.1 uses entity tags in the etag (section 14.19), If-Match (section 14.24), If-None-Match (section 14.26), and If-Range (section 14.27) header fields.",. </param>
         /// <param name="sku"> The sku of the managed cluster. </param>
-        internal ServiceFabricManagedClusterData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, BinaryData> additionalBinaryDataProperties, IDictionary<string, string> tags, AzureLocation location, ManagedClusterProperties properties, ETag? eTag, ServiceFabricManagedClustersSku sku) : base(id, name, resourceType, systemData, tags, location)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal ServiceFabricManagedClusterData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ManagedClusterProperties properties, ETag? eTag, ServiceFabricManagedClustersSku sku, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(id, name, resourceType, systemData, tags, location)
         {
-            _additionalBinaryDataProperties = additionalBinaryDataProperties;
             Properties = properties;
             ETag = eTag;
             Sku = sku;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> The managed cluster resource properties. </summary>
@@ -128,7 +128,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
                 {
                     Properties = new ManagedClusterProperties();
                 }
-                Properties.ClientConnectionPort = value.Value;
+                Properties.ClientConnectionPort = value;
             }
         }
 
@@ -145,7 +145,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
                 {
                     Properties = new ManagedClusterProperties();
                 }
-                Properties.HttpGatewayConnectionPort = value.Value;
+                Properties.HttpGatewayConnectionPort = value;
             }
         }
 
@@ -209,7 +209,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
                 {
                     Properties = new ManagedClusterProperties();
                 }
-                Properties.IsRdpAccessAllowed = value.Value;
+                Properties.IsRdpAccessAllowed = value;
             }
         }
 
@@ -308,7 +308,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
                 {
                     Properties = new ManagedClusterProperties();
                 }
-                Properties.ClusterUpgradeMode = value.Value;
+                Properties.ClusterUpgradeMode = value;
             }
         }
 
@@ -325,7 +325,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
                 {
                     Properties = new ManagedClusterProperties();
                 }
-                Properties.ClusterUpgradeCadence = value.Value;
+                Properties.ClusterUpgradeCadence = value;
             }
         }
 
@@ -355,7 +355,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
                 {
                     Properties = new ManagedClusterProperties();
                 }
-                Properties.IsAutoOSUpgradeEnabled = value.Value;
+                Properties.IsAutoOSUpgradeEnabled = value;
             }
         }
 
@@ -372,7 +372,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
                 {
                     Properties = new ManagedClusterProperties();
                 }
-                Properties.HasZoneResiliency = value.Value;
+                Properties.HasZoneResiliency = value;
             }
         }
 
@@ -389,7 +389,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
                 {
                     Properties = new ManagedClusterProperties();
                 }
-                Properties.IsIPv6Enabled = value.Value;
+                Properties.IsIPv6Enabled = value;
             }
         }
 
@@ -445,7 +445,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
                 {
                     Properties = new ManagedClusterProperties();
                 }
-                Properties.IsServicePublicIPEnabled = value.Value;
+                Properties.IsServicePublicIPEnabled = value;
             }
         }
 
@@ -488,7 +488,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
                 {
                     Properties = new ManagedClusterProperties();
                 }
-                Properties.ZonalUpdateMode = value.Value;
+                Properties.ZonalUpdateMode = value;
             }
         }
 
@@ -505,7 +505,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
                 {
                     Properties = new ManagedClusterProperties();
                 }
-                Properties.UseCustomVnet = value.Value;
+                Properties.UseCustomVnet = value;
             }
         }
 
@@ -590,7 +590,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
                 {
                     Properties = new ManagedClusterProperties();
                 }
-                Properties.HttpGatewayTokenAuthConnectionPort = value.Value;
+                Properties.HttpGatewayTokenAuthConnectionPort = value;
             }
         }
 
@@ -607,7 +607,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
                 {
                     Properties = new ManagedClusterProperties();
                 }
-                Properties.IsHttpGatewayExclusiveAuthModeEnabled = value.Value;
+                Properties.IsHttpGatewayExclusiveAuthModeEnabled = value;
             }
         }
 
@@ -624,7 +624,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
                 {
                     Properties = new ManagedClusterProperties();
                 }
-                Properties.AutoGeneratedDomainNameLabelScope = value.Value;
+                Properties.AutoGeneratedDomainNameLabelScope = value;
             }
         }
 
@@ -641,7 +641,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
                 {
                     Properties = new ManagedClusterProperties();
                 }
-                Properties.AllocatedOutboundPorts = value.Value;
+                Properties.AllocatedOutboundPorts = value;
             }
         }
 
@@ -675,7 +675,24 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
                 {
                     Properties = new ManagedClusterProperties();
                 }
-                Properties.EnableOutboundOnlyNodeTypes = value.Value;
+                Properties.EnableOutboundOnlyNodeTypes = value;
+            }
+        }
+
+        /// <summary> Determines whether to skip the assignment of the managed network security group (SF-NSG) to the cluster subnet when using a bring-your-own virtual network (BYOVNET) configuration. The default value is false. </summary>
+        public bool? SkipManagedNsgAssignment
+        {
+            get
+            {
+                return Properties is null ? default : Properties.SkipManagedNsgAssignment;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new ManagedClusterProperties();
+                }
+                Properties.SkipManagedNsgAssignment = value;
             }
         }
 
@@ -692,20 +709,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
                 {
                     Properties = new ManagedClusterProperties();
                 }
-                Properties.MaxUnusedVersionsToKeep = value.Value;
-            }
-        }
-
-        /// <summary> Sku Name. </summary>
-        public ServiceFabricManagedClustersSkuName? SkuName
-        {
-            get
-            {
-                return Sku is null ? default : Sku.Name;
-            }
-            set
-            {
-                Sku = value.HasValue ? new ServiceFabricManagedClustersSku(value.Value) : default;
+                Properties.MaxUnusedVersionsToKeep = value;
             }
         }
     }

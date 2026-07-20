@@ -10,13 +10,9 @@ using System.Threading;
 using System.Threading.Tasks;
 using Azure.ResourceManager.Resources;
 
+// NOTE: The following customization is intentionally retained for backward compatibility.
 namespace Azure.ResourceManager.NetworkCloud
 {
-    /// <summary>
-    /// A class representing a collection of <see cref="NetworkCloudL2NetworkResource"/> and their operations.
-    /// Each <see cref="NetworkCloudL2NetworkResource"/> in the collection will belong to the same instance of <see cref="ResourceGroupResource"/>.
-    /// To get a <see cref="NetworkCloudL2NetworkCollection"/> instance call the GetNetworkCloudL2Networks method from an instance of <see cref="ResourceGroupResource"/>.
-    /// </summary>
     public partial class NetworkCloudL2NetworkCollection : ArmCollection, IEnumerable<NetworkCloudL2NetworkResource>, IAsyncEnumerable<NetworkCloudL2NetworkResource>
     {
         /// <summary>
@@ -44,7 +40,7 @@ namespace Azure.ResourceManager.NetworkCloud
         /// <exception cref="ArgumentNullException"> <paramref name="l2NetworkName"/> or <paramref name="data"/> is null. </exception>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public virtual async Task<ArmOperation<NetworkCloudL2NetworkResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string l2NetworkName, NetworkCloudL2NetworkData data, CancellationToken cancellationToken)
-            => await CreateOrUpdateAsync(waitUntil, l2NetworkName, data, null, null, cancellationToken).ConfigureAwait(false);
+            => await CreateOrUpdateAsync(waitUntil, l2NetworkName, data, null, cancellationToken).ConfigureAwait(false);
 
         /// <summary>
         /// Create a new layer 2 (L2) network or update the properties of the existing network.
@@ -71,7 +67,7 @@ namespace Azure.ResourceManager.NetworkCloud
         /// <exception cref="ArgumentNullException"> <paramref name="l2NetworkName"/> or <paramref name="data"/> is null. </exception>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public virtual ArmOperation<NetworkCloudL2NetworkResource> CreateOrUpdate(WaitUntil waitUntil, string l2NetworkName, NetworkCloudL2NetworkData data, CancellationToken cancellationToken)
-            => CreateOrUpdate(waitUntil, l2NetworkName, data, null, null, cancellationToken);
+            => CreateOrUpdate(waitUntil, l2NetworkName, data, null, cancellationToken);
 
         /// <summary>
         /// Get a list of layer 2 (L2) networks in the provided resource group.
@@ -83,10 +79,6 @@ namespace Azure.ResourceManager.NetworkCloud
         /// <item>
         /// <term>Operation Id</term>
         /// <description>L2Networks_ListByResourceGroup</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-07-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -112,10 +104,6 @@ namespace Azure.ResourceManager.NetworkCloud
         /// <description>L2Networks_ListByResourceGroup</description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-07-01-preview</description>
-        /// </item>
-        /// <item>
         /// <term>Resource</term>
         /// <description><see cref="NetworkCloudL2NetworkResource"/></description>
         /// </item>
@@ -126,5 +114,63 @@ namespace Azure.ResourceManager.NetworkCloud
         [EditorBrowsable(EditorBrowsableState.Never)]
         public virtual Pageable<NetworkCloudL2NetworkResource> GetAll(CancellationToken cancellationToken)
             => GetAll(null, null, cancellationToken);
+
+        /// <summary>
+        /// Create a new layer 2 (L2) network or update the properties of the existing network.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.NetworkCloud/l2Networks/{l2NetworkName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>L2Networks_CreateOrUpdate</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="NetworkCloudL2NetworkResource"/></description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="l2NetworkName"> The name of the L2 network. </param>
+        /// <param name="data"> The request body. </param>
+        /// <param name="ifMatch"> The ETag of the transformation. Omit this value to always overwrite the current resource. Specify the last-seen ETag value to prevent accidentally overwriting concurrent changes. </param>
+        /// <param name="ifNoneMatch"> Set to '*' to allow a new record set to be created, but to prevent updating an existing resource. Other values will result in error from server as they are not supported. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="l2NetworkName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="l2NetworkName"/> or <paramref name="data"/> is null. </exception>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public virtual ArmOperation<NetworkCloudL2NetworkResource> CreateOrUpdate(WaitUntil waitUntil, string l2NetworkName, NetworkCloudL2NetworkData data, string ifMatch = null, string ifNoneMatch = null, CancellationToken cancellationToken = default)
+            => CreateOrUpdate(waitUntil, l2NetworkName, data, new MatchConditions { IfMatch = ifMatch != null ? new Azure.ETag(ifMatch) : default(Azure.ETag?), IfNoneMatch = ifNoneMatch != null ? new Azure.ETag(ifNoneMatch) : default(Azure.ETag?) }, cancellationToken);
+
+        /// <summary>
+        /// Create a new layer 2 (L2) network or update the properties of the existing network.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.NetworkCloud/l2Networks/{l2NetworkName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>L2Networks_CreateOrUpdate</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="NetworkCloudL2NetworkResource"/></description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="l2NetworkName"> The name of the L2 network. </param>
+        /// <param name="data"> The request body. </param>
+        /// <param name="ifMatch"> The ETag of the transformation. Omit this value to always overwrite the current resource. Specify the last-seen ETag value to prevent accidentally overwriting concurrent changes. </param>
+        /// <param name="ifNoneMatch"> Set to '*' to allow a new record set to be created, but to prevent updating an existing resource. Other values will result in error from server as they are not supported. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="l2NetworkName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="l2NetworkName"/> or <paramref name="data"/> is null. </exception>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public virtual async Task<ArmOperation<NetworkCloudL2NetworkResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string l2NetworkName, NetworkCloudL2NetworkData data, string ifMatch = null, string ifNoneMatch = null, CancellationToken cancellationToken = default)
+            => await CreateOrUpdateAsync(waitUntil, l2NetworkName, data, new MatchConditions { IfMatch = ifMatch != null ? new Azure.ETag(ifMatch) : default(Azure.ETag?), IfNoneMatch = ifNoneMatch != null ? new Azure.ETag(ifNoneMatch) : default(Azure.ETag?) }, cancellationToken).ConfigureAwait(false);
     }
 }

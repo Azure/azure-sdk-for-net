@@ -1,0 +1,40 @@
+{
+  "type": "object",
+  "properties": {
+    "AzureClients": {
+      "type": "object",
+      "properties": {
+        "SingleClient": {
+          "type": "object",
+          "description": "Configuration for SingleClient.",
+          "properties": {
+            "Endpoint": {
+              "type": "string",
+              "format": "uri",
+              "description": "Gets or sets the Endpoint."
+            },
+            "Credential": {
+              "$ref": "#/definitions/credential"
+            },
+            "Options": {
+              "$ref": "#/definitions/singleClientOptions"
+            }
+          }
+        }
+      },
+      "additionalProperties": {
+        "type": "object",
+        "description": "Configuration for a named client instance."
+      }
+    }
+  },
+  "definitions": {
+    "singleClientOptions": {
+      "allOf": [
+        {
+          "$ref": "#/definitions/azureOptions"
+        }
+      ]
+    }
+  }
+}

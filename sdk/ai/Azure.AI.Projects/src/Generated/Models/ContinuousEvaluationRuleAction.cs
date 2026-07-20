@@ -4,8 +4,9 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.AI.Projects;
 
-namespace Azure.AI.Projects
+namespace Azure.AI.Projects.Evaluation
 {
     /// <summary> Evaluation rule action for continuous evaluation. </summary>
     public partial class ContinuousEvaluationRuleAction : EvaluationRuleAction
@@ -25,10 +26,12 @@ namespace Azure.AI.Projects
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="evalId"> Eval Id to add continuous evaluation runs to. </param>
         /// <param name="maxHourlyRuns"> Maximum number of evaluation runs allowed per hour. </param>
-        internal ContinuousEvaluationRuleAction(EvaluationRuleActionType @type, IDictionary<string, BinaryData> additionalBinaryDataProperties, string evalId, int? maxHourlyRuns) : base(@type, additionalBinaryDataProperties)
+        /// <param name="samplingRate"> Percentage (0-100] chance that a matching event triggers an evaluation. When omitted, the service-default is to evaluate every event, which is equivalent to setting a sampling rate of 100. </param>
+        internal ContinuousEvaluationRuleAction(EvaluationRuleActionType @type, IDictionary<string, BinaryData> additionalBinaryDataProperties, string evalId, int? maxHourlyRuns, double? samplingRate) : base(@type, additionalBinaryDataProperties)
         {
             EvalId = evalId;
             MaxHourlyRuns = maxHourlyRuns;
+            SamplingRate = samplingRate;
         }
 
         /// <summary> Eval Id to add continuous evaluation runs to. </summary>
@@ -36,5 +39,8 @@ namespace Azure.AI.Projects
 
         /// <summary> Maximum number of evaluation runs allowed per hour. </summary>
         public int? MaxHourlyRuns { get; set; }
+
+        /// <summary> Percentage (0-100] chance that a matching event triggers an evaluation. When omitted, the service-default is to evaluate every event, which is equivalent to setting a sampling rate of 100. </summary>
+        public double? SamplingRate { get; set; }
     }
 }

@@ -68,9 +68,7 @@ namespace Azure.AI.Vision.ImageAnalysis
             {
                 return null;
             }
-            Utf8JsonRequestContent content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(imageUrl, ModelSerializationExtensions.WireOptions);
-            return content;
+            return RequestContent.Create(imageUrl, ModelSerializationExtensions.WireOptions);
         }
 
         /// <param name="writer"> The JSON writer. </param>

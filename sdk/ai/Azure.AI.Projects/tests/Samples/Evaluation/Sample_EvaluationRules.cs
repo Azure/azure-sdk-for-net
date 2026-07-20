@@ -4,12 +4,12 @@
 using System;
 using System.ClientModel;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure.AI.Projects.OpenAI;
+using Azure.AI.Extensions.OpenAI;
+using Azure.AI.Projects.Agents;
+using Azure.AI.Projects.Evaluation;
 using Azure.Identity;
 using Microsoft.ClientModel.TestFramework;
 using NUnit.Framework;
@@ -18,76 +18,8 @@ using OpenAI.Responses;
 
 namespace Azure.AI.Projects.Tests.Samples.Evaluation;
 
-public class Sample_EvaluationRules : SamplesBase
+public class Sample_EvaluationRules : EvaluationSampleBase
 {
-    #region Snippet:Sample_GetError_EvaluationRules
-    private static string GetErrorMessageOrEmpty(ClientResult result)
-    {
-        string error = "";
-        Utf8JsonReader reader = new(result.GetRawResponse().Content.ToMemory().ToArray());
-        JsonDocument document = JsonDocument.ParseValue(ref reader);
-        string code = default;
-        string message = default;
-        foreach (JsonProperty prop in document.RootElement.EnumerateObject())
-        {
-            if (prop.NameEquals("error"u8) && prop.Value.ValueKind != JsonValueKind.Null && prop.Value is JsonElement countsElement)
-            {
-                foreach (JsonProperty errorNode in countsElement.EnumerateObject())
-                {
-                    if (errorNode.Value.ValueKind == JsonValueKind.String)
-                    {
-                        if (errorNode.NameEquals("code"u8))
-                        {
-                            code = errorNode.Value.GetString();
-                        }
-                        else if (errorNode.NameEquals("message"u8))
-                        {
-                            message = errorNode.Value.GetString();
-                        }
-                    }
-                }
-            }
-        }
-        if (!string.IsNullOrEmpty(message))
-        {
-            error = $"Message: {message}, Code: {code ?? "<None>"}";
-        }
-        return error;
-    }
-    #endregion
-    #region Snippet:Sample_GetStringValues_EvaluationRules
-    private static Dictionary<string, string> ParseClientResult(ClientResult result, string[] expectedProperties)
-    {
-        Dictionary<string, string> results = [];
-        Utf8JsonReader reader = new(result.GetRawResponse().Content.ToMemory().ToArray());
-        JsonDocument document = JsonDocument.ParseValue(ref reader);
-        foreach (JsonProperty prop in document.RootElement.EnumerateObject())
-        {
-            foreach (string key in expectedProperties)
-            {
-                if (prop.NameEquals(Encoding.UTF8.GetBytes(key)) && prop.Value.ValueKind == JsonValueKind.String)
-                {
-                    results[key] = prop.Value.GetString();
-                }
-            }
-        }
-        List<string> notFoundItems = expectedProperties.Where((key) => !results.ContainsKey(key)).ToList();
-        if (notFoundItems.Count > 0)
-        {
-            StringBuilder sbNotFound = new();
-            foreach (string value in notFoundItems)
-            {
-                sbNotFound.Append($"{value}, ");
-            }
-            if (sbNotFound.Length > 2)
-            {
-                sbNotFound.Remove(sbNotFound.Length - 2, 2);
-            }
-            throw new InvalidOperationException($"The next keys were not found in returned result: {sbNotFound}.");
-        }
-        return results;
-    }
-    #endregion
     #region Snippet:Sample_GetRunIDs_EvaluationRules_Async
     private static async Task<Dictionary<string, (string RunUri, string RunStatus)>> GetRunIDsAsync(EvaluationClient client, string evaluationId, string evaluationRunStatus = default)
     {
@@ -98,7 +30,7 @@ public class Sample_EvaluationRules : SamplesBase
         {
             ClientResult resultList = await client.GetEvaluationRunsAsync(evaluationId: evaluationId, limit: 10, order: "desc", after: lastId, evaluationRunStatus: evaluationRunStatus, options: new System.ClientModel.Primitives.RequestOptions());
             Utf8JsonReader reader = new(resultList.GetRawResponse().Content.ToMemory().ToArray());
-            JsonDocument document = JsonDocument.ParseValue(ref reader);
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
 
             foreach (JsonProperty topProperty in document.RootElement.EnumerateObject())
             {
@@ -161,7 +93,7 @@ public class Sample_EvaluationRules : SamplesBase
         {
             ClientResult resultList = client.GetEvaluationRuns(evaluationId: evaluationId, limit: 10, order: "desc", after: lastId, evaluationRunStatus: evaluationRunStatus, options: new System.ClientModel.Primitives.RequestOptions());
             Utf8JsonReader reader = new(resultList.GetRawResponse().Content.ToMemory().ToArray());
-            JsonDocument document = JsonDocument.ParseValue(ref reader);
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
 
             foreach (JsonProperty topProperty in document.RootElement.EnumerateObject())
             {
@@ -241,21 +173,21 @@ public class Sample_EvaluationRules : SamplesBase
     {
         #region Snippet:Sample_CreateClients_EvaluationRules
 #if SNIPPET
-        var endpoint = System.Environment.GetEnvironmentVariable("PROJECT_ENDPOINT");
-        var modelDeploymentName = System.Environment.GetEnvironmentVariable("MODEL_DEPLOYMENT_NAME");
+        var endpoint = System.Environment.GetEnvironmentVariable("FOUNDRY_PROJECT_ENDPOINT");
+        var modelDeploymentName = System.Environment.GetEnvironmentVariable("FOUNDRY_MODEL_NAME");
 #else
-        var endpoint = TestEnvironment.PROJECT_ENDPOINT;
-        var modelDeploymentName = TestEnvironment.MODELDEPLOYMENTNAME;
+        var endpoint = TestEnvironment.FOUNDRY_PROJECT_ENDPOINT;
+        var modelDeploymentName = TestEnvironment.FOUNDRY_MODEL_NAME;
 #endif
         AIProjectClient projectClient = new(new Uri(endpoint), new DefaultAzureCredential());
-        EvaluationClient evaluationClient = projectClient.OpenAI.GetEvaluationClient();
+        EvaluationClient evaluationClient = projectClient.ProjectOpenAIClient.GetEvaluationClient();
         #endregion
         #region Snippet:Sample_CreateAgent_EvaluationRules_Async
-        PromptAgentDefinition agentDefinition = new(model: modelDeploymentName)
+        DeclarativeAgentDefinition agentDefinition = new(model: modelDeploymentName)
         {
             Instructions = "You are a helpful assistant that answers general questions",
         };
-        AgentVersion agentVersion = await projectClient.Agents.CreateAgentVersionAsync(
+        ProjectsAgentVersion agentVersion = await projectClient.AgentAdministrationClient.CreateAgentVersionAsync(
             agentName: "evalAgent",
             options: new(agentDefinition));
         Console.WriteLine($"Agent created (id: {agentVersion.Id}, name: {agentVersion.Name}, version: {agentVersion.Version})");
@@ -288,8 +220,8 @@ public class Sample_EvaluationRules : SamplesBase
         Console.WriteLine($"Continuous Evaluation Rule created (id: {continuousEvalRule.Id}, name: {continuousEvalRule.DisplayName})");
         #endregion
         #region Snippet:Sample_CreateConversation_EvaluationRules_Async
-        ProjectConversation conversation = await projectClient.OpenAI.Conversations.CreateProjectConversationAsync();
-        ProjectResponsesClient responseClient = projectClient.OpenAI.GetProjectResponsesClientForAgent(agentVersion, conversation.Id);
+        ProjectConversation conversation = await projectClient.ProjectOpenAIClient.GetProjectConversationsClient().CreateProjectConversationAsync();
+        ProjectResponsesClient responseClient = projectClient.ProjectOpenAIClient.GetProjectResponsesClientForAgent(new(name: agentVersion.Name, version: agentVersion.Version), conversation.Id);
         #endregion
         #region Snippet:Sample_AskQuestions_EvaluationRules_Async
         string[] countries = ["France", "Italy", "Ivory Coast", "Kenya", "Uruguay", "Morocco", "Tajikistan", "Somalia", "Brunei", "Belgium"];
@@ -353,9 +285,9 @@ public class Sample_EvaluationRules : SamplesBase
         Console.WriteLine($"To check evaluation runs, please open {reportUri} from the browser");
         #endregion
         #region Snippet:Sample_Cleanup_EvaluationRules_Async
-        await projectClient.OpenAI.Conversations.DeleteConversationAsync(conversation.Id);
+        await projectClient.ProjectOpenAIClient.GetProjectConversationsClient().DeleteConversationAsync(conversation.Id);
         await projectClient.EvaluationRules.DeleteAsync(id: continuousEvalRule.Id);
-        await projectClient.Agents.DeleteAgentVersionAsync(agentName: agentVersion.Name, agentVersion: agentVersion.Version);
+        await projectClient.AgentAdministrationClient.DeleteAgentVersionAsync(agentName: agentVersion.Name, agentVersion: agentVersion.Version);
         // Warning! After this step the evaluations will be deleted and will not be available on Microsoft Foundry portal.
         // First we need to remove all runs.
         foreach (string runId in evaluationRunIds.Keys)
@@ -372,20 +304,20 @@ public class Sample_EvaluationRules : SamplesBase
     public void EvaluationRulesExample()
     {
 #if SNIPPET
-        var endpoint = System.Environment.GetEnvironmentVariable("PROJECT_ENDPOINT");
-        var modelDeploymentName = System.Environment.GetEnvironmentVariable("MODEL_DEPLOYMENT_NAME");
+        var endpoint = System.Environment.GetEnvironmentVariable("FOUNDRY_PROJECT_ENDPOINT");
+        var modelDeploymentName = System.Environment.GetEnvironmentVariable("FOUNDRY_MODEL_NAME");
 #else
-        var endpoint = TestEnvironment.PROJECT_ENDPOINT;
-        var modelDeploymentName = TestEnvironment.MODELDEPLOYMENTNAME;
+        var endpoint = TestEnvironment.FOUNDRY_PROJECT_ENDPOINT;
+        var modelDeploymentName = TestEnvironment.FOUNDRY_MODEL_NAME;
 #endif
         AIProjectClient projectClient = new(new Uri(endpoint), new DefaultAzureCredential());
-        EvaluationClient evaluationClient = projectClient.OpenAI.GetEvaluationClient();
+        EvaluationClient evaluationClient = projectClient.ProjectOpenAIClient.GetEvaluationClient();
         #region Snippet:Sample_CreateAgent_EvaluationRules_Sync
-        PromptAgentDefinition agentDefinition = new(model: modelDeploymentName)
+        DeclarativeAgentDefinition agentDefinition = new(model: modelDeploymentName)
         {
             Instructions = "You are a helpful assistant that answers general questions",
         };
-        AgentVersion agentVersion = projectClient.Agents.CreateAgentVersion(
+        ProjectsAgentVersion agentVersion = projectClient.AgentAdministrationClient.CreateAgentVersion(
             agentName: "evalAgent",
             options: new(agentDefinition));
         Console.WriteLine($"Agent created (id: {agentVersion.Id}, name: {agentVersion.Name}, version: {agentVersion.Version})");
@@ -416,8 +348,8 @@ public class Sample_EvaluationRules : SamplesBase
         Console.WriteLine($"Continuous Evaluation Rule created (id: {continuousEvalRule.Id}, name: {continuousEvalRule.DisplayName})");
         #endregion
         #region Snippet:Sample_CreateConversation_EvaluationRules_Sync
-        ProjectConversation conversation = projectClient.OpenAI.Conversations.CreateProjectConversation();
-        ProjectResponsesClient responseClient = projectClient.OpenAI.GetProjectResponsesClientForAgent(agentVersion, conversation.Id);
+        ProjectConversation conversation = projectClient.ProjectOpenAIClient.GetProjectConversationsClient().CreateProjectConversation();
+        ProjectResponsesClient responseClient = projectClient.ProjectOpenAIClient.GetProjectResponsesClientForAgent(new(name: agentVersion.Name, version: agentVersion.Version), conversation.Id);
         #endregion
         #region Snippet:Sample_AskQuestions_EvaluationRules_Sync
         string[] countries = ["France", "Italy", "Ivory Coast", "Kenya", "Uruguay", "Morocco", "Tajikistan", "Somalia", "Brunei", "Belgium"];
@@ -481,9 +413,9 @@ public class Sample_EvaluationRules : SamplesBase
         Console.WriteLine($"To check evaluation runs, please open {reportUri} from the browser");
         #endregion
         #region Snippet:Sample_Cleanup_EvaluationRules_Sync
-        projectClient.OpenAI.Conversations.DeleteConversation(conversation.Id);
+        projectClient.ProjectOpenAIClient.GetProjectConversationsClient().DeleteConversation(conversation.Id);
         projectClient.EvaluationRules.Delete(id: continuousEvalRule.Id);
-        projectClient.Agents.DeleteAgentVersion(agentName: agentVersion.Name, agentVersion: agentVersion.Version);
+        projectClient.AgentAdministrationClient.DeleteAgentVersion(agentName: agentVersion.Name, agentVersion: agentVersion.Version);
         // Warning! After this step the evaluations will be deleted and will not be available on Microsoft Foundry portal.
         // First we need to remove all runs.
         foreach (string runId in evaluationRunIds.Keys)

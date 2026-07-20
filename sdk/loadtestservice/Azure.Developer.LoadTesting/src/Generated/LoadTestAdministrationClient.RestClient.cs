@@ -703,6 +703,25 @@ namespace Azure.Developer.LoadTesting
             return message;
         }
 
+        internal HttpMessage CreateGenerateTestPlanRecommendationsRequest(string testId, RequestContext context)
+        {
+            RawRequestUriBuilder uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/tests/", false);
+            uri.AppendPath(testId, true);
+            uri.AppendPath(":generateTestPlanRecommendations", false);
+            if (_apiVersion != null)
+            {
+                uri.AppendQuery("api-version", _apiVersion, true);
+            }
+            HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier202);
+            Request request = message.Request;
+            request.Uri = uri;
+            request.Method = RequestMethod.Post;
+            request.Headers.SetValue("Accept", "application/json");
+            return message;
+        }
+
         internal HttpMessage CreateGetOperationStatusRequest(string operationId, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();

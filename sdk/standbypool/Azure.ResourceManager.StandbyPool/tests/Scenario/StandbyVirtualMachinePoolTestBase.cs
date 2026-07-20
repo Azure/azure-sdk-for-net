@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.StandbyPool.Tests
         {
         }
 
-        protected async Task<StandbyVirtualMachinePoolResource> CreateStandbyVirtualMachinePoolResource(ResourceGroupResource resourceGroup, string standbyVirtualMachinePoolName, long maxReadyCapacity, AzureLocation location, ResourceIdentifier vmssId, string virtualMachineState = "Running", long minReadyCapacity = 1)
+        protected async Task<StandbyVirtualMachinePoolResource> CreateStandbyVirtualMachinePoolResource(ResourceGroupResource resourceGroup, string standbyVirtualMachinePoolName, long maxReadyCapacity, AzureLocation location, ResourceIdentifier vmssId, string virtualMachineState = "Running", long minReadyCapacity = 1, string postProvisioningDelay = null, bool? dynamicSizingEnabled = null)
         {
             StandbyVirtualMachinePoolProperties properties = new StandbyVirtualMachinePoolProperties()
             {
@@ -30,7 +30,9 @@ namespace Azure.ResourceManager.StandbyPool.Tests
                 ElasticityProfile = new Models.StandbyVirtualMachinePoolElasticityProfile()
                 {
                     MaxReadyCapacity = maxReadyCapacity,
-                    MinReadyCapacity = minReadyCapacity
+                    MinReadyCapacity = minReadyCapacity,
+                    PostProvisioningDelay = postProvisioningDelay,
+                    DynamicSizingEnabled = dynamicSizingEnabled
                 },
                 AttachedVirtualMachineScaleSetId = vmssId
             };
@@ -142,6 +144,10 @@ namespace Azure.ResourceManager.StandbyPool.Tests
                     {
                         Enabled = true
                     }
+                },
+                AdditionalCapabilities = new AdditionalCapabilities()
+                {
+                    HibernationEnabled = true
                 },
                 PlatformFaultDomainCount = 1
             };

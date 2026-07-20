@@ -7,43 +7,15 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.ContainerService;
 
 namespace Azure.ResourceManager.ContainerService.Models
 {
     /// <summary> Advanced Networking profile for enabling observability and security feature suite on a cluster. For more information see aka.ms/aksadvancednetworking. </summary>
     public partial class ManagedClusterAdvancedNetworking
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="ManagedClusterAdvancedNetworking"/>. </summary>
         public ManagedClusterAdvancedNetworking()
@@ -54,35 +26,67 @@ namespace Azure.ResourceManager.ContainerService.Models
         /// <param name="isEnabled"> Indicates the enablement of Advanced Networking functionalities of observability and security on AKS clusters. When this is set to true, all observability and security features will be set to enabled unless explicitly disabled. If not specified, the default is false. </param>
         /// <param name="observability"> Observability profile to enable advanced network metrics and flow logs with historical contexts. </param>
         /// <param name="security"> Security profile to enable security features on cilium based cluster. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ManagedClusterAdvancedNetworking(bool? isEnabled, AdvancedNetworkingObservability observability, ManagedClusterAdvancedNetworkingSecurity security, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="performance"> Profile to enable performance-enhancing features on clusters that use Azure CNI powered by Cilium. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal ManagedClusterAdvancedNetworking(bool? isEnabled, AdvancedNetworkingObservability observability, ManagedClusterAdvancedNetworkingSecurity security, ManagedClusterAdvancedNetworkingPerformance performance, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             IsEnabled = isEnabled;
             Observability = observability;
             Security = security;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            Performance = performance;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> Indicates the enablement of Advanced Networking functionalities of observability and security on AKS clusters. When this is set to true, all observability and security features will be set to enabled unless explicitly disabled. If not specified, the default is false. </summary>
         [WirePath("enabled")]
         public bool? IsEnabled { get; set; }
+
         /// <summary> Observability profile to enable advanced network metrics and flow logs with historical contexts. </summary>
+        [WirePath("observability")]
         internal AdvancedNetworkingObservability Observability { get; set; }
-        /// <summary> Indicates the enablement of Advanced Networking observability functionalities on clusters. </summary>
-        [WirePath("observability.enabled")]
-        public bool? IsObservabilityEnabled
-        {
-            get => Observability is null ? default : Observability.IsObservabilityEnabled;
-            set
-            {
-                if (Observability is null)
-                    Observability = new AdvancedNetworkingObservability();
-                Observability.IsObservabilityEnabled = value;
-            }
-        }
 
         /// <summary> Security profile to enable security features on cilium based cluster. </summary>
         [WirePath("security")]
         public ManagedClusterAdvancedNetworkingSecurity Security { get; set; }
+
+        /// <summary> Profile to enable performance-enhancing features on clusters that use Azure CNI powered by Cilium. </summary>
+        [WirePath("performance")]
+        internal ManagedClusterAdvancedNetworkingPerformance Performance { get; set; }
+
+        /// <summary> Indicates the enablement of Advanced Networking observability functionalities on clusters. </summary>
+        [WirePath("observability.enabled")]
+        public bool? IsObservabilityEnabled
+        {
+            get
+            {
+                return Observability is null ? default : Observability.IsObservabilityEnabled;
+            }
+            set
+            {
+                if (Observability is null)
+                {
+                    Observability = new AdvancedNetworkingObservability();
+                }
+                Observability.IsObservabilityEnabled = value;
+            }
+        }
+
+        /// <summary> Enable advanced network acceleration options. This allows users to configure acceleration using BPF host routing. This can be enabled only with Cilium dataplane. If not specified, the default value is None (no acceleration). The acceleration mode can be changed on a pre-existing cluster. See https://aka.ms/acnsperformance for a detailed explanation. </summary>
+        [WirePath("performance.accelerationMode")]
+        public ManagedClusterAdvancedNetworkingAccelerationMode? PerformanceAccelerationMode
+        {
+            get
+            {
+                return Performance is null ? default : Performance.AccelerationMode;
+            }
+            set
+            {
+                if (Performance is null)
+                {
+                    Performance = new ManagedClusterAdvancedNetworkingPerformance();
+                }
+                Performance.AccelerationMode = value;
+            }
+        }
     }
 }

@@ -75,7 +75,7 @@ public class RecordedTestAttribute : TestAttribute, IWrapSetUpTearDown
                 string? resultMessage = context.CurrentResult.Message;
                 TestResult originalResult = context.CurrentResult;
 
-                if (resultMessage?.Contains(typeof(TestRecordingMismatchException).FullName!) ?? false /*TODO-default*/ &&
+                if ((resultMessage?.Contains(typeof(TestRecordingMismatchException).FullName!) ?? false /*TODO-default*/) &&
                     !TestEnvironment.GlobalDisableAutoRecording)
                 {
                     context.CurrentResult = context.CurrentTest.MakeTestResult();
