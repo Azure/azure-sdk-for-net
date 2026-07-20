@@ -7,8 +7,6 @@
     <Nullable>enable</Nullable>
     <LangVersion>12</LangVersion>
 
-    <!-- Disable warning CS1591: Missing XML comment for publicly visible type or member -->
-    <!-- Disable warning AZC0012: Single word class names -->
     <AotCompatOptOut>true</AotCompatOptOut>
   </PropertyGroup>
 
