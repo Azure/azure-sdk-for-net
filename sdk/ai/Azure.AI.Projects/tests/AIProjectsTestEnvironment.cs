@@ -75,7 +75,7 @@ namespace Azure.AI.Projects.Tests
         public string GITHUB_USERNAME => GetRecordedVariable(nameof(GITHUB_USERNAME));
         public string GITHUB_REPOSITORY => GetRecordedVariable(nameof(GITHUB_REPOSITORY));
 
-        public override Dictionary<string, string> ParseEnvironmentFile() => new()
+        public override Dictionary<string, string> ParseEnvironmentFile()
         {
             var values = AiTestEnvironmentBootstrap.ReadEnvironmentFile(
                 new Dictionary<string, string>
