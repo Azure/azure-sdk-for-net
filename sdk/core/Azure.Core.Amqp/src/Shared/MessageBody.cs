@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 using System;
+using System.Buffers;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
@@ -136,9 +137,7 @@ namespace Azure.Core.Amqp
 
                 if (segment.Length > 0)
                 {
-                    var memory = _writer.GetMemory(segment.Length);
-                    segment.CopyTo(memory);
-                    _writer.Advance(segment.Length);
+                    _writer.Write(segment.Span);
                 }
             }
 
@@ -208,10 +207,8 @@ namespace Azure.Core.Amqp
                 for (var i = 0; i < numberOfSegments; i++)
                 {
                     var dataToAppend = segments[i];
-                    var memory = refWriter.GetMemory(dataToAppend.Length);
-                    dataToAppend.CopyTo(memory);
-                    refWriter.Advance(dataToAppend.Length);
-                    segments[i] = memory.Slice(0, dataToAppend.Length);
+                    refWriter.Write(dataToAppend.Span);
+                    segments[i] = refWriter.WrittenMemory.Slice(refWriter.WrittenMemory.Length - dataToAppend.Length, dataToAppend.Length);
                 }
             }
 
