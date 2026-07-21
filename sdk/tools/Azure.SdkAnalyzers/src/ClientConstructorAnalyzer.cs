@@ -18,6 +18,7 @@ namespace Azure.SdkAnalyzers
         private const string ClientsOptionsSuffix = "ClientsOptions";
         private const string AzureCoreClientOptions = "Azure.Core.ClientOptions";
         private const string SystemClientModelClientSettings = "System.ClientModel.Primitives.ClientSettings";
+        private const string SystemClientModelClientPipelineOptions = "System.ClientModel.Primitives.ClientPipelineOptions";
 
         public override SymbolKind[] SymbolKinds { get; } = new[] { SymbolKind.NamedType };
 
@@ -40,6 +41,13 @@ namespace Azure.SdkAnalyzers
                 context.ReportDiagnostic(Diagnostic.Create(Descriptors.AZC0005, type.Locations.First()));
             }
 
+            // System.ClientModel (SCM) clients follow a different constructor convention than
+            // Azure.Core clients: a convenience parameterless constructor plus a
+            // (endpoint, ClientPipelineOptions-derived options) constructor, without the Azure.Core
+            // split of with/without-options overloads. Detect the SCM shape so those constructors
+            // are not flagged as missing an options/non-options counterpart.
+            bool isScmClient = type.Constructors.Any(c => IsClientPipelineOptionsParameter(c.Parameters.LastOrDefault()));
+
             foreach (var constructor in type.Constructors)
             {
                 if (constructor.DeclaredAccessibility != Accessibility.Public)
@@ -59,6 +67,13 @@ namespace Azure.SdkAnalyzers
                 // A client constructed from another client (a sub-client, e.g. a lease client) inherits its
                 // configuration from that client, so it legitimately has no service-connection or options overload.
                 if (constructor.Parameters.Any(IsClientParameter))
+                {
+                    continue;
+                }
+
+                // For an SCM client, accept the convenience parameterless constructor and any
+                // constructor whose last parameter is the SCM ClientPipelineOptions bag.
+                if (isScmClient && (constructor.Parameters.Length == 0 || IsClientPipelineOptionsParameter(lastParameter)))
                 {
                     continue;
                 }
@@ -117,6 +132,9 @@ namespace Azure.SdkAnalyzers
         private static bool IsClientSettingsParameter(IParameterSymbol symbol)
             => symbol != null && IsClientSettingsType(symbol.Type);
 
+        private static bool IsClientPipelineOptionsParameter(IParameterSymbol symbol)
+            => symbol != null && IsClientPipelineOptionsType(symbol.Type);
+
         private static bool IsClientParameter(IParameterSymbol symbol)
         {
             return symbol.Type is INamedTypeSymbol named
@@ -164,6 +182,24 @@ namespace Azure.SdkAnalyzers
             for (ITypeSymbol baseType = typeSymbol.BaseType; baseType != null; baseType = baseType.BaseType)
             {
                 if (baseType.ToDisplayString() == SystemClientModelClientSettings)
+                {
+                    return true;
+                }
+            }
+
+            return false;
+        }
+
+        private static bool IsClientPipelineOptionsType(ITypeSymbol typeSymbol)
+        {
+            if (typeSymbol == null || typeSymbol.TypeKind != TypeKind.Class || typeSymbol.DeclaredAccessibility != Accessibility.Public)
+            {
+                return false;
+            }
+
+            for (ITypeSymbol baseType = typeSymbol.BaseType; baseType != null; baseType = baseType.BaseType)
+            {
+                if (baseType.ToDisplayString() == SystemClientModelClientPipelineOptions)
                 {
                     return true;
                 }

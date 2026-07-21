@@ -92,6 +92,15 @@ namespace Azure.SdkAnalyzers
             true,
             "A constructor that takes a System.ClientModel.Primitives.ClientSettings-derived parameter should only take that single parameter.");
 
+        public static readonly DiagnosticDescriptor AZC0015 = new(
+            nameof(AZC0015),
+            "Unexpected client method return type.",
+            "Client methods should return Response/Response<T>/Pageable<T>/AsyncPageable<T>/Operation<T> (or their Task-wrapped forms) for Azure.Core clients, or ClientResult/ClientResult<T>/CollectionResult<T>/AsyncCollectionResult<T> for System.ClientModel clients; found {0} instead.",
+            DiagnosticCategory.Usage,
+            DiagnosticSeverity.Warning,
+            true,
+            "Client methods should return an approved Azure.Core or System.ClientModel result type.");
+
         public static readonly DiagnosticDescriptor AZC0040 = new(
             nameof(AZC0040),
             "Do not expose Apache.Arrow types on the public API surface",
