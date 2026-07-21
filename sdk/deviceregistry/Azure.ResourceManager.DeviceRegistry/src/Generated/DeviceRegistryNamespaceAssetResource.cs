@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.DeviceRegistry
         {
             TryGetApiVersion(ResourceType, out string deviceRegistryNamespaceAssetApiVersion);
             _namespaceAssetsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.DeviceRegistry", ResourceType.Namespace, Diagnostics);
-            _namespaceAssetsRestClient = new NamespaceAssets(_namespaceAssetsClientDiagnostics, Pipeline, Endpoint, deviceRegistryNamespaceAssetApiVersion ?? "2026-03-01-preview");
+            _namespaceAssetsRestClient = new NamespaceAssets(_namespaceAssetsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, deviceRegistryNamespaceAssetApiVersion ?? "2026-03-01-preview");
             ValidateResourceId(id);
         }
 
