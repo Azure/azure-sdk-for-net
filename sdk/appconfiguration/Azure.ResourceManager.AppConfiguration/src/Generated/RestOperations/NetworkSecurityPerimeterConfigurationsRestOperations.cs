@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.AppConfiguration
         /// <summary> The ClientDiagnostics is used to provide tracing support for the client library. </summary>
         internal ClientDiagnostics ClientDiagnostics { get; }
 
-        internal HttpMessage CreateGetRequest(Guid subscriptionId, string resourceGroupName, string configStoreName, string networkSecurityPerimeterConfigurationName, RequestContext context)
+        internal HttpMessage CreateGetNetworkSecurityPerimeterConfigurationRequest(Guid subscriptionId, string resourceGroupName, string configStoreName, string networkSecurityPerimeterConfigurationName, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -65,7 +65,7 @@ namespace Azure.ResourceManager.AppConfiguration
             return message;
         }
 
-        internal HttpMessage CreateGetByConfigurationStoreRequest(Guid subscriptionId, string resourceGroupName, string configStoreName, RequestContext context)
+        internal HttpMessage CreateGetNetworkSecurityPerimeterConfigurationsRequest(Guid subscriptionId, string resourceGroupName, string configStoreName, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.AppConfiguration
             return message;
         }
 
-        internal HttpMessage CreateNextGetByConfigurationStoreRequest(Uri nextPage, Guid subscriptionId, string resourceGroupName, string configStoreName, RequestContext context)
+        internal HttpMessage CreateNextGetNetworkSecurityPerimeterConfigurationsRequest(Uri nextPage, Guid subscriptionId, string resourceGroupName, string configStoreName, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             if (nextPage.IsAbsoluteUri)

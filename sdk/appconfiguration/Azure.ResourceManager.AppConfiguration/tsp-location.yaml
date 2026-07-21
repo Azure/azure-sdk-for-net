@@ -1,5 +1,5 @@
 directory: specification/appconfiguration/resource-manager/Microsoft.AppConfiguration/AppConfiguration
-commit: a8af50e319772b61703d996b6e65209ad565a2ac
+commit: d9bca92dd6bb8d7b7a067e402d0a90ebcf02a505
 repo: Azure/azure-rest-api-specs
 additionalDirectories: 
 
