@@ -10,13 +10,13 @@ using System;
 
 namespace Azure.ResourceManager.NetApp.Models
 {
-    [Microsoft.TypeSpec.Generator.Customizations.CodeGenSuppress("BreakthroughModeOld")]
     public partial class NetAppVolumeGroupVolume
     {
         private NetAppVolumeLanguage? _language;
         private NetAppLdapServerType? _ldapServerType;
         private LargeVolumeType? _largeVolumeType;
         private BreakthroughMode? _breakthroughMode;
+        private BreakthroughMode? _breakthroughModeOld;
 
         /// <summary> Restoring. </summary>
         public bool? IsRestoring
@@ -60,16 +60,8 @@ namespace Azure.ResourceManager.NetApp.Models
         [Obsolete("Use BreakthroughMode instead.")]
         public BreakthroughMode? BreakthroughModeOld
         {
-            get => Properties is null ? default : Properties.BreakthroughModeOld;
-            set
-            {
-                if (Properties is null)
-                {
-                    Properties = new VolumeProperties();
-                }
-
-                Properties.BreakthroughModeOld = value;
-            }
+            get => _breakthroughModeOld;
+            set => _breakthroughModeOld = value;
         }
     }
 }

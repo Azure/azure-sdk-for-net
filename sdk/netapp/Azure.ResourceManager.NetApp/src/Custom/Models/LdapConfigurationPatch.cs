@@ -5,8 +5,8 @@
 
 #pragma warning disable CS1591
 
-using System.ClientModel.Primitives;
 using System;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Net;
 using System.Text.Json;
