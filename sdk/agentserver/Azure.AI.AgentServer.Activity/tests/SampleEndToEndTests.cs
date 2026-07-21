@@ -119,7 +119,7 @@ public class SampleEndToEndTests
         try
         {
             var client = app.GetTestClient();
-            var response = await client.PostAsync("/api/messages", MessageContent());
+            var response = await client.PostAsync("/activity/messages", MessageContent());
 
             Assert.Multiple(() =>
             {
@@ -159,8 +159,8 @@ public class SampleEndToEndTests
         {
             var client = app.GetTestClient();
 
-            var message = await client.PostAsync("/api/messages", MessageContent());
-            var conversationUpdate = await client.PostAsync("/api/messages", new StringContent(
+            var message = await client.PostAsync("/activity/messages", MessageContent());
+            var conversationUpdate = await client.PostAsync("/activity/messages", new StringContent(
                 """{"type":"conversationUpdate","membersAdded":[{"id":"u2"}],"recipient":{"id":"b1"},"from":{"id":"u1"},"conversation":{"id":"c1"},"channelId":"msteams","serviceUrl":"http://localhost:1/","id":"a2"}""",
                 Encoding.UTF8,
                 "application/json"));
