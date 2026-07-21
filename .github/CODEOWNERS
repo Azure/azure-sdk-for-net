@@ -130,7 +130,7 @@
 # ServiceOwners: @bganapa @rakku-ms
 
 # PRLabel: %Azure.Core
-/sdk/tools/Azure.SdkAnalyzers/    @jsquire @m-nash
+/sdk/tools/Azure.SdkAnalyzers/    @jsquire @m-nash @m-redding
 
 # PRLabel: %Batch
 /sdk/batch/    @cRui861 @dpwatrous @iwang2 @lilinvictorms @skapur12 @wanghoppe @wiboris @xingwu1
