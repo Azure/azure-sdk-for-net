@@ -1,0 +1,7 @@
+<Project>
+  <!-- The central packages expose incompatible VariableExpression.Update APIs, so keep these generator assemblies aligned. -->
+  <ItemGroup>
+    <PackageVersion Update="Azure.Generator" Version="1.0.0-alpha.20260701.4" />
+    <PackageVersion Update="Azure.Generator.Management" Version="1.0.0-alpha.20260708.2" />
+  </ItemGroup>
+</Project>
