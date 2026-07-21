@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.HealthBot
         {
             TryGetApiVersion(ResourceType, out string healthBotApiVersion);
             _botsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.HealthBot", ResourceType.Namespace, Diagnostics);
-            _botsRestClient = new Bots(_botsClientDiagnostics, Pipeline, Endpoint, healthBotApiVersion ?? "2025-11-01");
+            _botsRestClient = new Bots(_botsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, healthBotApiVersion ?? "2025-11-01");
             ValidateResourceId(id);
         }
 

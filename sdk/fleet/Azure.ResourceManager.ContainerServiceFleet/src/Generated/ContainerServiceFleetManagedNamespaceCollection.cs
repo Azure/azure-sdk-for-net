@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.ContainerServiceFleet
         {
             TryGetApiVersion(ContainerServiceFleetManagedNamespaceResource.ResourceType, out string containerServiceFleetManagedNamespaceApiVersion);
             _fleetManagedNamespacesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ContainerServiceFleet", ContainerServiceFleetManagedNamespaceResource.ResourceType.Namespace, Diagnostics);
-            _fleetManagedNamespacesRestClient = new FleetManagedNamespaces(_fleetManagedNamespacesClientDiagnostics, Pipeline, Endpoint, containerServiceFleetManagedNamespaceApiVersion ?? "2026-03-02-preview");
+            _fleetManagedNamespacesRestClient = new FleetManagedNamespaces(_fleetManagedNamespacesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, containerServiceFleetManagedNamespaceApiVersion ?? "2026-03-02-preview");
             ValidateResourceId(id);
         }
 

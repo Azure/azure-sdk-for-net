@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.ExtendedLocations
         {
             TryGetApiVersion(ResourceType, out string resourceSyncRuleApiVersion);
             _resourceSyncRulesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ExtendedLocations", ResourceType.Namespace, Diagnostics);
-            _resourceSyncRulesRestClient = new ResourceSyncRules(_resourceSyncRulesClientDiagnostics, Pipeline, Endpoint, resourceSyncRuleApiVersion ?? "2021-08-31-preview");
+            _resourceSyncRulesRestClient = new ResourceSyncRules(_resourceSyncRulesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, resourceSyncRuleApiVersion ?? "2021-08-31-preview");
             ValidateResourceId(id);
         }
 
