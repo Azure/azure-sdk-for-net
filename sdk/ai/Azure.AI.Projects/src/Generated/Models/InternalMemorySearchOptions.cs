@@ -48,6 +48,7 @@ namespace Azure.AI.Projects
         public string PreviousSearchId { get; }
 
         /// <summary> Memory search options. </summary>
+        [Experimental("AAIP001")]
         public MemorySearchResultOptions Options { get; }
     }
 }

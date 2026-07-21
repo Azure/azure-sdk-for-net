@@ -9,5 +9,7 @@ extends:
     Artifacts:
     - name: Azure.ResourceManager.AlertsManagement
       safeName: AzureResourceManagerAlertsManagement
+    - name: Azure.ResourceManager.AlertRuleRecommendations
+      safeName: AzureResourceManagerAlertRuleRecommendations
     - name: Azure.ResourceManager.AlertProcessingRules
       safeName: AzureResourceManagerAlertProcessingRules
