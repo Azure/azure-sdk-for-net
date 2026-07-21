@@ -86,7 +86,7 @@ ProjectsAgentVersion agentVersion = await projectClient.AgentAdministrationClien
 
 Synchronous sample:
 ```C# Snippet:Sample_CreateResponse_FileSearch_Streaming_Sync
-ProjectConversation conversation = projectClient.ProjectOpenAIClient.GetProjectConversationsClient().CreateProjectConversation();
+ConversationResource conversation = projectClient.ProjectOpenAIClient.GetProjectConversationsClient().CreateProjectConversation();
 CreateResponseOptions responseOptions = new()
 {
     Agent = new(name: agentVersion.Name, version: agentVersion.Version),
@@ -97,7 +97,7 @@ CreateResponseOptions responseOptions = new()
 
 Asynchronous sample:
 ```C# Snippet:Sample_CreateResponse_FileSearch_Streaming_Async
-ProjectConversation conversation = await projectClient.ProjectOpenAIClient.GetProjectConversationsClient().CreateProjectConversationAsync();
+ConversationResource conversation = await projectClient.ProjectOpenAIClient.GetProjectConversationsClient().CreateProjectConversationAsync();
 CreateResponseOptions responseOptions = new()
 {
     Agent = new(name: agentVersion.Name, version: agentVersion.Version),

@@ -1136,20 +1136,5 @@ namespace Azure.AI.Extensions.OpenAI
                 status,
                 additionalBinaryDataProperties: null);
         }
-
-        /// <summary> The ProjectConversation. </summary>
-        /// <param name="id"> The unique ID of the conversation. </param>
-        /// <param name="metadata">
-        /// Set of 16 key-value pairs that can be attached to an object. This can be         useful for storing additional information about the object in a structured         format, and querying for objects via API or the dashboard.
-        ///   Keys are strings with a maximum length of 64 characters. Values are strings         with a maximum length of 512 characters.
-        /// </param>
-        /// <param name="createdAt"> The time at which the conversation was created, measured in seconds since the Unix epoch. </param>
-        /// <returns> A new <see cref="OpenAI.ProjectConversation"/> instance for mocking. </returns>
-        public static ProjectConversation ProjectConversation(string id = default, IDictionary<string, string> metadata = default, DateTimeOffset createdAt = default)
-        {
-            metadata ??= new ChangeTrackingDictionary<string, string>();
-
-            return new ProjectConversation(id, "conversation", metadata, createdAt, additionalBinaryDataProperties: null);
-        }
     }
 }

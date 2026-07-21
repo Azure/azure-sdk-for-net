@@ -11,6 +11,7 @@ using System.Text.Json;
 using System.Text.Json.Nodes;
 using System.Threading;
 using System.Threading.Tasks;
+using OpenAI.Conversations;
 using OpenAI.Files;
 using OpenAI.Responses;
 
@@ -196,7 +197,7 @@ public static partial class AzureAIExtensions
     /// <param name="agentRef"> The agent that should create the response. </param>
     /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
     /// <returns> The created response result. </returns>
-    public static ClientResult<ResponseResult> CreateResponse(this ResponsesClient responseClient, ProjectConversation conversation, AgentReference agentRef, CancellationToken cancellationToken = default)
+    public static ClientResult<ResponseResult> CreateResponse(this ResponsesClient responseClient, ConversationResource conversation, AgentReference agentRef, CancellationToken cancellationToken = default)
     {
         using BinaryContent content = RemoveItems(conversation: conversation, agentRef: agentRef);
         ClientResult protocolResult = responseClient.CreateResponse(
@@ -214,7 +215,7 @@ public static partial class AzureAIExtensions
     /// <param name="agentRef"> The agent that should create the response. </param>
     /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
     /// <returns> The created response result. </returns>
-    public static async Task<ClientResult<ResponseResult>> CreateResponseAsync(this ResponsesClient responseClient, ProjectConversation conversation, AgentReference agentRef, CancellationToken cancellationToken = default)
+    public static async Task<ClientResult<ResponseResult>> CreateResponseAsync(this ResponsesClient responseClient, ConversationResource conversation, AgentReference agentRef, CancellationToken cancellationToken = default)
     {
         using BinaryContent content = RemoveItems(conversation: conversation, agentRef: agentRef);
         ClientResult protocolResult = await responseClient.CreateResponseAsync(
@@ -226,7 +227,7 @@ public static partial class AzureAIExtensions
         return ClientResult.FromValue(convenienceValue, protocolResult.GetRawResponse());
     }
 
-    private static BinaryContent RemoveItems(ProjectConversation conversation, AgentReference agentRef)
+    private static BinaryContent RemoveItems(ConversationResource conversation, AgentReference agentRef)
     {
         CreateResponseOptions responseOptions = new()
         {
