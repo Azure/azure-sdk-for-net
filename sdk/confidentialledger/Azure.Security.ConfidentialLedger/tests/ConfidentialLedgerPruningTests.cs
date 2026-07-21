@@ -70,7 +70,7 @@ namespace Azure.Security.ConfidentialLedger.Tests
                     ok.SetContent(
                         $@"{{ ""state"": ""Ready"", ""entries"": [
                             {{ ""contents"": ""old"", ""collectionId"": ""{collectionId}"", ""transactionId"": ""2.3"" }},
-                            {{ ""contents"": ""latest"", ""collectionId"": ""{collectionId}"", ""transactionId"": ""2.7"" }}
+                              {{ ""contents"": ""latest"", ""collectionId"": ""{collectionId}"", ""transactionId"": ""2.7"", ""tags"": [""retained""] }}
                         ] }}");
                     return ok;
                 }
@@ -89,6 +89,51 @@ namespace Azure.Security.ConfidentialLedger.Tests
             Assert.AreEqual("latest", root.GetProperty("contents").GetString());
             Assert.AreEqual(collectionId, root.GetProperty("collectionId").GetString());
             Assert.AreEqual("2.7", root.GetProperty("transactionId").GetString());
+            Assert.AreEqual("retained", root.GetProperty("tags")[0].GetString());
+        }
+
+        [Test]
+        public async Task ArchivedCollectionFallback_RetriesHistoricalRangeWhileLoading()
+        {
+            const string collectionId = "my-collection";
+            int rangeCalls = 0;
+
+            var transport = new MockTransport(req =>
+            {
+                string path = req.Uri.Path;
+                if (path.Contains("/current"))
+                {
+                    return new MockResponse(404);
+                }
+                if (path.EndsWith("/app/transactions"))
+                {
+                    rangeCalls++;
+                    var response = new MockResponse(200);
+                    if (rangeCalls == 1)
+                    {
+                        response.SetContent(
+                            $@"{{ ""state"": ""Loading"", ""nextLink"": ""/app/transactions?api-version=2024-12-09-preview&collectionId={collectionId}&fromTransactionId=1.2"" }}");
+                    }
+                    else
+                    {
+                        response.SetContent(
+                            $@"{{ ""state"": ""Ready"", ""entries"": [
+                                {{ ""contents"": ""latest"", ""collectionId"": ""{collectionId}"", ""transactionId"": ""2.7"" }}
+                            ] }}");
+                    }
+                    return response;
+                }
+                return new MockResponse(404);
+            });
+
+            var client = CreateClient(transport, enableArchivedFallback: true, maxRetries: 3);
+
+            Response response = await client.GetCurrentLedgerEntryAsync(collectionId);
+
+            Assert.AreEqual(200, response.Status);
+            Assert.GreaterOrEqual(rangeCalls, 2);
+            using JsonDocument doc = JsonDocument.Parse(response.Content);
+            Assert.AreEqual("latest", doc.RootElement.GetProperty("contents").GetString());
         }
 
         [Test]
@@ -115,6 +160,37 @@ namespace Azure.Security.ConfidentialLedger.Tests
 
             Assert.ThrowsAsync<RequestFailedException>(async () => await client.GetCurrentLedgerEntryAsync(collectionId));
             Assert.IsFalse(rangeQueried, "Historical range query must not be used when the fallback is disabled.");
+        }
+
+        [Test]
+        public void CollectionCapacityExceeded_IsSurfacedWithoutWriteFailover()
+        {
+            int failoverMetadataCalls = 0;
+            var transport = new MockTransport(req =>
+            {
+                if (req.Uri.Path.StartsWith("/failover/"))
+                {
+                    failoverMetadataCalls++;
+                    return new MockResponse(500);
+                }
+
+                var response = new MockResponse(400);
+                response.SetContent(
+                    @"{ ""error"": { ""code"": ""CollectionCapacityExceeded"", ""message"": ""Collection capacity 10 has been reached."" } }");
+                return response;
+            });
+
+            var client = CreateClient(transport, enableArchivedFallback: true, maxRetries: 3);
+
+            RequestFailedException exception = Assert.ThrowsAsync<RequestFailedException>(async () =>
+                await client.CreateLedgerEntryAsync(
+                    RequestContent.Create(new { contents = "overflow" }),
+                    collectionId: "new-collection",
+                    context: new RequestContext()));
+
+            Assert.AreEqual(400, exception.Status);
+            Assert.AreEqual("CollectionCapacityExceeded", exception.ErrorCode);
+            Assert.AreEqual(0, failoverMetadataCalls, "Capacity failures on writes must not trigger failover.");
         }
 
         [Test]

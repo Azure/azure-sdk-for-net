@@ -470,40 +470,12 @@ namespace Azure.Security.ConfidentialLedger
 
         /// <summary>
         /// Builds a synthetic <c>GetCurrentLedgerEntry</c>-shaped response from a single historical
-        /// ledger entry (as returned by <c>GetLedgerEntries</c>). The current-entry body shape is
-        /// <c>{ "collectionId": "...", "contents": "...", "transactionId": "..." }</c>. The returned
-        /// response always reports HTTP 200 since the entry was successfully retrieved from history.
+        /// ledger entry (as returned by <c>GetLedgerEntries</c>). Historical and current entries share
+        /// the same entry schema, so the complete payload is retained, including optional tags. The
+        /// returned response always reports HTTP 200 since the entry was successfully retrieved from history.
         /// </summary>
-        private static Response FormatArchivedCurrentEntry(BinaryData latestEntry, string collectionId)
-        {
-            using JsonDocument doc = JsonDocument.Parse(latestEntry);
-            JsonElement root = doc.RootElement;
-
-            using var ms = new System.IO.MemoryStream();
-            var writerOptions = new System.Text.Json.JsonWriterOptions
-            {
-                Encoder = System.Text.Encodings.Web.JavaScriptEncoder.UnsafeRelaxedJsonEscaping
-            };
-            using (var writer = new System.Text.Json.Utf8JsonWriter(ms, writerOptions))
-            {
-                writer.WriteStartObject();
-                string col = root.TryGetProperty("collectionId", out var colEl) ? colEl.GetString() : collectionId;
-                if (col != null)
-                {
-                    writer.WriteString("collectionId", col);
-                }
-                if (root.TryGetProperty("contents", out var contents))
-                {
-                    writer.WriteString("contents", contents.GetString());
-                }
-                if (root.TryGetProperty("transactionId", out var tx))
-                {
-                    writer.WriteString("transactionId", tx.GetString());
-                }
-                writer.WriteEndObject();
-            }
-            return new ArchivedCurrentEntryResponse(ms.ToArray());
-        }
+        private static Response FormatArchivedCurrentEntry(BinaryData latestEntry) =>
+            new ArchivedCurrentEntryResponse(latestEntry.ToArray());
 
         /// <summary>
         /// Retrieves the latest historical entry for an archived (pruned) collection and returns it
@@ -519,7 +491,7 @@ namespace Azure.Security.ConfidentialLedger
                 latest = entry;
             }
 
-            return latest == null ? null : FormatArchivedCurrentEntry(latest, collectionId);
+            return latest == null ? null : FormatArchivedCurrentEntry(latest);
         }
 
         /// <summary>
@@ -533,7 +505,7 @@ namespace Azure.Security.ConfidentialLedger
                 latest = entry;
             }
 
-            return latest == null ? null : FormatArchivedCurrentEntry(latest, collectionId);
+            return latest == null ? null : FormatArchivedCurrentEntry(latest);
         }
 
         /// <summary>

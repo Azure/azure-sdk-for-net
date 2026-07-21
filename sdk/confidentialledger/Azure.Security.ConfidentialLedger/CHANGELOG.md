@@ -14,6 +14,7 @@
 ### Bugs Fixed
 - Failover requests are now validated against the failover ledger's own identity TLS certificate. The transport previously pinned only the primary ledger's certificate, so a failover request would fail TLS validation (unless certificate verification was disabled). The client now trusts the identity certificate of each ledger it talks to, fetched from the (independently validated) identity service. Failover endpoint discovery likewise uses a pipeline with normal TLS validation rather than the primary-pinned ledger pipeline.
 - `PostLedgerEntryOperation` now treats transient `406 NotAcceptable` responses from the status endpoint as `Pending` (instead of failing) and tolerates up to 3 consecutive `404 NotFound` responses while a transaction is being replicated across nodes, preventing spurious `RequestFailedException`s during normal commit propagation.
+- Archived-collection fallback responses now preserve the complete historical ledger entry payload, including optional tags.
 
 ### Other Changes
 
