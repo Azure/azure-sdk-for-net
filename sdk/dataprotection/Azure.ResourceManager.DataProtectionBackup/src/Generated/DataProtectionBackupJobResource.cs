@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.DataProtectionBackup
         {
             TryGetApiVersion(ResourceType, out string dataProtectionBackupJobApiVersion);
             _azureBackupJobResourcesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.DataProtectionBackup", ResourceType.Namespace, Diagnostics);
-            _azureBackupJobResourcesRestClient = new AzureBackupJobResources(_azureBackupJobResourcesClientDiagnostics, Pipeline, Endpoint, dataProtectionBackupJobApiVersion ?? "2026-03-01");
+            _azureBackupJobResourcesRestClient = new AzureBackupJobResources(_azureBackupJobResourcesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, dataProtectionBackupJobApiVersion ?? "2026-03-01");
             ValidateResourceId(id);
         }
 

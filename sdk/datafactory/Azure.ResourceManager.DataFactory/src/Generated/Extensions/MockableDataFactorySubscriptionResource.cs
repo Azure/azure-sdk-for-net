@@ -40,11 +40,11 @@ namespace Azure.ResourceManager.DataFactory.Mocking
 
         private ClientDiagnostics FactoriesClientDiagnostics => _factoriesClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.DataFactory.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private Factories FactoriesRestClient => _factoriesRestClient ??= new Factories(FactoriesClientDiagnostics, Pipeline, Endpoint, "2018-06-01");
+        private Factories FactoriesRestClient => _factoriesRestClient ??= new Factories(FactoriesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2018-06-01");
 
         private ClientDiagnostics ExposureControlClientDiagnostics => _exposureControlClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.DataFactory.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private ExposureControl ExposureControlRestClient => _exposureControlRestClient ??= new ExposureControl(ExposureControlClientDiagnostics, Pipeline, Endpoint, "2018-06-01");
+        private ExposureControl ExposureControlRestClient => _exposureControlRestClient ??= new ExposureControl(ExposureControlClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2018-06-01");
 
         /// <summary>
         /// Lists factories under the specified subscription.
