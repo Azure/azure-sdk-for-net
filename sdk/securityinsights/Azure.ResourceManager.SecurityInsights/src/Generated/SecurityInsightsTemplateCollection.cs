@@ -42,9 +42,9 @@ namespace Azure.ResourceManager.SecurityInsights
         {
             TryGetApiVersion(SecurityInsightsTemplateResource.ResourceType, out string securityInsightsTemplateApiVersion);
             _contentTemplateClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.SecurityInsights", SecurityInsightsTemplateResource.ResourceType.Namespace, Diagnostics);
-            _contentTemplateRestClient = new ContentTemplate(_contentTemplateClientDiagnostics, Pipeline, Endpoint, securityInsightsTemplateApiVersion ?? "2025-07-01-preview");
+            _contentTemplateRestClient = new ContentTemplate(_contentTemplateClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, securityInsightsTemplateApiVersion ?? "2025-07-01-preview");
             _contentTemplatesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.SecurityInsights", SecurityInsightsTemplateResource.ResourceType.Namespace, Diagnostics);
-            _contentTemplatesRestClient = new ContentTemplates(_contentTemplatesClientDiagnostics, Pipeline, Endpoint, securityInsightsTemplateApiVersion ?? "2025-07-01-preview");
+            _contentTemplatesRestClient = new ContentTemplates(_contentTemplatesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, securityInsightsTemplateApiVersion ?? "2025-07-01-preview");
             ValidateResourceId(id);
         }
 

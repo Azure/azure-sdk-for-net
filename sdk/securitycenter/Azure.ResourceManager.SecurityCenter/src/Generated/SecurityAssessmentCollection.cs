@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.SecurityCenter
         {
             TryGetApiVersion(SecurityAssessmentResource.ResourceType, out string securityAssessmentApiVersion);
             _assessmentsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.SecurityCenter", SecurityAssessmentResource.ResourceType.Namespace, Diagnostics);
-            _assessmentsRestClient = new Assessments(_assessmentsClientDiagnostics, Pipeline, Endpoint, securityAssessmentApiVersion ?? "2025-05-04");
+            _assessmentsRestClient = new Assessments(_assessmentsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, securityAssessmentApiVersion ?? "2025-05-04");
         }
 
         /// <summary>
