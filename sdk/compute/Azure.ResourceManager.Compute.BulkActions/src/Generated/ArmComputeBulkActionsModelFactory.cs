@@ -22,11 +22,11 @@ namespace Azure.ResourceManager.Compute.BulkActions.Models
 
         /// <param name="executionParameters"> The execution parameters for the request. </param>
         /// <param name="resources"> The resources for the request. </param>
-        /// <param name="resources0"> The resource ids used for the request. </param>
+        /// <param name="resourcesWithContext"> The resources for the request with resource context information. Cannot be provided together with `resources` - exactly one must be specified. </param>
         /// <returns> A new <see cref="Models.ExecuteDeallocateContent"/> instance for mocking. </returns>
-        public static ExecuteDeallocateContent ExecuteDeallocateContent(BulkActionExecutionParameterDetail executionParameters = default, UserRequestResources resources = default, IEnumerable<ResourceWithContext> resources0 = default)
+        public static ExecuteDeallocateContent ExecuteDeallocateContent(BulkActionExecutionParameterDetail executionParameters = default, UserRequestResources resources = default, ResourcesWithContext resourcesWithContext = default)
         {
-            return new ExecuteDeallocateContent(executionParameters, resources, resources0 is null ? default : new ResourcesWithContext((resources0 ?? new ChangeTrackingList<ResourceWithContext>()).ToList(), default), default);
+            return new ExecuteDeallocateContent(executionParameters, resources, resourcesWithContext, default);
         }
 
         /// <param name="optimizationPreference"> Details that could optimize the user's request. </param>
@@ -153,11 +153,11 @@ namespace Azure.ResourceManager.Compute.BulkActions.Models
 
         /// <param name="executionParameters"> The execution parameters for the request. </param>
         /// <param name="resources"> The resources for the request. </param>
-        /// <param name="resources0"> The resource ids used for the request. </param>
+        /// <param name="resourcesWithContext"> The resources for the request with resource context information. Cannot be provided together with `resources` - exactly one must be specified. </param>
         /// <returns> A new <see cref="Models.ExecuteHibernateContent"/> instance for mocking. </returns>
-        public static ExecuteHibernateContent ExecuteHibernateContent(BulkActionExecutionParameterDetail executionParameters = default, UserRequestResources resources = default, IEnumerable<ResourceWithContext> resources0 = default)
+        public static ExecuteHibernateContent ExecuteHibernateContent(BulkActionExecutionParameterDetail executionParameters = default, UserRequestResources resources = default, ResourcesWithContext resourcesWithContext = default)
         {
-            return new ExecuteHibernateContent(executionParameters, resources, resources0 is null ? default : new ResourcesWithContext((resources0 ?? new ChangeTrackingList<ResourceWithContext>()).ToList(), default), default);
+            return new ExecuteHibernateContent(executionParameters, resources, resourcesWithContext, default);
         }
 
         /// <param name="description"> The description of the operation response. </param>
@@ -174,11 +174,11 @@ namespace Azure.ResourceManager.Compute.BulkActions.Models
 
         /// <param name="executionParameters"> The execution parameters for the request. </param>
         /// <param name="resources"> The resources for the request. </param>
-        /// <param name="resources0"> The resource ids used for the request. </param>
+        /// <param name="resourcesWithContext"> The resources for the request with resource context information. Cannot be provided together with `resources` - exactly one must be specified. </param>
         /// <returns> A new <see cref="Models.ExecuteStartContent"/> instance for mocking. </returns>
-        public static ExecuteStartContent ExecuteStartContent(BulkActionExecutionParameterDetail executionParameters = default, UserRequestResources resources = default, IEnumerable<ResourceWithContext> resources0 = default)
+        public static ExecuteStartContent ExecuteStartContent(BulkActionExecutionParameterDetail executionParameters = default, UserRequestResources resources = default, ResourcesWithContext resourcesWithContext = default)
         {
-            return new ExecuteStartContent(executionParameters, resources, resources0 is null ? default : new ResourcesWithContext((resources0 ?? new ChangeTrackingList<ResourceWithContext>()).ToList(), default), default);
+            return new ExecuteStartContent(executionParameters, resources, resourcesWithContext, default);
         }
 
         /// <param name="description"> The description of the operation response. </param>
@@ -311,12 +311,12 @@ namespace Azure.ResourceManager.Compute.BulkActions.Models
 
         /// <param name="executionParameters"> The execution parameters for the request. </param>
         /// <param name="resources"> The resources for the request. </param>
-        /// <param name="resources0"> The resource ids used for the request. </param>
+        /// <param name="resourcesWithContext"> The resources for the request with resource context information. Cannot be provided together with `resources` - exactly one must be specified. </param>
         /// <param name="isForceDeletion"> Forced delete resource item. </param>
         /// <returns> A new <see cref="Models.ExecuteDeleteContent"/> instance for mocking. </returns>
-        public static ExecuteDeleteContent ExecuteDeleteContent(BulkActionExecutionParameterDetail executionParameters = default, UserRequestResources resources = default, IEnumerable<ResourceWithContext> resources0 = default, bool? isForceDeletion = default)
+        public static ExecuteDeleteContent ExecuteDeleteContent(BulkActionExecutionParameterDetail executionParameters = default, UserRequestResources resources = default, ResourcesWithContext resourcesWithContext = default, bool? isForceDeletion = default)
         {
-            return new ExecuteDeleteContent(executionParameters, resources, resources0 is null ? default : new ResourcesWithContext((resources0 ?? new ChangeTrackingList<ResourceWithContext>()).ToList(), default), isForceDeletion, default);
+            return new ExecuteDeleteContent(executionParameters, resources, resourcesWithContext, isForceDeletion, default);
         }
 
         /// <param name="description"> The description of the operation response. </param>
@@ -369,12 +369,12 @@ namespace Azure.ResourceManager.Compute.BulkActions.Models
 
         /// <param name="executionParameters"> The execution parameters for the request. </param>
         /// <param name="resources"> The resources for the request. </param>
-        /// <param name="resources0"> The resource ids used for the request. </param>
+        /// <param name="resourcesWithContext"> The resources for the request with resource context information. Cannot be provided together with `resources` - exactly one must be specified. </param>
         /// <param name="reimageParameters"> Reimage parameters including base profile and per-resource overrides. </param>
         /// <returns> A new <see cref="Models.BulkActionsExecuteReimageRequestContent"/> instance for mocking. </returns>
-        public static BulkActionsExecuteReimageRequestContent BulkActionsExecuteReimageRequestContent(BulkActionExecutionParameterDetail executionParameters = default, UserRequestResources resources = default, IEnumerable<ResourceWithContext> resources0 = default, ReimagePayload reimageParameters = default)
+        public static BulkActionsExecuteReimageRequestContent BulkActionsExecuteReimageRequestContent(BulkActionExecutionParameterDetail executionParameters = default, UserRequestResources resources = default, ResourcesWithContext resourcesWithContext = default, ReimagePayload reimageParameters = default)
         {
-            return new BulkActionsExecuteReimageRequestContent(executionParameters, resources, resources0 is null ? default : new ResourcesWithContext((resources0 ?? new ChangeTrackingList<ResourceWithContext>()).ToList(), default), reimageParameters, default);
+            return new BulkActionsExecuteReimageRequestContent(executionParameters, resources, resourcesWithContext, reimageParameters, default);
         }
 
         /// <param name="baseProfile"> Common reimage profile applied to all resources unless overridden. </param>
@@ -425,25 +425,25 @@ namespace Azure.ResourceManager.Compute.BulkActions.Models
         }
 
         /// <param name="operationIds"> The set of operation ids to acknowledge. </param>
-        /// <returns> A new <see cref="Models.AcknowledgeBulkOperationErrorsRequest"/> instance for mocking. </returns>
-        public static AcknowledgeBulkOperationErrorsRequest AcknowledgeBulkOperationErrorsRequest(IEnumerable<string> operationIds = default)
+        /// <returns> A new <see cref="Models.BulkActionsAcknowledgeBulkOperationErrorsRequestContent"/> instance for mocking. </returns>
+        public static BulkActionsAcknowledgeBulkOperationErrorsRequestContent BulkActionsAcknowledgeBulkOperationErrorsRequestContent(IEnumerable<string> operationIds = default)
         {
             operationIds ??= new ChangeTrackingList<string>();
 
-            return new AcknowledgeBulkOperationErrorsRequest((operationIds ?? new ChangeTrackingList<string>()).ToList(), default);
+            return new BulkActionsAcknowledgeBulkOperationErrorsRequestContent((operationIds ?? new ChangeTrackingList<string>()).ToList(), default);
         }
 
         /// <param name="acknowledged"> The set of operation ids that were newly acknowledged. </param>
         /// <param name="notFound"> The set of operation ids that were not found in the completed operations store. </param>
         /// <param name="skipped"> The set of operation ids that were skipped because they were already acknowledged, not failed, or belong to a different scope. </param>
-        /// <returns> A new <see cref="Models.AcknowledgeBulkOperationErrorsResponse"/> instance for mocking. </returns>
-        public static AcknowledgeBulkOperationErrorsResponse AcknowledgeBulkOperationErrorsResponse(IEnumerable<string> acknowledged = default, IEnumerable<string> notFound = default, IEnumerable<string> skipped = default)
+        /// <returns> A new <see cref="Models.BulkActionsAcknowledgeBulkOperationErrorsResponseResult"/> instance for mocking. </returns>
+        public static BulkActionsAcknowledgeBulkOperationErrorsResponseResult BulkActionsAcknowledgeBulkOperationErrorsResponseResult(IEnumerable<string> acknowledged = default, IEnumerable<string> notFound = default, IEnumerable<string> skipped = default)
         {
             acknowledged ??= new ChangeTrackingList<string>();
             notFound ??= new ChangeTrackingList<string>();
             skipped ??= new ChangeTrackingList<string>();
 
-            return new AcknowledgeBulkOperationErrorsResponse((acknowledged ?? new ChangeTrackingList<string>()).ToList(), (notFound ?? new ChangeTrackingList<string>()).ToList(), (skipped ?? new ChangeTrackingList<string>()).ToList(), default);
+            return new BulkActionsAcknowledgeBulkOperationErrorsResponseResult((acknowledged ?? new ChangeTrackingList<string>()).ToList(), (notFound ?? new ChangeTrackingList<string>()).ToList(), (skipped ?? new ChangeTrackingList<string>()).ToList(), default);
         }
 
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
@@ -1557,7 +1557,7 @@ namespace Azure.ResourceManager.Compute.BulkActions.Models
         /// <param name="executionParameters"> The execution parameters the scheduled action is supposed to follow. </param>
         /// <param name="deadlineType"> The type of deadline the scheduled action is supposed to follow for the schedule. If no value is passed, it will default to InitiateAt. </param>
         /// <returns> A new <see cref="Models.ScheduledActionsSchedule"/> instance for mocking. </returns>
-        public static ScheduledActionsSchedule ScheduledActionsSchedule(TimeSpan scheduledTime = default, string timeZone = default, IEnumerable<WeekDay> requestedWeekDays = default, IEnumerable<Month> requestedMonths = default, IEnumerable<int> requestedDaysOfTheMonth = default, RecurringScheduledActionsExecutionParameters executionParameters = default, RecurringScheduledActionsDeadlineType? deadlineType = default)
+        public static ScheduledActionsSchedule ScheduledActionsSchedule(TimeSpan scheduledTime = default, string timeZone = default, IEnumerable<WeekDay> requestedWeekDays = default, IEnumerable<Month> requestedMonths = default, IEnumerable<int> requestedDaysOfTheMonth = default, BulkActionsRecurringScheduledActionsExecutionParametersContent executionParameters = default, RecurringScheduledActionsDeadlineType? deadlineType = default)
         {
             requestedWeekDays ??= new ChangeTrackingList<WeekDay>();
             requestedMonths ??= new ChangeTrackingList<Month>();
@@ -1576,10 +1576,10 @@ namespace Azure.ResourceManager.Compute.BulkActions.Models
 
         /// <param name="optimizationPreference"> Details that could optimize the user's request. </param>
         /// <param name="retryPolicy"> Retry policy the user can pass. </param>
-        /// <returns> A new <see cref="Models.RecurringScheduledActionsExecutionParameters"/> instance for mocking. </returns>
-        public static RecurringScheduledActionsExecutionParameters RecurringScheduledActionsExecutionParameters(OptimizationPreference? optimizationPreference = default, RecurringScheduledActionsRetryPolicy retryPolicy = default)
+        /// <returns> A new <see cref="Models.BulkActionsRecurringScheduledActionsExecutionParametersContent"/> instance for mocking. </returns>
+        public static BulkActionsRecurringScheduledActionsExecutionParametersContent BulkActionsRecurringScheduledActionsExecutionParametersContent(OptimizationPreference? optimizationPreference = default, RecurringScheduledActionsRetryPolicy retryPolicy = default)
         {
-            return new RecurringScheduledActionsExecutionParameters(optimizationPreference, retryPolicy, default);
+            return new BulkActionsRecurringScheduledActionsExecutionParametersContent(optimizationPreference, retryPolicy, default);
         }
 
         /// <param name="retryCount"> Retry count for the request. </param>
@@ -1642,7 +1642,7 @@ namespace Azure.ResourceManager.Compute.BulkActions.Models
         /// <param name="executionParameters"> The execution parameters the scheduled action is supposed to follow. </param>
         /// <param name="deadlineType"> The type of deadline the scheduled action is supposed to follow for the schedule. If no value is passed, it will default to InitiateAt. </param>
         /// <returns> A new <see cref="Models.ScheduledActionsScheduleUpdate"/> instance for mocking. </returns>
-        public static ScheduledActionsScheduleUpdate ScheduledActionsScheduleUpdate(TimeSpan? scheduledTime = default, string timeZone = default, IEnumerable<WeekDay> requestedWeekDays = default, IEnumerable<Month> requestedMonths = default, IEnumerable<int> requestedDaysOfTheMonth = default, RecurringScheduledActionsExecutionParameters executionParameters = default, RecurringScheduledActionsDeadlineType? deadlineType = default)
+        public static ScheduledActionsScheduleUpdate ScheduledActionsScheduleUpdate(TimeSpan? scheduledTime = default, string timeZone = default, IEnumerable<WeekDay> requestedWeekDays = default, IEnumerable<Month> requestedMonths = default, IEnumerable<int> requestedDaysOfTheMonth = default, BulkActionsRecurringScheduledActionsExecutionParametersContent executionParameters = default, RecurringScheduledActionsDeadlineType? deadlineType = default)
         {
             requestedWeekDays ??= new ChangeTrackingList<WeekDay>();
             requestedMonths ??= new ChangeTrackingList<Month>();
@@ -1682,12 +1682,12 @@ namespace Azure.ResourceManager.Compute.BulkActions.Models
         }
 
         /// <param name="resources"> List of resources to be attached/patched. </param>
-        /// <returns> A new <see cref="Models.ResourceAttachRequest"/> instance for mocking. </returns>
-        public static ResourceAttachRequest ResourceAttachRequest(IEnumerable<ScheduledActionResourceInput> resources = default)
+        /// <returns> A new <see cref="Models.BulkActionsResourceAttachRequestContent"/> instance for mocking. </returns>
+        public static BulkActionsResourceAttachRequestContent BulkActionsResourceAttachRequestContent(IEnumerable<ScheduledActionResourceInput> resources = default)
         {
             resources ??= new ChangeTrackingList<ScheduledActionResourceInput>();
 
-            return new ResourceAttachRequest((resources ?? new ChangeTrackingList<ScheduledActionResourceInput>()).ToList(), default);
+            return new BulkActionsResourceAttachRequestContent((resources ?? new ChangeTrackingList<ScheduledActionResourceInput>()).ToList(), default);
         }
 
         /// <param name="resourceId">
@@ -1705,12 +1705,12 @@ namespace Azure.ResourceManager.Compute.BulkActions.Models
 
         /// <param name="totalResources"> The total number of resources operated on. </param>
         /// <param name="resourcesStatuses"> The resource status of for each resource. </param>
-        /// <returns> A new <see cref="Models.ResourceOperationResponse"/> instance for mocking. </returns>
-        public static ResourceOperationResponse ResourceOperationResponse(int totalResources = default, IEnumerable<ResourceStatus> resourcesStatuses = default)
+        /// <returns> A new <see cref="Models.BulkActionsResourceOperationResponseResult"/> instance for mocking. </returns>
+        public static BulkActionsResourceOperationResponseResult BulkActionsResourceOperationResponseResult(int totalResources = default, IEnumerable<ResourceStatus> resourcesStatuses = default)
         {
             resourcesStatuses ??= new ChangeTrackingList<ResourceStatus>();
 
-            return new ResourceOperationResponse(totalResources, (resourcesStatuses ?? new ChangeTrackingList<ResourceStatus>()).ToList(), default);
+            return new BulkActionsResourceOperationResponseResult(totalResources, (resourcesStatuses ?? new ChangeTrackingList<ResourceStatus>()).ToList(), default);
         }
 
         /// <param name="resourceId"> The arm identifier of the resource. </param>
@@ -1723,30 +1723,30 @@ namespace Azure.ResourceManager.Compute.BulkActions.Models
         }
 
         /// <param name="resources"> List of resources to be detached. </param>
-        /// <returns> A new <see cref="Models.ResourceDetachRequest"/> instance for mocking. </returns>
-        public static ResourceDetachRequest ResourceDetachRequest(IEnumerable<ResourceIdentifier> resources = default)
+        /// <returns> A new <see cref="Models.BulkActionsResourceDetachRequestContent"/> instance for mocking. </returns>
+        public static BulkActionsResourceDetachRequestContent BulkActionsResourceDetachRequestContent(IEnumerable<ResourceIdentifier> resources = default)
         {
             resources ??= new ChangeTrackingList<ResourceIdentifier>();
 
-            return new ResourceDetachRequest((resources ?? new ChangeTrackingList<ResourceIdentifier>()).ToList(), default);
+            return new BulkActionsResourceDetachRequestContent((resources ?? new ChangeTrackingList<ResourceIdentifier>()).ToList(), default);
         }
 
         /// <param name="resources"> The list of resources we watch to patch. </param>
-        /// <returns> A new <see cref="Models.ResourcePatchRequest"/> instance for mocking. </returns>
-        public static ResourcePatchRequest ResourcePatchRequest(IEnumerable<ScheduledActionResourceInput> resources = default)
+        /// <returns> A new <see cref="Models.BulkActionsResourcePatchRequestContent"/> instance for mocking. </returns>
+        public static BulkActionsResourcePatchRequestContent BulkActionsResourcePatchRequestContent(IEnumerable<ScheduledActionResourceInput> resources = default)
         {
             resources ??= new ChangeTrackingList<ScheduledActionResourceInput>();
 
-            return new ResourcePatchRequest((resources ?? new ChangeTrackingList<ScheduledActionResourceInput>()).ToList(), default);
+            return new BulkActionsResourcePatchRequestContent((resources ?? new ChangeTrackingList<ScheduledActionResourceInput>()).ToList(), default);
         }
 
         /// <param name="resourceIds"> The resources the cancellation should act on. If no resource is passed in the list, Scheduled Action will cancel the occurrence for all resources. </param>
-        /// <returns> A new <see cref="Models.CancelOccurrenceRequest"/> instance for mocking. </returns>
-        public static CancelOccurrenceRequest CancelOccurrenceRequest(IEnumerable<ResourceIdentifier> resourceIds = default)
+        /// <returns> A new <see cref="Models.BulkActionsCancelOccurrenceRequestContent"/> instance for mocking. </returns>
+        public static BulkActionsCancelOccurrenceRequestContent BulkActionsCancelOccurrenceRequestContent(IEnumerable<ResourceIdentifier> resourceIds = default)
         {
             resourceIds ??= new ChangeTrackingList<ResourceIdentifier>();
 
-            return new CancelOccurrenceRequest((resourceIds ?? new ChangeTrackingList<ResourceIdentifier>()).ToList(), default);
+            return new BulkActionsCancelOccurrenceRequestContent((resourceIds ?? new ChangeTrackingList<ResourceIdentifier>()).ToList(), default);
         }
 
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
@@ -1869,12 +1869,12 @@ namespace Azure.ResourceManager.Compute.BulkActions.Models
 
         /// <param name="delay"> The exact time to delay the operations to. </param>
         /// <param name="resourceIds"> The resources that should be delayed. If empty, the delay will apply to the all resources in the occurrence. </param>
-        /// <returns> A new <see cref="Models.DelayRequest"/> instance for mocking. </returns>
-        public static DelayRequest DelayRequest(DateTimeOffset delay = default, IEnumerable<ResourceIdentifier> resourceIds = default)
+        /// <returns> A new <see cref="Models.BulkActionsDelayRequestContent"/> instance for mocking. </returns>
+        public static BulkActionsDelayRequestContent BulkActionsDelayRequestContent(DateTimeOffset delay = default, IEnumerable<ResourceIdentifier> resourceIds = default)
         {
             resourceIds ??= new ChangeTrackingList<ResourceIdentifier>();
 
-            return new DelayRequest(delay, (resourceIds ?? new ChangeTrackingList<ResourceIdentifier>()).ToList(), default);
+            return new BulkActionsDelayRequestContent(delay, (resourceIds ?? new ChangeTrackingList<ResourceIdentifier>()).ToList(), default);
         }
 
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>

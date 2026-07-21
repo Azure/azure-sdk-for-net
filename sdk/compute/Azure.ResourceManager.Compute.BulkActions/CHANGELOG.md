@@ -4,7 +4,12 @@
 
 ### Features Added
 
+- Added support for the `2026-07-06-preview` API version.
+- `Execute*Content` request models now expose an optional `ResourcesWithContext` property, allowing resource ids to be supplied together with per-resource context information. A request supplies exactly one of `Resources` or `ResourcesWithContext`.
+
 ### Breaking Changes
+
+- The `Resources` property on the `Execute*Content` request models (`ExecuteStartContent`, `ExecuteDeallocateContent`, `ExecuteHibernateContent`, `ExecuteDeleteContent`) is now optional. The constructor overload that required `resources` (`(BulkActionExecutionParameterDetail executionParameters, UserRequestResources resources)`) has been removed; use the `(BulkActionExecutionParameterDetail executionParameters)` constructor and set `Resources` or `ResourcesWithContext` as needed.
 
 ### Bugs Fixed
 

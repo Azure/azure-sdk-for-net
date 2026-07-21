@@ -14,25 +14,25 @@ using Azure.ResourceManager.Compute.BulkActions;
 namespace Azure.ResourceManager.Compute.BulkActions.Models
 {
     /// <summary> Request model to detach a list of scheduled action resources. </summary>
-    public partial class ResourceDetachRequest
+    public partial class BulkActionsResourceDetachRequestContent
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="ResourceDetachRequest"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="BulkActionsResourceDetachRequestContent"/>. </summary>
         /// <param name="resources"> List of resources to be detached. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resources"/> is null. </exception>
-        public ResourceDetachRequest(IEnumerable<ResourceIdentifier> resources)
+        public BulkActionsResourceDetachRequestContent(IEnumerable<ResourceIdentifier> resources)
         {
             Argument.AssertNotNull(resources, nameof(resources));
 
             Resources = resources.ToList();
         }
 
-        /// <summary> Initializes a new instance of <see cref="ResourceDetachRequest"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="BulkActionsResourceDetachRequestContent"/>. </summary>
         /// <param name="resources"> List of resources to be detached. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ResourceDetachRequest(IList<ResourceIdentifier> resources, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal BulkActionsResourceDetachRequestContent(IList<ResourceIdentifier> resources, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Resources = resources;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;

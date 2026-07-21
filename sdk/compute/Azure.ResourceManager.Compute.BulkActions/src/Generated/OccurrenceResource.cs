@@ -213,7 +213,7 @@ namespace Azure.ResourceManager.Compute.BulkActions
         /// <param name="content"> The content of the action request. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        public virtual async Task<ArmOperation<ResourceOperationResponse>> CancelAsync(WaitUntil waitUntil, CancelOccurrenceRequest content, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation<BulkActionsResourceOperationResponseResult>> CancelAsync(WaitUntil waitUntil, BulkActionsCancelOccurrenceRequestContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(content, nameof(content));
 
@@ -225,9 +225,9 @@ namespace Azure.ResourceManager.Compute.BulkActions
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _occurrencesRestClient.CreateCancelRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, CancelOccurrenceRequest.ToRequestContent(content), context);
+                HttpMessage message = _occurrencesRestClient.CreateCancelRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, BulkActionsCancelOccurrenceRequestContent.ToRequestContent(content), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                BulkActionsArmOperation<ResourceOperationResponse> operation = new BulkActionsArmOperation<ResourceOperationResponse>(
+                BulkActionsArmOperation<BulkActionsResourceOperationResponseResult> operation = new BulkActionsArmOperation<BulkActionsResourceOperationResponseResult>(
                     new ResourceOperationResponseOperationSource(),
                     _occurrencesClientDiagnostics,
                     Pipeline,
@@ -272,7 +272,7 @@ namespace Azure.ResourceManager.Compute.BulkActions
         /// <param name="content"> The content of the action request. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        public virtual ArmOperation<ResourceOperationResponse> Cancel(WaitUntil waitUntil, CancelOccurrenceRequest content, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<BulkActionsResourceOperationResponseResult> Cancel(WaitUntil waitUntil, BulkActionsCancelOccurrenceRequestContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(content, nameof(content));
 
@@ -284,9 +284,9 @@ namespace Azure.ResourceManager.Compute.BulkActions
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _occurrencesRestClient.CreateCancelRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, CancelOccurrenceRequest.ToRequestContent(content), context);
+                HttpMessage message = _occurrencesRestClient.CreateCancelRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, BulkActionsCancelOccurrenceRequestContent.ToRequestContent(content), context);
                 Response response = Pipeline.ProcessMessage(message, context);
-                BulkActionsArmOperation<ResourceOperationResponse> operation = new BulkActionsArmOperation<ResourceOperationResponse>(
+                BulkActionsArmOperation<BulkActionsResourceOperationResponseResult> operation = new BulkActionsArmOperation<BulkActionsResourceOperationResponseResult>(
                     new ResourceOperationResponseOperationSource(),
                     _occurrencesClientDiagnostics,
                     Pipeline,
@@ -331,7 +331,7 @@ namespace Azure.ResourceManager.Compute.BulkActions
         /// <param name="content"> The content of the action request. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        public virtual async Task<ArmOperation<ResourceOperationResponse>> DelayAsync(WaitUntil waitUntil, DelayRequest content, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation<BulkActionsResourceOperationResponseResult>> DelayAsync(WaitUntil waitUntil, BulkActionsDelayRequestContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(content, nameof(content));
 
@@ -343,9 +343,9 @@ namespace Azure.ResourceManager.Compute.BulkActions
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _occurrencesRestClient.CreateDelayRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, DelayRequest.ToRequestContent(content), context);
+                HttpMessage message = _occurrencesRestClient.CreateDelayRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, BulkActionsDelayRequestContent.ToRequestContent(content), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                BulkActionsArmOperation<ResourceOperationResponse> operation = new BulkActionsArmOperation<ResourceOperationResponse>(
+                BulkActionsArmOperation<BulkActionsResourceOperationResponseResult> operation = new BulkActionsArmOperation<BulkActionsResourceOperationResponseResult>(
                     new ResourceOperationResponseOperationSource(),
                     _occurrencesClientDiagnostics,
                     Pipeline,
@@ -390,7 +390,7 @@ namespace Azure.ResourceManager.Compute.BulkActions
         /// <param name="content"> The content of the action request. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        public virtual ArmOperation<ResourceOperationResponse> Delay(WaitUntil waitUntil, DelayRequest content, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<BulkActionsResourceOperationResponseResult> Delay(WaitUntil waitUntil, BulkActionsDelayRequestContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(content, nameof(content));
 
@@ -402,9 +402,9 @@ namespace Azure.ResourceManager.Compute.BulkActions
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _occurrencesRestClient.CreateDelayRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, DelayRequest.ToRequestContent(content), context);
+                HttpMessage message = _occurrencesRestClient.CreateDelayRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, BulkActionsDelayRequestContent.ToRequestContent(content), context);
                 Response response = Pipeline.ProcessMessage(message, context);
-                BulkActionsArmOperation<ResourceOperationResponse> operation = new BulkActionsArmOperation<ResourceOperationResponse>(
+                BulkActionsArmOperation<BulkActionsResourceOperationResponseResult> operation = new BulkActionsArmOperation<BulkActionsResourceOperationResponseResult>(
                     new ResourceOperationResponseOperationSource(),
                     _occurrencesClientDiagnostics,
                     Pipeline,

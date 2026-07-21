@@ -49,22 +49,9 @@ namespace Azure.ResourceManager.Compute.BulkActions.Models
         public UserRequestResources Resources { get; set; }
 
         /// <summary> The resources for the request with resource context information. Cannot be provided together with `resources` - exactly one must be specified. </summary>
-        internal ResourcesWithContext ResourcesWithContext { get; set; }
+        public ResourcesWithContext ResourcesWithContext { get; set; }
 
         /// <summary> Reimage parameters including base profile and per-resource overrides. </summary>
         public ReimagePayload ReimageParameters { get; set; }
-
-        /// <summary> The resource ids used for the request. </summary>
-        public IList<ResourceWithContext> Resources
-        {
-            get
-            {
-                if (ResourcesWithContext is null)
-                {
-                    ResourcesWithContext = new ResourcesWithContext();
-                }
-                return ResourcesWithContext.Resources;
-            }
-        }
     }
 }

@@ -1,0 +1,11 @@
+# Intended breaking change in 1.2.0-beta.1: the `resources` property became optional in the
+# 2026-07-06-preview API (a request now supplies exactly one of `resources` or
+# `resourcesWithContext`). The generator therefore emits a single required-parameter constructor
+# (executionParameters) for each Execute*Content model and drops the former
+# (executionParameters, resources) constructor. Documented under Breaking Changes in CHANGELOG.md.
+Compat issues with assembly Azure.ResourceManager.Compute.BulkActions:
+MembersMustExist : Member 'public void Azure.ResourceManager.Compute.BulkActions.Models.ExecuteDeallocateContent..ctor(Azure.ResourceManager.Compute.BulkActions.Models.BulkActionExecutionParameterDetail, Azure.ResourceManager.Compute.BulkActions.Models.UserRequestResources)' does not exist in the implementation but it does exist in the contract.
+MembersMustExist : Member 'public void Azure.ResourceManager.Compute.BulkActions.Models.ExecuteDeleteContent..ctor(Azure.ResourceManager.Compute.BulkActions.Models.BulkActionExecutionParameterDetail, Azure.ResourceManager.Compute.BulkActions.Models.UserRequestResources)' does not exist in the implementation but it does exist in the contract.
+MembersMustExist : Member 'public void Azure.ResourceManager.Compute.BulkActions.Models.ExecuteHibernateContent..ctor(Azure.ResourceManager.Compute.BulkActions.Models.BulkActionExecutionParameterDetail, Azure.ResourceManager.Compute.BulkActions.Models.UserRequestResources)' does not exist in the implementation but it does exist in the contract.
+MembersMustExist : Member 'public void Azure.ResourceManager.Compute.BulkActions.Models.ExecuteStartContent..ctor(Azure.ResourceManager.Compute.BulkActions.Models.BulkActionExecutionParameterDetail, Azure.ResourceManager.Compute.BulkActions.Models.UserRequestResources)' does not exist in the implementation but it does exist in the contract.
+Total Issues: 4
