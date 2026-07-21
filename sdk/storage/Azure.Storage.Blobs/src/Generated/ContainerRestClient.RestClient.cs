@@ -561,7 +561,10 @@ namespace Azure.Storage.Blobs
             uri.Reset(_endpoint);
             uri.AppendQuery("restype", "container", true);
             uri.AppendQuery("comp", "list", true);
-            uri.AppendQuery("delimiter", delimiter, true);
+            if (delimiter != null)
+            {
+                uri.AppendQuery("delimiter", delimiter, true);
+            }
             if (prefix != null)
             {
                 uri.AppendQuery("prefix", prefix, true);
