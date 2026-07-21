@@ -14,7 +14,7 @@ namespace Azure.Storage.Blobs.Specialized
 {
     internal partial class BlobBatchClientOptions : ClientOptions
     {
-        private const ServiceVersion LatestVersion = ServiceVersion.V2026_06_06;
+        private const ServiceVersion LatestVersion = ServiceVersion.V2026_12_06;
 
         /// <summary> Initializes a new instance of BlobBatchClientOptions. </summary>
         /// <param name="version"> The service version. </param>
@@ -26,6 +26,8 @@ namespace Azure.Storage.Blobs.Specialized
                 ServiceVersion.V2026_02_06 => "2026-02-06",
                 ServiceVersion.V2026_04_06 => "2026-04-06",
                 ServiceVersion.V2026_06_06 => "2026-06-06",
+                ServiceVersion.V2026_10_06 => "2026-10-06",
+                ServiceVersion.V2026_12_06 => "2026-12-06",
                 _ => throw new NotSupportedException()
             };
             ConfigureLogging();
@@ -36,7 +38,7 @@ namespace Azure.Storage.Blobs.Specialized
         [Experimental("SCME0002")]
         internal BlobBatchClientOptions(IConfigurationSection section) : base(section, null)
         {
-            Version = "2026-06-06";
+            Version = "2026-12-06";
             if (section is null || !section.Exists())
             {
                 return;
@@ -63,7 +65,11 @@ namespace Azure.Storage.Blobs.Specialized
             /// <summary> The 2026-04-06 version of the Azure.Storage.Blob service. </summary>
             V2026_04_06 = 3,
             /// <summary> The 2026-06-06 version of the Azure.Storage.Blob service. </summary>
-            V2026_06_06 = 4
+            V2026_06_06 = 4,
+            /// <summary> The 2026-10-06 version of the Azure.Storage.Blob service. </summary>
+            V2026_10_06 = 5,
+            /// <summary> The 2026-12-06 version of the Azure.Storage.Blob service. </summary>
+            V2026_12_06 = 6
         }
     }
 }
