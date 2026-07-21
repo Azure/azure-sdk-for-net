@@ -337,10 +337,10 @@ function ProcessPackage($packageInfo)
                     {
                         if (!$apiStatus.IsApproved)
                         {
-                            Write-Error "Package version $($version) is GA and automatic API Review is not yet approved for package $($packageInfo.ArtifactName)."
-                            Write-Error "Build and release is not allowed for GA package without API review approval."
-                            Write-Error "You will need to queue another build to proceed further after API review is approved"
-                            Write-Error "You can check http://aka.ms/azsdk/engsys/apireview/faq for more details on API Approval."
+                            Write-Error "Package version $($version) is GA and automatic API Review is not yet approved for package $($packageInfo.ArtifactName)." -ErrorAction Continue
+                            Write-Error "Build and release is not allowed for GA package without API review approval." -ErrorAction Continue
+                            Write-Error "You will need to queue another build to proceed further after API review is approved" -ErrorAction Continue
+                            Write-Error "You can check http://aka.ms/azsdk/engsys/apireview/faq for more details on API Approval." -ErrorAction Continue
                         }
                         return 1
                     }
