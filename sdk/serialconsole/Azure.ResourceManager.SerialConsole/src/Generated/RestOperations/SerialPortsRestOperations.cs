@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.SerialConsole
             uri.Reset(_endpoint);
             uri.AppendPath("/subscriptions/", false);
             uri.AppendPath(subscriptionId.ToString(), true);
-            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath("/resourcegroups/", false);
             uri.AppendPath(resourceGroupName, true);
             uri.AppendPath("/providers/", false);
             uri.AppendPath(resourceProviderNamespace, true);
@@ -75,7 +75,7 @@ namespace Azure.ResourceManager.SerialConsole
             uri.Reset(_endpoint);
             uri.AppendPath("/subscriptions/", false);
             uri.AppendPath(subscriptionId.ToString(), true);
-            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath("/resourcegroups/", false);
             uri.AppendPath(resourceGroupName, true);
             uri.AppendPath("/providers/", false);
             uri.AppendPath(resourceProviderNamespace, true);
@@ -105,7 +105,7 @@ namespace Azure.ResourceManager.SerialConsole
             uri.Reset(_endpoint);
             uri.AppendPath("/subscriptions/", false);
             uri.AppendPath(subscriptionId.ToString(), true);
-            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath("/resourcegroups/", false);
             uri.AppendPath(resourceGroupName, true);
             uri.AppendPath("/providers/", false);
             uri.AppendPath(resourceProviderNamespace, true);
@@ -151,7 +151,7 @@ namespace Azure.ResourceManager.SerialConsole
             uri.Reset(_endpoint);
             uri.AppendPath("/subscriptions/", false);
             uri.AppendPath(subscriptionId.ToString(), true);
-            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath("/resourcegroups/", false);
             uri.AppendPath(resourceGroupName, true);
             uri.AppendPath("/providers/", false);
             uri.AppendPath(resourceProviderNamespace, true);

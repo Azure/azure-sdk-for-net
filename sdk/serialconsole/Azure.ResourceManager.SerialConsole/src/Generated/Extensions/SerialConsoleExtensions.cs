@@ -219,6 +219,74 @@ namespace Azure.ResourceManager.SerialConsole
         }
 
         /// <summary>
+        /// Disables the Serial Console service for all VMs and VM scale sets in the provided subscription
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableSerialConsoleSubscriptionResource.DisableConsoleAsync(CancellationToken)"/> instead. </description>
+        /// </item>
+        /// </summary>
+        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource"/> the method will execute against. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
+        public static async Task<Response<DisableSerialConsoleResult>> DisableConsoleAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
+
+            return await GetMockableSerialConsoleSubscriptionResource(subscriptionResource).DisableConsoleAsync(cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Disables the Serial Console service for all VMs and VM scale sets in the provided subscription
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableSerialConsoleSubscriptionResource.DisableConsole(CancellationToken)"/> instead. </description>
+        /// </item>
+        /// </summary>
+        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource"/> the method will execute against. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
+        public static Response<DisableSerialConsoleResult> DisableConsole(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
+
+            return GetMockableSerialConsoleSubscriptionResource(subscriptionResource).DisableConsole(cancellationToken);
+        }
+
+        /// <summary>
+        /// Enables the Serial Console service for all VMs and VM scale sets in the provided subscription
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableSerialConsoleSubscriptionResource.EnableConsoleAsync(CancellationToken)"/> instead. </description>
+        /// </item>
+        /// </summary>
+        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource"/> the method will execute against. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
+        public static async Task<Response<EnableSerialConsoleResult>> EnableConsoleAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
+
+            return await GetMockableSerialConsoleSubscriptionResource(subscriptionResource).EnableConsoleAsync(cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Enables the Serial Console service for all VMs and VM scale sets in the provided subscription
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableSerialConsoleSubscriptionResource.EnableConsole(CancellationToken)"/> instead. </description>
+        /// </item>
+        /// </summary>
+        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource"/> the method will execute against. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
+        public static Response<EnableSerialConsoleResult> EnableConsole(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
+
+            return GetMockableSerialConsoleSubscriptionResource(subscriptionResource).EnableConsole(cancellationToken);
+        }
+
+        /// <summary>
         /// Gets a list of Serial Console API operations.
         /// <item>
         /// <term> Mocking. </term>

@@ -41,14 +41,14 @@ namespace Azure.ResourceManager.SerialConsole
         /// <summary> The ClientDiagnostics is used to provide tracing support for the client library. </summary>
         internal ClientDiagnostics ClientDiagnostics { get; }
 
-        internal HttpMessage CreateDisableConsoleRequest(Guid subscriptionId, string @default, RequestContext context)
+        internal HttpMessage CreateDisableConsoleRequest(Guid subscriptionId, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/subscriptions/", false);
             uri.AppendPath(subscriptionId.ToString(), true);
             uri.AppendPath("/providers/Microsoft.SerialConsole/consoleServices/", false);
-            uri.AppendPath(@default, true);
+            uri.AppendPath("default", true);
             uri.AppendPath("/disableConsole", false);
             if (_apiVersion != null)
             {
@@ -62,14 +62,14 @@ namespace Azure.ResourceManager.SerialConsole
             return message;
         }
 
-        internal HttpMessage CreateEnableConsoleRequest(Guid subscriptionId, string @default, RequestContext context)
+        internal HttpMessage CreateEnableConsoleRequest(Guid subscriptionId, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/subscriptions/", false);
             uri.AppendPath(subscriptionId.ToString(), true);
             uri.AppendPath("/providers/Microsoft.SerialConsole/consoleServices/", false);
-            uri.AppendPath(@default, true);
+            uri.AppendPath("default", true);
             uri.AppendPath("/enableConsole", false);
             if (_apiVersion != null)
             {

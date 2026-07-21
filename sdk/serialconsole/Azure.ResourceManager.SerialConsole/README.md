@@ -4,7 +4,7 @@ The Azure Serial Console allows access to the serial console of a virtual machin
 
 This library follows the [new Azure SDK guidelines](https://azure.github.io/azure-sdk/general_introduction.html), and provides many core capabilities:
 
-    - Support MSAL.NET through Azure.Identity.
+    - Supports MSAL.NET; Azure.Identity works out of the box for authentication.
     - Support [OpenTelemetry](https://opentelemetry.io/) for distributed tracing.
     - HTTP pipeline with custom policies.
     - Better error-handling.
