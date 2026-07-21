@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.CosmosDB
         {
             TryGetApiVersion(RestorableCosmosDBAccountResource.ResourceType, out string restorableCosmosDBAccountApiVersion);
             _restorableDatabaseAccountsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.CosmosDB", RestorableCosmosDBAccountResource.ResourceType.Namespace, Diagnostics);
-            _restorableDatabaseAccountsRestClient = new RestorableDatabaseAccounts(_restorableDatabaseAccountsClientDiagnostics, Pipeline, Endpoint, restorableCosmosDBAccountApiVersion ?? "2026-03-15");
+            _restorableDatabaseAccountsRestClient = new RestorableDatabaseAccounts(_restorableDatabaseAccountsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, restorableCosmosDBAccountApiVersion ?? "2026-03-15");
             ValidateResourceId(id);
         }
 
