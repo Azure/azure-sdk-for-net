@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.AppService
         {
             TryGetApiVersion(ResourceType, out string staticSiteLinkedBackendApiVersion);
             _staticSiteLinkedBackendARMResourcesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.AppService", ResourceType.Namespace, Diagnostics);
-            _staticSiteLinkedBackendARMResourcesRestClient = new StaticSiteLinkedBackendARMResources(_staticSiteLinkedBackendARMResourcesClientDiagnostics, Pipeline, Endpoint, staticSiteLinkedBackendApiVersion ?? "2026-03-15");
+            _staticSiteLinkedBackendARMResourcesRestClient = new StaticSiteLinkedBackendARMResources(_staticSiteLinkedBackendARMResourcesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, staticSiteLinkedBackendApiVersion ?? "2026-03-15");
             ValidateResourceId(id);
         }
 

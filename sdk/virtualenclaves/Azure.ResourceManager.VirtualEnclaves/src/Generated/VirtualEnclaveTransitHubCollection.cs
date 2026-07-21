@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.VirtualEnclaves
         {
             TryGetApiVersion(VirtualEnclaveTransitHubResource.ResourceType, out string virtualEnclaveTransitHubApiVersion);
             _transitHubClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.VirtualEnclaves", VirtualEnclaveTransitHubResource.ResourceType.Namespace, Diagnostics);
-            _transitHubRestClient = new TransitHub(_transitHubClientDiagnostics, Pipeline, Endpoint, virtualEnclaveTransitHubApiVersion ?? "2025-05-01-preview");
+            _transitHubRestClient = new TransitHub(_transitHubClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, virtualEnclaveTransitHubApiVersion ?? "2025-05-01-preview");
             ValidateResourceId(id);
         }
 

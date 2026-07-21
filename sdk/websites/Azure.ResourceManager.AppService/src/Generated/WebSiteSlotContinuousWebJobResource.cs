@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.AppService
         {
             TryGetApiVersion(ResourceType, out string webSiteSlotContinuousWebJobApiVersion);
             _continuousWebJobOperationGroupClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.AppService", ResourceType.Namespace, Diagnostics);
-            _continuousWebJobOperationGroupRestClient = new ContinuousWebJobOperationGroup(_continuousWebJobOperationGroupClientDiagnostics, Pipeline, Endpoint, webSiteSlotContinuousWebJobApiVersion ?? "2026-03-15");
+            _continuousWebJobOperationGroupRestClient = new ContinuousWebJobOperationGroup(_continuousWebJobOperationGroupClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, webSiteSlotContinuousWebJobApiVersion ?? "2026-03-15");
             ValidateResourceId(id);
         }
 
