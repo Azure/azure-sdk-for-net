@@ -22,15 +22,25 @@ namespace Azure.ResourceManager.Compute.BulkActions.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="BulkActionExecutionParameterDetail"/>. </summary>
+        /// <param name="optimizationPreference"> Details that could optimize the user's request. </param>
         /// <param name="retryPolicy"> Retry policy the user can pass. </param>
+        /// <param name="verifyVmAgentHealth"> When true on an executeStart request, run a post-Start VM agent health check and engage the fallback chain if the guest agent does not report Ready. Ignored for non-Start operations. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal BulkActionExecutionParameterDetail(BulkOperationRetryPolicy retryPolicy, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal BulkActionExecutionParameterDetail(OptimizationPreference? optimizationPreference, BulkOperationRetryPolicy retryPolicy, bool? verifyVmAgentHealth, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
+            OptimizationPreference = optimizationPreference;
             RetryPolicy = retryPolicy;
+            VerifyVmAgentHealth = verifyVmAgentHealth;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
+        /// <summary> Details that could optimize the user's request. </summary>
+        public OptimizationPreference? OptimizationPreference { get; set; }
+
         /// <summary> Retry policy the user can pass. </summary>
         public BulkOperationRetryPolicy RetryPolicy { get; set; }
+
+        /// <summary> When true on an executeStart request, run a post-Start VM agent health check and engage the fallback chain if the guest agent does not report Ready. Ignored for non-Start operations. </summary>
+        public bool? VerifyVmAgentHealth { get; set; }
     }
 }

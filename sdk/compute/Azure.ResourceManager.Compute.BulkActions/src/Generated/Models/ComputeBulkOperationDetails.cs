@@ -37,8 +37,9 @@ namespace Azure.ResourceManager.Compute.BulkActions.Models
         /// <param name="fallbackOperationInfo"> Fallback operation details if a fallback was performed. </param>
         /// <param name="completedOn"> Time the operation was complete if errors are null. </param>
         /// <param name="retryPolicy"> Retry policy the user can pass. </param>
+        /// <param name="resourceNotificationDetails"> Resource notification details. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ComputeBulkOperationDetails(string operationId, ResourceIdentifier resourceId, ComputeBulkOperationKind? operationKind, Guid? subscriptionId, DateTimeOffset? deadlineOn, BulkActionDeadlineKind? deadlineKind, BulkActionOperationState? state, string timeZone, ComputeBulkOperationError error, ComputeBulkFallbackOperationInfo fallbackOperationInfo, DateTimeOffset? completedOn, BulkOperationRetryPolicy retryPolicy, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ComputeBulkOperationDetails(string operationId, ResourceIdentifier resourceId, ComputeBulkOperationKind? operationKind, Guid? subscriptionId, DateTimeOffset? deadlineOn, BulkActionDeadlineKind? deadlineKind, BulkActionOperationState? state, string timeZone, ComputeBulkOperationError error, ComputeBulkFallbackOperationInfo fallbackOperationInfo, DateTimeOffset? completedOn, BulkOperationRetryPolicy retryPolicy, ResourceNotificationDetails resourceNotificationDetails, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             OperationId = operationId;
             ResourceId = resourceId;
@@ -52,6 +53,7 @@ namespace Azure.ResourceManager.Compute.BulkActions.Models
             FallbackOperationInfo = fallbackOperationInfo;
             CompletedOn = completedOn;
             RetryPolicy = retryPolicy;
+            ResourceNotificationDetails = resourceNotificationDetails;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
@@ -87,5 +89,17 @@ namespace Azure.ResourceManager.Compute.BulkActions.Models
 
         /// <summary> Retry policy the user can pass. </summary>
         public BulkOperationRetryPolicy RetryPolicy { get; }
+
+        /// <summary> Resource notification details. </summary>
+        internal ResourceNotificationDetails ResourceNotificationDetails { get; }
+
+        /// <summary> Resource context for notification tracking. </summary>
+        public string ResourceContext
+        {
+            get
+            {
+                return ResourceNotificationDetails is null ? default : ResourceNotificationDetails.ResourceContext;
+            }
+        }
     }
 }

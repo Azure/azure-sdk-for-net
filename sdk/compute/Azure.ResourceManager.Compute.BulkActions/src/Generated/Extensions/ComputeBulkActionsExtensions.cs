@@ -10,8 +10,10 @@ using System.Threading;
 using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
+using Azure.ResourceManager;
 using Azure.ResourceManager.Compute.BulkActions.Mocking;
 using Azure.ResourceManager.Compute.BulkActions.Models;
+using Azure.ResourceManager.Models;
 using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.Compute.BulkActions
@@ -19,10 +21,341 @@ namespace Azure.ResourceManager.Compute.BulkActions
     /// <summary> A class to add extension methods to Azure.ResourceManager.Compute.BulkActions. </summary>
     public static partial class ComputeBulkActionsExtensions
     {
+        /// <param name="client"></param>
+        private static MockableComputeBulkActionsArmClient GetMockableComputeBulkActionsArmClient(ArmClient client)
+        {
+            return client.GetCachedClient(client0 => new MockableComputeBulkActionsArmClient(client0, ResourceIdentifier.Root));
+        }
+
         /// <param name="resourceGroupResource"></param>
         private static MockableComputeBulkActionsResourceGroupResource GetMockableComputeBulkActionsResourceGroupResource(ResourceGroupResource resourceGroupResource)
         {
             return resourceGroupResource.GetCachedClient(client => new MockableComputeBulkActionsResourceGroupResource(client, resourceGroupResource.Id));
+        }
+
+        /// <param name="subscriptionResource"></param>
+        private static MockableComputeBulkActionsSubscriptionResource GetMockableComputeBulkActionsSubscriptionResource(SubscriptionResource subscriptionResource)
+        {
+            return subscriptionResource.GetCachedClient(client => new MockableComputeBulkActionsSubscriptionResource(client, subscriptionResource.Id));
+        }
+
+        /// <summary>
+        /// Gets an object representing a <see cref="LocationBasedLaunchBulkInstancesOperationResource"/> along with the instance operations that can be performed on it but with no data.
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableComputeBulkActionsArmClient.GetLocationBasedLaunchBulkInstancesOperationResource(ResourceIdentifier)"/> instead. </description>
+        /// </item>
+        /// </summary>
+        /// <param name="client"> The <see cref="ArmClient"/> the method will execute against. </param>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
+        /// <returns> Returns a <see cref="LocationBasedLaunchBulkInstancesOperationResource"/> object. </returns>
+        public static LocationBasedLaunchBulkInstancesOperationResource GetLocationBasedLaunchBulkInstancesOperationResource(this ArmClient client, ResourceIdentifier id)
+        {
+            Argument.AssertNotNull(client, nameof(client));
+
+            return GetMockableComputeBulkActionsArmClient(client).GetLocationBasedLaunchBulkInstancesOperationResource(id);
+        }
+
+        /// <summary>
+        /// Gets an object representing a <see cref="LocationBasedBulkCreateCustomResource"/> along with the instance operations that can be performed on it but with no data.
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableComputeBulkActionsArmClient.GetLocationBasedBulkCreateCustomResource(ResourceIdentifier)"/> instead. </description>
+        /// </item>
+        /// </summary>
+        /// <param name="client"> The <see cref="ArmClient"/> the method will execute against. </param>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
+        /// <returns> Returns a <see cref="LocationBasedBulkCreateCustomResource"/> object. </returns>
+        public static LocationBasedBulkCreateCustomResource GetLocationBasedBulkCreateCustomResource(this ArmClient client, ResourceIdentifier id)
+        {
+            Argument.AssertNotNull(client, nameof(client));
+
+            return GetMockableComputeBulkActionsArmClient(client).GetLocationBasedBulkCreateCustomResource(id);
+        }
+
+        /// <summary>
+        /// Gets an object representing a <see cref="ScheduledActionResource"/> along with the instance operations that can be performed on it but with no data.
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableComputeBulkActionsArmClient.GetScheduledActionResource(ResourceIdentifier)"/> instead. </description>
+        /// </item>
+        /// </summary>
+        /// <param name="client"> The <see cref="ArmClient"/> the method will execute against. </param>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
+        /// <returns> Returns a <see cref="ScheduledActionResource"/> object. </returns>
+        public static ScheduledActionResource GetScheduledActionResource(this ArmClient client, ResourceIdentifier id)
+        {
+            Argument.AssertNotNull(client, nameof(client));
+
+            return GetMockableComputeBulkActionsArmClient(client).GetScheduledActionResource(id);
+        }
+
+        /// <summary>
+        /// Gets an object representing a <see cref="OccurrenceResource"/> along with the instance operations that can be performed on it but with no data.
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableComputeBulkActionsArmClient.GetOccurrenceResource(ResourceIdentifier)"/> instead. </description>
+        /// </item>
+        /// </summary>
+        /// <param name="client"> The <see cref="ArmClient"/> the method will execute against. </param>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
+        /// <returns> Returns a <see cref="OccurrenceResource"/> object. </returns>
+        public static OccurrenceResource GetOccurrenceResource(this ArmClient client, ResourceIdentifier id)
+        {
+            Argument.AssertNotNull(client, nameof(client));
+
+            return GetMockableComputeBulkActionsArmClient(client).GetOccurrenceResource(id);
+        }
+
+        /// <summary>
+        /// List ScheduledActionResources resources by parent
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableComputeBulkActionsArmClient.GetByVmsAsync(ResourceIdentifier, CancellationToken)"/> instead. </description>
+        /// </item>
+        /// </summary>
+        /// <param name="client"> The <see cref="ArmClient"/> the method will execute against. </param>
+        /// <param name="scope"> The scope that the resource will apply against. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
+        /// <returns> A collection of <see cref="ScheduledActionResources"/> that may take multiple service requests to iterate over. </returns>
+        public static AsyncPageable<ScheduledActionResources> GetByVmsAsync(this ArmClient client, ResourceIdentifier scope, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(client, nameof(client));
+
+            return GetMockableComputeBulkActionsArmClient(client).GetByVmsAsync(scope, cancellationToken);
+        }
+
+        /// <summary>
+        /// List ScheduledActionResources resources by parent
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableComputeBulkActionsArmClient.GetByVms(ResourceIdentifier, CancellationToken)"/> instead. </description>
+        /// </item>
+        /// </summary>
+        /// <param name="client"> The <see cref="ArmClient"/> the method will execute against. </param>
+        /// <param name="scope"> The scope that the resource will apply against. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
+        /// <returns> A collection of <see cref="ScheduledActionResources"/> that may take multiple service requests to iterate over. </returns>
+        public static Pageable<ScheduledActionResources> GetByVms(this ArmClient client, ResourceIdentifier scope, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(client, nameof(client));
+
+            return GetMockableComputeBulkActionsArmClient(client).GetByVms(scope, cancellationToken);
+        }
+
+        /// <summary>
+        /// List OccurrenceExtensionResource resources by parent
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableComputeBulkActionsArmClient.GetOccurrenceByVmsAsync(ResourceIdentifier, CancellationToken)"/> instead. </description>
+        /// </item>
+        /// </summary>
+        /// <param name="client"> The <see cref="ArmClient"/> the method will execute against. </param>
+        /// <param name="scope"> The scope that the resource will apply against. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
+        /// <returns> A collection of <see cref="OccurrenceExtensionResource"/> that may take multiple service requests to iterate over. </returns>
+        public static AsyncPageable<OccurrenceExtensionResource> GetOccurrenceByVmsAsync(this ArmClient client, ResourceIdentifier scope, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(client, nameof(client));
+
+            return GetMockableComputeBulkActionsArmClient(client).GetOccurrenceByVmsAsync(scope, cancellationToken);
+        }
+
+        /// <summary>
+        /// List OccurrenceExtensionResource resources by parent
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableComputeBulkActionsArmClient.GetOccurrenceByVms(ResourceIdentifier, CancellationToken)"/> instead. </description>
+        /// </item>
+        /// </summary>
+        /// <param name="client"> The <see cref="ArmClient"/> the method will execute against. </param>
+        /// <param name="scope"> The scope that the resource will apply against. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
+        /// <returns> A collection of <see cref="OccurrenceExtensionResource"/> that may take multiple service requests to iterate over. </returns>
+        public static Pageable<OccurrenceExtensionResource> GetOccurrenceByVms(this ArmClient client, ResourceIdentifier scope, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(client, nameof(client));
+
+            return GetMockableComputeBulkActionsArmClient(client).GetOccurrenceByVms(scope, cancellationToken);
+        }
+
+        /// <summary>
+        /// Gets a collection of LocationBasedLaunchBulkInstancesOperations in the <see cref="ResourceGroupResource"/>
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableComputeBulkActionsResourceGroupResource.GetLocationBasedLaunchBulkInstancesOperations(AzureLocation)"/> instead. </description>
+        /// </item>
+        /// </summary>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
+        /// <param name="location"> The location for the resource. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
+        /// <returns> An object representing collection of LocationBasedLaunchBulkInstancesOperations and their operations over a LocationBasedLaunchBulkInstancesOperationResource. </returns>
+        public static LocationBasedLaunchBulkInstancesOperationCollection GetLocationBasedLaunchBulkInstancesOperations(this ResourceGroupResource resourceGroupResource, AzureLocation location)
+        {
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
+
+            return GetMockableComputeBulkActionsResourceGroupResource(resourceGroupResource).GetLocationBasedLaunchBulkInstancesOperations(location);
+        }
+
+        /// <summary>
+        /// Gets an instance of LaunchBulkInstancesOperations.
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableComputeBulkActionsResourceGroupResource.GetLocationBasedLaunchBulkInstancesOperationAsync(AzureLocation, string, CancellationToken)"/> instead. </description>
+        /// </item>
+        /// </summary>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
+        /// <param name="location"> The location for the resource. </param>
+        /// <param name="name"> The name of the LaunchBulkInstancesOperation. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
+        [ForwardsClientCalls]
+        public static async Task<Response<LocationBasedLaunchBulkInstancesOperationResource>> GetLocationBasedLaunchBulkInstancesOperationAsync(this ResourceGroupResource resourceGroupResource, AzureLocation location, string name, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
+
+            return await GetMockableComputeBulkActionsResourceGroupResource(resourceGroupResource).GetLocationBasedLaunchBulkInstancesOperationAsync(location, name, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Gets an instance of LaunchBulkInstancesOperations.
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableComputeBulkActionsResourceGroupResource.GetLocationBasedLaunchBulkInstancesOperation(AzureLocation, string, CancellationToken)"/> instead. </description>
+        /// </item>
+        /// </summary>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
+        /// <param name="location"> The location for the resource. </param>
+        /// <param name="name"> The name of the LaunchBulkInstancesOperation. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
+        [ForwardsClientCalls]
+        public static Response<LocationBasedLaunchBulkInstancesOperationResource> GetLocationBasedLaunchBulkInstancesOperation(this ResourceGroupResource resourceGroupResource, AzureLocation location, string name, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
+
+            return GetMockableComputeBulkActionsResourceGroupResource(resourceGroupResource).GetLocationBasedLaunchBulkInstancesOperation(location, name, cancellationToken);
+        }
+
+        /// <summary>
+        /// Gets a collection of LocationBasedBulkCreateCustoms in the <see cref="ResourceGroupResource"/>
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableComputeBulkActionsResourceGroupResource.GetLocationBasedBulkCreateCustoms(AzureLocation)"/> instead. </description>
+        /// </item>
+        /// </summary>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
+        /// <param name="location"> The location for the resource. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
+        /// <returns> An object representing collection of LocationBasedBulkCreateCustoms and their operations over a LocationBasedBulkCreateCustomResource. </returns>
+        public static LocationBasedBulkCreateCustomCollection GetLocationBasedBulkCreateCustoms(this ResourceGroupResource resourceGroupResource, AzureLocation location)
+        {
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
+
+            return GetMockableComputeBulkActionsResourceGroupResource(resourceGroupResource).GetLocationBasedBulkCreateCustoms(location);
+        }
+
+        /// <summary>
+        /// Gets an instance of BulkCreateCustoms.
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableComputeBulkActionsResourceGroupResource.GetLocationBasedBulkCreateCustomAsync(AzureLocation, string, CancellationToken)"/> instead. </description>
+        /// </item>
+        /// </summary>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
+        /// <param name="location"> The location for the resource. </param>
+        /// <param name="name"> The name of the BulkCreateCustom. The value must be an UUID. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
+        [ForwardsClientCalls]
+        public static async Task<Response<LocationBasedBulkCreateCustomResource>> GetLocationBasedBulkCreateCustomAsync(this ResourceGroupResource resourceGroupResource, AzureLocation location, string name, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
+
+            return await GetMockableComputeBulkActionsResourceGroupResource(resourceGroupResource).GetLocationBasedBulkCreateCustomAsync(location, name, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Gets an instance of BulkCreateCustoms.
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableComputeBulkActionsResourceGroupResource.GetLocationBasedBulkCreateCustom(AzureLocation, string, CancellationToken)"/> instead. </description>
+        /// </item>
+        /// </summary>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
+        /// <param name="location"> The location for the resource. </param>
+        /// <param name="name"> The name of the BulkCreateCustom. The value must be an UUID. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
+        [ForwardsClientCalls]
+        public static Response<LocationBasedBulkCreateCustomResource> GetLocationBasedBulkCreateCustom(this ResourceGroupResource resourceGroupResource, AzureLocation location, string name, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
+
+            return GetMockableComputeBulkActionsResourceGroupResource(resourceGroupResource).GetLocationBasedBulkCreateCustom(location, name, cancellationToken);
+        }
+
+        /// <summary>
+        /// Gets a collection of ScheduledActions in the <see cref="ResourceGroupResource"/>
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableComputeBulkActionsResourceGroupResource.GetScheduledActions()"/> instead. </description>
+        /// </item>
+        /// </summary>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
+        /// <returns> An object representing collection of ScheduledActions and their operations over a ScheduledActionResource. </returns>
+        public static ScheduledActionCollection GetScheduledActions(this ResourceGroupResource resourceGroupResource)
+        {
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
+
+            return GetMockableComputeBulkActionsResourceGroupResource(resourceGroupResource).GetScheduledActions();
+        }
+
+        /// <summary>
+        /// Get a ScheduledAction
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableComputeBulkActionsResourceGroupResource.GetScheduledActionAsync(string, CancellationToken)"/> instead. </description>
+        /// </item>
+        /// </summary>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
+        /// <param name="scheduledActionName"> The name of the ScheduledAction. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
+        [ForwardsClientCalls]
+        public static async Task<Response<ScheduledActionResource>> GetScheduledActionAsync(this ResourceGroupResource resourceGroupResource, string scheduledActionName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
+
+            return await GetMockableComputeBulkActionsResourceGroupResource(resourceGroupResource).GetScheduledActionAsync(scheduledActionName, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Get a ScheduledAction
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableComputeBulkActionsResourceGroupResource.GetScheduledAction(string, CancellationToken)"/> instead. </description>
+        /// </item>
+        /// </summary>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
+        /// <param name="scheduledActionName"> The name of the ScheduledAction. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
+        [ForwardsClientCalls]
+        public static Response<ScheduledActionResource> GetScheduledAction(this ResourceGroupResource resourceGroupResource, string scheduledActionName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
+
+            return GetMockableComputeBulkActionsResourceGroupResource(resourceGroupResource).GetScheduledAction(scheduledActionName, cancellationToken);
         }
 
         /// <summary>
@@ -140,6 +473,82 @@ namespace Azure.ResourceManager.Compute.BulkActions
         }
 
         /// <summary>
+        /// BulkCreate: Execute create operation for a batch of virtual machines, this operation is triggered as soon as Computeschedule receives it.
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableComputeBulkActionsResourceGroupResource.BulkCreateOperationAsync(AzureLocation, ExecuteCreateContent, CancellationToken)"/> instead. </description>
+        /// </item>
+        /// </summary>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
+        /// <param name="location"> The location name. </param>
+        /// <param name="content"> The request body. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
+        public static async Task<Response<CreateResourceOperationResult>> BulkCreateOperationAsync(this ResourceGroupResource resourceGroupResource, AzureLocation location, ExecuteCreateContent content, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
+
+            return await GetMockableComputeBulkActionsResourceGroupResource(resourceGroupResource).BulkCreateOperationAsync(location, content, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// BulkCreate: Execute create operation for a batch of virtual machines, this operation is triggered as soon as Computeschedule receives it.
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableComputeBulkActionsResourceGroupResource.BulkCreateOperation(AzureLocation, ExecuteCreateContent, CancellationToken)"/> instead. </description>
+        /// </item>
+        /// </summary>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
+        /// <param name="location"> The location name. </param>
+        /// <param name="content"> The request body. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
+        public static Response<CreateResourceOperationResult> BulkCreateOperation(this ResourceGroupResource resourceGroupResource, AzureLocation location, ExecuteCreateContent content, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
+
+            return GetMockableComputeBulkActionsResourceGroupResource(resourceGroupResource).BulkCreateOperation(location, content, cancellationToken);
+        }
+
+        /// <summary>
+        /// BulkVdiFlexCreate: Bulk create  operation for a batch of virtual machines, this operation supports flex properties to give options on Sku and zone selection.
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableComputeBulkActionsResourceGroupResource.BulkVdiFlexCreateOperationAsync(AzureLocation, BulkActionsExecuteVdiCreateRequestContent, CancellationToken)"/> instead. </description>
+        /// </item>
+        /// </summary>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
+        /// <param name="location"> The location name. </param>
+        /// <param name="content"> The request body. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
+        public static async Task<Response<CreateResourceOperationResult>> BulkVdiFlexCreateOperationAsync(this ResourceGroupResource resourceGroupResource, AzureLocation location, BulkActionsExecuteVdiCreateRequestContent content, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
+
+            return await GetMockableComputeBulkActionsResourceGroupResource(resourceGroupResource).BulkVdiFlexCreateOperationAsync(location, content, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// BulkVdiFlexCreate: Bulk create  operation for a batch of virtual machines, this operation supports flex properties to give options on Sku and zone selection.
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableComputeBulkActionsResourceGroupResource.BulkVdiFlexCreateOperation(AzureLocation, BulkActionsExecuteVdiCreateRequestContent, CancellationToken)"/> instead. </description>
+        /// </item>
+        /// </summary>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
+        /// <param name="location"> The location name. </param>
+        /// <param name="content"> The request body. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
+        public static Response<CreateResourceOperationResult> BulkVdiFlexCreateOperation(this ResourceGroupResource resourceGroupResource, AzureLocation location, BulkActionsExecuteVdiCreateRequestContent content, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
+
+            return GetMockableComputeBulkActionsResourceGroupResource(resourceGroupResource).BulkVdiFlexCreateOperation(location, content, cancellationToken);
+        }
+
+        /// <summary>
         /// BulkDelete: Execute delete operation for a batch of virtual machines, this operation is triggered as soon as Computeschedule receives it.
         /// <item>
         /// <term> Mocking. </term>
@@ -251,6 +660,348 @@ namespace Azure.ResourceManager.Compute.BulkActions
             Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
 
             return GetMockableComputeBulkActionsResourceGroupResource(resourceGroupResource).BulkCancelOperations(location, content, cancellationToken);
+        }
+
+        /// <summary>
+        /// BulkReimage: Execute reimage operation for a batch of virtual machines, this operation is triggered as soon as Computeschedule receives it.
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableComputeBulkActionsResourceGroupResource.BulkReimageOperationAsync(AzureLocation, BulkActionsExecuteReimageRequestContent, CancellationToken)"/> instead. </description>
+        /// </item>
+        /// </summary>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
+        /// <param name="location"> The location name. </param>
+        /// <param name="content"> The request body. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
+        public static async Task<Response<BulkActionsReimageResourceOperationResponseResult>> BulkReimageOperationAsync(this ResourceGroupResource resourceGroupResource, AzureLocation location, BulkActionsExecuteReimageRequestContent content, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
+
+            return await GetMockableComputeBulkActionsResourceGroupResource(resourceGroupResource).BulkReimageOperationAsync(location, content, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// BulkReimage: Execute reimage operation for a batch of virtual machines, this operation is triggered as soon as Computeschedule receives it.
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableComputeBulkActionsResourceGroupResource.BulkReimageOperation(AzureLocation, BulkActionsExecuteReimageRequestContent, CancellationToken)"/> instead. </description>
+        /// </item>
+        /// </summary>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
+        /// <param name="location"> The location name. </param>
+        /// <param name="content"> The request body. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
+        public static Response<BulkActionsReimageResourceOperationResponseResult> BulkReimageOperation(this ResourceGroupResource resourceGroupResource, AzureLocation location, BulkActionsExecuteReimageRequestContent content, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
+
+            return GetMockableComputeBulkActionsResourceGroupResource(resourceGroupResource).BulkReimageOperation(location, content, cancellationToken);
+        }
+
+        /// <summary>
+        /// BulkListOperationErrors: List bulk operation errors for a resource group
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableComputeBulkActionsResourceGroupResource.BulkListOperationErrorsAsync(AzureLocation, int?, CancellationToken)"/> instead. </description>
+        /// </item>
+        /// </summary>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
+        /// <param name="location"> The location name. </param>
+        /// <param name="lookbackInMinutes"> The number of minutes to look back for errors. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
+        /// <returns> A collection of <see cref="ComputeBulkOperationResult"/> that may take multiple service requests to iterate over. </returns>
+        public static AsyncPageable<ComputeBulkOperationResult> BulkListOperationErrorsAsync(this ResourceGroupResource resourceGroupResource, AzureLocation location, int? lookbackInMinutes = default, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
+
+            return GetMockableComputeBulkActionsResourceGroupResource(resourceGroupResource).BulkListOperationErrorsAsync(location, lookbackInMinutes, cancellationToken);
+        }
+
+        /// <summary>
+        /// BulkListOperationErrors: List bulk operation errors for a resource group
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableComputeBulkActionsResourceGroupResource.BulkListOperationErrors(AzureLocation, int?, CancellationToken)"/> instead. </description>
+        /// </item>
+        /// </summary>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
+        /// <param name="location"> The location name. </param>
+        /// <param name="lookbackInMinutes"> The number of minutes to look back for errors. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
+        /// <returns> A collection of <see cref="ComputeBulkOperationResult"/> that may take multiple service requests to iterate over. </returns>
+        public static Pageable<ComputeBulkOperationResult> BulkListOperationErrors(this ResourceGroupResource resourceGroupResource, AzureLocation location, int? lookbackInMinutes = default, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
+
+            return GetMockableComputeBulkActionsResourceGroupResource(resourceGroupResource).BulkListOperationErrors(location, lookbackInMinutes, cancellationToken);
+        }
+
+        /// <summary>
+        /// BulkAcknowledgeOperationErrors: Acknowledge bulk operation errors for a resource group
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableComputeBulkActionsResourceGroupResource.BulkAcknowledgeOperationErrorsAsync(AzureLocation, AcknowledgeBulkOperationErrorsRequest, CancellationToken)"/> instead. </description>
+        /// </item>
+        /// </summary>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
+        /// <param name="location"> The location name. </param>
+        /// <param name="content"> The list of operation ids to acknowledge. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
+        public static async Task<Response<AcknowledgeBulkOperationErrorsResponse>> BulkAcknowledgeOperationErrorsAsync(this ResourceGroupResource resourceGroupResource, AzureLocation location, AcknowledgeBulkOperationErrorsRequest content, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
+
+            return await GetMockableComputeBulkActionsResourceGroupResource(resourceGroupResource).BulkAcknowledgeOperationErrorsAsync(location, content, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// BulkAcknowledgeOperationErrors: Acknowledge bulk operation errors for a resource group
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableComputeBulkActionsResourceGroupResource.BulkAcknowledgeOperationErrors(AzureLocation, AcknowledgeBulkOperationErrorsRequest, CancellationToken)"/> instead. </description>
+        /// </item>
+        /// </summary>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
+        /// <param name="location"> The location name. </param>
+        /// <param name="content"> The list of operation ids to acknowledge. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
+        public static Response<AcknowledgeBulkOperationErrorsResponse> BulkAcknowledgeOperationErrors(this ResourceGroupResource resourceGroupResource, AzureLocation location, AcknowledgeBulkOperationErrorsRequest content, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
+
+            return GetMockableComputeBulkActionsResourceGroupResource(resourceGroupResource).BulkAcknowledgeOperationErrors(location, content, cancellationToken);
+        }
+
+        /// <summary>
+        /// List LaunchBulkInstancesOperation resources by subscriptionId.
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableComputeBulkActionsSubscriptionResource.GetLocationBasedLaunchBulkInstancesOperationsAsync(AzureLocation, CancellationToken)"/> instead. </description>
+        /// </item>
+        /// </summary>
+        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource"/> the method will execute against. </param>
+        /// <param name="location"> The location name. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
+        /// <returns> A collection of <see cref="LocationBasedLaunchBulkInstancesOperationResource"/> that may take multiple service requests to iterate over. </returns>
+        public static AsyncPageable<LocationBasedLaunchBulkInstancesOperationResource> GetLocationBasedLaunchBulkInstancesOperationsAsync(this SubscriptionResource subscriptionResource, AzureLocation location, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
+
+            return GetMockableComputeBulkActionsSubscriptionResource(subscriptionResource).GetLocationBasedLaunchBulkInstancesOperationsAsync(location, cancellationToken);
+        }
+
+        /// <summary>
+        /// List LaunchBulkInstancesOperation resources by subscriptionId.
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableComputeBulkActionsSubscriptionResource.GetLocationBasedLaunchBulkInstancesOperations(AzureLocation, CancellationToken)"/> instead. </description>
+        /// </item>
+        /// </summary>
+        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource"/> the method will execute against. </param>
+        /// <param name="location"> The location name. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
+        /// <returns> A collection of <see cref="LocationBasedLaunchBulkInstancesOperationResource"/> that may take multiple service requests to iterate over. </returns>
+        public static Pageable<LocationBasedLaunchBulkInstancesOperationResource> GetLocationBasedLaunchBulkInstancesOperations(this SubscriptionResource subscriptionResource, AzureLocation location, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
+
+            return GetMockableComputeBulkActionsSubscriptionResource(subscriptionResource).GetLocationBasedLaunchBulkInstancesOperations(location, cancellationToken);
+        }
+
+        /// <summary>
+        /// List BulkCreateCustom resources by subscriptionId.
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableComputeBulkActionsSubscriptionResource.GetLocationBasedBulkCreateCustomsAsync(AzureLocation, CancellationToken)"/> instead. </description>
+        /// </item>
+        /// </summary>
+        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource"/> the method will execute against. </param>
+        /// <param name="location"> The location name. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
+        /// <returns> A collection of <see cref="LocationBasedBulkCreateCustomResource"/> that may take multiple service requests to iterate over. </returns>
+        public static AsyncPageable<LocationBasedBulkCreateCustomResource> GetLocationBasedBulkCreateCustomsAsync(this SubscriptionResource subscriptionResource, AzureLocation location, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
+
+            return GetMockableComputeBulkActionsSubscriptionResource(subscriptionResource).GetLocationBasedBulkCreateCustomsAsync(location, cancellationToken);
+        }
+
+        /// <summary>
+        /// List BulkCreateCustom resources by subscriptionId.
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableComputeBulkActionsSubscriptionResource.GetLocationBasedBulkCreateCustoms(AzureLocation, CancellationToken)"/> instead. </description>
+        /// </item>
+        /// </summary>
+        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource"/> the method will execute against. </param>
+        /// <param name="location"> The location name. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
+        /// <returns> A collection of <see cref="LocationBasedBulkCreateCustomResource"/> that may take multiple service requests to iterate over. </returns>
+        public static Pageable<LocationBasedBulkCreateCustomResource> GetLocationBasedBulkCreateCustoms(this SubscriptionResource subscriptionResource, AzureLocation location, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
+
+            return GetMockableComputeBulkActionsSubscriptionResource(subscriptionResource).GetLocationBasedBulkCreateCustoms(location, cancellationToken);
+        }
+
+        /// <summary>
+        /// List ScheduledAction resources by subscription ID
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableComputeBulkActionsSubscriptionResource.GetScheduledActionsAsync(CancellationToken)"/> instead. </description>
+        /// </item>
+        /// </summary>
+        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource"/> the method will execute against. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
+        /// <returns> A collection of <see cref="ScheduledActionResource"/> that may take multiple service requests to iterate over. </returns>
+        public static AsyncPageable<ScheduledActionResource> GetScheduledActionsAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
+
+            return GetMockableComputeBulkActionsSubscriptionResource(subscriptionResource).GetScheduledActionsAsync(cancellationToken);
+        }
+
+        /// <summary>
+        /// List ScheduledAction resources by subscription ID
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableComputeBulkActionsSubscriptionResource.GetScheduledActions(CancellationToken)"/> instead. </description>
+        /// </item>
+        /// </summary>
+        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource"/> the method will execute against. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
+        /// <returns> A collection of <see cref="ScheduledActionResource"/> that may take multiple service requests to iterate over. </returns>
+        public static Pageable<ScheduledActionResource> GetScheduledActions(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
+
+            return GetMockableComputeBulkActionsSubscriptionResource(subscriptionResource).GetScheduledActions(cancellationToken);
+        }
+
+        /// <summary>
+        /// Get the status of a LaunchBulkInstancesOperation.
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableComputeBulkActionsSubscriptionResource.GetOperationStatusAsync(AzureLocation, string, CancellationToken)"/> instead. </description>
+        /// </item>
+        /// </summary>
+        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource"/> the method will execute against. </param>
+        /// <param name="location"> The location name. </param>
+        /// <param name="asyncOperationId"> The async operation id. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
+        public static async Task<Response<OperationStatusResult>> GetOperationStatusAsync(this SubscriptionResource subscriptionResource, AzureLocation location, string asyncOperationId, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
+
+            return await GetMockableComputeBulkActionsSubscriptionResource(subscriptionResource).GetOperationStatusAsync(location, asyncOperationId, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Get the status of a LaunchBulkInstancesOperation.
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableComputeBulkActionsSubscriptionResource.GetOperationStatus(AzureLocation, string, CancellationToken)"/> instead. </description>
+        /// </item>
+        /// </summary>
+        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource"/> the method will execute against. </param>
+        /// <param name="location"> The location name. </param>
+        /// <param name="asyncOperationId"> The async operation id. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
+        public static Response<OperationStatusResult> GetOperationStatus(this SubscriptionResource subscriptionResource, AzureLocation location, string asyncOperationId, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
+
+            return GetMockableComputeBulkActionsSubscriptionResource(subscriptionResource).GetOperationStatus(location, asyncOperationId, cancellationToken);
+        }
+
+        /// <summary>
+        /// Get the status of an async operation of a BulkCreateCustom.
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableComputeBulkActionsSubscriptionResource.GetAsyncOperationStatusAsync(AzureLocation, string, CancellationToken)"/> instead. </description>
+        /// </item>
+        /// </summary>
+        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource"/> the method will execute against. </param>
+        /// <param name="location"> The location name. </param>
+        /// <param name="asyncOperationId"> The async operation id. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
+        public static async Task<Response<OperationStatusResult>> GetAsyncOperationStatusAsync(this SubscriptionResource subscriptionResource, AzureLocation location, string asyncOperationId, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
+
+            return await GetMockableComputeBulkActionsSubscriptionResource(subscriptionResource).GetAsyncOperationStatusAsync(location, asyncOperationId, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Get the status of an async operation of a BulkCreateCustom.
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableComputeBulkActionsSubscriptionResource.GetAsyncOperationStatus(AzureLocation, string, CancellationToken)"/> instead. </description>
+        /// </item>
+        /// </summary>
+        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource"/> the method will execute against. </param>
+        /// <param name="location"> The location name. </param>
+        /// <param name="asyncOperationId"> The async operation id. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
+        public static Response<OperationStatusResult> GetAsyncOperationStatus(this SubscriptionResource subscriptionResource, AzureLocation location, string asyncOperationId, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
+
+            return GetMockableComputeBulkActionsSubscriptionResource(subscriptionResource).GetAsyncOperationStatus(location, asyncOperationId, cancellationToken);
+        }
+
+        /// <summary>
+        /// Get the status of a ScheduledActions asynchronous operation. Both the `Azure-AsyncOperation` and `Location` headers returned by long-running operations point at this endpoint.
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableComputeBulkActionsSubscriptionResource.GetAsync(AzureLocation, string, CancellationToken)"/> instead. </description>
+        /// </item>
+        /// </summary>
+        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource"/> the method will execute against. </param>
+        /// <param name="location"> The location name. </param>
+        /// <param name="operationId"> The operation id. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
+        public static async Task<Response<OperationStatusResult>> GetAsync(this SubscriptionResource subscriptionResource, AzureLocation location, string operationId, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
+
+            return await GetMockableComputeBulkActionsSubscriptionResource(subscriptionResource).GetAsync(location, operationId, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Get the status of a ScheduledActions asynchronous operation. Both the `Azure-AsyncOperation` and `Location` headers returned by long-running operations point at this endpoint.
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableComputeBulkActionsSubscriptionResource.Get(AzureLocation, string, CancellationToken)"/> instead. </description>
+        /// </item>
+        /// </summary>
+        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource"/> the method will execute against. </param>
+        /// <param name="location"> The location name. </param>
+        /// <param name="operationId"> The operation id. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
+        public static Response<OperationStatusResult> Get(this SubscriptionResource subscriptionResource, AzureLocation location, string operationId, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
+
+            return GetMockableComputeBulkActionsSubscriptionResource(subscriptionResource).Get(location, operationId, cancellationToken);
         }
     }
 }

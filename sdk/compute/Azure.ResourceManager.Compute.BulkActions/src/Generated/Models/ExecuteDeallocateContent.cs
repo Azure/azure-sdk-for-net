@@ -19,25 +19,24 @@ namespace Azure.ResourceManager.Compute.BulkActions.Models
 
         /// <summary> Initializes a new instance of <see cref="ExecuteDeallocateContent"/>. </summary>
         /// <param name="executionParameters"> The execution parameters for the request. </param>
-        /// <param name="resources"> The resources for the request. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="executionParameters"/> or <paramref name="resources"/> is null. </exception>
-        public ExecuteDeallocateContent(BulkActionExecutionParameterDetail executionParameters, UserRequestResources resources)
+        /// <exception cref="ArgumentNullException"> <paramref name="executionParameters"/> is null. </exception>
+        public ExecuteDeallocateContent(BulkActionExecutionParameterDetail executionParameters)
         {
             Argument.AssertNotNull(executionParameters, nameof(executionParameters));
-            Argument.AssertNotNull(resources, nameof(resources));
 
             ExecutionParameters = executionParameters;
-            Resources = resources;
         }
 
         /// <summary> Initializes a new instance of <see cref="ExecuteDeallocateContent"/>. </summary>
         /// <param name="executionParameters"> The execution parameters for the request. </param>
         /// <param name="resources"> The resources for the request. </param>
+        /// <param name="resourcesWithContext"> The resources for the request with resource context information. Cannot be provided together with `resources` - exactly one must be specified. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ExecuteDeallocateContent(BulkActionExecutionParameterDetail executionParameters, UserRequestResources resources, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ExecuteDeallocateContent(BulkActionExecutionParameterDetail executionParameters, UserRequestResources resources, ResourcesWithContext resourcesWithContext, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             ExecutionParameters = executionParameters;
             Resources = resources;
+            ResourcesWithContext = resourcesWithContext;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
@@ -45,6 +44,22 @@ namespace Azure.ResourceManager.Compute.BulkActions.Models
         public BulkActionExecutionParameterDetail ExecutionParameters { get; }
 
         /// <summary> The resources for the request. </summary>
-        public UserRequestResources Resources { get; }
+        public UserRequestResources Resources { get; set; }
+
+        /// <summary> The resources for the request with resource context information. Cannot be provided together with `resources` - exactly one must be specified. </summary>
+        internal ResourcesWithContext ResourcesWithContext { get; set; }
+
+        /// <summary> The resource ids used for the request. </summary>
+        public IList<ResourceWithContext> Resources
+        {
+            get
+            {
+                if (ResourcesWithContext is null)
+                {
+                    ResourcesWithContext = new ResourcesWithContext();
+                }
+                return ResourcesWithContext.Resources;
+            }
+        }
     }
 }
