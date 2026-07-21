@@ -847,6 +847,10 @@
         "CUSTOM_BING_CONNECTION_NAME": {
             "type": "string",
             "value": "[variables('bingCustomSearchConnectionName')]"
+        },
+        "BING_CONNECTION_NAME": {
+            "type": "string",
+            "value": "[variables('bingConnectionName')]"
         }
     }
 }

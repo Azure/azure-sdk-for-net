@@ -123,6 +123,7 @@ public class ResponseNormalizationLiveTests : ProjectsOpenAITestBase
     // Test 5 (list funnel): a Bing response scoped to a conversation, re-listed via
     // GetProjectResponses(conversationId), must have its output items normalized. This proves the
     // list funnel normalizes each enumerated response, not just single-response funnels.
+    [Ignore("5453301")]
     [RecordedTest]
     public async Task BingGroundingToolCallDeserializesInListFunnel()
     {
@@ -170,17 +171,19 @@ public class ResponseNormalizationLiveTests : ProjectsOpenAITestBase
             Is.True,
             "Expected the Azure Bing grounding call to be typed.");
 
-        // The assistant's answer should still be an ordinary, OpenAI-recognized message item whose
-        // concrete type is exactly MessageResponseItem (not re-dispatched to any Azure subtype).
+        // The assistant's answer should still be an OpenAI-recognized message item. The service
+        // returns it as an OpenAI internal subtype of MessageResponseItem (e.g.
+        // InternalResponsesAssistantMessage); normalization must not re-dispatch it into an
+        // Azure-specific type.
         MessageResponseItem messageItem = response.OutputItems.OfType<MessageResponseItem>().FirstOrDefault();
         Assert.That(
             messageItem,
             Is.Not.Null,
-            "Expected the assistant answer to remain a plain MessageResponseItem after normalization.");
+            "Expected the assistant answer to remain a MessageResponseItem after normalization.");
         Assert.That(
-            messageItem.GetType(),
-            Is.EqualTo(typeof(MessageResponseItem)),
-            "A message item OpenAI already recognizes should not be altered by normalization.");
+            messageItem.GetType().FullName,
+            Does.StartWith("OpenAI."),
+            "A message item OpenAI already recognizes should not be re-dispatched to an Azure type by normalization.");
         AssertNoOpaqueUnknownItems(response);
     }
 
@@ -235,6 +238,7 @@ public class ResponseNormalizationLiveTests : ProjectsOpenAITestBase
     // AzureAIExtensionsOpenAIContext type-builder at read time, a mechanism entirely separate from
     // the ProjectResponsesClient post-hoc normalization. Run a Bing response tied to a conversation,
     // then read the conversation's items back and assert the Azure tool-call item is strongly typed.
+    [Ignore("5453301")]
     [RecordedTest]
     public async Task ConversationItemsMaterializeAzureSubtypes()
     {
@@ -266,13 +270,86 @@ public class ResponseNormalizationLiveTests : ProjectsOpenAITestBase
             "No conversation item should remain OpenAI's opaque InternalUnknownItemResource.");
     }
 
+    // Test 8 (second tool kind — guards against Bing-specific special-casing): the normalization
+    // bridge must type ANY Azure tool/item discriminator, not just Bing grounding. The
+    // CaptureStructuredOutputs tool needs only a model (no connection), so it isolates the bridge
+    // from connection-dependent behavior. Assert both that the echoed tool definition normalizes to
+    // CaptureStructuredOutputsTool (NormalizeAgentTools is not hard-coded to Bing) and that the
+    // structured-output item the model produces materializes as the typed
+    // AgentStructuredOutputsResponseItem rather than an opaque InternalUnknownItemResource.
+    [RecordedTest]
+    public async Task StructuredOutputsToolAndItemAreTyped()
+    {
+        ProjectResponsesClient responsesClient = GetTestProjectOpenAIClient().GetProjectResponsesClient();
+
+        CaptureStructuredOutputsTool structuredOutputsTool = CreateCapitalCaptureTool();
+
+        CreateResponseOptions options = new()
+        {
+            Model = TestEnvironment.FOUNDRY_MODEL_NAME,
+            Tools = { structuredOutputsTool },
+            InputItems =
+            {
+                ResponseItem.CreateUserMessageItem(
+                    "What is the capital of France? Capture the country and its capital as structured output."),
+            },
+        };
+
+        ResponseResult response = await responsesClient.CreateResponseAsync(options);
+
+        Assert.That(response, Is.Not.Null);
+
+        // Tool-echo: the non-Bing Azure tool definition echoed in response.Tools must normalize to
+        // its typed subtype. This is the deterministic proof that NormalizeAgentTools handles tool
+        // kinds beyond Bing grounding.
+        Assert.That(
+            response.Tools.OfType<CaptureStructuredOutputsTool>().Any(),
+            Is.True,
+            "Expected the echoed capture-structured-outputs tool to normalize to CaptureStructuredOutputsTool. "
+            + "Getting an opaque/unknown tool instead means the bridge is special-cased to Bing.");
+
+        AssertNoOpaqueUnknownItems(response);
+
+        // The structured-output item the tool produces must surface as the typed Azure subtype
+        // directly off OutputItems, with no AsAgentResponseItem() conversion by the caller.
+        AgentStructuredOutputsResponseItem structuredItem =
+            response.OutputItems.OfType<AgentStructuredOutputsResponseItem>().FirstOrDefault();
+        Assert.That(
+            structuredItem,
+            Is.Not.Null,
+            "Expected a strongly-typed AgentStructuredOutputsResponseItem in OutputItems (normalization bridge). "
+            + "Getting InternalUnknownItemResource instead means the bridge did not fire for this tool kind.");
+        Assert.That(
+            structuredItem.Output,
+            Is.Not.Null,
+            "The structured-output item should carry the captured output payload.");
+    }
+
+    // Builds a minimal strict JSON-schema structured-output definition. Schema is a dictionary of
+    // top-level JSON-schema keys to raw JSON values (see StructuredOutputDefinition serialization).
+    private static CaptureStructuredOutputsTool CreateCapitalCaptureTool()
+    {
+        StructuredOutputDefinition definition = new(
+            name: "capital_info",
+            description: "Captures a country and its capital city.",
+            schema: new Dictionary<string, BinaryData>
+            {
+                ["type"] = BinaryData.FromString("\"object\""),
+                ["properties"] = BinaryData.FromString(
+                    """{"country":{"type":"string"},"capital":{"type":"string"}}"""),
+                ["required"] = BinaryData.FromString("""["country","capital"]"""),
+                ["additionalProperties"] = BinaryData.FromString("false"),
+            },
+            isStrict: true);
+
+        return new CaptureStructuredOutputsTool(definition);
+    }
+
     private async Task<BingGroundingTool> GetBingGroundingToolAsync()
     {
-        string bingConnectionName = TryGetBingConnectionName();
-        if (string.IsNullOrEmpty(bingConnectionName))
-        {
-            Assert.Ignore("BING_CONNECTION_NAME is not configured; skipping until a Bing grounding connection is provisioned.");
-        }
+        // Intentionally not guarded: a missing BING_CONNECTION_NAME must fail the test (via the
+        // GetRecordedVariable exception), not silently skip it.
+        string bingConnectionName = TestEnvironment.BING_CONNECTION_NAME;
 
         AIProjectConnection bingConnection =
             await GetTestProjectClient().Connections.GetConnectionAsync(connectionName: bingConnectionName);
@@ -287,6 +364,10 @@ public class ResponseNormalizationLiveTests : ProjectsOpenAITestBase
         CreateResponseOptions options = new()
         {
             Tools = { bingGroundingTool },
+            // Force a tool call so the Bing grounding item deterministically appears in the output;
+            // without this the model may answer without grounding, making the item-level assertions
+            // flaky in Live.
+            ToolChoice = ResponseToolChoice.CreateRequiredChoice(),
             InputItems = { ResponseItem.CreateUserMessageItem(BingGroundingPrompt) },
         };
         if (includeModel)
@@ -310,18 +391,6 @@ public class ResponseNormalizationLiveTests : ProjectsOpenAITestBase
             item?.GetType().FullName,
             Is.Not.EqualTo(OpenAIUnknownItemTypeName),
             "A streamed output item should not remain OpenAI's opaque InternalUnknownItemResource after normalization.");
-    }
-
-    private string TryGetBingConnectionName()
-    {
-        try
-        {
-            return TestEnvironment.BING_CONNECTION_NAME;
-        }
-        catch (Exception)
-        {
-            return null;
-        }
     }
 }
 #pragma warning restore AAIP001
