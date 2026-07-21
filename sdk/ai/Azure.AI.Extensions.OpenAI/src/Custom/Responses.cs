@@ -7,8 +7,8 @@ using Azure.AI.Extensions.OpenAI.Internal;
 
 namespace Azure.AI.Extensions.OpenAI;
 
-[CodeGenSuppress("CompactResponseConversation", typeof(ModelIdsCompaction?), typeof(BinaryData), typeof(string), typeof(string), typeof(string), typeof(CancellationToken))]
-[CodeGenSuppress("CompactResponseConversationAsync", typeof(ModelIdsCompaction?), typeof(BinaryData), typeof(string), typeof(string), typeof(string), typeof(CancellationToken))]
+[CodeGenSuppress("Compactconversation", typeof(string), typeof(BinaryData), typeof(string), typeof(string), typeof(string), typeof(CancellationToken))]
+[CodeGenSuppress("CompactconversationAsync", typeof(string), typeof(BinaryData), typeof(string), typeof(string), typeof(string), typeof(CancellationToken))]
 internal partial class Responses { }
 //public partial class
 //{

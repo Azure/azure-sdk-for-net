@@ -11,10 +11,10 @@ namespace Azure.Provisioning.Search
     public enum SearchServicePublicInternetAccess
     {
         /// <summary> The search service is accessible from traffic originating from the public internet. </summary>
-        Enabled,
+        Enabled = 0,
         /// <summary> The search service is not accessible from traffic originating from the public internet. Access is only permitted over approved private endpoint connections. </summary>
-        Disabled,
+        Disabled = 1,
         /// <summary> The network security perimeter configuration rules allow or disallow public network access to the resource. Requires an associated network security perimeter. </summary>
-        SecuredByPerimeter
+        SecuredByPerimeter = 2
     }
 }

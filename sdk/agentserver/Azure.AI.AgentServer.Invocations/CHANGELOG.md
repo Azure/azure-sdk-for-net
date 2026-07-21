@@ -4,6 +4,15 @@
 
 ### Features Added
 
+- AsyncAPI discovery endpoints — `InvocationHandler` now exposes two new
+  virtual methods, `GetAsyncApiJsonAsync` and `GetAsyncApiYamlAsync`, served
+  at `GET /invocations/docs/asyncapi.json` and `GET /invocations/docs/asyncapi.yaml`
+  respectively. Both default to `404`; override either or both to publish the
+  AsyncAPI companion to the existing `openapi.json` endpoint for
+  streaming/bidirectional surfaces (e.g. the `invocations_ws` WebSocket protocol)
+  that OpenAPI cannot express. The path extension is authoritative for the
+  returned content type — no `Accept` negotiation and no format conversion.
+
 ### Breaking Changes
 
 ### Bugs Fixed

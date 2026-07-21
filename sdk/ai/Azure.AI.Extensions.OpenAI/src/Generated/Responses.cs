@@ -19,10 +19,12 @@ namespace Azure.AI.Extensions.OpenAI
         }
 
         /// <summary> Initializes a new instance of Responses. </summary>
+        /// <param name="clientDiagnostics"> The ClientDiagnostics is used to provide tracing support for the client library. </param>
         /// <param name="pipeline"> The HTTP pipeline for sending and receiving REST requests and responses. </param>
         /// <param name="endpoint"> Service endpoint. </param>
-        internal Responses(ClientPipeline pipeline, Uri endpoint)
+        internal Responses(ClientDiagnostics clientDiagnostics, ClientPipeline pipeline, Uri endpoint)
         {
+            ClientDiagnostics = clientDiagnostics;
             _endpoint = endpoint;
             Pipeline = pipeline;
         }
@@ -30,6 +32,9 @@ namespace Azure.AI.Extensions.OpenAI
         /// <summary> The HTTP pipeline for sending and receiving REST requests and responses. </summary>
         public ClientPipeline Pipeline { get; }
 
+        /// <summary> The ClientDiagnostics is used to provide tracing support for the client library. </summary>
+        internal ClientDiagnostics ClientDiagnostics { get; }
+
         /// <summary>
         /// [Protocol Method] Compacts a conversation into a response object suitable for long-running and zero-data-retention scenarios.
         /// <list type="bullet">
@@ -42,10 +47,20 @@ namespace Azure.AI.Extensions.OpenAI
         /// <param name="options"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual ClientResult CompactResponseConversation(BinaryContent content, RequestOptions options = null)
+        public virtual ClientResult Compactconversation(BinaryContent content, RequestOptions options = null)
         {
-            using PipelineMessage message = CreateCompactResponseConversationRequest(content, options);
-            return ClientResult.FromResponse(Pipeline.ProcessMessage(message, options));
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("Responses.Compactconversation");
+            scope.Start();
+            try
+            {
+                using PipelineMessage message = CreateCompactconversationRequest(content, options);
+                return ClientResult.FromResponse(Pipeline.ProcessMessage(message, options));
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
 
         /// <summary>
@@ -60,10 +75,20 @@ namespace Azure.AI.Extensions.OpenAI
         /// <param name="options"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual async Task<ClientResult> CompactResponseConversationAsync(BinaryContent content, RequestOptions options = null)
+        public virtual async Task<ClientResult> CompactconversationAsync(BinaryContent content, RequestOptions options = null)
         {
-            using PipelineMessage message = CreateCompactResponseConversationRequest(content, options);
-            return ClientResult.FromResponse(await Pipeline.ProcessMessageAsync(message, options).ConfigureAwait(false));
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("Responses.Compactconversation");
+            scope.Start();
+            try
+            {
+                using PipelineMessage message = CreateCompactconversationRequest(content, options);
+                return ClientResult.FromResponse(await Pipeline.ProcessMessageAsync(message, options).ConfigureAwait(false));
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
     }
 }

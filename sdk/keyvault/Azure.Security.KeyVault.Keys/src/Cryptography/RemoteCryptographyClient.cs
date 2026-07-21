@@ -212,6 +212,98 @@ namespace Azure.Security.KeyVault.Keys.Cryptography
             }
         }
 
+        public virtual async Task<Response<SecureWrapResult>> SecureWrapKeyAsync(SecureKeyWrapAlgorithm algorithm, CancellationToken cancellationToken = default)
+        {
+            var parameters = new SecureKeyWrapParameters()
+            {
+                Algorithm = algorithm.ToString(),
+            };
+
+            using DiagnosticScope scope = Pipeline.CreateScope($"{nameof(RemoteCryptographyClient)}.{nameof(SecureWrapKey)}");
+            scope.AddAttribute(OTelKeyIdKey, _keyIdStr);
+            scope.Start();
+
+            try
+            {
+                return await Pipeline.SendRequestAsync(RequestMethod.Post, parameters, () => new SecureWrapResult { Algorithm = algorithm }, cancellationToken, "/securewrapkey").ConfigureAwait(false);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        public virtual Response<SecureWrapResult> SecureWrapKey(SecureKeyWrapAlgorithm algorithm, CancellationToken cancellationToken = default)
+        {
+            var parameters = new SecureKeyWrapParameters()
+            {
+                Algorithm = algorithm.ToString(),
+            };
+
+            using DiagnosticScope scope = Pipeline.CreateScope($"{nameof(RemoteCryptographyClient)}.{nameof(SecureWrapKey)}");
+            scope.AddAttribute(OTelKeyIdKey, _keyIdStr);
+            scope.Start();
+
+            try
+            {
+                return Pipeline.SendRequest(RequestMethod.Post, parameters, () => new SecureWrapResult { Algorithm = algorithm }, cancellationToken, "/securewrapkey");
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        public virtual async Task<Response<SecureUnwrapResult>> SecureUnwrapKeyAsync(SecureKeyWrapAlgorithm algorithm, byte[] encryptedKey, string targetAttestationToken, CancellationToken cancellationToken = default)
+        {
+            var parameters = new SecureKeyUnwrapParameters()
+            {
+                Algorithm = algorithm.ToString(),
+                EncryptedKey = encryptedKey,
+                TargetAttestationToken = targetAttestationToken,
+            };
+
+            using DiagnosticScope scope = Pipeline.CreateScope($"{nameof(RemoteCryptographyClient)}.{nameof(SecureUnwrapKey)}");
+            scope.AddAttribute(OTelKeyIdKey, _keyIdStr);
+            scope.Start();
+
+            try
+            {
+                return await Pipeline.SendRequestAsync(RequestMethod.Post, parameters, () => new SecureUnwrapResult { Algorithm = algorithm }, cancellationToken, "/secureunwrapkey").ConfigureAwait(false);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        public virtual Response<SecureUnwrapResult> SecureUnwrapKey(SecureKeyWrapAlgorithm algorithm, byte[] encryptedKey, string targetAttestationToken, CancellationToken cancellationToken = default)
+        {
+            var parameters = new SecureKeyUnwrapParameters()
+            {
+                Algorithm = algorithm.ToString(),
+                EncryptedKey = encryptedKey,
+                TargetAttestationToken = targetAttestationToken,
+            };
+
+            using DiagnosticScope scope = Pipeline.CreateScope($"{nameof(RemoteCryptographyClient)}.{nameof(SecureUnwrapKey)}");
+            scope.AddAttribute(OTelKeyIdKey, _keyIdStr);
+            scope.Start();
+
+            try
+            {
+                return Pipeline.SendRequest(RequestMethod.Post, parameters, () => new SecureUnwrapResult { Algorithm = algorithm }, cancellationToken, "/secureunwrapkey");
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
         public virtual async Task<Response<SignResult>> SignAsync(SignatureAlgorithm algorithm, byte[] digest, CancellationToken cancellationToken = default)
         {
             var parameters = new KeySignParameters
@@ -380,6 +472,26 @@ namespace Azure.Security.KeyVault.Keys.Cryptography
         UnwrapResult ICryptographyProvider.UnwrapKey(KeyWrapAlgorithm algorithm, byte[] encryptedKey, CancellationToken cancellationToken)
         {
             return UnwrapKey(algorithm, encryptedKey, cancellationToken);
+        }
+
+        async Task<SecureWrapResult> ICryptographyProvider.SecureWrapKeyAsync(SecureKeyWrapAlgorithm algorithm, CancellationToken cancellationToken)
+        {
+            return await SecureWrapKeyAsync(algorithm, cancellationToken).ConfigureAwait(false);
+        }
+
+        SecureWrapResult ICryptographyProvider.SecureWrapKey(SecureKeyWrapAlgorithm algorithm, CancellationToken cancellationToken)
+        {
+            return SecureWrapKey(algorithm, cancellationToken);
+        }
+
+        async Task<SecureUnwrapResult> ICryptographyProvider.SecureUnwrapKeyAsync(SecureKeyWrapAlgorithm algorithm, byte[] encryptedKey, string targetAttestationToken, CancellationToken cancellationToken)
+        {
+            return await SecureUnwrapKeyAsync(algorithm, encryptedKey, targetAttestationToken, cancellationToken).ConfigureAwait(false);
+        }
+
+        SecureUnwrapResult ICryptographyProvider.SecureUnwrapKey(SecureKeyWrapAlgorithm algorithm, byte[] encryptedKey, string targetAttestationToken, CancellationToken cancellationToken)
+        {
+            return SecureUnwrapKey(algorithm, encryptedKey, targetAttestationToken, cancellationToken);
         }
 
         async Task<SignResult> ICryptographyProvider.SignAsync(SignatureAlgorithm algorithm, byte[] digest, CancellationToken cancellationToken)

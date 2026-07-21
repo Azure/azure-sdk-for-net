@@ -40,7 +40,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
         {
             TryGetApiVersion(PolicyArcAssignmentResource.ResourceType, out string policyArcAssignmentApiVersion);
             _policyArcAssignmentsClientDiagnostics = new ClientDiagnostics("Azure.Generator.MgmtTypeSpec.Tests", PolicyArcAssignmentResource.ResourceType.Namespace, Diagnostics);
-            _policyArcAssignmentsRestClient = new PolicyArcAssignments(_policyArcAssignmentsClientDiagnostics, Pipeline, Endpoint, policyArcAssignmentApiVersion ?? "2024-05-01");
+            _policyArcAssignmentsRestClient = new PolicyArcAssignments(_policyArcAssignmentsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, policyArcAssignmentApiVersion ?? "2024-05-01");
             ValidateResourceId(id);
         }
 

@@ -11,10 +11,10 @@ namespace Azure.Provisioning.ContainerService
     public enum ManagedClusterSkuTier
     {
         /// <summary> Cluster has premium capabilities in addition to all of the capabilities included in 'Standard'. Premium enables selection of LongTermSupport (aka.ms/aks/lts) for certain Kubernetes versions. </summary>
-        Premium,
+        Premium = 0,
         /// <summary> Recommended for mission-critical and production workloads. Includes Kubernetes control plane autoscaling, workload-intensive testing, and up to 5,000 nodes per cluster. Guarantees 99.95% availability of the Kubernetes API server endpoint for clusters that use Availability Zones and 99.9% of availability for clusters that don't use Availability Zones. </summary>
-        Standard,
+        Standard = 1,
         /// <summary> The cluster management is free, but charged for VM, storage, and networking usage. Best for experimenting, learning, simple testing, or workloads with fewer than 10 nodes. Not recommended for production use cases. </summary>
-        Free
+        Free = 2
     }
 }

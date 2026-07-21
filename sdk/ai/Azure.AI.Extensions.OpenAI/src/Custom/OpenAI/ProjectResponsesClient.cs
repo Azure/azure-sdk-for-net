@@ -6,6 +6,7 @@ using System.ClientModel;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Diagnostics.CodeAnalysis;
 using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
@@ -209,6 +210,7 @@ public partial class ProjectResponsesClient : ResponsesClient
     /// <param name="options"> The options used to create the response. </param>
     /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
     /// <returns> The created response result. </returns>
+    [Experimental("AAIP001")]
     public override ClientResult<ResponseResult> CreateResponse(CreateResponseOptions options, CancellationToken cancellationToken = default)
     {
         Argument.AssertNotNull(options, nameof(options));
@@ -244,6 +246,7 @@ public partial class ProjectResponsesClient : ResponsesClient
     /// <param name="previousResponseId"> The ID of the previous response to continue. </param>
     /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
     /// <returns> The created response result. </returns>
+    [Experimental("AAIP001")]
     public override ClientResult<ResponseResult> CreateResponse(string model, IEnumerable<ResponseItem> inputItems, string previousResponseId = null, CancellationToken cancellationToken = default)
     {
         Argument.AssertNotNull(inputItems, nameof(inputItems));
@@ -278,6 +281,7 @@ public partial class ProjectResponsesClient : ResponsesClient
     /// <param name="previousResponseId"> The ID of the previous response to continue. </param>
     /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
     /// <returns> The created response result. </returns>
+    [Experimental("AAIP001")]
     public override ClientResult<ResponseResult> CreateResponse(string model, string userInputText, string previousResponseId = null, CancellationToken cancellationToken = default)
     {
         Argument.AssertNotNullOrEmpty(userInputText, nameof(userInputText));
@@ -307,6 +311,7 @@ public partial class ProjectResponsesClient : ResponsesClient
     /// <param name="options"> The options used to create the response. </param>
     /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
     /// <returns> The created response result. </returns>
+    [Experimental("AAIP001")]
     public override async Task<ClientResult<ResponseResult>> CreateResponseAsync(CreateResponseOptions options, CancellationToken cancellationToken = default)
     {
         Argument.AssertNotNull(options, nameof(options));
@@ -342,6 +347,7 @@ public partial class ProjectResponsesClient : ResponsesClient
     /// <param name="previousResponseId"> The ID of the previous response to continue. </param>
     /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
     /// <returns> The created response result. </returns>
+    [Experimental("AAIP001")]
     public override async Task<ClientResult<ResponseResult>> CreateResponseAsync(string model, IEnumerable<ResponseItem> inputItems, string previousResponseId = null, CancellationToken cancellationToken = default)
     {
         Argument.AssertNotNull(inputItems, nameof(inputItems));
@@ -386,6 +392,7 @@ public partial class ProjectResponsesClient : ResponsesClient
     /// <param name="previousResponseId"> The ID of the previous response to continue. </param>
     /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
     /// <returns> The created response result. </returns>
+    [Experimental("AAIP001")]
     public async override Task<ClientResult<ResponseResult>> CreateResponseAsync(string model, string userInputText, string previousResponseId = null, CancellationToken cancellationToken = default)
     {
         Argument.AssertNotNullOrEmpty(userInputText, nameof(userInputText));
@@ -605,6 +612,7 @@ public partial class ProjectResponsesClient : ResponsesClient
     /// <param name="before"> The response ID before which results should be returned. </param>
     /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
     /// <returns> The project responses. </returns>
+    [Experimental("AAIP001")]
     public virtual CollectionResult<ResponseResult> GetProjectResponses(AgentReference agent = null, string conversationId = null, int? limit = default, string order = null, string after = default, string before = default, CancellationToken cancellationToken = default)
     {
         Dictionary<string, string> extraQueryForProtocol = new()
@@ -640,6 +648,7 @@ public partial class ProjectResponsesClient : ResponsesClient
     /// <param name="before"> The response ID before which results should be returned. </param>
     /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
     /// <returns> The project responses. </returns>
+    [Experimental("AAIP001")]
     public virtual AsyncCollectionResult<ResponseResult> GetProjectResponsesAsync(AgentReference agent = null, string conversationId = null, int? limit = default, string order = null, string after = default, string before = default, CancellationToken cancellationToken = default)
     {
         Dictionary<string, string> extraQueryForProtocol = new()
@@ -670,6 +679,7 @@ public partial class ProjectResponsesClient : ResponsesClient
     /// <param name="options"> The options identifying the response to retrieve. </param>
     /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
     /// <returns> The retrieved response result. </returns>
+    [Experimental("AAIP001")]
     public override ClientResult<ResponseResult> GetResponse(GetResponseOptions options, CancellationToken cancellationToken = default)
     {
         var result = base.GetResponse(options, cancellationToken);
@@ -681,6 +691,7 @@ public partial class ProjectResponsesClient : ResponsesClient
     /// <param name="options"> The options identifying the response to retrieve. </param>
     /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
     /// <returns> The retrieved response result. </returns>
+    [Experimental("AAIP001")]
     public override async Task<ClientResult<ResponseResult>> GetResponseAsync(GetResponseOptions options, CancellationToken cancellationToken = default)
     {
         var result = await base.GetResponseAsync(options, cancellationToken).ConfigureAwait(false);
@@ -692,6 +703,7 @@ public partial class ProjectResponsesClient : ResponsesClient
     /// <param name="responseId"> The ID of the response to retrieve. </param>
     /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
     /// <returns> The retrieved response result. </returns>
+    [Experimental("AAIP001")]
     public override ClientResult<ResponseResult> GetResponse(string responseId, CancellationToken cancellationToken = default)
     {
         var result = base.GetResponse(responseId, cancellationToken);
@@ -703,6 +715,7 @@ public partial class ProjectResponsesClient : ResponsesClient
     /// <param name="responseId"> The ID of the response to retrieve. </param>
     /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
     /// <returns> The retrieved response result. </returns>
+    [Experimental("AAIP001")]
     public override async Task<ClientResult<ResponseResult>> GetResponseAsync(string responseId, CancellationToken cancellationToken = default)
     {
         var result = await base.GetResponseAsync(responseId, cancellationToken).ConfigureAwait(false);
@@ -730,6 +743,7 @@ public partial class ProjectResponsesClient : ResponsesClient
         }
     }
 
+    [Experimental("AAIP001")]
     private static ResponseResult DeserializeResponseResult(JsonElement element, ModelReaderWriterOptions options)
     {
         ResponseResult result = ModelReaderWriter.Read<ResponseResult>(

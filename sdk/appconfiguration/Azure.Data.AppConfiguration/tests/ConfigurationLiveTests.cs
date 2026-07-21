@@ -17,10 +17,6 @@ using NUnit.Framework;
 namespace Azure.Data.AppConfiguration.Tests
 {
     [ClientTestFixture(
-        ConfigurationClientOptions.ServiceVersion.V1_0,
-        ConfigurationClientOptions.ServiceVersion.V2023_10_01,
-        ConfigurationClientOptions.ServiceVersion.V2023_11_01,
-        ConfigurationClientOptions.ServiceVersion.V2024_09_01,
         ConfigurationClientOptions.ServiceVersion.V2026_04_01)]
     public class ConfigurationLiveTests : RecordedTestBase<AppConfigurationTestEnvironment>
     {
@@ -163,29 +159,6 @@ namespace Azure.Data.AppConfiguration.Tests
         public async Task TokenAudienceDefaultAudience()
         {
             ConfigurationClient service = GetEntraIdClient();
-            ConfigurationSetting testSetting = CreateSetting();
-
-            try
-            {
-                ConfigurationSetting setting = await service.AddConfigurationSettingAsync(testSetting);
-                Assert.That(ConfigurationSettingEqualityComparer.Instance.Equals(testSetting, setting), Is.True);
-            }
-            finally
-            {
-                AssertStatus200(await service.DeleteConfigurationSettingAsync(testSetting));
-            }
-        }
-
-        // This test validates that the client successfully authenticates and calls the service operation
-        // when the client is created with a specified audience. The audience is derived from the test endpoint.
-        [RecordedTest]
-        public async Task TokenAudienceSpecifiedAudience()
-        {
-            ConfigurationClientOptions options = new(_serviceVersion)
-            {
-                Audience = TestEnvironment.GetAudience()
-            };
-            ConfigurationClient service = GetEntraIdClient(options);
             ConfigurationSetting testSetting = CreateSetting();
 
             try

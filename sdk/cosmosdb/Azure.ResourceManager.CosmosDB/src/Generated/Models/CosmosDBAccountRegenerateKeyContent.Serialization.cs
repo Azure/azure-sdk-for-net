@@ -92,11 +92,6 @@ namespace Azure.ResourceManager.CosmosDB.Models
             }
             writer.WritePropertyName("keyKind"u8);
             writer.WriteStringValue(KeyKind.ToString());
-            if (Optional.IsDefined(SkipAccountKeysLastUsageCheck))
-            {
-                writer.WritePropertyName("skipAccountKeysLastUsageCheck"u8);
-                writer.WriteBooleanValue(SkipAccountKeysLastUsageCheck.Value);
-            }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
                 foreach (var item in _additionalBinaryDataProperties)
@@ -140,7 +135,6 @@ namespace Azure.ResourceManager.CosmosDB.Models
                 return null;
             }
             CosmosDBAccountKeyKind keyKind = default;
-            bool? skipAccountKeysLastUsageCheck = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -149,21 +143,12 @@ namespace Azure.ResourceManager.CosmosDB.Models
                     keyKind = new CosmosDBAccountKeyKind(prop.Value.GetString());
                     continue;
                 }
-                if (prop.NameEquals("skipAccountKeysLastUsageCheck"u8))
-                {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    skipAccountKeysLastUsageCheck = prop.Value.GetBoolean();
-                    continue;
-                }
                 if (options.Format != "W")
                 {
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new CosmosDBAccountRegenerateKeyContent(keyKind, skipAccountKeysLastUsageCheck, additionalBinaryDataProperties);
+            return new CosmosDBAccountRegenerateKeyContent(keyKind, additionalBinaryDataProperties);
         }
     }
 }

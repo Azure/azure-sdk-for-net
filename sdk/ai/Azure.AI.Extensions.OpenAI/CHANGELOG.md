@@ -1,11 +1,13 @@
 # Release History
 
-## 2.1.0-beta.5 (Unreleased)
+## 3.0.0-beta.1 (Unreleased)
 
 ### Features Added
 - Added `ProjectOAIResponsesClientOptions`, a new options type for `ProjectResponsesClient` that derives from `OpenAI.Responses.ResponsesClientOptions`. This aligns with the upstream OpenAI client option hierarchy after `ResponsesClientOptions` was split out as a sibling of `OpenAIClientOptions`.
 - Added an implicit conversion from `ProjectOpenAIClientOptions` to `ProjectOAIResponsesClientOptions` that copies all public configuration (endpoint, organization/project IDs, user-agent application ID, pipeline/retry/logging/transport settings, network timeout, distributed tracing flag, `ApiVersion`, and `AgentName`).
 - Added new `ProjectResponsesClient` constructors that accept `ProjectOAIResponsesClientOptions`, including parameterless-options overloads so `new ProjectResponsesClient(projectEndpoint, tokenProvider)` resolves to a visible constructor without requiring an options argument.
+
+- Added distributed tracing support.
 
 ### Breaking Changes
 - Removed the `ProjectConversation`, `ProjectConversationCreationOptions`, and `ProjectConversationUpdateOptions` data models. These were duplicative of the conversation types now provided by the `OpenAI` library (2.12.0+). `ProjectConversationsClient` and the `CreateResponse`/`CreateResponseAsync` extension overloads now consume and return `OpenAI.Conversations.ConversationResource`, `OpenAI.Conversations.ConversationCreationOptions`, and `OpenAI.Conversations.ConversationUpdateOptions` instead. The `ProjectConversationsClient` method names (`CreateProjectConversation`, `GetProjectConversation(s)`, `UpdateProjectConversation`) are unchanged. Note that `ProjectConversation`'s implicit conversion to its ID string is not available on `ConversationResource`; use `conversation.Id` explicitly.
@@ -16,6 +18,10 @@
 - Updated the `OpenAI` package dependency to `2.12.0`, which adds strongly-typed conversation support (`OpenAI.Conversations.ConversationResource`, `ConversationCreationOptions`, `ConversationUpdateOptions`). The conversation data models previously emitted by this package are no longer generated, and the temporary local convenience layer now delegates to the upstream types.
 - Updated the `OpenAI` package dependency to `2.11.0`. This release reshapes `OpenAI.Responses.ResponsesClientOptions` to derive directly from `System.ClientModel.Primitives.ClientPipelineOptions` (a sibling of `OpenAI.OpenAIClientOptions` rather than a subclass), which motivated the new `ProjectOAIResponsesClientOptions` type above.
 - The legacy `ProjectResponsesClientOptions` type and the `ProjectResponsesClient` constructors that take it are retained for binary compatibility but are now hidden from IntelliSense via `[EditorBrowsable(EditorBrowsableState.Never)]`. New code should prefer `ProjectOAIResponsesClientOptions`.
+
+### Sample Updates
+- Added sample for running responses in specific sessions.
+- Added sample for `ReminderPreviewToolboxTool`.
 
 ## 2.1.0-beta.4 (2026-06-30)
 

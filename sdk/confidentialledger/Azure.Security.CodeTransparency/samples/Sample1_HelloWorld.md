@@ -18,30 +18,38 @@ CodeTransparencyClient client = new(new Uri("https://<< service name >>.confiden
 
 ## Submit the file
 
-The most basic usage submits a valid signature file to the service. Accepting the submission is a long-running operation, so the response contains the operation ID.
+The most basic usage submits a valid signature file to the service. The response will contain the receipt bytes.
 
-```C# Snippet:CodeTransparencySubmission
+```C# Snippet:CodeTransparencySubmissionSyncReceipt
 CodeTransparencyClient client = new(new Uri("https://<< service name >>.confidential-ledger.azure.com"));
 FileStream fileStream = File.OpenRead("signature.cose");
 BinaryData content = BinaryData.FromStream(fileStream);
-Operation<BinaryData> operation = await client.CreateEntryAsync(WaitUntil.Started, content);
+bool waitForCommit = true;
+Response<BinaryData> receiptResponse = await client.CreateEntryAsync(content, waitForCommit);
 ```
 
-## Verify the operation was successful
+## Transparent statement
 
-To ensure the submission completes successfully, check the status of the operation. A successful operation means the service has accepted and countersigned the signed statement, which in turn allows you to obtain the cryptographic receipt.
+Once you have the receipt it can be added to the unprotected header of the signed statement to create a transparent statement. The embedded-receipts header value is a CBOR array of receipts. The transparent statement can be distributed to verify this registration.
 
-Checking the operation also returns an identifier (entry ID) used to retrieve the transparent statement or a transaction receipt.
-
-```C# Snippet:CodeTransparencySample1_WaitForResult
-Response<BinaryData> operationResult = await operation.WaitForCompletionAsync();
-string entryId = CborUtils.GetStringValueFromCborMapByKey(operationResult.Value.ToArray(), "EntryId");
-Console.WriteLine($"The entry ID to use to retrieve the receipt and transparent statement is {{{entryId}}}");
+```C# Snippet:CodeTransparencySample1_CreateStatement
+BinaryData receipt = receiptResponse.Value;
+// Add the receipt to the embedded-receipts unprotected header of the signed statement to create a transparent statement.
+CoseSign1Message signedStatement = CoseMessage.DecodeSign1(content.ToArray());
+CborWriter cborWriter = new CborWriter();
+cborWriter.WriteStartArray(1);
+cborWriter.WriteByteString(receipt.ToArray());
+cborWriter.WriteEndArray();
+signedStatement.UnprotectedHeaders[new CoseHeaderLabel(CcfReceipt.CoseHeaderEmbeddedReceipts)] =
+    CoseHeaderValue.FromEncodedValue(cborWriter.Encode());
+byte[] transparentStatement = signedStatement.Encode();
 ```
 
-## Download the transparent statement
+Alternatively you can use the entry ID to retrieve the transparent statement from the service. The entry ID (registration transaction id) can be extracted directly from the receipt, which works regardless of whether the service committed the entry inline or via a `303 See Other` redirect.
 
-Once the operation is complete, you can download the transparent statement so you can distribute it to verify this registration.
+```C# Snippet:CodeTransparencySample1_ExtractEntryId
+string entryId = CcfReceipt.GetRegistrationTransactionId(receipt.ToArray());
+```
 
 ```C# Snippet:CodeTransparencySample1_DownloadStatement
 Response<BinaryData> transparentStatementResponse = client.GetEntryStatement(entryId);

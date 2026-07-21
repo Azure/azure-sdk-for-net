@@ -11,8 +11,8 @@ namespace Azure.Provisioning.Batch
     public enum InterNodeCommunicationState
     {
         /// <summary> Enable network communication between virtual machines. </summary>
-        Enabled,
+        Enabled = 0,
         /// <summary> Disable network communication between virtual machines. </summary>
-        Disabled
+        Disabled = 1
     }
 }

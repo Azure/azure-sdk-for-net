@@ -8,6 +8,7 @@ using NUnit.Framework;
 using OpenAI.Responses;
 
 namespace Azure.AI.Extensions.OpenAI.Tests;
+#pragma warning disable AAIP001
 
 [Category("Smoke")]
 [Parallelizable(ParallelScope.All)]
@@ -52,3 +53,4 @@ public class ResponseToolDeserializationTests
         Assert.That(tool, Is.InstanceOf(expectedType), $"'{discriminator}' should deserialize to {expectedType.Name} but was {tool?.GetType().Name}.");
     }
 }
+#pragma warning restore AAIP001

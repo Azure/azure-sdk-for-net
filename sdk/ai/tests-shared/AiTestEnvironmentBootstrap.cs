@@ -22,6 +22,24 @@ namespace Azure.AI.Tests.Shared
         // The sdk/<service> directory that owns test-resources.json (and its generated .env).
         private const string ServiceDirectory = "ai";
 
+        // Environment switch honored by Microsoft.ClientModel.TestFramework.TestEnvironment to skip
+        // launching the resource bootstrapping script when a required variable is missing. Setting it
+        // is version-robust: older package versions expose TestEnvironment.DisableBootstrapping as
+        // internal, so this switch is the only cross-version way to opt out of bootstrapping.
+        private const string DisableBootstrappingSwitch = "CLIENTMODEL_DISABLE_BOOTSTRAPPING";
+
+        /// <summary>
+        /// Disables the automatic resource bootstrapping script so that a missing variable causes the
+        /// test to fail with a clear "missing environment variable" error instead of launching resource
+        /// creation. Intended for use when a test environment has already been provisioned (an env file
+        /// was found), where the numerous settings the suites require exceed what the deployment
+        /// template/scripts pre-create.
+        /// </summary>
+        public static void DisableResourceBootstrapping()
+        {
+            Environment.SetEnvironmentVariable(DisableBootstrappingSwitch, "true");
+        }
+
         /// <summary>
         /// Value for <see cref="TestEnvironment.PathToTestResourceBootstrappingScript"/> so that a
         /// missing variable launches eng/scripts/New-TestResources-Bootstrapper.ps1, mirroring the
@@ -41,7 +59,8 @@ namespace Azure.AI.Tests.Shared
                 // The script path and its service argument are passed together as the single pwsh
                 // argument string (see TestEnvironment.BootStrapTestResources), matching the legacy
                 // Azure.Core.TestFramework construction.
-                return Path.Combine(root, "eng", "scripts", $"New-TestResources-Bootstrapper.ps1 {ServiceDirectory}");
+                var scriptPath = Path.Combine(root, "eng", "scripts", "New-TestResources-Bootstrapper.ps1");
+                return $"\"{scriptPath}\" {ServiceDirectory}";
             }
         }
 
@@ -51,8 +70,15 @@ namespace Azure.AI.Tests.Shared
         /// seed entries. When the file is absent, only the seed entries are returned so that tests
         /// still fall back to live process environment variables.
         /// </summary>
-        public static Dictionary<string, string> ReadEnvironmentFile(IDictionary<string, string> seed)
+        /// <param name="seed">Seed values to layer the environment file on top of.</param>
+        /// <param name="environmentFileFound">
+        /// Set to <see langword="true"/> when a DPAPI-protected environment file was located and
+        /// parsed, indicating a test environment has already been provisioned. Callers can use this
+        /// to decide whether a missing setting should trigger resource bootstrapping.
+        /// </param>
+        public static Dictionary<string, string> ReadEnvironmentFile(IDictionary<string, string> seed, out bool environmentFileFound)
         {
+            environmentFileFound = false;
             var values = new Dictionary<string, string>(StringComparer.OrdinalIgnoreCase);
             if (seed != null)
             {
@@ -91,6 +117,7 @@ namespace Azure.AI.Tests.Shared
                     values[property.Name] = property.Value.GetString();
                 }
 
+                environmentFileFound = true;
                 break;
             }
 

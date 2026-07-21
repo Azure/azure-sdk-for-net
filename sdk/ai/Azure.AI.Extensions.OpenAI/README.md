@@ -484,12 +484,6 @@ Console.WriteLine(response.GetOutputText());
 
 ### Hosted Agents
 
-**Note:** This feature is in the preview, to use it, please disable the `AAIP001` warning.
-
-```C#
-#pragma warning disable AAIP001
-```
-
 Hosted agents simplify the custom agent deployment on fully controlled environment [see more](https://learn.microsoft.com/azure/ai-foundry/agents/concepts/hosted-agents).
 
 To create the hosted agent, please use the `HostedAgentDefinition` while creating the AgentVersion object.

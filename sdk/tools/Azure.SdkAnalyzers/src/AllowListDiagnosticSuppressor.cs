@@ -29,11 +29,13 @@ namespace Azure.SdkAnalyzers
         private static readonly string[] SupportedDiagnosticIds = new[]
         {
             "AZC0007",
+            "AZC0012",
             "AZC0014",
             "AZC0030",
             "AZC0034",
             "AZC0035",
             "CS0618",
+            "AAIP001"
         };
 
         private const string SuppressionIdPrefix = "AZSDKSP";
