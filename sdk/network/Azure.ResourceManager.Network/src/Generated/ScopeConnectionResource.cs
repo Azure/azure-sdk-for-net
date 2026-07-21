@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.Network
         {
             TryGetApiVersion(ResourceType, out string scopeConnectionApiVersion);
             _scopeConnectionsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Network", ResourceType.Namespace, Diagnostics);
-            _scopeConnectionsRestClient = new ScopeConnections(_scopeConnectionsClientDiagnostics, Pipeline, Endpoint, scopeConnectionApiVersion ?? "2025-07-01");
+            _scopeConnectionsRestClient = new ScopeConnections(_scopeConnectionsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, scopeConnectionApiVersion ?? "2025-07-01");
             ValidateResourceId(id);
         }
 

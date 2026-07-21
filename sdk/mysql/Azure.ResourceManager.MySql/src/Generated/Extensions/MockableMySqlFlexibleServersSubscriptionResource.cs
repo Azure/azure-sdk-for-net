@@ -46,23 +46,23 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Mocking
 
         private ClientDiagnostics ServersClientDiagnostics => _serversClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.MySql.FlexibleServers.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private Servers ServersRestClient => _serversRestClient ??= new Servers(ServersClientDiagnostics, Pipeline, Endpoint, "2024-12-30");
+        private Servers ServersRestClient => _serversRestClient ??= new Servers(ServersClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2024-12-30");
 
         private ClientDiagnostics LocationBasedCapabilitiesClientDiagnostics => _locationBasedCapabilitiesClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.MySql.FlexibleServers.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private LocationBasedCapabilities LocationBasedCapabilitiesRestClient => _locationBasedCapabilitiesRestClient ??= new LocationBasedCapabilities(LocationBasedCapabilitiesClientDiagnostics, Pipeline, Endpoint, "2024-12-30");
+        private LocationBasedCapabilities LocationBasedCapabilitiesRestClient => _locationBasedCapabilitiesRestClient ??= new LocationBasedCapabilities(LocationBasedCapabilitiesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2024-12-30");
 
         private ClientDiagnostics CheckVirtualNetworkSubnetUsageClientDiagnostics => _checkVirtualNetworkSubnetUsageClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.MySql.FlexibleServers.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private CheckVirtualNetworkSubnetUsage CheckVirtualNetworkSubnetUsageRestClient => _checkVirtualNetworkSubnetUsageRestClient ??= new CheckVirtualNetworkSubnetUsage(CheckVirtualNetworkSubnetUsageClientDiagnostics, Pipeline, Endpoint, "2024-12-30");
+        private CheckVirtualNetworkSubnetUsage CheckVirtualNetworkSubnetUsageRestClient => _checkVirtualNetworkSubnetUsageRestClient ??= new CheckVirtualNetworkSubnetUsage(CheckVirtualNetworkSubnetUsageClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2024-12-30");
 
         private ClientDiagnostics CheckNameAvailabilityClientDiagnostics => _checkNameAvailabilityClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.MySql.FlexibleServers.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private CheckNameAvailability CheckNameAvailabilityRestClient => _checkNameAvailabilityRestClient ??= new CheckNameAvailability(CheckNameAvailabilityClientDiagnostics, Pipeline, Endpoint, "2024-12-30");
+        private CheckNameAvailability CheckNameAvailabilityRestClient => _checkNameAvailabilityRestClient ??= new CheckNameAvailability(CheckNameAvailabilityClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2024-12-30");
 
         private ClientDiagnostics CheckNameAvailabilityWithoutLocationClientDiagnostics => _checkNameAvailabilityWithoutLocationClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.MySql.FlexibleServers.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private CheckNameAvailabilityWithoutLocation CheckNameAvailabilityWithoutLocationRestClient => _checkNameAvailabilityWithoutLocationRestClient ??= new CheckNameAvailabilityWithoutLocation(CheckNameAvailabilityWithoutLocationClientDiagnostics, Pipeline, Endpoint, "2024-12-30");
+        private CheckNameAvailabilityWithoutLocation CheckNameAvailabilityWithoutLocationRestClient => _checkNameAvailabilityWithoutLocationRestClient ??= new CheckNameAvailabilityWithoutLocation(CheckNameAvailabilityWithoutLocationClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2024-12-30");
 
         /// <summary> Gets a collection of MySqlFlexibleServersCapabilities in the <see cref="SubscriptionResource"/>. </summary>
         /// <param name="locationName"> The locationName for the resource. </param>

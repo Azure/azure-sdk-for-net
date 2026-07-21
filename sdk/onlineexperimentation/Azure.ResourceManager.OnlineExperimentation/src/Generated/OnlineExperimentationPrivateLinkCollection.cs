@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.OnlineExperimentation
         {
             TryGetApiVersion(OnlineExperimentationPrivateLinkResource.ResourceType, out string onlineExperimentationPrivateLinkApiVersion);
             _privateLinkResourcesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.OnlineExperimentation", OnlineExperimentationPrivateLinkResource.ResourceType.Namespace, Diagnostics);
-            _privateLinkResourcesRestClient = new PrivateLinkResources(_privateLinkResourcesClientDiagnostics, Pipeline, Endpoint, onlineExperimentationPrivateLinkApiVersion ?? "2025-08-01-preview");
+            _privateLinkResourcesRestClient = new PrivateLinkResources(_privateLinkResourcesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, onlineExperimentationPrivateLinkApiVersion ?? "2025-08-01-preview");
             ValidateResourceId(id);
         }
 

@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.AppConfiguration
         {
             TryGetApiVersion(AppConfigurationSnapshotResource.ResourceType, out string appConfigurationSnapshotApiVersion);
             _snapshotsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.AppConfiguration", AppConfigurationSnapshotResource.ResourceType.Namespace, Diagnostics);
-            _snapshotsRestClient = new Snapshots(_snapshotsClientDiagnostics, Pipeline, Endpoint, appConfigurationSnapshotApiVersion ?? "2025-06-01-preview");
+            _snapshotsRestClient = new Snapshots(_snapshotsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, appConfigurationSnapshotApiVersion ?? "2025-06-01-preview");
             ValidateResourceId(id);
         }
 

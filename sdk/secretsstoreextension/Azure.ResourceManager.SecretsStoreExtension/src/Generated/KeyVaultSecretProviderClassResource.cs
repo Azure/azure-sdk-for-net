@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.SecretsStoreExtension
         {
             TryGetApiVersion(ResourceType, out string keyVaultSecretProviderClassApiVersion);
             _azureKeyVaultSecretProviderClassesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.SecretsStoreExtension", ResourceType.Namespace, Diagnostics);
-            _azureKeyVaultSecretProviderClassesRestClient = new AzureKeyVaultSecretProviderClasses(_azureKeyVaultSecretProviderClassesClientDiagnostics, Pipeline, Endpoint, keyVaultSecretProviderClassApiVersion ?? "2024-08-21-preview");
+            _azureKeyVaultSecretProviderClassesRestClient = new AzureKeyVaultSecretProviderClasses(_azureKeyVaultSecretProviderClassesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, keyVaultSecretProviderClassApiVersion ?? "2024-08-21-preview");
             ValidateResourceId(id);
         }
 

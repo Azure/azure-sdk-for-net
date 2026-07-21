@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.Resources.DeploymentStacks
         {
             TryGetApiVersion(DeploymentStackResource.ResourceType, out string deploymentStackApiVersion);
             _deploymentStacksAtScopeClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Resources.DeploymentStacks", DeploymentStackResource.ResourceType.Namespace, Diagnostics);
-            _deploymentStacksAtScopeRestClient = new DeploymentStacksAtScope(_deploymentStacksAtScopeClientDiagnostics, Pipeline, Endpoint, deploymentStackApiVersion ?? "2025-07-01");
+            _deploymentStacksAtScopeRestClient = new DeploymentStacksAtScope(_deploymentStacksAtScopeClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, deploymentStackApiVersion ?? "2025-07-01");
         }
 
         /// <summary>

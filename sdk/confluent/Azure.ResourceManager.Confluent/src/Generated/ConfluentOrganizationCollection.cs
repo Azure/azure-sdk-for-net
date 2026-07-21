@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.Confluent
         {
             TryGetApiVersion(ConfluentOrganizationResource.ResourceType, out string confluentOrganizationApiVersion);
             _confluentOrganizationClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Confluent", ConfluentOrganizationResource.ResourceType.Namespace, Diagnostics);
-            _confluentOrganizationRestClient = new ConfluentOrganization(_confluentOrganizationClientDiagnostics, Pipeline, Endpoint, confluentOrganizationApiVersion ?? "2025-08-18-preview");
+            _confluentOrganizationRestClient = new ConfluentOrganization(_confluentOrganizationClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, confluentOrganizationApiVersion ?? "2025-08-18-preview");
             ValidateResourceId(id);
         }
 

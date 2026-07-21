@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.RecoveryServices
         {
             TryGetApiVersion(ResourceType, out string recoveryServicesVaultExtendedInfoApiVersion);
             _vaultExtendedInfoResourcesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.RecoveryServices", ResourceType.Namespace, Diagnostics);
-            _vaultExtendedInfoResourcesRestClient = new VaultExtendedInfoResources(_vaultExtendedInfoResourcesClientDiagnostics, Pipeline, Endpoint, recoveryServicesVaultExtendedInfoApiVersion ?? "2026-05-01");
+            _vaultExtendedInfoResourcesRestClient = new VaultExtendedInfoResources(_vaultExtendedInfoResourcesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, recoveryServicesVaultExtendedInfoApiVersion ?? "2026-05-01");
             ValidateResourceId(id);
         }
 

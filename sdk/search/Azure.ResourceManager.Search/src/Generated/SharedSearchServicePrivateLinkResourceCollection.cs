@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.Search
         {
             TryGetApiVersion(SharedSearchServicePrivateLinkResource.ResourceType, out string sharedSearchServicePrivateLinkResourceApiVersion);
             _sharedPrivateLinkResourcesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Search", SharedSearchServicePrivateLinkResource.ResourceType.Namespace, Diagnostics);
-            _sharedPrivateLinkResourcesRestClient = new SharedPrivateLinkResources(_sharedPrivateLinkResourcesClientDiagnostics, Pipeline, Endpoint, sharedSearchServicePrivateLinkResourceApiVersion ?? "2026-03-01-preview");
+            _sharedPrivateLinkResourcesRestClient = new SharedPrivateLinkResources(_sharedPrivateLinkResourcesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, sharedSearchServicePrivateLinkResourceApiVersion ?? "2026-03-01-preview");
             ValidateResourceId(id);
         }
 

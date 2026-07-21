@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.Network
         {
             TryGetApiVersion(VirtualWanResource.ResourceType, out string virtualWanApiVersion);
             _virtualWansClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Network", VirtualWanResource.ResourceType.Namespace, Diagnostics);
-            _virtualWansRestClient = new VirtualWans(_virtualWansClientDiagnostics, Pipeline, Endpoint, virtualWanApiVersion ?? "2025-07-01");
+            _virtualWansRestClient = new VirtualWans(_virtualWansClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, virtualWanApiVersion ?? "2025-07-01");
             ValidateResourceId(id);
         }
 

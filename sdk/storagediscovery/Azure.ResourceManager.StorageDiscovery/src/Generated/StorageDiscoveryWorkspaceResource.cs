@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.StorageDiscovery
         {
             TryGetApiVersion(ResourceType, out string storageDiscoveryWorkspaceApiVersion);
             _storageDiscoveryWorkspacesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.StorageDiscovery", ResourceType.Namespace, Diagnostics);
-            _storageDiscoveryWorkspacesRestClient = new StorageDiscoveryWorkspaces(_storageDiscoveryWorkspacesClientDiagnostics, Pipeline, Endpoint, storageDiscoveryWorkspaceApiVersion ?? "2025-09-01");
+            _storageDiscoveryWorkspacesRestClient = new StorageDiscoveryWorkspaces(_storageDiscoveryWorkspacesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, storageDiscoveryWorkspaceApiVersion ?? "2025-09-01");
             ValidateResourceId(id);
         }
 

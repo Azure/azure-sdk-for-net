@@ -42,15 +42,15 @@ namespace Azure.ResourceManager.Quantum.Mocking
 
         private ClientDiagnostics WorkspacesClientDiagnostics => _workspacesClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Quantum.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private Workspaces WorkspacesRestClient => _workspacesRestClient ??= new Workspaces(WorkspacesClientDiagnostics, Pipeline, Endpoint, "2025-12-15-preview");
+        private Workspaces WorkspacesRestClient => _workspacesRestClient ??= new Workspaces(WorkspacesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2025-12-15-preview");
 
         private ClientDiagnostics SuiteOffersClientDiagnostics => _suiteOffersClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Quantum.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private SuiteOffers SuiteOffersRestClient => _suiteOffersRestClient ??= new SuiteOffers(SuiteOffersClientDiagnostics, Pipeline, Endpoint, "2025-12-15-preview");
+        private SuiteOffers SuiteOffersRestClient => _suiteOffersRestClient ??= new SuiteOffers(SuiteOffersClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2025-12-15-preview");
 
         private ClientDiagnostics OfferingsClientDiagnostics => _offeringsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Quantum.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private Offerings OfferingsRestClient => _offeringsRestClient ??= new Offerings(OfferingsClientDiagnostics, Pipeline, Endpoint, "2025-12-15-preview");
+        private Offerings OfferingsRestClient => _offeringsRestClient ??= new Offerings(OfferingsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2025-12-15-preview");
 
         /// <summary>
         /// Gets the list of Workspaces within a Subscription.

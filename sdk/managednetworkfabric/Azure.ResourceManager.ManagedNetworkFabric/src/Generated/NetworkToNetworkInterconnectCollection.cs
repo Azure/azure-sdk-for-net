@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         {
             TryGetApiVersion(NetworkToNetworkInterconnectResource.ResourceType, out string networkToNetworkInterconnectApiVersion);
             _networkToNetworkInterconnectsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ManagedNetworkFabric", NetworkToNetworkInterconnectResource.ResourceType.Namespace, Diagnostics);
-            _networkToNetworkInterconnectsRestClient = new NetworkToNetworkInterconnects(_networkToNetworkInterconnectsClientDiagnostics, Pipeline, Endpoint, networkToNetworkInterconnectApiVersion ?? "2025-07-15");
+            _networkToNetworkInterconnectsRestClient = new NetworkToNetworkInterconnects(_networkToNetworkInterconnectsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, networkToNetworkInterconnectApiVersion ?? "2025-07-15");
             ValidateResourceId(id);
         }
 

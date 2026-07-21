@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.DevCenter
         {
             TryGetApiVersion(AttachedNetworkConnectionResource.ResourceType, out string attachedNetworkConnectionApiVersion);
             _attachedNetworksClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.DevCenter", AttachedNetworkConnectionResource.ResourceType.Namespace, Diagnostics);
-            _attachedNetworksRestClient = new AttachedNetworks(_attachedNetworksClientDiagnostics, Pipeline, Endpoint, attachedNetworkConnectionApiVersion ?? "2026-01-01-preview");
+            _attachedNetworksRestClient = new AttachedNetworks(_attachedNetworksClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, attachedNetworkConnectionApiVersion ?? "2026-01-01-preview");
             ValidateResourceId(id);
         }
 

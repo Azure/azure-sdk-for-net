@@ -35,7 +35,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration.PrivateLinkScopes.Mockin
 
         private ClientDiagnostics KubernetesConfigurationPrivateLinkScopesClientDiagnostics => _kubernetesConfigurationPrivateLinkScopesClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.KubernetesConfiguration.PrivateLinkScopes.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private KubernetesConfigurationPrivateLinkScopes KubernetesConfigurationPrivateLinkScopesRestClient => _kubernetesConfigurationPrivateLinkScopesRestClient ??= new KubernetesConfigurationPrivateLinkScopes(KubernetesConfigurationPrivateLinkScopesClientDiagnostics, Pipeline, Endpoint, "2024-11-01-preview");
+        private KubernetesConfigurationPrivateLinkScopes KubernetesConfigurationPrivateLinkScopesRestClient => _kubernetesConfigurationPrivateLinkScopesRestClient ??= new KubernetesConfigurationPrivateLinkScopes(KubernetesConfigurationPrivateLinkScopesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2024-11-01-preview");
 
         /// <summary>
         /// Gets a list of all Azure Arc PrivateLinkScopes within a subscription.

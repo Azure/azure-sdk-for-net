@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.AppService
         {
             TryGetApiVersion(WebSiteConfigConnectionStringResource.ResourceType, out string webSiteConfigConnectionStringApiVersion);
             _siteConnectionStringKeyVaultReferenceClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.AppService", WebSiteConfigConnectionStringResource.ResourceType.Namespace, Diagnostics);
-            _siteConnectionStringKeyVaultReferenceRestClient = new SiteConnectionStringKeyVaultReference(_siteConnectionStringKeyVaultReferenceClientDiagnostics, Pipeline, Endpoint, webSiteConfigConnectionStringApiVersion ?? "2026-03-15");
+            _siteConnectionStringKeyVaultReferenceRestClient = new SiteConnectionStringKeyVaultReference(_siteConnectionStringKeyVaultReferenceClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, webSiteConfigConnectionStringApiVersion ?? "2026-03-15");
             ValidateResourceId(id);
         }
 

@@ -55,9 +55,9 @@ namespace Azure.ResourceManager.HealthcareApis
         {
             TryGetApiVersion(ResourceType, out string healthcareApisIotConnectorApiVersion);
             _healthcareApisIotConnectorsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.HealthcareApis", ResourceType.Namespace, Diagnostics);
-            _healthcareApisIotConnectorsRestClient = new HealthcareApisIotConnectors(_healthcareApisIotConnectorsClientDiagnostics, Pipeline, Endpoint, healthcareApisIotConnectorApiVersion ?? "2025-04-01-preview");
+            _healthcareApisIotConnectorsRestClient = new HealthcareApisIotConnectors(_healthcareApisIotConnectorsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, healthcareApisIotConnectorApiVersion ?? "2025-04-01-preview");
             _iotConnectorsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.HealthcareApis", ResourceType.Namespace, Diagnostics);
-            _iotConnectorsRestClient = new IotConnectors(_iotConnectorsClientDiagnostics, Pipeline, Endpoint, healthcareApisIotConnectorApiVersion ?? "2025-04-01-preview");
+            _iotConnectorsRestClient = new IotConnectors(_iotConnectorsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, healthcareApisIotConnectorApiVersion ?? "2025-04-01-preview");
             ValidateResourceId(id);
         }
 
