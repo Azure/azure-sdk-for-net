@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.ComputeLimit
         {
             TryGetApiVersion(ResourceType, out string memberCapOverrideApiVersion);
             _memberCapOverridesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ComputeLimit", ResourceType.Namespace, Diagnostics);
-            _memberCapOverridesRestClient = new MemberCapOverrides(_memberCapOverridesClientDiagnostics, Pipeline, Endpoint, memberCapOverrideApiVersion ?? "2026-07-01");
+            _memberCapOverridesRestClient = new MemberCapOverrides(_memberCapOverridesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, memberCapOverrideApiVersion ?? "2026-07-01");
             ValidateResourceId(id);
         }
 

@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.AppContainers
         {
             TryGetApiVersion(ResourceType, out string sessionPoolApiVersion);
             _containerAppsSessionPoolsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.AppContainers", ResourceType.Namespace, Diagnostics);
-            _containerAppsSessionPoolsRestClient = new ContainerAppsSessionPools(_containerAppsSessionPoolsClientDiagnostics, Pipeline, Endpoint, sessionPoolApiVersion ?? "2025-10-02-preview");
+            _containerAppsSessionPoolsRestClient = new ContainerAppsSessionPools(_containerAppsSessionPoolsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, sessionPoolApiVersion ?? "2025-10-02-preview");
             ValidateResourceId(id);
         }
 
