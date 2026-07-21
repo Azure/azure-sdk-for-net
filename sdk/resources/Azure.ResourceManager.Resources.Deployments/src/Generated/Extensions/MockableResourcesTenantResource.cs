@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.Resources.Mocking
 
         private ClientDiagnostics DeploymentsOperationGroupClientDiagnostics => _deploymentsOperationGroupClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Resources.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private DeploymentsOperationGroup DeploymentsOperationGroupRestClient => _deploymentsOperationGroupRestClient ??= new DeploymentsOperationGroup(DeploymentsOperationGroupClientDiagnostics, Pipeline, Endpoint, "2025-04-01");
+        private DeploymentsOperationGroup DeploymentsOperationGroupRestClient => _deploymentsOperationGroupRestClient ??= new DeploymentsOperationGroup(DeploymentsOperationGroupClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2025-04-01");
 
         /// <summary>
         /// Calculate the hash of the given template.
