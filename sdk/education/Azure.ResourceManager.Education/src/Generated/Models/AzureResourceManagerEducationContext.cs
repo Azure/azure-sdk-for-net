@@ -17,6 +17,8 @@ namespace Azure.ResourceManager.Education
     /// </summary>
     [ModelReaderWriterBuildable(typeof(EducationAmount))]
     [ModelReaderWriterBuildable(typeof(EducationInviteCodeGenerateContent))]
+    [ModelReaderWriterBuildable(typeof(EducationJoinRequestData))]
+    [ModelReaderWriterBuildable(typeof(EducationJoinRequestResource))]
     [ModelReaderWriterBuildable(typeof(EducationLabData))]
     [ModelReaderWriterBuildable(typeof(EducationLabResource))]
     [ModelReaderWriterBuildable(typeof(EducationOperationInfo))]
@@ -27,8 +29,6 @@ namespace Azure.ResourceManager.Education
     [ModelReaderWriterBuildable(typeof(GrantDetailsData))]
     [ModelReaderWriterBuildable(typeof(GrantDetailsResource))]
     [ModelReaderWriterBuildable(typeof(GrantListResponse))]
-    [ModelReaderWriterBuildable(typeof(JoinRequestDetailsData))]
-    [ModelReaderWriterBuildable(typeof(JoinRequestDetailsResource))]
     [ModelReaderWriterBuildable(typeof(JoinRequestList))]
     [ModelReaderWriterBuildable(typeof(JoinRequestProperties))]
     [ModelReaderWriterBuildable(typeof(LabProperties))]

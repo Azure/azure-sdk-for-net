@@ -64,35 +64,21 @@ namespace Azure.ResourceManager.Education.Mocking
             return new EducationLabResource(Client, scope.AppendProviderResource("Microsoft.Education", "labs", "default"));
         }
 
-        /// <summary> Gets an object representing a <see cref="JoinRequestDetailsResource"/> along with the instance operations that can be performed on it but with no data. </summary>
+        /// <summary> Gets an object representing a <see cref="EducationJoinRequestResource"/> along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="JoinRequestDetailsResource"/> object. </returns>
-        public virtual JoinRequestDetailsResource GetJoinRequestDetailsResource(ResourceIdentifier id)
+        /// <returns> Returns a <see cref="EducationJoinRequestResource"/> object. </returns>
+        public virtual EducationJoinRequestResource GetEducationJoinRequestResource(ResourceIdentifier id)
         {
-            JoinRequestDetailsResource.ValidateResourceId(id);
-            return new JoinRequestDetailsResource(Client, id);
+            EducationJoinRequestResource.ValidateResourceId(id);
+            return new EducationJoinRequestResource(Client, id);
         }
 
-        /// <summary> Gets a collection of <see cref="JoinRequestDetailsCollection"/> objects within the specified scope. </summary>
+        /// <summary> Gets a collection of <see cref="EducationJoinRequestCollection"/> objects within the specified scope. </summary>
         /// <param name="scope"> The scope of the resource collection to get. </param>
-        /// <returns> Returns a collection of <see cref="JoinRequestDetailsResource"/> objects. </returns>
-        public virtual JoinRequestDetailsCollection GetAllJoinRequestDetails(ResourceIdentifier scope)
+        /// <returns> Returns a collection of <see cref="EducationJoinRequestResource"/> objects. </returns>
+        public virtual EducationJoinRequestCollection GetEducationJoinRequests(ResourceIdentifier scope)
         {
-            return new JoinRequestDetailsCollection(Client, scope);
-        }
-
-        /// <summary> get student join requests. </summary>
-        /// <param name="scope"> The scope of the resource collection to get. </param>
-        /// <param name="joinRequestName"> The ID that uniquely identifies a join request. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="joinRequestName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="joinRequestName"/> is an empty string, and was expected to be non-empty. </exception>
-        [ForwardsClientCalls]
-        public virtual Response<JoinRequestDetailsResource> GetJoinRequestDetails(ResourceIdentifier scope, string joinRequestName, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(joinRequestName, nameof(joinRequestName));
-
-            return GetAllJoinRequestDetails(scope).Get(joinRequestName, cancellationToken);
+            return new EducationJoinRequestCollection(Client, scope);
         }
 
         /// <summary> get student join requests. </summary>
@@ -102,11 +88,25 @@ namespace Azure.ResourceManager.Education.Mocking
         /// <exception cref="ArgumentNullException"> <paramref name="joinRequestName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="joinRequestName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual async Task<Response<JoinRequestDetailsResource>> GetJoinRequestDetailsAsync(ResourceIdentifier scope, string joinRequestName, CancellationToken cancellationToken = default)
+        public virtual Response<EducationJoinRequestResource> GetEducationJoinRequest(ResourceIdentifier scope, string joinRequestName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(joinRequestName, nameof(joinRequestName));
 
-            return await GetAllJoinRequestDetails(scope).GetAsync(joinRequestName, cancellationToken).ConfigureAwait(false);
+            return GetEducationJoinRequests(scope).Get(joinRequestName, cancellationToken);
+        }
+
+        /// <summary> get student join requests. </summary>
+        /// <param name="scope"> The scope of the resource collection to get. </param>
+        /// <param name="joinRequestName"> The ID that uniquely identifies a join request. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="joinRequestName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="joinRequestName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual async Task<Response<EducationJoinRequestResource>> GetEducationJoinRequestAsync(ResourceIdentifier scope, string joinRequestName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(joinRequestName, nameof(joinRequestName));
+
+            return await GetEducationJoinRequests(scope).GetAsync(joinRequestName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary> Gets an object representing a <see cref="EducationStudentResource"/> along with the instance operations that can be performed on it but with no data. </summary>

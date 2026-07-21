@@ -115,10 +115,10 @@ namespace Azure.ResourceManager.Education.Models
         /// <param name="lastName"> Last Name. </param>
         /// <param name="email"> join request email. </param>
         /// <param name="status"> Join request status. </param>
-        /// <returns> A new <see cref="Education.JoinRequestDetailsData"/> instance for mocking. </returns>
-        public static JoinRequestDetailsData JoinRequestDetailsData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, string firstName = default, string lastName = default, string email = default, JoinRequestStatus? status = default)
+        /// <returns> A new <see cref="Education.EducationJoinRequestData"/> instance for mocking. </returns>
+        public static EducationJoinRequestData EducationJoinRequestData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, string firstName = default, string lastName = default, string email = default, JoinRequestStatus? status = default)
         {
-            return new JoinRequestDetailsData(
+            return new EducationJoinRequestData(
                 id,
                 name,
                 resourceType,

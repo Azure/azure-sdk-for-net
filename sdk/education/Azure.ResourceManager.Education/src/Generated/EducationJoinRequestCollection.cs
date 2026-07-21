@@ -19,28 +19,28 @@ using Azure.ResourceManager;
 namespace Azure.ResourceManager.Education
 {
     /// <summary>
-    /// A class representing a collection of <see cref="JoinRequestDetailsResource"/> and their operations.
-    /// Each <see cref="JoinRequestDetailsResource"/> in the collection will belong to the same instance of <see cref="EducationLabResource"/>.
-    /// To get a <see cref="JoinRequestDetailsCollection"/> instance call the GetJoinRequestDetails method from an instance of <see cref="EducationLabResource"/>.
+    /// A class representing a collection of <see cref="EducationJoinRequestResource"/> and their operations.
+    /// Each <see cref="EducationJoinRequestResource"/> in the collection will belong to the same instance of <see cref="EducationLabResource"/>.
+    /// To get a <see cref="EducationJoinRequestCollection"/> instance call the GetEducationJoinRequests method from an instance of <see cref="EducationLabResource"/>.
     /// </summary>
-    public partial class JoinRequestDetailsCollection : ArmCollection, IEnumerable<JoinRequestDetailsResource>, IAsyncEnumerable<JoinRequestDetailsResource>
+    public partial class EducationJoinRequestCollection : ArmCollection, IEnumerable<EducationJoinRequestResource>, IAsyncEnumerable<EducationJoinRequestResource>
     {
         private readonly ClientDiagnostics _joinRequestsClientDiagnostics;
         private readonly JoinRequests _joinRequestsRestClient;
 
-        /// <summary> Initializes a new instance of JoinRequestDetailsCollection for mocking. </summary>
-        protected JoinRequestDetailsCollection()
+        /// <summary> Initializes a new instance of EducationJoinRequestCollection for mocking. </summary>
+        protected EducationJoinRequestCollection()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="JoinRequestDetailsCollection"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="EducationJoinRequestCollection"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
-        internal JoinRequestDetailsCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
+        internal EducationJoinRequestCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            TryGetApiVersion(JoinRequestDetailsResource.ResourceType, out string joinRequestDetailsApiVersion);
-            _joinRequestsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Education", JoinRequestDetailsResource.ResourceType.Namespace, Diagnostics);
-            _joinRequestsRestClient = new JoinRequests(_joinRequestsClientDiagnostics, Pipeline, Endpoint, joinRequestDetailsApiVersion ?? "2021-12-01-preview");
+            TryGetApiVersion(EducationJoinRequestResource.ResourceType, out string educationJoinRequestApiVersion);
+            _joinRequestsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Education", EducationJoinRequestResource.ResourceType.Namespace, Diagnostics);
+            _joinRequestsRestClient = new JoinRequests(_joinRequestsClientDiagnostics, Pipeline, Endpoint, educationJoinRequestApiVersion ?? "2021-12-01-preview");
             ValidateResourceId(id);
         }
 
@@ -75,11 +75,11 @@ namespace Azure.ResourceManager.Education
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="joinRequestName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="joinRequestName"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual async Task<Response<JoinRequestDetailsResource>> GetAsync(string joinRequestName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<EducationJoinRequestResource>> GetAsync(string joinRequestName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(joinRequestName, nameof(joinRequestName));
 
-            using DiagnosticScope scope = _joinRequestsClientDiagnostics.CreateScope("JoinRequestDetailsCollection.Get");
+            using DiagnosticScope scope = _joinRequestsClientDiagnostics.CreateScope("EducationJoinRequestCollection.Get");
             scope.Start();
             try
             {
@@ -89,12 +89,12 @@ namespace Azure.ResourceManager.Education
                 };
                 HttpMessage message = _joinRequestsRestClient.CreateGetRequest(Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, joinRequestName, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                Response<JoinRequestDetailsData> response = Response.FromValue(JoinRequestDetailsData.FromResponse(result), result);
+                Response<EducationJoinRequestData> response = Response.FromValue(EducationJoinRequestData.FromResponse(result), result);
                 if (response.Value == null)
                 {
                     throw new RequestFailedException(response.GetRawResponse());
                 }
-                return Response.FromValue(new JoinRequestDetailsResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new EducationJoinRequestResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -124,11 +124,11 @@ namespace Azure.ResourceManager.Education
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="joinRequestName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="joinRequestName"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual Response<JoinRequestDetailsResource> Get(string joinRequestName, CancellationToken cancellationToken = default)
+        public virtual Response<EducationJoinRequestResource> Get(string joinRequestName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(joinRequestName, nameof(joinRequestName));
 
-            using DiagnosticScope scope = _joinRequestsClientDiagnostics.CreateScope("JoinRequestDetailsCollection.Get");
+            using DiagnosticScope scope = _joinRequestsClientDiagnostics.CreateScope("EducationJoinRequestCollection.Get");
             scope.Start();
             try
             {
@@ -138,12 +138,12 @@ namespace Azure.ResourceManager.Education
                 };
                 HttpMessage message = _joinRequestsRestClient.CreateGetRequest(Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, joinRequestName, context);
                 Response result = Pipeline.ProcessMessage(message, context);
-                Response<JoinRequestDetailsData> response = Response.FromValue(JoinRequestDetailsData.FromResponse(result), result);
+                Response<EducationJoinRequestData> response = Response.FromValue(EducationJoinRequestData.FromResponse(result), result);
                 if (response.Value == null)
                 {
                     throw new RequestFailedException(response.GetRawResponse());
                 }
-                return Response.FromValue(new JoinRequestDetailsResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new EducationJoinRequestResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -171,21 +171,21 @@ namespace Azure.ResourceManager.Education
         /// </summary>
         /// <param name="includeDenied"> Include denied. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="JoinRequestDetailsResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<JoinRequestDetailsResource> GetAllAsync(bool? includeDenied = default, CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="EducationJoinRequestResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<EducationJoinRequestResource> GetAllAsync(bool? includeDenied = default, CancellationToken cancellationToken = default)
         {
             RequestContext context = new RequestContext
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<JoinRequestDetailsData, JoinRequestDetailsResource>(new JoinRequestsGetAllAsyncCollectionResultOfT(
+            return new AsyncPageableWrapper<EducationJoinRequestData, EducationJoinRequestResource>(new JoinRequestsGetAllAsyncCollectionResultOfT(
                 _joinRequestsRestClient,
                 Id.Parent.Parent.Parent.Name,
                 Id.Parent.Parent.Name,
                 Id.Parent.Name,
                 includeDenied,
                 context,
-                "JoinRequestDetailsCollection.GetAll"), data => new JoinRequestDetailsResource(Client, data));
+                "EducationJoinRequestCollection.GetAll"), data => new EducationJoinRequestResource(Client, data));
         }
 
         /// <summary>
@@ -207,21 +207,21 @@ namespace Azure.ResourceManager.Education
         /// </summary>
         /// <param name="includeDenied"> Include denied. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="JoinRequestDetailsResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<JoinRequestDetailsResource> GetAll(bool? includeDenied = default, CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="EducationJoinRequestResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<EducationJoinRequestResource> GetAll(bool? includeDenied = default, CancellationToken cancellationToken = default)
         {
             RequestContext context = new RequestContext
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<JoinRequestDetailsData, JoinRequestDetailsResource>(new JoinRequestsGetAllCollectionResultOfT(
+            return new PageableWrapper<EducationJoinRequestData, EducationJoinRequestResource>(new JoinRequestsGetAllCollectionResultOfT(
                 _joinRequestsRestClient,
                 Id.Parent.Parent.Parent.Name,
                 Id.Parent.Parent.Name,
                 Id.Parent.Name,
                 includeDenied,
                 context,
-                "JoinRequestDetailsCollection.GetAll"), data => new JoinRequestDetailsResource(Client, data));
+                "EducationJoinRequestCollection.GetAll"), data => new EducationJoinRequestResource(Client, data));
         }
 
         /// <summary>
@@ -249,7 +249,7 @@ namespace Azure.ResourceManager.Education
         {
             Argument.AssertNotNullOrEmpty(joinRequestName, nameof(joinRequestName));
 
-            using DiagnosticScope scope = _joinRequestsClientDiagnostics.CreateScope("JoinRequestDetailsCollection.Exists");
+            using DiagnosticScope scope = _joinRequestsClientDiagnostics.CreateScope("EducationJoinRequestCollection.Exists");
             scope.Start();
             try
             {
@@ -260,14 +260,14 @@ namespace Azure.ResourceManager.Education
                 HttpMessage message = _joinRequestsRestClient.CreateGetRequest(Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, joinRequestName, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
-                Response<JoinRequestDetailsData> response = default;
+                Response<EducationJoinRequestData> response = default;
                 switch (result.Status)
                 {
                     case 200:
-                        response = Response.FromValue(JoinRequestDetailsData.FromResponse(result), result);
+                        response = Response.FromValue(EducationJoinRequestData.FromResponse(result), result);
                         break;
                     case 404:
-                        response = Response.FromValue((JoinRequestDetailsData)null, result);
+                        response = Response.FromValue((EducationJoinRequestData)null, result);
                         break;
                     default:
                         throw new RequestFailedException(result);
@@ -306,7 +306,7 @@ namespace Azure.ResourceManager.Education
         {
             Argument.AssertNotNullOrEmpty(joinRequestName, nameof(joinRequestName));
 
-            using DiagnosticScope scope = _joinRequestsClientDiagnostics.CreateScope("JoinRequestDetailsCollection.Exists");
+            using DiagnosticScope scope = _joinRequestsClientDiagnostics.CreateScope("EducationJoinRequestCollection.Exists");
             scope.Start();
             try
             {
@@ -317,14 +317,14 @@ namespace Azure.ResourceManager.Education
                 HttpMessage message = _joinRequestsRestClient.CreateGetRequest(Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, joinRequestName, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
-                Response<JoinRequestDetailsData> response = default;
+                Response<EducationJoinRequestData> response = default;
                 switch (result.Status)
                 {
                     case 200:
-                        response = Response.FromValue(JoinRequestDetailsData.FromResponse(result), result);
+                        response = Response.FromValue(EducationJoinRequestData.FromResponse(result), result);
                         break;
                     case 404:
-                        response = Response.FromValue((JoinRequestDetailsData)null, result);
+                        response = Response.FromValue((EducationJoinRequestData)null, result);
                         break;
                     default:
                         throw new RequestFailedException(result);
@@ -359,11 +359,11 @@ namespace Azure.ResourceManager.Education
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="joinRequestName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="joinRequestName"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual async Task<NullableResponse<JoinRequestDetailsResource>> GetIfExistsAsync(string joinRequestName, CancellationToken cancellationToken = default)
+        public virtual async Task<NullableResponse<EducationJoinRequestResource>> GetIfExistsAsync(string joinRequestName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(joinRequestName, nameof(joinRequestName));
 
-            using DiagnosticScope scope = _joinRequestsClientDiagnostics.CreateScope("JoinRequestDetailsCollection.GetIfExists");
+            using DiagnosticScope scope = _joinRequestsClientDiagnostics.CreateScope("EducationJoinRequestCollection.GetIfExists");
             scope.Start();
             try
             {
@@ -374,23 +374,23 @@ namespace Azure.ResourceManager.Education
                 HttpMessage message = _joinRequestsRestClient.CreateGetRequest(Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, joinRequestName, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
-                Response<JoinRequestDetailsData> response = default;
+                Response<EducationJoinRequestData> response = default;
                 switch (result.Status)
                 {
                     case 200:
-                        response = Response.FromValue(JoinRequestDetailsData.FromResponse(result), result);
+                        response = Response.FromValue(EducationJoinRequestData.FromResponse(result), result);
                         break;
                     case 404:
-                        response = Response.FromValue((JoinRequestDetailsData)null, result);
+                        response = Response.FromValue((EducationJoinRequestData)null, result);
                         break;
                     default:
                         throw new RequestFailedException(result);
                 }
                 if (response.Value == null)
                 {
-                    return new NoValueResponse<JoinRequestDetailsResource>(response.GetRawResponse());
+                    return new NoValueResponse<EducationJoinRequestResource>(response.GetRawResponse());
                 }
-                return Response.FromValue(new JoinRequestDetailsResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new EducationJoinRequestResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -420,11 +420,11 @@ namespace Azure.ResourceManager.Education
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="joinRequestName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="joinRequestName"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual NullableResponse<JoinRequestDetailsResource> GetIfExists(string joinRequestName, CancellationToken cancellationToken = default)
+        public virtual NullableResponse<EducationJoinRequestResource> GetIfExists(string joinRequestName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(joinRequestName, nameof(joinRequestName));
 
-            using DiagnosticScope scope = _joinRequestsClientDiagnostics.CreateScope("JoinRequestDetailsCollection.GetIfExists");
+            using DiagnosticScope scope = _joinRequestsClientDiagnostics.CreateScope("EducationJoinRequestCollection.GetIfExists");
             scope.Start();
             try
             {
@@ -435,23 +435,23 @@ namespace Azure.ResourceManager.Education
                 HttpMessage message = _joinRequestsRestClient.CreateGetRequest(Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, joinRequestName, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
-                Response<JoinRequestDetailsData> response = default;
+                Response<EducationJoinRequestData> response = default;
                 switch (result.Status)
                 {
                     case 200:
-                        response = Response.FromValue(JoinRequestDetailsData.FromResponse(result), result);
+                        response = Response.FromValue(EducationJoinRequestData.FromResponse(result), result);
                         break;
                     case 404:
-                        response = Response.FromValue((JoinRequestDetailsData)null, result);
+                        response = Response.FromValue((EducationJoinRequestData)null, result);
                         break;
                     default:
                         throw new RequestFailedException(result);
                 }
                 if (response.Value == null)
                 {
-                    return new NoValueResponse<JoinRequestDetailsResource>(response.GetRawResponse());
+                    return new NoValueResponse<EducationJoinRequestResource>(response.GetRawResponse());
                 }
-                return Response.FromValue(new JoinRequestDetailsResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new EducationJoinRequestResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -460,7 +460,7 @@ namespace Azure.ResourceManager.Education
             }
         }
 
-        IEnumerator<JoinRequestDetailsResource> IEnumerable<JoinRequestDetailsResource>.GetEnumerator()
+        IEnumerator<EducationJoinRequestResource> IEnumerable<EducationJoinRequestResource>.GetEnumerator()
         {
             return GetAll().GetEnumerator();
         }
@@ -471,7 +471,7 @@ namespace Azure.ResourceManager.Education
         }
 
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        IAsyncEnumerator<JoinRequestDetailsResource> IAsyncEnumerable<JoinRequestDetailsResource>.GetAsyncEnumerator(CancellationToken cancellationToken)
+        IAsyncEnumerator<EducationJoinRequestResource> IAsyncEnumerable<EducationJoinRequestResource>.GetAsyncEnumerator(CancellationToken cancellationToken)
         {
             return GetAllAsync(cancellationToken: cancellationToken).GetAsyncEnumerator(cancellationToken);
         }

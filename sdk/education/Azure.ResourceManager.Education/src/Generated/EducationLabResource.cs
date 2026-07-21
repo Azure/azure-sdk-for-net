@@ -509,11 +509,11 @@ namespace Azure.ResourceManager.Education
             }
         }
 
-        /// <summary> Gets a collection of JoinRequestDetails in the <see cref="EducationLabResource"/>. </summary>
-        /// <returns> An object representing collection of JoinRequestDetails and their operations over a JoinRequestDetailsResource. </returns>
-        public virtual JoinRequestDetailsCollection GetAllJoinRequestDetails()
+        /// <summary> Gets a collection of EducationJoinRequests in the <see cref="EducationLabResource"/>. </summary>
+        /// <returns> An object representing collection of EducationJoinRequests and their operations over a EducationJoinRequestResource. </returns>
+        public virtual EducationJoinRequestCollection GetEducationJoinRequests()
         {
-            return GetCachedClient(client => new JoinRequestDetailsCollection(client, Id));
+            return GetCachedClient(client => new EducationJoinRequestCollection(client, Id));
         }
 
         /// <summary> get student join requests. </summary>
@@ -522,11 +522,11 @@ namespace Azure.ResourceManager.Education
         /// <exception cref="ArgumentNullException"> <paramref name="joinRequestName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="joinRequestName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual async Task<Response<JoinRequestDetailsResource>> GetJoinRequestDetailsAsync(string joinRequestName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<EducationJoinRequestResource>> GetEducationJoinRequestAsync(string joinRequestName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(joinRequestName, nameof(joinRequestName));
 
-            return await GetAllJoinRequestDetails().GetAsync(joinRequestName, cancellationToken).ConfigureAwait(false);
+            return await GetEducationJoinRequests().GetAsync(joinRequestName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary> get student join requests. </summary>
@@ -535,11 +535,11 @@ namespace Azure.ResourceManager.Education
         /// <exception cref="ArgumentNullException"> <paramref name="joinRequestName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="joinRequestName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual Response<JoinRequestDetailsResource> GetJoinRequestDetails(string joinRequestName, CancellationToken cancellationToken = default)
+        public virtual Response<EducationJoinRequestResource> GetEducationJoinRequest(string joinRequestName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(joinRequestName, nameof(joinRequestName));
 
-            return GetAllJoinRequestDetails().Get(joinRequestName, cancellationToken);
+            return GetEducationJoinRequests().Get(joinRequestName, cancellationToken);
         }
 
         /// <summary> Gets a collection of EducationStudents in the <see cref="EducationLabResource"/>. </summary>
