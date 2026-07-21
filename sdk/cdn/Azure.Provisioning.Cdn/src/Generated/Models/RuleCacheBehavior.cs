@@ -11,10 +11,10 @@ namespace Azure.Provisioning.Cdn
     public enum RuleCacheBehavior
     {
         /// <summary> HonorOrigin. </summary>
-        HonorOrigin,
+        HonorOrigin = 0,
         /// <summary> OverrideAlways. </summary>
-        OverrideAlways,
+        OverrideAlways = 1,
         /// <summary> OverrideIfOriginMissing. </summary>
-        OverrideIfOriginMissing
+        OverrideIfOriginMissing = 2
     }
 }

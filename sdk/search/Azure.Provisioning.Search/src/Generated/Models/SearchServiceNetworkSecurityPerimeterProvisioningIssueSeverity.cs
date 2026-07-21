@@ -11,8 +11,8 @@ namespace Azure.Provisioning.Search
     public enum SearchServiceNetworkSecurityPerimeterProvisioningIssueSeverity
     {
         /// <summary> Warning. </summary>
-        Warning,
+        Warning = 0,
         /// <summary> Error. </summary>
-        Error
+        Error = 1
     }
 }

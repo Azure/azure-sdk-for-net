@@ -1,5 +1,17 @@
 # Release History
 
+## 7.21.0-beta.1 (Unreleased)
+
+### Features Added
+
+- Added `GetMessageSessionsAsync` overloads on `ServiceBusClient` for queues and subscriptions. The no-filter overload returns the IDs of sessions that have active messages or session state, and the `sessionStateUpdatedAfter` overload returns session IDs whose session state was updated after the specified timestamp. Implements the `com.microsoft:get-message-sessions` AMQP management operation. ([#58761](https://github.com/Azure/azure-sdk-for-net/pull/58761))
+
+### Breaking Changes
+
+### Bugs Fixed
+
+### Other Changes
+
 ## 7.20.2 (2026-07-08)
 
 ### Acknowledgments

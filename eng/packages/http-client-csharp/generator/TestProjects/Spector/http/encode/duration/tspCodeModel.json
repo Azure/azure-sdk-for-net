@@ -7138,6 +7138,271 @@
             "$ref": "119"
           },
           "isMultiServiceClient": false
+        },
+        {
+          "$id": "475",
+          "kind": "client",
+          "name": "Lossy",
+          "isExactName": false,
+          "namespace": "Encode.Duration",
+          "doc": "Lossy encode scenarios.\n\nThese scenarios cover the case where the source `duration` carries more precision than the\ntarget encoding can represent (e.g. a sub-second value encoded as integer seconds). The client\nmust still serialize the value using the target number type (an integer), discarding the extra\nprecision, rather than emitting a floating point number. This is distinct from arbitrary type\nmismatches, which are already covered by the round-trip scenarios above.",
+          "methods": [
+            {
+              "$id": "476",
+              "kind": "basic",
+              "name": "intSeconds",
+              "isExactName": false,
+              "accessibility": "public",
+              "apiVersions": [],
+              "operation": {
+                "$id": "477",
+                "name": "intSeconds",
+                "isExactName": false,
+                "resourceName": "Lossy",
+                "accessibility": "public",
+                "parameters": [
+                  {
+                    "$id": "478",
+                    "kind": "query",
+                    "name": "input",
+                    "serializedName": "input",
+                    "type": {
+                      "$id": "479",
+                      "kind": "duration",
+                      "name": "duration",
+                      "encode": "seconds",
+                      "wireType": {
+                        "$id": "480",
+                        "kind": "int32",
+                        "name": "int32",
+                        "crossLanguageDefinitionId": "TypeSpec.int32",
+                        "decorators": []
+                      },
+                      "crossLanguageDefinitionId": "TypeSpec.duration",
+                      "decorators": []
+                    },
+                    "isApiVersion": false,
+                    "explode": false,
+                    "optional": false,
+                    "scope": "Method",
+                    "decorators": [],
+                    "crossLanguageDefinitionId": "Encode.Duration.Lossy.intSeconds.input",
+                    "readOnly": false,
+                    "methodParameterSegments": [
+                      {
+                        "$id": "481",
+                        "kind": "method",
+                        "name": "input",
+                        "serializedName": "input",
+                        "type": {
+                          "$id": "482",
+                          "kind": "duration",
+                          "name": "duration",
+                          "encode": "seconds",
+                          "wireType": {
+                            "$id": "483",
+                            "kind": "int32",
+                            "name": "int32",
+                            "crossLanguageDefinitionId": "TypeSpec.int32",
+                            "decorators": []
+                          },
+                          "crossLanguageDefinitionId": "TypeSpec.duration",
+                          "decorators": []
+                        },
+                        "location": "Query",
+                        "isApiVersion": false,
+                        "optional": false,
+                        "scope": "Method",
+                        "crossLanguageDefinitionId": "Encode.Duration.Lossy.intSeconds.input",
+                        "readOnly": false,
+                        "access": "public",
+                        "decorators": [],
+                        "isExactName": false
+                      }
+                    ],
+                    "isExactName": false
+                  }
+                ],
+                "responses": [
+                  {
+                    "statusCodes": [
+                      204
+                    ],
+                    "headers": [],
+                    "isErrorResponse": false,
+                    "serializationOptions": {}
+                  }
+                ],
+                "httpMethod": "GET",
+                "uri": "{endpoint}",
+                "path": "/encode/duration/lossy/int32-seconds",
+                "bufferResponse": true,
+                "generateProtocolMethod": true,
+                "generateConvenienceMethod": true,
+                "crossLanguageDefinitionId": "Encode.Duration.Lossy.intSeconds",
+                "decorators": [],
+                "namespace": "Encode.Duration"
+              },
+              "parameters": [
+                {
+                  "$ref": "481"
+                }
+              ],
+              "response": {},
+              "isOverride": false,
+              "generateConvenient": true,
+              "generateProtocol": true,
+              "crossLanguageDefinitionId": "Encode.Duration.Lossy.intSeconds"
+            },
+            {
+              "$id": "484",
+              "kind": "basic",
+              "name": "intMilliseconds",
+              "isExactName": false,
+              "accessibility": "public",
+              "apiVersions": [],
+              "operation": {
+                "$id": "485",
+                "name": "intMilliseconds",
+                "isExactName": false,
+                "resourceName": "Lossy",
+                "accessibility": "public",
+                "parameters": [
+                  {
+                    "$id": "486",
+                    "kind": "query",
+                    "name": "input",
+                    "serializedName": "input",
+                    "type": {
+                      "$id": "487",
+                      "kind": "duration",
+                      "name": "duration",
+                      "encode": "milliseconds",
+                      "wireType": {
+                        "$id": "488",
+                        "kind": "int32",
+                        "name": "int32",
+                        "crossLanguageDefinitionId": "TypeSpec.int32",
+                        "decorators": []
+                      },
+                      "crossLanguageDefinitionId": "TypeSpec.duration",
+                      "decorators": []
+                    },
+                    "isApiVersion": false,
+                    "explode": false,
+                    "optional": false,
+                    "scope": "Method",
+                    "decorators": [],
+                    "crossLanguageDefinitionId": "Encode.Duration.Lossy.intMilliseconds.input",
+                    "readOnly": false,
+                    "methodParameterSegments": [
+                      {
+                        "$id": "489",
+                        "kind": "method",
+                        "name": "input",
+                        "serializedName": "input",
+                        "type": {
+                          "$id": "490",
+                          "kind": "duration",
+                          "name": "duration",
+                          "encode": "milliseconds",
+                          "wireType": {
+                            "$id": "491",
+                            "kind": "int32",
+                            "name": "int32",
+                            "crossLanguageDefinitionId": "TypeSpec.int32",
+                            "decorators": []
+                          },
+                          "crossLanguageDefinitionId": "TypeSpec.duration",
+                          "decorators": []
+                        },
+                        "location": "Query",
+                        "isApiVersion": false,
+                        "optional": false,
+                        "scope": "Method",
+                        "crossLanguageDefinitionId": "Encode.Duration.Lossy.intMilliseconds.input",
+                        "readOnly": false,
+                        "access": "public",
+                        "decorators": [],
+                        "isExactName": false
+                      }
+                    ],
+                    "isExactName": false
+                  }
+                ],
+                "responses": [
+                  {
+                    "statusCodes": [
+                      204
+                    ],
+                    "headers": [],
+                    "isErrorResponse": false,
+                    "serializationOptions": {}
+                  }
+                ],
+                "httpMethod": "GET",
+                "uri": "{endpoint}",
+                "path": "/encode/duration/lossy/int32-milliseconds",
+                "bufferResponse": true,
+                "generateProtocolMethod": true,
+                "generateConvenienceMethod": true,
+                "crossLanguageDefinitionId": "Encode.Duration.Lossy.intMilliseconds",
+                "decorators": [],
+                "namespace": "Encode.Duration"
+              },
+              "parameters": [
+                {
+                  "$ref": "489"
+                }
+              ],
+              "response": {},
+              "isOverride": false,
+              "generateConvenient": true,
+              "generateProtocol": true,
+              "crossLanguageDefinitionId": "Encode.Duration.Lossy.intMilliseconds"
+            }
+          ],
+          "parameters": [
+            {
+              "$id": "492",
+              "kind": "endpoint",
+              "name": "endpoint",
+              "serializedName": "endpoint",
+              "doc": "Service host",
+              "type": {
+                "$id": "493",
+                "kind": "url",
+                "name": "endpoint",
+                "crossLanguageDefinitionId": "TypeSpec.url"
+              },
+              "isApiVersion": false,
+              "optional": false,
+              "scope": "Client",
+              "isEndpoint": true,
+              "defaultValue": {
+                "type": {
+                  "$id": "494",
+                  "kind": "string",
+                  "name": "string",
+                  "crossLanguageDefinitionId": "TypeSpec.string"
+                },
+                "value": "http://localhost:3000"
+              },
+              "serverUrlTemplate": "{endpoint}",
+              "skipUrlEncoding": false,
+              "readOnly": false,
+              "crossLanguageDefinitionId": "Encode.Duration.Lossy.endpoint",
+              "isExactName": false
+            }
+          ],
+          "initializedBy": 0,
+          "decorators": [],
+          "crossLanguageDefinitionId": "Encode.Duration.Lossy",
+          "apiVersions": [],
+          "parent": {
+            "$ref": "119"
+          },
+          "isMultiServiceClient": false
         }
       ],
       "isMultiServiceClient": false

@@ -11,6 +11,6 @@ namespace Azure.Provisioning.CostManagement
     public enum FunctionType
     {
         /// <summary> Sum. </summary>
-        Sum
+        Sum = 0
     }
 }

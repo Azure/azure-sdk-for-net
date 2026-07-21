@@ -11,6 +11,7 @@ using System;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
+using System.Text;
 
 namespace Extensions.Plugin.Visitors
 {
@@ -107,7 +108,7 @@ namespace Extensions.Plugin.Visitors
         protected override TypeProvider VisitType(TypeProvider type)
         {
             // Diagnostic code for troubleshooting.
-            //if (string.Equals(type.Type.Name, "MemorySearchPreviewTool"))
+            //if (string.Equals(type.Type.Name, "ProjectsAgentVersion"))
             //{
             //    throw new InvalidOperationException(
             //        $"================================================\n" +
@@ -119,8 +120,9 @@ namespace Extensions.Plugin.Visitors
             //        $"Is explicitly marked as experimental: {SupportedPackages.IsExperimental(GetRealName(type))}\n" +
             //        $"================================================\n");
             //}
-            // Fisrt check if the whole class needs to be marked as experimental.
-            if ((SupportedPackages.IsExperimental(GetRealName(type)) || HasExperimentalAncestor(type.Type) || ImplementsExperimrental(type))
+            // First check if the whole class needs to be marked as experimental.
+            string typeRealName = GetRealName(type);
+            if ((SupportedPackages.IsExperimental(typeRealName) || HasExperimentalAncestor(type.Type) || ImplementsExperimrental(type))
                 && !type.Attributes.Any(attr => attr.Type.Equals(typeof(ExperimentalAttribute)))
                 && _attributedTypes.Add(type.Type.FullyQualifiedName))
             {
@@ -145,7 +147,7 @@ namespace Extensions.Plugin.Visitors
                         new(typeof(ExperimentalAttribute), Snippet.Literal(DiagnosticId))]);
                 return type;
             }
-            // If there is at least one constriuctor without experimental argument, just update experimental constructors.
+            // If there is at least one constructor without experimental argument, just update experimental constructors.
             foreach (ConstructorProvider constructor in type.Constructors)
             {
                 if (constructor.Signature.Parameters.Any(x => IsExperimental(x.Type)))
@@ -174,7 +176,18 @@ namespace Extensions.Plugin.Visitors
             List<FieldProvider> fields = [];
             foreach (FieldProvider field in type.Fields)
             {
-                if (IsExperimental(field.Type))
+                //if (string.Equals(field.Name, "Draft") && string.Equals(type.Type.Name, "ProjectsAgentVersion"))
+                //{
+                //    throw new InvalidOperationException(
+                //        $"================================================\n" +
+                //        $"{GetRealName(type)}\n" +
+                //        $"Field name: {field.Name}\n" +
+                //        $"Field type: {field.Type.FullyQualifiedName}\n" +
+                //        $"Is experimental {SupportedPackages.IsExperimental(($"{typeRealName}.{field.Name}")} \n" +
+                //        $"Is of experimental type {IsExperimental(field.Type)}\n" +
+                //        $"================================================\n");
+                //}
+                if (IsExperimental(field.Type) || SupportedPackages.IsExperimental($"{typeRealName}.{field.Name}"))
                 {
                     field.Update(
                         attributes: [.. field.Attributes, new(typeof(ExperimentalAttribute), Snippet.Literal(DiagnosticId))]
@@ -183,12 +196,37 @@ namespace Extensions.Plugin.Visitors
                 }
                 fields.Add(field);
             }
+            List<PropertyProvider> properties = [];
+            foreach (PropertyProvider property in type.Properties)
+            {
+                //if (string.Equals(property.Name, "Definition") && string.Equals(type.Type.Name, "ProjectsAgentVersion"))
+                //{
+                //    throw new InvalidOperationException(
+                //        $"================================================\n" +
+                //        $"{GetRealName(type)}\n" +
+                //        $"Property name: {property.Name}\n" +
+                //        $"Property type: {property.Type.FullyQualifiedName}\n" +
+                //        $"Property full name: {typeRealName}.{property.Name}\n" +
+                //        $"Is experimental {SupportedPackages.IsExperimental($"{type.Type.FullyQualifiedName}.{property.Name}")} \n" +
+                //        $"Is of experimental type {IsExperimental(property.Type)}\n" +
+                //        $"================================================\n");
+                //}
+                if (IsExperimental(property.Type) || SupportedPackages.IsExperimental($"{typeRealName}.{property.Name}"))
+                {
+                    property.Update(
+                        attributes: [.. property.Attributes, new(typeof(ExperimentalAttribute), Snippet.Literal(DiagnosticId))]
+                    );
+                    isDirty = true;
+                }
+                properties.Add(property);
+            }
             if (isDirty)
             {
                 type.Update(
                     constructors: constructors,
                     methods: methods,
-                    fields: fields
+                    fields: fields,
+                    properties: properties
                 );
                 return type;
             }

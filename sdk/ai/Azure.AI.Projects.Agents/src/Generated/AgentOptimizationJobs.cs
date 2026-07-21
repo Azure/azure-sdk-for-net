@@ -23,11 +23,13 @@ namespace Azure.AI.Projects.Agents
         }
 
         /// <summary> Initializes a new instance of AgentOptimizationJobs. </summary>
+        /// <param name="clientDiagnostics"> The ClientDiagnostics is used to provide tracing support for the client library. </param>
         /// <param name="pipeline"> The HTTP pipeline for sending and receiving REST requests and responses. </param>
         /// <param name="endpoint"> Service endpoint. </param>
         /// <param name="apiVersion"></param>
-        internal AgentOptimizationJobs(ClientPipeline pipeline, Uri endpoint, string apiVersion)
+        internal AgentOptimizationJobs(ClientDiagnostics clientDiagnostics, ClientPipeline pipeline, Uri endpoint, string apiVersion)
         {
+            ClientDiagnostics = clientDiagnostics;
             _endpoint = endpoint;
             Pipeline = pipeline;
             _apiVersion = apiVersion;
@@ -36,8 +38,11 @@ namespace Azure.AI.Projects.Agents
         /// <summary> The HTTP pipeline for sending and receiving REST requests and responses. </summary>
         public ClientPipeline Pipeline { get; }
 
+        /// <summary> The ClientDiagnostics is used to provide tracing support for the client library. </summary>
+        internal ClientDiagnostics ClientDiagnostics { get; }
+
         /// <summary>
-        /// [Protocol Method] Create an optimization job. Returns 201 with the queued job. Honours `Operation-Id` for idempotent retry.
+        /// [Protocol Method] Creates an optimization job and returns the queued job. Honors `Operation-Id` for idempotent retry.
         /// <list type="bullet">
         /// <item>
         /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
@@ -52,12 +57,22 @@ namespace Azure.AI.Projects.Agents
         /// <returns> The response returned from the service. </returns>
         internal virtual ClientResult Create(BinaryContent content, string foundryFeatures = default, string operationId = default, RequestOptions options = null)
         {
-            using PipelineMessage message = CreateCreateRequest(content, foundryFeatures, operationId, options);
-            return ClientResult.FromResponse(Pipeline.ProcessMessage(message, options));
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("AgentOptimizationJobs.Create");
+            scope.Start();
+            try
+            {
+                using PipelineMessage message = CreateCreateRequest(content, foundryFeatures, operationId, options);
+                return ClientResult.FromResponse(Pipeline.ProcessMessage(message, options));
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
 
         /// <summary>
-        /// [Protocol Method] Create an optimization job. Returns 201 with the queued job. Honours `Operation-Id` for idempotent retry.
+        /// [Protocol Method] Creates an optimization job and returns the queued job. Honors `Operation-Id` for idempotent retry.
         /// <list type="bullet">
         /// <item>
         /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
@@ -72,11 +87,21 @@ namespace Azure.AI.Projects.Agents
         /// <returns> The response returned from the service. </returns>
         internal virtual async Task<ClientResult> CreateAsync(BinaryContent content, string foundryFeatures = default, string operationId = default, RequestOptions options = null)
         {
-            using PipelineMessage message = CreateCreateRequest(content, foundryFeatures, operationId, options);
-            return ClientResult.FromResponse(await Pipeline.ProcessMessageAsync(message, options).ConfigureAwait(false));
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("AgentOptimizationJobs.Create");
+            scope.Start();
+            try
+            {
+                using PipelineMessage message = CreateCreateRequest(content, foundryFeatures, operationId, options);
+                return ClientResult.FromResponse(await Pipeline.ProcessMessageAsync(message, options).ConfigureAwait(false));
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
 
-        /// <summary> Create an optimization job. Returns 201 with the queued job. Honours `Operation-Id` for idempotent retry. </summary>
+        /// <summary> Creates an optimization job and returns the queued job. Honors `Operation-Id` for idempotent retry. </summary>
         /// <param name="job"> The job to create. </param>
         /// <param name="foundryFeatures"> A feature flag opt-in required when using preview operations or modifying persisted preview resources. </param>
         /// <param name="operationId"> Client-generated unique ID for idempotent retries. When absent, the server creates the job unconditionally. </param>
@@ -89,7 +114,7 @@ namespace Azure.AI.Projects.Agents
             return ClientResult.FromValue((OptimizationJob)result, result.GetRawResponse());
         }
 
-        /// <summary> Create an optimization job. Returns 201 with the queued job. Honours `Operation-Id` for idempotent retry. </summary>
+        /// <summary> Creates an optimization job and returns the queued job. Honors `Operation-Id` for idempotent retry. </summary>
         /// <param name="job"> The job to create. </param>
         /// <param name="foundryFeatures"> A feature flag opt-in required when using preview operations or modifying persisted preview resources. </param>
         /// <param name="operationId"> Client-generated unique ID for idempotent retries. When absent, the server creates the job unconditionally. </param>
@@ -103,7 +128,7 @@ namespace Azure.AI.Projects.Agents
         }
 
         /// <summary>
-        /// [Protocol Method] Get an optimization job by id.
+        /// [Protocol Method] Retrieves an optimization job by its identifier.
         /// <list type="bullet">
         /// <item>
         /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
@@ -117,12 +142,22 @@ namespace Azure.AI.Projects.Agents
         /// <returns> The response returned from the service. </returns>
         internal virtual ClientResult Get(string jobId, string foundryFeatures, RequestOptions options)
         {
-            using PipelineMessage message = CreateGetRequest(jobId, foundryFeatures, options);
-            return ClientResult.FromResponse(Pipeline.ProcessMessage(message, options));
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("AgentOptimizationJobs.Get");
+            scope.Start();
+            try
+            {
+                using PipelineMessage message = CreateGetRequest(jobId, foundryFeatures, options);
+                return ClientResult.FromResponse(Pipeline.ProcessMessage(message, options));
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
 
         /// <summary>
-        /// [Protocol Method] Get an optimization job by id.
+        /// [Protocol Method] Retrieves an optimization job by its identifier.
         /// <list type="bullet">
         /// <item>
         /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
@@ -136,11 +171,21 @@ namespace Azure.AI.Projects.Agents
         /// <returns> The response returned from the service. </returns>
         internal virtual async Task<ClientResult> GetAsync(string jobId, string foundryFeatures, RequestOptions options)
         {
-            using PipelineMessage message = CreateGetRequest(jobId, foundryFeatures, options);
-            return ClientResult.FromResponse(await Pipeline.ProcessMessageAsync(message, options).ConfigureAwait(false));
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("AgentOptimizationJobs.Get");
+            scope.Start();
+            try
+            {
+                using PipelineMessage message = CreateGetRequest(jobId, foundryFeatures, options);
+                return ClientResult.FromResponse(await Pipeline.ProcessMessageAsync(message, options).ConfigureAwait(false));
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
 
-        /// <summary> Get an optimization job by id. </summary>
+        /// <summary> Retrieves an optimization job by its identifier. </summary>
         /// <param name="jobId"> The ID of the job. </param>
         /// <param name="foundryFeatures"> A feature flag opt-in required when using preview operations or modifying persisted preview resources. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
@@ -152,7 +197,7 @@ namespace Azure.AI.Projects.Agents
             return ClientResult.FromValue((OptimizationJob)result, result.GetRawResponse());
         }
 
-        /// <summary> Get an optimization job by id. </summary>
+        /// <summary> Retrieves an optimization job by its identifier. </summary>
         /// <param name="jobId"> The ID of the job. </param>
         /// <param name="foundryFeatures"> A feature flag opt-in required when using preview operations or modifying persisted preview resources. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
@@ -165,7 +210,7 @@ namespace Azure.AI.Projects.Agents
         }
 
         /// <summary>
-        /// [Protocol Method] Request cancellation of a running or queued job. Returns an error if the job is already in a terminal state.
+        /// [Protocol Method] Requests cancellation of a running or queued job and returns an error if the job is already in a terminal state.
         /// <list type="bullet">
         /// <item>
         /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
@@ -179,12 +224,22 @@ namespace Azure.AI.Projects.Agents
         /// <returns> The response returned from the service. </returns>
         internal virtual ClientResult Cancel(string jobId, string foundryFeatures, RequestOptions options)
         {
-            using PipelineMessage message = CreateCancelRequest(jobId, foundryFeatures, options);
-            return ClientResult.FromResponse(Pipeline.ProcessMessage(message, options));
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("AgentOptimizationJobs.Cancel");
+            scope.Start();
+            try
+            {
+                using PipelineMessage message = CreateCancelRequest(jobId, foundryFeatures, options);
+                return ClientResult.FromResponse(Pipeline.ProcessMessage(message, options));
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
 
         /// <summary>
-        /// [Protocol Method] Request cancellation of a running or queued job. Returns an error if the job is already in a terminal state.
+        /// [Protocol Method] Requests cancellation of a running or queued job and returns an error if the job is already in a terminal state.
         /// <list type="bullet">
         /// <item>
         /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
@@ -198,11 +253,21 @@ namespace Azure.AI.Projects.Agents
         /// <returns> The response returned from the service. </returns>
         internal virtual async Task<ClientResult> CancelAsync(string jobId, string foundryFeatures, RequestOptions options)
         {
-            using PipelineMessage message = CreateCancelRequest(jobId, foundryFeatures, options);
-            return ClientResult.FromResponse(await Pipeline.ProcessMessageAsync(message, options).ConfigureAwait(false));
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("AgentOptimizationJobs.Cancel");
+            scope.Start();
+            try
+            {
+                using PipelineMessage message = CreateCancelRequest(jobId, foundryFeatures, options);
+                return ClientResult.FromResponse(await Pipeline.ProcessMessageAsync(message, options).ConfigureAwait(false));
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
 
-        /// <summary> Request cancellation of a running or queued job. Returns an error if the job is already in a terminal state. </summary>
+        /// <summary> Requests cancellation of a running or queued job and returns an error if the job is already in a terminal state. </summary>
         /// <param name="jobId"> The ID of the job to cancel. </param>
         /// <param name="foundryFeatures"> A feature flag opt-in required when using preview operations or modifying persisted preview resources. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
@@ -214,7 +279,7 @@ namespace Azure.AI.Projects.Agents
             return ClientResult.FromValue((OptimizationJob)result, result.GetRawResponse());
         }
 
-        /// <summary> Request cancellation of a running or queued job. Returns an error if the job is already in a terminal state. </summary>
+        /// <summary> Requests cancellation of a running or queued job and returns an error if the job is already in a terminal state. </summary>
         /// <param name="jobId"> The ID of the job to cancel. </param>
         /// <param name="foundryFeatures"> A feature flag opt-in required when using preview operations or modifying persisted preview resources. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
@@ -227,7 +292,7 @@ namespace Azure.AI.Projects.Agents
         }
 
         /// <summary>
-        /// [Protocol Method] Delete the job and its candidate artifacts. Cancels first if non-terminal.
+        /// [Protocol Method] Deletes the job and its candidate artifacts, canceling the job first if it is non-terminal.
         /// <list type="bullet">
         /// <item>
         /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
@@ -241,12 +306,22 @@ namespace Azure.AI.Projects.Agents
         /// <returns> The response returned from the service. </returns>
         internal virtual ClientResult Delete(string jobId, string foundryFeatures, RequestOptions options)
         {
-            using PipelineMessage message = CreateDeleteRequest(jobId, foundryFeatures, options);
-            return ClientResult.FromResponse(Pipeline.ProcessMessage(message, options));
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("AgentOptimizationJobs.Delete");
+            scope.Start();
+            try
+            {
+                using PipelineMessage message = CreateDeleteRequest(jobId, foundryFeatures, options);
+                return ClientResult.FromResponse(Pipeline.ProcessMessage(message, options));
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
 
         /// <summary>
-        /// [Protocol Method] Delete the job and its candidate artifacts. Cancels first if non-terminal.
+        /// [Protocol Method] Deletes the job and its candidate artifacts, canceling the job first if it is non-terminal.
         /// <list type="bullet">
         /// <item>
         /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
@@ -260,11 +335,21 @@ namespace Azure.AI.Projects.Agents
         /// <returns> The response returned from the service. </returns>
         internal virtual async Task<ClientResult> DeleteAsync(string jobId, string foundryFeatures, RequestOptions options)
         {
-            using PipelineMessage message = CreateDeleteRequest(jobId, foundryFeatures, options);
-            return ClientResult.FromResponse(await Pipeline.ProcessMessageAsync(message, options).ConfigureAwait(false));
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("AgentOptimizationJobs.Delete");
+            scope.Start();
+            try
+            {
+                using PipelineMessage message = CreateDeleteRequest(jobId, foundryFeatures, options);
+                return ClientResult.FromResponse(await Pipeline.ProcessMessageAsync(message, options).ConfigureAwait(false));
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
 
-        /// <summary> Delete the job and its candidate artifacts. Cancels first if non-terminal. </summary>
+        /// <summary> Deletes the job and its candidate artifacts, canceling the job first if it is non-terminal. </summary>
         /// <param name="jobId"> The ID of the job to delete. </param>
         /// <param name="foundryFeatures"> A feature flag opt-in required when using preview operations or modifying persisted preview resources. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
@@ -274,7 +359,7 @@ namespace Azure.AI.Projects.Agents
             return Delete(jobId, foundryFeatures?.ToString(), cancellationToken.ToRequestOptions());
         }
 
-        /// <summary> Delete the job and its candidate artifacts. Cancels first if non-terminal. </summary>
+        /// <summary> Deletes the job and its candidate artifacts, canceling the job first if it is non-terminal. </summary>
         /// <param name="jobId"> The ID of the job to delete. </param>
         /// <param name="foundryFeatures"> A feature flag opt-in required when using preview operations or modifying persisted preview resources. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>

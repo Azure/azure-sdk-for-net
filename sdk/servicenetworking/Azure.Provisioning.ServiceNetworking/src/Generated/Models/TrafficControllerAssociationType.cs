@@ -14,6 +14,6 @@ namespace Azure.Provisioning.ServiceNetworking
     {
         /// <summary> Association of Type Subnet. </summary>
         [DataMember(Name = "subnets")]
-        Subnets
+        Subnets = 0
     }
 }

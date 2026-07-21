@@ -138,13 +138,9 @@ namespace Azure.ResourceManager.CosmosDB.Models
             long? analyticalStorageTtl = default;
             ResourceRestoreParameters restoreParameters = default;
             CosmosDBAccountCreateMode? createMode = default;
-            CosmosDBMaterializedViewDefinition materializedViewDefinition = default;
-            IList<CosmosDBMaterializedViewDetails> materializedViews = default;
-            MaterializedViewsProperties materializedViewsProperties = default;
             IList<ComputedProperty> computedProperties = default;
             VectorEmbeddingPolicy vectorEmbeddingPolicy = default;
             FullTextPolicy fullTextPolicy = default;
-            DataMaskingPolicy dataMaskingPolicy = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             string rid = default;
             float? timestamp = default;
@@ -238,38 +234,6 @@ namespace Azure.ResourceManager.CosmosDB.Models
                     createMode = new CosmosDBAccountCreateMode(prop.Value.GetString());
                     continue;
                 }
-                if (prop.NameEquals("materializedViewDefinition"u8))
-                {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    materializedViewDefinition = CosmosDBMaterializedViewDefinition.DeserializeCosmosDBMaterializedViewDefinition(prop.Value, options);
-                    continue;
-                }
-                if (prop.NameEquals("materializedViews"u8))
-                {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    List<CosmosDBMaterializedViewDetails> array = new List<CosmosDBMaterializedViewDetails>();
-                    foreach (var item in prop.Value.EnumerateArray())
-                    {
-                        array.Add(CosmosDBMaterializedViewDetails.DeserializeCosmosDBMaterializedViewDetails(item, options));
-                    }
-                    materializedViews = array;
-                    continue;
-                }
-                if (prop.NameEquals("materializedViewsProperties"u8))
-                {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    materializedViewsProperties = MaterializedViewsProperties.DeserializeMaterializedViewsProperties(prop.Value, options);
-                    continue;
-                }
                 if (prop.NameEquals("computedProperties"u8))
                 {
                     if (prop.Value.ValueKind == JsonValueKind.Null)
@@ -300,15 +264,6 @@ namespace Azure.ResourceManager.CosmosDB.Models
                         continue;
                     }
                     fullTextPolicy = FullTextPolicy.DeserializeFullTextPolicy(prop.Value, options);
-                    continue;
-                }
-                if (prop.NameEquals("dataMaskingPolicy"u8))
-                {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    dataMaskingPolicy = DataMaskingPolicy.DeserializeDataMaskingPolicy(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("_rid"u8))
@@ -355,13 +310,9 @@ namespace Azure.ResourceManager.CosmosDB.Models
                 analyticalStorageTtl,
                 restoreParameters,
                 createMode,
-                materializedViewDefinition,
-                materializedViews ?? new ChangeTrackingList<CosmosDBMaterializedViewDetails>(),
-                materializedViewsProperties,
                 computedProperties ?? new ChangeTrackingList<ComputedProperty>(),
                 vectorEmbeddingPolicy,
                 fullTextPolicy,
-                dataMaskingPolicy,
                 additionalBinaryDataProperties,
                 rid,
                 timestamp,
