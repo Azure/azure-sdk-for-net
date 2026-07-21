@@ -109,6 +109,11 @@ namespace Azure.ResourceManager.EventHubs.Models
                 writer.WritePropertyName("platformCapabilities"u8);
                 writer.WriteObjectValue(PlatformCapabilities, options);
             }
+            if (Optional.IsDefined(ZoneRedundant))
+            {
+                writer.WritePropertyName("zoneRedundant"u8);
+                writer.WriteBooleanValue(ZoneRedundant.Value);
+            }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
                 foreach (var item in _additionalBinaryDataProperties)
@@ -158,6 +163,7 @@ namespace Azure.ResourceManager.EventHubs.Models
             string status = default;
             bool? supportsScaling = default;
             PlatformCapabilities platformCapabilities = default;
+            bool? zoneRedundant = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -216,6 +222,15 @@ namespace Azure.ResourceManager.EventHubs.Models
                     platformCapabilities = PlatformCapabilities.DeserializePlatformCapabilities(prop.Value, options);
                     continue;
                 }
+                if (prop.NameEquals("zoneRedundant"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    zoneRedundant = prop.Value.GetBoolean();
+                    continue;
+                }
                 if (options.Format != "W")
                 {
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
@@ -229,6 +244,7 @@ namespace Azure.ResourceManager.EventHubs.Models
                 status,
                 supportsScaling,
                 platformCapabilities,
+                zoneRedundant,
                 additionalBinaryDataProperties);
         }
     }

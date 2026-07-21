@@ -27,17 +27,11 @@
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
   </PropertyGroup>
 
-  <PropertyGroup>
-    <NoWarn>
-      $(NoWarn);
-      AZC0035; <!-- Missing model factory methods.  #51227-->
-    </NoWarn>
-  </PropertyGroup>
-
   <ItemGroup Condition="'$(TargetFramework)' == 'netstandard2.0'">
     <Compile Include="$(AzureStorageSharedSources)AesGcm\**\*.cs" LinkBase="Shared" />
   </ItemGroup>
   <ItemGroup>
+    <PackageReference Include="Apache.Arrow" />
     <PackageReference Include="Azure.Core" />
     <ProjectReference Include="$(MSBuildThisFileDirectory)..\..\Azure.Storage.Common\src\Azure.Storage.Common.csproj" />
   </ItemGroup>
@@ -66,6 +60,7 @@
     <Compile Include="$(AzureStorageSharedSources)Constants.cs" LinkBase="Shared" />
     <Compile Include="$(AzureStorageSharedSources)CompatSwitches.cs" LinkBase="Shared" />
     <Compile Include="$(AzureStorageSharedSources)ContentHasher.cs" LinkBase="Shared" />
+    <Compile Include="$(AzureStorageSharedSources)ContentHasher.UploadEncoding.cs" LinkBase="Shared" />
     <Compile Include="$(AzureStorageSharedSources)DisposableBucket.cs" LinkBase="Shared" />
     <Compile Include="$(AzureStorageSharedSources)Errors.cs" LinkBase="Shared" />
     <Compile Include="$(AzureStorageSharedSources)Errors.Clients.cs" LinkBase="Shared" />
@@ -116,6 +111,7 @@
     <Compile Include="$(AzureStorageSharedSources)LazyLoadingReadOnlyStream.cs" LinkBase="Shared" />
     <Compile Include="$(AzureStorageSharedSources)WindowStream.cs" LinkBase="Shared" />
     <Compile Include="$(AzureStorageSharedSources)StorageWriteStream.cs" LinkBase="Shared" />
+    <Compile Include="$(AzureStorageSharedSources)StorageResponseFormatExtensions.cs" LinkBase="Shared" />
     <Compile Include="$(AzureStorageSharedSources)StreamExtensions.cs" LinkBase="Shared" />
     <Compile Include="$(AzureStorageSharedSources)TransferValidationOptionsExtensions.cs" LinkBase="Shared" />
     <Compile Include="$(MSBuildThisFileDirectory)\..\..\Azure.Storage.Internal.Avro\src\AvroParser.cs" LinkBase="Shared" />

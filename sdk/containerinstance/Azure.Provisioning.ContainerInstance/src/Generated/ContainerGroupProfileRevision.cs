@@ -29,7 +29,7 @@ namespace Azure.Provisioning.ContainerInstance
         /// <summary> Creates a new ContainerGroupProfileRevision. </summary>
         /// <param name="bicepIdentifier"> The bicep identifier name. </param>
         /// <param name="resourceVersion"> The resource API version. </param>
-        internal ContainerGroupProfileRevision(string bicepIdentifier, string resourceVersion = null) : base(bicepIdentifier, "Microsoft.ContainerInstance/containerGroupProfiles/revisions", resourceVersion ?? "2025-09-01")
+        public ContainerGroupProfileRevision(string bicepIdentifier, string resourceVersion = null) : base(bicepIdentifier, "Microsoft.ContainerInstance/containerGroupProfiles/revisions", resourceVersion ?? "2025-09-01")
         {
         }
 
@@ -43,13 +43,18 @@ namespace Azure.Provisioning.ContainerInstance
             }
         }
 
-        /// <summary> Gets the Name. </summary>
+        /// <summary> Gets or sets the Name. </summary>
         public BicepValue<string> Name
         {
             get
             {
                 Initialize();
                 return _name;
+            }
+            set
+            {
+                Initialize();
+                _name.Assign(value);
             }
         }
 
@@ -63,7 +68,7 @@ namespace Azure.Provisioning.ContainerInstance
             }
         }
 
-        /// <summary> Gets the Tags. </summary>
+        /// <summary> Gets or sets the Tags. </summary>
         public BicepDictionary<string> Tags
         {
             get
@@ -71,9 +76,14 @@ namespace Azure.Provisioning.ContainerInstance
                 Initialize();
                 return _tags;
             }
+            set
+            {
+                Initialize();
+                _tags.Assign(value);
+            }
         }
 
-        /// <summary> Gets the Location. </summary>
+        /// <summary> Gets or sets the Location. </summary>
         public BicepValue<AzureLocation> Location
         {
             get
@@ -81,9 +91,14 @@ namespace Azure.Provisioning.ContainerInstance
                 Initialize();
                 return _location;
             }
+            set
+            {
+                Initialize();
+                _location.Assign(value);
+            }
         }
 
-        /// <summary> Gets the Properties. </summary>
+        /// <summary> Gets or sets the Properties. </summary>
         internal ContainerGroupProfileProperties Properties
         {
             get
@@ -91,15 +106,25 @@ namespace Azure.Provisioning.ContainerInstance
                 Initialize();
                 return _properties;
             }
+            set
+            {
+                Initialize();
+                AssignOrReplace(ref _properties, value);
+            }
         }
 
-        /// <summary> Gets the Zones. </summary>
+        /// <summary> Gets or sets the Zones. </summary>
         public BicepList<string> Zones
         {
             get
             {
                 Initialize();
                 return _zones;
+            }
+            set
+            {
+                Initialize();
+                _zones.Assign(value);
             }
         }
 
@@ -123,7 +148,15 @@ namespace Azure.Provisioning.ContainerInstance
         {
             get
             {
-                return Properties.Sku;
+                return Properties is null ? default : Properties.Sku;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new ContainerGroupProfileProperties();
+                }
+                Properties.Sku = value;
             }
         }
 
@@ -132,7 +165,15 @@ namespace Azure.Provisioning.ContainerInstance
         {
             get
             {
-                return Properties.EncryptionProperties;
+                return Properties is null ? default : Properties.EncryptionProperties;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new ContainerGroupProfileProperties();
+                }
+                Properties.EncryptionProperties = value;
             }
         }
 
@@ -141,7 +182,15 @@ namespace Azure.Provisioning.ContainerInstance
         {
             get
             {
-                return Properties.Containers;
+                return Properties is null ? default : Properties.Containers;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new ContainerGroupProfileProperties();
+                }
+                Properties.Containers = value;
             }
         }
 
@@ -150,7 +199,15 @@ namespace Azure.Provisioning.ContainerInstance
         {
             get
             {
-                return Properties.InitContainers;
+                return Properties is null ? default : Properties.InitContainers;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new ContainerGroupProfileProperties();
+                }
+                Properties.InitContainers = value;
             }
         }
 
@@ -159,7 +216,15 @@ namespace Azure.Provisioning.ContainerInstance
         {
             get
             {
-                return Properties.Extensions;
+                return Properties is null ? default : Properties.Extensions;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new ContainerGroupProfileProperties();
+                }
+                Properties.Extensions = value;
             }
         }
 
@@ -168,7 +233,15 @@ namespace Azure.Provisioning.ContainerInstance
         {
             get
             {
-                return Properties.ImageRegistryCredentials;
+                return Properties is null ? default : Properties.ImageRegistryCredentials;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new ContainerGroupProfileProperties();
+                }
+                Properties.ImageRegistryCredentials = value;
             }
         }
 
@@ -177,7 +250,15 @@ namespace Azure.Provisioning.ContainerInstance
         {
             get
             {
-                return Properties.RestartPolicy;
+                return Properties is null ? default : Properties.RestartPolicy;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new ContainerGroupProfileProperties();
+                }
+                Properties.RestartPolicy = value;
             }
         }
 
@@ -186,7 +267,15 @@ namespace Azure.Provisioning.ContainerInstance
         {
             get
             {
-                return Properties.ShutdownGracePeriod;
+                return Properties is null ? default : Properties.ShutdownGracePeriod;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new ContainerGroupProfileProperties();
+                }
+                Properties.ShutdownGracePeriod = value;
             }
         }
 
@@ -195,7 +284,15 @@ namespace Azure.Provisioning.ContainerInstance
         {
             get
             {
-                return Properties.IPAddress;
+                return Properties is null ? default : Properties.IPAddress;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new ContainerGroupProfileProperties();
+                }
+                Properties.IPAddress = value;
             }
         }
 
@@ -204,7 +301,15 @@ namespace Azure.Provisioning.ContainerInstance
         {
             get
             {
-                return Properties.TimeToLive;
+                return Properties is null ? default : Properties.TimeToLive;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new ContainerGroupProfileProperties();
+                }
+                Properties.TimeToLive = value;
             }
         }
 
@@ -213,7 +318,15 @@ namespace Azure.Provisioning.ContainerInstance
         {
             get
             {
-                return Properties.OSType;
+                return Properties is null ? default : Properties.OSType;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new ContainerGroupProfileProperties();
+                }
+                Properties.OSType = value;
             }
         }
 
@@ -222,7 +335,15 @@ namespace Azure.Provisioning.ContainerInstance
         {
             get
             {
-                return Properties.Volumes;
+                return Properties is null ? default : Properties.Volumes;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new ContainerGroupProfileProperties();
+                }
+                Properties.Volumes = value;
             }
         }
 
@@ -231,7 +352,15 @@ namespace Azure.Provisioning.ContainerInstance
         {
             get
             {
-                return Properties.Priority;
+                return Properties is null ? default : Properties.Priority;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new ContainerGroupProfileProperties();
+                }
+                Properties.Priority = value;
             }
         }
 
@@ -240,7 +369,15 @@ namespace Azure.Provisioning.ContainerInstance
         {
             get
             {
-                return Properties.SecurityContext;
+                return Properties is null ? default : Properties.SecurityContext;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new ContainerGroupProfileProperties();
+                }
+                Properties.SecurityContext = value;
             }
         }
 
@@ -249,6 +386,10 @@ namespace Azure.Provisioning.ContainerInstance
         {
             get
             {
+                if (Properties is null)
+                {
+                    Properties = new ContainerGroupProfileProperties();
+                }
                 return Properties.Revision;
             }
         }
@@ -258,6 +399,10 @@ namespace Azure.Provisioning.ContainerInstance
         {
             get
             {
+                if (Properties is null)
+                {
+                    Properties = new ContainerGroupProfileProperties();
+                }
                 return Properties.RegisteredRevisions;
             }
         }
@@ -267,7 +412,15 @@ namespace Azure.Provisioning.ContainerInstance
         {
             get
             {
-                return Properties.UseKrypton;
+                return Properties is null ? default : Properties.UseKrypton;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new ContainerGroupProfileProperties();
+                }
+                Properties.UseKrypton = value;
             }
         }
 
@@ -276,7 +429,15 @@ namespace Azure.Provisioning.ContainerInstance
         {
             get
             {
-                return Properties.DiagnosticsLogAnalytics;
+                return Properties is null ? default : Properties.DiagnosticsLogAnalytics;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new ContainerGroupProfileProperties();
+                }
+                Properties.DiagnosticsLogAnalytics = value;
             }
         }
 
@@ -285,7 +446,15 @@ namespace Azure.Provisioning.ContainerInstance
         {
             get
             {
-                return Properties.ConfidentialComputeCcePolicy;
+                return Properties is null ? default : Properties.ConfidentialComputeCcePolicy;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new ContainerGroupProfileProperties();
+                }
+                Properties.ConfidentialComputeCcePolicy = value;
             }
         }
 

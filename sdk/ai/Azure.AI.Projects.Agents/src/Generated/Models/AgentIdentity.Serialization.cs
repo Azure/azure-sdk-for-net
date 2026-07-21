@@ -79,6 +79,11 @@ namespace Azure.AI.Projects.Agents
             writer.WriteStringValue(PrincipalId);
             writer.WritePropertyName("client_id"u8);
             writer.WriteStringValue(ClientId);
+            if (Optional.IsDefined(Status))
+            {
+                writer.WritePropertyName("status"u8);
+                writer.WriteStringValue(Status.Value.ToString());
+            }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
                 foreach (var item in _additionalBinaryDataProperties)
@@ -123,6 +128,7 @@ namespace Azure.AI.Projects.Agents
             }
             string principalId = default;
             string clientId = default;
+            AgentIdentityStatus? status = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -136,12 +142,21 @@ namespace Azure.AI.Projects.Agents
                     clientId = prop.Value.GetString();
                     continue;
                 }
+                if (prop.NameEquals("status"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    status = new AgentIdentityStatus(prop.Value.GetString());
+                    continue;
+                }
                 if (options.Format != "W")
                 {
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new AgentIdentity(principalId, clientId, additionalBinaryDataProperties);
+            return new AgentIdentity(principalId, clientId, status, additionalBinaryDataProperties);
         }
     }
 }

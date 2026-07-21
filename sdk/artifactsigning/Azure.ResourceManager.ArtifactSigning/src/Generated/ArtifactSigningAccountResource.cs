@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.ArtifactSigning
         {
             TryGetApiVersion(ResourceType, out string artifactSigningAccountApiVersion);
             _codeSigningAccountsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ArtifactSigning", ResourceType.Namespace, Diagnostics);
-            _codeSigningAccountsRestClient = new CodeSigningAccounts(_codeSigningAccountsClientDiagnostics, Pipeline, Endpoint, artifactSigningAccountApiVersion ?? "2025-10-13");
+            _codeSigningAccountsRestClient = new CodeSigningAccounts(_codeSigningAccountsClientDiagnostics, Pipeline, Endpoint, artifactSigningAccountApiVersion ?? "2026-05-15-preview");
             ValidateResourceId(id);
         }
 
@@ -106,7 +106,7 @@ namespace Azure.ResourceManager.ArtifactSigning
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-10-13. </description>
+        /// <description> 2026-05-15-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -154,7 +154,7 @@ namespace Azure.ResourceManager.ArtifactSigning
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-10-13. </description>
+        /// <description> 2026-05-15-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -202,7 +202,7 @@ namespace Azure.ResourceManager.ArtifactSigning
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-10-13. </description>
+        /// <description> 2026-05-15-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -261,7 +261,7 @@ namespace Azure.ResourceManager.ArtifactSigning
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-10-13. </description>
+        /// <description> 2026-05-15-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -320,7 +320,7 @@ namespace Azure.ResourceManager.ArtifactSigning
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-10-13. </description>
+        /// <description> 2026-05-15-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -369,7 +369,7 @@ namespace Azure.ResourceManager.ArtifactSigning
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-10-13. </description>
+        /// <description> 2026-05-15-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
