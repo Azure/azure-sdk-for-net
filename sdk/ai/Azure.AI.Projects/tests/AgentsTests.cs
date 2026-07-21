@@ -1060,7 +1060,7 @@ public class AgentsTests : AgentsTestBase
     [TestCase(ToolType.MCPConnection)]
     [TestCase(ToolType.MCPToolbox)]
     [TestCase(ToolType.MCPToolboxWithPreview)]
-    public async Task TestInterativeTools(ToolType toolType)
+    public async Task TestInteractiveTools(ToolType toolType)
     {
         AIProjectClient projectClient = GetTestProjectClient();
         ProjectsAgentVersion ProjectsAgentVersion = await projectClient.AgentAdministrationClient.CreateAgentVersionAsync(
@@ -1126,7 +1126,7 @@ public class AgentsTests : AgentsTestBase
     [TestCase(ToolType.MCPConnection)]
     [TestCase(ToolType.MCPToolbox)]
     [TestCase(ToolType.MCPToolboxWithPreview)]
-    public async Task TestInterativeToolsStreaming(ToolType toolType)
+    public async Task TestInteractiveToolsStreaming(ToolType toolType)
     {
         AIProjectClient projectClient = GetTestProjectClient();
         ProjectsAgentVersion ProjectsAgentVersion = await projectClient.AgentAdministrationClient.CreateAgentVersionAsync(
