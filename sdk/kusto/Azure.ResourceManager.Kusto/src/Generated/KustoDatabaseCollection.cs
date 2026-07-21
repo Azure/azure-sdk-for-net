@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.Kusto
         {
             TryGetApiVersion(KustoDatabaseResource.ResourceType, out string kustoDatabaseApiVersion);
             _databasesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Kusto", KustoDatabaseResource.ResourceType.Namespace, Diagnostics);
-            _databasesRestClient = new Databases(_databasesClientDiagnostics, Pipeline, Endpoint, kustoDatabaseApiVersion ?? "2025-02-14");
+            _databasesRestClient = new Databases(_databasesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, kustoDatabaseApiVersion ?? "2025-02-14");
             ValidateResourceId(id);
         }
 

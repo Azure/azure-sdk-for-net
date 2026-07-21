@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.Kusto
         {
             TryGetApiVersion(KustoClusterPrincipalAssignmentResource.ResourceType, out string kustoClusterPrincipalAssignmentApiVersion);
             _clusterPrincipalAssignmentsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Kusto", KustoClusterPrincipalAssignmentResource.ResourceType.Namespace, Diagnostics);
-            _clusterPrincipalAssignmentsRestClient = new ClusterPrincipalAssignments(_clusterPrincipalAssignmentsClientDiagnostics, Pipeline, Endpoint, kustoClusterPrincipalAssignmentApiVersion ?? "2025-02-14");
+            _clusterPrincipalAssignmentsRestClient = new ClusterPrincipalAssignments(_clusterPrincipalAssignmentsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, kustoClusterPrincipalAssignmentApiVersion ?? "2025-02-14");
             ValidateResourceId(id);
         }
 
