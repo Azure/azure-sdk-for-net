@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.IotOperations
         {
             TryGetApiVersion(IotOperationsBrokerAuthorizationResource.ResourceType, out string iotOperationsBrokerAuthorizationApiVersion);
             _brokerAuthorizationClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.IotOperations", IotOperationsBrokerAuthorizationResource.ResourceType.Namespace, Diagnostics);
-            _brokerAuthorizationRestClient = new BrokerAuthorization(_brokerAuthorizationClientDiagnostics, Pipeline, Endpoint, iotOperationsBrokerAuthorizationApiVersion ?? "2025-10-01");
+            _brokerAuthorizationRestClient = new BrokerAuthorization(_brokerAuthorizationClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, iotOperationsBrokerAuthorizationApiVersion ?? "2025-10-01");
             ValidateResourceId(id);
         }
 

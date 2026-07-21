@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.HybridCompute
         {
             TryGetApiVersion(HybridComputeSettingsResource.ResourceType, out string hybridComputeSettingsApiVersion);
             _settingsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.HybridCompute", HybridComputeSettingsResource.ResourceType.Namespace, Diagnostics);
-            _settingsRestClient = new Settings(_settingsClientDiagnostics, Pipeline, Endpoint, hybridComputeSettingsApiVersion ?? "2025-09-16-preview");
+            _settingsRestClient = new Settings(_settingsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, hybridComputeSettingsApiVersion ?? "2025-09-16-preview");
         }
 
         /// <summary>
