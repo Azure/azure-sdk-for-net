@@ -333,21 +333,49 @@ namespace Azure.Storage.Blobs
                 return null;
             }
 
+            ETag eTag = response.Headers.TryGetValue(Constants.HeaderNames.ETag, out string value)
+                ? new ETag(value)
+                : default;
+            DateTimeOffset lastModified = response.Headers.TryGetValue(Constants.HeaderNames.LastModified, out DateTimeOffset? lastModifiedValue)
+                ? lastModifiedValue.GetValueOrDefault()
+                : default;
+            byte[] contentHash = response.Headers.TryGetValue(Constants.HeaderNames.ContentMD5, out byte[] contentHashValue)
+                ? contentHashValue
+                : default;
+            string versionId = response.Headers.TryGetValue(Constants.HeaderNames.VersionId, out string versionIdValue)
+                ? versionIdValue
+                : default;
+            string encryptionKeySha256 = response.Headers.TryGetValue("x-ms-encryption-key-sha256", out string encryptionKeySha256Value)
+                ? encryptionKeySha256Value
+                : default;
+            string encryptionScope = response.Headers.TryGetValue("x-ms-encryption-scope", out string encryptionScopeValue)
+                ? encryptionScopeValue
+                : default;
             switch (headerType)
             {
                 case BlobContentInfoHeaderType.AppendBlobCreate:
                 case BlobContentInfoHeaderType.PageBlobCreate:
                 case BlobContentInfoHeaderType.BlockBlobCommitBlockList:
-                case BlobContentInfoHeaderType.BlockBlobPutBlobFromUrl:
                 case BlobContentInfoHeaderType.BlockBlobUpload:
                     return new BlobContentInfo
                     {
-                        ETag = response.Headers.TryGetValue(Constants.HeaderNames.ETag, out string value) ? new ETag(value) : default,
-                        LastModified = response.Headers.TryGetValue(Constants.HeaderNames.LastModified, out DateTimeOffset? lastModified) ? lastModified.GetValueOrDefault() : default,
-                        ContentHash = response.Headers.TryGetValue(Constants.HeaderNames.ContentMD5, out byte[] contentMD5) ? contentMD5 : null,
-                        VersionId = response.Headers.TryGetValue(Constants.HeaderNames.VersionId, out string versionId) ? versionId : null,
-                        EncryptionKeySha256 = response.Headers.TryGetValue("x-ms-encryption-key-sha256", out string encryptionKeySha256) ? encryptionKeySha256 : null,
-                        EncryptionScope = response.Headers.TryGetValue("x-ms-encryption-scope", out string encryptionScope) ? encryptionScope : null,
+                        ETag = eTag,
+                        LastModified = lastModified,
+                        ContentHash = contentHash,
+                        VersionId = versionId,
+                        EncryptionKeySha256 = encryptionKeySha256,
+                        EncryptionScope = encryptionScope,
+                    };
+                case BlobContentInfoHeaderType.BlockBlobPutBlobFromUrl:
+                    return new BlobContentInfo
+                    {
+                        ETag = eTag,
+                        LastModified = lastModified,
+                        ContentHash = contentHash,
+                        ContentCrc64 = response.Headers.TryGetValue("x-ms-content-crc64", out byte[] contentCrc64) ? contentCrc64 : null,
+                        VersionId = versionId,
+                        EncryptionKeySha256 = encryptionKeySha256,
+                        EncryptionScope = encryptionScope,
                     };
                 default:
                     throw new ArgumentException($"Unknown {nameof(BlobContentInfoHeaderType)}: {headerType}", nameof(headerType));
@@ -804,7 +832,11 @@ namespace Azure.Storage.Blobs
                     LastAccessed = rawResponse.Headers.TryGetValue("x-ms-last-access-time", out DateTimeOffset? lastAccessed) ? lastAccessed.GetValueOrDefault() : default,
                     ImmutabilityPolicy = immutabilityPolicy,
                     HasLegalHold = rawResponse.Headers.TryGetValue("x-ms-legal-hold", out bool? legalHold) && legalHold.GetValueOrDefault(),
-                    CreatedOn = rawResponse.Headers.TryGetValue("x-ms-creation-time", out DateTimeOffset? creationTime) ? creationTime.GetValueOrDefault() : default
+                    CreatedOn = rawResponse.Headers.TryGetValue("x-ms-creation-time", out DateTimeOffset? creationTime) ? creationTime.GetValueOrDefault() : default,
+                    AccessTier = rawResponse.Headers.TryGetValue("x-ms-access-tier", out string accessTierValue) ? accessTierValue : null,
+                    AccessTierInferred = rawResponse.Headers.TryGetValue("x-ms-access-tier-inferred", out bool? accessTierInferred) && accessTierInferred.GetValueOrDefault(),
+                    AccessTierChangedOn = rawResponse.Headers.TryGetValue("x-ms-access-tier-change-time", out DateTimeOffset? accessTierChangedOn) ? accessTierChangedOn.GetValueOrDefault() : default,
+                    SmartAccessTier = rawResponse.Headers.TryGetValue("x-ms-smart-access-tier", out string smartAccessTier) ? smartAccessTier : null,
                 }
             };
         }

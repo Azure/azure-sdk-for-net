@@ -11,20 +11,20 @@ namespace Azure.Provisioning.ServiceFabric
     public enum ClusterCertificateStoreName
     {
         /// <summary> Static value for AddressBook. </summary>
-        AddressBook,
+        AddressBook = 0,
         /// <summary> Static value for AuthRoot. </summary>
-        AuthRoot,
+        AuthRoot = 1,
         /// <summary> Static value for CertificateAuthority. </summary>
-        CertificateAuthority,
+        CertificateAuthority = 2,
         /// <summary> Static value for Disallowed. </summary>
-        Disallowed,
+        Disallowed = 3,
         /// <summary> Static value for My. </summary>
-        My,
+        My = 4,
         /// <summary> Static value for Root. </summary>
-        Root,
+        Root = 5,
         /// <summary> Static value for TrustedPeople. </summary>
-        TrustedPeople,
+        TrustedPeople = 6,
         /// <summary> Static value for TrustedPublisher. </summary>
-        TrustedPublisher
+        TrustedPublisher = 7
     }
 }

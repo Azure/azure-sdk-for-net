@@ -10,7 +10,7 @@ namespace Azure.AI.Projects
 {
     /// <summary> A warning associated with a model. </summary>
     [Experimental("AAIP001")]
-    internal partial class FoundryModelWarning
+    public partial class FoundryModelWarning
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;

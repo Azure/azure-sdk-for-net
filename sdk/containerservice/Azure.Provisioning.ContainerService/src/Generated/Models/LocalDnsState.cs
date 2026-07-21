@@ -11,8 +11,8 @@ namespace Azure.Provisioning.ContainerService
     public enum LocalDnsState
     {
         /// <summary> localDNS is enabled. </summary>
-        Enabled,
+        Enabled = 0,
         /// <summary> localDNS is disabled. </summary>
-        Disabled
+        Disabled = 1
     }
 }

@@ -51,31 +51,31 @@ namespace Azure.Generator.MgmtTypeSpec.Tests.Mocking
 
         private ClientDiagnostics FoosClientDiagnostics => _foosClientDiagnostics ??= new ClientDiagnostics("Azure.Generator.MgmtTypeSpec.Tests.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private Foos FoosRestClient => _foosRestClient ??= new Foos(FoosClientDiagnostics, Pipeline, Endpoint, "2024-05-01");
+        private Foos FoosRestClient => _foosRestClient ??= new Foos(FoosClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2024-05-01");
 
         private ClientDiagnostics BazsClientDiagnostics => _bazsClientDiagnostics ??= new ClientDiagnostics("Azure.Generator.MgmtTypeSpec.Tests.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private Bazs BazsRestClient => _bazsRestClient ??= new Bazs(BazsClientDiagnostics, Pipeline, Endpoint, "2024-05-01");
+        private Bazs BazsRestClient => _bazsRestClient ??= new Bazs(BazsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2024-05-01");
 
         private ClientDiagnostics ZoosClientDiagnostics => _zoosClientDiagnostics ??= new ClientDiagnostics("Azure.Generator.MgmtTypeSpec.Tests.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private Zoos ZoosRestClient => _zoosRestClient ??= new Zoos(ZoosClientDiagnostics, Pipeline, Endpoint, "2024-05-01");
+        private Zoos ZoosRestClient => _zoosRestClient ??= new Zoos(ZoosClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2024-05-01");
 
         private ClientDiagnostics ClustersClientDiagnostics => _clustersClientDiagnostics ??= new ClientDiagnostics("Azure.Generator.MgmtTypeSpec.Tests.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private Clusters ClustersRestClient => _clustersRestClient ??= new Clusters(ClustersClientDiagnostics, Pipeline, Endpoint, "2024-05-01");
+        private Clusters ClustersRestClient => _clustersRestClient ??= new Clusters(ClustersClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2024-05-01");
 
         private ClientDiagnostics PublicSharedConfigsClientDiagnostics => _publicSharedConfigsClientDiagnostics ??= new ClientDiagnostics("Azure.Generator.MgmtTypeSpec.Tests.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private PublicSharedConfigs PublicSharedConfigsRestClient => _publicSharedConfigsRestClient ??= new PublicSharedConfigs(PublicSharedConfigsClientDiagnostics, Pipeline, Endpoint, "2024-05-01");
+        private PublicSharedConfigs PublicSharedConfigsRestClient => _publicSharedConfigsRestClient ??= new PublicSharedConfigs(PublicSharedConfigsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2024-05-01");
 
         private ClientDiagnostics MgmtTypeSpecClientClientDiagnostics => _mgmtTypeSpecClientClientDiagnostics ??= new ClientDiagnostics("Azure.Generator.MgmtTypeSpec.Tests.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private MgmtTypeSpecClient MgmtTypeSpecClientRestClient => _mgmtTypeSpecClientRestClient ??= new MgmtTypeSpecClient(MgmtTypeSpecClientClientDiagnostics, Pipeline, Endpoint, "2024-05-01");
+        private MgmtTypeSpecClient MgmtTypeSpecClientRestClient => _mgmtTypeSpecClientRestClient ??= new MgmtTypeSpecClient(MgmtTypeSpecClientClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2024-05-01");
 
         private ClientDiagnostics SAPVirtualInstancesClientDiagnostics => _sapVirtualInstancesClientDiagnostics ??= new ClientDiagnostics("Azure.Generator.MgmtTypeSpec.Tests.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private SAPVirtualInstances SAPVirtualInstancesRestClient => _sapVirtualInstancesRestClient ??= new SAPVirtualInstances(SAPVirtualInstancesClientDiagnostics, Pipeline, Endpoint, "2024-05-01");
+        private SAPVirtualInstances SAPVirtualInstancesRestClient => _sapVirtualInstancesRestClient ??= new SAPVirtualInstances(SAPVirtualInstancesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2024-05-01");
 
         /// <summary> Gets a collection of PlaywrightQuota in the <see cref="SubscriptionResource"/>. </summary>
         /// <param name="location"> The location for the resource. </param>

@@ -11,6 +11,6 @@ namespace Azure.Provisioning.Cdn
     public enum CertificateDeleteAction
     {
         /// <summary> NoAction. </summary>
-        NoAction
+        NoAction = 0
     }
 }

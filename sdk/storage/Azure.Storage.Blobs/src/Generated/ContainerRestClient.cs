@@ -1536,6 +1536,74 @@ namespace Azure.Storage.Blobs
         }
 
         /// <summary>
+        /// [Protocol Method] Returns a list of the blobs in Apache Arrow format as raw data, to be deserialized by the client.
+        /// <list type="bullet">
+        /// <item>
+        /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="prefix"> Filters the results to return only resources whose name begins with the specified prefix. </param>
+        /// <param name="marker"> An opaque string value that identifies the portion of the result set to return with this operation. </param>
+        /// <param name="maxresults"> Specifies the maximum number of resources to return. If the request does not specify maxresults, or specifies a value greater than 5000, the server will return up to 5000 items. </param>
+        /// <param name="include"> Specify to include additional, optional information. </param>
+        /// <param name="timeout"> The timeout parameter is expressed in seconds. For more information, see &lt;a href=\"https://docs.microsoft.com/en-us/rest/api/storageservices/fileservices/setting-timeouts-for-blob-service-operations\"&gt;Setting Timeouts for Blob Service Operations.&lt;/a&gt;. </param>
+        /// <param name="startFrom"> Specifies the relative path to list paths from. For non-recursive list, only one entity level is supported; for recursive list, multiple entity levels are supported. (Inclusive). </param>
+        /// <param name="endBefore"> Filters the results to return only names that are ordered before this value. Currently only applies to Apache Arrow scenario. </param>
+        /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. </returns>
+        public virtual Response GetBlobFlatSegmentApacheArrow(string prefix, string marker, int? maxresults, IEnumerable<ListBlobsIncludeItem> include, int? timeout, string startFrom, string endBefore, RequestContext context)
+        {
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("ContainerRestClient.GetBlobFlatSegmentApacheArrow");
+            scope.Start();
+            try
+            {
+                using HttpMessage message = CreateGetBlobFlatSegmentApacheArrowRequest(prefix, marker, maxresults, include, timeout, startFrom, endBefore, context);
+                return Pipeline.ProcessMessage(message, context);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// [Protocol Method] Returns a list of the blobs in Apache Arrow format as raw data, to be deserialized by the client.
+        /// <list type="bullet">
+        /// <item>
+        /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="prefix"> Filters the results to return only resources whose name begins with the specified prefix. </param>
+        /// <param name="marker"> An opaque string value that identifies the portion of the result set to return with this operation. </param>
+        /// <param name="maxresults"> Specifies the maximum number of resources to return. If the request does not specify maxresults, or specifies a value greater than 5000, the server will return up to 5000 items. </param>
+        /// <param name="include"> Specify to include additional, optional information. </param>
+        /// <param name="timeout"> The timeout parameter is expressed in seconds. For more information, see &lt;a href=\"https://docs.microsoft.com/en-us/rest/api/storageservices/fileservices/setting-timeouts-for-blob-service-operations\"&gt;Setting Timeouts for Blob Service Operations.&lt;/a&gt;. </param>
+        /// <param name="startFrom"> Specifies the relative path to list paths from. For non-recursive list, only one entity level is supported; for recursive list, multiple entity levels are supported. (Inclusive). </param>
+        /// <param name="endBefore"> Filters the results to return only names that are ordered before this value. Currently only applies to Apache Arrow scenario. </param>
+        /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. </returns>
+        public virtual async Task<Response> GetBlobFlatSegmentApacheArrowAsync(string prefix, string marker, int? maxresults, IEnumerable<ListBlobsIncludeItem> include, int? timeout, string startFrom, string endBefore, RequestContext context)
+        {
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("ContainerRestClient.GetBlobFlatSegmentApacheArrow");
+            scope.Start();
+            try
+            {
+                using HttpMessage message = CreateGetBlobFlatSegmentApacheArrowRequest(prefix, marker, maxresults, include, timeout, startFrom, endBefore, context);
+                return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
         /// [Protocol Method] Returns a list of the blobs in the specified container. A delimiter can be used to traverse a virtual hierarchy of blobs as though it were a file system.
         /// <list type="bullet">
         /// <item>
@@ -1633,6 +1701,76 @@ namespace Azure.Storage.Blobs
         {
             Response result = await GetBlobHierarchySegmentAsync(delimiter, prefix, marker, maxresults, include, timeout, startFrom, cancellationToken.ToRequestContext()).ConfigureAwait(false);
             return Response.FromValue((ListBlobsHierarchySegmentResponse)result, result);
+        }
+
+        /// <summary>
+        /// [Protocol Method] Returns a list of the blobs in Apache Arrow format as raw data, to be deserialized by the client. A delimiter can be used to traverse a virtual hierarchy of blobs as though it were a file system.
+        /// <list type="bullet">
+        /// <item>
+        /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="delimiter"> If specified, the operation returns a BlobPrefix element that acts as a placeholder for all blobs whose names begin with the same substring up to the appearance of the delimiter character. The delimiter may be a single character or a string. </param>
+        /// <param name="prefix"> Filters the results to return only resources whose name begins with the specified prefix. </param>
+        /// <param name="marker"> An opaque string value that identifies the portion of the result set to return with this operation. </param>
+        /// <param name="maxresults"> Specifies the maximum number of resources to return. If the request does not specify maxresults, or specifies a value greater than 5000, the server will return up to 5000 items. </param>
+        /// <param name="include"> Specify to include additional, optional information. </param>
+        /// <param name="timeout"> The timeout parameter is expressed in seconds. For more information, see &lt;a href=\"https://docs.microsoft.com/en-us/rest/api/storageservices/fileservices/setting-timeouts-for-blob-service-operations\"&gt;Setting Timeouts for Blob Service Operations.&lt;/a&gt;. </param>
+        /// <param name="startFrom"> Specifies the relative path to list paths from. For non-recursive list, only one entity level is supported; for recursive list, multiple entity levels are supported. (Inclusive). </param>
+        /// <param name="endBefore"> Filters the results to return only names that are ordered before this value. Currently only applies to Apache Arrow scenario. </param>
+        /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. </returns>
+        public virtual Response GetBlobHierarchySegmentApacheArrow(string delimiter, string prefix, string marker, int? maxresults, IEnumerable<ListBlobsIncludeItem> include, int? timeout, string startFrom, string endBefore, RequestContext context)
+        {
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("ContainerRestClient.GetBlobHierarchySegmentApacheArrow");
+            scope.Start();
+            try
+            {
+                using HttpMessage message = CreateGetBlobHierarchySegmentApacheArrowRequest(delimiter, prefix, marker, maxresults, include, timeout, startFrom, endBefore, context);
+                return Pipeline.ProcessMessage(message, context);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// [Protocol Method] Returns a list of the blobs in Apache Arrow format as raw data, to be deserialized by the client. A delimiter can be used to traverse a virtual hierarchy of blobs as though it were a file system.
+        /// <list type="bullet">
+        /// <item>
+        /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="delimiter"> If specified, the operation returns a BlobPrefix element that acts as a placeholder for all blobs whose names begin with the same substring up to the appearance of the delimiter character. The delimiter may be a single character or a string. </param>
+        /// <param name="prefix"> Filters the results to return only resources whose name begins with the specified prefix. </param>
+        /// <param name="marker"> An opaque string value that identifies the portion of the result set to return with this operation. </param>
+        /// <param name="maxresults"> Specifies the maximum number of resources to return. If the request does not specify maxresults, or specifies a value greater than 5000, the server will return up to 5000 items. </param>
+        /// <param name="include"> Specify to include additional, optional information. </param>
+        /// <param name="timeout"> The timeout parameter is expressed in seconds. For more information, see &lt;a href=\"https://docs.microsoft.com/en-us/rest/api/storageservices/fileservices/setting-timeouts-for-blob-service-operations\"&gt;Setting Timeouts for Blob Service Operations.&lt;/a&gt;. </param>
+        /// <param name="startFrom"> Specifies the relative path to list paths from. For non-recursive list, only one entity level is supported; for recursive list, multiple entity levels are supported. (Inclusive). </param>
+        /// <param name="endBefore"> Filters the results to return only names that are ordered before this value. Currently only applies to Apache Arrow scenario. </param>
+        /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. </returns>
+        public virtual async Task<Response> GetBlobHierarchySegmentApacheArrowAsync(string delimiter, string prefix, string marker, int? maxresults, IEnumerable<ListBlobsIncludeItem> include, int? timeout, string startFrom, string endBefore, RequestContext context)
+        {
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("ContainerRestClient.GetBlobHierarchySegmentApacheArrow");
+            scope.Start();
+            try
+            {
+                using HttpMessage message = CreateGetBlobHierarchySegmentApacheArrowRequest(delimiter, prefix, marker, maxresults, include, timeout, startFrom, endBefore, context);
+                return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
 
         /// <summary>

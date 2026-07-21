@@ -33,6 +33,6 @@ namespace Azure.ResourceManager.VirtualEnclaves.Models
         }
 
         /// <summary> List of resource group ids. </summary>
-        public IList<string> ResourceGroupCollection { get; }
+        public IList<string> ResourceGroupCollection { get; } = new ChangeTrackingList<string>();
     }
 }

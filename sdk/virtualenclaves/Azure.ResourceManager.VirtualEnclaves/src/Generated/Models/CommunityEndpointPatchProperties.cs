@@ -38,6 +38,6 @@ namespace Azure.ResourceManager.VirtualEnclaves.Models
         }
 
         /// <summary> Community Endpoint Rule Collection. </summary>
-        public IList<CommunityEndpointDestinationRule> RuleCollection { get; }
+        public IList<CommunityEndpointDestinationRule> RuleCollection { get; } = new ChangeTrackingList<CommunityEndpointDestinationRule>();
     }
 }

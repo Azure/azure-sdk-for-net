@@ -11,18 +11,18 @@ namespace Azure.Provisioning.CostManagement
     public enum ScheduledActionDaysOfWeek
     {
         /// <summary> Monday. </summary>
-        Monday,
+        Monday = 0,
         /// <summary> Tuesday. </summary>
-        Tuesday,
+        Tuesday = 1,
         /// <summary> Wednesday. </summary>
-        Wednesday,
+        Wednesday = 2,
         /// <summary> Thursday. </summary>
-        Thursday,
+        Thursday = 3,
         /// <summary> Friday. </summary>
-        Friday,
+        Friday = 4,
         /// <summary> Saturday. </summary>
-        Saturday,
+        Saturday = 5,
         /// <summary> Sunday. </summary>
-        Sunday
+        Sunday = 6
     }
 }

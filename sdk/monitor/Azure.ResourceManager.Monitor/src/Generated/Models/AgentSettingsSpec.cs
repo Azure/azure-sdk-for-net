@@ -33,6 +33,6 @@ namespace Azure.ResourceManager.Monitor.Models
         }
 
         /// <summary> All the settings that are applicable to the logs agent (AMA). </summary>
-        public IList<MonitorAgentSetting> Logs { get; }
+        public IList<MonitorAgentSetting> Logs { get; } = new ChangeTrackingList<MonitorAgentSetting>();
     }
 }
