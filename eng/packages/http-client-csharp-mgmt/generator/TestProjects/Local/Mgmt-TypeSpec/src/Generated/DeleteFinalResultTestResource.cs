@@ -52,7 +52,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
         {
             TryGetApiVersion(ResourceType, out string deleteFinalResultTestApiVersion);
             _deleteFinalResultTestsClientDiagnostics = new ClientDiagnostics("Azure.Generator.MgmtTypeSpec.Tests", ResourceType.Namespace, Diagnostics);
-            _deleteFinalResultTestsRestClient = new DeleteFinalResultTests(_deleteFinalResultTestsClientDiagnostics, Pipeline, Endpoint, deleteFinalResultTestApiVersion ?? "2024-05-01");
+            _deleteFinalResultTestsRestClient = new DeleteFinalResultTests(_deleteFinalResultTestsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, deleteFinalResultTestApiVersion ?? "2024-05-01");
             ValidateResourceId(id);
         }
 
