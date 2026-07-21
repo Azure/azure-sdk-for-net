@@ -1059,6 +1059,7 @@ public class AgentsTests : AgentsTestBase
     [TestCase(ToolType.MCP)]
     [TestCase(ToolType.MCPConnection)]
     [TestCase(ToolType.MCPToolbox)]
+    [TestCase(ToolType.MCPToolboxWithPreview)]
     public async Task TestInterativeTools(ToolType toolType)
     {
         AIProjectClient projectClient = GetTestProjectClient();
@@ -1102,9 +1103,9 @@ public class AgentsTests : AgentsTestBase
                     funcionCalled = true;
                     functionWasCalled = true;
                 }
-                else if ((toolType == ToolType.MCP || toolType == ToolType.MCPConnection || toolType == ToolType.MCPToolbox) && responseItem is McpToolCallApprovalRequestItem mcpToolCall)
+                else if ((toolType == ToolType.MCP || toolType == ToolType.MCPConnection || toolType == ToolType.MCPToolbox || toolType == ToolType.MCPToolboxWithPreview) && responseItem is McpToolCallApprovalRequestItem mcpToolCall)
                 {
-                    Assert.That(mcpToolCall.ServerLabel, Is.EqualTo(toolType == ToolType.MCPToolbox? "search-tool" : "api-specs"));
+                    Assert.That(mcpToolCall.ServerLabel, Is.EqualTo(toolType == ToolType.MCPToolbox || toolType == ToolType.MCPToolboxWithPreview ? "search-tool" : "api-specs"));
                     responseOptions.InputItems.Add(ResponseItem.CreateMcpApprovalResponseItem(approvalRequestId: mcpToolCall.Id, approved: true));
                     funcionCalled = true;
                     functionWasCalled = true;
@@ -1123,6 +1124,8 @@ public class AgentsTests : AgentsTestBase
     [TestCase(ToolType.FunctionCall)]
     [TestCase(ToolType.MCP)]
     [TestCase(ToolType.MCPConnection)]
+    [TestCase(ToolType.MCPToolbox)]
+    [TestCase(ToolType.MCPToolboxWithPreview)]
     public async Task TestInterativeToolsStreaming(ToolType toolType)
     {
         AIProjectClient projectClient = GetTestProjectClient();
@@ -1192,9 +1195,9 @@ public class AgentsTests : AgentsTestBase
                             functionCalled = true;
                             functionWasCalled = true;
                         }
-                        else if ((toolType == ToolType.MCP || toolType == ToolType.MCPConnection) && responseItem is McpToolCallApprovalRequestItem mcpToolCall)
+                        else if ((toolType == ToolType.MCP || toolType == ToolType.MCPConnection || toolType == ToolType.MCPToolbox || toolType == ToolType.MCPToolboxWithPreview) && responseItem is McpToolCallApprovalRequestItem mcpToolCall)
                         {
-                            Assert.That(mcpToolCall.ServerLabel, Is.EqualTo("api-specs"));
+                            Assert.That(mcpToolCall.ServerLabel, Is.EqualTo(toolType == ToolType.MCPToolbox || toolType == ToolType.MCPToolboxWithPreview ? "search-tool" : "api-specs"));
                             nextResponseOptions.InputItems.Add(ResponseItem.CreateMcpApprovalResponseItem(approvalRequestId: mcpToolCall.Id, approved: true));
                             functionCalled = true;
                             functionWasCalled = true;
