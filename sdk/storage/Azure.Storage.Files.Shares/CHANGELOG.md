@@ -1,7 +1,6 @@
 # Release History
 
-## 12.28.0-beta.1 (Unreleased)
-
+## 12.28.0-beta.1 (2026-07-21)
 ### Features Added
 - Added support for service version 2026-10-06.
 - Added `ShareFileClient.GetAllRangeList()`, `GetAllRangeListAsync()`, `GetAllRangeListDiff()`, and `GetAllRangeListDiffAsync()`.
