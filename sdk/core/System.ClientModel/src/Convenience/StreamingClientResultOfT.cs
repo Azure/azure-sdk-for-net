@@ -4,6 +4,7 @@
 using System.ClientModel.Primitives;
 using System.Collections;
 using System.Collections.Generic;
+using System.Runtime.ExceptionServices;
 using System.Threading;
 
 namespace System.ClientModel;
@@ -16,12 +17,13 @@ namespace System.ClientModel;
 /// <remarks>
 /// A <see cref="StreamingClientResult{T}"/> can be enumerated only once.
 /// Disposing the enumerator or the result disposes the underlying response.
+/// Enumerating a disposed result throws <see cref="ObjectDisposedException"/>;
+/// requesting a second enumerator throws <see cref="InvalidOperationException"/>.
 /// </remarks>
-public abstract class StreamingClientResult<T> : ClientResult, IEnumerable<T>, IDisposable
+public abstract class StreamingClientResult<T> : StreamingClientResult, IEnumerable<T>
 {
     private readonly object _sync = new();
     private bool _enumerationStarted;
-    private bool _disposed;
     private StreamingEnumerator? _activeEnumerator;
 
     /// <summary>
@@ -68,34 +70,32 @@ public abstract class StreamingClientResult<T> : ClientResult, IEnumerable<T>, I
     /// <returns>The values read from the response stream.</returns>
     protected abstract IEnumerable<T> GetValues();
 
-    /// <summary>
-    /// Disposes the underlying response.
-    /// </summary>
-    public void Dispose()
+    internal override bool DisposeResult()
     {
         StreamingEnumerator? enumerator;
         lock (_sync)
         {
-            if (_disposed)
-            {
-                return;
-            }
-
-            _disposed = true;
             enumerator = _activeEnumerator;
-            _activeEnumerator = null;
         }
 
-        try
+        if (enumerator is null)
         {
-            enumerator?.DisposeFromResult();
-        }
-        finally
-        {
-            GetRawResponse().Dispose();
+            return true;
         }
 
-        GC.SuppressFinalize(this);
+        bool disposalCompleted = enumerator.DisposeFromResult();
+        if (disposalCompleted)
+        {
+            lock (_sync)
+            {
+                if (ReferenceEquals(_activeEnumerator, enumerator))
+                {
+                    _activeEnumerator = null;
+                }
+            }
+        }
+
+        return disposalCompleted;
     }
 
     private void CompleteEnumeration(StreamingEnumerator enumerator)
@@ -110,19 +110,15 @@ public abstract class StreamingClientResult<T> : ClientResult, IEnumerable<T>, I
         Dispose();
     }
 
-    private void ThrowIfDisposed()
-    {
-        if (_disposed)
-        {
-            throw new ObjectDisposedException(GetType().FullName);
-        }
-    }
-
     private sealed class StreamingEnumerator(
         StreamingClientResult<T> result,
         IEnumerator<T> inner) : IEnumerator<T>
     {
-        private int _disposed;
+        private readonly object _disposeSync = new();
+        private bool _disposeStarted;
+        private bool _disposeCompleted;
+        private int _disposeThreadId;
+        private ExceptionDispatchInfo? _disposeException;
 
         public T Current => inner.Current;
 
@@ -151,25 +147,69 @@ public abstract class StreamingClientResult<T> : ClientResult, IEnumerable<T>, I
 
         public void Dispose()
         {
-            if (Interlocked.Exchange(ref _disposed, 1) == 0)
+            try
             {
-                try
-                {
-                    inner.Dispose();
-                }
-                finally
-                {
-                    result.CompleteEnumeration(this);
-                }
+                DisposeInner();
+            }
+            finally
+            {
+                result.CompleteEnumeration(this);
             }
         }
 
-        public void DisposeFromResult()
+        public bool DisposeFromResult() => DisposeInner();
+
+        private bool DisposeInner()
         {
-            if (Interlocked.Exchange(ref _disposed, 1) == 0)
+            bool disposeInner;
+            lock (_disposeSync)
+            {
+                disposeInner = !_disposeStarted;
+                _disposeStarted = true;
+                if (disposeInner)
+                {
+                    _disposeThreadId = Environment.CurrentManagedThreadId;
+                }
+
+                while (!disposeInner && !_disposeCompleted)
+                {
+                    if (_disposeThreadId == Environment.CurrentManagedThreadId)
+                    {
+                        return false;
+                    }
+
+                    Monitor.Wait(_disposeSync);
+                }
+
+                if (!disposeInner)
+                {
+                    _disposeException?.Throw();
+                    return true;
+                }
+            }
+
+            ExceptionDispatchInfo? exception = null;
+            try
             {
                 inner.Dispose();
             }
+            catch (Exception ex)
+            {
+                exception = ExceptionDispatchInfo.Capture(ex);
+            }
+            finally
+            {
+                lock (_disposeSync)
+                {
+                    _disposeException = exception;
+                    _disposeCompleted = true;
+                    _disposeThreadId = 0;
+                    Monitor.PulseAll(_disposeSync);
+                }
+            }
+
+            exception?.Throw();
+            return true;
         }
     }
 }

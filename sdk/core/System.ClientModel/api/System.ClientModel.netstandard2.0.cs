@@ -13,10 +13,14 @@ namespace System.ClientModel
         public System.Collections.Generic.IAsyncEnumerator<T> GetAsyncEnumerator(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         protected abstract System.Collections.Generic.IAsyncEnumerable<T> GetValuesFromPageAsync(System.ClientModel.ClientResult page);
     }
-    public abstract partial class AsyncStreamingClientResult<T> : System.ClientModel.ClientResult, System.Collections.Generic.IAsyncEnumerable<T>, System.IAsyncDisposable
+    public abstract partial class AsyncStreamingClientResult : System.ClientModel.ClientResult, System.IAsyncDisposable
     {
         protected internal AsyncStreamingClientResult(System.ClientModel.Primitives.PipelineResponse response) : base (default(System.ClientModel.Primitives.PipelineResponse)) { }
         public System.Threading.Tasks.ValueTask DisposeAsync() { throw null; }
+    }
+    public abstract partial class AsyncStreamingClientResult<T> : System.ClientModel.AsyncStreamingClientResult, System.Collections.Generic.IAsyncEnumerable<T>
+    {
+        protected internal AsyncStreamingClientResult(System.ClientModel.Primitives.PipelineResponse response) : base (default(System.ClientModel.Primitives.PipelineResponse)) { }
         public System.Collections.Generic.IAsyncEnumerator<T> GetAsyncEnumerator(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         protected abstract System.Collections.Generic.IAsyncEnumerable<T> GetValuesAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
     }
@@ -132,10 +136,14 @@ namespace System.ClientModel
         public override void WriteTo(System.IO.Stream stream, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { }
         public override System.Threading.Tasks.Task WriteToAsync(System.IO.Stream stream, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
-    public abstract partial class StreamingClientResult<T> : System.ClientModel.ClientResult, System.Collections.Generic.IEnumerable<T>, System.Collections.IEnumerable, System.IDisposable
+    public abstract partial class StreamingClientResult : System.ClientModel.ClientResult, System.IDisposable
     {
         protected internal StreamingClientResult(System.ClientModel.Primitives.PipelineResponse response) : base (default(System.ClientModel.Primitives.PipelineResponse)) { }
         public void Dispose() { }
+    }
+    public abstract partial class StreamingClientResult<T> : System.ClientModel.StreamingClientResult, System.Collections.Generic.IEnumerable<T>, System.Collections.IEnumerable
+    {
+        protected internal StreamingClientResult(System.ClientModel.Primitives.PipelineResponse response) : base (default(System.ClientModel.Primitives.PipelineResponse)) { }
         public System.Collections.Generic.IEnumerator<T> GetEnumerator() { throw null; }
         protected abstract System.Collections.Generic.IEnumerable<T> GetValues();
         System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }

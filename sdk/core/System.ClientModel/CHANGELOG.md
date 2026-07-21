@@ -4,7 +4,7 @@
 
 ### Features Added
 
-- Added `StreamingClientResult<T>` and `AsyncStreamingClientResult<T>` for one-shot enumeration of values from streaming service responses while retaining access to the raw response.
+- Added disposable `StreamingClientResult` and `AsyncStreamingClientResult` abstractions for protocol access to streaming service responses, with generic variants for one-shot typed enumeration.
 
 ### Breaking Changes
 

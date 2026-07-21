@@ -16,12 +16,13 @@ namespace System.ClientModel;
 /// <remarks>
 /// An <see cref="AsyncStreamingClientResult{T}"/> can be enumerated only once.
 /// Disposing the enumerator or the result disposes the underlying response.
+/// Enumerating a disposed result throws <see cref="ObjectDisposedException"/>;
+/// requesting a second enumerator throws <see cref="InvalidOperationException"/>.
 /// </remarks>
-public abstract class AsyncStreamingClientResult<T> : ClientResult, IAsyncEnumerable<T>, IAsyncDisposable
+public abstract class AsyncStreamingClientResult<T> : AsyncStreamingClientResult, IAsyncEnumerable<T>
 {
     private readonly object _sync = new();
     private bool _enumerationStarted;
-    private bool _disposed;
     private StreamingAsyncEnumerator? _activeEnumerator;
 
     /// <summary>
@@ -71,37 +72,33 @@ public abstract class AsyncStreamingClientResult<T> : ClientResult, IAsyncEnumer
     protected abstract IAsyncEnumerable<T> GetValuesAsync(
         CancellationToken cancellationToken = default);
 
-    /// <summary>
-    /// Asynchronously disposes the active enumerator and underlying response.
-    /// </summary>
-    public async ValueTask DisposeAsync()
+    internal override async ValueTask<bool> DisposeResultAsync()
     {
         StreamingAsyncEnumerator? enumerator;
         lock (_sync)
         {
-            if (_disposed)
-            {
-                return;
-            }
-
-            _disposed = true;
             enumerator = _activeEnumerator;
-            _activeEnumerator = null;
         }
 
-        try
+        if (enumerator is null)
         {
-            if (enumerator is not null)
+            return true;
+        }
+
+        bool disposalCompleted =
+            await enumerator.DisposeFromResultAsync().ConfigureAwait(false);
+        if (disposalCompleted)
+        {
+            lock (_sync)
             {
-                await enumerator.DisposeFromResultAsync().ConfigureAwait(false);
+                if (ReferenceEquals(_activeEnumerator, enumerator))
+                {
+                    _activeEnumerator = null;
+                }
             }
         }
-        finally
-        {
-            GetRawResponse().Dispose();
-        }
 
-        GC.SuppressFinalize(this);
+        return disposalCompleted;
     }
 
     private async ValueTask CompleteEnumerationAsync(
@@ -117,36 +114,15 @@ public abstract class AsyncStreamingClientResult<T> : ClientResult, IAsyncEnumer
         await DisposeAsync().ConfigureAwait(false);
     }
 
-    private void DisposeResponse()
-    {
-        lock (_sync)
-        {
-            if (_disposed)
-            {
-                return;
-            }
-
-            _disposed = true;
-            _activeEnumerator = null;
-        }
-
-        GetRawResponse().Dispose();
-        GC.SuppressFinalize(this);
-    }
-
-    private void ThrowIfDisposed()
-    {
-        if (_disposed)
-        {
-            throw new ObjectDisposedException(GetType().FullName);
-        }
-    }
-
     private sealed class StreamingAsyncEnumerator(
         AsyncStreamingClientResult<T> result,
         IAsyncEnumerator<T> inner) : IAsyncEnumerator<T>
     {
-        private int _disposed;
+        private readonly object _disposeSync = new();
+        private readonly TaskCompletionSource<object?> _disposeCompletion =
+            new(TaskCreationOptions.RunContinuationsAsynchronously);
+        private readonly AsyncLocal<bool> _isDisposing = new();
+        private bool _disposeStarted;
 
         public T Current => inner.Current;
 
@@ -170,26 +146,53 @@ public abstract class AsyncStreamingClientResult<T> : ClientResult, IAsyncEnumer
 
         public async ValueTask DisposeAsync()
         {
-            if (Interlocked.Exchange(ref _disposed, 1) == 0)
+            try
             {
-                try
-                {
-                    await inner.DisposeAsync().ConfigureAwait(false);
-                }
-                finally
-                {
-                    await result.CompleteEnumerationAsync(this)
-                        .ConfigureAwait(false);
-                }
+                await DisposeInnerAsync().ConfigureAwait(false);
+            }
+            finally
+            {
+                await result.CompleteEnumerationAsync(this)
+                    .ConfigureAwait(false);
             }
         }
 
-        public async ValueTask DisposeFromResultAsync()
+        public ValueTask<bool> DisposeFromResultAsync() => DisposeInnerAsync();
+
+        private async ValueTask<bool> DisposeInnerAsync()
         {
-            if (Interlocked.Exchange(ref _disposed, 1) == 0)
+            bool disposeInner;
+            lock (_disposeSync)
             {
-                await inner.DisposeAsync().ConfigureAwait(false);
+                disposeInner = !_disposeStarted;
+                _disposeStarted = true;
             }
+
+            if (!disposeInner && _isDisposing.Value)
+            {
+                return false;
+            }
+
+            if (disposeInner)
+            {
+                _isDisposing.Value = true;
+                try
+                {
+                    await inner.DisposeAsync().ConfigureAwait(false);
+                    _disposeCompletion.TrySetResult(null);
+                }
+                catch (Exception ex)
+                {
+                    _disposeCompletion.TrySetException(ex);
+                }
+                finally
+                {
+                    _isDisposing.Value = false;
+                }
+            }
+
+            await _disposeCompletion.Task.ConfigureAwait(false);
+            return true;
         }
     }
 }
