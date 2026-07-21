@@ -6,8 +6,9 @@
 # client-method return-type rule (Response<T>-family), which does not apply to
 # unbranded System.ClientModel clients, so it is suppressed for these two types.
 #
-# INTERIM: a follow-up will migrate AZC0015 into Azure.SdkAnalyzers and make it
-# recognize ClientResult return types, after which these entries can be removed.
+# INTERIM: AZC0015 is now SCM-aware in Azure.SdkAnalyzers (it accepts ClientResult),
+# but the azure-sdk-tools ClientMethodsAnalyzer still emits AZC0015 until it is
+# removed there and the package is bumped here; these entries can be dropped then.
 # (AZC0007 was already made SCM-aware in ClientConstructorAnalyzer, so its entries
 # were dropped.)
 nowarn:AZC0015 T:Microsoft.ClientModel.TestFramework.TestProxy.TestProxyClient

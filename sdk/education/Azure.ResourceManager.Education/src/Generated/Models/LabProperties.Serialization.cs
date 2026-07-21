@@ -13,6 +13,7 @@ using Azure.ResourceManager.Education;
 
 namespace Azure.ResourceManager.Education.Models
 {
+    /// <summary> Lab detail result properties. </summary>
     internal partial class LabProperties : IJsonModel<LabProperties>
     {
         /// <summary> Initializes a new instance of <see cref="LabProperties"/> for deserialization. </summary>
