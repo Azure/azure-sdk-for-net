@@ -4,6 +4,7 @@
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection;
 using System.Runtime.CompilerServices;
 using System.Threading;
 using System.Threading.Tasks;
@@ -96,6 +97,103 @@ public class StreamingClientResultTests
 
         result.Dispose();
 
+        Assert.IsNull(response.ContentStream);
+    }
+
+    [Test]
+    public void DisposesResponseWhenEnumeratorConstructionThrows()
+    {
+        MockPipelineResponse response = CreateResponse();
+        StreamingClientResult<int> result = new BlockingStreamingClientResult(
+            new ThrowingGetEnumeratorEnumerable(),
+            response);
+
+        Assert.Throws<InvalidOperationException>(() => result.GetEnumerator());
+
+        Assert.IsNull(response.ContentStream);
+    }
+
+    [Test]
+    public void DisposesResponseWhenEnumeratorDisposalThrows()
+    {
+        MockPipelineResponse response = CreateResponse();
+        ThrowingDisposeEnumerable values = new();
+        StreamingClientResult<int> result = new BlockingStreamingClientResult(values, response);
+        IEnumerator<int> enumerator = result.GetEnumerator();
+        Assert.IsTrue(enumerator.MoveNext());
+
+        InvalidOperationException? exception =
+            Assert.Throws<InvalidOperationException>(enumerator.Dispose);
+
+        Assert.AreSame(values.Exception, exception);
+        Assert.IsNull(response.ContentStream);
+        Assert.Throws<InvalidOperationException>(enumerator.Dispose);
+        Assert.AreEqual(1, values.DisposeCount);
+    }
+
+    [Test]
+    public void ConcurrentEnumeratorDisposalsDisposeInnerEnumeratorOnce()
+    {
+        MockPipelineResponse response = CreateResponse();
+        BlockingDisposeEnumerable values = new();
+        StreamingClientResult<int> result = new BlockingStreamingClientResult(
+            values,
+            response);
+        IEnumerator<int> enumerator = result.GetEnumerator();
+        Assert.IsTrue(enumerator.MoveNext());
+
+        Task firstDisposal = Task.Run(enumerator.Dispose);
+        Assert.IsTrue(values.DisposeStarted.Wait(TimeSpan.FromSeconds(5)));
+
+        Exception? secondDisposalException = null;
+        Thread secondDisposal = new(() =>
+        {
+            try
+            {
+                enumerator.Dispose();
+            }
+            catch (Exception ex)
+            {
+                secondDisposalException = ex;
+            }
+        });
+        secondDisposal.Start();
+        Assert.IsTrue(SpinWait.SpinUntil(
+            () => (secondDisposal.ThreadState & ThreadState.WaitSleepJoin) != 0,
+            TimeSpan.FromSeconds(5)));
+
+        values.AllowDispose.Set();
+        firstDisposal.GetAwaiter().GetResult();
+        Assert.IsTrue(secondDisposal.Join(TimeSpan.FromSeconds(5)));
+
+        Assert.IsNull(secondDisposalException);
+        Assert.AreEqual(1, values.DisposeCount);
+        Assert.IsNull(response.ContentStream);
+    }
+
+    [Test]
+    public void ConcurrentEnumerationAndResultDisposalDoNotDeadlock()
+    {
+        MockPipelineResponse response = CreateResponse();
+        BlockingGetEnumeratorEnumerable values = new();
+        StreamingClientResult<int> result = new BlockingStreamingClientResult(values, response);
+
+        Task<IEnumerator<int>> enumeration = Task.Run(result.GetEnumerator);
+        Assert.IsTrue(values.GetEnumeratorStarted.Wait(TimeSpan.FromSeconds(5)));
+
+        Task disposal = Task.Run(result.Dispose);
+        AssertDisposalStarted(result, typeof(StreamingClientResult));
+        Assert.IsFalse(disposal.Wait(TimeSpan.FromMilliseconds(100)));
+
+        values.AllowGetEnumerator.Set();
+        Task completion = Task.WhenAll(enumeration, disposal);
+        Assert.AreSame(
+            completion,
+            Task.WhenAny(completion, Task.Delay(TimeSpan.FromSeconds(5)))
+                .GetAwaiter().GetResult());
+        completion.GetAwaiter().GetResult();
+
+        Assert.AreEqual(1, values.DisposeCount);
         Assert.IsNull(response.ContentStream);
     }
 
@@ -259,6 +357,93 @@ public class StreamingClientResultTests
     }
 
     [Test]
+    public void AsyncDisposesResponseWhenEnumeratorConstructionThrows()
+    {
+        MockPipelineResponse response = CreateResponse();
+        AsyncStreamingClientResult<int> result = new BlockingAsyncStreamingClientResult(
+            new ThrowingGetAsyncEnumeratorEnumerable(),
+            response);
+
+        Assert.Throws<InvalidOperationException>(() => result.GetAsyncEnumerator());
+
+        Assert.IsNull(response.ContentStream);
+    }
+
+    [Test]
+    public async Task AsyncDisposesResponseWhenEnumeratorDisposalThrows()
+    {
+        MockPipelineResponse response = CreateResponse();
+        ThrowingAsyncDisposeEnumerable values = new();
+        AsyncStreamingClientResult<int> result = new BlockingAsyncStreamingClientResult(values, response);
+        IAsyncEnumerator<int> enumerator = result.GetAsyncEnumerator();
+        Assert.IsTrue(await enumerator.MoveNextAsync());
+
+        InvalidOperationException? exception =
+            Assert.ThrowsAsync<InvalidOperationException>(
+                async () => await enumerator.DisposeAsync());
+
+        Assert.AreSame(values.Exception, exception);
+        Assert.IsNull(response.ContentStream);
+        Assert.ThrowsAsync<InvalidOperationException>(
+            async () => await enumerator.DisposeAsync());
+        Assert.AreEqual(1, values.DisposeCount);
+    }
+
+    [Test]
+    public async Task AsyncConcurrentEnumeratorDisposalsDisposeInnerEnumeratorOnce()
+    {
+        MockPipelineResponse response = CreateResponse();
+        BlockingAsyncDisposeEnumerable values = new();
+        AsyncStreamingClientResult<int> result = new BlockingAsyncStreamingClientResult(
+            values,
+            response);
+        IAsyncEnumerator<int> enumerator = result.GetAsyncEnumerator();
+        Assert.IsTrue(await enumerator.MoveNextAsync());
+
+        Task firstDisposal = enumerator.DisposeAsync().AsTask();
+        await values.DisposeStarted.Task;
+
+        Task secondDisposal = enumerator.DisposeAsync().AsTask();
+        Assert.AreNotSame(
+            secondDisposal,
+            await Task.WhenAny(secondDisposal, Task.Delay(100)));
+
+        values.AllowDispose.SetResult(null);
+        await Task.WhenAll(firstDisposal, secondDisposal);
+
+        Assert.AreEqual(1, values.DisposeCount);
+        Assert.IsNull(response.ContentStream);
+    }
+
+    [Test]
+    public async Task AsyncConcurrentEnumerationAndResultDisposalDoNotDeadlock()
+    {
+        MockPipelineResponse response = CreateResponse();
+        BlockingGetAsyncEnumeratorEnumerable values = new();
+        AsyncStreamingClientResult<int> result = new BlockingAsyncStreamingClientResult(values, response);
+
+        Task<IAsyncEnumerator<int>> enumeration =
+            Task.Run(() => result.GetAsyncEnumerator());
+        Assert.IsTrue(values.GetAsyncEnumeratorStarted.Wait(TimeSpan.FromSeconds(5)));
+
+        Task disposal = Task.Run(async () => await result.DisposeAsync());
+        AssertDisposalStarted(result, typeof(AsyncStreamingClientResult));
+        Assert.AreNotSame(
+            disposal,
+            await Task.WhenAny(disposal, Task.Delay(100)));
+
+        values.AllowGetAsyncEnumerator.Set();
+        Task completion = Task.WhenAll(enumeration, disposal);
+        Assert.AreSame(
+            completion,
+            await Task.WhenAny(completion, Task.Delay(TimeSpan.FromSeconds(5))));
+        await completion;
+
+        Assert.AreEqual(1, values.DisposeCount);
+        Assert.IsNull(response.ContentStream);
+    }
+
+    [Test]
     public async Task AsyncResultDisposalWaitsForConcurrentEnumeratorDisposal()
     {
         MockPipelineResponse response = CreateResponse();
@@ -373,8 +558,37 @@ public class StreamingClientResultTests
         Assert.IsNull(response.ContentStream);
     }
 
+    [Test]
+    public async Task AsyncCancellationAfterFirstValueDisposesEnumeratorAndResponse()
+    {
+        MockPipelineResponse response = CreateResponse();
+        CancellationAfterFirstAsyncEnumerable values = new();
+        AsyncStreamingClientResult<int> result = new BlockingAsyncStreamingClientResult(values, response);
+        using CancellationTokenSource cts = new();
+        IAsyncEnumerator<int> enumerator = result.GetAsyncEnumerator(cts.Token);
+        Assert.IsTrue(await enumerator.MoveNextAsync());
+
+        cts.Cancel();
+
+        Assert.CatchAsync<OperationCanceledException>(
+            async () => await enumerator.MoveNextAsync());
+        Assert.AreEqual(1, values.DisposeCount);
+        Assert.IsNull(response.ContentStream);
+    }
+
     private static MockPipelineResponse CreateResponse()
         => new MockPipelineResponse(200).SetContent("stream");
+
+    private static void AssertDisposalStarted(object result, Type resultType)
+    {
+        FieldInfo field = resultType.GetField(
+            "_disposeStarted",
+            BindingFlags.Instance | BindingFlags.NonPublic)!;
+
+        Assert.IsTrue(SpinWait.SpinUntil(
+            () => (bool)field.GetValue(result)!,
+            TimeSpan.FromSeconds(5)));
+    }
 
     private static async Task<int[]> ToArrayAsync(
         IAsyncEnumerable<int> values,
@@ -435,8 +649,11 @@ public class StreamingClientResultTests
 
     private sealed class BlockingDisposeEnumerable : IEnumerable<int>
     {
+        private int _disposeCount;
+
         public ManualResetEventSlim DisposeStarted { get; } = new();
         public ManualResetEventSlim AllowDispose { get; } = new();
+        public int DisposeCount => _disposeCount;
 
         public IEnumerator<int> GetEnumerator() => new Enumerator(this);
 
@@ -453,18 +670,87 @@ public class StreamingClientResultTests
 
             public void Dispose()
             {
+                Interlocked.Increment(ref owner._disposeCount);
                 owner.DisposeStarted.Set();
                 owner.AllowDispose.Wait();
             }
         }
     }
 
+    private sealed class ThrowingGetEnumeratorEnumerable : IEnumerable<int>
+    {
+        public IEnumerator<int> GetEnumerator() => throw new InvalidOperationException();
+
+        System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator()
+            => GetEnumerator();
+    }
+
+    private sealed class ThrowingDisposeEnumerable : IEnumerable<int>
+    {
+        private int _disposeCount;
+
+        public InvalidOperationException Exception { get; } = new();
+        public int DisposeCount => _disposeCount;
+
+        public IEnumerator<int> GetEnumerator() => new Enumerator(this);
+
+        System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator()
+            => GetEnumerator();
+
+        private sealed class Enumerator(ThrowingDisposeEnumerable owner) : IEnumerator<int>
+        {
+            public int Current => 1;
+            object System.Collections.IEnumerator.Current => Current;
+
+            public bool MoveNext() => true;
+            public void Reset() => throw new NotSupportedException();
+
+            public void Dispose()
+            {
+                Interlocked.Increment(ref owner._disposeCount);
+                throw owner.Exception;
+            }
+        }
+    }
+
+    private sealed class BlockingGetEnumeratorEnumerable : IEnumerable<int>
+    {
+        private int _disposeCount;
+
+        public ManualResetEventSlim GetEnumeratorStarted { get; } = new();
+        public ManualResetEventSlim AllowGetEnumerator { get; } = new();
+        public int DisposeCount => _disposeCount;
+
+        public IEnumerator<int> GetEnumerator()
+        {
+            GetEnumeratorStarted.Set();
+            AllowGetEnumerator.Wait();
+            return new Enumerator(this);
+        }
+
+        System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator()
+            => GetEnumerator();
+
+        private sealed class Enumerator(BlockingGetEnumeratorEnumerable owner) : IEnumerator<int>
+        {
+            public int Current => 1;
+            object System.Collections.IEnumerator.Current => Current;
+
+            public bool MoveNext() => true;
+            public void Reset() => throw new NotSupportedException();
+            public void Dispose() => Interlocked.Increment(ref owner._disposeCount);
+        }
+    }
+
     private sealed class BlockingAsyncDisposeEnumerable : IAsyncEnumerable<int>
     {
+        private int _disposeCount;
+
         public TaskCompletionSource<object?> DisposeStarted { get; } =
             new(TaskCreationOptions.RunContinuationsAsynchronously);
         public TaskCompletionSource<object?> AllowDispose { get; } =
             new(TaskCreationOptions.RunContinuationsAsynchronously);
+        public int DisposeCount => _disposeCount;
 
         public IAsyncEnumerator<int> GetAsyncEnumerator(
             CancellationToken cancellationToken = default) => new Enumerator(this);
@@ -478,8 +764,110 @@ public class StreamingClientResultTests
 
             public async ValueTask DisposeAsync()
             {
+                Interlocked.Increment(ref owner._disposeCount);
                 owner.DisposeStarted.SetResult(null);
                 await owner.AllowDispose.Task;
+            }
+        }
+    }
+
+    private sealed class ThrowingGetAsyncEnumeratorEnumerable : IAsyncEnumerable<int>
+    {
+        public IAsyncEnumerator<int> GetAsyncEnumerator(
+            CancellationToken cancellationToken = default)
+            => throw new InvalidOperationException();
+    }
+
+    private sealed class ThrowingAsyncDisposeEnumerable : IAsyncEnumerable<int>
+    {
+        private int _disposeCount;
+
+        public InvalidOperationException Exception { get; } = new();
+        public int DisposeCount => _disposeCount;
+
+        public IAsyncEnumerator<int> GetAsyncEnumerator(
+            CancellationToken cancellationToken = default) => new Enumerator(this);
+
+        private sealed class Enumerator(ThrowingAsyncDisposeEnumerable owner)
+            : IAsyncEnumerator<int>
+        {
+            public int Current => 1;
+
+            public ValueTask<bool> MoveNextAsync() => new(true);
+
+            public ValueTask DisposeAsync()
+            {
+                Interlocked.Increment(ref owner._disposeCount);
+                return new ValueTask(Task.FromException(owner.Exception));
+            }
+        }
+    }
+
+    private sealed class BlockingGetAsyncEnumeratorEnumerable : IAsyncEnumerable<int>
+    {
+        private int _disposeCount;
+
+        public ManualResetEventSlim GetAsyncEnumeratorStarted { get; } = new();
+        public ManualResetEventSlim AllowGetAsyncEnumerator { get; } = new();
+        public int DisposeCount => _disposeCount;
+
+        public IAsyncEnumerator<int> GetAsyncEnumerator(
+            CancellationToken cancellationToken = default)
+        {
+            GetAsyncEnumeratorStarted.Set();
+            AllowGetAsyncEnumerator.Wait();
+            return new Enumerator(this);
+        }
+
+        private sealed class Enumerator(BlockingGetAsyncEnumeratorEnumerable owner)
+            : IAsyncEnumerator<int>
+        {
+            public int Current => 1;
+
+            public ValueTask<bool> MoveNextAsync() => new(true);
+
+            public ValueTask DisposeAsync()
+            {
+                Interlocked.Increment(ref owner._disposeCount);
+                return default;
+            }
+        }
+    }
+
+    private sealed class CancellationAfterFirstAsyncEnumerable : IAsyncEnumerable<int>
+    {
+        private int _disposeCount;
+
+        public int DisposeCount => _disposeCount;
+
+        public IAsyncEnumerator<int> GetAsyncEnumerator(
+            CancellationToken cancellationToken = default)
+            => new Enumerator(this, cancellationToken);
+
+        private sealed class Enumerator(
+            CancellationAfterFirstAsyncEnumerable owner,
+            CancellationToken cancellationToken) : IAsyncEnumerator<int>
+        {
+            private bool _returnedFirstValue;
+
+            public int Current => 1;
+
+            public async ValueTask<bool> MoveNextAsync()
+            {
+                if (!_returnedFirstValue)
+                {
+                    _returnedFirstValue = true;
+                    return true;
+                }
+
+                await Task.Delay(Timeout.Infinite, cancellationToken);
+                return false;
+            }
+
+            public ValueTask DisposeAsync()
+            {
+                Interlocked.Increment(ref owner._disposeCount);
+                return default;
             }
         }
     }

@@ -12,19 +12,31 @@ public class MockStreamedData
     private static ReadOnlySpan<byte> TerminalData => "[DONE]"u8;
 
     // Note: need extra line because raw string literal removes \n from final line.
-    internal const string DefaultMockContent = """
+    public const string DefaultMockContent = """
+        id: 0
+        retry: 1500
         event: event.0
         data: { "id": 0, "value": "0" }
 
+        id: 1
         event: event.1
         data: { "id": 1, "value": "1" }
 
+        id: 2
         event: event.2
         data: { "id": 2, "value": "2" }
 
         event: done
         data: [DONE]
 
+
+        """;
+
+    public const string JsonlMockContent = """
+        { "id": 0, "value": "0" }
+
+        { "id": 1, "value": "1" }
+        { "id": 2, "value": "2" }
 
         """;
 
