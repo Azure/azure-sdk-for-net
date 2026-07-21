@@ -95,7 +95,7 @@ namespace Azure.SdkAnalyzers
         public static readonly DiagnosticDescriptor AZC0015 = new(
             nameof(AZC0015),
             "Unexpected client method return type.",
-            "Client methods should return Response/Response<T>/Pageable<T>/AsyncPageable<T>/Operation<T> (or their Task-wrapped forms) for Azure.Core clients, or ClientResult/ClientResult<T>/CollectionResult<T>/AsyncCollectionResult<T> for System.ClientModel clients; found {0} instead.",
+            "Client methods should return one of: Response/Response<T>/NullableResponse<T>/Operation<T> (optionally Task-wrapped) or Pageable<T>/AsyncPageable<T> for Azure.Core clients, or ClientResult/ClientResult<T> (optionally Task-wrapped) or CollectionResult<T>/AsyncCollectionResult<T> for System.ClientModel clients; found {0} instead.",
             DiagnosticCategory.Usage,
             DiagnosticSeverity.Warning,
             true,
