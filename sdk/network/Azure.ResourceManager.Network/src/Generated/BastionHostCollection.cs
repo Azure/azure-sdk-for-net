@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.Network
         {
             TryGetApiVersion(BastionHostResource.ResourceType, out string bastionHostApiVersion);
             _bastionHostsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Network", BastionHostResource.ResourceType.Namespace, Diagnostics);
-            _bastionHostsRestClient = new BastionHosts(_bastionHostsClientDiagnostics, Pipeline, Endpoint, bastionHostApiVersion ?? "2025-07-01");
+            _bastionHostsRestClient = new BastionHosts(_bastionHostsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, bastionHostApiVersion ?? "2025-07-01");
             ValidateResourceId(id);
         }
 

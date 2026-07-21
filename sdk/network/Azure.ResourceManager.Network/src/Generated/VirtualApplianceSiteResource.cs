@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.Network
         {
             TryGetApiVersion(ResourceType, out string virtualApplianceSiteApiVersion);
             _virtualApplianceSitesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Network", ResourceType.Namespace, Diagnostics);
-            _virtualApplianceSitesRestClient = new VirtualApplianceSites(_virtualApplianceSitesClientDiagnostics, Pipeline, Endpoint, virtualApplianceSiteApiVersion ?? "2025-07-01");
+            _virtualApplianceSitesRestClient = new VirtualApplianceSites(_virtualApplianceSitesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, virtualApplianceSiteApiVersion ?? "2025-07-01");
             ValidateResourceId(id);
         }
 

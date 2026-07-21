@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.Network
         {
             TryGetApiVersion(ResourceType, out string ipAllocationApiVersion);
             _ipAllocationsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Network", ResourceType.Namespace, Diagnostics);
-            _ipAllocationsRestClient = new IpAllocations(_ipAllocationsClientDiagnostics, Pipeline, Endpoint, ipAllocationApiVersion ?? "2025-07-01");
+            _ipAllocationsRestClient = new IpAllocations(_ipAllocationsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, ipAllocationApiVersion ?? "2025-07-01");
             ValidateResourceId(id);
         }
 

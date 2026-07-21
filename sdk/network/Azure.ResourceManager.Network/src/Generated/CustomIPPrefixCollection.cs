@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.Network
         {
             TryGetApiVersion(CustomIPPrefixResource.ResourceType, out string customIPPrefixApiVersion);
             _customIPPrefixesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Network", CustomIPPrefixResource.ResourceType.Namespace, Diagnostics);
-            _customIPPrefixesRestClient = new CustomIPPrefixes(_customIPPrefixesClientDiagnostics, Pipeline, Endpoint, customIPPrefixApiVersion ?? "2025-07-01");
+            _customIPPrefixesRestClient = new CustomIPPrefixes(_customIPPrefixesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, customIPPrefixApiVersion ?? "2025-07-01");
             ValidateResourceId(id);
         }
 

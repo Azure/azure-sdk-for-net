@@ -57,11 +57,11 @@ namespace Azure.ResourceManager.Peering
         {
             TryGetApiVersion(ResourceType, out string peeringApiVersion);
             _peeringsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Peering", ResourceType.Namespace, Diagnostics);
-            _peeringsRestClient = new Peerings(_peeringsClientDiagnostics, Pipeline, Endpoint, peeringApiVersion ?? "2025-05-01");
+            _peeringsRestClient = new Peerings(_peeringsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, peeringApiVersion ?? "2025-05-01");
             _rpUnbilledPrefixesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Peering", ResourceType.Namespace, Diagnostics);
-            _rpUnbilledPrefixesRestClient = new RpUnbilledPrefixes(_rpUnbilledPrefixesClientDiagnostics, Pipeline, Endpoint, peeringApiVersion ?? "2025-05-01");
+            _rpUnbilledPrefixesRestClient = new RpUnbilledPrefixes(_rpUnbilledPrefixesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, peeringApiVersion ?? "2025-05-01");
             _receivedRoutesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Peering", ResourceType.Namespace, Diagnostics);
-            _receivedRoutesRestClient = new ReceivedRoutes(_receivedRoutesClientDiagnostics, Pipeline, Endpoint, peeringApiVersion ?? "2025-05-01");
+            _receivedRoutesRestClient = new ReceivedRoutes(_receivedRoutesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, peeringApiVersion ?? "2025-05-01");
             ValidateResourceId(id);
         }
 
