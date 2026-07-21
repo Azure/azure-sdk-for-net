@@ -610,6 +610,25 @@ namespace Azure.ResourceManager.AppConfiguration.Models
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.AppConfiguration.Models.AppConfigurationDataPlaneProxyProperties>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.AppConfiguration.Models.AppConfigurationDataPlaneProxyProperties>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct AppConfigurationIssueType : System.IEquatable<Azure.ResourceManager.AppConfiguration.Models.AppConfigurationIssueType>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public AppConfigurationIssueType(string value) { throw null; }
+        public static Azure.ResourceManager.AppConfiguration.Models.AppConfigurationIssueType ConfigurationPropagationFailure { get { throw null; } }
+        public static Azure.ResourceManager.AppConfiguration.Models.AppConfigurationIssueType MissingIdentityConfiguration { get { throw null; } }
+        public static Azure.ResourceManager.AppConfiguration.Models.AppConfigurationIssueType MissingPerimeterConfiguration { get { throw null; } }
+        public static Azure.ResourceManager.AppConfiguration.Models.AppConfigurationIssueType Unknown { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.AppConfiguration.Models.AppConfigurationIssueType other) { throw null; }
+        public override bool Equals(object obj) { throw null; }
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.ResourceManager.AppConfiguration.Models.AppConfigurationIssueType left, Azure.ResourceManager.AppConfiguration.Models.AppConfigurationIssueType right) { throw null; }
+        public static implicit operator Azure.ResourceManager.AppConfiguration.Models.AppConfigurationIssueType (string value) { throw null; }
+        public static implicit operator Azure.ResourceManager.AppConfiguration.Models.AppConfigurationIssueType? (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.AppConfiguration.Models.AppConfigurationIssueType left, Azure.ResourceManager.AppConfiguration.Models.AppConfigurationIssueType right) { throw null; }
+        public override string ToString() { throw null; }
+    }
     public partial class AppConfigurationKeyVaultProperties : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.AppConfiguration.Models.AppConfigurationKeyVaultProperties>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.AppConfiguration.Models.AppConfigurationKeyVaultProperties>
     {
         public AppConfigurationKeyVaultProperties() { }
@@ -810,6 +829,23 @@ namespace Azure.ResourceManager.AppConfiguration.Models
         public static bool operator !=(Azure.ResourceManager.AppConfiguration.Models.AppConfigurationResourceType left, Azure.ResourceManager.AppConfiguration.Models.AppConfigurationResourceType right) { throw null; }
         public override string ToString() { throw null; }
     }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct AppConfigurationSeverity : System.IEquatable<Azure.ResourceManager.AppConfiguration.Models.AppConfigurationSeverity>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public AppConfigurationSeverity(string value) { throw null; }
+        public static Azure.ResourceManager.AppConfiguration.Models.AppConfigurationSeverity Error { get { throw null; } }
+        public static Azure.ResourceManager.AppConfiguration.Models.AppConfigurationSeverity Warning { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.AppConfiguration.Models.AppConfigurationSeverity other) { throw null; }
+        public override bool Equals(object obj) { throw null; }
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.ResourceManager.AppConfiguration.Models.AppConfigurationSeverity left, Azure.ResourceManager.AppConfiguration.Models.AppConfigurationSeverity right) { throw null; }
+        public static implicit operator Azure.ResourceManager.AppConfiguration.Models.AppConfigurationSeverity (string value) { throw null; }
+        public static implicit operator Azure.ResourceManager.AppConfiguration.Models.AppConfigurationSeverity? (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.AppConfiguration.Models.AppConfigurationSeverity left, Azure.ResourceManager.AppConfiguration.Models.AppConfigurationSeverity right) { throw null; }
+        public override string ToString() { throw null; }
+    }
     public partial class AppConfigurationSku : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.AppConfiguration.Models.AppConfigurationSku>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.AppConfiguration.Models.AppConfigurationSku>
     {
         public AppConfigurationSku(string name) { }
@@ -920,7 +956,7 @@ namespace Azure.ResourceManager.AppConfiguration.Models
         public static Azure.ResourceManager.AppConfiguration.Models.NetworkSecurityPerimeterConfigurationProperties NetworkSecurityPerimeterConfigurationProperties(Azure.ResourceManager.AppConfiguration.Models.NetworkSecurityPerimeterConfigurationProvisioningState? provisioningState = default(Azure.ResourceManager.AppConfiguration.Models.NetworkSecurityPerimeterConfigurationProvisioningState?), System.Collections.Generic.IEnumerable<Azure.ResourceManager.AppConfiguration.Models.ProvisioningIssue> provisioningIssues = null, Azure.ResourceManager.AppConfiguration.Models.NetworkSecurityPerimeter networkSecurityPerimeter = null, Azure.ResourceManager.AppConfiguration.Models.ResourceAssociation resourceAssociation = null, Azure.ResourceManager.AppConfiguration.Models.NetworkSecurityProfile profile = null) { throw null; }
         public static Azure.ResourceManager.AppConfiguration.Models.NetworkSecurityProfile NetworkSecurityProfile(string name = null, int? accessRulesVersion = default(int?), System.Collections.Generic.IEnumerable<Azure.ResourceManager.AppConfiguration.Models.AccessRule> accessRules = null, int? diagnosticSettingsVersion = default(int?), System.Collections.Generic.IEnumerable<string> enabledLogCategories = null) { throw null; }
         public static Azure.ResourceManager.AppConfiguration.Models.ProvisioningIssue ProvisioningIssue(string name = null, Azure.ResourceManager.AppConfiguration.Models.ProvisioningIssueProperties properties = null) { throw null; }
-        public static Azure.ResourceManager.AppConfiguration.Models.ProvisioningIssueProperties ProvisioningIssueProperties(Azure.ResourceManager.AppConfiguration.Models.IssueType? issueType = default(Azure.ResourceManager.AppConfiguration.Models.IssueType?), Azure.ResourceManager.AppConfiguration.Models.Severity? severity = default(Azure.ResourceManager.AppConfiguration.Models.Severity?), string description = null, System.Collections.Generic.IEnumerable<Azure.Core.ResourceIdentifier> suggestedResourceIds = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.AppConfiguration.Models.AccessRule> suggestedAccessRules = null) { throw null; }
+        public static Azure.ResourceManager.AppConfiguration.Models.ProvisioningIssueProperties ProvisioningIssueProperties(Azure.ResourceManager.AppConfiguration.Models.AppConfigurationIssueType? issueType = default(Azure.ResourceManager.AppConfiguration.Models.AppConfigurationIssueType?), Azure.ResourceManager.AppConfiguration.Models.AppConfigurationSeverity? severity = default(Azure.ResourceManager.AppConfiguration.Models.AppConfigurationSeverity?), string description = null, System.Collections.Generic.IEnumerable<Azure.Core.ResourceIdentifier> suggestedResourceIds = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.AppConfiguration.Models.AccessRule> suggestedAccessRules = null) { throw null; }
         public static Azure.ResourceManager.AppConfiguration.Models.ResourceAssociation ResourceAssociation(string name = null, Azure.ResourceManager.AppConfiguration.Models.ResourceAssociationAccessMode? accessMode = default(Azure.ResourceManager.AppConfiguration.Models.ResourceAssociationAccessMode?)) { throw null; }
         public static Azure.ResourceManager.AppConfiguration.Models.SnapshotKeyValueFilter SnapshotKeyValueFilter(string key = null, string label = null) { throw null; }
     }
@@ -956,25 +992,6 @@ namespace Azure.ResourceManager.AppConfiguration.Models
         public static implicit operator Azure.ResourceManager.AppConfiguration.Models.DataPlaneProxyPrivateLinkDelegation (string value) { throw null; }
         public static implicit operator Azure.ResourceManager.AppConfiguration.Models.DataPlaneProxyPrivateLinkDelegation? (string value) { throw null; }
         public static bool operator !=(Azure.ResourceManager.AppConfiguration.Models.DataPlaneProxyPrivateLinkDelegation left, Azure.ResourceManager.AppConfiguration.Models.DataPlaneProxyPrivateLinkDelegation right) { throw null; }
-        public override string ToString() { throw null; }
-    }
-    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
-    public readonly partial struct IssueType : System.IEquatable<Azure.ResourceManager.AppConfiguration.Models.IssueType>
-    {
-        private readonly object _dummy;
-        private readonly int _dummyPrimitive;
-        public IssueType(string value) { throw null; }
-        public static Azure.ResourceManager.AppConfiguration.Models.IssueType ConfigurationPropagationFailure { get { throw null; } }
-        public static Azure.ResourceManager.AppConfiguration.Models.IssueType MissingIdentityConfiguration { get { throw null; } }
-        public static Azure.ResourceManager.AppConfiguration.Models.IssueType MissingPerimeterConfiguration { get { throw null; } }
-        public static Azure.ResourceManager.AppConfiguration.Models.IssueType Unknown { get { throw null; } }
-        public bool Equals(Azure.ResourceManager.AppConfiguration.Models.IssueType other) { throw null; }
-        public override bool Equals(object obj) { throw null; }
-        public override int GetHashCode() { throw null; }
-        public static bool operator ==(Azure.ResourceManager.AppConfiguration.Models.IssueType left, Azure.ResourceManager.AppConfiguration.Models.IssueType right) { throw null; }
-        public static implicit operator Azure.ResourceManager.AppConfiguration.Models.IssueType (string value) { throw null; }
-        public static implicit operator Azure.ResourceManager.AppConfiguration.Models.IssueType? (string value) { throw null; }
-        public static bool operator !=(Azure.ResourceManager.AppConfiguration.Models.IssueType left, Azure.ResourceManager.AppConfiguration.Models.IssueType right) { throw null; }
         public override string ToString() { throw null; }
     }
     public partial class NetworkSecurityPerimeter : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.AppConfiguration.Models.NetworkSecurityPerimeter>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.AppConfiguration.Models.NetworkSecurityPerimeter>
@@ -1084,8 +1101,8 @@ namespace Azure.ResourceManager.AppConfiguration.Models
     {
         internal ProvisioningIssueProperties() { }
         public string Description { get { throw null; } }
-        public Azure.ResourceManager.AppConfiguration.Models.IssueType? IssueType { get { throw null; } }
-        public Azure.ResourceManager.AppConfiguration.Models.Severity? Severity { get { throw null; } }
+        public Azure.ResourceManager.AppConfiguration.Models.AppConfigurationIssueType? IssueType { get { throw null; } }
+        public Azure.ResourceManager.AppConfiguration.Models.AppConfigurationSeverity? Severity { get { throw null; } }
         public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.AppConfiguration.Models.AccessRule> SuggestedAccessRules { get { throw null; } }
         public System.Collections.Generic.IReadOnlyList<Azure.Core.ResourceIdentifier> SuggestedResourceIds { get { throw null; } }
         protected virtual Azure.ResourceManager.AppConfiguration.Models.ProvisioningIssueProperties JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -1129,23 +1146,6 @@ namespace Azure.ResourceManager.AppConfiguration.Models
         public static implicit operator Azure.ResourceManager.AppConfiguration.Models.ResourceAssociationAccessMode (string value) { throw null; }
         public static implicit operator Azure.ResourceManager.AppConfiguration.Models.ResourceAssociationAccessMode? (string value) { throw null; }
         public static bool operator !=(Azure.ResourceManager.AppConfiguration.Models.ResourceAssociationAccessMode left, Azure.ResourceManager.AppConfiguration.Models.ResourceAssociationAccessMode right) { throw null; }
-        public override string ToString() { throw null; }
-    }
-    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
-    public readonly partial struct Severity : System.IEquatable<Azure.ResourceManager.AppConfiguration.Models.Severity>
-    {
-        private readonly object _dummy;
-        private readonly int _dummyPrimitive;
-        public Severity(string value) { throw null; }
-        public static Azure.ResourceManager.AppConfiguration.Models.Severity Error { get { throw null; } }
-        public static Azure.ResourceManager.AppConfiguration.Models.Severity Warning { get { throw null; } }
-        public bool Equals(Azure.ResourceManager.AppConfiguration.Models.Severity other) { throw null; }
-        public override bool Equals(object obj) { throw null; }
-        public override int GetHashCode() { throw null; }
-        public static bool operator ==(Azure.ResourceManager.AppConfiguration.Models.Severity left, Azure.ResourceManager.AppConfiguration.Models.Severity right) { throw null; }
-        public static implicit operator Azure.ResourceManager.AppConfiguration.Models.Severity (string value) { throw null; }
-        public static implicit operator Azure.ResourceManager.AppConfiguration.Models.Severity? (string value) { throw null; }
-        public static bool operator !=(Azure.ResourceManager.AppConfiguration.Models.Severity left, Azure.ResourceManager.AppConfiguration.Models.Severity right) { throw null; }
         public override string ToString() { throw null; }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]

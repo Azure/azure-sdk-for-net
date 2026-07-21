@@ -287,7 +287,7 @@ namespace Azure.ResourceManager.AppConfiguration.Models
         /// <param name="suggestedResourceIds"> Fully qualified resource IDs of suggested resources that can be associated to the network security perimeter (NSP) to remediate the issue. </param>
         /// <param name="suggestedAccessRules"> Access rules that can be added to the network security profile (NSP) to remediate the issue. </param>
         /// <returns> A new <see cref="Models.ProvisioningIssueProperties"/> instance for mocking. </returns>
-        public static ProvisioningIssueProperties ProvisioningIssueProperties(IssueType? issueType = default, Severity? severity = default, string description = default, IEnumerable<ResourceIdentifier> suggestedResourceIds = default, IEnumerable<AccessRule> suggestedAccessRules = default)
+        public static ProvisioningIssueProperties ProvisioningIssueProperties(AppConfigurationIssueType? issueType = default, AppConfigurationSeverity? severity = default, string description = default, IEnumerable<ResourceIdentifier> suggestedResourceIds = default, IEnumerable<AccessRule> suggestedAccessRules = default)
         {
             suggestedResourceIds ??= new ChangeTrackingList<ResourceIdentifier>();
             suggestedAccessRules ??= new ChangeTrackingList<AccessRule>();

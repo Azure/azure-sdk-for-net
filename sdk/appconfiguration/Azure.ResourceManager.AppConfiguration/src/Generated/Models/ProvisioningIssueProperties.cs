@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.AppConfiguration.Models
         /// <param name="suggestedResourceIds"> Fully qualified resource IDs of suggested resources that can be associated to the network security perimeter (NSP) to remediate the issue. </param>
         /// <param name="suggestedAccessRules"> Access rules that can be added to the network security profile (NSP) to remediate the issue. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ProvisioningIssueProperties(IssueType? issueType, Severity? severity, string description, IReadOnlyList<ResourceIdentifier> suggestedResourceIds, IReadOnlyList<AccessRule> suggestedAccessRules, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ProvisioningIssueProperties(AppConfigurationIssueType? issueType, AppConfigurationSeverity? severity, string description, IReadOnlyList<ResourceIdentifier> suggestedResourceIds, IReadOnlyList<AccessRule> suggestedAccessRules, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             IssueType = issueType;
             Severity = severity;
@@ -44,11 +44,11 @@ namespace Azure.ResourceManager.AppConfiguration.Models
 
         /// <summary> Type of issue. </summary>
         [WirePath("issueType")]
-        public IssueType? IssueType { get; }
+        public AppConfigurationIssueType? IssueType { get; }
 
         /// <summary> Severity of the issue. </summary>
         [WirePath("severity")]
-        public Severity? Severity { get; }
+        public AppConfigurationSeverity? Severity { get; }
 
         /// <summary> Description of the issue. </summary>
         [WirePath("description")]

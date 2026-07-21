@@ -157,8 +157,8 @@ namespace Azure.ResourceManager.AppConfiguration.Models
             {
                 return null;
             }
-            IssueType? issueType = default;
-            Severity? severity = default;
+            AppConfigurationIssueType? issueType = default;
+            AppConfigurationSeverity? severity = default;
             string description = default;
             IReadOnlyList<ResourceIdentifier> suggestedResourceIds = default;
             IReadOnlyList<AccessRule> suggestedAccessRules = default;
@@ -171,7 +171,7 @@ namespace Azure.ResourceManager.AppConfiguration.Models
                     {
                         continue;
                     }
-                    issueType = new IssueType(prop.Value.GetString());
+                    issueType = new AppConfigurationIssueType(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("severity"u8))
@@ -180,7 +180,7 @@ namespace Azure.ResourceManager.AppConfiguration.Models
                     {
                         continue;
                     }
-                    severity = new Severity(prop.Value.GetString());
+                    severity = new AppConfigurationSeverity(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("description"u8))
