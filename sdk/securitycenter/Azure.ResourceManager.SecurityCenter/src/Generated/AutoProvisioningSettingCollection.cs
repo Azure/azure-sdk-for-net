@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.SecurityCenter
         {
             TryGetApiVersion(AutoProvisioningSettingResource.ResourceType, out string autoProvisioningSettingApiVersion);
             _autoProvisioningSettingsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.SecurityCenter", AutoProvisioningSettingResource.ResourceType.Namespace, Diagnostics);
-            _autoProvisioningSettingsRestClient = new AutoProvisioningSettings(_autoProvisioningSettingsClientDiagnostics, Pipeline, Endpoint, autoProvisioningSettingApiVersion ?? "2017-08-01-preview");
+            _autoProvisioningSettingsRestClient = new AutoProvisioningSettings(_autoProvisioningSettingsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, autoProvisioningSettingApiVersion ?? "2017-08-01-preview");
             ValidateResourceId(id);
         }
 

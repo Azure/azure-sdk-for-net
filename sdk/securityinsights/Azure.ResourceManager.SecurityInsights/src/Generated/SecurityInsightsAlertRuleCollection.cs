@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.SecurityInsights
         {
             TryGetApiVersion(SecurityInsightsAlertRuleResource.ResourceType, out string securityInsightsAlertRuleApiVersion);
             _alertRulesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.SecurityInsights", SecurityInsightsAlertRuleResource.ResourceType.Namespace, Diagnostics);
-            _alertRulesRestClient = new AlertRules(_alertRulesClientDiagnostics, Pipeline, Endpoint, securityInsightsAlertRuleApiVersion ?? "2025-07-01-preview");
+            _alertRulesRestClient = new AlertRules(_alertRulesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, securityInsightsAlertRuleApiVersion ?? "2025-07-01-preview");
             ValidateResourceId(id);
         }
 
