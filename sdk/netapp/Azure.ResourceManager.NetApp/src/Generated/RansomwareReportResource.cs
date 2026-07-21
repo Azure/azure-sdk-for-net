@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.NetApp
         {
             TryGetApiVersion(ResourceType, out string ransomwareReportApiVersion);
             _ransomwareReportsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.NetApp", ResourceType.Namespace, Diagnostics);
-            _ransomwareReportsRestClient = new RansomwareReports(_ransomwareReportsClientDiagnostics, Pipeline, Endpoint, ransomwareReportApiVersion ?? "2026-05-01");
+            _ransomwareReportsRestClient = new RansomwareReports(_ransomwareReportsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, ransomwareReportApiVersion ?? "2026-05-01");
             ValidateResourceId(id);
         }
 

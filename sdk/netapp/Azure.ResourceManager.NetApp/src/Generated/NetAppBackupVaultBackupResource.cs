@@ -53,9 +53,9 @@ namespace Azure.ResourceManager.NetApp
         {
             TryGetApiVersion(ResourceType, out string netAppBackupVaultBackupApiVersion);
             _backupsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.NetApp", ResourceType.Namespace, Diagnostics);
-            _backupsRestClient = new Backups(_backupsClientDiagnostics, Pipeline, Endpoint, netAppBackupVaultBackupApiVersion ?? "2026-05-01");
+            _backupsRestClient = new Backups(_backupsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, netAppBackupVaultBackupApiVersion ?? "2026-05-01");
             _backupsUnderBackupVaultClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.NetApp", ResourceType.Namespace, Diagnostics);
-            _backupsUnderBackupVaultRestClient = new BackupsUnderBackupVault(_backupsUnderBackupVaultClientDiagnostics, Pipeline, Endpoint, netAppBackupVaultBackupApiVersion ?? "2026-05-01");
+            _backupsUnderBackupVaultRestClient = new BackupsUnderBackupVault(_backupsUnderBackupVaultClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, netAppBackupVaultBackupApiVersion ?? "2026-05-01");
             ValidateResourceId(id);
         }
 

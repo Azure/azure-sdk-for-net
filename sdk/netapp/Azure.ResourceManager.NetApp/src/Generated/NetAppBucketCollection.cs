@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.NetApp
         {
             TryGetApiVersion(NetAppBucketResource.ResourceType, out string netAppBucketApiVersion);
             _bucketsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.NetApp", NetAppBucketResource.ResourceType.Namespace, Diagnostics);
-            _bucketsRestClient = new Buckets(_bucketsClientDiagnostics, Pipeline, Endpoint, netAppBucketApiVersion ?? "2026-05-01");
+            _bucketsRestClient = new Buckets(_bucketsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, netAppBucketApiVersion ?? "2026-05-01");
             ValidateResourceId(id);
         }
 

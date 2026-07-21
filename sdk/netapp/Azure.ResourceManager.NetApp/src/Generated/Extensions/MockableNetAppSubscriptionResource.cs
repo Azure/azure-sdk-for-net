@@ -46,11 +46,11 @@ namespace Azure.ResourceManager.NetApp.Mocking
 
         private ClientDiagnostics NetAppResourceClientDiagnostics => _netAppResourceClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.NetApp.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private NetAppResource NetAppResourceRestClient => _netAppResourceRestClient ??= new NetAppResource(NetAppResourceClientDiagnostics, Pipeline, Endpoint, "2026-05-01");
+        private NetAppResource NetAppResourceRestClient => _netAppResourceRestClient ??= new NetAppResource(NetAppResourceClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2026-05-01");
 
         private ClientDiagnostics NetAppResourceUsagesClientDiagnostics => _netAppResourceUsagesClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.NetApp.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private NetAppResourceUsages NetAppResourceUsagesRestClient => _netAppResourceUsagesRestClient ??= new NetAppResourceUsages(NetAppResourceUsagesClientDiagnostics, Pipeline, Endpoint, "2026-05-01");
+        private NetAppResourceUsages NetAppResourceUsagesRestClient => _netAppResourceUsagesRestClient ??= new NetAppResourceUsages(NetAppResourceUsagesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2026-05-01");
 
         /// <summary> Gets a collection of NetAppSubscriptionQuotaItems in the <see cref="SubscriptionResource"/>. </summary>
         /// <param name="location"> The location for the resource. </param>

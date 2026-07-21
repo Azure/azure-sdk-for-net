@@ -1,14 +1,14 @@
 # Release History
 
-## 1.18.0-beta.2 (Unreleased)
+## 1.18.0 (2026-07-15)
 
 ### Features Added
 
+- Upgraded api-version to `2026-05-01`.
+
 ### Breaking Changes
 
-### Bugs Fixed
-
-### Other Changes
+- The Elastic resource types (`NetAppElasticAccountResource`, `NetAppElasticCapacityPoolResource`, etc.) and Active Directory configuration resource types introduced in the preview API are removed from the generated surface in this stable release. SDK-side compatibility shims are provided in the package to preserve source and binary compatibility for callers who used the preview types.
 
 ## 1.18.0-beta.1 (2026-06-30)
 

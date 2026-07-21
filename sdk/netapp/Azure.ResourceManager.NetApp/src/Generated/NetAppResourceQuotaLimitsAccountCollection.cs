@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.NetApp
         {
             TryGetApiVersion(NetAppResourceQuotaLimitsAccountResource.ResourceType, out string netAppResourceQuotaLimitsAccountApiVersion);
             _netAppResourceQuotaLimitsAccountClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.NetApp", NetAppResourceQuotaLimitsAccountResource.ResourceType.Namespace, Diagnostics);
-            _netAppResourceQuotaLimitsAccountRestClient = new NetAppResourceQuotaLimitsAccount(_netAppResourceQuotaLimitsAccountClientDiagnostics, Pipeline, Endpoint, netAppResourceQuotaLimitsAccountApiVersion ?? "2026-05-01");
+            _netAppResourceQuotaLimitsAccountRestClient = new NetAppResourceQuotaLimitsAccount(_netAppResourceQuotaLimitsAccountClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, netAppResourceQuotaLimitsAccountApiVersion ?? "2026-05-01");
             ValidateResourceId(id);
         }
 

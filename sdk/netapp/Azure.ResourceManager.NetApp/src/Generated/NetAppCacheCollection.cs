@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.NetApp
         {
             TryGetApiVersion(NetAppCacheResource.ResourceType, out string netAppCacheApiVersion);
             _cachesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.NetApp", NetAppCacheResource.ResourceType.Namespace, Diagnostics);
-            _cachesRestClient = new Caches(_cachesClientDiagnostics, Pipeline, Endpoint, netAppCacheApiVersion ?? "2026-05-01");
+            _cachesRestClient = new Caches(_cachesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, netAppCacheApiVersion ?? "2026-05-01");
             ValidateResourceId(id);
         }
 

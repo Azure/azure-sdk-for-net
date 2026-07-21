@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.NetApp
         {
             TryGetApiVersion(ResourceType, out string capacityPoolApiVersion);
             _poolsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.NetApp", ResourceType.Namespace, Diagnostics);
-            _poolsRestClient = new Pools(_poolsClientDiagnostics, Pipeline, Endpoint, capacityPoolApiVersion ?? "2026-05-01");
+            _poolsRestClient = new Pools(_poolsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, capacityPoolApiVersion ?? "2026-05-01");
             ValidateResourceId(id);
         }
 

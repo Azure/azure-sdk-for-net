@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.NetApp
         {
             TryGetApiVersion(ResourceType, out string snapshotPolicyApiVersion);
             _snapshotPoliciesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.NetApp", ResourceType.Namespace, Diagnostics);
-            _snapshotPoliciesRestClient = new SnapshotPolicies(_snapshotPoliciesClientDiagnostics, Pipeline, Endpoint, snapshotPolicyApiVersion ?? "2026-05-01");
+            _snapshotPoliciesRestClient = new SnapshotPolicies(_snapshotPoliciesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, snapshotPolicyApiVersion ?? "2026-05-01");
             ValidateResourceId(id);
         }
 
