@@ -210,8 +210,6 @@ public abstract class ProvisionableConstruct : Provisionable, IBicepValue
     /// <inheritdoc />
     void IBicepValue.SetReadOnly()
     {
-        _isOutput = true;
-
         // Reset all the properties as accessors off the current expr
         foreach (IBicepValue property in ProvisionableProperties.Values)
         {
@@ -277,13 +275,6 @@ public abstract class ProvisionableConstruct : Provisionable, IBicepValue
         {
             _kind = BicepValueKind.Literal;
             DefineProvisionableProperties();
-            if (_isOutput)
-            {
-                foreach (IBicepValue property in ProvisionableProperties.Values)
-                {
-                    property.SetReadOnly();
-                }
-            }
         }
     }
 
