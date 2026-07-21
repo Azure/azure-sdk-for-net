@@ -879,23 +879,6 @@ namespace Azure.ResourceManager.NetApp
             }
         }
 
-        /// <summary> Specifies whether the volume operates in Breakthrough Mode. </summary>
-        public BreakthroughMode? BreakthroughModeOld
-        {
-            get
-            {
-                return Properties is null ? default : Properties.BreakthroughModeOld;
-            }
-            set
-            {
-                if (Properties is null)
-                {
-                    Properties = new VolumeProperties();
-                }
-                Properties.BreakthroughModeOld = value;
-            }
-        }
-
         /// <summary> Export policy rule. </summary>
         public IList<NetAppVolumeExportPolicyRule> ExportRules
         {

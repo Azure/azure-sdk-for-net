@@ -1340,6 +1340,7 @@ namespace Azure.ResourceManager.NetApp
         public string BackupId { get { throw null; } set { } }
         public string BaremetalTenantId { get { throw null; } }
         public Azure.ResourceManager.NetApp.Models.BreakthroughMode? BreakthroughMode { get { throw null; } set { } }
+        [System.ObsoleteAttribute("Use BreakthroughMode instead.")]
         public Azure.ResourceManager.NetApp.Models.BreakthroughMode? BreakthroughModeOld { get { throw null; } set { } }
         public Azure.Core.ResourceIdentifier CapacityPoolResourceId { get { throw null; } set { } }
         public int? CloneProgress { get { throw null; } }
@@ -5333,6 +5334,7 @@ namespace Azure.ResourceManager.NetApp.Models
         public string BackupId { get { throw null; } set { } }
         public string BaremetalTenantId { get { throw null; } }
         public Azure.ResourceManager.NetApp.Models.BreakthroughMode? BreakthroughMode { get { throw null; } set { } }
+        [System.ObsoleteAttribute("Use BreakthroughMode instead.")]
         public Azure.ResourceManager.NetApp.Models.BreakthroughMode? BreakthroughModeOld { get { throw null; } set { } }
         public Azure.Core.ResourceIdentifier CapacityPoolResourceId { get { throw null; } set { } }
         public int? CloneProgress { get { throw null; } }

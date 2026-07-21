@@ -6,8 +6,11 @@
 
 #nullable disable
 
+using System;
+
 namespace Azure.ResourceManager.NetApp.Models
 {
+    [Microsoft.TypeSpec.Generator.Customizations.CodeGenSuppress("BreakthroughModeOld")]
     public partial class NetAppVolumeGroupVolume
     {
         private NetAppVolumeLanguage? _language;
@@ -48,6 +51,25 @@ namespace Azure.ResourceManager.NetApp.Models
         {
             get => _breakthroughMode;
             set => _breakthroughMode = value;
+        }
+
+        /// <summary>
+        /// Legacy breakthrough mode field retained for service-compatibility.
+        /// Use <see cref="BreakthroughMode"/> for new code.
+        /// </summary>
+        [Obsolete("Use BreakthroughMode instead.")]
+        public BreakthroughMode? BreakthroughModeOld
+        {
+            get => Properties is null ? default : Properties.BreakthroughModeOld;
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new VolumeProperties();
+                }
+
+                Properties.BreakthroughModeOld = value;
+            }
         }
     }
 }

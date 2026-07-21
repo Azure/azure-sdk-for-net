@@ -9,6 +9,7 @@ using Azure.ResourceManager.NetApp.Models;
 
 namespace Azure.ResourceManager.NetApp
 {
+    [Microsoft.TypeSpec.Generator.Customizations.CodeGenSuppress("BreakthroughModeOld")]
     // The spec now generates the GA ETag shape. The remaining custom member restores the
     // GA setter for IsRestoring, which is read-only in the current service contract.
     public partial class NetAppVolumeData
@@ -60,6 +61,25 @@ namespace Azure.ResourceManager.NetApp
         {
             get => _breakthroughMode;
             set => _breakthroughMode = value;
+        }
+
+        /// <summary>
+        /// Legacy breakthrough mode field retained for service-compatibility.
+        /// Use <see cref="BreakthroughMode"/> for new code.
+        /// </summary>
+        [Obsolete("Use BreakthroughMode instead.")]
+        public BreakthroughMode? BreakthroughModeOld
+        {
+            get => Properties is null ? default : Properties.BreakthroughModeOld;
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new VolumeProperties();
+                }
+
+                Properties.BreakthroughModeOld = value;
+            }
         }
     }
 }
