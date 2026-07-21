@@ -7,22 +7,23 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.Core;
 using Azure.ResourceManager.Authorization;
 
 namespace Azure.ResourceManager.Authorization.Models
 {
     /// <summary> Alert operation result. </summary>
-    public partial class AlertOperationResult
+    public partial class RoleManagementAlertOperationResult
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="AlertOperationResult"/>. </summary>
-        internal AlertOperationResult()
+        /// <summary> Initializes a new instance of <see cref="RoleManagementAlertOperationResult"/>. </summary>
+        internal RoleManagementAlertOperationResult()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="AlertOperationResult"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="RoleManagementAlertOperationResult"/>. </summary>
         /// <param name="id"> The id of the alert operation. </param>
         /// <param name="status"> The status of the alert operation. </param>
         /// <param name="statusDetail"> The status detail of the alert operation. </param>
@@ -30,7 +31,7 @@ namespace Azure.ResourceManager.Authorization.Models
         /// <param name="lastActionOn"> The last action date of the alert operation. </param>
         /// <param name="resourceLocation"> The location of the alert associated with the operation. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal AlertOperationResult(string id, string status, string statusDetail, DateTimeOffset? createdOn, DateTimeOffset? lastActionOn, string resourceLocation, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal RoleManagementAlertOperationResult(string id, string status, string statusDetail, DateTimeOffset? createdOn, DateTimeOffset? lastActionOn, AzureLocation? resourceLocation, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Id = id;
             Status = status;
@@ -63,6 +64,6 @@ namespace Azure.ResourceManager.Authorization.Models
 
         /// <summary> The location of the alert associated with the operation. </summary>
         [WirePath("resourceLocation")]
-        public string ResourceLocation { get; }
+        public AzureLocation? ResourceLocation { get; }
     }
 }

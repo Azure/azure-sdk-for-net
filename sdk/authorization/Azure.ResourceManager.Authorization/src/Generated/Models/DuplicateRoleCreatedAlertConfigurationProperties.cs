@@ -12,7 +12,7 @@ using Azure.ResourceManager.Authorization;
 namespace Azure.ResourceManager.Authorization.Models
 {
     /// <summary> The duplicate role created alert configuration. </summary>
-    public partial class DuplicateRoleCreatedAlertConfigurationProperties : AlertConfigurationProperties
+    public partial class DuplicateRoleCreatedAlertConfigurationProperties : RoleManagementAlertConfigurationProperties
     {
         /// <summary> Initializes a new instance of <see cref="DuplicateRoleCreatedAlertConfigurationProperties"/>. </summary>
         public DuplicateRoleCreatedAlertConfigurationProperties() : base("DuplicateRoleCreatedAlertConfiguration")

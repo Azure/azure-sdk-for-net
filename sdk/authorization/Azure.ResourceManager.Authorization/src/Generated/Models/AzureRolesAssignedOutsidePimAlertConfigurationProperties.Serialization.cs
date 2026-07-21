@@ -14,11 +14,11 @@ using Azure.ResourceManager.Authorization;
 namespace Azure.ResourceManager.Authorization.Models
 {
     /// <summary> The Azure roles assigned outside PIM alert configuration properties. </summary>
-    public partial class AzureRolesAssignedOutsidePimAlertConfigurationProperties : AlertConfigurationProperties, IJsonModel<AzureRolesAssignedOutsidePimAlertConfigurationProperties>
+    public partial class AzureRolesAssignedOutsidePimAlertConfigurationProperties : RoleManagementAlertConfigurationProperties, IJsonModel<AzureRolesAssignedOutsidePimAlertConfigurationProperties>
     {
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected override AlertConfigurationProperties PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        protected override RoleManagementAlertConfigurationProperties PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
             string format = options.Format == "W" ? ((IPersistableModel<AzureRolesAssignedOutsidePimAlertConfigurationProperties>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
@@ -83,7 +83,7 @@ namespace Azure.ResourceManager.Authorization.Models
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected override AlertConfigurationProperties JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        protected override RoleManagementAlertConfigurationProperties JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
             string format = options.Format == "W" ? ((IPersistableModel<AzureRolesAssignedOutsidePimAlertConfigurationProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")

@@ -148,7 +148,7 @@ namespace Azure.ResourceManager.Authorization.Models
                 return null;
             }
             string principalId = default;
-            string resourceId = default;
+            ResourceIdentifier resourceId = default;
             RecordAllDecisionsResult? decision = default;
             string justification = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
@@ -161,7 +161,11 @@ namespace Azure.ResourceManager.Authorization.Models
                 }
                 if (prop.NameEquals("resourceId"u8))
                 {
-                    resourceId = prop.Value.GetString();
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    resourceId = new ResourceIdentifier(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("decision"u8))

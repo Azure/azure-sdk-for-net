@@ -12,7 +12,7 @@ using Azure.ResourceManager.Authorization;
 namespace Azure.ResourceManager.Authorization.Models
 {
     /// <summary> Too many owners assigned to resource alert incident properties. </summary>
-    public partial class TooManyOwnersAssignedToResourceAlertIncidentProperties : AlertIncidentProperties
+    public partial class TooManyOwnersAssignedToResourceAlertIncidentProperties : RoleManagementAlertIncidentProperties
     {
         /// <summary> Initializes a new instance of <see cref="TooManyOwnersAssignedToResourceAlertIncidentProperties"/>. </summary>
         internal TooManyOwnersAssignedToResourceAlertIncidentProperties() : base("TooManyOwnersAssignedToResourceAlertIncident")

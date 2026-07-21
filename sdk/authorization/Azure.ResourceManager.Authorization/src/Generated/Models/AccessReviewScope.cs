@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.Core;
 using Azure.ResourceManager.Authorization;
 
 namespace Azure.ResourceManager.Authorization.Models
@@ -34,7 +35,7 @@ namespace Azure.ResourceManager.Authorization.Models
         /// <param name="excludeResourceId"> This is used to indicate the resource id(s) to exclude. </param>
         /// <param name="excludeRoleDefinitionId"> This is used to indicate the role definition id(s) to exclude. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal AccessReviewScope(string resourceId, string roleDefinitionId, AccessReviewScopePrincipalType? principalType, AccessReviewScopeAssignmentState? assignmentState, TimeSpan? inactiveDuration, bool? isExpandNestedMemberships, bool? isIncludeInheritedAccess, bool? isIncludeAccessBelowResource, string excludeResourceId, string excludeRoleDefinitionId, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal AccessReviewScope(ResourceIdentifier resourceId, string roleDefinitionId, AccessReviewScopePrincipalType? principalType, AccessReviewScopeAssignmentState? assignmentState, TimeSpan? inactiveDuration, bool? isExpandNestedMemberships, bool? isIncludeInheritedAccess, bool? isIncludeAccessBelowResource, ResourceIdentifier excludeResourceId, string excludeRoleDefinitionId, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             ResourceId = resourceId;
             RoleDefinitionId = roleDefinitionId;
@@ -51,7 +52,7 @@ namespace Azure.ResourceManager.Authorization.Models
 
         /// <summary> ResourceId in which this review is getting created. </summary>
         [WirePath("resourceId")]
-        public string ResourceId { get; }
+        public ResourceIdentifier ResourceId { get; }
 
         /// <summary> This is used to indicate the role being reviewed. </summary>
         [WirePath("roleDefinitionId")]
@@ -83,7 +84,7 @@ namespace Azure.ResourceManager.Authorization.Models
 
         /// <summary> This is used to indicate the resource id(s) to exclude. </summary>
         [WirePath("excludeResourceId")]
-        public string ExcludeResourceId { get; set; }
+        public ResourceIdentifier ExcludeResourceId { get; set; }
 
         /// <summary> This is used to indicate the role definition id(s) to exclude. </summary>
         [WirePath("excludeRoleDefinitionId")]

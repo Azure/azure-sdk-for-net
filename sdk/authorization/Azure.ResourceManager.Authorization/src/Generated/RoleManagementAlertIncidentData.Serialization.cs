@@ -137,7 +137,7 @@ namespace Azure.ResourceManager.Authorization
             string name = default;
             ResourceType resourceType = default;
             SystemData systemData = default;
-            AlertIncidentProperties properties = default;
+            RoleManagementAlertIncidentProperties properties = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -179,7 +179,7 @@ namespace Azure.ResourceManager.Authorization
                     {
                         continue;
                     }
-                    properties = AlertIncidentProperties.DeserializeAlertIncidentProperties(prop.Value, options);
+                    properties = RoleManagementAlertIncidentProperties.DeserializeRoleManagementAlertIncidentProperties(prop.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

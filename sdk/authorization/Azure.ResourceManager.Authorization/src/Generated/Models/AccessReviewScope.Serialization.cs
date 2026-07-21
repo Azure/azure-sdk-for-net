@@ -9,6 +9,7 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure.Core;
 using Azure.ResourceManager.Authorization;
 
 namespace Azure.ResourceManager.Authorization.Models
@@ -166,7 +167,7 @@ namespace Azure.ResourceManager.Authorization.Models
             {
                 return null;
             }
-            string resourceId = default;
+            ResourceIdentifier resourceId = default;
             string roleDefinitionId = default;
             AccessReviewScopePrincipalType? principalType = default;
             AccessReviewScopeAssignmentState? assignmentState = default;
@@ -174,14 +175,18 @@ namespace Azure.ResourceManager.Authorization.Models
             bool? isExpandNestedMemberships = default;
             bool? isIncludeInheritedAccess = default;
             bool? isIncludeAccessBelowResource = default;
-            string excludeResourceId = default;
+            ResourceIdentifier excludeResourceId = default;
             string excludeRoleDefinitionId = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("resourceId"u8))
                 {
-                    resourceId = prop.Value.GetString();
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    resourceId = new ResourceIdentifier(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("roleDefinitionId"u8))
@@ -245,7 +250,11 @@ namespace Azure.ResourceManager.Authorization.Models
                 }
                 if (prop.NameEquals("excludeResourceId"u8))
                 {
-                    excludeResourceId = prop.Value.GetString();
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    excludeResourceId = new ResourceIdentifier(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("excludeRoleDefinitionId"u8))

@@ -15,26 +15,26 @@ namespace Azure.ResourceManager.Authorization.Models
     /// Alert configuration properties.
     /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="AzureRolesAssignedOutsidePimAlertConfigurationProperties"/>, <see cref="DuplicateRoleCreatedAlertConfigurationProperties"/>, <see cref="TooManyOwnersAssignedToResourceAlertConfigurationProperties"/>, and <see cref="TooManyPermanentOwnersAssignedToResourceAlertConfigurationProperties"/>.
     /// </summary>
-    public abstract partial class AlertConfigurationProperties
+    public abstract partial class RoleManagementAlertConfigurationProperties
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="AlertConfigurationProperties"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="RoleManagementAlertConfigurationProperties"/>. </summary>
         /// <param name="alertConfigurationType"> The alert configuration type. </param>
-        private protected AlertConfigurationProperties(string alertConfigurationType)
+        private protected RoleManagementAlertConfigurationProperties(string alertConfigurationType)
         {
             AlertConfigurationType = alertConfigurationType;
         }
 
-        /// <summary> Initializes a new instance of <see cref="AlertConfigurationProperties"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="RoleManagementAlertConfigurationProperties"/>. </summary>
         /// <param name="alertDefinitionId"> The alert definition ID. </param>
         /// <param name="scope"> The alert scope. </param>
         /// <param name="isEnabled"> True if the alert is enabled, false will disable the scanning for the specific alert. </param>
         /// <param name="alertConfigurationType"> The alert configuration type. </param>
         /// <param name="alertDefinition"> The alert definition. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal AlertConfigurationProperties(string alertDefinitionId, string scope, bool? isEnabled, string alertConfigurationType, RoleManagementAlertDefinitionData alertDefinition, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal RoleManagementAlertConfigurationProperties(string alertDefinitionId, string scope, bool? isEnabled, string alertConfigurationType, RoleManagementAlertDefinitionData alertDefinition, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             AlertDefinitionId = alertDefinitionId;
             Scope = scope;

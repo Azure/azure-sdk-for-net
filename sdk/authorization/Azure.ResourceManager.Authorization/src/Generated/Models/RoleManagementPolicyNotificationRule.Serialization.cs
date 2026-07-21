@@ -105,10 +105,10 @@ namespace Azure.ResourceManager.Authorization.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(AreDefaultRecipientsEnabled))
+            if (Optional.IsDefined(IsDefaultRecipientsEnabled))
             {
                 writer.WritePropertyName("isDefaultRecipientsEnabled"u8);
-                writer.WriteBooleanValue(AreDefaultRecipientsEnabled.Value);
+                writer.WriteBooleanValue(IsDefaultRecipientsEnabled.Value);
             }
         }
 
@@ -145,7 +145,7 @@ namespace Azure.ResourceManager.Authorization.Models
             RoleManagementPolicyNotificationLevel? notificationLevel = default;
             RoleManagementPolicyRecipientType? recipientType = default;
             IList<string> notificationRecipients = default;
-            bool? areDefaultRecipientsEnabled = default;
+            bool? isDefaultRecipientsEnabled = default;
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("id"u8))
@@ -221,7 +221,7 @@ namespace Azure.ResourceManager.Authorization.Models
                     {
                         continue;
                     }
-                    areDefaultRecipientsEnabled = prop.Value.GetBoolean();
+                    isDefaultRecipientsEnabled = prop.Value.GetBoolean();
                     continue;
                 }
                 if (options.Format != "W")
@@ -238,7 +238,7 @@ namespace Azure.ResourceManager.Authorization.Models
                 notificationLevel,
                 recipientType,
                 notificationRecipients ?? new ChangeTrackingList<string>(),
-                areDefaultRecipientsEnabled);
+                isDefaultRecipientsEnabled);
         }
     }
 }

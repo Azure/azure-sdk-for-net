@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.Authorization
         /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
         /// <param name="properties"> Alert incident properties. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal RoleManagementAlertIncidentData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, AlertIncidentProperties properties, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(id, name, resourceType, systemData)
+        internal RoleManagementAlertIncidentData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, RoleManagementAlertIncidentProperties properties, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(id, name, resourceType, systemData)
         {
             Properties = properties;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
@@ -39,6 +39,6 @@ namespace Azure.ResourceManager.Authorization
 
         /// <summary> Alert incident properties. </summary>
         [WirePath("properties")]
-        public AlertIncidentProperties Properties { get; }
+        public RoleManagementAlertIncidentProperties Properties { get; }
     }
 }

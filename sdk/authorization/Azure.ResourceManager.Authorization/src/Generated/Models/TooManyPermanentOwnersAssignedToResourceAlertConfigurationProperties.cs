@@ -12,7 +12,7 @@ using Azure.ResourceManager.Authorization;
 namespace Azure.ResourceManager.Authorization.Models
 {
     /// <summary> Too many permanent owners assigned to resource alert configuration properties. </summary>
-    public partial class TooManyPermanentOwnersAssignedToResourceAlertConfigurationProperties : AlertConfigurationProperties
+    public partial class TooManyPermanentOwnersAssignedToResourceAlertConfigurationProperties : RoleManagementAlertConfigurationProperties
     {
         /// <summary> Initializes a new instance of <see cref="TooManyPermanentOwnersAssignedToResourceAlertConfigurationProperties"/>. </summary>
         public TooManyPermanentOwnersAssignedToResourceAlertConfigurationProperties() : base("TooManyPermanentOwnersAssignedToResourceAlertConfiguration")

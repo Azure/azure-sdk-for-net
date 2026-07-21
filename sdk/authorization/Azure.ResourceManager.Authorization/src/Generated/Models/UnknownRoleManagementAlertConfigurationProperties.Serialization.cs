@@ -13,59 +13,59 @@ using Azure.ResourceManager.Authorization;
 
 namespace Azure.ResourceManager.Authorization.Models
 {
-    internal partial class UnknownAlertConfigurationProperties : AlertConfigurationProperties, IJsonModel<AlertConfigurationProperties>
+    internal partial class UnknownRoleManagementAlertConfigurationProperties : RoleManagementAlertConfigurationProperties, IJsonModel<RoleManagementAlertConfigurationProperties>
     {
-        /// <summary> Initializes a new instance of <see cref="UnknownAlertConfigurationProperties"/> for deserialization. </summary>
-        internal UnknownAlertConfigurationProperties()
+        /// <summary> Initializes a new instance of <see cref="UnknownRoleManagementAlertConfigurationProperties"/> for deserialization. </summary>
+        internal UnknownRoleManagementAlertConfigurationProperties()
         {
         }
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected override AlertConfigurationProperties PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        protected override RoleManagementAlertConfigurationProperties PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<AlertConfigurationProperties>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<RoleManagementAlertConfigurationProperties>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeAlertConfigurationProperties(document.RootElement, options);
+                        return DeserializeRoleManagementAlertConfigurationProperties(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(AlertConfigurationProperties)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(RoleManagementAlertConfigurationProperties)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<AlertConfigurationProperties>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<RoleManagementAlertConfigurationProperties>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options, AzureResourceManagerAuthorizationContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(AlertConfigurationProperties)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(RoleManagementAlertConfigurationProperties)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<AlertConfigurationProperties>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<RoleManagementAlertConfigurationProperties>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        AlertConfigurationProperties IPersistableModel<AlertConfigurationProperties>.Create(BinaryData data, ModelReaderWriterOptions options)
+        RoleManagementAlertConfigurationProperties IPersistableModel<RoleManagementAlertConfigurationProperties>.Create(BinaryData data, ModelReaderWriterOptions options)
         {
             return PersistableModelCreateCore(data, options);
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<AlertConfigurationProperties>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<RoleManagementAlertConfigurationProperties>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<AlertConfigurationProperties>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<RoleManagementAlertConfigurationProperties>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -76,37 +76,37 @@ namespace Azure.ResourceManager.Authorization.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<AlertConfigurationProperties>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<RoleManagementAlertConfigurationProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(AlertConfigurationProperties)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(RoleManagementAlertConfigurationProperties)} does not support writing '{format}' format.");
             }
             base.JsonModelWriteCore(writer, options);
         }
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        AlertConfigurationProperties IJsonModel<AlertConfigurationProperties>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        RoleManagementAlertConfigurationProperties IJsonModel<RoleManagementAlertConfigurationProperties>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
             return JsonModelCreateCore(ref reader, options);
         }
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected override AlertConfigurationProperties JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        protected override RoleManagementAlertConfigurationProperties JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<AlertConfigurationProperties>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<RoleManagementAlertConfigurationProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(AlertConfigurationProperties)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(RoleManagementAlertConfigurationProperties)} does not support reading '{format}' format.");
             }
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeAlertConfigurationProperties(document.RootElement, options);
+            return DeserializeRoleManagementAlertConfigurationProperties(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        internal static UnknownAlertConfigurationProperties DeserializeUnknownAlertConfigurationProperties(JsonElement element, ModelReaderWriterOptions options)
+        internal static UnknownRoleManagementAlertConfigurationProperties DeserializeUnknownRoleManagementAlertConfigurationProperties(JsonElement element, ModelReaderWriterOptions options)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -158,7 +158,7 @@ namespace Azure.ResourceManager.Authorization.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new UnknownAlertConfigurationProperties(
+            return new UnknownRoleManagementAlertConfigurationProperties(
                 alertDefinitionId,
                 scope,
                 isEnabled,

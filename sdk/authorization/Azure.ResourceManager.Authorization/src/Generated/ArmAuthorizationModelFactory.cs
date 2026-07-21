@@ -133,7 +133,7 @@ namespace Azure.ResourceManager.Authorization.Models
         /// <param name="excludeResourceId"> This is used to indicate the resource id(s) to exclude. </param>
         /// <param name="excludeRoleDefinitionId"> This is used to indicate the role definition id(s) to exclude. </param>
         /// <returns> A new <see cref="Models.AccessReviewScope"/> instance for mocking. </returns>
-        public static AccessReviewScope AccessReviewScope(string resourceId = default, string roleDefinitionId = default, AccessReviewScopePrincipalType? principalType = default, AccessReviewScopeAssignmentState? assignmentState = default, TimeSpan? inactiveDuration = default, bool? isExpandNestedMemberships = default, bool? isIncludeInheritedAccess = default, bool? isIncludeAccessBelowResource = default, string excludeResourceId = default, string excludeRoleDefinitionId = default)
+        public static AccessReviewScope AccessReviewScope(ResourceIdentifier resourceId = default, string roleDefinitionId = default, AccessReviewScopePrincipalType? principalType = default, AccessReviewScopeAssignmentState? assignmentState = default, TimeSpan? inactiveDuration = default, bool? isExpandNestedMemberships = default, bool? isIncludeInheritedAccess = default, bool? isIncludeAccessBelowResource = default, ResourceIdentifier excludeResourceId = default, string excludeRoleDefinitionId = default)
         {
             return new AccessReviewScope(
                 resourceId,
@@ -959,9 +959,9 @@ namespace Azure.ResourceManager.Authorization.Models
         /// <param name="notificationLevel"> The notification level. </param>
         /// <param name="recipientType"> The recipient type. </param>
         /// <param name="notificationRecipients"> The list of notification recipients. </param>
-        /// <param name="areDefaultRecipientsEnabled"> Determines if the notification will be sent to the recipient type specified in the policy rule. </param>
+        /// <param name="isDefaultRecipientsEnabled"> Determines if the notification will be sent to the recipient type specified in the policy rule. </param>
         /// <returns> A new <see cref="Models.RoleManagementPolicyNotificationRule"/> instance for mocking. </returns>
-        public static RoleManagementPolicyNotificationRule RoleManagementPolicyNotificationRule(string id = default, RoleManagementPolicyRuleTarget target = default, NotificationDeliveryType? notificationDeliveryType = default, RoleManagementPolicyNotificationLevel? notificationLevel = default, RoleManagementPolicyRecipientType? recipientType = default, IEnumerable<string> notificationRecipients = default, bool? areDefaultRecipientsEnabled = default)
+        public static RoleManagementPolicyNotificationRule RoleManagementPolicyNotificationRule(string id = default, RoleManagementPolicyRuleTarget target = default, NotificationDeliveryType? notificationDeliveryType = default, RoleManagementPolicyNotificationLevel? notificationLevel = default, RoleManagementPolicyRecipientType? recipientType = default, IEnumerable<string> notificationRecipients = default, bool? isDefaultRecipientsEnabled = default)
         {
             notificationRecipients ??= new ChangeTrackingList<string>();
 
@@ -974,7 +974,7 @@ namespace Azure.ResourceManager.Authorization.Models
                 notificationLevel,
                 recipientType,
                 (notificationRecipients ?? new ChangeTrackingList<string>()).ToList(),
-                areDefaultRecipientsEnabled);
+                isDefaultRecipientsEnabled);
         }
 
         /// <param name="id"> The id of the rule. </param>
@@ -1347,7 +1347,7 @@ namespace Azure.ResourceManager.Authorization.Models
         /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
         /// <param name="properties"> Alert incident properties. </param>
         /// <returns> A new <see cref="Authorization.RoleManagementAlertIncidentData"/> instance for mocking. </returns>
-        public static RoleManagementAlertIncidentData RoleManagementAlertIncidentData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, AlertIncidentProperties properties = default)
+        public static RoleManagementAlertIncidentData RoleManagementAlertIncidentData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, RoleManagementAlertIncidentProperties properties = default)
         {
             return new RoleManagementAlertIncidentData(
                 id,
@@ -1359,10 +1359,10 @@ namespace Azure.ResourceManager.Authorization.Models
         }
 
         /// <param name="alertIncidentType"> The alert incident type. </param>
-        /// <returns> A new <see cref="Models.AlertIncidentProperties"/> instance for mocking. </returns>
-        public static AlertIncidentProperties AlertIncidentProperties(string alertIncidentType = default)
+        /// <returns> A new <see cref="Models.RoleManagementAlertIncidentProperties"/> instance for mocking. </returns>
+        public static RoleManagementAlertIncidentProperties RoleManagementAlertIncidentProperties(string alertIncidentType = default)
         {
-            return new UnknownAlertIncidentProperties(alertIncidentType, default);
+            return new UnknownRoleManagementAlertIncidentProperties(alertIncidentType, default);
         }
 
         /// <param name="assigneeDisplayName"> The assignee display name. </param>
@@ -1424,7 +1424,7 @@ namespace Azure.ResourceManager.Authorization.Models
         /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
         /// <param name="properties"> Alert configuration properties. </param>
         /// <returns> A new <see cref="Authorization.RoleManagementAlertConfigurationData"/> instance for mocking. </returns>
-        public static RoleManagementAlertConfigurationData RoleManagementAlertConfigurationData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, AlertConfigurationProperties properties = default)
+        public static RoleManagementAlertConfigurationData RoleManagementAlertConfigurationData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, RoleManagementAlertConfigurationProperties properties = default)
         {
             return new RoleManagementAlertConfigurationData(
                 id,
@@ -1440,10 +1440,10 @@ namespace Azure.ResourceManager.Authorization.Models
         /// <param name="isEnabled"> True if the alert is enabled, false will disable the scanning for the specific alert. </param>
         /// <param name="alertConfigurationType"> The alert configuration type. </param>
         /// <param name="alertDefinition"> The alert definition. </param>
-        /// <returns> A new <see cref="Models.AlertConfigurationProperties"/> instance for mocking. </returns>
-        public static AlertConfigurationProperties AlertConfigurationProperties(string alertDefinitionId = default, string scope = default, bool? isEnabled = default, string alertConfigurationType = default, RoleManagementAlertDefinitionData alertDefinition = default)
+        /// <returns> A new <see cref="Models.RoleManagementAlertConfigurationProperties"/> instance for mocking. </returns>
+        public static RoleManagementAlertConfigurationProperties RoleManagementAlertConfigurationProperties(string alertDefinitionId = default, string scope = default, bool? isEnabled = default, string alertConfigurationType = default, RoleManagementAlertDefinitionData alertDefinition = default)
         {
-            return new UnknownAlertConfigurationProperties(
+            return new UnknownRoleManagementAlertConfigurationProperties(
                 alertDefinitionId,
                 scope,
                 isEnabled,
@@ -1530,10 +1530,10 @@ namespace Azure.ResourceManager.Authorization.Models
         /// <param name="createdOn"> The created date of the alert operation. </param>
         /// <param name="lastActionOn"> The last action date of the alert operation. </param>
         /// <param name="resourceLocation"> The location of the alert associated with the operation. </param>
-        /// <returns> A new <see cref="Models.AlertOperationResult"/> instance for mocking. </returns>
-        public static AlertOperationResult AlertOperationResult(string id = default, string status = default, string statusDetail = default, DateTimeOffset? createdOn = default, DateTimeOffset? lastActionOn = default, string resourceLocation = default)
+        /// <returns> A new <see cref="Models.RoleManagementAlertOperationResult"/> instance for mocking. </returns>
+        public static RoleManagementAlertOperationResult RoleManagementAlertOperationResult(string id = default, string status = default, string statusDetail = default, DateTimeOffset? createdOn = default, DateTimeOffset? lastActionOn = default, AzureLocation? resourceLocation = default)
         {
-            return new AlertOperationResult(
+            return new RoleManagementAlertOperationResult(
                 id,
                 status,
                 statusDetail,
@@ -1696,7 +1696,7 @@ namespace Azure.ResourceManager.Authorization.Models
         /// <param name="decision"> The decision to make. Approvers can take action of Approve/Deny. </param>
         /// <param name="justification"> Justification provided by approvers for their action. </param>
         /// <returns> A new <see cref="Models.RecordAllDecisionsProperties"/> instance for mocking. </returns>
-        public static RecordAllDecisionsProperties RecordAllDecisionsProperties(string principalId = default, string resourceId = default, RecordAllDecisionsResult? decision = default, string justification = default)
+        public static RecordAllDecisionsProperties RecordAllDecisionsProperties(string principalId = default, ResourceIdentifier resourceId = default, RecordAllDecisionsResult? decision = default, string justification = default)
         {
             return new RecordAllDecisionsProperties(principalId, resourceId, decision, justification, default);
         }

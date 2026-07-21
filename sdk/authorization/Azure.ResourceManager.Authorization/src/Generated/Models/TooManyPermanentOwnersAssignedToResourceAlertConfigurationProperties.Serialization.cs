@@ -14,11 +14,11 @@ using Azure.ResourceManager.Authorization;
 namespace Azure.ResourceManager.Authorization.Models
 {
     /// <summary> Too many permanent owners assigned to resource alert configuration properties. </summary>
-    public partial class TooManyPermanentOwnersAssignedToResourceAlertConfigurationProperties : AlertConfigurationProperties, IJsonModel<TooManyPermanentOwnersAssignedToResourceAlertConfigurationProperties>
+    public partial class TooManyPermanentOwnersAssignedToResourceAlertConfigurationProperties : RoleManagementAlertConfigurationProperties, IJsonModel<TooManyPermanentOwnersAssignedToResourceAlertConfigurationProperties>
     {
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected override AlertConfigurationProperties PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        protected override RoleManagementAlertConfigurationProperties PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
             string format = options.Format == "W" ? ((IPersistableModel<TooManyPermanentOwnersAssignedToResourceAlertConfigurationProperties>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
@@ -93,7 +93,7 @@ namespace Azure.ResourceManager.Authorization.Models
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected override AlertConfigurationProperties JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        protected override RoleManagementAlertConfigurationProperties JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
             string format = options.Format == "W" ? ((IPersistableModel<TooManyPermanentOwnersAssignedToResourceAlertConfigurationProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")

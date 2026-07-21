@@ -303,7 +303,7 @@ namespace Azure.ResourceManager.Authorization
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<ArmOperation<AlertOperationResult>> RefreshAsync(WaitUntil waitUntil, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation<RoleManagementAlertOperationResult>> RefreshAsync(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = _alertsClientDiagnostics.CreateScope("RoleManagementAlertResource.Refresh");
             scope.Start();
@@ -315,8 +315,8 @@ namespace Azure.ResourceManager.Authorization
                 };
                 HttpMessage message = _alertsRestClient.CreateRefreshRequest(Id.Parent.ToString(), Id.Name, context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                AuthorizationArmOperation<AlertOperationResult> operation = new AuthorizationArmOperation<AlertOperationResult>(
-                    new AlertOperationResultOperationSource(),
+                AuthorizationArmOperation<RoleManagementAlertOperationResult> operation = new AuthorizationArmOperation<RoleManagementAlertOperationResult>(
+                    new RoleManagementAlertOperationResultOperationSource(),
                     _alertsClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -358,7 +358,7 @@ namespace Azure.ResourceManager.Authorization
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual ArmOperation<AlertOperationResult> Refresh(WaitUntil waitUntil, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<RoleManagementAlertOperationResult> Refresh(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = _alertsClientDiagnostics.CreateScope("RoleManagementAlertResource.Refresh");
             scope.Start();
@@ -370,8 +370,8 @@ namespace Azure.ResourceManager.Authorization
                 };
                 HttpMessage message = _alertsRestClient.CreateRefreshRequest(Id.Parent.ToString(), Id.Name, context);
                 Response response = Pipeline.ProcessMessage(message, context);
-                AuthorizationArmOperation<AlertOperationResult> operation = new AuthorizationArmOperation<AlertOperationResult>(
-                    new AlertOperationResultOperationSource(),
+                AuthorizationArmOperation<RoleManagementAlertOperationResult> operation = new AuthorizationArmOperation<RoleManagementAlertOperationResult>(
+                    new RoleManagementAlertOperationResultOperationSource(),
                     _alertsClientDiagnostics,
                     Pipeline,
                     message.Request,

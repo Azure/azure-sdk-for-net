@@ -1688,7 +1688,7 @@ namespace Azure.ResourceManager.Authorization
         /// <param name="scope"> The scope that the resource will apply against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
-        public static async Task<ArmOperation<AlertOperationResult>> RefreshAllAsync(this ArmClient client, WaitUntil waitUntil, ResourceIdentifier scope, CancellationToken cancellationToken = default)
+        public static async Task<ArmOperation<RoleManagementAlertOperationResult>> RefreshAllAsync(this ArmClient client, WaitUntil waitUntil, ResourceIdentifier scope, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(client, nameof(client));
 
@@ -1707,7 +1707,7 @@ namespace Azure.ResourceManager.Authorization
         /// <param name="scope"> The scope that the resource will apply against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
-        public static ArmOperation<AlertOperationResult> RefreshAll(this ArmClient client, WaitUntil waitUntil, ResourceIdentifier scope, CancellationToken cancellationToken = default)
+        public static ArmOperation<RoleManagementAlertOperationResult> RefreshAll(this ArmClient client, WaitUntil waitUntil, ResourceIdentifier scope, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(client, nameof(client));
 
@@ -1766,7 +1766,7 @@ namespace Azure.ResourceManager.Authorization
         /// <param name="operationId"> The id of the alert operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
-        public static async Task<Response<AlertOperationResult>> GetAlertOperationAsync(this ArmClient client, ResourceIdentifier scope, string operationId, CancellationToken cancellationToken = default)
+        public static async Task<Response<RoleManagementAlertOperationResult>> GetAlertOperationAsync(this ArmClient client, ResourceIdentifier scope, string operationId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(client, nameof(client));
 
@@ -1785,7 +1785,7 @@ namespace Azure.ResourceManager.Authorization
         /// <param name="operationId"> The id of the alert operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
-        public static Response<AlertOperationResult> GetAlertOperation(this ArmClient client, ResourceIdentifier scope, string operationId, CancellationToken cancellationToken = default)
+        public static Response<RoleManagementAlertOperationResult> GetAlertOperation(this ArmClient client, ResourceIdentifier scope, string operationId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(client, nameof(client));
 

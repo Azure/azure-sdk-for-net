@@ -12,7 +12,7 @@ using Azure.ResourceManager.Authorization;
 namespace Azure.ResourceManager.Authorization.Models
 {
     /// <summary> The Azure roles assigned outside PIM alert configuration properties. </summary>
-    public partial class AzureRolesAssignedOutsidePimAlertConfigurationProperties : AlertConfigurationProperties
+    public partial class AzureRolesAssignedOutsidePimAlertConfigurationProperties : RoleManagementAlertConfigurationProperties
     {
         /// <summary> Initializes a new instance of <see cref="AzureRolesAssignedOutsidePimAlertConfigurationProperties"/>. </summary>
         public AzureRolesAssignedOutsidePimAlertConfigurationProperties() : base("AzureRolesAssignedOutsidePimAlertConfiguration")

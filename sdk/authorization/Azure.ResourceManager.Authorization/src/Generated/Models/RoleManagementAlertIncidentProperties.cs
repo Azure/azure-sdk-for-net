@@ -15,22 +15,22 @@ namespace Azure.ResourceManager.Authorization.Models
     /// Alert incident properties
     /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="AzureRolesAssignedOutsidePimAlertIncidentProperties"/>, <see cref="DuplicateRoleCreatedAlertIncidentProperties"/>, <see cref="TooManyOwnersAssignedToResourceAlertIncidentProperties"/>, and <see cref="TooManyPermanentOwnersAssignedToResourceAlertIncidentProperties"/>.
     /// </summary>
-    public abstract partial class AlertIncidentProperties
+    public abstract partial class RoleManagementAlertIncidentProperties
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="AlertIncidentProperties"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="RoleManagementAlertIncidentProperties"/>. </summary>
         /// <param name="alertIncidentType"> The alert incident type. </param>
-        private protected AlertIncidentProperties(string alertIncidentType)
+        private protected RoleManagementAlertIncidentProperties(string alertIncidentType)
         {
             AlertIncidentType = alertIncidentType;
         }
 
-        /// <summary> Initializes a new instance of <see cref="AlertIncidentProperties"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="RoleManagementAlertIncidentProperties"/>. </summary>
         /// <param name="alertIncidentType"> The alert incident type. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal AlertIncidentProperties(string alertIncidentType, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal RoleManagementAlertIncidentProperties(string alertIncidentType, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             AlertIncidentType = alertIncidentType;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;

@@ -29,14 +29,14 @@ namespace Azure.ResourceManager.Authorization.Models
         /// <param name="notificationLevel"> The notification level. </param>
         /// <param name="recipientType"> The recipient type. </param>
         /// <param name="notificationRecipients"> The list of notification recipients. </param>
-        /// <param name="areDefaultRecipientsEnabled"> Determines if the notification will be sent to the recipient type specified in the policy rule. </param>
-        internal RoleManagementPolicyNotificationRule(string id, RoleManagementPolicyRuleType ruleType, RoleManagementPolicyRuleTarget target, IDictionary<string, BinaryData> additionalBinaryDataProperties, NotificationDeliveryType? notificationDeliveryType, RoleManagementPolicyNotificationLevel? notificationLevel, RoleManagementPolicyRecipientType? recipientType, IList<string> notificationRecipients, bool? areDefaultRecipientsEnabled) : base(id, ruleType, target, additionalBinaryDataProperties)
+        /// <param name="isDefaultRecipientsEnabled"> Determines if the notification will be sent to the recipient type specified in the policy rule. </param>
+        internal RoleManagementPolicyNotificationRule(string id, RoleManagementPolicyRuleType ruleType, RoleManagementPolicyRuleTarget target, IDictionary<string, BinaryData> additionalBinaryDataProperties, NotificationDeliveryType? notificationDeliveryType, RoleManagementPolicyNotificationLevel? notificationLevel, RoleManagementPolicyRecipientType? recipientType, IList<string> notificationRecipients, bool? isDefaultRecipientsEnabled) : base(id, ruleType, target, additionalBinaryDataProperties)
         {
             NotificationDeliveryType = notificationDeliveryType;
             NotificationLevel = notificationLevel;
             RecipientType = recipientType;
             NotificationRecipients = notificationRecipients;
-            AreDefaultRecipientsEnabled = areDefaultRecipientsEnabled;
+            IsDefaultRecipientsEnabled = isDefaultRecipientsEnabled;
         }
 
         /// <summary> The type of notification. </summary>
@@ -57,6 +57,6 @@ namespace Azure.ResourceManager.Authorization.Models
 
         /// <summary> Determines if the notification will be sent to the recipient type specified in the policy rule. </summary>
         [WirePath("isDefaultRecipientsEnabled")]
-        public bool? AreDefaultRecipientsEnabled { get; set; }
+        public bool? IsDefaultRecipientsEnabled { get; set; }
     }
 }

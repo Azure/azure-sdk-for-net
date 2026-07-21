@@ -15,29 +15,29 @@ using Azure.ResourceManager.Authorization.Models;
 namespace Azure.ResourceManager.Authorization
 {
     /// <summary></summary>
-    internal partial class AlertOperationResultOperationSource : IOperationSource<AlertOperationResult>
+    internal partial class RoleManagementAlertOperationResultOperationSource : IOperationSource<RoleManagementAlertOperationResult>
     {
         /// <summary></summary>
-        internal AlertOperationResultOperationSource()
+        internal RoleManagementAlertOperationResultOperationSource()
         {
         }
 
         /// <param name="response"> The response from the service. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns></returns>
-        AlertOperationResult IOperationSource<AlertOperationResult>.CreateResult(Response response, CancellationToken cancellationToken)
+        RoleManagementAlertOperationResult IOperationSource<RoleManagementAlertOperationResult>.CreateResult(Response response, CancellationToken cancellationToken)
         {
             using JsonDocument document = JsonDocument.Parse(response.ContentStream);
-            return AlertOperationResult.DeserializeAlertOperationResult(document.RootElement, ModelSerializationExtensions.WireOptions);
+            return RoleManagementAlertOperationResult.DeserializeRoleManagementAlertOperationResult(document.RootElement, ModelSerializationExtensions.WireOptions);
         }
 
         /// <param name="response"> The response from the service. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns></returns>
-        async ValueTask<AlertOperationResult> IOperationSource<AlertOperationResult>.CreateResultAsync(Response response, CancellationToken cancellationToken)
+        async ValueTask<RoleManagementAlertOperationResult> IOperationSource<RoleManagementAlertOperationResult>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using JsonDocument document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-            return AlertOperationResult.DeserializeAlertOperationResult(document.RootElement, ModelSerializationExtensions.WireOptions);
+            return RoleManagementAlertOperationResult.DeserializeRoleManagementAlertOperationResult(document.RootElement, ModelSerializationExtensions.WireOptions);
         }
     }
 }

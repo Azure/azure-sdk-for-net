@@ -10,12 +10,12 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.Authorization.Models
 {
-    internal partial class UnknownAlertIncidentProperties : AlertIncidentProperties
+    internal partial class UnknownRoleManagementAlertIncidentProperties : RoleManagementAlertIncidentProperties
     {
-        /// <summary> Initializes a new instance of <see cref="UnknownAlertIncidentProperties"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="UnknownRoleManagementAlertIncidentProperties"/>. </summary>
         /// <param name="alertIncidentType"> The alert incident type. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal UnknownAlertIncidentProperties(string alertIncidentType, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(alertIncidentType ?? "unknown", additionalBinaryDataProperties)
+        internal UnknownRoleManagementAlertIncidentProperties(string alertIncidentType, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(alertIncidentType ?? "unknown", additionalBinaryDataProperties)
         {
         }
     }

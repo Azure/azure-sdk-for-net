@@ -11,16 +11,16 @@ using Azure.ResourceManager.Authorization;
 
 namespace Azure.ResourceManager.Authorization.Models
 {
-    internal partial class UnknownAlertConfigurationProperties : AlertConfigurationProperties
+    internal partial class UnknownRoleManagementAlertConfigurationProperties : RoleManagementAlertConfigurationProperties
     {
-        /// <summary> Initializes a new instance of <see cref="UnknownAlertConfigurationProperties"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="UnknownRoleManagementAlertConfigurationProperties"/>. </summary>
         /// <param name="alertDefinitionId"> The alert definition ID. </param>
         /// <param name="scope"> The alert scope. </param>
         /// <param name="isEnabled"> True if the alert is enabled, false will disable the scanning for the specific alert. </param>
         /// <param name="alertConfigurationType"> The alert configuration type. </param>
         /// <param name="alertDefinition"> The alert definition. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal UnknownAlertConfigurationProperties(string alertDefinitionId, string scope, bool? isEnabled, string alertConfigurationType, RoleManagementAlertDefinitionData alertDefinition, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(alertDefinitionId, scope, isEnabled, alertConfigurationType ?? "unknown", alertDefinition, additionalBinaryDataProperties)
+        internal UnknownRoleManagementAlertConfigurationProperties(string alertDefinitionId, string scope, bool? isEnabled, string alertConfigurationType, RoleManagementAlertDefinitionData alertDefinition, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(alertDefinitionId, scope, isEnabled, alertConfigurationType ?? "unknown", alertDefinition, additionalBinaryDataProperties)
         {
         }
     }

@@ -1165,7 +1165,7 @@ namespace Azure.ResourceManager.Authorization.Mocking
         /// <param name="scope"> The scope that the resource will apply against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="scope"/> is null. </exception>
-        public virtual async Task<ArmOperation<AlertOperationResult>> RefreshAllAsync(WaitUntil waitUntil, ResourceIdentifier scope, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation<RoleManagementAlertOperationResult>> RefreshAllAsync(WaitUntil waitUntil, ResourceIdentifier scope, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(scope, nameof(scope));
 
@@ -1179,8 +1179,8 @@ namespace Azure.ResourceManager.Authorization.Mocking
                 };
                 HttpMessage message = AlertsRestClient.CreateRefreshAllRequest(scope.ToString(), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                AuthorizationArmOperation<AlertOperationResult> operation = new AuthorizationArmOperation<AlertOperationResult>(
-                    new AlertOperationResultOperationSource(),
+                AuthorizationArmOperation<RoleManagementAlertOperationResult> operation = new AuthorizationArmOperation<RoleManagementAlertOperationResult>(
+                    new RoleManagementAlertOperationResultOperationSource(),
                     AlertsClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -1220,7 +1220,7 @@ namespace Azure.ResourceManager.Authorization.Mocking
         /// <param name="scope"> The scope that the resource will apply against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="scope"/> is null. </exception>
-        public virtual ArmOperation<AlertOperationResult> RefreshAll(WaitUntil waitUntil, ResourceIdentifier scope, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<RoleManagementAlertOperationResult> RefreshAll(WaitUntil waitUntil, ResourceIdentifier scope, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(scope, nameof(scope));
 
@@ -1234,8 +1234,8 @@ namespace Azure.ResourceManager.Authorization.Mocking
                 };
                 HttpMessage message = AlertsRestClient.CreateRefreshAllRequest(scope.ToString(), context);
                 Response response = Pipeline.ProcessMessage(message, context);
-                AuthorizationArmOperation<AlertOperationResult> operation = new AuthorizationArmOperation<AlertOperationResult>(
-                    new AlertOperationResultOperationSource(),
+                AuthorizationArmOperation<RoleManagementAlertOperationResult> operation = new AuthorizationArmOperation<RoleManagementAlertOperationResult>(
+                    new RoleManagementAlertOperationResultOperationSource(),
                     AlertsClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -1342,7 +1342,7 @@ namespace Azure.ResourceManager.Authorization.Mocking
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="scope"/> or <paramref name="operationId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="operationId"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual async Task<Response<AlertOperationResult>> GetAlertOperationAsync(ResourceIdentifier scope, string operationId, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<RoleManagementAlertOperationResult>> GetAlertOperationAsync(ResourceIdentifier scope, string operationId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(scope, nameof(scope));
             Argument.AssertNotNullOrEmpty(operationId, nameof(operationId));
@@ -1357,7 +1357,7 @@ namespace Azure.ResourceManager.Authorization.Mocking
                 };
                 HttpMessage message = AlertOperationRestClient.CreateGetAlertOperationRequest(scope.ToString(), operationId, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                Response<AlertOperationResult> response = Response.FromValue(AlertOperationResult.FromResponse(result), result);
+                Response<RoleManagementAlertOperationResult> response = Response.FromValue(RoleManagementAlertOperationResult.FromResponse(result), result);
                 if (response.Value == null)
                 {
                     throw new RequestFailedException(response.GetRawResponse());
@@ -1393,7 +1393,7 @@ namespace Azure.ResourceManager.Authorization.Mocking
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="scope"/> or <paramref name="operationId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="operationId"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual Response<AlertOperationResult> GetAlertOperation(ResourceIdentifier scope, string operationId, CancellationToken cancellationToken = default)
+        public virtual Response<RoleManagementAlertOperationResult> GetAlertOperation(ResourceIdentifier scope, string operationId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(scope, nameof(scope));
             Argument.AssertNotNullOrEmpty(operationId, nameof(operationId));
@@ -1408,7 +1408,7 @@ namespace Azure.ResourceManager.Authorization.Mocking
                 };
                 HttpMessage message = AlertOperationRestClient.CreateGetAlertOperationRequest(scope.ToString(), operationId, context);
                 Response result = Pipeline.ProcessMessage(message, context);
-                Response<AlertOperationResult> response = Response.FromValue(AlertOperationResult.FromResponse(result), result);
+                Response<RoleManagementAlertOperationResult> response = Response.FromValue(RoleManagementAlertOperationResult.FromResponse(result), result);
                 if (response.Value == null)
                 {
                     throw new RequestFailedException(response.GetRawResponse());

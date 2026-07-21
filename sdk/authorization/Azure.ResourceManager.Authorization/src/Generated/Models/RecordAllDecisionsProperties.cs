@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.Core;
 using Azure.ResourceManager.Authorization;
 
 namespace Azure.ResourceManager.Authorization.Models
@@ -28,7 +29,7 @@ namespace Azure.ResourceManager.Authorization.Models
         /// <param name="decision"> The decision to make. Approvers can take action of Approve/Deny. </param>
         /// <param name="justification"> Justification provided by approvers for their action. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal RecordAllDecisionsProperties(string principalId, string resourceId, RecordAllDecisionsResult? decision, string justification, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal RecordAllDecisionsProperties(string principalId, ResourceIdentifier resourceId, RecordAllDecisionsResult? decision, string justification, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             PrincipalId = principalId;
             ResourceId = resourceId;
@@ -43,7 +44,7 @@ namespace Azure.ResourceManager.Authorization.Models
 
         /// <summary> The id of resource which needs to be approved/denied. </summary>
         [WirePath("resourceId")]
-        public string ResourceId { get; }
+        public ResourceIdentifier ResourceId { get; }
 
         /// <summary> The decision to make. Approvers can take action of Approve/Deny. </summary>
         [WirePath("decision")]
