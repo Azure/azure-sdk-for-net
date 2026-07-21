@@ -9,23 +9,22 @@ This file contains package-specific guidance for agents working in `Azure.Storag
 
 - Package path: `sdk/storage/Azure.Storage.Files.DataLake`
 - Applies to:
-  - DataLake service/file system/path clients
-  - hierarchical namespace path operations (create, rename, delete, list, ACL)
-  - DataLake-specific options and models
+  - DataLake service/file-system/path client internals,
+  - hierarchical namespace operation plumbing,
+  - ACL/permission/metadata option and model behavior.
 
-## DataLake-specific conventions
+## Package Architecture Guidance
 
 - Preserve hierarchical namespace semantics and path operation consistency.
-- Keep rename/move behavior aligned with existing package expectations and error paths.
-- Maintain ACL and permission-related API and behavior consistency.
-- Preserve continuation token and listing behavior (including recursion/flat listing modes as implemented).
+- Keep rename/move and related failure-path behavior aligned with current implementation.
+- Maintain ACL/permission model and translation behavior.
+- Preserve listing continuation-token behavior and current traversal modes.
 
-## Blob API preference
+## Cross-Package Boundary Guidance
 
-- Prefer Blob APIs for behavior that is fundamentally blob-native and does not depend on hierarchical namespace semantics.
-- Use DataLake APIs when the scenario requires DataLake-specific features such as directories, rename semantics, ACLs, POSIX permissions, or hierarchical path traversal.
-- When both packages can satisfy a scenario, avoid re-implementing blob behavior in DataLake-only code unless the package already has a clear precedent.
-- Keep shared behavior aligned with the Blob package where DataLake is acting as a layer over Blob storage.
+- Preserve the established boundary between DataLake package internals and Blob package internals.
+- Keep shared behavior aligned where DataLake layers over Blob-backed service mechanics.
+- Avoid duplicating Blob package internals in DataLake when an existing shared or delegated pattern already exists.
 
 ## Error handling
 
@@ -35,11 +34,8 @@ This file contains package-specific guidance for agents working in `Azure.Storag
 
 ## Testing guidance
 
-- Add focused tests around modified path/file-system scenarios.
-- Include representative coverage for:
-  - rename/move or delete edge cases (if touched)
-  - ACL/permission behavior (if touched)
-  - list pagination/continuation behavior (if touched)
+- Add focused tests around modified path/file-system internals.
+- Cover rename/move/delete, ACL/permission, and list continuation behavior when touched.
 - Keep test additions scoped to changed behavior.
 
 ## Non-goals

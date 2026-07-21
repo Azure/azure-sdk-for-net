@@ -9,37 +9,32 @@ This file contains package-specific guidance for agents working in `Azure.Storag
 
 - Package path: `sdk/storage/Azure.Storage.Blobs`
 - Applies to:
-  - Blob clients and models
-  - BlobContainer and BlobBase/BlobClient families
-  - Block blob/page blob/append blob behaviors
-  - Blob batch, query, and lease-related implementation in this package
+  - public and internal blob client families and models,
+  - container/blob operation plumbing,
+  - blob-type-specific behavior paths,
+  - batch/query/lease implementation inside this package.
 
-## Blob-specific conventions
+## Package Architecture Guidance
 
-- Preserve existing behavior around:
-  - conditional headers (`If-Match`, `If-None-Match`, etc.)
-  - access conditions and lease conditions
-  - versioning/snapshots semantics
-- Keep public API shape and naming consistent with existing clients.
-- Do not introduce convenience APIs that bypass existing request condition patterns.
-- For pageable/async pageable operations, preserve ordering and continuation token behavior.
+- Preserve client layering: public API -> convenience logic -> generated protocol clients -> pipeline.
+- Keep public API shape and naming consistent with neighboring blob clients.
+- Preserve existing condition, lease, version, and snapshot behavior semantics in implementation paths.
+- Keep pageable and async-pageable internals continuation-token based and lazily evaluated.
+- Keep shared helpers/package internals reusable rather than duplicating behavior per client.
 
 ## Error handling
 
-- Follow package-wide and storage-wide exception patterns from `sdk/storage/AGENTS.md`.
-- Do not create bespoke exception translation paths unless already established by this package.
-- Ensure request/response failures preserve service diagnostics and error codes.
+- Follow storage-wide exception patterns from `sdk/storage/AGENTS.md`.
+- Keep existing exception translation boundaries stable.
+- Preserve diagnostics context and service error codes on failures.
 
 ## Testing guidance
 
-- Add or update tests near the affected feature area (unit/live as applicable).
-- Include scenarios for:
-  - conditional request failures/successes
-  - lease-related constraints where relevant
-  - snapshot/version behaviors when touched
-- Avoid broad test refactors unrelated to the change.
+- Update tests in the same feature area as the change.
+- Prioritize coverage for behavior boundaries touched by the edit.
+- Avoid unrelated test refactors.
 
 ## Non-goals
 
-- Do not move shared logic out of established shared storage locations unless necessary.
-- Do not change generated code or protocol-layer conventions unless required by an upstream swagger/protocol update.
+- Do not move shared logic out of established shared locations without clear package need.
+- Do not edit generated code directly or alter protocol conventions without regeneration inputs.

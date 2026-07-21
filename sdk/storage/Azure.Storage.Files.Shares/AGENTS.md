@@ -9,31 +9,28 @@ This file contains package-specific guidance for agents working in `Azure.Storag
 
 - Package path: `sdk/storage/Azure.Storage.Files.Shares`
 - Applies to:
-  - Share, directory, and file clients
-  - SMB/NFS-related option surfaces exposed by this package
-  - Handle/permission/metadata operations under shares
+  - share/directory/file client internals,
+  - option and model surfaces for shares,
+  - handle/permission/metadata implementation paths.
 
-## Shares-specific conventions
+## Package Architecture Guidance
 
-- Preserve directory and file path behavior and normalization as currently implemented.
-- Maintain compatibility with existing SMB/NFS option handling and defaults.
-- Keep request condition handling aligned with current share/file operations.
-- Avoid introducing behavior that differs from existing shares client patterns unless required.
+- Preserve directory and file path normalization/validation behavior.
+- Keep SMB/NFS-related option handling consistent with existing package defaults.
+- Preserve request-condition and concurrency behavior in share/file operation paths.
+- Keep client and model shape consistent with neighboring shares types.
 
 ## Error handling
 
 - Follow `sdk/storage/AGENTS.md` for exception creation/translation.
-- Keep failures diagnosable with service error code/context preserved.
-- Avoid package-local one-off exception mapping unless already established.
+- Keep failure paths diagnosable with service error codes and diagnostics context.
+- Avoid one-off exception mapping patterns unless already established.
 
 ## Testing guidance
 
-- Add targeted tests for affected client type(s): share, directory, or file.
-- Include cases around:
-  - path and hierarchy operations
-  - permission/attribute-related behavior when changed
-  - conditional headers and concurrency paths where relevant
-- Keep changes minimal and focused to the feature under modification.
+- Add tests in the affected client area (share, directory, or file).
+- Cover changed hierarchy/path/permission/condition semantics as applicable.
+- Keep changes minimal and scoped.
 
 ## Non-goals
 
