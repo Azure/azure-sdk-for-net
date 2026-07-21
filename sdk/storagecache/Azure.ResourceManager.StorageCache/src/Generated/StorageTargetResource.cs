@@ -52,9 +52,9 @@ namespace Azure.ResourceManager.StorageCache
         {
             TryGetApiVersion(ResourceType, out string storageTargetApiVersion);
             _storageTargetsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.StorageCache", ResourceType.Namespace, Diagnostics);
-            _storageTargetsRestClient = new StorageTargets(_storageTargetsClientDiagnostics, Pipeline, Endpoint, storageTargetApiVersion ?? "2026-01-01");
+            _storageTargetsRestClient = new StorageTargets(_storageTargetsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, storageTargetApiVersion ?? "2026-01-01");
             _storageTargetClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.StorageCache", ResourceType.Namespace, Diagnostics);
-            _storageTargetRestClient = new StorageTarget(_storageTargetClientDiagnostics, Pipeline, Endpoint, storageTargetApiVersion ?? "2026-01-01");
+            _storageTargetRestClient = new StorageTarget(_storageTargetClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, storageTargetApiVersion ?? "2026-01-01");
             ValidateResourceId(id);
         }
 

@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.Sql
         {
             TryGetApiVersion(RecoverableDatabaseResource.ResourceType, out string recoverableDatabaseApiVersion);
             _recoverableDatabasesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Sql", RecoverableDatabaseResource.ResourceType.Namespace, Diagnostics);
-            _recoverableDatabasesRestClient = new RecoverableDatabases(_recoverableDatabasesClientDiagnostics, Pipeline, Endpoint, recoverableDatabaseApiVersion ?? "2025-02-01-preview");
+            _recoverableDatabasesRestClient = new RecoverableDatabases(_recoverableDatabasesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, recoverableDatabaseApiVersion ?? "2025-02-01-preview");
             ValidateResourceId(id);
         }
 

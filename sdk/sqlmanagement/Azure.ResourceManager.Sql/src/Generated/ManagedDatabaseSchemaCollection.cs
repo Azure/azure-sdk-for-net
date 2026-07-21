@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.Sql
         {
             TryGetApiVersion(ManagedDatabaseSchemaResource.ResourceType, out string managedDatabaseSchemaApiVersion);
             _managedDatabaseSchemasClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Sql", ManagedDatabaseSchemaResource.ResourceType.Namespace, Diagnostics);
-            _managedDatabaseSchemasRestClient = new ManagedDatabaseSchemas(_managedDatabaseSchemasClientDiagnostics, Pipeline, Endpoint, managedDatabaseSchemaApiVersion ?? "2025-02-01-preview");
+            _managedDatabaseSchemasRestClient = new ManagedDatabaseSchemas(_managedDatabaseSchemasClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, managedDatabaseSchemaApiVersion ?? "2025-02-01-preview");
             ValidateResourceId(id);
         }
 
