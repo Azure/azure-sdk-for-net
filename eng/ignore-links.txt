@@ -13,6 +13,10 @@ https://learn.microsoft.com/dotnet/api/overview/azure/monitor.query.metrics-read
 https://www.nuget.org/packages/Azure.AI.AgentServer.Core
 https://www.nuget.org/packages/Azure.AI.AgentServer.Responses
 https://www.nuget.org/packages/Azure.AI.AgentServer.Invocations
+https://www.nuget.org/packages/Azure.AI.AgentServer.Activity
 https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/agentserver/Azure.AI.AgentServer.Responses
 https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/agentserver/Azure.AI.AgentServer.Responses/samples
+https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/agentserver/Azure.AI.AgentServer.Activity
+https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/agentserver/Azure.AI.AgentServer.Activity/src
+https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/agentserver/Azure.AI.AgentServer.Activity/samples
 https://www.nuget.org/packages/Microsoft.Azure.PostgreSQL.Auth
