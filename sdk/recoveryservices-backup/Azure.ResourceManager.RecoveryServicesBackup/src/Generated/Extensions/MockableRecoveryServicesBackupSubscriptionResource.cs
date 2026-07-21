@@ -42,15 +42,15 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Mocking
 
         private ClientDiagnostics ProtectionIntentOperationGroupClientDiagnostics => _protectionIntentOperationGroupClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.RecoveryServicesBackup.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private ProtectionIntentOperationGroup ProtectionIntentOperationGroupRestClient => _protectionIntentOperationGroupRestClient ??= new ProtectionIntentOperationGroup(ProtectionIntentOperationGroupClientDiagnostics, Pipeline, Endpoint, "2026-01-31-preview");
+        private ProtectionIntentOperationGroup ProtectionIntentOperationGroupRestClient => _protectionIntentOperationGroupRestClient ??= new ProtectionIntentOperationGroup(ProtectionIntentOperationGroupClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2026-01-31-preview");
 
         private ClientDiagnostics BackupStatusClientDiagnostics => _backupStatusClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.RecoveryServicesBackup.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private BackupStatus BackupStatusRestClient => _backupStatusRestClient ??= new BackupStatus(BackupStatusClientDiagnostics, Pipeline, Endpoint, "2026-01-31-preview");
+        private BackupStatus BackupStatusRestClient => _backupStatusRestClient ??= new BackupStatus(BackupStatusClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2026-01-31-preview");
 
         private ClientDiagnostics FeatureSupportClientDiagnostics => _featureSupportClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.RecoveryServicesBackup.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private FeatureSupport FeatureSupportRestClient => _featureSupportRestClient ??= new FeatureSupport(FeatureSupportClientDiagnostics, Pipeline, Endpoint, "2026-01-31-preview");
+        private FeatureSupport FeatureSupportRestClient => _featureSupportRestClient ??= new FeatureSupport(FeatureSupportClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2026-01-31-preview");
 
         /// <summary>
         /// It will validate followings
