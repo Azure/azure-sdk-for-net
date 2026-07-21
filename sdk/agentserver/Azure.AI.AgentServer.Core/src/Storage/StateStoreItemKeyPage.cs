@@ -1,6 +1,7 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using System;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -19,7 +20,7 @@ namespace Azure.AI.AgentServer.Core.Storage
         internal StateStoreItemKeyPage(ListResponseStateStoreItemKey envelope)
         {
             Keys = envelope.Data is null
-                ? new List<StateStoreItemKey>()
+                ? Array.Empty<StateStoreItemKey>()
                 : envelope.Data.ToList();
             FirstId = envelope.FirstId;
             LastId = envelope.LastId;

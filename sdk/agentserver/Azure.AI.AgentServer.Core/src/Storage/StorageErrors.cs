@@ -14,7 +14,7 @@ namespace Azure.AI.AgentServer.Core.Storage
     {
         /// <summary>Throws the appropriate exception if <paramref name="response"/> represents an error.</summary>
         /// <param name="response">The HTTP response to inspect.</param>
-        public static void ThrowIfError(Response response)
+        internal static void ThrowIfError(Response response)
         {
             int status = response.Status;
             if (status >= 200 && status < 300)
