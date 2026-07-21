@@ -14,9 +14,9 @@ namespace Azure.Provisioning.ProvisioningTypeSpec
     {
         /// <summary> Create a new configuration store. </summary>
         [DataMember(Name = "default")]
-        Default,
+        Default = 0,
         /// <summary> Recover a soft-deleted configuration store. </summary>
         [DataMember(Name = "recover")]
-        Recover
+        Recover = 1
     }
 }

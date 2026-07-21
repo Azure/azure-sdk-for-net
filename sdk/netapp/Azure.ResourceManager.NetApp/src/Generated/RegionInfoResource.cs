@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.NetApp
         {
             TryGetApiVersion(ResourceType, out string regionInfoResourceApiVersion);
             _netAppResourceRegionInfosClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.NetApp", ResourceType.Namespace, Diagnostics);
-            _netAppResourceRegionInfosRestClient = new NetAppResourceRegionInfos(_netAppResourceRegionInfosClientDiagnostics, Pipeline, Endpoint, regionInfoResourceApiVersion ?? "2026-04-01");
+            _netAppResourceRegionInfosRestClient = new NetAppResourceRegionInfos(_netAppResourceRegionInfosClientDiagnostics, Pipeline, Endpoint, regionInfoResourceApiVersion ?? "2026-04-15-preview");
             ValidateResourceId(id);
         }
 
@@ -103,7 +103,7 @@ namespace Azure.ResourceManager.NetApp
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-04-01. </description>
+        /// <description> 2026-04-15-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -151,7 +151,7 @@ namespace Azure.ResourceManager.NetApp
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-04-01. </description>
+        /// <description> 2026-04-15-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>

@@ -37,7 +37,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
         {
             TryGetApiVersion(PolyDeviceResource.ResourceType, out string polyDeviceApiVersion);
             _polyDevicesClientDiagnostics = new ClientDiagnostics("Azure.Generator.MgmtTypeSpec.Tests", PolyDeviceResource.ResourceType.Namespace, Diagnostics);
-            _polyDevicesRestClient = new PolyDevices(_polyDevicesClientDiagnostics, Pipeline, Endpoint, polyDeviceApiVersion ?? "2024-05-01");
+            _polyDevicesRestClient = new PolyDevices(_polyDevicesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, polyDeviceApiVersion ?? "2024-05-01");
         }
 
         /// <summary>

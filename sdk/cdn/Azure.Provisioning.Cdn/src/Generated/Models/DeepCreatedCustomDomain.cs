@@ -21,7 +21,7 @@ namespace Azure.Provisioning.Cdn
         {
         }
 
-        /// <summary> Gets or sets the Name. </summary>
+        /// <summary> Gets the Name. </summary>
         public BicepValue<string> Name
         {
             get
@@ -29,14 +29,9 @@ namespace Azure.Provisioning.Cdn
                 Initialize();
                 return _name;
             }
-            set
-            {
-                Initialize();
-                _name.Assign(value);
-            }
         }
 
-        /// <summary> Gets or sets the Properties. </summary>
+        /// <summary> Gets the Properties. </summary>
         internal DeepCreatedCustomDomainProperties Properties
         {
             get
@@ -44,44 +39,23 @@ namespace Azure.Provisioning.Cdn
                 Initialize();
                 return _properties;
             }
-            set
-            {
-                Initialize();
-                AssignOrReplace(ref _properties, value);
-            }
         }
 
-        /// <summary> Gets or sets the HostName. </summary>
+        /// <summary> Gets the HostName. </summary>
         public BicepValue<string> HostName
         {
             get
             {
-                return Properties is null ? default : Properties.HostName;
-            }
-            set
-            {
-                if (Properties is null)
-                {
-                    Properties = new DeepCreatedCustomDomainProperties();
-                }
-                Properties.HostName = value;
+                return Properties.HostName;
             }
         }
 
-        /// <summary> Gets or sets the ValidationData. </summary>
+        /// <summary> Gets the ValidationData. </summary>
         public BicepValue<string> ValidationData
         {
             get
             {
-                return Properties is null ? default : Properties.ValidationData;
-            }
-            set
-            {
-                if (Properties is null)
-                {
-                    Properties = new DeepCreatedCustomDomainProperties();
-                }
-                Properties.ValidationData = value;
+                return Properties.ValidationData;
             }
         }
 
@@ -89,7 +63,7 @@ namespace Azure.Provisioning.Cdn
         protected override void DefineProvisionableProperties()
         {
             base.DefineProvisionableProperties();
-            _name = DefineProperty<string>(nameof(Name), new string[] { "name" }, isRequired: true);
+            _name = DefineProperty<string>(nameof(Name), new string[] { "name" });
             _properties = DefineModelProperty<DeepCreatedCustomDomainProperties>(nameof(Properties), new string[] { "properties" });
             DefineAdditionalProperties();
         }

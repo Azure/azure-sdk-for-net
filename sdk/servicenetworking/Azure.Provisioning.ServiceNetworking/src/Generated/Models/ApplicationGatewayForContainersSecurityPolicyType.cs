@@ -14,6 +14,6 @@ namespace Azure.Provisioning.ServiceNetworking
     {
         /// <summary> Policy of Type WAF. </summary>
         [DataMember(Name = "waf")]
-        WAF
+        WAF = 0
     }
 }

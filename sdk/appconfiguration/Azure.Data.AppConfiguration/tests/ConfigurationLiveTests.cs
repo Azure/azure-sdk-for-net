@@ -210,29 +210,6 @@ namespace Azure.Data.AppConfiguration.Tests
             }
         }
 
-        // This test validates that the client successfully authenticates and calls the service operation
-        // when the client is created with a specified audience. The audience is derived from the test endpoint.
-        [RecordedTest]
-        public async Task TokenAudienceSpecifiedAudience()
-        {
-            ConfigurationClientOptions options = new(_serviceVersion)
-            {
-                Audience = TestEnvironment.GetAudience()
-            };
-            ConfigurationClient service = GetEntraIdClient(options);
-            ConfigurationSetting testSetting = CreateSetting();
-
-            try
-            {
-                ConfigurationSetting setting = await service.AddConfigurationSettingAsync(testSetting);
-                Assert.That(ConfigurationSettingEqualityComparer.Instance.Equals(testSetting, setting), Is.True);
-            }
-            finally
-            {
-                AssertStatus200(await service.DeleteConfigurationSettingAsync(testSetting));
-            }
-        }
-
         [RecordedTest]
         public async Task DeleteSettingNotFound()
         {

@@ -160,7 +160,7 @@ namespace Azure.ResourceManager.ArtifactSigning
             return message;
         }
 
-        internal HttpMessage CreateRevokeCertificateRequest(Guid subscriptionId, string resourceGroupName, string accountName, string profileName, RequestContent content, RequestContext context)
+        internal HttpMessage CreateRevokeCertificatesRequest(Guid subscriptionId, string resourceGroupName, string accountName, string profileName, RequestContent content, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -172,7 +172,7 @@ namespace Azure.ResourceManager.ArtifactSigning
             uri.AppendPath(accountName, true);
             uri.AppendPath("/certificateProfiles/", false);
             uri.AppendPath(profileName, true);
-            uri.AppendPath("/revokeCertificate", false);
+            uri.AppendPath("/revokeCertificates", false);
             if (_apiVersion != null)
             {
                 uri.AppendQuery("api-version", _apiVersion, true);

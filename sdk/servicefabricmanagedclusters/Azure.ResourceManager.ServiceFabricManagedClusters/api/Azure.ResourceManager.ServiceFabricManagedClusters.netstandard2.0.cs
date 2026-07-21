@@ -2208,10 +2208,12 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
         public ServiceFabricManagedDataDiskType(string value) { throw null; }
         public static Azure.ResourceManager.ServiceFabricManagedClusters.Models.ServiceFabricManagedDataDiskType PremiumLrs { get { throw null; } }
         public static Azure.ResourceManager.ServiceFabricManagedClusters.Models.ServiceFabricManagedDataDiskType PremiumV2LRS { get { throw null; } }
-        public static Azure.ResourceManager.ServiceFabricManagedClusters.Models.ServiceFabricManagedDataDiskType PremiumZrs { get { throw null; } }
+        public static Azure.ResourceManager.ServiceFabricManagedClusters.Models.ServiceFabricManagedDataDiskType PremiumV2Lrs { get { throw null; } }
         public static Azure.ResourceManager.ServiceFabricManagedClusters.Models.ServiceFabricManagedDataDiskType PremiumZRS { get { throw null; } }
+        public static Azure.ResourceManager.ServiceFabricManagedClusters.Models.ServiceFabricManagedDataDiskType PremiumZrs { get { throw null; } }
         public static Azure.ResourceManager.ServiceFabricManagedClusters.Models.ServiceFabricManagedDataDiskType StandardLrs { get { throw null; } }
         public static Azure.ResourceManager.ServiceFabricManagedClusters.Models.ServiceFabricManagedDataDiskType StandardSsdLrs { get { throw null; } }
+        public static Azure.ResourceManager.ServiceFabricManagedClusters.Models.ServiceFabricManagedDataDiskType StandardSsdZrs { get { throw null; } }
         public bool Equals(Azure.ResourceManager.ServiceFabricManagedClusters.Models.ServiceFabricManagedDataDiskType other) { throw null; }
         public override bool Equals(object obj) { throw null; }
         public override int GetHashCode() { throw null; }
