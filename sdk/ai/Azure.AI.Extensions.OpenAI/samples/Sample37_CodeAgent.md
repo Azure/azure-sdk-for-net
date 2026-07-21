@@ -31,7 +31,7 @@ var projectEndpoint = System.Environment.GetEnvironmentVariable("FOUNDRY_PROJECT
 AIProjectClient projectClient = new(endpoint: new(projectEndpoint), tokenProvider: new DefaultAzureCredential());
 ```
 
-2. For brevity we will create the method, returning the `CreateAgentVersionFromCodeMetadata` object.
+2. For brevity we will create the method, returning the `AgentVersionFromCodeMetadata` object.
 
 ```C# Snippet:Sample_CodeAgentMetadata_CodeAgent
 private static AgentVersionFromCodeMetadata GetAgentMetadata()
