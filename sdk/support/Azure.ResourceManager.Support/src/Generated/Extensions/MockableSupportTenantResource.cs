@@ -42,15 +42,15 @@ namespace Azure.ResourceManager.Support.Mocking
 
         private ClientDiagnostics ClassifyServicesNoSubscriptionClientDiagnostics => _classifyServicesNoSubscriptionClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Support.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private ClassifyServicesNoSubscription ClassifyServicesNoSubscriptionRestClient => _classifyServicesNoSubscriptionRestClient ??= new ClassifyServicesNoSubscription(ClassifyServicesNoSubscriptionClientDiagnostics, Pipeline, Endpoint, "2025-06-01-preview");
+        private ClassifyServicesNoSubscription ClassifyServicesNoSubscriptionRestClient => _classifyServicesNoSubscriptionRestClient ??= new ClassifyServicesNoSubscription(ClassifyServicesNoSubscriptionClientDiagnostics, Pipeline, Endpoint, "2026-07-01");
 
         private ClientDiagnostics SubscriptionSupportTicketClientDiagnostics => _subscriptionSupportTicketClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Support.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private SubscriptionSupportTicket SubscriptionSupportTicketRestClient => _subscriptionSupportTicketRestClient ??= new SubscriptionSupportTicket(SubscriptionSupportTicketClientDiagnostics, Pipeline, Endpoint, "2025-06-01-preview");
+        private SubscriptionSupportTicket SubscriptionSupportTicketRestClient => _subscriptionSupportTicketRestClient ??= new SubscriptionSupportTicket(SubscriptionSupportTicketClientDiagnostics, Pipeline, Endpoint, "2026-07-01");
 
         private ClientDiagnostics TenantSupportTicketClientDiagnostics => _tenantSupportTicketClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Support.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private TenantSupportTicket TenantSupportTicketRestClient => _tenantSupportTicketRestClient ??= new TenantSupportTicket(TenantSupportTicketClientDiagnostics, Pipeline, Endpoint, "2025-06-01-preview");
+        private TenantSupportTicket TenantSupportTicketRestClient => _tenantSupportTicketRestClient ??= new TenantSupportTicket(TenantSupportTicketClientDiagnostics, Pipeline, Endpoint, "2026-07-01");
 
         /// <summary> Gets a collection of SupportAzureServices in the <see cref="TenantResource"/>. </summary>
         /// <returns> An object representing collection of SupportAzureServices and their operations over a SupportAzureServiceResource. </returns>
@@ -72,7 +72,7 @@ namespace Azure.ResourceManager.Support.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-06-01-preview. </description>
+        /// <description> 2026-07-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -101,7 +101,7 @@ namespace Azure.ResourceManager.Support.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-06-01-preview. </description>
+        /// <description> 2026-07-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -137,7 +137,7 @@ namespace Azure.ResourceManager.Support.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-06-01-preview. </description>
+        /// <description> 2026-07-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -166,7 +166,7 @@ namespace Azure.ResourceManager.Support.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-06-01-preview. </description>
+        /// <description> 2026-07-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -202,7 +202,7 @@ namespace Azure.ResourceManager.Support.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-06-01-preview. </description>
+        /// <description> 2026-07-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -231,7 +231,7 @@ namespace Azure.ResourceManager.Support.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-06-01-preview. </description>
+        /// <description> 2026-07-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -260,7 +260,7 @@ namespace Azure.ResourceManager.Support.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-06-01-preview. </description>
+        /// <description> 2026-07-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -308,7 +308,7 @@ namespace Azure.ResourceManager.Support.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-06-01-preview. </description>
+        /// <description> 2026-07-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -356,7 +356,7 @@ namespace Azure.ResourceManager.Support.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-06-01-preview. </description>
+        /// <description> 2026-07-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -404,7 +404,7 @@ namespace Azure.ResourceManager.Support.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-06-01-preview. </description>
+        /// <description> 2026-07-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -452,7 +452,7 @@ namespace Azure.ResourceManager.Support.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-06-01-preview. </description>
+        /// <description> 2026-07-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -500,7 +500,7 @@ namespace Azure.ResourceManager.Support.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-06-01-preview. </description>
+        /// <description> 2026-07-01. </description>
         /// </item>
         /// </list>
         /// </summary>
