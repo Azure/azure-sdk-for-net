@@ -13,18 +13,18 @@ namespace Azure.Provisioning.Cdn
     public enum TransformType
     {
         /// <summary> Lowercase. </summary>
-        Lowercase,
+        Lowercase = 0,
         /// <summary> Uppercase. </summary>
-        Uppercase,
+        Uppercase = 1,
         /// <summary> Trim. </summary>
-        Trim,
+        Trim = 2,
         /// <summary> UriDecode. </summary>
         [DataMember(Name = "UrlDecode")]
-        UriDecode,
+        UriDecode = 3,
         /// <summary> UriEncode. </summary>
         [DataMember(Name = "UrlEncode")]
-        UriEncode,
+        UriEncode = 4,
         /// <summary> RemoveNulls. </summary>
-        RemoveNulls
+        RemoveNulls = 5
     }
 }

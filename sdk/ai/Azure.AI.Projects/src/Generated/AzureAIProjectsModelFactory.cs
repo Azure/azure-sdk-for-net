@@ -367,6 +367,88 @@ namespace Azure.AI.Projects
             return new EmbeddingConfiguration(modelDeploymentName, embeddingField, additionalBinaryDataProperties: null);
         }
 
+        /// <summary> Model Version Definition. </summary>
+        /// <param name="blobUri"> URI of the model artifact in blob storage. </param>
+        /// <param name="weightType"> The weight type of the model. </param>
+        /// <param name="baseModel"> Base model asset ID. </param>
+        /// <param name="source"> The source of the model. </param>
+        /// <param name="loraConfig"> Adapter-specific configuration. Required when weight_type is lora; ignored otherwise. May be auto-populated from adapter_config.json when present in the uploaded files — user-provided values take precedence over auto-detected values. </param>
+        /// <param name="artifactProfile"> The artifact profile of the model. </param>
+        /// <param name="warnings"> Service-computed advisory warnings derived from the artifact profile. </param>
+        /// <param name="id"> Asset ID, a unique identifier for the asset. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="version"> The version of the resource. </param>
+        /// <param name="description"> The asset description text. </param>
+        /// <param name="tags"> Tag dictionary. Tags can be added, removed, and updated. </param>
+        /// <returns> A new <see cref="Projects.ModelVersion"/> instance for mocking. </returns>
+        [Experimental("AAIP001")]
+        public static ModelVersion ModelVersion(Uri blobUri = default, FoundryModelWeightType? weightType = default, string baseModel = default, ModelSourceData source = default, LoraConfig loraConfig = default, ArtifactProfile artifactProfile = default, IEnumerable<FoundryModelWarning> warnings = default, string id = default, string name = default, string version = default, string description = default, IDictionary<string, string> tags = default)
+        {
+            warnings ??= new ChangeTrackingList<FoundryModelWarning>();
+            tags ??= new ChangeTrackingDictionary<string, string>();
+
+            return new ModelVersion(
+                blobUri,
+                weightType,
+                baseModel,
+                source,
+                loraConfig,
+                artifactProfile,
+                warnings.ToList(),
+                id,
+                name,
+                version,
+                description,
+                tags,
+                additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> Source information for the model. </summary>
+        /// <param name="sourceType"> The source type of the model. </param>
+        /// <param name="jobId"> The job ID that produced this model. </param>
+        /// <returns> A new <see cref="Projects.ModelSourceData"/> instance for mocking. </returns>
+        [Experimental("AAIP001")]
+        public static ModelSourceData ModelSourceData(FoundryModelSourceType? sourceType = default, string jobId = default)
+        {
+            return new ModelSourceData(sourceType, jobId, additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> Adapter-specific metadata for LoRA models. Drives serving engine configuration at deployment time. </summary>
+        /// <param name="rank"> LoRA rank (r). Positive integer. Common values: 8, 16, 32, 64. </param>
+        /// <param name="alpha"> LoRA scaling factor (α). Positive integer; typically 2× the rank. </param>
+        /// <param name="targetModules"> Model layers modified by the adapter (e.g., q_proj, v_proj). Auto-detected from adapter_config.json if omitted. </param>
+        /// <param name="dropout"> Dropout rate used during training. Informational — not used at serving time. </param>
+        /// <returns> A new <see cref="Projects.LoraConfig"/> instance for mocking. </returns>
+        [Experimental("AAIP001")]
+        public static LoraConfig LoraConfig(int? rank = default, int? alpha = default, IEnumerable<string> targetModules = default, float? dropout = default)
+        {
+            targetModules ??= new ChangeTrackingList<string>();
+
+            return new LoraConfig(rank, alpha, targetModules.ToList(), dropout, additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> Artifact profile of the model. </summary>
+        /// <param name="category"> The category of the artifact profile. </param>
+        /// <param name="signals"> Signals detected in the model artifact. </param>
+        /// <returns> A new <see cref="Projects.ArtifactProfile"/> instance for mocking. </returns>
+        [Experimental("AAIP001")]
+        public static ArtifactProfile ArtifactProfile(FoundryModelArtifactProfileCategory category = default, IEnumerable<FoundryModelArtifactProfileSignal> signals = default)
+        {
+            signals ??= new ChangeTrackingList<FoundryModelArtifactProfileSignal>();
+
+            return new ArtifactProfile(category, signals.ToList(), additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> A warning associated with a model. </summary>
+        /// <param name="code"> The warning code. </param>
+        /// <param name="message"> The warning message. </param>
+        /// <returns> A new <see cref="Projects.FoundryModelWarning"/> instance for mocking. </returns>
+        [Experimental("AAIP001")]
+        public static FoundryModelWarning FoundryModelWarning(FoundryModelWarningCode? code = default, string message = default)
+        {
+            return new FoundryModelWarning(code, message, additionalBinaryDataProperties: null);
+        }
+
         /// <summary> Request body for updating a model version. Only description and tags can be modified. </summary>
         /// <param name="description"> The asset description text. </param>
         /// <param name="tags"> Tag dictionary. Tags can be added, removed, and updated. </param>
@@ -377,6 +459,15 @@ namespace Azure.AI.Projects
             tags ??= new ChangeTrackingDictionary<string, string>();
 
             return new UpdateModelVersionOptions(description, tags, additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> The CreateAsyncResponse. </summary>
+        /// <param name="location"> URL to poll for operation status. </param>
+        /// <param name="operationResult"> URL to the operation result, or null if the operation is still in progress. </param>
+        /// <returns> A new <see cref="Projects.CreateAsyncResponse"/> instance for mocking. </returns>
+        public static CreateAsyncResponse CreateAsyncResponse(Uri location = default, Uri operationResult = default)
+        {
+            return new CreateAsyncResponse(location, operationResult, additionalBinaryDataProperties: null);
         }
 
         /// <summary> Represents a request for a pending upload of a model version. </summary>
@@ -398,6 +489,15 @@ namespace Azure.AI.Projects
         public static ModelPendingUploadResult ModelPendingUploadResult(AIProjectBlobReference blobReference = default, string pendingUploadId = default, string version = default)
         {
             return new ModelPendingUploadResult(blobReference, pendingUploadId, version, "TemporaryBlobReference", additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> Request to fetch credentials for a model asset. </summary>
+        /// <param name="blobUri"> Blob URI of the model asset to fetch credentials for. </param>
+        /// <returns> A new <see cref="Projects.ModelCredentialRequest"/> instance for mocking. </returns>
+        [Experimental("AAIP001")]
+        public static ModelCredentialRequest ModelCredentialRequest(Uri blobUri = default)
+        {
+            return new ModelCredentialRequest(blobUri, additionalBinaryDataProperties: null);
         }
 
         /// <summary>
@@ -731,6 +831,8 @@ namespace Azure.AI.Projects
         /// <param name="supportedEvaluationLevels"> Evaluation levels this evaluator supports (e.g., `turn`, `conversation`). When omitted on create, the service defaults to `["turn"]`. On update, omitting this field leaves it unchanged; an empty list is rejected. Custom code-based evaluators support only `turn`; custom prompt-based evaluators support exactly one level (`turn` or `conversation`). </param>
         /// <param name="definition"> Definition of the evaluator. </param>
         /// <param name="generationArtifacts"> Provenance artifacts from the generation pipeline. Read-only; present only on evaluator versions created via an EvaluatorGenerationJob. Each artifact resolves to a versioned Foundry Dataset. </param>
+        /// <param name="generationJobId"> Read-only provenance link back to the EvaluatorGenerationJob that produced this version. Present only on evaluator versions created via the generation pipeline; absent for manually-created versions and unaffected by subsequent `PATCH` calls. </param>
+        /// <param name="warnings"> Categories of warnings surfaced on this generated evaluator version. Present only on versions created via an EvaluatorGenerationJob when the paired job produced non-empty warnings. Absent (treat as no warnings) when the version is not from generation, when the paired job was clean, or when a subsequent `PATCH` to `definition` cleared the paired job's advisories. Follow `generation_job_id` to fetch the detailed warning payloads. </param>
         /// <param name="createdBy"> Creator of the evaluator. </param>
         /// <param name="createdAt"> Creation date/time of the evaluator. </param>
         /// <param name="modifiedAt"> Last modified date/time of the evaluator. </param>
@@ -741,11 +843,12 @@ namespace Azure.AI.Projects
         /// <param name="tags"> Tag dictionary. Tags can be added, removed, and updated. </param>
         /// <returns> A new <see cref="Evaluation.EvaluatorVersion"/> instance for mocking. </returns>
         [Experimental("AAIP001")]
-        public static EvaluatorVersion EvaluatorVersion(string displayName = default, IDictionary<string, string> metadata = default, EvaluatorType evaluatorType = default, IEnumerable<EvaluatorCategory> categories = default, IEnumerable<ProjectsEvaluationLevel> supportedEvaluationLevels = default, EvaluatorDefinition definition = default, EvaluatorGenerationArtifacts generationArtifacts = default, string createdBy = default, string createdAt = default, string modifiedAt = default, string id = default, string name = default, string version = default, string description = default, IDictionary<string, string> tags = default)
+        public static EvaluatorVersion EvaluatorVersion(string displayName = default, IDictionary<string, string> metadata = default, EvaluatorType evaluatorType = default, IEnumerable<EvaluatorCategory> categories = default, IEnumerable<ProjectsEvaluationLevel> supportedEvaluationLevels = default, EvaluatorDefinition definition = default, EvaluatorGenerationArtifacts generationArtifacts = default, string generationJobId = default, IEnumerable<GenerationWarningType> warnings = default, string createdBy = default, string createdAt = default, string modifiedAt = default, string id = default, string name = default, string version = default, string description = default, IDictionary<string, string> tags = default)
         {
             metadata ??= new ChangeTrackingDictionary<string, string>();
             categories ??= new ChangeTrackingList<EvaluatorCategory>();
             supportedEvaluationLevels ??= new ChangeTrackingList<ProjectsEvaluationLevel>();
+            warnings ??= new ChangeTrackingList<GenerationWarningType>();
             tags ??= new ChangeTrackingDictionary<string, string>();
 
             return new EvaluatorVersion(
@@ -756,6 +859,8 @@ namespace Azure.AI.Projects
                 supportedEvaluationLevels.ToList(),
                 definition,
                 generationArtifacts,
+                generationJobId,
+                warnings.ToList(),
                 createdBy,
                 createdAt,
                 modifiedAt,
@@ -1033,6 +1138,24 @@ namespace Azure.AI.Projects
         public static EvaluatorGenerationTokenUsage EvaluatorGenerationTokenUsage(long inputTokens = default, long outputTokens = default, long totalTokens = default)
         {
             return new EvaluatorGenerationTokenUsage(inputTokens, outputTokens, totalTokens, additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> A non-fatal advisory produced during rubric evaluator generation when resolved inputs are technically valid but likely too weak to produce a high-quality rubric. Read-only; service-generated. Persisted with the terminal EvaluatorGenerationJob. </summary>
+        /// <param name="code"> Stable searchable machine-readable warning code. </param>
+        /// <param name="severity"> Advisory severity. Initial values: `warning`. </param>
+        /// <param name="message"> Human-readable message suitable for direct SDK/CLI/UI display. Must not include raw prompt, instruction, dataset, or trace text. </param>
+        /// <param name="source"> Which source category the warning applies to. `aggregate` is used only for cross-source warnings. </param>
+        /// <param name="sourceIndex"> Zero-based index into `EvaluatorGenerationJob.inputs.sources` when the warning applies to a specific source. Omitted for aggregate warnings and for warnings not tied to one source. </param>
+        /// <returns> A new <see cref="Projects.RubricGenerationInputQualityWarning"/> instance for mocking. </returns>
+        public static RubricGenerationInputQualityWarning RubricGenerationInputQualityWarning(RubricGenerationInputQualityWarningCode code = default, RubricGenerationInputQualityWarningSeverity severity = default, string message = default, RubricGenerationInputQualityWarningSource source = default, int? sourceIndex = default)
+        {
+            return new RubricGenerationInputQualityWarning(
+                code,
+                severity,
+                message,
+                source,
+                sourceIndex,
+                additionalBinaryDataProperties: null);
         }
 
         /// <summary> The response body for cluster insights. </summary>
@@ -2352,7 +2475,7 @@ namespace Azure.AI.Projects
         [Experimental("AAIP001")]
         public static EvaluatorVersion EvaluatorVersion(string displayName, IDictionary<string, string> metadata, EvaluatorType evaluatorType, IEnumerable<EvaluatorCategory> categories, EvaluatorDefinition definition, string createdBy, string createdAt, string modifiedAt, string id, string name, string version, string description, IDictionary<string, string> tags)
         {
-            return EvaluatorVersion(displayName: displayName, metadata: metadata, evaluatorType: evaluatorType, categories: categories, supportedEvaluationLevels: default, definition: definition, generationArtifacts: default, createdBy: createdBy, createdAt: createdAt, modifiedAt: modifiedAt, id: id, name: name, version: version, description: description, tags: tags);
+            return EvaluatorVersion(displayName: displayName, metadata: metadata, evaluatorType: evaluatorType, categories: categories, supportedEvaluationLevels: default, definition: definition, generationArtifacts: default, generationJobId: default, warnings: default, createdBy: createdBy, createdAt: createdAt, modifiedAt: modifiedAt, id: id, name: name, version: version, description: description, tags: tags);
         }
 
         /// <summary> Evaluator Metric. </summary>

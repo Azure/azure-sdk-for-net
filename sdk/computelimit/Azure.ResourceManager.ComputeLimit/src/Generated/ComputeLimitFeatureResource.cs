@@ -190,7 +190,7 @@ namespace Azure.ResourceManager.ComputeLimit
         }
 
         /// <summary>
-        /// Disables a compute limit feature for the subscription at the specified location.
+        /// Disables a compute limit feature for the subscription at the specified location. Requires the Contributor role.
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>
@@ -245,7 +245,7 @@ namespace Azure.ResourceManager.ComputeLimit
         }
 
         /// <summary>
-        /// Disables a compute limit feature for the subscription at the specified location.
+        /// Disables a compute limit feature for the subscription at the specified location. Requires the Contributor role.
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>
@@ -300,7 +300,7 @@ namespace Azure.ResourceManager.ComputeLimit
         }
 
         /// <summary>
-        /// Enables a compute limit feature for the subscription at the specified location.
+        /// Enables a compute limit feature for the subscription at the specified location. Requires the Contributor role.
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>
@@ -356,7 +356,7 @@ namespace Azure.ResourceManager.ComputeLimit
         }
 
         /// <summary>
-        /// Enables a compute limit feature for the subscription at the specified location.
+        /// Enables a compute limit feature for the subscription at the specified location. Requires the Contributor role.
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>

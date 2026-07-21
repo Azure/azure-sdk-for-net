@@ -11,8 +11,8 @@ namespace Azure.Provisioning.ContainerInstance
     public enum ContainerGroupLogAnalyticsLogType
     {
         /// <summary> ContainerInsights. </summary>
-        ContainerInsights,
+        ContainerInsights = 0,
         /// <summary> ContainerInstanceLogs. </summary>
-        ContainerInstanceLogs
+        ContainerInstanceLogs = 1
     }
 }
