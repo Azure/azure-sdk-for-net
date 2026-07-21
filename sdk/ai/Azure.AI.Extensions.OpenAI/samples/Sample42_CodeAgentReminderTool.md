@@ -172,7 +172,7 @@ azure-identity>=1.25.0
 ```C# Snippet:Sample_CreateAgentClient_CodeAgentReminderTool
 var projectEndpoint = System.Environment.GetEnvironmentVariable("FOUNDRY_PROJECT_ENDPOINT");
 var modelDeploymentName = System.Environment.GetEnvironmentVariable("FOUNDRY_MODEL_NAME");
-AIProjectClient projectClient = new(endpoint: new(projectEndpoint), tokenProvider: new AzureCliCredential());
+AIProjectClient projectClient = new(endpoint: new(projectEndpoint), tokenProvider: new DefaultAzureCredential());
 AgentToolboxes toolboxClient = projectClient.AgentAdministrationClient.GetAgentToolboxes();
 ```
 
@@ -407,7 +407,7 @@ Thread.Sleep(500);
 ProjectsRoutine created = null;
 foreach (ProjectsRoutine routine in projectClient.Routines.GetRoutines(order: MemoryStoreListOrder.Descending, limit: 1))
 {
-    // The routine created no earlier then response and not later then one minute after response.
+    // The routine created no earlier than response and not later than one minute after response.
     if (routine.CreatedAt >= responseTime && routine.CreatedAt < responseTime.AddMinutes(1))
     {
         created = routine;
@@ -433,7 +433,7 @@ await Task.Delay(500);
 ProjectsRoutine created = null;
 await foreach (ProjectsRoutine routine in projectClient.Routines.GetRoutinesAsync(order: MemoryStoreListOrder.Descending, limit: 1))
 {
-    // The routine created no earlier then response and not later then one minute after response.
+    // The routine created no earlier than response and not later than one minute after response.
     if (routine.CreatedAt >= responseTime && routine.CreatedAt < responseTime.AddMinutes(1))
     {
         created = routine;

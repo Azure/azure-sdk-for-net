@@ -19,7 +19,7 @@ using OpenAI.Responses;
 namespace Azure.AI.Extensions.OpenAI.Tests.Samples;
 #pragma warning disable AAIP001
 
-public class Sample_CodeAgentReminderTool: ProjectsOpenAITestBase
+public class Sample_CodeAgentReminderTool : ProjectsOpenAITestBase
 {
     #region Snippet:Sample_GetPath_CodeAgentReminderTool
     protected static string GetDirectory(string path, [CallerFilePath] string pth = "")
@@ -184,7 +184,7 @@ public class Sample_CodeAgentReminderTool: ProjectsOpenAITestBase
         ProjectsRoutine created = null;
         await foreach (ProjectsRoutine routine in projectClient.Routines.GetRoutinesAsync(order: MemoryStoreListOrder.Descending, limit: 1))
         {
-            // The routine created no earlier then response and not later then one minute after response.
+            // The routine created no earlier than response and not later than one minute after response.
             if (routine.CreatedAt >= responseTime && routine.CreatedAt < responseTime.AddMinutes(1))
             {
                 created = routine;
@@ -332,7 +332,7 @@ public class Sample_CodeAgentReminderTool: ProjectsOpenAITestBase
         ProjectsRoutine created = null;
         foreach (ProjectsRoutine routine in projectClient.Routines.GetRoutines(order: MemoryStoreListOrder.Descending, limit: 1))
         {
-            // The routine created no earlier then response and not later then one minute after response.
+            // The routine created no earlier than response and not later than one minute after response.
             if (routine.CreatedAt >= responseTime && routine.CreatedAt < responseTime.AddMinutes(1))
             {
                 created = routine;

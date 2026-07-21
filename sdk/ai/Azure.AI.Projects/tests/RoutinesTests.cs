@@ -10,10 +10,8 @@ using Azure.AI.Extensions.OpenAI;
 using Azure.AI.Projects.Agents;
 using Azure.AI.Projects.Memory;
 using Microsoft.ClientModel.TestFramework;
-using Microsoft.Identity.Client;
 using NUnit.Framework;
 using OpenAI.Responses;
-using static Azure.AI.Projects.Tests.RoutinesTests;
 
 namespace Azure.AI.Projects.Tests;
 #pragma warning disable AAIP001
@@ -320,24 +318,24 @@ public class RoutinesTests : ProjectsClientTestBase
     [RecordedTest]
     public async Task TestRoutineToolboxes()
     {
-        // To re record this test please use the hosted agent, created in the sample Sample42_CodeAgentReminderTool.md from Azure.AI.Extensions.OpenAI package.
+        // To re-record this test please use the hosted agent, created in the sample Sample42_CodeAgentReminderTool.md from Azure.AI.Extensions.OpenAI package.
         AIProjectClient projectClient = GetTestProjectClient();
         ProjectsAgentRecord agentRecord = await projectClient.AgentAdministrationClient.GetAgentAsync("myCodeAgentReminderTool");
         ProjectOpenAIClientOptions responsesOptions = CreateTestProjectOpenAIClientOptions(
             apiVersion: "v1"
         );
-        responsesOptions.AgentName = agentRecord.Name;
-        ProjectResponsesClient responseClient = CreateProxyFromClient(projectClient.ProjectOpenAIClient.GetProjectResponsesClientForAgentEndpoint("myCodeAgentReminderTool", options: responsesOptions));
+        ProjectResponsesClient responseClient = CreateProxyFromClient(projectClient.ProjectOpenAIClient.GetProjectResponsesClientForAgentEndpoint(agentRecord.Name, options: responsesOptions));
+
         ResponseResult response = await responseClient.CreateResponseAsync("Please remind me to go to lunch after one minute.");
         Console.WriteLine("Response items:");
         bool functionCallMet = false, functionCallOutMet = false;
         foreach (ResponseItem item in response.OutputItems)
         {
-            if (item is FunctionCallOutputResponseItem functionResponse)
+            if (item is FunctionCallOutputResponseItem)
             {
                 functionCallOutMet = true;
             }
-            else if (item is FunctionCallResponseItem functionCall)
+            else if (item is FunctionCallResponseItem)
             {
                 functionCallMet = true;
             }
@@ -348,7 +346,7 @@ public class RoutinesTests : ProjectsClientTestBase
         ProjectsRoutine created = null;
         await foreach (ProjectsRoutine routine in projectClient.Routines.GetRoutinesAsync(order: MemoryStoreListOrder.Descending, limit: 1))
         {
-            // The routine created no earlier then response and not later then one minute after response.
+            // The routine created no earlier than response and not later than one minute after response.
             if (routine.CreatedAt >= response.CreatedAt && routine.CreatedAt < response.CreatedAt.AddMinutes(1))
             {
                 created = routine;
