@@ -166,6 +166,7 @@ invoke activities). Deployable projects are in the Foundry hosted-agents sample 
 
 ## Next steps
 
+- Read the [hosting & handler guide](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/agentserver/Azure.AI.AgentServer.Activity/docs/hosting-guide.md) for the full hosting-tier and handler reference.
 - Review the [activity protocol samples](https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/agentserver/Azure.AI.AgentServer.Activity/samples).
 - Learn about the shared host in [`Azure.AI.AgentServer.Core`](https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/agentserver/Azure.AI.AgentServer.Core).
 

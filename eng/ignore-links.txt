@@ -19,4 +19,5 @@ https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/agentserver/Azure.AI.Ag
 https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/agentserver/Azure.AI.AgentServer.Activity
 https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/agentserver/Azure.AI.AgentServer.Activity/src
 https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/agentserver/Azure.AI.AgentServer.Activity/samples
+https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/agentserver/Azure.AI.AgentServer.Activity/docs/hosting-guide.md
 https://www.nuget.org/packages/Microsoft.Azure.PostgreSQL.Auth

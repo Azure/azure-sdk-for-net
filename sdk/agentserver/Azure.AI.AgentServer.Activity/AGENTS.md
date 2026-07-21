@@ -10,7 +10,7 @@
 
 `Azure.AI.AgentServer.Activity` hosts a Microsoft 365 Agents SDK `AgentApplication`
 as an Azure AI Foundry **hosted agent** that speaks the **activity protocol**
-(`POST /activity/messages`, plus the Bot Framework-compatible `POST /api/messages`,
+(`POST /activity/messages` `POST /api/messages`,
 and a `/readiness` probe).
 
 The consumer owns an ordinary Microsoft 365 Agents SDK application (the
