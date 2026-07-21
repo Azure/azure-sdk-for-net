@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.Sql
         {
             TryGetApiVersion(ResourceType, out string managedInstanceQueryApiVersion);
             _managedDatabaseQueriesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Sql", ResourceType.Namespace, Diagnostics);
-            _managedDatabaseQueriesRestClient = new ManagedDatabaseQueries(_managedDatabaseQueriesClientDiagnostics, Pipeline, Endpoint, managedInstanceQueryApiVersion ?? "2025-02-01-preview");
+            _managedDatabaseQueriesRestClient = new ManagedDatabaseQueries(_managedDatabaseQueriesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, managedInstanceQueryApiVersion ?? "2025-02-01-preview");
             ValidateResourceId(id);
         }
 
