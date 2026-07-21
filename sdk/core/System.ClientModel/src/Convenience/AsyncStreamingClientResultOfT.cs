@@ -21,7 +21,7 @@ namespace System.ClientModel;
 /// </remarks>
 public abstract class AsyncStreamingClientResult<T> : AsyncStreamingClientResult, IAsyncEnumerable<T>
 {
-    private readonly object _sync = new();
+    private readonly object _enumerationSync = new();
     private bool _enumerationStarted;
     private StreamingAsyncEnumerator? _activeEnumerator;
 
@@ -37,7 +37,7 @@ public abstract class AsyncStreamingClientResult<T> : AsyncStreamingClientResult
     /// <inheritdoc/>
     public IAsyncEnumerator<T> GetAsyncEnumerator(CancellationToken cancellationToken = default)
     {
-        lock (_sync)
+        lock (_enumerationSync)
         {
             if (_enumerationStarted)
             {
@@ -75,7 +75,7 @@ public abstract class AsyncStreamingClientResult<T> : AsyncStreamingClientResult
     internal override async ValueTask<bool> DisposeResultAsync()
     {
         StreamingAsyncEnumerator? enumerator;
-        lock (_sync)
+        lock (_enumerationSync)
         {
             enumerator = _activeEnumerator;
         }
@@ -89,7 +89,7 @@ public abstract class AsyncStreamingClientResult<T> : AsyncStreamingClientResult
             await enumerator.DisposeFromResultAsync().ConfigureAwait(false);
         if (disposalCompleted)
         {
-            lock (_sync)
+            lock (_enumerationSync)
             {
                 if (ReferenceEquals(_activeEnumerator, enumerator))
                 {
@@ -104,7 +104,7 @@ public abstract class AsyncStreamingClientResult<T> : AsyncStreamingClientResult
     private async ValueTask CompleteEnumerationAsync(
         StreamingAsyncEnumerator enumerator)
     {
-        lock (_sync)
+        lock (_enumerationSync)
         {
             if (ReferenceEquals(_activeEnumerator, enumerator))
             {

@@ -21,7 +21,7 @@ namespace System.ClientModel;
 /// </remarks>
 public abstract class AsyncStreamingClientResult : ClientResult, IAsyncDisposable
 {
-    private readonly object _sync = new();
+    private readonly object _disposeSync = new();
     private bool _disposeStarted;
     private bool _responseDisposed;
 
@@ -39,7 +39,7 @@ public abstract class AsyncStreamingClientResult : ClientResult, IAsyncDisposabl
     /// </summary>
     public async ValueTask DisposeAsync()
     {
-        lock (_sync)
+        lock (_disposeSync)
         {
             if (_responseDisposed)
             {
@@ -53,7 +53,7 @@ public abstract class AsyncStreamingClientResult : ClientResult, IAsyncDisposabl
         try
         {
             deferResponseDisposal =
-                !await DisposeResultAsync().ConfigureAwait(false);
+                !(await DisposeResultAsync().ConfigureAwait(false));
         }
         finally
         {
@@ -68,7 +68,7 @@ public abstract class AsyncStreamingClientResult : ClientResult, IAsyncDisposabl
 
     internal void DisposeResponse()
     {
-        lock (_sync)
+        lock (_disposeSync)
         {
             if (_responseDisposed)
             {
@@ -85,7 +85,7 @@ public abstract class AsyncStreamingClientResult : ClientResult, IAsyncDisposabl
 
     internal void ThrowIfDisposed()
     {
-        lock (_sync)
+        lock (_disposeSync)
         {
             if (_disposeStarted)
             {

@@ -16,7 +16,7 @@ namespace System.ClientModel;
 /// </remarks>
 public abstract class StreamingClientResult : ClientResult, IDisposable
 {
-    private readonly object _sync = new();
+    private readonly object _disposeSync = new();
     private bool _disposeStarted;
     private bool _responseDisposed;
 
@@ -34,7 +34,7 @@ public abstract class StreamingClientResult : ClientResult, IDisposable
     /// </summary>
     public void Dispose()
     {
-        lock (_sync)
+        lock (_disposeSync)
         {
             if (_responseDisposed)
             {
@@ -65,7 +65,7 @@ public abstract class StreamingClientResult : ClientResult, IDisposable
 
     internal void ThrowIfDisposed()
     {
-        lock (_sync)
+        lock (_disposeSync)
         {
             if (_disposeStarted)
             {
@@ -76,7 +76,7 @@ public abstract class StreamingClientResult : ClientResult, IDisposable
 
     private void DisposeResponse()
     {
-        lock (_sync)
+        lock (_disposeSync)
         {
             if (_responseDisposed)
             {

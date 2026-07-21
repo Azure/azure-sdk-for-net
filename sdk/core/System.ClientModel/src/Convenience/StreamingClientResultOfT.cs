@@ -22,7 +22,7 @@ namespace System.ClientModel;
 /// </remarks>
 public abstract class StreamingClientResult<T> : StreamingClientResult, IEnumerable<T>
 {
-    private readonly object _sync = new();
+    private readonly object _enumerationSync = new();
     private bool _enumerationStarted;
     private StreamingEnumerator? _activeEnumerator;
 
@@ -38,7 +38,7 @@ public abstract class StreamingClientResult<T> : StreamingClientResult, IEnumera
     /// <inheritdoc/>
     public IEnumerator<T> GetEnumerator()
     {
-        lock (_sync)
+        lock (_enumerationSync)
         {
             if (_enumerationStarted)
             {
@@ -73,7 +73,7 @@ public abstract class StreamingClientResult<T> : StreamingClientResult, IEnumera
     internal override bool DisposeResult()
     {
         StreamingEnumerator? enumerator;
-        lock (_sync)
+        lock (_enumerationSync)
         {
             enumerator = _activeEnumerator;
         }
@@ -86,7 +86,7 @@ public abstract class StreamingClientResult<T> : StreamingClientResult, IEnumera
         bool disposalCompleted = enumerator.DisposeFromResult();
         if (disposalCompleted)
         {
-            lock (_sync)
+            lock (_enumerationSync)
             {
                 if (ReferenceEquals(_activeEnumerator, enumerator))
                 {
@@ -100,7 +100,7 @@ public abstract class StreamingClientResult<T> : StreamingClientResult, IEnumera
 
     private void CompleteEnumeration(StreamingEnumerator enumerator)
     {
-        lock (_sync)
+        lock (_enumerationSync)
         {
             if (ReferenceEquals(_activeEnumerator, enumerator))
             {
