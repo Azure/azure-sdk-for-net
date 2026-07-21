@@ -22,5 +22,25 @@ namespace Azure.ResourceManager.MachineLearning.Mocking
             MachineLearningOutboundRuleBasicResource.ValidateResourceId(id);
             return new MachineLearningOutboundRuleBasicResource(Client, id);
         }
+
+        // Customized: correcting the resource name also renames these generated virtual mocking hooks.
+        // Keep the shipped MachineLearnin* methods because client.tsp cannot generate compatibility aliases.
+        /// <summary> Gets an object representing a <see cref="MachineLearninRegistryComponentContainerResource"/> along with the instance operations that can be performed on it but with no data. </summary>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="MachineLearninRegistryComponentContainerResource"/> object. </returns>
+        public virtual MachineLearninRegistryComponentContainerResource GetMachineLearninRegistryComponentContainerResource(ResourceIdentifier id)
+        {
+            MachineLearninRegistryComponentContainerResource.ValidateResourceId(id);
+            return new MachineLearninRegistryComponentContainerResource(Client, id);
+        }
+
+        /// <summary> Gets an object representing a <see cref="MachineLearninRegistryComponentVersionResource"/> along with the instance operations that can be performed on it but with no data. </summary>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="MachineLearninRegistryComponentVersionResource"/> object. </returns>
+        public virtual MachineLearninRegistryComponentVersionResource GetMachineLearninRegistryComponentVersionResource(ResourceIdentifier id)
+        {
+            MachineLearninRegistryComponentVersionResource.ValidateResourceId(id);
+            return new MachineLearninRegistryComponentVersionResource(Client, id);
+        }
     }
 }

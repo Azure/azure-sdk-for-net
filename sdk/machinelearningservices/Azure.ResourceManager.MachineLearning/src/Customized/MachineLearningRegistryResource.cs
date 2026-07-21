@@ -29,6 +29,8 @@ namespace Azure.ResourceManager.MachineLearning
         /// <summary> Gets a registry code container. </summary>
         [ForwardsClientCalls]
         public virtual Response<MachineLearningRegistryCodeContainerResource> GetMachineLearningRegistryCodeContainer(string codeName, CancellationToken cancellationToken = default) => GetMachineLearningRegistryCodeContainers().Get(codeName, cancellationToken);
+        // Customized: correcting the component resource name changes these generated child accessors. Keep the
+        // shipped MachineLearnin* names because client.tsp cannot generate compatibility aliases for child accessors.
         /// <summary> Gets registry component containers. </summary>
         public virtual MachineLearninRegistryComponentContainerCollection GetMachineLearninRegistryComponentContainers() => new MachineLearninRegistryComponentContainerCollection(Client, Id);
         /// <summary> Gets a registry component container. </summary>
