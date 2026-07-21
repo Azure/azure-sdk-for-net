@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.Network
         {
             TryGetApiVersion(NetworkManagerConfigurationCommitResource.ResourceType, out string networkManagerConfigurationCommitApiVersion);
             _commitsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Network", NetworkManagerConfigurationCommitResource.ResourceType.Namespace, Diagnostics);
-            _commitsRestClient = new Commits(_commitsClientDiagnostics, Pipeline, Endpoint, networkManagerConfigurationCommitApiVersion ?? "2025-07-01");
+            _commitsRestClient = new Commits(_commitsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, networkManagerConfigurationCommitApiVersion ?? "2025-07-01");
             ValidateResourceId(id);
         }
 

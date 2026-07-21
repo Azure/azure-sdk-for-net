@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.Network
         {
             TryGetApiVersion(IPGroupResource.ResourceType, out string ipGroupApiVersion);
             _ipGroupsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Network", IPGroupResource.ResourceType.Namespace, Diagnostics);
-            _ipGroupsRestClient = new IpGroups(_ipGroupsClientDiagnostics, Pipeline, Endpoint, ipGroupApiVersion ?? "2025-07-01");
+            _ipGroupsRestClient = new IpGroups(_ipGroupsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, ipGroupApiVersion ?? "2025-07-01");
             ValidateResourceId(id);
         }
 

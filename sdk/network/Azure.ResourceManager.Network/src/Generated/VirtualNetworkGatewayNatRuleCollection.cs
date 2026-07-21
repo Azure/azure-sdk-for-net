@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.Network
         {
             TryGetApiVersion(VirtualNetworkGatewayNatRuleResource.ResourceType, out string virtualNetworkGatewayNatRuleApiVersion);
             _virtualNetworkGatewayNatRulesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Network", VirtualNetworkGatewayNatRuleResource.ResourceType.Namespace, Diagnostics);
-            _virtualNetworkGatewayNatRulesRestClient = new VirtualNetworkGatewayNatRules(_virtualNetworkGatewayNatRulesClientDiagnostics, Pipeline, Endpoint, virtualNetworkGatewayNatRuleApiVersion ?? "2025-07-01");
+            _virtualNetworkGatewayNatRulesRestClient = new VirtualNetworkGatewayNatRules(_virtualNetworkGatewayNatRulesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, virtualNetworkGatewayNatRuleApiVersion ?? "2025-07-01");
             ValidateResourceId(id);
         }
 

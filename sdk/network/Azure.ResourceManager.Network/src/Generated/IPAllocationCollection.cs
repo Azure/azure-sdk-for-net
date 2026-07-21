@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.Network
         {
             TryGetApiVersion(IPAllocationResource.ResourceType, out string ipAllocationApiVersion);
             _ipAllocationsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Network", IPAllocationResource.ResourceType.Namespace, Diagnostics);
-            _ipAllocationsRestClient = new IpAllocations(_ipAllocationsClientDiagnostics, Pipeline, Endpoint, ipAllocationApiVersion ?? "2025-07-01");
+            _ipAllocationsRestClient = new IpAllocations(_ipAllocationsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, ipAllocationApiVersion ?? "2025-07-01");
             ValidateResourceId(id);
         }
 
