@@ -110,7 +110,7 @@ namespace Azure.Generator.Provisioning.Primitives
 
         internal static IReadOnlyList<ProvisioningResourceProjection> Create(IReadOnlyList<ArmResourceMetadata> metadata)
         {
-            var groups = new Dictionary<(string ResourceType, InputModelType ResourceModel), List<ArmResourceMetadata>>();
+            var groups = new Dictionary<(ResourceTypePattern ResourceType, InputModelType ResourceModel), List<ArmResourceMetadata>>();
             var orderedGroups = new List<List<ArmResourceMetadata>>();
 
             foreach (var resource in metadata)
@@ -141,11 +141,11 @@ namespace Azure.Generator.Provisioning.Primitives
         private static string GetSameResourceType(IReadOnlyList<ArmResourceMetadata> metadata)
         {
             var resourceType = metadata[0].ResourceType;
-            if (metadata.Any(resource => !string.Equals(resource.ResourceType, resourceType, StringComparison.Ordinal)))
+            if (metadata.Any(resource => !resource.ResourceType.Equals(resourceType)))
             {
                 throw new InvalidOperationException("Collapsed provisioning resources must share the same resource type.");
             }
-            return resourceType;
+            return resourceType.SerializedResourceType;
         }
 
         private static T GetSameValueOrDefault<T>(IEnumerable<T> values, T defaultValue, IEqualityComparer<T>? comparer = null)
