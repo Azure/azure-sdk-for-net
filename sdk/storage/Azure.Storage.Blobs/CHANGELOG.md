@@ -1,6 +1,7 @@
 # Release History
 
 ## 12.30.0-beta.1 (2026-07-21)
+
 ### Features Added
 - Added support for service version 2026-10-06.
 - Added `AccessTier`, `AccessTierInferred`, `AccessTierChangedOn`, and `SmartAccessTier` to `BlobDownloadDetails`.
