@@ -6,12 +6,6 @@
 - Added support for service version 2026-10-06.
 - Added `ShareFileClient.GetAllRangeList()`, `GetAllRangeListAsync()`, `GetAllRangeListDiff()`, and `GetAllRangeListDiffAsync()`.
 
-### Breaking Changes
-
-### Bugs Fixed
-
-### Other Changes
-
 ## 12.27.1 (2026-06-23)
 
 ### Bugs Fixed

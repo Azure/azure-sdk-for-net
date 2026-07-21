@@ -12,8 +12,6 @@
 ### Breaking Changes
 - Block IDs generated during partitioned uploads are now randomly generated instead of based on sequential integers. This ensures uniqueness across concurrent uploads to the same blob but means block IDs are no longer predictable or ordered.
 
-### Bugs Fixed
-
 ### Other Changes
 - Improved performance of `DownloadToAsync` by buffering each range into memory concurrently instead of streaming one range at a time. This increases throughput but also increases memory consumption, as up to `MaximumConcurrency` ranges (each up to `MaximumTransferLength` in size) may be buffered simultaneously. Use `StorageTransferOptions.MaximumConcurrency` and `StorageTransferOptions.MaximumTransferLength` to control memory usage.
 

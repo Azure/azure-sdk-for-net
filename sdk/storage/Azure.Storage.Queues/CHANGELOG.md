@@ -5,12 +5,6 @@
 ### Features Added
 - Added support for service version 2026-10-06.
 
-### Breaking Changes
-
-### Bugs Fixed
-
-### Other Changes
-
 ## 12.27.1 (2026-06-23)
 
 ### Bugs Fixed
