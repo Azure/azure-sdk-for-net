@@ -1,4 +1,4 @@
 directory: specification/databricks/resource-manager/Microsoft.Databricks/Databricks
-commit: 91b50910a78ae0c6e0ff0c4bfb05f76486a12001
+commit: c3c4181172471f19e6b21ad39924f6d5e48a9677
 repo: Azure/azure-rest-api-specs
 emitterPackageJsonPath: eng/azure-typespec-http-client-csharp-mgmt-emitter-package.json
