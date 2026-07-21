@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.ProviderHub
         {
             TryGetApiVersion(ProviderAuthorizedApplicationResource.ResourceType, out string providerAuthorizedApplicationApiVersion);
             _authorizedApplicationsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ProviderHub", ProviderAuthorizedApplicationResource.ResourceType.Namespace, Diagnostics);
-            _authorizedApplicationsRestClient = new AuthorizedApplications(_authorizedApplicationsClientDiagnostics, Pipeline, Endpoint, providerAuthorizedApplicationApiVersion ?? "2024-09-01");
+            _authorizedApplicationsRestClient = new AuthorizedApplications(_authorizedApplicationsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, providerAuthorizedApplicationApiVersion ?? "2024-09-01");
             ValidateResourceId(id);
         }
 
