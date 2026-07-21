@@ -1681,7 +1681,7 @@ namespace Azure.Storage.Blobs
         /// <param name="startFrom"> Specifies the relative path to list paths from. For non-recursive list, only one entity level is supported; for recursive list, multiple entity levels are supported. (Inclusive). </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual Response<ListBlobsHierarchySegmentResponse> GetBlobHierarchySegment(string delimiter, string prefix = default, string marker = default, int? maxresults = default, IEnumerable<ListBlobsIncludeItem> include = default, int? timeout = default, string startFrom = default, CancellationToken cancellationToken = default)
+        public virtual Response<ListBlobsHierarchySegmentResponse> GetBlobHierarchySegment(string delimiter = default, string prefix = default, string marker = default, int? maxresults = default, IEnumerable<ListBlobsIncludeItem> include = default, int? timeout = default, string startFrom = default, CancellationToken cancellationToken = default)
         {
             Response result = GetBlobHierarchySegment(delimiter, prefix, marker, maxresults, include, timeout, startFrom, cancellationToken.ToRequestContext());
             return Response.FromValue((ListBlobsHierarchySegmentResponse)result, result);
@@ -1697,7 +1697,7 @@ namespace Azure.Storage.Blobs
         /// <param name="startFrom"> Specifies the relative path to list paths from. For non-recursive list, only one entity level is supported; for recursive list, multiple entity levels are supported. (Inclusive). </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual async Task<Response<ListBlobsHierarchySegmentResponse>> GetBlobHierarchySegmentAsync(string delimiter, string prefix = default, string marker = default, int? maxresults = default, IEnumerable<ListBlobsIncludeItem> include = default, int? timeout = default, string startFrom = default, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<ListBlobsHierarchySegmentResponse>> GetBlobHierarchySegmentAsync(string delimiter = default, string prefix = default, string marker = default, int? maxresults = default, IEnumerable<ListBlobsIncludeItem> include = default, int? timeout = default, string startFrom = default, CancellationToken cancellationToken = default)
         {
             Response result = await GetBlobHierarchySegmentAsync(delimiter, prefix, marker, maxresults, include, timeout, startFrom, cancellationToken.ToRequestContext()).ConfigureAwait(false);
             return Response.FromValue((ListBlobsHierarchySegmentResponse)result, result);

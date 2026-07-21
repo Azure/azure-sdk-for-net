@@ -15,7 +15,6 @@ using Azure.Storage.Blobs.Models;
 namespace Azure.Storage.Blobs
 {
     // CUSTOM:
-    // - Maintain optionality of delimiter parameter for backwards compatibility.
     // - Suppress generated GetBlobFlatSegmentApacheArrow & GetBlobHierarchySegmentApacheArrow methods in favor of custom implementations that return Stream.
     internal partial class ContainerRestClient
     {
@@ -90,7 +89,7 @@ namespace Azure.Storage.Blobs
         /// <param name="endBefore"> Filters the results to return only names that are ordered before this value. Currently only applies to Apache Arrow scenario. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual Response<Stream> GetBlobHierarchySegmentApacheArrow(string delimiter, string prefix = default, string marker = default, int? maxresults = default, IEnumerable<ListBlobsIncludeItem> include = default, int? timeout = default, string startFrom = default, string endBefore = default, CancellationToken cancellationToken = default)
+        public virtual Response<Stream> GetBlobHierarchySegmentApacheArrow(string delimiter = default, string prefix = default, string marker = default, int? maxresults = default, IEnumerable<ListBlobsIncludeItem> include = default, int? timeout = default, string startFrom = default, string endBefore = default, CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = ClientDiagnostics.CreateScope("ContainerRestClient.GetBlobHierarchySegmentApacheArrow");
             scope.Start();
@@ -121,7 +120,7 @@ namespace Azure.Storage.Blobs
         /// <param name="endBefore"> Filters the results to return only names that are ordered before this value. Currently only applies to Apache Arrow scenario. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual async Task<Response<Stream>> GetBlobHierarchySegmentApacheArrowAsync(string delimiter, string prefix = default, string marker = default, int? maxresults = default, IEnumerable<ListBlobsIncludeItem> include = default, int? timeout = default, string startFrom = default, string endBefore = default, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<Stream>> GetBlobHierarchySegmentApacheArrowAsync(string delimiter = default, string prefix = default, string marker = default, int? maxresults = default, IEnumerable<ListBlobsIncludeItem> include = default, int? timeout = default, string startFrom = default, string endBefore = default, CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = ClientDiagnostics.CreateScope("ContainerRestClient.GetBlobHierarchySegmentApacheArrow");
             scope.Start();
@@ -139,52 +138,6 @@ namespace Azure.Storage.Blobs
                 scope.Failed(e);
                 throw;
             }
-        }
-
-        internal HttpMessage CreateGetBlobHierarchySegmentRequest(string delimiter, string prefix, string marker, int? maxresults, IEnumerable<ListBlobsIncludeItem> include, int? timeout, string startFrom, RequestContext context)
-        {
-            RawRequestUriBuilder uri = new RawRequestUriBuilder();
-            uri.Reset(_endpoint);
-            uri.AppendQuery("restype", "container", true);
-            uri.AppendQuery("comp", "list", true);
-            if (delimiter != null)
-            {
-                uri.AppendQuery("delimiter", delimiter, true);
-            }
-            if (prefix != null)
-            {
-                uri.AppendQuery("prefix", prefix, true);
-            }
-            if (marker != null)
-            {
-                uri.AppendQuery("marker", marker, true);
-            }
-            if (maxresults != null)
-            {
-                uri.AppendQuery("maxresults", TypeFormatters.ConvertToString(maxresults), true);
-            }
-            if (include != null && !(include is ChangeTrackingList<ListBlobsIncludeItem> changeTrackingList && changeTrackingList.IsUndefined))
-            {
-                uri.AppendQueryDelimited("include", include, ",", escape: true);
-            }
-            if (timeout != null)
-            {
-                uri.AppendQuery("timeout", TypeFormatters.ConvertToString(timeout), true);
-            }
-            if (startFrom != null)
-            {
-                uri.AppendQuery("startFrom", startFrom, true);
-            }
-            HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier200);
-            Request request = message.Request;
-            request.Uri = uri;
-            request.Method = RequestMethod.Get;
-            if (_version != null)
-            {
-                request.Headers.SetValue("x-ms-version", _version);
-            }
-            request.Headers.SetValue("Accept", "application/xml");
-            return message;
         }
     }
 }
