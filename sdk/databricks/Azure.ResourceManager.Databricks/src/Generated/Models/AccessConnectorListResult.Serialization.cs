@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.Databricks.Models
             }
             writer.WritePropertyName("value"u8);
             writer.WriteStartArray();
-            foreach (DatabricksAccessConnectorData item in Value)
+            foreach (AccessConnectorData item in Value)
             {
                 writer.WriteObjectValue(item, options);
             }
@@ -141,17 +141,17 @@ namespace Azure.ResourceManager.Databricks.Models
             {
                 return null;
             }
-            IList<DatabricksAccessConnectorData> value = default;
+            IList<AccessConnectorData> value = default;
             Uri nextLink = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("value"u8))
                 {
-                    List<DatabricksAccessConnectorData> array = new List<DatabricksAccessConnectorData>();
+                    List<AccessConnectorData> array = new List<AccessConnectorData>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(DatabricksAccessConnectorData.DeserializeDatabricksAccessConnectorData(item, options));
+                        array.Add(AccessConnectorData.DeserializeAccessConnectorData(item, options));
                     }
                     value = array;
                     continue;

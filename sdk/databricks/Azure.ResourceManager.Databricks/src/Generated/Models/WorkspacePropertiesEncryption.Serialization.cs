@@ -123,13 +123,13 @@ namespace Azure.ResourceManager.Databricks.Models
             {
                 return null;
             }
-            DatabricksEncryptionEntities entities = default;
+            EncryptionEntitiesDefinition entities = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("entities"u8))
                 {
-                    entities = DatabricksEncryptionEntities.DeserializeDatabricksEncryptionEntities(prop.Value, options);
+                    entities = EncryptionEntitiesDefinition.DeserializeEncryptionEntitiesDefinition(prop.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

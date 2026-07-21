@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.Databricks.Models
 
         /// <summary> Initializes a new instance of <see cref="WorkspaceListResult"/>. </summary>
         /// <param name="value"> The Workspace items on this page. </param>
-        internal WorkspaceListResult(IEnumerable<DatabricksWorkspaceData> value)
+        internal WorkspaceListResult(IEnumerable<WorkspaceData> value)
         {
             Value = value.ToList();
         }
@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.Databricks.Models
         /// <param name="value"> The Workspace items on this page. </param>
         /// <param name="nextLink"> The link to the next page of items. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal WorkspaceListResult(IList<DatabricksWorkspaceData> value, Uri nextLink, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal WorkspaceListResult(IList<WorkspaceData> value, Uri nextLink, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Value = value;
             NextLink = nextLink;
@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.Databricks.Models
         }
 
         /// <summary> The Workspace items on this page. </summary>
-        public IList<DatabricksWorkspaceData> Value { get; }
+        public IList<WorkspaceData> Value { get; }
 
         /// <summary> The link to the next page of items. </summary>
         public Uri NextLink { get; }

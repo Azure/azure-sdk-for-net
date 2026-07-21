@@ -15,7 +15,7 @@ using Azure.ResourceManager.Databricks.Models;
 
 namespace Azure.ResourceManager.Databricks
 {
-    internal partial class AccessConnectorsGetBySubscriptionAsyncCollectionResultOfT : AsyncPageable<DatabricksAccessConnectorData>
+    internal partial class AccessConnectorsGetBySubscriptionAsyncCollectionResultOfT : AsyncPageable<AccessConnectorData>
     {
         private readonly AccessConnectors _client;
         private readonly Guid _subscriptionId;
@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.Databricks
         /// <param name="continuationToken"> A continuation token indicating where to resume paging. </param>
         /// <param name="pageSizeHint"> The number of items per page. </param>
         /// <returns> The pages of AccessConnectorsGetBySubscriptionAsyncCollectionResultOfT as an enumerable collection. </returns>
-        public override async IAsyncEnumerable<Page<DatabricksAccessConnectorData>> AsPages(string continuationToken, int? pageSizeHint)
+        public override async IAsyncEnumerable<Page<AccessConnectorData>> AsPages(string continuationToken, int? pageSizeHint)
         {
             Uri nextPage = continuationToken != null ? new Uri(continuationToken) : null;
             while (true)
@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.Databricks
                 }
                 AccessConnectorListResult result = AccessConnectorListResult.FromResponse(response);
                 nextPage = result.NextLink;
-                yield return Page<DatabricksAccessConnectorData>.FromValues((IReadOnlyList<DatabricksAccessConnectorData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
+                yield return Page<AccessConnectorData>.FromValues((IReadOnlyList<AccessConnectorData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 if (nextPage == null)
                 {
                     yield break;

@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.Core;
 
 namespace Azure.ResourceManager.Databricks.Models
 {
@@ -25,13 +24,13 @@ namespace Azure.ResourceManager.Databricks.Models
         /// <summary> Initializes a new instance of <see cref="VirtualNetworkPeeringPropertiesFormatDatabricksVirtualNetwork"/>. </summary>
         /// <param name="id"> The Id of the databricks virtual network. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal VirtualNetworkPeeringPropertiesFormatDatabricksVirtualNetwork(ResourceIdentifier id, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal VirtualNetworkPeeringPropertiesFormatDatabricksVirtualNetwork(string id, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Id = id;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> The Id of the databricks virtual network. </summary>
-        public ResourceIdentifier Id { get; set; }
+        public string Id { get; set; }
     }
 }

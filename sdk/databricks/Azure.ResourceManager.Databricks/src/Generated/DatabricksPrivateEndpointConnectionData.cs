@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.Databricks
         /// <summary> Initializes a new instance of <see cref="DatabricksPrivateEndpointConnectionData"/>. </summary>
         /// <param name="properties"> The private endpoint connection properties. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="properties"/> is null. </exception>
-        public DatabricksPrivateEndpointConnectionData(DatabricksPrivateEndpointConnectionProperties properties)
+        public DatabricksPrivateEndpointConnectionData(PrivateEndpointConnectionProperties properties)
         {
             Argument.AssertNotNull(properties, nameof(properties));
 
@@ -36,13 +36,13 @@ namespace Azure.ResourceManager.Databricks
         /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
         /// <param name="properties"> The private endpoint connection properties. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal DatabricksPrivateEndpointConnectionData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, DatabricksPrivateEndpointConnectionProperties properties, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(id, name, resourceType, systemData)
+        internal DatabricksPrivateEndpointConnectionData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, PrivateEndpointConnectionProperties properties, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(id, name, resourceType, systemData)
         {
             Properties = properties;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> The private endpoint connection properties. </summary>
-        public DatabricksPrivateEndpointConnectionProperties Properties { get; set; }
+        public PrivateEndpointConnectionProperties Properties { get; set; }
     }
 }

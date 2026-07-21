@@ -62,14 +62,14 @@ namespace Azure.ResourceManager.Databricks.Mocking
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="DatabricksWorkspaceResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<DatabricksWorkspaceResource> GetDatabricksWorkspacesAsync(CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="WorkspaceResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<WorkspaceResource> GetWorkspacesAsync(CancellationToken cancellationToken = default)
         {
             RequestContext context = new RequestContext
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<DatabricksWorkspaceData, DatabricksWorkspaceResource>(new WorkspacesGetBySubscriptionAsyncCollectionResultOfT(WorkspacesRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableDatabricksSubscriptionResource.GetDatabricksWorkspaces"), data => new DatabricksWorkspaceResource(Client, data));
+            return new AsyncPageableWrapper<WorkspaceData, WorkspaceResource>(new WorkspacesGetBySubscriptionAsyncCollectionResultOfT(WorkspacesRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableDatabricksSubscriptionResource.GetWorkspaces"), data => new WorkspaceResource(Client, data));
         }
 
         /// <summary>
@@ -90,14 +90,14 @@ namespace Azure.ResourceManager.Databricks.Mocking
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="DatabricksWorkspaceResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<DatabricksWorkspaceResource> GetDatabricksWorkspaces(CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="WorkspaceResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<WorkspaceResource> GetWorkspaces(CancellationToken cancellationToken = default)
         {
             RequestContext context = new RequestContext
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<DatabricksWorkspaceData, DatabricksWorkspaceResource>(new WorkspacesGetBySubscriptionCollectionResultOfT(WorkspacesRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableDatabricksSubscriptionResource.GetDatabricksWorkspaces"), data => new DatabricksWorkspaceResource(Client, data));
+            return new PageableWrapper<WorkspaceData, WorkspaceResource>(new WorkspacesGetBySubscriptionCollectionResultOfT(WorkspacesRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableDatabricksSubscriptionResource.GetWorkspaces"), data => new WorkspaceResource(Client, data));
         }
 
         /// <summary>
@@ -118,14 +118,14 @@ namespace Azure.ResourceManager.Databricks.Mocking
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="DatabricksAccessConnectorResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<DatabricksAccessConnectorResource> GetDatabricksAccessConnectorsAsync(CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="AccessConnectorResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<AccessConnectorResource> GetAccessConnectorsAsync(CancellationToken cancellationToken = default)
         {
             RequestContext context = new RequestContext
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<DatabricksAccessConnectorData, DatabricksAccessConnectorResource>(new AccessConnectorsGetBySubscriptionAsyncCollectionResultOfT(AccessConnectorsRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableDatabricksSubscriptionResource.GetDatabricksAccessConnectors"), data => new DatabricksAccessConnectorResource(Client, data));
+            return new AsyncPageableWrapper<AccessConnectorData, AccessConnectorResource>(new AccessConnectorsGetBySubscriptionAsyncCollectionResultOfT(AccessConnectorsRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableDatabricksSubscriptionResource.GetAccessConnectors"), data => new AccessConnectorResource(Client, data));
         }
 
         /// <summary>
@@ -146,14 +146,14 @@ namespace Azure.ResourceManager.Databricks.Mocking
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="DatabricksAccessConnectorResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<DatabricksAccessConnectorResource> GetDatabricksAccessConnectors(CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="AccessConnectorResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<AccessConnectorResource> GetAccessConnectors(CancellationToken cancellationToken = default)
         {
             RequestContext context = new RequestContext
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<DatabricksAccessConnectorData, DatabricksAccessConnectorResource>(new AccessConnectorsGetBySubscriptionCollectionResultOfT(AccessConnectorsRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableDatabricksSubscriptionResource.GetDatabricksAccessConnectors"), data => new DatabricksAccessConnectorResource(Client, data));
+            return new PageableWrapper<AccessConnectorData, AccessConnectorResource>(new AccessConnectorsGetBySubscriptionCollectionResultOfT(AccessConnectorsRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableDatabricksSubscriptionResource.GetAccessConnectors"), data => new AccessConnectorResource(Client, data));
         }
     }
 }

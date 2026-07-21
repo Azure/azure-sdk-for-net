@@ -121,7 +121,7 @@ namespace Azure.ResourceManager.Databricks.Models
             {
                 return null;
             }
-            DatabricksEnhancedSecurityMonitoringValue? value = default;
+            EnhancedSecurityMonitoringValue? value = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -131,7 +131,7 @@ namespace Azure.ResourceManager.Databricks.Models
                     {
                         continue;
                     }
-                    value = new DatabricksEnhancedSecurityMonitoringValue(prop.Value.GetString());
+                    value = new EnhancedSecurityMonitoringValue(prop.Value.GetString());
                     continue;
                 }
                 if (options.Format != "W")

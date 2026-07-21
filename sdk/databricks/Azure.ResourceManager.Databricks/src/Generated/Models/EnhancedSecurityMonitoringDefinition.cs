@@ -24,13 +24,13 @@ namespace Azure.ResourceManager.Databricks.Models
         /// <summary> Initializes a new instance of <see cref="EnhancedSecurityMonitoringDefinition"/>. </summary>
         /// <param name="value"></param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal EnhancedSecurityMonitoringDefinition(DatabricksEnhancedSecurityMonitoringValue? value, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal EnhancedSecurityMonitoringDefinition(EnhancedSecurityMonitoringValue? value, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Value = value;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> Gets or sets the Value. </summary>
-        public DatabricksEnhancedSecurityMonitoringValue? Value { get; set; }
+        public EnhancedSecurityMonitoringValue? Value { get; set; }
     }
 }

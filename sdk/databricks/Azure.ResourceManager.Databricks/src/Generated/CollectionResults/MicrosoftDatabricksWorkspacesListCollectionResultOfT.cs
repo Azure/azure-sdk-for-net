@@ -17,7 +17,7 @@ using Azure.ResourceManager.Databricks.Models;
 
 namespace Azure.ResourceManager.Databricks
 {
-    internal partial class MicrosoftDatabricksWorkspacesListCollectionResultOfT : Pageable<DatabricksOutboundEnvironmentEndpoint>
+    internal partial class MicrosoftDatabricksWorkspacesListCollectionResultOfT : Pageable<OutboundEnvironmentEndpoint>
     {
         private readonly OutboundNetworkDependenciesEndpoints _client;
         private readonly Guid _subscriptionId;
@@ -47,15 +47,15 @@ namespace Azure.ResourceManager.Databricks
         /// <param name="continuationToken"> A continuation token indicating where to resume paging. </param>
         /// <param name="pageSizeHint"> The number of items per page. </param>
         /// <returns> The pages of MicrosoftDatabricksWorkspacesListCollectionResultOfT as an enumerable collection. </returns>
-        public override IEnumerable<Page<DatabricksOutboundEnvironmentEndpoint>> AsPages(string continuationToken, int? pageSizeHint)
+        public override IEnumerable<Page<OutboundEnvironmentEndpoint>> AsPages(string continuationToken, int? pageSizeHint)
         {
             Response response = GetNextResponse(pageSizeHint, null);
             if (response is null)
             {
                 yield break;
             }
-            IReadOnlyList<DatabricksOutboundEnvironmentEndpoint> result = ParseArrayFromResponse(response);
-            yield return Page<DatabricksOutboundEnvironmentEndpoint>.FromValues(result, null, response);
+            IReadOnlyList<OutboundEnvironmentEndpoint> result = ParseArrayFromResponse(response);
+            yield return Page<OutboundEnvironmentEndpoint>.FromValues(result, null, response);
         }
 
         /// <summary> Get next page. </summary>
@@ -63,7 +63,7 @@ namespace Azure.ResourceManager.Databricks
         /// <param name="nextLink"> The next link to use for the next page of results. </param>
         private Response GetNextResponse(int? pageSizeHint, Uri nextLink)
         {
-            HttpMessage message = _client.CreateGetOutboundNetworkDependenciesEndpointsRequest(_subscriptionId, _resourceGroupName, _workspaceName, _context);
+            HttpMessage message = _client.CreateGetAllRequest(_subscriptionId, _resourceGroupName, _workspaceName, _context);
             using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope(_diagnosticScope);
             scope.Start();
             try
@@ -80,14 +80,14 @@ namespace Azure.ResourceManager.Databricks
         /// <summary> Parse the array from the response. </summary>
         /// <param name="response"> The response to parse. </param>
         /// <returns> The parsed array. </returns>
-        private static IReadOnlyList<DatabricksOutboundEnvironmentEndpoint> ParseArrayFromResponse(Response response)
+        private static IReadOnlyList<OutboundEnvironmentEndpoint> ParseArrayFromResponse(Response response)
         {
             using JsonDocument document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
             JsonElement array = document.RootElement;
-            List<DatabricksOutboundEnvironmentEndpoint> result = new List<DatabricksOutboundEnvironmentEndpoint>();
+            List<OutboundEnvironmentEndpoint> result = new List<OutboundEnvironmentEndpoint>();
             foreach (JsonElement element in array.EnumerateArray())
             {
-                result.Add(ModelReaderWriter.Read<DatabricksOutboundEnvironmentEndpoint>(new BinaryData(Encoding.UTF8.GetBytes(element.GetRawText())), ModelSerializationExtensions.WireOptions, AzureResourceManagerDatabricksContext.Default));
+                result.Add(ModelReaderWriter.Read<OutboundEnvironmentEndpoint>(new BinaryData(Encoding.UTF8.GetBytes(element.GetRawText())), ModelSerializationExtensions.WireOptions, AzureResourceManagerDatabricksContext.Default));
             }
             return result;
         }

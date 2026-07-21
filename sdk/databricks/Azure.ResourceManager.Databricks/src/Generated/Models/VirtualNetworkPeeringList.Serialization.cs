@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.Databricks.Models
             }
             writer.WritePropertyName("value"u8);
             writer.WriteStartArray();
-            foreach (DatabricksVirtualNetworkPeeringData item in Value)
+            foreach (VirtualNetworkPeeringData item in Value)
             {
                 writer.WriteObjectValue(item, options);
             }
@@ -141,17 +141,17 @@ namespace Azure.ResourceManager.Databricks.Models
             {
                 return null;
             }
-            IList<DatabricksVirtualNetworkPeeringData> value = default;
+            IList<VirtualNetworkPeeringData> value = default;
             Uri nextLink = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("value"u8))
                 {
-                    List<DatabricksVirtualNetworkPeeringData> array = new List<DatabricksVirtualNetworkPeeringData>();
+                    List<VirtualNetworkPeeringData> array = new List<VirtualNetworkPeeringData>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(DatabricksVirtualNetworkPeeringData.DeserializeDatabricksVirtualNetworkPeeringData(item, options));
+                        array.Add(VirtualNetworkPeeringData.DeserializeVirtualNetworkPeeringData(item, options));
                     }
                     value = array;
                     continue;

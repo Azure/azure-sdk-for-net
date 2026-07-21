@@ -121,7 +121,7 @@ namespace Azure.ResourceManager.Databricks.Models
             {
                 return null;
             }
-            DatabricksAutomaticClusterUpdateValue? value = default;
+            AutomaticClusterUpdateValue? value = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -131,7 +131,7 @@ namespace Azure.ResourceManager.Databricks.Models
                     {
                         continue;
                     }
-                    value = new DatabricksAutomaticClusterUpdateValue(prop.Value.GetString());
+                    value = new AutomaticClusterUpdateValue(prop.Value.GetString());
                     continue;
                 }
                 if (options.Format != "W")

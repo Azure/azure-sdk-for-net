@@ -49,12 +49,12 @@ namespace Azure.ResourceManager.Databricks.Models
         /// <param name="defaultStorageFirewall"> Gets or Sets Default Storage Firewall configuration information. Not allowed in Serverless ComputeMode workspace. </param>
         /// <param name="encryptionEntities"> Encryption entities definition for the workspace. </param>
         /// <param name="sku"> The SKU of the resource. </param>
-        /// <returns> A new <see cref="Databricks.DatabricksWorkspaceData"/> instance for mocking. </returns>
-        public static DatabricksWorkspaceData DatabricksWorkspaceData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, DatabricksComputeMode computeMode = default, ResourceIdentifier managedResourceGroupId = default, WorkspaceCustomProperties parameters = default, DatabricksProvisioningState? provisioningState = default, string uiDefinitionUri = default, IEnumerable<DatabricksWorkspaceProviderAuthorization> authorizations = default, DatabricksCreatedBy createdBy = default, DatabricksCreatedBy updatedBy = default, DateTimeOffset? createdOn = default, string workspaceId = default, string workspaceUri = default, DatabricksManagedIdentityConfiguration storageAccountIdentity = default, DatabricksManagedIdentityConfiguration managedDiskIdentity = default, ResourceIdentifier diskEncryptionSetId = default, DatabricksEnhancedSecurityCompliance enhancedSecurityCompliance = default, IEnumerable<DatabricksPrivateEndpointConnectionData> privateEndpointConnections = default, DatabricksPublicNetworkAccess? publicNetworkAccess = default, DatabricksRequiredNsgRules? requiredNsgRules = default, DatabricksDefaultCatalogProperties defaultCatalog = default, bool? isUcEnabled = default, DatabricksWorkspaceAccessConnectorInfo accessConnector = default, DatabricksDefaultStorageFirewall? defaultStorageFirewall = default, DatabricksEncryptionEntities encryptionEntities = default, DatabricksSku sku = default)
+        /// <returns> A new <see cref="Databricks.WorkspaceData"/> instance for mocking. </returns>
+        public static WorkspaceData WorkspaceData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, ComputeMode computeMode = default, string managedResourceGroupId = default, WorkspaceCustomParameters parameters = default, ProvisioningState? provisioningState = default, string uiDefinitionUri = default, IEnumerable<WorkspaceProviderAuthorization> authorizations = default, CreatedBy createdBy = default, CreatedBy updatedBy = default, DateTimeOffset? createdOn = default, string workspaceId = default, string workspaceUri = default, ManagedIdentityConfiguration storageAccountIdentity = default, ManagedIdentityConfiguration managedDiskIdentity = default, string diskEncryptionSetId = default, EnhancedSecurityComplianceDefinition enhancedSecurityCompliance = default, IEnumerable<DatabricksPrivateEndpointConnectionData> privateEndpointConnections = default, PublicNetworkAccess? publicNetworkAccess = default, RequiredNsgRules? requiredNsgRules = default, DefaultCatalogProperties defaultCatalog = default, bool? isUcEnabled = default, WorkspacePropertiesAccessConnector accessConnector = default, DefaultStorageFirewall? defaultStorageFirewall = default, EncryptionEntitiesDefinition encryptionEntities = default, DatabricksSku sku = default)
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
 
-            return new DatabricksWorkspaceData(
+            return new WorkspaceData(
                 id,
                 name,
                 resourceType,
@@ -106,10 +106,10 @@ namespace Azure.ResourceManager.Databricks.Models
         /// <param name="storageAccountSkuName"> Storage account SKU name, ex: Standard_GRS, Standard_LRS. Refer https://aka.ms/storageskus for valid inputs. Not allowed in Serverless ComputeMode workspace. </param>
         /// <param name="vnetAddressPrefix"> Address prefix for Managed virtual network. Default value for this input is 10.139. Not allowed in Serverless ComputeMode workspace. </param>
         /// <param name="resourceTags"> Tags applied to resources under Managed resource group. These can be updated by updating tags at workspace level. Not allowed in Serverless ComputeMode workspace. </param>
-        /// <returns> A new <see cref="Models.WorkspaceCustomProperties"/> instance for mocking. </returns>
-        public static WorkspaceCustomProperties WorkspaceCustomProperties(WorkspaceCustomStringParameterValue amlWorkspaceId = default, WorkspaceCustomStringParameterValue customVirtualNetworkId = default, WorkspaceCustomStringParameterValue customPublicSubnetName = default, WorkspaceCustomStringParameterValue customPrivateSubnetName = default, WorkspaceNoPublicIPBooleanParameterValue enableNoPublicIp = default, WorkspaceCustomStringParameterValue loadBalancerBackendPoolName = default, WorkspaceCustomStringParameterValue loadBalancerId = default, WorkspaceCustomStringParameterValue natGatewayName = default, WorkspaceCustomStringParameterValue publicIpName = default, WorkspaceCustomBooleanParameterValue prepareEncryption = default, WorkspaceEncryptionParameterValue encryption = default, WorkspaceCustomBooleanParameterValue requireInfrastructureEncryption = default, WorkspaceCustomStringParameterValue storageAccountName = default, WorkspaceCustomStringParameterValue storageAccountSkuName = default, WorkspaceCustomStringParameterValue vnetAddressPrefix = default, WorkspaceCustomObjectParameterValue resourceTags = default)
+        /// <returns> A new <see cref="Models.WorkspaceCustomParameters"/> instance for mocking. </returns>
+        public static WorkspaceCustomParameters WorkspaceCustomParameters(WorkspaceCustomStringParameter amlWorkspaceId = default, WorkspaceCustomStringParameter customVirtualNetworkId = default, WorkspaceCustomStringParameter customPublicSubnetName = default, WorkspaceCustomStringParameter customPrivateSubnetName = default, WorkspaceNoPublicIPBooleanParameter enableNoPublicIp = default, WorkspaceCustomStringParameter loadBalancerBackendPoolName = default, WorkspaceCustomStringParameter loadBalancerId = default, WorkspaceCustomStringParameter natGatewayName = default, WorkspaceCustomStringParameter publicIpName = default, WorkspaceCustomBooleanParameter prepareEncryption = default, WorkspaceEncryptionParameter encryption = default, WorkspaceCustomBooleanParameter requireInfrastructureEncryption = default, WorkspaceCustomStringParameter storageAccountName = default, WorkspaceCustomStringParameter storageAccountSkuName = default, WorkspaceCustomStringParameter vnetAddressPrefix = default, WorkspaceCustomObjectParameter resourceTags = default)
         {
-            return new WorkspaceCustomProperties(
+            return new WorkspaceCustomParameters(
                 amlWorkspaceId,
                 customVirtualNetworkId,
                 customPublicSubnetName,
@@ -131,140 +131,140 @@ namespace Azure.ResourceManager.Databricks.Models
 
         /// <param name="type"> The type of variable that this is. </param>
         /// <param name="value"> The value which should be used for this field. </param>
-        /// <returns> A new <see cref="Models.WorkspaceCustomStringParameterValue"/> instance for mocking. </returns>
-        public static WorkspaceCustomStringParameterValue WorkspaceCustomStringParameterValue(DatabricksCustomParameterType? @type = default, string value = default)
+        /// <returns> A new <see cref="Models.WorkspaceCustomStringParameter"/> instance for mocking. </returns>
+        public static WorkspaceCustomStringParameter WorkspaceCustomStringParameter(CustomParameterType? @type = default, string value = default)
         {
-            return new WorkspaceCustomStringParameterValue(@type, value, default);
-        }
-
-        /// <param name="type"> The type of variable that this is. </param>
-        /// <param name="isEnabled"> The value which should be used for this field. </param>
-        /// <returns> A new <see cref="Models.WorkspaceNoPublicIPBooleanParameterValue"/> instance for mocking. </returns>
-        public static WorkspaceNoPublicIPBooleanParameterValue WorkspaceNoPublicIPBooleanParameterValue(DatabricksCustomParameterType? @type = default, bool isEnabled = default)
-        {
-            return new WorkspaceNoPublicIPBooleanParameterValue(@type, isEnabled, default);
-        }
-
-        /// <param name="type"> The type of variable that this is. </param>
-        /// <param name="isEnabled"> The value which should be used for this field. </param>
-        /// <returns> A new <see cref="Models.WorkspaceCustomBooleanParameterValue"/> instance for mocking. </returns>
-        public static WorkspaceCustomBooleanParameterValue WorkspaceCustomBooleanParameterValue(DatabricksCustomParameterType? @type = default, bool isEnabled = default)
-        {
-            return new WorkspaceCustomBooleanParameterValue(@type, isEnabled, default);
+            return new WorkspaceCustomStringParameter(@type, value, default);
         }
 
         /// <param name="type"> The type of variable that this is. </param>
         /// <param name="value"> The value which should be used for this field. </param>
-        /// <returns> A new <see cref="Models.WorkspaceEncryptionParameterValue"/> instance for mocking. </returns>
-        public static WorkspaceEncryptionParameterValue WorkspaceEncryptionParameterValue(DatabricksCustomParameterType? @type = default, DatabricksEncryption value = default)
+        /// <returns> A new <see cref="Models.WorkspaceNoPublicIPBooleanParameter"/> instance for mocking. </returns>
+        public static WorkspaceNoPublicIPBooleanParameter WorkspaceNoPublicIPBooleanParameter(CustomParameterType? @type = default, bool value = default)
         {
-            return new WorkspaceEncryptionParameterValue(@type, value, default);
+            return new WorkspaceNoPublicIPBooleanParameter(@type, value, default);
+        }
+
+        /// <param name="type"> The type of variable that this is. </param>
+        /// <param name="value"> The value which should be used for this field. </param>
+        /// <returns> A new <see cref="Models.WorkspaceCustomBooleanParameter"/> instance for mocking. </returns>
+        public static WorkspaceCustomBooleanParameter WorkspaceCustomBooleanParameter(CustomParameterType? @type = default, bool value = default)
+        {
+            return new WorkspaceCustomBooleanParameter(@type, value, default);
+        }
+
+        /// <param name="type"> The type of variable that this is. </param>
+        /// <param name="value"> The value which should be used for this field. </param>
+        /// <returns> A new <see cref="Models.WorkspaceEncryptionParameter"/> instance for mocking. </returns>
+        public static WorkspaceEncryptionParameter WorkspaceEncryptionParameter(CustomParameterType? @type = default, Encryption value = default)
+        {
+            return new WorkspaceEncryptionParameter(@type, value, default);
         }
 
         /// <param name="keySource"> The encryption keySource (provider). Possible values (case-insensitive):  Default, Microsoft.Keyvault. </param>
         /// <param name="keyName"> The name of KeyVault key. </param>
         /// <param name="keyVersion"> The version of KeyVault key. </param>
         /// <param name="keyVaultUri"> The Uri of KeyVault. </param>
-        /// <returns> A new <see cref="Models.DatabricksEncryption"/> instance for mocking. </returns>
-        public static DatabricksEncryption DatabricksEncryption(DatabricksKeySource? keySource = default, string keyName = default, string keyVersion = default, string keyVaultUri = default)
+        /// <returns> A new <see cref="Models.Encryption"/> instance for mocking. </returns>
+        public static Encryption Encryption(KeySource? keySource = default, string keyName = default, string keyVersion = default, string keyVaultUri = default)
         {
-            return new DatabricksEncryption(keySource, keyName, keyVersion, keyVaultUri, default);
+            return new Encryption(keySource, keyName, keyVersion, keyVaultUri, default);
         }
 
         /// <param name="type"> The type of variable that this is. </param>
         /// <param name="value"> The value which should be used for this field. </param>
-        /// <returns> A new <see cref="Models.WorkspaceCustomObjectParameterValue"/> instance for mocking. </returns>
-        public static WorkspaceCustomObjectParameterValue WorkspaceCustomObjectParameterValue(DatabricksCustomParameterType? @type = default, BinaryData value = default)
+        /// <returns> A new <see cref="Models.WorkspaceCustomObjectParameter"/> instance for mocking. </returns>
+        public static WorkspaceCustomObjectParameter WorkspaceCustomObjectParameter(CustomParameterType? @type = default, BinaryData value = default)
         {
-            return new WorkspaceCustomObjectParameterValue(@type, value, default);
+            return new WorkspaceCustomObjectParameter(@type, value, default);
         }
 
         /// <param name="principalId"> The provider's principal identifier. This is the identity that the provider will use to call ARM to manage the workspace resources. </param>
         /// <param name="roleDefinitionId"> The provider's role definition identifier. This role will define all the permissions that the provider must have on the workspace's container resource group. This role definition cannot have permission to delete the resource group. </param>
-        /// <returns> A new <see cref="Models.DatabricksWorkspaceProviderAuthorization"/> instance for mocking. </returns>
-        public static DatabricksWorkspaceProviderAuthorization DatabricksWorkspaceProviderAuthorization(Guid principalId = default, Guid roleDefinitionId = default)
+        /// <returns> A new <see cref="Models.WorkspaceProviderAuthorization"/> instance for mocking. </returns>
+        public static WorkspaceProviderAuthorization WorkspaceProviderAuthorization(string principalId = default, string roleDefinitionId = default)
         {
-            return new DatabricksWorkspaceProviderAuthorization(principalId, roleDefinitionId, default);
+            return new WorkspaceProviderAuthorization(principalId, roleDefinitionId, default);
         }
 
         /// <param name="oid"> The Object ID that created the workspace. </param>
         /// <param name="puid"> The Personal Object ID corresponding to the object ID above. </param>
         /// <param name="applicationId"> The application ID of the application that initiated the creation of the workspace. For example, Azure Portal. </param>
-        /// <returns> A new <see cref="Models.DatabricksCreatedBy"/> instance for mocking. </returns>
-        public static DatabricksCreatedBy DatabricksCreatedBy(Guid? oid = default, string puid = default, Guid? applicationId = default)
+        /// <returns> A new <see cref="Models.CreatedBy"/> instance for mocking. </returns>
+        public static CreatedBy CreatedBy(string oid = default, string puid = default, string applicationId = default)
         {
-            return new DatabricksCreatedBy(oid, puid, applicationId, default);
+            return new CreatedBy(oid, puid, applicationId, default);
         }
 
         /// <param name="principalId"> The objectId of the Managed Identity that is linked to the Managed Storage account. </param>
         /// <param name="tenantId"> The tenant Id where the Managed Identity is created. </param>
         /// <param name="type"> The type of Identity created. It can be either SystemAssigned or UserAssigned. </param>
-        /// <returns> A new <see cref="Models.DatabricksManagedIdentityConfiguration"/> instance for mocking. </returns>
-        public static DatabricksManagedIdentityConfiguration DatabricksManagedIdentityConfiguration(Guid? principalId = default, Guid? tenantId = default, string @type = default)
+        /// <returns> A new <see cref="Models.ManagedIdentityConfiguration"/> instance for mocking. </returns>
+        public static ManagedIdentityConfiguration ManagedIdentityConfiguration(string principalId = default, string tenantId = default, string @type = default)
         {
-            return new DatabricksManagedIdentityConfiguration(principalId, tenantId, @type, default);
+            return new ManagedIdentityConfiguration(principalId, tenantId, @type, default);
         }
 
         /// <param name="managedServices"> Encryption properties for the databricks managed services. Supported in both Serverless and Hybrid ComputeMode. </param>
         /// <param name="managedDisk"> Encryption properties for the databricks managed disks. Not allowed in Serverless ComputeMode workspace. </param>
-        /// <returns> A new <see cref="Models.DatabricksEncryptionEntities"/> instance for mocking. </returns>
-        public static DatabricksEncryptionEntities DatabricksEncryptionEntities(DatabricksEncryptionV2 managedServices = default, DatabricksManagedDiskEncryption managedDisk = default)
+        /// <returns> A new <see cref="Models.EncryptionEntitiesDefinition"/> instance for mocking. </returns>
+        public static EncryptionEntitiesDefinition EncryptionEntitiesDefinition(EncryptionV2 managedServices = default, ManagedDiskEncryption managedDisk = default)
         {
-            return new DatabricksEncryptionEntities(managedServices, managedDisk, default);
+            return new EncryptionEntitiesDefinition(managedServices, managedDisk, default);
         }
 
         /// <param name="keySource"> The encryption keySource (provider). Possible values (case-insensitive):  Microsoft.Keyvault. </param>
         /// <param name="keyVaultProperties"> Key Vault input properties for encryption. </param>
-        /// <returns> A new <see cref="Models.DatabricksEncryptionV2"/> instance for mocking. </returns>
-        public static DatabricksEncryptionV2 DatabricksEncryptionV2(DatabricksEncryptionKeySource keySource = default, DatabricksEncryptionV2KeyVaultProperties keyVaultProperties = default)
+        /// <returns> A new <see cref="Models.EncryptionV2"/> instance for mocking. </returns>
+        public static EncryptionV2 EncryptionV2(EncryptionKeySource keySource = default, EncryptionV2KeyVaultProperties keyVaultProperties = default)
         {
-            return new DatabricksEncryptionV2(keySource, keyVaultProperties, default);
+            return new EncryptionV2(keySource, keyVaultProperties, default);
         }
 
         /// <param name="keyVaultUri"> The Uri of KeyVault. </param>
         /// <param name="keyName"> The name of KeyVault key. </param>
         /// <param name="keyVersion"> The version of KeyVault key. </param>
-        /// <returns> A new <see cref="Models.DatabricksEncryptionV2KeyVaultProperties"/> instance for mocking. </returns>
-        public static DatabricksEncryptionV2KeyVaultProperties DatabricksEncryptionV2KeyVaultProperties(string keyVaultUri = default, string keyName = default, string keyVersion = default)
+        /// <returns> A new <see cref="Models.EncryptionV2KeyVaultProperties"/> instance for mocking. </returns>
+        public static EncryptionV2KeyVaultProperties EncryptionV2KeyVaultProperties(string keyVaultUri = default, string keyName = default, string keyVersion = default)
         {
-            return new DatabricksEncryptionV2KeyVaultProperties(keyVaultUri, keyName, keyVersion, default);
+            return new EncryptionV2KeyVaultProperties(keyVaultUri, keyName, keyVersion, default);
         }
 
         /// <param name="keySource"> The encryption keySource (provider). Possible values (case-insensitive):  Microsoft.Keyvault. Not allowed in Serverless ComputeMode workspace. </param>
         /// <param name="keyVaultProperties"> Key Vault input properties for encryption. </param>
-        /// <param name="isRotationToLatestKeyVersionEnabled"> Indicate whether the latest key version should be automatically used for Managed Disk Encryption. </param>
-        /// <returns> A new <see cref="Models.DatabricksManagedDiskEncryption"/> instance for mocking. </returns>
-        public static DatabricksManagedDiskEncryption DatabricksManagedDiskEncryption(DatabricksEncryptionKeySource keySource = default, DatabricksManagedDiskEncryptionKeyVaultProperties keyVaultProperties = default, bool? isRotationToLatestKeyVersionEnabled = default)
+        /// <param name="rotationToLatestKeyVersionEnabled"> Indicate whether the latest key version should be automatically used for Managed Disk Encryption. </param>
+        /// <returns> A new <see cref="Models.ManagedDiskEncryption"/> instance for mocking. </returns>
+        public static ManagedDiskEncryption ManagedDiskEncryption(EncryptionKeySource keySource = default, ManagedDiskEncryptionKeyVaultProperties keyVaultProperties = default, bool? rotationToLatestKeyVersionEnabled = default)
         {
-            return new DatabricksManagedDiskEncryption(keySource, keyVaultProperties, isRotationToLatestKeyVersionEnabled, default);
+            return new ManagedDiskEncryption(keySource, keyVaultProperties, rotationToLatestKeyVersionEnabled, default);
         }
 
         /// <param name="keyVaultUri"> The URI of KeyVault. </param>
         /// <param name="keyName"> The name of KeyVault key. </param>
         /// <param name="keyVersion"> The version of KeyVault key. </param>
-        /// <returns> A new <see cref="Models.DatabricksManagedDiskEncryptionKeyVaultProperties"/> instance for mocking. </returns>
-        public static DatabricksManagedDiskEncryptionKeyVaultProperties DatabricksManagedDiskEncryptionKeyVaultProperties(string keyVaultUri = default, string keyName = default, string keyVersion = default)
+        /// <returns> A new <see cref="Models.ManagedDiskEncryptionKeyVaultProperties"/> instance for mocking. </returns>
+        public static ManagedDiskEncryptionKeyVaultProperties ManagedDiskEncryptionKeyVaultProperties(string keyVaultUri = default, string keyName = default, string keyVersion = default)
         {
-            return new DatabricksManagedDiskEncryptionKeyVaultProperties(keyVaultUri, keyName, keyVersion, default);
+            return new ManagedDiskEncryptionKeyVaultProperties(keyVaultUri, keyName, keyVersion, default);
         }
 
         /// <param name="automaticClusterUpdateValue"> Gets or sets the Value. </param>
         /// <param name="complianceSecurityProfile"> Status of Compliance Security Profile feature. </param>
         /// <param name="enhancedSecurityMonitoringValue"> Gets or sets the Value. </param>
-        /// <returns> A new <see cref="Models.DatabricksEnhancedSecurityCompliance"/> instance for mocking. </returns>
-        public static DatabricksEnhancedSecurityCompliance DatabricksEnhancedSecurityCompliance(DatabricksAutomaticClusterUpdateValue? automaticClusterUpdateValue = default, DatabricksComplianceSecurityProfile complianceSecurityProfile = default, DatabricksEnhancedSecurityMonitoringValue? enhancedSecurityMonitoringValue = default)
+        /// <returns> A new <see cref="Models.EnhancedSecurityComplianceDefinition"/> instance for mocking. </returns>
+        public static EnhancedSecurityComplianceDefinition EnhancedSecurityComplianceDefinition(AutomaticClusterUpdateValue? automaticClusterUpdateValue = default, ComplianceSecurityProfileDefinition complianceSecurityProfile = default, EnhancedSecurityMonitoringValue? enhancedSecurityMonitoringValue = default)
         {
-            return new DatabricksEnhancedSecurityCompliance(automaticClusterUpdateValue is null ? default : new AutomaticClusterUpdateDefinition(automaticClusterUpdateValue, default), complianceSecurityProfile, enhancedSecurityMonitoringValue is null ? default : new EnhancedSecurityMonitoringDefinition(enhancedSecurityMonitoringValue, default), default);
+            return new EnhancedSecurityComplianceDefinition(automaticClusterUpdateValue is null ? default : new AutomaticClusterUpdateDefinition(automaticClusterUpdateValue, default), complianceSecurityProfile, enhancedSecurityMonitoringValue is null ? default : new EnhancedSecurityMonitoringDefinition(enhancedSecurityMonitoringValue, default), default);
         }
 
         /// <param name="complianceStandards"> Compliance standards associated with the workspace. </param>
         /// <param name="value"></param>
-        /// <returns> A new <see cref="Models.DatabricksComplianceSecurityProfile"/> instance for mocking. </returns>
-        public static DatabricksComplianceSecurityProfile DatabricksComplianceSecurityProfile(IEnumerable<string> complianceStandards = default, DatabricksComplianceSecurityProfileValue? value = default)
+        /// <returns> A new <see cref="Models.ComplianceSecurityProfileDefinition"/> instance for mocking. </returns>
+        public static ComplianceSecurityProfileDefinition ComplianceSecurityProfileDefinition(IEnumerable<string> complianceStandards = default, ComplianceSecurityProfileValue? value = default)
         {
             complianceStandards ??= new ChangeTrackingList<string>();
 
-            return new DatabricksComplianceSecurityProfile((complianceStandards ?? new ChangeTrackingList<string>()).ToList(), value, default);
+            return new ComplianceSecurityProfileDefinition((complianceStandards ?? new ChangeTrackingList<string>()).ToList(), value, default);
         }
 
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
@@ -273,7 +273,7 @@ namespace Azure.ResourceManager.Databricks.Models
         /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
         /// <param name="properties"> The private endpoint connection properties. </param>
         /// <returns> A new <see cref="Databricks.DatabricksPrivateEndpointConnectionData"/> instance for mocking. </returns>
-        public static DatabricksPrivateEndpointConnectionData DatabricksPrivateEndpointConnectionData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, DatabricksPrivateEndpointConnectionProperties properties = default)
+        public static DatabricksPrivateEndpointConnectionData DatabricksPrivateEndpointConnectionData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, PrivateEndpointConnectionProperties properties = default)
         {
             return new DatabricksPrivateEndpointConnectionData(
                 id,
@@ -288,38 +288,38 @@ namespace Azure.ResourceManager.Databricks.Models
         /// <param name="groupIds"> GroupIds from the private link service resource. </param>
         /// <param name="privateLinkServiceConnectionState"> Private endpoint connection state. </param>
         /// <param name="provisioningState"> Provisioning state of the private endpoint connection. </param>
-        /// <returns> A new <see cref="Models.DatabricksPrivateEndpointConnectionProperties"/> instance for mocking. </returns>
-        public static DatabricksPrivateEndpointConnectionProperties DatabricksPrivateEndpointConnectionProperties(ResourceIdentifier privateEndpointId = default, IEnumerable<string> groupIds = default, DatabricksPrivateLinkServiceConnectionState privateLinkServiceConnectionState = default, DatabricksPrivateEndpointConnectionProvisioningState? provisioningState = default)
+        /// <returns> A new <see cref="Models.PrivateEndpointConnectionProperties"/> instance for mocking. </returns>
+        public static PrivateEndpointConnectionProperties PrivateEndpointConnectionProperties(string privateEndpointId = default, IEnumerable<string> groupIds = default, DatabricksPrivateLinkServiceConnectionState privateLinkServiceConnectionState = default, DatabricksPrivateEndpointConnectionProvisioningState? provisioningState = default)
         {
             groupIds ??= new ChangeTrackingList<string>();
 
-            return new DatabricksPrivateEndpointConnectionProperties(privateEndpointId is null ? default : new PrivateEndpoint(privateEndpointId, default), (groupIds ?? new ChangeTrackingList<string>()).ToList(), privateLinkServiceConnectionState, provisioningState, default);
+            return new PrivateEndpointConnectionProperties(privateEndpointId is null ? default : new PrivateEndpoint(privateEndpointId, default), (groupIds ?? new ChangeTrackingList<string>()).ToList(), privateLinkServiceConnectionState, provisioningState, default);
         }
 
         /// <param name="status"> The status of a private endpoint connection. </param>
         /// <param name="description"> The description for the current state of a private endpoint connection. </param>
         /// <param name="actionsRequired"> Actions required for a private endpoint connection. </param>
         /// <returns> A new <see cref="Models.DatabricksPrivateLinkServiceConnectionState"/> instance for mocking. </returns>
-        public static DatabricksPrivateLinkServiceConnectionState DatabricksPrivateLinkServiceConnectionState(DatabricksPrivateLinkServiceConnectionStatus status = default, string description = default, string actionsRequired = default)
+        public static DatabricksPrivateLinkServiceConnectionState DatabricksPrivateLinkServiceConnectionState(PrivateLinkServiceConnectionStatus status = default, string description = default, string actionsRequired = default)
         {
             return new DatabricksPrivateLinkServiceConnectionState(status, description, actionsRequired, default);
         }
 
         /// <param name="initialType"> Defines the initial type of the default catalog. Possible values (case-insensitive):  HiveMetastore, UnityCatalog. </param>
         /// <param name="initialName"> Specifies the initial Name of default catalog. If not specified, the name of the workspace will be used. </param>
-        /// <returns> A new <see cref="Models.DatabricksDefaultCatalogProperties"/> instance for mocking. </returns>
-        public static DatabricksDefaultCatalogProperties DatabricksDefaultCatalogProperties(DatabricksInitialCatalogType? initialType = default, string initialName = default)
+        /// <returns> A new <see cref="Models.DefaultCatalogProperties"/> instance for mocking. </returns>
+        public static DefaultCatalogProperties DefaultCatalogProperties(InitialType? initialType = default, string initialName = default)
         {
-            return new DatabricksDefaultCatalogProperties(initialType, initialName, default);
+            return new DefaultCatalogProperties(initialType, initialName, default);
         }
 
         /// <param name="id"> The resource ID of Azure Databricks Access Connector Resource. </param>
         /// <param name="identityType"> The identity type of the Access Connector Resource. </param>
         /// <param name="userAssignedIdentityId"> The resource ID of the User Assigned Identity associated with the Access Connector Resource. This is required for type 'UserAssigned' and not valid for type 'SystemAssigned'. </param>
-        /// <returns> A new <see cref="Models.DatabricksWorkspaceAccessConnectorInfo"/> instance for mocking. </returns>
-        public static DatabricksWorkspaceAccessConnectorInfo DatabricksWorkspaceAccessConnectorInfo(ResourceIdentifier id = default, DatabricksIdentityType identityType = default, ResourceIdentifier userAssignedIdentityId = default)
+        /// <returns> A new <see cref="Models.WorkspacePropertiesAccessConnector"/> instance for mocking. </returns>
+        public static WorkspacePropertiesAccessConnector WorkspacePropertiesAccessConnector(ResourceIdentifier id = default, IdentityType identityType = default, ResourceIdentifier userAssignedIdentityId = default)
         {
-            return new DatabricksWorkspaceAccessConnectorInfo(id, identityType, userAssignedIdentityId, default);
+            return new WorkspacePropertiesAccessConnector(id, identityType, userAssignedIdentityId, default);
         }
 
         /// <param name="name"> The SKU name. </param>
@@ -331,12 +331,12 @@ namespace Azure.ResourceManager.Databricks.Models
         }
 
         /// <param name="tags"> Resource tags. </param>
-        /// <returns> A new <see cref="Models.DatabricksWorkspacePatch"/> instance for mocking. </returns>
-        public static DatabricksWorkspacePatch DatabricksWorkspacePatch(IDictionary<string, string> tags = default)
+        /// <returns> A new <see cref="Models.WorkspacePatch"/> instance for mocking. </returns>
+        public static WorkspacePatch WorkspacePatch(IDictionary<string, string> tags = default)
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
 
-            return new DatabricksWorkspacePatch(tags ?? new ChangeTrackingDictionary<string, string>(), default);
+            return new WorkspacePatch(tags ?? new ChangeTrackingDictionary<string, string>(), default);
         }
 
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
@@ -347,12 +347,12 @@ namespace Azure.ResourceManager.Databricks.Models
         /// <param name="location"> The geo-location where the resource lives. </param>
         /// <param name="properties"> Azure Databricks Access Connector properties. </param>
         /// <param name="identity"> The managed service identities assigned to this resource. </param>
-        /// <returns> A new <see cref="Databricks.DatabricksAccessConnectorData"/> instance for mocking. </returns>
-        public static DatabricksAccessConnectorData DatabricksAccessConnectorData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, DatabricksAccessConnectorProperties properties = default, ManagedServiceIdentity identity = default)
+        /// <returns> A new <see cref="Databricks.AccessConnectorData"/> instance for mocking. </returns>
+        public static AccessConnectorData AccessConnectorData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, AccessConnectorProperties properties = default, ManagedServiceIdentity identity = default)
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
 
-            return new DatabricksAccessConnectorData(
+            return new AccessConnectorData(
                 id,
                 name,
                 resourceType,
@@ -365,53 +365,53 @@ namespace Azure.ResourceManager.Databricks.Models
         }
 
         /// <param name="provisioningState"> Provisioning status of the Access Connector. </param>
-        /// <param name="referredBy"> List of workspaces referring this Access Connector. </param>
-        /// <returns> A new <see cref="Models.DatabricksAccessConnectorProperties"/> instance for mocking. </returns>
-        public static DatabricksAccessConnectorProperties DatabricksAccessConnectorProperties(DatabricksProvisioningState? provisioningState = default, IEnumerable<string> referredBy = default)
+        /// <param name="referedBy"> List of workspaces referring this Access Connector. </param>
+        /// <returns> A new <see cref="Models.AccessConnectorProperties"/> instance for mocking. </returns>
+        public static AccessConnectorProperties AccessConnectorProperties(ProvisioningState? provisioningState = default, IEnumerable<string> referedBy = default)
         {
-            referredBy ??= new ChangeTrackingList<string>();
+            referedBy ??= new ChangeTrackingList<string>();
 
-            return new DatabricksAccessConnectorProperties(provisioningState, (referredBy ?? new ChangeTrackingList<string>()).ToList(), default);
+            return new AccessConnectorProperties(provisioningState, (referedBy ?? new ChangeTrackingList<string>()).ToList(), default);
         }
 
         /// <param name="tags"> Resource tags. </param>
         /// <param name="identity"> Managed service identity (system assigned and/or user assigned identities). </param>
-        /// <returns> A new <see cref="Models.DatabricksAccessConnectorPatch"/> instance for mocking. </returns>
-        public static DatabricksAccessConnectorPatch DatabricksAccessConnectorPatch(IDictionary<string, string> tags = default, ManagedServiceIdentity identity = default)
+        /// <returns> A new <see cref="Models.AccessConnectorPatch"/> instance for mocking. </returns>
+        public static AccessConnectorPatch AccessConnectorPatch(IDictionary<string, string> tags = default, ManagedServiceIdentity identity = default)
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
 
-            return new DatabricksAccessConnectorPatch(tags ?? new ChangeTrackingDictionary<string, string>(), identity, default);
+            return new AccessConnectorPatch(tags ?? new ChangeTrackingDictionary<string, string>(), identity, default);
         }
 
         /// <param name="category"> The category of endpoints accessed by the Workspace, e.g. azure-storage, azure-mysql, etc. </param>
         /// <param name="endpoints"> The endpoints that Workspace connect to. </param>
-        /// <returns> A new <see cref="Models.DatabricksOutboundEnvironmentEndpoint"/> instance for mocking. </returns>
-        public static DatabricksOutboundEnvironmentEndpoint DatabricksOutboundEnvironmentEndpoint(string category = default, IEnumerable<DatabricksEndpointDependency> endpoints = default)
+        /// <returns> A new <see cref="Models.OutboundEnvironmentEndpoint"/> instance for mocking. </returns>
+        public static OutboundEnvironmentEndpoint OutboundEnvironmentEndpoint(string category = default, IEnumerable<EndpointDependency> endpoints = default)
         {
-            endpoints ??= new ChangeTrackingList<DatabricksEndpointDependency>();
+            endpoints ??= new ChangeTrackingList<EndpointDependency>();
 
-            return new DatabricksOutboundEnvironmentEndpoint(category, (endpoints ?? new ChangeTrackingList<DatabricksEndpointDependency>()).ToList(), default);
+            return new OutboundEnvironmentEndpoint(category, (endpoints ?? new ChangeTrackingList<EndpointDependency>()).ToList(), default);
         }
 
         /// <param name="domainName"> The domain name of the dependency. </param>
         /// <param name="endpointDetails"> The Ports used when connecting to domainName. </param>
-        /// <returns> A new <see cref="Models.DatabricksEndpointDependency"/> instance for mocking. </returns>
-        public static DatabricksEndpointDependency DatabricksEndpointDependency(string domainName = default, IEnumerable<DatabricksEndpointDetail> endpointDetails = default)
+        /// <returns> A new <see cref="Models.EndpointDependency"/> instance for mocking. </returns>
+        public static EndpointDependency EndpointDependency(string domainName = default, IEnumerable<EndpointDetail> endpointDetails = default)
         {
-            endpointDetails ??= new ChangeTrackingList<DatabricksEndpointDetail>();
+            endpointDetails ??= new ChangeTrackingList<EndpointDetail>();
 
-            return new DatabricksEndpointDependency(domainName, (endpointDetails ?? new ChangeTrackingList<DatabricksEndpointDetail>()).ToList(), default);
+            return new EndpointDependency(domainName, (endpointDetails ?? new ChangeTrackingList<EndpointDetail>()).ToList(), default);
         }
 
         /// <param name="ipAddress"> An IP Address that Domain Name currently resolves to. </param>
         /// <param name="port"> The port an endpoint is connected to. </param>
         /// <param name="latency"> The time in milliseconds it takes for the connection to be created from the Workspace to this IpAddress at this Port. </param>
         /// <param name="isAccessible"> Whether it is possible to create a connection from the Workspace to this IpAddress at this Port. </param>
-        /// <returns> A new <see cref="Models.DatabricksEndpointDetail"/> instance for mocking. </returns>
-        public static DatabricksEndpointDetail DatabricksEndpointDetail(string ipAddress = default, int? port = default, double? latency = default, bool? isAccessible = default)
+        /// <returns> A new <see cref="Models.EndpointDetail"/> instance for mocking. </returns>
+        public static EndpointDetail EndpointDetail(string ipAddress = default, int? port = default, double? latency = default, bool? isAccessible = default)
         {
-            return new DatabricksEndpointDetail(ipAddress, port, latency, isAccessible, default);
+            return new EndpointDetail(ipAddress, port, latency, isAccessible, default);
         }
 
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
@@ -419,10 +419,10 @@ namespace Azure.ResourceManager.Databricks.Models
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
         /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
         /// <param name="properties"> The group id properties. </param>
-        /// <returns> A new <see cref="Databricks.DatabricksPrivateLinkResourceData"/> instance for mocking. </returns>
-        public static DatabricksPrivateLinkResourceData DatabricksPrivateLinkResourceData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, DatabricksGroupIdInformationProperties properties = default)
+        /// <returns> A new <see cref="Databricks.GroupIdInformationData"/> instance for mocking. </returns>
+        public static GroupIdInformationData GroupIdInformationData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, GroupIdInformationProperties properties = default)
         {
-            return new DatabricksPrivateLinkResourceData(
+            return new GroupIdInformationData(
                 id,
                 name,
                 resourceType,
@@ -434,13 +434,13 @@ namespace Azure.ResourceManager.Databricks.Models
         /// <param name="groupId"> The group id. </param>
         /// <param name="requiredMembers"> The required members for a specific group id. </param>
         /// <param name="requiredZoneNames"> The required DNS zones for a specific group id. </param>
-        /// <returns> A new <see cref="Models.DatabricksGroupIdInformationProperties"/> instance for mocking. </returns>
-        public static DatabricksGroupIdInformationProperties DatabricksGroupIdInformationProperties(string groupId = default, IEnumerable<string> requiredMembers = default, IEnumerable<string> requiredZoneNames = default)
+        /// <returns> A new <see cref="Models.GroupIdInformationProperties"/> instance for mocking. </returns>
+        public static GroupIdInformationProperties GroupIdInformationProperties(string groupId = default, IEnumerable<string> requiredMembers = default, IEnumerable<string> requiredZoneNames = default)
         {
             requiredMembers ??= new ChangeTrackingList<string>();
             requiredZoneNames ??= new ChangeTrackingList<string>();
 
-            return new DatabricksGroupIdInformationProperties(groupId, (requiredMembers ?? new ChangeTrackingList<string>()).ToList(), (requiredZoneNames ?? new ChangeTrackingList<string>()).ToList(), default);
+            return new GroupIdInformationProperties(groupId, (requiredMembers ?? new ChangeTrackingList<string>()).ToList(), (requiredZoneNames ?? new ChangeTrackingList<string>()).ToList(), default);
         }
 
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
@@ -457,10 +457,10 @@ namespace Azure.ResourceManager.Databricks.Models
         /// <param name="databricksAddressPrefixes"> A list of address blocks reserved for this virtual network in CIDR notation. </param>
         /// <param name="remoteVirtualNetworkId"> The Id of the remote virtual network. </param>
         /// <param name="remoteAddressPrefixes"> A list of address blocks reserved for this virtual network in CIDR notation. </param>
-        /// <returns> A new <see cref="Databricks.DatabricksVirtualNetworkPeeringData"/> instance for mocking. </returns>
-        public static DatabricksVirtualNetworkPeeringData DatabricksVirtualNetworkPeeringData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, bool? allowVirtualNetworkAccess = default, bool? allowForwardedTraffic = default, bool? allowGatewayTransit = default, bool? useRemoteGateways = default, DatabricksVirtualNetworkPeeringState? peeringState = default, DatabricksVirtualNetworkPeeringProvisioningState? provisioningState = default, ResourceIdentifier databricksVirtualNetworkId = default, IEnumerable<string> databricksAddressPrefixes = default, ResourceIdentifier remoteVirtualNetworkId = default, IEnumerable<string> remoteAddressPrefixes = default)
+        /// <returns> A new <see cref="Databricks.VirtualNetworkPeeringData"/> instance for mocking. </returns>
+        public static VirtualNetworkPeeringData VirtualNetworkPeeringData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, bool? allowVirtualNetworkAccess = default, bool? allowForwardedTraffic = default, bool? allowGatewayTransit = default, bool? useRemoteGateways = default, PeeringState? peeringState = default, PeeringProvisioningState? provisioningState = default, string databricksVirtualNetworkId = default, IEnumerable<string> databricksAddressPrefixes = default, string remoteVirtualNetworkId = default, IEnumerable<string> remoteAddressPrefixes = default)
         {
-            return new DatabricksVirtualNetworkPeeringData(
+            return new VirtualNetworkPeeringData(
                 id,
                 name,
                 resourceType,
