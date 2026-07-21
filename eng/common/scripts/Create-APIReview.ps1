@@ -340,7 +340,7 @@ function ProcessPackage($packageInfo)
                             Write-Error "Package version $($version) is GA and automatic API Review is not yet approved for package $($packageInfo.ArtifactName)." -ErrorAction Continue
                             Write-Error "Build and release is not allowed for GA package without API review approval." -ErrorAction Continue
                             Write-Error "You will need to queue another build to proceed further after API review is approved" -ErrorAction Continue
-                            Write-Error "You can check http://aka.ms/azsdk/engsys/apireview/faq for more details on API Approval." -ErrorAction Continue
+                            Write-Error "You can check https://aka.ms/azsdk/engsys/apireview/faq for more details on API Approval." -ErrorAction Continue
                         }
                         return 1
                     }
@@ -437,7 +437,7 @@ foreach($pkg in $responses.keys)
 {
     if ($responses[$pkg] -eq 1)
     {
-        Write-Error "API changes are not approved for $($pkg)"
+        Write-Error "API changes are not approved for $($pkg)" -ErrorAction Continue
         $exitCode = 1
     }
 }
