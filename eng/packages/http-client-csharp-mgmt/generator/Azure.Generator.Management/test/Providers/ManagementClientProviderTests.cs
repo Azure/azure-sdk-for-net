@@ -3,14 +3,14 @@
 
 using Azure.Generator.Management.Tests.Common;
 using Azure.Generator.Management.Tests.TestHelpers;
-using Azure.Generator.Management.Visitors;
+using Azure.Generator.Management.Providers;
 using Microsoft.TypeSpec.Generator.Primitives;
 using Microsoft.TypeSpec.Generator.Providers;
 using NUnit.Framework;
 
-namespace Azure.Generator.Management.Tests
+namespace Azure.Generator.Management.Tests.Providers
 {
-    internal class RestClientVisitorTests
+    internal class ManagementClientProviderTests
     {
         [Test]
         public void RestClientInitializesServicePackageUserAgent()
@@ -22,20 +22,12 @@ namespace Azure.Generator.Management.Tests
             var plugin = ManagementMockHelpers.LoadMockPlugin(clients: () => [client]);
             var provider = plugin.Object.TypeFactory.CreateClient(client)!;
 
-            var visited = new TestRestClientVisitor().InvokeVisitType(provider)!;
-            var code = new TypeProviderWriter(visited).Write().Content;
+            var code = new TypeProviderWriter(provider).Write().Content;
 
+            Assert.That(provider, Is.TypeOf<ManagementClientProvider>());
             Assert.That(code, Does.Contain("private readonly global::Azure.Core.TelemetryDetails _userAgent;"));
             Assert.That(code, Does.Contain("string applicationId"));
             Assert.That(code, Does.Contain("_userAgent = new global::Azure.Core.TelemetryDetails(typeof(global::Samples.TestClient).Assembly, applicationId);"));
-        }
-
-        private sealed class TestRestClientVisitor : RestClientVisitor
-        {
-            public TypeProvider? InvokeVisitType(TypeProvider type)
-            {
-                return base.VisitType(type);
-            }
         }
     }
 }
