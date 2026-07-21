@@ -31,11 +31,11 @@ namespace Azure.ResourceManager.Databricks.Mocking
         {
         }
 
-        /// <summary> Gets a collection of Workspaces in the <see cref="ResourceGroupResource"/>. </summary>
-        /// <returns> An object representing collection of Workspaces and their operations over a WorkspaceResource. </returns>
-        public virtual WorkspaceCollection GetWorkspaces()
+        /// <summary> Gets a collection of DatabricksWorkspaces in the <see cref="ResourceGroupResource"/>. </summary>
+        /// <returns> An object representing collection of DatabricksWorkspaces and their operations over a DatabricksWorkspaceResource. </returns>
+        public virtual DatabricksWorkspaceCollection GetDatabricksWorkspaces()
         {
-            return GetCachedClient(client => new WorkspaceCollection(client, Id));
+            return GetCachedClient(client => new DatabricksWorkspaceCollection(client, Id));
         }
 
         /// <summary>
@@ -60,11 +60,11 @@ namespace Azure.ResourceManager.Databricks.Mocking
         /// <exception cref="ArgumentNullException"> <paramref name="workspaceName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="workspaceName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual async Task<Response<WorkspaceResource>> GetWorkspaceAsync(string workspaceName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<DatabricksWorkspaceResource>> GetDatabricksWorkspaceAsync(string workspaceName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(workspaceName, nameof(workspaceName));
 
-            return await GetWorkspaces().GetAsync(workspaceName, cancellationToken).ConfigureAwait(false);
+            return await GetDatabricksWorkspaces().GetAsync(workspaceName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -89,47 +89,18 @@ namespace Azure.ResourceManager.Databricks.Mocking
         /// <exception cref="ArgumentNullException"> <paramref name="workspaceName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="workspaceName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual Response<WorkspaceResource> GetWorkspace(string workspaceName, CancellationToken cancellationToken = default)
+        public virtual Response<DatabricksWorkspaceResource> GetDatabricksWorkspace(string workspaceName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(workspaceName, nameof(workspaceName));
 
-            return GetWorkspaces().Get(workspaceName, cancellationToken);
+            return GetDatabricksWorkspaces().Get(workspaceName, cancellationToken);
         }
 
-        /// <summary> Gets a collection of AccessConnectors in the <see cref="ResourceGroupResource"/>. </summary>
-        /// <returns> An object representing collection of AccessConnectors and their operations over a AccessConnectorResource. </returns>
-        public virtual AccessConnectorCollection GetAccessConnectors()
+        /// <summary> Gets a collection of DatabricksAccessConnectors in the <see cref="ResourceGroupResource"/>. </summary>
+        /// <returns> An object representing collection of DatabricksAccessConnectors and their operations over a DatabricksAccessConnectorResource. </returns>
+        public virtual DatabricksAccessConnectorCollection GetDatabricksAccessConnectors()
         {
-            return GetCachedClient(client => new AccessConnectorCollection(client, Id));
-        }
-
-        /// <summary>
-        /// Gets an Azure Databricks Access Connector.
-        /// <list type="bullet">
-        /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Databricks/accessConnectors/{connectorName}. </description>
-        /// </item>
-        /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> AccessConnectors_Get. </description>
-        /// </item>
-        /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2026-01-01. </description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="connectorName"> The name of the Azure Databricks Access Connector. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="connectorName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="connectorName"/> is an empty string, and was expected to be non-empty. </exception>
-        [ForwardsClientCalls]
-        public virtual async Task<Response<AccessConnectorResource>> GetAccessConnectorAsync(string connectorName, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(connectorName, nameof(connectorName));
-
-            return await GetAccessConnectors().GetAsync(connectorName, cancellationToken).ConfigureAwait(false);
+            return GetCachedClient(client => new DatabricksAccessConnectorCollection(client, Id));
         }
 
         /// <summary>
@@ -154,11 +125,40 @@ namespace Azure.ResourceManager.Databricks.Mocking
         /// <exception cref="ArgumentNullException"> <paramref name="connectorName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="connectorName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual Response<AccessConnectorResource> GetAccessConnector(string connectorName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<DatabricksAccessConnectorResource>> GetDatabricksAccessConnectorAsync(string connectorName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(connectorName, nameof(connectorName));
 
-            return GetAccessConnectors().Get(connectorName, cancellationToken);
+            return await GetDatabricksAccessConnectors().GetAsync(connectorName, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Gets an Azure Databricks Access Connector.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Databricks/accessConnectors/{connectorName}. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> AccessConnectors_Get. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-01-01. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="connectorName"> The name of the Azure Databricks Access Connector. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="connectorName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="connectorName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual Response<DatabricksAccessConnectorResource> GetDatabricksAccessConnector(string connectorName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(connectorName, nameof(connectorName));
+
+            return GetDatabricksAccessConnectors().Get(connectorName, cancellationToken);
         }
     }
 }

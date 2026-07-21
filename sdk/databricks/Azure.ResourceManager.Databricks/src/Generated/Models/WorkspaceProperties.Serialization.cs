@@ -9,6 +9,7 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure.Core;
 using Azure.ResourceManager.Databricks;
 
 namespace Azure.ResourceManager.Databricks.Models
@@ -105,7 +106,7 @@ namespace Azure.ResourceManager.Databricks.Models
             {
                 writer.WritePropertyName("authorizations"u8);
                 writer.WriteStartArray();
-                foreach (WorkspaceProviderAuthorization item in Authorizations)
+                foreach (DatabricksWorkspaceProviderAuthorization item in Authorizations)
                 {
                     writer.WriteObjectValue(item, options);
                 }
@@ -243,40 +244,44 @@ namespace Azure.ResourceManager.Databricks.Models
             {
                 return null;
             }
-            ComputeMode computeMode = default;
-            string managedResourceGroupId = default;
-            WorkspaceCustomParameters parameters = default;
-            ProvisioningState? provisioningState = default;
+            DatabricksComputeMode computeMode = default;
+            ResourceIdentifier managedResourceGroupId = default;
+            WorkspaceCustomProperties parameters = default;
+            DatabricksProvisioningState? provisioningState = default;
             string uiDefinitionUri = default;
-            IList<WorkspaceProviderAuthorization> authorizations = default;
-            CreatedBy createdBy = default;
-            CreatedBy updatedBy = default;
+            IList<DatabricksWorkspaceProviderAuthorization> authorizations = default;
+            DatabricksCreatedBy createdBy = default;
+            DatabricksCreatedBy updatedBy = default;
             DateTimeOffset? createdOn = default;
             string workspaceId = default;
             string workspaceUri = default;
-            ManagedIdentityConfiguration storageAccountIdentity = default;
-            ManagedIdentityConfiguration managedDiskIdentity = default;
-            string diskEncryptionSetId = default;
+            DatabricksManagedIdentityConfiguration storageAccountIdentity = default;
+            DatabricksManagedIdentityConfiguration managedDiskIdentity = default;
+            ResourceIdentifier diskEncryptionSetId = default;
             WorkspacePropertiesEncryption encryption = default;
-            EnhancedSecurityComplianceDefinition enhancedSecurityCompliance = default;
+            DatabricksEnhancedSecurityCompliance enhancedSecurityCompliance = default;
             IReadOnlyList<DatabricksPrivateEndpointConnectionData> privateEndpointConnections = default;
-            PublicNetworkAccess? publicNetworkAccess = default;
-            RequiredNsgRules? requiredNsgRules = default;
-            DefaultCatalogProperties defaultCatalog = default;
+            DatabricksPublicNetworkAccess? publicNetworkAccess = default;
+            DatabricksRequiredNsgRules? requiredNsgRules = default;
+            DatabricksDefaultCatalogProperties defaultCatalog = default;
             bool? isUcEnabled = default;
-            WorkspacePropertiesAccessConnector accessConnector = default;
-            DefaultStorageFirewall? defaultStorageFirewall = default;
+            DatabricksWorkspaceAccessConnectorInfo accessConnector = default;
+            DatabricksDefaultStorageFirewall? defaultStorageFirewall = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("computeMode"u8))
                 {
-                    computeMode = new ComputeMode(prop.Value.GetString());
+                    computeMode = new DatabricksComputeMode(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("managedResourceGroupId"u8))
                 {
-                    managedResourceGroupId = prop.Value.GetString();
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    managedResourceGroupId = new ResourceIdentifier(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("parameters"u8))
@@ -285,7 +290,7 @@ namespace Azure.ResourceManager.Databricks.Models
                     {
                         continue;
                     }
-                    parameters = WorkspaceCustomParameters.DeserializeWorkspaceCustomParameters(prop.Value, options);
+                    parameters = WorkspaceCustomProperties.DeserializeWorkspaceCustomProperties(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("provisioningState"u8))
@@ -294,7 +299,7 @@ namespace Azure.ResourceManager.Databricks.Models
                     {
                         continue;
                     }
-                    provisioningState = new ProvisioningState(prop.Value.GetString());
+                    provisioningState = new DatabricksProvisioningState(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("uiDefinitionUri"u8))
@@ -308,10 +313,10 @@ namespace Azure.ResourceManager.Databricks.Models
                     {
                         continue;
                     }
-                    List<WorkspaceProviderAuthorization> array = new List<WorkspaceProviderAuthorization>();
+                    List<DatabricksWorkspaceProviderAuthorization> array = new List<DatabricksWorkspaceProviderAuthorization>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(WorkspaceProviderAuthorization.DeserializeWorkspaceProviderAuthorization(item, options));
+                        array.Add(DatabricksWorkspaceProviderAuthorization.DeserializeDatabricksWorkspaceProviderAuthorization(item, options));
                     }
                     authorizations = array;
                     continue;
@@ -322,7 +327,7 @@ namespace Azure.ResourceManager.Databricks.Models
                     {
                         continue;
                     }
-                    createdBy = CreatedBy.DeserializeCreatedBy(prop.Value, options);
+                    createdBy = DatabricksCreatedBy.DeserializeDatabricksCreatedBy(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("updatedBy"u8))
@@ -331,7 +336,7 @@ namespace Azure.ResourceManager.Databricks.Models
                     {
                         continue;
                     }
-                    updatedBy = CreatedBy.DeserializeCreatedBy(prop.Value, options);
+                    updatedBy = DatabricksCreatedBy.DeserializeDatabricksCreatedBy(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("createdDateTime"u8))
@@ -359,7 +364,7 @@ namespace Azure.ResourceManager.Databricks.Models
                     {
                         continue;
                     }
-                    storageAccountIdentity = ManagedIdentityConfiguration.DeserializeManagedIdentityConfiguration(prop.Value, options);
+                    storageAccountIdentity = DatabricksManagedIdentityConfiguration.DeserializeDatabricksManagedIdentityConfiguration(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("managedDiskIdentity"u8))
@@ -368,12 +373,16 @@ namespace Azure.ResourceManager.Databricks.Models
                     {
                         continue;
                     }
-                    managedDiskIdentity = ManagedIdentityConfiguration.DeserializeManagedIdentityConfiguration(prop.Value, options);
+                    managedDiskIdentity = DatabricksManagedIdentityConfiguration.DeserializeDatabricksManagedIdentityConfiguration(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("diskEncryptionSetId"u8))
                 {
-                    diskEncryptionSetId = prop.Value.GetString();
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    diskEncryptionSetId = new ResourceIdentifier(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("encryption"u8))
@@ -391,7 +400,7 @@ namespace Azure.ResourceManager.Databricks.Models
                     {
                         continue;
                     }
-                    enhancedSecurityCompliance = EnhancedSecurityComplianceDefinition.DeserializeEnhancedSecurityComplianceDefinition(prop.Value, options);
+                    enhancedSecurityCompliance = DatabricksEnhancedSecurityCompliance.DeserializeDatabricksEnhancedSecurityCompliance(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("privateEndpointConnections"u8))
@@ -414,7 +423,7 @@ namespace Azure.ResourceManager.Databricks.Models
                     {
                         continue;
                     }
-                    publicNetworkAccess = new PublicNetworkAccess(prop.Value.GetString());
+                    publicNetworkAccess = new DatabricksPublicNetworkAccess(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("requiredNsgRules"u8))
@@ -423,7 +432,7 @@ namespace Azure.ResourceManager.Databricks.Models
                     {
                         continue;
                     }
-                    requiredNsgRules = new RequiredNsgRules(prop.Value.GetString());
+                    requiredNsgRules = new DatabricksRequiredNsgRules(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("defaultCatalog"u8))
@@ -432,7 +441,7 @@ namespace Azure.ResourceManager.Databricks.Models
                     {
                         continue;
                     }
-                    defaultCatalog = DefaultCatalogProperties.DeserializeDefaultCatalogProperties(prop.Value, options);
+                    defaultCatalog = DatabricksDefaultCatalogProperties.DeserializeDatabricksDefaultCatalogProperties(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("isUcEnabled"u8))
@@ -450,7 +459,7 @@ namespace Azure.ResourceManager.Databricks.Models
                     {
                         continue;
                     }
-                    accessConnector = WorkspacePropertiesAccessConnector.DeserializeWorkspacePropertiesAccessConnector(prop.Value, options);
+                    accessConnector = DatabricksWorkspaceAccessConnectorInfo.DeserializeDatabricksWorkspaceAccessConnectorInfo(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("defaultStorageFirewall"u8))
@@ -459,7 +468,7 @@ namespace Azure.ResourceManager.Databricks.Models
                     {
                         continue;
                     }
-                    defaultStorageFirewall = new DefaultStorageFirewall(prop.Value.GetString());
+                    defaultStorageFirewall = new DatabricksDefaultStorageFirewall(prop.Value.GetString());
                     continue;
                 }
                 if (options.Format != "W")
@@ -473,7 +482,7 @@ namespace Azure.ResourceManager.Databricks.Models
                 parameters,
                 provisioningState,
                 uiDefinitionUri,
-                authorizations ?? new ChangeTrackingList<WorkspaceProviderAuthorization>(),
+                authorizations ?? new ChangeTrackingList<DatabricksWorkspaceProviderAuthorization>(),
                 createdBy,
                 updatedBy,
                 createdOn,

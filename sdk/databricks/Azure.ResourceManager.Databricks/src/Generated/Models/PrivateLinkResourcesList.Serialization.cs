@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.Databricks.Models
             }
             writer.WritePropertyName("value"u8);
             writer.WriteStartArray();
-            foreach (GroupIdInformationData item in Value)
+            foreach (DatabricksPrivateLinkResourceData item in Value)
             {
                 writer.WriteObjectValue(item, options);
             }
@@ -141,17 +141,17 @@ namespace Azure.ResourceManager.Databricks.Models
             {
                 return null;
             }
-            IList<GroupIdInformationData> value = default;
+            IList<DatabricksPrivateLinkResourceData> value = default;
             Uri nextLink = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("value"u8))
                 {
-                    List<GroupIdInformationData> array = new List<GroupIdInformationData>();
+                    List<DatabricksPrivateLinkResourceData> array = new List<DatabricksPrivateLinkResourceData>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(GroupIdInformationData.DeserializeGroupIdInformationData(item, options));
+                        array.Add(DatabricksPrivateLinkResourceData.DeserializeDatabricksPrivateLinkResourceData(item, options));
                     }
                     value = array;
                     continue;

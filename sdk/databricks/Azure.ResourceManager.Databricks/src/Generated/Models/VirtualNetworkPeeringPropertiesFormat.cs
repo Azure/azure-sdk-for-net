@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.Core;
 
 namespace Azure.ResourceManager.Databricks.Models
 {
@@ -34,7 +35,7 @@ namespace Azure.ResourceManager.Databricks.Models
         /// <param name="peeringState"> The status of the virtual network peering. </param>
         /// <param name="provisioningState"> The provisioning state of the virtual network peering resource. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal VirtualNetworkPeeringPropertiesFormat(bool? allowVirtualNetworkAccess, bool? allowForwardedTraffic, bool? allowGatewayTransit, bool? useRemoteGateways, VirtualNetworkPeeringPropertiesFormatDatabricksVirtualNetwork databricksVirtualNetwork, AddressSpace databricksAddressSpace, VirtualNetworkPeeringPropertiesFormatRemoteVirtualNetwork remoteVirtualNetwork, AddressSpace remoteAddressSpace, PeeringState? peeringState, PeeringProvisioningState? provisioningState, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal VirtualNetworkPeeringPropertiesFormat(bool? allowVirtualNetworkAccess, bool? allowForwardedTraffic, bool? allowGatewayTransit, bool? useRemoteGateways, VirtualNetworkPeeringPropertiesFormatDatabricksVirtualNetwork databricksVirtualNetwork, AddressSpace databricksAddressSpace, VirtualNetworkPeeringPropertiesFormatRemoteVirtualNetwork remoteVirtualNetwork, AddressSpace remoteAddressSpace, DatabricksVirtualNetworkPeeringState? peeringState, DatabricksVirtualNetworkPeeringProvisioningState? provisioningState, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             AllowVirtualNetworkAccess = allowVirtualNetworkAccess;
             AllowForwardedTraffic = allowForwardedTraffic;
@@ -74,13 +75,13 @@ namespace Azure.ResourceManager.Databricks.Models
         internal AddressSpace RemoteAddressSpace { get; set; }
 
         /// <summary> The status of the virtual network peering. </summary>
-        public PeeringState? PeeringState { get; }
+        public DatabricksVirtualNetworkPeeringState? PeeringState { get; }
 
         /// <summary> The provisioning state of the virtual network peering resource. </summary>
-        public PeeringProvisioningState? ProvisioningState { get; }
+        public DatabricksVirtualNetworkPeeringProvisioningState? ProvisioningState { get; }
 
         /// <summary> The Id of the databricks virtual network. </summary>
-        public string DatabricksVirtualNetworkId
+        public ResourceIdentifier DatabricksVirtualNetworkId
         {
             get
             {
@@ -110,7 +111,7 @@ namespace Azure.ResourceManager.Databricks.Models
         }
 
         /// <summary> The Id of the remote virtual network. </summary>
-        public string RemoteVirtualNetworkId
+        public ResourceIdentifier RemoteVirtualNetworkId
         {
             get
             {

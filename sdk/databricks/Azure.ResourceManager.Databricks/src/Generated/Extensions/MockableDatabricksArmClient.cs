@@ -26,49 +26,49 @@ namespace Azure.ResourceManager.Databricks.Mocking
         {
         }
 
-        /// <summary> Gets an object representing a <see cref="WorkspaceResource"/> along with the instance operations that can be performed on it but with no data. </summary>
+        /// <summary> Gets an object representing a <see cref="DatabricksWorkspaceResource"/> along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="WorkspaceResource"/> object. </returns>
-        public virtual WorkspaceResource GetWorkspaceResource(ResourceIdentifier id)
+        /// <returns> Returns a <see cref="DatabricksWorkspaceResource"/> object. </returns>
+        public virtual DatabricksWorkspaceResource GetDatabricksWorkspaceResource(ResourceIdentifier id)
         {
-            WorkspaceResource.ValidateResourceId(id);
-            return new WorkspaceResource(Client, id);
+            DatabricksWorkspaceResource.ValidateResourceId(id);
+            return new DatabricksWorkspaceResource(Client, id);
         }
 
-        /// <summary> Gets an object representing a <see cref="PrivateEndpointConnectionResource"/> along with the instance operations that can be performed on it but with no data. </summary>
+        /// <summary> Gets an object representing a <see cref="DatabricksPrivateEndpointConnectionResource"/> along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="PrivateEndpointConnectionResource"/> object. </returns>
-        public virtual PrivateEndpointConnectionResource GetPrivateEndpointConnectionResource(ResourceIdentifier id)
+        /// <returns> Returns a <see cref="DatabricksPrivateEndpointConnectionResource"/> object. </returns>
+        public virtual DatabricksPrivateEndpointConnectionResource GetDatabricksPrivateEndpointConnectionResource(ResourceIdentifier id)
         {
-            PrivateEndpointConnectionResource.ValidateResourceId(id);
-            return new PrivateEndpointConnectionResource(Client, id);
+            DatabricksPrivateEndpointConnectionResource.ValidateResourceId(id);
+            return new DatabricksPrivateEndpointConnectionResource(Client, id);
         }
 
-        /// <summary> Gets an object representing a <see cref="AccessConnectorResource"/> along with the instance operations that can be performed on it but with no data. </summary>
+        /// <summary> Gets an object representing a <see cref="DatabricksAccessConnectorResource"/> along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="AccessConnectorResource"/> object. </returns>
-        public virtual AccessConnectorResource GetAccessConnectorResource(ResourceIdentifier id)
+        /// <returns> Returns a <see cref="DatabricksAccessConnectorResource"/> object. </returns>
+        public virtual DatabricksAccessConnectorResource GetDatabricksAccessConnectorResource(ResourceIdentifier id)
         {
-            AccessConnectorResource.ValidateResourceId(id);
-            return new AccessConnectorResource(Client, id);
+            DatabricksAccessConnectorResource.ValidateResourceId(id);
+            return new DatabricksAccessConnectorResource(Client, id);
         }
 
-        /// <summary> Gets an object representing a <see cref="GroupIdInformationResource"/> along with the instance operations that can be performed on it but with no data. </summary>
+        /// <summary> Gets an object representing a <see cref="DatabricksPrivateLinkResource"/> along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="GroupIdInformationResource"/> object. </returns>
-        public virtual GroupIdInformationResource GetGroupIdInformationResource(ResourceIdentifier id)
+        /// <returns> Returns a <see cref="DatabricksPrivateLinkResource"/> object. </returns>
+        public virtual DatabricksPrivateLinkResource GetDatabricksPrivateLinkResource(ResourceIdentifier id)
         {
-            GroupIdInformationResource.ValidateResourceId(id);
-            return new GroupIdInformationResource(Client, id);
+            DatabricksPrivateLinkResource.ValidateResourceId(id);
+            return new DatabricksPrivateLinkResource(Client, id);
         }
 
-        /// <summary> Gets an object representing a <see cref="VirtualNetworkPeeringResource"/> along with the instance operations that can be performed on it but with no data. </summary>
+        /// <summary> Gets an object representing a <see cref="DatabricksVirtualNetworkPeeringResource"/> along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="VirtualNetworkPeeringResource"/> object. </returns>
-        public virtual VirtualNetworkPeeringResource GetVirtualNetworkPeeringResource(ResourceIdentifier id)
+        /// <returns> Returns a <see cref="DatabricksVirtualNetworkPeeringResource"/> object. </returns>
+        public virtual DatabricksVirtualNetworkPeeringResource GetDatabricksVirtualNetworkPeeringResource(ResourceIdentifier id)
         {
-            VirtualNetworkPeeringResource.ValidateResourceId(id);
-            return new VirtualNetworkPeeringResource(Client, id);
+            DatabricksVirtualNetworkPeeringResource.ValidateResourceId(id);
+            return new DatabricksVirtualNetworkPeeringResource(Client, id);
         }
     }
 }

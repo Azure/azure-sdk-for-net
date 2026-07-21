@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.Databricks.Models
 
         /// <summary> Initializes a new instance of <see cref="VirtualNetworkPeeringList"/>. </summary>
         /// <param name="value"> The VirtualNetworkPeering items on this page. </param>
-        internal VirtualNetworkPeeringList(IEnumerable<VirtualNetworkPeeringData> value)
+        internal VirtualNetworkPeeringList(IEnumerable<DatabricksVirtualNetworkPeeringData> value)
         {
             Value = value.ToList();
         }
@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.Databricks.Models
         /// <param name="value"> The VirtualNetworkPeering items on this page. </param>
         /// <param name="nextLink"> The link to the next page of items. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal VirtualNetworkPeeringList(IList<VirtualNetworkPeeringData> value, Uri nextLink, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal VirtualNetworkPeeringList(IList<DatabricksVirtualNetworkPeeringData> value, Uri nextLink, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Value = value;
             NextLink = nextLink;
@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.Databricks.Models
         }
 
         /// <summary> The VirtualNetworkPeering items on this page. </summary>
-        public IList<VirtualNetworkPeeringData> Value { get; }
+        public IList<DatabricksVirtualNetworkPeeringData> Value { get; }
 
         /// <summary> The link to the next page of items. </summary>
         public Uri NextLink { get; }

@@ -15,7 +15,7 @@ using Azure.ResourceManager.Databricks.Models;
 
 namespace Azure.ResourceManager.Databricks
 {
-    internal partial class WorkspacesGetByResourceGroupAsyncCollectionResultOfT : AsyncPageable<WorkspaceData>
+    internal partial class WorkspacesGetByResourceGroupAsyncCollectionResultOfT : AsyncPageable<DatabricksWorkspaceData>
     {
         private readonly Workspaces _client;
         private readonly Guid _subscriptionId;
@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.Databricks
         /// <param name="continuationToken"> A continuation token indicating where to resume paging. </param>
         /// <param name="pageSizeHint"> The number of items per page. </param>
         /// <returns> The pages of WorkspacesGetByResourceGroupAsyncCollectionResultOfT as an enumerable collection. </returns>
-        public override async IAsyncEnumerable<Page<WorkspaceData>> AsPages(string continuationToken, int? pageSizeHint)
+        public override async IAsyncEnumerable<Page<DatabricksWorkspaceData>> AsPages(string continuationToken, int? pageSizeHint)
         {
             Uri nextPage = continuationToken != null ? new Uri(continuationToken) : null;
             while (true)
@@ -54,7 +54,7 @@ namespace Azure.ResourceManager.Databricks
                 }
                 WorkspaceListResult result = WorkspaceListResult.FromResponse(response);
                 nextPage = result.NextLink;
-                yield return Page<WorkspaceData>.FromValues((IReadOnlyList<WorkspaceData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
+                yield return Page<DatabricksWorkspaceData>.FromValues((IReadOnlyList<DatabricksWorkspaceData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 if (nextPage == null)
                 {
                     yield break;

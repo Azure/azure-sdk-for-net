@@ -133,7 +133,7 @@ namespace Azure.ResourceManager.Databricks.Models
             {
                 return null;
             }
-            PrivateLinkServiceConnectionStatus status = default;
+            DatabricksPrivateLinkServiceConnectionStatus status = default;
             string description = default;
             string actionsRequired = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
@@ -141,7 +141,7 @@ namespace Azure.ResourceManager.Databricks.Models
             {
                 if (prop.NameEquals("status"u8))
                 {
-                    status = new PrivateLinkServiceConnectionStatus(prop.Value.GetString());
+                    status = new DatabricksPrivateLinkServiceConnectionStatus(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("description"u8))

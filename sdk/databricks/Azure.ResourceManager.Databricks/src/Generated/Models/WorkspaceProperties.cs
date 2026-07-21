@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.Core;
 using Azure.ResourceManager.Databricks;
 
 namespace Azure.ResourceManager.Databricks.Models
@@ -19,10 +20,10 @@ namespace Azure.ResourceManager.Databricks.Models
 
         /// <summary> Initializes a new instance of <see cref="WorkspaceProperties"/>. </summary>
         /// <param name="computeMode"> The workspace compute mode. Required on create, cannot be changed. Possible values include: 'Serverless', 'Hybrid'. </param>
-        public WorkspaceProperties(ComputeMode computeMode)
+        public WorkspaceProperties(DatabricksComputeMode computeMode)
         {
             ComputeMode = computeMode;
-            Authorizations = new ChangeTrackingList<WorkspaceProviderAuthorization>();
+            Authorizations = new ChangeTrackingList<DatabricksWorkspaceProviderAuthorization>();
             PrivateEndpointConnections = new ChangeTrackingList<DatabricksPrivateEndpointConnectionData>();
         }
 
@@ -51,7 +52,7 @@ namespace Azure.ResourceManager.Databricks.Models
         /// <param name="accessConnector"> Access Connector Resource that is going to be associated with Databricks Workspace. Not allowed in Serverless ComputeMode workspace. </param>
         /// <param name="defaultStorageFirewall"> Gets or Sets Default Storage Firewall configuration information. Not allowed in Serverless ComputeMode workspace. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal WorkspaceProperties(ComputeMode computeMode, string managedResourceGroupId, WorkspaceCustomParameters parameters, ProvisioningState? provisioningState, string uiDefinitionUri, IList<WorkspaceProviderAuthorization> authorizations, CreatedBy createdBy, CreatedBy updatedBy, DateTimeOffset? createdOn, string workspaceId, string workspaceUri, ManagedIdentityConfiguration storageAccountIdentity, ManagedIdentityConfiguration managedDiskIdentity, string diskEncryptionSetId, WorkspacePropertiesEncryption encryption, EnhancedSecurityComplianceDefinition enhancedSecurityCompliance, IReadOnlyList<DatabricksPrivateEndpointConnectionData> privateEndpointConnections, PublicNetworkAccess? publicNetworkAccess, RequiredNsgRules? requiredNsgRules, DefaultCatalogProperties defaultCatalog, bool? isUcEnabled, WorkspacePropertiesAccessConnector accessConnector, DefaultStorageFirewall? defaultStorageFirewall, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal WorkspaceProperties(DatabricksComputeMode computeMode, ResourceIdentifier managedResourceGroupId, WorkspaceCustomProperties parameters, DatabricksProvisioningState? provisioningState, string uiDefinitionUri, IList<DatabricksWorkspaceProviderAuthorization> authorizations, DatabricksCreatedBy createdBy, DatabricksCreatedBy updatedBy, DateTimeOffset? createdOn, string workspaceId, string workspaceUri, DatabricksManagedIdentityConfiguration storageAccountIdentity, DatabricksManagedIdentityConfiguration managedDiskIdentity, ResourceIdentifier diskEncryptionSetId, WorkspacePropertiesEncryption encryption, DatabricksEnhancedSecurityCompliance enhancedSecurityCompliance, IReadOnlyList<DatabricksPrivateEndpointConnectionData> privateEndpointConnections, DatabricksPublicNetworkAccess? publicNetworkAccess, DatabricksRequiredNsgRules? requiredNsgRules, DatabricksDefaultCatalogProperties defaultCatalog, bool? isUcEnabled, DatabricksWorkspaceAccessConnectorInfo accessConnector, DatabricksDefaultStorageFirewall? defaultStorageFirewall, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             ComputeMode = computeMode;
             ManagedResourceGroupId = managedResourceGroupId;
@@ -80,28 +81,28 @@ namespace Azure.ResourceManager.Databricks.Models
         }
 
         /// <summary> The workspace compute mode. Required on create, cannot be changed. Possible values include: 'Serverless', 'Hybrid'. </summary>
-        public ComputeMode ComputeMode { get; set; }
+        public DatabricksComputeMode ComputeMode { get; set; }
 
         /// <summary> The managed resource group Id. Required in Hybrid ComputeMode workspace. Not allowed in Serverless ComputeMode workspace. </summary>
-        public string ManagedResourceGroupId { get; set; }
+        public ResourceIdentifier ManagedResourceGroupId { get; set; }
 
         /// <summary> The workspace's custom parameters. </summary>
-        public WorkspaceCustomParameters Parameters { get; set; }
+        public WorkspaceCustomProperties Parameters { get; set; }
 
         /// <summary> The workspace provisioning state. </summary>
-        public ProvisioningState? ProvisioningState { get; }
+        public DatabricksProvisioningState? ProvisioningState { get; }
 
         /// <summary> The blob URI where the UI definition file is located. </summary>
         public string UiDefinitionUri { get; set; }
 
         /// <summary> The workspace provider authorizations. </summary>
-        public IList<WorkspaceProviderAuthorization> Authorizations { get; } = new ChangeTrackingList<WorkspaceProviderAuthorization>();
+        public IList<DatabricksWorkspaceProviderAuthorization> Authorizations { get; } = new ChangeTrackingList<DatabricksWorkspaceProviderAuthorization>();
 
         /// <summary> Indicates the Object ID, PUID and Application ID of entity that created the workspace. </summary>
-        public CreatedBy CreatedBy { get; set; }
+        public DatabricksCreatedBy CreatedBy { get; set; }
 
         /// <summary> Indicates the Object ID, PUID and Application ID of entity that last updated the workspace. </summary>
-        public CreatedBy UpdatedBy { get; set; }
+        public DatabricksCreatedBy UpdatedBy { get; set; }
 
         /// <summary> Specifies the date and time when the workspace is created. </summary>
         public DateTimeOffset? CreatedOn { get; }
@@ -113,43 +114,43 @@ namespace Azure.ResourceManager.Databricks.Models
         public string WorkspaceUri { get; }
 
         /// <summary> The details of Managed Identity of Storage Account. Only returned in Hybrid ComputeMode workspace. </summary>
-        public ManagedIdentityConfiguration StorageAccountIdentity { get; set; }
+        public DatabricksManagedIdentityConfiguration StorageAccountIdentity { get; set; }
 
         /// <summary> The details of Managed Identity of Disk Encryption Set used for Managed Disk Encryption. Only returned in Hybrid ComputeMode workspace. </summary>
-        public ManagedIdentityConfiguration ManagedDiskIdentity { get; set; }
+        public DatabricksManagedIdentityConfiguration ManagedDiskIdentity { get; set; }
 
         /// <summary> The resource Id of the managed disk encryption set. Not allowed in Serverless ComputeMode workspace. </summary>
-        public string DiskEncryptionSetId { get; }
+        public ResourceIdentifier DiskEncryptionSetId { get; }
 
         /// <summary> Encryption properties for databricks workspace. Supported in both Serverless and Hybrid ComputeMode workspace. </summary>
         internal WorkspacePropertiesEncryption Encryption { get; set; }
 
         /// <summary> Contains settings related to the Enhanced Security and Compliance Add-On. Supported in both Serverless and Hybrid ComputeMode workspace. </summary>
-        public EnhancedSecurityComplianceDefinition EnhancedSecurityCompliance { get; set; }
+        public DatabricksEnhancedSecurityCompliance EnhancedSecurityCompliance { get; set; }
 
         /// <summary> Private endpoint connections created on the workspace. Supported in both Serverless and Hybrid ComputeMode workspace. </summary>
         public IReadOnlyList<DatabricksPrivateEndpointConnectionData> PrivateEndpointConnections { get; } = new ChangeTrackingList<DatabricksPrivateEndpointConnectionData>();
 
         /// <summary> The network access type for accessing workspace. Set value to disabled to access workspace only via private link. Used to configure front-end only private link for Serverless ComputeMode workspace. </summary>
-        public PublicNetworkAccess? PublicNetworkAccess { get; set; }
+        public DatabricksPublicNetworkAccess? PublicNetworkAccess { get; set; }
 
         /// <summary> Gets or sets a value indicating whether data plane (clusters) to control plane communication happen over private endpoint. Supported values are 'AllRules' and 'NoAzureDatabricksRules'. 'NoAzureServiceRules' value is for internal use only. Not allowed in Serverless ComputeMode workspace. </summary>
-        public RequiredNsgRules? RequiredNsgRules { get; set; }
+        public DatabricksRequiredNsgRules? RequiredNsgRules { get; set; }
 
         /// <summary> Properties for Default Catalog configuration during workspace creation. Not allowed in Serverless ComputeMode workspace. </summary>
-        public DefaultCatalogProperties DefaultCatalog { get; set; }
+        public DatabricksDefaultCatalogProperties DefaultCatalog { get; set; }
 
         /// <summary> Indicates whether unity catalog enabled for the workspace or not. Set as true in Serverless ComputeMode workspace. </summary>
         public bool? IsUcEnabled { get; }
 
         /// <summary> Access Connector Resource that is going to be associated with Databricks Workspace. Not allowed in Serverless ComputeMode workspace. </summary>
-        public WorkspacePropertiesAccessConnector AccessConnector { get; set; }
+        public DatabricksWorkspaceAccessConnectorInfo AccessConnector { get; set; }
 
         /// <summary> Gets or Sets Default Storage Firewall configuration information. Not allowed in Serverless ComputeMode workspace. </summary>
-        public DefaultStorageFirewall? DefaultStorageFirewall { get; set; }
+        public DatabricksDefaultStorageFirewall? DefaultStorageFirewall { get; set; }
 
         /// <summary> Encryption entities definition for the workspace. </summary>
-        public EncryptionEntitiesDefinition EncryptionEntities
+        public DatabricksEncryptionEntities EncryptionEntities
         {
             get
             {
