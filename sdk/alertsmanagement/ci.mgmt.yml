@@ -11,5 +11,7 @@ extends:
       safeName: AzureResourceManagerAlertsManagement
     - name: Azure.ResourceManager.PrometheusRuleGroups
       safeName: AzureResourceManagerPrometheusRuleGroups
+    - name: Azure.ResourceManager.AlertRuleRecommendations
+      safeName: AzureResourceManagerAlertRuleRecommendations
     - name: Azure.ResourceManager.AlertProcessingRules
       safeName: AzureResourceManagerAlertProcessingRules

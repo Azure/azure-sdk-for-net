@@ -9,3 +9,5 @@ extends:
     Artifacts:
     - name: Azure.ResourceManager.BotService
       safeName: AzureResourceManagerBotService
+    - name: Azure.Provisioning.BotService
+      safeName: AzureProvisioningBotService

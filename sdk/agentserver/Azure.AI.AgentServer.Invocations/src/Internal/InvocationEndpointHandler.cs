@@ -127,14 +127,27 @@ internal sealed class InvocationEndpointHandler
     /// </summary>
     internal async Task HandleGetOpenApiAsync(HttpContext httpContext, InvocationHandler handler)
     {
-        // OpenAPI docs endpoint — inject session ID from env var only (no invocation context).
-        var sessionId = FoundryEnvironment.SessionId;
-        if (!string.IsNullOrEmpty(sessionId))
-        {
-            httpContext.Response.Headers[SessionIdResponseHeader] = sessionId;
-        }
-
+        InjectSessionIdHeaderFromEnv(httpContext.Response);
         await handler.GetOpenApiAsync(httpContext.Request, httpContext.Response, httpContext.RequestAborted);
+    }
+
+    /// <summary>
+    /// Handles <c>GET /invocations/docs/asyncapi.json</c>. Companion to the OpenAPI
+    /// endpoint for event-driven/streaming surfaces (e.g. <c>invocations_ws</c>).
+    /// </summary>
+    internal async Task HandleGetAsyncApiJsonAsync(HttpContext httpContext, InvocationHandler handler)
+    {
+        InjectSessionIdHeaderFromEnv(httpContext.Response);
+        await handler.GetAsyncApiJsonAsync(httpContext.Request, httpContext.Response, httpContext.RequestAborted);
+    }
+
+    /// <summary>
+    /// Handles <c>GET /invocations/docs/asyncapi.yaml</c>.
+    /// </summary>
+    internal async Task HandleGetAsyncApiYamlAsync(HttpContext httpContext, InvocationHandler handler)
+    {
+        InjectSessionIdHeaderFromEnv(httpContext.Response);
+        await handler.GetAsyncApiYamlAsync(httpContext.Request, httpContext.Response, httpContext.RequestAborted);
     }
 
     /// <summary>
@@ -167,13 +180,21 @@ internal sealed class InvocationEndpointHandler
     /// Injects the <c>x-agent-session-id</c> response header. Called before the
     /// handler writes the response body so the header is present on all responses.
     /// </summary>
-    private static void InjectSessionIdHeader(HttpResponse response, string sessionId)
+    private static void InjectSessionIdHeader(HttpResponse response, string? sessionId)
     {
         if (!string.IsNullOrEmpty(sessionId))
         {
             response.Headers[SessionIdResponseHeader] = sessionId;
         }
     }
+
+    /// <summary>
+    /// Injects the <c>x-agent-session-id</c> response header from the environment
+    /// variable. Used by discovery-docs endpoints (openapi.json, asyncapi.json,
+    /// asyncapi.yaml) that run without an invocation context.
+    /// </summary>
+    private static void InjectSessionIdHeaderFromEnv(HttpResponse response)
+        => InjectSessionIdHeader(response, FoundryEnvironment.SessionId);
 
     /// <summary>
     /// Wraps <paramref name="httpContext"/>.Response.Body with a <see cref="SseKeepAliveSession"/>
