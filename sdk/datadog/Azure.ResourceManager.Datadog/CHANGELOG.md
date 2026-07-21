@@ -6,6 +6,8 @@
 
 ### Breaking Changes
 
+- Replaced `DatadogActivateSaaSContent.SaaSGuid` (of type `Guid`) with `SaaSResourceId` (of type `ResourceIdentifier`). The `DatadogActivateSaaSContent` constructor parameter changed accordingly from `Guid saaSGuid` to `ResourceIdentifier saaSResourceId`, and the corresponding `ArmDatadogModelFactory.DatadogActivateSaaSContent` factory parameter was updated as well.
+
 ### Bugs Fixed
 
 ### Other Changes
