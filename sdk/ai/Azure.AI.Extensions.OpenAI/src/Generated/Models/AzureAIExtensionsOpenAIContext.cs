@@ -366,6 +366,9 @@ namespace Azure.AI.Extensions.OpenAI
     [ModelReaderWriterBuildable(typeof(ResponsesTool))]
     [ModelReaderWriterBuildable(typeof(ResponsesToolProjectConnection))]
     [ModelReaderWriterBuildable(typeof(ResponsesToolSearchToolParam))]
+#pragma warning disable AAIP001 // global::Azure.AI.Extensions.OpenAI.ResponsesWebIQPreviewTool is experimental and may change in future versions.
+    [ModelReaderWriterBuildable(typeof(ResponsesWebIQPreviewTool))]
+#pragma warning restore AAIP001 // global::Azure.AI.Extensions.OpenAI.ResponsesWebIQPreviewTool is experimental and may change in future versions.
     [ModelReaderWriterBuildable(typeof(ResponsesWebSearchApproximateLocation))]
     [ModelReaderWriterBuildable(typeof(ResponsesWebSearchConfiguration))]
     [ModelReaderWriterBuildable(typeof(ResponsesWebSearchTool))]
