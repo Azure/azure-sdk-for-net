@@ -23,7 +23,7 @@ namespace Azure.ResourceManager.IotHub.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="IotHubDeviceRegistry"/>. </summary>
-        /// <param name="namespaceResourceId"> The identifier of the Azure Device Registry namespace associated with the GEN2 SKU hub. </param>
+        /// <param name="namespaceResourceId"> The identifier of the Azure Device Registry namespace. </param>
         /// <param name="identityResourceId"> The identity used to manage the ADR namespace from the data plane. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         internal IotHubDeviceRegistry(ResourceIdentifier namespaceResourceId, ResourceIdentifier identityResourceId, IDictionary<string, BinaryData> additionalBinaryDataProperties)
@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.IotHub.Models
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
-        /// <summary> The identifier of the Azure Device Registry namespace associated with the GEN2 SKU hub. </summary>
+        /// <summary> The identifier of the Azure Device Registry namespace. </summary>
         public ResourceIdentifier NamespaceResourceId { get; set; }
 
         /// <summary> The identity used to manage the ADR namespace from the data plane. </summary>

@@ -124,6 +124,16 @@ namespace Azure.ResourceManager.IotHub.Models
                 }
                 writer.WriteEndArray();
             }
+            if (Optional.IsCollectionDefined(EventStreams))
+            {
+                writer.WritePropertyName("eventStreams"u8);
+                writer.WriteStartArray();
+                foreach (RoutingEventStreamProperties item in EventStreams)
+                {
+                    writer.WriteObjectValue(item, options);
+                }
+                writer.WriteEndArray();
+            }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
                 foreach (var item in _additionalBinaryDataProperties)
@@ -171,6 +181,7 @@ namespace Azure.ResourceManager.IotHub.Models
             IList<RoutingEventHubProperties> eventHubs = default;
             IList<RoutingStorageContainerProperties> storageContainers = default;
             IList<RoutingCosmosDBSqlApiProperties> cosmosDBSqlContainers = default;
+            IList<RoutingEventStreamProperties> eventStreams = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -244,6 +255,20 @@ namespace Azure.ResourceManager.IotHub.Models
                     cosmosDBSqlContainers = array;
                     continue;
                 }
+                if (prop.NameEquals("eventStreams"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    List<RoutingEventStreamProperties> array = new List<RoutingEventStreamProperties>();
+                    foreach (var item in prop.Value.EnumerateArray())
+                    {
+                        array.Add(RoutingEventStreamProperties.DeserializeRoutingEventStreamProperties(item, options));
+                    }
+                    eventStreams = array;
+                    continue;
+                }
                 if (options.Format != "W")
                 {
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
@@ -255,6 +280,7 @@ namespace Azure.ResourceManager.IotHub.Models
                 eventHubs ?? new ChangeTrackingList<RoutingEventHubProperties>(),
                 storageContainers ?? new ChangeTrackingList<RoutingStorageContainerProperties>(),
                 cosmosDBSqlContainers ?? new ChangeTrackingList<RoutingCosmosDBSqlApiProperties>(),
+                eventStreams ?? new ChangeTrackingList<RoutingEventStreamProperties>(),
                 additionalBinaryDataProperties);
         }
     }

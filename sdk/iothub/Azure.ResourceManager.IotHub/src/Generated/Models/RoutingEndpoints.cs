@@ -25,6 +25,7 @@ namespace Azure.ResourceManager.IotHub.Models
             EventHubs = new ChangeTrackingList<RoutingEventHubProperties>();
             StorageContainers = new ChangeTrackingList<RoutingStorageContainerProperties>();
             CosmosDBSqlContainers = new ChangeTrackingList<RoutingCosmosDBSqlApiProperties>();
+            EventStreams = new ChangeTrackingList<RoutingEventStreamProperties>();
         }
 
         /// <summary> Initializes a new instance of <see cref="RoutingEndpoints"/>. </summary>
@@ -33,14 +34,16 @@ namespace Azure.ResourceManager.IotHub.Models
         /// <param name="eventHubs"> The list of Event Hubs endpoints that IoT hub routes messages to, based on the routing rules. This list does not include the built-in Event Hubs endpoint. </param>
         /// <param name="storageContainers"> The list of storage container endpoints that IoT hub routes messages to, based on the routing rules. </param>
         /// <param name="cosmosDBSqlContainers"> The list of Cosmos DB container endpoints that IoT hub routes messages to, based on the routing rules. </param>
+        /// <param name="eventStreams"> The list of event stream endpoints that IoT hub routes messages to, based on the routing rules. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal RoutingEndpoints(IList<RoutingServiceBusQueueEndpointProperties> serviceBusQueues, IList<RoutingServiceBusTopicEndpointProperties> serviceBusTopics, IList<RoutingEventHubProperties> eventHubs, IList<RoutingStorageContainerProperties> storageContainers, IList<RoutingCosmosDBSqlApiProperties> cosmosDBSqlContainers, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal RoutingEndpoints(IList<RoutingServiceBusQueueEndpointProperties> serviceBusQueues, IList<RoutingServiceBusTopicEndpointProperties> serviceBusTopics, IList<RoutingEventHubProperties> eventHubs, IList<RoutingStorageContainerProperties> storageContainers, IList<RoutingCosmosDBSqlApiProperties> cosmosDBSqlContainers, IList<RoutingEventStreamProperties> eventStreams, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             ServiceBusQueues = serviceBusQueues;
             ServiceBusTopics = serviceBusTopics;
             EventHubs = eventHubs;
             StorageContainers = storageContainers;
             CosmosDBSqlContainers = cosmosDBSqlContainers;
+            EventStreams = eventStreams;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
@@ -58,5 +61,8 @@ namespace Azure.ResourceManager.IotHub.Models
 
         /// <summary> The list of Cosmos DB container endpoints that IoT hub routes messages to, based on the routing rules. </summary>
         public IList<RoutingCosmosDBSqlApiProperties> CosmosDBSqlContainers { get; }
+
+        /// <summary> The list of event stream endpoints that IoT hub routes messages to, based on the routing rules. </summary>
+        public IList<RoutingEventStreamProperties> EventStreams { get; }
     }
 }
