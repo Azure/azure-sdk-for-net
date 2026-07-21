@@ -14,12 +14,12 @@ namespace Azure.Provisioning.CostManagement
     {
         /// <summary> Gzip. </summary>
         [DataMember(Name = "gzip")]
-        Gzip,
+        Gzip = 0,
         /// <summary> Snappy. </summary>
         [DataMember(Name = "snappy")]
-        Snappy,
+        Snappy = 1,
         /// <summary> None. </summary>
         [DataMember(Name = "none")]
-        None
+        None = 2
     }
 }

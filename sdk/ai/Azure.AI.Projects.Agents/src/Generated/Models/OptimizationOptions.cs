@@ -28,14 +28,16 @@ namespace Azure.AI.Projects.Agents
         /// <param name="evalModel"> Model deployment used for evaluation. Defaults to server config (typically 'gpt-4o'). </param>
         /// <param name="optimizationModel"> Model deployment for optimization reasoning (must be gpt-5 family). Falls back to the default eval model when not set. </param>
         /// <param name="evaluationLevel"> Evaluation granularity. Null/omitted means per-item single-turn. Set to 'conversation' for per-conversation multi-turn simulation scoring. </param>
+        /// <param name="maxStalls"> Maximum number of consecutive reflective minibatch rejections before stopping early. A 'stall' occurs when the optimizer proposes a prompt change, evaluates it on a small subset, and the score does not improve — so no full validation-set evaluation is triggered. The counter resets whenever a minibatch passes and its full-validation score beats the current best. Only a sustained plateau of `max_stalls` consecutive minibatch failures triggers the stop. When omitted, the optimizer uses its internal default. Must be &gt;= 1 when set. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal OptimizationOptions(int? maxCandidates, IDictionary<string, BinaryData> optimizationConfig, string evalModel, string optimizationModel, AgentsEvaluationLevel? evaluationLevel, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal OptimizationOptions(int? maxCandidates, IDictionary<string, BinaryData> optimizationConfig, string evalModel, string optimizationModel, AgentsEvaluationLevel? evaluationLevel, int? maxStalls, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             MaxCandidates = maxCandidates;
             OptimizationConfig = optimizationConfig;
             EvalModel = evalModel;
             OptimizationModel = optimizationModel;
             EvaluationLevel = evaluationLevel;
+            MaxStalls = maxStalls;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
@@ -78,5 +80,8 @@ namespace Azure.AI.Projects.Agents
 
         /// <summary> Evaluation granularity. Null/omitted means per-item single-turn. Set to 'conversation' for per-conversation multi-turn simulation scoring. </summary>
         public AgentsEvaluationLevel? EvaluationLevel { get; set; }
+
+        /// <summary> Maximum number of consecutive reflective minibatch rejections before stopping early. A 'stall' occurs when the optimizer proposes a prompt change, evaluates it on a small subset, and the score does not improve — so no full validation-set evaluation is triggered. The counter resets whenever a minibatch passes and its full-validation score beats the current best. Only a sustained plateau of `max_stalls` consecutive minibatch failures triggers the stop. When omitted, the optimizer uses its internal default. Must be &gt;= 1 when set. </summary>
+        public int? MaxStalls { get; set; }
     }
 }

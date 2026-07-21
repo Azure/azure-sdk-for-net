@@ -11,24 +11,24 @@ namespace Azure.Provisioning.ServiceFabric
     public enum ServiceFabricClusterState
     {
         /// <summary> Indicates that the cluster resource is created and the resource provider is waiting for Service Fabric VM extension to boot up and report to it. </summary>
-        WaitingForNodes,
+        WaitingForNodes = 0,
         /// <summary> Indicates that the Service Fabric runtime is being installed on the VMs. Cluster resource will be in this state until the cluster boots up and system services are up. </summary>
-        Deploying,
+        Deploying = 1,
         /// <summary> Indicates that the cluster is upgrading to establishes the cluster version. This upgrade is automatically initiated when the cluster boots up for the first time. </summary>
-        BaselineUpgrade,
+        BaselineUpgrade = 2,
         /// <summary> Indicates that the cluster is being upgraded with the user provided configuration. </summary>
-        UpdatingUserConfiguration,
+        UpdatingUserConfiguration = 3,
         /// <summary> Indicates that the cluster is being upgraded with the user provided certificate. </summary>
-        UpdatingUserCertificate,
+        UpdatingUserCertificate = 4,
         /// <summary> Indicates that the cluster is being upgraded with the latest Service Fabric runtime version. This happens only when the <b>upgradeMode</b> is set to 'Automatic'. </summary>
-        UpdatingInfrastructure,
+        UpdatingInfrastructure = 5,
         /// <summary> Indicates that cluster is on a different version than expected and the cluster is being upgraded to the expected version. </summary>
-        EnforcingClusterVersion,
+        EnforcingClusterVersion = 6,
         /// <summary> Indicates that the system service in the cluster is no longer polling the Resource Provider. Clusters in this state cannot be managed by the Resource Provider. </summary>
-        UpgradeServiceUnreachable,
+        UpgradeServiceUnreachable = 7,
         /// <summary> Indicates that the ReliabilityLevel of the cluster is being adjusted. </summary>
-        AutoScale,
+        AutoScale = 8,
         /// <summary> Indicates that the cluster is in a stable state. </summary>
-        Ready
+        Ready = 9
     }
 }

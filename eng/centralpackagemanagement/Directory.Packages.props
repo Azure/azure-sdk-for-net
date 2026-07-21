@@ -104,7 +104,7 @@
     <PackageVersion Include="Azure.AI.Inference" Version="1.0.0-beta.5" />
     <PackageVersion Include="Azure.AI.OpenAI" Version="2.0.0" />
     <PackageVersion Include="Azure.AI.Projects" Version="2.0.1" />
-    <PackageVersion Include="Azure.Communication.Common" Version="1.4.0" />
+    <PackageVersion Include="Azure.Communication.Common" Version="1.4.1" />
     <PackageVersion Include="Azure.Core" Version="1.60.0" />
     <PackageVersion Include="Azure.Core.Amqp" Version="1.3.1" />
     <PackageVersion Include="Azure.Core.Experimental" Version="0.1.0-preview.36" />
@@ -234,7 +234,7 @@
   <!--                  package dependencies                          -->
   <!-- ============================================================== -->
   <ItemGroup>
-    <PackageVersion Include="Azure.ClientSdk.Analyzers" Version="0.1.1-dev.20260624.1" PrivateAssets="All" />
+    <PackageVersion Include="Azure.ClientSdk.Analyzers" Version="0.1.1-dev.20260709.1" PrivateAssets="All" />
     <PackageVersion Include="coverlet.collector" Version="6.0.4" PrivateAssets="All" />
     <PackageVersion Include="Microsoft.Azure.AutoRest.CSharp" Version="3.0.0-beta.20251023.1" PrivateAssets="All" />
 

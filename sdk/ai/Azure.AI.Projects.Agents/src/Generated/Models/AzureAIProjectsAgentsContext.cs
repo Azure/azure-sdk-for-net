@@ -195,6 +195,9 @@ namespace Azure.AI.Projects.Agents
 #pragma warning restore AAIP001 // global::Azure.AI.Projects.Agents.OptimizationJob is experimental and may change in future versions.
 #pragma warning disable AAIP001 // global::Azure.AI.Projects.Agents.OptimizationJobInputs is experimental and may change in future versions.
     [ModelReaderWriterBuildable(typeof(OptimizationJobInputs))]
+#pragma warning restore AAIP001 // global::Azure.AI.Projects.Agents.OptimizationJobInputs is experimental and may change in future versions.
+#pragma warning disable AAIP001 // global::Azure.AI.Projects.Agents.OptimizationJobListItem is experimental and may change in future versions.
+    [ModelReaderWriterBuildable(typeof(OptimizationJobListItem))]
 #pragma warning restore AAIP001 // global::Azure.AI.Projects.Agents.OptimizationJobListItem is experimental and may change in future versions.
 #pragma warning disable AAIP001 // global::Azure.AI.Projects.Agents.OptimizationJobProgress is experimental and may change in future versions.
     [ModelReaderWriterBuildable(typeof(OptimizationJobProgress))]

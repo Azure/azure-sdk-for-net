@@ -34,8 +34,8 @@ npm exec --prefix "${REPO_ROOT}/eng/common/tsp-client" --no -- tsp-client update
 The same in PowerShell:
 
 ```powershell
-$env:REPO_ROOT="/path/to/azure-sdk-for-net"
-npm exec --prefix "${env:REPO_ROOT}/eng/common/tsp-client" --no -- tsp-client update --no-prompt --output-dir "${env:REPO_ROOT}/sdk/ai/Azure.AI.Projects/src/../"
-npm exec --prefix "${env:REPO_ROOT}/eng/common/tsp-client" --no -- tsp-client update --no-prompt --output-dir "${env:REPO_ROOT}/sdk/ai/Azure.AI.Extensions.OpenAI/src/../"
-npm exec --prefix "${env:REPO_ROOT}/eng/common/tsp-client" --no -- tsp-client update --no-prompt --output-dir "${env:REPO_ROOT}/sdk/ai/Azure.AI.Projects.Agents/src/../"
+$REPO_ROOT="/path/to/azure-sdk-for-net"
+npm exec --prefix "${REPO_ROOT}/eng/common/tsp-client" --no -- tsp-client update --no-prompt --output-dir "${REPO_ROOT}/sdk/ai/Azure.AI.Projects/src/../"
+npm exec --prefix "${REPO_ROOT}/eng/common/tsp-client" --no -- tsp-client update --no-prompt --output-dir "${REPO_ROOT}/sdk/ai/Azure.AI.Extensions.OpenAI/src/../"
+npm exec --prefix "${REPO_ROOT}/eng/common/tsp-client" --no -- tsp-client update --no-prompt --output-dir "${REPO_ROOT}/sdk/ai/Azure.AI.Projects.Agents/src/../"
 ```

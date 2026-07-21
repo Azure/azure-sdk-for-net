@@ -12689,6 +12689,7 @@
           "kind": "property",
           "name": "optionalFlattenProperty",
           "serializedName": "optionalFlattenProperty",
+          "doc": "Optional single-property model used to verify generated flattened collection\ngetters initialize the nested collection wrapper instead of returning null.",
           "type": {
             "$id": "1079",
             "kind": "model",
@@ -12714,6 +12715,7 @@
                 "kind": "property",
                 "name": "randomCollectionProp",
                 "serializedName": "randomCollectionProp",
+                "doc": "Required collection used by the optional flattened model scenario.",
                 "type": {
                   "$ref": "815"
                 },

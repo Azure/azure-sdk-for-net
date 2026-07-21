@@ -601,6 +601,7 @@ namespace Azure.AI.Projects
 #pragma warning disable AAIP001 // global::Azure.AI.Projects.RubricBasedEvaluatorDefinition is experimental and may change in future versions.
     [ModelReaderWriterBuildable(typeof(RubricBasedEvaluatorDefinition))]
 #pragma warning restore AAIP001 // global::Azure.AI.Projects.RubricBasedEvaluatorDefinition is experimental and may change in future versions.
+    [ModelReaderWriterBuildable(typeof(RubricGenerationInputQualityWarning))]
 #pragma warning disable AAIP001 // global::Azure.AI.Projects.ScheduleRoutineTrigger is experimental and may change in future versions.
     [ModelReaderWriterBuildable(typeof(ScheduleRoutineTrigger))]
 #pragma warning restore AAIP001 // global::Azure.AI.Projects.ScheduleRoutineTrigger is experimental and may change in future versions.

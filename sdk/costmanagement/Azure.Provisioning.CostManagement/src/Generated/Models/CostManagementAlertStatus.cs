@@ -11,14 +11,14 @@ namespace Azure.Provisioning.CostManagement
     public enum CostManagementAlertStatus
     {
         /// <summary> None. </summary>
-        None,
+        None = 0,
         /// <summary> Active. </summary>
-        Active,
+        Active = 1,
         /// <summary> Overridden. </summary>
-        Overridden,
+        Overridden = 2,
         /// <summary> Resolved. </summary>
-        Resolved,
+        Resolved = 3,
         /// <summary> Dismissed. </summary>
-        Dismissed
+        Dismissed = 4
     }
 }
