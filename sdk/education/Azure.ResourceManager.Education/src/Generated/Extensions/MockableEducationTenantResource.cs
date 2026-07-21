@@ -42,15 +42,15 @@ namespace Azure.ResourceManager.Education.Mocking
 
         private ClientDiagnostics EducationClientClientDiagnostics => _educationClientClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Education.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private EducationClient EducationClientRestClient => _educationClientRestClient ??= new EducationClient(EducationClientClientDiagnostics, Pipeline, Endpoint, "2021-12-01-preview");
+        private EducationClient EducationClientRestClient => _educationClientRestClient ??= new EducationClient(EducationClientClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2021-12-01-preview");
 
         private ClientDiagnostics OperationsClientDiagnostics => _operationsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Education.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private Operations OperationsRestClient => _operationsRestClient ??= new Operations(OperationsClientDiagnostics, Pipeline, Endpoint, "2021-12-01-preview");
+        private Operations OperationsRestClient => _operationsRestClient ??= new Operations(OperationsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2021-12-01-preview");
 
         private ClientDiagnostics GrantsClientDiagnostics => _grantsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Education.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private Grants GrantsRestClient => _grantsRestClient ??= new Grants(GrantsClientDiagnostics, Pipeline, Endpoint, "2021-12-01-preview");
+        private Grants GrantsRestClient => _grantsRestClient ??= new Grants(GrantsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2021-12-01-preview");
 
         /// <summary> Gets a collection of StudentLabDetails in the <see cref="TenantResource"/>. </summary>
         /// <returns> An object representing collection of StudentLabDetails and their operations over a StudentLabDetailsResource. </returns>
