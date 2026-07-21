@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.Automation
         {
             TryGetApiVersion(ResourceType, out string automationScheduleApiVersion);
             _scheduleClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Automation", ResourceType.Namespace, Diagnostics);
-            _scheduleRestClient = new Schedule(_scheduleClientDiagnostics, Pipeline, Endpoint, automationScheduleApiVersion ?? "2024-10-23");
+            _scheduleRestClient = new Schedule(_scheduleClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, automationScheduleApiVersion ?? "2024-10-23");
             ValidateResourceId(id);
         }
 

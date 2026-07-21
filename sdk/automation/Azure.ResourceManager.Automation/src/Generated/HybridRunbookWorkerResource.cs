@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.Automation
         {
             TryGetApiVersion(ResourceType, out string hybridRunbookWorkerApiVersion);
             _hybridRunbookWorkersClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Automation", ResourceType.Namespace, Diagnostics);
-            _hybridRunbookWorkersRestClient = new HybridRunbookWorkers(_hybridRunbookWorkersClientDiagnostics, Pipeline, Endpoint, hybridRunbookWorkerApiVersion ?? "2024-10-23");
+            _hybridRunbookWorkersRestClient = new HybridRunbookWorkers(_hybridRunbookWorkersClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, hybridRunbookWorkerApiVersion ?? "2024-10-23");
             ValidateResourceId(id);
         }
 
