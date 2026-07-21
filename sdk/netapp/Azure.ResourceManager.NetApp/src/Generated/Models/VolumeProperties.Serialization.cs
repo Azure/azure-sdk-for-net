@@ -391,11 +391,6 @@ namespace Azure.ResourceManager.NetApp.Models
                 writer.WritePropertyName("inheritedSizeInBytes"u8);
                 writer.WriteNumberValue(InheritedSizeInBytes.Value);
             }
-            if (Optional.IsDefined(BreakthroughModeOld))
-            {
-                writer.WritePropertyName("breakthroughModeOld"u8);
-                writer.WriteStringValue(BreakthroughModeOld.Value.ToString());
-            }
             if (Optional.IsDefined(BreakthroughMode))
             {
                 writer.WritePropertyName("breakthroughMode"u8);
@@ -501,7 +496,6 @@ namespace Azure.ResourceManager.NetApp.Models
             bool? isLargeVolume = default;
             ResourceIdentifier originatingResourceId = default;
             long? inheritedSizeInBytes = default;
-            BreakthroughMode? breakthroughModeOld = default;
             BreakthroughMode? breakthroughMode = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
@@ -1024,15 +1018,6 @@ namespace Azure.ResourceManager.NetApp.Models
                     inheritedSizeInBytes = prop.Value.GetInt64();
                     continue;
                 }
-                if (prop.NameEquals("breakthroughModeOld"u8))
-                {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    breakthroughModeOld = new BreakthroughMode(prop.Value.GetString());
-                    continue;
-                }
                 if (prop.NameEquals("breakthroughMode"u8))
                 {
                     if (prop.Value.ValueKind == JsonValueKind.Null)
@@ -1106,7 +1091,6 @@ namespace Azure.ResourceManager.NetApp.Models
                 isLargeVolume,
                 originatingResourceId,
                 inheritedSizeInBytes,
-                breakthroughModeOld,
                 breakthroughMode,
                 additionalBinaryDataProperties);
         }
