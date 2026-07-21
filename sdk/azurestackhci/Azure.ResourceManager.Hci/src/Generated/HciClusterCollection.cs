@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.Hci
         {
             TryGetApiVersion(HciClusterResource.ResourceType, out string hciClusterApiVersion);
             _clustersClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Hci", HciClusterResource.ResourceType.Namespace, Diagnostics);
-            _clustersRestClient = new Clusters(_clustersClientDiagnostics, Pipeline, Endpoint, hciClusterApiVersion ?? "2026-05-01-preview");
+            _clustersRestClient = new Clusters(_clustersClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, hciClusterApiVersion ?? "2026-05-01-preview");
             ValidateResourceId(id);
         }
 

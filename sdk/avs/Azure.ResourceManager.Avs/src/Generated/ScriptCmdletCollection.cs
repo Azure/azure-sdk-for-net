@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.Avs
         {
             TryGetApiVersion(ScriptCmdletResource.ResourceType, out string scriptCmdletApiVersion);
             _scriptCmdletsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Avs", ScriptCmdletResource.ResourceType.Namespace, Diagnostics);
-            _scriptCmdletsRestClient = new ScriptCmdlets(_scriptCmdletsClientDiagnostics, Pipeline, Endpoint, scriptCmdletApiVersion ?? "2025-09-01");
+            _scriptCmdletsRestClient = new ScriptCmdlets(_scriptCmdletsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, scriptCmdletApiVersion ?? "2025-09-01");
             ValidateResourceId(id);
         }
 

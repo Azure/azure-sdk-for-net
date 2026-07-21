@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.Hci
         {
             TryGetApiVersion(EdgeMachineNetworkAdapterResource.ResourceType, out string edgeMachineNetworkAdapterApiVersion);
             _edgeMachineNetworkAdaptersClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Hci", EdgeMachineNetworkAdapterResource.ResourceType.Namespace, Diagnostics);
-            _edgeMachineNetworkAdaptersRestClient = new EdgeMachineNetworkAdapters(_edgeMachineNetworkAdaptersClientDiagnostics, Pipeline, Endpoint, edgeMachineNetworkAdapterApiVersion ?? "2026-05-01-preview");
+            _edgeMachineNetworkAdaptersRestClient = new EdgeMachineNetworkAdapters(_edgeMachineNetworkAdaptersClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, edgeMachineNetworkAdapterApiVersion ?? "2026-05-01-preview");
             ValidateResourceId(id);
         }
 

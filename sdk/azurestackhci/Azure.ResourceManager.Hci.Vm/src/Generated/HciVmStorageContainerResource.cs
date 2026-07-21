@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.Hci.Vm
         {
             TryGetApiVersion(ResourceType, out string hciVmStorageContainerApiVersion);
             _storageContainersClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Hci.Vm", ResourceType.Namespace, Diagnostics);
-            _storageContainersRestClient = new StorageContainers(_storageContainersClientDiagnostics, Pipeline, Endpoint, hciVmStorageContainerApiVersion ?? "2025-09-01-preview");
+            _storageContainersRestClient = new StorageContainers(_storageContainersClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, hciVmStorageContainerApiVersion ?? "2025-09-01-preview");
             ValidateResourceId(id);
         }
 
