@@ -13,6 +13,22 @@ public class MockStreamedData
 
     // Note: need extra line because raw string literal removes \n from final line.
     public const string DefaultMockContent = """
+        event: event.0
+        data: { "id": 0, "value": "0" }
+
+        event: event.1
+        data: { "id": 1, "value": "1" }
+
+        event: event.2
+        data: { "id": 2, "value": "2" }
+
+        event: done
+        data: [DONE]
+
+
+        """;
+
+    public const string SseMetadataMockContent = """
         id: 0
         retry: 1500
         event: event.0

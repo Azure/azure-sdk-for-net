@@ -17,7 +17,7 @@ public class StreamingResultParsingTests
     public void SseParsesEventEnvelopeAndTypedPayload()
     {
         MockStreamedResponse response =
-            new(MockStreamedData.DefaultMockContent);
+            new(MockStreamedData.SseMetadataMockContent);
         SseStreamedValueResult result = new(response);
 
         SseItem<StreamedValue>[] items = result.ToArray();
@@ -38,7 +38,7 @@ public class StreamingResultParsingTests
     public async Task SseParsesEventEnvelopeAndTypedPayloadAsync()
     {
         MockStreamedResponse response =
-            new(MockStreamedData.DefaultMockContent);
+            new(MockStreamedData.SseMetadataMockContent);
         AsyncSseStreamedValueResult result = new(response);
         List<SseItem<StreamedValue>> items = [];
 
