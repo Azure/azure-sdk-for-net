@@ -36,7 +36,6 @@ namespace Azure.ResourceManager.SecurityCenter.Tests
             }
         }
 
-        [Ignore("Blocked by Azure.ResourceManager.Network MPG migration playback mismatch; see https://github.com/Azure/azure-sdk-for-net/issues/59918.")]
         [RecordedTest]
         public async Task Get()
         {
@@ -44,7 +43,6 @@ namespace Azure.ResourceManager.SecurityCenter.Tests
             ValidateAllowedConnections(allowedConnection);
         }
 
-        [Ignore("Blocked by Azure.ResourceManager.Network MPG migration playback mismatch; see https://github.com/Azure/azure-sdk-for-net/issues/59918.")]
         [RecordedTest]
         public async Task GetAll()
         {
