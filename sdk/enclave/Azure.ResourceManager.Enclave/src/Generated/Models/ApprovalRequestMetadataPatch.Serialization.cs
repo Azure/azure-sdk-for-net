@@ -141,7 +141,7 @@ namespace Azure.ResourceManager.Enclave.Models
             string resourceAction = default;
             string approvalCallbackRoute = default;
             string approvalCallbackPayload = default;
-            VirtualEnclaveApprovalStatus? approvalStatus = default;
+            EnclaveApprovalStatus? approvalStatus = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -166,7 +166,7 @@ namespace Azure.ResourceManager.Enclave.Models
                     {
                         continue;
                     }
-                    approvalStatus = new VirtualEnclaveApprovalStatus(prop.Value.GetString());
+                    approvalStatus = new EnclaveApprovalStatus(prop.Value.GetString());
                     continue;
                 }
                 if (options.Format != "W")

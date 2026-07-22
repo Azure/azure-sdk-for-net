@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.Enclave.Models
             }
             writer.WritePropertyName("value"u8);
             writer.WriteStartArray();
-            foreach (VirtualEnclaveWorkloadData item in Value)
+            foreach (EnclaveWorkloadData item in Value)
             {
                 writer.WriteObjectValue(item, options);
             }
@@ -141,17 +141,17 @@ namespace Azure.ResourceManager.Enclave.Models
             {
                 return null;
             }
-            IList<VirtualEnclaveWorkloadData> value = default;
+            IList<EnclaveWorkloadData> value = default;
             Uri nextLink = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("value"u8))
                 {
-                    List<VirtualEnclaveWorkloadData> array = new List<VirtualEnclaveWorkloadData>();
+                    List<EnclaveWorkloadData> array = new List<EnclaveWorkloadData>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(VirtualEnclaveWorkloadData.DeserializeVirtualEnclaveWorkloadData(item, options));
+                        array.Add(EnclaveWorkloadData.DeserializeEnclaveWorkloadData(item, options));
                     }
                     value = array;
                     continue;

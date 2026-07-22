@@ -121,7 +121,7 @@ namespace Azure.ResourceManager.Enclave.Models
             {
                 return null;
             }
-            VirtualEnclaveDesignation? designation = default;
+            EnclaveDesignation? designation = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -131,7 +131,7 @@ namespace Azure.ResourceManager.Enclave.Models
                     {
                         continue;
                     }
-                    designation = new VirtualEnclaveDesignation(prop.Value.GetString());
+                    designation = new EnclaveDesignation(prop.Value.GetString());
                     continue;
                 }
                 if (options.Format != "W")

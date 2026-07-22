@@ -20,8 +20,8 @@ namespace Azure.ResourceManager.Enclave
 {
     /// <summary>
     /// A class representing a collection of <see cref="DedicatedHubResource"/> and their operations.
-    /// Each <see cref="DedicatedHubResource"/> in the collection will belong to the same instance of <see cref="VirtualEnclaveCommunityResource"/>.
-    /// To get a <see cref="DedicatedHubCollection"/> instance call the GetDedicatedHubs method from an instance of <see cref="VirtualEnclaveCommunityResource"/>.
+    /// Each <see cref="DedicatedHubResource"/> in the collection will belong to the same instance of <see cref="EnclaveCommunityResource"/>.
+    /// To get a <see cref="DedicatedHubCollection"/> instance call the GetDedicatedHubs method from an instance of <see cref="EnclaveCommunityResource"/>.
     /// </summary>
     public partial class DedicatedHubCollection : ArmCollection, IEnumerable<DedicatedHubResource>, IAsyncEnumerable<DedicatedHubResource>
     {
@@ -48,9 +48,9 @@ namespace Azure.ResourceManager.Enclave
         [Conditional("DEBUG")]
         internal static void ValidateResourceId(ResourceIdentifier id)
         {
-            if (id.ResourceType != VirtualEnclaveCommunityResource.ResourceType)
+            if (id.ResourceType != EnclaveCommunityResource.ResourceType)
             {
-                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, VirtualEnclaveCommunityResource.ResourceType), nameof(id));
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, EnclaveCommunityResource.ResourceType), nameof(id));
             }
         }
 

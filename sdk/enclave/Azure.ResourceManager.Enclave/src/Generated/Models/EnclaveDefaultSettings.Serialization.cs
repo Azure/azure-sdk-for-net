@@ -150,7 +150,7 @@ namespace Azure.ResourceManager.Enclave.Models
             ResourceIdentifier keyVaultResourceId = default;
             ResourceIdentifier storageAccountResourceId = default;
             IReadOnlyList<ResourceIdentifier> logAnalyticsResourceIdCollection = default;
-            VirtualEnclaveDiagnosticDestination? diagnosticDestination = default;
+            EnclaveDiagnosticDestination? diagnosticDestination = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -199,7 +199,7 @@ namespace Azure.ResourceManager.Enclave.Models
                     {
                         continue;
                     }
-                    diagnosticDestination = new VirtualEnclaveDiagnosticDestination(prop.Value.GetString());
+                    diagnosticDestination = new EnclaveDiagnosticDestination(prop.Value.GetString());
                     continue;
                 }
                 if (options.Format != "W")

@@ -15,7 +15,7 @@ using Azure.ResourceManager.Enclave.Models;
 
 namespace Azure.ResourceManager.Enclave
 {
-    internal partial class ApprovalGetByParentAsyncCollectionResultOfT : AsyncPageable<VirtualEnclaveApprovalData>
+    internal partial class ApprovalGetByParentAsyncCollectionResultOfT : AsyncPageable<EnclaveApprovalData>
     {
         private readonly Approval _client;
         private readonly string _resourceUri;
@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.Enclave
         /// <param name="continuationToken"> A continuation token indicating where to resume paging. </param>
         /// <param name="pageSizeHint"> The number of items per page. </param>
         /// <returns> The pages of ApprovalGetByParentAsyncCollectionResultOfT as an enumerable collection. </returns>
-        public override async IAsyncEnumerable<Page<VirtualEnclaveApprovalData>> AsPages(string continuationToken, int? pageSizeHint)
+        public override async IAsyncEnumerable<Page<EnclaveApprovalData>> AsPages(string continuationToken, int? pageSizeHint)
         {
             Uri nextPage = continuationToken != null ? new Uri(continuationToken) : null;
             while (true)
@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.Enclave
                 }
                 ApprovalResourceListResult result = ApprovalResourceListResult.FromResponse(response);
                 nextPage = result.NextLink;
-                yield return Page<VirtualEnclaveApprovalData>.FromValues((IReadOnlyList<VirtualEnclaveApprovalData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
+                yield return Page<EnclaveApprovalData>.FromValues((IReadOnlyList<EnclaveApprovalData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 if (nextPage == null)
                 {
                     yield break;

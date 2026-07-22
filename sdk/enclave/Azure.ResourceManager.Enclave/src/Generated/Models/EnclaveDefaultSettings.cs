@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.Enclave.Models
         /// <param name="logAnalyticsResourceIdCollection"> Log Analytics Resource Ids. </param>
         /// <param name="diagnosticDestination"> Diagnostic Destination. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal EnclaveDefaultSettings(ResourceIdentifier keyVaultResourceId, ResourceIdentifier storageAccountResourceId, IReadOnlyList<ResourceIdentifier> logAnalyticsResourceIdCollection, VirtualEnclaveDiagnosticDestination? diagnosticDestination, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal EnclaveDefaultSettings(ResourceIdentifier keyVaultResourceId, ResourceIdentifier storageAccountResourceId, IReadOnlyList<ResourceIdentifier> logAnalyticsResourceIdCollection, EnclaveDiagnosticDestination? diagnosticDestination, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             KeyVaultResourceId = keyVaultResourceId;
             StorageAccountResourceId = storageAccountResourceId;
@@ -49,6 +49,6 @@ namespace Azure.ResourceManager.Enclave.Models
         public IReadOnlyList<ResourceIdentifier> LogAnalyticsResourceIdCollection { get; }
 
         /// <summary> Diagnostic Destination. </summary>
-        public VirtualEnclaveDiagnosticDestination? DiagnosticDestination { get; set; }
+        public EnclaveDiagnosticDestination? DiagnosticDestination { get; set; }
     }
 }

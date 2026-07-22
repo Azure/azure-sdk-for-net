@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.Enclave.Models
 
         /// <summary> Initializes a new instance of <see cref="ApprovalDeletionCallbackContent"/>. </summary>
         /// <param name="resourceRequestAction"> Resource request action indicating action which needed to be performed upon calling approval-deletion-callback post action. </param>
-        public ApprovalDeletionCallbackContent(VirtualEnclaveApprovalDeletionCallbackResourceAction resourceRequestAction)
+        public ApprovalDeletionCallbackContent(EnclaveApprovalDeletionCallbackResourceAction resourceRequestAction)
         {
             ResourceRequestAction = resourceRequestAction;
         }
@@ -26,13 +26,13 @@ namespace Azure.ResourceManager.Enclave.Models
         /// <summary> Initializes a new instance of <see cref="ApprovalDeletionCallbackContent"/>. </summary>
         /// <param name="resourceRequestAction"> Resource request action indicating action which needed to be performed upon calling approval-deletion-callback post action. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ApprovalDeletionCallbackContent(VirtualEnclaveApprovalDeletionCallbackResourceAction resourceRequestAction, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ApprovalDeletionCallbackContent(EnclaveApprovalDeletionCallbackResourceAction resourceRequestAction, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             ResourceRequestAction = resourceRequestAction;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> Resource request action indicating action which needed to be performed upon calling approval-deletion-callback post action. </summary>
-        public VirtualEnclaveApprovalDeletionCallbackResourceAction ResourceRequestAction { get; }
+        public EnclaveApprovalDeletionCallbackResourceAction ResourceRequestAction { get; }
     }
 }

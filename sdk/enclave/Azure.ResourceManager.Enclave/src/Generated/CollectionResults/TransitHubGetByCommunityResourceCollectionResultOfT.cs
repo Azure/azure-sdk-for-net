@@ -14,7 +14,7 @@ using Azure.ResourceManager.Enclave.Models;
 
 namespace Azure.ResourceManager.Enclave
 {
-    internal partial class TransitHubGetByCommunityResourceCollectionResultOfT : Pageable<VirtualEnclaveTransitHubData>
+    internal partial class TransitHubGetByCommunityResourceCollectionResultOfT : Pageable<EnclaveTransitHubData>
     {
         private readonly TransitHub _client;
         private readonly Guid _subscriptionId;
@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.Enclave
         /// <param name="continuationToken"> A continuation token indicating where to resume paging. </param>
         /// <param name="pageSizeHint"> The number of items per page. </param>
         /// <returns> The pages of TransitHubGetByCommunityResourceCollectionResultOfT as an enumerable collection. </returns>
-        public override IEnumerable<Page<VirtualEnclaveTransitHubData>> AsPages(string continuationToken, int? pageSizeHint)
+        public override IEnumerable<Page<EnclaveTransitHubData>> AsPages(string continuationToken, int? pageSizeHint)
         {
             Uri nextPage = continuationToken != null ? new Uri(continuationToken) : null;
             while (true)
@@ -56,7 +56,7 @@ namespace Azure.ResourceManager.Enclave
                 }
                 TransitHubResourceListResult result = TransitHubResourceListResult.FromResponse(response);
                 nextPage = result.NextLink;
-                yield return Page<VirtualEnclaveTransitHubData>.FromValues((IReadOnlyList<VirtualEnclaveTransitHubData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
+                yield return Page<EnclaveTransitHubData>.FromValues((IReadOnlyList<EnclaveTransitHubData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 if (nextPage == null)
                 {
                     yield break;

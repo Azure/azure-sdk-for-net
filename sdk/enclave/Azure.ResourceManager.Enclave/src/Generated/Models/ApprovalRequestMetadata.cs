@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.Enclave.Models
         /// <param name="approvalCallbackPayload"> Payload to be sent upon any action on approval request. </param>
         /// <param name="approvalStatus"> Status of the approval. Uses ApprovalStatus enum. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ApprovalRequestMetadata(string resourceAction, string approvalCallbackRoute, string approvalCallbackPayload, VirtualEnclaveApprovalStatus? approvalStatus, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ApprovalRequestMetadata(string resourceAction, string approvalCallbackRoute, string approvalCallbackPayload, EnclaveApprovalStatus? approvalStatus, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             ResourceAction = resourceAction;
             ApprovalCallbackRoute = approvalCallbackRoute;
@@ -52,6 +52,6 @@ namespace Azure.ResourceManager.Enclave.Models
         public string ApprovalCallbackPayload { get; set; }
 
         /// <summary> Status of the approval. Uses ApprovalStatus enum. </summary>
-        public VirtualEnclaveApprovalStatus? ApprovalStatus { get; set; }
+        public EnclaveApprovalStatus? ApprovalStatus { get; set; }
     }
 }

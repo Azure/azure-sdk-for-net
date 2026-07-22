@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.Enclave.Models
 
         /// <summary> Initializes a new instance of <see cref="TransitHubResourceListResult"/>. </summary>
         /// <param name="value"> The TransitHubResource items on this page. </param>
-        internal TransitHubResourceListResult(IEnumerable<VirtualEnclaveTransitHubData> value)
+        internal TransitHubResourceListResult(IEnumerable<EnclaveTransitHubData> value)
         {
             Value = value.ToList();
         }
@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.Enclave.Models
         /// <param name="value"> The TransitHubResource items on this page. </param>
         /// <param name="nextLink"> The link to the next page of items. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal TransitHubResourceListResult(IList<VirtualEnclaveTransitHubData> value, Uri nextLink, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal TransitHubResourceListResult(IList<EnclaveTransitHubData> value, Uri nextLink, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Value = value;
             NextLink = nextLink;
@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.Enclave.Models
         }
 
         /// <summary> The TransitHubResource items on this page. </summary>
-        public IList<VirtualEnclaveTransitHubData> Value { get; }
+        public IList<EnclaveTransitHubData> Value { get; }
 
         /// <summary> The link to the next page of items. </summary>
         public Uri NextLink { get; }

@@ -93,7 +93,7 @@ namespace Azure.ResourceManager.Enclave.Models
             {
                 writer.WritePropertyName("subnetConfigurations"u8);
                 writer.WriteStartArray();
-                foreach (VirtualEnclaveSubnetConfiguration item in SubnetConfigurations)
+                foreach (EnclaveSubnetConfiguration item in SubnetConfigurations)
                 {
                     writer.WriteObjectValue(item, options);
                 }
@@ -149,7 +149,7 @@ namespace Azure.ResourceManager.Enclave.Models
             string networkName = default;
             string networkSize = default;
             string customCidrRange = default;
-            IList<VirtualEnclaveSubnetConfiguration> subnetConfigurations = default;
+            IList<EnclaveSubnetConfiguration> subnetConfigurations = default;
             bool? allowSubnetCommunication = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
@@ -175,10 +175,10 @@ namespace Azure.ResourceManager.Enclave.Models
                     {
                         continue;
                     }
-                    List<VirtualEnclaveSubnetConfiguration> array = new List<VirtualEnclaveSubnetConfiguration>();
+                    List<EnclaveSubnetConfiguration> array = new List<EnclaveSubnetConfiguration>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(VirtualEnclaveSubnetConfiguration.DeserializeVirtualEnclaveSubnetConfiguration(item, options));
+                        array.Add(EnclaveSubnetConfiguration.DeserializeEnclaveSubnetConfiguration(item, options));
                     }
                     subnetConfigurations = array;
                     continue;
@@ -201,7 +201,7 @@ namespace Azure.ResourceManager.Enclave.Models
                 networkName,
                 networkSize,
                 customCidrRange,
-                subnetConfigurations ?? new ChangeTrackingList<VirtualEnclaveSubnetConfiguration>(),
+                subnetConfigurations ?? new ChangeTrackingList<EnclaveSubnetConfiguration>(),
                 allowSubnetCommunication,
                 additionalBinaryDataProperties);
         }

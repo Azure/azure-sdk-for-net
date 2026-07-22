@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.Enclave.Models
         public IDictionary<string, string> Tags { get; }
 
         /// <summary> Designation of hub resource allocation (Pooled or Reserved). </summary>
-        public VirtualEnclaveDesignation? DedicatedHubPatchDesignation
+        public EnclaveDesignation? DedicatedHubPatchDesignation
         {
             get
             {

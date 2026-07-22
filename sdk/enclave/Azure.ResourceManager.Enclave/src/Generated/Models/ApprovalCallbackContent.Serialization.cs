@@ -141,7 +141,7 @@ namespace Azure.ResourceManager.Enclave.Models
             {
                 return null;
             }
-            VirtualEnclaveApprovalCallbackResourceAction resourceRequestAction = default;
+            EnclaveApprovalCallbackResourceAction resourceRequestAction = default;
             ApprovalCallbackRequestApprovalStatus approvalStatus = default;
             string approvalCallbackPayload = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
@@ -149,7 +149,7 @@ namespace Azure.ResourceManager.Enclave.Models
             {
                 if (prop.NameEquals("resourceRequestAction"u8))
                 {
-                    resourceRequestAction = new VirtualEnclaveApprovalCallbackResourceAction(prop.Value.GetString());
+                    resourceRequestAction = new EnclaveApprovalCallbackResourceAction(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("approvalStatus"u8))
