@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.ImageBuilder
         {
             TryGetApiVersion(ResourceType, out string imageTemplateTriggerApiVersion);
             _triggersClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ImageBuilder", ResourceType.Namespace, Diagnostics);
-            _triggersRestClient = new Triggers(_triggersClientDiagnostics, Pipeline, Endpoint, imageTemplateTriggerApiVersion ?? "2025-10-01");
+            _triggersRestClient = new Triggers(_triggersClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, imageTemplateTriggerApiVersion ?? "2025-10-01");
             ValidateResourceId(id);
         }
 

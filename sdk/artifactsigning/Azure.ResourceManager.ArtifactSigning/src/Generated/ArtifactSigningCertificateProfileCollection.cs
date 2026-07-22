@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.ArtifactSigning
         {
             TryGetApiVersion(ArtifactSigningCertificateProfileResource.ResourceType, out string artifactSigningCertificateProfileApiVersion);
             _certificateProfilesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ArtifactSigning", ArtifactSigningCertificateProfileResource.ResourceType.Namespace, Diagnostics);
-            _certificateProfilesRestClient = new CertificateProfiles(_certificateProfilesClientDiagnostics, Pipeline, Endpoint, artifactSigningCertificateProfileApiVersion ?? "2026-05-15-preview");
+            _certificateProfilesRestClient = new CertificateProfiles(_certificateProfilesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, artifactSigningCertificateProfileApiVersion ?? "2026-05-15-preview");
             ValidateResourceId(id);
         }
 

@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.Attestation.Mocking
 
         private ClientDiagnostics AttestationProvidersClientDiagnostics => _attestationProvidersClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Attestation.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private AttestationProviders AttestationProvidersRestClient => _attestationProvidersRestClient ??= new AttestationProviders(AttestationProvidersClientDiagnostics, Pipeline, Endpoint, "2021-06-01");
+        private AttestationProviders AttestationProvidersRestClient => _attestationProvidersRestClient ??= new AttestationProviders(AttestationProvidersClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2021-06-01");
 
         /// <summary>
         /// Returns a list of attestation providers in a subscription.

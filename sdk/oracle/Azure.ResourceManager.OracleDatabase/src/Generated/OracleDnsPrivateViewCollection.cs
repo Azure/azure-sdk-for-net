@@ -45,7 +45,7 @@ namespace Azure.ResourceManager.OracleDatabase
             TryGetApiVersion(OracleDnsPrivateViewResource.ResourceType, out string oracleDnsPrivateViewApiVersion);
             _location = location;
             _dnsPrivateViewsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.OracleDatabase", OracleDnsPrivateViewResource.ResourceType.Namespace, Diagnostics);
-            _dnsPrivateViewsRestClient = new DnsPrivateViews(_dnsPrivateViewsClientDiagnostics, Pipeline, Endpoint, oracleDnsPrivateViewApiVersion ?? "2025-09-01");
+            _dnsPrivateViewsRestClient = new DnsPrivateViews(_dnsPrivateViewsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, oracleDnsPrivateViewApiVersion ?? "2025-09-01");
             ValidateResourceId(id);
         }
 

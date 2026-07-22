@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.IotOperations
         {
             TryGetApiVersion(ResourceType, out string iotOperationsBrokerListenerApiVersion);
             _brokerListenerClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.IotOperations", ResourceType.Namespace, Diagnostics);
-            _brokerListenerRestClient = new BrokerListener(_brokerListenerClientDiagnostics, Pipeline, Endpoint, iotOperationsBrokerListenerApiVersion ?? "2025-10-01");
+            _brokerListenerRestClient = new BrokerListener(_brokerListenerClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, iotOperationsBrokerListenerApiVersion ?? "2025-10-01");
             ValidateResourceId(id);
         }
 

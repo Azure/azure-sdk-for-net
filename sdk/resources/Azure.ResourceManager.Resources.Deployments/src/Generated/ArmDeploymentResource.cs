@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.Resources
         {
             TryGetApiVersion(ResourceType, out string armDeploymentApiVersion);
             _armDeploymentsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Resources", ResourceType.Namespace, Diagnostics);
-            _armDeploymentsRestClient = new ArmDeployments(_armDeploymentsClientDiagnostics, Pipeline, Endpoint, armDeploymentApiVersion ?? "2025-04-01");
+            _armDeploymentsRestClient = new ArmDeployments(_armDeploymentsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, armDeploymentApiVersion ?? "2025-04-01");
             ValidateResourceId(id);
         }
 

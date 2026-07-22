@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.ContainerService
         {
             TryGetApiVersion(ResourceType, out string agentPoolUpgradeProfileApiVersion);
             _agentPoolUpgradeProfilesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ContainerService", ResourceType.Namespace, Diagnostics);
-            _agentPoolUpgradeProfilesRestClient = new AgentPoolUpgradeProfiles(_agentPoolUpgradeProfilesClientDiagnostics, Pipeline, Endpoint, agentPoolUpgradeProfileApiVersion ?? "2026-04-02-preview");
+            _agentPoolUpgradeProfilesRestClient = new AgentPoolUpgradeProfiles(_agentPoolUpgradeProfilesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, agentPoolUpgradeProfileApiVersion ?? "2026-04-02-preview");
             ValidateResourceId(id);
         }
 

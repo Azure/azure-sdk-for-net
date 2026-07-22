@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.MachineLearning
         {
             TryGetApiVersion(ResourceType, out string capabilityHostApiVersion);
             _capabilityHostsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.MachineLearning", ResourceType.Namespace, Diagnostics);
-            _capabilityHostsRestClient = new CapabilityHosts(_capabilityHostsClientDiagnostics, Pipeline, Endpoint, capabilityHostApiVersion ?? "2026-03-15-preview");
+            _capabilityHostsRestClient = new CapabilityHosts(_capabilityHostsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, capabilityHostApiVersion ?? "2026-03-15-preview");
             ValidateResourceId(id);
         }
 

@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.Hci
         {
             TryGetApiVersion(ResourceType, out string devicePoolApiVersion);
             _devicePoolsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Hci", ResourceType.Namespace, Diagnostics);
-            _devicePoolsRestClient = new DevicePools(_devicePoolsClientDiagnostics, Pipeline, Endpoint, devicePoolApiVersion ?? "2026-05-01-preview");
+            _devicePoolsRestClient = new DevicePools(_devicePoolsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, devicePoolApiVersion ?? "2026-05-01-preview");
             ValidateResourceId(id);
         }
 

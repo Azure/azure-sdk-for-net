@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.Network
         {
             TryGetApiVersion(ResourceType, out string managementGroupNetworkManagerConnectionApiVersion);
             _managementGroupNetworkManagerConnectionsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Network", ResourceType.Namespace, Diagnostics);
-            _managementGroupNetworkManagerConnectionsRestClient = new ManagementGroupNetworkManagerConnections(_managementGroupNetworkManagerConnectionsClientDiagnostics, Pipeline, Endpoint, managementGroupNetworkManagerConnectionApiVersion ?? "2025-07-01");
+            _managementGroupNetworkManagerConnectionsRestClient = new ManagementGroupNetworkManagerConnections(_managementGroupNetworkManagerConnectionsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, managementGroupNetworkManagerConnectionApiVersion ?? "2025-07-01");
             ValidateResourceId(id);
         }
 

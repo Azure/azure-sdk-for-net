@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.Network
         {
             TryGetApiVersion(SecurityAdminConfigurationResource.ResourceType, out string securityAdminConfigurationApiVersion);
             _securityAdminConfigurationsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Network", SecurityAdminConfigurationResource.ResourceType.Namespace, Diagnostics);
-            _securityAdminConfigurationsRestClient = new SecurityAdminConfigurations(_securityAdminConfigurationsClientDiagnostics, Pipeline, Endpoint, securityAdminConfigurationApiVersion ?? "2025-07-01");
+            _securityAdminConfigurationsRestClient = new SecurityAdminConfigurations(_securityAdminConfigurationsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, securityAdminConfigurationApiVersion ?? "2025-07-01");
             ValidateResourceId(id);
         }
 

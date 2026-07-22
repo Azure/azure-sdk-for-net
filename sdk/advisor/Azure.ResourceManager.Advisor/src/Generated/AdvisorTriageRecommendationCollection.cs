@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.Advisor
         {
             TryGetApiVersion(AdvisorTriageRecommendationResource.ResourceType, out string advisorTriageRecommendationApiVersion);
             _triageRecommendationsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Advisor", AdvisorTriageRecommendationResource.ResourceType.Namespace, Diagnostics);
-            _triageRecommendationsRestClient = new TriageRecommendations(_triageRecommendationsClientDiagnostics, Pipeline, Endpoint, advisorTriageRecommendationApiVersion ?? "2025-05-01-preview");
+            _triageRecommendationsRestClient = new TriageRecommendations(_triageRecommendationsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, advisorTriageRecommendationApiVersion ?? "2025-05-01-preview");
             ValidateResourceId(id);
         }
 

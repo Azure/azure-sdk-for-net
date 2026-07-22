@@ -49,7 +49,7 @@ namespace Azure.ResourceManager.Reservations
             _providerId = providerId;
             _location = location;
             _quotaRequestStatusClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Reservations", QuotaRequestDetailResource.ResourceType.Namespace, Diagnostics);
-            _quotaRequestStatusRestClient = new QuotaRequestStatus(_quotaRequestStatusClientDiagnostics, Pipeline, Endpoint, quotaRequestDetailApiVersion ?? "2020-10-25");
+            _quotaRequestStatusRestClient = new QuotaRequestStatus(_quotaRequestStatusClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, quotaRequestDetailApiVersion ?? "2020-10-25");
             ValidateResourceId(id);
         }
 

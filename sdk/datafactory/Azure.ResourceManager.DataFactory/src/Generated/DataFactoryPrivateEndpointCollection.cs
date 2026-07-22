@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.DataFactory
         {
             TryGetApiVersion(DataFactoryPrivateEndpointResource.ResourceType, out string dataFactoryPrivateEndpointApiVersion);
             _managedPrivateEndpointsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.DataFactory", DataFactoryPrivateEndpointResource.ResourceType.Namespace, Diagnostics);
-            _managedPrivateEndpointsRestClient = new ManagedPrivateEndpoints(_managedPrivateEndpointsClientDiagnostics, Pipeline, Endpoint, dataFactoryPrivateEndpointApiVersion ?? "2018-06-01");
+            _managedPrivateEndpointsRestClient = new ManagedPrivateEndpoints(_managedPrivateEndpointsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, dataFactoryPrivateEndpointApiVersion ?? "2018-06-01");
             ValidateResourceId(id);
         }
 

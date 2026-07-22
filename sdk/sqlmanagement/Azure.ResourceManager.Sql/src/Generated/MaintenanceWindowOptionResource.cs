@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.Sql
         {
             TryGetApiVersion(ResourceType, out string maintenanceWindowOptionApiVersion);
             _maintenanceWindowOptionsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Sql", ResourceType.Namespace, Diagnostics);
-            _maintenanceWindowOptionsRestClient = new MaintenanceWindowOptions(_maintenanceWindowOptionsClientDiagnostics, Pipeline, Endpoint, maintenanceWindowOptionApiVersion ?? "2025-02-01-preview");
+            _maintenanceWindowOptionsRestClient = new MaintenanceWindowOptions(_maintenanceWindowOptionsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, maintenanceWindowOptionApiVersion ?? "2025-02-01-preview");
             ValidateResourceId(id);
         }
 

@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.DevOpsInfrastructure
         {
             TryGetApiVersion(DevOpsPoolResource.ResourceType, out string devOpsPoolApiVersion);
             _poolsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.DevOpsInfrastructure", DevOpsPoolResource.ResourceType.Namespace, Diagnostics);
-            _poolsRestClient = new Pools(_poolsClientDiagnostics, Pipeline, Endpoint, devOpsPoolApiVersion ?? "2025-09-20");
+            _poolsRestClient = new Pools(_poolsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, devOpsPoolApiVersion ?? "2025-09-20");
             ValidateResourceId(id);
         }
 

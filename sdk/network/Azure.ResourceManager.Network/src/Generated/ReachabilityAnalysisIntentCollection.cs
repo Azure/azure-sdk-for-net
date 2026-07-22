@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.Network
         {
             TryGetApiVersion(ReachabilityAnalysisIntentResource.ResourceType, out string reachabilityAnalysisIntentApiVersion);
             _reachabilityAnalysisIntentsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Network", ReachabilityAnalysisIntentResource.ResourceType.Namespace, Diagnostics);
-            _reachabilityAnalysisIntentsRestClient = new ReachabilityAnalysisIntents(_reachabilityAnalysisIntentsClientDiagnostics, Pipeline, Endpoint, reachabilityAnalysisIntentApiVersion ?? "2025-07-01");
+            _reachabilityAnalysisIntentsRestClient = new ReachabilityAnalysisIntents(_reachabilityAnalysisIntentsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, reachabilityAnalysisIntentApiVersion ?? "2025-07-01");
             ValidateResourceId(id);
         }
 

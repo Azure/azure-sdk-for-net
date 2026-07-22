@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.IotOperations
         {
             TryGetApiVersion(ResourceType, out string iotOperationsInstanceApiVersion);
             _instanceClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.IotOperations", ResourceType.Namespace, Diagnostics);
-            _instanceRestClient = new Instance(_instanceClientDiagnostics, Pipeline, Endpoint, iotOperationsInstanceApiVersion ?? "2025-10-01");
+            _instanceRestClient = new Instance(_instanceClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, iotOperationsInstanceApiVersion ?? "2025-10-01");
             ValidateResourceId(id);
         }
 

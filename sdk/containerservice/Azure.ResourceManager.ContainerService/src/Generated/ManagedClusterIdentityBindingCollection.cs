@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.ContainerService
         {
             TryGetApiVersion(ManagedClusterIdentityBindingResource.ResourceType, out string managedClusterIdentityBindingApiVersion);
             _identityBindingsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ContainerService", ManagedClusterIdentityBindingResource.ResourceType.Namespace, Diagnostics);
-            _identityBindingsRestClient = new IdentityBindings(_identityBindingsClientDiagnostics, Pipeline, Endpoint, managedClusterIdentityBindingApiVersion ?? "2026-04-02-preview");
+            _identityBindingsRestClient = new IdentityBindings(_identityBindingsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, managedClusterIdentityBindingApiVersion ?? "2026-04-02-preview");
             ValidateResourceId(id);
         }
 

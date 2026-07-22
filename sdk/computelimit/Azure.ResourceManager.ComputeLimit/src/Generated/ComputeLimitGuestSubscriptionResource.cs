@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.ComputeLimit
         {
             TryGetApiVersion(ResourceType, out string computeLimitGuestSubscriptionApiVersion);
             _guestSubscriptionsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ComputeLimit", ResourceType.Namespace, Diagnostics);
-            _guestSubscriptionsRestClient = new GuestSubscriptions(_guestSubscriptionsClientDiagnostics, Pipeline, Endpoint, computeLimitGuestSubscriptionApiVersion ?? "2026-07-01");
+            _guestSubscriptionsRestClient = new GuestSubscriptions(_guestSubscriptionsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, computeLimitGuestSubscriptionApiVersion ?? "2026-07-01");
             ValidateResourceId(id);
         }
 

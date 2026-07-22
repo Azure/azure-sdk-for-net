@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.Network
         {
             this.TryGetApiVersion(ResourceType, out string publicIPAddressApiVersion);
             _publicIPAddressesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Network", ResourceType.Namespace, Diagnostics);
-            _publicIPAddressesRestClient = new PublicIPAddresses(_publicIPAddressesClientDiagnostics, Pipeline, Endpoint, publicIPAddressApiVersion ?? "2025-07-01");
+            _publicIPAddressesRestClient = new PublicIPAddresses(_publicIPAddressesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, publicIPAddressApiVersion ?? "2025-07-01");
             PublicIPAddressResource.ValidateResourceId(id);
         }
 

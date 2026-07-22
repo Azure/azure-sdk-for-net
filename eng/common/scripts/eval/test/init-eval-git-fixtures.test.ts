@@ -17,12 +17,12 @@ describe("getEvalGitFixtures discovery", () => {
   before(() => {
     // Throwaway eval tree so the tests do not depend on real eval content.
     root = fs.mkdtempSync(path.join(os.tmpdir(), "vally-fixtures-test-"));
-    fs.mkdirSync(path.join(root, "evals/tools"), { recursive: true });
-    fs.mkdirSync(path.join(root, "evals/workflow-scenarios/mock"), { recursive: true });
+    fs.mkdirSync(path.join(root, "tools"), { recursive: true });
+    fs.mkdirSync(path.join(root, "workflows/mock"), { recursive: true });
 
     // A unit eval with NO git fixture.
     fs.writeFileSync(
-      path.join(root, "evals/tools/prompt-to-tool-github.eval.yaml"),
+      path.join(root, "tools/prompt-to-tool-github.eval.yaml"),
       "tags:\n  area: github\nstimuli:\n  - name: x\n"
     );
 
@@ -45,7 +45,7 @@ describe("getEvalGitFixtures discovery", () => {
       "",
     ].join("\n");
     fs.writeFileSync(
-      path.join(root, "evals/workflow-scenarios/mock/release-planner-workflows.eval.yaml"),
+      path.join(root, "workflows/mock/release-planner-workflows.eval.yaml"),
       mock
     );
   });
@@ -76,7 +76,7 @@ describe("getEvalGitFixtures discovery", () => {
   });
 
   it("is a no-op when the scanned suite declares no git fixtures", () => {
-    const fixtures = getEvalGitFixtures({ root, patterns: ["evals/tools/*.eval.yaml"] });
+    const fixtures = getEvalGitFixtures({ root, patterns: ["tools/*.eval.yaml"] });
     assert.equal(fixtures.length, 0);
   });
 
@@ -90,7 +90,7 @@ describe("getEvalGitFixtures discovery", () => {
       "        source: ../../../../../../artifacts/specs-cache/some-other-repo",
       "",
     ].join("\n");
-    const file = path.join(root, "evals/workflow-scenarios/mock/no-ref.eval.yaml");
+    const file = path.join(root, "workflows/mock/no-ref.eval.yaml");
     fs.writeFileSync(file, noRef);
     try {
       const fixtures = dedupeFixtures(getEvalGitFixtures({ root }));
@@ -111,9 +111,9 @@ describe("getEvalGitFixtures discovery", () => {
 // contain the Vally suite they skip.
 describe("Folder-level invariant for real git fixtures", () => {
   const repoRoot = path.resolve(here, "../../../../..");
-  const vallyRoot = path.join(repoRoot, "azsdk-evals");
-  const vallyEvals = path.join(vallyRoot, "evals");
-  const present = fs.existsSync(vallyEvals);
+  const vallyRoot = path.join(repoRoot, "evals");
+  const evalRoots = [path.join(vallyRoot, "tools"), path.join(vallyRoot, "workflows")];
+  const present = evalRoots.some((root) => fs.existsSync(root));
 
   const expectedCacheRoot = path
     .join(repoRoot, "artifacts", "specs-cache")
@@ -122,7 +122,7 @@ describe("Folder-level invariant for real git fixtures", () => {
   function collectRealFixtures() {
     const srcRegex = /^\s*source:\s*(\.\.\S+)/gm;
     const results = [];
-    const stack = [vallyEvals];
+    const stack = evalRoots.filter((root) => fs.existsSync(root));
     while (stack.length > 0) {
       const dir = stack.pop();
       for (const entry of fs.readdirSync(dir, { withFileTypes: true })) {

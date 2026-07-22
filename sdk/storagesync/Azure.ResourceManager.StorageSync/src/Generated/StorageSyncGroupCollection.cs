@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.StorageSync
         {
             TryGetApiVersion(StorageSyncGroupResource.ResourceType, out string storageSyncGroupApiVersion);
             _syncGroupsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.StorageSync", StorageSyncGroupResource.ResourceType.Namespace, Diagnostics);
-            _syncGroupsRestClient = new SyncGroups(_syncGroupsClientDiagnostics, Pipeline, Endpoint, storageSyncGroupApiVersion ?? "2022-09-01");
+            _syncGroupsRestClient = new SyncGroups(_syncGroupsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, storageSyncGroupApiVersion ?? "2022-09-01");
             ValidateResourceId(id);
         }
 

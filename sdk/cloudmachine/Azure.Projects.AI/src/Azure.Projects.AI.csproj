@@ -7,9 +7,6 @@
     <LangVersion>12</LangVersion>
     <Nullable>enable</Nullable>
 
-    <!-- Disable warning CS1591: Missing XML comment for publicly visible type or member -->
-    <NoWarn>CS1591</NoWarn>
-    <NoWarn>OPENAI001</NoWarn>
     <AotCompatOptOut>true</AotCompatOptOut>
   </PropertyGroup>
 
