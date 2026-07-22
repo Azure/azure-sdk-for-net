@@ -2,7 +2,7 @@
 
 ## 3.0.0-beta.1 (Unreleased)
 
-This release migrates the library from emitting its own copies of the OpenAI Responses object model to consuming the types provided by the [`OpenAI`](https://www.nuget.org/packages/OpenAI) .NET library (2.12.0). This is a large, breaking change. See the [Migration Guide](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/ai/Azure.AI.Extensions.OpenAI/MigrationGuide.md) for step-by-step upgrade guidance.
+This release migrates the library from emitting its own copies of the OpenAI Responses object model to consuming the types provided by the [`OpenAI`](https://www.nuget.org/packages/OpenAI) .NET library (2.12.0). This is a large, breaking change. See the [Migration Guide](MigrationGuide.md) for step-by-step upgrade guidance.
 
 ### Features Added
 - Changed `ProjectResponsesClientOptions` to derive from `OpenAI.Responses.ResponsesClientOptions` (instead of `ProjectOpenAIClientOptions`). This aligns with the upstream OpenAI client option hierarchy after `ResponsesClientOptions` was split out as a sibling of `OpenAIClientOptions`. Because it no longer derives from `ProjectOpenAIClientOptions`, it can no longer be passed to the `ProjectOpenAIClient` constructor; use `ProjectOpenAIClientOptions` there.
