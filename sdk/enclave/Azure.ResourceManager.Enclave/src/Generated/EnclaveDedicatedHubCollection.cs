@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.Enclave
         {
             TryGetApiVersion(EnclaveDedicatedHubResource.ResourceType, out string enclaveDedicatedHubApiVersion);
             _dedicatedHubClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Enclave", EnclaveDedicatedHubResource.ResourceType.Namespace, Diagnostics);
-            _dedicatedHubRestClient = new DedicatedHub(_dedicatedHubClientDiagnostics, Pipeline, Endpoint, enclaveDedicatedHubApiVersion ?? "2026-03-01-preview");
+            _dedicatedHubRestClient = new DedicatedHub(_dedicatedHubClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, enclaveDedicatedHubApiVersion ?? "2026-03-01-preview");
             ValidateResourceId(id);
         }
 

@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.Enclave
         {
             TryGetApiVersion(EnclaveResource.ResourceType, out string enclaveApiVersion);
             _virtualEnclaveClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Enclave", EnclaveResource.ResourceType.Namespace, Diagnostics);
-            _virtualEnclaveRestClient = new VirtualEnclave(_virtualEnclaveClientDiagnostics, Pipeline, Endpoint, enclaveApiVersion ?? "2026-03-01-preview");
+            _virtualEnclaveRestClient = new VirtualEnclave(_virtualEnclaveClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, enclaveApiVersion ?? "2026-03-01-preview");
             ValidateResourceId(id);
         }
 

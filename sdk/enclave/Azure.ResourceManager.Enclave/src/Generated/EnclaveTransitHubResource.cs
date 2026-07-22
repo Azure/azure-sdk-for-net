@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.Enclave
         {
             TryGetApiVersion(ResourceType, out string enclaveTransitHubApiVersion);
             _transitHubClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Enclave", ResourceType.Namespace, Diagnostics);
-            _transitHubRestClient = new TransitHub(_transitHubClientDiagnostics, Pipeline, Endpoint, enclaveTransitHubApiVersion ?? "2026-03-01-preview");
+            _transitHubRestClient = new TransitHub(_transitHubClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, enclaveTransitHubApiVersion ?? "2026-03-01-preview");
             ValidateResourceId(id);
         }
 

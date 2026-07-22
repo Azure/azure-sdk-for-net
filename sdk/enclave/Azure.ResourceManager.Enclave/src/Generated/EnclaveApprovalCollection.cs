@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.Enclave
         {
             TryGetApiVersion(EnclaveApprovalResource.ResourceType, out string enclaveApprovalApiVersion);
             _approvalClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Enclave", EnclaveApprovalResource.ResourceType.Namespace, Diagnostics);
-            _approvalRestClient = new Approval(_approvalClientDiagnostics, Pipeline, Endpoint, enclaveApprovalApiVersion ?? "2026-03-01-preview");
+            _approvalRestClient = new Approval(_approvalClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, enclaveApprovalApiVersion ?? "2026-03-01-preview");
         }
 
         /// <summary>
