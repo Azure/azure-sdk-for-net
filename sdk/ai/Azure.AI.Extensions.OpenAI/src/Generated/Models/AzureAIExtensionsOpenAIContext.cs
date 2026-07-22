@@ -4,7 +4,6 @@
 
 using System.ClientModel.Primitives;
 using Azure.AI.Extensions.OpenAI.Internal;
-using OpenAI;
 using OpenAI.Responses;
 
 namespace Azure.AI.Extensions.OpenAI
@@ -91,7 +90,6 @@ namespace Azure.AI.Extensions.OpenAI
 #pragma warning disable AAIP001 // global::Azure.AI.Extensions.OpenAI.FabricIQPreviewTool is experimental and may change in future versions.
     [ModelReaderWriterBuildable(typeof(FabricIQPreviewTool))]
     [ModelReaderWriterBuildable(typeof(FoundryOpenAIError))]
-    [ModelReaderWriterBuildable(typeof(InternalImageGenToolInputImageMask))]
     [ModelReaderWriterBuildable(typeof(McpToolDefinition))]
     [ModelReaderWriterBuildable(typeof(McpToolFilter))]
     [ModelReaderWriterBuildable(typeof(MCPToolRequireApproval))]
