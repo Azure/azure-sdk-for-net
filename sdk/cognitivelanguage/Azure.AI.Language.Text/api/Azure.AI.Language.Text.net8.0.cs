@@ -447,7 +447,7 @@ namespace Azure.AI.Language.Text
     {
         internal BaseRedactionPolicy() { }
         public System.Collections.Generic.IList<Azure.AI.Language.Text.PiiCategoriesExclude> EntityTypes { get { throw null; } }
-        public bool? IsDefaultPolicy { get { throw null; } set { } }
+        public bool? IsDefault { get { throw null; } set { } }
         public string PolicyName { get { throw null; } set { } }
         protected virtual Azure.AI.Language.Text.BaseRedactionPolicy JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
@@ -1194,8 +1194,8 @@ namespace Azure.AI.Language.Text
     }
     public partial class EntitySynonyms : System.ClientModel.Primitives.IJsonModel<Azure.AI.Language.Text.EntitySynonyms>, System.ClientModel.Primitives.IPersistableModel<Azure.AI.Language.Text.EntitySynonyms>
     {
-        public EntitySynonyms(Azure.AI.Language.Text.EntityCategory entityType, System.Collections.Generic.IEnumerable<Azure.AI.Language.Text.EntitySynonym> synonyms) { }
-        public Azure.AI.Language.Text.EntityCategory EntityType { get { throw null; } }
+        public EntitySynonyms(Azure.AI.Language.Text.PiiCategoriesExclude entityType, System.Collections.Generic.IEnumerable<Azure.AI.Language.Text.EntitySynonym> synonyms) { }
+        public Azure.AI.Language.Text.PiiCategoriesExclude EntityType { get { throw null; } }
         public System.Collections.Generic.IList<Azure.AI.Language.Text.EntitySynonym> Synonyms { get { throw null; } }
         protected virtual Azure.AI.Language.Text.EntitySynonyms JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
@@ -3428,15 +3428,15 @@ namespace Azure.AI.Language.Text
     }
     public partial class TextAnalysisClientOptions : Azure.Core.ClientOptions
     {
-        public TextAnalysisClientOptions(Azure.AI.Language.Text.TextAnalysisClientOptions.ServiceVersion version = Azure.AI.Language.Text.TextAnalysisClientOptions.ServiceVersion.V2025_11_15_Preview) { }
+        public TextAnalysisClientOptions(Azure.AI.Language.Text.TextAnalysisClientOptions.ServiceVersion version = Azure.AI.Language.Text.TextAnalysisClientOptions.ServiceVersion.V2026_05_15_Preview) { }
         public enum ServiceVersion
         {
             V2022_05_01 = 1,
             V2023_04_01 = 2,
             V2024_11_01 = 3,
             V2025_11_01 = 4,
-            V2025_05_15_Preview = 5,
-            V2025_11_15_Preview = 6,
+            V2026_05_01 = 5,
+            V2026_05_15_Preview = 6,
         }
     }
     [System.Diagnostics.CodeAnalysis.ExperimentalAttribute("SCME0002")]
@@ -3472,8 +3472,8 @@ namespace Azure.AI.Language.Text
         public static Azure.AI.Language.Text.AnalyzeTextSentimentResult AnalyzeTextSentimentResult(Azure.AI.Language.Text.SentimentResult results = null) { throw null; }
         public static Azure.AI.Language.Text.AreaMetadata AreaMetadata(double value = 0, Azure.AI.Language.Text.AreaUnit unit = default(Azure.AI.Language.Text.AreaUnit)) { throw null; }
         public static Azure.AI.Language.Text.BaseMetadata BaseMetadata(string metadataKind = null) { throw null; }
-        public static Azure.AI.Language.Text.BaseRedactionPolicy BaseRedactionPolicy(string policyKind = null, System.Collections.Generic.IEnumerable<Azure.AI.Language.Text.PiiCategoriesExclude> entityTypes = null, string policyName = null, bool? isDefaultPolicy = default(bool?)) { throw null; }
-        public static Azure.AI.Language.Text.CharacterMaskPolicyType CharacterMaskPolicyType(System.Collections.Generic.IEnumerable<Azure.AI.Language.Text.PiiCategoriesExclude> entityTypes = null, string policyName = null, bool? isDefaultPolicy = default(bool?), Azure.AI.Language.Text.RedactionCharacter? redactionCharacter = default(Azure.AI.Language.Text.RedactionCharacter?), int? unmaskLength = default(int?), bool? unmaskFromEnd = default(bool?)) { throw null; }
+        public static Azure.AI.Language.Text.BaseRedactionPolicy BaseRedactionPolicy(string policyKind = null, System.Collections.Generic.IEnumerable<Azure.AI.Language.Text.PiiCategoriesExclude> entityTypes = null, string policyName = null, bool? isDefault = default(bool?)) { throw null; }
+        public static Azure.AI.Language.Text.CharacterMaskPolicyType CharacterMaskPolicyType(System.Collections.Generic.IEnumerable<Azure.AI.Language.Text.PiiCategoriesExclude> entityTypes = null, string policyName = null, bool? isDefault = default(bool?), Azure.AI.Language.Text.RedactionCharacter? redactionCharacter = default(Azure.AI.Language.Text.RedactionCharacter?), int? unmaskLength = default(int?), bool? unmaskFromEnd = default(bool?)) { throw null; }
         public static Azure.AI.Language.Text.ClassificationActionResult ClassificationActionResult(string id = null, System.Collections.Generic.IEnumerable<Azure.AI.Language.Text.DocumentWarning> warnings = null, Azure.AI.Language.Text.DocumentStatistics statistics = null, System.Collections.Generic.IEnumerable<Azure.AI.Language.Text.ClassificationResult> @class = null, Azure.AI.Language.Text.DetectedLanguage detectedLanguage = null) { throw null; }
         public static Azure.AI.Language.Text.ClassificationResult ClassificationResult(string category = null, double confidenceScore = 0) { throw null; }
         public static Azure.AI.Language.Text.ConfidenceScoreThreshold ConfidenceScoreThreshold(float @default = 0f, System.Collections.Generic.IEnumerable<Azure.AI.Language.Text.ConfidenceScoreThresholdOverride> overrides = null) { throw null; }
@@ -3511,11 +3511,11 @@ namespace Azure.AI.Language.Text
         public static Azure.AI.Language.Text.EntityLinkingOperationAction EntityLinkingOperationAction(string name = null, Azure.AI.Language.Text.EntityLinkingActionContent parameters = null) { throw null; }
         public static Azure.AI.Language.Text.EntityLinkingOperationResult EntityLinkingOperationResult(System.DateTimeOffset lastUpdateDateTime = default(System.DateTimeOffset), Azure.AI.Language.Text.TextActionState status = default(Azure.AI.Language.Text.TextActionState), string taskName = null, Azure.AI.Language.Text.EntityLinkingResult results = null) { throw null; }
         public static Azure.AI.Language.Text.EntityLinkingResult EntityLinkingResult(System.Collections.Generic.IEnumerable<Azure.AI.Language.Text.DocumentError> errors = null, Azure.AI.Language.Text.RequestStatistics statistics = null, string modelVersion = null, System.Collections.Generic.IEnumerable<Azure.AI.Language.Text.EntityLinkingActionResult> documents = null) { throw null; }
-        public static Azure.AI.Language.Text.EntityMaskPolicyType EntityMaskPolicyType(System.Collections.Generic.IEnumerable<Azure.AI.Language.Text.PiiCategoriesExclude> entityTypes = null, string policyName = null, bool? isDefaultPolicy = default(bool?)) { throw null; }
+        public static Azure.AI.Language.Text.EntityMaskPolicyType EntityMaskPolicyType(System.Collections.Generic.IEnumerable<Azure.AI.Language.Text.PiiCategoriesExclude> entityTypes = null, string policyName = null, bool? isDefault = default(bool?)) { throw null; }
         public static Azure.AI.Language.Text.EntityOverlapPolicy EntityOverlapPolicy(string policyKind = null) { throw null; }
         public static Azure.AI.Language.Text.EntityRecognitionOperationResult EntityRecognitionOperationResult(System.DateTimeOffset lastUpdateDateTime = default(System.DateTimeOffset), Azure.AI.Language.Text.TextActionState status = default(Azure.AI.Language.Text.TextActionState), string taskName = null, Azure.AI.Language.Text.EntitiesResult results = null) { throw null; }
         public static Azure.AI.Language.Text.EntitySynonym EntitySynonym(string synonym = null, string language = null) { throw null; }
-        public static Azure.AI.Language.Text.EntitySynonyms EntitySynonyms(Azure.AI.Language.Text.EntityCategory entityType = default(Azure.AI.Language.Text.EntityCategory), System.Collections.Generic.IEnumerable<Azure.AI.Language.Text.EntitySynonym> synonyms = null) { throw null; }
+        public static Azure.AI.Language.Text.EntitySynonyms EntitySynonyms(Azure.AI.Language.Text.PiiCategoriesExclude entityType = default(Azure.AI.Language.Text.PiiCategoriesExclude), System.Collections.Generic.IEnumerable<Azure.AI.Language.Text.EntitySynonym> synonyms = null) { throw null; }
         public static Azure.AI.Language.Text.EntityTag EntityTag(string name = null, double? confidenceScore = default(double?)) { throw null; }
         public static Azure.AI.Language.Text.ExtractedSummaryActionResult ExtractedSummaryActionResult(string id = null, System.Collections.Generic.IEnumerable<Azure.AI.Language.Text.DocumentWarning> warnings = null, Azure.AI.Language.Text.DocumentStatistics statistics = null, System.Collections.Generic.IEnumerable<Azure.AI.Language.Text.ExtractedSummarySentence> sentences = null, Azure.AI.Language.Text.DetectedLanguage detectedLanguage = null) { throw null; }
         public static Azure.AI.Language.Text.ExtractedSummarySentence ExtractedSummarySentence(string text = null, double rankScore = 0, int offset = 0, int length = 0) { throw null; }
@@ -3553,7 +3553,7 @@ namespace Azure.AI.Language.Text
         public static Azure.AI.Language.Text.MultiLanguageTextInput MultiLanguageTextInput(System.Collections.Generic.IEnumerable<Azure.AI.Language.Text.MultiLanguageInput> multiLanguageInputs = null) { throw null; }
         public static Azure.AI.Language.Text.NamedEntity NamedEntity(string text = null, string category = null, string subcategory = null, int offset = 0, int length = 0, double confidenceScore = 0) { throw null; }
         public static Azure.AI.Language.Text.NamedEntityWithMetadata NamedEntityWithMetadata(string text = null, string category = null, string subcategory = null, int offset = 0, int length = 0, double confidenceScore = 0, string type = null, System.Collections.Generic.IEnumerable<Azure.AI.Language.Text.EntityTag> tags = null, Azure.AI.Language.Text.BaseMetadata metadata = null) { throw null; }
-        public static Azure.AI.Language.Text.NoMaskPolicyType NoMaskPolicyType(System.Collections.Generic.IEnumerable<Azure.AI.Language.Text.PiiCategoriesExclude> entityTypes = null, string policyName = null, bool? isDefaultPolicy = default(bool?)) { throw null; }
+        public static Azure.AI.Language.Text.NoMaskPolicyType NoMaskPolicyType(System.Collections.Generic.IEnumerable<Azure.AI.Language.Text.PiiCategoriesExclude> entityTypes = null, string policyName = null, bool? isDefault = default(bool?)) { throw null; }
         public static Azure.AI.Language.Text.NumberMetadata NumberMetadata(Azure.AI.Language.Text.NumberKind numberKind = default(Azure.AI.Language.Text.NumberKind), double value = 0) { throw null; }
         public static Azure.AI.Language.Text.NumericRangeMetadata NumericRangeMetadata(Azure.AI.Language.Text.RangeKind rangeKind = default(Azure.AI.Language.Text.RangeKind), double minimum = 0, double maximum = 0, Azure.AI.Language.Text.RangeInclusivity? rangeInclusivity = default(Azure.AI.Language.Text.RangeInclusivity?)) { throw null; }
         public static Azure.AI.Language.Text.OrdinalMetadata OrdinalMetadata(string offset = null, Azure.AI.Language.Text.RelativeTo relativeTo = default(Azure.AI.Language.Text.RelativeTo), string value = null) { throw null; }
@@ -3575,7 +3575,7 @@ namespace Azure.AI.Language.Text
         public static Azure.AI.Language.Text.SentimentResult SentimentResult(System.Collections.Generic.IEnumerable<Azure.AI.Language.Text.DocumentError> errors = null, Azure.AI.Language.Text.RequestStatistics statistics = null, string modelVersion = null, System.Collections.Generic.IEnumerable<Azure.AI.Language.Text.SentimentActionResult> documents = null) { throw null; }
         public static Azure.AI.Language.Text.SpeedMetadata SpeedMetadata(double value = 0, Azure.AI.Language.Text.SpeedUnit unit = default(Azure.AI.Language.Text.SpeedUnit)) { throw null; }
         public static Azure.AI.Language.Text.SummaryContext SummaryContext(int offset = 0, int length = 0) { throw null; }
-        public static Azure.AI.Language.Text.SyntheticReplacementPolicyType SyntheticReplacementPolicyType(System.Collections.Generic.IEnumerable<Azure.AI.Language.Text.PiiCategoriesExclude> entityTypes = null, string policyName = null, bool? isDefaultPolicy = default(bool?), bool? preserveDataFormat = default(bool?)) { throw null; }
+        public static Azure.AI.Language.Text.SyntheticReplacementPolicyType SyntheticReplacementPolicyType(System.Collections.Generic.IEnumerable<Azure.AI.Language.Text.PiiCategoriesExclude> entityTypes = null, string policyName = null, bool? isDefault = default(bool?), bool? preserveDataFormat = default(bool?)) { throw null; }
         public static Azure.AI.Language.Text.TargetConfidenceScoreLabel TargetConfidenceScoreLabel(double positive = 0, double negative = 0) { throw null; }
         public static Azure.AI.Language.Text.TargetRelation TargetRelation(string @ref = null, Azure.AI.Language.Text.TargetRelationType relationType = Azure.AI.Language.Text.TargetRelationType.Assessment) { throw null; }
         public static Azure.AI.Language.Text.TemperatureMetadata TemperatureMetadata(double value = 0, Azure.AI.Language.Text.TemperatureUnit unit = default(Azure.AI.Language.Text.TemperatureUnit)) { throw null; }
