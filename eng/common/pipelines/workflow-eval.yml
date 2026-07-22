@@ -1,5 +1,5 @@
 # Hermetic workflow-scenario eval CI: runs the unit-tool + mock workflow-scenario evals in
-# tools/azsdk-cli/Azure.Sdk.Tools.Vally against the mock MCP (live tier runs in live-eval.yml).
+# evals against the mock MCP (live tier runs in live-eval.yml).
 
 trigger:
   branches:
@@ -7,7 +7,7 @@ trigger:
       - main
   paths:
     include:
-      - tools/azsdk-cli/Azure.Sdk.Tools.Vally/**
+      - evals/**
       - tools/azsdk-cli/Azure.Sdk.Tools.Mock/**
       # Cli tool catalog + skills feed the eval results, so changes here must retrigger.
       - tools/azsdk-cli/Azure.Sdk.Tools.Cli/**
@@ -25,7 +25,7 @@ pr:
       - main
   paths:
     include:
-      - tools/azsdk-cli/Azure.Sdk.Tools.Vally/**
+      - evals/**
       - tools/azsdk-cli/Azure.Sdk.Tools.Mock/**
       - tools/azsdk-cli/Azure.Sdk.Tools.Cli/**
       - .github/skills/**
@@ -48,7 +48,7 @@ extends:
     # Shared mock/live builder; select the mock tier.
     mcpSetupTemplate: /eng/common/pipelines/templates/steps/eval-mcp-setup.yml
     TestType: mock
-    vallyRoot: tools/azsdk-cli/Azure.Sdk.Tools.Vally
+    vallyRoot: evals
     # Per-shard job timeout (report-only tier).
     shardTimeoutInMinutes: 20
     # Pass-rate gate for `vally eval`. This tier is report-only (failOnFailedTests defaults false),

@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.SecurityInsights
         {
             TryGetApiVersion(SecurityInsightsBookmarkRelationResource.ResourceType, out string securityInsightsBookmarkRelationApiVersion);
             _bookmarkRelationsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.SecurityInsights", SecurityInsightsBookmarkRelationResource.ResourceType.Namespace, Diagnostics);
-            _bookmarkRelationsRestClient = new BookmarkRelations(_bookmarkRelationsClientDiagnostics, Pipeline, Endpoint, securityInsightsBookmarkRelationApiVersion ?? "2025-07-01-preview");
+            _bookmarkRelationsRestClient = new BookmarkRelations(_bookmarkRelationsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, securityInsightsBookmarkRelationApiVersion ?? "2025-07-01-preview");
             ValidateResourceId(id);
         }
 

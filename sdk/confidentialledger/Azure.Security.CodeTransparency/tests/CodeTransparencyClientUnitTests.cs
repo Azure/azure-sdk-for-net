@@ -8,6 +8,7 @@ using System.IO;
 using System.Linq;
 using System.Reflection;
 using System.Security.Cryptography;
+using System.Security.Cryptography.Cose;
 using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
@@ -134,6 +135,38 @@ namespace Azure.Security.CodeTransparency.Tests
                 IdentityClientEndpoint = "https://some.identity.com"
             };
             return (mockTransport, options);
+        }
+
+        private (byte[] Receipt, byte[] SignedStatement, byte[] TransparentStatement) createStatementWithEmptyInclusionProof()
+        {
+            CoseSign1Message transparentStatement = CoseMessage.DecodeSign1(readFileBytes("transparent_statement.cose"));
+            CoseHeaderValue embeddedReceipts = transparentStatement.UnprotectedHeaders[
+                new CoseHeaderLabel(CcfReceipt.CoseHeaderEmbeddedReceipts)];
+            CborReader receiptsReader = new(embeddedReceipts.EncodedValue);
+            receiptsReader.ReadStartArray();
+            CoseSign1Message receipt = CoseMessage.DecodeSign1(receiptsReader.ReadByteString());
+            receiptsReader.ReadEndArray();
+
+            CborWriter proofWriter = new();
+            proofWriter.WriteStartMap(1);
+            proofWriter.WriteInt32(CcfReceipt.CoseReceiptInclusionProofLabel);
+            proofWriter.WriteStartArray(0);
+            proofWriter.WriteEndArray();
+            proofWriter.WriteEndMap();
+            receipt.UnprotectedHeaders[new CoseHeaderLabel(CcfReceipt.CosePhdrVdpLabel)] =
+                CoseHeaderValue.FromEncodedValue(proofWriter.Encode());
+            byte[] receiptBytes = receipt.Encode();
+
+            CborWriter receiptsWriter = new();
+            receiptsWriter.WriteStartArray(1);
+            receiptsWriter.WriteByteString(receiptBytes);
+            receiptsWriter.WriteEndArray();
+            transparentStatement.UnprotectedHeaders[new CoseHeaderLabel(CcfReceipt.CoseHeaderEmbeddedReceipts)] =
+                CoseHeaderValue.FromEncodedValue(receiptsWriter.Encode());
+            byte[] transparentStatementBytes = transparentStatement.Encode();
+
+            transparentStatement.UnprotectedHeaders.Clear();
+            return (receiptBytes, transparentStatement.Encode(), transparentStatementBytes);
         }
 
         public CodeTransparencyClientUnitTests(bool isAsync) : base(isAsync)
@@ -388,6 +421,46 @@ namespace Azure.Security.CodeTransparency.Tests
             byte[] transparentStatementBytes = readFileBytes(name: "transparent_statement.cose");
 
             CodeTransparencyClient.VerifyTransparentStatement(transparentStatementBytes, verificationOptions, options);
+#endif
+        }
+
+        [Test]
+        public void VerifyTransparentStatementReceipt_EmptyInclusionProofs_ThrowsInvalidOperationException()
+        {
+#if NET462
+            Assert.Ignore("JsonWebKey to ECDsa is not supported on net462.");
+#else
+            var (_, options) = createClientOptionsWithValidPublicKeyResponse();
+            var client = new CodeTransparencyClient(new Uri("https://foo.bar.com"), new AzureKeyCredential("token"), options);
+            Response<JwksDocument> keys = client.GetPublicKeys();
+            var statement = createStatementWithEmptyInclusionProof();
+
+            var exception = Assert.Throws<InvalidOperationException>(() =>
+                CcfReceiptVerifier.VerifyTransparentStatementReceipt(keys.Value.Keys[0], statement.Receipt, statement.SignedStatement));
+
+            StringAssert.Contains("At least one inclusion proof is expected", exception.Message);
+#endif
+        }
+
+        [Test]
+        public void VerifyTransparentStatement_EmptyInclusionProofs_ThrowsAggregateException()
+        {
+#if NET462
+            Assert.Ignore("JsonWebKey to ECDsa is not supported on net462.");
+#else
+            var (_, options) = createClientOptionsWithValidPublicKeyResponse();
+            var statement = createStatementWithEmptyInclusionProof();
+            var verificationOptions = new CodeTransparencyVerificationOptions
+            {
+                AuthorizedDomains = new string[] { "foo.bar.com" },
+                AuthorizedReceiptBehavior = AuthorizedReceiptBehavior.RequireAll,
+                UnauthorizedReceiptBehavior = UnauthorizedReceiptBehavior.FailIfPresent
+            };
+
+            var exception = Assert.Throws<AggregateException>(() =>
+                CodeTransparencyClient.VerifyTransparentStatement(statement.TransparentStatement, verificationOptions, options));
+
+            StringAssert.Contains("At least one inclusion proof is expected", exception.Message);
 #endif
         }
 

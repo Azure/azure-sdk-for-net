@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.Hci
         {
             TryGetApiVersion(EdgeMachineUpdateResource.ResourceType, out string edgeMachineUpdateApiVersion);
             _edgeMachineUpdatesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Hci", EdgeMachineUpdateResource.ResourceType.Namespace, Diagnostics);
-            _edgeMachineUpdatesRestClient = new EdgeMachineUpdates(_edgeMachineUpdatesClientDiagnostics, Pipeline, Endpoint, edgeMachineUpdateApiVersion ?? "2026-05-01-preview");
+            _edgeMachineUpdatesRestClient = new EdgeMachineUpdates(_edgeMachineUpdatesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, edgeMachineUpdateApiVersion ?? "2026-05-01-preview");
             ValidateResourceId(id);
         }
 

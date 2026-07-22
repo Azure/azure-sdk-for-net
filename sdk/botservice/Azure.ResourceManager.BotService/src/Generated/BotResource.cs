@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.BotService
         {
             TryGetApiVersion(ResourceType, out string botApiVersion);
             _botsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.BotService", ResourceType.Namespace, Diagnostics);
-            _botsRestClient = new Bots(_botsClientDiagnostics, Pipeline, Endpoint, botApiVersion ?? "2023-09-15-preview");
+            _botsRestClient = new Bots(_botsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, botApiVersion ?? "2023-09-15-preview");
             ValidateResourceId(id);
         }
 

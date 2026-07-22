@@ -274,6 +274,24 @@ namespace Azure.ResourceManager.ServiceBus
             }
         }
 
+        /// <summary> The IP address type for the namespace. Determines whether the namespace supports IPv4 only or both IPv4 and IPv6 (dual stack). </summary>
+        [WirePath("properties.ipAddressType")]
+        public ServiceBusIPAddressType? IPAddressType
+        {
+            get
+            {
+                return Properties is null ? default : Properties.IPAddressType;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new SBNamespaceProperties();
+                }
+                Properties.IPAddressType = value;
+            }
+        }
+
         /// <summary> Setting to Enable or Disable Confidential Compute. </summary>
         [WirePath("properties.platformCapabilities.confidentialCompute.mode")]
         public ServiceBusConfidentialComputeMode? PlatformCapabilitiesConfidentialComputeMode

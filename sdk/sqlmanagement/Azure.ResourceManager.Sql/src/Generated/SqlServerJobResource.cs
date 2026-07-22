@@ -52,9 +52,9 @@ namespace Azure.ResourceManager.Sql
         {
             TryGetApiVersion(ResourceType, out string sqlServerJobApiVersion);
             _jobsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Sql", ResourceType.Namespace, Diagnostics);
-            _jobsRestClient = new Jobs(_jobsClientDiagnostics, Pipeline, Endpoint, sqlServerJobApiVersion ?? "2025-02-01-preview");
+            _jobsRestClient = new Jobs(_jobsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, sqlServerJobApiVersion ?? "2025-02-01-preview");
             _jobExecutionsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Sql", ResourceType.Namespace, Diagnostics);
-            _jobExecutionsRestClient = new JobExecutions(_jobExecutionsClientDiagnostics, Pipeline, Endpoint, sqlServerJobApiVersion ?? "2025-02-01-preview");
+            _jobExecutionsRestClient = new JobExecutions(_jobExecutionsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, sqlServerJobApiVersion ?? "2025-02-01-preview");
             ValidateResourceId(id);
         }
 

@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.PortalServicesCopilot
         {
             TryGetApiVersion(ResourceType, out string portalServicesCopilotSettingApiVersion);
             _copilotSettingsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.PortalServicesCopilot", ResourceType.Namespace, Diagnostics);
-            _copilotSettingsRestClient = new CopilotSettings(_copilotSettingsClientDiagnostics, Pipeline, Endpoint, portalServicesCopilotSettingApiVersion ?? "2024-04-01-preview");
+            _copilotSettingsRestClient = new CopilotSettings(_copilotSettingsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, portalServicesCopilotSettingApiVersion ?? "2024-04-01-preview");
             ValidateResourceId(id);
         }
 

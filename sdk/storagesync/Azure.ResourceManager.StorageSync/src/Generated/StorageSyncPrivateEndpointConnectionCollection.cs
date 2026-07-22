@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.StorageSync
         {
             TryGetApiVersion(StorageSyncPrivateEndpointConnectionResource.ResourceType, out string storageSyncPrivateEndpointConnectionApiVersion);
             _privateEndpointConnectionsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.StorageSync", StorageSyncPrivateEndpointConnectionResource.ResourceType.Namespace, Diagnostics);
-            _privateEndpointConnectionsRestClient = new PrivateEndpointConnections(_privateEndpointConnectionsClientDiagnostics, Pipeline, Endpoint, storageSyncPrivateEndpointConnectionApiVersion ?? "2022-09-01");
+            _privateEndpointConnectionsRestClient = new PrivateEndpointConnections(_privateEndpointConnectionsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, storageSyncPrivateEndpointConnectionApiVersion ?? "2022-09-01");
             ValidateResourceId(id);
         }
 

@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.PineconeVectorDB
         {
             TryGetApiVersion(PineconeVectorDBOrganizationResource.ResourceType, out string pineconeVectorDBOrganizationApiVersion);
             _organizationsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.PineconeVectorDB", PineconeVectorDBOrganizationResource.ResourceType.Namespace, Diagnostics);
-            _organizationsRestClient = new Organizations(_organizationsClientDiagnostics, Pipeline, Endpoint, pineconeVectorDBOrganizationApiVersion ?? "2024-10-22-preview");
+            _organizationsRestClient = new Organizations(_organizationsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, pineconeVectorDBOrganizationApiVersion ?? "2024-10-22-preview");
             ValidateResourceId(id);
         }
 

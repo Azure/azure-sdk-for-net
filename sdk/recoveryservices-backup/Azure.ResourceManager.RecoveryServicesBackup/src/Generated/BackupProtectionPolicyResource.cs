@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
         {
             TryGetApiVersion(ResourceType, out string backupProtectionPolicyApiVersion);
             _protectionPoliciesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.RecoveryServicesBackup", ResourceType.Namespace, Diagnostics);
-            _protectionPoliciesRestClient = new ProtectionPolicies(_protectionPoliciesClientDiagnostics, Pipeline, Endpoint, backupProtectionPolicyApiVersion ?? "2026-01-31-preview");
+            _protectionPoliciesRestClient = new ProtectionPolicies(_protectionPoliciesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, backupProtectionPolicyApiVersion ?? "2026-01-31-preview");
             ValidateResourceId(id);
         }
 

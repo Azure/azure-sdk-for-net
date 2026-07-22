@@ -46,7 +46,7 @@ namespace Azure.ResourceManager.OracleDatabase
             TryGetApiVersion(OracleGIVersionResource.ResourceType, out string oracleGIVersionApiVersion);
             _location = location;
             _giVersionsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.OracleDatabase", OracleGIVersionResource.ResourceType.Namespace, Diagnostics);
-            _giVersionsRestClient = new GiVersions(_giVersionsClientDiagnostics, Pipeline, Endpoint, oracleGIVersionApiVersion ?? "2025-09-01");
+            _giVersionsRestClient = new GiVersions(_giVersionsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, oracleGIVersionApiVersion ?? "2025-09-01");
             ValidateResourceId(id);
         }
 

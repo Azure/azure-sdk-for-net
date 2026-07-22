@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.Relay
         {
             TryGetApiVersion(WcfRelayAuthorizationRuleResource.ResourceType, out string wcfRelayAuthorizationRuleApiVersion);
             _wcfRelaysClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Relay", WcfRelayAuthorizationRuleResource.ResourceType.Namespace, Diagnostics);
-            _wcfRelaysRestClient = new WCFRelays(_wcfRelaysClientDiagnostics, Pipeline, Endpoint, wcfRelayAuthorizationRuleApiVersion ?? "2024-01-01");
+            _wcfRelaysRestClient = new WCFRelays(_wcfRelaysClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, wcfRelayAuthorizationRuleApiVersion ?? "2024-01-01");
             ValidateResourceId(id);
         }
 

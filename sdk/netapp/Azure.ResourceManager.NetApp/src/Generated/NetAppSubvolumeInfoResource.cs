@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.NetApp
         {
             TryGetApiVersion(ResourceType, out string netAppSubvolumeInfoApiVersion);
             _subvolumesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.NetApp", ResourceType.Namespace, Diagnostics);
-            _subvolumesRestClient = new Subvolumes(_subvolumesClientDiagnostics, Pipeline, Endpoint, netAppSubvolumeInfoApiVersion ?? "2026-04-15-preview");
+            _subvolumesRestClient = new Subvolumes(_subvolumesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, netAppSubvolumeInfoApiVersion ?? "2026-04-15-preview");
             ValidateResourceId(id);
         }
 

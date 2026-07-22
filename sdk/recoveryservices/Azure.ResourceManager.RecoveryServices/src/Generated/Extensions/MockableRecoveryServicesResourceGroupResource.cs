@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.RecoveryServices.Mocking
 
         private ClientDiagnostics RecoveryServicesOperationGroupClientDiagnostics => _recoveryServicesOperationGroupClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.RecoveryServices.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private RecoveryServicesOperationGroup RecoveryServicesOperationGroupRestClient => _recoveryServicesOperationGroupRestClient ??= new RecoveryServicesOperationGroup(RecoveryServicesOperationGroupClientDiagnostics, Pipeline, Endpoint, "2026-05-01");
+        private RecoveryServicesOperationGroup RecoveryServicesOperationGroupRestClient => _recoveryServicesOperationGroupRestClient ??= new RecoveryServicesOperationGroup(RecoveryServicesOperationGroupClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2026-05-01");
 
         /// <summary> Gets a collection of RecoveryServicesVaults in the <see cref="ResourceGroupResource"/>. </summary>
         /// <returns> An object representing collection of RecoveryServicesVaults and their operations over a RecoveryServicesVaultResource. </returns>

@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.DevHub
         {
             TryGetApiVersion(ResourceType, out string gitHubOAuthResponseApiVersion);
             _devHubClientClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.DevHub", ResourceType.Namespace, Diagnostics);
-            _devHubClientRestClient = new DevHubClient(_devHubClientClientDiagnostics, Pipeline, Endpoint, gitHubOAuthResponseApiVersion ?? "2025-03-01-preview");
+            _devHubClientRestClient = new DevHubClient(_devHubClientClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, gitHubOAuthResponseApiVersion ?? "2025-03-01-preview");
             ValidateResourceId(id);
         }
 

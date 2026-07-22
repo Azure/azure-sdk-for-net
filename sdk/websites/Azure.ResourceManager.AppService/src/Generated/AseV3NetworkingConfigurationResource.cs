@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.AppService
         {
             TryGetApiVersion(ResourceType, out string aseV3NetworkingConfigurationApiVersion);
             _aseV3NetworkingConfigurationsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.AppService", ResourceType.Namespace, Diagnostics);
-            _aseV3NetworkingConfigurationsRestClient = new AseV3NetworkingConfigurations(_aseV3NetworkingConfigurationsClientDiagnostics, Pipeline, Endpoint, aseV3NetworkingConfigurationApiVersion ?? "2026-03-15");
+            _aseV3NetworkingConfigurationsRestClient = new AseV3NetworkingConfigurations(_aseV3NetworkingConfigurationsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, aseV3NetworkingConfigurationApiVersion ?? "2026-03-15");
             ValidateResourceId(id);
         }
 

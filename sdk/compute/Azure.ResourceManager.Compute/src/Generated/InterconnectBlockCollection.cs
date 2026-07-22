@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.Compute
         {
             TryGetApiVersion(InterconnectBlockResource.ResourceType, out string interconnectBlockApiVersion);
             _interconnectBlocksClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Compute", InterconnectBlockResource.ResourceType.Namespace, Diagnostics);
-            _interconnectBlocksRestClient = new InterconnectBlocks(_interconnectBlocksClientDiagnostics, Pipeline, Endpoint, interconnectBlockApiVersion ?? "2026-03-01");
+            _interconnectBlocksRestClient = new InterconnectBlocks(_interconnectBlocksClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, interconnectBlockApiVersion ?? "2026-03-01");
             ValidateResourceId(id);
         }
 

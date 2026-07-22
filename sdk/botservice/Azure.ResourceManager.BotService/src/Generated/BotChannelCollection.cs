@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.BotService
         {
             TryGetApiVersion(BotChannelResource.ResourceType, out string botChannelApiVersion);
             _botChannelsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.BotService", BotChannelResource.ResourceType.Namespace, Diagnostics);
-            _botChannelsRestClient = new BotChannels(_botChannelsClientDiagnostics, Pipeline, Endpoint, botChannelApiVersion ?? "2023-09-15-preview");
+            _botChannelsRestClient = new BotChannels(_botChannelsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, botChannelApiVersion ?? "2023-09-15-preview");
             ValidateResourceId(id);
         }
 

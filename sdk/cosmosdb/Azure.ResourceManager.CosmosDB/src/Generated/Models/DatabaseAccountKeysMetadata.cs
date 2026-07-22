@@ -39,18 +39,18 @@ namespace Azure.ResourceManager.CosmosDB.Models
 
         /// <summary> The metadata related to the Primary Read-Write Key for the given Cosmos DB database account. </summary>
         [WirePath("primaryMasterKey")]
-        public AccountKeyMetadata PrimaryMasterKey { get; }
+        internal AccountKeyMetadata PrimaryMasterKey { get; }
 
         /// <summary> The metadata related to the Secondary Read-Write Key for the given Cosmos DB database account. </summary>
         [WirePath("secondaryMasterKey")]
-        public AccountKeyMetadata SecondaryMasterKey { get; }
+        internal AccountKeyMetadata SecondaryMasterKey { get; }
 
         /// <summary> The metadata related to the Primary Read-Only Key for the given Cosmos DB database account. </summary>
         [WirePath("primaryReadonlyMasterKey")]
-        public AccountKeyMetadata PrimaryReadonlyMasterKey { get; }
+        internal AccountKeyMetadata PrimaryReadonlyMasterKey { get; }
 
         /// <summary> The metadata related to the Secondary Read-Only Key for the given Cosmos DB database account. </summary>
         [WirePath("secondaryReadonlyMasterKey")]
-        public AccountKeyMetadata SecondaryReadonlyMasterKey { get; }
+        internal AccountKeyMetadata SecondaryReadonlyMasterKey { get; }
     }
 }

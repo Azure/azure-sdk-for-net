@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.CloudHealth
         {
             TryGetApiVersion(ResourceType, out string healthModelDiscoveryRuleApiVersion);
             _discoveryRulesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.CloudHealth", ResourceType.Namespace, Diagnostics);
-            _discoveryRulesRestClient = new DiscoveryRules(_discoveryRulesClientDiagnostics, Pipeline, Endpoint, healthModelDiscoveryRuleApiVersion ?? "2026-05-01-preview");
+            _discoveryRulesRestClient = new DiscoveryRules(_discoveryRulesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, healthModelDiscoveryRuleApiVersion ?? "2026-05-01-preview");
             ValidateResourceId(id);
         }
 

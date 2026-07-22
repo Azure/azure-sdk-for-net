@@ -53,9 +53,9 @@ namespace Azure.ResourceManager.SecurityCenter
         {
             TryGetApiVersion(ResourceType, out string gitLabGroupApiVersion);
             _gitLabGroupsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.SecurityCenter", ResourceType.Namespace, Diagnostics);
-            _gitLabGroupsRestClient = new GitLabGroups(_gitLabGroupsClientDiagnostics, Pipeline, Endpoint, gitLabGroupApiVersion ?? "2025-11-01-preview");
+            _gitLabGroupsRestClient = new GitLabGroups(_gitLabGroupsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, gitLabGroupApiVersion ?? "2025-11-01-preview");
             _gitLabSubgroupsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.SecurityCenter", ResourceType.Namespace, Diagnostics);
-            _gitLabSubgroupsRestClient = new GitLabSubgroups(_gitLabSubgroupsClientDiagnostics, Pipeline, Endpoint, gitLabGroupApiVersion ?? "2025-11-01-preview");
+            _gitLabSubgroupsRestClient = new GitLabSubgroups(_gitLabSubgroupsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, gitLabGroupApiVersion ?? "2025-11-01-preview");
             ValidateResourceId(id);
         }
 

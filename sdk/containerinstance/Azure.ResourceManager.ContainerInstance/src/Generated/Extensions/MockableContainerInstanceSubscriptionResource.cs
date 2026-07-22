@@ -43,19 +43,19 @@ namespace Azure.ResourceManager.ContainerInstance.Mocking
 
         private ClientDiagnostics ContainerGroupsClientDiagnostics => _containerGroupsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.ContainerInstance.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private ContainerGroups ContainerGroupsRestClient => _containerGroupsRestClient ??= new ContainerGroups(ContainerGroupsClientDiagnostics, Pipeline, Endpoint, "2025-09-01");
+        private ContainerGroups ContainerGroupsRestClient => _containerGroupsRestClient ??= new ContainerGroups(ContainerGroupsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2025-09-01");
 
         private ClientDiagnostics NGroupsClientDiagnostics => _nGroupsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.ContainerInstance.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private NGroups NGroupsRestClient => _nGroupsRestClient ??= new NGroups(NGroupsClientDiagnostics, Pipeline, Endpoint, "2025-09-01");
+        private NGroups NGroupsRestClient => _nGroupsRestClient ??= new NGroups(NGroupsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2025-09-01");
 
         private ClientDiagnostics CGProfilesClientDiagnostics => _cgProfilesClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.ContainerInstance.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private CGProfiles CGProfilesRestClient => _cgProfilesRestClient ??= new CGProfiles(CGProfilesClientDiagnostics, Pipeline, Endpoint, "2025-09-01");
+        private CGProfiles CGProfilesRestClient => _cgProfilesRestClient ??= new CGProfiles(CGProfilesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2025-09-01");
 
         private ClientDiagnostics LocationClientDiagnostics => _locationClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.ContainerInstance.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private Location LocationRestClient => _locationRestClient ??= new Location(LocationClientDiagnostics, Pipeline, Endpoint, "2025-09-01");
+        private Location LocationRestClient => _locationRestClient ??= new Location(LocationClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2025-09-01");
 
         /// <summary>
         /// Get a list of container groups in the specified subscription. This operation returns properties of each container group including containers, image registry credentials, restart policy, IP address type, OS type, state, and volumes.

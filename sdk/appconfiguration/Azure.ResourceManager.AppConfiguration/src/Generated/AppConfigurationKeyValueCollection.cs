@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.AppConfiguration
         {
             TryGetApiVersion(AppConfigurationKeyValueResource.ResourceType, out string appConfigurationKeyValueApiVersion);
             _keyValuesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.AppConfiguration", AppConfigurationKeyValueResource.ResourceType.Namespace, Diagnostics);
-            _keyValuesRestClient = new KeyValues(_keyValuesClientDiagnostics, Pipeline, Endpoint, appConfigurationKeyValueApiVersion ?? "2025-06-01-preview");
+            _keyValuesRestClient = new KeyValues(_keyValuesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, appConfigurationKeyValueApiVersion ?? "2025-06-01-preview");
             ValidateResourceId(id);
         }
 
