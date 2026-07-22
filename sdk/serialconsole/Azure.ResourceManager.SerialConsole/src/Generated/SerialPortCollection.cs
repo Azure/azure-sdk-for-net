@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.SerialConsole
         {
             TryGetApiVersion(SerialPortResource.ResourceType, out string serialPortApiVersion);
             _serialPortsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.SerialConsole", SerialPortResource.ResourceType.Namespace, Diagnostics);
-            _serialPortsRestClient = new SerialPorts(_serialPortsClientDiagnostics, Pipeline, Endpoint, serialPortApiVersion ?? "2024-07-01");
+            _serialPortsRestClient = new SerialPorts(_serialPortsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, serialPortApiVersion ?? "2024-07-01");
         }
 
         /// <summary>

@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.SerialConsole.Mocking
 
         private ClientDiagnostics SerialConsoleClientClientDiagnostics => _serialConsoleClientClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.SerialConsole.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private SerialConsoleClient SerialConsoleClientRestClient => _serialConsoleClientRestClient ??= new SerialConsoleClient(SerialConsoleClientClientDiagnostics, Pipeline, Endpoint, "2024-07-01");
+        private SerialConsoleClient SerialConsoleClientRestClient => _serialConsoleClientRestClient ??= new SerialConsoleClient(SerialConsoleClientClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2024-07-01");
 
         /// <summary>
         /// Gets a list of Serial Console API operations.

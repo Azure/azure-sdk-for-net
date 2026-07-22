@@ -51,14 +51,14 @@ namespace Azure.ResourceManager.SerialConsole
         {
             TryGetApiVersion(ResourceType, out string serialPortApiVersion);
             _serialPortsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.SerialConsole", ResourceType.Namespace, Diagnostics);
-            _serialPortsRestClient = new SerialPorts(_serialPortsClientDiagnostics, Pipeline, Endpoint, serialPortApiVersion ?? "2024-07-01");
+            _serialPortsRestClient = new SerialPorts(_serialPortsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, serialPortApiVersion ?? "2024-07-01");
             ValidateResourceId(id);
         }
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }
 
-        /// <summary> Gets the data representing this SerialPort. </summary>
+        /// <summary> Gets the data representing this Feature. </summary>
         public virtual SerialPortData Data
         {
             get

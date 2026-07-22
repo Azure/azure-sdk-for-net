@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.SerialConsole.Mocking
 
         private ClientDiagnostics SerialPortsClientDiagnostics => _serialPortsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.SerialConsole.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private SerialPorts SerialPortsRestClient => _serialPortsRestClient ??= new SerialPorts(SerialPortsClientDiagnostics, Pipeline, Endpoint, "2024-07-01");
+        private SerialPorts SerialPortsRestClient => _serialPortsRestClient ??= new SerialPorts(SerialPortsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2024-07-01");
 
         /// <summary> Gets an object representing a <see cref="SerialPortResource"/> along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
