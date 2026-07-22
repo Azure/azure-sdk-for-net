@@ -4,3 +4,4 @@ overrides:
   - filename: '**/sdk/enclave/**/*.cs'
     words:
       - mobo
+      - rbac
