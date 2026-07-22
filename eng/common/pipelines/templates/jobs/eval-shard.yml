@@ -6,6 +6,10 @@ parameters:
   - name: vallyRoot
     # Required (no default) so each repo passes its own eval root explicitly.
     type: string
+  - name: matrixStageName
+    # Stage name that produced generate_eval_matrix outputs consumed by this shard fan-out.
+    type: string
+    default: Prepare
   - name: evalInvokeTemplate
     # Swap point: runs `vally eval` for the shard (the common template is auth-conditional).
     type: string
@@ -42,7 +46,7 @@ jobs:
     continueOnError: true
     timeoutInMinutes: ${{ parameters.shardTimeoutInMinutes }}
     strategy:
-      matrix: $[ stageDependencies.Prepare.generate_eval_matrix.outputs['detect.matrix'] ]
+      matrix: $[ stageDependencies.${{ parameters.matrixStageName }}.generate_eval_matrix.outputs['detect.matrix'] ]
       maxParallel: 10
     templateContext:
       outputs:
