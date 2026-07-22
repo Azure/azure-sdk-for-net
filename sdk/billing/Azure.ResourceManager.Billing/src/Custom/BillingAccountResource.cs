@@ -215,7 +215,7 @@ namespace Azure.ResourceManager.Billing
                 if (_billingSavingsPlansRestClient is null)
                 {
                     TryGetApiVersion(BillingSavingsPlanModelResource.ResourceType, out string billingSavingsPlanModelApiVersion);
-                    _billingSavingsPlansRestClient = new SavingsPlans(_billingSavingsPlansClientDiagnostics, Pipeline, Endpoint, billingSavingsPlanModelApiVersion ?? "2024-04-01");
+                    _billingSavingsPlansRestClient = new SavingsPlans(_billingSavingsPlansClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, billingSavingsPlanModelApiVersion ?? "2024-04-01");
                 }
 
                 return _billingSavingsPlansRestClient;

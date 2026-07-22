@@ -489,10 +489,12 @@ namespace Azure.AI.Extensions.OpenAI
         }
 
         /// <summary> The MCPToolRequireApproval. </summary>
+        /// <param name="always"></param>
+        /// <param name="never"></param>
         /// <returns> A new <see cref="Internal.MCPToolRequireApproval"/> instance for mocking. </returns>
-        public static MCPToolRequireApproval MCPToolRequireApproval()
+        public static MCPToolRequireApproval MCPToolRequireApproval(McpToolFilter always = default, McpToolFilter never = default)
         {
-            return new MCPToolRequireApproval(additionalBinaryDataProperties: null);
+            return new MCPToolRequireApproval(always, never, additionalBinaryDataProperties: null);
         }
 
         /// <summary> A tool for integrating memories into the agent. </summary>

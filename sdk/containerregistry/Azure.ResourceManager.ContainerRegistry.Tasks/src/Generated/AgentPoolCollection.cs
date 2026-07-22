@@ -45,7 +45,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Tasks
             TryGetApiVersion(AgentPoolResource.ResourceType, out string agentPoolApiVersion);
             _registryName = registryName;
             _agentPoolsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ContainerRegistry.Tasks", AgentPoolResource.ResourceType.Namespace, Diagnostics);
-            _agentPoolsRestClient = new AgentPools(_agentPoolsClientDiagnostics, Pipeline, Endpoint, agentPoolApiVersion ?? "2025-03-01-preview");
+            _agentPoolsRestClient = new AgentPools(_agentPoolsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, agentPoolApiVersion ?? "2025-03-01-preview");
             ValidateResourceId(id);
         }
 

@@ -4,6 +4,7 @@
 
 using System;
 using System.Collections.Generic;
+using OpenAI.Responses;
 
 namespace Azure.AI.Extensions.OpenAI.Internal
 {
@@ -19,10 +20,20 @@ namespace Azure.AI.Extensions.OpenAI.Internal
         }
 
         /// <summary> Initializes a new instance of <see cref="MCPToolRequireApproval"/>. </summary>
+        /// <param name="always"></param>
+        /// <param name="never"></param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal MCPToolRequireApproval(IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal MCPToolRequireApproval(McpToolFilter always, McpToolFilter never, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
+            Always = always;
+            Never = never;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
+
+        /// <summary> Gets or sets the Always. </summary>
+        public McpToolFilter Always { get; set; }
+
+        /// <summary> Gets or sets the Never. </summary>
+        public McpToolFilter Never { get; set; }
     }
 }

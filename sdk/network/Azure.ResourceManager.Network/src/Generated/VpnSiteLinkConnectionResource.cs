@@ -52,9 +52,9 @@ namespace Azure.ResourceManager.Network
         {
             TryGetApiVersion(ResourceType, out string vpnSiteLinkConnectionApiVersion);
             _vpnSiteLinkConnectionsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Network", ResourceType.Namespace, Diagnostics);
-            _vpnSiteLinkConnectionsRestClient = new VpnSiteLinkConnections(_vpnSiteLinkConnectionsClientDiagnostics, Pipeline, Endpoint, vpnSiteLinkConnectionApiVersion ?? "2025-07-01");
+            _vpnSiteLinkConnectionsRestClient = new VpnSiteLinkConnections(_vpnSiteLinkConnectionsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, vpnSiteLinkConnectionApiVersion ?? "2025-07-01");
             _vpnLinkConnectionsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Network", ResourceType.Namespace, Diagnostics);
-            _vpnLinkConnectionsRestClient = new VpnLinkConnections(_vpnLinkConnectionsClientDiagnostics, Pipeline, Endpoint, vpnSiteLinkConnectionApiVersion ?? "2025-07-01");
+            _vpnLinkConnectionsRestClient = new VpnLinkConnections(_vpnLinkConnectionsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, vpnSiteLinkConnectionApiVersion ?? "2025-07-01");
             ValidateResourceId(id);
         }
 

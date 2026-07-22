@@ -94,6 +94,7 @@ namespace Azure.AI.Extensions.OpenAI
     [ModelReaderWriterBuildable(typeof(InternalImageGenToolInputImageMask))]
     [ModelReaderWriterBuildable(typeof(InternalMetadataContainer))]
     [ModelReaderWriterBuildable(typeof(McpToolDefinition))]
+    [ModelReaderWriterBuildable(typeof(McpToolFilter))]
     [ModelReaderWriterBuildable(typeof(MCPToolRequireApproval))]
 #pragma warning disable AAIP001 // global::Azure.AI.Extensions.OpenAI.MemoryCommandToolCall is experimental and may change in future versions.
     [ModelReaderWriterBuildable(typeof(MemoryCommandToolCall))]

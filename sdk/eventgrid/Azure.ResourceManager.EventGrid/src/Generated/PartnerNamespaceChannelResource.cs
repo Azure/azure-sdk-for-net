@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.EventGrid
         {
             TryGetApiVersion(ResourceType, out string partnerNamespaceChannelApiVersion);
             _channelsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.EventGrid", ResourceType.Namespace, Diagnostics);
-            _channelsRestClient = new Channels(_channelsClientDiagnostics, Pipeline, Endpoint, partnerNamespaceChannelApiVersion ?? "2025-07-15-preview");
+            _channelsRestClient = new Channels(_channelsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, partnerNamespaceChannelApiVersion ?? "2025-07-15-preview");
             ValidateResourceId(id);
         }
 

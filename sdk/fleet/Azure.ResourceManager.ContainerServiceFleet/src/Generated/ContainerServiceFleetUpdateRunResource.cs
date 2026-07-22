@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.ContainerServiceFleet
         {
             TryGetApiVersion(ResourceType, out string containerServiceFleetUpdateRunApiVersion);
             _updateRunsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ContainerServiceFleet", ResourceType.Namespace, Diagnostics);
-            _updateRunsRestClient = new UpdateRuns(_updateRunsClientDiagnostics, Pipeline, Endpoint, containerServiceFleetUpdateRunApiVersion ?? "2026-03-02-preview");
+            _updateRunsRestClient = new UpdateRuns(_updateRunsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, containerServiceFleetUpdateRunApiVersion ?? "2026-03-02-preview");
             ValidateResourceId(id);
         }
 

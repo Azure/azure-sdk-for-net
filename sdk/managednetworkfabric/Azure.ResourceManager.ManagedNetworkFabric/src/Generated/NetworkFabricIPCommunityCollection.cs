@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         {
             TryGetApiVersion(NetworkFabricIPCommunityResource.ResourceType, out string networkFabricIPCommunityApiVersion);
             _ipCommunitiesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ManagedNetworkFabric", NetworkFabricIPCommunityResource.ResourceType.Namespace, Diagnostics);
-            _ipCommunitiesRestClient = new IpCommunities(_ipCommunitiesClientDiagnostics, Pipeline, Endpoint, networkFabricIPCommunityApiVersion ?? "2025-07-15");
+            _ipCommunitiesRestClient = new IpCommunities(_ipCommunitiesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, networkFabricIPCommunityApiVersion ?? "2025-07-15");
             ValidateResourceId(id);
         }
 

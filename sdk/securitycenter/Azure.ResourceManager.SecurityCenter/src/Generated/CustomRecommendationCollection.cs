@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.SecurityCenter
         {
             TryGetApiVersion(CustomRecommendationResource.ResourceType, out string customRecommendationApiVersion);
             _customRecommendationsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.SecurityCenter", CustomRecommendationResource.ResourceType.Namespace, Diagnostics);
-            _customRecommendationsRestClient = new CustomRecommendations(_customRecommendationsClientDiagnostics, Pipeline, Endpoint, customRecommendationApiVersion ?? "2024-08-01");
+            _customRecommendationsRestClient = new CustomRecommendations(_customRecommendationsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, customRecommendationApiVersion ?? "2024-08-01");
         }
 
         /// <summary>

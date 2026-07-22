@@ -7,6 +7,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.AI.Extensions.OpenAI;
+using OpenAI.Responses;
 
 namespace Azure.AI.Extensions.OpenAI.Internal
 {
@@ -71,6 +72,16 @@ namespace Azure.AI.Extensions.OpenAI.Internal
             {
                 throw new FormatException($"The model {nameof(MCPToolRequireApproval)} does not support writing '{format}' format.");
             }
+            if (Optional.IsDefined(Always))
+            {
+                writer.WritePropertyName("always"u8);
+                writer.WriteObjectValue(Always, options);
+            }
+            if (Optional.IsDefined(Never))
+            {
+                writer.WritePropertyName("never"u8);
+                writer.WriteObjectValue(Never, options);
+            }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
                 foreach (var item in _additionalBinaryDataProperties)
@@ -113,15 +124,35 @@ namespace Azure.AI.Extensions.OpenAI.Internal
             {
                 return null;
             }
+            McpToolFilter always = default;
+            McpToolFilter never = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
+                if (prop.NameEquals("always"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    always = ModelReaderWriter.Read<McpToolFilter>(prop.Value.GetUtf8Bytes(), ModelSerializationExtensions.WireOptions, AzureAIExtensionsOpenAIContext.Default);
+                    continue;
+                }
+                if (prop.NameEquals("never"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    never = ModelReaderWriter.Read<McpToolFilter>(prop.Value.GetUtf8Bytes(), ModelSerializationExtensions.WireOptions, AzureAIExtensionsOpenAIContext.Default);
+                    continue;
+                }
                 if (options.Format != "W")
                 {
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new MCPToolRequireApproval(additionalBinaryDataProperties);
+            return new MCPToolRequireApproval(always, never, additionalBinaryDataProperties);
         }
     }
 }

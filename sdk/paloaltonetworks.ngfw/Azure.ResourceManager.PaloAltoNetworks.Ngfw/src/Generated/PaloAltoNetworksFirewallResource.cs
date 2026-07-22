@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
         {
             TryGetApiVersion(ResourceType, out string paloAltoNetworksFirewallApiVersion);
             _firewallsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.PaloAltoNetworks.Ngfw", ResourceType.Namespace, Diagnostics);
-            _firewallsRestClient = new Firewalls(_firewallsClientDiagnostics, Pipeline, Endpoint, paloAltoNetworksFirewallApiVersion ?? "2025-10-08");
+            _firewallsRestClient = new Firewalls(_firewallsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, paloAltoNetworksFirewallApiVersion ?? "2025-10-08");
             ValidateResourceId(id);
         }
 

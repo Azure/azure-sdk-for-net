@@ -53,9 +53,9 @@ namespace Azure.ResourceManager.RedisEnterprise
         {
             TryGetApiVersion(ResourceType, out string redisEnterpriseMigrationApiVersion);
             _migrationClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.RedisEnterprise", ResourceType.Namespace, Diagnostics);
-            _migrationRestClient = new Migration(_migrationClientDiagnostics, Pipeline, Endpoint, redisEnterpriseMigrationApiVersion ?? "2025-08-01-preview");
+            _migrationRestClient = new Migration(_migrationClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, redisEnterpriseMigrationApiVersion ?? "2025-08-01-preview");
             _migrationsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.RedisEnterprise", ResourceType.Namespace, Diagnostics);
-            _migrationsRestClient = new Migrations(_migrationsClientDiagnostics, Pipeline, Endpoint, redisEnterpriseMigrationApiVersion ?? "2025-08-01-preview");
+            _migrationsRestClient = new Migrations(_migrationsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, redisEnterpriseMigrationApiVersion ?? "2025-08-01-preview");
             ValidateResourceId(id);
         }
 

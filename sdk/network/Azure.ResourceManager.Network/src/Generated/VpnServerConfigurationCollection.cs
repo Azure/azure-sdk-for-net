@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.Network
         {
             TryGetApiVersion(VpnServerConfigurationResource.ResourceType, out string vpnServerConfigurationApiVersion);
             _vpnServerConfigurationsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Network", VpnServerConfigurationResource.ResourceType.Namespace, Diagnostics);
-            _vpnServerConfigurationsRestClient = new VpnServerConfigurations(_vpnServerConfigurationsClientDiagnostics, Pipeline, Endpoint, vpnServerConfigurationApiVersion ?? "2025-07-01");
+            _vpnServerConfigurationsRestClient = new VpnServerConfigurations(_vpnServerConfigurationsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, vpnServerConfigurationApiVersion ?? "2025-07-01");
             ValidateResourceId(id);
         }
 

@@ -43,19 +43,19 @@ namespace Azure.ResourceManager.Monitor.Mocking
 
         private ClientDiagnostics MetricDefinitionsClientDiagnostics => _metricDefinitionsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Monitor.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private MetricDefinitions MetricDefinitionsRestClient => _metricDefinitionsRestClient ??= new MetricDefinitions(MetricDefinitionsClientDiagnostics, Pipeline, Endpoint, "2024-02-01");
+        private MetricDefinitions MetricDefinitionsRestClient => _metricDefinitionsRestClient ??= new MetricDefinitions(MetricDefinitionsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2024-02-01");
 
         private ClientDiagnostics MetricNamespacesClientDiagnostics => _metricNamespacesClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Monitor.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private MetricNamespaces MetricNamespacesRestClient => _metricNamespacesRestClient ??= new MetricNamespaces(MetricNamespacesClientDiagnostics, Pipeline, Endpoint, "2024-02-01");
+        private MetricNamespaces MetricNamespacesRestClient => _metricNamespacesRestClient ??= new MetricNamespaces(MetricNamespacesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2024-02-01");
 
         private ClientDiagnostics MetricsClientDiagnostics => _metricsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Monitor.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private Metrics MetricsRestClient => _metricsRestClient ??= new Metrics(MetricsClientDiagnostics, Pipeline, Endpoint, "2024-02-01");
+        private Metrics MetricsRestClient => _metricsRestClient ??= new Metrics(MetricsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2024-02-01");
 
         private ClientDiagnostics BaselinesClientDiagnostics => _baselinesClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Monitor.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private Baselines BaselinesRestClient => _baselinesRestClient ??= new Baselines(BaselinesClientDiagnostics, Pipeline, Endpoint, "2019-03-01");
+        private Baselines BaselinesRestClient => _baselinesRestClient ??= new Baselines(BaselinesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2019-03-01");
 
         /// <summary> Gets an object representing a <see cref="MonitorPrivateLinkResource"/> along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>

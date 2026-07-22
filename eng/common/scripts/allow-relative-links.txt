@@ -9,5 +9,5 @@
 AGENTS.md
 # Allow relative links for all files under the eng folder (e.g. engineering system scripts and templates).
 eng/**
-# Allow relative links for the top-level eval suite (azsdk-evals is a cross-cutting asset at repo root).
-azsdk-evals/**
+# Allow relative links for the top-level eval suite (evals is a cross-cutting asset at repo root).
+evals/**

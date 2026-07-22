@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.Network
         {
             TryGetApiVersion(ResourceType, out string virtualMachineScaleSetNetworkInterfaceApiVersion);
             _virtualMachineScaleSetNetworkInterfacesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Network", ResourceType.Namespace, Diagnostics);
-            _virtualMachineScaleSetNetworkInterfacesRestClient = new VirtualMachineScaleSetNetworkInterfaces(_virtualMachineScaleSetNetworkInterfacesClientDiagnostics, Pipeline, Endpoint, virtualMachineScaleSetNetworkInterfaceApiVersion ?? "2018-10-01");
+            _virtualMachineScaleSetNetworkInterfacesRestClient = new VirtualMachineScaleSetNetworkInterfaces(_virtualMachineScaleSetNetworkInterfacesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, virtualMachineScaleSetNetworkInterfaceApiVersion ?? "2018-10-01");
             ValidateResourceId(id);
         }
 

@@ -12,7 +12,6 @@ using NUnit.Framework;
 using OpenAI.Responses;
 
 namespace Azure.AI.Extensions.OpenAI.Tests.Samples;
-#pragma warning disable AAIP001
 
 public class Sample_ToolSearch : ProjectsOpenAITestBase
 {
@@ -50,7 +49,7 @@ public class Sample_ToolSearch : ProjectsOpenAITestBase
                 CodeInterpreterToolContainerConfiguration.CreateAutomaticContainerConfiguration([])
             )
         };
-        ToolboxSearchPreviewToolboxTool searchTool = new()
+        ToolSearchToolboxTool searchTool = new()
         {
             Name = "ToolBoxSearch",
             Description = "Search for the toolboxes"
@@ -166,7 +165,7 @@ public class Sample_ToolSearch : ProjectsOpenAITestBase
                 CodeInterpreterToolContainerConfiguration.CreateAutomaticContainerConfiguration([])
             )
         };
-        ToolboxSearchPreviewToolboxTool searchTool = new()
+        ToolSearchToolboxTool searchTool = new()
         {
             Name = "ToolBoxSearch",
             Description = "Search for the toolboxes"

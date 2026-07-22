@@ -43,9 +43,9 @@ namespace Azure.ResourceManager.SecurityInsights
         {
             TryGetApiVersion(SecurityInsightsThreatIntelligenceIndicatorResource.ResourceType, out string securityInsightsThreatIntelligenceIndicatorApiVersion);
             _threatIntelligenceIndicatorClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.SecurityInsights", SecurityInsightsThreatIntelligenceIndicatorResource.ResourceType.Namespace, Diagnostics);
-            _threatIntelligenceIndicatorRestClient = new ThreatIntelligenceIndicator(_threatIntelligenceIndicatorClientDiagnostics, Pipeline, Endpoint, securityInsightsThreatIntelligenceIndicatorApiVersion ?? "2025-07-01-preview");
+            _threatIntelligenceIndicatorRestClient = new ThreatIntelligenceIndicator(_threatIntelligenceIndicatorClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, securityInsightsThreatIntelligenceIndicatorApiVersion ?? "2025-07-01-preview");
             _threatIntelligenceIndicatorsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.SecurityInsights", SecurityInsightsThreatIntelligenceIndicatorResource.ResourceType.Namespace, Diagnostics);
-            _threatIntelligenceIndicatorsRestClient = new ThreatIntelligenceIndicators(_threatIntelligenceIndicatorsClientDiagnostics, Pipeline, Endpoint, securityInsightsThreatIntelligenceIndicatorApiVersion ?? "2025-07-01-preview");
+            _threatIntelligenceIndicatorsRestClient = new ThreatIntelligenceIndicators(_threatIntelligenceIndicatorsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, securityInsightsThreatIntelligenceIndicatorApiVersion ?? "2025-07-01-preview");
             ValidateResourceId(id);
         }
 

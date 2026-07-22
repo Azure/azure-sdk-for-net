@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.Grafana
         {
             TryGetApiVersion(ResourceType, out string grafanaIntegrationFabricApiVersion);
             _integrationFabricsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Grafana", ResourceType.Namespace, Diagnostics);
-            _integrationFabricsRestClient = new IntegrationFabrics(_integrationFabricsClientDiagnostics, Pipeline, Endpoint, grafanaIntegrationFabricApiVersion ?? "2025-09-01-preview");
+            _integrationFabricsRestClient = new IntegrationFabrics(_integrationFabricsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, grafanaIntegrationFabricApiVersion ?? "2025-09-01-preview");
             ValidateResourceId(id);
         }
 

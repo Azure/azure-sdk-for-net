@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.Kusto
         {
             TryGetApiVersion(SandboxCustomImageResource.ResourceType, out string sandboxCustomImageApiVersion);
             _sandboxCustomImagesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Kusto", SandboxCustomImageResource.ResourceType.Namespace, Diagnostics);
-            _sandboxCustomImagesRestClient = new SandboxCustomImages(_sandboxCustomImagesClientDiagnostics, Pipeline, Endpoint, sandboxCustomImageApiVersion ?? "2025-02-14");
+            _sandboxCustomImagesRestClient = new SandboxCustomImages(_sandboxCustomImagesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, sandboxCustomImageApiVersion ?? "2025-02-14");
             ValidateResourceId(id);
         }
 

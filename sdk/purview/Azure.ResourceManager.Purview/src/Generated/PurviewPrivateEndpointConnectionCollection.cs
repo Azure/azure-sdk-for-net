@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.Purview
         {
             TryGetApiVersion(PurviewPrivateEndpointConnectionResource.ResourceType, out string purviewPrivateEndpointConnectionApiVersion);
             _privateEndpointConnectionsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Purview", PurviewPrivateEndpointConnectionResource.ResourceType.Namespace, Diagnostics);
-            _privateEndpointConnectionsRestClient = new PrivateEndpointConnections(_privateEndpointConnectionsClientDiagnostics, Pipeline, Endpoint, purviewPrivateEndpointConnectionApiVersion ?? "2024-04-01-preview");
+            _privateEndpointConnectionsRestClient = new PrivateEndpointConnections(_privateEndpointConnectionsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, purviewPrivateEndpointConnectionApiVersion ?? "2024-04-01-preview");
             ValidateResourceId(id);
         }
 
