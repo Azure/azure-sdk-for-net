@@ -686,7 +686,7 @@ namespace Azure.ResourceManager.Enclave
         /// List DedicatedHubResource resources by subscription ID
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableEnclaveSubscriptionResource.GetDedicatedHubResourcesAsync(string, CancellationToken)"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockableEnclaveSubscriptionResource.GetDedicatedHubsAsync(string, CancellationToken)"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource"/> the method will execute against. </param>
@@ -694,18 +694,18 @@ namespace Azure.ResourceManager.Enclave
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
         /// <returns> A collection of <see cref="DedicatedHubResource"/> that may take multiple service requests to iterate over. </returns>
-        public static AsyncPageable<DedicatedHubResource> GetDedicatedHubResourcesAsync(this SubscriptionResource subscriptionResource, string communityName, CancellationToken cancellationToken = default)
+        public static AsyncPageable<DedicatedHubResource> GetDedicatedHubsAsync(this SubscriptionResource subscriptionResource, string communityName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
-            return GetMockableEnclaveSubscriptionResource(subscriptionResource).GetDedicatedHubResourcesAsync(communityName, cancellationToken);
+            return GetMockableEnclaveSubscriptionResource(subscriptionResource).GetDedicatedHubsAsync(communityName, cancellationToken);
         }
 
         /// <summary>
         /// List DedicatedHubResource resources by subscription ID
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableEnclaveSubscriptionResource.GetDedicatedHubResources(string, CancellationToken)"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockableEnclaveSubscriptionResource.GetDedicatedHubs(string, CancellationToken)"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource"/> the method will execute against. </param>
@@ -713,11 +713,11 @@ namespace Azure.ResourceManager.Enclave
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
         /// <returns> A collection of <see cref="DedicatedHubResource"/> that may take multiple service requests to iterate over. </returns>
-        public static Pageable<DedicatedHubResource> GetDedicatedHubResources(this SubscriptionResource subscriptionResource, string communityName, CancellationToken cancellationToken = default)
+        public static Pageable<DedicatedHubResource> GetDedicatedHubs(this SubscriptionResource subscriptionResource, string communityName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
-            return GetMockableEnclaveSubscriptionResource(subscriptionResource).GetDedicatedHubResources(communityName, cancellationToken);
+            return GetMockableEnclaveSubscriptionResource(subscriptionResource).GetDedicatedHubs(communityName, cancellationToken);
         }
     }
 }

@@ -21,7 +21,7 @@ namespace Azure.ResourceManager.Enclave
     /// <summary>
     /// A class representing a collection of <see cref="DedicatedHubResource"/> and their operations.
     /// Each <see cref="DedicatedHubResource"/> in the collection will belong to the same instance of <see cref="VirtualEnclaveCommunityResource"/>.
-    /// To get a <see cref="DedicatedHubCollection"/> instance call the GetDedicatedHubResources method from an instance of <see cref="VirtualEnclaveCommunityResource"/>.
+    /// To get a <see cref="DedicatedHubCollection"/> instance call the GetDedicatedHubs method from an instance of <see cref="VirtualEnclaveCommunityResource"/>.
     /// </summary>
     public partial class DedicatedHubCollection : ArmCollection, IEnumerable<DedicatedHubResource>, IAsyncEnumerable<DedicatedHubResource>
     {
@@ -38,9 +38,9 @@ namespace Azure.ResourceManager.Enclave
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal DedicatedHubCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            TryGetApiVersion(DedicatedHubResource.ResourceType, out string dedicatedHubResourceApiVersion);
+            TryGetApiVersion(DedicatedHubResource.ResourceType, out string dedicatedHubApiVersion);
             _dedicatedHubClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Enclave", DedicatedHubResource.ResourceType.Namespace, Diagnostics);
-            _dedicatedHubRestClient = new DedicatedHub(_dedicatedHubClientDiagnostics, Pipeline, Endpoint, dedicatedHubResourceApiVersion ?? "2026-03-01-preview");
+            _dedicatedHubRestClient = new DedicatedHub(_dedicatedHubClientDiagnostics, Pipeline, Endpoint, dedicatedHubApiVersion ?? "2026-03-01-preview");
             ValidateResourceId(id);
         }
 

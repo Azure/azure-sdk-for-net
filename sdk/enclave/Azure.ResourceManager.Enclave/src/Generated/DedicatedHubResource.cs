@@ -20,9 +20,9 @@ using Azure.ResourceManager.Resources;
 namespace Azure.ResourceManager.Enclave
 {
     /// <summary>
-    /// A class representing a DedicatedHubResource along with the instance operations that can be performed on it.
+    /// A class representing a DedicatedHub along with the instance operations that can be performed on it.
     /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="DedicatedHubResource"/> from an instance of <see cref="ArmClient"/> using the GetResource method.
-    /// Otherwise you can get one from its parent resource <see cref="VirtualEnclaveCommunityResource"/> using the GetDedicatedHubResources method.
+    /// Otherwise you can get one from its parent resource <see cref="VirtualEnclaveCommunityResource"/> using the GetDedicatedHubs method.
     /// </summary>
     public partial class DedicatedHubResource : ArmResource
     {
@@ -51,9 +51,9 @@ namespace Azure.ResourceManager.Enclave
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal DedicatedHubResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            TryGetApiVersion(ResourceType, out string dedicatedHubResourceApiVersion);
+            TryGetApiVersion(ResourceType, out string dedicatedHubApiVersion);
             _dedicatedHubClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Enclave", ResourceType.Namespace, Diagnostics);
-            _dedicatedHubRestClient = new DedicatedHub(_dedicatedHubClientDiagnostics, Pipeline, Endpoint, dedicatedHubResourceApiVersion ?? "2026-03-01-preview");
+            _dedicatedHubRestClient = new DedicatedHub(_dedicatedHubClientDiagnostics, Pipeline, Endpoint, dedicatedHubApiVersion ?? "2026-03-01-preview");
             ValidateResourceId(id);
         }
 
