@@ -8,9 +8,9 @@ using System.Linq;
 using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
+using Microsoft.TypeSpec.Generator.Customizations;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Microsoft.TypeSpec.Generator.Customizations;
 
 namespace Azure.AI.Translation.Document
 {
