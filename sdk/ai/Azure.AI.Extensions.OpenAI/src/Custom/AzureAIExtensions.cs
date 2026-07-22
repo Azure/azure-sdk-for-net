@@ -18,7 +18,7 @@ using OpenAI.Responses;
 
 namespace Azure.AI.Extensions.OpenAI;
 
-#pragma warning disable SCME0001
+//#pragma warning disable SCME0001
 
 /// <summary>
 /// The class containing various extension methods.
@@ -186,14 +186,40 @@ public static partial class AzureAIExtensions
         return update;
     }
 
+    // ResponseItem
+    extension(ResponseItem item)
+    {
+        /// <summary> Gets the agent that produced this response item, when reported by the service. </summary>
+        [Experimental("SCME0001")]
+        public AgentReference AgentReference
+        {
+            get => item.Patch.GetJsonModelEx<AgentReference>("$.agent_reference"u8);
+        }
+
+        /// <summary> Gets the ID of the response on which this item was created, when reported by the service. </summary>
+        [Experimental("SCME0001")]
+        public string ResponseId
+        {
+            get => item.Patch.GetStringEx("$.response_id"u8);
+        }
+    }
+
     // ResponseResult
     extension(ResponseResult response)
     {
         /// <summary> Gets the agent associated with the response result. </summary>
-        public AgentReference Agent => response.Patch.GetJsonModelEx<AgentReference>("$.agent_reference"u8);
+        [Experimental("SCME0001")]
+        public AgentReference Agent
+        {
+            get => response.Patch.GetJsonModelEx<AgentReference>("$.agent_reference"u8);
+        }
 
         /// <summary> Gets the agent conversation ID associated with the response result. </summary>
-        public string AgentConversationId => response.Patch.GetStringEx("$.conversation.id"u8);
+        [Experimental("SCME0001")]
+        public string AgentConversationId
+        {
+            get => response.Patch.GetStringEx("$.conversation.id"u8);
+        }
     }
 
     // ResponsesClient
@@ -235,6 +261,7 @@ public static partial class AzureAIExtensions
         return ClientResult.FromValue(convenienceValue, protocolResult.GetRawResponse());
     }
 
+    [Experimental("SCME0001")]
     private static BinaryContent RemoveItems(ConversationResource conversation, AgentReference agentRef)
     {
         CreateResponseOptions responseOptions = new()
@@ -275,6 +302,7 @@ public static partial class AzureAIExtensions
     extension(CreateResponseOptions options)
     {
         /// <summary> Gets or sets the agent associated with the response options. </summary>
+        [Experimental("SCME0001")]
         public AgentReference Agent
         {
             get => options.Patch.GetJsonModelEx<AgentReference>("$.agent_reference"u8);
@@ -282,6 +310,7 @@ public static partial class AzureAIExtensions
         }
 
         /// <summary> Gets or sets the agent conversation ID associated with the response options. </summary>
+        [Experimental("SCME0001")]
         public string AgentConversationId
         {
             get => options.Patch.GetStringEx("$.conversation.id"u8);

@@ -68,6 +68,7 @@ public partial class AgentWorkflowPreviewActionResponseItem
     /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
     internal AgentWorkflowPreviewActionResponseItem(ResponseItemKind @type, string id, AgentReference agentReference, string responseId, string csdlActionKind, string actionId, string parentActionId, string previousActionId, AgentWorkflowPreviewActionStatus? status, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(@type)
     {
+        this.ApplyAgentAttribution(agentReference, responseId, additionalBinaryDataProperties);
         CSDLActionKind = csdlActionKind;
         ActionId = actionId;
         ParentActionId = parentActionId;

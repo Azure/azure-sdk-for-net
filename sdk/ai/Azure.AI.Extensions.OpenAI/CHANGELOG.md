@@ -22,6 +22,7 @@
   These tool kinds remain reachable on the wire because `ResponseToolKind` is an extensible enum and the corresponding tool slots accept a raw object payload, but strongly-typed construction is not available. Native support for each will return once the upstream OpenAI .NET SDK models the tool kind. This does not affect the Azure Foundry toolbox search feature (`ResponsesToolboxSearchPreviewTool`), which is a separate Azure-specific capability.
 
 ### Bugs Fixed
+- Restored the per-output-item Azure attribution fields that were dropped when response items were remapped onto the upstream `OpenAI.Responses.ResponseItem` types. Every response output item again surfaces `AgentReference` (the agent that produced the item) and `ResponseId` (the response it was created on) via extension members on `ResponseItem`, and both now survive a serialization round trip.
 
 ### Other Changes
 - Updated the `OpenAI` package dependency to `2.12.0`, which adds strongly-typed conversation support (`OpenAI.Conversations.ConversationResource`, `ConversationCreationOptions`, `ConversationUpdateOptions`). The conversation data models previously emitted by this package are no longer generated, and the temporary local convenience layer now delegates to the upstream types.
