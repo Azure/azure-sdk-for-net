@@ -5,3 +5,9 @@ extends:
   parameters:
     ServiceDirectory: contentunderstanding
     SupportedClouds: 'Public'
+    # test-resources-post.ps1 uses `az` CLI (cognitiveservices deployment + rest).
+    # PersistOidcToken defers the post-script into an AzureCLI@2 task, which
+    # authenticates `az` via the federated token. Without this, `az` calls
+    # fail with "Please run 'az login' to setup account." Same pattern as
+    # sdk/identity/tests.yml.
+    PersistOidcToken: true
