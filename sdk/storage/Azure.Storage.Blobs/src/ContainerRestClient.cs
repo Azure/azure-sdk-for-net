@@ -16,6 +16,7 @@ namespace Azure.Storage.Blobs
 {
     // CUSTOM:
     // - Suppress generated GetBlobFlatSegmentApacheArrow & GetBlobHierarchySegmentApacheArrow methods in favor of custom implementations that return Stream.
+    // - Maintain optionality of delimiter parameter for backwards compatibility.
     internal partial class ContainerRestClient
     {
         /// <summary> Returns a list of the blobs in Apache Arrow format as raw data, to be deserialized by the client. </summary>
@@ -138,6 +139,102 @@ namespace Azure.Storage.Blobs
                 scope.Failed(e);
                 throw;
             }
+        }
+
+        internal HttpMessage CreateGetBlobHierarchySegmentRequest(string delimiter, string prefix, string marker, int? maxresults, IEnumerable<ListBlobsIncludeItem> include, int? timeout, string startFrom, RequestContext context)
+        {
+            RawRequestUriBuilder uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendQuery("restype", "container", true);
+            uri.AppendQuery("comp", "list", true);
+            if (delimiter != null)
+            {
+                uri.AppendQuery("delimiter", delimiter, true);
+            }
+            if (prefix != null)
+            {
+                uri.AppendQuery("prefix", prefix, true);
+            }
+            if (marker != null)
+            {
+                uri.AppendQuery("marker", marker, true);
+            }
+            if (maxresults != null)
+            {
+                uri.AppendQuery("maxresults", TypeFormatters.ConvertToString(maxresults), true);
+            }
+            if (include != null && !(include is ChangeTrackingList<ListBlobsIncludeItem> changeTrackingList && changeTrackingList.IsUndefined))
+            {
+                uri.AppendQueryDelimited("include", include, ",", escape: true);
+            }
+            if (timeout != null)
+            {
+                uri.AppendQuery("timeout", TypeFormatters.ConvertToString(timeout), true);
+            }
+            if (startFrom != null)
+            {
+                uri.AppendQuery("startFrom", startFrom, true);
+            }
+            HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier200);
+            Request request = message.Request;
+            request.Uri = uri;
+            request.Method = RequestMethod.Get;
+            if (_version != null)
+            {
+                request.Headers.SetValue("x-ms-version", _version);
+            }
+            request.Headers.SetValue("Accept", "application/xml");
+            return message;
+        }
+
+        internal HttpMessage CreateGetBlobHierarchySegmentApacheArrowRequest(string delimiter, string prefix, string marker, int? maxresults, IEnumerable<ListBlobsIncludeItem> include, int? timeout, string startFrom, string endBefore, RequestContext context)
+        {
+            RawRequestUriBuilder uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendQuery("restype", "container", true);
+            uri.AppendQuery("comp", "list", true);
+            if (delimiter != null)
+            {
+                uri.AppendQuery("delimiter", delimiter, true);
+            }
+            if (prefix != null)
+            {
+                uri.AppendQuery("prefix", prefix, true);
+            }
+            if (marker != null)
+            {
+                uri.AppendQuery("marker", marker, true);
+            }
+            if (maxresults != null)
+            {
+                uri.AppendQuery("maxresults", TypeFormatters.ConvertToString(maxresults), true);
+            }
+            if (include != null && !(include is ChangeTrackingList<ListBlobsIncludeItem> changeTrackingList && changeTrackingList.IsUndefined))
+            {
+                uri.AppendQueryDelimited("include", include, ",", escape: true);
+            }
+            if (timeout != null)
+            {
+                uri.AppendQuery("timeout", TypeFormatters.ConvertToString(timeout), true);
+            }
+            if (startFrom != null)
+            {
+                uri.AppendQuery("startFrom", startFrom, true);
+            }
+            if (endBefore != null)
+            {
+                uri.AppendQuery("endBefore", endBefore, true);
+            }
+            HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier200);
+            Request request = message.Request;
+            request.Uri = uri;
+            request.Method = RequestMethod.Get;
+            if (_version != null)
+            {
+                request.Headers.SetValue("x-ms-version", _version);
+            }
+            request.Headers.SetValue("Accept", "application/vnd.apache.arrow.stream,application/xml");
+            return message;
         }
     }
 }
