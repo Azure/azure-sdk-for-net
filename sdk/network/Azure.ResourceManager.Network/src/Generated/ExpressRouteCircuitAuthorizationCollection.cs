@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.Network
         {
             TryGetApiVersion(ExpressRouteCircuitAuthorizationResource.ResourceType, out string expressRouteCircuitAuthorizationApiVersion);
             _expressRouteCircuitAuthorizationsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Network", ExpressRouteCircuitAuthorizationResource.ResourceType.Namespace, Diagnostics);
-            _expressRouteCircuitAuthorizationsRestClient = new ExpressRouteCircuitAuthorizations(_expressRouteCircuitAuthorizationsClientDiagnostics, Pipeline, Endpoint, expressRouteCircuitAuthorizationApiVersion ?? "2025-07-01");
+            _expressRouteCircuitAuthorizationsRestClient = new ExpressRouteCircuitAuthorizations(_expressRouteCircuitAuthorizationsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, expressRouteCircuitAuthorizationApiVersion ?? "2025-07-01");
             ValidateResourceId(id);
         }
 

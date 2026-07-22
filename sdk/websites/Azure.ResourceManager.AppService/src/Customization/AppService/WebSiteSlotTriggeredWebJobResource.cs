@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.AppService
         {
             TryGetApiVersion(WebSiteTriggeredwebJobResource.ResourceType, out string apiVersion);
             var clientDiagnostics = new Azure.Core.Pipeline.ClientDiagnostics("Azure.ResourceManager.AppService", ResourceType.Namespace, Diagnostics);
-            var restClient = new TriggeredWebJobOperationGroup(clientDiagnostics, Pipeline, Endpoint, apiVersion ?? "2026-03-15");
+            var restClient = new TriggeredWebJobOperationGroup(clientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, apiVersion ?? "2026-03-15");
             using var scope = clientDiagnostics.CreateScope("WebSiteSlotTriggeredWebJobResource.Run");
             scope.Start();
             try
@@ -72,7 +72,7 @@ namespace Azure.ResourceManager.AppService
         {
             TryGetApiVersion(WebSiteTriggeredwebJobResource.ResourceType, out string apiVersion);
             var clientDiagnostics = new Azure.Core.Pipeline.ClientDiagnostics("Azure.ResourceManager.AppService", ResourceType.Namespace, Diagnostics);
-            var restClient = new TriggeredWebJobOperationGroup(clientDiagnostics, Pipeline, Endpoint, apiVersion ?? "2026-03-15");
+            var restClient = new TriggeredWebJobOperationGroup(clientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, apiVersion ?? "2026-03-15");
             using var scope = clientDiagnostics.CreateScope("WebSiteSlotTriggeredWebJobResource.Run");
             scope.Start();
             try

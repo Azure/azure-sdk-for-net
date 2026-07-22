@@ -72,11 +72,7 @@ namespace Azure.ResourceManager.StorageMover.Tests.Scenario
         // bucket (via Multi-Cloud Connector) to a Blob container, with Private Link Service
         // approval and MSI RBAC on the target endpoint.
         //
-        // NOTE: Marked [Ignore] until a live recording is captured. Status in the cross-language
-        // tracker is 🆗 (code green, recordings pending) — matches the JS port. Remove the Ignore
-        // once assets.json is updated with a fresh tag containing this session's cassette.
         [Test]
-        [Ignore("Temporarily skipped until the C2C private-source recording is refreshed for the current Network privateEndpointConnections API version.")]
         [RecordedTest]
         public async Task StartC2CJobWithPrivateSourceTest()
         {
@@ -157,7 +153,7 @@ namespace Azure.ResourceManager.StorageMover.Tests.Scenario
                 NetworkPrivateEndpointConnectionData approvalData = new NetworkPrivateEndpointConnectionData
                 {
                     Name = pendingPeConnection.Data.Name,
-                    ConnectionState = new NetworkPrivateLinkServiceConnectionState
+                    PrivateLinkServiceConnectionState = new NetworkPrivateLinkServiceConnectionState
                     {
                         Status = "Approved",
                         Description = "",

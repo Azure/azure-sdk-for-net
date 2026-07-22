@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.SecurityCenter
         {
             TryGetApiVersion(ResourceType, out string securityTopologyApiVersion);
             _topologyResourcesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.SecurityCenter", ResourceType.Namespace, Diagnostics);
-            _topologyResourcesRestClient = new TopologyResources(_topologyResourcesClientDiagnostics, Pipeline, Endpoint, securityTopologyApiVersion ?? "2020-01-01");
+            _topologyResourcesRestClient = new TopologyResources(_topologyResourcesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, securityTopologyApiVersion ?? "2020-01-01");
             ValidateResourceId(id);
         }
 

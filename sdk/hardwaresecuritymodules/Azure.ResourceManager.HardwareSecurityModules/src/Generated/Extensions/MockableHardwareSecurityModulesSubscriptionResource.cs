@@ -38,11 +38,11 @@ namespace Azure.ResourceManager.HardwareSecurityModules.Mocking
 
         private ClientDiagnostics CloudHsmClustersClientDiagnostics => _cloudHsmClustersClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.HardwareSecurityModules.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private CloudHsmClusters CloudHsmClustersRestClient => _cloudHsmClustersRestClient ??= new CloudHsmClusters(CloudHsmClustersClientDiagnostics, Pipeline, Endpoint, "2025-03-31");
+        private CloudHsmClusters CloudHsmClustersRestClient => _cloudHsmClustersRestClient ??= new CloudHsmClusters(CloudHsmClustersClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2025-03-31");
 
         private ClientDiagnostics DedicatedHsmsClientDiagnostics => _dedicatedHsmsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.HardwareSecurityModules.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private DedicatedHsms DedicatedHsmsRestClient => _dedicatedHsmsRestClient ??= new DedicatedHsms(DedicatedHsmsClientDiagnostics, Pipeline, Endpoint, "2025-03-31");
+        private DedicatedHsms DedicatedHsmsRestClient => _dedicatedHsmsRestClient ??= new DedicatedHsms(DedicatedHsmsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2025-03-31");
 
         /// <summary>
         /// The List operation gets information about the Cloud HSM Clusters associated with the subscription.

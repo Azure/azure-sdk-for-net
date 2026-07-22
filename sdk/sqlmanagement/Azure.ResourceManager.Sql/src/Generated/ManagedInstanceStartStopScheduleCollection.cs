@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.Sql
         {
             TryGetApiVersion(ManagedInstanceStartStopScheduleResource.ResourceType, out string managedInstanceStartStopScheduleApiVersion);
             _startStopManagedInstanceSchedulesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Sql", ManagedInstanceStartStopScheduleResource.ResourceType.Namespace, Diagnostics);
-            _startStopManagedInstanceSchedulesRestClient = new StartStopManagedInstanceSchedules(_startStopManagedInstanceSchedulesClientDiagnostics, Pipeline, Endpoint, managedInstanceStartStopScheduleApiVersion ?? "2025-02-01-preview");
+            _startStopManagedInstanceSchedulesRestClient = new StartStopManagedInstanceSchedules(_startStopManagedInstanceSchedulesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, managedInstanceStartStopScheduleApiVersion ?? "2025-02-01-preview");
             ValidateResourceId(id);
         }
 

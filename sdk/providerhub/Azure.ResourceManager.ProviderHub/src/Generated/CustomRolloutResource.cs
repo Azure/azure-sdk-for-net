@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.ProviderHub
         {
             TryGetApiVersion(ResourceType, out string customRolloutApiVersion);
             _customRolloutsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ProviderHub", ResourceType.Namespace, Diagnostics);
-            _customRolloutsRestClient = new CustomRollouts(_customRolloutsClientDiagnostics, Pipeline, Endpoint, customRolloutApiVersion ?? "2024-09-01");
+            _customRolloutsRestClient = new CustomRollouts(_customRolloutsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, customRolloutApiVersion ?? "2024-09-01");
             ValidateResourceId(id);
         }
 

@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.HardwareSecurityModules
         {
             TryGetApiVersion(CloudHsmClusterPrivateEndpointConnectionResource.ResourceType, out string cloudHsmClusterPrivateEndpointConnectionApiVersion);
             _privateEndpointConnectionsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.HardwareSecurityModules", CloudHsmClusterPrivateEndpointConnectionResource.ResourceType.Namespace, Diagnostics);
-            _privateEndpointConnectionsRestClient = new PrivateEndpointConnections(_privateEndpointConnectionsClientDiagnostics, Pipeline, Endpoint, cloudHsmClusterPrivateEndpointConnectionApiVersion ?? "2025-03-31");
+            _privateEndpointConnectionsRestClient = new PrivateEndpointConnections(_privateEndpointConnectionsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, cloudHsmClusterPrivateEndpointConnectionApiVersion ?? "2025-03-31");
             ValidateResourceId(id);
         }
 

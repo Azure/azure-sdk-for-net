@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.Maintenance
         {
             TryGetApiVersion(ResourceType, out string maintenanceConfigurationApiVersion);
             _maintenanceConfigurationsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Maintenance", ResourceType.Namespace, Diagnostics);
-            _maintenanceConfigurationsRestClient = new MaintenanceConfigurations(_maintenanceConfigurationsClientDiagnostics, Pipeline, Endpoint, maintenanceConfigurationApiVersion ?? "2025-10-01-preview");
+            _maintenanceConfigurationsRestClient = new MaintenanceConfigurations(_maintenanceConfigurationsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, maintenanceConfigurationApiVersion ?? "2025-10-01-preview");
             ValidateResourceId(id);
         }
 

@@ -9,7 +9,6 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure.Core;
 using Azure.ResourceManager.NetApp;
 
 namespace Azure.ResourceManager.NetApp.Models
@@ -85,11 +84,6 @@ namespace Azure.ResourceManager.NetApp.Models
                 writer.WritePropertyName("certificateName"u8);
                 writer.WriteStringValue(CertificateName);
             }
-            if (Optional.IsDefined(UserAssignedIdentity))
-            {
-                writer.WritePropertyName("userAssignedIdentity"u8);
-                writer.WriteStringValue(UserAssignedIdentity);
-            }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
                 foreach (var item in _additionalBinaryDataProperties)
@@ -134,7 +128,6 @@ namespace Azure.ResourceManager.NetApp.Models
             }
             Uri certificateKeyVaultUri = default;
             string certificateName = default;
-            ResourceIdentifier userAssignedIdentity = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -152,21 +145,12 @@ namespace Azure.ResourceManager.NetApp.Models
                     certificateName = prop.Value.GetString();
                     continue;
                 }
-                if (prop.NameEquals("userAssignedIdentity"u8))
-                {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    userAssignedIdentity = new ResourceIdentifier(prop.Value.GetString());
-                    continue;
-                }
                 if (options.Format != "W")
                 {
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new CertificateKeyVaultDetails(certificateKeyVaultUri, certificateName, userAssignedIdentity, additionalBinaryDataProperties);
+            return new CertificateKeyVaultDetails(certificateKeyVaultUri, certificateName, additionalBinaryDataProperties);
         }
     }
 }

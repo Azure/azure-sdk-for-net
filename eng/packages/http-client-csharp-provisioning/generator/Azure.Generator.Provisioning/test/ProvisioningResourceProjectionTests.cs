@@ -13,6 +13,7 @@ using NUnit.Framework;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
+using System.Text.Json;
 
 namespace Azure.Generator.Provisioning.Tests
 {
@@ -25,160 +26,74 @@ namespace Azure.Generator.Provisioning.Tests
         }
 
         [Test]
-        public void SameResourceTypeAndModelCollapse()
+        public void ProjectionDeserializesEmitterMetadata()
         {
             var model = CreateModel("TestResourceData");
-            var resourceGroupResource = CreateMetadata(
-                model,
-                "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Test/widgets/{widgetName}",
-                "Microsoft.Test/widgets",
-                ResourceScope.ResourceGroup,
-                ["2024-01-01"]);
-            var subscriptionResource = CreateMetadata(
-                model,
-                "/subscriptions/{subscriptionId}/providers/Microsoft.Test/widgets/{widgetName}",
-                "Microsoft.Test/widgets",
-                ResourceScope.Subscription,
-                ["2024-02-01"],
-                [new ArmResourceRbacRole("SecondRole", "22222222-2222-2222-2222-222222222222")]);
+            var method = CreateMethod(ResourceOperationKind.Create, ResourceScope.Extension);
+            using var document = JsonDocument.Parse(
+                """
+                {
+                  "resourceModelId": "Sample.Models.TestResourceData",
+                  "resourceName": "TestResource",
+                  "resourceType": "Microsoft.Test/widgets",
+                  "singletonResourceName": "default",
+                  "parentResourceId": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Test/parents/{parentName}",
+                  "nameConstraints": {
+                    "pattern": "[a-z]+",
+                    "minLength": 1,
+                    "maxLength": 24
+                  },
+                  "resourceIdPatterns": [
+                    "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Test/widgets/default"
+                  ],
+                  "apiVersions": [
+                    "2024-01-01",
+                    "2024-02-01"
+                  ],
+                  "methodIds": [
+                    "Sample.CreateWidget"
+                  ],
+                  "rbacRoles": [
+                    {
+                      "name": "TestRole",
+                      "value": "11111111-1111-1111-1111-111111111111"
+                    }
+                  ],
+                  "readableScopes": [
+                    "ResourceGroup"
+                  ],
+                  "writableScopes": [
+                    "Extension"
+                  ],
+                  "isExtensionResource": true
+                }
+                """);
 
-            var projections = ProvisioningResourceProjection.Create([resourceGroupResource, subscriptionResource]);
+            var projection = ProvisioningResourceProjection.Deserialize(
+                document.RootElement,
+                new Dictionary<string, InputModelType> { [model.CrossLanguageDefinitionId] = model },
+                new Dictionary<string, ResourceMethod> { [method.InputMethod.CrossLanguageDefinitionId] = method });
 
-            Assert.That(projections, Has.Count.EqualTo(1));
-            Assert.That(projections[0].Metadata, Is.EqualTo(new[] { resourceGroupResource, subscriptionResource }));
-            Assert.That(projections[0].ResourceName, Is.EqualTo(resourceGroupResource.ResourceName));
-            Assert.That(projections[0].ResourceType, Is.EqualTo("Microsoft.Test/widgets"));
-            Assert.That(projections[0].ResourceModel, Is.SameAs(model));
-            Assert.That(projections[0].ResourceIdPatterns.Select(p => p.SerializedPath), Is.EqualTo(new[]
+            Assert.That(projection.ResourceModel, Is.SameAs(model));
+            Assert.That(projection.ResourceName, Is.EqualTo("TestResource"));
+            Assert.That(projection.ResourceType, Is.EqualTo("Microsoft.Test/widgets"));
+            Assert.That(projection.SingletonResourceName, Is.EqualTo("default"));
+            Assert.That(projection.ParentResourceId!.SerializedPath, Is.EqualTo(
+                "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Test/parents/{parentName}"));
+            Assert.That(projection.NameConstraints, Is.EqualTo(new ArmResourceNameConstraints("[a-z]+", 1, 24)));
+            Assert.That(projection.ResourceIdPatterns.Select(p => p.SerializedPath), Is.EqualTo(new[]
             {
-                resourceGroupResource.ResourceIdPattern.SerializedPath,
-                subscriptionResource.ResourceIdPattern.SerializedPath
+                "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Test/widgets/default"
             }));
-            Assert.That(projections[0].ApiVersions, Is.EqualTo(new[] { "2024-01-01", "2024-02-01" }));
-            Assert.That(projections[0].RbacRoles.Select(r => r.Name), Is.EqualTo(new[] { "FirstRole", "SecondRole" }));
-        }
-
-        [Test]
-        public void SameResourceTypeWithDifferentModelsDoesNotCollapse()
-        {
-            var firstModel = CreateModel("FirstResourceData");
-            var secondModel = CreateModel("SecondResourceData");
-            var firstResource = CreateMetadata(
-                firstModel,
-                "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Test/widgets/{widgetName}",
-                "Microsoft.Test/widgets",
-                ResourceScope.ResourceGroup,
-                ["2024-01-01"]);
-            var secondResource = CreateMetadata(
-                secondModel,
-                "/subscriptions/{subscriptionId}/providers/Microsoft.Test/widgets/{widgetName}",
-                "Microsoft.Test/widgets",
-                ResourceScope.Subscription,
-                ["2024-01-01"]);
-
-            var projections = ProvisioningResourceProjection.Create([firstResource, secondResource]);
-
-            Assert.That(projections, Has.Count.EqualTo(2));
-            Assert.That(projections[0].ResourceModel, Is.SameAs(firstModel));
-            Assert.That(projections[1].ResourceModel, Is.SameAs(secondModel));
-        }
-
-        [Test]
-        public void CollapsedProjectionDropsInconsistentPerEntryValues()
-        {
-            var model = CreateModel("TestResourceData");
-            var firstResource = CreateMetadata(
-                model,
-                "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Test/widgets/{widgetName}/children/default",
-                "Microsoft.Test/widgets/children",
-                ResourceScope.ResourceGroup,
-                ["2024-01-01"],
-                resourceName: "FirstResource",
-                singletonResourceName: "default",
-                parentResourceId: "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Test/widgets/{widgetName}",
-                nameConstraints: new ArmResourceNameConstraints("[a-z]+", 1, 24));
-            var secondResource = CreateMetadata(
-                model,
-                "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Test/widgets/{widgetName}/children/current",
-                "Microsoft.Test/widgets/children",
-                ResourceScope.ResourceGroup,
-                ["2024-01-01"],
-                resourceName: "SecondResource",
-                singletonResourceName: "current",
-                parentResourceId: "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Test/otherWidgets/{widgetName}",
-                nameConstraints: new ArmResourceNameConstraints("[0-9]+", 1, 24));
-
-            var projection = ProvisioningResourceProjection.Create([firstResource, secondResource])[0];
-
-            Assert.That(projection.ResourceName, Is.EqualTo(model.Name));
-            Assert.That(projection.SingletonResourceName, Is.Null);
-            Assert.That(projection.ParentResourceId, Is.Null);
-            Assert.That(projection.NameConstraints, Is.EqualTo(new ArmResourceNameConstraints(null, null, null)));
-        }
-
-        [Test]
-        public void CollapsedProjectionKeepsOnlyConsistentParentResourceId()
-        {
-            var model = CreateModel("TestResourceData");
-            const string parentResourceId = "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Test/widgets/{widgetName}";
-            var firstResource = CreateMetadata(
-                model,
-                "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Test/widgets/{widgetName}/children/first",
-                "Microsoft.Test/widgets/children",
-                ResourceScope.ResourceGroup,
-                ["2024-01-01"],
-                parentResourceId: parentResourceId);
-            var secondResource = CreateMetadata(
-                model,
-                "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Test/widgets/{widgetName}/children/second",
-                "Microsoft.Test/widgets/children",
-                ResourceScope.ResourceGroup,
-                ["2024-01-01"],
-                parentResourceId: parentResourceId);
-            var parentlessResource = CreateMetadata(
-                model,
-                "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Test/widgets/{widgetName}/children/third",
-                "Microsoft.Test/widgets/children",
-                ResourceScope.ResourceGroup,
-                ["2024-01-01"]);
-
-            var consistentProjection = ProvisioningResourceProjection.Create([firstResource, secondResource])[0];
-            var mixedNullProjection = ProvisioningResourceProjection.Create([firstResource, parentlessResource])[0];
-
-            Assert.That(consistentProjection.ParentResourceId, Is.EqualTo(firstResource.ParentResourceId));
-            Assert.That(mixedNullProjection.ParentResourceId, Is.Null);
-        }
-
-        [Test]
-        public void CollapsedProjectionKeepsOnlyConsistentSingletonResourceName()
-        {
-            var model = CreateModel("TestResourceData");
-            var firstResource = CreateMetadata(
-                model,
-                "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Test/widgets/{widgetName}/children/default",
-                "Microsoft.Test/widgets/children",
-                ResourceScope.ResourceGroup,
-                ["2024-01-01"],
-                singletonResourceName: "default");
-            var secondResource = CreateMetadata(
-                model,
-                "/subscriptions/{subscriptionId}/providers/Microsoft.Test/widgets/{widgetName}/children/default",
-                "Microsoft.Test/widgets/children",
-                ResourceScope.Subscription,
-                ["2024-01-01"],
-                singletonResourceName: "default");
-            var mixedNullResource = CreateMetadata(
-                model,
-                "/providers/Microsoft.Test/widgets/{widgetName}/children/default",
-                "Microsoft.Test/widgets/children",
-                ResourceScope.Tenant,
-                ["2024-01-01"]);
-
-            var consistentProjection = ProvisioningResourceProjection.Create([firstResource, secondResource])[0];
-            var mixedNullProjection = ProvisioningResourceProjection.Create([firstResource, mixedNullResource])[0];
-
-            Assert.That(consistentProjection.SingletonResourceName, Is.EqualTo("default"));
-            Assert.That(mixedNullProjection.SingletonResourceName, Is.Null);
+            Assert.That(projection.ApiVersions, Is.EqualTo(new[] { "2024-01-01", "2024-02-01" }));
+            Assert.That(projection.Methods, Is.EqualTo(new[] { method }));
+            Assert.That(projection.RbacRoles, Is.EqualTo(new[]
+            {
+                new ArmResourceRbacRole("TestRole", "11111111-1111-1111-1111-111111111111")
+            }));
+            Assert.That(projection.ReadableScopes, Is.EqualTo(new[] { ResourceScope.ResourceGroup }));
+            Assert.That(projection.WritableScopes, Is.EqualTo(new[] { ResourceScope.Extension }));
+            Assert.That(projection.IsExtensionResource, Is.True);
         }
 
         [Test]
@@ -201,6 +116,74 @@ namespace Azure.Generator.Provisioning.Tests
             Assert.That(propertyInfo, Is.Not.Null);
             Assert.That(propertyInfo!.IsOutput, Is.False);
             Assert.That(propertyInfo.IsSettable, Is.False);
+        }
+
+        [Test]
+        public void UpdateOnlyResourcePropertiesAreNotSettable()
+        {
+            var writableProperty = CreateProperty("WritableValue");
+            var model = CreateModel("UpdateOnlyWidget", [writableProperty]);
+            var updateOnlyResource = CreateMetadata(
+                model,
+                "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Test/widgets/{widgetName}",
+                "Microsoft.Test/widgets",
+                ResourceScope.ResourceGroup,
+                ["2024-01-01"],
+                methods:
+                [
+                    CreateMethod(ResourceOperationKind.Read, ResourceScope.ResourceGroup),
+                    CreateMethod(ResourceOperationKind.Update, ResourceScope.ResourceGroup)
+                ]);
+            ProvisioningMockHelpers.LoadMockPlugin(inputModels: () => [model]);
+            var provider = CreateResourceProvider(updateOnlyResource);
+
+            var propertyInfo = ((IProvisioningPropertyInfo)provider).GetProvisioningPropertyInfo(writableProperty);
+
+            Assert.That(provider.ResourceProjection!.WritableScopes, Is.Empty);
+            Assert.That(propertyInfo, Is.Not.Null);
+            Assert.That(propertyInfo!.IsSettable, Is.False);
+        }
+
+        [Test]
+        public void ReadOnlyExtensionResourceDoesNotExposeScopeMetadata()
+        {
+            var model = CreateModel("ReadOnlyExtension");
+            var resource = CreateMetadata(
+                model,
+                "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Test/widgets/{widgetName}/providers/Microsoft.Test/extensions/{extensionName}",
+                "Microsoft.Test/extensions",
+                ResourceScope.Extension,
+                ["2024-01-01"],
+                methods: [CreateMethod(ResourceOperationKind.Read, ResourceScope.Extension)]);
+            ProvisioningMockHelpers.LoadMockPlugin(inputModels: () => [model]);
+            var provider = CreateResourceProvider(resource);
+
+            Assert.That(provider.ResourceProjection!.WritableScopes, Is.Empty);
+            Assert.That(provider.ResourceProjection.IsExtensionResource, Is.False);
+            Assert.That(provider.Properties.Any(property => property.Name == "Scope"), Is.False);
+        }
+
+        [Test]
+        public void WritableExtensionResourceExposesScopeMetadata()
+        {
+            var model = CreateModel("WritableExtension");
+            var resource = CreateMetadata(
+                model,
+                "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Test/widgets/{widgetName}/providers/Microsoft.Test/extensions/{extensionName}",
+                "Microsoft.Test/extensions",
+                ResourceScope.Extension,
+                ["2024-01-01"],
+                methods:
+                [
+                    CreateMethod(ResourceOperationKind.Read, ResourceScope.Extension),
+                    CreateMethod(ResourceOperationKind.Create, ResourceScope.Extension)
+                ]);
+            ProvisioningMockHelpers.LoadMockPlugin(inputModels: () => [model]);
+            var provider = CreateResourceProvider(resource);
+
+            Assert.That(provider.ResourceProjection!.WritableScopes, Does.Contain(ResourceScope.Extension));
+            Assert.That(provider.ResourceProjection.IsExtensionResource, Is.True);
+            Assert.That(provider.Properties.Any(property => property.Name == "Scope"), Is.True);
         }
 
         [Test]
@@ -663,7 +646,7 @@ namespace Azure.Generator.Provisioning.Tests
             return new ArmResourceMetadata(
                 path,
                 resourceName ?? model.Name,
-                resourceType,
+                new ResourceTypePattern(resourceType),
                 model,
                 new ArmScopeInfo(scope, RequestPathPattern.GetFromScope(scope, path), null),
                 methods ?? [],
@@ -782,21 +765,95 @@ namespace Azure.Generator.Provisioning.Tests
 
         private static void RegisterResourceProjections(IReadOnlyList<ProvisioningResourceProjection> resourceProjections)
         {
-            var resourceProjectionsByModel = resourceProjections
-                .GroupBy(projection => projection.ResourceModel)
-                .ToDictionary(
-                    group => group.Key,
-                    group => group.ToList());
-
+            var inputLibrary = ProvisioningGenerator.Instance.InputLibrary;
             typeof(ProvisioningInputLibrary)
                 .GetField("_resourceProjections", BindingFlags.Instance | BindingFlags.NonPublic)!
                 .SetValue(ProvisioningGenerator.Instance.InputLibrary, resourceProjections);
             typeof(ProvisioningInputLibrary)
-                .GetField("_resourceProjectionsByModel", BindingFlags.Instance | BindingFlags.NonPublic)!
-                .SetValue(ProvisioningGenerator.Instance.InputLibrary, resourceProjectionsByModel);
-            typeof(ProvisioningInputLibrary)
                 .GetField("_modelSettableUsage", BindingFlags.Instance | BindingFlags.NonPublic)!
-                .SetValue(ProvisioningGenerator.Instance.InputLibrary, null);
+                .SetValue(inputLibrary, CollectModelSettableUsage(resourceProjections));
+        }
+
+        private static Dictionary<string, bool> CollectModelSettableUsage(IReadOnlyList<ProvisioningResourceProjection> projections)
+        {
+            var projectionsByModel = projections
+                .GroupBy(projection => projection.ResourceModel)
+                .ToDictionary(group => group.Key, group => group.ToList());
+            var usage = new Dictionary<string, bool>();
+            var visited = new HashSet<(InputType Type, bool IsSettable)>();
+            var queue = new Queue<(InputType Type, bool IsSettable)>(
+                projections.Select(projection => ((InputType)projection.ResourceModel, projection.WritableScopes.Count > 0)));
+
+            while (queue.TryDequeue(out var item))
+            {
+                if (!visited.Add(item))
+                {
+                    continue;
+                }
+
+                switch (item.Type)
+                {
+                    case InputModelType model:
+                        var isSettable = item.IsSettable ||
+                            (projectionsByModel.TryGetValue(model, out var modelProjections) &&
+                             modelProjections.Any(projection => projection.WritableScopes.Count > 0));
+                        usage[model.CrossLanguageDefinitionId] = isSettable ||
+                            (usage.TryGetValue(model.CrossLanguageDefinitionId, out var existing) && existing);
+                        if (model.BaseModel != null)
+                        {
+                            queue.Enqueue((model.BaseModel, isSettable));
+                        }
+                        foreach (var derived in model.DiscriminatedSubtypes.Values)
+                        {
+                            queue.Enqueue((derived, isSettable));
+                        }
+                        foreach (var property in GetProperties(model, projectionsByModel.ContainsKey(model)))
+                        {
+                            queue.Enqueue((property.Type, isSettable && !property.IsReadOnly));
+                        }
+                        if (!projectionsByModel.ContainsKey(model) && model.AdditionalProperties != null)
+                        {
+                            queue.Enqueue((model.AdditionalProperties, isSettable));
+                        }
+                        break;
+                    case InputArrayType array:
+                        queue.Enqueue((array.ValueType, item.IsSettable));
+                        break;
+                    case InputDictionaryType dictionary:
+                        queue.Enqueue((dictionary.KeyType, item.IsSettable));
+                        queue.Enqueue((dictionary.ValueType, item.IsSettable));
+                        break;
+                    case InputNullableType nullable:
+                        queue.Enqueue((nullable.Type, item.IsSettable));
+                        break;
+                    case InputLiteralType literal:
+                        queue.Enqueue((literal.ValueType, item.IsSettable));
+                        break;
+                    case InputUnionType union:
+                        foreach (var variant in union.VariantTypes)
+                        {
+                            queue.Enqueue((variant, item.IsSettable));
+                        }
+                        break;
+                }
+            }
+
+            return usage;
+        }
+
+        private static IEnumerable<InputModelProperty> GetProperties(InputModelType model, bool includeBaseProperties)
+        {
+            if (!includeBaseProperties)
+            {
+                return model.Properties;
+            }
+
+            var hierarchy = new Stack<InputModelType>();
+            for (var current = model; current != null; current = current.BaseModel)
+            {
+                hierarchy.Push(current);
+            }
+            return hierarchy.SelectMany(type => type.Properties);
         }
 
         private static void AddDiscriminatedSubtype(InputModelType baseModel, InputModelType derivedModel)
@@ -812,11 +869,35 @@ namespace Azure.Generator.Provisioning.Tests
 
         private static ProvisioningResourceProvider[] CreateAndRegisterResourceProviders(params ArmResourceMetadata[] metadata)
         {
-            var projections = ProvisioningResourceProjection.Create(metadata);
+            var projections = metadata.Select(CreateProjection).ToArray();
             RegisterResourceProjections(projections);
             var providers = projections.Select(projection => new ProvisioningResourceProvider(projection)).ToArray();
             RegisterResourceProviders(providers);
             return providers;
+        }
+
+        private static ProvisioningResourceProjection CreateProjection(ArmResourceMetadata metadata)
+        {
+            var readableScopes = metadata.Methods.Any(method => method.Kind == ResourceOperationKind.Read)
+                ? new[] { metadata.Scope.Kind }
+                : [];
+            var writableScopes = metadata.Methods.Any(method => method.Kind == ResourceOperationKind.Create)
+                ? new[] { metadata.Scope.Kind }
+                : [];
+            return new(
+                metadata.ResourceModel,
+                metadata.ResourceName,
+                metadata.ResourceType.SerializedResourceType,
+                metadata.SingletonResourceName,
+                metadata.ParentResourceId,
+                metadata.NameConstraints,
+                [metadata.ResourceIdPattern],
+                metadata.ApiVersions,
+                metadata.Methods,
+                metadata.RbacRoles,
+                readableScopes,
+                writableScopes,
+                writableScopes.Contains(ResourceScope.Extension));
         }
 
         private static InputModelProperty CreateProperty(string name, bool isRequired = false, bool isReadOnly = false, bool isDiscriminator = false, InputType? type = null, string? serializedName = null)

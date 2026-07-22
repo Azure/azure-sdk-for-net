@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.Network
         {
             TryGetApiVersion(VpnSiteLinkResource.ResourceType, out string vpnSiteLinkApiVersion);
             _vpnSiteLinksClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Network", VpnSiteLinkResource.ResourceType.Namespace, Diagnostics);
-            _vpnSiteLinksRestClient = new VpnSiteLinks(_vpnSiteLinksClientDiagnostics, Pipeline, Endpoint, vpnSiteLinkApiVersion ?? "2025-07-01");
+            _vpnSiteLinksRestClient = new VpnSiteLinks(_vpnSiteLinksClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, vpnSiteLinkApiVersion ?? "2025-07-01");
             ValidateResourceId(id);
         }
 

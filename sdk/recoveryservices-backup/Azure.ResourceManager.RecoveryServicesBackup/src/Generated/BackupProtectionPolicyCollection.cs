@@ -47,9 +47,9 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
             TryGetApiVersion(BackupProtectionPolicyResource.ResourceType, out string backupProtectionPolicyApiVersion);
             _vaultName = vaultName;
             _protectionPoliciesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.RecoveryServicesBackup", BackupProtectionPolicyResource.ResourceType.Namespace, Diagnostics);
-            _protectionPoliciesRestClient = new ProtectionPolicies(_protectionPoliciesClientDiagnostics, Pipeline, Endpoint, backupProtectionPolicyApiVersion ?? "2026-01-31-preview");
+            _protectionPoliciesRestClient = new ProtectionPolicies(_protectionPoliciesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, backupProtectionPolicyApiVersion ?? "2026-01-31-preview");
             _backupPoliciesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.RecoveryServicesBackup", BackupProtectionPolicyResource.ResourceType.Namespace, Diagnostics);
-            _backupPoliciesRestClient = new BackupPolicies(_backupPoliciesClientDiagnostics, Pipeline, Endpoint, backupProtectionPolicyApiVersion ?? "2026-01-31-preview");
+            _backupPoliciesRestClient = new BackupPolicies(_backupPoliciesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, backupProtectionPolicyApiVersion ?? "2026-01-31-preview");
             ValidateResourceId(id);
         }
 

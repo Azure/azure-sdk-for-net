@@ -42,15 +42,15 @@ namespace Azure.ResourceManager.DevOpsInfrastructure.Mocking
 
         private ClientDiagnostics PoolsClientDiagnostics => _poolsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.DevOpsInfrastructure.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private Pools PoolsRestClient => _poolsRestClient ??= new Pools(PoolsClientDiagnostics, Pipeline, Endpoint, "2025-09-20");
+        private Pools PoolsRestClient => _poolsRestClient ??= new Pools(PoolsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2025-09-20");
 
         private ClientDiagnostics SkuClientDiagnostics => _skuClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.DevOpsInfrastructure.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private Sku SkuRestClient => _skuRestClient ??= new Sku(SkuClientDiagnostics, Pipeline, Endpoint, "2025-09-20");
+        private Sku SkuRestClient => _skuRestClient ??= new Sku(SkuClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2025-09-20");
 
         private ClientDiagnostics SubscriptionUsagesClientDiagnostics => _subscriptionUsagesClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.DevOpsInfrastructure.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private SubscriptionUsages SubscriptionUsagesRestClient => _subscriptionUsagesRestClient ??= new SubscriptionUsages(SubscriptionUsagesClientDiagnostics, Pipeline, Endpoint, "2025-09-20");
+        private SubscriptionUsages SubscriptionUsagesRestClient => _subscriptionUsagesRestClient ??= new SubscriptionUsages(SubscriptionUsagesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2025-09-20");
 
         /// <summary>
         /// List Pool resources by subscription ID

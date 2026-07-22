@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.Sql
         {
             TryGetApiVersion(SqlDatabaseSensitivityLabelResource.ResourceType, out string sqlDatabaseSensitivityLabelApiVersion);
             _sensitivityLabelsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Sql", SqlDatabaseSensitivityLabelResource.ResourceType.Namespace, Diagnostics);
-            _sensitivityLabelsRestClient = new SensitivityLabels(_sensitivityLabelsClientDiagnostics, Pipeline, Endpoint, sqlDatabaseSensitivityLabelApiVersion ?? "2025-02-01-preview");
+            _sensitivityLabelsRestClient = new SensitivityLabels(_sensitivityLabelsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, sqlDatabaseSensitivityLabelApiVersion ?? "2025-02-01-preview");
             ValidateResourceId(id);
         }
 

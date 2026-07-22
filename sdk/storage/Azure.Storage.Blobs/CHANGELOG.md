@@ -1,13 +1,26 @@
 # Release History
 
-## 12.30.0-beta.1 (Unreleased)
+## 12.30.0-beta.2 (Unreleased)
 
 ### Features Added
 
 ### Breaking Changes
-- Block IDs generated during partitioned uploads are now randomly generated instead of based on sequential integers. This ensures uniqueness across concurrent uploads to the same blob but means block IDs are no longer predictable or ordered.
 
 ### Bugs Fixed
+
+### Other Changes
+
+## 12.30.0-beta.1 (2026-07-21)
+
+### Features Added
+- Added support for service version 2026-10-06.
+- Added `AccessTier`, `AccessTierInferred`, `AccessTierChangedOn`, and `SmartAccessTier` to `BlobDownloadDetails`.
+- Added support for PUT blob operations returning both the existing MD5 content hash and the new CRC64 checksum.
+- Added support for Apache Arrow response format for `GetBlobs` and `GetBlobsByHierarchy`.
+- Added support for the `EndBefore` property in `GetBlobs` and `GetBlobsByHierarchy`. Note that `EndBefore` is currently only available for Apache Arrow response format and is not returned for XML response format.
+
+### Breaking Changes
+- Block IDs generated during partitioned uploads are now randomly generated instead of based on sequential integers. This ensures uniqueness across concurrent uploads to the same blob but means block IDs are no longer predictable or ordered.
 
 ### Other Changes
 - Improved performance of `DownloadToAsync` by buffering each range into memory concurrently instead of streaming one range at a time. This increases throughput but also increases memory consumption, as up to `MaximumConcurrency` ranges (each up to `MaximumTransferLength` in size) may be buffered simultaneously. Use `StorageTransferOptions.MaximumConcurrency` and `StorageTransferOptions.MaximumTransferLength` to control memory usage.

@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.DurableTask
         {
             TryGetApiVersion(ResourceType, out string durableTaskRetentionPolicyApiVersion);
             _retentionPoliciesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.DurableTask", ResourceType.Namespace, Diagnostics);
-            _retentionPoliciesRestClient = new RetentionPolicies(_retentionPoliciesClientDiagnostics, Pipeline, Endpoint, durableTaskRetentionPolicyApiVersion ?? "2026-02-01");
+            _retentionPoliciesRestClient = new RetentionPolicies(_retentionPoliciesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, durableTaskRetentionPolicyApiVersion ?? "2026-02-01");
             ValidateResourceId(id);
         }
 

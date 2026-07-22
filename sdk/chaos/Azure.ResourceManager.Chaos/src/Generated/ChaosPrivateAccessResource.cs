@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.Chaos
         {
             TryGetApiVersion(ResourceType, out string chaosPrivateAccessApiVersion);
             _privateAccessesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Chaos", ResourceType.Namespace, Diagnostics);
-            _privateAccessesRestClient = new PrivateAccesses(_privateAccessesClientDiagnostics, Pipeline, Endpoint, chaosPrivateAccessApiVersion ?? "2026-05-01-preview");
+            _privateAccessesRestClient = new PrivateAccesses(_privateAccessesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, chaosPrivateAccessApiVersion ?? "2026-05-01-preview");
             ValidateResourceId(id);
         }
 
