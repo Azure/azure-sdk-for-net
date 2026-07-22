@@ -76,12 +76,12 @@ public class ProjectOpenAIClientSmokeTest : ProjectsOpenAITestBase
         ProjectOpenAIClient openAIClientWithoutApp = new(
             projectEndpoint: new Uri(TestEnvironment.FOUNDRY_PROJECT_ENDPOINT),
             tokenProvider: new MockCredential(),
-            options: WithExtraPolicy(new ProjectResponsesClientOptions()));
+            options: WithExtraPolicy(new ProjectOpenAIClientOptions()));
 
         ProjectOpenAIClient openAIClientWithApp = new(
             projectEndpoint: new Uri(TestEnvironment.FOUNDRY_PROJECT_ENDPOINT),
             tokenProvider: new MockCredential(),
-            options: WithExtraPolicy(new ProjectResponsesClientOptions()
+            options: WithExtraPolicy(new ProjectOpenAIClientOptions()
             {
                 UserAgentApplicationId = "MyOtherApplication",
             }));

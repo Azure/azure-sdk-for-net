@@ -1,4 +1,4 @@
-﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
 using System;
@@ -10,12 +10,12 @@ using OpenAI.Responses;
 namespace Azure.AI.Extensions.OpenAI.Tests;
 
 [Category("Smoke")]
-public class ProjectOAIResponsesClientOptionsTests
+public class ProjectResponsesClientOptionsTests
 {
     [Test]
     public void Defaults_ApiVersionIsV1()
     {
-        ProjectOAIResponsesClientOptions options = new();
+        ProjectResponsesClientOptions options = new();
         Assert.That(options.ApiVersion, Is.EqualTo("v1"));
         Assert.That(options.AgentName, Is.Null);
     }
@@ -23,7 +23,7 @@ public class ProjectOAIResponsesClientOptionsTests
     [Test]
     public void Setters_ThrowAfterFreeze()
     {
-        ProjectOAIResponsesClientOptions options = new();
+        ProjectResponsesClientOptions options = new();
         options.Freeze();
 
         Assert.That(() => options.ApiVersion = "2025-11-15-preview", Throws.InvalidOperationException);
@@ -34,7 +34,7 @@ public class ProjectOAIResponsesClientOptionsTests
     public void ImplicitOperator_NullSource_ReturnsNull()
     {
         ProjectOpenAIClientOptions source = null;
-        ProjectOAIResponsesClientOptions destination = source;
+        ProjectResponsesClientOptions destination = source;
         Assert.That(destination, Is.Null);
     }
 
@@ -59,7 +59,7 @@ public class ProjectOAIResponsesClientOptionsTests
             AgentName = "MyAgent",
         };
 
-        ProjectOAIResponsesClientOptions destination = source;
+        ProjectResponsesClientOptions destination = source;
 
         Assert.That(destination, Is.Not.Null);
         Assert.That(destination, Is.Not.SameAs(source));
@@ -84,7 +84,7 @@ public class ProjectOAIResponsesClientOptionsTests
         source.Freeze();
         Assert.That(source.IsReadOnly, Is.True);
 
-        ProjectOAIResponsesClientOptions destination = source;
+        ProjectResponsesClientOptions destination = source;
 
         Assert.That(destination.IsReadOnly, Is.False);
         Assert.DoesNotThrow(() => destination.ApiVersion = "v2");
@@ -94,7 +94,7 @@ public class ProjectOAIResponsesClientOptionsTests
     [Test]
     public void NewOptionsInstance_CanBeUsedToConstructResponsesClient()
     {
-        ProjectOAIResponsesClientOptions options = new()
+        ProjectResponsesClientOptions options = new()
         {
             Endpoint = new Uri("https://example.foundry.azure.com/api/projects/p/openai/v1"),
         };

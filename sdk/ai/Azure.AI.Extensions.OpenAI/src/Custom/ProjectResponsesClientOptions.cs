@@ -8,13 +8,13 @@ using OpenAI.Responses;
 namespace Azure.AI.Extensions.OpenAI;
 
 /// <summary> Represents options for configuring a project responses client. </summary>
-public partial class ProjectOAIResponsesClientOptions : ResponsesClientOptions
+public partial class ProjectResponsesClientOptions : ResponsesClientOptions
 {
     private string _apiVersion;
     private string _agentName;
 
-    /// <summary> Initializes a new instance of <see cref="ProjectOAIResponsesClientOptions"/>. </summary>
-    public ProjectOAIResponsesClientOptions() : base()
+    /// <summary> Initializes a new instance of <see cref="ProjectResponsesClientOptions"/>. </summary>
+    public ProjectResponsesClientOptions() : base()
     {
         _apiVersion = "v1";
     }
@@ -45,7 +45,7 @@ public partial class ProjectOAIResponsesClientOptions : ResponsesClientOptions
 
     /// <summary>
     /// Implicitly converts a <see cref="ProjectOpenAIClientOptions"/> instance to a new
-    /// <see cref="ProjectOAIResponsesClientOptions"/> instance.
+    /// <see cref="ProjectResponsesClientOptions"/> instance.
     /// </summary>
     /// <remarks>
     /// The conversion produces a fresh, unfrozen snapshot copy of the source's public and
@@ -56,14 +56,14 @@ public partial class ProjectOAIResponsesClientOptions : ResponsesClientOptions
     /// properties such as <see cref="ResponsesClientOptions.Endpoint"/>.
     /// </remarks>
     /// <param name="source"> The source options instance to convert. </param>
-    public static implicit operator ProjectOAIResponsesClientOptions(ProjectOpenAIClientOptions source)
+    public static implicit operator ProjectResponsesClientOptions(ProjectOpenAIClientOptions source)
     {
         if (source is null)
         {
             return null;
         }
 
-        ProjectOAIResponsesClientOptions destination = new()
+        ProjectResponsesClientOptions destination = new()
         {
             // OpenAIClientOptions / ResponsesClientOptions shared surface
             Endpoint = source.Endpoint,
