@@ -14,16 +14,16 @@ using Azure.ResourceManager.Compute.BulkActions;
 namespace Azure.ResourceManager.Compute.BulkActions.Models
 {
     /// <summary> Request to ask for a delay in an occurrence, delay should be set to client local time eg (PST) 2025-05-30T06:35:00-07:00. </summary>
-    public partial class BulkActionsDelayRequestContent
+    public partial class DelayRequest
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="BulkActionsDelayRequestContent"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="DelayRequest"/>. </summary>
         /// <param name="delay"> The exact time to delay the operations to. </param>
         /// <param name="resourceIds"> The resources that should be delayed. If empty, the delay will apply to the all resources in the occurrence. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceIds"/> is null. </exception>
-        public BulkActionsDelayRequestContent(DateTimeOffset delay, IEnumerable<ResourceIdentifier> resourceIds)
+        public DelayRequest(DateTimeOffset delay, IEnumerable<ResourceIdentifier> resourceIds)
         {
             Argument.AssertNotNull(resourceIds, nameof(resourceIds));
 
@@ -31,11 +31,11 @@ namespace Azure.ResourceManager.Compute.BulkActions.Models
             ResourceIds = resourceIds.ToList();
         }
 
-        /// <summary> Initializes a new instance of <see cref="BulkActionsDelayRequestContent"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="DelayRequest"/>. </summary>
         /// <param name="delay"> The exact time to delay the operations to. </param>
         /// <param name="resourceIds"> The resources that should be delayed. If empty, the delay will apply to the all resources in the occurrence. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal BulkActionsDelayRequestContent(DateTimeOffset delay, IList<ResourceIdentifier> resourceIds, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal DelayRequest(DateTimeOffset delay, IList<ResourceIdentifier> resourceIds, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Delay = delay;
             ResourceIds = resourceIds;

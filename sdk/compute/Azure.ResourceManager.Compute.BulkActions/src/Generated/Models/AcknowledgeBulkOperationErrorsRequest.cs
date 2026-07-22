@@ -13,25 +13,25 @@ using Azure.ResourceManager.Compute.BulkActions;
 namespace Azure.ResourceManager.Compute.BulkActions.Models
 {
     /// <summary> The request to acknowledge bulk operation errors. </summary>
-    public partial class BulkActionsAcknowledgeBulkOperationErrorsRequestContent
+    public partial class AcknowledgeBulkOperationErrorsRequest
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="BulkActionsAcknowledgeBulkOperationErrorsRequestContent"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="AcknowledgeBulkOperationErrorsRequest"/>. </summary>
         /// <param name="operationIds"> The set of operation ids to acknowledge. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="operationIds"/> is null. </exception>
-        public BulkActionsAcknowledgeBulkOperationErrorsRequestContent(IEnumerable<string> operationIds)
+        public AcknowledgeBulkOperationErrorsRequest(IEnumerable<string> operationIds)
         {
             Argument.AssertNotNull(operationIds, nameof(operationIds));
 
             OperationIds = operationIds.ToList();
         }
 
-        /// <summary> Initializes a new instance of <see cref="BulkActionsAcknowledgeBulkOperationErrorsRequestContent"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="AcknowledgeBulkOperationErrorsRequest"/>. </summary>
         /// <param name="operationIds"> The set of operation ids to acknowledge. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal BulkActionsAcknowledgeBulkOperationErrorsRequestContent(IList<string> operationIds, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal AcknowledgeBulkOperationErrorsRequest(IList<string> operationIds, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             OperationIds = operationIds;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;

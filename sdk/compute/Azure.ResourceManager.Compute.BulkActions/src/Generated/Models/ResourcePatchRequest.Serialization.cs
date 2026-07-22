@@ -9,61 +9,72 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure.Core;
 using Azure.ResourceManager.Compute.BulkActions;
 
 namespace Azure.ResourceManager.Compute.BulkActions.Models
 {
-    /// <summary> The resources needed for the user request with the context for tracking purposes. </summary>
-    internal partial class ResourcesWithContext : IJsonModel<ResourcesWithContext>
+    /// <summary> Request model perform a resource operation in a list of resources. </summary>
+    public partial class ResourcePatchRequest : IJsonModel<ResourcePatchRequest>
     {
-        /// <summary> Initializes a new instance of <see cref="ResourcesWithContext"/> for deserialization. </summary>
-        internal ResourcesWithContext()
+        /// <summary> Initializes a new instance of <see cref="ResourcePatchRequest"/> for deserialization. </summary>
+        internal ResourcePatchRequest()
         {
         }
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual ResourcesWithContext PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        protected virtual ResourcePatchRequest PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<ResourcesWithContext>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<ResourcePatchRequest>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeResourcesWithContext(document.RootElement, options);
+                        return DeserializeResourcePatchRequest(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ResourcesWithContext)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ResourcePatchRequest)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<ResourcesWithContext>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<ResourcePatchRequest>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options, AzureResourceManagerComputeBulkActionsContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(ResourcesWithContext)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ResourcePatchRequest)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<ResourcesWithContext>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<ResourcePatchRequest>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        ResourcesWithContext IPersistableModel<ResourcesWithContext>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+        ResourcePatchRequest IPersistableModel<ResourcePatchRequest>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<ResourcesWithContext>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<ResourcePatchRequest>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
+        /// <param name="resourcePatchRequest"> The <see cref="ResourcePatchRequest"/> to serialize into <see cref="RequestContent"/>. </param>
+        internal static RequestContent ToRequestContent(ResourcePatchRequest resourcePatchRequest)
+        {
+            if (resourcePatchRequest == null)
+            {
+                return null;
+            }
+            return RequestContent.Create(resourcePatchRequest, ModelSerializationExtensions.WireOptions);
+        }
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<ResourcesWithContext>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<ResourcePatchRequest>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -74,14 +85,14 @@ namespace Azure.ResourceManager.Compute.BulkActions.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<ResourcesWithContext>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<ResourcePatchRequest>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ResourcesWithContext)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(ResourcePatchRequest)} does not support writing '{format}' format.");
             }
             writer.WritePropertyName("resources"u8);
             writer.WriteStartArray();
-            foreach (ResourceWithContext item in Resources)
+            foreach (ScheduledActionResourceInput item in Resources)
             {
                 writer.WriteObjectValue(item, options);
             }
@@ -105,39 +116,39 @@ namespace Azure.ResourceManager.Compute.BulkActions.Models
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        ResourcesWithContext IJsonModel<ResourcesWithContext>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+        ResourcePatchRequest IJsonModel<ResourcePatchRequest>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual ResourcesWithContext JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        protected virtual ResourcePatchRequest JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<ResourcesWithContext>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<ResourcePatchRequest>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ResourcesWithContext)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(ResourcePatchRequest)} does not support reading '{format}' format.");
             }
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeResourcesWithContext(document.RootElement, options);
+            return DeserializeResourcePatchRequest(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        internal static ResourcesWithContext DeserializeResourcesWithContext(JsonElement element, ModelReaderWriterOptions options)
+        internal static ResourcePatchRequest DeserializeResourcePatchRequest(JsonElement element, ModelReaderWriterOptions options)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            IList<ResourceWithContext> resources = default;
+            IList<ScheduledActionResourceInput> resources = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("resources"u8))
                 {
-                    List<ResourceWithContext> array = new List<ResourceWithContext>();
+                    List<ScheduledActionResourceInput> array = new List<ScheduledActionResourceInput>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(ResourceWithContext.DeserializeResourceWithContext(item, options));
+                        array.Add(ScheduledActionResourceInput.DeserializeScheduledActionResourceInput(item, options));
                     }
                     resources = array;
                     continue;
@@ -147,7 +158,7 @@ namespace Azure.ResourceManager.Compute.BulkActions.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new ResourcesWithContext(resources, additionalBinaryDataProperties);
+            return new ResourcePatchRequest(resources, additionalBinaryDataProperties);
         }
     }
 }

@@ -11,21 +11,21 @@ using System.Collections.Generic;
 namespace Azure.ResourceManager.Compute.BulkActions.Models
 {
     /// <summary> The execution parameters the scheduled action is supposed to follow. </summary>
-    public partial class BulkActionsRecurringScheduledActionsExecutionParametersContent
+    public partial class RecurringScheduledActionsExecutionParameters
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="BulkActionsRecurringScheduledActionsExecutionParametersContent"/>. </summary>
-        public BulkActionsRecurringScheduledActionsExecutionParametersContent()
+        /// <summary> Initializes a new instance of <see cref="RecurringScheduledActionsExecutionParameters"/>. </summary>
+        public RecurringScheduledActionsExecutionParameters()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="BulkActionsRecurringScheduledActionsExecutionParametersContent"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="RecurringScheduledActionsExecutionParameters"/>. </summary>
         /// <param name="optimizationPreference"> Details that could optimize the user's request. </param>
         /// <param name="retryPolicy"> Retry policy the user can pass. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal BulkActionsRecurringScheduledActionsExecutionParametersContent(OptimizationPreference? optimizationPreference, RecurringScheduledActionsRetryPolicy retryPolicy, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal RecurringScheduledActionsExecutionParameters(OptimizationPreference? optimizationPreference, RecurringScheduledActionsRetryPolicy retryPolicy, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             OptimizationPreference = optimizationPreference;
             RetryPolicy = retryPolicy;

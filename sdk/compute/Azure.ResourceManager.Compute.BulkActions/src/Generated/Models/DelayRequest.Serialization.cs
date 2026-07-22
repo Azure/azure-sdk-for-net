@@ -15,18 +15,18 @@ using Azure.ResourceManager.Compute.BulkActions;
 namespace Azure.ResourceManager.Compute.BulkActions.Models
 {
     /// <summary> Request to ask for a delay in an occurrence, delay should be set to client local time eg (PST) 2025-05-30T06:35:00-07:00. </summary>
-    public partial class BulkActionsDelayRequestContent : IJsonModel<BulkActionsDelayRequestContent>
+    public partial class DelayRequest : IJsonModel<DelayRequest>
     {
-        /// <summary> Initializes a new instance of <see cref="BulkActionsDelayRequestContent"/> for deserialization. </summary>
-        internal BulkActionsDelayRequestContent()
+        /// <summary> Initializes a new instance of <see cref="DelayRequest"/> for deserialization. </summary>
+        internal DelayRequest()
         {
         }
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual BulkActionsDelayRequestContent PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        protected virtual DelayRequest PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<BulkActionsDelayRequestContent>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<DelayRequest>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
@@ -35,35 +35,35 @@ namespace Azure.ResourceManager.Compute.BulkActions.Models
                         return DeserializeDelayRequest(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(BulkActionsDelayRequestContent)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(DelayRequest)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<BulkActionsDelayRequestContent>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<DelayRequest>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options, AzureResourceManagerComputeBulkActionsContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(BulkActionsDelayRequestContent)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(DelayRequest)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<BulkActionsDelayRequestContent>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<DelayRequest>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        BulkActionsDelayRequestContent IPersistableModel<BulkActionsDelayRequestContent>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+        DelayRequest IPersistableModel<DelayRequest>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<BulkActionsDelayRequestContent>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<DelayRequest>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
-        /// <param name="delayRequest"> The <see cref="BulkActionsDelayRequestContent"/> to serialize into <see cref="RequestContent"/>. </param>
-        internal static RequestContent ToRequestContent(BulkActionsDelayRequestContent delayRequest)
+        /// <param name="delayRequest"> The <see cref="DelayRequest"/> to serialize into <see cref="RequestContent"/>. </param>
+        internal static RequestContent ToRequestContent(DelayRequest delayRequest)
         {
             if (delayRequest == null)
             {
@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.Compute.BulkActions.Models
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<BulkActionsDelayRequestContent>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<DelayRequest>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -85,10 +85,10 @@ namespace Azure.ResourceManager.Compute.BulkActions.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<BulkActionsDelayRequestContent>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<DelayRequest>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(BulkActionsDelayRequestContent)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(DelayRequest)} does not support writing '{format}' format.");
             }
             writer.WritePropertyName("delay"u8);
             writer.WriteStringValue(Delay, "O");
@@ -123,16 +123,16 @@ namespace Azure.ResourceManager.Compute.BulkActions.Models
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        BulkActionsDelayRequestContent IJsonModel<BulkActionsDelayRequestContent>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+        DelayRequest IJsonModel<DelayRequest>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual BulkActionsDelayRequestContent JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        protected virtual DelayRequest JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<BulkActionsDelayRequestContent>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<DelayRequest>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(BulkActionsDelayRequestContent)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(DelayRequest)} does not support reading '{format}' format.");
             }
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
             return DeserializeDelayRequest(document.RootElement, options);
@@ -140,7 +140,7 @@ namespace Azure.ResourceManager.Compute.BulkActions.Models
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        internal static BulkActionsDelayRequestContent DeserializeDelayRequest(JsonElement element, ModelReaderWriterOptions options)
+        internal static DelayRequest DeserializeDelayRequest(JsonElement element, ModelReaderWriterOptions options)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -178,7 +178,7 @@ namespace Azure.ResourceManager.Compute.BulkActions.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new BulkActionsDelayRequestContent(delay, resourceIds, additionalBinaryDataProperties);
+            return new DelayRequest(delay, resourceIds, additionalBinaryDataProperties);
         }
     }
 }

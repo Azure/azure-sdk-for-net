@@ -12,28 +12,28 @@ using System.Linq;
 namespace Azure.ResourceManager.Compute.BulkActions.Models
 {
     /// <summary> The response from acknowledging bulk operation errors. </summary>
-    public partial class BulkActionsAcknowledgeBulkOperationErrorsResponseResult
+    public partial class AcknowledgeBulkOperationErrorsResponse
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="BulkActionsAcknowledgeBulkOperationErrorsResponseResult"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="AcknowledgeBulkOperationErrorsResponse"/>. </summary>
         /// <param name="acknowledged"> The set of operation ids that were newly acknowledged. </param>
         /// <param name="notFound"> The set of operation ids that were not found in the completed operations store. </param>
         /// <param name="skipped"> The set of operation ids that were skipped because they were already acknowledged, not failed, or belong to a different scope. </param>
-        internal BulkActionsAcknowledgeBulkOperationErrorsResponseResult(IEnumerable<string> acknowledged, IEnumerable<string> notFound, IEnumerable<string> skipped)
+        internal AcknowledgeBulkOperationErrorsResponse(IEnumerable<string> acknowledged, IEnumerable<string> notFound, IEnumerable<string> skipped)
         {
             Acknowledged = acknowledged.ToList();
             NotFound = notFound.ToList();
             Skipped = skipped.ToList();
         }
 
-        /// <summary> Initializes a new instance of <see cref="BulkActionsAcknowledgeBulkOperationErrorsResponseResult"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="AcknowledgeBulkOperationErrorsResponse"/>. </summary>
         /// <param name="acknowledged"> The set of operation ids that were newly acknowledged. </param>
         /// <param name="notFound"> The set of operation ids that were not found in the completed operations store. </param>
         /// <param name="skipped"> The set of operation ids that were skipped because they were already acknowledged, not failed, or belong to a different scope. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal BulkActionsAcknowledgeBulkOperationErrorsResponseResult(IList<string> acknowledged, IList<string> notFound, IList<string> skipped, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal AcknowledgeBulkOperationErrorsResponse(IList<string> acknowledged, IList<string> notFound, IList<string> skipped, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Acknowledged = acknowledged;
             NotFound = notFound;

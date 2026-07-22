@@ -417,7 +417,7 @@ namespace Azure.ResourceManager.Compute.BulkActions
         /// <param name="content"> The content of the action request. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        public virtual async Task<ArmOperation<BulkActionsResourceOperationResponseResult>> AttachResourcesAsync(WaitUntil waitUntil, BulkActionsResourceAttachRequestContent content, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation<ResourceOperationResponse>> AttachResourcesAsync(WaitUntil waitUntil, ResourceAttachRequest content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(content, nameof(content));
 
@@ -429,9 +429,9 @@ namespace Azure.ResourceManager.Compute.BulkActions
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _scheduledActionsRestClient.CreateAttachResourcesRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, BulkActionsResourceAttachRequestContent.ToRequestContent(content), context);
+                HttpMessage message = _scheduledActionsRestClient.CreateAttachResourcesRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, ResourceAttachRequest.ToRequestContent(content), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                BulkActionsArmOperation<BulkActionsResourceOperationResponseResult> operation = new BulkActionsArmOperation<BulkActionsResourceOperationResponseResult>(
+                BulkActionsArmOperation<ResourceOperationResponse> operation = new BulkActionsArmOperation<ResourceOperationResponse>(
                     new ResourceOperationResponseOperationSource(),
                     _scheduledActionsClientDiagnostics,
                     Pipeline,
@@ -476,7 +476,7 @@ namespace Azure.ResourceManager.Compute.BulkActions
         /// <param name="content"> The content of the action request. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        public virtual ArmOperation<BulkActionsResourceOperationResponseResult> AttachResources(WaitUntil waitUntil, BulkActionsResourceAttachRequestContent content, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<ResourceOperationResponse> AttachResources(WaitUntil waitUntil, ResourceAttachRequest content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(content, nameof(content));
 
@@ -488,9 +488,9 @@ namespace Azure.ResourceManager.Compute.BulkActions
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _scheduledActionsRestClient.CreateAttachResourcesRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, BulkActionsResourceAttachRequestContent.ToRequestContent(content), context);
+                HttpMessage message = _scheduledActionsRestClient.CreateAttachResourcesRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, ResourceAttachRequest.ToRequestContent(content), context);
                 Response response = Pipeline.ProcessMessage(message, context);
-                BulkActionsArmOperation<BulkActionsResourceOperationResponseResult> operation = new BulkActionsArmOperation<BulkActionsResourceOperationResponseResult>(
+                BulkActionsArmOperation<ResourceOperationResponse> operation = new BulkActionsArmOperation<ResourceOperationResponse>(
                     new ResourceOperationResponseOperationSource(),
                     _scheduledActionsClientDiagnostics,
                     Pipeline,
@@ -535,7 +535,7 @@ namespace Azure.ResourceManager.Compute.BulkActions
         /// <param name="content"> The content of the action request. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        public virtual async Task<ArmOperation<BulkActionsResourceOperationResponseResult>> CancelNextOccurrenceAsync(WaitUntil waitUntil, BulkActionsCancelOccurrenceRequestContent content, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation<ResourceOperationResponse>> CancelNextOccurrenceAsync(WaitUntil waitUntil, CancelOccurrenceRequest content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(content, nameof(content));
 
@@ -547,9 +547,9 @@ namespace Azure.ResourceManager.Compute.BulkActions
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _scheduledActionsRestClient.CreateCancelNextOccurrenceRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, BulkActionsCancelOccurrenceRequestContent.ToRequestContent(content), context);
+                HttpMessage message = _scheduledActionsRestClient.CreateCancelNextOccurrenceRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, CancelOccurrenceRequest.ToRequestContent(content), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                BulkActionsArmOperation<BulkActionsResourceOperationResponseResult> operation = new BulkActionsArmOperation<BulkActionsResourceOperationResponseResult>(
+                BulkActionsArmOperation<ResourceOperationResponse> operation = new BulkActionsArmOperation<ResourceOperationResponse>(
                     new ResourceOperationResponseOperationSource(),
                     _scheduledActionsClientDiagnostics,
                     Pipeline,
@@ -594,7 +594,7 @@ namespace Azure.ResourceManager.Compute.BulkActions
         /// <param name="content"> The content of the action request. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        public virtual ArmOperation<BulkActionsResourceOperationResponseResult> CancelNextOccurrence(WaitUntil waitUntil, BulkActionsCancelOccurrenceRequestContent content, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<ResourceOperationResponse> CancelNextOccurrence(WaitUntil waitUntil, CancelOccurrenceRequest content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(content, nameof(content));
 
@@ -606,9 +606,9 @@ namespace Azure.ResourceManager.Compute.BulkActions
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _scheduledActionsRestClient.CreateCancelNextOccurrenceRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, BulkActionsCancelOccurrenceRequestContent.ToRequestContent(content), context);
+                HttpMessage message = _scheduledActionsRestClient.CreateCancelNextOccurrenceRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, CancelOccurrenceRequest.ToRequestContent(content), context);
                 Response response = Pipeline.ProcessMessage(message, context);
-                BulkActionsArmOperation<BulkActionsResourceOperationResponseResult> operation = new BulkActionsArmOperation<BulkActionsResourceOperationResponseResult>(
+                BulkActionsArmOperation<ResourceOperationResponse> operation = new BulkActionsArmOperation<ResourceOperationResponse>(
                     new ResourceOperationResponseOperationSource(),
                     _scheduledActionsClientDiagnostics,
                     Pipeline,
@@ -653,7 +653,7 @@ namespace Azure.ResourceManager.Compute.BulkActions
         /// <param name="content"> The content of the action request. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        public virtual async Task<ArmOperation<BulkActionsResourceOperationResponseResult>> DetachResourcesAsync(WaitUntil waitUntil, BulkActionsResourceDetachRequestContent content, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation<ResourceOperationResponse>> DetachResourcesAsync(WaitUntil waitUntil, ResourceDetachRequest content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(content, nameof(content));
 
@@ -665,9 +665,9 @@ namespace Azure.ResourceManager.Compute.BulkActions
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _scheduledActionsRestClient.CreateDetachResourcesRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, BulkActionsResourceDetachRequestContent.ToRequestContent(content), context);
+                HttpMessage message = _scheduledActionsRestClient.CreateDetachResourcesRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, ResourceDetachRequest.ToRequestContent(content), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                BulkActionsArmOperation<BulkActionsResourceOperationResponseResult> operation = new BulkActionsArmOperation<BulkActionsResourceOperationResponseResult>(
+                BulkActionsArmOperation<ResourceOperationResponse> operation = new BulkActionsArmOperation<ResourceOperationResponse>(
                     new ResourceOperationResponseOperationSource(),
                     _scheduledActionsClientDiagnostics,
                     Pipeline,
@@ -712,7 +712,7 @@ namespace Azure.ResourceManager.Compute.BulkActions
         /// <param name="content"> The content of the action request. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        public virtual ArmOperation<BulkActionsResourceOperationResponseResult> DetachResources(WaitUntil waitUntil, BulkActionsResourceDetachRequestContent content, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<ResourceOperationResponse> DetachResources(WaitUntil waitUntil, ResourceDetachRequest content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(content, nameof(content));
 
@@ -724,9 +724,9 @@ namespace Azure.ResourceManager.Compute.BulkActions
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _scheduledActionsRestClient.CreateDetachResourcesRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, BulkActionsResourceDetachRequestContent.ToRequestContent(content), context);
+                HttpMessage message = _scheduledActionsRestClient.CreateDetachResourcesRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, ResourceDetachRequest.ToRequestContent(content), context);
                 Response response = Pipeline.ProcessMessage(message, context);
-                BulkActionsArmOperation<BulkActionsResourceOperationResponseResult> operation = new BulkActionsArmOperation<BulkActionsResourceOperationResponseResult>(
+                BulkActionsArmOperation<ResourceOperationResponse> operation = new BulkActionsArmOperation<ResourceOperationResponse>(
                     new ResourceOperationResponseOperationSource(),
                     _scheduledActionsClientDiagnostics,
                     Pipeline,
@@ -1042,7 +1042,7 @@ namespace Azure.ResourceManager.Compute.BulkActions
         /// <param name="content"> The content of the action request. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        public virtual async Task<Response<BulkActionsResourceOperationResponseResult>> PatchResourcesAsync(BulkActionsResourcePatchRequestContent content, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<ResourceOperationResponse>> PatchResourcesAsync(ResourcePatchRequest content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(content, nameof(content));
 
@@ -1054,9 +1054,9 @@ namespace Azure.ResourceManager.Compute.BulkActions
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _scheduledActionsRestClient.CreatePatchResourcesRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, BulkActionsResourcePatchRequestContent.ToRequestContent(content), context);
+                HttpMessage message = _scheduledActionsRestClient.CreatePatchResourcesRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, ResourcePatchRequest.ToRequestContent(content), context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                Response<BulkActionsResourceOperationResponseResult> response = Response.FromValue(BulkActionsResourceOperationResponseResult.FromResponse(result), result);
+                Response<ResourceOperationResponse> response = Response.FromValue(ResourceOperationResponse.FromResponse(result), result);
                 if (response.Value == null)
                 {
                     throw new RequestFailedException(response.GetRawResponse());
@@ -1094,7 +1094,7 @@ namespace Azure.ResourceManager.Compute.BulkActions
         /// <param name="content"> The content of the action request. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        public virtual Response<BulkActionsResourceOperationResponseResult> PatchResources(BulkActionsResourcePatchRequestContent content, CancellationToken cancellationToken = default)
+        public virtual Response<ResourceOperationResponse> PatchResources(ResourcePatchRequest content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(content, nameof(content));
 
@@ -1106,9 +1106,9 @@ namespace Azure.ResourceManager.Compute.BulkActions
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _scheduledActionsRestClient.CreatePatchResourcesRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, BulkActionsResourcePatchRequestContent.ToRequestContent(content), context);
+                HttpMessage message = _scheduledActionsRestClient.CreatePatchResourcesRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, ResourcePatchRequest.ToRequestContent(content), context);
                 Response result = Pipeline.ProcessMessage(message, context);
-                Response<BulkActionsResourceOperationResponseResult> response = Response.FromValue(BulkActionsResourceOperationResponseResult.FromResponse(result), result);
+                Response<ResourceOperationResponse> response = Response.FromValue(ResourceOperationResponse.FromResponse(result), result);
                 if (response.Value == null)
                 {
                     throw new RequestFailedException(response.GetRawResponse());

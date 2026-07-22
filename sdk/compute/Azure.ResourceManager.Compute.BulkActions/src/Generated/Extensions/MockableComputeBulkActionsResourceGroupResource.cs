@@ -1218,7 +1218,7 @@ namespace Azure.ResourceManager.Compute.BulkActions.Mocking
         /// <param name="content"> The list of operation ids to acknowledge. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        public virtual async Task<Response<BulkActionsAcknowledgeBulkOperationErrorsResponseResult>> BulkAcknowledgeOperationErrorsAsync(AzureLocation location, BulkActionsAcknowledgeBulkOperationErrorsRequestContent content, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<AcknowledgeBulkOperationErrorsResponse>> BulkAcknowledgeOperationErrorsAsync(AzureLocation location, AcknowledgeBulkOperationErrorsRequest content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(content, nameof(content));
 
@@ -1230,9 +1230,9 @@ namespace Azure.ResourceManager.Compute.BulkActions.Mocking
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = VirtualMachineBulkOperationsRestClient.CreateBulkAcknowledgeOperationErrorsRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, location, BulkActionsAcknowledgeBulkOperationErrorsRequestContent.ToRequestContent(content), context);
+                HttpMessage message = VirtualMachineBulkOperationsRestClient.CreateBulkAcknowledgeOperationErrorsRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, location, AcknowledgeBulkOperationErrorsRequest.ToRequestContent(content), context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                Response<BulkActionsAcknowledgeBulkOperationErrorsResponseResult> response = Response.FromValue(BulkActionsAcknowledgeBulkOperationErrorsResponseResult.FromResponse(result), result);
+                Response<AcknowledgeBulkOperationErrorsResponse> response = Response.FromValue(AcknowledgeBulkOperationErrorsResponse.FromResponse(result), result);
                 if (response.Value == null)
                 {
                     throw new RequestFailedException(response.GetRawResponse());
@@ -1267,7 +1267,7 @@ namespace Azure.ResourceManager.Compute.BulkActions.Mocking
         /// <param name="content"> The list of operation ids to acknowledge. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        public virtual Response<BulkActionsAcknowledgeBulkOperationErrorsResponseResult> BulkAcknowledgeOperationErrors(AzureLocation location, BulkActionsAcknowledgeBulkOperationErrorsRequestContent content, CancellationToken cancellationToken = default)
+        public virtual Response<AcknowledgeBulkOperationErrorsResponse> BulkAcknowledgeOperationErrors(AzureLocation location, AcknowledgeBulkOperationErrorsRequest content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(content, nameof(content));
 
@@ -1279,9 +1279,9 @@ namespace Azure.ResourceManager.Compute.BulkActions.Mocking
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = VirtualMachineBulkOperationsRestClient.CreateBulkAcknowledgeOperationErrorsRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, location, BulkActionsAcknowledgeBulkOperationErrorsRequestContent.ToRequestContent(content), context);
+                HttpMessage message = VirtualMachineBulkOperationsRestClient.CreateBulkAcknowledgeOperationErrorsRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, location, AcknowledgeBulkOperationErrorsRequest.ToRequestContent(content), context);
                 Response result = Pipeline.ProcessMessage(message, context);
-                Response<BulkActionsAcknowledgeBulkOperationErrorsResponseResult> response = Response.FromValue(BulkActionsAcknowledgeBulkOperationErrorsResponseResult.FromResponse(result), result);
+                Response<AcknowledgeBulkOperationErrorsResponse> response = Response.FromValue(AcknowledgeBulkOperationErrorsResponse.FromResponse(result), result);
                 if (response.Value == null)
                 {
                     throw new RequestFailedException(response.GetRawResponse());

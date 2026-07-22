@@ -744,7 +744,7 @@ namespace Azure.ResourceManager.Compute.BulkActions
         /// BulkAcknowledgeOperationErrors: Acknowledge bulk operation errors for a resource group
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableComputeBulkActionsResourceGroupResource.BulkAcknowledgeOperationErrorsAsync(AzureLocation, BulkActionsAcknowledgeBulkOperationErrorsRequestContent, CancellationToken)"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockableComputeBulkActionsResourceGroupResource.BulkAcknowledgeOperationErrorsAsync(AzureLocation, AcknowledgeBulkOperationErrorsRequest, CancellationToken)"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
@@ -752,7 +752,7 @@ namespace Azure.ResourceManager.Compute.BulkActions
         /// <param name="content"> The list of operation ids to acknowledge. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
-        public static async Task<Response<BulkActionsAcknowledgeBulkOperationErrorsResponseResult>> BulkAcknowledgeOperationErrorsAsync(this ResourceGroupResource resourceGroupResource, AzureLocation location, BulkActionsAcknowledgeBulkOperationErrorsRequestContent content, CancellationToken cancellationToken = default)
+        public static async Task<Response<AcknowledgeBulkOperationErrorsResponse>> BulkAcknowledgeOperationErrorsAsync(this ResourceGroupResource resourceGroupResource, AzureLocation location, AcknowledgeBulkOperationErrorsRequest content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
 
@@ -763,7 +763,7 @@ namespace Azure.ResourceManager.Compute.BulkActions
         /// BulkAcknowledgeOperationErrors: Acknowledge bulk operation errors for a resource group
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableComputeBulkActionsResourceGroupResource.BulkAcknowledgeOperationErrors(AzureLocation, BulkActionsAcknowledgeBulkOperationErrorsRequestContent, CancellationToken)"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockableComputeBulkActionsResourceGroupResource.BulkAcknowledgeOperationErrors(AzureLocation, AcknowledgeBulkOperationErrorsRequest, CancellationToken)"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
@@ -771,7 +771,7 @@ namespace Azure.ResourceManager.Compute.BulkActions
         /// <param name="content"> The list of operation ids to acknowledge. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
-        public static Response<BulkActionsAcknowledgeBulkOperationErrorsResponseResult> BulkAcknowledgeOperationErrors(this ResourceGroupResource resourceGroupResource, AzureLocation location, BulkActionsAcknowledgeBulkOperationErrorsRequestContent content, CancellationToken cancellationToken = default)
+        public static Response<AcknowledgeBulkOperationErrorsResponse> BulkAcknowledgeOperationErrors(this ResourceGroupResource resourceGroupResource, AzureLocation location, AcknowledgeBulkOperationErrorsRequest content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
 

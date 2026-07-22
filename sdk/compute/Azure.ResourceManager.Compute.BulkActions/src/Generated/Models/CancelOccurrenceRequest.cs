@@ -14,25 +14,25 @@ using Azure.ResourceManager.Compute.BulkActions;
 namespace Azure.ResourceManager.Compute.BulkActions.Models
 {
     /// <summary> The request to cancel an occurrence. </summary>
-    public partial class BulkActionsCancelOccurrenceRequestContent
+    public partial class CancelOccurrenceRequest
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="BulkActionsCancelOccurrenceRequestContent"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="CancelOccurrenceRequest"/>. </summary>
         /// <param name="resourceIds"> The resources the cancellation should act on. If no resource is passed in the list, Scheduled Action will cancel the occurrence for all resources. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceIds"/> is null. </exception>
-        public BulkActionsCancelOccurrenceRequestContent(IEnumerable<ResourceIdentifier> resourceIds)
+        public CancelOccurrenceRequest(IEnumerable<ResourceIdentifier> resourceIds)
         {
             Argument.AssertNotNull(resourceIds, nameof(resourceIds));
 
             ResourceIds = resourceIds.ToList();
         }
 
-        /// <summary> Initializes a new instance of <see cref="BulkActionsCancelOccurrenceRequestContent"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="CancelOccurrenceRequest"/>. </summary>
         /// <param name="resourceIds"> The resources the cancellation should act on. If no resource is passed in the list, Scheduled Action will cancel the occurrence for all resources. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal BulkActionsCancelOccurrenceRequestContent(IList<ResourceIdentifier> resourceIds, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal CancelOccurrenceRequest(IList<ResourceIdentifier> resourceIds, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             ResourceIds = resourceIds;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;

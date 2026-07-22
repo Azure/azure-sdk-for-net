@@ -15,7 +15,7 @@ using Azure.ResourceManager.Compute.BulkActions.Models;
 namespace Azure.ResourceManager.Compute.BulkActions
 {
     /// <summary></summary>
-    internal partial class ResourceOperationResponseOperationSource : IOperationSource<BulkActionsResourceOperationResponseResult>
+    internal partial class ResourceOperationResponseOperationSource : IOperationSource<ResourceOperationResponse>
     {
         /// <summary></summary>
         internal ResourceOperationResponseOperationSource()
@@ -25,19 +25,19 @@ namespace Azure.ResourceManager.Compute.BulkActions
         /// <param name="response"> The response from the service. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns></returns>
-        BulkActionsResourceOperationResponseResult IOperationSource<BulkActionsResourceOperationResponseResult>.CreateResult(Response response, CancellationToken cancellationToken)
+        ResourceOperationResponse IOperationSource<ResourceOperationResponse>.CreateResult(Response response, CancellationToken cancellationToken)
         {
             using JsonDocument document = JsonDocument.Parse(response.ContentStream);
-            return BulkActionsResourceOperationResponseResult.DeserializeResourceOperationResponse(document.RootElement, ModelSerializationExtensions.WireOptions);
+            return ResourceOperationResponse.DeserializeResourceOperationResponse(document.RootElement, ModelSerializationExtensions.WireOptions);
         }
 
         /// <param name="response"> The response from the service. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns></returns>
-        async ValueTask<BulkActionsResourceOperationResponseResult> IOperationSource<BulkActionsResourceOperationResponseResult>.CreateResultAsync(Response response, CancellationToken cancellationToken)
+        async ValueTask<ResourceOperationResponse> IOperationSource<ResourceOperationResponse>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using JsonDocument document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-            return BulkActionsResourceOperationResponseResult.DeserializeResourceOperationResponse(document.RootElement, ModelSerializationExtensions.WireOptions);
+            return ResourceOperationResponse.DeserializeResourceOperationResponse(document.RootElement, ModelSerializationExtensions.WireOptions);
         }
     }
 }
