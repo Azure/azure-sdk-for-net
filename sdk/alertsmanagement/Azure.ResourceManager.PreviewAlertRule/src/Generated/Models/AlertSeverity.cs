@@ -14,21 +14,21 @@ namespace Azure.ResourceManager.PreviewAlertRule.Models
     /// <summary> Severity of the alert. Should be an integer between [0-4]. Value of 0 is severest. Relevant and required only for rules of the kind LogAlert. </summary>
     public readonly partial struct AlertSeverity : IEquatable<AlertSeverity>
     {
-        private readonly int _value;
+        private readonly long _value;
         /// <summary> 0. </summary>
-        private const int Sev0Value = 0;
+        private const long Sev0Value = 0L;
         /// <summary> 1. </summary>
-        private const int Sev1Value = 1;
+        private const long Sev1Value = 1L;
         /// <summary> 2. </summary>
-        private const int Sev2Value = 2;
+        private const long Sev2Value = 2L;
         /// <summary> 3. </summary>
-        private const int Sev3Value = 3;
+        private const long Sev3Value = 3L;
         /// <summary> 4. </summary>
-        private const int Sev4Value = 4;
+        private const long Sev4Value = 4L;
 
         /// <summary> Initializes a new instance of <see cref="AlertSeverity"/>. </summary>
         /// <param name="value"> The value. </param>
-        public AlertSeverity(int value)
+        public AlertSeverity(long value)
         {
             _value = value;
         }
@@ -60,7 +60,7 @@ namespace Azure.ResourceManager.PreviewAlertRule.Models
 
         /// <summary> Converts a string to a <see cref="AlertSeverity"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator AlertSeverity(int value) => new AlertSeverity(value);
+        public static implicit operator AlertSeverity(long value) => new AlertSeverity(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

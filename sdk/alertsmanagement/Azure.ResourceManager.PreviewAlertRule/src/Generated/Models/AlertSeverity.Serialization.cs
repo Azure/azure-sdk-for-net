@@ -10,6 +10,6 @@ namespace Azure.ResourceManager.PreviewAlertRule.Models
     /// <summary></summary>
     public readonly partial struct AlertSeverity
     {
-        internal int ToSerialInt32() => _value;
+        internal long ToSerialInt64() => _value;
     }
 }

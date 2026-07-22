@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.PreviewAlertRule.Models
             if (Optional.IsDefined(Severity))
             {
                 writer.WritePropertyName("severity"u8);
-                writer.WriteNumberValue(Severity.Value.ToSerialInt32());
+                writer.WriteNumberValue(Severity.Value.ToSerialInt64());
             }
             if (Optional.IsDefined(Enabled))
             {
@@ -216,7 +216,7 @@ namespace Azure.ResourceManager.PreviewAlertRule.Models
                     {
                         continue;
                     }
-                    severity = new AlertSeverity(prop.Value.GetInt32());
+                    severity = new AlertSeverity(prop.Value.GetInt64());
                     continue;
                 }
                 if (prop.NameEquals("enabled"u8))

@@ -27,7 +27,7 @@ namespace Azure.ResourceManager.PreviewAlertRule.Models
     public readonly partial struct AlertSeverity : System.IEquatable<Azure.ResourceManager.PreviewAlertRule.Models.AlertSeverity>
     {
         private readonly int _dummyPrimitive;
-        public AlertSeverity(int value) { throw null; }
+        public AlertSeverity(long value) { throw null; }
         public static Azure.ResourceManager.PreviewAlertRule.Models.AlertSeverity Sev0 { get { throw null; } }
         public static Azure.ResourceManager.PreviewAlertRule.Models.AlertSeverity Sev1 { get { throw null; } }
         public static Azure.ResourceManager.PreviewAlertRule.Models.AlertSeverity Sev2 { get { throw null; } }
@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.PreviewAlertRule.Models
         public override bool Equals(object obj) { throw null; }
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.PreviewAlertRule.Models.AlertSeverity left, Azure.ResourceManager.PreviewAlertRule.Models.AlertSeverity right) { throw null; }
-        public static implicit operator Azure.ResourceManager.PreviewAlertRule.Models.AlertSeverity (int value) { throw null; }
+        public static implicit operator Azure.ResourceManager.PreviewAlertRule.Models.AlertSeverity (long value) { throw null; }
         public static bool operator !=(Azure.ResourceManager.PreviewAlertRule.Models.AlertSeverity left, Azure.ResourceManager.PreviewAlertRule.Models.AlertSeverity right) { throw null; }
         public override string ToString() { throw null; }
     }

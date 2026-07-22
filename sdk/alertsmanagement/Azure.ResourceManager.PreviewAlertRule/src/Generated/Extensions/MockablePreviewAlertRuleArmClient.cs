@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.PreviewAlertRule.Mocking
 
         private ClientDiagnostics PreviewAlertRulesClientDiagnostics => _previewAlertRulesClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.PreviewAlertRule.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private PreviewAlertRules PreviewAlertRulesRestClient => _previewAlertRulesRestClient ??= new PreviewAlertRules(PreviewAlertRulesClientDiagnostics, Pipeline, Endpoint, "2025-07-01-preview");
+        private PreviewAlertRules PreviewAlertRulesRestClient => _previewAlertRulesRestClient ??= new PreviewAlertRules(PreviewAlertRulesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2025-07-01-preview");
 
         /// <summary>
         /// Retrieves the results of a simulated historical execution of an alert rule
