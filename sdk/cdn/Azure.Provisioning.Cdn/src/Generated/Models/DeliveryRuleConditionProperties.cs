@@ -9,10 +9,7 @@ using Azure.Provisioning.Primitives;
 
 namespace Azure.Provisioning.Cdn
 {
-    /// <summary>
-    /// Defines the parameters for delivery rule match conditions
-    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="RemoteAddressMatchCondition"/>, <see cref="RequestMethodMatchCondition"/>, <see cref="QueryStringMatchCondition"/>, <see cref="PostArgsMatchCondition"/>, <see cref="RequestUriMatchCondition"/>, <see cref="RequestHeaderMatchCondition"/>, <see cref="RequestBodyMatchCondition"/>, <see cref="RequestSchemeMatchCondition"/>, <see cref="UriPathMatchCondition"/>, <see cref="UriFileExtensionMatchCondition"/>, <see cref="UriFileNameMatchCondition"/>, <see cref="HttpVersionMatchCondition"/>, <see cref="CookiesMatchCondition"/>, <see cref="IsDeviceMatchCondition"/>, <see cref="SocketAddressMatchCondition"/>, <see cref="ClientPortMatchCondition"/>, <see cref="ServerPortMatchCondition"/>, <see cref="HostNameMatchCondition"/>, and <see cref="DeliveryRuleSslProtocolMatchCondition"/>.
-    /// </summary>
+    /// <summary> Defines the parameters for delivery rule match conditions. </summary>
     public partial class DeliveryRuleConditionProperties : ProvisionableConstruct
     {
         /// <summary> Creates a new DeliveryRuleConditionProperties. </summary>

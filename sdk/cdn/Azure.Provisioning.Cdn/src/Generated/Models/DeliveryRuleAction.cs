@@ -9,10 +9,7 @@ using Azure.Provisioning.Primitives;
 
 namespace Azure.Provisioning.Cdn
 {
-    /// <summary>
-    /// An action for the delivery rule.
-    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="UriRedirectAction"/>, <see cref="UriSigningAction"/>, <see cref="OriginGroupOverrideAction"/>, <see cref="UriRewriteAction"/>, <see cref="DeliveryRuleRequestHeaderAction"/>, <see cref="DeliveryRuleResponseHeaderAction"/>, <see cref="DeliveryRuleCacheExpirationAction"/>, <see cref="DeliveryRuleCacheKeyQueryStringAction"/>, and <see cref="DeliveryRuleRouteConfigurationOverrideAction"/>.
-    /// </summary>
+    /// <summary> An action for the delivery rule. </summary>
     public partial class DeliveryRuleAction : ProvisionableConstruct
     {
         /// <summary> Creates a new DeliveryRuleAction. </summary>

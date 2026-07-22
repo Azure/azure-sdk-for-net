@@ -9,10 +9,7 @@ using Azure.Provisioning.Primitives;
 
 namespace Azure.Provisioning.Cdn
 {
-    /// <summary>
-    /// The json object containing security policy parameters
-    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="SecurityPolicyWebApplicationFirewall"/>.
-    /// </summary>
+    /// <summary> The json object containing security policy parameters. </summary>
     public partial class SecurityPolicyProperties : ProvisionableConstruct
     {
         /// <summary> Creates a new SecurityPolicyProperties. </summary>
