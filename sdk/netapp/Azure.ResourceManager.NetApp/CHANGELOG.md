@@ -5,6 +5,7 @@
 ### Features Added
 
 - Upgraded api-version to `2026-05-01`.
+- Added `BreakThroughMode` property to `VolumeProperties`.
 
 ### Breaking Changes
 
