@@ -10,7 +10,7 @@ using OpenAI.Responses;
 namespace Azure.AI.Extensions.OpenAI
 {
     /// <summary> A memory search tool call. </summary>
-    [Experimental("AAIP001")]
+    [Experimental("OPENAI001")]
     public partial class MemorySearchToolCall : ResponseItem
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>

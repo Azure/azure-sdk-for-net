@@ -4,11 +4,13 @@
 
 using System;
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 using OpenAI.Responses;
 
 namespace Azure.AI.Extensions.OpenAI
 {
     /// <summary> The input definition information for an OpenAPI tool as used to configure an agent. </summary>
+    [Experimental("OPENAI001")]
     public partial class OpenAPITool : ResponseTool
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>

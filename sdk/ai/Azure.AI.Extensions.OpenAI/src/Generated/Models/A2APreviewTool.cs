@@ -10,7 +10,7 @@ using OpenAI.Responses;
 namespace Azure.AI.Extensions.OpenAI
 {
     /// <summary> An agent implementing the A2A protocol. </summary>
-    [Experimental("AAIP001")]
+    [Experimental("OPENAI001")]
     public partial class A2APreviewTool : ResponseTool
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
