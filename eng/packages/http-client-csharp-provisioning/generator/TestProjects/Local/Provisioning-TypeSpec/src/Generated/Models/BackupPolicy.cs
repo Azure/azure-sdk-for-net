@@ -10,10 +10,7 @@ using Azure.Provisioning.Primitives;
 
 namespace Azure.Provisioning.ProvisioningTypeSpec
 {
-    /// <summary>
-    /// Base backup policy with discriminator.
-    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="PeriodicBackupPolicy"/> and <see cref="ContinuousBackupPolicy"/>.
-    /// </summary>
+    /// <summary> Base backup policy with discriminator. </summary>
     public partial class BackupPolicy : ProvisionableConstruct
     {
         private BicepValue<int> _retentionDays;
