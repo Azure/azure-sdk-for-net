@@ -32,8 +32,9 @@ steps:
             --shard-name "$(shardName)" \
             --output-dir "$(Build.SourcesDirectory)/artifacts/vally-results/$(shardName)" \
             --threshold ${{ parameters.threshold }}
-      env:
-        GITHUB_TOKEN: $(azuresdk-copilot-github-pat)
+      ${{ if ne(variables['Build.Reason'], 'PullRequest') }}:
+        env:
+          GITHUB_TOKEN: $(azuresdk-copilot-github-pat)
 
   - ${{ else }}:
     - script: |
@@ -44,5 +45,6 @@ steps:
           --threshold ${{ parameters.threshold }}
       displayName: 'vally eval $(shardName)'
       workingDirectory: ${{ parameters.vallyRoot }}
-      env:
-        GITHUB_TOKEN: $(azuresdk-copilot-github-pat)
+      ${{ if ne(variables['Build.Reason'], 'PullRequest') }}:
+        env:
+          GITHUB_TOKEN: $(azuresdk-copilot-github-pat)
