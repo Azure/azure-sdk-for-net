@@ -10,93 +10,18 @@ using Azure.Provisioning.Primitives;
 
 namespace Azure.Provisioning.ServiceFabric
 {
-    /// <summary> The service resource properties. </summary>
-    public partial class ServiceResourceProperties : ProvisionableConstruct
+    /// <summary> The common service resource properties. </summary>
+    internal partial class ServiceResourcePropertiesBase : ProvisionableConstruct
     {
-        private BicepValue<string> _provisioningState;
-        private BicepValue<string> _serviceTypeName;
-        private PartitionSchemeDescription _partitionDescription;
-        private BicepValue<ArmServicePackageActivationMode> _servicePackageActivationMode;
-        private BicepValue<string> _serviceDnsName;
         private BicepValue<string> _placementConstraints;
         private BicepList<ServiceCorrelationDescription> _correlationScheme;
         private BicepList<ServiceLoadMetricDescription> _serviceLoadMetrics;
         private BicepList<ServicePlacementPolicyDescription> _servicePlacementPolicies;
         private BicepValue<ApplicationMoveCost> _defaultMoveCost;
 
-        /// <summary> Creates a new ServiceResourceProperties. </summary>
-        public ServiceResourceProperties()
+        /// <summary> Creates a new ServiceResourcePropertiesBase. </summary>
+        public ServiceResourcePropertiesBase()
         {
-        }
-
-        /// <summary> Gets the ProvisioningState. </summary>
-        public BicepValue<string> ProvisioningState
-        {
-            get
-            {
-                Initialize();
-                return _provisioningState;
-            }
-        }
-
-        /// <summary> Gets or sets the ServiceTypeName. </summary>
-        public BicepValue<string> ServiceTypeName
-        {
-            get
-            {
-                Initialize();
-                return _serviceTypeName;
-            }
-            set
-            {
-                Initialize();
-                _serviceTypeName.Assign(value);
-            }
-        }
-
-        /// <summary> Gets or sets the PartitionDescription. </summary>
-        public PartitionSchemeDescription PartitionDescription
-        {
-            get
-            {
-                Initialize();
-                return _partitionDescription;
-            }
-            set
-            {
-                Initialize();
-                AssignOrReplace(ref _partitionDescription, value);
-            }
-        }
-
-        /// <summary> Gets or sets the ServicePackageActivationMode. </summary>
-        public BicepValue<ArmServicePackageActivationMode> ServicePackageActivationMode
-        {
-            get
-            {
-                Initialize();
-                return _servicePackageActivationMode;
-            }
-            set
-            {
-                Initialize();
-                _servicePackageActivationMode.Assign(value);
-            }
-        }
-
-        /// <summary> Gets or sets the ServiceDnsName. </summary>
-        public BicepValue<string> ServiceDnsName
-        {
-            get
-            {
-                Initialize();
-                return _serviceDnsName;
-            }
-            set
-            {
-                Initialize();
-                _serviceDnsName.Assign(value);
-            }
         }
 
         /// <summary> Gets or sets the PlacementConstraints. </summary>
@@ -174,15 +99,10 @@ namespace Azure.Provisioning.ServiceFabric
             }
         }
 
-        /// <summary> Define all the provisionable properties for ServiceResourceProperties. </summary>
+        /// <summary> Define all the provisionable properties for ServiceResourcePropertiesBase. </summary>
         protected override void DefineProvisionableProperties()
         {
             base.DefineProvisionableProperties();
-            _provisioningState = DefineProperty<string>(nameof(ProvisioningState), new string[] { "provisioningState" }, isOutput: true);
-            _serviceTypeName = DefineProperty<string>(nameof(ServiceTypeName), new string[] { "serviceTypeName" });
-            _partitionDescription = DefineModelProperty<PartitionSchemeDescription>(nameof(PartitionDescription), new string[] { "partitionDescription" });
-            _servicePackageActivationMode = DefineProperty<ArmServicePackageActivationMode>(nameof(ServicePackageActivationMode), new string[] { "servicePackageActivationMode" });
-            _serviceDnsName = DefineProperty<string>(nameof(ServiceDnsName), new string[] { "serviceDnsName" });
             _placementConstraints = DefineProperty<string>(nameof(PlacementConstraints), new string[] { "placementConstraints" });
             _correlationScheme = DefineListProperty<ServiceCorrelationDescription>(nameof(CorrelationScheme), new string[] { "correlationScheme" });
             _serviceLoadMetrics = DefineListProperty<ServiceLoadMetricDescription>(nameof(ServiceLoadMetrics), new string[] { "serviceLoadMetrics" });
@@ -191,7 +111,7 @@ namespace Azure.Provisioning.ServiceFabric
             DefineAdditionalProperties();
         }
 
-        /// <summary> Define additional provisionable properties for ServiceResourceProperties that are not part of the generated code. </summary>
+        /// <summary> Define additional provisionable properties for ServiceResourcePropertiesBase that are not part of the generated code. </summary>
         partial void DefineAdditionalProperties();
     }
 }

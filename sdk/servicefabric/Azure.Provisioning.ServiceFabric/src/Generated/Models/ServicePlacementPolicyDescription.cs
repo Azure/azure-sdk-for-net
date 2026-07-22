@@ -9,10 +9,7 @@ using Azure.Provisioning.Primitives;
 
 namespace Azure.Provisioning.ServiceFabric
 {
-    /// <summary>
-    /// Describes the policy to be used for placement of a Service Fabric service.
-    /// Please note this is the abstract base class. The derived classes available for instantiation are: 
-    /// </summary>
+    /// <summary> Describes the policy to be used for placement of a Service Fabric service. </summary>
     public partial class ServicePlacementPolicyDescription : ProvisionableConstruct
     {
         /// <summary> Creates a new ServicePlacementPolicyDescription. </summary>
