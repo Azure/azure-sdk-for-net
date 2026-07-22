@@ -52,7 +52,7 @@ namespace Azure.Generator.MgmtTypeSpec.MultiService.Tests
         {
             TryGetApiVersion(ResourceType, out string fooApiVersion);
             _foosClientDiagnostics = new ClientDiagnostics("Azure.Generator.MgmtTypeSpec.MultiService.Tests", ResourceType.Namespace, Diagnostics);
-            _foosRestClient = new Foos(_foosClientDiagnostics, Pipeline, Endpoint, fooApiVersion ?? "2024-01-01");
+            _foosRestClient = new Foos(_foosClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, fooApiVersion ?? "2024-01-01");
             ValidateResourceId(id);
         }
 

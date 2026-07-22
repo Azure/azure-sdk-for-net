@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.CosmosDB
         {
             TryGetApiVersion(CosmosDBFleetspaceResource.ResourceType, out string cosmosDBFleetspaceApiVersion);
             _fleetspaceClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.CosmosDB", CosmosDBFleetspaceResource.ResourceType.Namespace, Diagnostics);
-            _fleetspaceRestClient = new Fleetspace(_fleetspaceClientDiagnostics, Pipeline, Endpoint, cosmosDBFleetspaceApiVersion ?? "2026-03-15");
+            _fleetspaceRestClient = new Fleetspace(_fleetspaceClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, cosmosDBFleetspaceApiVersion ?? "2026-03-15");
             ValidateResourceId(id);
         }
 

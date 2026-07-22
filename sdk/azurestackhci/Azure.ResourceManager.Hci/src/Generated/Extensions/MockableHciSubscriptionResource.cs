@@ -44,19 +44,19 @@ namespace Azure.ResourceManager.Hci.Mocking
 
         private ClientDiagnostics ClustersClientDiagnostics => _clustersClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Hci.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private Clusters ClustersRestClient => _clustersRestClient ??= new Clusters(ClustersClientDiagnostics, Pipeline, Endpoint, "2026-05-01-preview");
+        private Clusters ClustersRestClient => _clustersRestClient ??= new Clusters(ClustersClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2026-05-01-preview");
 
         private ClientDiagnostics EdgeMachinesClientDiagnostics => _edgeMachinesClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Hci.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private EdgeMachines EdgeMachinesRestClient => _edgeMachinesRestClient ??= new EdgeMachines(EdgeMachinesClientDiagnostics, Pipeline, Endpoint, "2026-05-01-preview");
+        private EdgeMachines EdgeMachinesRestClient => _edgeMachinesRestClient ??= new EdgeMachines(EdgeMachinesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2026-05-01-preview");
 
         private ClientDiagnostics DevicePoolsClientDiagnostics => _devicePoolsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Hci.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private DevicePools DevicePoolsRestClient => _devicePoolsRestClient ??= new DevicePools(DevicePoolsClientDiagnostics, Pipeline, Endpoint, "2026-05-01-preview");
+        private DevicePools DevicePoolsRestClient => _devicePoolsRestClient ??= new DevicePools(DevicePoolsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2026-05-01-preview");
 
         private ClientDiagnostics KubernetesVersionsClientDiagnostics => _kubernetesVersionsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Hci.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private KubernetesVersions KubernetesVersionsRestClient => _kubernetesVersionsRestClient ??= new KubernetesVersions(KubernetesVersionsClientDiagnostics, Pipeline, Endpoint, "2026-05-01-preview");
+        private KubernetesVersions KubernetesVersionsRestClient => _kubernetesVersionsRestClient ??= new KubernetesVersions(KubernetesVersionsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2026-05-01-preview");
 
         /// <summary> Gets a collection of PlatformUpdates in the <see cref="SubscriptionResource"/>. </summary>
         /// <param name="location"> The location for the resource. </param>

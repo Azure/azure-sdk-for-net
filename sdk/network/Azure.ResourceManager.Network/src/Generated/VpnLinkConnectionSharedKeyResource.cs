@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.Network
         {
             TryGetApiVersion(ResourceType, out string vpnLinkConnectionSharedKeyApiVersion);
             _vpnLinkConnectionsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Network", ResourceType.Namespace, Diagnostics);
-            _vpnLinkConnectionsRestClient = new VpnLinkConnections(_vpnLinkConnectionsClientDiagnostics, Pipeline, Endpoint, vpnLinkConnectionSharedKeyApiVersion ?? "2025-07-01");
+            _vpnLinkConnectionsRestClient = new VpnLinkConnections(_vpnLinkConnectionsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, vpnLinkConnectionSharedKeyApiVersion ?? "2025-07-01");
             ValidateResourceId(id);
         }
 

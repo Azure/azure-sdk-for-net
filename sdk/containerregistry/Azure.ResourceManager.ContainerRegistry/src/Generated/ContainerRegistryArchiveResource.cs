@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.ContainerRegistry
         {
             TryGetApiVersion(ResourceType, out string containerRegistryArchiveApiVersion);
             _archivesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ContainerRegistry", ResourceType.Namespace, Diagnostics);
-            _archivesRestClient = new Archives(_archivesClientDiagnostics, Pipeline, Endpoint, containerRegistryArchiveApiVersion ?? "2026-01-01-preview");
+            _archivesRestClient = new Archives(_archivesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, containerRegistryArchiveApiVersion ?? "2026-01-01-preview");
             ValidateResourceId(id);
         }
 

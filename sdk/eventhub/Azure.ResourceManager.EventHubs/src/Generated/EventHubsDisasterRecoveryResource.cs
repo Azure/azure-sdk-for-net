@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.EventHubs
         {
             TryGetApiVersion(ResourceType, out string eventHubsDisasterRecoveryApiVersion);
             _eventHubsDisasterRecoveryAuthorizationRuleClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.EventHubs", ResourceType.Namespace, Diagnostics);
-            _eventHubsDisasterRecoveryAuthorizationRuleRestClient = new EventHubsDisasterRecoveryAuthorizationRule(_eventHubsDisasterRecoveryAuthorizationRuleClientDiagnostics, Pipeline, Endpoint, eventHubsDisasterRecoveryApiVersion ?? "2026-01-01");
+            _eventHubsDisasterRecoveryAuthorizationRuleRestClient = new EventHubsDisasterRecoveryAuthorizationRule(_eventHubsDisasterRecoveryAuthorizationRuleClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, eventHubsDisasterRecoveryApiVersion ?? "2026-01-01");
             ValidateResourceId(id);
         }
 

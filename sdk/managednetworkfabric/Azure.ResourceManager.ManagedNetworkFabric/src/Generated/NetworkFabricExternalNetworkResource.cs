@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         {
             TryGetApiVersion(ResourceType, out string networkFabricExternalNetworkApiVersion);
             _externalNetworksClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ManagedNetworkFabric", ResourceType.Namespace, Diagnostics);
-            _externalNetworksRestClient = new ExternalNetworks(_externalNetworksClientDiagnostics, Pipeline, Endpoint, networkFabricExternalNetworkApiVersion ?? "2025-07-15");
+            _externalNetworksRestClient = new ExternalNetworks(_externalNetworksClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, networkFabricExternalNetworkApiVersion ?? "2025-07-15");
             ValidateResourceId(id);
         }
 

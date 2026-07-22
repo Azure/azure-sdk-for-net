@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.ServiceNetworking
         {
             TryGetApiVersion(TrafficControllerFrontendResource.ResourceType, out string trafficControllerFrontendApiVersion);
             _frontendsInterfaceClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ServiceNetworking", TrafficControllerFrontendResource.ResourceType.Namespace, Diagnostics);
-            _frontendsInterfaceRestClient = new FrontendsInterface(_frontendsInterfaceClientDiagnostics, Pipeline, Endpoint, trafficControllerFrontendApiVersion ?? "2025-03-01-preview");
+            _frontendsInterfaceRestClient = new FrontendsInterface(_frontendsInterfaceClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, trafficControllerFrontendApiVersion ?? "2025-03-01-preview");
             ValidateResourceId(id);
         }
 

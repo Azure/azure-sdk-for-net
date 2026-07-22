@@ -19,28 +19,28 @@ using Azure.ResourceManager;
 namespace Azure.ResourceManager.MachineLearning
 {
     /// <summary>
-    /// A class representing a collection of <see cref="MachineLearningRegistryComponentContainerResource"/> and their operations.
-    /// Each <see cref="MachineLearningRegistryComponentContainerResource"/> in the collection will belong to the same instance of <see cref="MachineLearningRegistryResource"/>.
-    /// To get a <see cref="MachineLearningRegistryComponentContainerCollection"/> instance call the GetMachineLearningRegistryComponentContainers method from an instance of <see cref="MachineLearningRegistryResource"/>.
+    /// A class representing a collection of <see cref="MachineLearninRegistryComponentContainerResource"/> and their operations.
+    /// Each <see cref="MachineLearninRegistryComponentContainerResource"/> in the collection will belong to the same instance of <see cref="MachineLearningRegistryResource"/>.
+    /// To get a <see cref="MachineLearninRegistryComponentContainerCollection"/> instance call the GetMachineLearninRegistryComponentContainers method from an instance of <see cref="MachineLearningRegistryResource"/>.
     /// </summary>
-    public partial class MachineLearningRegistryComponentContainerCollection : ArmCollection, IEnumerable<MachineLearningRegistryComponentContainerResource>, IAsyncEnumerable<MachineLearningRegistryComponentContainerResource>
+    public partial class MachineLearninRegistryComponentContainerCollection : ArmCollection, IEnumerable<MachineLearninRegistryComponentContainerResource>, IAsyncEnumerable<MachineLearninRegistryComponentContainerResource>
     {
         private readonly ClientDiagnostics _registryComponentContainersClientDiagnostics;
         private readonly RegistryComponentContainers _registryComponentContainersRestClient;
 
-        /// <summary> Initializes a new instance of MachineLearningRegistryComponentContainerCollection for mocking. </summary>
-        protected MachineLearningRegistryComponentContainerCollection()
+        /// <summary> Initializes a new instance of MachineLearninRegistryComponentContainerCollection for mocking. </summary>
+        protected MachineLearninRegistryComponentContainerCollection()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="MachineLearningRegistryComponentContainerCollection"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="MachineLearninRegistryComponentContainerCollection"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
-        internal MachineLearningRegistryComponentContainerCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
+        internal MachineLearninRegistryComponentContainerCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            TryGetApiVersion(MachineLearningRegistryComponentContainerResource.ResourceType, out string machineLearningRegistryComponentContainerApiVersion);
-            _registryComponentContainersClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.MachineLearning", MachineLearningRegistryComponentContainerResource.ResourceType.Namespace, Diagnostics);
-            _registryComponentContainersRestClient = new RegistryComponentContainers(_registryComponentContainersClientDiagnostics, Pipeline, Endpoint, machineLearningRegistryComponentContainerApiVersion ?? "2026-03-15-preview");
+            TryGetApiVersion(MachineLearninRegistryComponentContainerResource.ResourceType, out string machineLearninRegistryComponentContainerApiVersion);
+            _registryComponentContainersClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.MachineLearning", MachineLearninRegistryComponentContainerResource.ResourceType.Namespace, Diagnostics);
+            _registryComponentContainersRestClient = new RegistryComponentContainers(_registryComponentContainersClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, machineLearninRegistryComponentContainerApiVersion ?? "2026-03-15-preview");
             ValidateResourceId(id);
         }
 
@@ -77,12 +77,12 @@ namespace Azure.ResourceManager.MachineLearning
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="componentName"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="componentName"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual async Task<ArmOperation<MachineLearningRegistryComponentContainerResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string componentName, MachineLearningComponentContainerData data, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation<MachineLearninRegistryComponentContainerResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string componentName, MachineLearningComponentContainerData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(componentName, nameof(componentName));
             Argument.AssertNotNull(data, nameof(data));
 
-            using DiagnosticScope scope = _registryComponentContainersClientDiagnostics.CreateScope("MachineLearningRegistryComponentContainerCollection.CreateOrUpdate");
+            using DiagnosticScope scope = _registryComponentContainersClientDiagnostics.CreateScope("MachineLearninRegistryComponentContainerCollection.CreateOrUpdate");
             scope.Start();
             try
             {
@@ -92,8 +92,8 @@ namespace Azure.ResourceManager.MachineLearning
                 };
                 HttpMessage message = _registryComponentContainersRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, componentName, MachineLearningComponentContainerData.ToRequestContent(data), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                MachineLearningArmOperation<MachineLearningRegistryComponentContainerResource> operation = new MachineLearningArmOperation<MachineLearningRegistryComponentContainerResource>(
-                    new MachineLearningRegistryComponentContainerResourceOperationSource(Client),
+                MachineLearningArmOperation<MachineLearninRegistryComponentContainerResource> operation = new MachineLearningArmOperation<MachineLearninRegistryComponentContainerResource>(
+                    new MachineLearninRegistryComponentContainerResourceOperationSource(Client),
                     _registryComponentContainersClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -135,12 +135,12 @@ namespace Azure.ResourceManager.MachineLearning
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="componentName"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="componentName"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual ArmOperation<MachineLearningRegistryComponentContainerResource> CreateOrUpdate(WaitUntil waitUntil, string componentName, MachineLearningComponentContainerData data, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<MachineLearninRegistryComponentContainerResource> CreateOrUpdate(WaitUntil waitUntil, string componentName, MachineLearningComponentContainerData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(componentName, nameof(componentName));
             Argument.AssertNotNull(data, nameof(data));
 
-            using DiagnosticScope scope = _registryComponentContainersClientDiagnostics.CreateScope("MachineLearningRegistryComponentContainerCollection.CreateOrUpdate");
+            using DiagnosticScope scope = _registryComponentContainersClientDiagnostics.CreateScope("MachineLearninRegistryComponentContainerCollection.CreateOrUpdate");
             scope.Start();
             try
             {
@@ -150,8 +150,8 @@ namespace Azure.ResourceManager.MachineLearning
                 };
                 HttpMessage message = _registryComponentContainersRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, componentName, MachineLearningComponentContainerData.ToRequestContent(data), context);
                 Response response = Pipeline.ProcessMessage(message, context);
-                MachineLearningArmOperation<MachineLearningRegistryComponentContainerResource> operation = new MachineLearningArmOperation<MachineLearningRegistryComponentContainerResource>(
-                    new MachineLearningRegistryComponentContainerResourceOperationSource(Client),
+                MachineLearningArmOperation<MachineLearninRegistryComponentContainerResource> operation = new MachineLearningArmOperation<MachineLearninRegistryComponentContainerResource>(
+                    new MachineLearninRegistryComponentContainerResourceOperationSource(Client),
                     _registryComponentContainersClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -191,11 +191,11 @@ namespace Azure.ResourceManager.MachineLearning
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="componentName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="componentName"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual async Task<Response<MachineLearningRegistryComponentContainerResource>> GetAsync(string componentName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<MachineLearninRegistryComponentContainerResource>> GetAsync(string componentName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(componentName, nameof(componentName));
 
-            using DiagnosticScope scope = _registryComponentContainersClientDiagnostics.CreateScope("MachineLearningRegistryComponentContainerCollection.Get");
+            using DiagnosticScope scope = _registryComponentContainersClientDiagnostics.CreateScope("MachineLearninRegistryComponentContainerCollection.Get");
             scope.Start();
             try
             {
@@ -210,7 +210,7 @@ namespace Azure.ResourceManager.MachineLearning
                 {
                     throw new RequestFailedException(response.GetRawResponse());
                 }
-                return Response.FromValue(new MachineLearningRegistryComponentContainerResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new MachineLearninRegistryComponentContainerResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -240,11 +240,11 @@ namespace Azure.ResourceManager.MachineLearning
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="componentName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="componentName"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual Response<MachineLearningRegistryComponentContainerResource> Get(string componentName, CancellationToken cancellationToken = default)
+        public virtual Response<MachineLearninRegistryComponentContainerResource> Get(string componentName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(componentName, nameof(componentName));
 
-            using DiagnosticScope scope = _registryComponentContainersClientDiagnostics.CreateScope("MachineLearningRegistryComponentContainerCollection.Get");
+            using DiagnosticScope scope = _registryComponentContainersClientDiagnostics.CreateScope("MachineLearninRegistryComponentContainerCollection.Get");
             scope.Start();
             try
             {
@@ -259,7 +259,7 @@ namespace Azure.ResourceManager.MachineLearning
                 {
                     throw new RequestFailedException(response.GetRawResponse());
                 }
-                return Response.FromValue(new MachineLearningRegistryComponentContainerResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new MachineLearninRegistryComponentContainerResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -287,21 +287,21 @@ namespace Azure.ResourceManager.MachineLearning
         /// </summary>
         /// <param name="skip"> Continuation token for pagination. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="MachineLearningRegistryComponentContainerResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<MachineLearningRegistryComponentContainerResource> GetAllAsync(string skip = default, CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="MachineLearninRegistryComponentContainerResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<MachineLearninRegistryComponentContainerResource> GetAllAsync(string skip = default, CancellationToken cancellationToken = default)
         {
             RequestContext context = new RequestContext
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<MachineLearningComponentContainerData, MachineLearningRegistryComponentContainerResource>(new RegistryComponentContainersGetAllAsyncCollectionResultOfT(
+            return new AsyncPageableWrapper<MachineLearningComponentContainerData, MachineLearninRegistryComponentContainerResource>(new RegistryComponentContainersGetAllAsyncCollectionResultOfT(
                 _registryComponentContainersRestClient,
                 Id.SubscriptionId,
                 Id.ResourceGroupName,
                 Id.Name,
                 skip,
                 context,
-                "MachineLearningRegistryComponentContainerCollection.GetAll"), data => new MachineLearningRegistryComponentContainerResource(Client, data));
+                "MachineLearninRegistryComponentContainerCollection.GetAll"), data => new MachineLearninRegistryComponentContainerResource(Client, data));
         }
 
         /// <summary>
@@ -323,21 +323,21 @@ namespace Azure.ResourceManager.MachineLearning
         /// </summary>
         /// <param name="skip"> Continuation token for pagination. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="MachineLearningRegistryComponentContainerResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<MachineLearningRegistryComponentContainerResource> GetAll(string skip = default, CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="MachineLearninRegistryComponentContainerResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<MachineLearninRegistryComponentContainerResource> GetAll(string skip = default, CancellationToken cancellationToken = default)
         {
             RequestContext context = new RequestContext
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<MachineLearningComponentContainerData, MachineLearningRegistryComponentContainerResource>(new RegistryComponentContainersGetAllCollectionResultOfT(
+            return new PageableWrapper<MachineLearningComponentContainerData, MachineLearninRegistryComponentContainerResource>(new RegistryComponentContainersGetAllCollectionResultOfT(
                 _registryComponentContainersRestClient,
                 Id.SubscriptionId,
                 Id.ResourceGroupName,
                 Id.Name,
                 skip,
                 context,
-                "MachineLearningRegistryComponentContainerCollection.GetAll"), data => new MachineLearningRegistryComponentContainerResource(Client, data));
+                "MachineLearninRegistryComponentContainerCollection.GetAll"), data => new MachineLearninRegistryComponentContainerResource(Client, data));
         }
 
         /// <summary>
@@ -365,7 +365,7 @@ namespace Azure.ResourceManager.MachineLearning
         {
             Argument.AssertNotNullOrEmpty(componentName, nameof(componentName));
 
-            using DiagnosticScope scope = _registryComponentContainersClientDiagnostics.CreateScope("MachineLearningRegistryComponentContainerCollection.Exists");
+            using DiagnosticScope scope = _registryComponentContainersClientDiagnostics.CreateScope("MachineLearninRegistryComponentContainerCollection.Exists");
             scope.Start();
             try
             {
@@ -422,7 +422,7 @@ namespace Azure.ResourceManager.MachineLearning
         {
             Argument.AssertNotNullOrEmpty(componentName, nameof(componentName));
 
-            using DiagnosticScope scope = _registryComponentContainersClientDiagnostics.CreateScope("MachineLearningRegistryComponentContainerCollection.Exists");
+            using DiagnosticScope scope = _registryComponentContainersClientDiagnostics.CreateScope("MachineLearninRegistryComponentContainerCollection.Exists");
             scope.Start();
             try
             {
@@ -475,11 +475,11 @@ namespace Azure.ResourceManager.MachineLearning
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="componentName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="componentName"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual async Task<NullableResponse<MachineLearningRegistryComponentContainerResource>> GetIfExistsAsync(string componentName, CancellationToken cancellationToken = default)
+        public virtual async Task<NullableResponse<MachineLearninRegistryComponentContainerResource>> GetIfExistsAsync(string componentName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(componentName, nameof(componentName));
 
-            using DiagnosticScope scope = _registryComponentContainersClientDiagnostics.CreateScope("MachineLearningRegistryComponentContainerCollection.GetIfExists");
+            using DiagnosticScope scope = _registryComponentContainersClientDiagnostics.CreateScope("MachineLearninRegistryComponentContainerCollection.GetIfExists");
             scope.Start();
             try
             {
@@ -504,9 +504,9 @@ namespace Azure.ResourceManager.MachineLearning
                 }
                 if (response.Value == null)
                 {
-                    return new NoValueResponse<MachineLearningRegistryComponentContainerResource>(response.GetRawResponse());
+                    return new NoValueResponse<MachineLearninRegistryComponentContainerResource>(response.GetRawResponse());
                 }
-                return Response.FromValue(new MachineLearningRegistryComponentContainerResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new MachineLearninRegistryComponentContainerResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -536,11 +536,11 @@ namespace Azure.ResourceManager.MachineLearning
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="componentName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="componentName"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual NullableResponse<MachineLearningRegistryComponentContainerResource> GetIfExists(string componentName, CancellationToken cancellationToken = default)
+        public virtual NullableResponse<MachineLearninRegistryComponentContainerResource> GetIfExists(string componentName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(componentName, nameof(componentName));
 
-            using DiagnosticScope scope = _registryComponentContainersClientDiagnostics.CreateScope("MachineLearningRegistryComponentContainerCollection.GetIfExists");
+            using DiagnosticScope scope = _registryComponentContainersClientDiagnostics.CreateScope("MachineLearninRegistryComponentContainerCollection.GetIfExists");
             scope.Start();
             try
             {
@@ -565,9 +565,9 @@ namespace Azure.ResourceManager.MachineLearning
                 }
                 if (response.Value == null)
                 {
-                    return new NoValueResponse<MachineLearningRegistryComponentContainerResource>(response.GetRawResponse());
+                    return new NoValueResponse<MachineLearninRegistryComponentContainerResource>(response.GetRawResponse());
                 }
-                return Response.FromValue(new MachineLearningRegistryComponentContainerResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new MachineLearninRegistryComponentContainerResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -576,7 +576,7 @@ namespace Azure.ResourceManager.MachineLearning
             }
         }
 
-        IEnumerator<MachineLearningRegistryComponentContainerResource> IEnumerable<MachineLearningRegistryComponentContainerResource>.GetEnumerator()
+        IEnumerator<MachineLearninRegistryComponentContainerResource> IEnumerable<MachineLearninRegistryComponentContainerResource>.GetEnumerator()
         {
             return GetAll().GetEnumerator();
         }
@@ -587,7 +587,7 @@ namespace Azure.ResourceManager.MachineLearning
         }
 
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        IAsyncEnumerator<MachineLearningRegistryComponentContainerResource> IAsyncEnumerable<MachineLearningRegistryComponentContainerResource>.GetAsyncEnumerator(CancellationToken cancellationToken)
+        IAsyncEnumerator<MachineLearninRegistryComponentContainerResource> IAsyncEnumerable<MachineLearninRegistryComponentContainerResource>.GetAsyncEnumerator(CancellationToken cancellationToken)
         {
             return GetAllAsync(cancellationToken: cancellationToken).GetAsyncEnumerator(cancellationToken);
         }

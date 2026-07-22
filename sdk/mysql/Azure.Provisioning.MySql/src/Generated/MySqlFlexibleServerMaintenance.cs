@@ -26,7 +26,7 @@ namespace Azure.Provisioning.MySql
         /// <summary> Creates a new MySqlFlexibleServerMaintenance. </summary>
         /// <param name="bicepIdentifier"> The bicep identifier name. </param>
         /// <param name="resourceVersion"> The resource API version. </param>
-        public MySqlFlexibleServerMaintenance(string bicepIdentifier, string resourceVersion = null) : base(bicepIdentifier, "Microsoft.DBforMySQL/flexibleServers/maintenances", resourceVersion ?? "2024-12-30")
+        internal MySqlFlexibleServerMaintenance(string bicepIdentifier, string resourceVersion = null) : base(bicepIdentifier, "Microsoft.DBforMySQL/flexibleServers/maintenances", resourceVersion ?? "2024-12-30")
         {
         }
 
@@ -65,18 +65,13 @@ namespace Azure.Provisioning.MySql
             }
         }
 
-        /// <summary> Gets or sets the Properties. </summary>
+        /// <summary> Gets the Properties. </summary>
         internal MaintenanceProperties Properties
         {
             get
             {
                 Initialize();
                 return _properties;
-            }
-            set
-            {
-                Initialize();
-                AssignOrReplace(ref _properties, value);
             }
         }
 
@@ -100,10 +95,6 @@ namespace Azure.Provisioning.MySql
         {
             get
             {
-                if (Properties is null)
-                {
-                    Properties = new MaintenanceProperties();
-                }
                 return Properties.MaintenanceType;
             }
         }
@@ -113,28 +104,16 @@ namespace Azure.Provisioning.MySql
         {
             get
             {
-                if (Properties is null)
-                {
-                    Properties = new MaintenanceProperties();
-                }
                 return Properties.MaintenanceState;
             }
         }
 
-        /// <summary> Gets or sets the MaintenanceStartOn. </summary>
+        /// <summary> Gets the MaintenanceStartOn. </summary>
         public BicepValue<DateTimeOffset> MaintenanceStartOn
         {
             get
             {
-                return Properties is null ? default : Properties.MaintenanceStartOn;
-            }
-            set
-            {
-                if (Properties is null)
-                {
-                    Properties = new MaintenanceProperties();
-                }
-                Properties.MaintenanceStartOn = value;
+                return Properties.MaintenanceStartOn;
             }
         }
 
@@ -143,10 +122,6 @@ namespace Azure.Provisioning.MySql
         {
             get
             {
-                if (Properties is null)
-                {
-                    Properties = new MaintenanceProperties();
-                }
                 return Properties.MaintenanceEndOn;
             }
         }
@@ -156,10 +131,6 @@ namespace Azure.Provisioning.MySql
         {
             get
             {
-                if (Properties is null)
-                {
-                    Properties = new MaintenanceProperties();
-                }
                 return Properties.MaintenanceExecutionStartOn;
             }
         }
@@ -169,10 +140,6 @@ namespace Azure.Provisioning.MySql
         {
             get
             {
-                if (Properties is null)
-                {
-                    Properties = new MaintenanceProperties();
-                }
                 return Properties.MaintenanceExecutionEndOn;
             }
         }
@@ -182,10 +149,6 @@ namespace Azure.Provisioning.MySql
         {
             get
             {
-                if (Properties is null)
-                {
-                    Properties = new MaintenanceProperties();
-                }
                 return Properties.MaintenanceAvailableScheduleMinOn;
             }
         }
@@ -195,10 +158,6 @@ namespace Azure.Provisioning.MySql
         {
             get
             {
-                if (Properties is null)
-                {
-                    Properties = new MaintenanceProperties();
-                }
                 return Properties.MaintenanceAvailableScheduleMaxOn;
             }
         }
@@ -208,10 +167,6 @@ namespace Azure.Provisioning.MySql
         {
             get
             {
-                if (Properties is null)
-                {
-                    Properties = new MaintenanceProperties();
-                }
                 return Properties.MaintenanceTitle;
             }
         }
@@ -221,10 +176,6 @@ namespace Azure.Provisioning.MySql
         {
             get
             {
-                if (Properties is null)
-                {
-                    Properties = new MaintenanceProperties();
-                }
                 return Properties.MaintenanceDescription;
             }
         }
@@ -234,10 +185,6 @@ namespace Azure.Provisioning.MySql
         {
             get
             {
-                if (Properties is null)
-                {
-                    Properties = new MaintenanceProperties();
-                }
                 return Properties.ProvisioningState;
             }
         }
@@ -249,7 +196,7 @@ namespace Azure.Provisioning.MySql
             _id = DefineProperty<ResourceIdentifier>(nameof(Id), new string[] { "id" }, isOutput: true);
             _name = DefineProperty<string>(nameof(Name), new string[] { "name" }, isRequired: true);
             _systemData = DefineModelProperty<SystemData>(nameof(SystemData), new string[] { "systemData" }, isOutput: true);
-            _properties = DefineModelProperty<MaintenanceProperties>(nameof(Properties), new string[] { "properties" }, isRequired: true);
+            _properties = DefineModelProperty<MaintenanceProperties>(nameof(Properties), new string[] { "properties" });
             _parent = DefineResource<MySqlFlexibleServer>("Parent", new string[] { "parent" }, isRequired: true);
             DefineAdditionalProperties();
         }

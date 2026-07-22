@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.Monitor
         {
             TryGetApiVersion(DataCollectionEndpointResource.ResourceType, out string dataCollectionEndpointApiVersion);
             _dataCollectionEndpointsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Monitor", DataCollectionEndpointResource.ResourceType.Namespace, Diagnostics);
-            _dataCollectionEndpointsRestClient = new DataCollectionEndpoints(_dataCollectionEndpointsClientDiagnostics, Pipeline, Endpoint, dataCollectionEndpointApiVersion ?? "2024-03-11");
+            _dataCollectionEndpointsRestClient = new DataCollectionEndpoints(_dataCollectionEndpointsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, dataCollectionEndpointApiVersion ?? "2024-03-11");
             ValidateResourceId(id);
         }
 

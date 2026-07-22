@@ -387,7 +387,7 @@ namespace Azure.Generator.Provisioning.Tests
             return new ArmResourceMetadata(
                 path,
                 model.Name,
-                resourceType,
+                new ResourceTypePattern(resourceType),
                 model,
                 new ArmScopeInfo(scope, RequestPathPattern.GetFromScope(scope, path), null),
                 methods,

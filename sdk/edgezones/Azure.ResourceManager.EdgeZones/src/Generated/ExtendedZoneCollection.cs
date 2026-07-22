@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.EdgeZones
         {
             TryGetApiVersion(ExtendedZoneResource.ResourceType, out string extendedZoneApiVersion);
             _extendedZonesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.EdgeZones", ExtendedZoneResource.ResourceType.Namespace, Diagnostics);
-            _extendedZonesRestClient = new ExtendedZones(_extendedZonesClientDiagnostics, Pipeline, Endpoint, extendedZoneApiVersion ?? "2024-04-01-preview");
+            _extendedZonesRestClient = new ExtendedZones(_extendedZonesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, extendedZoneApiVersion ?? "2024-04-01-preview");
             ValidateResourceId(id);
         }
 

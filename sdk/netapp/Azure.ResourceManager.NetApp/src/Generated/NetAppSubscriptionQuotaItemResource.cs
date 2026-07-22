@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.NetApp
         {
             TryGetApiVersion(ResourceType, out string netAppSubscriptionQuotaItemApiVersion);
             _netAppSubscriptionQuotaItemsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.NetApp", ResourceType.Namespace, Diagnostics);
-            _netAppSubscriptionQuotaItemsRestClient = new NetAppSubscriptionQuotaItems(_netAppSubscriptionQuotaItemsClientDiagnostics, Pipeline, Endpoint, netAppSubscriptionQuotaItemApiVersion ?? "2026-04-15-preview");
+            _netAppSubscriptionQuotaItemsRestClient = new NetAppSubscriptionQuotaItems(_netAppSubscriptionQuotaItemsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, netAppSubscriptionQuotaItemApiVersion ?? "2026-04-15-preview");
             ValidateResourceId(id);
         }
 

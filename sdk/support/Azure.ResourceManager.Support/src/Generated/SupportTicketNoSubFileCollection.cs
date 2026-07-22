@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.Support
         {
             TryGetApiVersion(SupportTicketNoSubFileResource.ResourceType, out string supportTicketNoSubFileApiVersion);
             _supportTicketNoSubFileClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Support", SupportTicketNoSubFileResource.ResourceType.Namespace, Diagnostics);
-            _supportTicketNoSubFileRestClient = new SupportTicketNoSubFile(_supportTicketNoSubFileClientDiagnostics, Pipeline, Endpoint, supportTicketNoSubFileApiVersion ?? "2025-06-01-preview");
+            _supportTicketNoSubFileRestClient = new SupportTicketNoSubFile(_supportTicketNoSubFileClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, supportTicketNoSubFileApiVersion ?? "2025-06-01-preview");
             ValidateResourceId(id);
         }
 

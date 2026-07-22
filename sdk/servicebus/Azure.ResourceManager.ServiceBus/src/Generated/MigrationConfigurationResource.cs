@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.ServiceBus
         {
             TryGetApiVersion(ResourceType, out string migrationConfigurationApiVersion);
             _migrationConfigsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ServiceBus", ResourceType.Namespace, Diagnostics);
-            _migrationConfigsRestClient = new MigrationConfigs(_migrationConfigsClientDiagnostics, Pipeline, Endpoint, migrationConfigurationApiVersion ?? "2026-01-01");
+            _migrationConfigsRestClient = new MigrationConfigs(_migrationConfigsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, migrationConfigurationApiVersion ?? "2026-01-01");
             ValidateResourceId(id);
         }
 

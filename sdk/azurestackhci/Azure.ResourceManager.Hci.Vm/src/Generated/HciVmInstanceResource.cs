@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.Hci.Vm
         {
             TryGetApiVersion(ResourceType, out string hciVmInstanceApiVersion);
             _virtualMachineInstancesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Hci.Vm", ResourceType.Namespace, Diagnostics);
-            _virtualMachineInstancesRestClient = new VirtualMachineInstances(_virtualMachineInstancesClientDiagnostics, Pipeline, Endpoint, hciVmInstanceApiVersion ?? "2025-09-01-preview");
+            _virtualMachineInstancesRestClient = new VirtualMachineInstances(_virtualMachineInstancesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, hciVmInstanceApiVersion ?? "2025-09-01-preview");
             ValidateResourceId(id);
         }
 

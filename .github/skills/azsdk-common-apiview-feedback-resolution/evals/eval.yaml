@@ -20,10 +20,6 @@ scoring:
 stimuli:
   - name: apiview-basic-001
     prompt: "My Python SDK PR has APIView comments that I need to address. Can you help me retrieve and resolve them?"
-    environment:
-      # Load the real skill so the executor can route to it and call its tools.
-      skills:
-        - ..
     graders:
       - type: tool-calls
         config:

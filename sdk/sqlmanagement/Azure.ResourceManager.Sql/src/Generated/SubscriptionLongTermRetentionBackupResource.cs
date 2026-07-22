@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.Sql
         {
             TryGetApiVersion(ResourceType, out string subscriptionLongTermRetentionBackupApiVersion);
             _longTermRetentionBackupsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Sql", ResourceType.Namespace, Diagnostics);
-            _longTermRetentionBackupsRestClient = new LongTermRetentionBackups(_longTermRetentionBackupsClientDiagnostics, Pipeline, Endpoint, subscriptionLongTermRetentionBackupApiVersion ?? "2025-02-01-preview");
+            _longTermRetentionBackupsRestClient = new LongTermRetentionBackups(_longTermRetentionBackupsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, subscriptionLongTermRetentionBackupApiVersion ?? "2025-02-01-preview");
             ValidateResourceId(id);
         }
 

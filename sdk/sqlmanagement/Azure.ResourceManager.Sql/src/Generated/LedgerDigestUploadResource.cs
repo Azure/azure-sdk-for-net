@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.Sql
         {
             TryGetApiVersion(ResourceType, out string ledgerDigestUploadApiVersion);
             _ledgerDigestUploadsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Sql", ResourceType.Namespace, Diagnostics);
-            _ledgerDigestUploadsRestClient = new LedgerDigestUploads(_ledgerDigestUploadsClientDiagnostics, Pipeline, Endpoint, ledgerDigestUploadApiVersion ?? "2025-02-01-preview");
+            _ledgerDigestUploadsRestClient = new LedgerDigestUploads(_ledgerDigestUploadsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, ledgerDigestUploadApiVersion ?? "2025-02-01-preview");
             ValidateResourceId(id);
         }
 

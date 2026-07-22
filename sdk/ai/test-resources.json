@@ -178,13 +178,84 @@
             "metadata": {
                 "description": "The capacity of the model deployment in TPM."
             }
+        },
+        "embeddingModelName": {
+            "type": "string",
+            "defaultValue": "text-embedding-3-small",
+            "metadata": {
+                "description": "The name of the embedding model to deploy."
+            }
+        },
+        "embeddingModelFormat": {
+            "type": "string",
+            "defaultValue": "OpenAI"
+        },
+        "embeddingModelVersion": {
+            "type": "string",
+            "defaultValue": "1"
+        },
+        "embeddingModelSkuName": {
+            "type": "string",
+            "defaultValue": "GlobalStandard"
+        },
+        "embeddingModelCapacity": {
+            "type": "int",
+            "defaultValue": 50
+        },
+        "imageModelName": {
+            "type": "string",
+            "defaultValue": "gpt-image-1-mini",
+            "metadata": {
+                "description": "The name of the image generation model to deploy. Requires a region where the subscription has the gpt-image feature enabled (for example westus3, swedencentral, or eastus2); it is not available in eastus."
+            }
+        },
+        "imageModelFormat": {
+            "type": "string",
+            "defaultValue": "OpenAI"
+        },
+        "imageModelVersion": {
+            "type": "string",
+            "defaultValue": "2025-10-06"
+        },
+        "imageModelSkuName": {
+            "type": "string",
+            "defaultValue": "GlobalStandard"
+        },
+        "imageModelCapacity": {
+            "type": "int",
+            "defaultValue": 1
+        },
+        "computerUseModelName": {
+            "type": "string",
+            "defaultValue": "computer-use-preview",
+            "metadata": {
+                "description": "The name of the computer-use model to deploy. computer-use-preview is a limited-access model; the subscription must have access and the GlobalStandard SKU in the deployment region (for example eastus2 or swedencentral). eastus and westus3 only offer the Provisioned SKU."
+            }
+        },
+        "computerUseModelFormat": {
+            "type": "string",
+            "defaultValue": "OpenAI"
+        },
+        "computerUseModelVersion": {
+            "type": "string",
+            "defaultValue": "2025-03-11"
+        },
+        "computerUseModelSkuName": {
+            "type": "string",
+            "defaultValue": "GlobalStandard"
+        },
+        "computerUseModelCapacity": {
+            "type": "int",
+            "defaultValue": 1
         }
     },
     "variables": {
         "aiServicesName": "[concat(parameters('baseName'), '-ai')]",
         "defaultVNetName": "[concat(parameters('baseName'), '-vnet')]",
         "defaultSubnetName": "default",
-        "defaultAddressPrefix": "10.0.0.0/16"
+        "defaultAddressPrefix": "10.0.0.0/16",
+        "bingCustomSearchName": "[concat(parameters('baseName'), '-bingcustom')]",
+        "bingCustomSearchConnectionName": "[concat(variables('aiServicesName'), '-bingcustomsearchconnection')]"
     },
     "resources": [
         {
@@ -306,6 +377,97 @@
             },
             "dependsOn": [
                 "[resourceId('Microsoft.CognitiveServices/accounts', variables('aiServicesName'))]"
+            ]
+        },
+        {
+            "type": "Microsoft.CognitiveServices/accounts/deployments",
+            "apiVersion": "2024-10-01",
+            "name": "[concat(variables('aiServicesName'), '/', parameters('embeddingModelName'))]",
+            "sku": {
+                "capacity": "[parameters('embeddingModelCapacity')]",
+                "name": "[parameters('embeddingModelSkuName')]"
+            },
+            "properties": {
+                "model": {
+                    "name": "[parameters('embeddingModelName')]",
+                    "format": "[parameters('embeddingModelFormat')]",
+                    "version": "[parameters('embeddingModelVersion')]"
+                }
+            },
+            "dependsOn": [
+                "[resourceId('Microsoft.CognitiveServices/accounts/deployments', variables('aiServicesName'), parameters('modelName'))]"
+            ]
+        },
+        {
+            "type": "Microsoft.CognitiveServices/accounts/deployments",
+            "apiVersion": "2024-10-01",
+            "name": "[concat(variables('aiServicesName'), '/', parameters('imageModelName'))]",
+            "sku": {
+                "capacity": "[parameters('imageModelCapacity')]",
+                "name": "[parameters('imageModelSkuName')]"
+            },
+            "properties": {
+                "model": {
+                    "name": "[parameters('imageModelName')]",
+                    "format": "[parameters('imageModelFormat')]",
+                    "version": "[parameters('imageModelVersion')]"
+                }
+            },
+            "dependsOn": [
+                "[resourceId('Microsoft.CognitiveServices/accounts/deployments', variables('aiServicesName'), parameters('embeddingModelName'))]"
+            ]
+        },
+        {
+            "type": "Microsoft.CognitiveServices/accounts/deployments",
+            "apiVersion": "2024-10-01",
+            "name": "[concat(variables('aiServicesName'), '/', parameters('computerUseModelName'))]",
+            "sku": {
+                "capacity": "[parameters('computerUseModelCapacity')]",
+                "name": "[parameters('computerUseModelSkuName')]"
+            },
+            "properties": {
+                "model": {
+                    "name": "[parameters('computerUseModelName')]",
+                    "format": "[parameters('computerUseModelFormat')]",
+                    "version": "[parameters('computerUseModelVersion')]"
+                }
+            },
+            "dependsOn": [
+                "[resourceId('Microsoft.CognitiveServices/accounts/deployments', variables('aiServicesName'), parameters('imageModelName'))]"
+            ]
+        },
+        {
+            "type": "Microsoft.Bing/accounts",
+            "apiVersion": "2020-06-10",
+            "name": "[variables('bingCustomSearchName')]",
+            "location": "global",
+            "sku": {
+                "name": "G2"
+            },
+            "kind": "Bing.GroundingCustomSearch",
+            "tags": "[if(contains(parameters('tagValues'), 'Microsoft.Bing/accounts'), parameters('tagValues')['Microsoft.Bing/accounts'], json('{}'))]"
+        },
+        {
+            "type": "Microsoft.CognitiveServices/accounts/connections",
+            "apiVersion": "2025-04-01-preview",
+            "name": "[concat(variables('aiServicesName'), '/', variables('bingCustomSearchConnectionName'))]",
+            "properties": {
+                "category": "ApiKey",
+                "target": "https://api.bing.microsoft.com/",
+                "authType": "ApiKey",
+                "credentials": {
+                    "key": "[listKeys(resourceId('Microsoft.Bing/accounts', variables('bingCustomSearchName')), '2020-06-10').key1]"
+                },
+                "isSharedToAll": true,
+                "metadata": {
+                    "ApiType": "Azure",
+                    "Location": "global",
+                    "ResourceId": "[resourceId('Microsoft.Bing/accounts', variables('bingCustomSearchName'))]"
+                }
+            },
+            "dependsOn": [
+                "[resourceId('Microsoft.CognitiveServices/accounts', variables('aiServicesName'))]",
+                "[resourceId('Microsoft.Bing/accounts', variables('bingCustomSearchName'))]"
             ]
         },
         {
@@ -615,13 +777,41 @@
             "type": "string",
             "value": "[reference(resourceId('Microsoft.CognitiveServices/accounts', variables('aiServicesName'))).endpoints['AI Foundry API']]"
         },
-        "AI_SERVICES_KEY": {
+        "FOUNDRY_PROJECT_ENDPOINT": {
             "type": "string",
-            "value": "[listKeys(resourceId('Microsoft.CognitiveServices/accounts', variables('aiServicesName')), '2025-04-01-preview').key1]"
+            "value": "[concat(reference(resourceId('Microsoft.CognitiveServices/accounts', variables('aiServicesName'))).endpoints['AI Foundry API'], 'api/projects/', parameters('defaultProjectName'))]"
+        },
+        "FOUNDRY_MODEL_NAME": {
+            "type": "string",
+            "value": "[parameters('modelName')]"
         },
         "MODEL_DEPLOYMENT_NAME": {
             "type": "string",
             "value": "[parameters('modelName')]"
+        },
+        "EMBEDDING_MODEL_NAME": {
+            "type": "string",
+            "value": "[parameters('embeddingModelName')]"
+        },
+        "IMAGE_GENERATION_DEPLOYMENT_NAME": {
+            "type": "string",
+            "value": "[parameters('imageModelName')]"
+        },
+        "COMPUTER_USE_DEPLOYMENT_NAME": {
+            "type": "string",
+            "value": "[parameters('computerUseModelName')]"
+        },
+        "MEMORY_STORE_CHAT_MODEL_DEPLOYMENT_NAME": {
+            "type": "string",
+            "value": "[parameters('modelName')]"
+        },
+        "MEMORY_STORE_EMBEDDING_MODEL_DEPLOYMENT_NAME": {
+            "type": "string",
+            "value": "[parameters('embeddingModelName')]"
+        },
+        "CUSTOM_BING_CONNECTION_NAME": {
+            "type": "string",
+            "value": "[variables('bingCustomSearchConnectionName')]"
         }
     }
 }

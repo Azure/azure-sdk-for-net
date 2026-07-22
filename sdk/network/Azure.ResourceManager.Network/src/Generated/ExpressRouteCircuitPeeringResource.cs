@@ -53,9 +53,9 @@ namespace Azure.ResourceManager.Network
         {
             TryGetApiVersion(ResourceType, out string expressRouteCircuitPeeringApiVersion);
             _expressRouteCircuitPeeringsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Network", ResourceType.Namespace, Diagnostics);
-            _expressRouteCircuitPeeringsRestClient = new ExpressRouteCircuitPeerings(_expressRouteCircuitPeeringsClientDiagnostics, Pipeline, Endpoint, expressRouteCircuitPeeringApiVersion ?? "2025-07-01");
+            _expressRouteCircuitPeeringsRestClient = new ExpressRouteCircuitPeerings(_expressRouteCircuitPeeringsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, expressRouteCircuitPeeringApiVersion ?? "2025-07-01");
             _expressRouteCircuitsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Network", ResourceType.Namespace, Diagnostics);
-            _expressRouteCircuitsRestClient = new ExpressRouteCircuits(_expressRouteCircuitsClientDiagnostics, Pipeline, Endpoint, expressRouteCircuitPeeringApiVersion ?? "2025-07-01");
+            _expressRouteCircuitsRestClient = new ExpressRouteCircuits(_expressRouteCircuitsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, expressRouteCircuitPeeringApiVersion ?? "2025-07-01");
             ValidateResourceId(id);
         }
 

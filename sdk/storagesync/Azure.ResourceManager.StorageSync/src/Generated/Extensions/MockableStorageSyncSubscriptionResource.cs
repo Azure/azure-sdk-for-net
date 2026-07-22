@@ -40,11 +40,11 @@ namespace Azure.ResourceManager.StorageSync.Mocking
 
         private ClientDiagnostics StorageSyncServicesClientDiagnostics => _storageSyncServicesClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.StorageSync.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private StorageSyncServices StorageSyncServicesRestClient => _storageSyncServicesRestClient ??= new StorageSyncServices(StorageSyncServicesClientDiagnostics, Pipeline, Endpoint, "2022-09-01");
+        private StorageSyncServices StorageSyncServicesRestClient => _storageSyncServicesRestClient ??= new StorageSyncServices(StorageSyncServicesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2022-09-01");
 
         private ClientDiagnostics StorageSyncServicesOperationGroupClientDiagnostics => _storageSyncServicesOperationGroupClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.StorageSync.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private StorageSyncServicesOperationGroup StorageSyncServicesOperationGroupRestClient => _storageSyncServicesOperationGroupRestClient ??= new StorageSyncServicesOperationGroup(StorageSyncServicesOperationGroupClientDiagnostics, Pipeline, Endpoint, "2022-09-01");
+        private StorageSyncServicesOperationGroup StorageSyncServicesOperationGroupRestClient => _storageSyncServicesOperationGroupRestClient ??= new StorageSyncServicesOperationGroup(StorageSyncServicesOperationGroupClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2022-09-01");
 
         /// <summary>
         /// Get a StorageSyncService list by subscription.
