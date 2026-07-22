@@ -24,7 +24,7 @@ public class ActivityServerOptions
     ///     <c>https://api.botframework.com/.default</c>. This is the standard
     ///     single-tenant Teams bot pattern.</item>
     ///   <item><c>true</c> — <b>Digital worker</b> model: the <em>blueprint</em>
-    ///     identity (<c>FOUNDRY_AGENT_BLUEPRINT_CLIENT_ID</c>) performs a 3-step
+    ///     identity (<c>FOUNDRY_AGENT_BLUEPRINT_CLIENT_ID</c>) performs a
     ///     federated-identity (FMI) token exchange to obtain an agentic user
     ///     token.</item>
     /// </list>

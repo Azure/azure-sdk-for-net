@@ -399,9 +399,8 @@ Mapping the Activity endpoints registers:
 | `/activity/messages` | POST | The activity-protocol inbound endpoint (primary). |
 | `/readiness` | GET | Readiness probe — returns `200` when the host is ready. |
 
-There is a single inbound endpoint — `POST /activity/messages`. (Earlier previews also
-mapped a Bot Framework-compatible `/api/messages`; that path has been removed —
-`/activity/messages` is the canonical route.)
+There is a single inbound endpoint — `POST /activity/messages` — which is the
+canonical route for all inbound activities.
 
 ---
 
@@ -612,7 +611,6 @@ on the delivered reply must run as live tests against a Foundry project. See
 | Asserting on the reply body in a non-live test | Test sees only `202`, no reply text | Reply is delivered outbound over the channel — assert reply delivery in a **live** test. |
 | Expecting a synchronous response | No reply in the HTTP response | Normal messages are acked with `202`; the reply is delivered asynchronously. |
 | Using `MemoryStorage` in production | Turn state lost on restart / not shared across instances | Supply a durable `IStorage` via `options.Storage`. |
-| Posting to `/api/messages` | `404 Not Found` | Use the canonical `/activity/messages` route. |
 | Forgetting `app.MapFoundryActivity()` | Endpoint returns `404`; no `/readiness` | Both **register** (`AddFoundryActivity`) and **map** (`MapFoundryActivity`) are required. |
 | Setting `DigitalWorker = true` for a plain Teams bot | Outbound token has the wrong audience | Keep the default (`false`) unless you need the blueprint/agentic identity. |
 | Using the raw `RequestDelegate` overload for an `AgentApplication` | You have to re-implement the activity protocol yourself | Use the adapter-backed `MapFoundryActivity()` (no `RequestDelegate`) to run an agent. |
