@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.HybridCompute
         {
             TryGetApiVersion(ResourceType, out string hybridComputeExtensionValueV2ApiVersion);
             _extensionMetadataV2ClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.HybridCompute", ResourceType.Namespace, Diagnostics);
-            _extensionMetadataV2RestClient = new ExtensionMetadataV2(_extensionMetadataV2ClientDiagnostics, Pipeline, Endpoint, hybridComputeExtensionValueV2ApiVersion ?? "2025-09-16-preview");
+            _extensionMetadataV2RestClient = new ExtensionMetadataV2(_extensionMetadataV2ClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, hybridComputeExtensionValueV2ApiVersion ?? "2025-09-16-preview");
             ValidateResourceId(id);
         }
 

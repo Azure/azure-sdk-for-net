@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.RecoveryServices
         {
             TryGetApiVersion(RecoveryServicesPrivateLinkResource.ResourceType, out string recoveryServicesPrivateLinkResourceApiVersion);
             _privateLinkResourceOperationGroupClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.RecoveryServices", RecoveryServicesPrivateLinkResource.ResourceType.Namespace, Diagnostics);
-            _privateLinkResourceOperationGroupRestClient = new PrivateLinkResourceOperationGroup(_privateLinkResourceOperationGroupClientDiagnostics, Pipeline, Endpoint, recoveryServicesPrivateLinkResourceApiVersion ?? "2026-05-01");
+            _privateLinkResourceOperationGroupRestClient = new PrivateLinkResourceOperationGroup(_privateLinkResourceOperationGroupClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, recoveryServicesPrivateLinkResourceApiVersion ?? "2026-05-01");
             ValidateResourceId(id);
         }
 

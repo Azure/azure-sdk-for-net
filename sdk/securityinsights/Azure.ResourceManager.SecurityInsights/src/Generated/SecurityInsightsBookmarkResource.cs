@@ -53,9 +53,9 @@ namespace Azure.ResourceManager.SecurityInsights
         {
             TryGetApiVersion(ResourceType, out string securityInsightsBookmarkApiVersion);
             _bookmarksClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.SecurityInsights", ResourceType.Namespace, Diagnostics);
-            _bookmarksRestClient = new Bookmarks(_bookmarksClientDiagnostics, Pipeline, Endpoint, securityInsightsBookmarkApiVersion ?? "2025-07-01-preview");
+            _bookmarksRestClient = new Bookmarks(_bookmarksClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, securityInsightsBookmarkApiVersion ?? "2025-07-01-preview");
             _bookmarkClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.SecurityInsights", ResourceType.Namespace, Diagnostics);
-            _bookmarkRestClient = new Bookmark(_bookmarkClientDiagnostics, Pipeline, Endpoint, securityInsightsBookmarkApiVersion ?? "2025-07-01-preview");
+            _bookmarkRestClient = new Bookmark(_bookmarkClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, securityInsightsBookmarkApiVersion ?? "2025-07-01-preview");
             ValidateResourceId(id);
         }
 

@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.Network
         {
             TryGetApiVersion(HubRouteTableResource.ResourceType, out string hubRouteTableApiVersion);
             _hubRouteTablesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Network", HubRouteTableResource.ResourceType.Namespace, Diagnostics);
-            _hubRouteTablesRestClient = new HubRouteTables(_hubRouteTablesClientDiagnostics, Pipeline, Endpoint, hubRouteTableApiVersion ?? "2025-07-01");
+            _hubRouteTablesRestClient = new HubRouteTables(_hubRouteTablesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, hubRouteTableApiVersion ?? "2025-07-01");
             ValidateResourceId(id);
         }
 

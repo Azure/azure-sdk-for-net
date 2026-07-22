@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.Databricks
         {
             TryGetApiVersion(ResourceType, out string databricksVirtualNetworkPeeringApiVersion);
             _vNetPeeringClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Databricks", ResourceType.Namespace, Diagnostics);
-            _vNetPeeringRestClient = new VNetPeering(_vNetPeeringClientDiagnostics, Pipeline, Endpoint, databricksVirtualNetworkPeeringApiVersion ?? "2026-01-01");
+            _vNetPeeringRestClient = new VNetPeering(_vNetPeeringClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, databricksVirtualNetworkPeeringApiVersion ?? "2026-01-01");
             ValidateResourceId(id);
         }
 

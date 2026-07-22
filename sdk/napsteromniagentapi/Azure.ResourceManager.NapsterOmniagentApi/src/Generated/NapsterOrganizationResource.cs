@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.NapsterOmniagentApi
         {
             TryGetApiVersion(ResourceType, out string napsterOrganizationApiVersion);
             _organizationsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.NapsterOmniagentApi", ResourceType.Namespace, Diagnostics);
-            _organizationsRestClient = new Organizations(_organizationsClientDiagnostics, Pipeline, Endpoint, napsterOrganizationApiVersion ?? "2025-12-24-preview");
+            _organizationsRestClient = new Organizations(_organizationsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, napsterOrganizationApiVersion ?? "2025-12-24-preview");
             ValidateResourceId(id);
         }
 

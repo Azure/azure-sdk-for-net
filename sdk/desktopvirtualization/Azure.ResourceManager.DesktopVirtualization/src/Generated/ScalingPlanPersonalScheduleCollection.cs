@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.DesktopVirtualization
         {
             TryGetApiVersion(ScalingPlanPersonalScheduleResource.ResourceType, out string scalingPlanPersonalScheduleApiVersion);
             _scalingPlanPersonalSchedulesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.DesktopVirtualization", ScalingPlanPersonalScheduleResource.ResourceType.Namespace, Diagnostics);
-            _scalingPlanPersonalSchedulesRestClient = new ScalingPlanPersonalSchedules(_scalingPlanPersonalSchedulesClientDiagnostics, Pipeline, Endpoint, scalingPlanPersonalScheduleApiVersion ?? "2026-03-01-preview");
+            _scalingPlanPersonalSchedulesRestClient = new ScalingPlanPersonalSchedules(_scalingPlanPersonalSchedulesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, scalingPlanPersonalScheduleApiVersion ?? "2026-03-01-preview");
             ValidateResourceId(id);
         }
 

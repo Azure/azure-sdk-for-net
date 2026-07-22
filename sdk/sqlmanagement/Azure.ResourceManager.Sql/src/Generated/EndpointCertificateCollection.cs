@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.Sql
         {
             TryGetApiVersion(EndpointCertificateResource.ResourceType, out string endpointCertificateApiVersion);
             _endpointCertificatesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Sql", EndpointCertificateResource.ResourceType.Namespace, Diagnostics);
-            _endpointCertificatesRestClient = new EndpointCertificates(_endpointCertificatesClientDiagnostics, Pipeline, Endpoint, endpointCertificateApiVersion ?? "2025-02-01-preview");
+            _endpointCertificatesRestClient = new EndpointCertificates(_endpointCertificatesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, endpointCertificateApiVersion ?? "2025-02-01-preview");
             ValidateResourceId(id);
         }
 

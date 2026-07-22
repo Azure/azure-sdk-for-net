@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.Hci.Vm
         {
             TryGetApiVersion(HciVmVirtualNetworkSubnetResource.ResourceType, out string hciVmVirtualNetworkSubnetApiVersion);
             _virtualNetworkSubnetsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Hci.Vm", HciVmVirtualNetworkSubnetResource.ResourceType.Namespace, Diagnostics);
-            _virtualNetworkSubnetsRestClient = new VirtualNetworkSubnets(_virtualNetworkSubnetsClientDiagnostics, Pipeline, Endpoint, hciVmVirtualNetworkSubnetApiVersion ?? "2025-09-01-preview");
+            _virtualNetworkSubnetsRestClient = new VirtualNetworkSubnets(_virtualNetworkSubnetsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, hciVmVirtualNetworkSubnetApiVersion ?? "2025-09-01-preview");
             ValidateResourceId(id);
         }
 

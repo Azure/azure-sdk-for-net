@@ -45,7 +45,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
             TryGetApiVersion(SiteRecoveryEventResource.ResourceType, out string siteRecoveryEventApiVersion);
             _resourceName = resourceName;
             _replicationEventsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.RecoveryServicesSiteRecovery", SiteRecoveryEventResource.ResourceType.Namespace, Diagnostics);
-            _replicationEventsRestClient = new ReplicationEvents(_replicationEventsClientDiagnostics, Pipeline, Endpoint, siteRecoveryEventApiVersion ?? "2026-02-01");
+            _replicationEventsRestClient = new ReplicationEvents(_replicationEventsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, siteRecoveryEventApiVersion ?? "2026-02-01");
             ValidateResourceId(id);
         }
 

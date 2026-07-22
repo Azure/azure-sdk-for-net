@@ -20,7 +20,6 @@ Azure.AI.Inference
 Azure.AI.Language.QuestionAnswering.Inference
 Azure.AI.OpenAI
 Azure.AI.OpenAI.Assistants
-Azure.AI.VoiceLive.Snippets
 Azure.Messaging.ServiceBus
 Azure.Monitor.OpenTelemetry.AspNetCore
 Azure.Projects
@@ -30,4 +29,3 @@ Azure.ResourceManager.InformaticaDataManagement
 Microsoft.Azure.WebJobs.Extensions.EventHubs
 Microsoft.Azure.WebJobs.Extensions.ServiceBus
 Microsoft.Azure.WebJobs.Extensions.Tables
-Microsoft.ClientModel.TestFramework

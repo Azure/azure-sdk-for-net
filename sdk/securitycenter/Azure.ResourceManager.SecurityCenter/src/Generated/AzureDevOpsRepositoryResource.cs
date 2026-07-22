@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.SecurityCenter
         {
             TryGetApiVersion(ResourceType, out string azureDevOpsRepositoryApiVersion);
             _azureDevOpsReposClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.SecurityCenter", ResourceType.Namespace, Diagnostics);
-            _azureDevOpsReposRestClient = new AzureDevOpsRepos(_azureDevOpsReposClientDiagnostics, Pipeline, Endpoint, azureDevOpsRepositoryApiVersion ?? "2025-11-01-preview");
+            _azureDevOpsReposRestClient = new AzureDevOpsRepos(_azureDevOpsReposClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, azureDevOpsRepositoryApiVersion ?? "2025-11-01-preview");
             ValidateResourceId(id);
         }
 

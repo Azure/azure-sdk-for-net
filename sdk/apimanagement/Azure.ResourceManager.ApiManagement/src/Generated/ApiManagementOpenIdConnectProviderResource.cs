@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.ApiManagement
         {
             TryGetApiVersion(ResourceType, out string apiManagementOpenIdConnectProviderApiVersion);
             _openIdConnectProviderClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ApiManagement", ResourceType.Namespace, Diagnostics);
-            _openIdConnectProviderRestClient = new OpenIdConnectProvider(_openIdConnectProviderClientDiagnostics, Pipeline, Endpoint, apiManagementOpenIdConnectProviderApiVersion ?? "2025-09-01-preview");
+            _openIdConnectProviderRestClient = new OpenIdConnectProvider(_openIdConnectProviderClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, apiManagementOpenIdConnectProviderApiVersion ?? "2025-09-01-preview");
             ValidateResourceId(id);
         }
 

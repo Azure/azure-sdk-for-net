@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.WorkloadOrchestration
         {
             TryGetApiVersion(EdgeDynamicSchemaVersionResource.ResourceType, out string edgeDynamicSchemaVersionApiVersion);
             _dynamicSchemaVersionsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.WorkloadOrchestration", EdgeDynamicSchemaVersionResource.ResourceType.Namespace, Diagnostics);
-            _dynamicSchemaVersionsRestClient = new DynamicSchemaVersions(_dynamicSchemaVersionsClientDiagnostics, Pipeline, Endpoint, edgeDynamicSchemaVersionApiVersion ?? "2025-06-01");
+            _dynamicSchemaVersionsRestClient = new DynamicSchemaVersions(_dynamicSchemaVersionsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, edgeDynamicSchemaVersionApiVersion ?? "2025-06-01");
             ValidateResourceId(id);
         }
 

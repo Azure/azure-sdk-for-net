@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.DataProtectionBackup
         {
             TryGetApiVersion(ResourceType, out string dataProtectionDeletedBackupVaultApiVersion);
             _deletedBackupVaultsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.DataProtectionBackup", ResourceType.Namespace, Diagnostics);
-            _deletedBackupVaultsRestClient = new DeletedBackupVaults(_deletedBackupVaultsClientDiagnostics, Pipeline, Endpoint, dataProtectionDeletedBackupVaultApiVersion ?? "2026-03-01");
+            _deletedBackupVaultsRestClient = new DeletedBackupVaults(_deletedBackupVaultsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, dataProtectionDeletedBackupVaultApiVersion ?? "2026-03-01");
             ValidateResourceId(id);
         }
 

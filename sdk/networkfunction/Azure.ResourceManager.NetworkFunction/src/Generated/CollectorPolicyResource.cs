@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.NetworkFunction
         {
             TryGetApiVersion(ResourceType, out string collectorPolicyApiVersion);
             _collectorPoliciesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.NetworkFunction", ResourceType.Namespace, Diagnostics);
-            _collectorPoliciesRestClient = new CollectorPolicies(_collectorPoliciesClientDiagnostics, Pipeline, Endpoint, collectorPolicyApiVersion ?? "2022-11-01");
+            _collectorPoliciesRestClient = new CollectorPolicies(_collectorPoliciesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, collectorPolicyApiVersion ?? "2022-11-01");
             ValidateResourceId(id);
         }
 

@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.Network.Mocking
 
         private ClientDiagnostics VipSwapClientDiagnostics => _vipSwapClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Network.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private VipSwap VipSwapRestClient => _vipSwapRestClient ??= new VipSwap(VipSwapClientDiagnostics, Pipeline, Endpoint, "2025-07-01");
+        private VipSwap VipSwapRestClient => _vipSwapRestClient ??= new VipSwap(VipSwapClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2025-07-01");
 
         /// <summary> Gets an object representing a <see cref="ApplicationGatewayResource"/> along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>

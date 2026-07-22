@@ -42,15 +42,15 @@ namespace Azure.ResourceManager.ServiceFabric.Mocking
 
         private ClientDiagnostics ClustersClientDiagnostics => _clustersClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.ServiceFabric.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private Clusters ClustersRestClient => _clustersRestClient ??= new Clusters(ClustersClientDiagnostics, Pipeline, Endpoint, "2026-03-01-preview");
+        private Clusters ClustersRestClient => _clustersRestClient ??= new Clusters(ClustersClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2026-03-01-preview");
 
         private ClientDiagnostics ClusterVersionDetailsClientDiagnostics => _clusterVersionDetailsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.ServiceFabric.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private ClusterVersionDetails ClusterVersionDetailsRestClient => _clusterVersionDetailsRestClient ??= new ClusterVersionDetails(ClusterVersionDetailsClientDiagnostics, Pipeline, Endpoint, "2026-03-01-preview");
+        private ClusterVersionDetails ClusterVersionDetailsRestClient => _clusterVersionDetailsRestClient ??= new ClusterVersionDetails(ClusterVersionDetailsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2026-03-01-preview");
 
         private ClientDiagnostics ClusterVersionsClientDiagnostics => _clusterVersionsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.ServiceFabric.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private ClusterVersions ClusterVersionsRestClient => _clusterVersionsRestClient ??= new ClusterVersions(ClusterVersionsClientDiagnostics, Pipeline, Endpoint, "2026-03-01-preview");
+        private ClusterVersions ClusterVersionsRestClient => _clusterVersionsRestClient ??= new ClusterVersions(ClusterVersionsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2026-03-01-preview");
 
         /// <summary> Gets a collection of ServiceFabricVmSizeResources in the <see cref="SubscriptionResource"/>. </summary>
         /// <param name="location"> The location for the resource. </param>

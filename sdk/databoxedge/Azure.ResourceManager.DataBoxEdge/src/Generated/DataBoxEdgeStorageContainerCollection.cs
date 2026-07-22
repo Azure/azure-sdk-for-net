@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.DataBoxEdge
         {
             TryGetApiVersion(DataBoxEdgeStorageContainerResource.ResourceType, out string dataBoxEdgeStorageContainerApiVersion);
             _containersClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.DataBoxEdge", DataBoxEdgeStorageContainerResource.ResourceType.Namespace, Diagnostics);
-            _containersRestClient = new Containers(_containersClientDiagnostics, Pipeline, Endpoint, dataBoxEdgeStorageContainerApiVersion ?? "2023-12-01");
+            _containersRestClient = new Containers(_containersClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, dataBoxEdgeStorageContainerApiVersion ?? "2023-12-01");
             ValidateResourceId(id);
         }
 

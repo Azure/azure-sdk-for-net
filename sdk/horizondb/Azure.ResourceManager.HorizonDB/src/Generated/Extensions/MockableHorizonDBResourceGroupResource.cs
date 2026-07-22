@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.HorizonDB.Mocking
 
         private ClientDiagnostics HorizonDBPrivateEndpointConnectionsClientDiagnostics => _horizonDBPrivateEndpointConnectionsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.HorizonDB.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private HorizonDBPrivateEndpointConnections HorizonDBPrivateEndpointConnectionsRestClient => _horizonDBPrivateEndpointConnectionsRestClient ??= new HorizonDBPrivateEndpointConnections(HorizonDBPrivateEndpointConnectionsClientDiagnostics, Pipeline, Endpoint, "2026-01-20-preview");
+        private HorizonDBPrivateEndpointConnections HorizonDBPrivateEndpointConnectionsRestClient => _horizonDBPrivateEndpointConnectionsRestClient ??= new HorizonDBPrivateEndpointConnections(HorizonDBPrivateEndpointConnectionsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2026-01-20-preview");
 
         /// <summary> Gets a collection of HorizonDBClusters in the <see cref="ResourceGroupResource"/>. </summary>
         /// <returns> An object representing collection of HorizonDBClusters and their operations over a HorizonDBClusterResource. </returns>

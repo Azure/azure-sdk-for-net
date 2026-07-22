@@ -55,9 +55,9 @@ namespace Azure.ResourceManager.Network
         {
             TryGetApiVersion(ResourceType, out string expressRouteGatewayApiVersion);
             _expressRouteGatewaysClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Network", ResourceType.Namespace, Diagnostics);
-            _expressRouteGatewaysRestClient = new ExpressRouteGateways(_expressRouteGatewaysClientDiagnostics, Pipeline, Endpoint, expressRouteGatewayApiVersion ?? "2025-07-01");
+            _expressRouteGatewaysRestClient = new ExpressRouteGateways(_expressRouteGatewaysClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, expressRouteGatewayApiVersion ?? "2025-07-01");
             _expressRouteConnectionsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Network", ResourceType.Namespace, Diagnostics);
-            _expressRouteConnectionsRestClient = new ExpressRouteConnections(_expressRouteConnectionsClientDiagnostics, Pipeline, Endpoint, expressRouteGatewayApiVersion ?? "2025-07-01");
+            _expressRouteConnectionsRestClient = new ExpressRouteConnections(_expressRouteConnectionsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, expressRouteGatewayApiVersion ?? "2025-07-01");
             ValidateResourceId(id);
         }
 

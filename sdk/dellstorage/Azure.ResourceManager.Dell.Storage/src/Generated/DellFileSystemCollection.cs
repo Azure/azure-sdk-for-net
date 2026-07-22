@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.Dell.Storage
         {
             TryGetApiVersion(DellFileSystemResource.ResourceType, out string dellFileSystemApiVersion);
             _fileSystemsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Dell.Storage", DellFileSystemResource.ResourceType.Namespace, Diagnostics);
-            _fileSystemsRestClient = new FileSystems(_fileSystemsClientDiagnostics, Pipeline, Endpoint, dellFileSystemApiVersion ?? "2025-03-21");
+            _fileSystemsRestClient = new FileSystems(_fileSystemsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, dellFileSystemApiVersion ?? "2025-03-21");
             ValidateResourceId(id);
         }
 

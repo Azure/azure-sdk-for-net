@@ -2882,7 +2882,6 @@ namespace Azure.Storage.Blobs.Test
             Assert.AreEqual(tags.Count, blobItems[0].Properties.TagCount);
         }
 
-        [Ignore("Feature not supported in current test environment")]
         [RecordedTest]
         [ServiceVersion(Min = BlobClientOptions.ServiceVersion.V2026_06_06)]
         [TestCase(null)]
@@ -2972,7 +2971,6 @@ namespace Azure.Storage.Blobs.Test
             AssertDictionaryEquality(metadata, blobs.First().Metadata);
         }
 
-        [Ignore("Feature not supported in current test environment")]
         [RecordedTest]
         [ServiceVersion(Min = BlobClientOptions.ServiceVersion.V2026_06_06)]
         public async Task ListBlobsFlatSegmentAsync_UseApacheArrow_EncryptionScope()
@@ -2996,7 +2994,6 @@ namespace Azure.Storage.Blobs.Test
             Assert.AreEqual(TestConfigDefault.EncryptionScope, blobs.First().Properties.EncryptionScope);
         }
 
-        [Ignore("Feature not supported in current test environment")]
         [RecordedTest]
         [ServiceVersion(Min = BlobClientOptions.ServiceVersion.V2026_06_06)]
         public async Task ListBlobsFlatSegmentAsync_UseApacheArrow_Deleted()
@@ -3227,7 +3224,6 @@ namespace Azure.Storage.Blobs.Test
             Assert.AreNotEqual(DateTimeOffset.MinValue, blobs.FirstOrDefault().Properties.LastAccessedOn);
         }
 
-        [Ignore("Feature not supported in current test environment")]
         [RecordedTest]
         [ServiceVersion(Min = BlobClientOptions.ServiceVersion.V2026_06_06)]
         public async Task ListBlobsFlatSegmentAsync_UseApacheArrow_DeletedWithVersions()
@@ -3933,7 +3929,6 @@ namespace Azure.Storage.Blobs.Test
             Assert.AreEqual(tags.Count, blobHierachyItems[0].Blob.Properties.TagCount);
         }
 
-        [Ignore("Feature not supported in current test environment")]
         [RecordedTest]
         [ServiceVersion(Min = BlobClientOptions.ServiceVersion.V2026_06_06)]
         [TestCase(null)]
@@ -4046,7 +4041,6 @@ namespace Azure.Storage.Blobs.Test
             Assert.AreEqual(0, item.Blob.Metadata.Count);
         }
 
-        [Ignore("Feature not supported in current test environment")]
         [RecordedTest]
         [ServiceVersion(Min = BlobClientOptions.ServiceVersion.V2026_06_06)]
         public async Task ListBlobsHierarchySegmentAsync_UseApacheArrow_EncryptionScope()
@@ -4069,7 +4063,6 @@ namespace Azure.Storage.Blobs.Test
             Assert.AreEqual(TestConfigDefault.EncryptionScope, item.Blob.Properties.EncryptionScope);
         }
 
-        [Ignore("Feature not supported in current test environment")]
         [RecordedTest]
         [ServiceVersion(Min = BlobClientOptions.ServiceVersion.V2026_06_06)]
         public async Task ListBlobsHierarchySegmentAsync_UseApacheArrow_Deleted()
@@ -4276,7 +4269,6 @@ namespace Azure.Storage.Blobs.Test
             Assert.IsNotNull(item.Blob.Properties.LastAccessedOn);
         }
 
-        [Ignore("Feature not supported in current test environment")]
         [RecordedTest]
         [ServiceVersion(Min = BlobClientOptions.ServiceVersion.V2026_06_06)]
         public async Task ListBlobsHierarchySegmentAsync_UseApacheArrow_DeletedWithVersions()
@@ -4353,7 +4345,6 @@ namespace Azure.Storage.Blobs.Test
             }
         }
 
-        [Ignore("Feature not supported in current test environment")]
         [RecordedTest]
         [ServiceVersion(Min = BlobClientOptions.ServiceVersion.V2026_06_06)]
         public async Task ListBlobsHierarchySegmentAsync_UseApacheArrow_VersionPrefixDelimiter()

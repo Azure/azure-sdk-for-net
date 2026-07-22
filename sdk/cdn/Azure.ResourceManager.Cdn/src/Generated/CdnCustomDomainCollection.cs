@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.Cdn
         {
             TryGetApiVersion(CdnCustomDomainResource.ResourceType, out string cdnCustomDomainApiVersion);
             _customDomainsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Cdn", CdnCustomDomainResource.ResourceType.Namespace, Diagnostics);
-            _customDomainsRestClient = new CustomDomains(_customDomainsClientDiagnostics, Pipeline, Endpoint, cdnCustomDomainApiVersion ?? "2025-09-01-preview");
+            _customDomainsRestClient = new CustomDomains(_customDomainsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, cdnCustomDomainApiVersion ?? "2025-09-01-preview");
             ValidateResourceId(id);
         }
 
