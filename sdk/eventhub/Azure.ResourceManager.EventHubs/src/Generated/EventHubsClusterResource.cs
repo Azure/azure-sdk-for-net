@@ -56,9 +56,9 @@ namespace Azure.ResourceManager.EventHubs
         {
             TryGetApiVersion(ResourceType, out string eventHubsClusterApiVersion);
             _clustersClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.EventHubs", ResourceType.Namespace, Diagnostics);
-            _clustersRestClient = new Clusters(_clustersClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, eventHubsClusterApiVersion ?? "2026-01-01");
+            _clustersRestClient = new Clusters(_clustersClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, eventHubsClusterApiVersion ?? "2026-07-01-preview");
             _configurationClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.EventHubs", ResourceType.Namespace, Diagnostics);
-            _configurationRestClient = new Configuration(_configurationClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, eventHubsClusterApiVersion ?? "2026-01-01");
+            _configurationRestClient = new Configuration(_configurationClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, eventHubsClusterApiVersion ?? "2026-07-01-preview");
             ValidateResourceId(id);
         }
 
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.EventHubs
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-01-01. </description>
+        /// <description> 2026-07-01-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -159,7 +159,7 @@ namespace Azure.ResourceManager.EventHubs
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-01-01. </description>
+        /// <description> 2026-07-01-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -207,7 +207,7 @@ namespace Azure.ResourceManager.EventHubs
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-01-01. </description>
+        /// <description> 2026-07-01-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -266,7 +266,7 @@ namespace Azure.ResourceManager.EventHubs
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-01-01. </description>
+        /// <description> 2026-07-01-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -325,7 +325,7 @@ namespace Azure.ResourceManager.EventHubs
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-01-01. </description>
+        /// <description> 2026-07-01-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -374,7 +374,7 @@ namespace Azure.ResourceManager.EventHubs
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-01-01. </description>
+        /// <description> 2026-07-01-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -423,7 +423,7 @@ namespace Azure.ResourceManager.EventHubs
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-01-01. </description>
+        /// <description> 2026-07-01-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -471,7 +471,7 @@ namespace Azure.ResourceManager.EventHubs
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-01-01. </description>
+        /// <description> 2026-07-01-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -519,7 +519,7 @@ namespace Azure.ResourceManager.EventHubs
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-01-01. </description>
+        /// <description> 2026-07-01-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -557,7 +557,7 @@ namespace Azure.ResourceManager.EventHubs
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-01-01. </description>
+        /// <description> 2026-07-01-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -595,7 +595,7 @@ namespace Azure.ResourceManager.EventHubs
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-01-01. </description>
+        /// <description> 2026-07-01-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -647,7 +647,7 @@ namespace Azure.ResourceManager.EventHubs
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-01-01. </description>
+        /// <description> 2026-07-01-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -958,6 +958,13 @@ namespace Azure.ResourceManager.EventHubs
                 scope.Failed(e);
                 throw;
             }
+        }
+
+        /// <summary> Gets an object representing a <see cref="UpgradePreferencesResource"/> along with the instance operations that can be performed on it in the <see cref="EventHubsClusterResource"/>. </summary>
+        /// <returns> Returns a <see cref="UpgradePreferencesResource"/> object. </returns>
+        public virtual UpgradePreferencesResource GetUpgradePreferences()
+        {
+            return new UpgradePreferencesResource(Client, Id.AppendChildResource("upgradePreferences", "default"));
         }
     }
 }
