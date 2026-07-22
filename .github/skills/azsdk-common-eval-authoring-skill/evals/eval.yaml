@@ -1,0 +1,123 @@
+name: azsdk-common-eval-authoring-skill-eval
+description: Routing and boundary tests for the azsdk-common-eval-authoring-skill skill
+type: capability
+
+environment: azsdk-mcp-mock
+
+tags:
+  area: azsdk-common-eval-authoring-skill
+  type: ci-gate
+
+defaults:
+  runs: 1
+  timeout: "120s"
+  model: claude-opus-4.6
+  executor: copilot-sdk
+
+scoring:
+  threshold: 0.8
+
+stimuli:
+  # Boundary anti-triggers need the two sibling eval-authoring skills mounted
+  # alongside this one, or "disallowed" is trivially satisfied because no
+  # better-fitting skill was ever available to the model.
+  - name: trigger-write-skill-eval
+    environment: &siblingSkills
+      skills:
+        - ..
+        - ../../azsdk-common-eval-authoring-tool
+        - ../../azsdk-common-eval-authoring-workflow
+    prompt: "write a robust eval for my Agent Skill"
+    graders:
+      - type: skill-invocation
+        config:
+          required: [azsdk-common-eval-authoring-skill]
+          disallowed:
+            [
+              azsdk-common-eval-authoring-tool,
+              azsdk-common-eval-authoring-workflow,
+            ]
+
+  - name: trigger-add-trigger-and-anti-trigger-tests
+    environment: *siblingSkills
+    prompt: "Add Vally trigger and anti-trigger routing tests for .github/skills/azsdk-common-generate-sdk-locally. Its eval file is .github/skills/azsdk-common-generate-sdk-locally/evals/eval.yaml and it handles local TypeSpec SDK generation."
+    graders:
+      - type: skill-invocation
+        config:
+          required: [azsdk-common-eval-authoring-skill]
+          disallowed:
+            [
+              azsdk-common-eval-authoring-tool,
+              azsdk-common-eval-authoring-workflow,
+            ]
+
+  - name: trigger-test-skill-routing
+    environment: *siblingSkills
+    prompt: "Test routing for .github/skills/azsdk-common-pipeline-analysis: it should activate for Azure SDK CI/pipeline diagnosis requests but not for requests to fix the failure. Add the appropriate Vally routing eval cases."
+    graders:
+      - type: skill-invocation
+        config:
+          required: [azsdk-common-eval-authoring-skill]
+          disallowed:
+            [
+              azsdk-common-eval-authoring-tool,
+              azsdk-common-eval-authoring-workflow,
+            ]
+
+  - name: trigger-harden-skill-graders
+    environment: *siblingSkills
+    prompt: "harden my skill capability eval so refusals cannot pass"
+    graders:
+      - type: skill-invocation
+        config:
+          required: [azsdk-common-eval-authoring-skill]
+          disallowed:
+            [
+              azsdk-common-eval-authoring-tool,
+              azsdk-common-eval-authoring-workflow,
+            ]
+
+  - name: anti-trigger-single-mcp-tool-eval
+    environment: *siblingSkills
+    prompt: "add a prompt-to-tool eval for azsdk_get_release_plan under evals/tools"
+    graders:
+      - type: skill-invocation
+        config:
+          required: [azsdk-common-eval-authoring-tool]
+          disallowed:
+            [
+              azsdk-common-eval-authoring-skill,
+              azsdk-common-eval-authoring-workflow,
+            ]
+
+  - name: anti-trigger-multi-tool-workflow
+    environment: *siblingSkills
+    prompt: "write a mock workflow eval that checks two MCP tools are called in order"
+    graders:
+      - type: skill-invocation
+        config:
+          required: [azsdk-common-eval-authoring-workflow]
+          disallowed:
+            [
+              azsdk-common-eval-authoring-skill,
+              azsdk-common-eval-authoring-tool,
+            ]
+
+  - name: anti-trigger-author-skill
+    environment:
+      skills:
+        - ..
+        - ../../azsdk-common-eval-authoring-tool
+        - ../../azsdk-common-eval-authoring-workflow
+        - ../../skill-authoring
+    prompt: "create a new Agent Skill and write its SKILL.md"
+    graders:
+      - type: skill-invocation
+        config:
+          required: [skill-authoring]
+          disallowed:
+            [
+              azsdk-common-eval-authoring-skill,
+              azsdk-common-eval-authoring-tool,
+              azsdk-common-eval-authoring-workflow,
+            ]

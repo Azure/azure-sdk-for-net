@@ -1,0 +1,117 @@
+name: azsdk-common-eval-authoring-tool-eval
+description: Routing and boundary tests for the azsdk-common-eval-authoring-tool skill
+type: capability
+
+environment: azsdk-mcp-mock
+
+tags:
+  area: azsdk-common-eval-authoring-tool
+  type: ci-gate
+
+defaults:
+  runs: 1
+  timeout: "120s"
+  model: claude-opus-4.6
+  executor: copilot-sdk
+
+scoring:
+  threshold: 0.8
+
+stimuli:
+  # Boundary anti-triggers need the two sibling eval-authoring skills mounted
+  # alongside this one, or "disallowed" is trivially satisfied because no
+  # better-fitting skill was ever available to the model.
+  - name: trigger-write-tool-eval
+    environment: &siblingSkills
+      skills:
+        - ..
+        - ../../azsdk-common-eval-authoring-skill
+        - ../../azsdk-common-eval-authoring-workflow
+    prompt: "write a Vally eval for a single Azure SDK MCP tool"
+    graders:
+      - type: skill-invocation
+        config:
+          required: [azsdk-common-eval-authoring-tool]
+          disallowed:
+            [
+              azsdk-common-eval-authoring-skill,
+              azsdk-common-eval-authoring-workflow,
+            ]
+
+  - name: trigger-add-prompt-to-tool-coverage
+    environment: *siblingSkills
+    prompt: "add prompt-to-tool coverage for azsdk_get_release_plan"
+    graders:
+      - type: skill-invocation
+        config:
+          required: [azsdk-common-eval-authoring-tool]
+          disallowed:
+            [
+              azsdk-common-eval-authoring-skill,
+              azsdk-common-eval-authoring-workflow,
+            ]
+
+  - name: trigger-test-mcp-tool-selection
+    environment: *siblingSkills
+    prompt: "test whether user prompts select the correct MCP tool"
+    graders:
+      - type: skill-invocation
+        config:
+          required: [azsdk-common-eval-authoring-tool]
+          disallowed:
+            [
+              azsdk-common-eval-authoring-skill,
+              azsdk-common-eval-authoring-workflow,
+            ]
+
+  - name: trigger-harden-tool-call-grader
+    environment: *siblingSkills
+    prompt: "harden this single-tool eval against a competing tool call"
+    graders:
+      - type: skill-invocation
+        config:
+          required: [azsdk-common-eval-authoring-tool]
+          disallowed:
+            [
+              azsdk-common-eval-authoring-skill,
+              azsdk-common-eval-authoring-workflow,
+            ]
+
+  - name: anti-trigger-skill-routing
+    environment: *siblingSkills
+    prompt: "add trigger and anti-trigger tests to verify my Agent Skill activates for the right prompts"
+    graders:
+      - type: skill-invocation
+        config:
+          required: [azsdk-common-eval-authoring-skill]
+          disallowed:
+            [
+              azsdk-common-eval-authoring-tool,
+              azsdk-common-eval-authoring-workflow,
+            ]
+
+  - name: anti-trigger-multi-tool-workflow
+    environment: *siblingSkills
+    prompt: "create an end-to-end eval for a sequence of three MCP tools"
+    graders:
+      - type: skill-invocation
+        config:
+          required: [azsdk-common-eval-authoring-workflow]
+          disallowed:
+            [
+              azsdk-common-eval-authoring-skill,
+              azsdk-common-eval-authoring-tool,
+            ]
+
+  - name: anti-trigger-live-scenario
+    environment: *siblingSkills
+    prompt: "add a nightly live eval that writes to Azure DevOps"
+    graders:
+      - type: skill-invocation
+        config:
+          required: [azsdk-common-eval-authoring-workflow]
+          disallowed:
+            [
+              azsdk-common-eval-authoring-skill,
+              azsdk-common-eval-authoring-tool,
+            ]

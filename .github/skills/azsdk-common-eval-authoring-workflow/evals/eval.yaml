@@ -1,0 +1,117 @@
+name: azsdk-common-eval-authoring-workflow-eval
+description: Routing and boundary tests for the azsdk-common-eval-authoring-workflow skill
+type: capability
+
+environment: azsdk-mcp-mock
+
+tags:
+  area: azsdk-common-eval-authoring-workflow
+  type: ci-gate
+
+defaults:
+  runs: 1
+  timeout: "120s"
+  model: claude-opus-4.6
+  executor: copilot-sdk
+
+scoring:
+  threshold: 0.8
+
+stimuli:
+  # Boundary anti-triggers need the two sibling eval-authoring skills mounted
+  # alongside this one, or "disallowed" is trivially satisfied because no
+  # better-fitting skill was ever available to the model.
+  - name: trigger-write-workflow-eval
+    environment: &siblingSkills
+      skills:
+        - ..
+        - ../../azsdk-common-eval-authoring-skill
+        - ../../azsdk-common-eval-authoring-tool
+    prompt: "write a Vally workflow eval for a multi-tool Azure SDK scenario"
+    graders:
+      - type: skill-invocation
+        config:
+          required: [azsdk-common-eval-authoring-workflow]
+          disallowed:
+            [
+              azsdk-common-eval-authoring-skill,
+              azsdk-common-eval-authoring-tool,
+            ]
+
+  - name: trigger-add-end-to-end-eval
+    environment: *siblingSkills
+    prompt: "add an end-to-end eval that verifies the whole agent workflow"
+    graders:
+      - type: skill-invocation
+        config:
+          required: [azsdk-common-eval-authoring-workflow]
+          disallowed:
+            [
+              azsdk-common-eval-authoring-skill,
+              azsdk-common-eval-authoring-tool,
+            ]
+
+  - name: trigger-test-tool-sequence
+    environment: *siblingSkills
+    prompt: "create a mock eval that checks several MCP tools are orchestrated correctly"
+    graders:
+      - type: skill-invocation
+        config:
+          required: [azsdk-common-eval-authoring-workflow]
+          disallowed:
+            [
+              azsdk-common-eval-authoring-skill,
+              azsdk-common-eval-authoring-tool,
+            ]
+
+  - name: trigger-create-multi-turn-eval
+    environment: *siblingSkills
+    prompt: "create a multi-turn conversation eval that reuses context from the first turn"
+    graders:
+      - type: skill-invocation
+        config:
+          required: [azsdk-common-eval-authoring-workflow]
+          disallowed:
+            [
+              azsdk-common-eval-authoring-skill,
+              azsdk-common-eval-authoring-tool,
+            ]
+
+  - name: trigger-add-live-eval
+    environment: *siblingSkills
+    prompt: "add a nightly live workflow eval for behavior the mock server cannot represent"
+    graders:
+      - type: skill-invocation
+        config:
+          required: [azsdk-common-eval-authoring-workflow]
+          disallowed:
+            [
+              azsdk-common-eval-authoring-skill,
+              azsdk-common-eval-authoring-tool,
+            ]
+
+  - name: anti-trigger-single-tool-selection
+    environment: *siblingSkills
+    prompt: "add two prompt-to-tool cases for one MCP tool under evals/tools"
+    graders:
+      - type: skill-invocation
+        config:
+          required: [azsdk-common-eval-authoring-tool]
+          disallowed:
+            [
+              azsdk-common-eval-authoring-skill,
+              azsdk-common-eval-authoring-workflow,
+            ]
+
+  - name: anti-trigger-skill-routing
+    environment: *siblingSkills
+    prompt: "add trigger and anti-trigger tests for my skill's routing"
+    graders:
+      - type: skill-invocation
+        config:
+          required: [azsdk-common-eval-authoring-skill]
+          disallowed:
+            [
+              azsdk-common-eval-authoring-tool,
+              azsdk-common-eval-authoring-workflow,
+            ]
