@@ -43,6 +43,7 @@ public partial class MemorySearchToolCall
     /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
     internal MemorySearchToolCall(ResponseItemKind @type, string id, AgentReference agentReference, string responseId, ToolCallStatus status, IList<MemoryOutputItem> memories, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(@type)
     {
+        this.ApplyAgentAttribution(agentReference, responseId, additionalBinaryDataProperties);
         Status = status;
         Memories = memories;
         _additionalBinaryDataProperties = additionalBinaryDataProperties;

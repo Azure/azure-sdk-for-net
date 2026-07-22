@@ -66,6 +66,7 @@ public partial class OAuthConsentRequestResponseItem
     /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
     internal OAuthConsentRequestResponseItem(ResponseItemKind @type, string id, AgentReference agentReference, string responseId, string internalConsentLink, string serverLabel, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(@type)
     {
+        this.ApplyAgentAttribution(agentReference, responseId, additionalBinaryDataProperties);
         InternalConsentLink = internalConsentLink;
         ServerLabel = serverLabel;
         _additionalBinaryDataProperties = additionalBinaryDataProperties;

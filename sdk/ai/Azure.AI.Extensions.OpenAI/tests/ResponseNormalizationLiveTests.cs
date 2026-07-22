@@ -326,6 +326,52 @@ public class ResponseNormalizationLiveTests : ProjectsOpenAITestBase
             "The structured-output item should carry the captured output payload.");
     }
 
+    // Test 9 (item-level agent attribution — the AGENT funnel): every test above targets a MODEL
+    // (CreateResponseOptions.Model + a tool), so the service returns no per-item agent_reference /
+    // response_id and those tests only ever asserted item TYPE. That is exactly why the silent loss
+    // of these Azure-only @@copyProperties fields went uncaught. An AGENT-targeted response echoes,
+    // on each output item, which agent produced it (agent_reference) and which response it belongs to
+    // (response_id). This test drives that funnel and asserts the VALUES survive normalization.
+    // Authored pending a live recording (the existing recordings are model calls without item-level
+    // attribution), so it is [LiveOnly] until recorded.
+    [RecordedTest]
+    public async Task AgentResponseItemsCarryAgentAttribution()
+    {
+        ProjectResponsesClient responsesClient = GetTestProjectOpenAIClient()
+            .GetProjectResponsesClientForAgent(new AgentReference(TestEnvironment.FOUNDRY_AGENT_NAME));
+
+        ResponseResult response = await responsesClient.CreateResponseAsync(
+            "What is the latest news about the Mars Perseverance rover?");
+
+        Assert.That(response, Is.Not.Null);
+        Assert.That(response.Status, Is.EqualTo(ResponseStatus.Completed));
+        // The whole-response agent attribution (already surfaced pre-fix) anchors the expected value.
+        Assert.That(response.Agent?.Name, Is.EqualTo(TestEnvironment.FOUNDRY_AGENT_NAME));
+        Assert.That(response.OutputItems, Is.Not.Empty);
+
+        // The crux: at least one output item must carry the per-item attribution that was dropped,
+        // and any item that carries it must report the producing agent and the owning response.
+        List<ResponseItem> attributedItems =
+            response.OutputItems.Where(item => item.AgentReference is not null).ToList();
+        Assert.That(
+            attributedItems,
+            Is.Not.Empty,
+            "Expected at least one output item to carry per-item agent attribution (agent_reference). "
+            + "Its absence is the regression this test guards against.");
+
+        foreach (ResponseItem item in attributedItems)
+        {
+            Assert.That(
+                item.AgentReference.Name,
+                Is.EqualTo(TestEnvironment.FOUNDRY_AGENT_NAME),
+                "Each attributed output item should name the agent that produced it (agent_reference).");
+            Assert.That(
+                item.ResponseId,
+                Is.EqualTo(response.Id),
+                "Each attributed output item should reference the response it was created on (response_id).");
+        }
+    }
+
     // Builds a minimal strict JSON-schema structured-output definition. Schema is a dictionary of
     // top-level JSON-schema keys to raw JSON values (see StructuredOutputDefinition serialization).
     private static CaptureStructuredOutputsTool CreateCapitalCaptureTool()
