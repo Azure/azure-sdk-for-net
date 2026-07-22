@@ -107,9 +107,11 @@ steps:
   - name: Install azsdk CLI
     shell: pwsh
     run: |
-      $dir = Join-Path $env:RUNNER_TEMP 'azsdk-cli'
+      # gh-aw exposes tool-cache bin directories inside the agent sandbox.
+      $dir = Join-Path $env:RUNNER_TOOL_CACHE 'azsdk/latest/x64/bin'
       ./eng/common/mcp/azure-sdk-mcp.ps1 -InstallDirectory $dir
       Add-Content -Path $env:GITHUB_PATH -Value $dir
+      & (Join-Path $dir 'azsdk') --version
 
 tools:
   github:
