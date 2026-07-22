@@ -25,7 +25,7 @@ namespace Azure.ResourceManager.Enclave.Models
             ResourceCollection = new ChangeTrackingList<ResourceIdentifier>();
             GovernedServiceList = new ChangeTrackingList<EnclaveGovernedService>();
             CommunityRoleAssignments = new ChangeTrackingList<EnclaveRoleAssignmentItem>();
-            DedicatedHubList = new ChangeTrackingList<DedicatedHubData>();
+            DedicatedHubList = new ChangeTrackingList<EnclaveDedicatedHubData>();
             AddressSpaces = new ChangeTrackingList<string>();
         }
 
@@ -46,7 +46,7 @@ namespace Azure.ResourceManager.Enclave.Models
         /// <param name="monitoringSettings"> Community Monitoring Settings for diagnostic and virtual network flow logs. </param>
         /// <param name="addressSpaces"> Address spaces list. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal EnclaveCommunityProperties(string addressSpace, IList<string> dnsServers, EnclaveProvisioningState? provisioningState, IReadOnlyList<ResourceIdentifier> resourceCollection, string managedResourceGroupName, ManagedOnBehalfOfConfiguration managedOnBehalfOfConfiguration, IList<EnclaveGovernedService> governedServiceList, CommunityPropertiesPolicyOverride? policyOverride, IList<EnclaveRoleAssignmentItem> communityRoleAssignments, EnclaveFirewallSku? firewallSku, EnclaveBaseApprovalSettings granularApprovalSettings, EnclaveMaintenanceModeConfiguration maintenanceModeConfiguration, IReadOnlyList<DedicatedHubData> dedicatedHubList, EnclaveMonitoringSettings monitoringSettings, IList<string> addressSpaces, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal EnclaveCommunityProperties(string addressSpace, IList<string> dnsServers, EnclaveProvisioningState? provisioningState, IReadOnlyList<ResourceIdentifier> resourceCollection, string managedResourceGroupName, ManagedOnBehalfOfConfiguration managedOnBehalfOfConfiguration, IList<EnclaveGovernedService> governedServiceList, CommunityPropertiesPolicyOverride? policyOverride, IList<EnclaveRoleAssignmentItem> communityRoleAssignments, EnclaveFirewallSku? firewallSku, EnclaveBaseApprovalSettings granularApprovalSettings, EnclaveMaintenanceModeConfiguration maintenanceModeConfiguration, IReadOnlyList<EnclaveDedicatedHubData> dedicatedHubList, EnclaveMonitoringSettings monitoringSettings, IList<string> addressSpaces, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             AddressSpace = addressSpace;
             DnsServers = dnsServers;
@@ -103,7 +103,7 @@ namespace Azure.ResourceManager.Enclave.Models
         public EnclaveMaintenanceModeConfiguration MaintenanceModeConfiguration { get; set; }
 
         /// <summary> DedicatedHub List. </summary>
-        public IReadOnlyList<DedicatedHubData> DedicatedHubList { get; }
+        public IReadOnlyList<EnclaveDedicatedHubData> DedicatedHubList { get; }
 
         /// <summary> Community Monitoring Settings for diagnostic and virtual network flow logs. </summary>
         public EnclaveMonitoringSettings MonitoringSettings { get; set; }

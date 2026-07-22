@@ -11,20 +11,20 @@ using System.Collections.Generic;
 namespace Azure.ResourceManager.Enclave.Models
 {
     /// <summary> Dedicated Hub patchable Properties. </summary>
-    internal partial class DedicatedHubPatchProperties
+    internal partial class EnclaveDedicatedHubPatchProperties
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="DedicatedHubPatchProperties"/>. </summary>
-        public DedicatedHubPatchProperties()
+        /// <summary> Initializes a new instance of <see cref="EnclaveDedicatedHubPatchProperties"/>. </summary>
+        public EnclaveDedicatedHubPatchProperties()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="DedicatedHubPatchProperties"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="EnclaveDedicatedHubPatchProperties"/>. </summary>
         /// <param name="designation"> Designation of hub resource allocation (Pooled or Reserved). </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal DedicatedHubPatchProperties(EnclaveDesignation? designation, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal EnclaveDedicatedHubPatchProperties(EnclaveDesignation? designation, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Designation = designation;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;

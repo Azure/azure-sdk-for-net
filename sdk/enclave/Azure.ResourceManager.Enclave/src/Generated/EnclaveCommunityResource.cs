@@ -849,11 +849,11 @@ namespace Azure.ResourceManager.Enclave
             return GetEnclaveCommunityEndpoints().Get(communityEndpointName, cancellationToken);
         }
 
-        /// <summary> Gets a collection of DedicatedHubs in the <see cref="EnclaveCommunityResource"/>. </summary>
-        /// <returns> An object representing collection of DedicatedHubs and their operations over a DedicatedHubResource. </returns>
-        public virtual DedicatedHubCollection GetDedicatedHubs()
+        /// <summary> Gets a collection of EnclaveDedicatedHubs in the <see cref="EnclaveCommunityResource"/>. </summary>
+        /// <returns> An object representing collection of EnclaveDedicatedHubs and their operations over a EnclaveDedicatedHubResource. </returns>
+        public virtual EnclaveDedicatedHubCollection GetEnclaveDedicatedHubs()
         {
-            return GetCachedClient(client => new DedicatedHubCollection(client, Id));
+            return GetCachedClient(client => new EnclaveDedicatedHubCollection(client, Id));
         }
 
         /// <summary> Get a DedicatedHubResource. </summary>
@@ -862,11 +862,11 @@ namespace Azure.ResourceManager.Enclave
         /// <exception cref="ArgumentNullException"> <paramref name="dedicatedHubName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="dedicatedHubName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual async Task<Response<DedicatedHubResource>> GetDedicatedHubAsync(string dedicatedHubName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<EnclaveDedicatedHubResource>> GetEnclaveDedicatedHubAsync(string dedicatedHubName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(dedicatedHubName, nameof(dedicatedHubName));
 
-            return await GetDedicatedHubs().GetAsync(dedicatedHubName, cancellationToken).ConfigureAwait(false);
+            return await GetEnclaveDedicatedHubs().GetAsync(dedicatedHubName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary> Get a DedicatedHubResource. </summary>
@@ -875,11 +875,11 @@ namespace Azure.ResourceManager.Enclave
         /// <exception cref="ArgumentNullException"> <paramref name="dedicatedHubName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="dedicatedHubName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual Response<DedicatedHubResource> GetDedicatedHub(string dedicatedHubName, CancellationToken cancellationToken = default)
+        public virtual Response<EnclaveDedicatedHubResource> GetEnclaveDedicatedHub(string dedicatedHubName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(dedicatedHubName, nameof(dedicatedHubName));
 
-            return GetDedicatedHubs().Get(dedicatedHubName, cancellationToken);
+            return GetEnclaveDedicatedHubs().Get(dedicatedHubName, cancellationToken);
         }
     }
 }

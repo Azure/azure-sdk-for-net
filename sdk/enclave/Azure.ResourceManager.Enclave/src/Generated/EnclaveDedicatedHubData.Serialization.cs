@@ -18,10 +18,10 @@ using Azure.ResourceManager.Models;
 namespace Azure.ResourceManager.Enclave
 {
     /// <summary> DedicatedHub Model Resource. </summary>
-    public partial class DedicatedHubData : TrackedResourceData, IJsonModel<DedicatedHubData>
+    public partial class EnclaveDedicatedHubData : TrackedResourceData, IJsonModel<EnclaveDedicatedHubData>
     {
-        /// <summary> Initializes a new instance of <see cref="DedicatedHubData"/> for deserialization. </summary>
-        internal DedicatedHubData()
+        /// <summary> Initializes a new instance of <see cref="EnclaveDedicatedHubData"/> for deserialization. </summary>
+        internal EnclaveDedicatedHubData()
         {
         }
 
@@ -29,62 +29,62 @@ namespace Azure.ResourceManager.Enclave
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual ResourceData PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<DedicatedHubData>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<EnclaveDedicatedHubData>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeDedicatedHubData(document.RootElement, options);
+                        return DeserializeEnclaveDedicatedHubData(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(DedicatedHubData)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(EnclaveDedicatedHubData)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<DedicatedHubData>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<EnclaveDedicatedHubData>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options, AzureResourceManagerEnclaveContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(DedicatedHubData)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(EnclaveDedicatedHubData)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<DedicatedHubData>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<EnclaveDedicatedHubData>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        DedicatedHubData IPersistableModel<DedicatedHubData>.Create(BinaryData data, ModelReaderWriterOptions options) => (DedicatedHubData)PersistableModelCreateCore(data, options);
+        EnclaveDedicatedHubData IPersistableModel<EnclaveDedicatedHubData>.Create(BinaryData data, ModelReaderWriterOptions options) => (EnclaveDedicatedHubData)PersistableModelCreateCore(data, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<DedicatedHubData>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<EnclaveDedicatedHubData>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
-        /// <param name="dedicatedHubData"> The <see cref="DedicatedHubData"/> to serialize into <see cref="RequestContent"/>. </param>
-        internal static RequestContent ToRequestContent(DedicatedHubData dedicatedHubData)
+        /// <param name="enclaveDedicatedHubData"> The <see cref="EnclaveDedicatedHubData"/> to serialize into <see cref="RequestContent"/>. </param>
+        internal static RequestContent ToRequestContent(EnclaveDedicatedHubData enclaveDedicatedHubData)
         {
-            if (dedicatedHubData == null)
+            if (enclaveDedicatedHubData == null)
             {
                 return null;
             }
-            return RequestContent.Create(dedicatedHubData, ModelSerializationExtensions.WireOptions);
+            return RequestContent.Create(enclaveDedicatedHubData, ModelSerializationExtensions.WireOptions);
         }
 
-        /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="DedicatedHubData"/> from. </param>
-        internal static DedicatedHubData FromResponse(Response response)
+        /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="EnclaveDedicatedHubData"/> from. </param>
+        internal static EnclaveDedicatedHubData FromResponse(Response response)
         {
             using JsonDocument document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
-            return DeserializeDedicatedHubData(document.RootElement, ModelSerializationExtensions.WireOptions);
+            return DeserializeEnclaveDedicatedHubData(document.RootElement, ModelSerializationExtensions.WireOptions);
         }
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<DedicatedHubData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<EnclaveDedicatedHubData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -95,10 +95,10 @@ namespace Azure.ResourceManager.Enclave
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<DedicatedHubData>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<EnclaveDedicatedHubData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(DedicatedHubData)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(EnclaveDedicatedHubData)} does not support writing '{format}' format.");
             }
             base.JsonModelWriteCore(writer, options);
             if (Optional.IsDefined(Properties))
@@ -125,24 +125,24 @@ namespace Azure.ResourceManager.Enclave
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        DedicatedHubData IJsonModel<DedicatedHubData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => (DedicatedHubData)JsonModelCreateCore(ref reader, options);
+        EnclaveDedicatedHubData IJsonModel<EnclaveDedicatedHubData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => (EnclaveDedicatedHubData)JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual ResourceData JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<DedicatedHubData>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<EnclaveDedicatedHubData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(DedicatedHubData)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(EnclaveDedicatedHubData)} does not support reading '{format}' format.");
             }
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeDedicatedHubData(document.RootElement, options);
+            return DeserializeEnclaveDedicatedHubData(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        internal static DedicatedHubData DeserializeDedicatedHubData(JsonElement element, ModelReaderWriterOptions options)
+        internal static EnclaveDedicatedHubData DeserializeEnclaveDedicatedHubData(JsonElement element, ModelReaderWriterOptions options)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -154,7 +154,7 @@ namespace Azure.ResourceManager.Enclave
             SystemData systemData = default;
             IDictionary<string, string> tags = default;
             AzureLocation location = default;
-            DedicatedHubProperties properties = default;
+            EnclaveDedicatedHubProperties properties = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -222,7 +222,7 @@ namespace Azure.ResourceManager.Enclave
                     {
                         continue;
                     }
-                    properties = DedicatedHubProperties.DeserializeDedicatedHubProperties(prop.Value, options);
+                    properties = EnclaveDedicatedHubProperties.DeserializeEnclaveDedicatedHubProperties(prop.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
@@ -230,7 +230,7 @@ namespace Azure.ResourceManager.Enclave
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new DedicatedHubData(
+            return new EnclaveDedicatedHubData(
                 id,
                 name,
                 resourceType,

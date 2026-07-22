@@ -93,13 +93,13 @@ namespace Azure.ResourceManager.Enclave.Mocking
             return new EnclaveCommunityEndpointResource(Client, id);
         }
 
-        /// <summary> Gets an object representing a <see cref="DedicatedHubResource"/> along with the instance operations that can be performed on it but with no data. </summary>
+        /// <summary> Gets an object representing a <see cref="EnclaveDedicatedHubResource"/> along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="DedicatedHubResource"/> object. </returns>
-        public virtual DedicatedHubResource GetDedicatedHubResource(ResourceIdentifier id)
+        /// <returns> Returns a <see cref="EnclaveDedicatedHubResource"/> object. </returns>
+        public virtual EnclaveDedicatedHubResource GetEnclaveDedicatedHubResource(ResourceIdentifier id)
         {
-            DedicatedHubResource.ValidateResourceId(id);
-            return new DedicatedHubResource(Client, id);
+            EnclaveDedicatedHubResource.ValidateResourceId(id);
+            return new EnclaveDedicatedHubResource(Client, id);
         }
 
         /// <summary> Gets an object representing a <see cref="EnclaveApprovalResource"/> along with the instance operations that can be performed on it but with no data. </summary>

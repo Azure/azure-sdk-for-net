@@ -449,13 +449,13 @@ namespace Azure.ResourceManager.Enclave.Models
         /// <param name="monitoringSettings"> Community Monitoring Settings for diagnostic and virtual network flow logs. </param>
         /// <param name="addressSpaces"> Address spaces list. </param>
         /// <returns> A new <see cref="Models.EnclaveCommunityProperties"/> instance for mocking. </returns>
-        public static EnclaveCommunityProperties EnclaveCommunityProperties(string addressSpace = default, IEnumerable<string> dnsServers = default, EnclaveProvisioningState? provisioningState = default, IEnumerable<ResourceIdentifier> resourceCollection = default, string managedResourceGroupName = default, IEnumerable<EnclaveManagedOnBehalfOfBroker> managedOnBehalfOfMoboBrokerResources = default, IEnumerable<EnclaveGovernedService> governedServiceList = default, CommunityPropertiesPolicyOverride? policyOverride = default, IEnumerable<EnclaveRoleAssignmentItem> communityRoleAssignments = default, EnclaveFirewallSku? firewallSku = default, EnclaveBaseApprovalSettings granularApprovalSettings = default, EnclaveMaintenanceModeConfiguration maintenanceModeConfiguration = default, IEnumerable<DedicatedHubData> dedicatedHubList = default, EnclaveMonitoringSettings monitoringSettings = default, IEnumerable<string> addressSpaces = default)
+        public static EnclaveCommunityProperties EnclaveCommunityProperties(string addressSpace = default, IEnumerable<string> dnsServers = default, EnclaveProvisioningState? provisioningState = default, IEnumerable<ResourceIdentifier> resourceCollection = default, string managedResourceGroupName = default, IEnumerable<EnclaveManagedOnBehalfOfBroker> managedOnBehalfOfMoboBrokerResources = default, IEnumerable<EnclaveGovernedService> governedServiceList = default, CommunityPropertiesPolicyOverride? policyOverride = default, IEnumerable<EnclaveRoleAssignmentItem> communityRoleAssignments = default, EnclaveFirewallSku? firewallSku = default, EnclaveBaseApprovalSettings granularApprovalSettings = default, EnclaveMaintenanceModeConfiguration maintenanceModeConfiguration = default, IEnumerable<EnclaveDedicatedHubData> dedicatedHubList = default, EnclaveMonitoringSettings monitoringSettings = default, IEnumerable<string> addressSpaces = default)
         {
             dnsServers ??= new ChangeTrackingList<string>();
             resourceCollection ??= new ChangeTrackingList<ResourceIdentifier>();
             governedServiceList ??= new ChangeTrackingList<EnclaveGovernedService>();
             communityRoleAssignments ??= new ChangeTrackingList<EnclaveRoleAssignmentItem>();
-            dedicatedHubList ??= new ChangeTrackingList<DedicatedHubData>();
+            dedicatedHubList ??= new ChangeTrackingList<EnclaveDedicatedHubData>();
             addressSpaces ??= new ChangeTrackingList<string>();
 
             return new EnclaveCommunityProperties(
@@ -471,7 +471,7 @@ namespace Azure.ResourceManager.Enclave.Models
                 firewallSku,
                 granularApprovalSettings,
                 maintenanceModeConfiguration,
-                (dedicatedHubList ?? new ChangeTrackingList<DedicatedHubData>()).ToList(),
+                (dedicatedHubList ?? new ChangeTrackingList<EnclaveDedicatedHubData>()).ToList(),
                 monitoringSettings,
                 (addressSpaces ?? new ChangeTrackingList<string>()).ToList(),
                 default);
@@ -505,12 +505,12 @@ namespace Azure.ResourceManager.Enclave.Models
         /// <param name="tags"> Resource tags. </param>
         /// <param name="location"> The geo-location where the resource lives. </param>
         /// <param name="properties"> The resource-specific properties for this resource. </param>
-        /// <returns> A new <see cref="Enclave.DedicatedHubData"/> instance for mocking. </returns>
-        public static DedicatedHubData DedicatedHubData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, DedicatedHubProperties properties = default)
+        /// <returns> A new <see cref="Enclave.EnclaveDedicatedHubData"/> instance for mocking. </returns>
+        public static EnclaveDedicatedHubData EnclaveDedicatedHubData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, EnclaveDedicatedHubProperties properties = default)
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
 
-            return new DedicatedHubData(
+            return new EnclaveDedicatedHubData(
                 id,
                 name,
                 resourceType,
@@ -526,10 +526,10 @@ namespace Azure.ResourceManager.Enclave.Models
         /// <param name="firewallPolicyResourceId"> Firewall Policy Resource ID. </param>
         /// <param name="designation"> Designation of hub resource allocation (Pooled or Reserved). </param>
         /// <param name="provisioningState"> The status of the last operation. </param>
-        /// <returns> A new <see cref="Models.DedicatedHubProperties"/> instance for mocking. </returns>
-        public static DedicatedHubProperties DedicatedHubProperties(ResourceIdentifier vHubResourceId = default, ResourceIdentifier firewallResourceId = default, ResourceIdentifier firewallPolicyResourceId = default, EnclaveDesignation? designation = default, EnclaveProvisioningState? provisioningState = default)
+        /// <returns> A new <see cref="Models.EnclaveDedicatedHubProperties"/> instance for mocking. </returns>
+        public static EnclaveDedicatedHubProperties EnclaveDedicatedHubProperties(ResourceIdentifier vHubResourceId = default, ResourceIdentifier firewallResourceId = default, ResourceIdentifier firewallPolicyResourceId = default, EnclaveDesignation? designation = default, EnclaveProvisioningState? provisioningState = default)
         {
-            return new DedicatedHubProperties(
+            return new EnclaveDedicatedHubProperties(
                 vHubResourceId,
                 firewallResourceId,
                 firewallPolicyResourceId,
@@ -895,14 +895,14 @@ namespace Azure.ResourceManager.Enclave.Models
             return new EnclaveCommunityEndpointPatchProperties((ruleCollection ?? new ChangeTrackingList<EnclaveCommunityEndpointDestinationRule>()).ToList(), updateMode, default);
         }
 
-        /// <param name="dedicatedHubPatchDesignation"> Designation of hub resource allocation (Pooled or Reserved). </param>
+        /// <param name="enclaveDedicatedHubPatchDesignation"> Designation of hub resource allocation (Pooled or Reserved). </param>
         /// <param name="tags"> Resource tags. </param>
-        /// <returns> A new <see cref="Models.DedicatedHubPatch"/> instance for mocking. </returns>
-        public static DedicatedHubPatch DedicatedHubPatch(EnclaveDesignation? dedicatedHubPatchDesignation = default, IDictionary<string, string> tags = default)
+        /// <returns> A new <see cref="Models.EnclaveDedicatedHubPatch"/> instance for mocking. </returns>
+        public static EnclaveDedicatedHubPatch EnclaveDedicatedHubPatch(EnclaveDesignation? enclaveDedicatedHubPatchDesignation = default, IDictionary<string, string> tags = default)
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
 
-            return new DedicatedHubPatch(dedicatedHubPatchDesignation is null ? default : new DedicatedHubPatchProperties(dedicatedHubPatchDesignation, default), tags ?? new ChangeTrackingDictionary<string, string>(), default);
+            return new EnclaveDedicatedHubPatch(enclaveDedicatedHubPatchDesignation is null ? default : new EnclaveDedicatedHubPatchProperties(enclaveDedicatedHubPatchDesignation, default), tags ?? new ChangeTrackingDictionary<string, string>(), default);
         }
 
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>

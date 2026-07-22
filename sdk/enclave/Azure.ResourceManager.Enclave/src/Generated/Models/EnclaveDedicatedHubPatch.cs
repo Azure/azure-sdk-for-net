@@ -12,22 +12,22 @@ using Azure.ResourceManager.Enclave;
 namespace Azure.ResourceManager.Enclave.Models
 {
     /// <summary> Dedicated Hub Patch Resource. </summary>
-    public partial class DedicatedHubPatch
+    public partial class EnclaveDedicatedHubPatch
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="DedicatedHubPatch"/>. </summary>
-        public DedicatedHubPatch()
+        /// <summary> Initializes a new instance of <see cref="EnclaveDedicatedHubPatch"/>. </summary>
+        public EnclaveDedicatedHubPatch()
         {
             Tags = new ChangeTrackingDictionary<string, string>();
         }
 
-        /// <summary> Initializes a new instance of <see cref="DedicatedHubPatch"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="EnclaveDedicatedHubPatch"/>. </summary>
         /// <param name="properties"> The DedicatedHub resource. </param>
         /// <param name="tags"> Resource tags. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal DedicatedHubPatch(DedicatedHubPatchProperties properties, IDictionary<string, string> tags, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal EnclaveDedicatedHubPatch(EnclaveDedicatedHubPatchProperties properties, IDictionary<string, string> tags, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Properties = properties;
             Tags = tags;
@@ -35,13 +35,13 @@ namespace Azure.ResourceManager.Enclave.Models
         }
 
         /// <summary> The DedicatedHub resource. </summary>
-        internal DedicatedHubPatchProperties Properties { get; set; }
+        internal EnclaveDedicatedHubPatchProperties Properties { get; set; }
 
         /// <summary> Resource tags. </summary>
         public IDictionary<string, string> Tags { get; }
 
         /// <summary> Designation of hub resource allocation (Pooled or Reserved). </summary>
-        public EnclaveDesignation? DedicatedHubPatchDesignation
+        public EnclaveDesignation? EnclaveDedicatedHubPatchDesignation
         {
             get
             {
@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.Enclave.Models
             {
                 if (Properties is null)
                 {
-                    Properties = new DedicatedHubPatchProperties();
+                    Properties = new EnclaveDedicatedHubPatchProperties();
                 }
                 Properties.Designation = value;
             }

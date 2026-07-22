@@ -533,8 +533,8 @@ namespace Azure.ResourceManager.Enclave.Mocking
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="communityName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="communityName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <returns> A collection of <see cref="DedicatedHubResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<DedicatedHubResource> GetDedicatedHubsAsync(string communityName, CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="EnclaveDedicatedHubResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<EnclaveDedicatedHubResource> GetEnclaveDedicatedHubsAsync(string communityName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(communityName, nameof(communityName));
 
@@ -542,7 +542,7 @@ namespace Azure.ResourceManager.Enclave.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<DedicatedHubData, DedicatedHubResource>(new DedicatedHubGetBySubscriptionAsyncCollectionResultOfT(DedicatedHubRestClient, Guid.Parse(Id.SubscriptionId), communityName, context, "MockableEnclaveSubscriptionResource.GetDedicatedHubs"), data => new DedicatedHubResource(Client, data));
+            return new AsyncPageableWrapper<EnclaveDedicatedHubData, EnclaveDedicatedHubResource>(new DedicatedHubGetBySubscriptionAsyncCollectionResultOfT(DedicatedHubRestClient, Guid.Parse(Id.SubscriptionId), communityName, context, "MockableEnclaveSubscriptionResource.GetEnclaveDedicatedHubs"), data => new EnclaveDedicatedHubResource(Client, data));
         }
 
         /// <summary>
@@ -566,8 +566,8 @@ namespace Azure.ResourceManager.Enclave.Mocking
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="communityName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="communityName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <returns> A collection of <see cref="DedicatedHubResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<DedicatedHubResource> GetDedicatedHubs(string communityName, CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="EnclaveDedicatedHubResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<EnclaveDedicatedHubResource> GetEnclaveDedicatedHubs(string communityName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(communityName, nameof(communityName));
 
@@ -575,7 +575,7 @@ namespace Azure.ResourceManager.Enclave.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<DedicatedHubData, DedicatedHubResource>(new DedicatedHubGetBySubscriptionCollectionResultOfT(DedicatedHubRestClient, Guid.Parse(Id.SubscriptionId), communityName, context, "MockableEnclaveSubscriptionResource.GetDedicatedHubs"), data => new DedicatedHubResource(Client, data));
+            return new PageableWrapper<EnclaveDedicatedHubData, EnclaveDedicatedHubResource>(new DedicatedHubGetBySubscriptionCollectionResultOfT(DedicatedHubRestClient, Guid.Parse(Id.SubscriptionId), communityName, context, "MockableEnclaveSubscriptionResource.GetEnclaveDedicatedHubs"), data => new EnclaveDedicatedHubResource(Client, data));
         }
     }
 }

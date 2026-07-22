@@ -15,13 +15,13 @@ using Azure.ResourceManager;
 namespace Azure.ResourceManager.Enclave
 {
     /// <summary></summary>
-    internal partial class DedicatedHubResourceOperationSource : IOperationSource<DedicatedHubResource>
+    internal partial class EnclaveDedicatedHubResourceOperationSource : IOperationSource<EnclaveDedicatedHubResource>
     {
         private readonly ArmClient _client;
 
         /// <summary></summary>
         /// <param name="client"></param>
-        internal DedicatedHubResourceOperationSource(ArmClient client)
+        internal EnclaveDedicatedHubResourceOperationSource(ArmClient client)
         {
             _client = client;
         }
@@ -29,21 +29,21 @@ namespace Azure.ResourceManager.Enclave
         /// <param name="response"> The response from the service. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns></returns>
-        DedicatedHubResource IOperationSource<DedicatedHubResource>.CreateResult(Response response, CancellationToken cancellationToken)
+        EnclaveDedicatedHubResource IOperationSource<EnclaveDedicatedHubResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
             using JsonDocument document = JsonDocument.Parse(response.ContentStream);
-            DedicatedHubData data = DedicatedHubData.DeserializeDedicatedHubData(document.RootElement, ModelSerializationExtensions.WireOptions);
-            return new DedicatedHubResource(_client, data);
+            EnclaveDedicatedHubData data = EnclaveDedicatedHubData.DeserializeEnclaveDedicatedHubData(document.RootElement, ModelSerializationExtensions.WireOptions);
+            return new EnclaveDedicatedHubResource(_client, data);
         }
 
         /// <param name="response"> The response from the service. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns></returns>
-        async ValueTask<DedicatedHubResource> IOperationSource<DedicatedHubResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
+        async ValueTask<EnclaveDedicatedHubResource> IOperationSource<EnclaveDedicatedHubResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using JsonDocument document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-            DedicatedHubData data = DedicatedHubData.DeserializeDedicatedHubData(document.RootElement, ModelSerializationExtensions.WireOptions);
-            return new DedicatedHubResource(_client, data);
+            EnclaveDedicatedHubData data = EnclaveDedicatedHubData.DeserializeEnclaveDedicatedHubData(document.RootElement, ModelSerializationExtensions.WireOptions);
+            return new EnclaveDedicatedHubResource(_client, data);
         }
     }
 }

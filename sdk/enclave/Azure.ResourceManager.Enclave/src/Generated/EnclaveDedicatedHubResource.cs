@@ -20,40 +20,40 @@ using Azure.ResourceManager.Resources;
 namespace Azure.ResourceManager.Enclave
 {
     /// <summary>
-    /// A class representing a DedicatedHub along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="DedicatedHubResource"/> from an instance of <see cref="ArmClient"/> using the GetResource method.
-    /// Otherwise you can get one from its parent resource <see cref="EnclaveCommunityResource"/> using the GetDedicatedHubs method.
+    /// A class representing a EnclaveDedicatedHub along with the instance operations that can be performed on it.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="EnclaveDedicatedHubResource"/> from an instance of <see cref="ArmClient"/> using the GetResource method.
+    /// Otherwise you can get one from its parent resource <see cref="EnclaveCommunityResource"/> using the GetEnclaveDedicatedHubs method.
     /// </summary>
-    public partial class DedicatedHubResource : ArmResource
+    public partial class EnclaveDedicatedHubResource : ArmResource
     {
         private readonly ClientDiagnostics _dedicatedHubClientDiagnostics;
         private readonly DedicatedHub _dedicatedHubRestClient;
-        private readonly DedicatedHubData _data;
+        private readonly EnclaveDedicatedHubData _data;
         /// <summary> Gets the resource type for the operations. </summary>
         public static readonly ResourceType ResourceType = "Microsoft.Mission/communities/dedicatedHubs";
 
-        /// <summary> Initializes a new instance of DedicatedHubResource for mocking. </summary>
-        protected DedicatedHubResource()
+        /// <summary> Initializes a new instance of EnclaveDedicatedHubResource for mocking. </summary>
+        protected EnclaveDedicatedHubResource()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="DedicatedHubResource"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="EnclaveDedicatedHubResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
-        internal DedicatedHubResource(ArmClient client, DedicatedHubData data) : this(client, data.Id)
+        internal EnclaveDedicatedHubResource(ArmClient client, EnclaveDedicatedHubData data) : this(client, data.Id)
         {
             HasData = true;
             _data = data;
         }
 
-        /// <summary> Initializes a new instance of <see cref="DedicatedHubResource"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="EnclaveDedicatedHubResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
-        internal DedicatedHubResource(ArmClient client, ResourceIdentifier id) : base(client, id)
+        internal EnclaveDedicatedHubResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            TryGetApiVersion(ResourceType, out string dedicatedHubApiVersion);
+            TryGetApiVersion(ResourceType, out string enclaveDedicatedHubApiVersion);
             _dedicatedHubClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Enclave", ResourceType.Namespace, Diagnostics);
-            _dedicatedHubRestClient = new DedicatedHub(_dedicatedHubClientDiagnostics, Pipeline, Endpoint, dedicatedHubApiVersion ?? "2026-03-01-preview");
+            _dedicatedHubRestClient = new DedicatedHub(_dedicatedHubClientDiagnostics, Pipeline, Endpoint, enclaveDedicatedHubApiVersion ?? "2026-03-01-preview");
             ValidateResourceId(id);
         }
 
@@ -61,7 +61,7 @@ namespace Azure.ResourceManager.Enclave
         public virtual bool HasData { get; }
 
         /// <summary> Gets the data representing this Feature. </summary>
-        public virtual DedicatedHubData Data
+        public virtual EnclaveDedicatedHubData Data
         {
             get
             {
@@ -111,14 +111,14 @@ namespace Azure.ResourceManager.Enclave
         /// </item>
         /// <item>
         /// <term> Resource. </term>
-        /// <description> <see cref="DedicatedHubResource"/>. </description>
+        /// <description> <see cref="EnclaveDedicatedHubResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<DedicatedHubResource>> GetAsync(CancellationToken cancellationToken = default)
+        public virtual async Task<Response<EnclaveDedicatedHubResource>> GetAsync(CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _dedicatedHubClientDiagnostics.CreateScope("DedicatedHubResource.Get");
+            using DiagnosticScope scope = _dedicatedHubClientDiagnostics.CreateScope("EnclaveDedicatedHubResource.Get");
             scope.Start();
             try
             {
@@ -128,12 +128,12 @@ namespace Azure.ResourceManager.Enclave
                 };
                 HttpMessage message = _dedicatedHubRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                Response<DedicatedHubData> response = Response.FromValue(DedicatedHubData.FromResponse(result), result);
+                Response<EnclaveDedicatedHubData> response = Response.FromValue(EnclaveDedicatedHubData.FromResponse(result), result);
                 if (response.Value == null)
                 {
                     throw new RequestFailedException(response.GetRawResponse());
                 }
-                return Response.FromValue(new DedicatedHubResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new EnclaveDedicatedHubResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -159,14 +159,14 @@ namespace Azure.ResourceManager.Enclave
         /// </item>
         /// <item>
         /// <term> Resource. </term>
-        /// <description> <see cref="DedicatedHubResource"/>. </description>
+        /// <description> <see cref="EnclaveDedicatedHubResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<DedicatedHubResource> Get(CancellationToken cancellationToken = default)
+        public virtual Response<EnclaveDedicatedHubResource> Get(CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _dedicatedHubClientDiagnostics.CreateScope("DedicatedHubResource.Get");
+            using DiagnosticScope scope = _dedicatedHubClientDiagnostics.CreateScope("EnclaveDedicatedHubResource.Get");
             scope.Start();
             try
             {
@@ -176,12 +176,12 @@ namespace Azure.ResourceManager.Enclave
                 };
                 HttpMessage message = _dedicatedHubRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
                 Response result = Pipeline.ProcessMessage(message, context);
-                Response<DedicatedHubData> response = Response.FromValue(DedicatedHubData.FromResponse(result), result);
+                Response<EnclaveDedicatedHubData> response = Response.FromValue(EnclaveDedicatedHubData.FromResponse(result), result);
                 if (response.Value == null)
                 {
                     throw new RequestFailedException(response.GetRawResponse());
                 }
-                return Response.FromValue(new DedicatedHubResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new EnclaveDedicatedHubResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -207,7 +207,7 @@ namespace Azure.ResourceManager.Enclave
         /// </item>
         /// <item>
         /// <term> Resource. </term>
-        /// <description> <see cref="DedicatedHubResource"/>. </description>
+        /// <description> <see cref="EnclaveDedicatedHubResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -215,11 +215,11 @@ namespace Azure.ResourceManager.Enclave
         /// <param name="patch"> The resource properties to be updated. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="patch"/> is null. </exception>
-        public virtual async Task<ArmOperation<DedicatedHubResource>> UpdateAsync(WaitUntil waitUntil, DedicatedHubPatch patch, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation<EnclaveDedicatedHubResource>> UpdateAsync(WaitUntil waitUntil, EnclaveDedicatedHubPatch patch, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(patch, nameof(patch));
 
-            using DiagnosticScope scope = _dedicatedHubClientDiagnostics.CreateScope("DedicatedHubResource.Update");
+            using DiagnosticScope scope = _dedicatedHubClientDiagnostics.CreateScope("EnclaveDedicatedHubResource.Update");
             scope.Start();
             try
             {
@@ -227,10 +227,10 @@ namespace Azure.ResourceManager.Enclave
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _dedicatedHubRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, DedicatedHubPatch.ToRequestContent(patch), context);
+                HttpMessage message = _dedicatedHubRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, EnclaveDedicatedHubPatch.ToRequestContent(patch), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                EnclaveArmOperation<DedicatedHubResource> operation = new EnclaveArmOperation<DedicatedHubResource>(
-                    new DedicatedHubResourceOperationSource(Client),
+                EnclaveArmOperation<EnclaveDedicatedHubResource> operation = new EnclaveArmOperation<EnclaveDedicatedHubResource>(
+                    new EnclaveDedicatedHubResourceOperationSource(Client),
                     _dedicatedHubClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -266,7 +266,7 @@ namespace Azure.ResourceManager.Enclave
         /// </item>
         /// <item>
         /// <term> Resource. </term>
-        /// <description> <see cref="DedicatedHubResource"/>. </description>
+        /// <description> <see cref="EnclaveDedicatedHubResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -274,11 +274,11 @@ namespace Azure.ResourceManager.Enclave
         /// <param name="patch"> The resource properties to be updated. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="patch"/> is null. </exception>
-        public virtual ArmOperation<DedicatedHubResource> Update(WaitUntil waitUntil, DedicatedHubPatch patch, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<EnclaveDedicatedHubResource> Update(WaitUntil waitUntil, EnclaveDedicatedHubPatch patch, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(patch, nameof(patch));
 
-            using DiagnosticScope scope = _dedicatedHubClientDiagnostics.CreateScope("DedicatedHubResource.Update");
+            using DiagnosticScope scope = _dedicatedHubClientDiagnostics.CreateScope("EnclaveDedicatedHubResource.Update");
             scope.Start();
             try
             {
@@ -286,10 +286,10 @@ namespace Azure.ResourceManager.Enclave
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _dedicatedHubRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, DedicatedHubPatch.ToRequestContent(patch), context);
+                HttpMessage message = _dedicatedHubRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, EnclaveDedicatedHubPatch.ToRequestContent(patch), context);
                 Response response = Pipeline.ProcessMessage(message, context);
-                EnclaveArmOperation<DedicatedHubResource> operation = new EnclaveArmOperation<DedicatedHubResource>(
-                    new DedicatedHubResourceOperationSource(Client),
+                EnclaveArmOperation<EnclaveDedicatedHubResource> operation = new EnclaveArmOperation<EnclaveDedicatedHubResource>(
+                    new EnclaveDedicatedHubResourceOperationSource(Client),
                     _dedicatedHubClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -325,7 +325,7 @@ namespace Azure.ResourceManager.Enclave
         /// </item>
         /// <item>
         /// <term> Resource. </term>
-        /// <description> <see cref="DedicatedHubResource"/>. </description>
+        /// <description> <see cref="EnclaveDedicatedHubResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -333,7 +333,7 @@ namespace Azure.ResourceManager.Enclave
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<ArmOperation> DeleteAsync(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _dedicatedHubClientDiagnostics.CreateScope("DedicatedHubResource.Delete");
+            using DiagnosticScope scope = _dedicatedHubClientDiagnostics.CreateScope("EnclaveDedicatedHubResource.Delete");
             scope.Start();
             try
             {
@@ -374,7 +374,7 @@ namespace Azure.ResourceManager.Enclave
         /// </item>
         /// <item>
         /// <term> Resource. </term>
-        /// <description> <see cref="DedicatedHubResource"/>. </description>
+        /// <description> <see cref="EnclaveDedicatedHubResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -382,7 +382,7 @@ namespace Azure.ResourceManager.Enclave
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual ArmOperation Delete(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _dedicatedHubClientDiagnostics.CreateScope("DedicatedHubResource.Delete");
+            using DiagnosticScope scope = _dedicatedHubClientDiagnostics.CreateScope("EnclaveDedicatedHubResource.Delete");
             scope.Start();
             try
             {
@@ -411,12 +411,12 @@ namespace Azure.ResourceManager.Enclave
         /// <param name="value"> The value for the tag. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> or <paramref name="value"/> is null. </exception>
-        public virtual async Task<Response<DedicatedHubResource>> AddTagAsync(string key, string value, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<EnclaveDedicatedHubResource>> AddTagAsync(string key, string value, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(key, nameof(key));
             Argument.AssertNotNull(value, nameof(value));
 
-            using DiagnosticScope scope = _dedicatedHubClientDiagnostics.CreateScope("DedicatedHubResource.AddTag");
+            using DiagnosticScope scope = _dedicatedHubClientDiagnostics.CreateScope("EnclaveDedicatedHubResource.AddTag");
             scope.Start();
             try
             {
@@ -431,19 +431,19 @@ namespace Azure.ResourceManager.Enclave
                     };
                     HttpMessage message = _dedicatedHubRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
                     Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                    Response<DedicatedHubData> response = Response.FromValue(DedicatedHubData.FromResponse(result), result);
-                    return Response.FromValue(new DedicatedHubResource(Client, response.Value), response.GetRawResponse());
+                    Response<EnclaveDedicatedHubData> response = Response.FromValue(EnclaveDedicatedHubData.FromResponse(result), result);
+                    return Response.FromValue(new EnclaveDedicatedHubResource(Client, response.Value), response.GetRawResponse());
                 }
                 else
                 {
-                    DedicatedHubData current = (await GetAsync(cancellationToken: cancellationToken).ConfigureAwait(false)).Value.Data;
-                    DedicatedHubPatch patch = new DedicatedHubPatch();
+                    EnclaveDedicatedHubData current = (await GetAsync(cancellationToken: cancellationToken).ConfigureAwait(false)).Value.Data;
+                    EnclaveDedicatedHubPatch patch = new EnclaveDedicatedHubPatch();
                     foreach (KeyValuePair<string, string> tag in current.Tags)
                     {
                         patch.Tags.Add(tag);
                     }
                     patch.Tags[key] = value;
-                    ArmOperation<DedicatedHubResource> result = await UpdateAsync(WaitUntil.Completed, patch, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    ArmOperation<EnclaveDedicatedHubResource> result = await UpdateAsync(WaitUntil.Completed, patch, cancellationToken: cancellationToken).ConfigureAwait(false);
                     return Response.FromValue(result.Value, result.GetRawResponse());
                 }
             }
@@ -459,12 +459,12 @@ namespace Azure.ResourceManager.Enclave
         /// <param name="value"> The value for the tag. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> or <paramref name="value"/> is null. </exception>
-        public virtual Response<DedicatedHubResource> AddTag(string key, string value, CancellationToken cancellationToken = default)
+        public virtual Response<EnclaveDedicatedHubResource> AddTag(string key, string value, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(key, nameof(key));
             Argument.AssertNotNull(value, nameof(value));
 
-            using DiagnosticScope scope = _dedicatedHubClientDiagnostics.CreateScope("DedicatedHubResource.AddTag");
+            using DiagnosticScope scope = _dedicatedHubClientDiagnostics.CreateScope("EnclaveDedicatedHubResource.AddTag");
             scope.Start();
             try
             {
@@ -479,19 +479,19 @@ namespace Azure.ResourceManager.Enclave
                     };
                     HttpMessage message = _dedicatedHubRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
                     Response result = Pipeline.ProcessMessage(message, context);
-                    Response<DedicatedHubData> response = Response.FromValue(DedicatedHubData.FromResponse(result), result);
-                    return Response.FromValue(new DedicatedHubResource(Client, response.Value), response.GetRawResponse());
+                    Response<EnclaveDedicatedHubData> response = Response.FromValue(EnclaveDedicatedHubData.FromResponse(result), result);
+                    return Response.FromValue(new EnclaveDedicatedHubResource(Client, response.Value), response.GetRawResponse());
                 }
                 else
                 {
-                    DedicatedHubData current = Get(cancellationToken: cancellationToken).Value.Data;
-                    DedicatedHubPatch patch = new DedicatedHubPatch();
+                    EnclaveDedicatedHubData current = Get(cancellationToken: cancellationToken).Value.Data;
+                    EnclaveDedicatedHubPatch patch = new EnclaveDedicatedHubPatch();
                     foreach (KeyValuePair<string, string> tag in current.Tags)
                     {
                         patch.Tags.Add(tag);
                     }
                     patch.Tags[key] = value;
-                    ArmOperation<DedicatedHubResource> result = Update(WaitUntil.Completed, patch, cancellationToken: cancellationToken);
+                    ArmOperation<EnclaveDedicatedHubResource> result = Update(WaitUntil.Completed, patch, cancellationToken: cancellationToken);
                     return Response.FromValue(result.Value, result.GetRawResponse());
                 }
             }
@@ -506,11 +506,11 @@ namespace Azure.ResourceManager.Enclave
         /// <param name="tags"> The tags to set on the resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="tags"/> is null. </exception>
-        public virtual async Task<Response<DedicatedHubResource>> SetTagsAsync(IDictionary<string, string> tags, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<EnclaveDedicatedHubResource>> SetTagsAsync(IDictionary<string, string> tags, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(tags, nameof(tags));
 
-            using DiagnosticScope scope = _dedicatedHubClientDiagnostics.CreateScope("DedicatedHubResource.SetTags");
+            using DiagnosticScope scope = _dedicatedHubClientDiagnostics.CreateScope("EnclaveDedicatedHubResource.SetTags");
             scope.Start();
             try
             {
@@ -526,15 +526,15 @@ namespace Azure.ResourceManager.Enclave
                     };
                     HttpMessage message = _dedicatedHubRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
                     Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                    Response<DedicatedHubData> response = Response.FromValue(DedicatedHubData.FromResponse(result), result);
-                    return Response.FromValue(new DedicatedHubResource(Client, response.Value), response.GetRawResponse());
+                    Response<EnclaveDedicatedHubData> response = Response.FromValue(EnclaveDedicatedHubData.FromResponse(result), result);
+                    return Response.FromValue(new EnclaveDedicatedHubResource(Client, response.Value), response.GetRawResponse());
                 }
                 else
                 {
-                    DedicatedHubData current = (await GetAsync(cancellationToken: cancellationToken).ConfigureAwait(false)).Value.Data;
-                    DedicatedHubPatch patch = new DedicatedHubPatch();
+                    EnclaveDedicatedHubData current = (await GetAsync(cancellationToken: cancellationToken).ConfigureAwait(false)).Value.Data;
+                    EnclaveDedicatedHubPatch patch = new EnclaveDedicatedHubPatch();
                     patch.Tags.ReplaceWith(tags);
-                    ArmOperation<DedicatedHubResource> result = await UpdateAsync(WaitUntil.Completed, patch, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    ArmOperation<EnclaveDedicatedHubResource> result = await UpdateAsync(WaitUntil.Completed, patch, cancellationToken: cancellationToken).ConfigureAwait(false);
                     return Response.FromValue(result.Value, result.GetRawResponse());
                 }
             }
@@ -549,11 +549,11 @@ namespace Azure.ResourceManager.Enclave
         /// <param name="tags"> The tags to set on the resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="tags"/> is null. </exception>
-        public virtual Response<DedicatedHubResource> SetTags(IDictionary<string, string> tags, CancellationToken cancellationToken = default)
+        public virtual Response<EnclaveDedicatedHubResource> SetTags(IDictionary<string, string> tags, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(tags, nameof(tags));
 
-            using DiagnosticScope scope = _dedicatedHubClientDiagnostics.CreateScope("DedicatedHubResource.SetTags");
+            using DiagnosticScope scope = _dedicatedHubClientDiagnostics.CreateScope("EnclaveDedicatedHubResource.SetTags");
             scope.Start();
             try
             {
@@ -569,15 +569,15 @@ namespace Azure.ResourceManager.Enclave
                     };
                     HttpMessage message = _dedicatedHubRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
                     Response result = Pipeline.ProcessMessage(message, context);
-                    Response<DedicatedHubData> response = Response.FromValue(DedicatedHubData.FromResponse(result), result);
-                    return Response.FromValue(new DedicatedHubResource(Client, response.Value), response.GetRawResponse());
+                    Response<EnclaveDedicatedHubData> response = Response.FromValue(EnclaveDedicatedHubData.FromResponse(result), result);
+                    return Response.FromValue(new EnclaveDedicatedHubResource(Client, response.Value), response.GetRawResponse());
                 }
                 else
                 {
-                    DedicatedHubData current = Get(cancellationToken: cancellationToken).Value.Data;
-                    DedicatedHubPatch patch = new DedicatedHubPatch();
+                    EnclaveDedicatedHubData current = Get(cancellationToken: cancellationToken).Value.Data;
+                    EnclaveDedicatedHubPatch patch = new EnclaveDedicatedHubPatch();
                     patch.Tags.ReplaceWith(tags);
-                    ArmOperation<DedicatedHubResource> result = Update(WaitUntil.Completed, patch, cancellationToken: cancellationToken);
+                    ArmOperation<EnclaveDedicatedHubResource> result = Update(WaitUntil.Completed, patch, cancellationToken: cancellationToken);
                     return Response.FromValue(result.Value, result.GetRawResponse());
                 }
             }
@@ -592,11 +592,11 @@ namespace Azure.ResourceManager.Enclave
         /// <param name="key"> The key for the tag. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> is null. </exception>
-        public virtual async Task<Response<DedicatedHubResource>> RemoveTagAsync(string key, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<EnclaveDedicatedHubResource>> RemoveTagAsync(string key, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(key, nameof(key));
 
-            using DiagnosticScope scope = _dedicatedHubClientDiagnostics.CreateScope("DedicatedHubResource.RemoveTag");
+            using DiagnosticScope scope = _dedicatedHubClientDiagnostics.CreateScope("EnclaveDedicatedHubResource.RemoveTag");
             scope.Start();
             try
             {
@@ -611,19 +611,19 @@ namespace Azure.ResourceManager.Enclave
                     };
                     HttpMessage message = _dedicatedHubRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
                     Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                    Response<DedicatedHubData> response = Response.FromValue(DedicatedHubData.FromResponse(result), result);
-                    return Response.FromValue(new DedicatedHubResource(Client, response.Value), response.GetRawResponse());
+                    Response<EnclaveDedicatedHubData> response = Response.FromValue(EnclaveDedicatedHubData.FromResponse(result), result);
+                    return Response.FromValue(new EnclaveDedicatedHubResource(Client, response.Value), response.GetRawResponse());
                 }
                 else
                 {
-                    DedicatedHubData current = (await GetAsync(cancellationToken: cancellationToken).ConfigureAwait(false)).Value.Data;
-                    DedicatedHubPatch patch = new DedicatedHubPatch();
+                    EnclaveDedicatedHubData current = (await GetAsync(cancellationToken: cancellationToken).ConfigureAwait(false)).Value.Data;
+                    EnclaveDedicatedHubPatch patch = new EnclaveDedicatedHubPatch();
                     foreach (KeyValuePair<string, string> tag in current.Tags)
                     {
                         patch.Tags.Add(tag);
                     }
                     patch.Tags.Remove(key);
-                    ArmOperation<DedicatedHubResource> result = await UpdateAsync(WaitUntil.Completed, patch, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    ArmOperation<EnclaveDedicatedHubResource> result = await UpdateAsync(WaitUntil.Completed, patch, cancellationToken: cancellationToken).ConfigureAwait(false);
                     return Response.FromValue(result.Value, result.GetRawResponse());
                 }
             }
@@ -638,11 +638,11 @@ namespace Azure.ResourceManager.Enclave
         /// <param name="key"> The key for the tag. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> is null. </exception>
-        public virtual Response<DedicatedHubResource> RemoveTag(string key, CancellationToken cancellationToken = default)
+        public virtual Response<EnclaveDedicatedHubResource> RemoveTag(string key, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(key, nameof(key));
 
-            using DiagnosticScope scope = _dedicatedHubClientDiagnostics.CreateScope("DedicatedHubResource.RemoveTag");
+            using DiagnosticScope scope = _dedicatedHubClientDiagnostics.CreateScope("EnclaveDedicatedHubResource.RemoveTag");
             scope.Start();
             try
             {
@@ -657,19 +657,19 @@ namespace Azure.ResourceManager.Enclave
                     };
                     HttpMessage message = _dedicatedHubRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
                     Response result = Pipeline.ProcessMessage(message, context);
-                    Response<DedicatedHubData> response = Response.FromValue(DedicatedHubData.FromResponse(result), result);
-                    return Response.FromValue(new DedicatedHubResource(Client, response.Value), response.GetRawResponse());
+                    Response<EnclaveDedicatedHubData> response = Response.FromValue(EnclaveDedicatedHubData.FromResponse(result), result);
+                    return Response.FromValue(new EnclaveDedicatedHubResource(Client, response.Value), response.GetRawResponse());
                 }
                 else
                 {
-                    DedicatedHubData current = Get(cancellationToken: cancellationToken).Value.Data;
-                    DedicatedHubPatch patch = new DedicatedHubPatch();
+                    EnclaveDedicatedHubData current = Get(cancellationToken: cancellationToken).Value.Data;
+                    EnclaveDedicatedHubPatch patch = new EnclaveDedicatedHubPatch();
                     foreach (KeyValuePair<string, string> tag in current.Tags)
                     {
                         patch.Tags.Add(tag);
                     }
                     patch.Tags.Remove(key);
-                    ArmOperation<DedicatedHubResource> result = Update(WaitUntil.Completed, patch, cancellationToken: cancellationToken);
+                    ArmOperation<EnclaveDedicatedHubResource> result = Update(WaitUntil.Completed, patch, cancellationToken: cancellationToken);
                     return Response.FromValue(result.Value, result.GetRawResponse());
                 }
             }

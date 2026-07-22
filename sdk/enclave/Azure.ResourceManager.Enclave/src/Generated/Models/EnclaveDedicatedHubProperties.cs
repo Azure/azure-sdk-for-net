@@ -12,24 +12,24 @@ using Azure.Core;
 namespace Azure.ResourceManager.Enclave.Models
 {
     /// <summary> Describes the properties of a Dedicated Hub. </summary>
-    public partial class DedicatedHubProperties
+    public partial class EnclaveDedicatedHubProperties
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="DedicatedHubProperties"/>. </summary>
-        public DedicatedHubProperties()
+        /// <summary> Initializes a new instance of <see cref="EnclaveDedicatedHubProperties"/>. </summary>
+        public EnclaveDedicatedHubProperties()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="DedicatedHubProperties"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="EnclaveDedicatedHubProperties"/>. </summary>
         /// <param name="vHubResourceId"> Virtual Hub Resource ID. </param>
         /// <param name="firewallResourceId"> Firewall Resource ID. </param>
         /// <param name="firewallPolicyResourceId"> Firewall Policy Resource ID. </param>
         /// <param name="designation"> Designation of hub resource allocation (Pooled or Reserved). </param>
         /// <param name="provisioningState"> The status of the last operation. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal DedicatedHubProperties(ResourceIdentifier vHubResourceId, ResourceIdentifier firewallResourceId, ResourceIdentifier firewallPolicyResourceId, EnclaveDesignation? designation, EnclaveProvisioningState? provisioningState, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal EnclaveDedicatedHubProperties(ResourceIdentifier vHubResourceId, ResourceIdentifier firewallResourceId, ResourceIdentifier firewallPolicyResourceId, EnclaveDesignation? designation, EnclaveProvisioningState? provisioningState, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             VHubResourceId = vHubResourceId;
             FirewallResourceId = firewallResourceId;

@@ -164,21 +164,21 @@ namespace Azure.ResourceManager.Enclave
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="DedicatedHubResource"/> along with the instance operations that can be performed on it but with no data.
+        /// Gets an object representing a <see cref="EnclaveDedicatedHubResource"/> along with the instance operations that can be performed on it but with no data.
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableEnclaveArmClient.GetDedicatedHubResource(ResourceIdentifier)"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockableEnclaveArmClient.GetEnclaveDedicatedHubResource(ResourceIdentifier)"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient"/> the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
-        /// <returns> Returns a <see cref="DedicatedHubResource"/> object. </returns>
-        public static DedicatedHubResource GetDedicatedHubResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="EnclaveDedicatedHubResource"/> object. </returns>
+        public static EnclaveDedicatedHubResource GetEnclaveDedicatedHubResource(this ArmClient client, ResourceIdentifier id)
         {
             Argument.AssertNotNull(client, nameof(client));
 
-            return GetMockableEnclaveArmClient(client).GetDedicatedHubResource(id);
+            return GetMockableEnclaveArmClient(client).GetEnclaveDedicatedHubResource(id);
         }
 
         /// <summary>
@@ -686,38 +686,38 @@ namespace Azure.ResourceManager.Enclave
         /// List DedicatedHubResource resources by subscription ID
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableEnclaveSubscriptionResource.GetDedicatedHubsAsync(string, CancellationToken)"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockableEnclaveSubscriptionResource.GetEnclaveDedicatedHubsAsync(string, CancellationToken)"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource"/> the method will execute against. </param>
         /// <param name="communityName"> The name of the communityResource Resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
-        /// <returns> A collection of <see cref="DedicatedHubResource"/> that may take multiple service requests to iterate over. </returns>
-        public static AsyncPageable<DedicatedHubResource> GetDedicatedHubsAsync(this SubscriptionResource subscriptionResource, string communityName, CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="EnclaveDedicatedHubResource"/> that may take multiple service requests to iterate over. </returns>
+        public static AsyncPageable<EnclaveDedicatedHubResource> GetEnclaveDedicatedHubsAsync(this SubscriptionResource subscriptionResource, string communityName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
-            return GetMockableEnclaveSubscriptionResource(subscriptionResource).GetDedicatedHubsAsync(communityName, cancellationToken);
+            return GetMockableEnclaveSubscriptionResource(subscriptionResource).GetEnclaveDedicatedHubsAsync(communityName, cancellationToken);
         }
 
         /// <summary>
         /// List DedicatedHubResource resources by subscription ID
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableEnclaveSubscriptionResource.GetDedicatedHubs(string, CancellationToken)"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockableEnclaveSubscriptionResource.GetEnclaveDedicatedHubs(string, CancellationToken)"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource"/> the method will execute against. </param>
         /// <param name="communityName"> The name of the communityResource Resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
-        /// <returns> A collection of <see cref="DedicatedHubResource"/> that may take multiple service requests to iterate over. </returns>
-        public static Pageable<DedicatedHubResource> GetDedicatedHubs(this SubscriptionResource subscriptionResource, string communityName, CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="EnclaveDedicatedHubResource"/> that may take multiple service requests to iterate over. </returns>
+        public static Pageable<EnclaveDedicatedHubResource> GetEnclaveDedicatedHubs(this SubscriptionResource subscriptionResource, string communityName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
-            return GetMockableEnclaveSubscriptionResource(subscriptionResource).GetDedicatedHubs(communityName, cancellationToken);
+            return GetMockableEnclaveSubscriptionResource(subscriptionResource).GetEnclaveDedicatedHubs(communityName, cancellationToken);
         }
     }
 }

@@ -169,7 +169,7 @@ namespace Azure.ResourceManager.Enclave.Models
             {
                 writer.WritePropertyName("dedicatedHubList"u8);
                 writer.WriteStartArray();
-                foreach (DedicatedHubData item in DedicatedHubList)
+                foreach (EnclaveDedicatedHubData item in DedicatedHubList)
                 {
                     writer.WriteObjectValue(item, options);
                 }
@@ -249,7 +249,7 @@ namespace Azure.ResourceManager.Enclave.Models
             EnclaveFirewallSku? firewallSku = default;
             EnclaveBaseApprovalSettings granularApprovalSettings = default;
             EnclaveMaintenanceModeConfiguration maintenanceModeConfiguration = default;
-            IReadOnlyList<DedicatedHubData> dedicatedHubList = default;
+            IReadOnlyList<EnclaveDedicatedHubData> dedicatedHubList = default;
             EnclaveMonitoringSettings monitoringSettings = default;
             IList<string> addressSpaces = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
@@ -395,10 +395,10 @@ namespace Azure.ResourceManager.Enclave.Models
                     {
                         continue;
                     }
-                    List<DedicatedHubData> array = new List<DedicatedHubData>();
+                    List<EnclaveDedicatedHubData> array = new List<EnclaveDedicatedHubData>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(DedicatedHubData.DeserializeDedicatedHubData(item, options));
+                        array.Add(EnclaveDedicatedHubData.DeserializeEnclaveDedicatedHubData(item, options));
                     }
                     dedicatedHubList = array;
                     continue;
@@ -451,7 +451,7 @@ namespace Azure.ResourceManager.Enclave.Models
                 firewallSku,
                 granularApprovalSettings,
                 maintenanceModeConfiguration,
-                dedicatedHubList ?? new ChangeTrackingList<DedicatedHubData>(),
+                dedicatedHubList ?? new ChangeTrackingList<EnclaveDedicatedHubData>(),
                 monitoringSettings,
                 addressSpaces ?? new ChangeTrackingList<string>(),
                 additionalBinaryDataProperties);
