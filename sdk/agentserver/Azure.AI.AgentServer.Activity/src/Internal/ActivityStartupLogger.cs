@@ -21,7 +21,7 @@ internal sealed class ActivityStartupLogger : IHostedService
     public Task StartAsync(CancellationToken cancellationToken)
     {
         _logger.LogInformation(
-            "Activity protocol registered (routes: /activity/messages, /api/messages)");
+            "Activity protocol registered (route: /activity/messages)");
 
         return Task.CompletedTask;
     }

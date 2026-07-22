@@ -6,7 +6,7 @@
 
 - Initial release of `Azure.AI.AgentServer.Activity` — a .NET library for hosting a Microsoft 365
   Agents SDK `AgentApplication` as an Azure AI Foundry hosted agent that speaks the **activity
-  protocol** (`POST /activity/messages`, plus the Bot Framework-compatible `POST /api/messages`).
+  protocol** (`POST /activity/messages`).
 - `ActivityServer.Run(...)` one-liner startup that wires Kestrel, health probes, OpenTelemetry, and
   the activity endpoint, with overloads for the way your agent is constructed:
   - `Run<TAgent>()` — host an `AgentApplication` subclass by type.

@@ -21,8 +21,7 @@ is written using only this guide and the public API surface.
 
 `Azure.AI.AgentServer.Activity` hosts a Microsoft 365 Agents SDK
 `AgentApplication` as an Azure AI Foundry **hosted agent** that speaks the
-**activity protocol** (`POST /activity/messages`, plus the Bot
-Framework-compatible `POST /api/messages`, and a `GET /readiness` probe).
+**activity protocol** (`POST /activity/messages` and a `GET /readiness` probe).
 
 The split of responsibilities:
 
@@ -139,7 +138,6 @@ Mapping the Activity endpoints registers:
 | Route | Method | Purpose |
 |-------|--------|---------|
 | `/activity/messages` | POST | The activity-protocol inbound endpoint (primary). |
-| `/api/messages` | POST | Bot Framework-compatible alias for the same inbound path. |
 | `/readiness` | GET | Readiness probe — returns `200` when the host is ready. |
 
 A normal-delivery inbound message is queued and acknowledged with **`202

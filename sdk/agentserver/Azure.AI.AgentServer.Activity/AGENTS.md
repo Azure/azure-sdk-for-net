@@ -10,7 +10,7 @@
 
 `Azure.AI.AgentServer.Activity` hosts a Microsoft 365 Agents SDK `AgentApplication`
 as an Azure AI Foundry **hosted agent** that speaks the **activity protocol**
-(`POST /activity/messages` `POST /api/messages`,
+(`POST /activity/messages`
 and a `/readiness` probe).
 
 The consumer owns an ordinary Microsoft 365 Agents SDK application (the
@@ -34,7 +34,7 @@ The activity protocol has authoritative spec documents; the spec wins over the c
 
 | Document | Location | Defines |
 |----------|----------|---------|
-| **Activity Protocol Spec** | `foundry_specs/foundrysdk_specs/specs/hosted-agents/…` (activity protocol) | Wire endpoints (`/activity/messages`, `/api/messages`), readiness contract, inbound/outbound activity shapes, error envelope |
+| **Activity Protocol Spec** | `foundry_specs/foundrysdk_specs/specs/hosted-agents/…` (activity protocol) | Wire endpoint (`/activity/messages`), readiness contract, inbound/outbound activity shapes, error envelope |
 | **Container / hosting spec** | parent [AGENTS.md](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/agentserver/AGENTS.md) §1 | Foundry-injected env vars, hosting-environment contract, agent-endpoint auth schemes |
 
 ### Compliance workflow

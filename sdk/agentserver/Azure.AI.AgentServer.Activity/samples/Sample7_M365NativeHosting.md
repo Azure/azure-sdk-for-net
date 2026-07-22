@@ -77,8 +77,7 @@ app.Run();
 
 `AddFoundryActivity()` registers the Activity protocol server, the Foundry-managed `IConnections`
 (outbound token provider), the `CloudAdapter`, and the background delivery service.
-`MapFoundryActivity()` maps the Activity endpoints (`POST /activity/messages` and `POST
-/api/messages`) and exposes the `/readiness` health probe.
+`MapFoundryActivity()` maps the Activity endpoint (`POST /activity/messages`) and exposes the `/readiness` health probe.
 
 ## When to use the factory instead
 

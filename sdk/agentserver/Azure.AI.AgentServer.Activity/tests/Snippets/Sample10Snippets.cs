@@ -63,7 +63,7 @@ namespace Azure.AI.AgentServer.Activity.Tests.Snippets
             // Your existing endpoints coexist with the Activity endpoints.
             app.MapGet("/", () => "My existing app");
 
-            // Map the Activity endpoints (/activity/messages + /api/messages) and /readiness.
+            // Map the Activity endpoint (/activity/messages) and /readiness.
             // MapActivityServer() is the alias for MapFoundryActivity().
             app.MapActivityServer();
 

@@ -23,7 +23,7 @@ namespace Azure.AI.AgentServer.Activity;
 public static class FoundryActivityEndpointRouteBuilderExtensions
 {
     /// <summary>The Activity protocol inbound endpoint paths, shared by every hosting entry point.</summary>
-    internal static readonly string[] ActivityPaths = { "/activity/messages", "/api/messages" };
+    internal static readonly string[] ActivityPaths = { "/activity/messages" };
 
     /// <summary>
     /// Adds the Foundry platform middleware, health probe, and Activity protocol endpoints to a
@@ -51,10 +51,9 @@ public static class FoundryActivityEndpointRouteBuilderExtensions
     }
 
     /// <summary>
-    /// Maps the Foundry Activity protocol endpoints (<c>POST /api/messages</c> and
-    /// <c>POST /activity/messages</c>) onto an existing endpoint route builder. Use this overload
-    /// when you compose the middleware pipeline yourself; otherwise prefer
-    /// <see cref="MapFoundryActivity(WebApplication)"/>.
+    /// Maps the Foundry Activity protocol endpoint (<c>POST /activity/messages</c>) onto an existing
+    /// endpoint route builder. Use this overload when you compose the middleware pipeline yourself;
+    /// otherwise prefer <see cref="MapFoundryActivity(WebApplication)"/>.
     /// </summary>
     /// <param name="endpoints">The endpoint route builder.</param>
     /// <returns>The endpoint route builder, for chaining.</returns>
@@ -85,8 +84,8 @@ public static class FoundryActivityEndpointRouteBuilderExtensions
     }
 
     /// <summary>
-    /// Maps the Foundry Activity protocol endpoints (<c>POST /api/messages</c> and
-    /// <c>POST /activity/messages</c>) onto an existing endpoint route builder, routing each request
+    /// Maps the Foundry Activity protocol endpoint (<c>POST /activity/messages</c>) onto an existing
+    /// endpoint route builder, routing each request
     /// to the supplied <paramref name="requestHandler"/> instead of the Microsoft 365 Agents SDK
     /// adapter. Use this to own the request pipeline in a self-hosted app while still getting the
     /// Foundry platform contract (session-id response header, correlation baggage, and error-source

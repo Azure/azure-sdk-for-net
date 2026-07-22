@@ -141,7 +141,7 @@ public static class ActivityServer
     /// <summary>
     /// Builds and runs an Activity protocol server that owns the request pipeline entirely. The
     /// Microsoft 365 Agents SDK is not initialized; the supplied delegate receives each inbound
-    /// <c>POST /activity/messages</c> (and <c>/api/messages</c>) request.
+    /// <c>POST /activity/messages</c> request.
     /// </summary>
     /// <param name="requestHandler">The request handler that processes inbound activities.</param>
     /// <param name="args">Optional command-line arguments forwarded to the host builder.</param>

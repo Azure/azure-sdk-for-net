@@ -31,7 +31,7 @@ ActivityServer.Run(
     args);
 ```
 
-The host serves the activity endpoint at `POST /activity/messages` (and the equivalent `POST /api/messages`), along with health probes and OpenTelemetry.
+The host serves the activity endpoint at `POST /activity/messages`, along with health probes and OpenTelemetry.
 
 ## Next steps
 

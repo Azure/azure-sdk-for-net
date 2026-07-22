@@ -2,7 +2,7 @@
 
 `Azure.AI.AgentServer.Activity` is a .NET library for hosting a Microsoft 365 Agents SDK
 `AgentApplication` as an Azure AI Foundry hosted agent that speaks the **activity protocol**
-(`POST /activity/messages`, plus the Bot Framework-compatible `POST /api/messages`). Your agent is
+(`POST /activity/messages`). Your agent is
 an ordinary Microsoft 365 Agents SDK application; this library adds the Foundry-specific hosting —
 the outbound-auth connection provider, the activity endpoint, session and correlation resolution,
 error-source classification, and distributed tracing — on top of the shared
@@ -140,11 +140,10 @@ app.Run();
 | Method | Path | Purpose |
 |--------|------|---------|
 | POST | `/activity/messages` | Inbound activity (Foundry path). |
-| POST | `/api/messages` | Inbound activity (Bot Framework-compatible path). |
 | GET | `/readiness` | Readiness probe (200 when ready). |
 
 Inbound `message` activities are queued to the Microsoft 365 Agents SDK background service and
-acknowledged with **HTTP 202 Accepted**; the reply is delivered asynchronously to the caller''s
+acknowledged with **HTTP 202 Accepted**; the reply is delivered asynchronously to the caller's
 `serviceUrl`. Every response carries the resolved session-id header and correlation baggage.
 
 ## Examples
