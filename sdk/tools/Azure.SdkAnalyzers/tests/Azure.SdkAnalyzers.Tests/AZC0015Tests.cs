@@ -59,5 +59,24 @@ namespace RandomNamespace
         {
             await Verifier.VerifyAnalyzerAsync(Wrap(member));
         }
+
+        // A public client nested in a non-public type is not publicly accessible, so the
+        // return-type rule should not analyze it.
+        [Test]
+        public async Task AZC0015NotProducedForClientNestedInNonPublicType()
+        {
+            const string code = @"
+namespace RandomNamespace
+{
+    internal class Outer
+    {
+        public class SomeClient
+        {
+            public int FooAsync() { return default; }
+        }
+    }
+}";
+            await Verifier.VerifyAnalyzerAsync(code);
+        }
     }
 }

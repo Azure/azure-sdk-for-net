@@ -34,7 +34,7 @@ namespace Azure.SdkAnalyzers
             var type = (INamedTypeSymbol)context.Symbol;
             if (type.TypeKind != TypeKind.Class ||
                 !type.Name.EndsWith(ClientSuffix, StringComparison.Ordinal) ||
-                type.DeclaredAccessibility != Accessibility.Public)
+                !IsPubliclyAccessible(type))
             {
                 return;
             }
@@ -60,6 +60,19 @@ namespace Azure.SdkAnalyzers
                     CheckReturnType(context, syncMethod);
                 }
             }
+        }
+
+        private static bool IsPubliclyAccessible(INamedTypeSymbol type)
+        {
+            for (INamedTypeSymbol current = type; current != null; current = current.ContainingType)
+            {
+                if (current.DeclaredAccessibility != Accessibility.Public)
+                {
+                    return false;
+                }
+            }
+
+            return true;
         }
 
         private static void CheckReturnType(SymbolAnalysisContext context, IMethodSymbol method)
