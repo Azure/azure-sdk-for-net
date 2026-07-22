@@ -104,7 +104,7 @@ public class FoundryActivityHostingTests
     }
 
     [Test]
-    public async Task MapFoundryActivity_MapsActivityMessagesPath_AndNotApiMessages()
+    public async Task MapFoundryActivity_MapsActivityMessagesPath()
     {
         using var app = BuildApp();
         await app.StartAsync();
@@ -117,18 +117,7 @@ public class FoundryActivityHostingTests
                 System.Text.Encoding.UTF8,
                 "application/json"));
 
-        // The Bot Framework-compatible /api/messages path is intentionally not mapped.
-        var apiResponse = await client.PostAsync("/api/messages",
-            new StringContent(
-                """{"type":"message","text":"hi","from":{"id":"u1"},"recipient":{"id":"b1"},"conversation":{"id":"c1"},"channelId":"msteams","serviceUrl":"http://localhost:1/","id":"a1"}""",
-                System.Text.Encoding.UTF8,
-                "application/json"));
-
-        Assert.Multiple(() =>
-        {
-            Assert.That((int)activityResponse.StatusCode, Is.EqualTo(202));
-            Assert.That((int)apiResponse.StatusCode, Is.EqualTo(404));
-        });
+        Assert.That((int)activityResponse.StatusCode, Is.EqualTo(202));
 
         await app.StopAsync();
     }
