@@ -81,10 +81,10 @@ app.Run();
 
 ## When to use the factory instead
 
-If you are starting fresh (no existing M365 host to convert), [`ActivityServer.Run(...)`](Sample1_GettingStarted.md)
+If you are starting fresh (no existing M365 host to convert), [`ActivityServer.Run(...)`](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/agentserver/Azure.AI.AgentServer.Activity/samples/Sample1_GettingStarted.md)
 is a more concise entry point that also wires OpenTelemetry and health probes for you.
 
 ## Next steps
 
-- [Getting Started](Sample1_GettingStarted.md) — the `ActivityServer.Run(...)` one-liner.
-- [Customize the Build](Sample4_CustomizeTheBuild.md) — override storage, connections, and services.
+- [Getting Started](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/agentserver/Azure.AI.AgentServer.Activity/samples/Sample1_GettingStarted.md) — the `ActivityServer.Run(...)` one-liner.
+- [Customize the Build](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/agentserver/Azure.AI.AgentServer.Activity/samples/Sample4_CustomizeTheBuild.md) — override storage, connections, and services.

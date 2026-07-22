@@ -13,4 +13,4 @@ app.OnActivity(ActivityTypes.Message, async (ITurnContext turnContext, ITurnStat
 ActivityServer.Run(app, args);
 ```
 
-This is the most advanced construction mode. For most agents, the default [Getting Started](Sample1_GettingStarted.md) path (or [Customize the Build](Sample4_CustomizeTheBuild.md) for targeted overrides) is simpler — the host builds the `AgentApplication` for you and lets you register handlers inline.
+This is the most advanced construction mode. For most agents, the default [Getting Started](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/agentserver/Azure.AI.AgentServer.Activity/samples/Sample1_GettingStarted.md) path (or [Customize the Build](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/agentserver/Azure.AI.AgentServer.Activity/samples/Sample4_CustomizeTheBuild.md) for targeted overrides) is simpler — the host builds the `AgentApplication` for you and lets you register handlers inline.

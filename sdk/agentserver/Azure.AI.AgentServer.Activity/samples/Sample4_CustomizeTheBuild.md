@@ -52,4 +52,4 @@ ActivityServer.Run(
 
 ## Next steps
 
-- [Injected Application](Sample6_InjectedApplication.md) — build the entire `AgentApplication` yourself.
+- [Injected Application](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/agentserver/Azure.AI.AgentServer.Activity/samples/Sample6_InjectedApplication.md) — build the entire `AgentApplication` yourself.

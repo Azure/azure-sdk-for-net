@@ -40,5 +40,5 @@ app.OnActivity(ActivityTypes.Message, async (ITurnContext turnContext, ITurnStat
 
 ## Next steps
 
-- [Getting Started](Sample1_GettingStarted.md) — the minimal echo agent.
-- [Customize the Build](Sample4_CustomizeTheBuild.md) — supply your own storage or services.
+- [Getting Started](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/agentserver/Azure.AI.AgentServer.Activity/samples/Sample1_GettingStarted.md) — the minimal echo agent.
+- [Customize the Build](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/agentserver/Azure.AI.AgentServer.Activity/samples/Sample4_CustomizeTheBuild.md) — supply your own storage or services.

@@ -18,7 +18,7 @@ ActivityServer.Run(
     configureOptions: options => options.DigitalWorker = true);
 ```
 
-Register handlers inline on the `AgentApplication` exactly as in [Getting Started](Sample1_GettingStarted.md); only the outbound-auth model differs (set via `configureOptions`).
+Register handlers inline on the `AgentApplication` exactly as in [Getting Started](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/agentserver/Azure.AI.AgentServer.Activity/samples/Sample1_GettingStarted.md); only the outbound-auth model differs (set via `configureOptions`).
 
 | Model | Identity source | Scope |
 |---|---|---|

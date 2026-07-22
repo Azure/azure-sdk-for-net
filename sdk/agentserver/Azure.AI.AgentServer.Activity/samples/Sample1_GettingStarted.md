@@ -35,5 +35,5 @@ The host serves the activity endpoint at `POST /activity/messages`, along with h
 
 ## Next steps
 
-- [Welcome & Commands](Sample2_WelcomeAndCommands.md) — greet new members and handle keyword commands.
-- [Digital Worker](Sample3_DigitalWorker.md) — the blueprint + FMI outbound-auth model.
+- [Welcome & Commands](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/agentserver/Azure.AI.AgentServer.Activity/samples/Sample2_WelcomeAndCommands.md) — greet new members and handle keyword commands.
+- [Digital Worker](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/agentserver/Azure.AI.AgentServer.Activity/samples/Sample3_DigitalWorker.md) — the blueprint + FMI outbound-auth model.
