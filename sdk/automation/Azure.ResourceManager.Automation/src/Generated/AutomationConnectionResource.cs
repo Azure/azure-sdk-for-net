@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.Automation
         {
             TryGetApiVersion(ResourceType, out string automationConnectionApiVersion);
             _connectionClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Automation", ResourceType.Namespace, Diagnostics);
-            _connectionRestClient = new Connection(_connectionClientDiagnostics, Pipeline, Endpoint, automationConnectionApiVersion ?? "2024-10-23");
+            _connectionRestClient = new Connection(_connectionClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, automationConnectionApiVersion ?? "2024-10-23");
             ValidateResourceId(id);
         }
 

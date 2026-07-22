@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.Network
         {
             TryGetApiVersion(ResourceType, out string expressRoutePortsLocationApiVersion);
             _expressRoutePortsLocationsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Network", ResourceType.Namespace, Diagnostics);
-            _expressRoutePortsLocationsRestClient = new ExpressRoutePortsLocations(_expressRoutePortsLocationsClientDiagnostics, Pipeline, Endpoint, expressRoutePortsLocationApiVersion ?? "2025-07-01");
+            _expressRoutePortsLocationsRestClient = new ExpressRoutePortsLocations(_expressRoutePortsLocationsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, expressRoutePortsLocationApiVersion ?? "2025-07-01");
             ValidateResourceId(id);
         }
 

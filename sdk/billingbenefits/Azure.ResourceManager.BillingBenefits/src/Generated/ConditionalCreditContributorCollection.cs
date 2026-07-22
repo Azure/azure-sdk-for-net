@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.BillingBenefits
         {
             TryGetApiVersion(ConditionalCreditContributorResource.ResourceType, out string conditionalCreditContributorApiVersion);
             _conditionalCreditContributorsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.BillingBenefits", ConditionalCreditContributorResource.ResourceType.Namespace, Diagnostics);
-            _conditionalCreditContributorsRestClient = new ConditionalCreditContributors(_conditionalCreditContributorsClientDiagnostics, Pipeline, Endpoint, conditionalCreditContributorApiVersion ?? "2025-12-01-preview");
+            _conditionalCreditContributorsRestClient = new ConditionalCreditContributors(_conditionalCreditContributorsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, conditionalCreditContributorApiVersion ?? "2025-12-01-preview");
             ValidateResourceId(id);
         }
 

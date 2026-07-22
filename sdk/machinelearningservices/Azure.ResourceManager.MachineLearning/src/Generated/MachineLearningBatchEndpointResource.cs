@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.MachineLearning
         {
             TryGetApiVersion(ResourceType, out string machineLearningBatchEndpointApiVersion);
             _batchEndpointsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.MachineLearning", ResourceType.Namespace, Diagnostics);
-            _batchEndpointsRestClient = new BatchEndpoints(_batchEndpointsClientDiagnostics, Pipeline, Endpoint, machineLearningBatchEndpointApiVersion ?? "2026-03-15-preview");
+            _batchEndpointsRestClient = new BatchEndpoints(_batchEndpointsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, machineLearningBatchEndpointApiVersion ?? "2026-03-15-preview");
             ValidateResourceId(id);
         }
 

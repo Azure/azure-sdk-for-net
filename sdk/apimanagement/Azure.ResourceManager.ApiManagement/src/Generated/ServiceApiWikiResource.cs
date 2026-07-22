@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.ApiManagement
         {
             TryGetApiVersion(ResourceType, out string serviceApiWikiApiVersion);
             _apiWikiClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ApiManagement", ResourceType.Namespace, Diagnostics);
-            _apiWikiRestClient = new ApiWiki(_apiWikiClientDiagnostics, Pipeline, Endpoint, serviceApiWikiApiVersion ?? "2025-09-01-preview");
+            _apiWikiRestClient = new ApiWiki(_apiWikiClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, serviceApiWikiApiVersion ?? "2025-09-01-preview");
             ValidateResourceId(id);
         }
 

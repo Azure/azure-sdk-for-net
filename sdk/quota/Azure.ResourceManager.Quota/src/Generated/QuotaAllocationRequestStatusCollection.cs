@@ -46,7 +46,7 @@ namespace Azure.ResourceManager.Quota
             _groupQuotaName = groupQuotaName;
             _resourceProviderName = resourceProviderName;
             _quotaAllocationRequestStatusesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Quota", QuotaAllocationRequestStatusResource.ResourceType.Namespace, Diagnostics);
-            _quotaAllocationRequestStatusesRestClient = new QuotaAllocationRequestStatuses(_quotaAllocationRequestStatusesClientDiagnostics, Pipeline, Endpoint, quotaAllocationRequestStatusApiVersion ?? "2025-09-01");
+            _quotaAllocationRequestStatusesRestClient = new QuotaAllocationRequestStatuses(_quotaAllocationRequestStatusesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, quotaAllocationRequestStatusApiVersion ?? "2025-09-01");
             ValidateResourceId(id);
         }
 

@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.ElasticSan
         {
             TryGetApiVersion(ResourceType, out string elasticSanVolumeApiVersion);
             _volumesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ElasticSan", ResourceType.Namespace, Diagnostics);
-            _volumesRestClient = new Volumes(_volumesClientDiagnostics, Pipeline, Endpoint, elasticSanVolumeApiVersion ?? "2025-09-01");
+            _volumesRestClient = new Volumes(_volumesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, elasticSanVolumeApiVersion ?? "2025-09-01");
             _elasticSanClientClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ElasticSan", ProviderConstants.DefaultProviderNamespace, Diagnostics);
             _elasticSanClientRestClient = new ElasticSanRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint);
             ValidateResourceId(id);

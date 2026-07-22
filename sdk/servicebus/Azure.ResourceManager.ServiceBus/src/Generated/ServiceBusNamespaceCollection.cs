@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.ServiceBus
         {
             TryGetApiVersion(ServiceBusNamespaceResource.ResourceType, out string serviceBusNamespaceApiVersion);
             _namespacesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ServiceBus", ServiceBusNamespaceResource.ResourceType.Namespace, Diagnostics);
-            _namespacesRestClient = new Namespaces(_namespacesClientDiagnostics, Pipeline, Endpoint, serviceBusNamespaceApiVersion ?? "2026-01-01");
+            _namespacesRestClient = new Namespaces(_namespacesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, serviceBusNamespaceApiVersion ?? "2026-01-01");
             ValidateResourceId(id);
         }
 

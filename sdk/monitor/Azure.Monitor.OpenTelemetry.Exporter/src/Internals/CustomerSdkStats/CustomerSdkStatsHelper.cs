@@ -38,13 +38,14 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals.CustomerSdkStats
         /// <summary>
         /// Checks if customer SDK stats are enabled.
         /// </summary>
-        /// <returns>True if enabled (when APPLICATIONINSIGHTS_SDKSTATS_DISABLED=false), false otherwise</returns>
+        /// <returns>True unless explicitly disabled via APPLICATIONINSIGHTS_SDKSTATS_DISABLED=true.</returns>
         public static bool IsEnabled()
         {
             if (s_isEnabled == null)
             {
+                // On-by-default per the customer-facing SDKStats spec: emit unless the user opts out.
                 var disabledValue = DefaultPlatform.Instance.GetEnvironmentVariable(EnvironmentVariableConstants.APPLICATIONINSIGHTS_SDKSTATS_DISABLED);
-                s_isEnabled = string.Equals(disabledValue, "false", StringComparison.OrdinalIgnoreCase);
+                s_isEnabled = !string.Equals(disabledValue, "true", StringComparison.OrdinalIgnoreCase);
             }
 
             return s_isEnabled.Value;
@@ -195,7 +196,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals.CustomerSdkStats
                 if (dropCode > 0 && dropCode < 10)
                 {
                     DropCode enumValue = (DropCode)dropCode;
-                    dropCodeString = enumValue.ToString();
+                    dropCodeString = enumValue.ToDimensionString();
                 }
 
                 dropCodeString ??= dropCode.ToString();
@@ -260,7 +261,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals.CustomerSdkStats
                 if (retryCode > 0 && retryCode < 10)
                 {
                     DropCode enumValue = (DropCode)retryCode;
-                    retryCodeString = enumValue.ToString();
+                    retryCodeString = enumValue.ToDimensionString();
                 }
 
                 retryCodeString ??= retryCode.ToString();

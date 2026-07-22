@@ -55,9 +55,9 @@ namespace Azure.ResourceManager.ContainerInstance
         {
             TryGetApiVersion(ResourceType, out string containerGroupApiVersion);
             _containerGroupsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ContainerInstance", ResourceType.Namespace, Diagnostics);
-            _containerGroupsRestClient = new ContainerGroups(_containerGroupsClientDiagnostics, Pipeline, Endpoint, containerGroupApiVersion ?? "2025-09-01");
+            _containerGroupsRestClient = new ContainerGroups(_containerGroupsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, containerGroupApiVersion ?? "2025-09-01");
             _containersClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ContainerInstance", ResourceType.Namespace, Diagnostics);
-            _containersRestClient = new Containers(_containersClientDiagnostics, Pipeline, Endpoint, containerGroupApiVersion ?? "2025-09-01");
+            _containersRestClient = new Containers(_containersClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, containerGroupApiVersion ?? "2025-09-01");
             ValidateResourceId(id);
         }
 

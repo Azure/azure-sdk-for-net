@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.Compute
         {
             TryGetApiVersion(GalleryInVmAccessControlProfileVersionResource.ResourceType, out string galleryInVmAccessControlProfileVersionApiVersion);
             _galleryInVMAccessControlProfileVersionsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Compute", GalleryInVmAccessControlProfileVersionResource.ResourceType.Namespace, Diagnostics);
-            _galleryInVMAccessControlProfileVersionsRestClient = new GalleryInVMAccessControlProfileVersions(_galleryInVMAccessControlProfileVersionsClientDiagnostics, Pipeline, Endpoint, galleryInVmAccessControlProfileVersionApiVersion ?? "2025-12-03");
+            _galleryInVMAccessControlProfileVersionsRestClient = new GalleryInVMAccessControlProfileVersions(_galleryInVMAccessControlProfileVersionsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, galleryInVmAccessControlProfileVersionApiVersion ?? "2025-12-03");
             ValidateResourceId(id);
         }
 

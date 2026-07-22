@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.Network
         {
             TryGetApiVersion(ProbeResource.ResourceType, out string probeApiVersion);
             _loadBalancerProbesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Network", ProbeResource.ResourceType.Namespace, Diagnostics);
-            _loadBalancerProbesRestClient = new LoadBalancerProbes(_loadBalancerProbesClientDiagnostics, Pipeline, Endpoint, probeApiVersion ?? "2025-07-01");
+            _loadBalancerProbesRestClient = new LoadBalancerProbes(_loadBalancerProbesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, probeApiVersion ?? "2025-07-01");
             ValidateResourceId(id);
         }
 

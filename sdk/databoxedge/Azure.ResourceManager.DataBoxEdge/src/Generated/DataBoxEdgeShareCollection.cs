@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.DataBoxEdge
         {
             TryGetApiVersion(DataBoxEdgeShareResource.ResourceType, out string dataBoxEdgeShareApiVersion);
             _sharesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.DataBoxEdge", DataBoxEdgeShareResource.ResourceType.Namespace, Diagnostics);
-            _sharesRestClient = new Shares(_sharesClientDiagnostics, Pipeline, Endpoint, dataBoxEdgeShareApiVersion ?? "2023-12-01");
+            _sharesRestClient = new Shares(_sharesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, dataBoxEdgeShareApiVersion ?? "2023-12-01");
             ValidateResourceId(id);
         }
 

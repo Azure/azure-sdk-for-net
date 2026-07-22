@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.Databricks
         {
             TryGetApiVersion(ResourceType, out string databricksPrivateEndpointConnectionApiVersion);
             _privateEndpointConnectionsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Databricks", ResourceType.Namespace, Diagnostics);
-            _privateEndpointConnectionsRestClient = new PrivateEndpointConnections(_privateEndpointConnectionsClientDiagnostics, Pipeline, Endpoint, databricksPrivateEndpointConnectionApiVersion ?? "2026-01-01");
+            _privateEndpointConnectionsRestClient = new PrivateEndpointConnections(_privateEndpointConnectionsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, databricksPrivateEndpointConnectionApiVersion ?? "2026-01-01");
             ValidateResourceId(id);
         }
 

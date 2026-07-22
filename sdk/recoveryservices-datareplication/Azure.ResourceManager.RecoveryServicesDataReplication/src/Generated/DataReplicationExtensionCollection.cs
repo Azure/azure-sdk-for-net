@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication
         {
             TryGetApiVersion(DataReplicationExtensionResource.ResourceType, out string dataReplicationExtensionApiVersion);
             _replicationExtensionClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.RecoveryServicesDataReplication", DataReplicationExtensionResource.ResourceType.Namespace, Diagnostics);
-            _replicationExtensionRestClient = new ReplicationExtension(_replicationExtensionClientDiagnostics, Pipeline, Endpoint, dataReplicationExtensionApiVersion ?? "2024-09-01");
+            _replicationExtensionRestClient = new ReplicationExtension(_replicationExtensionClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, dataReplicationExtensionApiVersion ?? "2024-09-01");
             ValidateResourceId(id);
         }
 

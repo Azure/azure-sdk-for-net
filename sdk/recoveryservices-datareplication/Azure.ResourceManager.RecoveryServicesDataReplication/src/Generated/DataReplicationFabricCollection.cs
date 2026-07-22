@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication
         {
             TryGetApiVersion(DataReplicationFabricResource.ResourceType, out string dataReplicationFabricApiVersion);
             _fabricClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.RecoveryServicesDataReplication", DataReplicationFabricResource.ResourceType.Namespace, Diagnostics);
-            _fabricRestClient = new Fabric(_fabricClientDiagnostics, Pipeline, Endpoint, dataReplicationFabricApiVersion ?? "2024-09-01");
+            _fabricRestClient = new Fabric(_fabricClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, dataReplicationFabricApiVersion ?? "2024-09-01");
             ValidateResourceId(id);
         }
 

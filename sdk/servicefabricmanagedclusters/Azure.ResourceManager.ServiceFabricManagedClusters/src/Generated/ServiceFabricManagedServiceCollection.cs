@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
         {
             TryGetApiVersion(ServiceFabricManagedServiceResource.ResourceType, out string serviceFabricManagedServiceApiVersion);
             _servicesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ServiceFabricManagedClusters", ServiceFabricManagedServiceResource.ResourceType.Namespace, Diagnostics);
-            _servicesRestClient = new Services(_servicesClientDiagnostics, Pipeline, Endpoint, serviceFabricManagedServiceApiVersion ?? "2026-02-01");
+            _servicesRestClient = new Services(_servicesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, serviceFabricManagedServiceApiVersion ?? "2026-02-01");
             ValidateResourceId(id);
         }
 

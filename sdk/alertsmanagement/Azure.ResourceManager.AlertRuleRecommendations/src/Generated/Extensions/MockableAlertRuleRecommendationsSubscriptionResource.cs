@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.AlertRuleRecommendations.Mocking
 
         private ClientDiagnostics AlertRuleRecommendationsOperationGroupClientDiagnostics => _alertRuleRecommendationsOperationGroupClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.AlertRuleRecommendations.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private AlertRuleRecommendationsOperationGroup AlertRuleRecommendationsOperationGroupRestClient => _alertRuleRecommendationsOperationGroupRestClient ??= new AlertRuleRecommendationsOperationGroup(AlertRuleRecommendationsOperationGroupClientDiagnostics, Pipeline, Endpoint, "2023-08-01-preview");
+        private AlertRuleRecommendationsOperationGroup AlertRuleRecommendationsOperationGroupRestClient => _alertRuleRecommendationsOperationGroupRestClient ??= new AlertRuleRecommendationsOperationGroup(AlertRuleRecommendationsOperationGroupClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2023-08-01-preview");
 
         /// <summary>
         /// Retrieve alert rule recommendations for a target type.

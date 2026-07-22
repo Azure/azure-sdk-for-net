@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.SecurityInsights
         {
             TryGetApiVersion(ResourceType, out string securityInsightsIncidentCommentApiVersion);
             _incidentCommentsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.SecurityInsights", ResourceType.Namespace, Diagnostics);
-            _incidentCommentsRestClient = new IncidentComments(_incidentCommentsClientDiagnostics, Pipeline, Endpoint, securityInsightsIncidentCommentApiVersion ?? "2025-07-01-preview");
+            _incidentCommentsRestClient = new IncidentComments(_incidentCommentsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, securityInsightsIncidentCommentApiVersion ?? "2025-07-01-preview");
             ValidateResourceId(id);
         }
 

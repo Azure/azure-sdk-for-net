@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.Network
         {
             TryGetApiVersion(ResourceType, out string networkProfileApiVersion);
             _networkProfilesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Network", ResourceType.Namespace, Diagnostics);
-            _networkProfilesRestClient = new NetworkProfiles(_networkProfilesClientDiagnostics, Pipeline, Endpoint, networkProfileApiVersion ?? "2025-07-01");
+            _networkProfilesRestClient = new NetworkProfiles(_networkProfilesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, networkProfileApiVersion ?? "2025-07-01");
             ValidateResourceId(id);
         }
 

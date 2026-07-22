@@ -25,45 +25,30 @@ stimuli:
   # Should trigger
   - name: trigger-fix-pipeline-failure
     prompt: "fix the pipeline failure for build 6447834"
-    environment:
-      skills:
-        - ..
     graders:
       - type: skill-invocation
         config:
           required: ["azsdk-common-pipeline-fixer"]
   - name: trigger-auto-fix-failing-tests
     prompt: "My Azure SDK PR has failing tests in CI: https://dev.azure.com/azure-sdk/internal/_build/results?buildId=6447834. Can you fix them?"
-    environment:
-      skills:
-        - ..
     graders:
       - type: skill-invocation
         config:
           required: ["azsdk-common-pipeline-fixer"]
   - name: trigger-resolve-pipeline-failure
     prompt: "resolve my Azure SDK pipeline failure"
-    environment:
-      skills:
-        - ..
     graders:
       - type: skill-invocation
         config:
           required: ["azsdk-common-pipeline-fixer"]
   - name: trigger-fix-build-error
     prompt: "fix the build error in my Azure SDK CI"
-    environment:
-      skills:
-        - ..
     graders:
       - type: skill-invocation
         config:
           required: ["azsdk-common-pipeline-fixer"]
   - name: trigger-fix-mypy-type-error
     prompt: "My Python SDK CI is failing with a mypy type error: https://dev.azure.com/azure-sdk/internal/_build/results?buildId=6447834. Can you fix it?"
-    environment:
-      skills:
-        - ..
     graders:
       - type: skill-invocation
         config:
@@ -74,45 +59,30 @@ stimuli:
   # skill applies + verifies fixes and must stay out of pure-diagnosis requests.
   - name: anti-trigger-analyze-only
     prompt: "what went wrong in my pipeline build 12345? just tell me, don't fix anything"
-    environment:
-      skills:
-        - ..
     graders:
       - type: skill-invocation
         config:
           disallowed: ["azsdk-common-pipeline-fixer"]
   - name: anti-trigger-why-is-ci-red
     prompt: "why is my CI red? just diagnose the root cause, do not change any code"
-    environment:
-      skills:
-        - ..
     graders:
       - type: skill-invocation
         config:
           disallowed: ["azsdk-common-pipeline-fixer"]
   - name: anti-trigger-write-a-typespec-definition
     prompt: "write a TypeSpec definition"
-    environment:
-      skills:
-        - ..
     graders:
       - type: skill-invocation
         config:
           disallowed: ["azsdk-common-pipeline-fixer"]
   - name: anti-trigger-release-sdk-package
     prompt: "how do I release an SDK package"
-    environment:
-      skills:
-        - ..
     graders:
       - type: skill-invocation
         config:
           disallowed: ["azsdk-common-pipeline-fixer"]
   - name: anti-trigger-create-a-new-skill
     prompt: "create a new skill"
-    environment:
-      skills:
-        - ..
     graders:
       - type: skill-invocation
         config:

@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.AppService
         {
             TryGetApiVersion(ResourceType, out string siteFunctionApiVersion);
             _functionEnvelopesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.AppService", ResourceType.Namespace, Diagnostics);
-            _functionEnvelopesRestClient = new FunctionEnvelopes(_functionEnvelopesClientDiagnostics, Pipeline, Endpoint, siteFunctionApiVersion ?? "2026-03-15");
+            _functionEnvelopesRestClient = new FunctionEnvelopes(_functionEnvelopesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, siteFunctionApiVersion ?? "2026-03-15");
             ValidateResourceId(id);
         }
 

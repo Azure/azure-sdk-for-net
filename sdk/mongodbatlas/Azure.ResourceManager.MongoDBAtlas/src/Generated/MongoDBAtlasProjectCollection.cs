@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.MongoDBAtlas
         {
             TryGetApiVersion(MongoDBAtlasProjectResource.ResourceType, out string mongoDBAtlasProjectApiVersion);
             _projectsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.MongoDBAtlas", MongoDBAtlasProjectResource.ResourceType.Namespace, Diagnostics);
-            _projectsRestClient = new Projects(_projectsClientDiagnostics, Pipeline, Endpoint, mongoDBAtlasProjectApiVersion ?? "2026-03-01-preview");
+            _projectsRestClient = new Projects(_projectsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, mongoDBAtlasProjectApiVersion ?? "2026-03-01-preview");
             ValidateResourceId(id);
         }
 

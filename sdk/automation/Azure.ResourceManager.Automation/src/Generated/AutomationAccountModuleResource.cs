@@ -59,13 +59,13 @@ namespace Azure.ResourceManager.Automation
         {
             TryGetApiVersion(ResourceType, out string automationAccountModuleApiVersion);
             _moduleClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Automation", ResourceType.Namespace, Diagnostics);
-            _moduleRestClient = new Module(_moduleClientDiagnostics, Pipeline, Endpoint, automationAccountModuleApiVersion ?? "2024-10-23");
+            _moduleRestClient = new Module(_moduleClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, automationAccountModuleApiVersion ?? "2024-10-23");
             _activityClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Automation", ResourceType.Namespace, Diagnostics);
-            _activityRestClient = new Activity(_activityClientDiagnostics, Pipeline, Endpoint, automationAccountModuleApiVersion ?? "2024-10-23");
+            _activityRestClient = new Activity(_activityClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, automationAccountModuleApiVersion ?? "2024-10-23");
             _fieldsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Automation", ResourceType.Namespace, Diagnostics);
-            _fieldsRestClient = new Fields(_fieldsClientDiagnostics, Pipeline, Endpoint, automationAccountModuleApiVersion ?? "2024-10-23");
+            _fieldsRestClient = new Fields(_fieldsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, automationAccountModuleApiVersion ?? "2024-10-23");
             _objectDataTypesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Automation", ResourceType.Namespace, Diagnostics);
-            _objectDataTypesRestClient = new ObjectDataTypes(_objectDataTypesClientDiagnostics, Pipeline, Endpoint, automationAccountModuleApiVersion ?? "2024-10-23");
+            _objectDataTypesRestClient = new ObjectDataTypes(_objectDataTypesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, automationAccountModuleApiVersion ?? "2024-10-23");
             ValidateResourceId(id);
         }
 

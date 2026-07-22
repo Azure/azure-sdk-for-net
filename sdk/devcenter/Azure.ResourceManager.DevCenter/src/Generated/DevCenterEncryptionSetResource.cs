@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.DevCenter
         {
             TryGetApiVersion(ResourceType, out string devCenterEncryptionSetApiVersion);
             _encryptionSetsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.DevCenter", ResourceType.Namespace, Diagnostics);
-            _encryptionSetsRestClient = new EncryptionSets(_encryptionSetsClientDiagnostics, Pipeline, Endpoint, devCenterEncryptionSetApiVersion ?? "2026-01-01-preview");
+            _encryptionSetsRestClient = new EncryptionSets(_encryptionSetsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, devCenterEncryptionSetApiVersion ?? "2026-01-01-preview");
             ValidateResourceId(id);
         }
 

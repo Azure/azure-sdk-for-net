@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.ContainerService
         {
             TryGetApiVersion(ResourceType, out string managedClusterMeshMembershipApiVersion);
             _meshMembershipsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ContainerService", ResourceType.Namespace, Diagnostics);
-            _meshMembershipsRestClient = new MeshMemberships(_meshMembershipsClientDiagnostics, Pipeline, Endpoint, managedClusterMeshMembershipApiVersion ?? "2026-04-02-preview");
+            _meshMembershipsRestClient = new MeshMemberships(_meshMembershipsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, managedClusterMeshMembershipApiVersion ?? "2026-04-02-preview");
             ValidateResourceId(id);
         }
 

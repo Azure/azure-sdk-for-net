@@ -59,13 +59,13 @@ namespace Azure.ResourceManager.DataBoxEdge
         {
             TryGetApiVersion(ResourceType, out string dataBoxEdgeDeviceApiVersion);
             _devicesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.DataBoxEdge", ResourceType.Namespace, Diagnostics);
-            _devicesRestClient = new Devices(_devicesClientDiagnostics, Pipeline, Endpoint, dataBoxEdgeDeviceApiVersion ?? "2023-12-01");
+            _devicesRestClient = new Devices(_devicesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, dataBoxEdgeDeviceApiVersion ?? "2023-12-01");
             _deviceCapacityCheckClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.DataBoxEdge", ResourceType.Namespace, Diagnostics);
-            _deviceCapacityCheckRestClient = new DeviceCapacityCheck(_deviceCapacityCheckClientDiagnostics, Pipeline, Endpoint, dataBoxEdgeDeviceApiVersion ?? "2023-12-01");
+            _deviceCapacityCheckRestClient = new DeviceCapacityCheck(_deviceCapacityCheckClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, dataBoxEdgeDeviceApiVersion ?? "2023-12-01");
             _nodesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.DataBoxEdge", ResourceType.Namespace, Diagnostics);
-            _nodesRestClient = new Nodes(_nodesClientDiagnostics, Pipeline, Endpoint, dataBoxEdgeDeviceApiVersion ?? "2023-12-01");
+            _nodesRestClient = new Nodes(_nodesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, dataBoxEdgeDeviceApiVersion ?? "2023-12-01");
             _supportPackagesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.DataBoxEdge", ResourceType.Namespace, Diagnostics);
-            _supportPackagesRestClient = new SupportPackages(_supportPackagesClientDiagnostics, Pipeline, Endpoint, dataBoxEdgeDeviceApiVersion ?? "2023-12-01");
+            _supportPackagesRestClient = new SupportPackages(_supportPackagesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, dataBoxEdgeDeviceApiVersion ?? "2023-12-01");
             ValidateResourceId(id);
         }
 
