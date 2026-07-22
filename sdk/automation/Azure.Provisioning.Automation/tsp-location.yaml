@@ -1,6 +1,6 @@
 directory: specification/automation/Automation.Management
 commit: 8f9279473983601029523f62c83e121a036f017b
-repo: HarveyLink/azure-rest-api-specs
+repo: Azure/azure-rest-api-specs
 additionalDirectories:
 
 emitterPackageJsonPath: "eng/azure-typespec-http-client-csharp-provisioning-emitter-package.json"
