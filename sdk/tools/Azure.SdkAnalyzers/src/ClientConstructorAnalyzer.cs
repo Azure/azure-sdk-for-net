@@ -18,7 +18,8 @@ namespace Azure.SdkAnalyzers
         private const string ClientsOptionsSuffix = "ClientsOptions";
         private const string AzureCoreClientOptions = "Azure.Core.ClientOptions";
         private const string SystemClientModelClientSettings = "System.ClientModel.Primitives.ClientSettings";
-        private const string SystemClientModelClientPipelineOptions = "System.ClientModel.Primitives.ClientPipelineOptions";
+        private const string ClientPipelineOptionsTypeName = "ClientPipelineOptions";
+        private const string SystemClientModelPrimitivesNamespace = "System.ClientModel.Primitives";
 
         public override SymbolKind[] SymbolKinds { get; } = new[] { SymbolKind.NamedType };
 
@@ -197,9 +198,14 @@ namespace Azure.SdkAnalyzers
                 return false;
             }
 
-            for (ITypeSymbol baseType = typeSymbol.BaseType; baseType != null; baseType = baseType.BaseType)
+            // Match ClientPipelineOptions itself as well as any derived options type. Compare by
+            // name + namespace (rather than ToDisplayString) so a nullable-annotated
+            // 'ClientPipelineOptions?' parameter type still matches.
+            for (ITypeSymbol current = typeSymbol; current != null; current = current.BaseType)
             {
-                if (baseType.ToDisplayString() == SystemClientModelClientPipelineOptions)
+                if (current.Name == ClientPipelineOptionsTypeName &&
+                    current.ContainingNamespace != null &&
+                    current.ContainingNamespace.ToDisplayString() == SystemClientModelPrimitivesNamespace)
                 {
                     return true;
                 }

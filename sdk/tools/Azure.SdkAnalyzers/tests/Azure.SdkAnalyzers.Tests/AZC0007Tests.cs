@@ -237,6 +237,32 @@ namespace RandomNamespace
             await Verifier.VerifyAnalyzerAsync(code);
         }
 
+        // An SCM client may take the ClientPipelineOptions base type directly (including a
+        // nullable/optional 'ClientPipelineOptions? options = null'), not only a derived options type.
+        [Test]
+        public async Task AZC0007NotProducedForScmClientWithBaseClientPipelineOptions()
+        {
+            const string code = @"
+#nullable enable
+namespace System.ClientModel.Primitives
+{
+    public class ClientPipelineOptions {}
+}
+
+namespace RandomNamespace
+{
+    using System;
+    using System.ClientModel.Primitives;
+
+    public class SomeClient
+    {
+        protected SomeClient() {}
+        public SomeClient(Uri endpoint, ClientPipelineOptions? options = null) {}
+    }
+}";
+            await Verifier.VerifyAnalyzerAsync(code);
+        }
+
         // System.ClientModel (SCM) clients follow a different constructor convention than
         // Azure.Core clients: a convenience parameterless constructor plus a
         // (endpoint, ClientPipelineOptions-derived options) constructor, without the Azure.Core
