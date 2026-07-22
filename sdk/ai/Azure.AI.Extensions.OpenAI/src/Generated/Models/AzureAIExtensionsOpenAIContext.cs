@@ -92,7 +92,6 @@ namespace Azure.AI.Extensions.OpenAI
     [ModelReaderWriterBuildable(typeof(FabricIQPreviewTool))]
     [ModelReaderWriterBuildable(typeof(FoundryOpenAIError))]
     [ModelReaderWriterBuildable(typeof(InternalImageGenToolInputImageMask))]
-    [ModelReaderWriterBuildable(typeof(InternalMetadataContainer))]
     [ModelReaderWriterBuildable(typeof(McpToolDefinition))]
     [ModelReaderWriterBuildable(typeof(McpToolFilter))]
     [ModelReaderWriterBuildable(typeof(MCPToolRequireApproval))]
