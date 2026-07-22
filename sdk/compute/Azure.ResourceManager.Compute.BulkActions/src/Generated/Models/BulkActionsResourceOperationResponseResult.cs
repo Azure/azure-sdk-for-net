@@ -12,25 +12,25 @@ using System.Linq;
 namespace Azure.ResourceManager.Compute.BulkActions.Models
 {
     /// <summary> The response from scheduled action resource requests, which contains the status of each resource. </summary>
-    public partial class ResourceOperationResponse
+    public partial class BulkActionsResourceOperationResponseResult
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="ResourceOperationResponse"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="BulkActionsResourceOperationResponseResult"/>. </summary>
         /// <param name="totalResources"> The total number of resources operated on. </param>
         /// <param name="resourcesStatuses"> The resource status of for each resource. </param>
-        internal ResourceOperationResponse(int totalResources, IEnumerable<ResourceStatus> resourcesStatuses)
+        internal BulkActionsResourceOperationResponseResult(int totalResources, IEnumerable<ResourceStatus> resourcesStatuses)
         {
             TotalResources = totalResources;
             ResourcesStatuses = resourcesStatuses.ToList();
         }
 
-        /// <summary> Initializes a new instance of <see cref="ResourceOperationResponse"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="BulkActionsResourceOperationResponseResult"/>. </summary>
         /// <param name="totalResources"> The total number of resources operated on. </param>
         /// <param name="resourcesStatuses"> The resource status of for each resource. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ResourceOperationResponse(int totalResources, IList<ResourceStatus> resourcesStatuses, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal BulkActionsResourceOperationResponseResult(int totalResources, IList<ResourceStatus> resourcesStatuses, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             TotalResources = totalResources;
             ResourcesStatuses = resourcesStatuses;

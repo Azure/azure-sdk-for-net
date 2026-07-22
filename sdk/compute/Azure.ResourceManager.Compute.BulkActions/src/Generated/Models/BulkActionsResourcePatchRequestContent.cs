@@ -12,32 +12,32 @@ using Azure.ResourceManager.Compute.BulkActions;
 
 namespace Azure.ResourceManager.Compute.BulkActions.Models
 {
-    /// <summary> Request model to attach a list of scheduled action resources. </summary>
-    public partial class ResourceAttachRequest
+    /// <summary> Request model perform a resource operation in a list of resources. </summary>
+    public partial class BulkActionsResourcePatchRequestContent
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="ResourceAttachRequest"/>. </summary>
-        /// <param name="resources"> List of resources to be attached/patched. </param>
+        /// <summary> Initializes a new instance of <see cref="BulkActionsResourcePatchRequestContent"/>. </summary>
+        /// <param name="resources"> The list of resources we watch to patch. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resources"/> is null. </exception>
-        public ResourceAttachRequest(IEnumerable<ScheduledActionResourceInput> resources)
+        public BulkActionsResourcePatchRequestContent(IEnumerable<ScheduledActionResourceInput> resources)
         {
             Argument.AssertNotNull(resources, nameof(resources));
 
             Resources = resources.ToList();
         }
 
-        /// <summary> Initializes a new instance of <see cref="ResourceAttachRequest"/>. </summary>
-        /// <param name="resources"> List of resources to be attached/patched. </param>
+        /// <summary> Initializes a new instance of <see cref="BulkActionsResourcePatchRequestContent"/>. </summary>
+        /// <param name="resources"> The list of resources we watch to patch. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ResourceAttachRequest(IList<ScheduledActionResourceInput> resources, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal BulkActionsResourcePatchRequestContent(IList<ScheduledActionResourceInput> resources, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Resources = resources;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
-        /// <summary> List of resources to be attached/patched. </summary>
+        /// <summary> The list of resources we watch to patch. </summary>
         public IList<ScheduledActionResourceInput> Resources { get; }
     }
 }

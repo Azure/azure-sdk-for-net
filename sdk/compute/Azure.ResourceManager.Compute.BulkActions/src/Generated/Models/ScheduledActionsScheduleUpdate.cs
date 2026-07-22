@@ -34,7 +34,7 @@ namespace Azure.ResourceManager.Compute.BulkActions.Models
         /// <param name="executionParameters"> The execution parameters the scheduled action is supposed to follow. </param>
         /// <param name="deadlineType"> The type of deadline the scheduled action is supposed to follow for the schedule. If no value is passed, it will default to InitiateAt. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ScheduledActionsScheduleUpdate(TimeSpan? scheduledTime, string timeZone, IList<WeekDay> requestedWeekDays, IList<Month> requestedMonths, IList<int> requestedDaysOfTheMonth, RecurringScheduledActionsExecutionParameters executionParameters, RecurringScheduledActionsDeadlineType? deadlineType, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ScheduledActionsScheduleUpdate(TimeSpan? scheduledTime, string timeZone, IList<WeekDay> requestedWeekDays, IList<Month> requestedMonths, IList<int> requestedDaysOfTheMonth, BulkActionsRecurringScheduledActionsExecutionParametersContent executionParameters, RecurringScheduledActionsDeadlineType? deadlineType, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             ScheduledTime = scheduledTime;
             TimeZone = timeZone;
@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.Compute.BulkActions.Models
         public IList<int> RequestedDaysOfTheMonth { get; }
 
         /// <summary> The execution parameters the scheduled action is supposed to follow. </summary>
-        public RecurringScheduledActionsExecutionParameters ExecutionParameters { get; set; }
+        public BulkActionsRecurringScheduledActionsExecutionParametersContent ExecutionParameters { get; set; }
 
         /// <summary> The type of deadline the scheduled action is supposed to follow for the schedule. If no value is passed, it will default to InitiateAt. </summary>
         public RecurringScheduledActionsDeadlineType? DeadlineType { get; set; }

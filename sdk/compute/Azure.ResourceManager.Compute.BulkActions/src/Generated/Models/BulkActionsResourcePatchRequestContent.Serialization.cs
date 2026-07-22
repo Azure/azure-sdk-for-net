@@ -14,67 +14,67 @@ using Azure.ResourceManager.Compute.BulkActions;
 
 namespace Azure.ResourceManager.Compute.BulkActions.Models
 {
-    /// <summary> Request model to attach a list of scheduled action resources. </summary>
-    public partial class ResourceAttachRequest : IJsonModel<ResourceAttachRequest>
+    /// <summary> Request model perform a resource operation in a list of resources. </summary>
+    public partial class BulkActionsResourcePatchRequestContent : IJsonModel<BulkActionsResourcePatchRequestContent>
     {
-        /// <summary> Initializes a new instance of <see cref="ResourceAttachRequest"/> for deserialization. </summary>
-        internal ResourceAttachRequest()
+        /// <summary> Initializes a new instance of <see cref="BulkActionsResourcePatchRequestContent"/> for deserialization. </summary>
+        internal BulkActionsResourcePatchRequestContent()
         {
         }
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual ResourceAttachRequest PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        protected virtual BulkActionsResourcePatchRequestContent PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<ResourceAttachRequest>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<BulkActionsResourcePatchRequestContent>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeResourceAttachRequest(document.RootElement, options);
+                        return DeserializeBulkActionsResourcePatchRequestContent(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ResourceAttachRequest)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(BulkActionsResourcePatchRequestContent)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<ResourceAttachRequest>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<BulkActionsResourcePatchRequestContent>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options, AzureResourceManagerComputeBulkActionsContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(ResourceAttachRequest)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(BulkActionsResourcePatchRequestContent)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<ResourceAttachRequest>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<BulkActionsResourcePatchRequestContent>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        ResourceAttachRequest IPersistableModel<ResourceAttachRequest>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+        BulkActionsResourcePatchRequestContent IPersistableModel<BulkActionsResourcePatchRequestContent>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<ResourceAttachRequest>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<BulkActionsResourcePatchRequestContent>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
-        /// <param name="resourceAttachRequest"> The <see cref="ResourceAttachRequest"/> to serialize into <see cref="RequestContent"/>. </param>
-        internal static RequestContent ToRequestContent(ResourceAttachRequest resourceAttachRequest)
+        /// <param name="bulkActionsResourcePatchRequestContent"> The <see cref="BulkActionsResourcePatchRequestContent"/> to serialize into <see cref="RequestContent"/>. </param>
+        internal static RequestContent ToRequestContent(BulkActionsResourcePatchRequestContent bulkActionsResourcePatchRequestContent)
         {
-            if (resourceAttachRequest == null)
+            if (bulkActionsResourcePatchRequestContent == null)
             {
                 return null;
             }
-            return RequestContent.Create(resourceAttachRequest, ModelSerializationExtensions.WireOptions);
+            return RequestContent.Create(bulkActionsResourcePatchRequestContent, ModelSerializationExtensions.WireOptions);
         }
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<ResourceAttachRequest>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<BulkActionsResourcePatchRequestContent>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -85,10 +85,10 @@ namespace Azure.ResourceManager.Compute.BulkActions.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<ResourceAttachRequest>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<BulkActionsResourcePatchRequestContent>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ResourceAttachRequest)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(BulkActionsResourcePatchRequestContent)} does not support writing '{format}' format.");
             }
             writer.WritePropertyName("resources"u8);
             writer.WriteStartArray();
@@ -116,24 +116,24 @@ namespace Azure.ResourceManager.Compute.BulkActions.Models
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        ResourceAttachRequest IJsonModel<ResourceAttachRequest>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+        BulkActionsResourcePatchRequestContent IJsonModel<BulkActionsResourcePatchRequestContent>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual ResourceAttachRequest JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        protected virtual BulkActionsResourcePatchRequestContent JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<ResourceAttachRequest>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<BulkActionsResourcePatchRequestContent>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ResourceAttachRequest)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(BulkActionsResourcePatchRequestContent)} does not support reading '{format}' format.");
             }
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeResourceAttachRequest(document.RootElement, options);
+            return DeserializeBulkActionsResourcePatchRequestContent(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        internal static ResourceAttachRequest DeserializeResourceAttachRequest(JsonElement element, ModelReaderWriterOptions options)
+        internal static BulkActionsResourcePatchRequestContent DeserializeBulkActionsResourcePatchRequestContent(JsonElement element, ModelReaderWriterOptions options)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -158,7 +158,7 @@ namespace Azure.ResourceManager.Compute.BulkActions.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new ResourceAttachRequest(resources, additionalBinaryDataProperties);
+            return new BulkActionsResourcePatchRequestContent(resources, additionalBinaryDataProperties);
         }
     }
 }

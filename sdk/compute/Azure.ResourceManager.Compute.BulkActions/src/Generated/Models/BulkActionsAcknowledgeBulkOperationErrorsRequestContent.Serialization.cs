@@ -14,67 +14,67 @@ using Azure.ResourceManager.Compute.BulkActions;
 
 namespace Azure.ResourceManager.Compute.BulkActions.Models
 {
-    /// <summary> The request to cancel an occurrence. </summary>
-    public partial class CancelOccurrenceRequest : IJsonModel<CancelOccurrenceRequest>
+    /// <summary> The request to acknowledge bulk operation errors. </summary>
+    public partial class BulkActionsAcknowledgeBulkOperationErrorsRequestContent : IJsonModel<BulkActionsAcknowledgeBulkOperationErrorsRequestContent>
     {
-        /// <summary> Initializes a new instance of <see cref="CancelOccurrenceRequest"/> for deserialization. </summary>
-        internal CancelOccurrenceRequest()
+        /// <summary> Initializes a new instance of <see cref="BulkActionsAcknowledgeBulkOperationErrorsRequestContent"/> for deserialization. </summary>
+        internal BulkActionsAcknowledgeBulkOperationErrorsRequestContent()
         {
         }
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual CancelOccurrenceRequest PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        protected virtual BulkActionsAcknowledgeBulkOperationErrorsRequestContent PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<CancelOccurrenceRequest>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<BulkActionsAcknowledgeBulkOperationErrorsRequestContent>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeCancelOccurrenceRequest(document.RootElement, options);
+                        return DeserializeBulkActionsAcknowledgeBulkOperationErrorsRequestContent(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(CancelOccurrenceRequest)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(BulkActionsAcknowledgeBulkOperationErrorsRequestContent)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<CancelOccurrenceRequest>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<BulkActionsAcknowledgeBulkOperationErrorsRequestContent>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options, AzureResourceManagerComputeBulkActionsContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(CancelOccurrenceRequest)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(BulkActionsAcknowledgeBulkOperationErrorsRequestContent)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<CancelOccurrenceRequest>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<BulkActionsAcknowledgeBulkOperationErrorsRequestContent>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        CancelOccurrenceRequest IPersistableModel<CancelOccurrenceRequest>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+        BulkActionsAcknowledgeBulkOperationErrorsRequestContent IPersistableModel<BulkActionsAcknowledgeBulkOperationErrorsRequestContent>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<CancelOccurrenceRequest>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<BulkActionsAcknowledgeBulkOperationErrorsRequestContent>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
-        /// <param name="cancelOccurrenceRequest"> The <see cref="CancelOccurrenceRequest"/> to serialize into <see cref="RequestContent"/>. </param>
-        internal static RequestContent ToRequestContent(CancelOccurrenceRequest cancelOccurrenceRequest)
+        /// <param name="bulkActionsAcknowledgeBulkOperationErrorsRequestContent"> The <see cref="BulkActionsAcknowledgeBulkOperationErrorsRequestContent"/> to serialize into <see cref="RequestContent"/>. </param>
+        internal static RequestContent ToRequestContent(BulkActionsAcknowledgeBulkOperationErrorsRequestContent bulkActionsAcknowledgeBulkOperationErrorsRequestContent)
         {
-            if (cancelOccurrenceRequest == null)
+            if (bulkActionsAcknowledgeBulkOperationErrorsRequestContent == null)
             {
                 return null;
             }
-            return RequestContent.Create(cancelOccurrenceRequest, ModelSerializationExtensions.WireOptions);
+            return RequestContent.Create(bulkActionsAcknowledgeBulkOperationErrorsRequestContent, ModelSerializationExtensions.WireOptions);
         }
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<CancelOccurrenceRequest>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<BulkActionsAcknowledgeBulkOperationErrorsRequestContent>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -85,14 +85,14 @@ namespace Azure.ResourceManager.Compute.BulkActions.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<CancelOccurrenceRequest>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<BulkActionsAcknowledgeBulkOperationErrorsRequestContent>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(CancelOccurrenceRequest)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(BulkActionsAcknowledgeBulkOperationErrorsRequestContent)} does not support writing '{format}' format.");
             }
-            writer.WritePropertyName("resourceIds"u8);
+            writer.WritePropertyName("operationIds"u8);
             writer.WriteStartArray();
-            foreach (ResourceIdentifier item in ResourceIds)
+            foreach (string item in OperationIds)
             {
                 if (item == null)
                 {
@@ -121,36 +121,36 @@ namespace Azure.ResourceManager.Compute.BulkActions.Models
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        CancelOccurrenceRequest IJsonModel<CancelOccurrenceRequest>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+        BulkActionsAcknowledgeBulkOperationErrorsRequestContent IJsonModel<BulkActionsAcknowledgeBulkOperationErrorsRequestContent>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual CancelOccurrenceRequest JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        protected virtual BulkActionsAcknowledgeBulkOperationErrorsRequestContent JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<CancelOccurrenceRequest>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<BulkActionsAcknowledgeBulkOperationErrorsRequestContent>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(CancelOccurrenceRequest)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(BulkActionsAcknowledgeBulkOperationErrorsRequestContent)} does not support reading '{format}' format.");
             }
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeCancelOccurrenceRequest(document.RootElement, options);
+            return DeserializeBulkActionsAcknowledgeBulkOperationErrorsRequestContent(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        internal static CancelOccurrenceRequest DeserializeCancelOccurrenceRequest(JsonElement element, ModelReaderWriterOptions options)
+        internal static BulkActionsAcknowledgeBulkOperationErrorsRequestContent DeserializeBulkActionsAcknowledgeBulkOperationErrorsRequestContent(JsonElement element, ModelReaderWriterOptions options)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            IList<ResourceIdentifier> resourceIds = default;
+            IList<string> operationIds = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
-                if (prop.NameEquals("resourceIds"u8))
+                if (prop.NameEquals("operationIds"u8))
                 {
-                    List<ResourceIdentifier> array = new List<ResourceIdentifier>();
+                    List<string> array = new List<string>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
                         if (item.ValueKind == JsonValueKind.Null)
@@ -159,10 +159,10 @@ namespace Azure.ResourceManager.Compute.BulkActions.Models
                         }
                         else
                         {
-                            array.Add(new ResourceIdentifier(item.GetString()));
+                            array.Add(item.GetString());
                         }
                     }
-                    resourceIds = array;
+                    operationIds = array;
                     continue;
                 }
                 if (options.Format != "W")
@@ -170,7 +170,7 @@ namespace Azure.ResourceManager.Compute.BulkActions.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new CancelOccurrenceRequest(resourceIds, additionalBinaryDataProperties);
+            return new BulkActionsAcknowledgeBulkOperationErrorsRequestContent(operationIds, additionalBinaryDataProperties);
         }
     }
 }
