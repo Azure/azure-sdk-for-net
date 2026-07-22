@@ -118,5 +118,24 @@ namespace RandomNamespace
 }";
             await Verifier.VerifyAnalyzerAsync(code);
         }
+
+        // The sync-counterpart match must consider parameter modifiers (ref/out/in, params),
+        // not just types, so a method with a different modifier is not paired and reported on.
+        [Test]
+        public async Task AZC0015NotProducedWhenSyncCounterpartHasDifferentParameterModifiers()
+        {
+            const string code = @"
+using System.ClientModel;
+
+namespace RandomNamespace
+{
+    public class SomeClient
+    {
+        public ClientResult FooAsync(int x) { return default; }
+        public int Foo(ref int x) { return default; }
+    }
+}";
+            await Verifier.VerifyAnalyzerAsync(code);
+        }
     }
 }

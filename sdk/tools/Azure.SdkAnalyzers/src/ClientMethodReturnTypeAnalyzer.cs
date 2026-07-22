@@ -142,15 +142,35 @@ namespace Azure.SdkAnalyzers
             {
                 if (candidate.DeclaredAccessibility == Accessibility.Public &&
                     candidate.TypeParameters.Length == asyncMethod.TypeParameters.Length &&
-                    candidate.Parameters.Length == asyncMethod.Parameters.Length &&
-                    candidate.Parameters.Select(p => p.Type).SequenceEqual(
-                        asyncMethod.Parameters.Select(p => p.Type), SymbolEqualityComparer.Default))
+                    ParametersMatch(candidate, asyncMethod))
                 {
                     return candidate;
                 }
             }
 
             return null;
+        }
+
+        private static bool ParametersMatch(IMethodSymbol candidate, IMethodSymbol asyncMethod)
+        {
+            if (candidate.Parameters.Length != asyncMethod.Parameters.Length)
+            {
+                return false;
+            }
+
+            for (int i = 0; i < candidate.Parameters.Length; i++)
+            {
+                IParameterSymbol a = candidate.Parameters[i];
+                IParameterSymbol b = asyncMethod.Parameters[i];
+                if (a.RefKind != b.RefKind ||
+                    a.IsParams != b.IsParams ||
+                    !SymbolEqualityComparer.Default.Equals(a.Type, b.Type))
+                {
+                    return false;
+                }
+            }
+
+            return true;
         }
     }
 }
