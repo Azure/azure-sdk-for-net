@@ -148,6 +148,10 @@ OpenTelemetry is configured automatically via the `Microsoft.OpenTelemetry` dist
 
 A `/readiness` endpoint is registered by default, responding to liveness and readiness probes. It reports healthy as soon as the host finishes starting.
 
+### Durable state store
+
+`FoundryStateStore` is a durable, server-backed store for agent state. Each store is bound to a caller-chosen name and holds items — keyed JSON values — that you read, write, and list. Use it to persist checkpoints, conversation state, or counters across requests and restarts. `FoundryStateStore.GetOrCreateAsync` fetches or creates the store in one call, and items support tags, store-level TTL, and optimistic concurrency via `If-Match`. See [Sample 3: Durable state store](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/agentserver/Azure.AI.AgentServer.Core/samples/Sample3_StateStore.md).
+
 ## Examples
 
 You can familiarise yourself with different APIs using [Samples](https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/agentserver/Azure.AI.AgentServer.Core/samples).
@@ -166,6 +170,7 @@ The library emits OpenTelemetry traces via the `Azure.AI.AgentServer.Responses` 
 ## Next steps
 
 - [Samples](https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/agentserver/Azure.AI.AgentServer.Core/samples) — Getting started, multi-protocol composition
+- [Durable state store](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/agentserver/Azure.AI.AgentServer.Core/samples/Sample3_StateStore.md) — Persist agent state with `FoundryStateStore`
 
 ## Contributing
 

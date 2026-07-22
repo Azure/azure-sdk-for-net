@@ -12,3 +12,4 @@ description: Samples for the Azure.AI.AgentServer.Core client library.
 
 - [Getting Started](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/agentserver/Azure.AI.AgentServer.Core/samples/Sample1_GettingStarted.md) — Create and run an `AgentHost` with a custom protocol endpoint
 - [Configuration](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/agentserver/Azure.AI.AgentServer.Core/samples/Sample2_Configuration.md) — Tracing, health checks, graceful shutdown, and escape-hatch access to `WebApplicationBuilder`
+- [Durable state store](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/agentserver/Azure.AI.AgentServer.Core/samples/Sample3_StateStore.md) — Persist agent state with `FoundryStateStore`: get-or-create, items, TTL, optimistic concurrency, listing, and error handling
