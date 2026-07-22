@@ -11,7 +11,7 @@ using Azure.ResourceManager.ContainerService;
 
 namespace Azure.ResourceManager.ContainerService.Models
 {
-    /// <summary> The scheduler profile for a single scheduler instance. </summary>
+    /// <summary> Profile with settings related to a specific instance of an AKS-managed scheduler. </summary>
     internal partial class SchedulerInstanceProfile
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
@@ -23,7 +23,7 @@ namespace Azure.ResourceManager.ContainerService.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="SchedulerInstanceProfile"/>. </summary>
-        /// <param name="schedulerConfigMode"> The config customization mode for this scheduler instance. </param>
+        /// <param name="schedulerConfigMode"> The configuration mode to be used by the AKS-managed scheduler. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         internal SchedulerInstanceProfile(SchedulerConfigMode? schedulerConfigMode, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.ContainerService.Models
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
-        /// <summary> The config customization mode for this scheduler instance. </summary>
+        /// <summary> The configuration mode to be used by the AKS-managed scheduler. </summary>
         [WirePath("schedulerConfigMode")]
         public SchedulerConfigMode? SchedulerConfigMode { get; set; }
     }

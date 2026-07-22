@@ -13,7 +13,7 @@ using Azure.ResourceManager.ContainerService;
 
 namespace Azure.ResourceManager.ContainerService.Models
 {
-    /// <summary> The pod scheduler profile for the cluster. </summary>
+    /// <summary> Profile with scheduler-related settings, like the configuration mode for each scheduler managed by AKS. See https://aka.ms/aks/scheduler-profile. </summary>
     internal partial class SchedulerProfile : IJsonModel<SchedulerProfile>
     {
         /// <param name="data"> The data to parse. </param>
@@ -74,10 +74,10 @@ namespace Azure.ResourceManager.ContainerService.Models
             {
                 throw new FormatException($"The model {nameof(SchedulerProfile)} does not support writing '{format}' format.");
             }
-            if (Optional.IsDefined(SchedulerInstanceProfiles))
+            if (Optional.IsDefined(Upstream))
             {
-                writer.WritePropertyName("schedulerInstanceProfiles"u8);
-                writer.WriteObjectValue(SchedulerInstanceProfiles, options);
+                writer.WritePropertyName("upstream"u8);
+                writer.WriteObjectValue(Upstream, options);
             }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
@@ -121,17 +121,17 @@ namespace Azure.ResourceManager.ContainerService.Models
             {
                 return null;
             }
-            SchedulerProfileSchedulerInstanceProfiles schedulerInstanceProfiles = default;
+            SchedulerInstanceProfile upstream = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
-                if (prop.NameEquals("schedulerInstanceProfiles"u8))
+                if (prop.NameEquals("upstream"u8))
                 {
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    schedulerInstanceProfiles = SchedulerProfileSchedulerInstanceProfiles.DeserializeSchedulerProfileSchedulerInstanceProfiles(prop.Value, options);
+                    upstream = SchedulerInstanceProfile.DeserializeSchedulerInstanceProfile(prop.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
@@ -139,7 +139,7 @@ namespace Azure.ResourceManager.ContainerService.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new SchedulerProfile(schedulerInstanceProfiles, additionalBinaryDataProperties);
+            return new SchedulerProfile(upstream, additionalBinaryDataProperties);
         }
     }
 }
