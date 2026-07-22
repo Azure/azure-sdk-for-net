@@ -25,18 +25,13 @@ namespace Azure.Provisioning.Compute
         {
         }
 
-        /// <summary> Gets or sets the Priority. </summary>
+        /// <summary> Gets the Priority. </summary>
         public BicepValue<string> Priority
         {
             get
             {
                 Initialize();
                 return _priority;
-            }
-            set
-            {
-                Initialize();
-                _priority.Assign(value);
             }
         }
 
