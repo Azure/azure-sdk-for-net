@@ -1,5 +1,15 @@
 # Release History
 
+## 12.0.0-preview.65 (Unreleased)
+
+### Features Added
+
+### Breaking Changes
+
+### Bugs Fixed
+
+### Other Changes
+
 ## 12.0.0-preview.64 (2026-07-22)
 
 ### Features Added
