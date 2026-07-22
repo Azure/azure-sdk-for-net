@@ -21,6 +21,7 @@ namespace Azure.SdkAnalyzers
         private const string ClientSuffix = "Client";
         private const string AsyncSuffix = "Async";
         private const string TaskTypeName = "Task";
+        private const string SystemThreadingTasksNamespace = "System.Threading.Tasks";
         private const string AzureNamespace = "Azure";
         private const string SystemClientModelNamespace = "System.ClientModel";
 
@@ -89,9 +90,14 @@ namespace Azure.SdkAnalyzers
         private static bool IsValidClientReturnType(ITypeSymbol returnType)
         {
             ITypeSymbol unwrapped = returnType;
-            if (returnType is INamedTypeSymbol named && named.IsGenericType && named.Name == TaskTypeName)
+            if (returnType is INamedTypeSymbol named &&
+                named.IsGenericType &&
+                named.TypeArguments.Length == 1 &&
+                named.Name == TaskTypeName &&
+                named.ContainingNamespace != null &&
+                named.ContainingNamespace.ToDisplayString() == SystemThreadingTasksNamespace)
             {
-                unwrapped = named.TypeArguments.Single();
+                unwrapped = named.TypeArguments[0];
             }
 
             // Azure.Core return types.

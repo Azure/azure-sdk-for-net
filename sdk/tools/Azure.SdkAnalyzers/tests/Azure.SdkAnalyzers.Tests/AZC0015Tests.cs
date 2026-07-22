@@ -79,6 +79,27 @@ namespace RandomNamespace
             await Verifier.VerifyAnalyzerAsync(code);
         }
 
+        // A user-defined generic type named 'Task' is not System.Threading.Tasks.Task and must
+        // not be unwrapped; e.g. a client method returning a custom Task<Response> is not a valid
+        // client return type.
+        [TestCase("public RandomNamespace.Task<Response> {|AZC0015:FooAsync|}() { return default; }")]
+        public async Task AZC0015ProducedForUserDefinedTaskType(string member)
+        {
+            string code = $@"
+using Azure;
+
+namespace RandomNamespace
+{{
+    public class Task<T> {{ }}
+
+    public class SomeClient
+    {{
+        {member}
+    }}
+}}";
+            await Verifier.VerifyAnalyzerAsync(code);
+        }
+
         // AZC0015 is a public-API rule, so a non-public synchronous counterpart of an
         // async client method must not be validated (or reported on).
         [Test]
