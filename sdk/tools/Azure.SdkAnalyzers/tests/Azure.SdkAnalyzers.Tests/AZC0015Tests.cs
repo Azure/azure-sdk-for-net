@@ -78,5 +78,24 @@ namespace RandomNamespace
 }";
             await Verifier.VerifyAnalyzerAsync(code);
         }
+
+        // AZC0015 is a public-API rule, so a non-public synchronous counterpart of an
+        // async client method must not be validated (or reported on).
+        [Test]
+        public async Task AZC0015NotProducedForNonPublicSyncCounterpart()
+        {
+            const string code = @"
+using System.ClientModel;
+
+namespace RandomNamespace
+{
+    public class SomeClient
+    {
+        public ClientResult FooAsync() { return default; }
+        private int Foo() { return default; }
+    }
+}";
+            await Verifier.VerifyAnalyzerAsync(code);
+        }
     }
 }

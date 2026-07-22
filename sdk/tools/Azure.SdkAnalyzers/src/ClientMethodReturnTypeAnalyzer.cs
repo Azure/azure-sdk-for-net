@@ -134,7 +134,8 @@ namespace Azure.SdkAnalyzers
         {
             foreach (var candidate in type.GetMembers(syncName).OfType<IMethodSymbol>())
             {
-                if (candidate.TypeParameters.Length == asyncMethod.TypeParameters.Length &&
+                if (candidate.DeclaredAccessibility == Accessibility.Public &&
+                    candidate.TypeParameters.Length == asyncMethod.TypeParameters.Length &&
                     candidate.Parameters.Length == asyncMethod.Parameters.Length &&
                     candidate.Parameters.Select(p => p.Type).SequenceEqual(
                         asyncMethod.Parameters.Select(p => p.Type), SymbolEqualityComparer.Default))
