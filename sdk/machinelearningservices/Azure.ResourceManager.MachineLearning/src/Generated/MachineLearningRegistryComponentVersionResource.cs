@@ -17,11 +17,11 @@ using Azure.ResourceManager;
 namespace Azure.ResourceManager.MachineLearning
 {
     /// <summary>
-    /// A class representing a MachineLearninRegistryComponentVersion along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="MachineLearninRegistryComponentVersionResource"/> from an instance of <see cref="ArmClient"/> using the GetResource method.
-    /// Otherwise you can get one from its parent resource <see cref="MachineLearninRegistryComponentContainerResource"/> using the GetMachineLearninRegistryComponentVersions method.
+    /// A class representing a MachineLearningRegistryComponentVersion along with the instance operations that can be performed on it.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="MachineLearningRegistryComponentVersionResource"/> from an instance of <see cref="ArmClient"/> using the GetResource method.
+    /// Otherwise you can get one from its parent resource <see cref="MachineLearningRegistryComponentContainerResource"/> using the GetMachineLearningRegistryComponentVersions method.
     /// </summary>
-    public partial class MachineLearninRegistryComponentVersionResource : ArmResource
+    public partial class MachineLearningRegistryComponentVersionResource : ArmResource
     {
         private readonly ClientDiagnostics _registryComponentVersionsClientDiagnostics;
         private readonly RegistryComponentVersions _registryComponentVersionsRestClient;
@@ -29,28 +29,28 @@ namespace Azure.ResourceManager.MachineLearning
         /// <summary> Gets the resource type for the operations. </summary>
         public static readonly ResourceType ResourceType = "Microsoft.MachineLearningServices/registries/components/versions";
 
-        /// <summary> Initializes a new instance of MachineLearninRegistryComponentVersionResource for mocking. </summary>
-        protected MachineLearninRegistryComponentVersionResource()
+        /// <summary> Initializes a new instance of MachineLearningRegistryComponentVersionResource for mocking. </summary>
+        protected MachineLearningRegistryComponentVersionResource()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="MachineLearninRegistryComponentVersionResource"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="MachineLearningRegistryComponentVersionResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
-        internal MachineLearninRegistryComponentVersionResource(ArmClient client, MachineLearningComponentVersionData data) : this(client, data.Id)
+        internal MachineLearningRegistryComponentVersionResource(ArmClient client, MachineLearningComponentVersionData data) : this(client, data.Id)
         {
             HasData = true;
             _data = data;
         }
 
-        /// <summary> Initializes a new instance of <see cref="MachineLearninRegistryComponentVersionResource"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="MachineLearningRegistryComponentVersionResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
-        internal MachineLearninRegistryComponentVersionResource(ArmClient client, ResourceIdentifier id) : base(client, id)
+        internal MachineLearningRegistryComponentVersionResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            TryGetApiVersion(ResourceType, out string machineLearninRegistryComponentVersionApiVersion);
+            TryGetApiVersion(ResourceType, out string machineLearningRegistryComponentVersionApiVersion);
             _registryComponentVersionsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.MachineLearning", ResourceType.Namespace, Diagnostics);
-            _registryComponentVersionsRestClient = new RegistryComponentVersions(_registryComponentVersionsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, machineLearninRegistryComponentVersionApiVersion ?? "2026-03-15-preview");
+            _registryComponentVersionsRestClient = new RegistryComponentVersions(_registryComponentVersionsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, machineLearningRegistryComponentVersionApiVersion ?? "2026-03-15-preview");
             ValidateResourceId(id);
         }
 
@@ -109,14 +109,14 @@ namespace Azure.ResourceManager.MachineLearning
         /// </item>
         /// <item>
         /// <term> Resource. </term>
-        /// <description> <see cref="MachineLearninRegistryComponentVersionResource"/>. </description>
+        /// <description> <see cref="MachineLearningRegistryComponentVersionResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<MachineLearninRegistryComponentVersionResource>> GetAsync(CancellationToken cancellationToken = default)
+        public virtual async Task<Response<MachineLearningRegistryComponentVersionResource>> GetAsync(CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _registryComponentVersionsClientDiagnostics.CreateScope("MachineLearninRegistryComponentVersionResource.Get");
+            using DiagnosticScope scope = _registryComponentVersionsClientDiagnostics.CreateScope("MachineLearningRegistryComponentVersionResource.Get");
             scope.Start();
             try
             {
@@ -131,7 +131,7 @@ namespace Azure.ResourceManager.MachineLearning
                 {
                     throw new RequestFailedException(response.GetRawResponse());
                 }
-                return Response.FromValue(new MachineLearninRegistryComponentVersionResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new MachineLearningRegistryComponentVersionResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -157,14 +157,14 @@ namespace Azure.ResourceManager.MachineLearning
         /// </item>
         /// <item>
         /// <term> Resource. </term>
-        /// <description> <see cref="MachineLearninRegistryComponentVersionResource"/>. </description>
+        /// <description> <see cref="MachineLearningRegistryComponentVersionResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<MachineLearninRegistryComponentVersionResource> Get(CancellationToken cancellationToken = default)
+        public virtual Response<MachineLearningRegistryComponentVersionResource> Get(CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _registryComponentVersionsClientDiagnostics.CreateScope("MachineLearninRegistryComponentVersionResource.Get");
+            using DiagnosticScope scope = _registryComponentVersionsClientDiagnostics.CreateScope("MachineLearningRegistryComponentVersionResource.Get");
             scope.Start();
             try
             {
@@ -179,7 +179,7 @@ namespace Azure.ResourceManager.MachineLearning
                 {
                     throw new RequestFailedException(response.GetRawResponse());
                 }
-                return Response.FromValue(new MachineLearninRegistryComponentVersionResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new MachineLearningRegistryComponentVersionResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -205,7 +205,7 @@ namespace Azure.ResourceManager.MachineLearning
         /// </item>
         /// <item>
         /// <term> Resource. </term>
-        /// <description> <see cref="MachineLearninRegistryComponentVersionResource"/>. </description>
+        /// <description> <see cref="MachineLearningRegistryComponentVersionResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -213,7 +213,7 @@ namespace Azure.ResourceManager.MachineLearning
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<ArmOperation> DeleteAsync(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _registryComponentVersionsClientDiagnostics.CreateScope("MachineLearninRegistryComponentVersionResource.Delete");
+            using DiagnosticScope scope = _registryComponentVersionsClientDiagnostics.CreateScope("MachineLearningRegistryComponentVersionResource.Delete");
             scope.Start();
             try
             {
@@ -254,7 +254,7 @@ namespace Azure.ResourceManager.MachineLearning
         /// </item>
         /// <item>
         /// <term> Resource. </term>
-        /// <description> <see cref="MachineLearninRegistryComponentVersionResource"/>. </description>
+        /// <description> <see cref="MachineLearningRegistryComponentVersionResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -262,7 +262,7 @@ namespace Azure.ResourceManager.MachineLearning
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual ArmOperation Delete(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _registryComponentVersionsClientDiagnostics.CreateScope("MachineLearninRegistryComponentVersionResource.Delete");
+            using DiagnosticScope scope = _registryComponentVersionsClientDiagnostics.CreateScope("MachineLearningRegistryComponentVersionResource.Delete");
             scope.Start();
             try
             {
@@ -287,7 +287,7 @@ namespace Azure.ResourceManager.MachineLearning
         }
 
         /// <summary>
-        /// Update a MachineLearninRegistryComponentVersion.
+        /// Update a MachineLearningRegistryComponentVersion.
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>
@@ -303,7 +303,7 @@ namespace Azure.ResourceManager.MachineLearning
         /// </item>
         /// <item>
         /// <term> Resource. </term>
-        /// <description> <see cref="MachineLearninRegistryComponentVersionResource"/>. </description>
+        /// <description> <see cref="MachineLearningRegistryComponentVersionResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -311,11 +311,11 @@ namespace Azure.ResourceManager.MachineLearning
         /// <param name="data"> Version entity to create or update. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
-        public virtual async Task<ArmOperation<MachineLearninRegistryComponentVersionResource>> UpdateAsync(WaitUntil waitUntil, MachineLearningComponentVersionData data, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation<MachineLearningRegistryComponentVersionResource>> UpdateAsync(WaitUntil waitUntil, MachineLearningComponentVersionData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(data, nameof(data));
 
-            using DiagnosticScope scope = _registryComponentVersionsClientDiagnostics.CreateScope("MachineLearninRegistryComponentVersionResource.Update");
+            using DiagnosticScope scope = _registryComponentVersionsClientDiagnostics.CreateScope("MachineLearningRegistryComponentVersionResource.Update");
             scope.Start();
             try
             {
@@ -325,8 +325,8 @@ namespace Azure.ResourceManager.MachineLearning
                 };
                 HttpMessage message = _registryComponentVersionsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, MachineLearningComponentVersionData.ToRequestContent(data), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                MachineLearningArmOperation<MachineLearninRegistryComponentVersionResource> operation = new MachineLearningArmOperation<MachineLearninRegistryComponentVersionResource>(
-                    new MachineLearninRegistryComponentVersionResourceOperationSource(Client),
+                MachineLearningArmOperation<MachineLearningRegistryComponentVersionResource> operation = new MachineLearningArmOperation<MachineLearningRegistryComponentVersionResource>(
+                    new MachineLearningRegistryComponentVersionResourceOperationSource(Client),
                     _registryComponentVersionsClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -346,7 +346,7 @@ namespace Azure.ResourceManager.MachineLearning
         }
 
         /// <summary>
-        /// Update a MachineLearninRegistryComponentVersion.
+        /// Update a MachineLearningRegistryComponentVersion.
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>
@@ -362,7 +362,7 @@ namespace Azure.ResourceManager.MachineLearning
         /// </item>
         /// <item>
         /// <term> Resource. </term>
-        /// <description> <see cref="MachineLearninRegistryComponentVersionResource"/>. </description>
+        /// <description> <see cref="MachineLearningRegistryComponentVersionResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -370,11 +370,11 @@ namespace Azure.ResourceManager.MachineLearning
         /// <param name="data"> Version entity to create or update. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
-        public virtual ArmOperation<MachineLearninRegistryComponentVersionResource> Update(WaitUntil waitUntil, MachineLearningComponentVersionData data, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<MachineLearningRegistryComponentVersionResource> Update(WaitUntil waitUntil, MachineLearningComponentVersionData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(data, nameof(data));
 
-            using DiagnosticScope scope = _registryComponentVersionsClientDiagnostics.CreateScope("MachineLearninRegistryComponentVersionResource.Update");
+            using DiagnosticScope scope = _registryComponentVersionsClientDiagnostics.CreateScope("MachineLearningRegistryComponentVersionResource.Update");
             scope.Start();
             try
             {
@@ -384,8 +384,8 @@ namespace Azure.ResourceManager.MachineLearning
                 };
                 HttpMessage message = _registryComponentVersionsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, MachineLearningComponentVersionData.ToRequestContent(data), context);
                 Response response = Pipeline.ProcessMessage(message, context);
-                MachineLearningArmOperation<MachineLearninRegistryComponentVersionResource> operation = new MachineLearningArmOperation<MachineLearninRegistryComponentVersionResource>(
-                    new MachineLearninRegistryComponentVersionResourceOperationSource(Client),
+                MachineLearningArmOperation<MachineLearningRegistryComponentVersionResource> operation = new MachineLearningArmOperation<MachineLearningRegistryComponentVersionResource>(
+                    new MachineLearningRegistryComponentVersionResourceOperationSource(Client),
                     _registryComponentVersionsClientDiagnostics,
                     Pipeline,
                     message.Request,
