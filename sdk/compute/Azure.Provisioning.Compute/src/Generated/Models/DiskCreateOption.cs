@@ -11,26 +11,26 @@ namespace Azure.Provisioning.Compute
     public enum DiskCreateOption
     {
         /// <summary> Create an empty data disk of a size given by diskSizeGB. </summary>
-        Empty,
+        Empty = 0,
         /// <summary> Disk will be attached to a VM. </summary>
-        Attach,
+        Attach = 1,
         /// <summary> Create a new disk from a platform image specified by the given imageReference or galleryImageReference. </summary>
-        FromImage,
+        FromImage = 2,
         /// <summary> Create a disk by importing from a blob specified by a sourceUri in a storage account specified by storageAccountId. </summary>
-        Import,
+        Import = 3,
         /// <summary> Create a new disk or snapshot by copying from a disk or snapshot specified by the given sourceResourceId. </summary>
-        Copy,
+        Copy = 4,
         /// <summary> Create a new disk by copying from a backup recovery point. </summary>
-        Restore,
+        Restore = 5,
         /// <summary> Create a new disk by obtaining a write token and using it to directly upload the contents of the disk. </summary>
-        Upload,
+        Upload = 6,
         /// <summary> Create a new disk by using a deep copy process, where the resource creation is considered complete only after all data has been copied from the source. </summary>
-        CopyStart,
+        CopyStart = 7,
         /// <summary> Similar to Import create option. Create a new Trusted Launch VM or Confidential VM supported disk by importing additional blobs for VM guest state specified by securityDataUri and VM metadata specified by securityMetadataUri in storage account specified by storageAccountId. The VM metadata is optional and only required for certain Confidential VM configurations and not required for Trusted Launch VM. </summary>
-        ImportSecure,
+        ImportSecure = 8,
         /// <summary> Similar to Upload create option. Create a new Trusted Launch VM or Confidential VM supported disk and upload using write token in disk, VM guest state and VM metadata. The VM metadata is optional and only required for certain Confidential VM configurations and not required for Trusted Launch VM. </summary>
-        UploadPreparedSecure,
+        UploadPreparedSecure = 9,
         /// <summary> Create a new disk by exporting from elastic san volume snapshot. </summary>
-        CopyFromSanSnapshot
+        CopyFromSanSnapshot = 10
     }
 }

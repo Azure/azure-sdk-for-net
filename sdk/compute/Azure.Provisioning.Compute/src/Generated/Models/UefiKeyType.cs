@@ -14,9 +14,9 @@ namespace Azure.Provisioning.Compute
     {
         /// <summary> Sha256. </summary>
         [DataMember(Name = "sha256")]
-        Sha256,
+        Sha256 = 0,
         /// <summary> X509. </summary>
         [DataMember(Name = "x509")]
-        X509
+        X509 = 1
     }
 }

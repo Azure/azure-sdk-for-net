@@ -14,8 +14,8 @@ namespace Azure.Provisioning.Compute
     {
         /// <summary> X64. </summary>
         [DataMember(Name = "x64")]
-        X64,
+        X64 = 0,
         /// <summary> Arm64. </summary>
-        Arm64
+        Arm64 = 1
     }
 }

@@ -13,9 +13,9 @@ namespace Azure.Provisioning.Compute
     public enum SupportedSecurityOption
     {
         /// <summary> The disk supports creating Trusted Launch VMs. </summary>
-        TrustedLaunchSupported,
+        TrustedLaunchSupported = 0,
         /// <summary> The disk supports creating both Trusted Launch and Confidential VMs. </summary>
         [DataMember(Name = "TrustedLaunchAndConfidentialVMSupported")]
-        TrustedLaunchAndConfidentialVmSupported
+        TrustedLaunchAndConfidentialVmSupported = 1
     }
 }

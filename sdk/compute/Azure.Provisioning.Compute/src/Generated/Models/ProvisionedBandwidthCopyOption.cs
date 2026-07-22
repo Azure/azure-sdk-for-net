@@ -11,8 +11,8 @@ namespace Azure.Provisioning.Compute
     public enum ProvisionedBandwidthCopyOption
     {
         /// <summary> None. </summary>
-        None,
+        None = 0,
         /// <summary> Enhanced. </summary>
-        Enhanced
+        Enhanced = 1
     }
 }

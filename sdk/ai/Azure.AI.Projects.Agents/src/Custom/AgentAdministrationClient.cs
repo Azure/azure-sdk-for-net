@@ -797,7 +797,9 @@ public partial class AgentAdministrationClient
     /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
     public virtual ClientResult StopSession(string agentName, string sessionId, CancellationToken cancellationToken = default)
     {
-        return StopSession(agentName, sessionId, cancellationToken);
+        Argument.AssertNotNullOrEmpty(agentName, nameof(agentName));
+        Argument.AssertNotNullOrEmpty(agentName, nameof(sessionId));
+        return StopSession(agentName, sessionId, cancellationToken.ToRequestOptions());
     }
 
     /// <summary>
@@ -812,7 +814,9 @@ public partial class AgentAdministrationClient
     /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
     public virtual async Task<ClientResult> StopSessionAsync(string agentName, string sessionId, CancellationToken cancellationToken = default)
     {
-        return await StopSessionAsync(agentName, sessionId, cancellationToken).ConfigureAwait(false);
+        Argument.AssertNotNullOrEmpty(agentName, nameof(agentName));
+        Argument.AssertNotNullOrEmpty(agentName, nameof(sessionId));
+        return await StopSessionAsync(agentName, sessionId, cancellationToken.ToRequestOptions()).ConfigureAwait(false);
     }
 
     /// <summary>

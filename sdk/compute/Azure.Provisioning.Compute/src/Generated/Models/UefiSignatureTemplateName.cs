@@ -11,10 +11,10 @@ namespace Azure.Provisioning.Compute
     public enum UefiSignatureTemplateName
     {
         /// <summary> NoSignatureTemplate. </summary>
-        NoSignatureTemplate,
+        NoSignatureTemplate = 0,
         /// <summary> MicrosoftUefiCertificateAuthorityTemplate. </summary>
-        MicrosoftUefiCertificateAuthorityTemplate,
+        MicrosoftUefiCertificateAuthorityTemplate = 1,
         /// <summary> MicrosoftWindowsTemplate. </summary>
-        MicrosoftWindowsTemplate
+        MicrosoftWindowsTemplate = 2
     }
 }

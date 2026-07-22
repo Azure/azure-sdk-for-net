@@ -52,7 +52,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
         {
             TryGetApiVersion(ResourceType, out string trafficProfileApiVersion);
             _trafficProfilesClientDiagnostics = new ClientDiagnostics("Azure.Generator.MgmtTypeSpec.Tests", ResourceType.Namespace, Diagnostics);
-            _trafficProfilesRestClient = new TrafficProfiles(_trafficProfilesClientDiagnostics, Pipeline, Endpoint, trafficProfileApiVersion ?? "2024-05-01");
+            _trafficProfilesRestClient = new TrafficProfiles(_trafficProfilesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, trafficProfileApiVersion ?? "2024-05-01");
             ValidateResourceId(id);
         }
 

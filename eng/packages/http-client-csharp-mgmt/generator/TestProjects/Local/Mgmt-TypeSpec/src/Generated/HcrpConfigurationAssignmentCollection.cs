@@ -37,7 +37,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
         {
             TryGetApiVersion(HcrpConfigurationAssignmentResource.ResourceType, out string hcrpConfigurationAssignmentApiVersion);
             _hcrpConfigurationAssignmentsClientDiagnostics = new ClientDiagnostics("Azure.Generator.MgmtTypeSpec.Tests", HcrpConfigurationAssignmentResource.ResourceType.Namespace, Diagnostics);
-            _hcrpConfigurationAssignmentsRestClient = new HcrpConfigurationAssignments(_hcrpConfigurationAssignmentsClientDiagnostics, Pipeline, Endpoint, hcrpConfigurationAssignmentApiVersion ?? "2024-05-01");
+            _hcrpConfigurationAssignmentsRestClient = new HcrpConfigurationAssignments(_hcrpConfigurationAssignmentsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, hcrpConfigurationAssignmentApiVersion ?? "2024-05-01");
         }
 
         /// <summary>

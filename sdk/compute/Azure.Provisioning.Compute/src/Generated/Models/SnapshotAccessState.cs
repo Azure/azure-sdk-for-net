@@ -11,14 +11,14 @@ namespace Azure.Provisioning.Compute
     public enum SnapshotAccessState
     {
         /// <summary> Default value. </summary>
-        Unknown,
+        Unknown = 0,
         /// <summary> The snapshot cannot be used for restore, copy or download to offline. </summary>
-        Pending,
+        Pending = 1,
         /// <summary> The snapshot can be used for restore, copy to different region, and download to offline. </summary>
-        Available,
+        Available = 2,
         /// <summary> The snapshot can be used for restoring disks with fast performance but cannot be copied or downloaded. </summary>
-        InstantAccess,
+        InstantAccess = 3,
         /// <summary> The snapshot can be used for restoring disks with fast performance, copied and downloaded. </summary>
-        AvailableWithInstantAccess
+        AvailableWithInstantAccess = 4
     }
 }

@@ -8,7 +8,6 @@
     <!--The ApiCompatVersion is managed automatically and should not generally be modified manually.-->
     <SignAssembly>true</SignAssembly>
     <IsExtensionClientLibrary>true</IsExtensionClientLibrary>
-    <NoWarn>$(NoWarn);CS1591;AZC0107;</NoWarn>
     <AotCompatOptOut>true</AotCompatOptOut>
   </PropertyGroup>
 

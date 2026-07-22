@@ -129,6 +129,14 @@ namespace Azure.Identity
                 // If the managed identity is not found, throw a more specific exception.
                 throw new CredentialUnavailableException(MsiUnavailableError, ex);
             }
+            // MSAL reports that every managed identity source was probed and none is available (for example, on a
+            // developer machine with no managed identity configured). When chained, surface a CredentialUnavailableException
+            // so DefaultAzureCredential continues to the next credential instead of aborting the chain.
+            catch (MsalException ex) when (_isChainedCredential && ex.ErrorCode == MsalError.ManagedIdentityAllSourcesUnavailable)
+            {
+                AzureIdentityEventSource.Singleton.ManagedIdentitySourcesUnavailable(ex);
+                throw new CredentialUnavailableException(MsiUnavailableError, ex);
+            }
 
             return result.ToAccessToken();
         }
