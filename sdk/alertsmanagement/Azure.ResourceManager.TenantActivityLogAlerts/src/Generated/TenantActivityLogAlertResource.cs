@@ -54,7 +54,7 @@ namespace Azure.ResourceManager.TenantActivityLogAlerts
         {
             TryGetApiVersion(ResourceType, out string tenantActivityLogAlertApiVersion);
             _tenantActivityLogAlertResourcesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.TenantActivityLogAlerts", ResourceType.Namespace, Diagnostics);
-            _tenantActivityLogAlertResourcesRestClient = new TenantActivityLogAlertResources(_tenantActivityLogAlertResourcesClientDiagnostics, Pipeline, Endpoint, tenantActivityLogAlertApiVersion ?? "2023-04-01-preview");
+            _tenantActivityLogAlertResourcesRestClient = new TenantActivityLogAlertResources(_tenantActivityLogAlertResourcesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, tenantActivityLogAlertApiVersion ?? "2023-04-01-preview");
             ValidateResourceId(id);
         }
 

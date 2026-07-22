@@ -35,7 +35,7 @@ namespace Azure.ResourceManager.TenantActivityLogAlerts.Mocking
 
         private ClientDiagnostics TenantActivityLogAlertResourcesClientDiagnostics => _tenantActivityLogAlertResourcesClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.TenantActivityLogAlerts.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private TenantActivityLogAlertResources TenantActivityLogAlertResourcesRestClient => _tenantActivityLogAlertResourcesRestClient ??= new TenantActivityLogAlertResources(TenantActivityLogAlertResourcesClientDiagnostics, Pipeline, Endpoint, "2023-04-01-preview");
+        private TenantActivityLogAlertResources TenantActivityLogAlertResourcesRestClient => _tenantActivityLogAlertResourcesRestClient ??= new TenantActivityLogAlertResources(TenantActivityLogAlertResourcesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2023-04-01-preview");
 
         /// <summary>
         /// Get a list of all Tenant Activity Log Alert rules in the tenant.

@@ -6,6 +6,7 @@ using System.Linq;
 
 namespace Azure.ResourceManager.TenantActivityLogAlerts.Models
 {
+    // Workaround for https://github.com/Azure/azure-sdk-for-net/issues/61204.
     // The MPG generator emits a public AlertRuleProperties ctor that accepts IList<TenantActivityLogAlertAnyOfOrLeafCondition>,
     // but TenantActivityLogAlertData's public ctor (which takes IEnumerable<>) calls it with the IEnumerable
     // value directly, producing CS1503 (cannot convert IEnumerable<> to IList<>). Suppress the generated ctor and
