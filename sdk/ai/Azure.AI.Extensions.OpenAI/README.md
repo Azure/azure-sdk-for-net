@@ -61,6 +61,7 @@ Develop Agents using the Azure AI Foundry platform, leveraging an extensive ecos
   - [Memory search tool](#memory-search-tool)
   - [Azure Function tool](#azure-function-tool)
   - [Work IQ preview tool](#work-iq-preview-tool)
+  - [Web IQ preview tool](#web-iq-preview-tool)
 - [Tracing](#tracing)
   - [Enabling GenAI Tracing](#enabling-genai-tracing)
   - [Tracing to Azure Monitor](#tracing-to-azure-monitor)
@@ -1941,6 +1942,25 @@ DeclarativeAgentDefinition agentDefinition = new(model: modelDeploymentName)
 };
 ProjectsAgentVersion agentVersion = await projectClient.AgentAdministrationClient.CreateAgentVersionAsync(
     agentName: "myAgent",
+    options: new(agentDefinition));
+```
+
+### Web IQ preview tool
+Web IQ allows returning responses, grounded by web data. By operating on Pareto curve efficiency it allows to minimize the token usage. The Agent, using WebIQ may be created using code below:
+
+```C# Snippet:Sample_CreateAgent_WebIQ_Async
+string WebIQProjectConnectionId = (await projectClient.Connections.GetConnectionAsync(WebIQProjectConnectionName)).Value.Id;
+WebIQPreviewTool WebIQTool = new(projectConnectionId: WebIQProjectConnectionId)
+{
+    RequireApproval = new McpToolCallApprovalPolicy(GlobalMcpToolCallApprovalPolicy.NeverRequireApproval),
+};
+DeclarativeAgentDefinition agentDefinition = new(model: modelDeploymentName)
+{
+    Instructions = "Use the available Web IQ tools to answer questions and perform tasks.",
+    Tools = { WebIQTool },
+};
+ProjectsAgentVersion agentVersion = await projectClient.AgentAdministrationClient.CreateAgentVersionAsync(
+    agentName: "myWebIQAgent",
     options: new(agentDefinition));
 ```
 

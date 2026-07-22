@@ -288,10 +288,10 @@ namespace Azure.AI.Projects.Agents
         /// <param name="projectConnectionId"> The ID of the WebIQ project connection. </param>
         /// <param name="serverLabel"> The label of the WebIQ MCP server to connect to. </param>
         /// <param name="serverUri"> The URL of the WebIQ MCP server. If not provided, the URL from the project connection will be used. </param>
-        /// <param name="requireApproval"> Whether the agent requires approval before executing actions. Default is always. </param>
+        /// <param name="requireApprovalInternal"> Whether the agent requires approval before executing actions. Default is always. </param>
         /// <returns> A new <see cref="Agents.WebIQPreviewTool"/> instance for mocking. </returns>
         [Experimental("AAIP001")]
-        public static WebIQPreviewTool WebIQPreviewTool(string projectConnectionId = default, string serverLabel = default, Uri serverUri = default, BinaryData requireApproval = default)
+        public static WebIQPreviewTool WebIQPreviewTool(string projectConnectionId = default, string serverLabel = default, Uri serverUri = default, BinaryData requireApprovalInternal = default)
         {
             return new WebIQPreviewTool(
                 ToolType.WebIqPreview,
@@ -299,7 +299,7 @@ namespace Azure.AI.Projects.Agents
                 projectConnectionId,
                 serverLabel,
                 serverUri,
-                requireApproval);
+                requireApprovalInternal);
         }
 
         /// <summary> The input definition information for a bing grounding search tool as used to configure an agent. </summary>

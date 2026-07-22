@@ -89,13 +89,13 @@ namespace Azure.AI.Projects.Agents
                 writer.WritePropertyName("server_url"u8);
                 writer.WriteStringValue(ServerUri.AbsoluteUri);
             }
-            if (Optional.IsDefined(RequireApproval))
+            if (Optional.IsDefined(RequireApprovalInternal))
             {
                 writer.WritePropertyName("require_approval"u8);
 #if NET6_0_OR_GREATER
-                writer.WriteRawValue(RequireApproval);
+                writer.WriteRawValue(RequireApprovalInternal);
 #else
-                using (JsonDocument document = JsonDocument.Parse(RequireApproval))
+                using (JsonDocument document = JsonDocument.Parse(RequireApprovalInternal))
                 {
                     JsonSerializer.Serialize(writer, document.RootElement);
                 }
@@ -133,7 +133,7 @@ namespace Azure.AI.Projects.Agents
             string projectConnectionId = default;
             string serverLabel = default;
             Uri serverUri = default;
-            BinaryData requireApproval = default;
+            BinaryData requireApprovalInternal = default;
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("type"u8))
@@ -164,10 +164,10 @@ namespace Azure.AI.Projects.Agents
                 {
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
-                        requireApproval = null;
+                        requireApprovalInternal = null;
                         continue;
                     }
-                    requireApproval = BinaryData.FromString(prop.Value.GetRawText());
+                    requireApprovalInternal = BinaryData.FromString(prop.Value.GetRawText());
                     continue;
                 }
                 if (options.Format != "W")
@@ -181,7 +181,7 @@ namespace Azure.AI.Projects.Agents
                 projectConnectionId,
                 serverLabel,
                 serverUri,
-                requireApproval);
+                requireApprovalInternal);
         }
     }
 }

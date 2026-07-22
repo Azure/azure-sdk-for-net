@@ -58,6 +58,7 @@ public class AgentsTestBase : ProjectsClientTestBase
         DeepResearch,
         AzureFunctionTool,
         WorkIQTool,
+        WebIQ,
     }
 
     public Dictionary<ToolType, string> ToolPrompts = new()
@@ -101,6 +102,7 @@ public class AgentsTestBase : ProjectsClientTestBase
         {ToolType.A2ASpecialConnection, "What can the secondary agent do?"},
         {ToolType.AzureFunctionTool, "What is the most prevalent element in the universe? What would foo say?"},
         {ToolType.WorkIQTool, "What meetings do I have scheduled today?"},
+        {ToolType.WebIQ, "Tell me weather history in Centralia, Pennsylvania." },
     };
 
     public Dictionary<ToolType, string> ToolInstructions = new()
@@ -137,6 +139,7 @@ public class AgentsTestBase : ProjectsClientTestBase
         {ToolType.A2A, "You are a helpful assistant."},
         {ToolType.A2ASpecialConnection, "You are a helpful assistant."},
         {ToolType.WorkIQTool, "You are a helpful assistant that can access Microsoft 365 data through WorkIQ. Use the WorkIQ tool to search and retrieve information from emails, calendar events, Teams messages, and other Microsoft 365 content to assist users with their questions." },
+        {ToolType.WebIQ, "Use the available Web IQ tools to answer questions and perform tasks."},
     };
 
     public Dictionary<ToolType, string> ExpectedOutput = new()
@@ -205,7 +208,8 @@ public class AgentsTestBase : ProjectsClientTestBase
         {ToolType.FabricIQ, "mcp_call"},
         {ToolType.A2A, "a2a_preview_call_output"},
         {ToolType.A2ASpecialConnection, "a2a_preview_call_output"},
-        {ToolType.WorkIQTool, "a2a_preview_call_output"}
+        {ToolType.WorkIQTool, "a2a_preview_call_output"},
+        {ToolType.WebIQ, "webiq_preview_call_output"},
     };
     #endregion
 
@@ -619,6 +623,10 @@ public class AgentsTestBase : ProjectsClientTestBase
             ToolType.MCPToolbox => await GetToolBoxAsync(projectClient, false),
             ToolType.MCPToolboxWithPreview => await GetToolBoxAsync(projectClient, true),
             ToolType.WorkIQTool => new WorkIQPreviewTool(TestEnvironment.WORKIQ_CONNECTION_ID),
+            ToolType.WebIQ => new WebIQPreviewTool(projectConnectionId: TestEnvironment.WEB_CONNECTION_ID)
+            {
+                RequireApproval = new McpToolCallApprovalPolicy(GlobalMcpToolCallApprovalPolicy.NeverRequireApproval),
+            },
             _ => throw new InvalidOperationException($"Unknown tool type {toolType}")
         };
         string instructions;
