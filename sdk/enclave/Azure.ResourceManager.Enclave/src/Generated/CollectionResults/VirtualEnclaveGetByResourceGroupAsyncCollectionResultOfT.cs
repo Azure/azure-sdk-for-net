@@ -15,7 +15,7 @@ using Azure.ResourceManager.Enclave.Models;
 
 namespace Azure.ResourceManager.Enclave
 {
-    internal partial class VirtualEnclaveGetByResourceGroupAsyncCollectionResultOfT : AsyncPageable<EnclaveData>
+    internal partial class VirtualEnclaveGetByResourceGroupAsyncCollectionResultOfT : AsyncPageable<VirtualEnclaveData>
     {
         private readonly VirtualEnclave _client;
         private readonly Guid _subscriptionId;
@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.Enclave
         /// <param name="continuationToken"> A continuation token indicating where to resume paging. </param>
         /// <param name="pageSizeHint"> The number of items per page. </param>
         /// <returns> The pages of VirtualEnclaveGetByResourceGroupAsyncCollectionResultOfT as an enumerable collection. </returns>
-        public override async IAsyncEnumerable<Page<EnclaveData>> AsPages(string continuationToken, int? pageSizeHint)
+        public override async IAsyncEnumerable<Page<VirtualEnclaveData>> AsPages(string continuationToken, int? pageSizeHint)
         {
             Uri nextPage = continuationToken != null ? new Uri(continuationToken) : null;
             while (true)
@@ -54,7 +54,7 @@ namespace Azure.ResourceManager.Enclave
                 }
                 EnclaveResourceListResult result = EnclaveResourceListResult.FromResponse(response);
                 nextPage = result.NextLink;
-                yield return Page<EnclaveData>.FromValues((IReadOnlyList<EnclaveData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
+                yield return Page<VirtualEnclaveData>.FromValues((IReadOnlyList<VirtualEnclaveData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 if (nextPage == null)
                 {
                     yield break;

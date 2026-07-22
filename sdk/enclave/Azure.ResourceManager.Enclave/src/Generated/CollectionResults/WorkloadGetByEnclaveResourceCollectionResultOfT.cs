@@ -14,7 +14,7 @@ using Azure.ResourceManager.Enclave.Models;
 
 namespace Azure.ResourceManager.Enclave
 {
-    internal partial class WorkloadGetByEnclaveResourceCollectionResultOfT : Pageable<EnclaveWorkloadData>
+    internal partial class WorkloadGetByEnclaveResourceCollectionResultOfT : Pageable<VirtualEnclaveWorkloadData>
     {
         private readonly Workload _client;
         private readonly Guid _subscriptionId;
@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.Enclave
         /// <param name="continuationToken"> A continuation token indicating where to resume paging. </param>
         /// <param name="pageSizeHint"> The number of items per page. </param>
         /// <returns> The pages of WorkloadGetByEnclaveResourceCollectionResultOfT as an enumerable collection. </returns>
-        public override IEnumerable<Page<EnclaveWorkloadData>> AsPages(string continuationToken, int? pageSizeHint)
+        public override IEnumerable<Page<VirtualEnclaveWorkloadData>> AsPages(string continuationToken, int? pageSizeHint)
         {
             Uri nextPage = continuationToken != null ? new Uri(continuationToken) : null;
             while (true)
@@ -56,7 +56,7 @@ namespace Azure.ResourceManager.Enclave
                 }
                 WorkloadResourceListResult result = WorkloadResourceListResult.FromResponse(response);
                 nextPage = result.NextLink;
-                yield return Page<EnclaveWorkloadData>.FromValues((IReadOnlyList<EnclaveWorkloadData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
+                yield return Page<VirtualEnclaveWorkloadData>.FromValues((IReadOnlyList<VirtualEnclaveWorkloadData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 if (nextPage == null)
                 {
                     yield break;

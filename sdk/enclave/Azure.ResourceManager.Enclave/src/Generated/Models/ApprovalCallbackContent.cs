@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.Enclave.Models
         /// <summary> Initializes a new instance of <see cref="ApprovalCallbackContent"/>. </summary>
         /// <param name="resourceRequestAction"> Resource request action indicating action which needed to be performed upon calling approval-callback post action. </param>
         /// <param name="approvalStatus"> Approval status indicating 'Approved' or 'Rejected'. </param>
-        public ApprovalCallbackContent(EnclaveApprovalCallbackResourceAction resourceRequestAction, ApprovalCallbackRequestApprovalStatus approvalStatus)
+        public ApprovalCallbackContent(VirtualEnclaveApprovalCallbackResourceAction resourceRequestAction, ApprovalCallbackRequestApprovalStatus approvalStatus)
         {
             ResourceRequestAction = resourceRequestAction;
             ApprovalStatus = approvalStatus;
@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.Enclave.Models
         /// <param name="approvalStatus"> Approval status indicating 'Approved' or 'Rejected'. </param>
         /// <param name="approvalCallbackPayload"> Payload requested by client upon approval action. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ApprovalCallbackContent(EnclaveApprovalCallbackResourceAction resourceRequestAction, ApprovalCallbackRequestApprovalStatus approvalStatus, string approvalCallbackPayload, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ApprovalCallbackContent(VirtualEnclaveApprovalCallbackResourceAction resourceRequestAction, ApprovalCallbackRequestApprovalStatus approvalStatus, string approvalCallbackPayload, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             ResourceRequestAction = resourceRequestAction;
             ApprovalStatus = approvalStatus;
@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.Enclave.Models
         }
 
         /// <summary> Resource request action indicating action which needed to be performed upon calling approval-callback post action. </summary>
-        public EnclaveApprovalCallbackResourceAction ResourceRequestAction { get; }
+        public VirtualEnclaveApprovalCallbackResourceAction ResourceRequestAction { get; }
 
         /// <summary> Approval status indicating 'Approved' or 'Rejected'. </summary>
         public ApprovalCallbackRequestApprovalStatus ApprovalStatus { get; }

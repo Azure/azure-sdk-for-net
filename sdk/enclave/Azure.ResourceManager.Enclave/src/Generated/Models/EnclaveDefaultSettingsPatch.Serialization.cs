@@ -121,7 +121,7 @@ namespace Azure.ResourceManager.Enclave.Models
             {
                 return null;
             }
-            EnclaveDiagnosticDestination? diagnosticDestination = default;
+            VirtualEnclaveDiagnosticDestination? diagnosticDestination = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -131,7 +131,7 @@ namespace Azure.ResourceManager.Enclave.Models
                     {
                         continue;
                     }
-                    diagnosticDestination = new EnclaveDiagnosticDestination(prop.Value.GetString());
+                    diagnosticDestination = new VirtualEnclaveDiagnosticDestination(prop.Value.GetString());
                     continue;
                 }
                 if (options.Format != "W")

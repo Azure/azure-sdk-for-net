@@ -101,8 +101,8 @@ namespace Azure.ResourceManager.Enclave.Mocking
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="virtualEnclaveName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="virtualEnclaveName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <returns> A collection of <see cref="EnclaveWorkloadResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<EnclaveWorkloadResource> GetEnclaveWorkloadsAsync(string virtualEnclaveName, CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="VirtualEnclaveWorkloadResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<VirtualEnclaveWorkloadResource> GetVirtualEnclaveWorkloadsAsync(string virtualEnclaveName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(virtualEnclaveName, nameof(virtualEnclaveName));
 
@@ -110,7 +110,7 @@ namespace Azure.ResourceManager.Enclave.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<EnclaveWorkloadData, EnclaveWorkloadResource>(new WorkloadGetBySubscriptionAsyncCollectionResultOfT(WorkloadRestClient, Guid.Parse(Id.SubscriptionId), virtualEnclaveName, context, "MockableEnclaveSubscriptionResource.GetEnclaveWorkloads"), data => new EnclaveWorkloadResource(Client, data));
+            return new AsyncPageableWrapper<VirtualEnclaveWorkloadData, VirtualEnclaveWorkloadResource>(new WorkloadGetBySubscriptionAsyncCollectionResultOfT(WorkloadRestClient, Guid.Parse(Id.SubscriptionId), virtualEnclaveName, context, "MockableEnclaveSubscriptionResource.GetVirtualEnclaveWorkloads"), data => new VirtualEnclaveWorkloadResource(Client, data));
         }
 
         /// <summary>
@@ -134,8 +134,8 @@ namespace Azure.ResourceManager.Enclave.Mocking
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="virtualEnclaveName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="virtualEnclaveName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <returns> A collection of <see cref="EnclaveWorkloadResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<EnclaveWorkloadResource> GetEnclaveWorkloads(string virtualEnclaveName, CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="VirtualEnclaveWorkloadResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<VirtualEnclaveWorkloadResource> GetVirtualEnclaveWorkloads(string virtualEnclaveName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(virtualEnclaveName, nameof(virtualEnclaveName));
 
@@ -143,7 +143,7 @@ namespace Azure.ResourceManager.Enclave.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<EnclaveWorkloadData, EnclaveWorkloadResource>(new WorkloadGetBySubscriptionCollectionResultOfT(WorkloadRestClient, Guid.Parse(Id.SubscriptionId), virtualEnclaveName, context, "MockableEnclaveSubscriptionResource.GetEnclaveWorkloads"), data => new EnclaveWorkloadResource(Client, data));
+            return new PageableWrapper<VirtualEnclaveWorkloadData, VirtualEnclaveWorkloadResource>(new WorkloadGetBySubscriptionCollectionResultOfT(WorkloadRestClient, Guid.Parse(Id.SubscriptionId), virtualEnclaveName, context, "MockableEnclaveSubscriptionResource.GetVirtualEnclaveWorkloads"), data => new VirtualEnclaveWorkloadResource(Client, data));
         }
 
         /// <summary>
@@ -164,14 +164,14 @@ namespace Azure.ResourceManager.Enclave.Mocking
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="EnclaveResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<EnclaveResource> GetEnclavesAsync(CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="VirtualEnclaveResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<VirtualEnclaveResource> GetVirtualEnclavesAsync(CancellationToken cancellationToken = default)
         {
             RequestContext context = new RequestContext
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<EnclaveData, EnclaveResource>(new VirtualEnclaveGetBySubscriptionAsyncCollectionResultOfT(VirtualEnclaveRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableEnclaveSubscriptionResource.GetEnclaves"), data => new EnclaveResource(Client, data));
+            return new AsyncPageableWrapper<VirtualEnclaveData, VirtualEnclaveResource>(new VirtualEnclaveGetBySubscriptionAsyncCollectionResultOfT(VirtualEnclaveRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableEnclaveSubscriptionResource.GetVirtualEnclaves"), data => new VirtualEnclaveResource(Client, data));
         }
 
         /// <summary>
@@ -192,14 +192,14 @@ namespace Azure.ResourceManager.Enclave.Mocking
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="EnclaveResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<EnclaveResource> GetEnclaves(CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="VirtualEnclaveResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<VirtualEnclaveResource> GetVirtualEnclaves(CancellationToken cancellationToken = default)
         {
             RequestContext context = new RequestContext
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<EnclaveData, EnclaveResource>(new VirtualEnclaveGetBySubscriptionCollectionResultOfT(VirtualEnclaveRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableEnclaveSubscriptionResource.GetEnclaves"), data => new EnclaveResource(Client, data));
+            return new PageableWrapper<VirtualEnclaveData, VirtualEnclaveResource>(new VirtualEnclaveGetBySubscriptionCollectionResultOfT(VirtualEnclaveRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableEnclaveSubscriptionResource.GetVirtualEnclaves"), data => new VirtualEnclaveResource(Client, data));
         }
 
         /// <summary>
@@ -220,14 +220,14 @@ namespace Azure.ResourceManager.Enclave.Mocking
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="EnclaveCommunityResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<EnclaveCommunityResource> GetEnclaveCommunitiesAsync(CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="VirtualEnclaveCommunityResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<VirtualEnclaveCommunityResource> GetVirtualEnclaveCommunitiesAsync(CancellationToken cancellationToken = default)
         {
             RequestContext context = new RequestContext
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<EnclaveCommunityData, EnclaveCommunityResource>(new CommunityGetBySubscriptionAsyncCollectionResultOfT(CommunityRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableEnclaveSubscriptionResource.GetEnclaveCommunities"), data => new EnclaveCommunityResource(Client, data));
+            return new AsyncPageableWrapper<VirtualEnclaveCommunityData, VirtualEnclaveCommunityResource>(new CommunityGetBySubscriptionAsyncCollectionResultOfT(CommunityRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableEnclaveSubscriptionResource.GetVirtualEnclaveCommunities"), data => new VirtualEnclaveCommunityResource(Client, data));
         }
 
         /// <summary>
@@ -248,14 +248,14 @@ namespace Azure.ResourceManager.Enclave.Mocking
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="EnclaveCommunityResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<EnclaveCommunityResource> GetEnclaveCommunities(CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="VirtualEnclaveCommunityResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<VirtualEnclaveCommunityResource> GetVirtualEnclaveCommunities(CancellationToken cancellationToken = default)
         {
             RequestContext context = new RequestContext
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<EnclaveCommunityData, EnclaveCommunityResource>(new CommunityGetBySubscriptionCollectionResultOfT(CommunityRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableEnclaveSubscriptionResource.GetEnclaveCommunities"), data => new EnclaveCommunityResource(Client, data));
+            return new PageableWrapper<VirtualEnclaveCommunityData, VirtualEnclaveCommunityResource>(new CommunityGetBySubscriptionCollectionResultOfT(CommunityRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableEnclaveSubscriptionResource.GetVirtualEnclaveCommunities"), data => new VirtualEnclaveCommunityResource(Client, data));
         }
 
         /// <summary>
@@ -279,8 +279,8 @@ namespace Azure.ResourceManager.Enclave.Mocking
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="communityName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="communityName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <returns> A collection of <see cref="EnclaveTransitHubResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<EnclaveTransitHubResource> GetEnclaveTransitHubsAsync(string communityName, CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="VirtualEnclaveTransitHubResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<VirtualEnclaveTransitHubResource> GetVirtualEnclaveTransitHubsAsync(string communityName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(communityName, nameof(communityName));
 
@@ -288,7 +288,7 @@ namespace Azure.ResourceManager.Enclave.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<EnclaveTransitHubData, EnclaveTransitHubResource>(new TransitHubGetBySubscriptionAsyncCollectionResultOfT(TransitHubRestClient, Guid.Parse(Id.SubscriptionId), communityName, context, "MockableEnclaveSubscriptionResource.GetEnclaveTransitHubs"), data => new EnclaveTransitHubResource(Client, data));
+            return new AsyncPageableWrapper<VirtualEnclaveTransitHubData, VirtualEnclaveTransitHubResource>(new TransitHubGetBySubscriptionAsyncCollectionResultOfT(TransitHubRestClient, Guid.Parse(Id.SubscriptionId), communityName, context, "MockableEnclaveSubscriptionResource.GetVirtualEnclaveTransitHubs"), data => new VirtualEnclaveTransitHubResource(Client, data));
         }
 
         /// <summary>
@@ -312,8 +312,8 @@ namespace Azure.ResourceManager.Enclave.Mocking
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="communityName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="communityName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <returns> A collection of <see cref="EnclaveTransitHubResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<EnclaveTransitHubResource> GetEnclaveTransitHubs(string communityName, CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="VirtualEnclaveTransitHubResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<VirtualEnclaveTransitHubResource> GetVirtualEnclaveTransitHubs(string communityName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(communityName, nameof(communityName));
 
@@ -321,7 +321,7 @@ namespace Azure.ResourceManager.Enclave.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<EnclaveTransitHubData, EnclaveTransitHubResource>(new TransitHubGetBySubscriptionCollectionResultOfT(TransitHubRestClient, Guid.Parse(Id.SubscriptionId), communityName, context, "MockableEnclaveSubscriptionResource.GetEnclaveTransitHubs"), data => new EnclaveTransitHubResource(Client, data));
+            return new PageableWrapper<VirtualEnclaveTransitHubData, VirtualEnclaveTransitHubResource>(new TransitHubGetBySubscriptionCollectionResultOfT(TransitHubRestClient, Guid.Parse(Id.SubscriptionId), communityName, context, "MockableEnclaveSubscriptionResource.GetVirtualEnclaveTransitHubs"), data => new VirtualEnclaveTransitHubResource(Client, data));
         }
 
         /// <summary>
@@ -342,14 +342,14 @@ namespace Azure.ResourceManager.Enclave.Mocking
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="EnclaveConnectionResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<EnclaveConnectionResource> GetEnclaveConnectionsAsync(CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="VirtualEnclaveConnectionResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<VirtualEnclaveConnectionResource> GetVirtualEnclaveConnectionsAsync(CancellationToken cancellationToken = default)
         {
             RequestContext context = new RequestContext
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<EnclaveConnectionData, EnclaveConnectionResource>(new EnclaveConnectionGetBySubscriptionAsyncCollectionResultOfT(EnclaveConnectionRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableEnclaveSubscriptionResource.GetEnclaveConnections"), data => new EnclaveConnectionResource(Client, data));
+            return new AsyncPageableWrapper<VirtualEnclaveConnectionData, VirtualEnclaveConnectionResource>(new EnclaveConnectionGetBySubscriptionAsyncCollectionResultOfT(EnclaveConnectionRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableEnclaveSubscriptionResource.GetVirtualEnclaveConnections"), data => new VirtualEnclaveConnectionResource(Client, data));
         }
 
         /// <summary>
@@ -370,14 +370,14 @@ namespace Azure.ResourceManager.Enclave.Mocking
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="EnclaveConnectionResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<EnclaveConnectionResource> GetEnclaveConnections(CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="VirtualEnclaveConnectionResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<VirtualEnclaveConnectionResource> GetVirtualEnclaveConnections(CancellationToken cancellationToken = default)
         {
             RequestContext context = new RequestContext
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<EnclaveConnectionData, EnclaveConnectionResource>(new EnclaveConnectionGetBySubscriptionCollectionResultOfT(EnclaveConnectionRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableEnclaveSubscriptionResource.GetEnclaveConnections"), data => new EnclaveConnectionResource(Client, data));
+            return new PageableWrapper<VirtualEnclaveConnectionData, VirtualEnclaveConnectionResource>(new EnclaveConnectionGetBySubscriptionCollectionResultOfT(EnclaveConnectionRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableEnclaveSubscriptionResource.GetVirtualEnclaveConnections"), data => new VirtualEnclaveConnectionResource(Client, data));
         }
 
         /// <summary>
@@ -401,8 +401,8 @@ namespace Azure.ResourceManager.Enclave.Mocking
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="virtualEnclaveName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="virtualEnclaveName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <returns> A collection of <see cref="EnclaveEndpointResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<EnclaveEndpointResource> GetEnclaveEndpointsAsync(string virtualEnclaveName, CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="VirtualEnclaveEndpointResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<VirtualEnclaveEndpointResource> GetVirtualEnclaveEndpointsAsync(string virtualEnclaveName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(virtualEnclaveName, nameof(virtualEnclaveName));
 
@@ -410,7 +410,7 @@ namespace Azure.ResourceManager.Enclave.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<EnclaveEndpointData, EnclaveEndpointResource>(new EnclaveEndpointsGetBySubscriptionAsyncCollectionResultOfT(EnclaveEndpointsRestClient, Guid.Parse(Id.SubscriptionId), virtualEnclaveName, context, "MockableEnclaveSubscriptionResource.GetEnclaveEndpoints"), data => new EnclaveEndpointResource(Client, data));
+            return new AsyncPageableWrapper<VirtualEnclaveEndpointData, VirtualEnclaveEndpointResource>(new EnclaveEndpointsGetBySubscriptionAsyncCollectionResultOfT(EnclaveEndpointsRestClient, Guid.Parse(Id.SubscriptionId), virtualEnclaveName, context, "MockableEnclaveSubscriptionResource.GetVirtualEnclaveEndpoints"), data => new VirtualEnclaveEndpointResource(Client, data));
         }
 
         /// <summary>
@@ -434,8 +434,8 @@ namespace Azure.ResourceManager.Enclave.Mocking
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="virtualEnclaveName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="virtualEnclaveName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <returns> A collection of <see cref="EnclaveEndpointResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<EnclaveEndpointResource> GetEnclaveEndpoints(string virtualEnclaveName, CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="VirtualEnclaveEndpointResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<VirtualEnclaveEndpointResource> GetVirtualEnclaveEndpoints(string virtualEnclaveName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(virtualEnclaveName, nameof(virtualEnclaveName));
 
@@ -443,7 +443,7 @@ namespace Azure.ResourceManager.Enclave.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<EnclaveEndpointData, EnclaveEndpointResource>(new EnclaveEndpointsGetBySubscriptionCollectionResultOfT(EnclaveEndpointsRestClient, Guid.Parse(Id.SubscriptionId), virtualEnclaveName, context, "MockableEnclaveSubscriptionResource.GetEnclaveEndpoints"), data => new EnclaveEndpointResource(Client, data));
+            return new PageableWrapper<VirtualEnclaveEndpointData, VirtualEnclaveEndpointResource>(new EnclaveEndpointsGetBySubscriptionCollectionResultOfT(EnclaveEndpointsRestClient, Guid.Parse(Id.SubscriptionId), virtualEnclaveName, context, "MockableEnclaveSubscriptionResource.GetVirtualEnclaveEndpoints"), data => new VirtualEnclaveEndpointResource(Client, data));
         }
 
         /// <summary>
@@ -467,8 +467,8 @@ namespace Azure.ResourceManager.Enclave.Mocking
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="communityName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="communityName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <returns> A collection of <see cref="EnclaveCommunityEndpointResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<EnclaveCommunityEndpointResource> GetEnclaveCommunityEndpointsAsync(string communityName, CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="VirtualEnclaveCommunityEndpointResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<VirtualEnclaveCommunityEndpointResource> GetVirtualEnclaveCommunityEndpointsAsync(string communityName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(communityName, nameof(communityName));
 
@@ -476,7 +476,7 @@ namespace Azure.ResourceManager.Enclave.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<EnclaveCommunityEndpointData, EnclaveCommunityEndpointResource>(new CommunityEndpointsGetBySubscriptionAsyncCollectionResultOfT(CommunityEndpointsRestClient, Guid.Parse(Id.SubscriptionId), communityName, context, "MockableEnclaveSubscriptionResource.GetEnclaveCommunityEndpoints"), data => new EnclaveCommunityEndpointResource(Client, data));
+            return new AsyncPageableWrapper<VirtualEnclaveCommunityEndpointData, VirtualEnclaveCommunityEndpointResource>(new CommunityEndpointsGetBySubscriptionAsyncCollectionResultOfT(CommunityEndpointsRestClient, Guid.Parse(Id.SubscriptionId), communityName, context, "MockableEnclaveSubscriptionResource.GetVirtualEnclaveCommunityEndpoints"), data => new VirtualEnclaveCommunityEndpointResource(Client, data));
         }
 
         /// <summary>
@@ -500,8 +500,8 @@ namespace Azure.ResourceManager.Enclave.Mocking
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="communityName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="communityName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <returns> A collection of <see cref="EnclaveCommunityEndpointResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<EnclaveCommunityEndpointResource> GetEnclaveCommunityEndpoints(string communityName, CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="VirtualEnclaveCommunityEndpointResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<VirtualEnclaveCommunityEndpointResource> GetVirtualEnclaveCommunityEndpoints(string communityName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(communityName, nameof(communityName));
 
@@ -509,7 +509,7 @@ namespace Azure.ResourceManager.Enclave.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<EnclaveCommunityEndpointData, EnclaveCommunityEndpointResource>(new CommunityEndpointsGetBySubscriptionCollectionResultOfT(CommunityEndpointsRestClient, Guid.Parse(Id.SubscriptionId), communityName, context, "MockableEnclaveSubscriptionResource.GetEnclaveCommunityEndpoints"), data => new EnclaveCommunityEndpointResource(Client, data));
+            return new PageableWrapper<VirtualEnclaveCommunityEndpointData, VirtualEnclaveCommunityEndpointResource>(new CommunityEndpointsGetBySubscriptionCollectionResultOfT(CommunityEndpointsRestClient, Guid.Parse(Id.SubscriptionId), communityName, context, "MockableEnclaveSubscriptionResource.GetVirtualEnclaveCommunityEndpoints"), data => new VirtualEnclaveCommunityEndpointResource(Client, data));
         }
 
         /// <summary>
@@ -533,8 +533,8 @@ namespace Azure.ResourceManager.Enclave.Mocking
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="communityName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="communityName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <returns> A collection of <see cref="EnclaveDedicatedHubResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<EnclaveDedicatedHubResource> GetEnclaveDedicatedHubsAsync(string communityName, CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="VirtualEnclaveDedicatedHubResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<VirtualEnclaveDedicatedHubResource> GetVirtualEnclaveDedicatedHubsAsync(string communityName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(communityName, nameof(communityName));
 
@@ -542,7 +542,7 @@ namespace Azure.ResourceManager.Enclave.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<EnclaveDedicatedHubData, EnclaveDedicatedHubResource>(new DedicatedHubGetBySubscriptionAsyncCollectionResultOfT(DedicatedHubRestClient, Guid.Parse(Id.SubscriptionId), communityName, context, "MockableEnclaveSubscriptionResource.GetEnclaveDedicatedHubs"), data => new EnclaveDedicatedHubResource(Client, data));
+            return new AsyncPageableWrapper<VirtualEnclaveDedicatedHubData, VirtualEnclaveDedicatedHubResource>(new DedicatedHubGetBySubscriptionAsyncCollectionResultOfT(DedicatedHubRestClient, Guid.Parse(Id.SubscriptionId), communityName, context, "MockableEnclaveSubscriptionResource.GetVirtualEnclaveDedicatedHubs"), data => new VirtualEnclaveDedicatedHubResource(Client, data));
         }
 
         /// <summary>
@@ -566,8 +566,8 @@ namespace Azure.ResourceManager.Enclave.Mocking
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="communityName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="communityName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <returns> A collection of <see cref="EnclaveDedicatedHubResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<EnclaveDedicatedHubResource> GetEnclaveDedicatedHubs(string communityName, CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="VirtualEnclaveDedicatedHubResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<VirtualEnclaveDedicatedHubResource> GetVirtualEnclaveDedicatedHubs(string communityName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(communityName, nameof(communityName));
 
@@ -575,7 +575,7 @@ namespace Azure.ResourceManager.Enclave.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<EnclaveDedicatedHubData, EnclaveDedicatedHubResource>(new DedicatedHubGetBySubscriptionCollectionResultOfT(DedicatedHubRestClient, Guid.Parse(Id.SubscriptionId), communityName, context, "MockableEnclaveSubscriptionResource.GetEnclaveDedicatedHubs"), data => new EnclaveDedicatedHubResource(Client, data));
+            return new PageableWrapper<VirtualEnclaveDedicatedHubData, VirtualEnclaveDedicatedHubResource>(new DedicatedHubGetBySubscriptionCollectionResultOfT(DedicatedHubRestClient, Guid.Parse(Id.SubscriptionId), communityName, context, "MockableEnclaveSubscriptionResource.GetVirtualEnclaveDedicatedHubs"), data => new VirtualEnclaveDedicatedHubResource(Client, data));
         }
     }
 }

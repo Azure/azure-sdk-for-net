@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.Enclave.Models
         /// <summary> Initializes a new instance of <see cref="EnclaveVirtualNetwork"/>. </summary>
         public EnclaveVirtualNetwork()
         {
-            SubnetConfigurations = new ChangeTrackingList<EnclaveSubnetConfiguration>();
+            SubnetConfigurations = new ChangeTrackingList<VirtualEnclaveSubnetConfiguration>();
         }
 
         /// <summary> Initializes a new instance of <see cref="EnclaveVirtualNetwork"/>. </summary>
@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.Enclave.Models
         /// <param name="subnetConfigurations"> Subnet Configurations. </param>
         /// <param name="allowSubnetCommunication"> Allow Subnet Communication. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal EnclaveVirtualNetwork(string networkName, string networkSize, string customCidrRange, IList<EnclaveSubnetConfiguration> subnetConfigurations, bool? allowSubnetCommunication, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal EnclaveVirtualNetwork(string networkName, string networkSize, string customCidrRange, IList<VirtualEnclaveSubnetConfiguration> subnetConfigurations, bool? allowSubnetCommunication, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             NetworkName = networkName;
             NetworkSize = networkSize;
@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.Enclave.Models
         public string CustomCidrRange { get; set; }
 
         /// <summary> Subnet Configurations. </summary>
-        public IList<EnclaveSubnetConfiguration> SubnetConfigurations { get; }
+        public IList<VirtualEnclaveSubnetConfiguration> SubnetConfigurations { get; }
 
         /// <summary> Allow Subnet Communication. </summary>
         public bool? AllowSubnetCommunication { get; set; }

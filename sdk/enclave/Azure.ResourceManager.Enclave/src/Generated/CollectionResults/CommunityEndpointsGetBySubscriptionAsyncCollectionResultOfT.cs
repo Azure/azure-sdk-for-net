@@ -15,7 +15,7 @@ using Azure.ResourceManager.Enclave.Models;
 
 namespace Azure.ResourceManager.Enclave
 {
-    internal partial class CommunityEndpointsGetBySubscriptionAsyncCollectionResultOfT : AsyncPageable<EnclaveCommunityEndpointData>
+    internal partial class CommunityEndpointsGetBySubscriptionAsyncCollectionResultOfT : AsyncPageable<VirtualEnclaveCommunityEndpointData>
     {
         private readonly CommunityEndpoints _client;
         private readonly Guid _subscriptionId;
@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.Enclave
         /// <param name="continuationToken"> A continuation token indicating where to resume paging. </param>
         /// <param name="pageSizeHint"> The number of items per page. </param>
         /// <returns> The pages of CommunityEndpointsGetBySubscriptionAsyncCollectionResultOfT as an enumerable collection. </returns>
-        public override async IAsyncEnumerable<Page<EnclaveCommunityEndpointData>> AsPages(string continuationToken, int? pageSizeHint)
+        public override async IAsyncEnumerable<Page<VirtualEnclaveCommunityEndpointData>> AsPages(string continuationToken, int? pageSizeHint)
         {
             Uri nextPage = continuationToken != null ? new Uri(continuationToken) : null;
             while (true)
@@ -54,7 +54,7 @@ namespace Azure.ResourceManager.Enclave
                 }
                 CommunityEndpointResourceListResult result = CommunityEndpointResourceListResult.FromResponse(response);
                 nextPage = result.NextLink;
-                yield return Page<EnclaveCommunityEndpointData>.FromValues((IReadOnlyList<EnclaveCommunityEndpointData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
+                yield return Page<VirtualEnclaveCommunityEndpointData>.FromValues((IReadOnlyList<VirtualEnclaveCommunityEndpointData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 if (nextPage == null)
                 {
                     yield break;

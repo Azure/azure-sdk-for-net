@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.Enclave.Models
 
         /// <summary> Initializes a new instance of <see cref="ApprovalResourceListResult"/>. </summary>
         /// <param name="value"> The ApprovalResource items on this page. </param>
-        internal ApprovalResourceListResult(IEnumerable<EnclaveApprovalData> value)
+        internal ApprovalResourceListResult(IEnumerable<VirtualEnclaveApprovalData> value)
         {
             Value = value.ToList();
         }
@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.Enclave.Models
         /// <param name="value"> The ApprovalResource items on this page. </param>
         /// <param name="nextLink"> The link to the next page of items. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ApprovalResourceListResult(IList<EnclaveApprovalData> value, Uri nextLink, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ApprovalResourceListResult(IList<VirtualEnclaveApprovalData> value, Uri nextLink, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Value = value;
             NextLink = nextLink;
@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.Enclave.Models
         }
 
         /// <summary> The ApprovalResource items on this page. </summary>
-        public IList<EnclaveApprovalData> Value { get; }
+        public IList<VirtualEnclaveApprovalData> Value { get; }
 
         /// <summary> The link to the next page of items. </summary>
         public Uri NextLink { get; }

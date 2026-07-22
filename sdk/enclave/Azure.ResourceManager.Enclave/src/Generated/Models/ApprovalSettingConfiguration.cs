@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.Enclave.Models
         /// <summary> Initializes a new instance of <see cref="ApprovalSettingConfiguration"/>. </summary>
         public ApprovalSettingConfiguration()
         {
-            MandatoryApprovers = new ChangeTrackingList<EnclaveMandatoryApprover>();
+            MandatoryApprovers = new ChangeTrackingList<VirtualEnclaveMandatoryApprover>();
         }
 
         /// <summary> Initializes a new instance of <see cref="ApprovalSettingConfiguration"/>. </summary>
@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.Enclave.Models
         /// <param name="minimumApproversRequired"> Minimum number of approvers required for this approval setting. </param>
         /// <param name="mandatoryApprovers"> List of mandatory approvers for this approval setting. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ApprovalSettingConfiguration(EnclaveApprovalPolicy? approvalPolicy, int? minimumApproversRequired, IList<EnclaveMandatoryApprover> mandatoryApprovers, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ApprovalSettingConfiguration(VirtualEnclaveApprovalPolicy? approvalPolicy, int? minimumApproversRequired, IList<VirtualEnclaveMandatoryApprover> mandatoryApprovers, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             ApprovalPolicy = approvalPolicy;
             MinimumApproversRequired = minimumApproversRequired;
@@ -37,12 +37,12 @@ namespace Azure.ResourceManager.Enclave.Models
         }
 
         /// <summary> Approval policy (Required or NotRequired). </summary>
-        public EnclaveApprovalPolicy? ApprovalPolicy { get; set; }
+        public VirtualEnclaveApprovalPolicy? ApprovalPolicy { get; set; }
 
         /// <summary> Minimum number of approvers required for this approval setting. </summary>
         public int? MinimumApproversRequired { get; set; }
 
         /// <summary> List of mandatory approvers for this approval setting. </summary>
-        public IList<EnclaveMandatoryApprover> MandatoryApprovers { get; }
+        public IList<VirtualEnclaveMandatoryApprover> MandatoryApprovers { get; }
     }
 }

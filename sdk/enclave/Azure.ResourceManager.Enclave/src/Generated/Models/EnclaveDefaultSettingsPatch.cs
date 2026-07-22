@@ -24,13 +24,13 @@ namespace Azure.ResourceManager.Enclave.Models
         /// <summary> Initializes a new instance of <see cref="EnclaveDefaultSettingsPatch"/>. </summary>
         /// <param name="diagnosticDestination"> Diagnostic Destination. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal EnclaveDefaultSettingsPatch(EnclaveDiagnosticDestination? diagnosticDestination, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal EnclaveDefaultSettingsPatch(VirtualEnclaveDiagnosticDestination? diagnosticDestination, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             DiagnosticDestination = diagnosticDestination;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> Diagnostic Destination. </summary>
-        public EnclaveDiagnosticDestination? DiagnosticDestination { get; set; }
+        public VirtualEnclaveDiagnosticDestination? DiagnosticDestination { get; set; }
     }
 }

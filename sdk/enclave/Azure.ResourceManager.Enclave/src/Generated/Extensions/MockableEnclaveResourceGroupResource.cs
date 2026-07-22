@@ -31,11 +31,11 @@ namespace Azure.ResourceManager.Enclave.Mocking
         {
         }
 
-        /// <summary> Gets a collection of Enclaves in the <see cref="ResourceGroupResource"/>. </summary>
-        /// <returns> An object representing collection of Enclaves and their operations over a EnclaveResource. </returns>
-        public virtual EnclaveCollection GetEnclaves()
+        /// <summary> Gets a collection of VirtualEnclaves in the <see cref="ResourceGroupResource"/>. </summary>
+        /// <returns> An object representing collection of VirtualEnclaves and their operations over a VirtualEnclaveResource. </returns>
+        public virtual VirtualEnclaveCollection GetVirtualEnclaves()
         {
-            return GetCachedClient(client => new EnclaveCollection(client, Id));
+            return GetCachedClient(client => new VirtualEnclaveCollection(client, Id));
         }
 
         /// <summary>
@@ -60,11 +60,11 @@ namespace Azure.ResourceManager.Enclave.Mocking
         /// <exception cref="ArgumentNullException"> <paramref name="virtualEnclaveName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="virtualEnclaveName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual async Task<Response<EnclaveResource>> GetEnclaveAsync(string virtualEnclaveName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<VirtualEnclaveResource>> GetVirtualEnclaveAsync(string virtualEnclaveName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(virtualEnclaveName, nameof(virtualEnclaveName));
 
-            return await GetEnclaves().GetAsync(virtualEnclaveName, cancellationToken).ConfigureAwait(false);
+            return await GetVirtualEnclaves().GetAsync(virtualEnclaveName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -89,47 +89,18 @@ namespace Azure.ResourceManager.Enclave.Mocking
         /// <exception cref="ArgumentNullException"> <paramref name="virtualEnclaveName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="virtualEnclaveName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual Response<EnclaveResource> GetEnclave(string virtualEnclaveName, CancellationToken cancellationToken = default)
+        public virtual Response<VirtualEnclaveResource> GetVirtualEnclave(string virtualEnclaveName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(virtualEnclaveName, nameof(virtualEnclaveName));
 
-            return GetEnclaves().Get(virtualEnclaveName, cancellationToken);
+            return GetVirtualEnclaves().Get(virtualEnclaveName, cancellationToken);
         }
 
-        /// <summary> Gets a collection of EnclaveCommunities in the <see cref="ResourceGroupResource"/>. </summary>
-        /// <returns> An object representing collection of EnclaveCommunities and their operations over a EnclaveCommunityResource. </returns>
-        public virtual EnclaveCommunityCollection GetEnclaveCommunities()
+        /// <summary> Gets a collection of VirtualEnclaveCommunities in the <see cref="ResourceGroupResource"/>. </summary>
+        /// <returns> An object representing collection of VirtualEnclaveCommunities and their operations over a VirtualEnclaveCommunityResource. </returns>
+        public virtual VirtualEnclaveCommunityCollection GetVirtualEnclaveCommunities()
         {
-            return GetCachedClient(client => new EnclaveCommunityCollection(client, Id));
-        }
-
-        /// <summary>
-        /// Get a CommunityResource
-        /// <list type="bullet">
-        /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Mission/communities/{communityName}. </description>
-        /// </item>
-        /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> Community_Get. </description>
-        /// </item>
-        /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2026-03-01-preview. </description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="communityName"> The name of the communityResource Resource. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="communityName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="communityName"/> is an empty string, and was expected to be non-empty. </exception>
-        [ForwardsClientCalls]
-        public virtual async Task<Response<EnclaveCommunityResource>> GetEnclaveCommunityAsync(string communityName, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(communityName, nameof(communityName));
-
-            return await GetEnclaveCommunities().GetAsync(communityName, cancellationToken).ConfigureAwait(false);
+            return GetCachedClient(client => new VirtualEnclaveCommunityCollection(client, Id));
         }
 
         /// <summary>
@@ -154,18 +125,47 @@ namespace Azure.ResourceManager.Enclave.Mocking
         /// <exception cref="ArgumentNullException"> <paramref name="communityName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="communityName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual Response<EnclaveCommunityResource> GetEnclaveCommunity(string communityName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<VirtualEnclaveCommunityResource>> GetVirtualEnclaveCommunityAsync(string communityName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(communityName, nameof(communityName));
 
-            return GetEnclaveCommunities().Get(communityName, cancellationToken);
+            return await GetVirtualEnclaveCommunities().GetAsync(communityName, cancellationToken).ConfigureAwait(false);
         }
 
-        /// <summary> Gets a collection of EnclaveConnections in the <see cref="ResourceGroupResource"/>. </summary>
-        /// <returns> An object representing collection of EnclaveConnections and their operations over a EnclaveConnectionResource. </returns>
-        public virtual EnclaveConnectionCollection GetEnclaveConnections()
+        /// <summary>
+        /// Get a CommunityResource
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Mission/communities/{communityName}. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> Community_Get. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-03-01-preview. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="communityName"> The name of the communityResource Resource. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="communityName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="communityName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual Response<VirtualEnclaveCommunityResource> GetVirtualEnclaveCommunity(string communityName, CancellationToken cancellationToken = default)
         {
-            return GetCachedClient(client => new EnclaveConnectionCollection(client, Id));
+            Argument.AssertNotNullOrEmpty(communityName, nameof(communityName));
+
+            return GetVirtualEnclaveCommunities().Get(communityName, cancellationToken);
+        }
+
+        /// <summary> Gets a collection of VirtualEnclaveConnections in the <see cref="ResourceGroupResource"/>. </summary>
+        /// <returns> An object representing collection of VirtualEnclaveConnections and their operations over a VirtualEnclaveConnectionResource. </returns>
+        public virtual VirtualEnclaveConnectionCollection GetVirtualEnclaveConnections()
+        {
+            return GetCachedClient(client => new VirtualEnclaveConnectionCollection(client, Id));
         }
 
         /// <summary>
@@ -190,11 +190,11 @@ namespace Azure.ResourceManager.Enclave.Mocking
         /// <exception cref="ArgumentNullException"> <paramref name="enclaveConnectionName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="enclaveConnectionName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual async Task<Response<EnclaveConnectionResource>> GetEnclaveConnectionAsync(string enclaveConnectionName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<VirtualEnclaveConnectionResource>> GetVirtualEnclaveConnectionAsync(string enclaveConnectionName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(enclaveConnectionName, nameof(enclaveConnectionName));
 
-            return await GetEnclaveConnections().GetAsync(enclaveConnectionName, cancellationToken).ConfigureAwait(false);
+            return await GetVirtualEnclaveConnections().GetAsync(enclaveConnectionName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -219,11 +219,11 @@ namespace Azure.ResourceManager.Enclave.Mocking
         /// <exception cref="ArgumentNullException"> <paramref name="enclaveConnectionName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="enclaveConnectionName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual Response<EnclaveConnectionResource> GetEnclaveConnection(string enclaveConnectionName, CancellationToken cancellationToken = default)
+        public virtual Response<VirtualEnclaveConnectionResource> GetVirtualEnclaveConnection(string enclaveConnectionName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(enclaveConnectionName, nameof(enclaveConnectionName));
 
-            return GetEnclaveConnections().Get(enclaveConnectionName, cancellationToken);
+            return GetVirtualEnclaveConnections().Get(enclaveConnectionName, cancellationToken);
         }
     }
 }

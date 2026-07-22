@@ -30,93 +30,93 @@ namespace Azure.ResourceManager.Enclave.Mocking
         {
         }
 
-        /// <summary> Gets an object representing a <see cref="EnclaveWorkloadResource"/> along with the instance operations that can be performed on it but with no data. </summary>
+        /// <summary> Gets an object representing a <see cref="VirtualEnclaveWorkloadResource"/> along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="EnclaveWorkloadResource"/> object. </returns>
-        public virtual EnclaveWorkloadResource GetEnclaveWorkloadResource(ResourceIdentifier id)
+        /// <returns> Returns a <see cref="VirtualEnclaveWorkloadResource"/> object. </returns>
+        public virtual VirtualEnclaveWorkloadResource GetVirtualEnclaveWorkloadResource(ResourceIdentifier id)
         {
-            EnclaveWorkloadResource.ValidateResourceId(id);
-            return new EnclaveWorkloadResource(Client, id);
+            VirtualEnclaveWorkloadResource.ValidateResourceId(id);
+            return new VirtualEnclaveWorkloadResource(Client, id);
         }
 
-        /// <summary> Gets an object representing a <see cref="EnclaveResource"/> along with the instance operations that can be performed on it but with no data. </summary>
+        /// <summary> Gets an object representing a <see cref="VirtualEnclaveResource"/> along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="EnclaveResource"/> object. </returns>
-        public virtual EnclaveResource GetEnclaveResource(ResourceIdentifier id)
+        /// <returns> Returns a <see cref="VirtualEnclaveResource"/> object. </returns>
+        public virtual VirtualEnclaveResource GetVirtualEnclaveResource(ResourceIdentifier id)
         {
-            EnclaveResource.ValidateResourceId(id);
-            return new EnclaveResource(Client, id);
+            VirtualEnclaveResource.ValidateResourceId(id);
+            return new VirtualEnclaveResource(Client, id);
         }
 
-        /// <summary> Gets an object representing a <see cref="EnclaveCommunityResource"/> along with the instance operations that can be performed on it but with no data. </summary>
+        /// <summary> Gets an object representing a <see cref="VirtualEnclaveCommunityResource"/> along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="EnclaveCommunityResource"/> object. </returns>
-        public virtual EnclaveCommunityResource GetEnclaveCommunityResource(ResourceIdentifier id)
+        /// <returns> Returns a <see cref="VirtualEnclaveCommunityResource"/> object. </returns>
+        public virtual VirtualEnclaveCommunityResource GetVirtualEnclaveCommunityResource(ResourceIdentifier id)
         {
-            EnclaveCommunityResource.ValidateResourceId(id);
-            return new EnclaveCommunityResource(Client, id);
+            VirtualEnclaveCommunityResource.ValidateResourceId(id);
+            return new VirtualEnclaveCommunityResource(Client, id);
         }
 
-        /// <summary> Gets an object representing a <see cref="EnclaveTransitHubResource"/> along with the instance operations that can be performed on it but with no data. </summary>
+        /// <summary> Gets an object representing a <see cref="VirtualEnclaveTransitHubResource"/> along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="EnclaveTransitHubResource"/> object. </returns>
-        public virtual EnclaveTransitHubResource GetEnclaveTransitHubResource(ResourceIdentifier id)
+        /// <returns> Returns a <see cref="VirtualEnclaveTransitHubResource"/> object. </returns>
+        public virtual VirtualEnclaveTransitHubResource GetVirtualEnclaveTransitHubResource(ResourceIdentifier id)
         {
-            EnclaveTransitHubResource.ValidateResourceId(id);
-            return new EnclaveTransitHubResource(Client, id);
+            VirtualEnclaveTransitHubResource.ValidateResourceId(id);
+            return new VirtualEnclaveTransitHubResource(Client, id);
         }
 
-        /// <summary> Gets an object representing a <see cref="EnclaveConnectionResource"/> along with the instance operations that can be performed on it but with no data. </summary>
+        /// <summary> Gets an object representing a <see cref="VirtualEnclaveConnectionResource"/> along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="EnclaveConnectionResource"/> object. </returns>
-        public virtual EnclaveConnectionResource GetEnclaveConnectionResource(ResourceIdentifier id)
+        /// <returns> Returns a <see cref="VirtualEnclaveConnectionResource"/> object. </returns>
+        public virtual VirtualEnclaveConnectionResource GetVirtualEnclaveConnectionResource(ResourceIdentifier id)
         {
-            EnclaveConnectionResource.ValidateResourceId(id);
-            return new EnclaveConnectionResource(Client, id);
+            VirtualEnclaveConnectionResource.ValidateResourceId(id);
+            return new VirtualEnclaveConnectionResource(Client, id);
         }
 
-        /// <summary> Gets an object representing a <see cref="EnclaveEndpointResource"/> along with the instance operations that can be performed on it but with no data. </summary>
+        /// <summary> Gets an object representing a <see cref="VirtualEnclaveEndpointResource"/> along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="EnclaveEndpointResource"/> object. </returns>
-        public virtual EnclaveEndpointResource GetEnclaveEndpointResource(ResourceIdentifier id)
+        /// <returns> Returns a <see cref="VirtualEnclaveEndpointResource"/> object. </returns>
+        public virtual VirtualEnclaveEndpointResource GetVirtualEnclaveEndpointResource(ResourceIdentifier id)
         {
-            EnclaveEndpointResource.ValidateResourceId(id);
-            return new EnclaveEndpointResource(Client, id);
+            VirtualEnclaveEndpointResource.ValidateResourceId(id);
+            return new VirtualEnclaveEndpointResource(Client, id);
         }
 
-        /// <summary> Gets an object representing a <see cref="EnclaveCommunityEndpointResource"/> along with the instance operations that can be performed on it but with no data. </summary>
+        /// <summary> Gets an object representing a <see cref="VirtualEnclaveCommunityEndpointResource"/> along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="EnclaveCommunityEndpointResource"/> object. </returns>
-        public virtual EnclaveCommunityEndpointResource GetEnclaveCommunityEndpointResource(ResourceIdentifier id)
+        /// <returns> Returns a <see cref="VirtualEnclaveCommunityEndpointResource"/> object. </returns>
+        public virtual VirtualEnclaveCommunityEndpointResource GetVirtualEnclaveCommunityEndpointResource(ResourceIdentifier id)
         {
-            EnclaveCommunityEndpointResource.ValidateResourceId(id);
-            return new EnclaveCommunityEndpointResource(Client, id);
+            VirtualEnclaveCommunityEndpointResource.ValidateResourceId(id);
+            return new VirtualEnclaveCommunityEndpointResource(Client, id);
         }
 
-        /// <summary> Gets an object representing a <see cref="EnclaveDedicatedHubResource"/> along with the instance operations that can be performed on it but with no data. </summary>
+        /// <summary> Gets an object representing a <see cref="VirtualEnclaveDedicatedHubResource"/> along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="EnclaveDedicatedHubResource"/> object. </returns>
-        public virtual EnclaveDedicatedHubResource GetEnclaveDedicatedHubResource(ResourceIdentifier id)
+        /// <returns> Returns a <see cref="VirtualEnclaveDedicatedHubResource"/> object. </returns>
+        public virtual VirtualEnclaveDedicatedHubResource GetVirtualEnclaveDedicatedHubResource(ResourceIdentifier id)
         {
-            EnclaveDedicatedHubResource.ValidateResourceId(id);
-            return new EnclaveDedicatedHubResource(Client, id);
+            VirtualEnclaveDedicatedHubResource.ValidateResourceId(id);
+            return new VirtualEnclaveDedicatedHubResource(Client, id);
         }
 
-        /// <summary> Gets an object representing a <see cref="EnclaveApprovalResource"/> along with the instance operations that can be performed on it but with no data. </summary>
+        /// <summary> Gets an object representing a <see cref="VirtualEnclaveApprovalResource"/> along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="EnclaveApprovalResource"/> object. </returns>
-        public virtual EnclaveApprovalResource GetEnclaveApprovalResource(ResourceIdentifier id)
+        /// <returns> Returns a <see cref="VirtualEnclaveApprovalResource"/> object. </returns>
+        public virtual VirtualEnclaveApprovalResource GetVirtualEnclaveApprovalResource(ResourceIdentifier id)
         {
-            EnclaveApprovalResource.ValidateResourceId(id);
-            return new EnclaveApprovalResource(Client, id);
+            VirtualEnclaveApprovalResource.ValidateResourceId(id);
+            return new VirtualEnclaveApprovalResource(Client, id);
         }
 
-        /// <summary> Gets a collection of <see cref="EnclaveApprovalCollection"/> objects within the specified scope. </summary>
+        /// <summary> Gets a collection of <see cref="VirtualEnclaveApprovalCollection"/> objects within the specified scope. </summary>
         /// <param name="scope"> The scope of the resource collection to get. </param>
-        /// <returns> Returns a collection of <see cref="EnclaveApprovalResource"/> objects. </returns>
-        public virtual EnclaveApprovalCollection GetEnclaveApprovals(ResourceIdentifier scope)
+        /// <returns> Returns a collection of <see cref="VirtualEnclaveApprovalResource"/> objects. </returns>
+        public virtual VirtualEnclaveApprovalCollection GetVirtualEnclaveApprovals(ResourceIdentifier scope)
         {
-            return new EnclaveApprovalCollection(Client, scope);
+            return new VirtualEnclaveApprovalCollection(Client, scope);
         }
 
         /// <summary> Get a ApprovalResource. </summary>
@@ -126,11 +126,11 @@ namespace Azure.ResourceManager.Enclave.Mocking
         /// <exception cref="ArgumentNullException"> <paramref name="approvalName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="approvalName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual Response<EnclaveApprovalResource> GetEnclaveApproval(ResourceIdentifier scope, string approvalName, CancellationToken cancellationToken = default)
+        public virtual Response<VirtualEnclaveApprovalResource> GetVirtualEnclaveApproval(ResourceIdentifier scope, string approvalName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(approvalName, nameof(approvalName));
 
-            return GetEnclaveApprovals(scope).Get(approvalName, cancellationToken);
+            return GetVirtualEnclaveApprovals(scope).Get(approvalName, cancellationToken);
         }
 
         /// <summary> Get a ApprovalResource. </summary>
@@ -140,11 +140,11 @@ namespace Azure.ResourceManager.Enclave.Mocking
         /// <exception cref="ArgumentNullException"> <paramref name="approvalName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="approvalName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual async Task<Response<EnclaveApprovalResource>> GetEnclaveApprovalAsync(ResourceIdentifier scope, string approvalName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<VirtualEnclaveApprovalResource>> GetVirtualEnclaveApprovalAsync(ResourceIdentifier scope, string approvalName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(approvalName, nameof(approvalName));
 
-            return await GetEnclaveApprovals(scope).GetAsync(approvalName, cancellationToken).ConfigureAwait(false);
+            return await GetVirtualEnclaveApprovals(scope).GetAsync(approvalName, cancellationToken).ConfigureAwait(false);
         }
     }
 }

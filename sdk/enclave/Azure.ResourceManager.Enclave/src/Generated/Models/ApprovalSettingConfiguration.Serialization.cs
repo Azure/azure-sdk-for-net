@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.Enclave.Models
             {
                 writer.WritePropertyName("mandatoryApprovers"u8);
                 writer.WriteStartArray();
-                foreach (EnclaveMandatoryApprover item in MandatoryApprovers)
+                foreach (VirtualEnclaveMandatoryApprover item in MandatoryApprovers)
                 {
                     writer.WriteObjectValue(item, options);
                 }
@@ -136,9 +136,9 @@ namespace Azure.ResourceManager.Enclave.Models
             {
                 return null;
             }
-            EnclaveApprovalPolicy? approvalPolicy = default;
+            VirtualEnclaveApprovalPolicy? approvalPolicy = default;
             int? minimumApproversRequired = default;
-            IList<EnclaveMandatoryApprover> mandatoryApprovers = default;
+            IList<VirtualEnclaveMandatoryApprover> mandatoryApprovers = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -148,7 +148,7 @@ namespace Azure.ResourceManager.Enclave.Models
                     {
                         continue;
                     }
-                    approvalPolicy = new EnclaveApprovalPolicy(prop.Value.GetString());
+                    approvalPolicy = new VirtualEnclaveApprovalPolicy(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("minimumApproversRequired"u8))
@@ -166,10 +166,10 @@ namespace Azure.ResourceManager.Enclave.Models
                     {
                         continue;
                     }
-                    List<EnclaveMandatoryApprover> array = new List<EnclaveMandatoryApprover>();
+                    List<VirtualEnclaveMandatoryApprover> array = new List<VirtualEnclaveMandatoryApprover>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(EnclaveMandatoryApprover.DeserializeEnclaveMandatoryApprover(item, options));
+                        array.Add(VirtualEnclaveMandatoryApprover.DeserializeVirtualEnclaveMandatoryApprover(item, options));
                     }
                     mandatoryApprovers = array;
                     continue;
@@ -179,7 +179,7 @@ namespace Azure.ResourceManager.Enclave.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new ApprovalSettingConfiguration(approvalPolicy, minimumApproversRequired, mandatoryApprovers ?? new ChangeTrackingList<EnclaveMandatoryApprover>(), additionalBinaryDataProperties);
+            return new ApprovalSettingConfiguration(approvalPolicy, minimumApproversRequired, mandatoryApprovers ?? new ChangeTrackingList<VirtualEnclaveMandatoryApprover>(), additionalBinaryDataProperties);
         }
     }
 }
