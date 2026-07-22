@@ -22,11 +22,11 @@ namespace Azure.ResourceManager.Compute.BulkActions.Models
 
         /// <param name="executionParameters"> The execution parameters for the request. </param>
         /// <param name="resources"> The resources for the request. </param>
-        /// <param name="resources0"> The resource ids used for the request. </param>
+        /// <param name="resourcesWithContext"> The resources for the request with resource context information. Cannot be provided together with `resources` - exactly one must be specified. </param>
         /// <returns> A new <see cref="Models.ExecuteDeallocateContent"/> instance for mocking. </returns>
-        public static ExecuteDeallocateContent ExecuteDeallocateContent(BulkActionExecutionParameterDetail executionParameters = default, UserRequestResources resources = default, IEnumerable<ResourceWithContext> resources0 = default)
+        public static ExecuteDeallocateContent ExecuteDeallocateContent(BulkActionExecutionParameterDetail executionParameters = default, UserRequestResources resources = default, ResourcesWithContext resourcesWithContext = default)
         {
-            return new ExecuteDeallocateContent(executionParameters, resources, resources0 is null ? default : new ResourcesWithContext((resources0 ?? new ChangeTrackingList<ResourceWithContext>()).ToList(), default), default);
+            return new ExecuteDeallocateContent(executionParameters, resources, resourcesWithContext, default);
         }
 
         /// <param name="optimizationPreference"> Details that could optimize the user's request. </param>
@@ -54,6 +54,15 @@ namespace Azure.ResourceManager.Compute.BulkActions.Models
             ids ??= new ChangeTrackingList<ResourceIdentifier>();
 
             return new UserRequestResources((ids ?? new ChangeTrackingList<ResourceIdentifier>()).ToList(), default);
+        }
+
+        /// <param name="resources"> The resource ids used for the request. </param>
+        /// <returns> A new <see cref="Models.ResourcesWithContext"/> instance for mocking. </returns>
+        public static ResourcesWithContext ResourcesWithContext(IEnumerable<ResourceWithContext> resources = default)
+        {
+            resources ??= new ChangeTrackingList<ResourceWithContext>();
+
+            return new ResourcesWithContext((resources ?? new ChangeTrackingList<ResourceWithContext>()).ToList(), default);
         }
 
         /// <param name="resourceId"> The resource ids used for the request. </param>
@@ -153,11 +162,11 @@ namespace Azure.ResourceManager.Compute.BulkActions.Models
 
         /// <param name="executionParameters"> The execution parameters for the request. </param>
         /// <param name="resources"> The resources for the request. </param>
-        /// <param name="resources0"> The resource ids used for the request. </param>
+        /// <param name="resourcesWithContext"> The resources for the request with resource context information. Cannot be provided together with `resources` - exactly one must be specified. </param>
         /// <returns> A new <see cref="Models.ExecuteHibernateContent"/> instance for mocking. </returns>
-        public static ExecuteHibernateContent ExecuteHibernateContent(BulkActionExecutionParameterDetail executionParameters = default, UserRequestResources resources = default, IEnumerable<ResourceWithContext> resources0 = default)
+        public static ExecuteHibernateContent ExecuteHibernateContent(BulkActionExecutionParameterDetail executionParameters = default, UserRequestResources resources = default, ResourcesWithContext resourcesWithContext = default)
         {
-            return new ExecuteHibernateContent(executionParameters, resources, resources0 is null ? default : new ResourcesWithContext((resources0 ?? new ChangeTrackingList<ResourceWithContext>()).ToList(), default), default);
+            return new ExecuteHibernateContent(executionParameters, resources, resourcesWithContext, default);
         }
 
         /// <param name="description"> The description of the operation response. </param>
@@ -174,11 +183,11 @@ namespace Azure.ResourceManager.Compute.BulkActions.Models
 
         /// <param name="executionParameters"> The execution parameters for the request. </param>
         /// <param name="resources"> The resources for the request. </param>
-        /// <param name="resources0"> The resource ids used for the request. </param>
+        /// <param name="resourcesWithContext"> The resources for the request with resource context information. Cannot be provided together with `resources` - exactly one must be specified. </param>
         /// <returns> A new <see cref="Models.ExecuteStartContent"/> instance for mocking. </returns>
-        public static ExecuteStartContent ExecuteStartContent(BulkActionExecutionParameterDetail executionParameters = default, UserRequestResources resources = default, IEnumerable<ResourceWithContext> resources0 = default)
+        public static ExecuteStartContent ExecuteStartContent(BulkActionExecutionParameterDetail executionParameters = default, UserRequestResources resources = default, ResourcesWithContext resourcesWithContext = default)
         {
-            return new ExecuteStartContent(executionParameters, resources, resources0 is null ? default : new ResourcesWithContext((resources0 ?? new ChangeTrackingList<ResourceWithContext>()).ToList(), default), default);
+            return new ExecuteStartContent(executionParameters, resources, resourcesWithContext, default);
         }
 
         /// <param name="description"> The description of the operation response. </param>
@@ -311,12 +320,12 @@ namespace Azure.ResourceManager.Compute.BulkActions.Models
 
         /// <param name="executionParameters"> The execution parameters for the request. </param>
         /// <param name="resources"> The resources for the request. </param>
-        /// <param name="resources0"> The resource ids used for the request. </param>
+        /// <param name="resourcesWithContext"> The resources for the request with resource context information. Cannot be provided together with `resources` - exactly one must be specified. </param>
         /// <param name="isForceDeletion"> Forced delete resource item. </param>
         /// <returns> A new <see cref="Models.ExecuteDeleteContent"/> instance for mocking. </returns>
-        public static ExecuteDeleteContent ExecuteDeleteContent(BulkActionExecutionParameterDetail executionParameters = default, UserRequestResources resources = default, IEnumerable<ResourceWithContext> resources0 = default, bool? isForceDeletion = default)
+        public static ExecuteDeleteContent ExecuteDeleteContent(BulkActionExecutionParameterDetail executionParameters = default, UserRequestResources resources = default, ResourcesWithContext resourcesWithContext = default, bool? isForceDeletion = default)
         {
-            return new ExecuteDeleteContent(executionParameters, resources, resources0 is null ? default : new ResourcesWithContext((resources0 ?? new ChangeTrackingList<ResourceWithContext>()).ToList(), default), isForceDeletion, default);
+            return new ExecuteDeleteContent(executionParameters, resources, resourcesWithContext, isForceDeletion, default);
         }
 
         /// <param name="description"> The description of the operation response. </param>
@@ -369,12 +378,12 @@ namespace Azure.ResourceManager.Compute.BulkActions.Models
 
         /// <param name="executionParameters"> The execution parameters for the request. </param>
         /// <param name="resources"> The resources for the request. </param>
-        /// <param name="resources0"> The resource ids used for the request. </param>
+        /// <param name="resourcesWithContext"> The resources for the request with resource context information. Cannot be provided together with `resources` - exactly one must be specified. </param>
         /// <param name="reimageParameters"> Reimage parameters including base profile and per-resource overrides. </param>
         /// <returns> A new <see cref="Models.BulkActionsExecuteReimageRequestContent"/> instance for mocking. </returns>
-        public static BulkActionsExecuteReimageRequestContent BulkActionsExecuteReimageRequestContent(BulkActionExecutionParameterDetail executionParameters = default, UserRequestResources resources = default, IEnumerable<ResourceWithContext> resources0 = default, ReimagePayload reimageParameters = default)
+        public static BulkActionsExecuteReimageRequestContent BulkActionsExecuteReimageRequestContent(BulkActionExecutionParameterDetail executionParameters = default, UserRequestResources resources = default, ResourcesWithContext resourcesWithContext = default, ReimagePayload reimageParameters = default)
         {
-            return new BulkActionsExecuteReimageRequestContent(executionParameters, resources, resources0 is null ? default : new ResourcesWithContext((resources0 ?? new ChangeTrackingList<ResourceWithContext>()).ToList(), default), reimageParameters, default);
+            return new BulkActionsExecuteReimageRequestContent(executionParameters, resources, resourcesWithContext, reimageParameters, default);
         }
 
         /// <param name="baseProfile"> Common reimage profile applied to all resources unless overridden. </param>

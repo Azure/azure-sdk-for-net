@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.Compute.BulkActions.Models
             if (Optional.IsDefined(Resources))
             {
                 writer.WritePropertyName("resources"u8);
-                writer.WriteObjectValue<UserRequestResources>(Resources, options);
+                writer.WriteObjectValue(Resources, options);
             }
             if (Optional.IsDefined(ResourcesWithContext))
             {

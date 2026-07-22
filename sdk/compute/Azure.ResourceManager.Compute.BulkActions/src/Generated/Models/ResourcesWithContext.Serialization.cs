@@ -14,7 +14,7 @@ using Azure.ResourceManager.Compute.BulkActions;
 namespace Azure.ResourceManager.Compute.BulkActions.Models
 {
     /// <summary> The resources needed for the user request with the context for tracking purposes. </summary>
-    internal partial class ResourcesWithContext : IJsonModel<ResourcesWithContext>
+    public partial class ResourcesWithContext : IJsonModel<ResourcesWithContext>
     {
         /// <summary> Initializes a new instance of <see cref="ResourcesWithContext"/> for deserialization. </summary>
         internal ResourcesWithContext()

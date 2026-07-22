@@ -13,7 +13,7 @@ using Azure.ResourceManager.Compute.BulkActions;
 namespace Azure.ResourceManager.Compute.BulkActions.Models
 {
     /// <summary> The resources needed for the user request with the context for tracking purposes. </summary>
-    internal partial class ResourcesWithContext
+    public partial class ResourcesWithContext
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
@@ -38,6 +38,6 @@ namespace Azure.ResourceManager.Compute.BulkActions.Models
         }
 
         /// <summary> The resource ids used for the request. </summary>
-        public IList<ResourceWithContext> Resources { get; } = new ChangeTrackingList<ResourceWithContext>();
+        public IList<ResourceWithContext> Resources { get; }
     }
 }
