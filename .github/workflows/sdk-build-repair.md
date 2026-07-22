@@ -48,7 +48,10 @@ on:
   # Only repository maintainers (write+) may trigger; the release bot that applies the
   # label is allow-listed so the automatic path works. This is the prompt-injection /
   # abuse guard (gh-aw default roles are [admin, maintainer, write]).
-  roles: [admin, maintainer, write]
+  # Test branch only: the exact PR allowlist and author/branch gate below remain mandatory.
+  # GitHub reports the test author as "Maintainer w/Bypass", which gh-aw's role matcher
+  # does not recognize as `maintainer`.
+  roles: all
   bots: ["azure-sdk", "azure-sdk-automation[bot]"]
 
 # Master kill-switch (fail-safe) + PR allowlist + eligibility gate. The workflow stays
