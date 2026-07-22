@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.Sql
         {
             TryGetApiVersion(ResourceType, out string iPv6FirewallRuleApiVersion);
             _iPv6FirewallRulesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Sql", ResourceType.Namespace, Diagnostics);
-            _iPv6FirewallRulesRestClient = new IPv6FirewallRules(_iPv6FirewallRulesClientDiagnostics, Pipeline, Endpoint, iPv6FirewallRuleApiVersion ?? "2025-02-01-preview");
+            _iPv6FirewallRulesRestClient = new IPv6FirewallRules(_iPv6FirewallRulesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, iPv6FirewallRuleApiVersion ?? "2025-02-01-preview");
             ValidateResourceId(id);
         }
 

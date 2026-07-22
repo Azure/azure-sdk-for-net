@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.Compute
         {
             TryGetApiVersion(ResourceType, out string capacityReservationGroupApiVersion);
             _capacityReservationGroupsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Compute", ResourceType.Namespace, Diagnostics);
-            _capacityReservationGroupsRestClient = new CapacityReservationGroups(_capacityReservationGroupsClientDiagnostics, Pipeline, Endpoint, capacityReservationGroupApiVersion ?? "2026-03-01");
+            _capacityReservationGroupsRestClient = new CapacityReservationGroups(_capacityReservationGroupsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, capacityReservationGroupApiVersion ?? "2026-03-01");
             ValidateResourceId(id);
         }
 

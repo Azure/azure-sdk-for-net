@@ -107,15 +107,14 @@ namespace Azure.Security.CodeTransparency
                 throw new InvalidOperationException("Inclusion proof is required");
             }
 
-            if (proofs == null || proofs.Length == 0)
-            {
-                throw new InvalidOperationException("At least one inclusion proof is required");
-            }
-
             // InclusionProofs is an array of cbor bytestr
             List<byte[]> inclusionProofs = new List<byte[]>();
             CborReader proofsReader = new CborReader(proofs);
             proofsReader.ReadStartArray();
+            if (proofsReader.PeekState() == CborReaderState.EndArray)
+            {
+                throw new InvalidOperationException("At least one inclusion proof is expected");
+            }
             while (proofsReader.PeekState() != CborReaderState.EndArray)
             {
                 inclusionProofs.Add(proofsReader.ReadByteString());

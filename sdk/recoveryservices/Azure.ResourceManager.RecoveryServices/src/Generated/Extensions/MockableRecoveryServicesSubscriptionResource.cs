@@ -40,11 +40,11 @@ namespace Azure.ResourceManager.RecoveryServices.Mocking
 
         private ClientDiagnostics VaultsClientDiagnostics => _vaultsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.RecoveryServices.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private Vaults VaultsRestClient => _vaultsRestClient ??= new Vaults(VaultsClientDiagnostics, Pipeline, Endpoint, "2026-05-01");
+        private Vaults VaultsRestClient => _vaultsRestClient ??= new Vaults(VaultsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2026-05-01");
 
         private ClientDiagnostics RecoveryServicesOperationGroupClientDiagnostics => _recoveryServicesOperationGroupClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.RecoveryServices.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private RecoveryServicesOperationGroup RecoveryServicesOperationGroupRestClient => _recoveryServicesOperationGroupRestClient ??= new RecoveryServicesOperationGroup(RecoveryServicesOperationGroupClientDiagnostics, Pipeline, Endpoint, "2026-05-01");
+        private RecoveryServicesOperationGroup RecoveryServicesOperationGroupRestClient => _recoveryServicesOperationGroupRestClient ??= new RecoveryServicesOperationGroup(RecoveryServicesOperationGroupClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2026-05-01");
 
         /// <summary> Gets a collection of RecoveryServicesDeletedVaults in the <see cref="SubscriptionResource"/>. </summary>
         /// <param name="location"> The location for the resource. </param>

@@ -6,6 +6,8 @@
 
 #nullable disable
 
+using System;
+
 namespace Azure.ResourceManager.NetApp.Models
 {
     public partial class NetAppVolumeGroupVolume
@@ -14,6 +16,7 @@ namespace Azure.ResourceManager.NetApp.Models
         private NetAppLdapServerType? _ldapServerType;
         private LargeVolumeType? _largeVolumeType;
         private BreakthroughMode? _breakthroughMode;
+        private BreakthroughMode? _breakthroughModeOld;
 
         /// <summary> Restoring. </summary>
         public bool? IsRestoring
@@ -48,6 +51,17 @@ namespace Azure.ResourceManager.NetApp.Models
         {
             get => _breakthroughMode;
             set => _breakthroughMode = value;
+        }
+
+        /// <summary>
+        /// Legacy breakthrough mode field retained for service-compatibility.
+        /// Use <see cref="BreakthroughMode"/> for new code.
+        /// </summary>
+        [Obsolete("Use BreakthroughMode instead.")]
+        public BreakthroughMode? BreakthroughModeOld
+        {
+            get => _breakthroughModeOld;
+            set => _breakthroughModeOld = value;
         }
     }
 }

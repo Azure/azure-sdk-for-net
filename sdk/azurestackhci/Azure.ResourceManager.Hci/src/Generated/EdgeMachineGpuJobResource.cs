@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.Hci
         {
             TryGetApiVersion(ResourceType, out string edgeMachineGpuJobApiVersion);
             _edgeMachineGpuJobsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Hci", ResourceType.Namespace, Diagnostics);
-            _edgeMachineGpuJobsRestClient = new EdgeMachineGpuJobs(_edgeMachineGpuJobsClientDiagnostics, Pipeline, Endpoint, edgeMachineGpuJobApiVersion ?? "2026-05-01-preview");
+            _edgeMachineGpuJobsRestClient = new EdgeMachineGpuJobs(_edgeMachineGpuJobsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, edgeMachineGpuJobApiVersion ?? "2026-05-01-preview");
             ValidateResourceId(id);
         }
 

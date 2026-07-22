@@ -309,7 +309,7 @@ namespace Azure.Provisioning.MySql
     }
     public partial class MySqlFlexibleServerMaintenance : Azure.Provisioning.Primitives.ProvisionableResource
     {
-        public MySqlFlexibleServerMaintenance(string bicepIdentifier, string resourceVersion = null) : base (default(string), default(Azure.Core.ResourceType), default(string)) { }
+        internal MySqlFlexibleServerMaintenance() : base (default(string), default(Azure.Core.ResourceType), default(string)) { }
         public Azure.Provisioning.BicepValue<Azure.Core.ResourceIdentifier> Id { get { throw null; } }
         public Azure.Provisioning.BicepValue<System.DateTimeOffset> MaintenanceAvailableScheduleMaxOn { get { throw null; } }
         public Azure.Provisioning.BicepValue<System.DateTimeOffset> MaintenanceAvailableScheduleMinOn { get { throw null; } }
@@ -317,7 +317,7 @@ namespace Azure.Provisioning.MySql
         public Azure.Provisioning.BicepValue<System.DateTimeOffset> MaintenanceEndOn { get { throw null; } }
         public Azure.Provisioning.BicepValue<System.DateTimeOffset> MaintenanceExecutionEndOn { get { throw null; } }
         public Azure.Provisioning.BicepValue<System.DateTimeOffset> MaintenanceExecutionStartOn { get { throw null; } }
-        public Azure.Provisioning.BicepValue<System.DateTimeOffset> MaintenanceStartOn { get { throw null; } set { } }
+        public Azure.Provisioning.BicepValue<System.DateTimeOffset> MaintenanceStartOn { get { throw null; } }
         public Azure.Provisioning.BicepValue<Azure.Provisioning.MySql.MySqlFlexibleServerMaintenanceState> MaintenanceState { get { throw null; } }
         public Azure.Provisioning.BicepValue<string> MaintenanceTitle { get { throw null; } }
         public Azure.Provisioning.BicepValue<Azure.Provisioning.MySql.MySqlFlexibleServerMaintenanceType> MaintenanceType { get { throw null; } }

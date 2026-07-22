@@ -11,6 +11,6 @@ namespace Azure.Provisioning.MySql
     public enum ImportSourceStorageType
     {
         /// <summary> AzureBlob. </summary>
-        AzureBlob
+        AzureBlob = 0
     }
 }

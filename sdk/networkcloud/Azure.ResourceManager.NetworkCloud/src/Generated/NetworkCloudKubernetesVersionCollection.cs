@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.NetworkCloud
         {
             TryGetApiVersion(NetworkCloudKubernetesVersionResource.ResourceType, out string networkCloudKubernetesVersionApiVersion);
             _kubernetesVersionsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.NetworkCloud", NetworkCloudKubernetesVersionResource.ResourceType.Namespace, Diagnostics);
-            _kubernetesVersionsRestClient = new KubernetesVersions(_kubernetesVersionsClientDiagnostics, Pipeline, Endpoint, networkCloudKubernetesVersionApiVersion ?? "2026-05-01-preview");
+            _kubernetesVersionsRestClient = new KubernetesVersions(_kubernetesVersionsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, networkCloudKubernetesVersionApiVersion ?? "2026-05-01-preview");
             ValidateResourceId(id);
         }
 

@@ -20,8 +20,8 @@ namespace Azure.Generator.Management.Snippets
         public static ScopedApi<ResourceIdentifier> Id(this ScopedApi<ArmResource> resource)
             => resource.Property(nameof(ArmResource.Id)).As<ResourceIdentifier>();
 
-        public static ScopedApi<ClientDiagnostics> Diagnostics(this ScopedApi<ArmResource> resource)
-            => resource.Property("Diagnostics").As<ClientDiagnostics>();
+        public static ScopedApi<DiagnosticsOptions> Diagnostics(this ScopedApi<ArmResource> resource)
+            => resource.Property("Diagnostics").As<DiagnosticsOptions>();
 
         public static ScopedApi<HttpPipeline> Pipeline(this ScopedApi<ArmResource> resource)
             => resource.Property("Pipeline").As<HttpPipeline>();

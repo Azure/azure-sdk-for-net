@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.DataMigration
         {
             TryGetApiVersion(ResourceType, out string databaseMigrationsMongoToCosmosDbvCoreMongoApiVersion);
             _databaseMigrationsMongoToCosmosDbvCoreMongoClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.DataMigration", ResourceType.Namespace, Diagnostics);
-            _databaseMigrationsMongoToCosmosDbvCoreMongoRestClient = new DatabaseMigrationsMongoToCosmosDbvCoreMongo(_databaseMigrationsMongoToCosmosDbvCoreMongoClientDiagnostics, Pipeline, Endpoint, databaseMigrationsMongoToCosmosDbvCoreMongoApiVersion ?? "2025-09-01-preview");
+            _databaseMigrationsMongoToCosmosDbvCoreMongoRestClient = new DatabaseMigrationsMongoToCosmosDbvCoreMongo(_databaseMigrationsMongoToCosmosDbvCoreMongoClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, databaseMigrationsMongoToCosmosDbvCoreMongoApiVersion ?? "2025-09-01-preview");
             ValidateResourceId(id);
         }
 

@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.AppComplianceAutomation
         {
             TryGetApiVersion(AppComplianceReportResource.ResourceType, out string appComplianceReportApiVersion);
             _reportClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.AppComplianceAutomation", AppComplianceReportResource.ResourceType.Namespace, Diagnostics);
-            _reportRestClient = new Report(_reportClientDiagnostics, Pipeline, Endpoint, appComplianceReportApiVersion ?? "2024-06-27");
+            _reportRestClient = new Report(_reportClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, appComplianceReportApiVersion ?? "2024-06-27");
             ValidateResourceId(id);
         }
 

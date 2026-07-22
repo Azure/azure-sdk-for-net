@@ -11,12 +11,12 @@ namespace Azure.Provisioning.ContainerInstance
     public enum AzureFileShareAccessTier
     {
         /// <summary> Cool. </summary>
-        Cool,
+        Cool = 0,
         /// <summary> Hot. </summary>
-        Hot,
+        Hot = 1,
         /// <summary> Premium. </summary>
-        Premium,
+        Premium = 2,
         /// <summary> TransactionOptimized. </summary>
-        TransactionOptimized
+        TransactionOptimized = 3
     }
 }

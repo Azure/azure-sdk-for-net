@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.Compute
         {
             _communityGalleryImageVersionClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Compute", CommunityGalleryImageVersionResource.ResourceType.Namespace, Diagnostics);
             TryGetApiVersion(CommunityGalleryImageVersionResource.ResourceType, out string communityGalleryImageVersionApiVersion);
-            _communityGalleryImageVersionRestClient = new CommunityGalleryImageVersions(_communityGalleryImageVersionClientDiagnostics, Pipeline, Endpoint, communityGalleryImageVersionApiVersion);
+            _communityGalleryImageVersionRestClient = new CommunityGalleryImageVersions(_communityGalleryImageVersionClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, communityGalleryImageVersionApiVersion);
 #if DEBUG
             ValidateResourceId(Id);
 #endif

@@ -57,11 +57,11 @@ namespace Azure.ResourceManager.Cdn
         {
             TryGetApiVersion(ResourceType, out string profileApiVersion);
             _profilesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Cdn", ResourceType.Namespace, Diagnostics);
-            _profilesRestClient = new Profiles(_profilesClientDiagnostics, Pipeline, Endpoint, profileApiVersion ?? "2025-09-01-preview");
+            _profilesRestClient = new Profiles(_profilesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, profileApiVersion ?? "2025-09-01-preview");
             _afdProfilesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Cdn", ResourceType.Namespace, Diagnostics);
-            _afdProfilesRestClient = new AFDProfiles(_afdProfilesClientDiagnostics, Pipeline, Endpoint, profileApiVersion ?? "2025-09-01-preview");
+            _afdProfilesRestClient = new AFDProfiles(_afdProfilesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, profileApiVersion ?? "2025-09-01-preview");
             _logAnalyticsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Cdn", ResourceType.Namespace, Diagnostics);
-            _logAnalyticsRestClient = new LogAnalytics(_logAnalyticsClientDiagnostics, Pipeline, Endpoint, profileApiVersion ?? "2025-09-01-preview");
+            _logAnalyticsRestClient = new LogAnalytics(_logAnalyticsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, profileApiVersion ?? "2025-09-01-preview");
             ValidateResourceId(id);
         }
 

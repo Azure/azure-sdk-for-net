@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.SecurityInsights
         {
             TryGetApiVersion(SecurityInsightsHuntRelationResource.ResourceType, out string securityInsightsHuntRelationApiVersion);
             _huntRelationsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.SecurityInsights", SecurityInsightsHuntRelationResource.ResourceType.Namespace, Diagnostics);
-            _huntRelationsRestClient = new HuntRelations(_huntRelationsClientDiagnostics, Pipeline, Endpoint, securityInsightsHuntRelationApiVersion ?? "2025-07-01-preview");
+            _huntRelationsRestClient = new HuntRelations(_huntRelationsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, securityInsightsHuntRelationApiVersion ?? "2025-07-01-preview");
             ValidateResourceId(id);
         }
 

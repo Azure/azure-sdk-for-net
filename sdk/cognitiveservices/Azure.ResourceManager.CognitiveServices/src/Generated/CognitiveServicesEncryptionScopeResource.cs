@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.CognitiveServices
         {
             TryGetApiVersion(ResourceType, out string cognitiveServicesEncryptionScopeApiVersion);
             _encryptionScopesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.CognitiveServices", ResourceType.Namespace, Diagnostics);
-            _encryptionScopesRestClient = new EncryptionScopes(_encryptionScopesClientDiagnostics, Pipeline, Endpoint, cognitiveServicesEncryptionScopeApiVersion ?? "2026-05-15-preview");
+            _encryptionScopesRestClient = new EncryptionScopes(_encryptionScopesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, cognitiveServicesEncryptionScopeApiVersion ?? "2026-05-15-preview");
             ValidateResourceId(id);
         }
 

@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.HorizonDB
         {
             TryGetApiVersion(HorizonDBPoolResource.ResourceType, out string horizonDBPoolApiVersion);
             _horizonDBPoolsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.HorizonDB", HorizonDBPoolResource.ResourceType.Namespace, Diagnostics);
-            _horizonDBPoolsRestClient = new HorizonDBPools(_horizonDBPoolsClientDiagnostics, Pipeline, Endpoint, horizonDBPoolApiVersion ?? "2026-01-20-preview");
+            _horizonDBPoolsRestClient = new HorizonDBPools(_horizonDBPoolsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, horizonDBPoolApiVersion ?? "2026-01-20-preview");
             ValidateResourceId(id);
         }
 

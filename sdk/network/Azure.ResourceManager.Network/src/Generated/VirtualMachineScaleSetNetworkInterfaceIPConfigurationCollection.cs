@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.Network
         {
             TryGetApiVersion(VirtualMachineScaleSetNetworkInterfaceIPConfigurationResource.ResourceType, out string virtualMachineScaleSetNetworkInterfaceIPConfigurationApiVersion);
             _virtualMachineScaleSetNetworkInterfaceIPConfigurationsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Network", VirtualMachineScaleSetNetworkInterfaceIPConfigurationResource.ResourceType.Namespace, Diagnostics);
-            _virtualMachineScaleSetNetworkInterfaceIPConfigurationsRestClient = new VirtualMachineScaleSetNetworkInterfaceIPConfigurations(_virtualMachineScaleSetNetworkInterfaceIPConfigurationsClientDiagnostics, Pipeline, Endpoint, virtualMachineScaleSetNetworkInterfaceIPConfigurationApiVersion ?? "2018-10-01");
+            _virtualMachineScaleSetNetworkInterfaceIPConfigurationsRestClient = new VirtualMachineScaleSetNetworkInterfaceIPConfigurations(_virtualMachineScaleSetNetworkInterfaceIPConfigurationsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, virtualMachineScaleSetNetworkInterfaceIPConfigurationApiVersion ?? "2018-10-01");
             ValidateResourceId(id);
         }
 

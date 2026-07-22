@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.AppContainers
         {
             TryGetApiVersion(DaprComponentResiliencyPolicyResource.ResourceType, out string daprComponentResiliencyPolicyApiVersion);
             _daprComponentResiliencyPoliciesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.AppContainers", DaprComponentResiliencyPolicyResource.ResourceType.Namespace, Diagnostics);
-            _daprComponentResiliencyPoliciesRestClient = new DaprComponentResiliencyPolicies(_daprComponentResiliencyPoliciesClientDiagnostics, Pipeline, Endpoint, daprComponentResiliencyPolicyApiVersion ?? "2025-10-02-preview");
+            _daprComponentResiliencyPoliciesRestClient = new DaprComponentResiliencyPolicies(_daprComponentResiliencyPoliciesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, daprComponentResiliencyPolicyApiVersion ?? "2025-10-02-preview");
             ValidateResourceId(id);
         }
 

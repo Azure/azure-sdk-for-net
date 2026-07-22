@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.Sql
         {
             TryGetApiVersion(SqlServerDevOpsAuditingSettingResource.ResourceType, out string sqlServerDevOpsAuditingSettingApiVersion);
             _serverDevOpsAuditSettingsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Sql", SqlServerDevOpsAuditingSettingResource.ResourceType.Namespace, Diagnostics);
-            _serverDevOpsAuditSettingsRestClient = new ServerDevOpsAuditSettings(_serverDevOpsAuditSettingsClientDiagnostics, Pipeline, Endpoint, sqlServerDevOpsAuditingSettingApiVersion ?? "2025-02-01-preview");
+            _serverDevOpsAuditSettingsRestClient = new ServerDevOpsAuditSettings(_serverDevOpsAuditSettingsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, sqlServerDevOpsAuditingSettingApiVersion ?? "2025-02-01-preview");
             ValidateResourceId(id);
         }
 

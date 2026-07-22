@@ -53,9 +53,9 @@ namespace Azure.ResourceManager.Network
         {
             TryGetApiVersion(ResourceType, out string backendAddressPoolApiVersion);
             _loadBalancerBackendAddressPoolsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Network", ResourceType.Namespace, Diagnostics);
-            _loadBalancerBackendAddressPoolsRestClient = new LoadBalancerBackendAddressPools(_loadBalancerBackendAddressPoolsClientDiagnostics, Pipeline, Endpoint, backendAddressPoolApiVersion ?? "2025-07-01");
+            _loadBalancerBackendAddressPoolsRestClient = new LoadBalancerBackendAddressPools(_loadBalancerBackendAddressPoolsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, backendAddressPoolApiVersion ?? "2025-07-01");
             _loadBalancersClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Network", ResourceType.Namespace, Diagnostics);
-            _loadBalancersRestClient = new LoadBalancers(_loadBalancersClientDiagnostics, Pipeline, Endpoint, backendAddressPoolApiVersion ?? "2025-07-01");
+            _loadBalancersRestClient = new LoadBalancers(_loadBalancersClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, backendAddressPoolApiVersion ?? "2025-07-01");
             ValidateResourceId(id);
         }
 

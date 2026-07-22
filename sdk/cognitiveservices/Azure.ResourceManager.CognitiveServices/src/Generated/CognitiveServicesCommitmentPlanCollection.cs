@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.CognitiveServices
         {
             TryGetApiVersion(CognitiveServicesCommitmentPlanResource.ResourceType, out string cognitiveServicesCommitmentPlanApiVersion);
             _commitmentPlanOperationGroupClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.CognitiveServices", CognitiveServicesCommitmentPlanResource.ResourceType.Namespace, Diagnostics);
-            _commitmentPlanOperationGroupRestClient = new CommitmentPlanOperationGroup(_commitmentPlanOperationGroupClientDiagnostics, Pipeline, Endpoint, cognitiveServicesCommitmentPlanApiVersion ?? "2026-05-15-preview");
+            _commitmentPlanOperationGroupRestClient = new CommitmentPlanOperationGroup(_commitmentPlanOperationGroupClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, cognitiveServicesCommitmentPlanApiVersion ?? "2026-05-15-preview");
             ValidateResourceId(id);
         }
 

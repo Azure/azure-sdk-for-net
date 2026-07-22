@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.SecurityCenter
         {
             TryGetApiVersion(GovernanceRuleResource.ResourceType, out string governanceRuleApiVersion);
             _governanceRulesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.SecurityCenter", GovernanceRuleResource.ResourceType.Namespace, Diagnostics);
-            _governanceRulesRestClient = new GovernanceRules(_governanceRulesClientDiagnostics, Pipeline, Endpoint, governanceRuleApiVersion ?? "2022-01-01-preview");
+            _governanceRulesRestClient = new GovernanceRules(_governanceRulesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, governanceRuleApiVersion ?? "2022-01-01-preview");
         }
 
         /// <summary>

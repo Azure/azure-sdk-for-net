@@ -55,9 +55,9 @@ namespace Azure.ResourceManager.HybridNetwork
         {
             TryGetApiVersion(ResourceType, out string artifactStoreApiVersion);
             _artifactStoresClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.HybridNetwork", ResourceType.Namespace, Diagnostics);
-            _artifactStoresRestClient = new ArtifactStores(_artifactStoresClientDiagnostics, Pipeline, Endpoint, artifactStoreApiVersion ?? "2025-03-30");
+            _artifactStoresRestClient = new ArtifactStores(_artifactStoresClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, artifactStoreApiVersion ?? "2025-03-30");
             _proxyArtifactClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.HybridNetwork", ResourceType.Namespace, Diagnostics);
-            _proxyArtifactRestClient = new ProxyArtifact(_proxyArtifactClientDiagnostics, Pipeline, Endpoint, artifactStoreApiVersion ?? "2025-03-30");
+            _proxyArtifactRestClient = new ProxyArtifact(_proxyArtifactClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, artifactStoreApiVersion ?? "2025-03-30");
             ValidateResourceId(id);
         }
 

@@ -2,7 +2,9 @@
 // Licensed under the MIT License.
 
 using System;
-using System.Collections.Generic;
+using System.IO;
+using System.Runtime.CompilerServices;
+using System.Threading;
 using System.Threading.Tasks;
 using Azure.AI.Projects;
 using Azure.AI.Projects.Agents;
@@ -16,6 +18,39 @@ namespace Azure.AI.Extensions.OpenAI.Tests.Samples;
 # pragma warning disable AAIP001
 public class Sample_ToolBoxSkill : ProjectsOpenAITestBase
 {
+    #region Snippet:Sample_GetPath_ToolBoxSkill
+    protected static string GetDirectory(string path, [CallerFilePath] string pth = "")
+    {
+        var dirName = Path.GetDirectoryName(pth) ?? "";
+        return Path.Combine(dirName, path);
+    }
+    #endregion
+    #region Snippet:Sample_CodeAgentMetadata_ToolBoxSkill
+    private static AgentVersionFromCodeMetadata GetAgentMetadata(string middlewareAgentName, string toolboxName, string foundryProjectEndpoint, string modelDeploymentName)
+    {
+        HostedAgentDefinition agentDefinition = new(
+            cpu: "0.5",
+            memory: "1Gi"
+        )
+        {
+            Versions = { new ProtocolVersionRecord(ProjectsAgentProtocol.Responses, "2.0.0") },
+            CodeConfiguration = new(
+                runtime: "python_3_14",
+                entryPoint: ["python", "main.py"],
+                dependencyResolution: CodeDependencyResolution.RemoteBuild
+            ),
+            EnvironmentVariables = {
+                { "AGENT_NAME", middlewareAgentName},
+                { "TOOLBOX_NAME", toolboxName},
+                { "FOUNDRY_PROJECT_ENDPOINT", foundryProjectEndpoint},
+                { "FOUNDRY_MODEL_NAME", modelDeploymentName },
+            }
+        };
+        AgentVersionFromCodeMetadata metadata = new(agentDefinition);
+        metadata.Metadata["enableVnextExperience"] = "true";
+        return metadata;
+    }
+    #endregion
     [Test]
     [AsyncOnly]
     public async Task ToolBoxSkillCreateAsync()
@@ -29,8 +64,7 @@ public class Sample_ToolBoxSkill : ProjectsOpenAITestBase
         var projectEndpoint = TestEnvironment.FOUNDRY_PROJECT_ENDPOINT;
         var modelDeploymentName = TestEnvironment.FOUNDRY_MODEL_NAME;
 #endif
-        DefaultAzureCredential credential = new();
-        AIProjectClient projectClient = new(endpoint: new(projectEndpoint), tokenProvider: credential);
+        AIProjectClient projectClient = new(endpoint: new(projectEndpoint), tokenProvider: new DefaultAzureCredential());
         AgentToolboxes toolboxClient = projectClient.AgentAdministrationClient.GetAgentToolboxes();
         ProjectAgentSkills skillsClient = projectClient.AgentAdministrationClient.GetAgentSkills();
         #endregion
@@ -72,75 +106,31 @@ public class Sample_ToolBoxSkill : ProjectsOpenAITestBase
             description: "Toolbox exposing a shipping-cost skill."
         );
         Console.WriteLine($"Created toolbox {toolBox.Name}, v. {toolBox.Version}.");
-        ResponseTool skillTool = ResponseTool.CreateMcpTool(
-            serverLabel: "skill-toolbox",
-            serverUri: new Uri($"{projectEndpoint}/toolboxes/{toolBox.Name}/versions/{toolBox.Version}/mcp?api-version=v1"),
-            authorizationToken: credential.GetToken(new(scopes: ["https://ai.azure.com/.default"])).Token,
-            headers: new Dictionary<string, string>() {
-                { "Foundry-Features", "Toolboxes=V1Preview" }
-            }
-        );
         #endregion
         #region Snippet:Sample_CreateAgent_ToolBoxSkill_Async
-        DeclarativeAgentDefinition agentDefinition = new(model: modelDeploymentName)
+        ProjectsAgentVersion agentVersion = await projectClient.AgentAdministrationClient.CreateAgentVersionFromCodeAsync(
+            agentName: "myCodeAgentSkill",
+            filePath: GetDirectory(Path.Combine(["Assets", "AgentsCodeToolbox"])),
+            metadata: GetAgentMetadata(
+                middlewareAgentName: "codeAgentMiddleware1",
+                toolboxName: toolBox.Name,
+                foundryProjectEndpoint: projectEndpoint,
+                modelDeploymentName: modelDeploymentName
+            )
+        );
+        while (agentVersion.Status != AgentVersionStatus.Active && agentVersion.Status != AgentVersionStatus.Failed)
         {
-            Instructions = "Answer the user using the `shipping-cost-skill` instructions " +
-                "available in your context. Do not call `tool_search`; the " +
-                "skill rules are already part of your knowledge. Apply the " +
-                "skill's formula exactly as given and state the formula in " +
-                "your answer.",
-            Tools = { skillTool }
-        };
-        ProjectsAgentVersion agentVersion = await projectClient.AgentAdministrationClient.CreateAgentVersionAsync(
-            agentName: "myAgent",
-            options: new(agentDefinition));
-        Console.WriteLine($"Created Agent {agentVersion.Name}, v. {agentVersion.Version}.");
+            await Task.Delay(500);
+            agentVersion = await projectClient.AgentAdministrationClient.GetAgentVersionAsync(agentName: agentVersion.Name, agentVersion: agentVersion.Version);
+        }
+        if (agentVersion.Status != AgentVersionStatus.Active)
+        {
+            throw new InvalidOperationException($"The Agent deployment failed, status: {agentVersion.Status}");
+        }
         #endregion
         #region Snippet:Sample_GetResponseFromAgent_ToolBoxSkill_Async
-        ProjectResponsesClient responseClient = projectClient.ProjectOpenAIClient.GetProjectResponsesClientForAgent(agentVersion.Name);
-
-        CreateResponseOptions nextResponseOptions = new()
-        {
-            InputItems = { ResponseItem.CreateUserMessageItem("Compute the shipping cost for a 3 kg package shipped domestically.") }
-        };
-        ResponseResult latestResponse = null;
-
-        while (nextResponseOptions is not null)
-        {
-            latestResponse = await responseClient.CreateResponseAsync(nextResponseOptions);
-            nextResponseOptions = null;
-
-            foreach (ResponseItem responseItem in latestResponse.OutputItems)
-            {
-                if (responseItem is McpToolCallApprovalRequestItem mcpToolCall)
-                {
-                    nextResponseOptions = new CreateResponseOptions()
-                    {
-                        PreviousResponseId = latestResponse.Id,
-                    };
-                    if (string.Equals(mcpToolCall.ServerLabel, "skill-toolbox"))
-                    {
-                        Console.WriteLine($"Approving {mcpToolCall.ServerLabel}...");
-                        // Automatically approve the MCP request to allow the agent to proceed
-                        // In production, you might want to implement more sophisticated approval logic
-                        nextResponseOptions.InputItems.Add(ResponseItem.CreateMcpApprovalResponseItem(approvalRequestId: mcpToolCall.Id, approved: true));
-                    }
-                    else
-                    {
-                        Console.WriteLine($"Rejecting unknown call {mcpToolCall.ServerLabel}...");
-                        nextResponseOptions.InputItems.Add(ResponseItem.CreateMcpApprovalResponseItem(approvalRequestId: mcpToolCall.Id, approved: false));
-                    }
-                }
-                else if (responseItem is McpToolDefinitionListItem listItem)
-                {
-                    Console.WriteLine("Found tools:");
-                    foreach (McpToolDefinition tool in listItem.ToolDefinitions)
-                    {
-                        Console.WriteLine($"    {tool.Name}");
-                    }
-                }
-            }
-        }
+        ProjectResponsesClient responseClient = projectClient.ProjectOpenAIClient.GetProjectResponsesClientForAgentEndpoint(agentVersion.Name);
+        ResponseResult latestResponse = await responseClient.CreateResponseAsync("Compute the shipping cost for a 3 kg package shipped domestically.");
         Console.WriteLine(latestResponse.GetOutputText());
         #endregion
         #region Snippet:DeleteToolBoxSkill_ToolBoxSkill_Async
@@ -162,8 +152,7 @@ public class Sample_ToolBoxSkill : ProjectsOpenAITestBase
         var projectEndpoint = TestEnvironment.FOUNDRY_PROJECT_ENDPOINT;
         var modelDeploymentName = TestEnvironment.FOUNDRY_MODEL_NAME;
 #endif
-        DefaultAzureCredential credential = new();
-        AIProjectClient projectClient = new(endpoint: new(projectEndpoint), tokenProvider: credential);
+        AIProjectClient projectClient = new(endpoint: new(projectEndpoint), tokenProvider: new DefaultAzureCredential());
         AgentToolboxes toolboxClient = projectClient.AgentAdministrationClient.GetAgentToolboxes();
         ProjectAgentSkills skillsClient = projectClient.AgentAdministrationClient.GetAgentSkills();
         try
@@ -204,75 +193,31 @@ public class Sample_ToolBoxSkill : ProjectsOpenAITestBase
             description: "Toolbox exposing a shipping-cost skill."
         );
         Console.WriteLine($"Created toolbox {toolBox.Name}, v. {toolBox.Version}.");
-        ResponseTool skillTool = ResponseTool.CreateMcpTool(
-            serverLabel: "skill-toolbox",
-            serverUri: new Uri($"{projectEndpoint}/toolboxes/{toolBox.Name}/versions/{toolBox.Version}/mcp?api-version=v1"),
-            authorizationToken: credential.GetToken(new(scopes: ["https://ai.azure.com/.default"])).Token,
-            headers: new Dictionary<string, string>() {
-                { "Foundry-Features", "Toolboxes=V1Preview" }
-            }
-        );
         #endregion
         #region Snippet:Sample_CreateAgent_ToolBoxSkill_Sync
-        DeclarativeAgentDefinition agentDefinition = new(model: modelDeploymentName)
+        ProjectsAgentVersion agentVersion = projectClient.AgentAdministrationClient.CreateAgentVersionFromCode(
+            agentName: "myCodeAgentSkill",
+            filePath: GetDirectory(Path.Combine(["Assets", "AgentsCodeToolbox"])),
+            metadata: GetAgentMetadata(
+                middlewareAgentName: "codeAgentMiddleware1",
+                toolboxName: toolBox.Name,
+                foundryProjectEndpoint: projectEndpoint,
+                modelDeploymentName: modelDeploymentName
+            )
+        );
+        while (agentVersion.Status != AgentVersionStatus.Active && agentVersion.Status != AgentVersionStatus.Failed)
         {
-            Instructions = "Answer the user using the `shipping-cost-skill` instructions " +
-                "available in your context. Do not call `tool_search`; the " +
-                "skill rules are already part of your knowledge. Apply the " +
-                "skill's formula exactly as given and state the formula in " +
-                "your answer.",
-            Tools = { skillTool }
-        };
-        ProjectsAgentVersion agentVersion = projectClient.AgentAdministrationClient.CreateAgentVersion(
-            agentName: "myAgent",
-            options: new(agentDefinition));
-        Console.WriteLine($"Created Agent {agentVersion.Name}, v. {agentVersion.Version}.");
+            Thread.Sleep(500);
+            agentVersion = projectClient.AgentAdministrationClient.GetAgentVersion(agentName: agentVersion.Name, agentVersion: agentVersion.Version);
+        }
+        if (agentVersion.Status != AgentVersionStatus.Active)
+        {
+            throw new InvalidOperationException($"The Agent deployment failed, status: {agentVersion.Status}");
+        }
         #endregion
         #region Snippet:Sample_GetResponseFromAgent_ToolBoxSkill_Sync
-        ProjectResponsesClient responseClient = projectClient.ProjectOpenAIClient.GetProjectResponsesClientForAgent(agentVersion.Name);
-
-        CreateResponseOptions nextResponseOptions = new()
-        {
-            InputItems = { ResponseItem.CreateUserMessageItem("Compute the shipping cost for a 3 kg package shipped domestically.") }
-        };
-        ResponseResult latestResponse = null;
-
-        while (nextResponseOptions is not null)
-        {
-            latestResponse = responseClient.CreateResponse(nextResponseOptions);
-            nextResponseOptions = null;
-
-            foreach (ResponseItem responseItem in latestResponse.OutputItems)
-            {
-                if (responseItem is McpToolCallApprovalRequestItem mcpToolCall)
-                {
-                    nextResponseOptions = new CreateResponseOptions()
-                    {
-                        PreviousResponseId = latestResponse.Id,
-                    };
-                    if (string.Equals(mcpToolCall.ServerLabel, "skill-toolbox"))
-                    {
-                        Console.WriteLine($"Approving {mcpToolCall.ServerLabel}...");
-                        // Automatically approve the MCP request to allow the agent to proceed
-                        // In production, you might want to implement more sophisticated approval logic
-                        nextResponseOptions.InputItems.Add(ResponseItem.CreateMcpApprovalResponseItem(approvalRequestId: mcpToolCall.Id, approved: true));
-                    }
-                    else
-                    {
-                        Console.WriteLine($"Rejecting unknown call {mcpToolCall.ServerLabel}...");
-                        nextResponseOptions.InputItems.Add(ResponseItem.CreateMcpApprovalResponseItem(approvalRequestId: mcpToolCall.Id, approved: false));
-                    }
-                }
-                else if (responseItem is McpToolDefinitionListItem listItem)
-                {
-                    Console.WriteLine("Found tools:");
-                    foreach (McpToolDefinition tool in listItem.ToolDefinitions)
-                    {
-                        Console.WriteLine($"    {tool.Name}");
-                    }
-                }
-            }
-        }
+        ProjectResponsesClient responseClient = projectClient.ProjectOpenAIClient.GetProjectResponsesClientForAgentEndpoint(agentVersion.Name);
+        ResponseResult latestResponse = responseClient.CreateResponse("Compute the shipping cost for a 3 kg package shipped domestically.");
         Console.WriteLine(latestResponse.GetOutputText());
         #endregion
         #region Snippet:DeleteToolBoxSkill_ToolBoxSkill_Sync

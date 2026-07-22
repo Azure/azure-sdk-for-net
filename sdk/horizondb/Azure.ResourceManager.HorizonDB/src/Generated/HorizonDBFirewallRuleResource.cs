@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.HorizonDB
         {
             TryGetApiVersion(ResourceType, out string horizonDBFirewallRuleApiVersion);
             _horizonDBFirewallRulesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.HorizonDB", ResourceType.Namespace, Diagnostics);
-            _horizonDBFirewallRulesRestClient = new HorizonDBFirewallRules(_horizonDBFirewallRulesClientDiagnostics, Pipeline, Endpoint, horizonDBFirewallRuleApiVersion ?? "2026-01-20-preview");
+            _horizonDBFirewallRulesRestClient = new HorizonDBFirewallRules(_horizonDBFirewallRulesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, horizonDBFirewallRuleApiVersion ?? "2026-01-20-preview");
             ValidateResourceId(id);
         }
 
