@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.Support
         {
             TryGetApiVersion(SubscriptionFileWorkspaceResource.ResourceType, out string subscriptionFileWorkspaceApiVersion);
             _subscriptionFileWorkspaceClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Support", SubscriptionFileWorkspaceResource.ResourceType.Namespace, Diagnostics);
-            _subscriptionFileWorkspaceRestClient = new SubscriptionFileWorkspace(_subscriptionFileWorkspaceClientDiagnostics, Pipeline, Endpoint, subscriptionFileWorkspaceApiVersion ?? "2025-06-01-preview");
+            _subscriptionFileWorkspaceRestClient = new SubscriptionFileWorkspace(_subscriptionFileWorkspaceClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, subscriptionFileWorkspaceApiVersion ?? "2025-06-01-preview");
             ValidateResourceId(id);
         }
 

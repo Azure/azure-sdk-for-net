@@ -23,6 +23,8 @@ namespace Azure.AI.Extensions.OpenAI.Tests;
 [LiveParallelizable(ParallelScope.All)]
 public class ProjectsOpenAITestBase : RecordedTestBase<ProjectsOpenAITestEnvironment>
 {
+    private static AzureCliCredential _credential = null;
+
     public enum OpenAIClientMode
     {
         UseExternalOpenAI,
@@ -169,7 +171,8 @@ public class ProjectsOpenAITestBase : RecordedTestBase<ProjectsOpenAITestEnviron
         // This path should allow launching az command.
         if (Mode != RecordedTestMode.Playback && bool.TryParse(Environment.GetEnvironmentVariable("USE_CLI_CREDENTIAL"), out bool cliValue) && cliValue)
         {
-            return new AzureCliCredential();
+            System.Threading.Interlocked.CompareExchange(ref _credential, new AzureCliCredential(), null);
+            return _credential;
         }
         return TestEnvironment.Credential;
     }

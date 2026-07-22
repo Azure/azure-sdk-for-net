@@ -54,9 +54,9 @@ namespace Azure.ResourceManager.Support
         {
             TryGetApiVersion(ResourceType, out string subscriptionSupportTicketApiVersion);
             _subscriptionSupportTicketClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Support", ResourceType.Namespace, Diagnostics);
-            _subscriptionSupportTicketRestClient = new SubscriptionSupportTicket(_subscriptionSupportTicketClientDiagnostics, Pipeline, Endpoint, subscriptionSupportTicketApiVersion ?? "2025-06-01-preview");
+            _subscriptionSupportTicketRestClient = new SubscriptionSupportTicket(_subscriptionSupportTicketClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, subscriptionSupportTicketApiVersion ?? "2025-06-01-preview");
             _supportTicketCommunicationClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Support", ResourceType.Namespace, Diagnostics);
-            _supportTicketCommunicationRestClient = new SupportTicketCommunication(_supportTicketCommunicationClientDiagnostics, Pipeline, Endpoint, subscriptionSupportTicketApiVersion ?? "2025-06-01-preview");
+            _supportTicketCommunicationRestClient = new SupportTicketCommunication(_supportTicketCommunicationClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, subscriptionSupportTicketApiVersion ?? "2025-06-01-preview");
             ValidateResourceId(id);
         }
 

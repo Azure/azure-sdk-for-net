@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.Automation
         {
             TryGetApiVersion(AutomationRunbookResource.ResourceType, out string automationRunbookApiVersion);
             _runbookClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Automation", AutomationRunbookResource.ResourceType.Namespace, Diagnostics);
-            _runbookRestClient = new Runbook(_runbookClientDiagnostics, Pipeline, Endpoint, automationRunbookApiVersion ?? "2024-10-23");
+            _runbookRestClient = new Runbook(_runbookClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, automationRunbookApiVersion ?? "2024-10-23");
             ValidateResourceId(id);
         }
 

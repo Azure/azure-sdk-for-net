@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.Automation
         {
             TryGetApiVersion(ResourceType, out string softwareUpdateConfigurationApiVersion);
             _softwareUpdateConfigurationsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Automation", ResourceType.Namespace, Diagnostics);
-            _softwareUpdateConfigurationsRestClient = new SoftwareUpdateConfigurations(_softwareUpdateConfigurationsClientDiagnostics, Pipeline, Endpoint, softwareUpdateConfigurationApiVersion ?? "2024-10-23");
+            _softwareUpdateConfigurationsRestClient = new SoftwareUpdateConfigurations(_softwareUpdateConfigurationsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, softwareUpdateConfigurationApiVersion ?? "2024-10-23");
             ValidateResourceId(id);
         }
 

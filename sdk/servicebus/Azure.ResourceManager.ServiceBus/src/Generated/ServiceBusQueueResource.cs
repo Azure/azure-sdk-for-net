@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.ServiceBus
         {
             TryGetApiVersion(ResourceType, out string serviceBusQueueApiVersion);
             _queuesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ServiceBus", ResourceType.Namespace, Diagnostics);
-            _queuesRestClient = new Queues(_queuesClientDiagnostics, Pipeline, Endpoint, serviceBusQueueApiVersion ?? "2026-01-01");
+            _queuesRestClient = new Queues(_queuesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, serviceBusQueueApiVersion ?? "2026-01-01");
             ValidateResourceId(id);
         }
 

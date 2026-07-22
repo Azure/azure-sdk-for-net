@@ -32,6 +32,6 @@ namespace Azure.ResourceManager.Resources.Mocking
 
         private ClientDiagnostics DeploymentExtendedSubscriptionGroupClientDiagnostics => _deploymentExtendedSubscriptionGroupClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Resources.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private DeploymentExtendedSubscriptionGroup DeploymentExtendedSubscriptionGroupRestClient => _deploymentExtendedSubscriptionGroupRestClient ??= new DeploymentExtendedSubscriptionGroup(DeploymentExtendedSubscriptionGroupClientDiagnostics, Pipeline, Endpoint, "2025-04-01");
+        private DeploymentExtendedSubscriptionGroup DeploymentExtendedSubscriptionGroupRestClient => _deploymentExtendedSubscriptionGroupRestClient ??= new DeploymentExtendedSubscriptionGroup(DeploymentExtendedSubscriptionGroupClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2025-04-01");
     }
 }

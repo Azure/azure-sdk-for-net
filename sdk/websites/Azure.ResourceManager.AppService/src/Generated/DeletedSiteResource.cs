@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.AppService
         {
             TryGetApiVersion(ResourceType, out string deletedSiteApiVersion);
             _globalClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.AppService", ResourceType.Namespace, Diagnostics);
-            _globalRestClient = new Global(_globalClientDiagnostics, Pipeline, Endpoint, deletedSiteApiVersion ?? "2026-03-15");
+            _globalRestClient = new Global(_globalClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, deletedSiteApiVersion ?? "2026-03-15");
             ValidateResourceId(id);
         }
 

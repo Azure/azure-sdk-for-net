@@ -63,6 +63,43 @@ namespace Azure.ResourceManager.Education.Models
             return new EducationAmount(currency, value, default);
         }
 
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="displayName"> Lab Display Name. </param>
+        /// <param name="budgetPerStudent"> Default monetary cap for each student in this lab. </param>
+        /// <param name="description"> Detail description of this lab. </param>
+        /// <param name="expireOn"> Default expiration date for each student in this lab. </param>
+        /// <param name="effectiveOn"> Lab creation date. </param>
+        /// <param name="status"> The status of this lab. </param>
+        /// <param name="maxStudentCount"> the total number of students that can be accepted to the lab. </param>
+        /// <param name="invitationCode"> invitation code for redeemable lab. </param>
+        /// <param name="totalBudget"> Total budget. </param>
+        /// <param name="totalAllocatedBudget"> Total allocated budget. </param>
+        /// <returns> A new <see cref="Education.EducationLabData"/> instance for mocking. </returns>
+        public static EducationLabData EducationLabData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, string displayName = default, EducationAmount budgetPerStudent = default, string description = default, DateTimeOffset? expireOn = default, DateTimeOffset? effectiveOn = default, LabStatus? status = default, int? maxStudentCount = default, string invitationCode = default, EducationAmount totalBudget = default, EducationAmount totalAllocatedBudget = default)
+        {
+            return new EducationLabData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                displayName is null && budgetPerStudent is null && description is null && expireOn is null && effectiveOn is null && status is null && maxStudentCount is null && invitationCode is null && totalBudget is null && totalAllocatedBudget is null ? default : new LabProperties(
+                    displayName,
+                    budgetPerStudent,
+                    description,
+                    expireOn.GetValueOrDefault(),
+                    effectiveOn,
+                    status,
+                    maxStudentCount,
+                    invitationCode,
+                    totalBudget,
+                    totalAllocatedBudget,
+                    default),
+                default);
+        }
+
         /// <param name="maxStudentCount"> the total number of students that can be accepted to the lab. </param>
         /// <returns> A new <see cref="Models.EducationInviteCodeGenerateContent"/> instance for mocking. </returns>
         public static EducationInviteCodeGenerateContent EducationInviteCodeGenerateContent(int? maxStudentCount = default)
@@ -78,10 +115,10 @@ namespace Azure.ResourceManager.Education.Models
         /// <param name="lastName"> Last Name. </param>
         /// <param name="email"> join request email. </param>
         /// <param name="status"> Join request status. </param>
-        /// <returns> A new <see cref="Education.JoinRequestDetailsData"/> instance for mocking. </returns>
-        public static JoinRequestDetailsData JoinRequestDetailsData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, string firstName = default, string lastName = default, string email = default, JoinRequestStatus? status = default)
+        /// <returns> A new <see cref="Education.EducationJoinRequestData"/> instance for mocking. </returns>
+        public static EducationJoinRequestData EducationJoinRequestData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, string firstName = default, string lastName = default, string email = default, JoinRequestStatus? status = default)
         {
-            return new JoinRequestDetailsData(
+            return new EducationJoinRequestData(
                 id,
                 name,
                 resourceType,
@@ -105,10 +142,10 @@ namespace Azure.ResourceManager.Education.Models
         /// <param name="effectiveOn"> Date student was added to the lab. </param>
         /// <param name="subscriptionAlias"> Subscription alias. </param>
         /// <param name="subscriptionInviteLastSentOn"> subscription invite last sent date. </param>
-        /// <returns> A new <see cref="Education.StudentDetailsData"/> instance for mocking. </returns>
-        public static StudentDetailsData StudentDetailsData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, string firstName = default, string lastName = default, string email = default, StudentRole? role = default, EducationAmount budget = default, string subscriptionId = default, DateTimeOffset? expireOn = default, StudentLabStatus? status = default, DateTimeOffset? effectiveOn = default, string subscriptionAlias = default, DateTimeOffset? subscriptionInviteLastSentOn = default)
+        /// <returns> A new <see cref="Education.EducationStudentData"/> instance for mocking. </returns>
+        public static EducationStudentData EducationStudentData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, string firstName = default, string lastName = default, string email = default, StudentRole? role = default, EducationAmount budget = default, string subscriptionId = default, DateTimeOffset? expireOn = default, StudentLabStatus? status = default, DateTimeOffset? effectiveOn = default, string subscriptionAlias = default, DateTimeOffset? subscriptionInviteLastSentOn = default)
         {
-            return new StudentDetailsData(
+            return new EducationStudentData(
                 id,
                 name,
                 resourceType,

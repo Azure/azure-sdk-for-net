@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.Hci
         {
             TryGetApiVersion(ResourceType, out string edgeMachineDiskPrivilegedJobApiVersion);
             _edgeMachineDiskPrivilegedJobsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Hci", ResourceType.Namespace, Diagnostics);
-            _edgeMachineDiskPrivilegedJobsRestClient = new EdgeMachineDiskPrivilegedJobs(_edgeMachineDiskPrivilegedJobsClientDiagnostics, Pipeline, Endpoint, edgeMachineDiskPrivilegedJobApiVersion ?? "2026-05-01-preview");
+            _edgeMachineDiskPrivilegedJobsRestClient = new EdgeMachineDiskPrivilegedJobs(_edgeMachineDiskPrivilegedJobsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, edgeMachineDiskPrivilegedJobApiVersion ?? "2026-05-01-preview");
             ValidateResourceId(id);
         }
 

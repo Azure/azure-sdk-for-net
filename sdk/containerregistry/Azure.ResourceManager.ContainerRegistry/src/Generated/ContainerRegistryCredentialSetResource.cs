@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.ContainerRegistry
         {
             TryGetApiVersion(ResourceType, out string containerRegistryCredentialSetApiVersion);
             _credentialSetsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ContainerRegistry", ResourceType.Namespace, Diagnostics);
-            _credentialSetsRestClient = new CredentialSets(_credentialSetsClientDiagnostics, Pipeline, Endpoint, containerRegistryCredentialSetApiVersion ?? "2026-01-01-preview");
+            _credentialSetsRestClient = new CredentialSets(_credentialSetsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, containerRegistryCredentialSetApiVersion ?? "2026-01-01-preview");
             ValidateResourceId(id);
         }
 

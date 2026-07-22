@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.OracleDatabase
         {
             TryGetApiVersion(ResourceType, out string autonomousDBVersionApiVersion);
             _autonomousDatabaseVersionsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.OracleDatabase", ResourceType.Namespace, Diagnostics);
-            _autonomousDatabaseVersionsRestClient = new AutonomousDatabaseVersions(_autonomousDatabaseVersionsClientDiagnostics, Pipeline, Endpoint, autonomousDBVersionApiVersion ?? "2025-09-01");
+            _autonomousDatabaseVersionsRestClient = new AutonomousDatabaseVersions(_autonomousDatabaseVersionsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, autonomousDBVersionApiVersion ?? "2025-09-01");
             ValidateResourceId(id);
         }
 

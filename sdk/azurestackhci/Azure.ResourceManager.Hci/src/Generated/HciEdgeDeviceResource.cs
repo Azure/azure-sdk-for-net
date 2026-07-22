@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.Hci
         {
             TryGetApiVersion(ResourceType, out string hciEdgeDeviceApiVersion);
             _edgeDevicesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Hci", ResourceType.Namespace, Diagnostics);
-            _edgeDevicesRestClient = new EdgeDevices(_edgeDevicesClientDiagnostics, Pipeline, Endpoint, hciEdgeDeviceApiVersion ?? "2026-05-01-preview");
+            _edgeDevicesRestClient = new EdgeDevices(_edgeDevicesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, hciEdgeDeviceApiVersion ?? "2026-05-01-preview");
             ValidateResourceId(id);
         }
 

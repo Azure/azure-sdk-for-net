@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.Search
         {
             TryGetApiVersion(SearchServiceResource.ResourceType, out string searchServiceApiVersion);
             _servicesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Search", SearchServiceResource.ResourceType.Namespace, Diagnostics);
-            _servicesRestClient = new Services(_servicesClientDiagnostics, Pipeline, Endpoint, searchServiceApiVersion ?? "2026-03-01-preview");
+            _servicesRestClient = new Services(_servicesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, searchServiceApiVersion ?? "2026-03-01-preview");
             ValidateResourceId(id);
         }
 

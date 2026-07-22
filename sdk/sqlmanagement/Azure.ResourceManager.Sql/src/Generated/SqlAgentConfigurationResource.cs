@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.Sql
         {
             TryGetApiVersion(ResourceType, out string sqlAgentConfigurationApiVersion);
             _sqlAgentClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Sql", ResourceType.Namespace, Diagnostics);
-            _sqlAgentRestClient = new SqlAgent(_sqlAgentClientDiagnostics, Pipeline, Endpoint, sqlAgentConfigurationApiVersion ?? "2025-02-01-preview");
+            _sqlAgentRestClient = new SqlAgent(_sqlAgentClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, sqlAgentConfigurationApiVersion ?? "2025-02-01-preview");
             ValidateResourceId(id);
         }
 

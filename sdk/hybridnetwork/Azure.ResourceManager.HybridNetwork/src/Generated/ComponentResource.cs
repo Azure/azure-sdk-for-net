@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.HybridNetwork
         {
             TryGetApiVersion(ResourceType, out string componentApiVersion);
             _componentsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.HybridNetwork", ResourceType.Namespace, Diagnostics);
-            _componentsRestClient = new Components(_componentsClientDiagnostics, Pipeline, Endpoint, componentApiVersion ?? "2025-03-30");
+            _componentsRestClient = new Components(_componentsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, componentApiVersion ?? "2025-03-30");
             ValidateResourceId(id);
         }
 

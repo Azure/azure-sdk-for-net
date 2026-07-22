@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.Sql
         {
             TryGetApiVersion(ResourceType, out string serverAdvancedThreatProtectionApiVersion);
             _serverAdvancedThreatProtectionSettingsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Sql", ResourceType.Namespace, Diagnostics);
-            _serverAdvancedThreatProtectionSettingsRestClient = new ServerAdvancedThreatProtectionSettings(_serverAdvancedThreatProtectionSettingsClientDiagnostics, Pipeline, Endpoint, serverAdvancedThreatProtectionApiVersion ?? "2025-02-01-preview");
+            _serverAdvancedThreatProtectionSettingsRestClient = new ServerAdvancedThreatProtectionSettings(_serverAdvancedThreatProtectionSettingsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, serverAdvancedThreatProtectionApiVersion ?? "2025-02-01-preview");
             ValidateResourceId(id);
         }
 

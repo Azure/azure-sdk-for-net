@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration.PrivateLinkScopes
         {
             TryGetApiVersion(KubernetesConfigurationPrivateEndpointConnectionResource.ResourceType, out string kubernetesConfigurationPrivateEndpointConnectionApiVersion);
             _privateEndpointConnectionsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.KubernetesConfiguration.PrivateLinkScopes", KubernetesConfigurationPrivateEndpointConnectionResource.ResourceType.Namespace, Diagnostics);
-            _privateEndpointConnectionsRestClient = new PrivateEndpointConnections(_privateEndpointConnectionsClientDiagnostics, Pipeline, Endpoint, kubernetesConfigurationPrivateEndpointConnectionApiVersion ?? "2024-11-01-preview");
+            _privateEndpointConnectionsRestClient = new PrivateEndpointConnections(_privateEndpointConnectionsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, kubernetesConfigurationPrivateEndpointConnectionApiVersion ?? "2024-11-01-preview");
             ValidateResourceId(id);
         }
 

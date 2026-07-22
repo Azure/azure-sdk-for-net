@@ -59,15 +59,15 @@ namespace Azure.ResourceManager.Kusto
         {
             TryGetApiVersion(ResourceType, out string kustoDatabaseApiVersion);
             _databasesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Kusto", ResourceType.Namespace, Diagnostics);
-            _databasesRestClient = new Databases(_databasesClientDiagnostics, Pipeline, Endpoint, kustoDatabaseApiVersion ?? "2025-02-14");
+            _databasesRestClient = new Databases(_databasesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, kustoDatabaseApiVersion ?? "2025-02-14");
             _databasePrincipalAssignmentsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Kusto", ResourceType.Namespace, Diagnostics);
-            _databasePrincipalAssignmentsRestClient = new DatabasePrincipalAssignments(_databasePrincipalAssignmentsClientDiagnostics, Pipeline, Endpoint, kustoDatabaseApiVersion ?? "2025-02-14");
+            _databasePrincipalAssignmentsRestClient = new DatabasePrincipalAssignments(_databasePrincipalAssignmentsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, kustoDatabaseApiVersion ?? "2025-02-14");
             _dataConnectionsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Kusto", ResourceType.Namespace, Diagnostics);
-            _dataConnectionsRestClient = new DataConnections(_dataConnectionsClientDiagnostics, Pipeline, Endpoint, kustoDatabaseApiVersion ?? "2025-02-14");
+            _dataConnectionsRestClient = new DataConnections(_dataConnectionsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, kustoDatabaseApiVersion ?? "2025-02-14");
             _databaseClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Kusto", ResourceType.Namespace, Diagnostics);
-            _databaseRestClient = new Database(_databaseClientDiagnostics, Pipeline, Endpoint, kustoDatabaseApiVersion ?? "2025-02-14");
+            _databaseRestClient = new Database(_databaseClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, kustoDatabaseApiVersion ?? "2025-02-14");
             _scriptsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Kusto", ResourceType.Namespace, Diagnostics);
-            _scriptsRestClient = new Scripts(_scriptsClientDiagnostics, Pipeline, Endpoint, kustoDatabaseApiVersion ?? "2025-02-14");
+            _scriptsRestClient = new Scripts(_scriptsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, kustoDatabaseApiVersion ?? "2025-02-14");
             ValidateResourceId(id);
         }
 

@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.AgriculturePlatform
         {
             TryGetApiVersion(AgricultureServiceResource.ResourceType, out string agricultureServiceApiVersion);
             _agriServiceClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.AgriculturePlatform", AgricultureServiceResource.ResourceType.Namespace, Diagnostics);
-            _agriServiceRestClient = new AgriService(_agriServiceClientDiagnostics, Pipeline, Endpoint, agricultureServiceApiVersion ?? "2024-06-01-preview");
+            _agriServiceRestClient = new AgriService(_agriServiceClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, agricultureServiceApiVersion ?? "2024-06-01-preview");
             ValidateResourceId(id);
         }
 

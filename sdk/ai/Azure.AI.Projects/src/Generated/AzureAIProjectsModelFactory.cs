@@ -1147,6 +1147,7 @@ namespace Azure.AI.Projects
         /// <param name="source"> Which source category the warning applies to. `aggregate` is used only for cross-source warnings. </param>
         /// <param name="sourceIndex"> Zero-based index into `EvaluatorGenerationJob.inputs.sources` when the warning applies to a specific source. Omitted for aggregate warnings and for warnings not tied to one source. </param>
         /// <returns> A new <see cref="Projects.RubricGenerationInputQualityWarning"/> instance for mocking. </returns>
+        [Experimental("AAIP001")]
         public static RubricGenerationInputQualityWarning RubricGenerationInputQualityWarning(RubricGenerationInputQualityWarningCode code = default, RubricGenerationInputQualityWarningSeverity severity = default, string message = default, RubricGenerationInputQualityWarningSource source = default, int? sourceIndex = default)
         {
             return new RubricGenerationInputQualityWarning(

@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.HybridNetwork
         {
             TryGetApiVersion(NetworkServiceDesignGroupResource.ResourceType, out string networkServiceDesignGroupApiVersion);
             _networkServiceDesignGroupsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.HybridNetwork", NetworkServiceDesignGroupResource.ResourceType.Namespace, Diagnostics);
-            _networkServiceDesignGroupsRestClient = new NetworkServiceDesignGroups(_networkServiceDesignGroupsClientDiagnostics, Pipeline, Endpoint, networkServiceDesignGroupApiVersion ?? "2025-03-30");
+            _networkServiceDesignGroupsRestClient = new NetworkServiceDesignGroups(_networkServiceDesignGroupsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, networkServiceDesignGroupApiVersion ?? "2025-03-30");
             ValidateResourceId(id);
         }
 

@@ -57,13 +57,13 @@ namespace Azure.ResourceManager.Billing
         {
             TryGetApiVersion(ResourceType, out string billingCustomerApiVersion);
             _customersClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Billing", ResourceType.Namespace, Diagnostics);
-            _customersRestClient = new Customers(_customersClientDiagnostics, Pipeline, Endpoint, billingCustomerApiVersion ?? "2024-04-01");
+            _customersRestClient = new Customers(_customersClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, billingCustomerApiVersion ?? "2024-04-01");
             _billingSubscriptionsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Billing", ResourceType.Namespace, Diagnostics);
-            _billingSubscriptionsRestClient = new BillingSubscriptions(_billingSubscriptionsClientDiagnostics, Pipeline, Endpoint, billingCustomerApiVersion ?? "2024-04-01");
+            _billingSubscriptionsRestClient = new BillingSubscriptions(_billingSubscriptionsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, billingCustomerApiVersion ?? "2024-04-01");
             _productsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Billing", ResourceType.Namespace, Diagnostics);
-            _productsRestClient = new Products(_productsClientDiagnostics, Pipeline, Endpoint, billingCustomerApiVersion ?? "2024-04-01");
+            _productsRestClient = new Products(_productsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, billingCustomerApiVersion ?? "2024-04-01");
             _customerOperationGroupClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Billing", ResourceType.Namespace, Diagnostics);
-            _customerOperationGroupRestClient = new CustomerOperationGroup(_customerOperationGroupClientDiagnostics, Pipeline, Endpoint, billingCustomerApiVersion ?? "2024-04-01");
+            _customerOperationGroupRestClient = new CustomerOperationGroup(_customerOperationGroupClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, billingCustomerApiVersion ?? "2024-04-01");
             ValidateResourceId(id);
         }
 

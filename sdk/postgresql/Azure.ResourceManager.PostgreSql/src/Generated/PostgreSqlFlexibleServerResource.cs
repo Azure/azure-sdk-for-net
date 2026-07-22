@@ -63,17 +63,17 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
         {
             TryGetApiVersion(ResourceType, out string postgreSqlFlexibleServerApiVersion);
             _serversClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.PostgreSql.FlexibleServers", ResourceType.Namespace, Diagnostics);
-            _serversRestClient = new Servers(_serversClientDiagnostics, Pipeline, Endpoint, postgreSqlFlexibleServerApiVersion ?? "2026-04-01-preview");
+            _serversRestClient = new Servers(_serversClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, postgreSqlFlexibleServerApiVersion ?? "2026-04-01-preview");
             _migrationsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.PostgreSql.FlexibleServers", ResourceType.Namespace, Diagnostics);
-            _migrationsRestClient = new Migrations(_migrationsClientDiagnostics, Pipeline, Endpoint, postgreSqlFlexibleServerApiVersion ?? "2026-04-01-preview");
+            _migrationsRestClient = new Migrations(_migrationsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, postgreSqlFlexibleServerApiVersion ?? "2026-04-01-preview");
             _backupsLongTermRetentionClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.PostgreSql.FlexibleServers", ResourceType.Namespace, Diagnostics);
-            _backupsLongTermRetentionRestClient = new BackupsLongTermRetention(_backupsLongTermRetentionClientDiagnostics, Pipeline, Endpoint, postgreSqlFlexibleServerApiVersion ?? "2026-04-01-preview");
+            _backupsLongTermRetentionRestClient = new BackupsLongTermRetention(_backupsLongTermRetentionClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, postgreSqlFlexibleServerApiVersion ?? "2026-04-01-preview");
             _capabilitiesByServerClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.PostgreSql.FlexibleServers", ResourceType.Namespace, Diagnostics);
-            _capabilitiesByServerRestClient = new CapabilitiesByServer(_capabilitiesByServerClientDiagnostics, Pipeline, Endpoint, postgreSqlFlexibleServerApiVersion ?? "2026-04-01-preview");
+            _capabilitiesByServerRestClient = new CapabilitiesByServer(_capabilitiesByServerClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, postgreSqlFlexibleServerApiVersion ?? "2026-04-01-preview");
             _capturedLogsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.PostgreSql.FlexibleServers", ResourceType.Namespace, Diagnostics);
-            _capturedLogsRestClient = new CapturedLogs(_capturedLogsClientDiagnostics, Pipeline, Endpoint, postgreSqlFlexibleServerApiVersion ?? "2026-04-01-preview");
+            _capturedLogsRestClient = new CapturedLogs(_capturedLogsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, postgreSqlFlexibleServerApiVersion ?? "2026-04-01-preview");
             _replicasClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.PostgreSql.FlexibleServers", ResourceType.Namespace, Diagnostics);
-            _replicasRestClient = new Replicas(_replicasClientDiagnostics, Pipeline, Endpoint, postgreSqlFlexibleServerApiVersion ?? "2026-04-01-preview");
+            _replicasRestClient = new Replicas(_replicasClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, postgreSqlFlexibleServerApiVersion ?? "2026-04-01-preview");
             ValidateResourceId(id);
         }
 

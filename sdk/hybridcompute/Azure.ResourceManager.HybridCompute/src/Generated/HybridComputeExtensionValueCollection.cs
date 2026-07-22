@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.HybridCompute
             _publisher = publisher;
             _extensionType = extensionType;
             _extensionMetadataClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.HybridCompute", HybridComputeExtensionValueResource.ResourceType.Namespace, Diagnostics);
-            _extensionMetadataRestClient = new ExtensionMetadata(_extensionMetadataClientDiagnostics, Pipeline, Endpoint, hybridComputeExtensionValueApiVersion ?? "2025-09-16-preview");
+            _extensionMetadataRestClient = new ExtensionMetadata(_extensionMetadataClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, hybridComputeExtensionValueApiVersion ?? "2025-09-16-preview");
             ValidateResourceId(id);
         }
 

@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.OperationalInsights
         {
             TryGetApiVersion(StorageInsightResource.ResourceType, out string storageInsightApiVersion);
             _storageInsightConfigsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.OperationalInsights", StorageInsightResource.ResourceType.Namespace, Diagnostics);
-            _storageInsightConfigsRestClient = new StorageInsightConfigs(_storageInsightConfigsClientDiagnostics, Pipeline, Endpoint, storageInsightApiVersion ?? "2025-07-01");
+            _storageInsightConfigsRestClient = new StorageInsightConfigs(_storageInsightConfigsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, storageInsightApiVersion ?? "2025-07-01");
             ValidateResourceId(id);
         }
 

@@ -9,6 +9,8 @@ extends:
     Artifacts:
     - name: Azure.ResourceManager.AlertsManagement
       safeName: AzureResourceManagerAlertsManagement
+    - name: Azure.ResourceManager.PrometheusRuleGroups
+      safeName: AzureResourceManagerPrometheusRuleGroups
     - name: Azure.ResourceManager.AlertRuleRecommendations
       safeName: AzureResourceManagerAlertRuleRecommendations
     - name: Azure.ResourceManager.AlertProcessingRules
