@@ -16,7 +16,6 @@ In this example we will build the Docker image for hosted Agent based on the sim
 azure-ai-agentserver-core
 azure-ai-agentserver-invocations
 azure-ai-agentserver-responses
-openai
 ```
 
 6. Create a file `Dockerfile`, which instructs docker to copy the contents of the current directory, install the requirements and run `main.py`, which will start the service:
