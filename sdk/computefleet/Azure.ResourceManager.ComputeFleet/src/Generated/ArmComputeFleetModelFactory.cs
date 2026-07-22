@@ -1498,8 +1498,11 @@ namespace Azure.ResourceManager.ComputeFleet.Models
         /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
         /// <param name="operationStatus"> This represents the operationStatus of the virtual machine in response to the last operation that was performed on it by Azure Fleet resource. </param>
         /// <param name="error"> Error information when `operationStatus` is `Failed`. </param>
+        /// <param name="vmSize"> The VM size of the virtual machine. </param>
+        /// <param name="zone"> The availability zone of the virtual machine. </param>
+        /// <param name="priority"> The priority of the virtual machine. </param>
         /// <returns> A new <see cref="Models.ComputeFleetVirtualMachine"/> instance for mocking. </returns>
-        public static ComputeFleetVirtualMachine ComputeFleetVirtualMachine(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, ComputeFleetVmOperationStatus operationStatus = default, ComputeFleetApiError error = default)
+        public static ComputeFleetVirtualMachine ComputeFleetVirtualMachine(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, ComputeFleetVmOperationStatus operationStatus = default, ComputeFleetApiError error = default, string vmSize = default, string zone = default, string priority = default)
         {
             return new ComputeFleetVirtualMachine(
                 id,
@@ -1508,6 +1511,9 @@ namespace Azure.ResourceManager.ComputeFleet.Models
                 systemData,
                 operationStatus,
                 error,
+                vmSize,
+                zone,
+                priority,
                 default);
         }
 
