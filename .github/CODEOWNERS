@@ -205,9 +205,6 @@
 /sdk/communication/Azure.Communication.Chat/    @LuChen-Microsoft
 
 # PRLabel: %Communication - Common
-/sdk/communication/Azure.Communication.Common    @alvinjiang-msft @anjulgarg
-
-# PRLabel: %Communication - Common
 /sdk/communication/Azure.Communication.Common/    @alvinjiang-msft @anjulgarg @Joeleniqs @jorge-beauregard
 
 # ServiceLabel: %Communication - Common
