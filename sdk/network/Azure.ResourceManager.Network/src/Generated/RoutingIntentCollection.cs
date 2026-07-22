@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.Network
         {
             TryGetApiVersion(RoutingIntentResource.ResourceType, out string routingIntentApiVersion);
             _routingIntentClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Network", RoutingIntentResource.ResourceType.Namespace, Diagnostics);
-            _routingIntentRestClient = new RoutingIntent(_routingIntentClientDiagnostics, Pipeline, Endpoint, routingIntentApiVersion ?? "2025-07-01");
+            _routingIntentRestClient = new RoutingIntent(_routingIntentClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, routingIntentApiVersion ?? "2025-07-01");
             ValidateResourceId(id);
         }
 

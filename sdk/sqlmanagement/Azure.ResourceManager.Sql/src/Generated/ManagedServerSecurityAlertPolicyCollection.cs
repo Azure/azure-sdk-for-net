@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.Sql
         {
             TryGetApiVersion(ManagedServerSecurityAlertPolicyResource.ResourceType, out string managedServerSecurityAlertPolicyApiVersion);
             _managedServerSecurityAlertPoliciesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Sql", ManagedServerSecurityAlertPolicyResource.ResourceType.Namespace, Diagnostics);
-            _managedServerSecurityAlertPoliciesRestClient = new ManagedServerSecurityAlertPolicies(_managedServerSecurityAlertPoliciesClientDiagnostics, Pipeline, Endpoint, managedServerSecurityAlertPolicyApiVersion ?? "2025-02-01-preview");
+            _managedServerSecurityAlertPoliciesRestClient = new ManagedServerSecurityAlertPolicies(_managedServerSecurityAlertPoliciesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, managedServerSecurityAlertPolicyApiVersion ?? "2025-02-01-preview");
             ValidateResourceId(id);
         }
 

@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.DnsResolver
         {
             TryGetApiVersion(ResourceType, out string dnsSecurityRuleApiVersion);
             _dnsSecurityRulesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.DnsResolver", ResourceType.Namespace, Diagnostics);
-            _dnsSecurityRulesRestClient = new DnsSecurityRules(_dnsSecurityRulesClientDiagnostics, Pipeline, Endpoint, dnsSecurityRuleApiVersion ?? "2025-10-01-preview");
+            _dnsSecurityRulesRestClient = new DnsSecurityRules(_dnsSecurityRulesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, dnsSecurityRuleApiVersion ?? "2025-10-01-preview");
             ValidateResourceId(id);
         }
 

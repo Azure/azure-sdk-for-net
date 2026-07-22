@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.Network
         {
             TryGetApiVersion(FlowLogResource.ResourceType, out string flowLogApiVersion);
             _flowLogsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Network", FlowLogResource.ResourceType.Namespace, Diagnostics);
-            _flowLogsRestClient = new FlowLogs(_flowLogsClientDiagnostics, Pipeline, Endpoint, flowLogApiVersion ?? "2025-07-01");
+            _flowLogsRestClient = new FlowLogs(_flowLogsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, flowLogApiVersion ?? "2025-07-01");
             ValidateResourceId(id);
         }
 

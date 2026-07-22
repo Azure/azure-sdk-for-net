@@ -44,19 +44,19 @@ namespace Azure.ResourceManager.Datadog.Mocking
 
         private ClientDiagnostics DatadogMonitorResourcesClientDiagnostics => _datadogMonitorResourcesClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Datadog.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private DatadogMonitorResources DatadogMonitorResourcesRestClient => _datadogMonitorResourcesRestClient ??= new DatadogMonitorResources(DatadogMonitorResourcesClientDiagnostics, Pipeline, Endpoint, "2025-12-26-preview");
+        private DatadogMonitorResources DatadogMonitorResourcesRestClient => _datadogMonitorResourcesRestClient ??= new DatadogMonitorResources(DatadogMonitorResourcesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2025-12-26-preview");
 
         private ClientDiagnostics SaaSOperationGroupClientDiagnostics => _saaSOperationGroupClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Datadog.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private SaaSOperationGroup SaaSOperationGroupRestClient => _saaSOperationGroupRestClient ??= new SaaSOperationGroup(SaaSOperationGroupClientDiagnostics, Pipeline, Endpoint, "2025-12-26-preview");
+        private SaaSOperationGroup SaaSOperationGroupRestClient => _saaSOperationGroupRestClient ??= new SaaSOperationGroup(SaaSOperationGroupClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2025-12-26-preview");
 
         private ClientDiagnostics MarketplaceAgreementsClientDiagnostics => _marketplaceAgreementsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Datadog.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private MarketplaceAgreements MarketplaceAgreementsRestClient => _marketplaceAgreementsRestClient ??= new MarketplaceAgreements(MarketplaceAgreementsClientDiagnostics, Pipeline, Endpoint, "2025-12-26-preview");
+        private MarketplaceAgreements MarketplaceAgreementsRestClient => _marketplaceAgreementsRestClient ??= new MarketplaceAgreements(MarketplaceAgreementsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2025-12-26-preview");
 
         private ClientDiagnostics CreationSupportedClientDiagnostics => _creationSupportedClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Datadog.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private CreationSupported CreationSupportedRestClient => _creationSupportedRestClient ??= new CreationSupported(CreationSupportedClientDiagnostics, Pipeline, Endpoint, "2025-12-26-preview");
+        private CreationSupported CreationSupportedRestClient => _creationSupportedRestClient ??= new CreationSupported(CreationSupportedClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2025-12-26-preview");
 
         /// <summary>
         /// List all monitors under the specified subscription.

@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.ServiceNetworking
         {
             TryGetApiVersion(ResourceType, out string applicationGatewayForContainersSecurityPolicyApiVersion);
             _securityPoliciesInterfaceClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ServiceNetworking", ResourceType.Namespace, Diagnostics);
-            _securityPoliciesInterfaceRestClient = new SecurityPoliciesInterface(_securityPoliciesInterfaceClientDiagnostics, Pipeline, Endpoint, applicationGatewayForContainersSecurityPolicyApiVersion ?? "2025-03-01-preview");
+            _securityPoliciesInterfaceRestClient = new SecurityPoliciesInterface(_securityPoliciesInterfaceClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, applicationGatewayForContainersSecurityPolicyApiVersion ?? "2025-03-01-preview");
             ValidateResourceId(id);
         }
 

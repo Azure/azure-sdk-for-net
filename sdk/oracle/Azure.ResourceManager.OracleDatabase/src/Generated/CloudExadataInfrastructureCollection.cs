@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.OracleDatabase
         {
             TryGetApiVersion(CloudExadataInfrastructureResource.ResourceType, out string cloudExadataInfrastructureApiVersion);
             _cloudExadataInfrastructuresClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.OracleDatabase", CloudExadataInfrastructureResource.ResourceType.Namespace, Diagnostics);
-            _cloudExadataInfrastructuresRestClient = new CloudExadataInfrastructures(_cloudExadataInfrastructuresClientDiagnostics, Pipeline, Endpoint, cloudExadataInfrastructureApiVersion ?? "2025-09-01");
+            _cloudExadataInfrastructuresRestClient = new CloudExadataInfrastructures(_cloudExadataInfrastructuresClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, cloudExadataInfrastructureApiVersion ?? "2025-09-01");
             ValidateResourceId(id);
         }
 

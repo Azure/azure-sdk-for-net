@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.NetApp
         {
             TryGetApiVersion(NetAppVolumeGroupResource.ResourceType, out string netAppVolumeGroupApiVersion);
             _volumeGroupsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.NetApp", NetAppVolumeGroupResource.ResourceType.Namespace, Diagnostics);
-            _volumeGroupsRestClient = new VolumeGroups(_volumeGroupsClientDiagnostics, Pipeline, Endpoint, netAppVolumeGroupApiVersion ?? "2026-04-15-preview");
+            _volumeGroupsRestClient = new VolumeGroups(_volumeGroupsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, netAppVolumeGroupApiVersion ?? "2026-04-15-preview");
             ValidateResourceId(id);
         }
 

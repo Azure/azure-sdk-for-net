@@ -45,7 +45,7 @@ namespace Azure.ResourceManager.SecurityCenter
             TryGetApiVersion(ResourceGroupSecurityTaskResource.ResourceType, out string resourceGroupSecurityTaskApiVersion);
             _ascLocation = ascLocation;
             _tasksClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.SecurityCenter", ResourceGroupSecurityTaskResource.ResourceType.Namespace, Diagnostics);
-            _tasksRestClient = new Tasks(_tasksClientDiagnostics, Pipeline, Endpoint, resourceGroupSecurityTaskApiVersion ?? "2015-06-01-preview");
+            _tasksRestClient = new Tasks(_tasksClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, resourceGroupSecurityTaskApiVersion ?? "2015-06-01-preview");
             ValidateResourceId(id);
         }
 

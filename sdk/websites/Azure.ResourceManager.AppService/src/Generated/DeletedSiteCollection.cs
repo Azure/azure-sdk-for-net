@@ -43,9 +43,9 @@ namespace Azure.ResourceManager.AppService
         {
             TryGetApiVersion(DeletedSiteResource.ResourceType, out string deletedSiteApiVersion);
             _globalClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.AppService", DeletedSiteResource.ResourceType.Namespace, Diagnostics);
-            _globalRestClient = new Global(_globalClientDiagnostics, Pipeline, Endpoint, deletedSiteApiVersion ?? "2026-03-15");
+            _globalRestClient = new Global(_globalClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, deletedSiteApiVersion ?? "2026-03-15");
             _globalDeletedWebAppsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.AppService", DeletedSiteResource.ResourceType.Namespace, Diagnostics);
-            _globalDeletedWebAppsRestClient = new GlobalDeletedWebApps(_globalDeletedWebAppsClientDiagnostics, Pipeline, Endpoint, deletedSiteApiVersion ?? "2026-03-15");
+            _globalDeletedWebAppsRestClient = new GlobalDeletedWebApps(_globalDeletedWebAppsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, deletedSiteApiVersion ?? "2026-03-15");
             ValidateResourceId(id);
         }
 

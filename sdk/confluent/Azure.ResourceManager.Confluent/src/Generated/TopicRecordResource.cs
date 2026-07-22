@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.Confluent
         {
             TryGetApiVersion(ResourceType, out string topicRecordApiVersion);
             _topicRecordsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Confluent", ResourceType.Namespace, Diagnostics);
-            _topicRecordsRestClient = new TopicRecords(_topicRecordsClientDiagnostics, Pipeline, Endpoint, topicRecordApiVersion ?? "2025-08-18-preview");
+            _topicRecordsRestClient = new TopicRecords(_topicRecordsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, topicRecordApiVersion ?? "2025-08-18-preview");
             ValidateResourceId(id);
         }
 

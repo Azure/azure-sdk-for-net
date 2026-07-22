@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.StandbyPool
         {
             TryGetApiVersion(ResourceType, out string standbyVirtualMachinePoolApiVersion);
             _standbyVirtualMachinePoolsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.StandbyPool", ResourceType.Namespace, Diagnostics);
-            _standbyVirtualMachinePoolsRestClient = new StandbyVirtualMachinePools(_standbyVirtualMachinePoolsClientDiagnostics, Pipeline, Endpoint, standbyVirtualMachinePoolApiVersion ?? "2025-10-01");
+            _standbyVirtualMachinePoolsRestClient = new StandbyVirtualMachinePools(_standbyVirtualMachinePoolsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, standbyVirtualMachinePoolApiVersion ?? "2025-10-01");
             ValidateResourceId(id);
         }
 

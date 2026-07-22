@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.EventGrid
         {
             TryGetApiVersion(SystemTopicEventSubscriptionResource.ResourceType, out string systemTopicEventSubscriptionApiVersion);
             _systemTopicEventSubscriptionsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.EventGrid", SystemTopicEventSubscriptionResource.ResourceType.Namespace, Diagnostics);
-            _systemTopicEventSubscriptionsRestClient = new SystemTopicEventSubscriptions(_systemTopicEventSubscriptionsClientDiagnostics, Pipeline, Endpoint, systemTopicEventSubscriptionApiVersion ?? "2025-07-15-preview");
+            _systemTopicEventSubscriptionsRestClient = new SystemTopicEventSubscriptions(_systemTopicEventSubscriptionsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, systemTopicEventSubscriptionApiVersion ?? "2025-07-15-preview");
             ValidateResourceId(id);
         }
 

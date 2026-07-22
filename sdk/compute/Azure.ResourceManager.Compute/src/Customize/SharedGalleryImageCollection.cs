@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.Compute
         {
             _sharedGalleryImageClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Compute", SharedGalleryImageResource.ResourceType.Namespace, Diagnostics);
             TryGetApiVersion(SharedGalleryImageResource.ResourceType, out string sharedGalleryImageApiVersion);
-            _sharedGalleryImageRestClient = new SharedGalleryImages(_sharedGalleryImageClientDiagnostics, Pipeline, Endpoint, sharedGalleryImageApiVersion);
+            _sharedGalleryImageRestClient = new SharedGalleryImages(_sharedGalleryImageClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, sharedGalleryImageApiVersion);
 #if DEBUG
             ValidateResourceId(Id);
 #endif

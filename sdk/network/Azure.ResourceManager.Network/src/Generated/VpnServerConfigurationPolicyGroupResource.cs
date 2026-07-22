@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.Network
         {
             TryGetApiVersion(ResourceType, out string vpnServerConfigurationPolicyGroupApiVersion);
             _configurationPolicyGroupsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Network", ResourceType.Namespace, Diagnostics);
-            _configurationPolicyGroupsRestClient = new ConfigurationPolicyGroups(_configurationPolicyGroupsClientDiagnostics, Pipeline, Endpoint, vpnServerConfigurationPolicyGroupApiVersion ?? "2025-07-01");
+            _configurationPolicyGroupsRestClient = new ConfigurationPolicyGroups(_configurationPolicyGroupsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, vpnServerConfigurationPolicyGroupApiVersion ?? "2025-07-01");
             ValidateResourceId(id);
         }
 

@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.Compute.BulkActions
         {
             TryGetApiVersion(ResourceType, out string locationBasedLaunchBulkInstancesOperationApiVersion);
             _launchBulkInstancesOperationClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Compute.BulkActions", ResourceType.Namespace, Diagnostics);
-            _launchBulkInstancesOperationRestClient = new LaunchBulkInstancesOperation(_launchBulkInstancesOperationClientDiagnostics, Pipeline, Endpoint, locationBasedLaunchBulkInstancesOperationApiVersion ?? "2026-07-06-preview");
+            _launchBulkInstancesOperationRestClient = new LaunchBulkInstancesOperation(_launchBulkInstancesOperationClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, locationBasedLaunchBulkInstancesOperationApiVersion ?? "2026-07-06-preview");
             ValidateResourceId(id);
         }
 

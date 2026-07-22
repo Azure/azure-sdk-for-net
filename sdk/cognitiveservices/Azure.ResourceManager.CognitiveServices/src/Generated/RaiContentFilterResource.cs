@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.CognitiveServices
         {
             TryGetApiVersion(ResourceType, out string raiContentFilterApiVersion);
             _raiContentFiltersClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.CognitiveServices", ResourceType.Namespace, Diagnostics);
-            _raiContentFiltersRestClient = new RaiContentFilters(_raiContentFiltersClientDiagnostics, Pipeline, Endpoint, raiContentFilterApiVersion ?? "2026-05-15-preview");
+            _raiContentFiltersRestClient = new RaiContentFilters(_raiContentFiltersClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, raiContentFilterApiVersion ?? "2026-05-15-preview");
             ValidateResourceId(id);
         }
 

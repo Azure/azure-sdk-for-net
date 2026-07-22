@@ -22,12 +22,11 @@ namespace Azure.Provisioning.CostManagement
         private SystemData _systemData;
         private AlertProperties _properties;
         private BicepValue<ETag> _eTag;
-        private ResourceReference<ProvisionableResource> _scope;
 
         /// <summary> Creates a new CostManagementAlert. </summary>
         /// <param name="bicepIdentifier"> The bicep identifier name. </param>
         /// <param name="resourceVersion"> The resource API version. </param>
-        public CostManagementAlert(string bicepIdentifier, string resourceVersion = null) : base(bicepIdentifier, "Microsoft.CostManagement/alerts", resourceVersion ?? "2025-03-01")
+        internal CostManagementAlert(string bicepIdentifier, string resourceVersion = null) : base(bicepIdentifier, "Microsoft.CostManagement/alerts", resourceVersion ?? "2025-03-01")
         {
         }
 
@@ -66,7 +65,7 @@ namespace Azure.Provisioning.CostManagement
             }
         }
 
-        /// <summary> Gets or sets the Properties. </summary>
+        /// <summary> Gets the Properties. </summary>
         internal AlertProperties Properties
         {
             get
@@ -74,14 +73,9 @@ namespace Azure.Provisioning.CostManagement
                 Initialize();
                 return _properties;
             }
-            set
-            {
-                Initialize();
-                AssignOrReplace(ref _properties, value);
-            }
         }
 
-        /// <summary> Gets or sets the ETag. </summary>
+        /// <summary> Gets the ETag. </summary>
         public BicepValue<ETag> ETag
         {
             get
@@ -89,212 +83,104 @@ namespace Azure.Provisioning.CostManagement
                 Initialize();
                 return _eTag;
             }
-            set
-            {
-                Initialize();
-                _eTag.Assign(value);
-            }
         }
 
-        /// <summary> Gets or sets the Scope. </summary>
-        public ProvisionableResource Scope
-        {
-            get
-            {
-                Initialize();
-                return _scope.Value;
-            }
-            set
-            {
-                Initialize();
-                _scope.Value = value;
-            }
-        }
-
-        /// <summary> Gets or sets the Definition. </summary>
+        /// <summary> Gets the Definition. </summary>
         public AlertPropertiesDefinition Definition
         {
             get
             {
-                return Properties is null ? default : Properties.Definition;
-            }
-            set
-            {
-                if (Properties is null)
-                {
-                    Properties = new AlertProperties();
-                }
-                Properties.Definition = value;
+                return Properties.Definition;
             }
         }
 
-        /// <summary> Gets or sets the Description. </summary>
+        /// <summary> Gets the Description. </summary>
         public BicepValue<string> Description
         {
             get
             {
-                return Properties is null ? default : Properties.Description;
-            }
-            set
-            {
-                if (Properties is null)
-                {
-                    Properties = new AlertProperties();
-                }
-                Properties.Description = value;
+                return Properties.Description;
             }
         }
 
-        /// <summary> Gets or sets the Source. </summary>
+        /// <summary> Gets the Source. </summary>
         public BicepValue<CostManagementAlertSource> Source
         {
             get
             {
-                return Properties is null ? default : Properties.Source;
-            }
-            set
-            {
-                if (Properties is null)
-                {
-                    Properties = new AlertProperties();
-                }
-                Properties.Source = value;
+                return Properties.Source;
             }
         }
 
-        /// <summary> Gets or sets the Details. </summary>
+        /// <summary> Gets the Details. </summary>
         public AlertPropertiesDetails Details
         {
             get
             {
-                return Properties is null ? default : Properties.Details;
-            }
-            set
-            {
-                if (Properties is null)
-                {
-                    Properties = new AlertProperties();
-                }
-                Properties.Details = value;
+                return Properties.Details;
             }
         }
 
-        /// <summary> Gets or sets the CostEntityId. </summary>
+        /// <summary> Gets the CostEntityId. </summary>
         public BicepValue<string> CostEntityId
         {
             get
             {
-                return Properties is null ? default : Properties.CostEntityId;
-            }
-            set
-            {
-                if (Properties is null)
-                {
-                    Properties = new AlertProperties();
-                }
-                Properties.CostEntityId = value;
+                return Properties.CostEntityId;
             }
         }
 
-        /// <summary> Gets or sets the Status. </summary>
+        /// <summary> Gets the Status. </summary>
         public BicepValue<CostManagementAlertStatus> Status
         {
             get
             {
-                return Properties is null ? default : Properties.Status;
-            }
-            set
-            {
-                if (Properties is null)
-                {
-                    Properties = new AlertProperties();
-                }
-                Properties.Status = value;
+                return Properties.Status;
             }
         }
 
-        /// <summary> Gets or sets the CreatedOn. </summary>
+        /// <summary> Gets the CreatedOn. </summary>
         public BicepValue<DateTimeOffset> CreatedOn
         {
             get
             {
-                return Properties is null ? default : Properties.CreatedOn;
-            }
-            set
-            {
-                if (Properties is null)
-                {
-                    Properties = new AlertProperties();
-                }
-                Properties.CreatedOn = value;
+                return Properties.CreatedOn;
             }
         }
 
-        /// <summary> Gets or sets the CloseOn. </summary>
+        /// <summary> Gets the CloseOn. </summary>
         public BicepValue<DateTimeOffset> CloseOn
         {
             get
             {
-                return Properties is null ? default : Properties.CloseOn;
-            }
-            set
-            {
-                if (Properties is null)
-                {
-                    Properties = new AlertProperties();
-                }
-                Properties.CloseOn = value;
+                return Properties.CloseOn;
             }
         }
 
-        /// <summary> Gets or sets the ModifiedOn. </summary>
+        /// <summary> Gets the ModifiedOn. </summary>
         public BicepValue<DateTimeOffset> ModifiedOn
         {
             get
             {
-                return Properties is null ? default : Properties.ModifiedOn;
-            }
-            set
-            {
-                if (Properties is null)
-                {
-                    Properties = new AlertProperties();
-                }
-                Properties.ModifiedOn = value;
+                return Properties.ModifiedOn;
             }
         }
 
-        /// <summary> Gets or sets the StatusModificationUserName. </summary>
+        /// <summary> Gets the StatusModificationUserName. </summary>
         public BicepValue<string> StatusModificationUserName
         {
             get
             {
-                return Properties is null ? default : Properties.StatusModificationUserName;
-            }
-            set
-            {
-                if (Properties is null)
-                {
-                    Properties = new AlertProperties();
-                }
-                Properties.StatusModificationUserName = value;
+                return Properties.StatusModificationUserName;
             }
         }
 
-        /// <summary> Gets or sets the StatusModifiedOn. </summary>
+        /// <summary> Gets the StatusModifiedOn. </summary>
         public BicepValue<DateTimeOffset> StatusModifiedOn
         {
             get
             {
-                return Properties is null ? default : Properties.StatusModifiedOn;
-            }
-            set
-            {
-                if (Properties is null)
-                {
-                    Properties = new AlertProperties();
-                }
-                Properties.StatusModifiedOn = value;
+                return Properties.StatusModifiedOn;
             }
         }
 
@@ -307,7 +193,6 @@ namespace Azure.Provisioning.CostManagement
             _systemData = DefineModelProperty<SystemData>(nameof(SystemData), new string[] { "systemData" }, isOutput: true);
             _properties = DefineModelProperty<AlertProperties>(nameof(Properties), new string[] { "properties" });
             _eTag = DefineProperty<ETag>(nameof(ETag), new string[] { "eTag" });
-            _scope = DefineResource<ProvisionableResource>(nameof(Scope), new string[] { "scope" });
             DefineAdditionalProperties();
         }
 
