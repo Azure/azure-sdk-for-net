@@ -8,6 +8,8 @@
 
 ### Bugs Fixed
 
+- Hardened ingestion and Live Metrics redirect handling to reject untrusted destinations before replaying telemetry or caching the redirect. Redirect targets must now use HTTPS and match an approved Azure Monitor trust boundary, preventing credentials and telemetry from being forwarded to attacker-controlled endpoints.
+
 ### Other Changes
 
 - Customer SDK stats are now on by default; opt out with `APPLICATIONINSIGHTS_SDKSTATS_DISABLED=true`. `dropCode`/`retryCode` dimension values now use the spec's SCREAMING_SNAKE_CASE (e.g. `CLIENT_EXCEPTION`).
