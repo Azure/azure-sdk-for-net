@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.Automation
         {
             TryGetApiVersion(ResourceType, out string automationPython3PackageApiVersion);
             _python3PackageClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Automation", ResourceType.Namespace, Diagnostics);
-            _python3PackageRestClient = new Python3Package(_python3PackageClientDiagnostics, Pipeline, Endpoint, automationPython3PackageApiVersion ?? "2024-10-23");
+            _python3PackageRestClient = new Python3Package(_python3PackageClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, automationPython3PackageApiVersion ?? "2024-10-23");
             ValidateResourceId(id);
         }
 

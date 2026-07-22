@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.PureStorageBlock
         {
             TryGetApiVersion(ResourceType, out string pureStoragePoolApiVersion);
             _storagePoolsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.PureStorageBlock", ResourceType.Namespace, Diagnostics);
-            _storagePoolsRestClient = new StoragePools(_storagePoolsClientDiagnostics, Pipeline, Endpoint, pureStoragePoolApiVersion ?? "2024-11-01");
+            _storagePoolsRestClient = new StoragePools(_storagePoolsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, pureStoragePoolApiVersion ?? "2024-11-01");
             ValidateResourceId(id);
         }
 

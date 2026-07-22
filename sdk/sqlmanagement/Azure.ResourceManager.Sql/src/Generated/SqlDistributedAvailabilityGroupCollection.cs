@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.Sql
         {
             TryGetApiVersion(SqlDistributedAvailabilityGroupResource.ResourceType, out string sqlDistributedAvailabilityGroupApiVersion);
             _distributedAvailabilityGroupsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Sql", SqlDistributedAvailabilityGroupResource.ResourceType.Namespace, Diagnostics);
-            _distributedAvailabilityGroupsRestClient = new DistributedAvailabilityGroups(_distributedAvailabilityGroupsClientDiagnostics, Pipeline, Endpoint, sqlDistributedAvailabilityGroupApiVersion ?? "2025-02-01-preview");
+            _distributedAvailabilityGroupsRestClient = new DistributedAvailabilityGroups(_distributedAvailabilityGroupsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, sqlDistributedAvailabilityGroupApiVersion ?? "2025-02-01-preview");
             ValidateResourceId(id);
         }
 

@@ -20,8 +20,6 @@ DO NOT USE FOR: publishing to package registries, CI pipeline configuration, API
 
 ## Rules
 
-- This skill generates a **single language** SDK **locally**. If the user asks to "generate SDK for **all languages**", to generate **without a local clone**, or wants SDK **pull requests created** for them (release plan / pipeline flow), do **not** generate locally — call `azure-sdk-mcp:azsdk_run_generate_sdk` instead. It runs the SDK generation pipeline for each language and produces the SDK pull requests.
-- Never use `azure-sdk-mcp:azsdk_get_sdk_pull_request_link` or `azure-sdk-mcp:azsdk_get_pull_request` to _generate_ an SDK; those only retrieve links for SDKs that were already generated.
 - Requires the `azure-sdk-mcp` server for the MCP workflow; without MCP, use `npm exec --prefix eng/common/tsp-client -- tsp-client` CLI.
 - Verify the target language repo and the correct TypeSpec configuration file before generation.
 - After generation or customization, run the check and test steps before updating metadata or finalizing changes.
@@ -85,7 +83,6 @@ Prerequisites: azure-sdk-mcp server must be running. Without MCP, use `npx tsp-c
 
 ## Troubleshooting
 
-- For "generate SDK for all languages", pipeline-based generation, or when no local SDK clone exists, call `azure-sdk-mcp:azsdk_run_generate_sdk` instead of the local generate flow, and never substitute `azure-sdk-mcp:azsdk_get_sdk_pull_request_link` / `azure-sdk-mcp:azsdk_get_pull_request` for generation.
 - Run `azure-sdk-mcp:azsdk_verify_setup` to confirm MCP and tools.
 - If build fails with type conflicts, breaking changes, analyzer errors, or customization drift, use `azure-sdk-mcp:azsdk_customized_code_update` to apply customizations.
 - The customization tool uses a two-phase approach: TypeSpec decorators first (Phase A), then code repairs if needed (Phase B).

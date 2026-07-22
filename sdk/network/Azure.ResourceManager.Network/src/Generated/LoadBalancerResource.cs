@@ -55,9 +55,9 @@ namespace Azure.ResourceManager.Network
         {
             TryGetApiVersion(ResourceType, out string loadBalancerApiVersion);
             _loadBalancersClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Network", ResourceType.Namespace, Diagnostics);
-            _loadBalancersRestClient = new LoadBalancers(_loadBalancersClientDiagnostics, Pipeline, Endpoint, loadBalancerApiVersion ?? "2025-07-01");
+            _loadBalancersRestClient = new LoadBalancers(_loadBalancersClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, loadBalancerApiVersion ?? "2025-07-01");
             _loadBalancerNetworkInterfacesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Network", ResourceType.Namespace, Diagnostics);
-            _loadBalancerNetworkInterfacesRestClient = new LoadBalancerNetworkInterfaces(_loadBalancerNetworkInterfacesClientDiagnostics, Pipeline, Endpoint, loadBalancerApiVersion ?? "2025-07-01");
+            _loadBalancerNetworkInterfacesRestClient = new LoadBalancerNetworkInterfaces(_loadBalancerNetworkInterfacesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, loadBalancerApiVersion ?? "2025-07-01");
             ValidateResourceId(id);
         }
 

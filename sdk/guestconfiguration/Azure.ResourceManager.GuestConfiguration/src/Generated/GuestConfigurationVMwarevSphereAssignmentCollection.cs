@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.GuestConfiguration
         {
             TryGetApiVersion(GuestConfigurationVMwarevSphereAssignmentResource.ResourceType, out string guestConfigurationVMwarevSphereAssignmentApiVersion);
             _guestConfigurationConnectedVMwarevSphereAssignmentsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.GuestConfiguration", GuestConfigurationVMwarevSphereAssignmentResource.ResourceType.Namespace, Diagnostics);
-            _guestConfigurationConnectedVMwarevSphereAssignmentsRestClient = new GuestConfigurationConnectedVMwarevSphereAssignments(_guestConfigurationConnectedVMwarevSphereAssignmentsClientDiagnostics, Pipeline, Endpoint, guestConfigurationVMwarevSphereAssignmentApiVersion ?? "2024-04-05");
+            _guestConfigurationConnectedVMwarevSphereAssignmentsRestClient = new GuestConfigurationConnectedVMwarevSphereAssignments(_guestConfigurationConnectedVMwarevSphereAssignmentsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, guestConfigurationVMwarevSphereAssignmentApiVersion ?? "2024-04-05");
             ValidateResourceId(id);
         }
 

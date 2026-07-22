@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.Network
         {
             TryGetApiVersion(ResourceType, out string networkVirtualApplianceSkuApiVersion);
             _virtualApplianceSkusClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Network", ResourceType.Namespace, Diagnostics);
-            _virtualApplianceSkusRestClient = new VirtualApplianceSkus(_virtualApplianceSkusClientDiagnostics, Pipeline, Endpoint, networkVirtualApplianceSkuApiVersion ?? "2025-07-01");
+            _virtualApplianceSkusRestClient = new VirtualApplianceSkus(_virtualApplianceSkusClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, networkVirtualApplianceSkuApiVersion ?? "2025-07-01");
             ValidateResourceId(id);
         }
 

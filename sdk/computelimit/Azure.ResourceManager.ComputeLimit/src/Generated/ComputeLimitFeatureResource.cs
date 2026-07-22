@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.ComputeLimit
         {
             TryGetApiVersion(ResourceType, out string computeLimitFeatureApiVersion);
             _featuresClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ComputeLimit", ResourceType.Namespace, Diagnostics);
-            _featuresRestClient = new Features(_featuresClientDiagnostics, Pipeline, Endpoint, computeLimitFeatureApiVersion ?? "2026-07-01");
+            _featuresRestClient = new Features(_featuresClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, computeLimitFeatureApiVersion ?? "2026-07-01");
             ValidateResourceId(id);
         }
 

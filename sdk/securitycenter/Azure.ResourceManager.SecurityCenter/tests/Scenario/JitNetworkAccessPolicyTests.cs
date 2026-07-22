@@ -52,7 +52,6 @@ namespace Azure.ResourceManager.SecurityCenter.Tests
             return jitNetworkAccessPolicy.Value;
         }
 
-        [Ignore("Blocked by Azure.ResourceManager.Network MPG migration playback mismatch; see https://github.com/Azure/azure-sdk-for-net/issues/59918.")]
         [RecordedTest]
         public async Task CreateOrUpdate()
         {
@@ -61,7 +60,6 @@ namespace Azure.ResourceManager.SecurityCenter.Tests
             ValidateJitNetworkAccessPolicyResource(jitNetworkAccessPolicy, jitNetworkAccessPolicyName);
         }
 
-        [Ignore("Blocked by Azure.ResourceManager.Network MPG migration playback mismatch; see https://github.com/Azure/azure-sdk-for-net/issues/59918.")]
         [RecordedTest]
         public async Task Exist()
         {
@@ -71,7 +69,6 @@ namespace Azure.ResourceManager.SecurityCenter.Tests
             Assert.IsTrue(flag);
         }
 
-        [Ignore("Blocked by Azure.ResourceManager.Network MPG migration playback mismatch; see https://github.com/Azure/azure-sdk-for-net/issues/59918.")]
         [RecordedTest]
         public async Task Get()
         {
@@ -81,7 +78,6 @@ namespace Azure.ResourceManager.SecurityCenter.Tests
             ValidateJitNetworkAccessPolicyResource(jitNetworkAccessPolicy, jitNetworkAccessPolicyName);
         }
 
-        [Ignore("Blocked by Azure.ResourceManager.Network MPG migration playback mismatch; see https://github.com/Azure/azure-sdk-for-net/issues/59918.")]
         [RecordedTest]
         public async Task GetAll()
         {
@@ -92,7 +88,6 @@ namespace Azure.ResourceManager.SecurityCenter.Tests
             ValidateJitNetworkAccessPolicyResource(list.First(item => item.Data.Name == jitNetworkAccessPolicyName), jitNetworkAccessPolicyName);
         }
 
-        [Ignore("Blocked by Azure.ResourceManager.Network MPG migration playback mismatch; see https://github.com/Azure/azure-sdk-for-net/issues/59918.")]
         [RecordedTest]
         public async Task Delete()
         {

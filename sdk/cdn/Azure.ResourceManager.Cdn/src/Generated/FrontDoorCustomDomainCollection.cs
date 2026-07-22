@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.Cdn
         {
             TryGetApiVersion(FrontDoorCustomDomainResource.ResourceType, out string frontDoorCustomDomainApiVersion);
             _afdCustomDomainsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Cdn", FrontDoorCustomDomainResource.ResourceType.Namespace, Diagnostics);
-            _afdCustomDomainsRestClient = new AFDCustomDomains(_afdCustomDomainsClientDiagnostics, Pipeline, Endpoint, frontDoorCustomDomainApiVersion ?? "2025-09-01-preview");
+            _afdCustomDomainsRestClient = new AFDCustomDomains(_afdCustomDomainsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, frontDoorCustomDomainApiVersion ?? "2025-09-01-preview");
             ValidateResourceId(id);
         }
 

@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.CognitiveServices
         {
             TryGetApiVersion(ResourceType, out string raiToolLabelApiVersion);
             _raiToolLabelsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.CognitiveServices", ResourceType.Namespace, Diagnostics);
-            _raiToolLabelsRestClient = new RaiToolLabels(_raiToolLabelsClientDiagnostics, Pipeline, Endpoint, raiToolLabelApiVersion ?? "2026-05-15-preview");
+            _raiToolLabelsRestClient = new RaiToolLabels(_raiToolLabelsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, raiToolLabelApiVersion ?? "2026-05-15-preview");
             ValidateResourceId(id);
         }
 

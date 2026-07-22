@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.FrontDoor
         {
             TryGetApiVersion(FrontDoorNetworkExperimentProfileResource.ResourceType, out string frontDoorNetworkExperimentProfileApiVersion);
             _networkExperimentProfilesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.FrontDoor", FrontDoorNetworkExperimentProfileResource.ResourceType.Namespace, Diagnostics);
-            _networkExperimentProfilesRestClient = new NetworkExperimentProfiles(_networkExperimentProfilesClientDiagnostics, Pipeline, Endpoint, frontDoorNetworkExperimentProfileApiVersion ?? "2025-11-01");
+            _networkExperimentProfilesRestClient = new NetworkExperimentProfiles(_networkExperimentProfilesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, frontDoorNetworkExperimentProfileApiVersion ?? "2025-11-01");
             ValidateResourceId(id);
         }
 

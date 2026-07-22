@@ -40,11 +40,11 @@ namespace Azure.ResourceManager.IotHub.Mocking
 
         private ClientDiagnostics IotHubResourceClientDiagnostics => _iotHubResourceClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.IotHub.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private IotHubResource IotHubResourceRestClient => _iotHubResourceRestClient ??= new IotHubResource(IotHubResourceClientDiagnostics, Pipeline, Endpoint, "2026-03-01-preview");
+        private IotHubResource IotHubResourceRestClient => _iotHubResourceRestClient ??= new IotHubResource(IotHubResourceClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2026-03-01-preview");
 
         private ClientDiagnostics ResourceProviderCommonClientDiagnostics => _resourceProviderCommonClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.IotHub.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private ResourceProviderCommon ResourceProviderCommonRestClient => _resourceProviderCommonRestClient ??= new ResourceProviderCommon(ResourceProviderCommonClientDiagnostics, Pipeline, Endpoint, "2026-03-01-preview");
+        private ResourceProviderCommon ResourceProviderCommonRestClient => _resourceProviderCommonRestClient ??= new ResourceProviderCommon(ResourceProviderCommonClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2026-03-01-preview");
 
         /// <summary>
         /// Get all the IoT hubs in a subscription.

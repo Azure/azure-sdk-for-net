@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.DeviceProvisioningServices
         {
             TryGetApiVersion(DeviceProvisioningServicesPrivateEndpointConnectionResource.ResourceType, out string deviceProvisioningServicesPrivateEndpointConnectionApiVersion);
             _privateEndpointConnectionsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.DeviceProvisioningServices", DeviceProvisioningServicesPrivateEndpointConnectionResource.ResourceType.Namespace, Diagnostics);
-            _privateEndpointConnectionsRestClient = new PrivateEndpointConnections(_privateEndpointConnectionsClientDiagnostics, Pipeline, Endpoint, deviceProvisioningServicesPrivateEndpointConnectionApiVersion ?? "2025-02-01-preview");
+            _privateEndpointConnectionsRestClient = new PrivateEndpointConnections(_privateEndpointConnectionsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, deviceProvisioningServicesPrivateEndpointConnectionApiVersion ?? "2025-02-01-preview");
             ValidateResourceId(id);
         }
 

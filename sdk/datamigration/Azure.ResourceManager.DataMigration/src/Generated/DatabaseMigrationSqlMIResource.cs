@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.DataMigration
         {
             TryGetApiVersion(ResourceType, out string databaseMigrationSqlMIApiVersion);
             _databaseMigrationsSqlMiClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.DataMigration", ResourceType.Namespace, Diagnostics);
-            _databaseMigrationsSqlMiRestClient = new DatabaseMigrationsSqlMi(_databaseMigrationsSqlMiClientDiagnostics, Pipeline, Endpoint, databaseMigrationSqlMIApiVersion ?? "2025-09-01-preview");
+            _databaseMigrationsSqlMiRestClient = new DatabaseMigrationsSqlMi(_databaseMigrationsSqlMiClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, databaseMigrationSqlMIApiVersion ?? "2025-09-01-preview");
             ValidateResourceId(id);
         }
 

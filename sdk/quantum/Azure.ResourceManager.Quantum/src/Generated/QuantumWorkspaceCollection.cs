@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.Quantum
         {
             TryGetApiVersion(QuantumWorkspaceResource.ResourceType, out string quantumWorkspaceApiVersion);
             _workspacesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Quantum", QuantumWorkspaceResource.ResourceType.Namespace, Diagnostics);
-            _workspacesRestClient = new Workspaces(_workspacesClientDiagnostics, Pipeline, Endpoint, quantumWorkspaceApiVersion ?? "2025-12-15-preview");
+            _workspacesRestClient = new Workspaces(_workspacesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, quantumWorkspaceApiVersion ?? "2025-12-15-preview");
             ValidateResourceId(id);
         }
 

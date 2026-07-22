@@ -38,11 +38,11 @@ namespace Azure.ResourceManager.Monitor.Mocking
 
         private ClientDiagnostics EventCategoriesClientDiagnostics => _eventCategoriesClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Monitor.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private EventCategories EventCategoriesRestClient => _eventCategoriesRestClient ??= new EventCategories(EventCategoriesClientDiagnostics, Pipeline, Endpoint, "2015-04-01");
+        private EventCategories EventCategoriesRestClient => _eventCategoriesRestClient ??= new EventCategories(EventCategoriesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2015-04-01");
 
         private ClientDiagnostics TenantActivityLogsClientDiagnostics => _tenantActivityLogsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Monitor.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private TenantActivityLogs TenantActivityLogsRestClient => _tenantActivityLogsRestClient ??= new TenantActivityLogs(TenantActivityLogsClientDiagnostics, Pipeline, Endpoint, "2015-04-01");
+        private TenantActivityLogs TenantActivityLogsRestClient => _tenantActivityLogsRestClient ??= new TenantActivityLogs(TenantActivityLogsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2015-04-01");
 
         /// <summary>
         /// Get the list of available event categories supported in the Activity Logs Service.&lt;br&gt;The current list includes the following: Administrative, Security, ServiceHealth, Alert, Recommendation, Policy.

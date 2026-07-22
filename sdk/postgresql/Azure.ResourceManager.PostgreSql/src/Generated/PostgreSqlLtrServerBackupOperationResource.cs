@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
         {
             TryGetApiVersion(ResourceType, out string postgreSqlLtrServerBackupOperationApiVersion);
             _backupsLongTermRetentionClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.PostgreSql.FlexibleServers", ResourceType.Namespace, Diagnostics);
-            _backupsLongTermRetentionRestClient = new BackupsLongTermRetention(_backupsLongTermRetentionClientDiagnostics, Pipeline, Endpoint, postgreSqlLtrServerBackupOperationApiVersion ?? "2026-04-01-preview");
+            _backupsLongTermRetentionRestClient = new BackupsLongTermRetention(_backupsLongTermRetentionClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, postgreSqlLtrServerBackupOperationApiVersion ?? "2026-04-01-preview");
             ValidateResourceId(id);
         }
 

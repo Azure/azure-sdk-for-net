@@ -57,13 +57,13 @@ namespace Azure.ResourceManager.ApiManagement
         {
             TryGetApiVersion(ResourceType, out string apiApiVersion);
             _apiClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ApiManagement", ResourceType.Namespace, Diagnostics);
-            _apiRestClient = new Api(_apiClientDiagnostics, Pipeline, Endpoint, apiApiVersion ?? "2025-09-01-preview");
+            _apiRestClient = new Api(_apiClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, apiApiVersion ?? "2025-09-01-preview");
             _apiRevisionClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ApiManagement", ResourceType.Namespace, Diagnostics);
-            _apiRevisionRestClient = new ApiRevision(_apiRevisionClientDiagnostics, Pipeline, Endpoint, apiApiVersion ?? "2025-09-01-preview");
+            _apiRevisionRestClient = new ApiRevision(_apiRevisionClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, apiApiVersion ?? "2025-09-01-preview");
             _apiProductClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ApiManagement", ResourceType.Namespace, Diagnostics);
-            _apiProductRestClient = new ApiProduct(_apiProductClientDiagnostics, Pipeline, Endpoint, apiApiVersion ?? "2025-09-01-preview");
+            _apiProductRestClient = new ApiProduct(_apiProductClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, apiApiVersion ?? "2025-09-01-preview");
             _operationClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ApiManagement", ResourceType.Namespace, Diagnostics);
-            _operationRestClient = new Operation(_operationClientDiagnostics, Pipeline, Endpoint, apiApiVersion ?? "2025-09-01-preview");
+            _operationRestClient = new Operation(_operationClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, apiApiVersion ?? "2025-09-01-preview");
             ValidateResourceId(id);
         }
 

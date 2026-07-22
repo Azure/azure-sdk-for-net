@@ -40,11 +40,11 @@ namespace Azure.ResourceManager.AppConfiguration.Mocking
 
         private ClientDiagnostics ConfigurationStoresClientDiagnostics => _configurationStoresClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.AppConfiguration.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private ConfigurationStores ConfigurationStoresRestClient => _configurationStoresRestClient ??= new ConfigurationStores(ConfigurationStoresClientDiagnostics, Pipeline, Endpoint, "2025-06-01-preview");
+        private ConfigurationStores ConfigurationStoresRestClient => _configurationStoresRestClient ??= new ConfigurationStores(ConfigurationStoresClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2025-06-01-preview");
 
         private ClientDiagnostics OperationsClientDiagnostics => _operationsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.AppConfiguration.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private Operations OperationsRestClient => _operationsRestClient ??= new Operations(OperationsClientDiagnostics, Pipeline, Endpoint, "2025-06-01-preview");
+        private Operations OperationsRestClient => _operationsRestClient ??= new Operations(OperationsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2025-06-01-preview");
 
         /// <summary> Gets a collection of DeletedAppConfigurationStores in the <see cref="SubscriptionResource"/>. </summary>
         /// <returns> An object representing collection of DeletedAppConfigurationStores and their operations over a DeletedAppConfigurationStoreResource. </returns>

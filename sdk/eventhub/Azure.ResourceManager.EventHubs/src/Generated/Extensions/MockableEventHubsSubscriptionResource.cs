@@ -40,11 +40,11 @@ namespace Azure.ResourceManager.EventHubs.Mocking
 
         private ClientDiagnostics ClustersClientDiagnostics => _clustersClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.EventHubs.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private Clusters ClustersRestClient => _clustersRestClient ??= new Clusters(ClustersClientDiagnostics, Pipeline, Endpoint, "2026-01-01");
+        private Clusters ClustersRestClient => _clustersRestClient ??= new Clusters(ClustersClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2026-01-01");
 
         private ClientDiagnostics NamespacesClientDiagnostics => _namespacesClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.EventHubs.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private Namespaces NamespacesRestClient => _namespacesRestClient ??= new Namespaces(NamespacesClientDiagnostics, Pipeline, Endpoint, "2026-01-01");
+        private Namespaces NamespacesRestClient => _namespacesRestClient ??= new Namespaces(NamespacesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2026-01-01");
 
         /// <summary>
         /// Lists the available Event Hubs Clusters within an ARM resource group

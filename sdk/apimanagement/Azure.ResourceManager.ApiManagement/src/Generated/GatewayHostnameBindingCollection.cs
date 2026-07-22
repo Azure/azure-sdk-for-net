@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.ApiManagement
         {
             TryGetApiVersion(GatewayHostnameBindingResource.ResourceType, out string gatewayHostnameBindingApiVersion);
             _apiGatewayHostnameBindingClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ApiManagement", GatewayHostnameBindingResource.ResourceType.Namespace, Diagnostics);
-            _apiGatewayHostnameBindingRestClient = new ApiGatewayHostnameBinding(_apiGatewayHostnameBindingClientDiagnostics, Pipeline, Endpoint, gatewayHostnameBindingApiVersion ?? "2025-09-01-preview");
+            _apiGatewayHostnameBindingRestClient = new ApiGatewayHostnameBinding(_apiGatewayHostnameBindingClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, gatewayHostnameBindingApiVersion ?? "2025-09-01-preview");
             ValidateResourceId(id);
         }
 

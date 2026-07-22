@@ -86,7 +86,7 @@ namespace Azure.ResourceManager.Education.Models
             {
                 writer.WritePropertyName("value"u8);
                 writer.WriteStartArray();
-                foreach (StudentDetailsData item in Value)
+                foreach (EducationStudentData item in Value)
                 {
                     writer.WriteObjectValue(item, options);
                 }
@@ -139,7 +139,7 @@ namespace Azure.ResourceManager.Education.Models
             {
                 return null;
             }
-            IReadOnlyList<StudentDetailsData> value = default;
+            IReadOnlyList<EducationStudentData> value = default;
             string nextLink = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
@@ -150,10 +150,10 @@ namespace Azure.ResourceManager.Education.Models
                     {
                         continue;
                     }
-                    List<StudentDetailsData> array = new List<StudentDetailsData>();
+                    List<EducationStudentData> array = new List<EducationStudentData>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(StudentDetailsData.DeserializeStudentDetailsData(item, options));
+                        array.Add(EducationStudentData.DeserializeEducationStudentData(item, options));
                     }
                     value = array;
                     continue;
@@ -168,7 +168,7 @@ namespace Azure.ResourceManager.Education.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new StudentListResult(value ?? new ChangeTrackingList<StudentDetailsData>(), nextLink, additionalBinaryDataProperties);
+            return new StudentListResult(value ?? new ChangeTrackingList<EducationStudentData>(), nextLink, additionalBinaryDataProperties);
         }
     }
 }

@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.AppContainers
         {
             TryGetApiVersion(BuilderResource.ResourceType, out string builderApiVersion);
             _buildersClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.AppContainers", BuilderResource.ResourceType.Namespace, Diagnostics);
-            _buildersRestClient = new Builders(_buildersClientDiagnostics, Pipeline, Endpoint, builderApiVersion ?? "2025-10-02-preview");
+            _buildersRestClient = new Builders(_buildersClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, builderApiVersion ?? "2025-10-02-preview");
             ValidateResourceId(id);
         }
 

@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.ContainerService
         {
             TryGetApiVersion(ResourceType, out string managedClusterUpgradeProfileApiVersion);
             _managedClusterUpgradeProfilesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ContainerService", ResourceType.Namespace, Diagnostics);
-            _managedClusterUpgradeProfilesRestClient = new ManagedClusterUpgradeProfiles(_managedClusterUpgradeProfilesClientDiagnostics, Pipeline, Endpoint, managedClusterUpgradeProfileApiVersion ?? "2026-04-02-preview");
+            _managedClusterUpgradeProfilesRestClient = new ManagedClusterUpgradeProfiles(_managedClusterUpgradeProfilesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, managedClusterUpgradeProfileApiVersion ?? "2026-04-02-preview");
             ValidateResourceId(id);
         }
 

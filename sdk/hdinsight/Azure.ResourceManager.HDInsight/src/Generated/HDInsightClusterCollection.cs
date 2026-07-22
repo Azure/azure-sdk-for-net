@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.HDInsight
         {
             TryGetApiVersion(HDInsightClusterResource.ResourceType, out string hdInsightClusterApiVersion);
             _hdInsightClusterClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.HDInsight", HDInsightClusterResource.ResourceType.Namespace, Diagnostics);
-            _hdInsightClusterRestClient = new HDInsightCluster(_hdInsightClusterClientDiagnostics, Pipeline, Endpoint, hdInsightClusterApiVersion ?? "2025-01-15-preview");
+            _hdInsightClusterRestClient = new HDInsightCluster(_hdInsightClusterClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, hdInsightClusterApiVersion ?? "2025-01-15-preview");
             ValidateResourceId(id);
         }
 

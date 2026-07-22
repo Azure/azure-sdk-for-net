@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.CognitiveServices
         {
             TryGetApiVersion(CognitiveServicesQuotaTierResource.ResourceType, out string cognitiveServicesQuotaTierApiVersion);
             _quotaTiersClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.CognitiveServices", CognitiveServicesQuotaTierResource.ResourceType.Namespace, Diagnostics);
-            _quotaTiersRestClient = new QuotaTiers(_quotaTiersClientDiagnostics, Pipeline, Endpoint, cognitiveServicesQuotaTierApiVersion ?? "2026-05-15-preview");
+            _quotaTiersRestClient = new QuotaTiers(_quotaTiersClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, cognitiveServicesQuotaTierApiVersion ?? "2026-05-15-preview");
             ValidateResourceId(id);
         }
 

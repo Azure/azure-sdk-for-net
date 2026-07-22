@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
         {
             TryGetApiVersion(ResourceType, out string virtualEndpointResourceApiVersion);
             _virtualEndpointsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.PostgreSql.FlexibleServers", ResourceType.Namespace, Diagnostics);
-            _virtualEndpointsRestClient = new VirtualEndpoints(_virtualEndpointsClientDiagnostics, Pipeline, Endpoint, virtualEndpointResourceApiVersion ?? "2026-04-01-preview");
+            _virtualEndpointsRestClient = new VirtualEndpoints(_virtualEndpointsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, virtualEndpointResourceApiVersion ?? "2026-04-01-preview");
             ValidateResourceId(id);
         }
 

@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.SiteManager
         {
             TryGetApiVersion(ServiceGroupEdgeSiteResource.ResourceType, out string serviceGroupEdgeSiteApiVersion);
             _serviceGroupEdgeSiteClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.SiteManager", ServiceGroupEdgeSiteResource.ResourceType.Namespace, Diagnostics);
-            _serviceGroupEdgeSiteRestClient = new ServiceGroupEdgeSite(_serviceGroupEdgeSiteClientDiagnostics, Pipeline, Endpoint, serviceGroupEdgeSiteApiVersion ?? "2025-06-01");
+            _serviceGroupEdgeSiteRestClient = new ServiceGroupEdgeSite(_serviceGroupEdgeSiteClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, serviceGroupEdgeSiteApiVersion ?? "2025-06-01");
             ValidateResourceId(id);
         }
 

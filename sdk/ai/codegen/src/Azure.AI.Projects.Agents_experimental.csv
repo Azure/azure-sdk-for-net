@@ -41,6 +41,8 @@ class;Azure.AI.Projects.Agents.SkillInlineContent
 class;Azure.AI.Projects.Agents.SkillVersion
 class;Azure.AI.Projects.Agents.SkillVersionDeletionResult
 class;Azure.AI.Projects.Agents.ToolboxSearchPreviewToolboxTool
+class;Azure.AI.Projects.Agents.WebIQPreviewTool
+class;Azure.AI.Projects.Agents.WebIQPreviewToolboxTool
 class;Azure.AI.Projects.Agents.WorkflowAgentDefinition
 class;Azure.AI.Projects.Agents.WorkIQPreviewTool
 class;Azure.AI.Projects.Agents.WorkIQPreviewToolboxTool
