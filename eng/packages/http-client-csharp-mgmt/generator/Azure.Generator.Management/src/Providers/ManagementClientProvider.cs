@@ -42,6 +42,9 @@ internal sealed class ManagementClientProvider : ClientProvider
                 name: "Pipeline",
                 body: new AutoPropertyBody(false),
                 enclosingType: this);
+            // This property is intentionally NOT returned from BuildProperties. The actual ClientDiagnostics
+            // property on the root client is added by the base AzureDistributedTracingVisitor. This instance is
+            // only used to render the assignment in the root constructor below.
             _clientDiagnosticsProperty = new PropertyProvider(
                 description: $"The ClientDiagnostics is used to provide tracing support for the client library.",
                 modifiers: MethodSignatureModifiers.Internal,
@@ -58,8 +61,12 @@ internal sealed class ManagementClientProvider : ClientProvider
             : [.. base.BuildFields(), _userAgentField];
 
     protected override PropertyProvider[] BuildProperties()
+        // The ClientDiagnostics property is added by the base AzureDistributedTracingVisitor. We must not add it
+        // here as well: that visitor de-duplicates by property type, and the ClientDiagnostics type it compares
+        // against lives in a different assembly than the one referenced here, so our property is not recognized
+        // as an existing one and a duplicate would be injected (causing a duplicate-key crash in BuildMethods).
         => _isRootClient
-            ? [_pipelineProperty!, _clientDiagnosticsProperty!]
+            ? [_pipelineProperty!]
             : base.BuildProperties();
 
     protected override ConstructorProvider[] BuildConstructors()
