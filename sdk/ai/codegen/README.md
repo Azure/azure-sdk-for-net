@@ -7,7 +7,7 @@ To update the table after the typespec change, please run the following commands
 ```bash
 npx tsp-client sync
 cd .\TempTypeSpecFiles\
-npm install --no-save typespec-extension-exporter
+npm install --no-save typespec-extension-exporter --force
 # For Azure.AI.Projects.Agents
 npx tsp compile sdk-csharp-azure-ai-projects-agents\client.tsp --emit typespec-extension-exporter
 # For Azure.AI.Extensions.OpenAI
