@@ -7,6 +7,7 @@ using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core.Pipeline;
+using Azure.Storage.Common;
 
 namespace Azure.Storage.Blobs.Models
 {
@@ -31,6 +32,8 @@ namespace Azure.Storage.Blobs.Models
             string startFrom,
             string endBefore)
         {
+            // Delimiter is a required paramter for GetBlobsByHierarchy
+            Argument.AssertNotNullOrWhiteSpace(delimiter, nameof(delimiter));
             _client = client;
             _responseFormat = responseFormat;
             _delimiter = delimiter;

@@ -3400,6 +3400,7 @@ namespace Azure.Storage.Blobs.Test
             await using DisposingContainer test = await GetTestContainerAsync();
             AppendBlobClient appendBlob = InstrumentClient(test.Container.GetAppendBlobClient(GetNewBlobName()));
             IDictionary<string, string> tags = BuildTags();
+            var delimiter = "/";
             AppendBlobCreateOptions options = new AppendBlobCreateOptions
             {
                 Tags = tags
@@ -3408,6 +3409,7 @@ namespace Azure.Storage.Blobs.Test
 
             GetBlobsByHierarchyOptions getBlobsByHierarchyOptions = new GetBlobsByHierarchyOptions
             {
+                Delimiter = delimiter,
                 Traits = BlobTraits.Tags
             };
 
@@ -3445,7 +3447,11 @@ namespace Azure.Storage.Blobs.Test
             }
 
             // Act
-            IList<BlobHierarchyItem> blobItems = await test.Container.GetBlobsByHierarchyAsync().ToListAsync();
+            GetBlobsByHierarchyOptions options = new GetBlobsByHierarchyOptions
+            {
+                Delimiter = "/"
+            };
+            IList<BlobHierarchyItem> blobItems = await test.Container.GetBlobsByHierarchyAsync(options).ToListAsync();
 
             // Assert
             Assert.AreEqual(rehydratePriority, blobItems[0].Blob.Properties.RehydratePriority);
@@ -3487,6 +3493,7 @@ namespace Azure.Storage.Blobs.Test
 
             GetBlobsByHierarchyOptions options = new GetBlobsByHierarchyOptions
             {
+                Delimiter = "/",
                 Traits = BlobTraits.Metadata,
             };
 
@@ -3508,6 +3515,7 @@ namespace Azure.Storage.Blobs.Test
 
             GetBlobsByHierarchyOptions options = new GetBlobsByHierarchyOptions
             {
+                Delimiter = "/",
                 Traits = BlobTraits.Metadata
             };
 
@@ -3531,7 +3539,11 @@ namespace Azure.Storage.Blobs.Test
             await blob.CreateIfNotExistsAsync();
 
             // Act
-            BlobHierarchyItem item = await test.Container.GetBlobsByHierarchyAsync().FirstAsync();
+            GetBlobsByHierarchyOptions options = new GetBlobsByHierarchyOptions
+            {
+                Delimiter = "/"
+            };
+            BlobHierarchyItem item = await test.Container.GetBlobsByHierarchyAsync(options: options).FirstAsync();
 
             // Assert
             Assert.AreEqual(TestConfigDefault.EncryptionScope, item.Blob.Properties.EncryptionScope);
@@ -3550,6 +3562,7 @@ namespace Azure.Storage.Blobs.Test
 
             GetBlobsByHierarchyOptions options = new GetBlobsByHierarchyOptions
             {
+                Delimiter = "/",
                 States = BlobStates.Deleted
             };
 
@@ -3581,6 +3594,7 @@ namespace Azure.Storage.Blobs.Test
 
             GetBlobsByHierarchyOptions options = new GetBlobsByHierarchyOptions
             {
+                Delimiter = "/",
                 States = BlobStates.Uncommitted,
             };
 
@@ -3604,6 +3618,7 @@ namespace Azure.Storage.Blobs.Test
 
             GetBlobsByHierarchyOptions options = new GetBlobsByHierarchyOptions
             {
+                Delimiter = "/",
                 States = BlobStates.Snapshots,
             };
 
@@ -3630,6 +3645,7 @@ namespace Azure.Storage.Blobs.Test
             // Act
             GetBlobsByHierarchyOptions options = new GetBlobsByHierarchyOptions
             {
+                Delimiter = "/",
                 States = BlobStates.Version,
             };
 
@@ -3657,6 +3673,7 @@ namespace Azure.Storage.Blobs.Test
 
             GetBlobsByHierarchyOptions options = new GetBlobsByHierarchyOptions
             {
+                Delimiter = "/",
                 Prefix = "foo",
             };
 
@@ -3675,9 +3692,14 @@ namespace Azure.Storage.Blobs.Test
             BlobContainerClient container = InstrumentClient(service.GetBlobContainerClient(GetNewContainerName()));
             var id = Recording.Random.NewGuid().ToString();
 
+            GetBlobsByHierarchyOptions options = new GetBlobsByHierarchyOptions
+            {
+                Delimiter = "/"
+            };
+
             // Act
             await TestHelper.AssertExpectedExceptionAsync<RequestFailedException>(
-                container.GetBlobsByHierarchyAsync().ToListAsync(),
+                container.GetBlobsByHierarchyAsync(options).ToListAsync(),
                 e => Assert.AreEqual("ContainerNotFound", e.ErrorCode));
         }
 
@@ -3694,7 +3716,11 @@ namespace Azure.Storage.Blobs.Test
             BlobContainerClient sourceContainer = InstrumentClient(sourceServiceClient.GetBlobContainerClient("test1"));
 
             // Act
-            BlobHierarchyItem item = await sourceContainer.GetBlobsByHierarchyAsync().FirstAsync();
+            GetBlobsByHierarchyOptions options = new GetBlobsByHierarchyOptions
+            {
+                Delimiter = "/"
+            };
+            BlobHierarchyItem item = await sourceContainer.GetBlobsByHierarchyAsync(options).FirstAsync();
 
             // Assert
             // Since this is a PLAYBACK ONLY test. We expect all the blobs in this source container/account
@@ -3715,7 +3741,11 @@ namespace Azure.Storage.Blobs.Test
             await blob.UploadAsync(content: stream);
 
             // Act
-            BlobHierarchyItem item = await test.Container.GetBlobsByHierarchyAsync().FirstAsync();
+            GetBlobsByHierarchyOptions options = new GetBlobsByHierarchyOptions
+            {
+                Delimiter = "/"
+            };
+            BlobHierarchyItem item = await test.Container.GetBlobsByHierarchyAsync(options).FirstAsync();
 
             // Assert
             Assert.IsNotNull(item.Blob.Properties.LastAccessedOn);
@@ -3739,6 +3769,7 @@ namespace Azure.Storage.Blobs.Test
 
             GetBlobsByHierarchyOptions options = new GetBlobsByHierarchyOptions
             {
+                Delimiter = "/",
                 States = BlobStates.DeletedWithVersions,
             };
 
@@ -3769,11 +3800,21 @@ namespace Azure.Storage.Blobs.Test
             BlobHierarchyItem item;
             if (delimiter)
             {
-                item = await test.Container.GetBlobsByHierarchyAsync().FirstAsync();
+                GetBlobsByHierarchyOptions options = new GetBlobsByHierarchyOptions
+                {
+                    Delimiter = "/",
+                    Prefix = "dir1/dir2/",
+                    ResponseFormat = StorageResponseFormat.Arrow
+                };
+                List<BlobHierarchyItem> blobHierarchyItems = new List<BlobHierarchyItem>();
+                await foreach (BlobHierarchyItem blobItem in test.Container.GetBlobsByHierarchyAsync(options: options))
+                {
+                    blobHierarchyItems.Add(blobItem);
+                }
 
                 // Assert
-                Assert.IsTrue(item.IsBlob);
-                Assert.AreEqual(blobName, item.Blob.Name);
+                Assert.IsTrue(blobHierarchyItems.Last().IsBlob);
+                Assert.AreEqual(blobName, blobHierarchyItems.Last().Blob.Name);
             }
             else
             {
@@ -3842,6 +3883,7 @@ namespace Azure.Storage.Blobs.Test
 
             GetBlobsByHierarchyOptions options = new GetBlobsByHierarchyOptions
             {
+                Delimiter = "/",
                 StartFrom = "foo"
             };
 
@@ -3917,6 +3959,7 @@ namespace Azure.Storage.Blobs.Test
 
             GetBlobsByHierarchyOptions getBlobsByHierarchyOptions = new GetBlobsByHierarchyOptions
             {
+                Delimiter = "/",
                 ResponseFormat = StorageResponseFormat.Arrow,
                 Traits = BlobTraits.Tags
             };
@@ -3957,6 +4000,7 @@ namespace Azure.Storage.Blobs.Test
             // Act
             GetBlobsByHierarchyOptions options = new GetBlobsByHierarchyOptions
             {
+                Delimiter = "/",
                 ResponseFormat = StorageResponseFormat.Arrow
             };
             IList<BlobHierarchyItem> blobItems = await test.Container.GetBlobsByHierarchyAsync(options: options).ToListAsync();
@@ -3976,6 +4020,7 @@ namespace Azure.Storage.Blobs.Test
 
             GetBlobsByHierarchyOptions options = new GetBlobsByHierarchyOptions
             {
+                Delimiter = "/",
                 ResponseFormat = StorageResponseFormat.Arrow
             };
 
@@ -4006,6 +4051,7 @@ namespace Azure.Storage.Blobs.Test
 
             GetBlobsByHierarchyOptions options = new GetBlobsByHierarchyOptions
             {
+                Delimiter = "/",
                 ResponseFormat = StorageResponseFormat.Arrow,
                 Traits = BlobTraits.Metadata
             };
@@ -4029,6 +4075,7 @@ namespace Azure.Storage.Blobs.Test
 
             GetBlobsByHierarchyOptions options = new GetBlobsByHierarchyOptions
             {
+                Delimiter = "/",
                 ResponseFormat = StorageResponseFormat.Arrow,
                 Traits = BlobTraits.Metadata
             };
@@ -4055,6 +4102,7 @@ namespace Azure.Storage.Blobs.Test
             // Act
             GetBlobsByHierarchyOptions options = new GetBlobsByHierarchyOptions
             {
+                Delimiter = "/",
                 ResponseFormat = StorageResponseFormat.Arrow
             };
             BlobHierarchyItem item = await test.Container.GetBlobsByHierarchyAsync(options: options).FirstAsync();
@@ -4077,6 +4125,7 @@ namespace Azure.Storage.Blobs.Test
 
             GetBlobsByHierarchyOptions options = new GetBlobsByHierarchyOptions
             {
+                Delimiter = "/",
                 ResponseFormat = StorageResponseFormat.Arrow,
                 States = BlobStates.Deleted
             };
@@ -4110,6 +4159,7 @@ namespace Azure.Storage.Blobs.Test
 
             GetBlobsByHierarchyOptions options = new GetBlobsByHierarchyOptions
             {
+                Delimiter = "/",
                 ResponseFormat = StorageResponseFormat.Arrow,
                 States = BlobStates.Uncommitted
             };
@@ -4135,6 +4185,7 @@ namespace Azure.Storage.Blobs.Test
 
             GetBlobsByHierarchyOptions options = new GetBlobsByHierarchyOptions
             {
+                Delimiter = "/",
                 ResponseFormat = StorageResponseFormat.Arrow,
                 States = BlobStates.Snapshots
             };
@@ -4162,6 +4213,7 @@ namespace Azure.Storage.Blobs.Test
             // Act
             GetBlobsByHierarchyOptions options = new GetBlobsByHierarchyOptions
             {
+                Delimiter = "/",
                 ResponseFormat = StorageResponseFormat.Arrow,
                 States = BlobStates.Version
             };
@@ -4191,6 +4243,7 @@ namespace Azure.Storage.Blobs.Test
 
             GetBlobsByHierarchyOptions options = new GetBlobsByHierarchyOptions
             {
+                Delimiter = "/",
                 ResponseFormat = StorageResponseFormat.Arrow,
                 Prefix = "foo"
             };
@@ -4214,6 +4267,7 @@ namespace Azure.Storage.Blobs.Test
             // Act
             GetBlobsByHierarchyOptions options = new GetBlobsByHierarchyOptions
             {
+                Delimiter = "/",
                 ResponseFormat = StorageResponseFormat.Arrow
             };
             await TestHelper.AssertExpectedExceptionAsync<RequestFailedException>(
@@ -4236,6 +4290,7 @@ namespace Azure.Storage.Blobs.Test
             // Act
             GetBlobsByHierarchyOptions options = new GetBlobsByHierarchyOptions
             {
+                Delimiter = "/",
                 ResponseFormat = StorageResponseFormat.Arrow
             };
             BlobHierarchyItem item = await sourceContainer.GetBlobsByHierarchyAsync(options: options).FirstAsync();
@@ -4261,6 +4316,7 @@ namespace Azure.Storage.Blobs.Test
             // Act
             GetBlobsByHierarchyOptions options = new GetBlobsByHierarchyOptions
             {
+                Delimiter = "/",
                 ResponseFormat = StorageResponseFormat.Arrow
             };
             BlobHierarchyItem item = await test.Container.GetBlobsByHierarchyAsync(options: options).FirstAsync();
@@ -4287,6 +4343,7 @@ namespace Azure.Storage.Blobs.Test
 
             GetBlobsByHierarchyOptions options = new GetBlobsByHierarchyOptions
             {
+                Delimiter = "/",
                 ResponseFormat = StorageResponseFormat.Arrow,
                 States = BlobStates.DeletedWithVersions
             };
@@ -4320,13 +4377,19 @@ namespace Azure.Storage.Blobs.Test
             {
                 GetBlobsByHierarchyOptions options = new GetBlobsByHierarchyOptions
                 {
+                    Delimiter = "/",
+                    Prefix = "dir1/dir2/",
                     ResponseFormat = StorageResponseFormat.Arrow
                 };
-                item = await test.Container.GetBlobsByHierarchyAsync(options: options).FirstAsync();
+                List<BlobHierarchyItem> blobHierarchyItems = new List<BlobHierarchyItem>();
+                await foreach (BlobHierarchyItem blobItem in test.Container.GetBlobsByHierarchyAsync(options: options))
+                {
+                    blobHierarchyItems.Add(blobItem);
+                }
 
                 // Assert
-                Assert.IsTrue(item.IsBlob);
-                Assert.AreEqual(blobName, item.Blob.Name);
+                Assert.IsTrue(blobHierarchyItems.Last().IsBlob);
+                Assert.AreEqual(blobName, blobHierarchyItems.Last().Blob.Name);
             }
             else
             {
@@ -4397,6 +4460,7 @@ namespace Azure.Storage.Blobs.Test
 
             GetBlobsByHierarchyOptions options = new GetBlobsByHierarchyOptions
             {
+                Delimiter = "/",
                 ResponseFormat = StorageResponseFormat.Arrow,
                 StartFrom = "foo"
             };
@@ -4419,6 +4483,7 @@ namespace Azure.Storage.Blobs.Test
 
             GetBlobsByHierarchyOptions options = new GetBlobsByHierarchyOptions
             {
+                Delimiter = "/",
                 ResponseFormat = StorageResponseFormat.Arrow,
                 EndBefore = "foo"
             };
@@ -4441,6 +4506,7 @@ namespace Azure.Storage.Blobs.Test
 
             GetBlobsByHierarchyOptions options = new GetBlobsByHierarchyOptions
             {
+                Delimiter = "/",
                 ResponseFormat = StorageResponseFormat.Arrow,
                 StartFrom = "foo",
                 EndBefore = "foo/foo"
