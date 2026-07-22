@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.DesktopVirtualization
         {
             TryGetApiVersion(ResourceType, out string scalingPlanPooledScheduleApiVersion);
             _scalingPlanPooledSchedulesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.DesktopVirtualization", ResourceType.Namespace, Diagnostics);
-            _scalingPlanPooledSchedulesRestClient = new ScalingPlanPooledSchedules(_scalingPlanPooledSchedulesClientDiagnostics, Pipeline, Endpoint, scalingPlanPooledScheduleApiVersion ?? "2026-03-01-preview");
+            _scalingPlanPooledSchedulesRestClient = new ScalingPlanPooledSchedules(_scalingPlanPooledSchedulesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, scalingPlanPooledScheduleApiVersion ?? "2026-03-01-preview");
             ValidateResourceId(id);
         }
 

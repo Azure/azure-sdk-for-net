@@ -63,59 +63,59 @@ namespace Azure.ResourceManager.Consumption.Mocking
 
         private ClientDiagnostics PriceSheetClientDiagnostics => _priceSheetClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Consumption.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private PriceSheet PriceSheetRestClient => _priceSheetRestClient ??= new PriceSheet(PriceSheetClientDiagnostics, Pipeline, Endpoint, "2024-08-01");
+        private PriceSheet PriceSheetRestClient => _priceSheetRestClient ??= new PriceSheet(PriceSheetClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2024-08-01");
 
         private ClientDiagnostics UsageDetailsClientDiagnostics => _usageDetailsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Consumption.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private UsageDetails UsageDetailsRestClient => _usageDetailsRestClient ??= new UsageDetails(UsageDetailsClientDiagnostics, Pipeline, Endpoint, "2024-08-01");
+        private UsageDetails UsageDetailsRestClient => _usageDetailsRestClient ??= new UsageDetails(UsageDetailsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2024-08-01");
 
         private ClientDiagnostics MarketplacesClientDiagnostics => _marketplacesClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Consumption.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private Marketplaces MarketplacesRestClient => _marketplacesRestClient ??= new Marketplaces(MarketplacesClientDiagnostics, Pipeline, Endpoint, "2024-08-01");
+        private Marketplaces MarketplacesRestClient => _marketplacesRestClient ??= new Marketplaces(MarketplacesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2024-08-01");
 
         private ClientDiagnostics TagsClientDiagnostics => _tagsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Consumption.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private Tags TagsRestClient => _tagsRestClient ??= new Tags(TagsClientDiagnostics, Pipeline, Endpoint, "2024-08-01");
+        private Tags TagsRestClient => _tagsRestClient ??= new Tags(TagsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2024-08-01");
 
         private ClientDiagnostics ChargesClientDiagnostics => _chargesClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Consumption.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private Charges ChargesRestClient => _chargesRestClient ??= new Charges(ChargesClientDiagnostics, Pipeline, Endpoint, "2024-08-01");
+        private Charges ChargesRestClient => _chargesRestClient ??= new Charges(ChargesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2024-08-01");
 
         private ClientDiagnostics BalancesClientDiagnostics => _balancesClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Consumption.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private Balances BalancesRestClient => _balancesRestClient ??= new Balances(BalancesClientDiagnostics, Pipeline, Endpoint, "2024-08-01");
+        private Balances BalancesRestClient => _balancesRestClient ??= new Balances(BalancesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2024-08-01");
 
         private ClientDiagnostics ReservationsSummariesClientDiagnostics => _reservationsSummariesClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Consumption.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private ReservationsSummaries ReservationsSummariesRestClient => _reservationsSummariesRestClient ??= new ReservationsSummaries(ReservationsSummariesClientDiagnostics, Pipeline, Endpoint, "2024-08-01");
+        private ReservationsSummaries ReservationsSummariesRestClient => _reservationsSummariesRestClient ??= new ReservationsSummaries(ReservationsSummariesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2024-08-01");
 
         private ClientDiagnostics ReservationsDetailsClientDiagnostics => _reservationsDetailsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Consumption.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private ReservationsDetails ReservationsDetailsRestClient => _reservationsDetailsRestClient ??= new ReservationsDetails(ReservationsDetailsClientDiagnostics, Pipeline, Endpoint, "2024-08-01");
+        private ReservationsDetails ReservationsDetailsRestClient => _reservationsDetailsRestClient ??= new ReservationsDetails(ReservationsDetailsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2024-08-01");
 
         private ClientDiagnostics ReservationRecommendationsClientDiagnostics => _reservationRecommendationsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Consumption.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private ReservationRecommendations ReservationRecommendationsRestClient => _reservationRecommendationsRestClient ??= new ReservationRecommendations(ReservationRecommendationsClientDiagnostics, Pipeline, Endpoint, "2024-08-01");
+        private ReservationRecommendations ReservationRecommendationsRestClient => _reservationRecommendationsRestClient ??= new ReservationRecommendations(ReservationRecommendationsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2024-08-01");
 
         private ClientDiagnostics ReservationRecommendationDetailsClientDiagnostics => _reservationRecommendationDetailsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Consumption.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private ReservationRecommendationDetails ReservationRecommendationDetailsRestClient => _reservationRecommendationDetailsRestClient ??= new ReservationRecommendationDetails(ReservationRecommendationDetailsClientDiagnostics, Pipeline, Endpoint, "2024-08-01");
+        private ReservationRecommendationDetails ReservationRecommendationDetailsRestClient => _reservationRecommendationDetailsRestClient ??= new ReservationRecommendationDetails(ReservationRecommendationDetailsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2024-08-01");
 
         private ClientDiagnostics ReservationTransactionsClientDiagnostics => _reservationTransactionsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Consumption.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private ReservationTransactions ReservationTransactionsRestClient => _reservationTransactionsRestClient ??= new ReservationTransactions(ReservationTransactionsClientDiagnostics, Pipeline, Endpoint, "2024-08-01");
+        private ReservationTransactions ReservationTransactionsRestClient => _reservationTransactionsRestClient ??= new ReservationTransactions(ReservationTransactionsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2024-08-01");
 
         private ClientDiagnostics AggregatedCostClientDiagnostics => _aggregatedCostClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Consumption.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private AggregatedCost AggregatedCostRestClient => _aggregatedCostRestClient ??= new AggregatedCost(AggregatedCostClientDiagnostics, Pipeline, Endpoint, "2024-08-01");
+        private AggregatedCost AggregatedCostRestClient => _aggregatedCostRestClient ??= new AggregatedCost(AggregatedCostClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2024-08-01");
 
         private ClientDiagnostics EventsClientDiagnostics => _eventsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Consumption.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private Events EventsRestClient => _eventsRestClient ??= new Events(EventsClientDiagnostics, Pipeline, Endpoint, "2024-08-01");
+        private Events EventsRestClient => _eventsRestClient ??= new Events(EventsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2024-08-01");
 
         private ClientDiagnostics LotsClientDiagnostics => _lotsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Consumption.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private Lots LotsRestClient => _lotsRestClient ??= new Lots(LotsClientDiagnostics, Pipeline, Endpoint, "2024-08-01");
+        private Lots LotsRestClient => _lotsRestClient ??= new Lots(LotsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2024-08-01");
 
         /// <summary> Gets an object representing a <see cref="PriceSheetResource"/> along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>

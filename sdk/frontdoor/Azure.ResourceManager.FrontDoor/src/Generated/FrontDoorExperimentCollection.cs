@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.FrontDoor
         {
             TryGetApiVersion(FrontDoorExperimentResource.ResourceType, out string frontDoorExperimentApiVersion);
             _experimentsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.FrontDoor", FrontDoorExperimentResource.ResourceType.Namespace, Diagnostics);
-            _experimentsRestClient = new Experiments(_experimentsClientDiagnostics, Pipeline, Endpoint, frontDoorExperimentApiVersion ?? "2025-11-01");
+            _experimentsRestClient = new Experiments(_experimentsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, frontDoorExperimentApiVersion ?? "2025-11-01");
             ValidateResourceId(id);
         }
 

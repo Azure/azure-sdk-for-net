@@ -40,11 +40,11 @@ namespace Azure.ResourceManager.HDInsight.Mocking
 
         private ClientDiagnostics HDInsightClusterClientDiagnostics => _hdInsightClusterClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.HDInsight.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private HDInsightCluster HDInsightClusterRestClient => _hdInsightClusterRestClient ??= new HDInsightCluster(HDInsightClusterClientDiagnostics, Pipeline, Endpoint, "2025-01-15-preview");
+        private HDInsightCluster HDInsightClusterRestClient => _hdInsightClusterRestClient ??= new HDInsightCluster(HDInsightClusterClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2025-01-15-preview");
 
         private ClientDiagnostics LocationsClientDiagnostics => _locationsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.HDInsight.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private Locations LocationsRestClient => _locationsRestClient ??= new Locations(LocationsClientDiagnostics, Pipeline, Endpoint, "2025-01-15-preview");
+        private Locations LocationsRestClient => _locationsRestClient ??= new Locations(LocationsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2025-01-15-preview");
 
         /// <summary>
         /// Lists all the HDInsight clusters under the subscription.

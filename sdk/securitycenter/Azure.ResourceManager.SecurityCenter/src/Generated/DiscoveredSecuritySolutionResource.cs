@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.SecurityCenter
         {
             TryGetApiVersion(ResourceType, out string discoveredSecuritySolutionApiVersion);
             _discoveredSecuritySolutionsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.SecurityCenter", ResourceType.Namespace, Diagnostics);
-            _discoveredSecuritySolutionsRestClient = new DiscoveredSecuritySolutions(_discoveredSecuritySolutionsClientDiagnostics, Pipeline, Endpoint, discoveredSecuritySolutionApiVersion ?? "2020-01-01");
+            _discoveredSecuritySolutionsRestClient = new DiscoveredSecuritySolutions(_discoveredSecuritySolutionsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, discoveredSecuritySolutionApiVersion ?? "2020-01-01");
             ValidateResourceId(id);
         }
 

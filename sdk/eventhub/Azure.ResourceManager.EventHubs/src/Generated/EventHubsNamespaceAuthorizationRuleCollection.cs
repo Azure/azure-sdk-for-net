@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.EventHubs
         {
             TryGetApiVersion(EventHubsNamespaceAuthorizationRuleResource.ResourceType, out string eventHubsNamespaceAuthorizationRuleApiVersion);
             _eventHubsNamespaceAuthorizationRuleClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.EventHubs", EventHubsNamespaceAuthorizationRuleResource.ResourceType.Namespace, Diagnostics);
-            _eventHubsNamespaceAuthorizationRuleRestClient = new EventHubsNamespaceAuthorizationRule(_eventHubsNamespaceAuthorizationRuleClientDiagnostics, Pipeline, Endpoint, eventHubsNamespaceAuthorizationRuleApiVersion ?? "2026-01-01");
+            _eventHubsNamespaceAuthorizationRuleRestClient = new EventHubsNamespaceAuthorizationRule(_eventHubsNamespaceAuthorizationRuleClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, eventHubsNamespaceAuthorizationRuleApiVersion ?? "2026-01-01");
             ValidateResourceId(id);
         }
 

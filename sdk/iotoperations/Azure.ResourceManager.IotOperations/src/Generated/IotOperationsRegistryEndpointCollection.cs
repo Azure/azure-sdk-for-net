@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.IotOperations
         {
             TryGetApiVersion(IotOperationsRegistryEndpointResource.ResourceType, out string iotOperationsRegistryEndpointApiVersion);
             _registryEndpointClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.IotOperations", IotOperationsRegistryEndpointResource.ResourceType.Namespace, Diagnostics);
-            _registryEndpointRestClient = new RegistryEndpoint(_registryEndpointClientDiagnostics, Pipeline, Endpoint, iotOperationsRegistryEndpointApiVersion ?? "2025-10-01");
+            _registryEndpointRestClient = new RegistryEndpoint(_registryEndpointClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, iotOperationsRegistryEndpointApiVersion ?? "2025-10-01");
             ValidateResourceId(id);
         }
 

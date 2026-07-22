@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
         {
             TryGetApiVersion(BackupRecoveryPointResource.ResourceType, out string backupRecoveryPointApiVersion);
             _recoveryPointsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.RecoveryServicesBackup", BackupRecoveryPointResource.ResourceType.Namespace, Diagnostics);
-            _recoveryPointsRestClient = new RecoveryPoints(_recoveryPointsClientDiagnostics, Pipeline, Endpoint, backupRecoveryPointApiVersion ?? "2026-01-31-preview");
+            _recoveryPointsRestClient = new RecoveryPoints(_recoveryPointsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, backupRecoveryPointApiVersion ?? "2026-01-31-preview");
             ValidateResourceId(id);
         }
 

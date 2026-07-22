@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.DataFactory
         {
             TryGetApiVersion(DataFactoryPipelineResource.ResourceType, out string dataFactoryPipelineApiVersion);
             _pipelinesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.DataFactory", DataFactoryPipelineResource.ResourceType.Namespace, Diagnostics);
-            _pipelinesRestClient = new Pipelines(_pipelinesClientDiagnostics, Pipeline, Endpoint, dataFactoryPipelineApiVersion ?? "2018-06-01");
+            _pipelinesRestClient = new Pipelines(_pipelinesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, dataFactoryPipelineApiVersion ?? "2018-06-01");
             ValidateResourceId(id);
         }
 

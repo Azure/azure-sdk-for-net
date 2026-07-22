@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.DataProtectionBackup
         {
             TryGetApiVersion(ResourceType, out string deletedDataProtectionBackupInstanceApiVersion);
             _deletedBackupInstanceResourcesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.DataProtectionBackup", ResourceType.Namespace, Diagnostics);
-            _deletedBackupInstanceResourcesRestClient = new DeletedBackupInstanceResources(_deletedBackupInstanceResourcesClientDiagnostics, Pipeline, Endpoint, deletedDataProtectionBackupInstanceApiVersion ?? "2026-03-01");
+            _deletedBackupInstanceResourcesRestClient = new DeletedBackupInstanceResources(_deletedBackupInstanceResourcesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, deletedDataProtectionBackupInstanceApiVersion ?? "2026-03-01");
             ValidateResourceId(id);
         }
 

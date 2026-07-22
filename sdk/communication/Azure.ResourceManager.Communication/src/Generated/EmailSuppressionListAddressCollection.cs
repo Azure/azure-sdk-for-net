@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.Communication
         {
             TryGetApiVersion(EmailSuppressionListAddressResource.ResourceType, out string emailSuppressionListAddressApiVersion);
             _suppressionListAddressesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Communication", EmailSuppressionListAddressResource.ResourceType.Namespace, Diagnostics);
-            _suppressionListAddressesRestClient = new SuppressionListAddresses(_suppressionListAddressesClientDiagnostics, Pipeline, Endpoint, emailSuppressionListAddressApiVersion ?? "2026-03-18");
+            _suppressionListAddressesRestClient = new SuppressionListAddresses(_suppressionListAddressesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, emailSuppressionListAddressApiVersion ?? "2026-03-18");
             ValidateResourceId(id);
         }
 

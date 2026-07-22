@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.CosmosDB
         {
             TryGetApiVersion(MongoMIRoleDefinitionResource.ResourceType, out string mongoMIRoleDefinitionApiVersion);
             _mongoMIResourcesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.CosmosDB", MongoMIRoleDefinitionResource.ResourceType.Namespace, Diagnostics);
-            _mongoMIResourcesRestClient = new MongoMIResources(_mongoMIResourcesClientDiagnostics, Pipeline, Endpoint, mongoMIRoleDefinitionApiVersion ?? "2026-03-15");
+            _mongoMIResourcesRestClient = new MongoMIResources(_mongoMIResourcesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, mongoMIRoleDefinitionApiVersion ?? "2026-03-15");
             ValidateResourceId(id);
         }
 

@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.Dns
         {
             TryGetApiVersion(DnsZoneResource.ResourceType, out string dnsZoneApiVersion);
             _zonesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Dns", DnsZoneResource.ResourceType.Namespace, Diagnostics);
-            _zonesRestClient = new Zones(_zonesClientDiagnostics, Pipeline, Endpoint, dnsZoneApiVersion ?? "2023-07-01-preview");
+            _zonesRestClient = new Zones(_zonesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, dnsZoneApiVersion ?? "2023-07-01-preview");
             ValidateResourceId(id);
         }
 

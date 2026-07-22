@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.AppContainers
         {
             TryGetApiVersion(ContainerAppConnectedEnvironmentDaprComponentResource.ResourceType, out string containerAppConnectedEnvironmentDaprComponentApiVersion);
             _containerAppConnectedEnvironmentDaprComponentsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.AppContainers", ContainerAppConnectedEnvironmentDaprComponentResource.ResourceType.Namespace, Diagnostics);
-            _containerAppConnectedEnvironmentDaprComponentsRestClient = new ContainerAppConnectedEnvironmentDaprComponents(_containerAppConnectedEnvironmentDaprComponentsClientDiagnostics, Pipeline, Endpoint, containerAppConnectedEnvironmentDaprComponentApiVersion ?? "2025-10-02-preview");
+            _containerAppConnectedEnvironmentDaprComponentsRestClient = new ContainerAppConnectedEnvironmentDaprComponents(_containerAppConnectedEnvironmentDaprComponentsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, containerAppConnectedEnvironmentDaprComponentApiVersion ?? "2025-10-02-preview");
             ValidateResourceId(id);
         }
 

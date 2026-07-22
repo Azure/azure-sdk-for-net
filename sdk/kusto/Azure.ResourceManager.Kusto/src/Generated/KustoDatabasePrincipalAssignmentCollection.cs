@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.Kusto
         {
             TryGetApiVersion(KustoDatabasePrincipalAssignmentResource.ResourceType, out string kustoDatabasePrincipalAssignmentApiVersion);
             _databasePrincipalAssignmentsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Kusto", KustoDatabasePrincipalAssignmentResource.ResourceType.Namespace, Diagnostics);
-            _databasePrincipalAssignmentsRestClient = new DatabasePrincipalAssignments(_databasePrincipalAssignmentsClientDiagnostics, Pipeline, Endpoint, kustoDatabasePrincipalAssignmentApiVersion ?? "2025-02-14");
+            _databasePrincipalAssignmentsRestClient = new DatabasePrincipalAssignments(_databasePrincipalAssignmentsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, kustoDatabasePrincipalAssignmentApiVersion ?? "2025-02-14");
             ValidateResourceId(id);
         }
 

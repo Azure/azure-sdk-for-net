@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.StorageCache
         {
             TryGetApiVersion(ResourceType, out string amlFileSystemApiVersion);
             _amlFilesystemsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.StorageCache", ResourceType.Namespace, Diagnostics);
-            _amlFilesystemsRestClient = new AmlFilesystems(_amlFilesystemsClientDiagnostics, Pipeline, Endpoint, amlFileSystemApiVersion ?? "2026-01-01");
+            _amlFilesystemsRestClient = new AmlFilesystems(_amlFilesystemsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, amlFileSystemApiVersion ?? "2026-01-01");
             ValidateResourceId(id);
         }
 

@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.Maintenance
         {
             TryGetApiVersion(MaintenanceGroupApplyUpdateResource.ResourceType, out string maintenanceGroupApplyUpdateApiVersion);
             _maintenanceApplyUpdateClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Maintenance", MaintenanceGroupApplyUpdateResource.ResourceType.Namespace, Diagnostics);
-            _maintenanceApplyUpdateRestClient = new MaintenanceApplyUpdate(_maintenanceApplyUpdateClientDiagnostics, Pipeline, Endpoint, maintenanceGroupApplyUpdateApiVersion ?? "2025-10-01-preview");
+            _maintenanceApplyUpdateRestClient = new MaintenanceApplyUpdate(_maintenanceApplyUpdateClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, maintenanceGroupApplyUpdateApiVersion ?? "2025-10-01-preview");
         }
 
         /// <summary>

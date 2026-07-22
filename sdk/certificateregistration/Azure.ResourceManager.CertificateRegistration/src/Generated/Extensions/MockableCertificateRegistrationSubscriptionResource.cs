@@ -39,11 +39,11 @@ namespace Azure.ResourceManager.CertificateRegistration.Mocking
 
         private ClientDiagnostics AppServiceCertificateOrdersClientDiagnostics => _appServiceCertificateOrdersClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.CertificateRegistration.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private AppServiceCertificateOrders AppServiceCertificateOrdersRestClient => _appServiceCertificateOrdersRestClient ??= new AppServiceCertificateOrders(AppServiceCertificateOrdersClientDiagnostics, Pipeline, Endpoint, "2024-11-01");
+        private AppServiceCertificateOrders AppServiceCertificateOrdersRestClient => _appServiceCertificateOrdersRestClient ??= new AppServiceCertificateOrders(AppServiceCertificateOrdersClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2024-11-01");
 
         private ClientDiagnostics AppServiceCertificateOrdersOperationGroupClientDiagnostics => _appServiceCertificateOrdersOperationGroupClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.CertificateRegistration.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private AppServiceCertificateOrdersOperationGroup AppServiceCertificateOrdersOperationGroupRestClient => _appServiceCertificateOrdersOperationGroupRestClient ??= new AppServiceCertificateOrdersOperationGroup(AppServiceCertificateOrdersOperationGroupClientDiagnostics, Pipeline, Endpoint, "2024-11-01");
+        private AppServiceCertificateOrdersOperationGroup AppServiceCertificateOrdersOperationGroupRestClient => _appServiceCertificateOrdersOperationGroupRestClient ??= new AppServiceCertificateOrdersOperationGroup(AppServiceCertificateOrdersOperationGroupClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2024-11-01");
 
         /// <summary>
         /// Description for List all certificate orders in a subscription.

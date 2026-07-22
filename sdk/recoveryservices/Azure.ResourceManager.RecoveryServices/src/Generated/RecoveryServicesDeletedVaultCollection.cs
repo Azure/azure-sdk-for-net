@@ -45,7 +45,7 @@ namespace Azure.ResourceManager.RecoveryServices
             TryGetApiVersion(RecoveryServicesDeletedVaultResource.ResourceType, out string recoveryServicesDeletedVaultApiVersion);
             _location = location;
             _deletedVaultsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.RecoveryServices", RecoveryServicesDeletedVaultResource.ResourceType.Namespace, Diagnostics);
-            _deletedVaultsRestClient = new DeletedVaults(_deletedVaultsClientDiagnostics, Pipeline, Endpoint, recoveryServicesDeletedVaultApiVersion ?? "2026-05-01");
+            _deletedVaultsRestClient = new DeletedVaults(_deletedVaultsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, recoveryServicesDeletedVaultApiVersion ?? "2026-05-01");
             ValidateResourceId(id);
         }
 

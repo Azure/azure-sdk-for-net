@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.NetApp
         {
             TryGetApiVersion(NetAppVolumeQuotaRuleResource.ResourceType, out string netAppVolumeQuotaRuleApiVersion);
             _volumeQuotaRulesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.NetApp", NetAppVolumeQuotaRuleResource.ResourceType.Namespace, Diagnostics);
-            _volumeQuotaRulesRestClient = new VolumeQuotaRules(_volumeQuotaRulesClientDiagnostics, Pipeline, Endpoint, netAppVolumeQuotaRuleApiVersion ?? "2026-04-15-preview");
+            _volumeQuotaRulesRestClient = new VolumeQuotaRules(_volumeQuotaRulesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, netAppVolumeQuotaRuleApiVersion ?? "2026-04-15-preview");
             ValidateResourceId(id);
         }
 

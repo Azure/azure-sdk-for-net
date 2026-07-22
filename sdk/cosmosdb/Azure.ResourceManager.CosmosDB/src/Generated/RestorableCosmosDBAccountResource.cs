@@ -73,29 +73,29 @@ namespace Azure.ResourceManager.CosmosDB
         {
             TryGetApiVersion(ResourceType, out string restorableCosmosDBAccountApiVersion);
             _restorableDatabaseAccountsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.CosmosDB", ResourceType.Namespace, Diagnostics);
-            _restorableDatabaseAccountsRestClient = new RestorableDatabaseAccounts(_restorableDatabaseAccountsClientDiagnostics, Pipeline, Endpoint, restorableCosmosDBAccountApiVersion ?? "2026-03-15");
+            _restorableDatabaseAccountsRestClient = new RestorableDatabaseAccounts(_restorableDatabaseAccountsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, restorableCosmosDBAccountApiVersion ?? "2026-03-15");
             _restorableSqlDatabasesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.CosmosDB", ResourceType.Namespace, Diagnostics);
-            _restorableSqlDatabasesRestClient = new RestorableSqlDatabases(_restorableSqlDatabasesClientDiagnostics, Pipeline, Endpoint, restorableCosmosDBAccountApiVersion ?? "2026-03-15");
+            _restorableSqlDatabasesRestClient = new RestorableSqlDatabases(_restorableSqlDatabasesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, restorableCosmosDBAccountApiVersion ?? "2026-03-15");
             _restorableGremlinDatabasesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.CosmosDB", ResourceType.Namespace, Diagnostics);
-            _restorableGremlinDatabasesRestClient = new RestorableGremlinDatabases(_restorableGremlinDatabasesClientDiagnostics, Pipeline, Endpoint, restorableCosmosDBAccountApiVersion ?? "2026-03-15");
+            _restorableGremlinDatabasesRestClient = new RestorableGremlinDatabases(_restorableGremlinDatabasesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, restorableCosmosDBAccountApiVersion ?? "2026-03-15");
             _restorableGremlinGraphsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.CosmosDB", ResourceType.Namespace, Diagnostics);
-            _restorableGremlinGraphsRestClient = new RestorableGremlinGraphs(_restorableGremlinGraphsClientDiagnostics, Pipeline, Endpoint, restorableCosmosDBAccountApiVersion ?? "2026-03-15");
+            _restorableGremlinGraphsRestClient = new RestorableGremlinGraphs(_restorableGremlinGraphsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, restorableCosmosDBAccountApiVersion ?? "2026-03-15");
             _restorableGremlinResourcesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.CosmosDB", ResourceType.Namespace, Diagnostics);
-            _restorableGremlinResourcesRestClient = new RestorableGremlinResources(_restorableGremlinResourcesClientDiagnostics, Pipeline, Endpoint, restorableCosmosDBAccountApiVersion ?? "2026-03-15");
+            _restorableGremlinResourcesRestClient = new RestorableGremlinResources(_restorableGremlinResourcesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, restorableCosmosDBAccountApiVersion ?? "2026-03-15");
             _restorableMongodbCollectionsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.CosmosDB", ResourceType.Namespace, Diagnostics);
-            _restorableMongodbCollectionsRestClient = new RestorableMongodbCollections(_restorableMongodbCollectionsClientDiagnostics, Pipeline, Endpoint, restorableCosmosDBAccountApiVersion ?? "2026-03-15");
+            _restorableMongodbCollectionsRestClient = new RestorableMongodbCollections(_restorableMongodbCollectionsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, restorableCosmosDBAccountApiVersion ?? "2026-03-15");
             _restorableMongodbDatabasesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.CosmosDB", ResourceType.Namespace, Diagnostics);
-            _restorableMongodbDatabasesRestClient = new RestorableMongodbDatabases(_restorableMongodbDatabasesClientDiagnostics, Pipeline, Endpoint, restorableCosmosDBAccountApiVersion ?? "2026-03-15");
+            _restorableMongodbDatabasesRestClient = new RestorableMongodbDatabases(_restorableMongodbDatabasesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, restorableCosmosDBAccountApiVersion ?? "2026-03-15");
             _restorableMongodbResourcesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.CosmosDB", ResourceType.Namespace, Diagnostics);
-            _restorableMongodbResourcesRestClient = new RestorableMongodbResources(_restorableMongodbResourcesClientDiagnostics, Pipeline, Endpoint, restorableCosmosDBAccountApiVersion ?? "2026-03-15");
+            _restorableMongodbResourcesRestClient = new RestorableMongodbResources(_restorableMongodbResourcesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, restorableCosmosDBAccountApiVersion ?? "2026-03-15");
             _restorableSqlContainersClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.CosmosDB", ResourceType.Namespace, Diagnostics);
-            _restorableSqlContainersRestClient = new RestorableSqlContainers(_restorableSqlContainersClientDiagnostics, Pipeline, Endpoint, restorableCosmosDBAccountApiVersion ?? "2026-03-15");
+            _restorableSqlContainersRestClient = new RestorableSqlContainers(_restorableSqlContainersClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, restorableCosmosDBAccountApiVersion ?? "2026-03-15");
             _restorableSqlResourcesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.CosmosDB", ResourceType.Namespace, Diagnostics);
-            _restorableSqlResourcesRestClient = new RestorableSqlResources(_restorableSqlResourcesClientDiagnostics, Pipeline, Endpoint, restorableCosmosDBAccountApiVersion ?? "2026-03-15");
+            _restorableSqlResourcesRestClient = new RestorableSqlResources(_restorableSqlResourcesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, restorableCosmosDBAccountApiVersion ?? "2026-03-15");
             _restorableTableResourcesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.CosmosDB", ResourceType.Namespace, Diagnostics);
-            _restorableTableResourcesRestClient = new RestorableTableResources(_restorableTableResourcesClientDiagnostics, Pipeline, Endpoint, restorableCosmosDBAccountApiVersion ?? "2026-03-15");
+            _restorableTableResourcesRestClient = new RestorableTableResources(_restorableTableResourcesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, restorableCosmosDBAccountApiVersion ?? "2026-03-15");
             _restorableTablesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.CosmosDB", ResourceType.Namespace, Diagnostics);
-            _restorableTablesRestClient = new RestorableTables(_restorableTablesClientDiagnostics, Pipeline, Endpoint, restorableCosmosDBAccountApiVersion ?? "2026-03-15");
+            _restorableTablesRestClient = new RestorableTables(_restorableTablesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, restorableCosmosDBAccountApiVersion ?? "2026-03-15");
             ValidateResourceId(id);
         }
 

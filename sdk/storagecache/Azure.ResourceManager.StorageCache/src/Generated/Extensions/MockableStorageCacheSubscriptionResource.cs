@@ -50,31 +50,31 @@ namespace Azure.ResourceManager.StorageCache.Mocking
 
         private ClientDiagnostics CachesClientDiagnostics => _cachesClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.StorageCache.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private Caches CachesRestClient => _cachesRestClient ??= new Caches(CachesClientDiagnostics, Pipeline, Endpoint, "2026-01-01");
+        private Caches CachesRestClient => _cachesRestClient ??= new Caches(CachesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2026-01-01");
 
         private ClientDiagnostics AmlFilesystemsClientDiagnostics => _amlFilesystemsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.StorageCache.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private AmlFilesystems AmlFilesystemsRestClient => _amlFilesystemsRestClient ??= new AmlFilesystems(AmlFilesystemsClientDiagnostics, Pipeline, Endpoint, "2026-01-01");
+        private AmlFilesystems AmlFilesystemsRestClient => _amlFilesystemsRestClient ??= new AmlFilesystems(AmlFilesystemsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2026-01-01");
 
         private ClientDiagnostics StorageCacheClientClientDiagnostics => _storageCacheClientClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.StorageCache.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private StorageCacheClient StorageCacheClientRestClient => _storageCacheClientRestClient ??= new StorageCacheClient(StorageCacheClientClientDiagnostics, Pipeline, Endpoint, "2026-01-01");
+        private StorageCacheClient StorageCacheClientRestClient => _storageCacheClientRestClient ??= new StorageCacheClient(StorageCacheClientClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2026-01-01");
 
         private ClientDiagnostics SkusClientDiagnostics => _skusClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.StorageCache.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private Skus SkusRestClient => _skusRestClient ??= new Skus(SkusClientDiagnostics, Pipeline, Endpoint, "2026-01-01");
+        private Skus SkusRestClient => _skusRestClient ??= new Skus(SkusClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2026-01-01");
 
         private ClientDiagnostics UsageModelsClientDiagnostics => _usageModelsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.StorageCache.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private UsageModels UsageModelsRestClient => _usageModelsRestClient ??= new UsageModels(UsageModelsClientDiagnostics, Pipeline, Endpoint, "2026-01-01");
+        private UsageModels UsageModelsRestClient => _usageModelsRestClient ??= new UsageModels(UsageModelsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2026-01-01");
 
         private ClientDiagnostics AscOperationsClientDiagnostics => _ascOperationsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.StorageCache.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private AscOperations AscOperationsRestClient => _ascOperationsRestClient ??= new AscOperations(AscOperationsClientDiagnostics, Pipeline, Endpoint, "2026-01-01");
+        private AscOperations AscOperationsRestClient => _ascOperationsRestClient ??= new AscOperations(AscOperationsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2026-01-01");
 
         private ClientDiagnostics AscUsagesClientDiagnostics => _ascUsagesClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.StorageCache.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private AscUsages AscUsagesRestClient => _ascUsagesRestClient ??= new AscUsages(AscUsagesClientDiagnostics, Pipeline, Endpoint, "2026-01-01");
+        private AscUsages AscUsagesRestClient => _ascUsagesRestClient ??= new AscUsages(AscUsagesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2026-01-01");
 
         /// <summary>
         /// Returns all caches the user has access to under a subscription.

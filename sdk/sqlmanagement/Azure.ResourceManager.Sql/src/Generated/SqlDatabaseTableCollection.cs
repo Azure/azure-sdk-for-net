@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.Sql
         {
             TryGetApiVersion(SqlDatabaseTableResource.ResourceType, out string sqlDatabaseTableApiVersion);
             _databaseTablesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Sql", SqlDatabaseTableResource.ResourceType.Namespace, Diagnostics);
-            _databaseTablesRestClient = new DatabaseTables(_databaseTablesClientDiagnostics, Pipeline, Endpoint, sqlDatabaseTableApiVersion ?? "2025-02-01-preview");
+            _databaseTablesRestClient = new DatabaseTables(_databaseTablesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, sqlDatabaseTableApiVersion ?? "2025-02-01-preview");
             ValidateResourceId(id);
         }
 
