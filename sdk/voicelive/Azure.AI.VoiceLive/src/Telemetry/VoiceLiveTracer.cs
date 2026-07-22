@@ -96,10 +96,18 @@ namespace Azure.AI.VoiceLive.Telemetry
                             string value = Uri.UnescapeDataString(kv[1]);
                             switch (key)
                             {
-                                case "model": _model = value; break;
-                                case "agent-name": _agentName = value; break;
-                                case "agent-project-name": _agentProjectName = value; break;
-                                case "agent-version": _agentVersion = value; break;
+                                case "model":
+                                    _model = value;
+                                    break;
+                                case "agent-name":
+                                    _agentName = value;
+                                    break;
+                                case "agent-project-name":
+                                    _agentProjectName = value;
+                                    break;
+                                case "agent-version":
+                                    _agentVersion = value;
+                                    break;
                             }
                         }
                     }
@@ -170,13 +178,20 @@ namespace Azure.AI.VoiceLive.Telemetry
                 long mcpCalls = Interlocked.Read(ref _mcpCallCount);
                 long mcpListTools = Interlocked.Read(ref _mcpListToolsCount);
 
-                if (turns > 0) activity.SetTag(Keys.GenAiVoiceTurnCount, turns);
-                if (interruptions > 0) activity.SetTag(Keys.GenAiVoiceInterruptionCount, interruptions);
-                if (bytesSent > 0) activity.SetTag(Keys.GenAiVoiceAudioBytesSent, bytesSent);
-                if (bytesReceived > 0) activity.SetTag(Keys.GenAiVoiceAudioBytesReceived, bytesReceived);
-                if (mcpCalls > 0) activity.SetTag(Keys.GenAiVoiceMcpCallCount, mcpCalls);
-                if (mcpListTools > 0) activity.SetTag(Keys.GenAiVoiceMcpListToolsCount, mcpListTools);
-                if (_firstTokenLatencyMs >= 0) activity.SetTag(Keys.GenAiVoiceFirstTokenLatencyMs, _firstTokenLatencyMs);
+                if (turns > 0)
+                    activity.SetTag(Keys.GenAiVoiceTurnCount, turns);
+                if (interruptions > 0)
+                    activity.SetTag(Keys.GenAiVoiceInterruptionCount, interruptions);
+                if (bytesSent > 0)
+                    activity.SetTag(Keys.GenAiVoiceAudioBytesSent, bytesSent);
+                if (bytesReceived > 0)
+                    activity.SetTag(Keys.GenAiVoiceAudioBytesReceived, bytesReceived);
+                if (mcpCalls > 0)
+                    activity.SetTag(Keys.GenAiVoiceMcpCallCount, mcpCalls);
+                if (mcpListTools > 0)
+                    activity.SetTag(Keys.GenAiVoiceMcpListToolsCount, mcpListTools);
+                if (_firstTokenLatencyMs >= 0)
+                    activity.SetTag(Keys.GenAiVoiceFirstTokenLatencyMs, _firstTokenLatencyMs);
 
                 if (error != null)
                 {
