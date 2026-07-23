@@ -3681,7 +3681,7 @@ namespace Azure.Storage.Blobs.Test
             IList<BlobHierarchyItem> blobs = await test.Container.GetBlobsByHierarchyAsync(options: options).ToListAsync();
 
             // Assert
-            Assert.AreEqual(3, blobs.Count);
+            Assert.AreEqual(2, blobs.Count);
         }
 
         [RecordedTest]
@@ -3730,7 +3730,7 @@ namespace Azure.Storage.Blobs.Test
 
         [RecordedTest]
         [ServiceVersion(Min = BlobClientOptions.ServiceVersion.V2020_02_10)]
-        public async Task ListBlobsHierarchySegmentAsync_LastAccessed()
+        public async Task ListBlobsHierarchySegmentAsync_BlobType()
         {
             await using DisposingContainer test = await GetTestContainerAsync();
 
@@ -3748,7 +3748,7 @@ namespace Azure.Storage.Blobs.Test
             BlobHierarchyItem item = await test.Container.GetBlobsByHierarchyAsync(options).FirstAsync();
 
             // Assert
-            Assert.IsNotNull(item.Blob.Properties.LastAccessedOn);
+            Assert.IsNotNull(item.Blob.Properties.BlobType);
         }
 
         [RecordedTest]
@@ -3891,7 +3891,7 @@ namespace Azure.Storage.Blobs.Test
             IList<BlobHierarchyItem> blobHierachyItems = await test.Container.GetBlobsByHierarchyAsync(options).ToListAsync();
 
             // Assert
-            Assert.AreEqual(3, blobHierachyItems.Count);
+            Assert.AreEqual(2, blobHierachyItems.Count);
         }
 
         [RecordedTest]
@@ -4011,7 +4011,7 @@ namespace Azure.Storage.Blobs.Test
 
         [RecordedTest]
         [ServiceVersion(Min = BlobClientOptions.ServiceVersion.V2026_06_06)]
-        public async Task ListBlobsHierarchySegmentAsync_UseApacheArrow_MaxResults()
+           public async Task ListBlobsHierarchySegmentAsync_UseApacheArrow_MaxResults()
         {
             await using DisposingContainer test = await GetTestContainerAsync();
 
@@ -4035,7 +4035,7 @@ namespace Azure.Storage.Blobs.Test
             }
 
             // Assert
-            Assert.AreEqual(8, totalBlobs);
+            Assert.AreEqual(5, totalBlobs);
         }
 
         [RecordedTest]
@@ -4252,7 +4252,7 @@ namespace Azure.Storage.Blobs.Test
             IList<BlobHierarchyItem> blobs = await test.Container.GetBlobsByHierarchyAsync(options: options).ToListAsync();
 
             // Assert
-            Assert.AreEqual(3, blobs.Count);
+            Assert.AreEqual(2, blobs.Count);
         }
 
         [RecordedTest]
@@ -4303,7 +4303,7 @@ namespace Azure.Storage.Blobs.Test
 
         [RecordedTest]
         [ServiceVersion(Min = BlobClientOptions.ServiceVersion.V2026_06_06)]
-        public async Task ListBlobsHierarchySegmentAsync_UseApacheArrow_LastAccessed()
+        public async Task ListBlobsHierarchySegmentAsync_UseApacheArrow_BlobType()
         {
             await using DisposingContainer test = await GetTestContainerAsync();
 
@@ -4322,7 +4322,7 @@ namespace Azure.Storage.Blobs.Test
             BlobHierarchyItem item = await test.Container.GetBlobsByHierarchyAsync(options: options).FirstAsync();
 
             // Assert
-            Assert.IsNotNull(item.Blob.Properties.LastAccessedOn);
+            Assert.IsNotNull(item.Blob.Properties.BlobType);
         }
 
         [RecordedTest]
@@ -4469,7 +4469,7 @@ namespace Azure.Storage.Blobs.Test
             IList<BlobHierarchyItem> blobHierachyItems = await test.Container.GetBlobsByHierarchyAsync(options: options).ToListAsync();
 
             // Assert
-            Assert.AreEqual(3, blobHierachyItems.Count);
+            Assert.AreEqual(2, blobHierachyItems.Count);
         }
 
         [RecordedTest]
@@ -4492,7 +4492,7 @@ namespace Azure.Storage.Blobs.Test
             IList<BlobHierarchyItem> blobHierachyItems = await test.Container.GetBlobsByHierarchyAsync(options: options).ToListAsync();
 
             // Assert
-            Assert.AreEqual(5, blobHierachyItems.Count);
+            Assert.AreEqual(3, blobHierachyItems.Count);
         }
 
         [RecordedTest]

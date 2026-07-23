@@ -32,8 +32,6 @@ namespace Azure.Storage.Blobs.Models
             string startFrom,
             string endBefore)
         {
-            // Delimiter is a required paramter for GetBlobsByHierarchy
-            Argument.AssertNotNullOrWhiteSpace(delimiter, nameof(delimiter));
             _client = client;
             _responseFormat = responseFormat;
             _delimiter = delimiter;
