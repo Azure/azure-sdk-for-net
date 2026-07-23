@@ -1,5 +1,16 @@
 namespace Azure.ResourceManager.KubernetesConfiguration.PrivateLinkScopes
 {
+    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.KubernetesConfiguration.PrivateLinkScopes.KubernetesConfigurationPrivateEndpointConnectionData))]
+    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.KubernetesConfiguration.PrivateLinkScopes.KubernetesConfigurationPrivateEndpointConnectionResource))]
+    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.KubernetesConfiguration.PrivateLinkScopes.KubernetesConfigurationPrivateLinkResource))]
+    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.KubernetesConfiguration.PrivateLinkScopes.KubernetesConfigurationPrivateLinkResourceData))]
+    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.KubernetesConfiguration.PrivateLinkScopes.KubernetesConfigurationPrivateLinkScopeData))]
+    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.KubernetesConfiguration.PrivateLinkScopes.KubernetesConfigurationPrivateLinkScopeResource))]
+    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.KubernetesConfiguration.PrivateLinkScopes.Models.KubernetesConfigurationPrivateLinkScopePatch))]
+    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.KubernetesConfiguration.PrivateLinkScopes.Models.KubernetesConfigurationPrivateLinkScopeProperties))]
+    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.KubernetesConfiguration.PrivateLinkScopes.Models.KubernetesConfigurationPrivateLinkScopesPrivateLinkServiceConnectionState))]
+    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.Models.SystemData))]
+    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResponseError))]
     public partial class AzureResourceManagerKubernetesConfigurationPrivateLinkScopesContext : System.ClientModel.Primitives.ModelReaderWriterContext
     {
         internal AzureResourceManagerKubernetesConfigurationPrivateLinkScopesContext() { }

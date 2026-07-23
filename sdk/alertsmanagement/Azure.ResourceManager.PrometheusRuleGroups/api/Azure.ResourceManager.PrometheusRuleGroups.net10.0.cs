@@ -1,5 +1,13 @@
 namespace Azure.ResourceManager.PrometheusRuleGroups
 {
+    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.Models.SystemData))]
+    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.PrometheusRuleGroups.Models.PrometheusRule))]
+    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.PrometheusRuleGroups.Models.PrometheusRuleGroupAction))]
+    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.PrometheusRuleGroups.Models.PrometheusRuleGroupPatch))]
+    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.PrometheusRuleGroups.Models.PrometheusRuleResolveConfiguration))]
+    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.PrometheusRuleGroups.PrometheusRuleGroupData))]
+    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.PrometheusRuleGroups.PrometheusRuleGroupResource))]
+    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResponseError))]
     public partial class AzureResourceManagerPrometheusRuleGroupsContext : System.ClientModel.Primitives.ModelReaderWriterContext
     {
         internal AzureResourceManagerPrometheusRuleGroupsContext() { }

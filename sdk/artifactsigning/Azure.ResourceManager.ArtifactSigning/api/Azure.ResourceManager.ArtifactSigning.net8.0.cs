@@ -141,6 +141,18 @@ namespace Azure.ResourceManager.ArtifactSigning
         public static Azure.AsyncPageable<Azure.ResourceManager.ArtifactSigning.ArtifactSigningAccountResource> GetArtifactSigningAccountsAsync(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public static Azure.ResourceManager.ArtifactSigning.ArtifactSigningCertificateProfileResource GetArtifactSigningCertificateProfileResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
     }
+    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.ArtifactSigning.ArtifactSigningAccountData))]
+    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.ArtifactSigning.ArtifactSigningAccountResource))]
+    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.ArtifactSigning.ArtifactSigningCertificateProfileData))]
+    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.ArtifactSigning.ArtifactSigningCertificateProfileResource))]
+    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.ArtifactSigning.Models.ArtifactSigningAccountNameAvailabilityContent))]
+    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.ArtifactSigning.Models.ArtifactSigningAccountNameAvailabilityResult))]
+    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.ArtifactSigning.Models.ArtifactSigningAccountPatch))]
+    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.ArtifactSigning.Models.ArtifactSigningCertificate))]
+    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.ArtifactSigning.Models.RevokeCertificateContent))]
+    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.ArtifactSigning.Models.RevokeCertificateList))]
+    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.Models.SystemData))]
+    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResponseError))]
     public partial class AzureResourceManagerArtifactSigningContext : System.ClientModel.Primitives.ModelReaderWriterContext
     {
         internal AzureResourceManagerArtifactSigningContext() { }
