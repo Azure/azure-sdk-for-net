@@ -1,5 +1,31 @@
 namespace Azure.ResourceManager.Monitor.PipelineGroups
 {
+    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.Models.SystemData))]
+    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.Monitor.PipelineGroups.Models.AzureMonitorWorkspaceLogsApiConfig))]
+    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.Monitor.PipelineGroups.Models.AzureMonitorWorkspaceLogsExporter))]
+    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.Monitor.PipelineGroups.Models.PipelineGroupBatchProcessor))]
+    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.Monitor.PipelineGroups.Models.PipelineGroupCertificateSource))]
+    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.Monitor.PipelineGroups.Models.PipelineGroupCertificateWithKey))]
+    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.Monitor.PipelineGroups.Models.PipelineGroupExecutionPlacement))]
+    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.Monitor.PipelineGroups.Models.PipelineGroupExporter))]
+    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.Monitor.PipelineGroups.Models.PipelineGroupExporterPersistenceConfiguration))]
+    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.Monitor.PipelineGroups.Models.PipelineGroupPipeline))]
+    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.Monitor.PipelineGroups.Models.PipelineGroupPlacementConstraint))]
+    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.Monitor.PipelineGroups.Models.PipelineGroupPrivateKeySource))]
+    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.Monitor.PipelineGroups.Models.PipelineGroupProcessor))]
+    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.Monitor.PipelineGroups.Models.PipelineGroupProperties))]
+    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.Monitor.PipelineGroups.Models.PipelineGroupReceiver))]
+    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.Monitor.PipelineGroups.Models.PipelineGroupRecordMap))]
+    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.Monitor.PipelineGroups.Models.PipelineGroupResourceMap))]
+    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.Monitor.PipelineGroups.Models.PipelineGroupSchemaMap))]
+    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.Monitor.PipelineGroups.Models.PipelineGroupScopeMap))]
+    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.Monitor.PipelineGroups.Models.PipelineGroupService))]
+    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.Monitor.PipelineGroups.Models.PipelineGroupSyslogReceiver))]
+    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.Monitor.PipelineGroups.Models.PipelineGroupTlsConfiguration))]
+    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.Monitor.PipelineGroups.PipelineGroupData))]
+    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.Monitor.PipelineGroups.PipelineGroupResource))]
+    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.Resources.Models.ExtendedLocation))]
+    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResponseError))]
     public partial class AzureResourceManagerMonitorPipelineGroupsContext : System.ClientModel.Primitives.ModelReaderWriterContext
     {
         internal AzureResourceManagerMonitorPipelineGroupsContext() { }
