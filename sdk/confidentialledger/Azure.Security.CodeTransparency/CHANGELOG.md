@@ -1,6 +1,6 @@
 # Release History
 
-## 1.0.0-beta.11 (Unreleased)
+## 1.0.0-beta.12 (Unreleased)
 
 ### Features Added
 
@@ -9,6 +9,12 @@
 ### Bugs Fixed
 
 ### Other Changes
+
+## 1.0.0-beta.11 (2026-07-15)
+
+### Bugs Fixed
+
+- Hardened receipt verification to reject empty inclusion-proof collections.
 
 ## 1.0.0-beta.10 (2026-07-14)
 

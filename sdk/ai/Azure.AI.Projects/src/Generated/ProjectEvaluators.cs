@@ -141,7 +141,7 @@ namespace Azure.AI.Projects.Evaluation
         }
 
         /// <summary>
-        /// [Protocol Method] Lists the latest version of each evaluator
+        /// [Protocol Method] Lists the latest version of each evaluator.
         /// <list type="bullet">
         /// <item>
         /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
@@ -169,7 +169,7 @@ namespace Azure.AI.Projects.Evaluation
         }
 
         /// <summary>
-        /// [Protocol Method] Lists the latest version of each evaluator
+        /// [Protocol Method] Lists the latest version of each evaluator.
         /// <list type="bullet">
         /// <item>
         /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
@@ -600,7 +600,7 @@ namespace Azure.AI.Projects.Evaluation
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="name"></param>
+        /// <param name="name"> The name path parameter. </param>
         /// <param name="version"> The specific version id of the EvaluatorVersion to operate on. </param>
         /// <param name="content"> The content to send as the body of the request. </param>
         /// <param name="foundryFeatures"> A feature flag opt-in required when using preview operations or modifying persisted preview resources. </param>
@@ -631,7 +631,7 @@ namespace Azure.AI.Projects.Evaluation
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="name"></param>
+        /// <param name="name"> The name path parameter. </param>
         /// <param name="version"> The specific version id of the EvaluatorVersion to operate on. </param>
         /// <param name="content"> The content to send as the body of the request. </param>
         /// <param name="foundryFeatures"> A feature flag opt-in required when using preview operations or modifying persisted preview resources. </param>
@@ -655,7 +655,7 @@ namespace Azure.AI.Projects.Evaluation
         }
 
         /// <summary> Initiates a new pending upload or retrieves an existing one for the specified evaluator version. </summary>
-        /// <param name="name"></param>
+        /// <param name="name"> The name path parameter. </param>
         /// <param name="version"> The specific version id of the EvaluatorVersion to operate on. </param>
         /// <param name="pendingUploadRequest"> The pending upload request parameters. </param>
         /// <param name="foundryFeatures"> A feature flag opt-in required when using preview operations or modifying persisted preview resources. </param>
@@ -668,7 +668,7 @@ namespace Azure.AI.Projects.Evaluation
         }
 
         /// <summary> Initiates a new pending upload or retrieves an existing one for the specified evaluator version. </summary>
-        /// <param name="name"></param>
+        /// <param name="name"> The name path parameter. </param>
         /// <param name="version"> The specific version id of the EvaluatorVersion to operate on. </param>
         /// <param name="pendingUploadRequest"> The pending upload request parameters. </param>
         /// <param name="foundryFeatures"> A feature flag opt-in required when using preview operations or modifying persisted preview resources. </param>
@@ -688,7 +688,7 @@ namespace Azure.AI.Projects.Evaluation
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="name"></param>
+        /// <param name="name"> The name path parameter. </param>
         /// <param name="version"> The specific version id of the EvaluatorVersion to operate on. </param>
         /// <param name="content"> The content to send as the body of the request. </param>
         /// <param name="foundryFeatures"> A feature flag opt-in required when using preview operations or modifying persisted preview resources. </param>
@@ -719,7 +719,7 @@ namespace Azure.AI.Projects.Evaluation
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="name"></param>
+        /// <param name="name"> The name path parameter. </param>
         /// <param name="version"> The specific version id of the EvaluatorVersion to operate on. </param>
         /// <param name="content"> The content to send as the body of the request. </param>
         /// <param name="foundryFeatures"> A feature flag opt-in required when using preview operations or modifying persisted preview resources. </param>
@@ -743,7 +743,7 @@ namespace Azure.AI.Projects.Evaluation
         }
 
         /// <summary> Retrieves SAS credentials for accessing the storage account associated with the specified evaluator version. </summary>
-        /// <param name="name"></param>
+        /// <param name="name"> The name path parameter. </param>
         /// <param name="version"> The specific version id of the EvaluatorVersion to operate on. </param>
         /// <param name="credentialRequest"> The credential request parameters. </param>
         /// <param name="foundryFeatures"> A feature flag opt-in required when using preview operations or modifying persisted preview resources. </param>
@@ -757,7 +757,7 @@ namespace Azure.AI.Projects.Evaluation
         }
 
         /// <summary> Retrieves SAS credentials for accessing the storage account associated with the specified evaluator version. </summary>
-        /// <param name="name"></param>
+        /// <param name="name"> The name path parameter. </param>
         /// <param name="version"> The specific version id of the EvaluatorVersion to operate on. </param>
         /// <param name="credentialRequest"> The credential request parameters. </param>
         /// <param name="foundryFeatures"> A feature flag opt-in required when using preview operations or modifying persisted preview resources. </param>

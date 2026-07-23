@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.SecurityCenter
         {
             TryGetApiVersion(RegulatoryComplianceStandardResource.ResourceType, out string regulatoryComplianceStandardApiVersion);
             _regulatoryComplianceStandardsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.SecurityCenter", RegulatoryComplianceStandardResource.ResourceType.Namespace, Diagnostics);
-            _regulatoryComplianceStandardsRestClient = new RegulatoryComplianceStandards(_regulatoryComplianceStandardsClientDiagnostics, Pipeline, Endpoint, regulatoryComplianceStandardApiVersion ?? "2019-01-01-preview");
+            _regulatoryComplianceStandardsRestClient = new RegulatoryComplianceStandards(_regulatoryComplianceStandardsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, regulatoryComplianceStandardApiVersion ?? "2019-01-01-preview");
             ValidateResourceId(id);
         }
 

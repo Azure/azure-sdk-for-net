@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.ContainerService
         {
             TryGetApiVersion(ContainerServiceTrustedAccessRoleBindingResource.ResourceType, out string containerServiceTrustedAccessRoleBindingApiVersion);
             _trustedAccessRoleBindingsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ContainerService", ContainerServiceTrustedAccessRoleBindingResource.ResourceType.Namespace, Diagnostics);
-            _trustedAccessRoleBindingsRestClient = new TrustedAccessRoleBindings(_trustedAccessRoleBindingsClientDiagnostics, Pipeline, Endpoint, containerServiceTrustedAccessRoleBindingApiVersion ?? "2026-04-02-preview");
+            _trustedAccessRoleBindingsRestClient = new TrustedAccessRoleBindings(_trustedAccessRoleBindingsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, containerServiceTrustedAccessRoleBindingApiVersion ?? "2026-04-02-preview");
             ValidateResourceId(id);
         }
 

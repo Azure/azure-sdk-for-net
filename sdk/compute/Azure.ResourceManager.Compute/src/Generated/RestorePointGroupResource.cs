@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.Compute
         {
             TryGetApiVersion(ResourceType, out string restorePointGroupApiVersion);
             _restorePointCollectionsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Compute", ResourceType.Namespace, Diagnostics);
-            _restorePointCollectionsRestClient = new RestorePointCollections(_restorePointCollectionsClientDiagnostics, Pipeline, Endpoint, restorePointGroupApiVersion ?? "2026-03-01");
+            _restorePointCollectionsRestClient = new RestorePointCollections(_restorePointCollectionsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, restorePointGroupApiVersion ?? "2026-03-01");
             ValidateResourceId(id);
         }
 

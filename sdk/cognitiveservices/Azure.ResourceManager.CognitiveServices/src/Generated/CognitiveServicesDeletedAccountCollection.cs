@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.CognitiveServices
         {
             TryGetApiVersion(CognitiveServicesDeletedAccountResource.ResourceType, out string cognitiveServicesDeletedAccountApiVersion);
             _deletedAccountsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.CognitiveServices", CognitiveServicesDeletedAccountResource.ResourceType.Namespace, Diagnostics);
-            _deletedAccountsRestClient = new DeletedAccounts(_deletedAccountsClientDiagnostics, Pipeline, Endpoint, cognitiveServicesDeletedAccountApiVersion ?? "2026-05-15-preview");
+            _deletedAccountsRestClient = new DeletedAccounts(_deletedAccountsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, cognitiveServicesDeletedAccountApiVersion ?? "2026-05-15-preview");
             ValidateResourceId(id);
         }
 

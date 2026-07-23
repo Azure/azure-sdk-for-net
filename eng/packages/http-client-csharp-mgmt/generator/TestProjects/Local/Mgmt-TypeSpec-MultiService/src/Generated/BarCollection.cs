@@ -41,7 +41,7 @@ namespace Azure.Generator.MgmtTypeSpec.MultiService.Tests
         {
             TryGetApiVersion(BarResource.ResourceType, out string barApiVersion);
             _barsClientDiagnostics = new ClientDiagnostics("Azure.Generator.MgmtTypeSpec.MultiService.Tests", BarResource.ResourceType.Namespace, Diagnostics);
-            _barsRestClient = new Bars(_barsClientDiagnostics, Pipeline, Endpoint, barApiVersion ?? "2024-06-01");
+            _barsRestClient = new Bars(_barsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, barApiVersion ?? "2024-06-01");
             ValidateResourceId(id);
         }
 

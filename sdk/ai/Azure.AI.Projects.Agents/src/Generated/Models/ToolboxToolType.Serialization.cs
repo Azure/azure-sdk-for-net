@@ -22,6 +22,8 @@ namespace Azure.AI.Projects.Agents
             ToolboxToolType.ReminderPreview => "reminder_preview",
             ToolboxToolType.WorkIqPreview => "work_iq_preview",
             ToolboxToolType.FabricIqPreview => "fabric_iq_preview",
+            ToolboxToolType.WebIqPreview => "web_iq_preview",
+            ToolboxToolType.ToolboxSearch => "toolbox_search",
             ToolboxToolType.ToolboxSearchPreview => "toolbox_search_preview",
             _ => throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown ToolboxToolType value.")
         };
@@ -72,6 +74,14 @@ namespace Azure.AI.Projects.Agents
             if (StringComparer.OrdinalIgnoreCase.Equals(value, "fabric_iq_preview"))
             {
                 return ToolboxToolType.FabricIqPreview;
+            }
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "web_iq_preview"))
+            {
+                return ToolboxToolType.WebIqPreview;
+            }
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "toolbox_search"))
+            {
+                return ToolboxToolType.ToolboxSearch;
             }
             if (StringComparer.OrdinalIgnoreCase.Equals(value, "toolbox_search_preview"))
             {

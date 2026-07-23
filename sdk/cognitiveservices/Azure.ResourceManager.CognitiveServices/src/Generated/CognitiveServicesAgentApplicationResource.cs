@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.CognitiveServices
         {
             TryGetApiVersion(ResourceType, out string cognitiveServicesAgentApplicationApiVersion);
             _agentApplicationsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.CognitiveServices", ResourceType.Namespace, Diagnostics);
-            _agentApplicationsRestClient = new AgentApplications(_agentApplicationsClientDiagnostics, Pipeline, Endpoint, cognitiveServicesAgentApplicationApiVersion ?? "2026-05-15-preview");
+            _agentApplicationsRestClient = new AgentApplications(_agentApplicationsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, cognitiveServicesAgentApplicationApiVersion ?? "2026-05-15-preview");
             ValidateResourceId(id);
         }
 

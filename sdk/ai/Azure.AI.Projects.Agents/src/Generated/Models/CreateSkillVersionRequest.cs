@@ -31,6 +31,7 @@ namespace Azure.AI.Projects.Agents
         }
 
         /// <summary> Inline skill content for simple skills without file uploads. Foundry-specific extension. </summary>
+        [Experimental("AAIP001")]
         public SkillInlineContent InlineContent { get; }
 
         /// <summary> Whether to set this version as the default. </summary>

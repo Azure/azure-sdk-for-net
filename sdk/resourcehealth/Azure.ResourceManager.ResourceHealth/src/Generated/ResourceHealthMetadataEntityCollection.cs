@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.ResourceHealth
         {
             TryGetApiVersion(ResourceHealthMetadataEntityResource.ResourceType, out string resourceHealthMetadataEntityApiVersion);
             _metadataClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ResourceHealth", ResourceHealthMetadataEntityResource.ResourceType.Namespace, Diagnostics);
-            _metadataRestClient = new Metadata(_metadataClientDiagnostics, Pipeline, Endpoint, resourceHealthMetadataEntityApiVersion ?? "2025-05-01");
+            _metadataRestClient = new Metadata(_metadataClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, resourceHealthMetadataEntityApiVersion ?? "2025-05-01");
             ValidateResourceId(id);
         }
 

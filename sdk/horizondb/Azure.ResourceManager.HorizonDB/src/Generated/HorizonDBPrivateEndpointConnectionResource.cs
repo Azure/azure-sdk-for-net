@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.HorizonDB
         {
             TryGetApiVersion(ResourceType, out string horizonDBPrivateEndpointConnectionApiVersion);
             _horizonDBPrivateEndpointConnectionsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.HorizonDB", ResourceType.Namespace, Diagnostics);
-            _horizonDBPrivateEndpointConnectionsRestClient = new HorizonDBPrivateEndpointConnections(_horizonDBPrivateEndpointConnectionsClientDiagnostics, Pipeline, Endpoint, horizonDBPrivateEndpointConnectionApiVersion ?? "2026-01-20-preview");
+            _horizonDBPrivateEndpointConnectionsRestClient = new HorizonDBPrivateEndpointConnections(_horizonDBPrivateEndpointConnectionsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, horizonDBPrivateEndpointConnectionApiVersion ?? "2026-01-20-preview");
             ValidateResourceId(id);
         }
 

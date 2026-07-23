@@ -18,7 +18,7 @@ Phases:
 6. Migration New API Triage.
 
 Migration notes for base phases:
-- Phase 2: migration often introduces generic C# names such as `Scope`, `GroupScope`, `Sensitivity`, `ManagedRuleSetException`; flag contextual naming issues and prefer `@@clientName(..., "csharp")` when defined in TypeSpec.
+- Phase 2: migration often introduces generic C# names such as `Scope`, `GroupScope`, `Sensitivity`, `ManagedRuleSetException`; flag contextual naming issues and require `@@clientName(..., "csharp")` when defined in TypeSpec.
 - Phase 3: migration breaking changes are expected but still must be mitigated. ApiCompat baseline entries remain forbidden except targeted `WirePathAttribute` removal entries in the centralized baseline file.
 
 ## Phase 4: Migration Customization Review
@@ -27,10 +27,10 @@ Review added/modified files under `src/Custom*/`, `src/Customization*/`, or `src
 
 Rules:
 - **4.1 Justification comments**: each customization file or significant block must explain why it exists: breaking-change mitigation, generator bug with issue link, naming fix, backward compatibility, etc.
-- **4.2 `[CodeGenMember]` vs `[CodeGenSuppress]`**: use `[CodeGenMember("GeneratedName")]` for same-data renames so generator metadata, serialization, and samples remain linked. Use `[CodeGenSuppress("MemberName", ...)]` only when removing/suppressing a generated member or rewriting different behavior.
-- **4.3 Redundant `[CodeGenType]`**: only use `[CodeGenType("SpecName")]` when the custom class name differs from the generated/spec type name.
+- **4.2 `[CodeGenMember]` vs `[CodeGenSuppress]`**: after confirming the member cannot be renamed in TypeSpec, use `[CodeGenMember("GeneratedName")]` for same-data renames so generator metadata, serialization, and samples remain linked. Use `[CodeGenSuppress("MemberName", ...)]` only when removing/suppressing a generated member or rewriting different behavior.
+- **4.3 `[CodeGenType]` is not a spec-defined rename mechanism - blocking**: do not accept `[CodeGenType("SpecName")]` custom partials that only rename a model, enum, union, property container, or other API that is directly defined in the service TypeSpec. Require `@@clientName(TypeSpecTarget, "CSharpName", "csharp")` in `client.tsp` and regeneration instead. `[CodeGenType]` is allowed only when the generated C# artifact is synthesized/not directly targetable in TypeSpec, or when it is part of a necessary GA compatibility shim that cannot replace the generated name.
 - **4.4 `EditorBrowsable(Never)` misuse**: only hide backward-compat members that have replacements. Never hide the only public constructor, method, or property for its purpose.
-- **4.5 Rename, don't hide-and-replace**: when generated names differ from shipped SDK names, rename the generated API back to the shipped name instead of exposing both old and new names. Use `@@clientName(..., "csharp")` when the target is defined in TypeSpec. If synthesized by C# generator and not directly defined in TypeSpec, use the smallest SDK customization, e.g. `[CodeGenType]` for type rename or `[CodeGenMember]` for member rename. A custom old-name method that only forwards to a new generated method usually means the generated method should be renamed back.
+- **4.5 Rename in TypeSpec, don't hide-and-replace - blocking**: when a TypeSpec-defined API has the wrong C# name, require a scoped `@@clientName(..., "csharp")` customization in the spec and regeneration. Do not suggest or accept `[CodeGenType]`, `[CodeGenMember]`, `[CodeGenSuppress]`, wrapper members, or forwarding methods merely to rename that API. If the artifact is synthesized by the C# generator and is not directly targetable in TypeSpec, use the smallest SDK customization. A custom old-name method that only forwards to a new generated method usually means the generated method should be renamed back.
 - **4.6 ModelFactory anti-patterns**: do not suppress generated ModelFactory methods without strong justification. Backward-compat overloads should delegate to generated public ModelFactory overloads and translate renamed parameters/types as needed; do not call internal constructors or private `Core` helpers. Add only overloads that existed in the previous stable API.
 - **4.7 Constructor suppression**: if a generated constructor has the wrong signature, first fix root cause in `client.tsp`: missing flattened properties -> `@@flattenProperty`; wrong property type -> `@@alternateType`; missing `Properties` envelope members -> flatten the envelope. Review every constructor `[CodeGenSuppress]` for a possible decorator fix.
 - **4.8 Using cleanup**: flag customization-file diffs that only add/remove unnecessary `using` statements.
@@ -39,8 +39,10 @@ Rules:
 - **4.11 No manual edits to generated files - blocking**: `src/Generated/` must be generator output only. A large regenerated diff is expected and not evidence of hand editing. Flag clear hand edits such as isolated generated-style mismatches, custom logic, ad hoc `#pragma` suppressions, type changes, or CI `Verify Generated Code`/code-check drift. Fix through custom partials (`[CodeGenSuppress]`), TypeSpec decorators (`@@clientName`, `@@alternateType`, `@@access`), or generator bug fixes. After adding custom files with generator attributes, regenerate so suppressions are honored.
 
 Compact examples:
+- Bad TypeSpec-defined type rename: `[CodeGenType("CommunityEndpointProtocol")] public partial struct VirtualEnclaveCommunityEndpointProtocol`.
+- Good TypeSpec-defined type rename: `@@clientName(CommunityEndpointProtocol, "VirtualEnclaveCommunityEndpointProtocol", "csharp");` in `client.tsp`, followed by regeneration.
 - Bad rename: `[CodeGenSuppress("Tls1_0")]` plus custom `Tls10` member.
-- Good rename: `[CodeGenMember("Tls1_0")] public static RedisTlsVersion Tls10 { get; } = ...;`.
+- Good synthesized-member rename when TypeSpec cannot target it: `[CodeGenMember("Tls1_0")] public static RedisTlsVersion Tls10 { get; } = ...;`.
 - Bad ModelFactory compatibility: private helper calling internal generated constructors.
 - Good ModelFactory compatibility: compatibility overload delegates to `ArmRedisModelFactory.RedisData(...)`.
 - Bad generated edit: changing `src/Generated/Models/SomeModel.cs` by hand.
@@ -53,12 +55,15 @@ Prefer TypeSpec decorators over SDK custom code when they can express the fix. D
 Always include the `"csharp"` scope parameter for decorators in `azure-rest-api-specs`; unscoped decorators affect other language emitters.
 
 Common replacements:
+- `[CodeGenType]`, `[CodeGenMember]`, suppression, or wrapper code used only to rename a TypeSpec-defined API -> `@@clientName(TypeSpecTarget, "CSharpName", "csharp")`.
 - Manual wrapper properties for an unflattened `Properties` envelope -> `@@flattenProperty(Model.properties, "csharp")`.
 - Manual property type conversion (`string` -> `ResourceIdentifier`, `AzureLocation`, etc.) plus custom serialization -> `@@alternateType(Model.prop, TargetType, "csharp")`.
 - Custom pageable wrappers for old `Pageable<T>` / `AsyncPageable<T>` shape -> `@@markAsPageable(Interface.operation, "csharp")`, with `#suppress "@azure-tools/typespec-azure-core/no-legacy-usage" "migration"` when needed.
 - Public accessibility for an internal generated type -> try `@@access(Type, Access.public, "csharp")` before `[CodeGenType]`; fall back only when `@@access` is ineffective, such as nested/wrapper generated types.
 
 When suggesting a decorator, include a scoped example and target the relevant `client.tsp`/TypeSpec line when in the diff.
+
+On re-review, inspect every newly added rename customization and compare it with prior review guidance. If an earlier comment requested a TypeSpec rename but the author added SDK custom code instead, keep the finding blocking; do not mark the naming issue resolved. The review summary must distinguish "API has the requested name" from "rename implemented in the required layer."
 
 ## Phase 6: Migration New API Triage
 
@@ -70,7 +75,7 @@ Migration PRs can show many additive public APIs after regeneration. Classify ea
 | Category | Identify by | Review action |
 |----------|-------------|---------------|
 | Real service/API-version addition | Exists only in newer TypeSpec input/API version; no equivalent in previous GA swagger/API surface | Keep; mention significant additions in summary. |
-| Rename of existing API | Same operation id, route, resource type, model semantics, or member semantics as previous GA API | Request changes: restore shipped name/shape with `@@clientName`, other decorators, or minimal SDK shim. |
+| Rename of existing API | Same operation id, route, resource type, model semantics, or member semantics as previous GA API | Request changes: restore shipped name/shape with scoped `@@clientName` or another TypeSpec decorator when directly targetable. Use a minimal SDK shim only for artifacts that TypeSpec cannot target or compatibility behavior that a rename cannot preserve. |
 | Generator convenience/drift | New overload/grouping/resource method/pageable/collection method appears because MPG grouped or named the same REST operation differently | Investigate; request a rename/decorator fix only when the generated API can be renamed in TypeSpec or otherwise expressed by a supported spec-level customization. If the API is the correct generated shape from TypeSpec and cannot be renamed in spec, keep it and preserve the previous GA shape with the smallest compatibility shim needed for ApiCompat. |
 
 Use operation IDs, generated XML docs, request paths, resource type/parent hierarchy, and previous GA API listings to distinguish real additions from renamed existing APIs. When a spec-level rename or decorator can produce the shipped API shape, do not keep both old and new names unless there is an approved deliberate reason. When the new API is the correct generated shape from TypeSpec and cannot be renamed in spec, keep it and preserve the old GA API shape for compatibility.

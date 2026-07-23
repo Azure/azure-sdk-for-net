@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.SecurityCenter
         {
             TryGetApiVersion(ResourceType, out string governanceAssignmentApiVersion);
             _governanceAssignmentsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.SecurityCenter", ResourceType.Namespace, Diagnostics);
-            _governanceAssignmentsRestClient = new GovernanceAssignments(_governanceAssignmentsClientDiagnostics, Pipeline, Endpoint, governanceAssignmentApiVersion ?? "2022-01-01-preview");
+            _governanceAssignmentsRestClient = new GovernanceAssignments(_governanceAssignmentsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, governanceAssignmentApiVersion ?? "2022-01-01-preview");
             ValidateResourceId(id);
         }
 

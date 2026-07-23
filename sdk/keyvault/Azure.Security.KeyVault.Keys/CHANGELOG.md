@@ -1,6 +1,16 @@
 # Release History
 
-## 4.11.0-beta.2 (Unreleased)
+## 4.11.0-beta.4 (Unreleased)
+
+### Features Added
+
+### Breaking Changes
+
+### Bugs Fixed
+
+### Other Changes
+
+## 4.11.0-beta.3 (2026-07-16)
 
 ### Features Added
 - Added the `SecureWrapKey` and `SecureUnwrapKey` methods (and their async counterparts) to `CryptographyClient` for secure wrap/unwrap operations on Managed HSM keys ([#60933](https://github.com/Azure/azure-sdk-for-net/pull/60933)).
@@ -8,11 +18,10 @@
 - Added the `SecureWrapResult` and `SecureUnwrapResult` model classes wrapping the results of `SecureWrapKey` and `SecureUnwrapKey`, respectively.
 - Added the `SecureWrapKey` and `SecureUnwrapKey` values to `KeyOperation`.
 
-### Breaking Changes
+## 4.11.0-beta.2 (2026-06-10)
 
-### Bugs Fixed
-
-### Other Changes
+### Features Added
+- Added support for Proof-of-Possession (PoP) token binding in the Key Vault authentication policy.
 
 ## 4.11.0-beta.1 (2026-06-04)
 

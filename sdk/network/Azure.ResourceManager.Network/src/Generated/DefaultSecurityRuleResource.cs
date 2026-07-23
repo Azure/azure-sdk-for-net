@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.Network
         {
             TryGetApiVersion(ResourceType, out string defaultSecurityRuleApiVersion);
             _defaultSecurityRulesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Network", ResourceType.Namespace, Diagnostics);
-            _defaultSecurityRulesRestClient = new DefaultSecurityRules(_defaultSecurityRulesClientDiagnostics, Pipeline, Endpoint, defaultSecurityRuleApiVersion ?? "2025-07-01");
+            _defaultSecurityRulesRestClient = new DefaultSecurityRules(_defaultSecurityRulesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, defaultSecurityRuleApiVersion ?? "2025-07-01");
             ValidateResourceId(id);
         }
 
