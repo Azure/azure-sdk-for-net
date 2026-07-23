@@ -3,6 +3,7 @@
 
 using Microsoft.TypeSpec.Generator.ClientModel;
 using Microsoft.TypeSpec.Generator.Expressions;
+using Microsoft.TypeSpec.Generator.Input;
 using Microsoft.TypeSpec.Generator.Primitives;
 using Microsoft.TypeSpec.Generator.Providers;
 using Microsoft.TypeSpec.Generator.Snippets;
@@ -28,6 +29,9 @@ namespace Extensions.Plugin.Visitors
     {
         private const string DiagnosticId = "AAIP001";
 
+        private readonly HashSet<string> _experimentalClasses = new(StringComparer.Ordinal);
+        private readonly HashSet<string> _experimentalProperties = new(StringComparer.Ordinal);
+
         private readonly HashSet<string> _attributedTypes = new(StringComparer.Ordinal);
 
         private static bool ImplementsExperimrental(TypeProvider theType)
@@ -51,23 +55,23 @@ namespace Extensions.Plugin.Visitors
             }
             return false;
         }
-        private static bool HasExperimentalAncestor(CSharpType theType)
+        private bool HasExperimentalAncestor(CSharpType theType)
         {
             if (theType.BaseType is null)
             {
                 return false;
             }
-            return SupportedPackages.IsExperimental(theType.BaseType.FullyQualifiedName) || HasExperimentalAncestor(theType.BaseType);
+            return IsListed(theType.BaseType.FullyQualifiedName) || HasExperimentalAncestor(theType.BaseType);
         }
 
-        public static bool IsExperimental(CSharpType theType)
+        public bool IsExperimental(CSharpType theType)
         {
             if (theType is null)
             {
                 return false;
             }
             theType = theType.GetNestedElementType();
-            if (SupportedPackages.IsExperimental(theType.FullyQualifiedName))
+            if (IsListed(theType.FullyQualifiedName))
             {
                 return true;
             }
@@ -104,6 +108,109 @@ namespace Extensions.Plugin.Visitors
             return $"{classPath}.{realName}";
         }
 
+        private static bool hasExperimentalDecorator(IEnumerable<InputDecoratorInfo> decorators) => decorators
+                .Where(x => string.Equals(x.Name, "TypeSpec.OpenAPI.@extension"))
+                .Where(x => x.Arguments.ContainsKey("key"))
+                .Select(x => x.Arguments["key"])
+                .Where(x => x.ToString().Contains("x-ms-foundry-meta"))
+                .Any();
+
+        /// <inheritdoc />
+        protected override ModelProvider PreVisitModel(InputModelType modelType, ModelProvider type)
+        {
+            bool hasExperimental = hasExperimentalDecorator(modelType.Decorators);
+            //if (string.Equals(type.Type.Name, "InternalComparisonFilter"))
+            //{
+            //    StringBuilder sbDecorators = new();
+            //    foreach (InputDecoratorInfo oneDecorator in modelType.Decorators)
+            //    {
+            //        sbDecorators.Append(oneDecorator.Name);
+            //        sbDecorators.Append(":\n");
+            //        foreach (KeyValuePair<string, BinaryData> arg in oneDecorator.Arguments)
+            //        {
+            //            sbDecorators.Append($"Key={arg.Key} Value={arg.Value}\n");
+            //        }
+            //    }
+            //    throw new InvalidOperationException(
+            //        $"================================================\n" +
+            //        $"{type.Name}\n" +
+            //        $"{sbDecorators}\n" +
+            //        $"${hasExperimental}" +
+            //        $"================================================\n");
+            //}
+            
+            if (hasExperimental)
+            {
+                _experimentalClasses.Add(type.Type.FullyQualifiedName);
+            }
+            return base.PreVisitModel(modelType, type);
+        }
+
+        protected override EnumProvider PreVisitEnum(InputEnumType enumType, EnumProvider type)
+        {
+            if (hasExperimentalDecorator(enumType.Decorators))
+            {
+                _experimentalClasses.Add(type.Type.FullyQualifiedName);
+            }
+            return base.PreVisitEnum(enumType, type);
+        }
+
+        protected override PropertyProvider PreVisitProperty(InputProperty property, PropertyProvider propertyProvider)
+        {
+            if (string.Equals(property.Name, "draft"))
+            {
+                StringBuilder sbDecorators = new();
+                foreach (InputDecoratorInfo oneDecorator in property.Decorators)
+                {
+                    sbDecorators.Append(oneDecorator.Name);
+                    sbDecorators.Append(":\n");
+                    foreach (KeyValuePair<string, BinaryData> arg in oneDecorator.Arguments)
+                    {
+                        sbDecorators.Append($"Key={arg.Key} Value={arg.Value}\n");
+                    }
+                }
+                throw new InvalidOperationException(
+                    $"================================================\n" +
+                    $"{GetRealName(propertyProvider.EnclosingType)}->{property.Name}\n" +
+                    $"{sbDecorators}\n" +
+                    $"${hasExperimentalDecorator(property.Decorators)}" +
+                    $"================================================\n");
+            }
+            if (hasExperimentalDecorator(property.Decorators))
+            {
+                _experimentalProperties.Add($"{GetRealName(propertyProvider.EnclosingType)}.{property.Name}");
+            }
+            return base.PreVisitProperty(property, propertyProvider);
+        }
+
+        private static string FixNamespace(string fullyQualifiedName)
+        {
+            if (fullyQualifiedName.StartsWith("Azure.AI.Projects.Memory."))
+            {
+                return fullyQualifiedName.Replace("Azure.AI.Projects.Memory.", "Azure.AI.Projects.");
+            }
+            else if (fullyQualifiedName.StartsWith("Azure.AI.Projects.Evaluation."))
+            {
+                return fullyQualifiedName.Replace("Azure.AI.Projects.Evaluation.", "Azure.AI.Projects.");
+            }
+            return fullyQualifiedName;
+        }
+        public bool IsListed(string type)
+        {
+            if (type is null)
+            {
+                return false;
+            }
+            type = FixNamespace(type);
+            return _experimentalClasses.Contains(type);
+        }
+
+        public bool IsPropertyListed(string property)
+        {
+            property = FixNamespace(property);
+            return _experimentalProperties.Contains(property);
+        }
+
         /// <inheritdoc />
         protected override TypeProvider VisitType(TypeProvider type)
         {
@@ -122,7 +229,7 @@ namespace Extensions.Plugin.Visitors
             //}
             // First check if the whole class needs to be marked as experimental.
             string typeRealName = GetRealName(type);
-            if ((SupportedPackages.IsExperimental(typeRealName) || HasExperimentalAncestor(type.Type) || ImplementsExperimrental(type))
+            if ((IsListed(typeRealName) || HasExperimentalAncestor(type.Type) || ImplementsExperimrental(type))
                 && !type.Attributes.Any(attr => attr.Type.Equals(typeof(ExperimentalAttribute)))
                 && _attributedTypes.Add(type.Type.FullyQualifiedName))
             {
@@ -187,7 +294,7 @@ namespace Extensions.Plugin.Visitors
                 //        $"Is of experimental type {IsExperimental(field.Type)}\n" +
                 //        $"================================================\n");
                 //}
-                if (IsExperimental(field.Type) || SupportedPackages.IsExperimental($"{typeRealName}.{field.Name}"))
+                if (IsExperimental(field.Type) || IsPropertyListed($"{typeRealName}.{field.Name}"))
                 {
                     field.Update(
                         attributes: [.. field.Attributes, new(typeof(ExperimentalAttribute), Snippet.Literal(DiagnosticId))]
@@ -211,7 +318,7 @@ namespace Extensions.Plugin.Visitors
                 //        $"Is of experimental type {IsExperimental(property.Type)}\n" +
                 //        $"================================================\n");
                 //}
-                if (IsExperimental(property.Type) || SupportedPackages.IsExperimental($"{typeRealName}.{property.Name}"))
+                if (IsExperimental(property.Type) || IsPropertyListed($"{typeRealName}.{property.Name}"))
                 {
                     property.Update(
                         attributes: [.. property.Attributes, new(typeof(ExperimentalAttribute), Snippet.Literal(DiagnosticId))]
