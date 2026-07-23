@@ -58,6 +58,9 @@ public class ActivityServerOptions
     /// container before the Microsoft 365 Agents SDK services are added. Because the SDK registers
     /// its defaults only when a service is not already present, anything registered here wins — use
     /// it to plug in a custom adapter, authorization, channel-service factory, or any other service.
+    /// The one exception is <see cref="Microsoft.Agents.Authentication.IConnections"/>: the
+    /// outbound-auth provider is always substituted after this callback runs, so register a custom
+    /// connection provider through <see cref="Connections"/> instead.
     /// </summary>
     public Action<IServiceCollection>? ConfigureServices { get; set; }
 }

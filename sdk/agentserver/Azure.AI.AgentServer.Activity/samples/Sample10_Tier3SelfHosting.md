@@ -99,16 +99,17 @@ app.Run();
 ## Own the request pipeline — a raw handler (no Microsoft 365 adapter)
 
 When you want to receive each inbound activity as a raw `HttpContext` and write the response
-yourself — without the Microsoft 365 Agents SDK adapter — pass a `RequestDelegate` to the
+yourself — without the Microsoft 365 Agents SDK adapter handling it — pass a `RequestDelegate` to the
 `IEndpointRouteBuilder` overload of `MapFoundryActivity()` (aliased as `MapActivityServer()`). The
-Microsoft 365 Agents SDK is **not** initialized on this path, but the platform still stamps the
-session-id response header, correlation baggage, and error-source classification around your handler.
+SDK services are still registered by `AddActivityServer()`, but the adapter is bypassed for this
+request (your delegate handles it), and the platform still stamps the session-id response header,
+correlation baggage, and error-source classification around your handler.
 
 ```C# Snippet:Activity_Sample10_RawHandler
 var builder = WebApplication.CreateBuilder(args);
 
-// Register only the Activity package services (for the session-id / baggage stamping).
-// The Microsoft 365 Agents SDK is not initialized on the raw-handler path.
+// Register the Activity package services (for the session-id / baggage stamping).
+// The Microsoft 365 adapter is bypassed for the raw-handler request below.
 builder.Services.AddActivityServer();
 
 var app = builder.Build();

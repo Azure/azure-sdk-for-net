@@ -28,7 +28,7 @@ ActivityServer.Run(
 
 ## Register additional services
 
-`ConfigureServices` runs before the Microsoft 365 Agents SDK registers its defaults, and the SDK only adds a default when a service is not already present — so anything you register here wins. Use it to plug in a custom adapter, authorization, or channel-service factory.
+`ConfigureServices` runs before the Microsoft 365 Agents SDK registers its defaults, and the SDK only adds a default when a service is not already present — so anything you register here wins. Use it to plug in a custom adapter, authorization, or channel-service factory. The one exception is `IConnections`: the outbound-auth provider is always substituted after this callback runs, so register a custom connection provider through `options.Connections` instead.
 
 ```C# Snippet:Activity_Sample4_ConfigureServices
 // Register additional services (a custom adapter, authorization, channel-service

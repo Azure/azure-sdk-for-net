@@ -42,7 +42,7 @@ ActivityServer.Run((AgentApplication app) =>
     {
         await turnContext.SendActivityAsync($"Echo: {turnContext.Activity.Text}", cancellationToken: cancellationToken);
     });
-});
+}, args);
 ```
 
 Or host an agent class by type — the standard Microsoft 365 Agents SDK style, where handlers are

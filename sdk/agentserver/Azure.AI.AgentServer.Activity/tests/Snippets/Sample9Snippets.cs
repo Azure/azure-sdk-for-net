@@ -116,5 +116,46 @@ namespace Azure.AI.AgentServer.Activity.Tests.Snippets
 
             #endregion
         }
+
+        #region Snippet:Activity_Sample9_OpsInvocationHandler
+        // A second protocol hosted on the same server: a simple Invocations handler
+        // that exposes an operational "ping" endpoint at POST /invocations. Composition
+        // means the Activity agent and this handler share one host, port, and pipeline.
+        public sealed class OpsInvocationHandler : InvocationHandler
+        {
+            public override async Task HandleAsync(
+                HttpRequest request, HttpResponse response,
+                InvocationContext context, CancellationToken cancellationToken)
+            {
+                response.ContentType = "application/json";
+                await response.WriteAsJsonAsync(
+                    new { status = "ok", session_id = context.SessionId },
+                    cancellationToken);
+            }
+        }
+        #endregion
+
+        public void BuilderComposeProtocols(string[] args)
+        {
+            #region Snippet:Activity_Sample9_ComposeProtocols
+
+            var builder = AgentHost.CreateBuilder(args);
+
+            builder.Services.AddSingleton<IStorage, MemoryStorage>();
+
+            // Compose multiple protocols on a single host. Each Add* call registers its
+            // own endpoints on the shared Core pipeline (OpenTelemetry, health probes,
+            // identity/session headers, graceful shutdown):
+            //   - Activity     -> POST /activity/messages   (Teams/channel conversations)
+            //   - Invocations  -> POST /invocations         (synchronous request/response)
+            builder
+                .AddActivity<EchoAgent>()
+                .AddInvocations<OpsInvocationHandler>();
+
+            var app = builder.Build();
+            app.Run();
+
+            #endregion
+        }
     }
 }

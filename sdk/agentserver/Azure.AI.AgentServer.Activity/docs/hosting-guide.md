@@ -58,7 +58,7 @@ Microsoft 365 Agents SDK code. You do **not** need to think about:
 - How inbound activities are read, queued, and acknowledged with `202 Accepted`.
 - How outbound replies are authenticated to the channel (Bot Connector or digital-worker token).
 - Session-id resolution and the `x-agent-session-id` response header.
-- Error-source classification (platform fault vs. user-container fault).
+- Error-source classification (`user` input fault vs. `platform` infrastructure fault vs. `upstream` handler fault).
 - Distributed-tracing baggage propagation for a turn.
 - Reading the Foundry container identity/environment to wire outbound auth.
 
@@ -279,9 +279,10 @@ builder.AddFoundryActivity(options => options.DigitalWorker = true);
 builder.Services.AddActivityServer();
 ```
 
-Use the `IServiceCollection` overload (`AddActivityServer`) when you want the Activity
-services **without** the Microsoft 365 Agents SDK adapter — for example when mapping a
-[raw request handler](#custom-request-handler-tier-3-raw).
+Use the `IServiceCollection` overload (`AddActivityServer`) when you map a
+[raw request handler](#custom-request-handler-tier-3-raw): the Microsoft 365 Agents SDK
+services are still registered, but the adapter is bypassed for each request because your
+`RequestDelegate` — not the SDK adapter — handles it.
 
 ### `MapFoundryActivity` / `MapActivityServer`
 
@@ -339,7 +340,7 @@ Selects the outbound-auth model used when the agent replies to the channel:
   Teams bot pattern.
 - `true` — **Digital worker** model: the *blueprint* identity
   (`FOUNDRY_AGENT_BLUEPRINT_CLIENT_ID`) performs a federated-identity (FMI) token
-  exchange to obtain an agentic token.
+  exchange to obtain an agentic user token.
 
 ```csharp
 builder.AddFoundryActivity(options => options.DigitalWorker = true);
@@ -379,7 +380,9 @@ Optional callback to register additional services into the host's DI container
 **before** the Microsoft 365 Agents SDK services are added. Because the SDK registers
 its defaults only when a service is not already present, **anything registered here
 wins** — use it to plug in a custom adapter, authorization, channel-service factory,
-or any other service.
+or any other service. The one exception is `IConnections`: the outbound-auth provider
+is always substituted **after** this callback runs, so register a custom connection
+provider through [`Connections`](#connections), not here.
 
 ```csharp
 options.ConfigureServices = services =>
@@ -435,7 +438,7 @@ environment — you do not configure credentials directly, you only choose the m
 |---|---|---|
 | `DigitalWorker` | `false` | `true` |
 | Identity used | Agent **instance** MI (`FOUNDRY_AGENT_INSTANCE_CLIENT_ID`) | Agent **blueprint** identity (`FOUNDRY_AGENT_BLUEPRINT_CLIENT_ID`) |
-| Token | Bot Connector token via Managed Identity | Agentic token via federated-identity (FMI) exchange |
+| Token | Bot Connector token via Managed Identity | Agentic user token via federated-identity (FMI) exchange |
 | Scope | `https://api.botframework.com/.default` | Agentic scope (`…/.default`) |
 | Typical use | Standard single-tenant Teams bot | On-behalf-of / agentic scenarios |
 
@@ -448,8 +451,8 @@ extra configuration beyond the Foundry-provided instance identity.
 ### Digital Worker
 
 With `DigitalWorker = true`, the blueprint identity performs a federated-identity token
-exchange to obtain an agentic token. Select this model only when your scenario requires
-the blueprint/agentic identity rather than the plain instance Bot Connector token.
+exchange to obtain an agentic user token. Select this model only when your scenario
+requires the blueprint/agentic identity rather than the plain instance Bot Connector token.
 
 ---
 
@@ -488,14 +491,23 @@ You do not need to do anything to opt in — mapping the endpoints wires this up
 
 ## Error-Source Classification
 
-Exceptions thrown while handling a request are classified as **platform** faults vs.
-**user-container** faults, so the Foundry platform can attribute failures correctly.
-The classification is applied as an endpoint filter on the mapped routes and surfaced
-via response headers. Mapping the endpoints wires it up automatically — there is
-nothing to configure.
+Exceptions thrown while handling a request are classified into one of three sources —
+surfaced on the `x-platform-error-source` response header — so the Foundry platform can
+attribute failures correctly:
 
-This lets the platform distinguish "the hosting infrastructure failed" from "the
-agent's own handler threw," which drives correct ret/alerting and billing attribution.
+- **`user`** — the caller's input is invalid (for example a `BadHttpRequestException`
+  or `ArgumentException`).
+- **`platform`** — the hosting infrastructure failed (an exception tagged by the SDK
+  infrastructure, for example outbound token acquisition). A `platform` fault also
+  carries an `x-platform-error-detail` header.
+- **`upstream`** — everything else (the default): the agent's own handler threw.
+
+The classification is applied as an endpoint filter on the mapped routes. Mapping the
+endpoints wires it up automatically — there is nothing to configure.
+
+This lets the platform distinguish "the hosting infrastructure failed" (`platform`)
+from "the agent's own handler threw" (`upstream`), which drives correct retry/alerting
+and billing attribution.
 
 ---
 
@@ -513,13 +525,14 @@ ASP.NET Core service.
 ## Custom Request Handler (Tier 3, raw)
 
 When you want to own the request pipeline — read the request and write the response
-yourself, without the Microsoft 365 Agents SDK adapter — map the Activity endpoints to
-your own `RequestDelegate`. The platform still stamps the session-id header,
-correlation baggage, and error-source classification around your handler.
+yourself — map the Activity endpoints to your own `RequestDelegate`. The Microsoft 365
+Agents SDK adapter is bypassed for this request (your delegate handles it instead), while
+the platform still stamps the session-id header, correlation baggage, and error-source
+classification around your handler.
 
 ```csharp
 var builder = WebApplication.CreateBuilder(args);
-builder.Services.AddActivityServer();     // Activity services only (no M365 SDK adapter)
+builder.Services.AddActivityServer();     // the adapter is bypassed for the raw handler below
 
 var app = builder.Build();
 app.UseAgentServerCore();
@@ -568,19 +581,62 @@ var response = await client.PostAsync("/activity/messages", new StringContent(
 Assert.That((int)response.StatusCode, Is.EqualTo(202));
 ```
 
-Outbound **reply delivery** requires a real Bot Connector token, so tests that assert
-on the delivered reply must run as live tests against a Foundry project. See
+Outbound reply delivery **over the wire** (a real HTTP `POST` to the channel's
+`serviceUrl`) requires a Bot Connector token, so tests that assert on the *delivered*
+reply must run as live tests against a Foundry project. See
 `tests/SampleEndToEndTests.cs` for the CI-safe (accept/readiness) and live
 (reply-delivery) split.
 
+This does **not** mean you cannot assert on your agent's reply text offline — you
+can, and should, using the Microsoft 365 Agents SDK test harness (below). The
+in-process `TestServer` above exercises the *Foundry hosting contract* (endpoint,
+`202`, session header); the SDK harness exercises your *agent's conversation logic*.
+
+### Testing handler logic (Microsoft 365 Agents SDK)
+
+Your agent is an ordinary Microsoft 365 Agents SDK `AgentApplication`, so test its
+behaviour with the SDK's own in-memory harness — `TestAdapter` / `TestFlow` (via
+`AgentTestHost`) from the `Microsoft.Agents.Builder.Testing` package. There is no HTTP
+and no Bot Connector: the adapter captures the agent's outbound replies in memory, so
+you assert on the **actual reply text** offline. This is the same pattern the Microsoft
+365 Agents SDK uses to test agents.
+
+```csharp
+using Microsoft.Agents.Builder;
+using Microsoft.Agents.Builder.Testing;
+using Microsoft.Agents.Core.Models;
+using Microsoft.Agents.Storage;
+using Microsoft.Extensions.DependencyInjection;
+
+await using var host = AgentTestHost.Create(builder =>
+{
+    builder.Services.AddSingleton<IStorage, MemoryStorage>();
+    builder.Services.AddTransient<IAgent>(sp =>
+        new EchoAgent(new AgentApplicationOptions(sp.GetRequiredService<IStorage>())));
+});
+
+await host.CreateTestFlow()
+    // conversationUpdate → the welcome reply
+    .SendConversationUpdate(new[] { new ChannelAccount { Id = "u1" } })
+    .AssertReply("Welcome!")
+    // message → the echo reply, asserted offline
+    .Send("hello")
+    .AssertReplyContains("Echo: hello")
+    .StartTestAsync();
+```
+
+Use this layer for your handler logic (routing, reply text, cards, multi-turn state);
+use the `TestServer` layer above for the hosting contract; and reserve live tests for
+verifying replies actually reach the channel.
+
 ### What to Test at Each Layer
 
-| Layer | What to assert | Live? |
-|-------|----------------|-------|
-| Readiness | `GET /readiness` returns `200` | No |
-| Accept path | `POST /activity/messages` returns `202` + `x-agent-session-id` | No |
-| Handler logic | Your `AgentApplication` handler behaviour (unit-test the handler directly) | No |
-| Reply delivery | The outbound reply reaches the channel | Yes |
+| Layer | What to assert | How | Live? |
+|-------|----------------|-----|-------|
+| Readiness | `GET /readiness` returns `200` | `TestServer` | No |
+| Accept path | `POST /activity/messages` returns `202` + `x-agent-session-id` | `TestServer` | No |
+| Handler logic | Your `AgentApplication` reply text / routing / state | `TestAdapter` / `TestFlow` | No |
+| Reply delivery | The outbound reply actually reaches the channel | Live Foundry project | Yes |
 
 ---
 

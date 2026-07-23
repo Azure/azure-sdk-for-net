@@ -1,4 +1,4 @@
-# Sample 8: Tier 1 — The One-Liner
+# Sample 8: Tier 1 — Customize the One-Liner
 
 **Tier 1** is the fastest path to a running Activity agent: a single call,
 `ActivityServer.Run<TAgent>()`. It creates the Core host builder, registers the Activity protocol

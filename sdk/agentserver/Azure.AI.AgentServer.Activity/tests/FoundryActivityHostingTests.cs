@@ -142,8 +142,8 @@ public class FoundryActivityHostingTests
         var builder = WebApplication.CreateBuilder();
         builder.WebHost.UseTestServer();
 
-        // Only the Activity package services are needed for the session/baggage stamping; the
-        // Microsoft 365 Agents SDK stack is not initialized on the raw-handler path.
+        // The Activity package services are registered by AddActivityServer(); the adapter is
+        // bypassed for the raw-handler request (the RequestDelegate handles it instead).
         builder.Services.AddActivityServer();
 
         using var app = builder.Build();

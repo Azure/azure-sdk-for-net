@@ -19,8 +19,8 @@ namespace Azure.AI.AgentServer.Activity.Tests.Snippets
             #region Snippet:Activity_Sample5_CustomHandler
 
             // Own the request pipeline entirely: the Microsoft 365 Agents SDK is not initialized.
-            // The delegate receives each inbound POST /activity/messages request. The parsed
-            // activity is available at request.HttpContext for custom processing.
+            // The delegate receives each inbound POST /activity/messages request as a raw HttpContext
+            // (no activity is parsed for you — read the body yourself).
             ActivityServer.Run(
                 async (HttpContext context) =>
                 {

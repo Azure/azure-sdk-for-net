@@ -115,8 +115,8 @@ namespace Azure.AI.AgentServer.Activity.Tests.Snippets
 
             var builder = WebApplication.CreateBuilder(args);
 
-            // Register only the Activity package services (for the session-id / baggage stamping).
-            // The Microsoft 365 Agents SDK is not initialized on the raw-handler path.
+            // Register the Activity package services (for the session-id / baggage stamping).
+            // The Microsoft 365 adapter is bypassed for the raw-handler request below.
             builder.Services.AddActivityServer();
 
             var app = builder.Build();

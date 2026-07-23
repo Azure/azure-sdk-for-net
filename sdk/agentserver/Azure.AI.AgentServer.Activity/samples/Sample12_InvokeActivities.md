@@ -20,25 +20,25 @@ Register a handler for `ActivityTypes.Invoke`. The `Activity.Name` tells you whi
 ```C# Snippet:Activity_Sample12_Invoke
 ActivityServer.Run(
     (AgentApplication app) =>
-// Invoke activities are synchronous request/response (e.g. Teams message extensions,
-// task modules, adaptive card Action.Execute). Reply with an "invokeResponse" activity
-// carrying an InvokeResponse (HTTP-style status + body).
-app.OnActivity(ActivityTypes.Invoke, async (ITurnContext turnContext, ITurnState turnState, CancellationToken cancellationToken) =>
-{
-    var name = turnContext.Activity.Name; // e.g. "composeExtension/query", "task/fetch"
-
-    var response = new Microsoft.Agents.Core.Models.Activity
-    {
-        Type = "invokeResponse",
-        Value = new InvokeResponse
+        // Invoke activities are synchronous request/response (e.g. Teams message extensions,
+        // task modules, adaptive card Action.Execute). Reply with an "invokeResponse" activity
+        // carrying an InvokeResponse (HTTP-style status + body).
+        app.OnActivity(ActivityTypes.Invoke, async (ITurnContext turnContext, ITurnState turnState, CancellationToken cancellationToken) =>
         {
-            Status = 200,
-            Body = new { message = $"Handled invoke: {name}" },
-        },
-    };
+            var name = turnContext.Activity.Name; // e.g. "composeExtension/query", "task/fetch"
 
-    await turnContext.SendActivityAsync(response, cancellationToken: cancellationToken);
-}),
+            var response = new Microsoft.Agents.Core.Models.Activity
+            {
+                Type = "invokeResponse",
+                Value = new InvokeResponse
+                {
+                    Status = 200,
+                    Body = new { message = $"Handled invoke: {name}" },
+                },
+            };
+
+            await turnContext.SendActivityAsync(response, cancellationToken: cancellationToken);
+        }),
     args);
 ```
 

@@ -20,7 +20,7 @@ hosting concerns **only**:
 - the outbound-auth connection provider (`FoundryConnections`),
 - the activity endpoint mapping and request handling,
 - session and correlation-id resolution,
-- error-source classification (platform vs. user-container faults),
+- error-source classification (`user` / `platform` / `upstream` faults),
 - distributed tracing (`ActivityProtocolActivitySource`).
 
 The library MUST NOT own agent business logic — that belongs to the consumer's
