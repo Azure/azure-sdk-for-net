@@ -75,29 +75,29 @@ namespace Azure.ResourceManager.CosmosDB
         {
             TryGetApiVersion(ResourceType, out string cosmosDBAccountApiVersion);
             _databaseAccountsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.CosmosDB", ResourceType.Namespace, Diagnostics);
-            _databaseAccountsRestClient = new DatabaseAccounts(_databaseAccountsClientDiagnostics, Pipeline, Endpoint, cosmosDBAccountApiVersion ?? "2026-03-15");
+            _databaseAccountsRestClient = new DatabaseAccounts(_databaseAccountsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, cosmosDBAccountApiVersion ?? "2026-03-15");
             _collectionClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.CosmosDB", ResourceType.Namespace, Diagnostics);
-            _collectionRestClient = new Collection(_collectionClientDiagnostics, Pipeline, Endpoint, cosmosDBAccountApiVersion ?? "2026-03-15");
+            _collectionRestClient = new Collection(_collectionClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, cosmosDBAccountApiVersion ?? "2026-03-15");
             _collectionPartitionClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.CosmosDB", ResourceType.Namespace, Diagnostics);
-            _collectionPartitionRestClient = new CollectionPartition(_collectionPartitionClientDiagnostics, Pipeline, Endpoint, cosmosDBAccountApiVersion ?? "2026-03-15");
+            _collectionPartitionRestClient = new CollectionPartition(_collectionPartitionClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, cosmosDBAccountApiVersion ?? "2026-03-15");
             _collectionPartitionRegionClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.CosmosDB", ResourceType.Namespace, Diagnostics);
-            _collectionPartitionRegionRestClient = new CollectionPartitionRegion(_collectionPartitionRegionClientDiagnostics, Pipeline, Endpoint, cosmosDBAccountApiVersion ?? "2026-03-15");
+            _collectionPartitionRegionRestClient = new CollectionPartitionRegion(_collectionPartitionRegionClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, cosmosDBAccountApiVersion ?? "2026-03-15");
             _collectionRegionClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.CosmosDB", ResourceType.Namespace, Diagnostics);
-            _collectionRegionRestClient = new CollectionRegion(_collectionRegionClientDiagnostics, Pipeline, Endpoint, cosmosDBAccountApiVersion ?? "2026-03-15");
+            _collectionRegionRestClient = new CollectionRegion(_collectionRegionClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, cosmosDBAccountApiVersion ?? "2026-03-15");
             _databaseAccountRegionClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.CosmosDB", ResourceType.Namespace, Diagnostics);
-            _databaseAccountRegionRestClient = new DatabaseAccountRegion(_databaseAccountRegionClientDiagnostics, Pipeline, Endpoint, cosmosDBAccountApiVersion ?? "2026-03-15");
+            _databaseAccountRegionRestClient = new DatabaseAccountRegion(_databaseAccountRegionClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, cosmosDBAccountApiVersion ?? "2026-03-15");
             _databaseClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.CosmosDB", ResourceType.Namespace, Diagnostics);
-            _databaseRestClient = new Database(_databaseClientDiagnostics, Pipeline, Endpoint, cosmosDBAccountApiVersion ?? "2026-03-15");
+            _databaseRestClient = new Database(_databaseClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, cosmosDBAccountApiVersion ?? "2026-03-15");
             _partitionKeyRangeIdClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.CosmosDB", ResourceType.Namespace, Diagnostics);
-            _partitionKeyRangeIdRestClient = new PartitionKeyRangeId(_partitionKeyRangeIdClientDiagnostics, Pipeline, Endpoint, cosmosDBAccountApiVersion ?? "2026-03-15");
+            _partitionKeyRangeIdRestClient = new PartitionKeyRangeId(_partitionKeyRangeIdClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, cosmosDBAccountApiVersion ?? "2026-03-15");
             _partitionKeyRangeIdRegionClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.CosmosDB", ResourceType.Namespace, Diagnostics);
-            _partitionKeyRangeIdRegionRestClient = new PartitionKeyRangeIdRegion(_partitionKeyRangeIdRegionClientDiagnostics, Pipeline, Endpoint, cosmosDBAccountApiVersion ?? "2026-03-15");
+            _partitionKeyRangeIdRegionRestClient = new PartitionKeyRangeIdRegion(_partitionKeyRangeIdRegionClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, cosmosDBAccountApiVersion ?? "2026-03-15");
             _percentileClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.CosmosDB", ResourceType.Namespace, Diagnostics);
-            _percentileRestClient = new Percentile(_percentileClientDiagnostics, Pipeline, Endpoint, cosmosDBAccountApiVersion ?? "2026-03-15");
+            _percentileRestClient = new Percentile(_percentileClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, cosmosDBAccountApiVersion ?? "2026-03-15");
             _percentileSourceTargetClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.CosmosDB", ResourceType.Namespace, Diagnostics);
-            _percentileSourceTargetRestClient = new PercentileSourceTarget(_percentileSourceTargetClientDiagnostics, Pipeline, Endpoint, cosmosDBAccountApiVersion ?? "2026-03-15");
+            _percentileSourceTargetRestClient = new PercentileSourceTarget(_percentileSourceTargetClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, cosmosDBAccountApiVersion ?? "2026-03-15");
             _percentileTargetClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.CosmosDB", ResourceType.Namespace, Diagnostics);
-            _percentileTargetRestClient = new PercentileTarget(_percentileTargetClientDiagnostics, Pipeline, Endpoint, cosmosDBAccountApiVersion ?? "2026-03-15");
+            _percentileTargetRestClient = new PercentileTarget(_percentileTargetClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, cosmosDBAccountApiVersion ?? "2026-03-15");
             ValidateResourceId(id);
         }
 

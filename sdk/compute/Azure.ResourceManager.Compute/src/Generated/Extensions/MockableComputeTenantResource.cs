@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.Compute.Mocking
 
         private ClientDiagnostics TenantLevelSharedGalleryInvitesClientDiagnostics => _tenantLevelSharedGalleryInvitesClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Compute.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private TenantLevelSharedGalleryInvites TenantLevelSharedGalleryInvitesRestClient => _tenantLevelSharedGalleryInvitesRestClient ??= new TenantLevelSharedGalleryInvites(TenantLevelSharedGalleryInvitesClientDiagnostics, Pipeline, Endpoint, "2025-12-03");
+        private TenantLevelSharedGalleryInvites TenantLevelSharedGalleryInvitesRestClient => _tenantLevelSharedGalleryInvitesRestClient ??= new TenantLevelSharedGalleryInvites(TenantLevelSharedGalleryInvitesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2025-12-03");
 
         /// <summary>
         /// Accept sharing of a tenant-level shared gallery.

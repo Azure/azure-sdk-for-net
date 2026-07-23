@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.CosmosDB
         {
             TryGetApiVersion(CosmosDBTableRoleAssignmentResource.ResourceType, out string cosmosDBTableRoleAssignmentApiVersion);
             _tableResourcesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.CosmosDB", CosmosDBTableRoleAssignmentResource.ResourceType.Namespace, Diagnostics);
-            _tableResourcesRestClient = new TableResources(_tableResourcesClientDiagnostics, Pipeline, Endpoint, cosmosDBTableRoleAssignmentApiVersion ?? "2026-03-15");
+            _tableResourcesRestClient = new TableResources(_tableResourcesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, cosmosDBTableRoleAssignmentApiVersion ?? "2026-03-15");
             ValidateResourceId(id);
         }
 

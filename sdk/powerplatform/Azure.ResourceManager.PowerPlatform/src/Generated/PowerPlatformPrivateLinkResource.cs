@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.PowerPlatform
         {
             TryGetApiVersion(ResourceType, out string powerPlatformPrivateLinkResourceApiVersion);
             _privateLinkResourcesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.PowerPlatform", ResourceType.Namespace, Diagnostics);
-            _privateLinkResourcesRestClient = new PrivateLinkResources(_privateLinkResourcesClientDiagnostics, Pipeline, Endpoint, powerPlatformPrivateLinkResourceApiVersion ?? "2020-10-30-preview");
+            _privateLinkResourcesRestClient = new PrivateLinkResources(_privateLinkResourcesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, powerPlatformPrivateLinkResourceApiVersion ?? "2020-10-30-preview");
             ValidateResourceId(id);
         }
 

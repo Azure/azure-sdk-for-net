@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.SecurityInsights
         {
             TryGetApiVersion(WorkspaceManagerAssignmentResource.ResourceType, out string workspaceManagerAssignmentApiVersion);
             _workspaceManagerAssignmentsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.SecurityInsights", WorkspaceManagerAssignmentResource.ResourceType.Namespace, Diagnostics);
-            _workspaceManagerAssignmentsRestClient = new WorkspaceManagerAssignments(_workspaceManagerAssignmentsClientDiagnostics, Pipeline, Endpoint, workspaceManagerAssignmentApiVersion ?? "2025-07-01-preview");
+            _workspaceManagerAssignmentsRestClient = new WorkspaceManagerAssignments(_workspaceManagerAssignmentsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, workspaceManagerAssignmentApiVersion ?? "2025-07-01-preview");
             ValidateResourceId(id);
         }
 

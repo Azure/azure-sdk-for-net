@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.Network
         {
             TryGetApiVersion(InterconnectGroupSubgroupResource.ResourceType, out string interconnectGroupSubgroupApiVersion);
             _subgroupsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Network", InterconnectGroupSubgroupResource.ResourceType.Namespace, Diagnostics);
-            _subgroupsRestClient = new Subgroups(_subgroupsClientDiagnostics, Pipeline, Endpoint, interconnectGroupSubgroupApiVersion ?? "2025-07-01");
+            _subgroupsRestClient = new Subgroups(_subgroupsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, interconnectGroupSubgroupApiVersion ?? "2025-07-01");
             ValidateResourceId(id);
         }
 

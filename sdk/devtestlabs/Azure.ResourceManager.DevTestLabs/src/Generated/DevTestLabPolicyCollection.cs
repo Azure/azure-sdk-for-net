@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.DevTestLabs
             TryGetApiVersion(DevTestLabPolicyResource.ResourceType, out string devTestLabPolicyApiVersion);
             _policySetName = policySetName;
             _policiesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.DevTestLabs", DevTestLabPolicyResource.ResourceType.Namespace, Diagnostics);
-            _policiesRestClient = new Policies(_policiesClientDiagnostics, Pipeline, Endpoint, devTestLabPolicyApiVersion ?? "2018-09-15");
+            _policiesRestClient = new Policies(_policiesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, devTestLabPolicyApiVersion ?? "2018-09-15");
             ValidateResourceId(id);
         }
 

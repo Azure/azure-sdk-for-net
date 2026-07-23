@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.ArtifactSigning.Mocking
 
         private ClientDiagnostics CodeSigningAccountsClientDiagnostics => _codeSigningAccountsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.ArtifactSigning.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private CodeSigningAccounts CodeSigningAccountsRestClient => _codeSigningAccountsRestClient ??= new CodeSigningAccounts(CodeSigningAccountsClientDiagnostics, Pipeline, Endpoint, "2026-05-15-preview");
+        private CodeSigningAccounts CodeSigningAccountsRestClient => _codeSigningAccountsRestClient ??= new CodeSigningAccounts(CodeSigningAccountsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2026-05-15-preview");
 
         /// <summary>
         /// Lists artifact signing accounts within a subscription.

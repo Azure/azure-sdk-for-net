@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.StorageSync
         {
             TryGetApiVersion(ResourceType, out string cloudEndpointApiVersion);
             _cloudEndpointsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.StorageSync", ResourceType.Namespace, Diagnostics);
-            _cloudEndpointsRestClient = new CloudEndpoints(_cloudEndpointsClientDiagnostics, Pipeline, Endpoint, cloudEndpointApiVersion ?? "2022-09-01");
+            _cloudEndpointsRestClient = new CloudEndpoints(_cloudEndpointsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, cloudEndpointApiVersion ?? "2022-09-01");
             ValidateResourceId(id);
         }
 

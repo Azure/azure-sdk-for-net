@@ -10,6 +10,8 @@
 
 ### Other Changes
 
+- Customer SDK stats are now on by default; opt out with `APPLICATIONINSIGHTS_SDKSTATS_DISABLED=true`. `dropCode`/`retryCode` dimension values now use the spec's SCREAMING_SNAKE_CASE (e.g. `CLIENT_EXCEPTION`).
+
 ## 1.8.2 (2026-06-30)
 
 ### Features Added

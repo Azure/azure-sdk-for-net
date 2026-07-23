@@ -58,13 +58,13 @@ namespace Azure.ResourceManager.SecurityCenter
         {
             TryGetApiVersion(ResourceType, out string securityCenterLocationApiVersion);
             _locationsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.SecurityCenter", ResourceType.Namespace, Diagnostics);
-            _locationsRestClient = new Locations(_locationsClientDiagnostics, Pipeline, Endpoint, securityCenterLocationApiVersion ?? "2015-06-01-preview");
+            _locationsRestClient = new Locations(_locationsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, securityCenterLocationApiVersion ?? "2015-06-01-preview");
             _operationResultsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.SecurityCenter", ResourceType.Namespace, Diagnostics);
-            _operationResultsRestClient = new OperationResults(_operationResultsClientDiagnostics, Pipeline, Endpoint, securityCenterLocationApiVersion ?? "2025-10-01-preview");
+            _operationResultsRestClient = new OperationResults(_operationResultsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, securityCenterLocationApiVersion ?? "2025-10-01-preview");
             _externalSecuritySolutionsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.SecurityCenter", ResourceType.Namespace, Diagnostics);
-            _externalSecuritySolutionsRestClient = new ExternalSecuritySolutions(_externalSecuritySolutionsClientDiagnostics, Pipeline, Endpoint, securityCenterLocationApiVersion ?? "2020-01-01");
+            _externalSecuritySolutionsRestClient = new ExternalSecuritySolutions(_externalSecuritySolutionsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, securityCenterLocationApiVersion ?? "2020-01-01");
             _securitySolutionsReferenceDataOperationGroupClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.SecurityCenter", ResourceType.Namespace, Diagnostics);
-            _securitySolutionsReferenceDataOperationGroupRestClient = new SecuritySolutionsReferenceDataOperationGroup(_securitySolutionsReferenceDataOperationGroupClientDiagnostics, Pipeline, Endpoint, securityCenterLocationApiVersion ?? "2020-01-01");
+            _securitySolutionsReferenceDataOperationGroupRestClient = new SecuritySolutionsReferenceDataOperationGroup(_securitySolutionsReferenceDataOperationGroupClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, securityCenterLocationApiVersion ?? "2020-01-01");
             ValidateResourceId(id);
         }
 

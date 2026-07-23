@@ -59,13 +59,13 @@ namespace Azure.ResourceManager.DataFactory
         {
             TryGetApiVersion(ResourceType, out string dataFactoryApiVersion);
             _factoriesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.DataFactory", ResourceType.Namespace, Diagnostics);
-            _factoriesRestClient = new Factories(_factoriesClientDiagnostics, Pipeline, Endpoint, dataFactoryApiVersion ?? "2018-06-01");
+            _factoriesRestClient = new Factories(_factoriesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, dataFactoryApiVersion ?? "2018-06-01");
             _dataFlowDebugSessionClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.DataFactory", ResourceType.Namespace, Diagnostics);
-            _dataFlowDebugSessionRestClient = new DataFlowDebugSession(_dataFlowDebugSessionClientDiagnostics, Pipeline, Endpoint, dataFactoryApiVersion ?? "2018-06-01");
+            _dataFlowDebugSessionRestClient = new DataFlowDebugSession(_dataFlowDebugSessionClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, dataFactoryApiVersion ?? "2018-06-01");
             _pipelineRunsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.DataFactory", ResourceType.Namespace, Diagnostics);
-            _pipelineRunsRestClient = new PipelineRuns(_pipelineRunsClientDiagnostics, Pipeline, Endpoint, dataFactoryApiVersion ?? "2018-06-01");
+            _pipelineRunsRestClient = new PipelineRuns(_pipelineRunsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, dataFactoryApiVersion ?? "2018-06-01");
             _exposureControlClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.DataFactory", ResourceType.Namespace, Diagnostics);
-            _exposureControlRestClient = new ExposureControl(_exposureControlClientDiagnostics, Pipeline, Endpoint, dataFactoryApiVersion ?? "2018-06-01");
+            _exposureControlRestClient = new ExposureControl(_exposureControlClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, dataFactoryApiVersion ?? "2018-06-01");
             ValidateResourceId(id);
         }
 

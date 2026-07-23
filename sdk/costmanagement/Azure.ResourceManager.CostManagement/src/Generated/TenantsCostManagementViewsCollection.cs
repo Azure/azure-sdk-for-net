@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.CostManagement
         {
             TryGetApiVersion(TenantsCostManagementViewsResource.ResourceType, out string tenantsCostManagementViewsApiVersion);
             _viewsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.CostManagement", TenantsCostManagementViewsResource.ResourceType.Namespace, Diagnostics);
-            _viewsRestClient = new Views(_viewsClientDiagnostics, Pipeline, Endpoint, tenantsCostManagementViewsApiVersion ?? "2025-03-01");
+            _viewsRestClient = new Views(_viewsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, tenantsCostManagementViewsApiVersion ?? "2025-03-01");
             ValidateResourceId(id);
         }
 

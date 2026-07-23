@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.ComputeSchedule
         {
             TryGetApiVersion(ResourceType, out string scheduledActionOccurrenceApiVersion);
             _occurrencesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ComputeSchedule", ResourceType.Namespace, Diagnostics);
-            _occurrencesRestClient = new Occurrences(_occurrencesClientDiagnostics, Pipeline, Endpoint, scheduledActionOccurrenceApiVersion ?? "2026-04-15-preview");
+            _occurrencesRestClient = new Occurrences(_occurrencesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, scheduledActionOccurrenceApiVersion ?? "2026-04-15-preview");
             ValidateResourceId(id);
         }
 

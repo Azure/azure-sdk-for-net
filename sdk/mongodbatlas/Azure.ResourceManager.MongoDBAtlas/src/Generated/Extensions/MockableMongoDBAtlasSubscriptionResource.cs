@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.MongoDBAtlas.Mocking
 
         private ClientDiagnostics OrganizationsClientDiagnostics => _organizationsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.MongoDBAtlas.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private Organizations OrganizationsRestClient => _organizationsRestClient ??= new Organizations(OrganizationsClientDiagnostics, Pipeline, Endpoint, "2026-03-01-preview");
+        private Organizations OrganizationsRestClient => _organizationsRestClient ??= new Organizations(OrganizationsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2026-03-01-preview");
 
         /// <summary>
         /// List OrganizationResource resources by subscription ID

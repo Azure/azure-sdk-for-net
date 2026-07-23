@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.ContainerService
         {
             TryGetApiVersion(MaintenanceWindowResource.ResourceType, out string maintenanceWindowApiVersion);
             _maintenanceWindowsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ContainerService", MaintenanceWindowResource.ResourceType.Namespace, Diagnostics);
-            _maintenanceWindowsRestClient = new MaintenanceWindows(_maintenanceWindowsClientDiagnostics, Pipeline, Endpoint, maintenanceWindowApiVersion ?? "2026-04-02-preview");
+            _maintenanceWindowsRestClient = new MaintenanceWindows(_maintenanceWindowsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, maintenanceWindowApiVersion ?? "2026-04-02-preview");
             ValidateResourceId(id);
         }
 

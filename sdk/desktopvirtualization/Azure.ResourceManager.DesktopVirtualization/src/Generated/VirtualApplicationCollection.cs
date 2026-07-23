@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.DesktopVirtualization
         {
             TryGetApiVersion(VirtualApplicationResource.ResourceType, out string virtualApplicationApiVersion);
             _applicationsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.DesktopVirtualization", VirtualApplicationResource.ResourceType.Namespace, Diagnostics);
-            _applicationsRestClient = new Applications(_applicationsClientDiagnostics, Pipeline, Endpoint, virtualApplicationApiVersion ?? "2026-03-01-preview");
+            _applicationsRestClient = new Applications(_applicationsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, virtualApplicationApiVersion ?? "2026-03-01-preview");
             ValidateResourceId(id);
         }
 

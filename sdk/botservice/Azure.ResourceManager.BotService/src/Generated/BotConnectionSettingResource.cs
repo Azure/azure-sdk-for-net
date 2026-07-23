@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.BotService
         {
             TryGetApiVersion(ResourceType, out string botConnectionSettingApiVersion);
             _connectionSettingsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.BotService", ResourceType.Namespace, Diagnostics);
-            _connectionSettingsRestClient = new ConnectionSettings(_connectionSettingsClientDiagnostics, Pipeline, Endpoint, botConnectionSettingApiVersion ?? "2023-09-15-preview");
+            _connectionSettingsRestClient = new ConnectionSettings(_connectionSettingsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, botConnectionSettingApiVersion ?? "2023-09-15-preview");
             ValidateResourceId(id);
         }
 

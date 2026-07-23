@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.EventHubs
         {
             TryGetApiVersion(ResourceType, out string eventHubsApplicationGroupApiVersion);
             _applicationGroupClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.EventHubs", ResourceType.Namespace, Diagnostics);
-            _applicationGroupRestClient = new ApplicationGroup(_applicationGroupClientDiagnostics, Pipeline, Endpoint, eventHubsApplicationGroupApiVersion ?? "2026-01-01");
+            _applicationGroupRestClient = new ApplicationGroup(_applicationGroupClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, eventHubsApplicationGroupApiVersion ?? "2026-01-01");
             ValidateResourceId(id);
         }
 

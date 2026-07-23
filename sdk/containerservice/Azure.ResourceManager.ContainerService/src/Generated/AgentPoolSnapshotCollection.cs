@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.ContainerService
         {
             TryGetApiVersion(AgentPoolSnapshotResource.ResourceType, out string agentPoolSnapshotApiVersion);
             _snapshotsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ContainerService", AgentPoolSnapshotResource.ResourceType.Namespace, Diagnostics);
-            _snapshotsRestClient = new Snapshots(_snapshotsClientDiagnostics, Pipeline, Endpoint, agentPoolSnapshotApiVersion ?? "2026-04-02-preview");
+            _snapshotsRestClient = new Snapshots(_snapshotsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, agentPoolSnapshotApiVersion ?? "2026-04-02-preview");
             ValidateResourceId(id);
         }
 

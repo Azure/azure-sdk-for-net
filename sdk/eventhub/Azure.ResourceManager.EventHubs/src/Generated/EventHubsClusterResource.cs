@@ -56,9 +56,9 @@ namespace Azure.ResourceManager.EventHubs
         {
             TryGetApiVersion(ResourceType, out string eventHubsClusterApiVersion);
             _clustersClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.EventHubs", ResourceType.Namespace, Diagnostics);
-            _clustersRestClient = new Clusters(_clustersClientDiagnostics, Pipeline, Endpoint, eventHubsClusterApiVersion ?? "2026-01-01");
+            _clustersRestClient = new Clusters(_clustersClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, eventHubsClusterApiVersion ?? "2026-01-01");
             _configurationClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.EventHubs", ResourceType.Namespace, Diagnostics);
-            _configurationRestClient = new Configuration(_configurationClientDiagnostics, Pipeline, Endpoint, eventHubsClusterApiVersion ?? "2026-01-01");
+            _configurationRestClient = new Configuration(_configurationClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, eventHubsClusterApiVersion ?? "2026-01-01");
             ValidateResourceId(id);
         }
 
