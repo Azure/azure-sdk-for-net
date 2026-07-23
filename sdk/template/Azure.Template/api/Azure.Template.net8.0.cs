@@ -1,5 +1,9 @@
 namespace Azure.Template
 {
+    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResponseError))]
+    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.Template.FakedSharedModel))]
+    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.Template.ResourceOperationStatusWidgetSuiteWidgetSuiteError))]
+    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.Template.WidgetSuite))]
     public partial class AzureTemplateContext : System.ClientModel.Primitives.ModelReaderWriterContext
     {
         internal AzureTemplateContext() { }
