@@ -25,6 +25,20 @@ internal sealed class ManagementClientProvider : ClientProvider
     private readonly FieldProvider? _endpointField;
     private readonly FieldProvider _userAgentField;
     private readonly PropertyProvider? _pipelineProperty;
+    private PropertyProvider? _clientDiagnosticsProperty;
+
+    // The ClientDiagnostics property is normally added to the root client by the base AzureDistributedTracingVisitor
+    // (via base.Configure()). Look it up lazily from the base-populated property list; if it is not present, create
+    // it ourselves as a fallback.
+    private PropertyProvider ClientDiagnosticsProperty => _clientDiagnosticsProperty ??=
+        Properties.FirstOrDefault(property => property.Name == ClientDiagnosticsPropertyName)
+        ?? new PropertyProvider(
+            description: $"The ClientDiagnostics is used to provide tracing support for the client library.",
+            modifiers: MethodSignatureModifiers.Internal,
+            type: typeof(ClientDiagnostics),
+            name: ClientDiagnosticsPropertyName,
+            body: new AutoPropertyBody(false),
+            enclosingType: this);
 
     public ManagementClientProvider(InputClient inputClient)
         : base(inputClient)
@@ -52,10 +66,6 @@ internal sealed class ManagementClientProvider : ClientProvider
             : [.. base.BuildFields(), _userAgentField];
 
     protected override PropertyProvider[] BuildProperties()
-        // The ClientDiagnostics property is added by the base AzureDistributedTracingVisitor. We must not add it
-        // here as well: that visitor de-duplicates by property type, and the ClientDiagnostics type it compares
-        // against lives in a different assembly than the one referenced here, so our property is not recognized
-        // as an existing one and a duplicate would be injected (causing a duplicate-key crash in BuildMethods).
         => _isRootClient
             ? [_pipelineProperty!]
             : base.BuildProperties();
@@ -70,11 +80,7 @@ internal sealed class ManagementClientProvider : ClientProvider
 
     private ConstructorProvider[] BuildRootConstructors()
     {
-        // The ClientDiagnostics property is added to the root client by the base AzureDistributedTracingVisitor,
-        // which runs via base.Configure() before constructors are built. Look it up from the base-populated
-        // property list rather than defining a duplicate PropertyProvider, so the assignment below references the
-        // exact property the base generator emits.
-        var clientDiagnosticsProperty = Properties.Single(property => property.Name == ClientDiagnosticsPropertyName);
+        var clientDiagnosticsProperty = ClientDiagnosticsProperty;
         var clientDiagnosticsParam = new ParameterProvider("clientDiagnostics", $"The ClientDiagnostics is used to provide tracing support for the client library.", typeof(ClientDiagnostics));
         var pipelineParam = new ParameterProvider("pipeline", $"The HTTP pipeline for sending and receiving REST requests and responses.", typeof(HttpPipeline));
         var applicationIdParam = new ParameterProvider("applicationId", $"The application id to use for user agent.", typeof(string));
