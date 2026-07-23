@@ -265,6 +265,13 @@ namespace Microsoft.Azure.WebJobs.EventHubs
             set => EventProcessorOptions.LoadBalancingUpdateInterval = value;
         }
 
+        /// <inheritdoc cref="EventProcessorOptions.Identifier"/>
+        public string Identifier
+        {
+            get => EventProcessorOptions.Identifier;
+            set => EventProcessorOptions.Identifier = value;
+        }
+
         /// <summary>
         /// Gets or sets the Azure Blobs container name that the event processor uses to coordinate load balancing listening on an event hub.
         /// </summary>
@@ -293,6 +300,7 @@ namespace Microsoft.Azure.WebJobs.EventHubs
                     { nameof(PrefetchSizeInBytes), PrefetchSizeInBytes },
                     { nameof(PartitionOwnershipExpirationInterval), PartitionOwnershipExpirationInterval },
                     { nameof(LoadBalancingUpdateInterval), LoadBalancingUpdateInterval },
+                    { nameof(Identifier), Identifier },
                     { nameof(InitialOffsetOptions), ConstructInitialOffsetOptions() },
                     { nameof(EnableCheckpointing), EnableCheckpointing },
                 };

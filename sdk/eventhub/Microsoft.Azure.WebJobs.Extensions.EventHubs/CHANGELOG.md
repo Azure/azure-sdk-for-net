@@ -4,6 +4,8 @@
 
 ### Features Added
 
+- Exposed `Identifier` on `EventHubOptions` as a pass-through to `EventProcessorOptions.Identifier`. Hosts (e.g. Azure Functions) can now supply a stable per-instance identifier so the processor enters recovery mode immediately on restart instead of waiting for `PartitionOwnershipExpirationInterval` to elapse. ([#52057](https://github.com/Azure/azure-sdk-for-net/issues/52057))
+
 ### Breaking Changes
 
 ### Bugs Fixed
