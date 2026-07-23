@@ -5,7 +5,6 @@
 using System;
 using System.ClientModel;
 using System.ClientModel.Primitives;
-using System.Diagnostics.CodeAnalysis;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -104,7 +103,6 @@ namespace Azure.AI.Projects
         /// <param name="foundryFeatures"> A feature flag opt-in required when using preview operations or modifying persisted preview resources. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
         /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
-        [Experimental("AAIP001")]
         internal virtual ClientResult<DataGenerationJob> GetGenerationJob(string jobId, FoundryFeaturesOptInKeys? foundryFeatures = default, CancellationToken cancellationToken = default)
         {
             ClientResult result = GetGenerationJob(jobId, foundryFeatures?.ToSerialString(), cancellationToken.ToRequestOptions());
@@ -116,7 +114,6 @@ namespace Azure.AI.Projects
         /// <param name="foundryFeatures"> A feature flag opt-in required when using preview operations or modifying persisted preview resources. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
         /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
-        [Experimental("AAIP001")]
         internal virtual async Task<ClientResult<DataGenerationJob>> GetGenerationJobAsync(string jobId, FoundryFeaturesOptInKeys? foundryFeatures = default, CancellationToken cancellationToken = default)
         {
             ClientResult result = await GetGenerationJobAsync(jobId, foundryFeatures?.ToSerialString(), cancellationToken.ToRequestOptions()).ConfigureAwait(false);
@@ -189,7 +186,6 @@ namespace Azure.AI.Projects
         /// <param name="operationId"> Client-generated unique ID for idempotent retries. When absent, the server creates the job unconditionally. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
         /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
-        [Experimental("AAIP001")]
         internal virtual ClientResult<DataGenerationJob> CreateGenerationJob(DataGenerationJob job, FoundryFeaturesOptInKeys? foundryFeatures = default, string operationId = default, CancellationToken cancellationToken = default)
         {
             ClientResult result = CreateGenerationJob(job, foundryFeatures?.ToSerialString(), operationId, cancellationToken.ToRequestOptions());
@@ -202,7 +198,6 @@ namespace Azure.AI.Projects
         /// <param name="operationId"> Client-generated unique ID for idempotent retries. When absent, the server creates the job unconditionally. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
         /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
-        [Experimental("AAIP001")]
         internal virtual async Task<ClientResult<DataGenerationJob>> CreateGenerationJobAsync(DataGenerationJob job, FoundryFeaturesOptInKeys? foundryFeatures = default, string operationId = default, CancellationToken cancellationToken = default)
         {
             ClientResult result = await CreateGenerationJobAsync(job, foundryFeatures?.ToSerialString(), operationId, cancellationToken.ToRequestOptions()).ConfigureAwait(false);
@@ -272,7 +267,6 @@ namespace Azure.AI.Projects
         /// <param name="foundryFeatures"> A feature flag opt-in required when using preview operations or modifying persisted preview resources. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
         /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
-        [Experimental("AAIP001")]
         internal virtual ClientResult<DataGenerationJob> CancelGenerationJob(string jobId, FoundryFeaturesOptInKeys? foundryFeatures = default, CancellationToken cancellationToken = default)
         {
             ClientResult result = CancelGenerationJob(jobId, foundryFeatures?.ToSerialString(), cancellationToken.ToRequestOptions());
@@ -284,7 +278,6 @@ namespace Azure.AI.Projects
         /// <param name="foundryFeatures"> A feature flag opt-in required when using preview operations or modifying persisted preview resources. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
         /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
-        [Experimental("AAIP001")]
         internal virtual async Task<ClientResult<DataGenerationJob>> CancelGenerationJobAsync(string jobId, FoundryFeaturesOptInKeys? foundryFeatures = default, CancellationToken cancellationToken = default)
         {
             ClientResult result = await CancelGenerationJobAsync(jobId, foundryFeatures?.ToSerialString(), cancellationToken.ToRequestOptions()).ConfigureAwait(false);
