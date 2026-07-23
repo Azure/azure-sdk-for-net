@@ -18,7 +18,7 @@ namespace Azure.AI.VoiceLive
     /// synthesis than standard Azure voices. Only valid when using the
     /// `azure-realtime` model.
     /// </summary>
-    internal partial class AzureRealtimeNativeVoice : IJsonModel<AzureRealtimeNativeVoice>
+    public partial class AzureRealtimeNativeVoice : VoiceProvider, IJsonModel<AzureRealtimeNativeVoice>
     {
         /// <summary> Initializes a new instance of <see cref="AzureRealtimeNativeVoice"/> for deserialization. </summary>
         internal AzureRealtimeNativeVoice()

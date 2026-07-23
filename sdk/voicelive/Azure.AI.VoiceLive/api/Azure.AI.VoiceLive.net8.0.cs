@@ -293,7 +293,7 @@ namespace Azure.AI.VoiceLive
         string System.ClientModel.Primitives.IPersistableModel<Azure.AI.VoiceLive.AzurePersonalVoice>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.AI.VoiceLive.AzurePersonalVoice>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class AzureRealtimeNativeVoice : System.ClientModel.Primitives.IJsonModel<Azure.AI.VoiceLive.AzureRealtimeNativeVoice>, System.ClientModel.Primitives.IPersistableModel<Azure.AI.VoiceLive.AzureRealtimeNativeVoice>
+    public partial class AzureRealtimeNativeVoice : Azure.AI.VoiceLive.VoiceProvider, System.ClientModel.Primitives.IJsonModel<Azure.AI.VoiceLive.AzureRealtimeNativeVoice>, System.ClientModel.Primitives.IPersistableModel<Azure.AI.VoiceLive.AzureRealtimeNativeVoice>
     {
         public AzureRealtimeNativeVoice(Azure.AI.VoiceLive.AzureRealtimeNativeVoiceName name) { }
         public string Kind { get { throw null; } }
