@@ -26,6 +26,8 @@ namespace Azure.ResourceManager.ContainerInstance.Mocking
         private NGroups _nGroupsRestClient;
         private ClientDiagnostics _cgProfilesClientDiagnostics;
         private CGProfiles _cgProfilesRestClient;
+        private ClientDiagnostics _aiAgentsGroupsClientDiagnostics;
+        private AiAgentsGroups _aiAgentsGroupsRestClient;
         private ClientDiagnostics _locationClientDiagnostics;
         private Location _locationRestClient;
 
@@ -43,19 +45,23 @@ namespace Azure.ResourceManager.ContainerInstance.Mocking
 
         private ClientDiagnostics ContainerGroupsClientDiagnostics => _containerGroupsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.ContainerInstance.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private ContainerGroups ContainerGroupsRestClient => _containerGroupsRestClient ??= new ContainerGroups(ContainerGroupsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2025-09-01");
+        private ContainerGroups ContainerGroupsRestClient => _containerGroupsRestClient ??= new ContainerGroups(ContainerGroupsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2026-08-01-preview");
 
         private ClientDiagnostics NGroupsClientDiagnostics => _nGroupsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.ContainerInstance.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private NGroups NGroupsRestClient => _nGroupsRestClient ??= new NGroups(NGroupsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2025-09-01");
+        private NGroups NGroupsRestClient => _nGroupsRestClient ??= new NGroups(NGroupsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2026-08-01-preview");
 
         private ClientDiagnostics CGProfilesClientDiagnostics => _cgProfilesClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.ContainerInstance.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private CGProfiles CGProfilesRestClient => _cgProfilesRestClient ??= new CGProfiles(CGProfilesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2025-09-01");
+        private CGProfiles CGProfilesRestClient => _cgProfilesRestClient ??= new CGProfiles(CGProfilesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2026-08-01-preview");
+
+        private ClientDiagnostics AiAgentsGroupsClientDiagnostics => _aiAgentsGroupsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.ContainerInstance.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
+
+        private AiAgentsGroups AiAgentsGroupsRestClient => _aiAgentsGroupsRestClient ??= new AiAgentsGroups(AiAgentsGroupsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2026-08-01-preview");
 
         private ClientDiagnostics LocationClientDiagnostics => _locationClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.ContainerInstance.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private Location LocationRestClient => _locationRestClient ??= new Location(LocationClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2025-09-01");
+        private Location LocationRestClient => _locationRestClient ??= new Location(LocationClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2026-08-01-preview");
 
         /// <summary>
         /// Get a list of container groups in the specified subscription. This operation returns properties of each container group including containers, image registry credentials, restart policy, IP address type, OS type, state, and volumes.
@@ -70,7 +76,7 @@ namespace Azure.ResourceManager.ContainerInstance.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-09-01. </description>
+        /// <description> 2026-08-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -98,7 +104,7 @@ namespace Azure.ResourceManager.ContainerInstance.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-09-01. </description>
+        /// <description> 2026-08-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -126,7 +132,7 @@ namespace Azure.ResourceManager.ContainerInstance.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-09-01. </description>
+        /// <description> 2026-08-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -154,7 +160,7 @@ namespace Azure.ResourceManager.ContainerInstance.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-09-01. </description>
+        /// <description> 2026-08-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -182,7 +188,7 @@ namespace Azure.ResourceManager.ContainerInstance.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-09-01. </description>
+        /// <description> 2026-08-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -210,7 +216,7 @@ namespace Azure.ResourceManager.ContainerInstance.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-09-01. </description>
+        /// <description> 2026-08-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -226,6 +232,62 @@ namespace Azure.ResourceManager.ContainerInstance.Mocking
         }
 
         /// <summary>
+        /// List AiAgentsGroup resources by subscription ID
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.ContainerInstance/aiAgentsGroups. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> AiAgentsGroups_ListBySubscription. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-08-01-preview. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> A collection of <see cref="AiAgentsGroupResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<AiAgentsGroupResource> GetAiAgentsGroupsAsync(CancellationToken cancellationToken = default)
+        {
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new AsyncPageableWrapper<AiAgentsGroupData, AiAgentsGroupResource>(new AiAgentsGroupsGetBySubscriptionAsyncCollectionResultOfT(AiAgentsGroupsRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableContainerInstanceSubscriptionResource.GetAiAgentsGroups"), data => new AiAgentsGroupResource(Client, data));
+        }
+
+        /// <summary>
+        /// List AiAgentsGroup resources by subscription ID
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.ContainerInstance/aiAgentsGroups. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> AiAgentsGroups_ListBySubscription. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-08-01-preview. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> A collection of <see cref="AiAgentsGroupResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<AiAgentsGroupResource> GetAiAgentsGroups(CancellationToken cancellationToken = default)
+        {
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new PageableWrapper<AiAgentsGroupData, AiAgentsGroupResource>(new AiAgentsGroupsGetBySubscriptionCollectionResultOfT(AiAgentsGroupsRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableContainerInstanceSubscriptionResource.GetAiAgentsGroups"), data => new AiAgentsGroupResource(Client, data));
+        }
+
+        /// <summary>
         /// Get the usage for a subscription
         /// <list type="bullet">
         /// <item>
@@ -238,7 +300,7 @@ namespace Azure.ResourceManager.ContainerInstance.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-09-01. </description>
+        /// <description> 2026-08-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -267,7 +329,7 @@ namespace Azure.ResourceManager.ContainerInstance.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-09-01. </description>
+        /// <description> 2026-08-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -296,7 +358,7 @@ namespace Azure.ResourceManager.ContainerInstance.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-09-01. </description>
+        /// <description> 2026-08-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -325,7 +387,7 @@ namespace Azure.ResourceManager.ContainerInstance.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-09-01. </description>
+        /// <description> 2026-08-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -354,7 +416,7 @@ namespace Azure.ResourceManager.ContainerInstance.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-09-01. </description>
+        /// <description> 2026-08-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -383,7 +445,7 @@ namespace Azure.ResourceManager.ContainerInstance.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-09-01. </description>
+        /// <description> 2026-08-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>

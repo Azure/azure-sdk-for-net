@@ -55,9 +55,9 @@ namespace Azure.ResourceManager.ContainerInstance
         {
             TryGetApiVersion(ResourceType, out string containerGroupApiVersion);
             _containerGroupsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ContainerInstance", ResourceType.Namespace, Diagnostics);
-            _containerGroupsRestClient = new ContainerGroups(_containerGroupsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, containerGroupApiVersion ?? "2025-09-01");
+            _containerGroupsRestClient = new ContainerGroups(_containerGroupsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, containerGroupApiVersion ?? "2026-08-01-preview");
             _containersClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ContainerInstance", ResourceType.Namespace, Diagnostics);
-            _containersRestClient = new Containers(_containersClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, containerGroupApiVersion ?? "2025-09-01");
+            _containersRestClient = new Containers(_containersClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, containerGroupApiVersion ?? "2026-08-01-preview");
             ValidateResourceId(id);
         }
 
@@ -110,7 +110,7 @@ namespace Azure.ResourceManager.ContainerInstance
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-09-01. </description>
+        /// <description> 2026-08-01-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -158,7 +158,7 @@ namespace Azure.ResourceManager.ContainerInstance
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-09-01. </description>
+        /// <description> 2026-08-01-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -206,7 +206,7 @@ namespace Azure.ResourceManager.ContainerInstance
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-09-01. </description>
+        /// <description> 2026-08-01-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -214,12 +214,12 @@ namespace Azure.ResourceManager.ContainerInstance
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="patch"> The container group resource with just the tags to be updated. </param>
+        /// <param name="resource"> The container group resource with just the tags to be updated. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="patch"/> is null. </exception>
-        public virtual async Task<Response<ContainerGroupResource>> UpdateAsync(ContainerGroupPatch patch, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="resource"/> is null. </exception>
+        public virtual async Task<Response<ContainerGroupResource>> UpdateAsync(Resource resource, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(patch, nameof(patch));
+            Argument.AssertNotNull(resource, nameof(resource));
 
             using DiagnosticScope scope = _containerGroupsClientDiagnostics.CreateScope("ContainerGroupResource.Update");
             scope.Start();
@@ -229,7 +229,7 @@ namespace Azure.ResourceManager.ContainerInstance
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _containerGroupsRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, ContainerGroupPatch.ToRequestContent(patch), context);
+                HttpMessage message = _containerGroupsRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, Resource.ToRequestContent(resource), context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<ContainerGroupData> response = Response.FromValue(ContainerGroupData.FromResponse(result), result);
                 if (response.Value == null)
@@ -258,7 +258,7 @@ namespace Azure.ResourceManager.ContainerInstance
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-09-01. </description>
+        /// <description> 2026-08-01-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -266,12 +266,12 @@ namespace Azure.ResourceManager.ContainerInstance
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="patch"> The container group resource with just the tags to be updated. </param>
+        /// <param name="resource"> The container group resource with just the tags to be updated. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="patch"/> is null. </exception>
-        public virtual Response<ContainerGroupResource> Update(ContainerGroupPatch patch, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="resource"/> is null. </exception>
+        public virtual Response<ContainerGroupResource> Update(Resource resource, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(patch, nameof(patch));
+            Argument.AssertNotNull(resource, nameof(resource));
 
             using DiagnosticScope scope = _containerGroupsClientDiagnostics.CreateScope("ContainerGroupResource.Update");
             scope.Start();
@@ -281,7 +281,7 @@ namespace Azure.ResourceManager.ContainerInstance
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _containerGroupsRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, ContainerGroupPatch.ToRequestContent(patch), context);
+                HttpMessage message = _containerGroupsRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, Resource.ToRequestContent(resource), context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<ContainerGroupData> response = Response.FromValue(ContainerGroupData.FromResponse(result), result);
                 if (response.Value == null)
@@ -310,7 +310,7 @@ namespace Azure.ResourceManager.ContainerInstance
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-09-01. </description>
+        /// <description> 2026-08-01-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -363,7 +363,7 @@ namespace Azure.ResourceManager.ContainerInstance
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-09-01. </description>
+        /// <description> 2026-08-01-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -416,7 +416,7 @@ namespace Azure.ResourceManager.ContainerInstance
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-09-01. </description>
+        /// <description> 2026-08-01-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -471,7 +471,7 @@ namespace Azure.ResourceManager.ContainerInstance
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-09-01. </description>
+        /// <description> 2026-08-01-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -526,7 +526,7 @@ namespace Azure.ResourceManager.ContainerInstance
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-09-01. </description>
+        /// <description> 2026-08-01-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -564,7 +564,7 @@ namespace Azure.ResourceManager.ContainerInstance
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-09-01. </description>
+        /// <description> 2026-08-01-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -602,7 +602,7 @@ namespace Azure.ResourceManager.ContainerInstance
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-09-01. </description>
+        /// <description> 2026-08-01-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -657,7 +657,7 @@ namespace Azure.ResourceManager.ContainerInstance
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-09-01. </description>
+        /// <description> 2026-08-01-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -712,7 +712,7 @@ namespace Azure.ResourceManager.ContainerInstance
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-09-01. </description>
+        /// <description> 2026-08-01-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -761,7 +761,7 @@ namespace Azure.ResourceManager.ContainerInstance
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-09-01. </description>
+        /// <description> 2026-08-01-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -810,7 +810,7 @@ namespace Azure.ResourceManager.ContainerInstance
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-09-01. </description>
+        /// <description> 2026-08-01-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -859,7 +859,7 @@ namespace Azure.ResourceManager.ContainerInstance
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-09-01. </description>
+        /// <description> 2026-08-01-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -908,7 +908,7 @@ namespace Azure.ResourceManager.ContainerInstance
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-09-01. </description>
+        /// <description> 2026-08-01-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -951,7 +951,7 @@ namespace Azure.ResourceManager.ContainerInstance
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-09-01. </description>
+        /// <description> 2026-08-01-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -1012,7 +1012,7 @@ namespace Azure.ResourceManager.ContainerInstance
                 else
                 {
                     ContainerGroupData current = (await GetAsync(cancellationToken: cancellationToken).ConfigureAwait(false)).Value.Data;
-                    ContainerGroupPatch patch = new ContainerGroupPatch(current.Location);
+                    Resource patch = new Resource(current.Location);
                     foreach (KeyValuePair<string, string> tag in current.Tags)
                     {
                         patch.Tags.Add(tag);
@@ -1060,7 +1060,7 @@ namespace Azure.ResourceManager.ContainerInstance
                 else
                 {
                     ContainerGroupData current = Get(cancellationToken: cancellationToken).Value.Data;
-                    ContainerGroupPatch patch = new ContainerGroupPatch(current.Location);
+                    Resource patch = new Resource(current.Location);
                     foreach (KeyValuePair<string, string> tag in current.Tags)
                     {
                         patch.Tags.Add(tag);
@@ -1107,7 +1107,7 @@ namespace Azure.ResourceManager.ContainerInstance
                 else
                 {
                     ContainerGroupData current = (await GetAsync(cancellationToken: cancellationToken).ConfigureAwait(false)).Value.Data;
-                    ContainerGroupPatch patch = new ContainerGroupPatch(current.Location);
+                    Resource patch = new Resource(current.Location);
                     patch.Tags.ReplaceWith(tags);
                     Response<ContainerGroupResource> result = await UpdateAsync(patch, cancellationToken: cancellationToken).ConfigureAwait(false);
                     return Response.FromValue(result.Value, result.GetRawResponse());
@@ -1150,7 +1150,7 @@ namespace Azure.ResourceManager.ContainerInstance
                 else
                 {
                     ContainerGroupData current = Get(cancellationToken: cancellationToken).Value.Data;
-                    ContainerGroupPatch patch = new ContainerGroupPatch(current.Location);
+                    Resource patch = new Resource(current.Location);
                     patch.Tags.ReplaceWith(tags);
                     Response<ContainerGroupResource> result = Update(patch, cancellationToken: cancellationToken);
                     return Response.FromValue(result.Value, result.GetRawResponse());
@@ -1192,7 +1192,7 @@ namespace Azure.ResourceManager.ContainerInstance
                 else
                 {
                     ContainerGroupData current = (await GetAsync(cancellationToken: cancellationToken).ConfigureAwait(false)).Value.Data;
-                    ContainerGroupPatch patch = new ContainerGroupPatch(current.Location);
+                    Resource patch = new Resource(current.Location);
                     foreach (KeyValuePair<string, string> tag in current.Tags)
                     {
                         patch.Tags.Add(tag);
@@ -1238,7 +1238,7 @@ namespace Azure.ResourceManager.ContainerInstance
                 else
                 {
                     ContainerGroupData current = Get(cancellationToken: cancellationToken).Value.Data;
-                    ContainerGroupPatch patch = new ContainerGroupPatch(current.Location);
+                    Resource patch = new Resource(current.Location);
                     foreach (KeyValuePair<string, string> tag in current.Tags)
                     {
                         patch.Tags.Add(tag);
