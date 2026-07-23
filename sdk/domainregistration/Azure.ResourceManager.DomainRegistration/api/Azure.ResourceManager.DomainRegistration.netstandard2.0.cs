@@ -83,25 +83,6 @@ namespace Azure.ResourceManager.DomainRegistration
         public virtual Azure.Response<Azure.ResourceManager.DomainRegistration.AppServiceDomainResource> Update(Azure.ResourceManager.DomainRegistration.Models.AppServiceDomainPatch patch, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.DomainRegistration.AppServiceDomainResource>> UpdateAsync(Azure.ResourceManager.DomainRegistration.Models.AppServiceDomainPatch patch, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
-    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.DomainRegistration.AppServiceDomainData))]
-    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.DomainRegistration.AppServiceDomainResource))]
-    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.DomainRegistration.DomainOwnershipIdentifierData))]
-    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.DomainRegistration.DomainOwnershipIdentifierResource))]
-    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.DomainRegistration.Models.AppServiceDomainNameIdentifier))]
-    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.DomainRegistration.Models.AppServiceDomainPatch))]
-    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.DomainRegistration.Models.AppServiceHostName))]
-    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.DomainRegistration.Models.DomainAvailabilityCheckResult))]
-    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.DomainRegistration.Models.DomainControlCenterSsoRequestInfo))]
-    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.DomainRegistration.Models.DomainPurchaseConsent))]
-    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.DomainRegistration.Models.DomainRecommendationSearchContent))]
-    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.DomainRegistration.Models.RegistrationAddressInfo))]
-    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.DomainRegistration.Models.RegistrationContactInfo))]
-    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.DomainRegistration.Models.TopLevelDomainAgreementContent))]
-    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.DomainRegistration.Models.TopLevelDomainLegalAgreement))]
-    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.DomainRegistration.TopLevelDomainData))]
-    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.DomainRegistration.TopLevelDomainResource))]
-    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.Models.SystemData))]
-    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResponseError))]
     public partial class AzureResourceManagerDomainRegistrationContext : System.ClientModel.Primitives.ModelReaderWriterContext
     {
         internal AzureResourceManagerDomainRegistrationContext() { }

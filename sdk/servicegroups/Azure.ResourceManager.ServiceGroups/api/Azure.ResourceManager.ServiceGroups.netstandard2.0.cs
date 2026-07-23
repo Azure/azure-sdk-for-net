@@ -1,10 +1,5 @@
 namespace Azure.ResourceManager.ServiceGroups
 {
-    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.Models.SystemData))]
-    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.ServiceGroups.Models.ServiceGroupProperties))]
-    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.ServiceGroups.ServiceGroupData))]
-    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.ServiceGroups.ServiceGroupResource))]
-    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResponseError))]
     public partial class AzureResourceManagerServiceGroupsContext : System.ClientModel.Primitives.ModelReaderWriterContext
     {
         internal AzureResourceManagerServiceGroupsContext() { }

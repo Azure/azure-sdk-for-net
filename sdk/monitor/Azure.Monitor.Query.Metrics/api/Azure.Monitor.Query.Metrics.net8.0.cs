@@ -1,11 +1,5 @@
 namespace Azure.Monitor.Query.Metrics
 {
-    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.Monitor.Query.Metrics.Models.MetricResult))]
-    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.Monitor.Query.Metrics.Models.MetricsQueryResourcesResult))]
-    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.Monitor.Query.Metrics.Models.MetricsQueryResult))]
-    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.Monitor.Query.Metrics.Models.MetricTimeSeriesElement))]
-    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.Monitor.Query.Metrics.Models.MetricValue))]
-    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResponseError))]
     public partial class AzureMonitorQueryMetricsContext : System.ClientModel.Primitives.ModelReaderWriterContext
     {
         internal AzureMonitorQueryMetricsContext() { }

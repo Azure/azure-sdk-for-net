@@ -90,24 +90,6 @@ namespace Azure.AI.Language.QuestionAnswering.Inference
         string System.ClientModel.Primitives.IPersistableModel<Azure.AI.Language.QuestionAnswering.Inference.AnswersResult>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.AI.Language.QuestionAnswering.Inference.AnswersResult>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.AI.Language.QuestionAnswering.Inference.AnswersFromTextOptions))]
-    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.AI.Language.QuestionAnswering.Inference.AnswersFromTextResult))]
-    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.AI.Language.QuestionAnswering.Inference.AnswersOptions))]
-    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.AI.Language.QuestionAnswering.Inference.AnswerSpan))]
-    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.AI.Language.QuestionAnswering.Inference.AnswersResult))]
-    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.AI.Language.QuestionAnswering.Inference.KnowledgeBaseAnswer))]
-    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.AI.Language.QuestionAnswering.Inference.KnowledgeBaseAnswerContext))]
-    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.AI.Language.QuestionAnswering.Inference.KnowledgeBaseAnswerDialog))]
-    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.AI.Language.QuestionAnswering.Inference.KnowledgeBaseAnswerPrompt))]
-    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.AI.Language.QuestionAnswering.Inference.MatchingPolicy))]
-    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.AI.Language.QuestionAnswering.Inference.MetadataFilter))]
-    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.AI.Language.QuestionAnswering.Inference.MetadataRecord))]
-    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.AI.Language.QuestionAnswering.Inference.PrebuiltQueryMatchingPolicy))]
-    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.AI.Language.QuestionAnswering.Inference.QueryFilters))]
-    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.AI.Language.QuestionAnswering.Inference.QueryPreferences))]
-    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.AI.Language.QuestionAnswering.Inference.ShortAnswerOptions))]
-    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.AI.Language.QuestionAnswering.Inference.TextAnswer))]
-    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.AI.Language.QuestionAnswering.Inference.TextDocument))]
     public partial class AzureAILanguageQuestionAnsweringInferenceContext : System.ClientModel.Primitives.ModelReaderWriterContext
     {
         internal AzureAILanguageQuestionAnsweringInferenceContext() { }

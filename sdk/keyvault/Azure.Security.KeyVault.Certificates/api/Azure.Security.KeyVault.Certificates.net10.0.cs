@@ -8,7 +8,6 @@ namespace Azure.Security.KeyVault.Certificates
         public string LastName { get { throw null; } set { } }
         public string Phone { get { throw null; } set { } }
     }
-    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.Security.KeyVault.Certificates.PlatformManaged))]
     public partial class AzureSecurityKeyVaultCertificatesContext : System.ClientModel.Primitives.ModelReaderWriterContext
     {
         internal AzureSecurityKeyVaultCertificatesContext() { }

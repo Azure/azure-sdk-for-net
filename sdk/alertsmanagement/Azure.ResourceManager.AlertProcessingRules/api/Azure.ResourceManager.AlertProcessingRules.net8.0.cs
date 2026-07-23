@@ -65,20 +65,6 @@ namespace Azure.ResourceManager.AlertProcessingRules
         public static Azure.Pageable<Azure.ResourceManager.AlertProcessingRules.AlertProcessingRuleResource> GetAlertProcessingRules(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public static Azure.AsyncPageable<Azure.ResourceManager.AlertProcessingRules.AlertProcessingRuleResource> GetAlertProcessingRulesAsync(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
-    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.AlertProcessingRules.AlertProcessingRuleData))]
-    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.AlertProcessingRules.AlertProcessingRuleResource))]
-    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.AlertProcessingRules.Models.AlertProcessingRuleAction))]
-    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.AlertProcessingRules.Models.AlertProcessingRuleAddGroupsAction))]
-    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.AlertProcessingRules.Models.AlertProcessingRuleCondition))]
-    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.AlertProcessingRules.Models.AlertProcessingRuleMonthlyRecurrence))]
-    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.AlertProcessingRules.Models.AlertProcessingRulePatch))]
-    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.AlertProcessingRules.Models.AlertProcessingRuleProperties))]
-    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.AlertProcessingRules.Models.AlertProcessingRuleRecurrence))]
-    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.AlertProcessingRules.Models.AlertProcessingRuleRemoveAllGroupsAction))]
-    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.AlertProcessingRules.Models.AlertProcessingRuleSchedule))]
-    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.AlertProcessingRules.Models.AlertProcessingRuleWeeklyRecurrence))]
-    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.AlertProcessingRules.Models.DailyRecurrence))]
-    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.Models.SystemData))]
     public partial class AzureResourceManagerAlertProcessingRulesContext : System.ClientModel.Primitives.ModelReaderWriterContext
     {
         internal AzureResourceManagerAlertProcessingRulesContext() { }

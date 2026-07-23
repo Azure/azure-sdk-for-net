@@ -1,16 +1,5 @@
 namespace Azure.ResourceManager.ConfidentialLedger
 {
-    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.ConfidentialLedger.ConfidentialLedgerData))]
-    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.ConfidentialLedger.ConfidentialLedgerResource))]
-    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.ConfidentialLedger.Models.AadBasedSecurityPrincipal))]
-    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.ConfidentialLedger.Models.CertBasedSecurityPrincipal))]
-    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.ConfidentialLedger.Models.ConfidentialLedgerFilesExportContent))]
-    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.ConfidentialLedger.Models.ConfidentialLedgerFilesExportResult))]
-    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.ConfidentialLedger.Models.ConfidentialLedgerNameAvailabilityContent))]
-    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.ConfidentialLedger.Models.ConfidentialLedgerNameAvailabilityResult))]
-    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.ConfidentialLedger.Models.ConfidentialLedgerProperties))]
-    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.Models.SystemData))]
-    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResponseError))]
     public partial class AzureResourceManagerConfidentialLedgerContext : System.ClientModel.Primitives.ModelReaderWriterContext
     {
         internal AzureResourceManagerConfidentialLedgerContext() { }

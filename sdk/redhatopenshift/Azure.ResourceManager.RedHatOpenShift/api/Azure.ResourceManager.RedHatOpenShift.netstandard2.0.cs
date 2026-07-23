@@ -1,30 +1,5 @@
 namespace Azure.ResourceManager.RedHatOpenShift
 {
-    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.Models.ManagedServiceIdentity))]
-    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.Models.SystemData))]
-    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.Models.UserAssignedIdentity))]
-    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.RedHatOpenShift.Models.EffectiveOutboundIP))]
-    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.RedHatOpenShift.Models.OpenShiftApiServerProfile))]
-    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.RedHatOpenShift.Models.OpenShiftClusterAdminKubeconfig))]
-    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.RedHatOpenShift.Models.OpenShiftClusterCredentials))]
-    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.RedHatOpenShift.Models.OpenShiftClusterPatch))]
-    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.RedHatOpenShift.Models.OpenShiftClusterProfile))]
-    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.RedHatOpenShift.Models.OpenShiftIngressProfile))]
-    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.RedHatOpenShift.Models.OpenShiftLoadBalancerProfile))]
-    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.RedHatOpenShift.Models.OpenShiftMasterProfile))]
-    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.RedHatOpenShift.Models.OpenShiftNetworkProfile))]
-    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.RedHatOpenShift.Models.OpenShiftPlatformWorkloadIdentity))]
-    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.RedHatOpenShift.Models.OpenShiftPlatformWorkloadIdentityProfile))]
-    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.RedHatOpenShift.Models.OpenShiftPlatformWorkloadIdentityRole))]
-    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.RedHatOpenShift.Models.OpenShiftServicePrincipalProfile))]
-    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.RedHatOpenShift.Models.OpenShiftWorkerProfile))]
-    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.RedHatOpenShift.OpenShiftClusterData))]
-    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.RedHatOpenShift.OpenShiftClusterResource))]
-    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.RedHatOpenShift.OpenShiftPlatformWorkloadIdentityRoleSetData))]
-    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.RedHatOpenShift.OpenShiftPlatformWorkloadIdentityRoleSetResource))]
-    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.RedHatOpenShift.OpenShiftVersionData))]
-    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.RedHatOpenShift.OpenShiftVersionResource))]
-    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResponseError))]
     public partial class AzureResourceManagerRedHatOpenShiftContext : System.ClientModel.Primitives.ModelReaderWriterContext
     {
         internal AzureResourceManagerRedHatOpenShiftContext() { }

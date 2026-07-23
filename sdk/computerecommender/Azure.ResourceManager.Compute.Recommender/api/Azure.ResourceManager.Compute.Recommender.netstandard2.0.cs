@@ -1,13 +1,5 @@
 namespace Azure.ResourceManager.Compute.Recommender
 {
-    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.Compute.Recommender.ComputeRecommenderDiagnosticData))]
-    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.Compute.Recommender.ComputeRecommenderDiagnosticResource))]
-    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.Compute.Recommender.Models.ComputeRecommenderGenerateContent))]
-    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.Compute.Recommender.Models.ComputeRecommenderGenerateResult))]
-    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.Compute.Recommender.Models.ComputeRecommenderPlacementScore))]
-    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.Compute.Recommender.Models.ComputeRecommenderResourceSize))]
-    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.Models.SystemData))]
-    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResponseError))]
     public partial class AzureResourceManagerComputeRecommenderContext : System.ClientModel.Primitives.ModelReaderWriterContext
     {
         internal AzureResourceManagerComputeRecommenderContext() { }

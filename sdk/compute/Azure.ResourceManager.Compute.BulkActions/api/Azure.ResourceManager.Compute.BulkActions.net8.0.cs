@@ -1,25 +1,5 @@
 namespace Azure.ResourceManager.Compute.BulkActions
 {
-    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.Compute.BulkActions.Models.BulkActionExecutionParameterDetail))]
-    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.Compute.BulkActions.Models.BulkOperationRetryPolicy))]
-    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.Compute.BulkActions.Models.CancelBulkOperationsContent))]
-    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.Compute.BulkActions.Models.CancelBulkOperationsResult))]
-    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.Compute.BulkActions.Models.ComputeBulkFallbackOperationInfo))]
-    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.Compute.BulkActions.Models.ComputeBulkOperationDetails))]
-    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.Compute.BulkActions.Models.ComputeBulkOperationError))]
-    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.Compute.BulkActions.Models.ComputeBulkOperationResult))]
-    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.Compute.BulkActions.Models.DeallocateResourceOperationResult))]
-    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.Compute.BulkActions.Models.DeleteResourceOperationResult))]
-    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.Compute.BulkActions.Models.ExecuteDeallocateContent))]
-    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.Compute.BulkActions.Models.ExecuteDeleteContent))]
-    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.Compute.BulkActions.Models.ExecuteHibernateContent))]
-    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.Compute.BulkActions.Models.ExecuteStartContent))]
-    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.Compute.BulkActions.Models.GetBulkOperationStatusContent))]
-    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.Compute.BulkActions.Models.GetBulkOperationStatusResult))]
-    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.Compute.BulkActions.Models.HibernateResourceOperationResult))]
-    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.Compute.BulkActions.Models.StartResourceOperationResult))]
-    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.Compute.BulkActions.Models.UserRequestResources))]
-    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResponseError))]
     public partial class AzureResourceManagerComputeBulkActionsContext : System.ClientModel.Primitives.ModelReaderWriterContext
     {
         internal AzureResourceManagerComputeBulkActionsContext() { }

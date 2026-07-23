@@ -6,8 +6,6 @@ namespace Azure.Security.CodeTransparency
         VerifyAllMatching = 1,
         RequireAll = 2,
     }
-    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.Security.CodeTransparency.JsonWebKey))]
-    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.Security.CodeTransparency.JwksDocument))]
     public partial class AzureSecurityCodeTransparencyContext : System.ClientModel.Primitives.ModelReaderWriterContext
     {
         internal AzureSecurityCodeTransparencyContext() { }

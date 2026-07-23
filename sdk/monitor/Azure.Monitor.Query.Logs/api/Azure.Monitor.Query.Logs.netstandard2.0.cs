@@ -1,10 +1,5 @@
 namespace Azure.Monitor.Query.Logs
 {
-    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.Monitor.Query.Logs.Models.LogsBatchQueryResult))]
-    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.Monitor.Query.Logs.Models.LogsQueryResult))]
-    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.Monitor.Query.Logs.Models.LogsTable))]
-    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.Monitor.Query.Logs.Models.LogsTableColumn))]
-    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResponseError))]
     public partial class AzureMonitorQueryLogsContext : System.ClientModel.Primitives.ModelReaderWriterContext
     {
         internal AzureMonitorQueryLogsContext() { }

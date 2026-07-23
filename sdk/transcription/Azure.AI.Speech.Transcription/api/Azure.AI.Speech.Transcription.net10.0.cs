@@ -1,13 +1,5 @@
 namespace Azure.AI.Speech.Transcription
 {
-    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.AI.Speech.Transcription.ChannelCombinedPhrases))]
-    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.AI.Speech.Transcription.EnhancedModeProperties))]
-    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.AI.Speech.Transcription.PhraseListProperties))]
-    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.AI.Speech.Transcription.TranscribedPhrase))]
-    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.AI.Speech.Transcription.TranscribedWord))]
-    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.AI.Speech.Transcription.TranscriptionDiarizationOptions))]
-    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.AI.Speech.Transcription.TranscriptionOptions))]
-    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.AI.Speech.Transcription.TranscriptionResult))]
     public partial class AzureAISpeechTranscriptionContext : System.ClientModel.Primitives.ModelReaderWriterContext
     {
         internal AzureAISpeechTranscriptionContext() { }
