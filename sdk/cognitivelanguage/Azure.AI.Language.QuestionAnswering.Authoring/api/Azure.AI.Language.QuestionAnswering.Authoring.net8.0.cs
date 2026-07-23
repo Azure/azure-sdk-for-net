@@ -32,6 +32,30 @@ namespace Azure.AI.Language.QuestionAnswering.Authoring
         public static bool operator !=(Azure.AI.Language.QuestionAnswering.Authoring.AssetKind left, Azure.AI.Language.QuestionAnswering.Authoring.AssetKind right) { throw null; }
         public override string ToString() { throw null; }
     }
+    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.AI.Language.QuestionAnswering.Authoring.ActiveLearningFeedback))]
+    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.AI.Language.QuestionAnswering.Authoring.FeedbackRecord))]
+    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.AI.Language.QuestionAnswering.Authoring.ImportJobOptions))]
+    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.AI.Language.QuestionAnswering.Authoring.ImportQnaRecord))]
+    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.AI.Language.QuestionAnswering.Authoring.ProjectDeployment))]
+    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.AI.Language.QuestionAnswering.Authoring.ProjectSettings))]
+    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.AI.Language.QuestionAnswering.Authoring.QnaDialog))]
+    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.AI.Language.QuestionAnswering.Authoring.QnaPrompt))]
+    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.AI.Language.QuestionAnswering.Authoring.QnaRecord))]
+    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.AI.Language.QuestionAnswering.Authoring.QnaSourceRecord))]
+    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.AI.Language.QuestionAnswering.Authoring.QuestionAnsweringAuthoringAssets))]
+    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.AI.Language.QuestionAnswering.Authoring.QuestionAnsweringAuthoringExportJobState))]
+    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.AI.Language.QuestionAnswering.Authoring.QuestionAnsweringAuthoringImportJobState))]
+    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.AI.Language.QuestionAnswering.Authoring.QuestionAnsweringAuthoringProjectDeletionJobState))]
+    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.AI.Language.QuestionAnswering.Authoring.QuestionAnsweringAuthoringProjectDeploymentJobState))]
+    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.AI.Language.QuestionAnswering.Authoring.QuestionAnsweringAuthoringUpdateQnasJobState))]
+    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.AI.Language.QuestionAnswering.Authoring.QuestionAnsweringAuthoringUpdateSourcesJobState))]
+    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.AI.Language.QuestionAnswering.Authoring.QuestionAnsweringProject))]
+    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.AI.Language.QuestionAnswering.Authoring.RetrieveQnaRecord))]
+    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.AI.Language.QuestionAnswering.Authoring.SuggestedQuestion))]
+    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.AI.Language.QuestionAnswering.Authoring.SuggestedQuestionsCluster))]
+    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.AI.Language.QuestionAnswering.Authoring.SynonymAssets))]
+    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.AI.Language.QuestionAnswering.Authoring.WordAlterations))]
+    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResponseError))]
     public partial class AzureAILanguageQuestionAnsweringAuthoringContext : System.ClientModel.Primitives.ModelReaderWriterContext
     {
         internal AzureAILanguageQuestionAnsweringAuthoringContext() { }

@@ -1,5 +1,14 @@
 namespace Azure.Security.KeyVault.Administration
 {
+    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.Security.KeyVault.Administration.EkmProxyClientCertificateInfo))]
+    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.Security.KeyVault.Administration.EkmProxyInfo))]
+    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.Security.KeyVault.Administration.GetSettingsResult))]
+    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.Security.KeyVault.Administration.KeyVaultEkmConnection))]
+    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.Security.KeyVault.Administration.KeyVaultPermission))]
+    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.Security.KeyVault.Administration.KeyVaultRoleAssignment))]
+    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.Security.KeyVault.Administration.KeyVaultRoleAssignmentProperties))]
+    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.Security.KeyVault.Administration.KeyVaultRoleDefinition))]
+    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.Security.KeyVault.Administration.KeyVaultSetting))]
     public partial class AzureSecurityKeyVaultAdministrationContext : System.ClientModel.Primitives.ModelReaderWriterContext
     {
         internal AzureSecurityKeyVaultAdministrationContext() { }
