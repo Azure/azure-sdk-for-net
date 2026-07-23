@@ -112,8 +112,13 @@ internal sealed class FoundryAccessTokenProvider : IAccessTokenProvider
         _tenantId = tenantId;
         _scope = scope;
         _logger = logger;
+        // When a user-assigned client id is configured, bind the credential to it. Otherwise
+        // (e.g. local development with no managed identity configured) fall back to the
+        // system-assigned identity — FromUserAssignedClientId(empty) throws.
         _credential = new Lazy<ManagedIdentityCredential>(
-            () => new ManagedIdentityCredential(ManagedIdentityId.FromUserAssignedClientId(_clientId)));
+            () => string.IsNullOrEmpty(_clientId)
+                ? new ManagedIdentityCredential(ManagedIdentityId.SystemAssigned)
+                : new ManagedIdentityCredential(ManagedIdentityId.FromUserAssignedClientId(_clientId)));
 
         _logger.LogDebug("[FoundryAccessTokenProvider] Created | clientId={ClientId} | scope={Scope}",
             clientId.Length > 8 ? clientId[..8] + "..." : clientId, scope);
