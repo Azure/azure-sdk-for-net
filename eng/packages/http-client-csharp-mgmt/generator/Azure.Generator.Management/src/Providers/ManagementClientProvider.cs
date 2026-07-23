@@ -18,12 +18,27 @@ namespace Azure.Generator.Management.Providers;
 
 internal sealed class ManagementClientProvider : ClientProvider
 {
+    private const string ClientDiagnosticsPropertyName = "ClientDiagnostics";
+
     private readonly bool _isRootClient;
     private readonly FieldProvider? _apiVersionField;
     private readonly FieldProvider? _endpointField;
     private readonly FieldProvider _userAgentField;
     private readonly PropertyProvider? _pipelineProperty;
-    private readonly PropertyProvider? _clientDiagnosticsProperty;
+    private PropertyProvider? _clientDiagnosticsProperty;
+
+    // The ClientDiagnostics property is normally added to the root client by the base AzureDistributedTracingVisitor
+    // (via base.Configure()). Look it up lazily from the base-populated property list; if it is not present, create
+    // it ourselves as a fallback.
+    private PropertyProvider ClientDiagnosticsProperty => _clientDiagnosticsProperty ??=
+        Properties.FirstOrDefault(property => property.Name == ClientDiagnosticsPropertyName)
+        ?? new PropertyProvider(
+            description: $"The ClientDiagnostics is used to provide tracing support for the client library.",
+            modifiers: MethodSignatureModifiers.Internal,
+            type: typeof(ClientDiagnostics),
+            name: ClientDiagnosticsPropertyName,
+            body: new AutoPropertyBody(false),
+            enclosingType: this);
 
     public ManagementClientProvider(InputClient inputClient)
         : base(inputClient)
@@ -42,13 +57,6 @@ internal sealed class ManagementClientProvider : ClientProvider
                 name: "Pipeline",
                 body: new AutoPropertyBody(false),
                 enclosingType: this);
-            _clientDiagnosticsProperty = new PropertyProvider(
-                description: $"The ClientDiagnostics is used to provide tracing support for the client library.",
-                modifiers: MethodSignatureModifiers.Internal,
-                type: typeof(ClientDiagnostics),
-                name: "ClientDiagnostics",
-                body: new AutoPropertyBody(false),
-                enclosingType: this);
         }
     }
 
@@ -59,7 +67,7 @@ internal sealed class ManagementClientProvider : ClientProvider
 
     protected override PropertyProvider[] BuildProperties()
         => _isRootClient
-            ? [_pipelineProperty!, _clientDiagnosticsProperty!]
+            ? [_pipelineProperty!]
             : base.BuildProperties();
 
     protected override ConstructorProvider[] BuildConstructors()
@@ -72,6 +80,7 @@ internal sealed class ManagementClientProvider : ClientProvider
 
     private ConstructorProvider[] BuildRootConstructors()
     {
+        var clientDiagnosticsProperty = ClientDiagnosticsProperty;
         var clientDiagnosticsParam = new ParameterProvider("clientDiagnostics", $"The ClientDiagnostics is used to provide tracing support for the client library.", typeof(ClientDiagnostics));
         var pipelineParam = new ParameterProvider("pipeline", $"The HTTP pipeline for sending and receiving REST requests and responses.", typeof(HttpPipeline));
         var applicationIdParam = new ParameterProvider("applicationId", $"The application id to use for user agent.", typeof(string));
@@ -81,7 +90,7 @@ internal sealed class ManagementClientProvider : ClientProvider
             new ConstructorSignature(Type, null, MethodSignatureModifiers.Public, [clientDiagnosticsParam, pipelineParam, applicationIdParam, endpointParam, apiVersionParam]),
             new MethodBodyStatement[]
             {
-                _clientDiagnosticsProperty!.Assign(clientDiagnosticsParam).Terminate(),
+                clientDiagnosticsProperty.Assign(clientDiagnosticsParam).Terminate(),
                 _endpointField!.Assign(endpointParam).Terminate(),
                 _pipelineProperty!.Assign(pipelineParam).Terminate(),
                 _apiVersionField!.Assign(apiVersionParam).Terminate(),
