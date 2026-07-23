@@ -13,52 +13,52 @@ using Azure.ResourceManager.ContainerService;
 
 namespace Azure.ResourceManager.ContainerService.Models
 {
-    /// <summary> Identity information used by Defender security gating to access container registries. </summary>
-    public partial class ManagedClusterSecurityProfileDefenderSecurityGatingIdentitiesItem : IJsonModel<ManagedClusterSecurityProfileDefenderSecurityGatingIdentitiesItem>
+    /// <summary> Identity mapping used by Defender security gating for registry access. </summary>
+    public partial class ManagedClusterSecurityProfileDefenderSecurityGatingIdentity : IJsonModel<ManagedClusterSecurityProfileDefenderSecurityGatingIdentity>
     {
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual ManagedClusterSecurityProfileDefenderSecurityGatingIdentitiesItem PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        protected virtual ManagedClusterSecurityProfileDefenderSecurityGatingIdentity PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<ManagedClusterSecurityProfileDefenderSecurityGatingIdentitiesItem>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<ManagedClusterSecurityProfileDefenderSecurityGatingIdentity>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeManagedClusterSecurityProfileDefenderSecurityGatingIdentitiesItem(document.RootElement, options);
+                        return DeserializeManagedClusterSecurityProfileDefenderSecurityGatingIdentity(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ManagedClusterSecurityProfileDefenderSecurityGatingIdentitiesItem)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ManagedClusterSecurityProfileDefenderSecurityGatingIdentity)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<ManagedClusterSecurityProfileDefenderSecurityGatingIdentitiesItem>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<ManagedClusterSecurityProfileDefenderSecurityGatingIdentity>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options, AzureResourceManagerContainerServiceContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(ManagedClusterSecurityProfileDefenderSecurityGatingIdentitiesItem)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ManagedClusterSecurityProfileDefenderSecurityGatingIdentity)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<ManagedClusterSecurityProfileDefenderSecurityGatingIdentitiesItem>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<ManagedClusterSecurityProfileDefenderSecurityGatingIdentity>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        ManagedClusterSecurityProfileDefenderSecurityGatingIdentitiesItem IPersistableModel<ManagedClusterSecurityProfileDefenderSecurityGatingIdentitiesItem>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+        ManagedClusterSecurityProfileDefenderSecurityGatingIdentity IPersistableModel<ManagedClusterSecurityProfileDefenderSecurityGatingIdentity>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<ManagedClusterSecurityProfileDefenderSecurityGatingIdentitiesItem>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<ManagedClusterSecurityProfileDefenderSecurityGatingIdentity>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<ManagedClusterSecurityProfileDefenderSecurityGatingIdentitiesItem>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<ManagedClusterSecurityProfileDefenderSecurityGatingIdentity>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -69,10 +69,10 @@ namespace Azure.ResourceManager.ContainerService.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<ManagedClusterSecurityProfileDefenderSecurityGatingIdentitiesItem>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<ManagedClusterSecurityProfileDefenderSecurityGatingIdentity>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ManagedClusterSecurityProfileDefenderSecurityGatingIdentitiesItem)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(ManagedClusterSecurityProfileDefenderSecurityGatingIdentity)} does not support writing '{format}' format.");
             }
             if (Optional.IsDefined(AzureContainerRegistry))
             {
@@ -103,24 +103,24 @@ namespace Azure.ResourceManager.ContainerService.Models
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        ManagedClusterSecurityProfileDefenderSecurityGatingIdentitiesItem IJsonModel<ManagedClusterSecurityProfileDefenderSecurityGatingIdentitiesItem>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+        ManagedClusterSecurityProfileDefenderSecurityGatingIdentity IJsonModel<ManagedClusterSecurityProfileDefenderSecurityGatingIdentity>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual ManagedClusterSecurityProfileDefenderSecurityGatingIdentitiesItem JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        protected virtual ManagedClusterSecurityProfileDefenderSecurityGatingIdentity JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<ManagedClusterSecurityProfileDefenderSecurityGatingIdentitiesItem>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<ManagedClusterSecurityProfileDefenderSecurityGatingIdentity>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ManagedClusterSecurityProfileDefenderSecurityGatingIdentitiesItem)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(ManagedClusterSecurityProfileDefenderSecurityGatingIdentity)} does not support reading '{format}' format.");
             }
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeManagedClusterSecurityProfileDefenderSecurityGatingIdentitiesItem(document.RootElement, options);
+            return DeserializeManagedClusterSecurityProfileDefenderSecurityGatingIdentity(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        internal static ManagedClusterSecurityProfileDefenderSecurityGatingIdentitiesItem DeserializeManagedClusterSecurityProfileDefenderSecurityGatingIdentitiesItem(JsonElement element, ModelReaderWriterOptions options)
+        internal static ManagedClusterSecurityProfileDefenderSecurityGatingIdentity DeserializeManagedClusterSecurityProfileDefenderSecurityGatingIdentity(JsonElement element, ModelReaderWriterOptions options)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -150,7 +150,7 @@ namespace Azure.ResourceManager.ContainerService.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new ManagedClusterSecurityProfileDefenderSecurityGatingIdentitiesItem(azureContainerRegistry, identity, additionalBinaryDataProperties);
+            return new ManagedClusterSecurityProfileDefenderSecurityGatingIdentity(azureContainerRegistry, identity, additionalBinaryDataProperties);
         }
     }
 }
