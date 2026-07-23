@@ -202,14 +202,17 @@ function Wait-ForDeployment {
 
 # Function to call Content Understanding UpdateDefaults API using Invoke-RestMethod
 # Returns $true if successful, $false if failed
-# Retries on DeploymentIdNotFound errors to handle propagation delay
+# Retries on DeploymentIdNotFound errors to handle propagation delay from the
+# Foundry account catalog to the Content Understanding service catalog. This can
+# take longer than a few minutes when models were just deployed, so the default
+# retry window is intentionally generous (20 x 60s = 20 min).
 function Update-ContentUnderstandingDefaults {
     param (
         [string] $Endpoint,
         [string] $AccountName,
         [hashtable] $ModelDeployments,
-        [int] $MaxRetries = 10,
-        [int] $RetryDelaySeconds = 30
+        [int] $MaxRetries = 20,
+        [int] $RetryDelaySeconds = 60
     )
 
     Write-Host "Updating Content Understanding defaults for account '$AccountName'..."
@@ -410,8 +413,12 @@ if ($allDeploymentsReady) {
         Write-Host "Content Understanding defaults updated successfully for both resources!" -ForegroundColor Green
     }
     else {
+        # Fail the deploy step loudly rather than letting live tests run against
+        # an account with missing/invalid defaults, which would silently produce
+        # a wave of DeploymentIdNotFound test failures that are hard to diagnose.
         Write-Host ""
-        Write-Warning "Some UpdateDefaults calls may have failed. Check the error messages above."
+        Write-Error "UpdateDefaults failed for one or both Content Understanding accounts (Primary=$updatePrimaryResult, CopyTarget=$updateCopyTargetResult). See error messages above." -ErrorAction Stop
+        exit 1
     }
 }
 else {
