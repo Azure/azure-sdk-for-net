@@ -7,7 +7,7 @@ namespace Azure.AI.Extensions.OpenAI
     /// The approval required for the tool.
     /// </summary>
     public partial class FabricIQPreviewToolRequireApprovalChoice
-{
+    {
         /// <summary>
         /// The approval choce.
         /// </summary>
@@ -18,11 +18,11 @@ namespace Azure.AI.Extensions.OpenAI
         /// </summary>
         public global::OpenAI.Responses.McpToolCallApprovalPolicy ApprovalPolicy { get; }
 
-    /// <summary>
-    /// Creates an options class with a fixed number of tokens.
-    /// </summary>
-    /// <param name="approvalPolicy">The approval policy for the tool.</param>
-    public FabricIQPreviewToolRequireApprovalChoice(global::OpenAI.Responses.McpToolCallApprovalPolicy approvalPolicy)
+        /// <summary>
+        /// Creates an options class with a fixed number of tokens.
+        /// </summary>
+        /// <param name="approvalPolicy">The approval policy for the tool.</param>
+        public FabricIQPreviewToolRequireApprovalChoice(global::OpenAI.Responses.McpToolCallApprovalPolicy approvalPolicy)
         {
             ApprovalPolicy = approvalPolicy;
         }

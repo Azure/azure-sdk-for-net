@@ -15,7 +15,7 @@ namespace Azure.AI.Extensions.OpenAI
         // constructor). We add the chain here and supply the "azure_function" discriminator so
         // the tool kind is set correctly during deserialization.
         /// <summary> Initializes a new instance of <see cref="AzureFunctionTool"/> for deserialization. </summary>
-        internal AzureFunctionTool(): base(ResponseToolKind.AzureFunction)
+        internal AzureFunctionTool() : base(ResponseToolKind.AzureFunction)
         {
         }
     }

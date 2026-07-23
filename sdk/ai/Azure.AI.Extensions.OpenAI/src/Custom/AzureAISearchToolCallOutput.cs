@@ -37,7 +37,7 @@ public partial class AzureAISearchToolCallOutput
     }
 
     /// <summary> Initializes a new instance of <see cref="AzureAISearchToolCallOutput"/> for deserialization. </summary>
-    internal AzureAISearchToolCallOutput(): base(ResponseItemKind.AzureAISearchCallOutput)
+    internal AzureAISearchToolCallOutput() : base(ResponseItemKind.AzureAISearchCallOutput)
     {
     }
 
@@ -55,7 +55,6 @@ public partial class AzureAISearchToolCallOutput
     /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
     internal AzureAISearchToolCallOutput(ResponseItemKind @type, string id, AgentReference agentReference, string responseId, string callId, BinaryData output, ToolCallStatus status, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(@type)
     {
-        this.ApplyAgentAttribution(agentReference, responseId, additionalBinaryDataProperties);
         CallId = callId;
         Output = output;
         Status = status;

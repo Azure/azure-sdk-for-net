@@ -81,6 +81,21 @@ namespace Azure.AI.Extensions.OpenAI
 
             /// <summary> Gets the AzureFunctionCallOutput. </summary>
             public static global::OpenAI.Responses.ResponseItemKind AzureFunctionCallOutput => new("azure_function_call_output");
+
+            /// <summary> Gets the FunctionShellCall. </summary>
+            public static global::OpenAI.Responses.ResponseItemKind FunctionShellCall => new("shell_call");
+
+            /// <summary> Gets the FunctionShellCallOutput. </summary>
+            public static global::OpenAI.Responses.ResponseItemKind FunctionShellCallOutput => new("shell_call_output");
+
+            /// <summary> Gets the LocalShellCall. </summary>
+            public static global::OpenAI.Responses.ResponseItemKind LocalShellCall => new("local_shell_call");
+
+            /// <summary> Gets the LocalShellCallOutput. </summary>
+            public static global::OpenAI.Responses.ResponseItemKind LocalShellCallOutput => new("local_shell_call_output");
+
+            /// <summary> Gets the Compaction. </summary>
+            public static global::OpenAI.Responses.ResponseItemKind Compaction => new("compaction");
         }
     }
 }

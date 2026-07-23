@@ -28,7 +28,7 @@ public partial class MemoryCommandToolCall
     }
 
     /// <summary> Initializes a new instance of <see cref="MemoryCommandToolCall"/> for deserialization. </summary>
-    internal MemoryCommandToolCall(): base(ResponseItemKind.MemoryCommandPreviewCall)
+    internal MemoryCommandToolCall() : base(ResponseItemKind.MemoryCommandPreviewCall)
     {
     }
 
@@ -46,7 +46,6 @@ public partial class MemoryCommandToolCall
     /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
     internal MemoryCommandToolCall(ResponseItemKind @type, string id, AgentReference agentReference, string responseId, string callId, string arguments, ToolCallStatus status, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(@type)
     {
-        this.ApplyAgentAttribution(agentReference, responseId, additionalBinaryDataProperties);
         CallId = callId;
         Arguments = arguments;
         Status = status;

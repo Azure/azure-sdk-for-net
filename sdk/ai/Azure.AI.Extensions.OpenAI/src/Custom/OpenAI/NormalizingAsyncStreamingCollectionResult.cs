@@ -3,7 +3,6 @@
 
 using System.ClientModel;
 using System.Collections.Generic;
-using System.Diagnostics.CodeAnalysis;
 using OpenAI.Responses;
 
 namespace Azure.AI.Extensions.OpenAI;
@@ -36,7 +35,6 @@ internal sealed class NormalizingAsyncStreamingCollectionResult : AsyncCollectio
     }
 #pragma warning restore CS1998
 
-    [Experimental("AAIP001")]
     protected override async IAsyncEnumerable<StreamingResponseUpdate> GetValuesFromPageAsync(ClientResult page)
     {
         // The inner result owns its SSE parsing; the page parameter is intentionally unused.

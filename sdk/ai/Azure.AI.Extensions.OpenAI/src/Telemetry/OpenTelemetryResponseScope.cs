@@ -5,7 +5,6 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Diagnostics;
-using System.Diagnostics.CodeAnalysis;
 using System.Diagnostics.Metrics;
 using System.IO;
 using System.Text;
@@ -159,7 +158,6 @@ namespace Azure.AI.Extensions.OpenAI.Telemetry
             return scope;
         }
 
-        [Experimental("SCME0001")]
         internal static OpenTelemetryResponseScope Start(CreateResponseOptions options, Uri endpoint, string defaultModelName)
         {
             if (!IsEnabled)
@@ -174,7 +172,6 @@ namespace Azure.AI.Extensions.OpenAI.Telemetry
             return scope;
         }
 
-        [Experimental("SCME0001")]
         internal static void ExtractOptionsContext(
             CreateResponseOptions options,
             string defaultModelName,
