@@ -18,12 +18,13 @@ namespace Azure.Generator.Management.Providers;
 
 internal sealed class ManagementClientProvider : ClientProvider
 {
+    private const string ClientDiagnosticsPropertyName = "ClientDiagnostics";
+
     private readonly bool _isRootClient;
     private readonly FieldProvider? _apiVersionField;
     private readonly FieldProvider? _endpointField;
     private readonly FieldProvider _userAgentField;
     private readonly PropertyProvider? _pipelineProperty;
-    private readonly PropertyProvider? _clientDiagnosticsProperty;
 
     public ManagementClientProvider(InputClient inputClient)
         : base(inputClient)
@@ -40,16 +41,6 @@ internal sealed class ManagementClientProvider : ClientProvider
                 modifiers: MethodSignatureModifiers.Public,
                 type: typeof(HttpPipeline),
                 name: "Pipeline",
-                body: new AutoPropertyBody(false),
-                enclosingType: this);
-            // This property is intentionally NOT returned from BuildProperties. The actual ClientDiagnostics
-            // property on the root client is added by the base AzureDistributedTracingVisitor. This instance is
-            // only used to render the assignment in the root constructor below.
-            _clientDiagnosticsProperty = new PropertyProvider(
-                description: $"The ClientDiagnostics is used to provide tracing support for the client library.",
-                modifiers: MethodSignatureModifiers.Internal,
-                type: typeof(ClientDiagnostics),
-                name: "ClientDiagnostics",
                 body: new AutoPropertyBody(false),
                 enclosingType: this);
         }
@@ -79,6 +70,11 @@ internal sealed class ManagementClientProvider : ClientProvider
 
     private ConstructorProvider[] BuildRootConstructors()
     {
+        // The ClientDiagnostics property is added to the root client by the base AzureDistributedTracingVisitor,
+        // which runs via base.Configure() before constructors are built. Look it up from the base-populated
+        // property list rather than defining a duplicate PropertyProvider, so the assignment below references the
+        // exact property the base generator emits.
+        var clientDiagnosticsProperty = Properties.Single(property => property.Name == ClientDiagnosticsPropertyName);
         var clientDiagnosticsParam = new ParameterProvider("clientDiagnostics", $"The ClientDiagnostics is used to provide tracing support for the client library.", typeof(ClientDiagnostics));
         var pipelineParam = new ParameterProvider("pipeline", $"The HTTP pipeline for sending and receiving REST requests and responses.", typeof(HttpPipeline));
         var applicationIdParam = new ParameterProvider("applicationId", $"The application id to use for user agent.", typeof(string));
@@ -88,7 +84,7 @@ internal sealed class ManagementClientProvider : ClientProvider
             new ConstructorSignature(Type, null, MethodSignatureModifiers.Public, [clientDiagnosticsParam, pipelineParam, applicationIdParam, endpointParam, apiVersionParam]),
             new MethodBodyStatement[]
             {
-                _clientDiagnosticsProperty!.Assign(clientDiagnosticsParam).Terminate(),
+                clientDiagnosticsProperty.Assign(clientDiagnosticsParam).Terminate(),
                 _endpointField!.Assign(endpointParam).Terminate(),
                 _pipelineProperty!.Assign(pipelineParam).Terminate(),
                 _apiVersionField!.Assign(apiVersionParam).Terminate(),
