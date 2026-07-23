@@ -67,6 +67,32 @@ public class StreamingResultParsingTests
         Assert.IsTrue(response.IsDisposed);
     }
 
+    [Test]
+    public async Task SseWithoutTerminalPredicateUsesTypedParser()
+    {
+        MockStreamedResponse response =
+            new("event: value\nid: 1\ndata: { \"id\": 1, \"value\": \"one\" }\n\n");
+        int parserInvocationCount = 0;
+        AsyncStreamingClientResult<SseItem<StreamedValue>> result =
+            AsyncStreamingClientResult.CreateSse(
+                response,
+                (_, data) =>
+                {
+                    parserInvocationCount++;
+                    return StreamedValue.FromJson(data.ToArray());
+                });
+
+        await foreach (SseItem<StreamedValue> item in result)
+        {
+            Assert.AreEqual("value", item.EventType);
+            Assert.AreEqual("1", item.EventId);
+            Assert.AreEqual(1, item.Data.Id);
+        }
+
+        Assert.AreEqual(1, parserInvocationCount);
+        Assert.IsTrue(response.IsDisposed);
+    }
+
     [TestCase("\n")]
     [TestCase("\r\n")]
     public async Task JsonlParsesTypedValuesAndBlankLines(string newline)
@@ -111,6 +137,79 @@ public class StreamingResultParsingTests
             }
         });
 
+        Assert.IsTrue(response.IsDisposed);
+    }
+
+    [TestCase("\n")]
+    [TestCase("\r\n")]
+    public async Task JsonlSkipsLeadingUtf8Bom(string newline)
+    {
+        MockStreamedResponse response =
+            new($"\uFEFF{{ \"id\": 0, \"value\": \"0\" }}{newline}");
+        AsyncStreamingClientResult<StreamedValue> result =
+            JsonlStreamedValueResult.Create(response);
+
+        await foreach (StreamedValue item in result)
+        {
+            Assert.AreEqual(0, item.Id);
+            Assert.AreEqual("0", item.Value);
+        }
+
+        Assert.IsTrue(response.IsDisposed);
+    }
+
+    [Test]
+    public async Task JsonlDoesNotSkipBomAfterFirstRecord()
+    {
+        MockStreamedResponse response =
+            new("{\"id\":0}\n\uFEFF{\"id\":1}\n");
+        List<BinaryData> items = [];
+
+        await foreach (BinaryData item in
+            AsyncStreamingClientResult.CreateJsonLines(response))
+        {
+            items.Add(item);
+        }
+
+        Assert.AreEqual(2, items.Count);
+        Assert.AreEqual(0xEF, items[1].ToMemory().Span[0]);
+        Assert.IsTrue(response.IsDisposed);
+    }
+
+    [Test]
+    public async Task JsonlSkipsAsciiWhitespaceLines()
+    {
+        MockStreamedResponse response =
+            new(" \t\r\n{\"id\":1}\n");
+        List<BinaryData> items = [];
+
+        await foreach (BinaryData item in
+            AsyncStreamingClientResult.CreateJsonLines(response))
+        {
+            items.Add(item);
+        }
+
+        Assert.AreEqual(1, items.Count);
+        Assert.AreEqual("{\"id\":1}", items[0].ToString());
+        Assert.IsTrue(response.IsDisposed);
+    }
+
+    [Test]
+    public void JsonlRejectsLineOverConfiguredLimit()
+    {
+        MockStreamedResponse response = new("123456789\n");
+        AsyncStreamingClientResult<BinaryData> result =
+            AsyncStreamingClientResult.CreateJsonLines(
+                response,
+                static data => data,
+                maxLineLength: 8);
+
+        Assert.ThrowsAsync<InvalidDataException>(async () =>
+        {
+            await foreach (BinaryData _ in result)
+            {
+            }
+        });
         Assert.IsTrue(response.IsDisposed);
     }
 

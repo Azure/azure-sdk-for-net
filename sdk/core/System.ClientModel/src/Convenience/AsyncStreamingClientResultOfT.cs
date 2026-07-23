@@ -32,7 +32,10 @@ public sealed class AsyncStreamingClientResult<T> : IAsyncEnumerable<T>, IAsyncD
     private readonly CancellationToken _operationCancellationToken;
     private readonly CancellationTokenSource _resultCancellationSource = new();
     private readonly object _sync = new();
+    // Reentrant disposal must not await the shared completion operation that
+    // depends on the current construction or inner-disposal flow finishing.
     private readonly AsyncLocal<bool> _isEnumeratorDisposing = new();
+    private readonly AsyncLocal<bool> _isEnumeratorConstructing = new();
     private bool _enumerationStarted;
     private bool _disposeStarted;
     private bool _consumptionCancellationRequested;
@@ -40,7 +43,12 @@ public sealed class AsyncStreamingClientResult<T> : IAsyncEnumerable<T>, IAsyncD
     private bool _responseDisposed;
     private bool _disposeCoreRunning;
     private TaskCompletionSource<object?>? _resultDisposeCompletion;
+    private TaskCompletionSource<object?>? _enumeratorConstructionCompletion;
     private StreamingAsyncEnumerator? _activeEnumerator;
+
+    // _sync protects the result lifecycle and publishing the active enumerator.
+    // Disposal marks the enumerator under _sync before taking its _moveNextSync;
+    // code holding _moveNextSync never acquires _sync.
 
     internal AsyncStreamingClientResult(
         PipelineResponse response,
@@ -48,23 +56,59 @@ public sealed class AsyncStreamingClientResult<T> : IAsyncEnumerable<T>, IAsyncD
         CancellationToken operationCancellationToken)
     {
         _response = response;
-        _contentStream = response.ContentStream ?? response.Content.ToStream();
+        _contentStream = response.ContentStream ??
+            throw new InvalidOperationException(
+                "An established streaming response must have a content stream.");
         _producer = producer;
         _operationCancellationToken = operationCancellationToken;
     }
 
     /// <summary>Gets the status code of the service response.</summary>
-    public int Status => _response.Status;
+    /// <exception cref="ObjectDisposedException">The result has been disposed.</exception>
+    public int Status
+    {
+        get
+        {
+            lock (_sync)
+            {
+                ThrowIfDisposed();
+                return _response.Status;
+            }
+        }
+    }
 
     /// <summary>Gets the reason phrase of the service response.</summary>
-    public string ReasonPhrase => _response.ReasonPhrase;
+    /// <exception cref="ObjectDisposedException">The result has been disposed.</exception>
+    public string ReasonPhrase
+    {
+        get
+        {
+            lock (_sync)
+            {
+                ThrowIfDisposed();
+                return _response.ReasonPhrase;
+            }
+        }
+    }
 
     /// <summary>Gets the headers of the service response.</summary>
-    public PipelineResponseHeaders Headers => _response.Headers;
+    /// <exception cref="ObjectDisposedException">The result has been disposed.</exception>
+    public PipelineResponseHeaders Headers
+    {
+        get
+        {
+            lock (_sync)
+            {
+                ThrowIfDisposed();
+                return _response.Headers;
+            }
+        }
+    }
 
     /// <inheritdoc/>
     public IAsyncEnumerator<T> GetAsyncEnumerator(CancellationToken cancellationToken = default)
     {
+        TaskCompletionSource<object?> constructionCompletion;
         lock (_sync)
         {
             if (_enumerationStarted)
@@ -77,29 +121,60 @@ public sealed class AsyncStreamingClientResult<T> : IAsyncEnumerable<T>, IAsyncD
                 throw new ObjectDisposedException(GetType().FullName);
             }
             _enumerationStarted = true;
+            constructionCompletion = new(
+                TaskCreationOptions.RunContinuationsAsynchronously);
+            _enumeratorConstructionCompletion = constructionCompletion;
+        }
 
-            CancellationTokenSource? linkedCancellationSource = null;
-            try
+        CancellationTokenSource? linkedCancellationSource = null;
+        bool enumeratorPublished = false;
+        try
+        {
+            _isEnumeratorConstructing.Value = true;
+            linkedCancellationSource =
+                CreateLinkedCancellationSource(cancellationToken);
+            CancellationToken combinedCancellationToken =
+                linkedCancellationSource?.Token ??
+                _resultCancellationSource.Token;
+            StreamingAsyncEnumerator enumerator = new(
+                this,
+                _producer(_contentStream, combinedCancellationToken)
+                    .GetAsyncEnumerator(combinedCancellationToken),
+                linkedCancellationSource);
+
+            bool disposeStarted;
+            lock (_sync)
             {
-                linkedCancellationSource =
-                    CreateLinkedCancellationSource(cancellationToken);
-                CancellationToken combinedCancellationToken =
-                    linkedCancellationSource?.Token ??
-                    _resultCancellationSource.Token;
-                StreamingAsyncEnumerator enumerator = new(
-                    this,
-                    _producer(_contentStream, combinedCancellationToken)
-                        .GetAsyncEnumerator(combinedCancellationToken),
-                    linkedCancellationSource);
                 _activeEnumerator = enumerator;
-                return enumerator;
+                enumeratorPublished = true;
+                disposeStarted = _disposeStarted;
+                if (disposeStarted)
+                {
+                    enumerator.BeginDisposal();
+                }
             }
-            catch
+
+            constructionCompletion.TrySetResult(null);
+            if (disposeStarted)
+            {
+                throw new ObjectDisposedException(GetType().FullName);
+            }
+
+            return enumerator;
+        }
+        catch
+        {
+            if (!enumeratorPublished)
             {
                 linkedCancellationSource?.Dispose();
-                DisposeAfterEnumeratorConstructionFailure();
-                throw;
             }
+            constructionCompletion.TrySetResult(null);
+            _ = DisposeAsync();
+            throw;
+        }
+        finally
+        {
+            _isEnumeratorConstructing.Value = false;
         }
     }
 
@@ -124,7 +199,9 @@ public sealed class AsyncStreamingClientResult<T> : IAsyncEnumerable<T>, IAsyncD
             }
 
             disposeTask = _resultDisposeCompletion.Task;
-            isReentrant = _isEnumeratorDisposing.Value;
+            isReentrant =
+                _isEnumeratorDisposing.Value ||
+                _isEnumeratorConstructing.Value;
         }
 
         if (startDisposeCore)
@@ -142,6 +219,7 @@ public sealed class AsyncStreamingClientResult<T> : IAsyncEnumerable<T>, IAsyncD
         {
             CancelConsumption();
             CloseContentStream();
+            await WaitForEnumeratorConstructionAsync().ConfigureAwait(false);
 
             if (!(await DisposeResultAsync().ConfigureAwait(false)))
             {
@@ -207,6 +285,20 @@ public sealed class AsyncStreamingClientResult<T> : IAsyncEnumerable<T>, IAsyncD
         return disposalCompleted;
     }
 
+    private async ValueTask WaitForEnumeratorConstructionAsync()
+    {
+        Task? construction;
+        lock (_sync)
+        {
+            construction = _enumeratorConstructionCompletion?.Task;
+        }
+
+        if (construction is not null)
+        {
+            await construction.ConfigureAwait(false);
+        }
+    }
+
     private CancellationTokenSource? CreateLinkedCancellationSource(
         CancellationToken enumerationCancellationToken)
     {
@@ -246,6 +338,14 @@ public sealed class AsyncStreamingClientResult<T> : IAsyncEnumerable<T>, IAsyncD
             }
 
             return enumerator.StartMoveNext();
+        }
+    }
+
+    private void ThrowIfDisposed()
+    {
+        if (_disposeStarted)
+        {
+            throw new ObjectDisposedException(GetType().FullName);
         }
     }
 
@@ -299,27 +399,6 @@ public sealed class AsyncStreamingClientResult<T> : IAsyncEnumerable<T>, IAsyncD
         finally
         {
             _resultCancellationSource.Dispose();
-            GC.SuppressFinalize(this);
-        }
-    }
-
-    private void DisposeAfterEnumeratorConstructionFailure()
-    {
-        lock (_sync)
-        {
-            _disposeStarted = true;
-            _resultDisposeCompletion ??= new(
-                TaskCreationOptions.RunContinuationsAsynchronously);
-        }
-
-        try
-        {
-            DisposeResponse();
-            _resultDisposeCompletion.TrySetResult(null);
-        }
-        catch (Exception ex)
-        {
-            _resultDisposeCompletion.TrySetException(ex);
         }
     }
 

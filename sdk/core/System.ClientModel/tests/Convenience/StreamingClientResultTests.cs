@@ -31,6 +31,26 @@ public class StreamingClientResultTests
         Assert.IsNull(result.GetType().GetProperty("ContentStream"));
 
         await result.DisposeAsync();
+
+        Assert.Throws<ObjectDisposedException>(() => _ = result.Status);
+        Assert.Throws<ObjectDisposedException>(() => _ = result.ReasonPhrase);
+        Assert.Throws<ObjectDisposedException>(() => _ = result.Headers);
+    }
+
+    [Test]
+    public void RequiresResponseContentStream()
+    {
+        MockPipelineResponse response = new(200);
+
+        InvalidOperationException? exception =
+            Assert.Throws<InvalidOperationException>(() =>
+                AsyncStreamingClientResult.Create<int>(
+                    response,
+                    static (_, _) => GetValues([], default)));
+
+        Assert.That(
+            exception!.Message,
+            Does.Contain("must have a content stream"));
     }
 
     [Test]
@@ -309,6 +329,32 @@ public class StreamingClientResultTests
 
         Assert.CatchAsync<OperationCanceledException>(async () => await moveNext);
         Assert.IsTrue(stream.IsDisposed);
+        Assert.IsNull(response.ContentStream);
+    }
+
+    [Test]
+    public async Task EagerProducerCanReentrantlyDisposeWithoutLifecycleLockDeadlock()
+    {
+        MockPipelineResponse response = CreateResponse();
+        AsyncStreamingClientResult<int>? result = null;
+        result = AsyncStreamingClientResult.Create(
+            response,
+            (_, cancellationToken) =>
+            {
+                Task.Run(async () => await result!.DisposeAsync())
+                    .GetAwaiter().GetResult();
+                return GetValues([1], cancellationToken);
+            });
+
+        Task<IAsyncEnumerator<int>> enumeration =
+            Task.Run(() => result!.GetAsyncEnumerator());
+        Assert.AreSame(
+            enumeration,
+            await Task.WhenAny(
+                enumeration,
+                Task.Delay(TimeSpan.FromSeconds(5))));
+        Assert.ThrowsAsync<ObjectDisposedException>(async () => await enumeration);
+        await result!.DisposeAsync();
         Assert.IsNull(response.ContentStream);
     }
 
