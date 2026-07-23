@@ -11,7 +11,7 @@ using OpenAI.Responses;
 namespace Azure.AI.Extensions.OpenAI
 {
     /// <summary> The output of an A2A (Agent-to-Agent) tool call. </summary>
-    [Experimental("AAIP001")]
+    [Experimental("OPENAI001")]
     public partial class A2AToolCallOutput : ResponseItem
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>

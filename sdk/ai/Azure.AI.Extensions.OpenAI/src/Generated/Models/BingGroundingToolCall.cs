@@ -4,11 +4,13 @@
 
 using System;
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 using OpenAI.Responses;
 
 namespace Azure.AI.Extensions.OpenAI
 {
     /// <summary> A Bing grounding tool call. </summary>
+    [Experimental("OPENAI001")]
     public partial class BingGroundingToolCall : ResponseItem
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>

@@ -23,6 +23,7 @@ namespace Azure.AI.Extensions.OpenAI
     /// to succeed without editing generated code. It mirrors <see cref="ResponseItemKindModel"/>.
     /// </para>
     /// </summary>
+    #pragma warning disable OPENAI001
     internal sealed class ResponseToolKindModel : IJsonModel<object>
     {
         object IPersistableModel<object>.Create(BinaryData data, ModelReaderWriterOptions options)

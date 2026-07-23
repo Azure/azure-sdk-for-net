@@ -3,7 +3,6 @@
 
 using System;
 using System.Threading;
-using Azure.AI.Extensions.OpenAI.Internal;
 
 namespace Azure.AI.Extensions.OpenAI;
 

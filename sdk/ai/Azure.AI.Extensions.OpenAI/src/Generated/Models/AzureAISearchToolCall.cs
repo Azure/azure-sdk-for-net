@@ -4,11 +4,13 @@
 
 using System;
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 using OpenAI.Responses;
 
 namespace Azure.AI.Extensions.OpenAI
 {
     /// <summary> An Azure AI Search tool call. </summary>
+    [Experimental("OPENAI001")]
     public partial class AzureAISearchToolCall : ResponseItem
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>

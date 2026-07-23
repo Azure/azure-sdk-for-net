@@ -29,6 +29,7 @@ public static partial class AzureAIExtensions
     /// <summary> Converts an OpenAI response item into an agent response item. </summary>
     /// <param name="responseItem"> The OpenAI response item to convert. </param>
     /// <returns> The agent response item representation. </returns>
+    [Experimental("OPENAI001")]
     internal static ResponseItem AsAgentResponseItem(this ResponseItem responseItem)
     {
         BinaryData serializedResponseItem = ModelReaderWriter.Write(responseItem, ModelSerializationExtensions.WireOptions, AzureAIExtensionsOpenAIContext.Default);
@@ -52,6 +53,7 @@ public static partial class AzureAIExtensions
 
     // Round-trips a tool through the Azure context so a tool that OpenAI could not strongly type re-dispatches
     // to its concrete Azure subtype, mirroring AsAgentResponseItem for the tool axis.
+    [Experimental("OPENAI001")]
     private static ResponseTool AsAgentResponseTool(ResponseTool responseTool)
     {
         BinaryData serializedTool = ModelReaderWriter.Write(responseTool, ModelSerializationExtensions.WireOptions, AzureAIExtensionsOpenAIContext.Default);
@@ -60,12 +62,14 @@ public static partial class AzureAIExtensions
 
     // Whether an already-materialized tool still needs client-side normalization, keyed off the known Azure tool
     // discriminator set (see NeedsAgentItemNormalization for the rationale).
+    [Experimental("OPENAI001")]
     private static bool NeedsAgentToolNormalization(ResponseTool tool)
         => tool is not null
             && UnknownAzureResponseTool.TryGetAzureToolType(tool.Kind, out Type azureType)
             && !azureType.IsInstanceOfType(tool);
 
     // Returns the strongly-typed Azure subtype for a tool that needs it, or the tool unchanged otherwise.
+    [Experimental("OPENAI001")]
     private static ResponseTool NormalizeAgentResponseTool(ResponseTool tool)
         => NeedsAgentToolNormalization(tool) ? AsAgentResponseTool(tool) : tool;
 
@@ -108,6 +112,7 @@ public static partial class AzureAIExtensions
     /// tool list in place. Non-Azure unknowns round-trip back to the same opaque type, so this is a
     /// no-op for them. Temporary client-side bridge, mirroring <see cref="NormalizeAgentOutputItems"/>.
     /// </summary>
+    [Experimental("OPENAI001")]
     internal static void NormalizeAgentTools(ResponseResult response)
     {
         if (response is null)
@@ -186,42 +191,6 @@ public static partial class AzureAIExtensions
         return update;
     }
 
-    // ResponseItem
-    extension(ResponseItem item)
-    {
-        /// <summary> Gets the agent that produced this response item, when reported by the service. </summary>
-        [Experimental("SCME0001")]
-        public AgentReference AgentReference
-        {
-            get => item.Patch.GetJsonModelEx<AgentReference>("$.agent_reference"u8);
-        }
-
-        /// <summary> Gets the ID of the response on which this item was created, when reported by the service. </summary>
-        [Experimental("SCME0001")]
-        public string ResponseId
-        {
-            get => item.Patch.GetStringEx("$.response_id"u8);
-        }
-    }
-
-    // ResponseResult
-    extension(ResponseResult response)
-    {
-        /// <summary> Gets the agent associated with the response result. </summary>
-        [Experimental("SCME0001")]
-        public AgentReference Agent
-        {
-            get => response.Patch.GetJsonModelEx<AgentReference>("$.agent_reference"u8);
-        }
-
-        /// <summary> Gets the agent conversation ID associated with the response result. </summary>
-        [Experimental("SCME0001")]
-        public string AgentConversationId
-        {
-            get => response.Patch.GetStringEx("$.conversation.id"u8);
-        }
-    }
-
     // ResponsesClient
     /// <summary> Creates a response for an existing project conversation and agent. </summary>
     /// <param name="responseClient"> The response client used to send the request. </param>
@@ -261,7 +230,7 @@ public static partial class AzureAIExtensions
         return ClientResult.FromValue(convenienceValue, protocolResult.GetRawResponse());
     }
 
-    [Experimental("SCME0001")]
+    [Experimental("OPENAI001")]
     private static BinaryContent RemoveItems(ConversationResource conversation, AgentReference agentRef)
     {
         CreateResponseOptions responseOptions = new()
@@ -297,24 +266,5 @@ public static partial class AzureAIExtensions
             }
         }
         return null;
-    }
-
-    extension(CreateResponseOptions options)
-    {
-        /// <summary> Gets or sets the agent associated with the response options. </summary>
-        [Experimental("SCME0001")]
-        public AgentReference Agent
-        {
-            get => options.Patch.GetJsonModelEx<AgentReference>("$.agent_reference"u8);
-            set => options.Patch.SetOrClearEx("$.agent_reference"u8, "$.agent_reference"u8, value);
-        }
-
-        /// <summary> Gets or sets the agent conversation ID associated with the response options. </summary>
-        [Experimental("SCME0001")]
-        public string AgentConversationId
-        {
-            get => options.Patch.GetStringEx("$.conversation.id"u8);
-            set => options.Patch.SetOrClearEx("$.conversation.id"u8, "$.conversation"u8, value);
-        }
     }
 }

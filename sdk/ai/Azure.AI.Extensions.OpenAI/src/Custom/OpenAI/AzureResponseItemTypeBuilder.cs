@@ -3,6 +3,7 @@
 
 using System;
 using System.ClientModel.Primitives;
+using System.Diagnostics.CodeAnalysis;
 using OpenAI.Responses;
 
 namespace Azure.AI.Extensions.OpenAI
@@ -14,8 +15,10 @@ namespace Azure.AI.Extensions.OpenAI
     /// </summary>
     internal sealed class AzureResponseItemTypeBuilder : ModelReaderWriterTypeBuilder
     {
+        [Experimental("OPENAI001")]
         protected override Type BuilderType => typeof(ResponseItem);
 
+        [Experimental("OPENAI001")]
         protected override object CreateInstance() => new UnknownAzureResponseItem();
     }
 }

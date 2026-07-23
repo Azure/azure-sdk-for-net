@@ -17,6 +17,10 @@ namespace Extensions.Plugin
         public override void Apply(CodeModelGenerator generator)
         {
             generator.AddVisitor(new SerializationOverrideVisitor());
+            // Runs before ExperimentalAttributeVisitor so declarations exposing OpenAI-experimental types
+            // are attributed with the correct OpenAI diagnostic id (OPENAI001/OPENAICUA001); the AAIP001
+            // visitor then only marks our own new/preview surface. Both skip already-attributed declarations.
+            generator.AddVisitor(new OpenAIExperimentalVisitor());
             generator.AddVisitor(new ExperimentalAttributeVisitor());
         }
     }

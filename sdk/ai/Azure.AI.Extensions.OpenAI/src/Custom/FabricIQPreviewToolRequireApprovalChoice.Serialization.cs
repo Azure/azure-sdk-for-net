@@ -31,6 +31,7 @@ namespace Azure.AI.Extensions.OpenAI
 
         string IPersistableModel<FabricIQPreviewToolRequireApprovalChoice>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
+#pragma warning disable OPENAI001
         internal static void SerializeFabricIQPreviewToolRequireApprovalChoice(FabricIQPreviewToolRequireApprovalChoice instance, Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             if (instance.ApprovalPolicy != null)
@@ -42,6 +43,7 @@ namespace Azure.AI.Extensions.OpenAI
                 writer.WriteObjectValue(instance.ApprovalString, options);
             }
         }
+#pragma warning restore OPENAI001
 
         internal static FabricIQPreviewToolRequireApprovalChoice DeserializeFabricIQPreviewToolRequireApprovalChoice(JsonElement element, ModelReaderWriterOptions options = null)
         {

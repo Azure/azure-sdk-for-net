@@ -9,6 +9,7 @@ using System.ClientModel.Primitives;
 using System.IO;
 using System.Text.Json;
 using OpenAI.Responses;
+using System.Diagnostics.CodeAnalysis;
 
 namespace Azure.AI.Extensions.OpenAI;
 
@@ -29,6 +30,7 @@ internal static class AgentAttributionExtensions
     private const string AgentReferenceProperty = "agent_reference";
     private const string ResponseIdProperty = "response_id";
 
+    [Experimental("OPENAI001")]
     internal static void ApplyAgentAttribution(
         this ResponseItem item,
         AgentReference agentReference,

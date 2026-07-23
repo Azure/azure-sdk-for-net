@@ -14,6 +14,7 @@ namespace Azure.AI.Extensions.OpenAI;
 /// bridge for the streaming path, matching the non-streaming behavior of
 /// <see cref="AzureAIExtensions.NormalizeAgentOutputItems(ResponseResult)"/>.
 /// </summary>
+[Experimental("OPENAI001")]
 internal sealed class NormalizingStreamingCollectionResult : CollectionResult<StreamingResponseUpdate>
 {
     private readonly CollectionResult<StreamingResponseUpdate> _innerResult;

@@ -30,6 +30,9 @@ namespace Extensions.Plugin.Visitors
 
         private readonly HashSet<string> _attributedTypes = new(StringComparer.Ordinal);
 
+        private static bool HasExperimental(IEnumerable<AttributeStatement> attributes)
+            => attributes.Any(attr => attr.Type.Equals(typeof(ExperimentalAttribute)));
+
         private static bool ImplementsExperimrental(TypeProvider theType)
         {
             foreach(CSharpType theInterface in theType.Implements)
@@ -122,6 +125,16 @@ namespace Extensions.Plugin.Visitors
             //}
             // First check if the whole class needs to be marked as experimental.
             string typeRealName = GetRealName(type);
+
+            // A prior visitor (OpenAIExperimentalVisitor) may have already marked this type experimental with
+            // a more specific OpenAI diagnostic id (OPENAI001 / OPENAICUA001). ExperimentalAttribute is
+            // AllowMultiple=false, so treat the type as already covered — do not add AAIP001 to it or its
+            // members. The OpenAI id is the more accurate signal for downstream consumers, so it wins.
+            if (HasExperimental(type.Attributes))
+            {
+                _attributedTypes.Add(type.Type.FullyQualifiedName);
+                return base.VisitType(type);
+            }
             if ((SupportedPackages.IsExperimental(typeRealName) || HasExperimentalAncestor(type.Type) || ImplementsExperimrental(type))
                 && !type.Attributes.Any(attr => attr.Type.Equals(typeof(ExperimentalAttribute)))
                 && _attributedTypes.Add(type.Type.FullyQualifiedName))
@@ -140,7 +153,11 @@ namespace Extensions.Plugin.Visitors
             // Constructors
             List<ConstructorProvider> constructors = [];
             // In a first run we will check if all the constructors are experimental and if it is the case, mark class experimental.
-            if (type.Constructors.Count > 0 && type.Constructors.All(x => x.Signature.Parameters.Any(x => IsExperimental(x.Type))))
+            // Skip this promotion if a prior visitor already marked any constructor experimental, so we defer to
+            // per-member marking below and avoid mixing a whole-type AAIP001 with member-level OpenAI ids.
+            if (type.Constructors.Count > 0
+                && type.Constructors.All(x => x.Signature.Parameters.Any(x => IsExperimental(x.Type)))
+                && !type.Constructors.Any(x => HasExperimental(x.Signature.Attributes)))
             {
                 type.Update(
                     attributes: [.. type.Attributes,
@@ -150,7 +167,7 @@ namespace Extensions.Plugin.Visitors
             // If there is at least one constructor without experimental argument, just update experimental constructors.
             foreach (ConstructorProvider constructor in type.Constructors)
             {
-                if (constructor.Signature.Parameters.Any(x => IsExperimental(x.Type)))
+                if (!HasExperimental(constructor.Signature.Attributes) && constructor.Signature.Parameters.Any(x => IsExperimental(x.Type)))
                 {
                     constructor.Signature.Update(
                         attributes: [.. constructor.Signature.Attributes, new(typeof(ExperimentalAttribute), Snippet.Literal(DiagnosticId))]
@@ -163,7 +180,7 @@ namespace Extensions.Plugin.Visitors
             List<MethodProvider> methods = [];
             foreach (MethodProvider method in type.Methods)
             {
-                if (method.Signature.Parameters.Any(x => IsExperimental(x.Type)) || IsExperimental(method.Signature.ReturnType))
+                if (!HasExperimental(method.Signature.Attributes) && (method.Signature.Parameters.Any(x => IsExperimental(x.Type)) || IsExperimental(method.Signature.ReturnType)))
                 {
                     method.Signature.Update(
                         attributes: [.. method.Signature.Attributes, new(typeof(ExperimentalAttribute), Snippet.Literal(DiagnosticId))]
@@ -187,7 +204,7 @@ namespace Extensions.Plugin.Visitors
                 //        $"Is of experimental type {IsExperimental(field.Type)}\n" +
                 //        $"================================================\n");
                 //}
-                if (IsExperimental(field.Type) || SupportedPackages.IsExperimental($"{typeRealName}.{field.Name}"))
+                if (!HasExperimental(field.Attributes) && (IsExperimental(field.Type) || SupportedPackages.IsExperimental($"{typeRealName}.{field.Name}")))
                 {
                     field.Update(
                         attributes: [.. field.Attributes, new(typeof(ExperimentalAttribute), Snippet.Literal(DiagnosticId))]
@@ -211,7 +228,7 @@ namespace Extensions.Plugin.Visitors
                 //        $"Is of experimental type {IsExperimental(property.Type)}\n" +
                 //        $"================================================\n");
                 //}
-                if (IsExperimental(property.Type) || SupportedPackages.IsExperimental($"{typeRealName}.{property.Name}"))
+                if (!HasExperimental(property.Attributes) && (IsExperimental(property.Type) || SupportedPackages.IsExperimental($"{typeRealName}.{property.Name}")))
                 {
                     property.Update(
                         attributes: [.. property.Attributes, new(typeof(ExperimentalAttribute), Snippet.Literal(DiagnosticId))]

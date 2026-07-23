@@ -51,6 +51,7 @@ namespace Azure.AI.Extensions.OpenAI.Telemetry
 
         private readonly StringBuilder _streamedTextBuilder = new();
         private string _streamedResponseId;
+        [Experimental("OPENAI001")]
         private ResponseStatus? _streamedStatus;
 
         private static bool s_traceContent = GetConfigValue(TraceContentSwitch, TraceContentEnvVar);
@@ -159,7 +160,7 @@ namespace Azure.AI.Extensions.OpenAI.Telemetry
             return scope;
         }
 
-        [Experimental("SCME0001")]
+        [Experimental("OPENAI001")]
         internal static OpenTelemetryResponseScope Start(CreateResponseOptions options, Uri endpoint, string defaultModelName)
         {
             if (!IsEnabled)
@@ -174,7 +175,7 @@ namespace Azure.AI.Extensions.OpenAI.Telemetry
             return scope;
         }
 
-        [Experimental("SCME0001")]
+        [Experimental("OPENAI001")]
         internal static void ExtractOptionsContext(
             CreateResponseOptions options,
             string defaultModelName,
@@ -213,6 +214,7 @@ namespace Azure.AI.Extensions.OpenAI.Telemetry
             }
         }
 
+        [Experimental("OPENAI001")]
         private static string ExtractInputText(ResponseItem item)
         {
             try
@@ -253,6 +255,7 @@ namespace Azure.AI.Extensions.OpenAI.Telemetry
             return null;
         }
 
+        [Experimental("OPENAI001")]
         private static ToolCallOutputInfo? ExtractToolCallOutput(ResponseItem item)
         {
             try
@@ -403,6 +406,7 @@ namespace Azure.AI.Extensions.OpenAI.Telemetry
             AddOutputMessage(outputText, finishReason);
         }
 
+        [Experimental("OPENAI001")]
         public void RecordResponse(ResponseResult response)
         {
             if (response == null)
@@ -459,6 +463,7 @@ namespace Azure.AI.Extensions.OpenAI.Telemetry
             _activity?.SetStatus(ActivityStatusCode.Error, e?.Message);
         }
 
+        [Experimental("OPENAI001")]
         internal void RecordStreamingUpdate(StreamingResponseUpdate update)
         {
             if (update == null)
@@ -561,11 +566,13 @@ namespace Azure.AI.Extensions.OpenAI.Telemetry
             _activity?.Dispose();
         }
 
+        [Experimental("OPENAI001")]
         private static string GetFinishReason(ResponseStatus status)
         {
             return status.ToString()?.ToLower();
         }
 
+        [Experimental("OPENAI001")]
         private static List<ToolCallInfo> ExtractToolCallsFromResponse(ResponseResult response)
         {
             List<ToolCallInfo> toolCalls = null;
