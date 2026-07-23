@@ -33,7 +33,7 @@ internal sealed class ManagementClientProvider : ClientProvider
     private PropertyProvider ClientDiagnosticsProperty => _clientDiagnosticsProperty ??=
         Properties.FirstOrDefault(property => property.Name == ClientDiagnosticsPropertyName)
         ?? new PropertyProvider(
-            description: $"The ClientDiagnostics is used to provide tracing support for the client library.",
+            description: $"The {ClientDiagnosticsPropertyName} is used to provide tracing support for the client library.",
             modifiers: MethodSignatureModifiers.Internal,
             type: typeof(ClientDiagnostics),
             name: ClientDiagnosticsPropertyName,
