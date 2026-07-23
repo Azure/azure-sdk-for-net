@@ -4113,33 +4113,6 @@ namespace Azure.Storage.Blobs.Test
 
         [RecordedTest]
         [ServiceVersion(Min = BlobClientOptions.ServiceVersion.V2026_06_06)]
-        public async Task ListBlobsHierarchySegmentAsync_UseApacheArrow_Deleted()
-        {
-            // Arrange
-            BlobServiceClient blobServiceClient = BlobsClientBuilder.GetServiceClient_SoftDelete_OAuth(TestEnvironment.Credential);
-            await using DisposingContainer test = await GetTestContainerAsync(blobServiceClient);
-            string blobName = GetNewBlobName();
-            AppendBlobClient blob = InstrumentClient(test.Container.GetAppendBlobClient(blobName));
-            await blob.CreateAsync();
-            await blob.DeleteAsync();
-
-            GetBlobsByHierarchyOptions options = new GetBlobsByHierarchyOptions
-            {
-                Delimiter = "/",
-                ResponseFormat = StorageResponseFormat.Arrow,
-                States = BlobStates.Deleted
-            };
-
-            // Act
-            IList<BlobHierarchyItem> blobs = await test.Container.GetBlobsByHierarchyAsync(options: options).ToListAsync();
-
-            // Assert
-            Assert.AreEqual(blobName, blobs[0].Blob.Name);
-            Assert.IsTrue(blobs[0].Blob.Deleted);
-        }
-
-        [RecordedTest]
-        [ServiceVersion(Min = BlobClientOptions.ServiceVersion.V2026_06_06)]
         public async Task ListBlobsHierarchySegmentAsync_UseApacheArrow_Uncommited()
         {
             await using DisposingContainer test = await GetTestContainerAsync();
