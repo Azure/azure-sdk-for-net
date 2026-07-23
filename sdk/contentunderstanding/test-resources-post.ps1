@@ -200,7 +200,7 @@ function Wait-ForDeployment {
     return $false
 }
 
-# Function to call Content Understanding UpdateDefaults API using az rest
+# Function to call Content Understanding UpdateDefaults API using Invoke-RestMethod
 # Returns $true if successful, $false if failed
 # Retries on DeploymentIdNotFound errors to handle propagation delay
 function Update-ContentUnderstandingDefaults {
@@ -224,16 +224,25 @@ function Update-ContentUnderstandingDefaults {
         modelDeployments = $modelDeploymentsJson
     } | ConvertTo-Json -Depth 10 -Compress
 
-    # Call UpdateDefaults API using az rest
-    # Endpoint: {endpoint}/contentunderstanding/defaults?api-version=2025-11-01
-    # Method: PATCH
-    # Content-Type: application/merge-patch+json
-    # Note: az rest will automatically determine the resource from the URL for known endpoints
+    # UpdateDefaults endpoint: {endpoint}/contentunderstanding/defaults?api-version=2025-11-01
+    # Method: PATCH, Content-Type: application/merge-patch+json
     $apiUrl = "$($Endpoint.TrimEnd('/'))/contentunderstanding/defaults?api-version=2025-11-01"
 
-    # Use the Cognitive Services resource URL for authentication
-    # For Azure Cognitive Services, the resource identifier is https://cognitiveservices.azure.com
-    $resourceUrl = "https://cognitiveservices.azure.com"
+    # Acquire a bearer token from Az PowerShell for the Cognitive Services audience.
+    # We use Invoke-RestMethod (native PowerShell) rather than `az rest` because
+    # on Windows cmd.exe strips inner double-quotes from `az rest --body`, which
+    # corrupts JSON payloads. Invoke-RestMethod runs entirely in-process and
+    # matches the convention used by other .NET SDK post-scripts such as
+    # sdk/ai/test-resources-post.ps1.
+    $token = Get-AzAccessToken -ResourceUrl 'https://cognitiveservices.azure.com'
+    # Az PowerShell 12+ returns Token as a SecureString; earlier versions return plaintext.
+    $accessToken = if ($token.Token -is [System.Security.SecureString]) {
+        [System.Net.NetworkCredential]::new('', $token.Token).Password
+    }
+    else {
+        $token.Token
+    }
+    $authHeader = @{ Authorization = "Bearer $accessToken" }
 
     $attempt = 0
     while ($attempt -lt $MaxRetries) {
@@ -249,47 +258,46 @@ function Update-ContentUnderstandingDefaults {
         }
 
         try {
-            $response = az rest --method patch `
-                --url $apiUrl `
-                --resource $resourceUrl `
-                --headers "Content-Type=application/merge-patch+json" `
-                --body $requestBody `
-                --output json 2>&1
+            $result = Invoke-RestMethod -Method Patch -Uri $apiUrl `
+                -Headers $authHeader `
+                -ContentType 'application/merge-patch+json' `
+                -Body $requestBody
 
-            if ($LASTEXITCODE -eq 0) {
-                $result = $response | ConvertFrom-Json
-                Write-Host "Successfully updated Content Understanding defaults for '$AccountName'" -ForegroundColor Green
-                if ($result.modelDeployments) {
-                    Write-Host "Configured model deployments:"
-                    foreach ($kvp in $result.modelDeployments.PSObject.Properties) {
-                        Write-Host "  $($kvp.Name): $($kvp.Value)"
-                    }
+            Write-Host "Successfully updated Content Understanding defaults for '$AccountName'" -ForegroundColor Green
+            if ($result.modelDeployments) {
+                Write-Host "Configured model deployments:"
+                foreach ($kvp in $result.modelDeployments.PSObject.Properties) {
+                    Write-Host "  $($kvp.Name): $($kvp.Value)"
                 }
-                return $true
+            }
+            return $true
+        }
+        catch {
+            # Invoke-RestMethod throws on non-2xx; the server's JSON body (if any)
+            # is available via $_.ErrorDetails.Message. For network/DNS errors
+            # ErrorDetails is null, so fall back to the exception message.
+            $errorMessage = if ($_.ErrorDetails -and $_.ErrorDetails.Message) {
+                $_.ErrorDetails.Message
             }
             else {
-                # Check if the error is DeploymentIdNotFound (propagation delay)
-                $errorMessage = $response -join " "
-                if ($errorMessage -match "DeploymentIdNotFound") {
-                    if ($attempt -lt $MaxRetries) {
-                        Write-Host "Deployment not yet visible to Content Understanding API (attempt $attempt/$MaxRetries). This is normal due to propagation delay." -ForegroundColor Yellow
-                        continue
-                    }
-                    else {
-                        Write-Error "FAILED to update Content Understanding defaults for '$AccountName' after $MaxRetries attempts: Deployment still not visible to API after waiting. $errorMessage" -ErrorAction Continue
-                        return $false
-                    }
+                $_.Exception.Message
+            }
+
+            if ($errorMessage -match 'DeploymentIdNotFound') {
+                if ($attempt -lt $MaxRetries) {
+                    Write-Host "Deployment not yet visible to Content Understanding API (attempt $attempt/$MaxRetries). This is normal due to propagation delay." -ForegroundColor Yellow
+                    continue
                 }
                 else {
-                    # Non-propagation error - don't retry
-                    Write-Error "FAILED to update Content Understanding defaults for '$AccountName': $errorMessage" -ErrorAction Continue
+                    Write-Error "FAILED to update Content Understanding defaults for '$AccountName' after $MaxRetries attempts: Deployment still not visible to API after waiting. $errorMessage" -ErrorAction Continue
                     return $false
                 }
             }
-        }
-        catch {
-            Write-Error "FAILED to update Content Understanding defaults for '$AccountName': $_" -ErrorAction Continue
-            return $false
+            else {
+                # Non-propagation error - don't retry
+                Write-Error "FAILED to update Content Understanding defaults for '$AccountName': $errorMessage" -ErrorAction Continue
+                return $false
+            }
         }
     }
 
