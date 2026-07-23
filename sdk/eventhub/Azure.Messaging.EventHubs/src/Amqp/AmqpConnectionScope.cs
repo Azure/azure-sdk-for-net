@@ -106,6 +106,20 @@ namespace Azure.Messaging.EventHubs.Amqp
         private static TimeSpan AuthorizationRefreshTimeout { get; } = TimeSpan.FromMinutes(3);
 
         /// <summary>
+        ///   The amount of time to allow a connection to gracefully finish closing before it is
+        ///   forcibly aborted.  A graceful close can stall indefinitely against a half-open or
+        ///   blackholed connection; this bounds how long the old connection may linger after a
+        ///   replacement has been opened during recovery.
+        /// </summary>
+        ///
+        /// <remarks>
+        ///   This is exposed as a virtual member so that tests may shorten the grace period; it is
+        ///   not intended to be a configuration surface for callers.
+        /// </remarks>
+        ///
+        protected virtual TimeSpan ConnectionCloseGracePeriod { get; } = TimeSpan.FromSeconds(60);
+
+        /// <summary>
         ///   The amount of buffer to apply when considering an authorization token
         ///   to be expired.  The token's actual expiration will be decreased by this
         ///   amount, ensuring that it is renewed before it has expired.
@@ -970,6 +984,61 @@ namespace Azure.Messaging.EventHubs.Amqp
         {
             connection.SafeClose();
             EventHubsEventSource.Log.FaultTolerantAmqpObjectClose(nameof(AmqpConnection), "", EventHubName, "", "", connection.TerminalException?.Message);
+
+            // SafeClose initiates a graceful close but, should it time out, completes without tearing
+            // down the underlying socket and without aborting; a half-open or blackholed connection can
+            // therefore remain live indefinitely while a replacement is already in use after recovery.
+            // Schedule a bounded background fallback that forcibly aborts the connection if it has not
+            // finished closing within the grace period.  Abort is idempotent and guarded by a state
+            // check, so a late fire after a successful graceful close is a no-op.
+
+            ScheduleCloseFallbackAbort(connection);
+        }
+
+        /// <summary>
+        ///   Schedules a background fallback that forcibly aborts an AMQP object if it has not finished
+        ///   closing within the <see cref="ConnectionCloseGracePeriod" />.  This guards against a graceful
+        ///   close that stalls (for example, against a half-open connection) leaving the transport live.
+        /// </summary>
+        ///
+        /// <param name="amqpObject">The AMQP object being closed to monitor and, if needed, abort.</param>
+        ///
+        /// <remarks>
+        ///   The fallback runs detached so that it does not block the caller initiating the close, which
+        ///   would otherwise serialize teardown into the recovery hot path.  It is cancelled when the scope
+        ///   is disposed so that it does not outlive the scope or leak a timer.
+        /// </remarks>
+        ///
+        private void ScheduleCloseFallbackAbort(AmqpObject amqpObject)
+        {
+            CancellationToken cancellationToken;
+
+            try
+            {
+                cancellationToken = OperationCancellationSource.Token;
+            }
+            catch (ObjectDisposedException)
+            {
+                // The scope has already been disposed; its teardown owns the connection and no
+                // fallback is needed.
+
+                return;
+            }
+
+            _ = Task.Delay(ConnectionCloseGracePeriod, cancellationToken).ContinueWith(
+                (_, state) =>
+                {
+                    var trackedObject = (AmqpObject)state;
+
+                    if (trackedObject.State != AmqpObjectState.End)
+                    {
+                        trackedObject.Abort();
+                    }
+                },
+                amqpObject,
+                CancellationToken.None,
+                TaskContinuationOptions.OnlyOnRanToCompletion | TaskContinuationOptions.ExecuteSynchronously,
+                TaskScheduler.Default);
         }
 
         /// <summary>

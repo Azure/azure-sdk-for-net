@@ -135,6 +135,20 @@ namespace Azure.Messaging.EventHubs.Amqp
         private FaultTolerantAmqpObject<ReceivingAmqpLink> ReceiveLink { get; }
 
         /// <summary>
+        ///   The amount of time to allow a receive link to gracefully finish closing before it is
+        ///   forcibly aborted.  A graceful close can stall indefinitely against a half-open connection;
+        ///   this bounds how long a stalled link may linger after a replacement has been opened during
+        ///   recovery.
+        /// </summary>
+        ///
+        /// <remarks>
+        ///   This is exposed as a virtual member so that tests may shorten the grace period; it is not
+        ///   intended to be a configuration surface for callers.
+        /// </remarks>
+        ///
+        protected virtual TimeSpan LinkCloseGracePeriod { get; } = TimeSpan.FromSeconds(60);
+
+        /// <summary>
         ///   Initializes a new instance of the <see cref="AmqpConsumer"/> class.
         /// </summary>
         ///
@@ -565,6 +579,48 @@ namespace Azure.Messaging.EventHubs.Amqp
             link.SafeClose();
 
             EventHubsEventSource.Log.FaultTolerantAmqpObjectClose(nameof(ReceivingAmqpLink), "", EventHubName, ConsumerGroup, PartitionId, link.TerminalException?.Message);
+
+            // SafeClose initiates a graceful close but, should it stall, completes without tearing down
+            // the underlying link and session; a half-open link can therefore linger after a replacement
+            // has been opened during recovery.  Schedule a bounded background fallback that forcibly
+            // aborts the link and its session if they have not finished closing within the grace period.
+            // Abort is idempotent and guarded by a state check, so a late fire after a successful graceful
+            // close is a no-op.
+
+            ScheduleCloseFallbackAbort(link);
+        }
+
+        /// <summary>
+        ///   Schedules a background fallback that forcibly aborts a receive link and its session if the
+        ///   link has not finished closing within the <see cref="LinkCloseGracePeriod" />.  This guards
+        ///   against a graceful close that stalls (for example, against a half-open connection) leaving
+        ///   the link live.
+        /// </summary>
+        ///
+        /// <param name="link">The link being closed to monitor and, if needed, abort.</param>
+        ///
+        /// <remarks>
+        ///   The fallback runs detached so that it does not block the caller initiating the close, which
+        ///   would otherwise serialize teardown into the recovery hot path.
+        /// </remarks>
+        ///
+        private void ScheduleCloseFallbackAbort(ReceivingAmqpLink link)
+        {
+            _ = Task.Delay(LinkCloseGracePeriod).ContinueWith(
+                (_, state) =>
+                {
+                    var trackedLink = (ReceivingAmqpLink)state;
+
+                    if (trackedLink.State != AmqpObjectState.End)
+                    {
+                        trackedLink.Session?.Abort();
+                        trackedLink.Abort();
+                    }
+                },
+                link,
+                CancellationToken.None,
+                TaskContinuationOptions.OnlyOnRanToCompletion | TaskContinuationOptions.ExecuteSynchronously,
+                TaskScheduler.Default);
         }
 
         /// <summary>
