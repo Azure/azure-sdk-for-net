@@ -7,6 +7,10 @@ namespace Azure.ResourceManager.AlertRuleRecommendations
         public static Azure.Pageable<Azure.ResourceManager.AlertRuleRecommendations.Models.AlertRuleRecommendation> GetAlertRuleRecommendationsByTargetType(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, string targetType, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public static Azure.AsyncPageable<Azure.ResourceManager.AlertRuleRecommendations.Models.AlertRuleRecommendation> GetAlertRuleRecommendationsByTargetTypeAsync(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, string targetType, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
+    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.AlertRuleRecommendations.Models.AlertRuleRecommendation))]
+    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.AlertRuleRecommendations.Models.AlertRuleRecommendationArmTemplate))]
+    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.Models.SystemData))]
+    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResponseError))]
     public partial class AzureResourceManagerAlertRuleRecommendationsContext : System.ClientModel.Primitives.ModelReaderWriterContext
     {
         internal AzureResourceManagerAlertRuleRecommendationsContext() { }
