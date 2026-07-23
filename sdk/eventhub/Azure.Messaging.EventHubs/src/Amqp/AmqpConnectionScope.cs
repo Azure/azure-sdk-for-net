@@ -546,9 +546,15 @@ namespace Azure.Messaging.EventHubs.Amqp
 
                 closeHandler = (snd, args) =>
                 {
+                    // Propagate the connection's terminal exception to each child link so that the
+                    // cause of a connection-level fault is preserved as the link's terminal exception;
+                    // without it, the link would close with a null terminal exception and a masked
+                    // partition steal could not be distinguished from a benign close.  When the
+                    // connection has no terminal exception, this behaves identically to a bare close.
+
                     foreach (var link in ActiveLinks.Keys)
                     {
-                        link.SafeClose();
+                        link.SafeClose(connection.TerminalException);
                     }
 
                     connection.Closed -= closeHandler;
