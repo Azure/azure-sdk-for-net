@@ -3,6 +3,7 @@
 
 using System;
 using Azure.Core.TestFramework;
+using Azure.Identity;
 
 namespace Azure.ResourceManager.EdgeOperator.Tests
 {
@@ -36,5 +37,17 @@ namespace Azure.ResourceManager.EdgeOperator.Tests
         /// </summary>
         public string ArmAudience =>
             GetRecordedOptionalVariable("EDGEOPERATOR_ARM_AUDIENCE") ?? "https://management.azure.com/";
+
+        /// <summary>
+        /// Record runs for this package are frequently executed from headless devbox terminals,
+        /// where broker-based interactive auth fails before default credential fallback.
+        /// Prefer Azure CLI auth in this environment.
+        /// </summary>
+        protected override Azure.Core.TokenCredential CreateDeveloperCredential()
+        {
+            return new ChainedTokenCredential(
+                new AzureCliCredential(),
+                base.CreateDeveloperCredential());
+        }
     }
 }

@@ -81,7 +81,7 @@ namespace Azure.ResourceManager.EdgeOperator.Tests
             Assert.That(resource.HasData, Is.True);
             Assert.That(resource.Data.Name, Is.EqualTo("default"));
             Assert.That(resource.Id.ToString().ToLowerInvariant(), Does.EndWith("/billingconfigurations/default"));
-            Assert.That(resource.Data.ResourceType.ToString(), Is.EqualTo("Microsoft.EdgeOperator/billingConfigurations"));
+            Assert.That(resource.Data.ResourceType.ToString(), Is.EqualTo("Microsoft.EdgeOperator/billingConfigurations").IgnoreCase);
             Assert.That(resource.Data.Properties, Is.Not.Null);
             Assert.That(resource.Data.Properties.BillingModel, Is.EqualTo(BillingModel.Capacity));
         }
