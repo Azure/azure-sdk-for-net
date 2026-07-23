@@ -2,7 +2,7 @@
 // Licensed under the MIT License.
 
 using System.Collections.Generic;
-using System.Linq;
+using System.IO;
 using System.Net.ServerSentEvents;
 using System.Text.Json;
 using System.Threading.Tasks;
@@ -14,32 +14,12 @@ namespace System.ClientModel.Tests.Results;
 public class StreamingResultParsingTests
 {
     [Test]
-    public void SseParsesEventEnvelopeAndTypedPayload()
+    public async Task SseParsesEventEnvelopeAndTypedPayload()
     {
         MockStreamedResponse response =
             new(MockStreamedData.SseMetadataMockContent);
-        SseStreamedValueResult result = new(response);
-
-        SseItem<StreamedValue>[] items = result.ToArray();
-
-        Assert.AreEqual(MockStreamedData.TotalItemCount, items.Length);
-        for (int i = 0; i < items.Length; i++)
-        {
-            Assert.AreEqual($"event.{i}", items[i].EventType);
-            Assert.AreEqual(i.ToString(), items[i].EventId);
-            Assert.AreEqual(i, items[i].Data.Id);
-            Assert.AreEqual(i.ToString(), items[i].Data.Value);
-        }
-        Assert.AreEqual(TimeSpan.FromMilliseconds(1500), items[0].ReconnectionInterval);
-        Assert.IsTrue(response.IsDisposed);
-    }
-
-    [Test]
-    public async Task SseParsesEventEnvelopeAndTypedPayloadAsync()
-    {
-        MockStreamedResponse response =
-            new(MockStreamedData.SseMetadataMockContent);
-        AsyncSseStreamedValueResult result = new(response);
+        AsyncStreamingClientResult<SseItem<StreamedValue>> result =
+            SseStreamedValueResult.Create(response);
         List<SseItem<StreamedValue>> items = [];
 
         await foreach (SseItem<StreamedValue> item in result)
@@ -59,36 +39,44 @@ public class StreamingResultParsingTests
         Assert.IsTrue(response.IsDisposed);
     }
 
-    [TestCase("\n")]
-    [TestCase("\r\n")]
-    public void JsonlParsesTypedValuesAndBlankLines(string newline)
+    [Test]
+    public async Task SseDetectsTerminalPayloadBeforeInvokingTypedParser()
     {
-        string content = MockStreamedData.JsonlMockContent
-            .Replace("\r\n", "\n")
-            .Replace("\n", newline);
-        MockStreamedResponse response = new(content);
-        JsonlStreamedValueResult result = new(response);
+        MockStreamedResponse response = new(
+            "data: { \"id\": 0, \"value\": \"0\" }\n\ndata: [DONE]\n\n");
+        int parserInvocationCount = 0;
+        AsyncStreamingClientResult<SseItem<StreamedValue>> result =
+            AsyncStreamingClientResult.CreateSse(
+                response,
+                (_, data) =>
+                {
+                    parserInvocationCount++;
+                    return StreamedValue.FromJson(data.ToArray());
+                },
+                static item => item.Data.ToString() == "[DONE]");
+        List<SseItem<StreamedValue>> items = [];
 
-        StreamedValue[] items = result.ToArray();
-
-        Assert.AreEqual(MockStreamedData.TotalItemCount, items.Length);
-        for (int i = 0; i < items.Length; i++)
+        await foreach (SseItem<StreamedValue> item in result)
         {
-            Assert.AreEqual(i, items[i].Id);
-            Assert.AreEqual(i.ToString(), items[i].Value);
+            items.Add(item);
         }
+
+        Assert.AreEqual(1, parserInvocationCount);
+        Assert.AreEqual(1, items.Count);
+        Assert.AreEqual(0, items[0].Data.Id);
         Assert.IsTrue(response.IsDisposed);
     }
 
     [TestCase("\n")]
     [TestCase("\r\n")]
-    public async Task JsonlParsesTypedValuesAsync(string newline)
+    public async Task JsonlParsesTypedValuesAndBlankLines(string newline)
     {
         string content = MockStreamedData.JsonlMockContent
             .Replace("\r\n", "\n")
             .Replace("\n", newline);
         MockStreamedResponse response = new(content);
-        AsyncJsonlStreamedValueResult result = new(response);
+        AsyncStreamingClientResult<StreamedValue> result =
+            JsonlStreamedValueResult.Create(response);
         List<StreamedValue> items = [];
 
         await foreach (StreamedValue item in result)
@@ -113,22 +101,8 @@ public class StreamingResultParsingTests
             { malformed }
 
             """);
-        JsonlStreamedValueResult result = new(response);
-
-        Assert.Catch<JsonException>(() => result.ToArray());
-
-        Assert.IsTrue(response.IsDisposed);
-    }
-
-    [Test]
-    public void JsonlDisposesResponseWhenParsingFailsAsync()
-    {
-        MockStreamedResponse response = new("""
-            { "id": 0, "value": "0" }
-            { malformed }
-
-            """);
-        AsyncJsonlStreamedValueResult result = new(response);
+        AsyncStreamingClientResult<StreamedValue> result =
+            JsonlStreamedValueResult.Create(response);
 
         Assert.CatchAsync<JsonException>(async () =>
         {
@@ -138,5 +112,42 @@ public class StreamingResultParsingTests
         });
 
         Assert.IsTrue(response.IsDisposed);
+    }
+
+    [Test]
+    public void SseTerminalPredicateRequiresTerminalEvent()
+    {
+        MockStreamedResponse response = new("data: value\n\n");
+        AsyncStreamingClientResult<SseItem<BinaryData>> result =
+            AsyncStreamingClientResult.CreateSse(
+                response,
+                static item => item.Data.ToString() == "[DONE]");
+
+        Assert.ThrowsAsync<InvalidDataException>(async () =>
+        {
+            await foreach (SseItem<BinaryData> _ in result)
+            {
+            }
+        });
+        Assert.IsTrue(response.IsDisposed);
+    }
+
+    [Test]
+    public async Task RawFactoriesReturnBinaryData()
+    {
+        MockStreamedResponse sseResponse = new("event: value\ndata: hello\n\n");
+        await foreach (SseItem<BinaryData> item in
+            AsyncStreamingClientResult.CreateSse(sseResponse))
+        {
+            Assert.AreEqual("value", item.EventType);
+            Assert.AreEqual("hello", item.Data.ToString());
+        }
+
+        MockStreamedResponse jsonlResponse = new("{\"value\":1}\n");
+        await foreach (BinaryData item in
+            AsyncStreamingClientResult.CreateJsonLines(jsonlResponse))
+        {
+            Assert.AreEqual("{\"value\":1}", item.ToString());
+        }
     }
 }

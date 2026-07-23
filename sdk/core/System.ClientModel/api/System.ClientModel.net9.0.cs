@@ -13,16 +13,22 @@ namespace System.ClientModel
         public System.Collections.Generic.IAsyncEnumerator<T> GetAsyncEnumerator(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         protected abstract System.Collections.Generic.IAsyncEnumerable<T> GetValuesFromPageAsync(System.ClientModel.ClientResult page);
     }
-    public abstract partial class AsyncStreamingClientResult : System.ClientModel.ClientResult, System.IAsyncDisposable
+    public static partial class AsyncStreamingClientResult
     {
-        protected internal AsyncStreamingClientResult(System.ClientModel.Primitives.PipelineResponse response) : base (default(System.ClientModel.Primitives.PipelineResponse)) { }
-        public System.Threading.Tasks.ValueTask DisposeAsync() { throw null; }
+        public static System.ClientModel.AsyncStreamingClientResult<System.BinaryData> CreateJsonLines(System.ClientModel.Primitives.PipelineResponse response, System.Threading.CancellationToken operationCancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public static System.ClientModel.AsyncStreamingClientResult<T> CreateJsonLines<T>(System.ClientModel.Primitives.PipelineResponse response, System.Func<System.BinaryData, T> itemParser, System.Threading.CancellationToken operationCancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public static System.ClientModel.AsyncStreamingClientResult<System.Net.ServerSentEvents.SseItem<System.BinaryData>> CreateSse(System.ClientModel.Primitives.PipelineResponse response, System.Func<System.Net.ServerSentEvents.SseItem<System.BinaryData>, bool>? isTerminal = null, System.Threading.CancellationToken operationCancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public static System.ClientModel.AsyncStreamingClientResult<System.Net.ServerSentEvents.SseItem<T>> CreateSse<T>(System.ClientModel.Primitives.PipelineResponse response, System.Net.ServerSentEvents.SseItemParser<T> itemParser, System.Func<System.Net.ServerSentEvents.SseItem<System.BinaryData>, bool>? isTerminal = null, System.Threading.CancellationToken operationCancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public static System.ClientModel.AsyncStreamingClientResult<T> Create<T>(System.ClientModel.Primitives.PipelineResponse response, System.Func<System.IO.Stream, System.Threading.CancellationToken, System.Collections.Generic.IAsyncEnumerable<T>> producer, System.Threading.CancellationToken operationCancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
-    public abstract partial class AsyncStreamingClientResult<T> : System.ClientModel.AsyncStreamingClientResult, System.Collections.Generic.IAsyncEnumerable<T>
+    public sealed partial class AsyncStreamingClientResult<T> : System.Collections.Generic.IAsyncEnumerable<T>, System.IAsyncDisposable
     {
-        protected internal AsyncStreamingClientResult(System.ClientModel.Primitives.PipelineResponse response) : base (default(System.ClientModel.Primitives.PipelineResponse)) { }
+        internal AsyncStreamingClientResult() { }
+        public System.ClientModel.Primitives.PipelineResponseHeaders Headers { get { throw null; } }
+        public string ReasonPhrase { get { throw null; } }
+        public int Status { get { throw null; } }
+        public System.Threading.Tasks.ValueTask DisposeAsync() { throw null; }
         public System.Collections.Generic.IAsyncEnumerator<T> GetAsyncEnumerator(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        protected abstract System.Collections.Generic.IAsyncEnumerable<T> GetValuesAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
     }
     public abstract partial class AuthenticationTokenProvider
     {
@@ -139,18 +145,6 @@ namespace System.ClientModel
         public override bool TryComputeLength(out long length) { throw null; }
         public override void WriteTo(System.IO.Stream stream, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { }
         public override System.Threading.Tasks.Task WriteToAsync(System.IO.Stream stream, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-    }
-    public abstract partial class StreamingClientResult : System.ClientModel.ClientResult, System.IDisposable
-    {
-        protected internal StreamingClientResult(System.ClientModel.Primitives.PipelineResponse response) : base (default(System.ClientModel.Primitives.PipelineResponse)) { }
-        public void Dispose() { }
-    }
-    public abstract partial class StreamingClientResult<T> : System.ClientModel.StreamingClientResult, System.Collections.Generic.IEnumerable<T>, System.Collections.IEnumerable
-    {
-        protected internal StreamingClientResult(System.ClientModel.Primitives.PipelineResponse response) : base (default(System.ClientModel.Primitives.PipelineResponse)) { }
-        public System.Collections.Generic.IEnumerator<T> GetEnumerator() { throw null; }
-        protected abstract System.Collections.Generic.IEnumerable<T> GetValues();
-        System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
     }
 }
 namespace System.ClientModel.Primitives

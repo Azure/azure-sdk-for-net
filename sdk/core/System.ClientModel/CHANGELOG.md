@@ -4,7 +4,7 @@
 
 ### Features Added
 
-- Added disposable `StreamingClientResult` and `AsyncStreamingClientResult` abstractions for protocol access to streaming service responses, with generic variants for one-shot typed enumeration.
+- Added sealed, one-shot `AsyncStreamingClientResult<T>` for asynchronous streaming responses, with factories for custom producers, server-sent events, and newline-delimited JSON.
 
 ### Breaking Changes
 
