@@ -133,6 +133,31 @@ public class ModelRoundTripTests
         Assert.That(request.StreamingEnabled, Is.False);
     }
 
+    [Test]
+    public void CreateResponse_Serialize_PreservesRawCompatibilityFields()
+    {
+        var options = CreateOptions();
+        var request = new CreateResponse
+        {
+            Model = "gpt-4o",
+            Input = BinaryData.FromString("\"hello\""),
+            Conversation = BinaryData.FromString("\"conv_123\""),
+        };
+
+        var json = JsonSerializer.Serialize(request, options);
+        using JsonDocument document = JsonDocument.Parse(json);
+
+        Assert.That(document.RootElement.GetProperty("model").GetString(), Is.EqualTo("gpt-4o"));
+        Assert.That(document.RootElement.GetProperty("input").GetString(), Is.EqualTo("hello"));
+        Assert.That(document.RootElement.GetProperty("conversation").GetString(), Is.EqualTo("conv_123"));
+
+        var deserialized = JsonSerializer.Deserialize<CreateResponse>(json, options);
+
+        Assert.That(deserialized, Is.Not.Null);
+        Assert.That(deserialized!.Input!.ToString(), Is.EqualTo("\"hello\""));
+        Assert.That(deserialized.Conversation!.ToString(), Is.EqualTo("\"conv_123\""));
+    }
+
     // ========================================
     // T059: Models.ResponseObject Serialization
     // ========================================

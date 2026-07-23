@@ -90,7 +90,25 @@ internal sealed class CreateResponseJsonConverter : JsonConverter<CreateResponse
         writer.WriteStartObject();
         foreach (JsonProperty property in document.RootElement.EnumerateObject())
         {
+            if ((value.Input is not null && property.NameEquals("input"u8))
+                || (value.Conversation is not null && property.NameEquals("conversation"u8)))
+            {
+                continue;
+            }
+
             property.WriteTo(writer);
+        }
+
+        if (value.Input is not null)
+        {
+            writer.WritePropertyName("input"u8);
+            writer.WriteRawValue(value.Input.ToString());
+        }
+
+        if (value.Conversation is not null)
+        {
+            writer.WritePropertyName("conversation"u8);
+            writer.WriteRawValue(value.Conversation.ToString());
         }
 
         if (value.AgentReference is not null)
