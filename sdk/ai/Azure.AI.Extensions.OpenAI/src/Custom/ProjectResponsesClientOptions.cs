@@ -3,11 +3,13 @@
 
 using System;
 using System.ClientModel;
+using System.Diagnostics.CodeAnalysis;
 using OpenAI.Responses;
 
 namespace Azure.AI.Extensions.OpenAI;
 
 /// <summary> Represents options for configuring a project responses client. </summary>
+[Experimental("OPENAI001")]
 public partial class ProjectResponsesClientOptions : ResponsesClientOptions
 {
     private string _apiVersion;

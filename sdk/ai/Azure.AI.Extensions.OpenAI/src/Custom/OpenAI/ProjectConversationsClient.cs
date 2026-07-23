@@ -6,6 +6,7 @@ using System.ClientModel;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using System.Text.Json;
 using System.Threading;
@@ -17,6 +18,7 @@ using OpenAI.Responses;
 namespace Azure.AI.Extensions.OpenAI;
 
 /// <summary> Provides conversation operations for an Azure AI project through the OpenAI conversation API. </summary>
+[Experimental("OPENAI001")]
 public partial class ProjectConversationsClient : ConversationClient
 {
     /*

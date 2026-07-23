@@ -23,6 +23,7 @@ namespace Azure.AI.Extensions.OpenAI
     /// to succeed without editing generated code.
     /// </para>
     /// </summary>
+#pragma warning disable OPENAI001
     internal sealed class ResponseItemKindModel : IJsonModel<object>
     {
         object IPersistableModel<object>.Create(BinaryData data, ModelReaderWriterOptions options)
