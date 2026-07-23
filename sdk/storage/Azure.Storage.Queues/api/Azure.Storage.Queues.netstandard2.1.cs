@@ -1,5 +1,19 @@
 namespace Azure.Storage.Queues
 {
+    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.Storage.Queues.Models.PeekedMessage))]
+    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.Storage.Queues.Models.QueueAccessPolicy))]
+    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.Storage.Queues.Models.QueueAnalyticsLogging))]
+    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.Storage.Queues.Models.QueueCorsRule))]
+    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.Storage.Queues.Models.QueueGeoReplication))]
+    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.Storage.Queues.Models.QueueItem))]
+    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.Storage.Queues.Models.QueueMessage))]
+    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.Storage.Queues.Models.QueueMetrics))]
+    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.Storage.Queues.Models.QueueRetentionPolicy))]
+    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.Storage.Queues.Models.QueueServiceProperties))]
+    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.Storage.Queues.Models.QueueServiceStatistics))]
+    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.Storage.Queues.Models.QueueSignedIdentifier))]
+    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.Storage.Queues.Models.SendReceipt))]
+    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.Storage.Queues.Models.UserDelegationKey))]
     public partial class AzureStorageQueuesContext : System.ClientModel.Primitives.ModelReaderWriterContext
     {
         internal AzureStorageQueuesContext() { }

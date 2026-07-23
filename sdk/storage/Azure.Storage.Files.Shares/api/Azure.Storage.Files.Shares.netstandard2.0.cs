@@ -1,5 +1,19 @@
 namespace Azure.Storage.Files.Shares
 {
+    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.Storage.Files.Shares.Models.ShareAccessPolicy))]
+    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.Storage.Files.Shares.Models.ShareCorsRule))]
+    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.Storage.Files.Shares.Models.ShareMetrics))]
+    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.Storage.Files.Shares.Models.ShareNfsSettings))]
+    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.Storage.Files.Shares.Models.ShareNfsSettingsEncryptionInTransit))]
+    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.Storage.Files.Shares.Models.ShareProtocolSettings))]
+    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.Storage.Files.Shares.Models.ShareRetentionPolicy))]
+    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.Storage.Files.Shares.Models.ShareServiceProperties))]
+    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.Storage.Files.Shares.Models.ShareSignedIdentifier))]
+    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.Storage.Files.Shares.Models.ShareSmbSettings))]
+    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.Storage.Files.Shares.Models.ShareSmbSettingsEncryptionInTransit))]
+    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.Storage.Files.Shares.Models.ShareStatistics))]
+    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.Storage.Files.Shares.Models.SmbMultichannel))]
+    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.Storage.Files.Shares.Models.UserDelegationKey))]
     public partial class AzureStorageFilesSharesContext : System.ClientModel.Primitives.ModelReaderWriterContext
     {
         internal AzureStorageFilesSharesContext() { }
