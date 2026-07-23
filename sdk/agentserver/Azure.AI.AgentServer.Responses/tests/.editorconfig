@@ -1,0 +1,10 @@
+# Copyright (c) Microsoft Corporation. All rights reserved.
+# Licensed under the MIT License.
+
+[*.cs]
+# Tests intentionally exercise shared OpenAI response-model types through
+# AgentServer's compatibility aliases and public reflection coverage. These
+# upstream OpenAI types are experimental and cannot be avoided without losing
+# coverage for the shared model ownership surface.
+dotnet_diagnostic.OPENAI001.severity = none
+dotnet_diagnostic.OPENAICUA001.severity = none

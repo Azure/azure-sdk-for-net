@@ -6,7 +6,7 @@
     <IsPackable>false</IsPackable>
     <IsTestProject>true</IsTestProject>
     <Nullable>annotations</Nullable>
-    <NoWarn>$(NoWarn);CS1591;OPENAI001;OPENAICUA001</NoWarn>
+    <NoWarn>$(NoWarn);CS1591</NoWarn>
   </PropertyGroup>
 
   <!-- Mirror the global using that NuGet consumers get via Core's build props.
