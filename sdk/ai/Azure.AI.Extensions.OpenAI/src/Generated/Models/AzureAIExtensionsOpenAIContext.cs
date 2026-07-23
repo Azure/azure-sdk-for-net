@@ -116,8 +116,6 @@ namespace Azure.AI.Extensions.OpenAI
 #pragma warning restore OPENAI001 // global::Azure.AI.Extensions.OpenAI.Internal.InputItemWebSearchToolCall is experimental and may change in future versions.
     [ModelReaderWriterBuildable(typeof(InternalImageGenToolInputImageMask))]
     [ModelReaderWriterBuildable(typeof(McpToolDefinition))]
-    [ModelReaderWriterBuildable(typeof(McpToolFilter))]
-    [ModelReaderWriterBuildable(typeof(MCPToolRequireApproval))]
 #pragma warning disable OPENAI001 // global::Azure.AI.Extensions.OpenAI.MemoryCommandToolCall is experimental and may change in future versions.
     [ModelReaderWriterBuildable(typeof(MemoryCommandToolCall))]
 #pragma warning restore OPENAI001 // global::Azure.AI.Extensions.OpenAI.MemoryCommandToolCall is experimental and may change in future versions.
