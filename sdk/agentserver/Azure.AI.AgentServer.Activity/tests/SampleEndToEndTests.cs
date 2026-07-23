@@ -7,6 +7,7 @@ using Azure.AI.AgentServer.Activity.Internal;
 using Microsoft.Agents.Builder;
 using Microsoft.Agents.Builder.App;
 using Microsoft.Agents.Builder.State;
+using Microsoft.Agents.Builder.Testing;
 using Microsoft.Agents.Core.Models;
 using Microsoft.Agents.Hosting.AspNetCore;
 using Microsoft.Agents.Storage;
@@ -242,6 +243,40 @@ public class SampleEndToEndTests
     // live Foundry project. Runnable locally with user-supplied credentials + a
     // Foundry project via environment variables; MUST fail with a clear message
     // when that configuration is absent (never silently pass).
+    [Test]
+    public async Task Sample1_EchoAgent_RepliesWithEchoText()
+    {
+        await using var host = AgentTestHost.Create(builder =>
+        {
+            builder.Services.AddSingleton<IStorage, MemoryStorage>();
+            builder.Services.AddTransient<IAgent>(sp =>
+                new EchoAgent(new AgentApplicationOptions(sp.GetRequiredService<IStorage>())));
+        });
+
+        await host.CreateTestFlow()
+            .Send("hi")
+            .AssertReplyContains("Echo: hi")
+            .StartTestAsync();
+    }
+
+    [Test]
+    public async Task Sample2_WelcomeAndCommands_GreetsNewMemberThenEchoes()
+    {
+        await using var host = AgentTestHost.Create(builder =>
+        {
+            builder.Services.AddSingleton<IStorage, MemoryStorage>();
+            builder.Services.AddTransient<IAgent>(sp =>
+                new WelcomeAgent(new AgentApplicationOptions(sp.GetRequiredService<IStorage>())));
+        });
+
+        await host.CreateTestFlow()
+            .SendConversationUpdate(new[] { new ChannelAccount { Id = host.Adapter.Conversation.User.Id } })
+            .AssertReply("Welcome!")
+            .Send("hello")
+            .AssertReplyContains("Echo: hello")
+            .StartTestAsync();
+    }
+
     [Test]
     [Category("Live")]
     public void Sample3_DigitalWorker_DeliversReply_Live()

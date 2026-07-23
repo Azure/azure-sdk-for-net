@@ -23,6 +23,9 @@
   <ItemGroup Condition="$([MSBuild]::IsTargetFrameworkCompatible('$(TargetFramework)', 'net8.0'))">
     <PackageReference Include="Microsoft.AspNetCore.Mvc.Testing" />
     <PackageReference Include="Microsoft.OpenTelemetry" />
+    <!-- Microsoft 365 Agents SDK test harness (TestAdapter / TestFlow / AgentTestHost)
+         used to assert agent reply text offline in SampleEndToEndTests. -->
+    <PackageReference Include="Microsoft.Agents.Builder.Testing" />
   </ItemGroup>
 
   <ItemGroup>
