@@ -1,6 +1,9 @@
 <Project>
   <ItemGroup>
-    <PackageVersion Include="Azure.Identity" Version="1.17.1" />
+    <!-- Latest Azure.Identity: type-forwards the credential types to Azure.Core,
+         hoisting the older transitive pulled in by the Microsoft.Agents.* packages
+         so there is no duplicate ManagedIdentityCredential definition. -->
+    <PackageVersion Include="Azure.Identity" Version="1.21.0" />
     <PackageVersion Include="Microsoft.Agents.Authentication.Msal" Version="1.6.150" />
     <PackageVersion Include="Microsoft.Agents.Connector" Version="1.6.150" />
     <PackageVersion Include="Microsoft.Agents.Hosting.AspNetCore" Version="1.6.150" />

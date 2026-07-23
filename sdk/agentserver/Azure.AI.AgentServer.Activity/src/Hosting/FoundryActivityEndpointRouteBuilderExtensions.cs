@@ -113,7 +113,7 @@ public static class FoundryActivityEndpointRouteBuilderExtensions
             {
                 // Apply the Foundry platform response contract (session-id header + baggage) around
                 // the caller's handler; the caller owns reading the request and writing the response.
-                handler.StampSessionAndBaggage(context);
+                await handler.StampSessionAndBaggageAsync(context).ConfigureAwait(false);
                 await requestHandler(context).ConfigureAwait(false);
             }).AddEndpointFilter<ActivityErrorSourceFilter>();
         }

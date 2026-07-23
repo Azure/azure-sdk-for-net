@@ -32,4 +32,22 @@ internal static partial class ActivityIdSanitizer
 
         return value;
     }
+
+    /// <summary>
+    /// Sanitizes an optional ID value used for correlation only (e.g. conversation id). Returns the
+    /// original value if it passes validation, or <c>null</c> if it is null, empty, too long, or
+    /// contains unsafe characters — unlike <see cref="Sanitize(string?)"/>, this never fabricates a
+    /// replacement id, so an absent/invalid value simply omits the correlation tag.
+    /// </summary>
+    internal static string? SanitizeOrNull(string? value)
+    {
+        if (string.IsNullOrEmpty(value)
+            || value.Length > MaxIdLength
+            || !SafeIdPattern().IsMatch(value))
+        {
+            return null;
+        }
+
+        return value;
+    }
 }

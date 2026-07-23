@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 using System.Security.Claims;
+using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.AI.AgentServer.Core;
@@ -68,7 +69,7 @@ internal sealed class ActivityEndpointHandler
         ArgumentNullException.ThrowIfNull(adapter);
         ArgumentNullException.ThrowIfNull(agent);
 
-        StampSessionAndBaggage(context);
+        await StampSessionAndBaggageAsync(context).ConfigureAwait(false);
 
         // The Foundry gateway is a trusted, network-isolated proxy; inbound requests are not Bot
         // Framework channel JWTs. Set the synthesized outbound claims on the request principal so
@@ -86,7 +87,7 @@ internal sealed class ActivityEndpointHandler
     /// current request span. Safe to call for custom request handlers that bypass the SDK adapter.
     /// </summary>
     /// <param name="context">The current request context.</param>
-    public void StampSessionAndBaggage(HttpContext context)
+    public async Task StampSessionAndBaggageAsync(HttpContext context)
     {
         ArgumentNullException.ThrowIfNull(context);
 
@@ -96,9 +97,58 @@ internal sealed class ActivityEndpointHandler
         var sessionId = ActivityIdSanitizer.Sanitize(ActivitySessionIdResolver.Resolve(context.Request));
         context.Response.Headers[PlatformHeaders.SessionId] = sessionId;
 
+        // Best-effort: resolve the conversation id from the inbound activity so traces can
+        // correlate a turn to its conversation (surfaced by the Core enrichment processor as the
+        // gen_ai.conversation.id tag). Sanitized to a null on absent/invalid values so we never
+        // stamp a fabricated correlation id.
+        var conversationId = ActivityIdSanitizer.SanitizeOrNull(
+            await TryReadConversationIdAsync(context.Request).ConfigureAwait(false));
+
         // Promote correlation baggage onto the current request span so the core enrichment
-        // processor stamps the session id onto every span (and the core log enrichment onto logs).
-        _tracing.PropagateActivityBaggage(sessionId);
+        // processor stamps the session id (and conversation id, if any) onto every span and log.
+        _tracing.PropagateActivityBaggage(sessionId, conversationId);
+    }
+
+    /// <summary>
+    /// Best-effort extraction of <c>conversation.id</c> from the inbound activity JSON body. Enables
+    /// request buffering and rewinds the stream so the adapter (or custom handler) can still read
+    /// the body. Never throws — correlation is a diagnostic concern, not a request-failure one.
+    /// </summary>
+    private static async Task<string?> TryReadConversationIdAsync(HttpRequest request)
+    {
+        if (request.ContentLength == 0)
+        {
+            return null;
+        }
+
+        try
+        {
+            request.EnableBuffering();
+            request.Body.Position = 0;
+            using var document = await JsonDocument.ParseAsync(request.Body).ConfigureAwait(false);
+
+            if (document.RootElement.ValueKind == JsonValueKind.Object
+                && document.RootElement.TryGetProperty("conversation", out var conversation)
+                && conversation.ValueKind == JsonValueKind.Object
+                && conversation.TryGetProperty("id", out var id)
+                && id.ValueKind == JsonValueKind.String)
+            {
+                return id.GetString();
+            }
+        }
+        catch (JsonException)
+        {
+            // Non-JSON or malformed body — no conversation id to correlate.
+        }
+        finally
+        {
+            if (request.Body.CanSeek)
+            {
+                request.Body.Position = 0;
+            }
+        }
+
+        return null;
     }
 
     /// <summary>
