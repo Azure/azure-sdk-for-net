@@ -136,13 +136,25 @@
 # ServiceOwners: @bganapa
 
 # PRLabel: %Azure.Core
-/sdk/tools/Azure.SdkAnalyzers/    @jsquire @m-nash
+/sdk/tools/Azure.SdkAnalyzers/    @jsquire @m-nash @m-redding
 
 # PRLabel: %Batch
 /sdk/batch/    @cRui861 @dpwatrous @iwang2 @lilinvictorms @skapur12 @wanghoppe @wiboris @xingwu1
 
 # ServiceLabel: %Batch
 # ServiceOwners: @dpwatrous @iwang2 @lilinvictorms @wiboris @xingwu1
+
+# PRLabel: %Cognitive - Anomaly Detector
+/sdk/anomalydetector/Azure.AI.AnomalyDetector/    @quentinRobinson @sarkar-rajarshi
+
+# ServiceLabel: %Cognitive - Anomaly Detector
+# ServiceOwners: @quentinRobinson @sarkar-rajarshi
+
+# PRLabel: %Cognitive - Content Safety
+/sdk/contentsafety/Azure.AI.ContentSafety/    @bojunehsu @changjian-wang
+
+# ServiceLabel: %Cognitive - Content Safety
+# ServiceOwners: @bojunehsu @changjian-wang
 
 # PRLabel: %Cognitive - Content Understanding
 /sdk/contentunderstanding/    @bojunehsu @changjian-wang @chienyuanchang @yungshinlintw
@@ -178,7 +190,7 @@
 /sdk/cognitivelanguage/Azure.AI.Language.QuestionAnswering.Inference/    @ahmedaashour @Amichelangelo @bidisha-c @mikaelsitruk @quentinRobinson @sarkar-rajarshi
 
 # ServiceLabel: %Cognitive - Language
-# ServiceOwners: @quentinRobinson
+# ServiceOwners: @quentinRobinson @sarkar-rajarshi
 
 # PRLabel: %Cognitive - Text Analytics
 /sdk/textanalytics/    @quentinRobinson
@@ -190,10 +202,19 @@
 /sdk/translation/    @jrjrguo
 
 # PRLabel: %Cognitive - Translator
+/sdk/translation/Azure.AI.Translation.Document/    @jrjrguo @quentinRobinson
+
+# PRLabel: %Cognitive - Translator
 /sdk/translation/Azure.AI.Translation.Text/    @jrjrguo @quentinRobinson
 
 # ServiceLabel: %Cognitive - Translator
 # ServiceOwners: @jrjrguo @quentinRobinson
+
+# PRLabel: %Communication
+/sdk/communication/Azure.Communication.JobRouter/    @marche0133 @sarkar-rajarshi
+
+# ServiceLabel: %Communication
+# ServiceOwners: @Azure/azure-sdk-write-communication
 
 # PRLabel: %Communication - Call Automation
 /sdk/communication/Azure.Communication.CallAutomation/    @juntuchen-msft @minwoolee-msft
@@ -336,6 +357,9 @@
 # PRLabel: %Monitor
 /sdk/monitor/Azure.Monitor.Ingestion/    @Azure/azure-sdk-write-monitor-data-plane
 
+# ServiceLabel: %Monitor
+# ServiceOwners: @joshfree @srnagar
+
 # PRLabel: %Monitor - Distro
 /sdk/monitor/Azure.Monitor.OpenTelemetry.AspNetCore/    @harsimar @mattsains-msft @rajkumar-rangaraj @xiang17
 
@@ -358,7 +382,7 @@
 /sdk/monitor/Azure.Monitor.Query.Metrics/    @Azure/azure-sdk-write-monitor-query-metrics
 
 # ServiceLabel: %Monitor - Query
-# ServiceOwners: @ToddKingMSFT
+# ServiceOwners: @srnagar @ToddKingMSFT
 
 # PRLabel: %Online Experimentation
 /sdk/onlineexperimentation/    @Azure/azure-sdk-write-onlineexperimentation
@@ -383,6 +407,12 @@
 
 # ServiceLabel: %PostgreSQL Auth
 # ServiceOwners: @alxhghs @carlovi81 @mattboentoro @nasc17 @nehrao1 @rmendiza
+
+# PRLabel: %Purview
+/sdk/purview/Azure.Analytics.Purview.DataMap/    @JoshLove-msft @qiaozha
+
+# ServiceLabel: %Purview
+# ServiceOwners: @JoshLove-msft @qiaozha
 
 # PRLabel: %Schema Registry
 /sdk/schemaregistry/    @axisc @hmlam @sjkwak
@@ -510,9 +540,6 @@
 
 # ServiceLabel: %Commerce
 # ServiceOwners: @qiaozha
-
-# ServiceLabel: %Communication
-# ServiceOwners: @Azure/azure-sdk-write-communication
 
 # ServiceLabel: %Compute - Extensions
 # ServiceOwners: @TravisCragg-MSFT
