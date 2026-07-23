@@ -15,13 +15,13 @@ using Azure.ResourceManager;
 namespace Azure.ResourceManager.MachineLearning
 {
     /// <summary></summary>
-    internal partial class MachineLearninRegistryComponentContainerResourceOperationSource : IOperationSource<MachineLearninRegistryComponentContainerResource>
+    internal partial class MachineLearningRegistryComponentContainerResourceOperationSource : IOperationSource<MachineLearningRegistryComponentContainerResource>
     {
         private readonly ArmClient _client;
 
         /// <summary></summary>
         /// <param name="client"></param>
-        internal MachineLearninRegistryComponentContainerResourceOperationSource(ArmClient client)
+        internal MachineLearningRegistryComponentContainerResourceOperationSource(ArmClient client)
         {
             _client = client;
         }
@@ -29,21 +29,21 @@ namespace Azure.ResourceManager.MachineLearning
         /// <param name="response"> The response from the service. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns></returns>
-        MachineLearninRegistryComponentContainerResource IOperationSource<MachineLearninRegistryComponentContainerResource>.CreateResult(Response response, CancellationToken cancellationToken)
+        MachineLearningRegistryComponentContainerResource IOperationSource<MachineLearningRegistryComponentContainerResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
             using JsonDocument document = JsonDocument.Parse(response.ContentStream);
             MachineLearningComponentContainerData data = MachineLearningComponentContainerData.DeserializeMachineLearningComponentContainerData(document.RootElement, ModelSerializationExtensions.WireOptions);
-            return new MachineLearninRegistryComponentContainerResource(_client, data);
+            return new MachineLearningRegistryComponentContainerResource(_client, data);
         }
 
         /// <param name="response"> The response from the service. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns></returns>
-        async ValueTask<MachineLearninRegistryComponentContainerResource> IOperationSource<MachineLearninRegistryComponentContainerResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
+        async ValueTask<MachineLearningRegistryComponentContainerResource> IOperationSource<MachineLearningRegistryComponentContainerResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using JsonDocument document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
             MachineLearningComponentContainerData data = MachineLearningComponentContainerData.DeserializeMachineLearningComponentContainerData(document.RootElement, ModelSerializationExtensions.WireOptions);
-            return new MachineLearninRegistryComponentContainerResource(_client, data);
+            return new MachineLearningRegistryComponentContainerResource(_client, data);
         }
     }
 }
