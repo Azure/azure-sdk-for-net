@@ -17,6 +17,11 @@ namespace Azure.Data.AppConfiguration
         public static bool operator !=(Azure.Data.AppConfiguration.AppConfigurationAudience left, Azure.Data.AppConfiguration.AppConfigurationAudience right) { throw null; }
         public override string ToString() { throw null; }
     }
+    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.Data.AppConfiguration.ConfigurationSetting))]
+    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.Data.AppConfiguration.ConfigurationSettingsFilter))]
+    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.Data.AppConfiguration.ConfigurationSnapshot))]
+    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.Data.AppConfiguration.SettingLabel))]
+    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResponseError))]
     public partial class AzureDataAppConfigurationContext : System.ClientModel.Primitives.ModelReaderWriterContext
     {
         internal AzureDataAppConfigurationContext() { }
