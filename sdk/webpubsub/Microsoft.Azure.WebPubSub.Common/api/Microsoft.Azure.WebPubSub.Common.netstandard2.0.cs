@@ -348,7 +348,7 @@ namespace Microsoft.Azure.WebPubSub.Common
         [System.Text.Json.Serialization.JsonPropertyNameAttribute("thumbprint")]
         public string Thumbprint { get { throw null; } }
     }
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Text.Json.SourceGeneration", "10.0.14.7603")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Text.Json.SourceGeneration", "10.0.14.27113")]
     [System.Text.Json.Serialization.JsonSerializableAttribute(typeof(Microsoft.Azure.WebPubSub.Common.ConnectEventRequest))]
     [System.Text.Json.Serialization.JsonSerializableAttribute(typeof(Microsoft.Azure.WebPubSub.Common.ConnectEventResponse))]
     [System.Text.Json.Serialization.JsonSerializableAttribute(typeof(Microsoft.Azure.WebPubSub.Common.DisconnectedEventRequest))]

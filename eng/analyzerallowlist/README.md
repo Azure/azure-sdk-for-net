@@ -25,29 +25,87 @@ For example: `Azure.Storage.Blobs.txt`, `Azure.Identity.txt`
 # Comments start with #
 # Blank lines are ignored
 
-# NoWarn entries — codes allowed in <NoWarn> in the .csproj
+# Whole-assembly NoWarn entries — codes injected into $(NoWarn) at build time
 nowarn:AZC0035
 nowarn:CS1591
 
-# (Future) Inline suppression entries — codes allowed in #pragma / [SuppressMessage]
-# AZC0002:M:Azure.Storage.Blobs.AppendBlobClient.AppendBlock
+# Per-symbol entries — handled by AllowListDiagnosticSuppressor in Azure.SdkAnalyzers
+nowarn:AZC0034 T:Azure.Foo.Bar                       # all sites inside type Foo.Bar
+nowarn:AZC0007 M:Azure.Foo.Bar.#ctor(System.String)  # one specific member
+nowarn:CS0618 N:Azure.Foo.Models                     # everything in namespace + descendants
+nowarn:OPENAI001 SourceGenerated                     # only sites inside *.g.cs generator output
 ```
 
 ### `nowarn:CODE`
 
-Each `nowarn:` line approves the use of `CODE` for the project **and applies it
-automatically** — the build system injects approved codes into `$(NoWarn)` before
-compilation, so projects should **not** keep an equivalent entry in the csproj's
-`<NoWarn>` property. The allow-list file is the single source of truth: every
-listed code is both reviewed and active.
+A bare `nowarn:` line (no scope) approves the use of `CODE` for the entire project
+**and applies it automatically** — the build system injects approved codes into
+`$(NoWarn)` before compilation, so projects should **not** keep an equivalent entry
+in the csproj's `<NoWarn>` property. The allow-list file is the single source of
+truth: every listed code is both reviewed and active.
 
 If a code appears in the csproj's `<NoWarn>` without being on this list (and not
 in the central allow-list), the build fails with `AZSDK0002`.
 
-### `CODE:SYMBOL` (future)
+### `nowarn:CODE Target` — per-symbol suppression
 
-These entries will be consumed by a Roslyn analyzer to approve inline suppressions
-(`#pragma warning disable` and `[SuppressMessage]`). This format is not yet enforced.
+A scoped entry is written as `nowarn:CODE Target` where `CODE` and `Target` are
+separated by **a single space character** (not a tab or any other whitespace).
+The `Target` is a Roslyn DocumentationCommentId; the kind prefix tells the
+analyzer what scope to apply:
+
+| Prefix | Scope |
+|--------|-------|
+| `T:`   | The named type and everything declared inside it (including nested types) |
+| `M:`   | The named method or constructor |
+| `N:`   | The named namespace and every type / member declared inside it |
+| `P:`   | The named property |
+| `F:`   | The named field |
+| `E:`   | The named event |
+
+A leading `~` (e.g., `~T:Foo`) is tolerated for parity with the
+`[SuppressMessage(Target = "~T:Foo")]` attribute form but is not required.
+
+**Why use scoped entries?** A bare `nowarn:AZC0034` silences the diagnostic for
+the entire assembly forever — including types that don't exist yet. A scoped
+entry keeps the analyzer live for every site except the specific symbol the
+SDK team has reviewed and approved.
+
+### `nowarn:CODE SourceGenerated` — source-generator-output suppression
+
+A scoped entry whose target is the keyword `SourceGenerated` (case-insensitive)
+suppresses `CODE` only at sites inside **source-generator output** — files whose
+path ends with `.g.cs`. These are emitted by a source generator at build time and
+exist only in the compiler's view, so they cannot be edited or `#pragma`-annotated
+at the source (e.g. the compile-time `ModelReaderWriterContext` partial that
+references external experimental types).
+
+This scope deliberately does **not** cover checked-in generated code under a
+`Generated/` folder. That code is regenerable, so a diagnostic there should be
+fixed at its source — correct per-symbol `[Experimental]` attribution or a tight
+`#pragma` emitted by the code generator — rather than silenced by a blanket
+suppression. Example:
+
+```
+# OPENAI001 refs the source generator emits into the compile-time
+# ModelReaderWriterContext .g.cs (references to the external experimental
+# OpenAI.OpenAIContext) that we cannot annotate at the source. Hand-written and
+# checked-in generated code carry per-symbol [Experimental]/pragmas instead.
+nowarn:OPENAI001 SourceGenerated
+```
+
+**Limitation:** scoped suppression (both symbol- and `SourceGenerated`-scoped)
+only works for diagnostics whose descriptor declares `DiagnosticSeverity.Warning`
+(or lower). Roslyn's `DiagnosticSuppressor` pipeline dispatches on the
+descriptor's **default** severity, so a warning promoted to an error by
+`/warnaserror` is still suppressible; a diagnostic whose descriptor ships as
+`DiagnosticSeverity.Error` (e.g., `AZC0034` in `azure-sdk-tools`) is not. Note
+that `[Experimental("…")]` diagnostics such as `OPENAI001` have a **Warning**
+default severity (the attribute promotes them to errors), so they *can* be
+scoped-suppressed — for a genuine `Error`-descriptor diagnostic, the underlying
+analyzer must instead ship the descriptor as Warning with `/warnaserror+`
+elevating it back to Error globally.
+
 
 ## How It Works
 

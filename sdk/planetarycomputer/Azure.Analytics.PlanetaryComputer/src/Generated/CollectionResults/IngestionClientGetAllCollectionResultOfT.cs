@@ -54,8 +54,8 @@ namespace Azure.Analytics.PlanetaryComputer
                     yield break;
                 }
                 IngestionDefinitionPagedResponse result = (IngestionDefinitionPagedResponse)response;
-                yield return Page<IngestionInformation>.FromValues((IReadOnlyList<IngestionInformation>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 nextPage = result.NextLink;
+                yield return Page<IngestionInformation>.FromValues((IReadOnlyList<IngestionInformation>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 if (nextPage == null)
                 {
                     yield break;

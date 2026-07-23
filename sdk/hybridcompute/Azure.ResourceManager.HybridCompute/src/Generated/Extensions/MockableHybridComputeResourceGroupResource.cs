@@ -8,41 +8,31 @@
 using System;
 using System.Threading;
 using System.Threading.Tasks;
+using Azure;
 using Azure.Core;
-using Azure.Core.Pipeline;
-using Azure.ResourceManager.HybridCompute.Models;
+using Azure.ResourceManager;
+using Azure.ResourceManager.HybridCompute;
+using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.HybridCompute.Mocking
 {
-    /// <summary> A class to add extension methods to ResourceGroupResource. </summary>
+    /// <summary> A class to add extension methods to <see cref="ResourceGroupResource"/>. </summary>
     public partial class MockableHybridComputeResourceGroupResource : ArmResource
     {
-        private ClientDiagnostics _settingsClientDiagnostics;
-        private SettingsRestOperations _settingsRestClient;
-
-        /// <summary> Initializes a new instance of the <see cref="MockableHybridComputeResourceGroupResource"/> class for mocking. </summary>
+        /// <summary> Initializes a new instance of MockableHybridComputeResourceGroupResource for mocking. </summary>
         protected MockableHybridComputeResourceGroupResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref="MockableHybridComputeResourceGroupResource"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="MockableHybridComputeResourceGroupResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal MockableHybridComputeResourceGroupResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
         }
 
-        private ClientDiagnostics SettingsClientDiagnostics => _settingsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.HybridCompute", ProviderConstants.DefaultProviderNamespace, Diagnostics);
-        private SettingsRestOperations SettingsRestClient => _settingsRestClient ??= new SettingsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint);
-
-        private string GetApiVersionOrNull(ResourceType resourceType)
-        {
-            TryGetApiVersion(resourceType, out string apiVersion);
-            return apiVersion;
-        }
-
-        /// <summary> Gets a collection of HybridComputeLicenseResources in the ResourceGroupResource. </summary>
-        /// <returns> An object representing collection of HybridComputeLicenseResources and their operations over a HybridComputeLicenseResource. </returns>
+        /// <summary> Gets a collection of HybridComputeLicenses in the <see cref="ResourceGroupResource"/>. </summary>
+        /// <returns> An object representing collection of HybridComputeLicenses and their operations over a HybridComputeLicenseResource. </returns>
         public virtual HybridComputeLicenseCollection GetHybridComputeLicenses()
         {
             return GetCachedClient(client => new HybridComputeLicenseCollection(client, Id));
@@ -52,20 +42,16 @@ namespace Azure.ResourceManager.HybridCompute.Mocking
         /// Retrieves information about the view of a license.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.HybridCompute/licenses/{licenseName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.HybridCompute/licenses/{licenseName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Licenses_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> Licenses_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-07-31-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="HybridComputeLicenseResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-09-16-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -76,6 +62,8 @@ namespace Azure.ResourceManager.HybridCompute.Mocking
         [ForwardsClientCalls]
         public virtual async Task<Response<HybridComputeLicenseResource>> GetHybridComputeLicenseAsync(string licenseName, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNullOrEmpty(licenseName, nameof(licenseName));
+
             return await GetHybridComputeLicenses().GetAsync(licenseName, cancellationToken).ConfigureAwait(false);
         }
 
@@ -83,20 +71,16 @@ namespace Azure.ResourceManager.HybridCompute.Mocking
         /// Retrieves information about the view of a license.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.HybridCompute/licenses/{licenseName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.HybridCompute/licenses/{licenseName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Licenses_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> Licenses_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-07-31-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="HybridComputeLicenseResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-09-16-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -107,82 +91,20 @@ namespace Azure.ResourceManager.HybridCompute.Mocking
         [ForwardsClientCalls]
         public virtual Response<HybridComputeLicenseResource> GetHybridComputeLicense(string licenseName, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNullOrEmpty(licenseName, nameof(licenseName));
+
             return GetHybridComputeLicenses().Get(licenseName, cancellationToken);
         }
 
-        /// <summary> Gets a collection of HybridComputeMachineResources in the ResourceGroupResource. </summary>
-        /// <returns> An object representing collection of HybridComputeMachineResources and their operations over a HybridComputeMachineResource. </returns>
+        /// <summary> Gets a collection of HybridComputeMachines in the <see cref="ResourceGroupResource"/>. </summary>
+        /// <returns> An object representing collection of HybridComputeMachines and their operations over a HybridComputeMachineResource. </returns>
         public virtual HybridComputeMachineCollection GetHybridComputeMachines()
         {
             return GetCachedClient(client => new HybridComputeMachineCollection(client, Id));
         }
 
-        /// <summary>
-        /// Retrieves information about the model view or the instance view of a hybrid machine.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.HybridCompute/machines/{machineName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Machines_Get</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-07-31-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="HybridComputeMachineResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="machineName"> The name of the hybrid machine. </param>
-        /// <param name="expand"> The expand expression to apply on the operation. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="machineName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="machineName"/> is an empty string, and was expected to be non-empty. </exception>
-        [ForwardsClientCalls]
-        public virtual async Task<Response<HybridComputeMachineResource>> GetHybridComputeMachineAsync(string machineName, string expand = null, CancellationToken cancellationToken = default)
-        {
-            return await GetHybridComputeMachines().GetAsync(machineName, expand, cancellationToken).ConfigureAwait(false);
-        }
-
-        /// <summary>
-        /// Retrieves information about the model view or the instance view of a hybrid machine.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.HybridCompute/machines/{machineName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Machines_Get</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-07-31-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="HybridComputeMachineResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="machineName"> The name of the hybrid machine. </param>
-        /// <param name="expand"> The expand expression to apply on the operation. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="machineName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="machineName"/> is an empty string, and was expected to be non-empty. </exception>
-        [ForwardsClientCalls]
-        public virtual Response<HybridComputeMachineResource> GetHybridComputeMachine(string machineName, string expand = null, CancellationToken cancellationToken = default)
-        {
-            return GetHybridComputeMachines().Get(machineName, expand, cancellationToken);
-        }
-
-        /// <summary> Gets a collection of ArcGatewayResources in the ResourceGroupResource. </summary>
-        /// <returns> An object representing collection of ArcGatewayResources and their operations over a ArcGatewayResource. </returns>
+        /// <summary> Gets a collection of ArcGateways in the <see cref="ResourceGroupResource"/>. </summary>
+        /// <returns> An object representing collection of ArcGateways and their operations over a ArcGatewayResource. </returns>
         public virtual ArcGatewayCollection GetArcGateways()
         {
             return GetCachedClient(client => new ArcGatewayCollection(client, Id));
@@ -192,20 +114,16 @@ namespace Azure.ResourceManager.HybridCompute.Mocking
         /// Retrieves information about the view of a gateway.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.HybridCompute/gateways/{gatewayName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.HybridCompute/gateways/{gatewayName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Gateways_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> Gateways_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-07-31-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ArcGatewayResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-09-16-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -216,6 +134,8 @@ namespace Azure.ResourceManager.HybridCompute.Mocking
         [ForwardsClientCalls]
         public virtual async Task<Response<ArcGatewayResource>> GetArcGatewayAsync(string gatewayName, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNullOrEmpty(gatewayName, nameof(gatewayName));
+
             return await GetArcGateways().GetAsync(gatewayName, cancellationToken).ConfigureAwait(false);
         }
 
@@ -223,20 +143,16 @@ namespace Azure.ResourceManager.HybridCompute.Mocking
         /// Retrieves information about the view of a gateway.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.HybridCompute/gateways/{gatewayName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.HybridCompute/gateways/{gatewayName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Gateways_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> Gateways_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-07-31-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ArcGatewayResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-09-16-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -247,11 +163,13 @@ namespace Azure.ResourceManager.HybridCompute.Mocking
         [ForwardsClientCalls]
         public virtual Response<ArcGatewayResource> GetArcGateway(string gatewayName, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNullOrEmpty(gatewayName, nameof(gatewayName));
+
             return GetArcGateways().Get(gatewayName, cancellationToken);
         }
 
-        /// <summary> Gets a collection of HybridComputePrivateLinkScopeResources in the ResourceGroupResource. </summary>
-        /// <returns> An object representing collection of HybridComputePrivateLinkScopeResources and their operations over a HybridComputePrivateLinkScopeResource. </returns>
+        /// <summary> Gets a collection of HybridComputePrivateLinkScopes in the <see cref="ResourceGroupResource"/>. </summary>
+        /// <returns> An object representing collection of HybridComputePrivateLinkScopes and their operations over a HybridComputePrivateLinkScopeResource. </returns>
         public virtual HybridComputePrivateLinkScopeCollection GetHybridComputePrivateLinkScopes()
         {
             return GetCachedClient(client => new HybridComputePrivateLinkScopeCollection(client, Id));
@@ -261,20 +179,16 @@ namespace Azure.ResourceManager.HybridCompute.Mocking
         /// Returns a Azure Arc PrivateLinkScope.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.HybridCompute/privateLinkScopes/{scopeName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.HybridCompute/privateLinkScopes/{scopeName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>PrivateLinkScopes_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> HybridComputePrivateLinkScopes_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-07-31-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="HybridComputePrivateLinkScopeResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-09-16-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -285,6 +199,8 @@ namespace Azure.ResourceManager.HybridCompute.Mocking
         [ForwardsClientCalls]
         public virtual async Task<Response<HybridComputePrivateLinkScopeResource>> GetHybridComputePrivateLinkScopeAsync(string scopeName, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNullOrEmpty(scopeName, nameof(scopeName));
+
             return await GetHybridComputePrivateLinkScopes().GetAsync(scopeName, cancellationToken).ConfigureAwait(false);
         }
 
@@ -292,20 +208,16 @@ namespace Azure.ResourceManager.HybridCompute.Mocking
         /// Returns a Azure Arc PrivateLinkScope.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.HybridCompute/privateLinkScopes/{scopeName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.HybridCompute/privateLinkScopes/{scopeName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>PrivateLinkScopes_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> HybridComputePrivateLinkScopes_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-07-31-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="HybridComputePrivateLinkScopeResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-09-16-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -316,101 +228,9 @@ namespace Azure.ResourceManager.HybridCompute.Mocking
         [ForwardsClientCalls]
         public virtual Response<HybridComputePrivateLinkScopeResource> GetHybridComputePrivateLinkScope(string scopeName, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNullOrEmpty(scopeName, nameof(scopeName));
+
             return GetHybridComputePrivateLinkScopes().Get(scopeName, cancellationToken);
-        }
-
-        /// <summary>
-        /// Updates the base Settings of the target resource.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{baseProvider}/{baseResourceType}/{baseResourceName}/providers/Microsoft.HybridCompute/settings/{settingsResourceName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Settings_Update</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-07-31-preview</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="baseProvider"> The name of the base Resource Provider. </param>
-        /// <param name="baseResourceType"> The name of the base Resource Type. </param>
-        /// <param name="baseResourceName"> The name of the base resource. </param>
-        /// <param name="settingsResourceName"> The name of the settings resource. </param>
-        /// <param name="arcSettings"> Settings details. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="baseProvider"/>, <paramref name="baseResourceType"/>, <paramref name="baseResourceName"/> or <paramref name="settingsResourceName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="baseProvider"/>, <paramref name="baseResourceType"/>, <paramref name="baseResourceName"/>, <paramref name="settingsResourceName"/> or <paramref name="arcSettings"/> is null. </exception>
-        public virtual async Task<Response<ArcSettings>> UpdateSettingAsync(string baseProvider, string baseResourceType, string baseResourceName, string settingsResourceName, ArcSettings arcSettings, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(baseProvider, nameof(baseProvider));
-            Argument.AssertNotNullOrEmpty(baseResourceType, nameof(baseResourceType));
-            Argument.AssertNotNullOrEmpty(baseResourceName, nameof(baseResourceName));
-            Argument.AssertNotNullOrEmpty(settingsResourceName, nameof(settingsResourceName));
-            Argument.AssertNotNull(arcSettings, nameof(arcSettings));
-
-            using var scope = SettingsClientDiagnostics.CreateScope("MockableHybridComputeResourceGroupResource.UpdateSetting");
-            scope.Start();
-            try
-            {
-                var response = await SettingsRestClient.UpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, baseProvider, baseResourceType, baseResourceName, settingsResourceName, arcSettings, cancellationToken).ConfigureAwait(false);
-                return response;
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// Updates the base Settings of the target resource.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{baseProvider}/{baseResourceType}/{baseResourceName}/providers/Microsoft.HybridCompute/settings/{settingsResourceName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Settings_Update</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-07-31-preview</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="baseProvider"> The name of the base Resource Provider. </param>
-        /// <param name="baseResourceType"> The name of the base Resource Type. </param>
-        /// <param name="baseResourceName"> The name of the base resource. </param>
-        /// <param name="settingsResourceName"> The name of the settings resource. </param>
-        /// <param name="arcSettings"> Settings details. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="baseProvider"/>, <paramref name="baseResourceType"/>, <paramref name="baseResourceName"/> or <paramref name="settingsResourceName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="baseProvider"/>, <paramref name="baseResourceType"/>, <paramref name="baseResourceName"/>, <paramref name="settingsResourceName"/> or <paramref name="arcSettings"/> is null. </exception>
-        public virtual Response<ArcSettings> UpdateSetting(string baseProvider, string baseResourceType, string baseResourceName, string settingsResourceName, ArcSettings arcSettings, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(baseProvider, nameof(baseProvider));
-            Argument.AssertNotNullOrEmpty(baseResourceType, nameof(baseResourceType));
-            Argument.AssertNotNullOrEmpty(baseResourceName, nameof(baseResourceName));
-            Argument.AssertNotNullOrEmpty(settingsResourceName, nameof(settingsResourceName));
-            Argument.AssertNotNull(arcSettings, nameof(arcSettings));
-
-            using var scope = SettingsClientDiagnostics.CreateScope("MockableHybridComputeResourceGroupResource.UpdateSetting");
-            scope.Start();
-            try
-            {
-                var response = SettingsRestClient.Update(Id.SubscriptionId, Id.ResourceGroupName, baseProvider, baseResourceType, baseResourceName, settingsResourceName, arcSettings, cancellationToken);
-                return response;
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
         }
     }
 }

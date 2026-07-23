@@ -7,43 +7,15 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.ApiManagement;
 
 namespace Azure.ResourceManager.ApiManagement.Models
 {
     /// <summary> Quota counter value details. </summary>
     public partial class QuotaCounterValueUpdateContent
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="QuotaCounterValueUpdateContent"/>. </summary>
         public QuotaCounterValueUpdateContent()
@@ -51,21 +23,52 @@ namespace Azure.ResourceManager.ApiManagement.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="QuotaCounterValueUpdateContent"/>. </summary>
-        /// <param name="callsCount"> Number of times Counter was called. </param>
-        /// <param name="kbTransferred"> Data Transferred in KiloBytes. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal QuotaCounterValueUpdateContent(int? callsCount, double? kbTransferred, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="properties"> Quota counter value details. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal QuotaCounterValueUpdateContent(QuotaCounterValueContractProperties properties, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
-            CallsCount = callsCount;
-            KbTransferred = kbTransferred;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            Properties = properties;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
+
+        /// <summary> Quota counter value details. </summary>
+        [WirePath("properties")]
+        internal QuotaCounterValueContractProperties Properties { get; set; }
 
         /// <summary> Number of times Counter was called. </summary>
         [WirePath("properties.callsCount")]
-        public int? CallsCount { get; set; }
+        public int? CallsCount
+        {
+            get
+            {
+                return Properties is null ? default : Properties.CallsCount;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new QuotaCounterValueContractProperties();
+                }
+                Properties.CallsCount = value;
+            }
+        }
+
         /// <summary> Data Transferred in KiloBytes. </summary>
         [WirePath("properties.kbTransferred")]
-        public double? KbTransferred { get; set; }
+        public double? KbTransferred
+        {
+            get
+            {
+                return Properties is null ? default : Properties.KbTransferred;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new QuotaCounterValueContractProperties();
+                }
+                Properties.KbTransferred = value;
+            }
+        }
     }
 }

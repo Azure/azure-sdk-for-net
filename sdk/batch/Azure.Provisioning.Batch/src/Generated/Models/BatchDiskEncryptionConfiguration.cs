@@ -57,6 +57,10 @@ namespace Azure.Provisioning.Batch
             base.DefineProvisionableProperties();
             _targets = DefineListProperty<BatchDiskEncryptionTarget>(nameof(Targets), new string[] { "targets" });
             _customerManagedKey = DefineModelProperty<BatchDiskCustomerManagedKey>(nameof(CustomerManagedKey), new string[] { "customerManagedKey" });
+            DefineAdditionalProperties();
         }
+
+        /// <summary> Define additional provisionable properties for BatchDiskEncryptionConfiguration that are not part of the generated code. </summary>
+        partial void DefineAdditionalProperties();
     }
 }

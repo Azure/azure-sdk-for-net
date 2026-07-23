@@ -9,14 +9,967 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
+using Azure;
 using Azure.Core;
+using Azure.ResourceManager.IotHub;
 using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.IotHub.Models
 {
-    /// <summary> Model factory for models. </summary>
+    /// <summary> A factory class for creating instances of the models for mocking. </summary>
     public static partial class ArmIotHubModelFactory
     {
+
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="properties"> The properties of a private endpoint connection. </param>
+        /// <returns> A new <see cref="IotHub.IotHubPrivateEndpointConnectionData"/> instance for mocking. </returns>
+        public static IotHubPrivateEndpointConnectionData IotHubPrivateEndpointConnectionData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IotHubPrivateEndpointConnectionProperties properties = default)
+        {
+            return new IotHubPrivateEndpointConnectionData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                properties,
+                default);
+        }
+
+        /// <param name="privateEndpointId"> The resource identifier. </param>
+        /// <param name="connectionState"> The current state of a private endpoint connection. </param>
+        /// <returns> A new <see cref="Models.IotHubPrivateEndpointConnectionProperties"/> instance for mocking. </returns>
+        public static IotHubPrivateEndpointConnectionProperties IotHubPrivateEndpointConnectionProperties(ResourceIdentifier privateEndpointId = default, IotHubPrivateLinkServiceConnectionState connectionState = default)
+        {
+            return new IotHubPrivateEndpointConnectionProperties(privateEndpointId is null ? default : new PrivateEndpoint(privateEndpointId, default), connectionState, default);
+        }
+
+        /// <param name="status"> The status of a private endpoint connection. </param>
+        /// <param name="description"> The description for the current state of a private endpoint connection. </param>
+        /// <param name="actionsRequired"> Actions required for a private endpoint connection. </param>
+        /// <returns> A new <see cref="Models.IotHubPrivateLinkServiceConnectionState"/> instance for mocking. </returns>
+        public static IotHubPrivateLinkServiceConnectionState IotHubPrivateLinkServiceConnectionState(IotHubPrivateLinkServiceConnectionStatus status = default, string description = default, string actionsRequired = default)
+        {
+            return new IotHubPrivateLinkServiceConnectionState(status, description, actionsRequired, default);
+        }
+
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="tags"> Resource tags. </param>
+        /// <param name="location"> The geo-location where the resource lives. </param>
+        /// <param name="properties"> IotHub properties. </param>
+        /// <param name="eTag"> The Etag field is <i>not</i> required. If it is provided in the response body, it must also be provided as a header per the normal ETag convention. </param>
+        /// <param name="sku"> IotHub SKU info. </param>
+        /// <param name="identity"> The managed identities for the IotHub. </param>
+        /// <returns> A new <see cref="IotHub.IotHubDescriptionData"/> instance for mocking. </returns>
+        public static IotHubDescriptionData IotHubDescriptionData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, IotHubProperties properties = default, ETag? eTag = default, IotHubSkuInfo sku = default, ManagedServiceIdentity identity = default)
+        {
+            tags ??= new ChangeTrackingDictionary<string, string>();
+
+            return new IotHubDescriptionData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                location,
+                properties,
+                eTag,
+                sku,
+                identity,
+                default);
+        }
+
+        /// <param name="authorizationPolicies"> The shared access policies you can use to secure a connection to the IoT hub. </param>
+        /// <param name="disableLocalAuth"> If true, SAS tokens with Iot hub scoped SAS keys cannot be used for authentication. </param>
+        /// <param name="disableDeviceSas"> If true, all device(including Edge devices but excluding modules) scoped SAS keys cannot be used for authentication. </param>
+        /// <param name="disableModuleSas"> If true, all module scoped SAS keys cannot be used for authentication. </param>
+        /// <param name="restrictOutboundNetworkAccess"> If true, egress from IotHub will be restricted to only the allowed FQDNs that are configured via allowedFqdnList. </param>
+        /// <param name="allowedFqdns"> List of allowed FQDNs(Fully Qualified Domain Name) for egress from Iot Hub. </param>
+        /// <param name="publicNetworkAccess"> Whether requests from Public Network are allowed. </param>
+        /// <param name="ipFilterRules"> The IP filter rules. </param>
+        /// <param name="networkRuleSets"> Network Rule Set Properties of IotHub. </param>
+        /// <param name="minTlsVersion"> Specifies the minimum TLS version to support for this hub. Can be set to "1.2" to have clients that use a TLS version below 1.2 to be rejected. </param>
+        /// <param name="privateEndpointConnections"> Private endpoint connections created on this IotHub. </param>
+        /// <param name="provisioningState"> The provisioning state. </param>
+        /// <param name="state"> The hub state. </param>
+        /// <param name="hostName"> The name of the host. </param>
+        /// <param name="deviceHostName"> The name of the device host. Supports secure connections over TLS 1.3. </param>
+        /// <param name="serviceHostName"> The name of the service host. Supports secure connections over TLS 1.3. </param>
+        /// <param name="eventHubEndpoints"> The Event Hub-compatible endpoint properties. The only possible keys to this dictionary is events. This key has to be present in the dictionary while making create or update calls for the IoT hub. </param>
+        /// <param name="routing"> The routing related properties of the IoT hub. See: https://docs.microsoft.com/azure/iot-hub/iot-hub-devguide-messaging. </param>
+        /// <param name="storageEndpoints"> The list of Azure Storage endpoints where you can upload files. Currently you can configure only one Azure Storage account and that MUST have its key as $default. Specifying more than one storage account causes an error to be thrown. Not specifying a value for this property when the enableFileUploadNotifications property is set to True, causes an error to be thrown. </param>
+        /// <param name="messagingEndpoints"> The messaging endpoint properties for the file upload notification queue. </param>
+        /// <param name="enableFileUploadNotifications"> If True, file upload notifications are enabled. </param>
+        /// <param name="cloudToDevice"> The IoT hub cloud-to-device messaging properties. </param>
+        /// <param name="comments"> IoT hub comments. </param>
+        /// <param name="deviceStreamsStreamingEndpoints"> List of Device Streams Endpoints. </param>
+        /// <param name="features"> The capabilities and features enabled for the IoT hub. </param>
+        /// <param name="encryption"> The encryption properties for the IoT hub. </param>
+        /// <param name="locations"> Primary and secondary location for iot hub. </param>
+        /// <param name="enableDataResidency"> This property when set to true, will enable data residency, thus, disabling disaster recovery. </param>
+        /// <param name="rootCertificate"> This property store root certificate related information. </param>
+        /// <param name="ipVersion"> This property specifies the IP Version the hub is currently utilizing. </param>
+        /// <param name="deviceRegistry"> Represents properties related to the Azure Device Registry (ADR). </param>
+        /// <param name="iotHubDetailsGatewayVersion"> The IoT hub Gateway version. </param>
+        /// <returns> A new <see cref="Models.IotHubProperties"/> instance for mocking. </returns>
+        public static IotHubProperties IotHubProperties(IEnumerable<SharedAccessSignatureAuthorizationRule> authorizationPolicies = default, bool? disableLocalAuth = default, bool? disableDeviceSas = default, bool? disableModuleSas = default, bool? restrictOutboundNetworkAccess = default, IEnumerable<string> allowedFqdns = default, IotHubPublicNetworkAccess? publicNetworkAccess = default, IEnumerable<IotHubIPFilterRule> ipFilterRules = default, IotHubNetworkRuleSetProperties networkRuleSets = default, string minTlsVersion = default, IEnumerable<IotHubPrivateEndpointConnectionData> privateEndpointConnections = default, string provisioningState = default, string state = default, string hostName = default, string deviceHostName = default, string serviceHostName = default, IDictionary<string, EventHubCompatibleEndpointProperties> eventHubEndpoints = default, IotHubRoutingProperties routing = default, IDictionary<string, IotHubStorageEndpointProperties> storageEndpoints = default, IDictionary<string, MessagingEndpointProperties> messagingEndpoints = default, bool? enableFileUploadNotifications = default, CloudToDeviceProperties cloudToDevice = default, string comments = default, IEnumerable<string> deviceStreamsStreamingEndpoints = default, IotHubCapability? features = default, IotHubEncryptionProperties encryption = default, IEnumerable<IotHubLocationDescription> locations = default, bool? enableDataResidency = default, IotHubRootCertificateProperties rootCertificate = default, IotHubIPVersion? ipVersion = default, IotHubDeviceRegistry deviceRegistry = default, IotHubGatewayVersion? iotHubDetailsGatewayVersion = default)
+        {
+            authorizationPolicies ??= new ChangeTrackingList<SharedAccessSignatureAuthorizationRule>();
+            allowedFqdns ??= new ChangeTrackingList<string>();
+            ipFilterRules ??= new ChangeTrackingList<IotHubIPFilterRule>();
+            privateEndpointConnections ??= new ChangeTrackingList<IotHubPrivateEndpointConnectionData>();
+            eventHubEndpoints ??= new ChangeTrackingDictionary<string, EventHubCompatibleEndpointProperties>();
+            storageEndpoints ??= new ChangeTrackingDictionary<string, IotHubStorageEndpointProperties>();
+            messagingEndpoints ??= new ChangeTrackingDictionary<string, MessagingEndpointProperties>();
+            locations ??= new ChangeTrackingList<IotHubLocationDescription>();
+
+            return new IotHubProperties(
+                (authorizationPolicies ?? new ChangeTrackingList<SharedAccessSignatureAuthorizationRule>()).ToList(),
+                disableLocalAuth,
+                disableDeviceSas,
+                disableModuleSas,
+                restrictOutboundNetworkAccess,
+                (allowedFqdns ?? new ChangeTrackingList<string>()).ToList(),
+                publicNetworkAccess,
+                (ipFilterRules ?? new ChangeTrackingList<IotHubIPFilterRule>()).ToList(),
+                networkRuleSets,
+                minTlsVersion,
+                (privateEndpointConnections ?? new ChangeTrackingList<IotHubPrivateEndpointConnectionData>()).ToList(),
+                provisioningState,
+                state,
+                hostName,
+                deviceHostName,
+                serviceHostName,
+                eventHubEndpoints ?? new ChangeTrackingDictionary<string, EventHubCompatibleEndpointProperties>(),
+                routing,
+                storageEndpoints ?? new ChangeTrackingDictionary<string, IotHubStorageEndpointProperties>(),
+                messagingEndpoints ?? new ChangeTrackingDictionary<string, MessagingEndpointProperties>(),
+                enableFileUploadNotifications,
+                cloudToDevice,
+                comments,
+                deviceStreamsStreamingEndpoints is null ? default : new IotHubPropertiesDeviceStreams((deviceStreamsStreamingEndpoints ?? new ChangeTrackingList<string>()).ToList(), default),
+                features,
+                encryption,
+                (locations ?? new ChangeTrackingList<IotHubLocationDescription>()).ToList(),
+                enableDataResidency,
+                rootCertificate,
+                ipVersion,
+                deviceRegistry,
+                iotHubDetailsGatewayVersion is null ? default : new IotHubDetails(iotHubDetailsGatewayVersion, default),
+                default);
+        }
+
+        /// <param name="keyName"> The name of the shared access policy. </param>
+        /// <param name="primaryKey"> The primary key. </param>
+        /// <param name="secondaryKey"> The secondary key. </param>
+        /// <param name="rights"> The permissions assigned to the shared access policy. </param>
+        /// <returns> A new <see cref="Models.SharedAccessSignatureAuthorizationRule"/> instance for mocking. </returns>
+        public static SharedAccessSignatureAuthorizationRule SharedAccessSignatureAuthorizationRule(string keyName = default, string primaryKey = default, string secondaryKey = default, IotHubSharedAccessRight rights = default)
+        {
+            return new SharedAccessSignatureAuthorizationRule(keyName, primaryKey, secondaryKey, rights, default);
+        }
+
+        /// <param name="filterName"> The name of the IP filter rule. </param>
+        /// <param name="action"> The desired action for requests captured by this rule. </param>
+        /// <param name="ipMask"> A string that contains the IP address range in CIDR notation for the rule. </param>
+        /// <returns> A new <see cref="Models.IotHubIPFilterRule"/> instance for mocking. </returns>
+        public static IotHubIPFilterRule IotHubIPFilterRule(string filterName = default, IotHubIPFilterActionType action = default, string ipMask = default)
+        {
+            return new IotHubIPFilterRule(filterName, action, ipMask, default);
+        }
+
+        /// <param name="defaultAction"> Default Action for Network Rule Set. </param>
+        /// <param name="applyToBuiltInEventHubEndpoint"> If True, then Network Rule Set is also applied to BuiltIn EventHub EndPoint of IotHub. </param>
+        /// <param name="ipRules"> List of IP Rules. </param>
+        /// <returns> A new <see cref="Models.IotHubNetworkRuleSetProperties"/> instance for mocking. </returns>
+        public static IotHubNetworkRuleSetProperties IotHubNetworkRuleSetProperties(IotHubNetworkRuleSetDefaultAction? defaultAction = default, bool applyToBuiltInEventHubEndpoint = default, IEnumerable<IotHubNetworkRuleSetIPRule> ipRules = default)
+        {
+            ipRules ??= new ChangeTrackingList<IotHubNetworkRuleSetIPRule>();
+
+            return new IotHubNetworkRuleSetProperties(defaultAction, applyToBuiltInEventHubEndpoint, (ipRules ?? new ChangeTrackingList<IotHubNetworkRuleSetIPRule>()).ToList(), default);
+        }
+
+        /// <param name="filterName"> Name of the IP filter rule. </param>
+        /// <param name="action"> IP Filter Action. </param>
+        /// <param name="ipMask"> A string that contains the IP address range in CIDR notation for the rule. </param>
+        /// <returns> A new <see cref="Models.IotHubNetworkRuleSetIPRule"/> instance for mocking. </returns>
+        public static IotHubNetworkRuleSetIPRule IotHubNetworkRuleSetIPRule(string filterName = default, IotHubNetworkRuleIPAction? action = default, string ipMask = default)
+        {
+            return new IotHubNetworkRuleSetIPRule(filterName, action, ipMask, default);
+        }
+
+        /// <param name="retentionTimeInDays"> The retention time for device-to-cloud messages in days. See: https://docs.microsoft.com/azure/iot-hub/iot-hub-devguide-messaging#device-to-cloud-messages. </param>
+        /// <param name="partitionCount"> The number of partitions for receiving device-to-cloud messages in the Event Hub-compatible endpoint. See: https://docs.microsoft.com/azure/iot-hub/iot-hub-devguide-messaging#device-to-cloud-messages. </param>
+        /// <param name="partitionIds"> The partition ids in the Event Hub-compatible endpoint. </param>
+        /// <param name="eventHubCompatibleName"> The Event Hub-compatible name. </param>
+        /// <param name="endpoint"> The Event Hub-compatible endpoint. </param>
+        /// <returns> A new <see cref="Models.EventHubCompatibleEndpointProperties"/> instance for mocking. </returns>
+        public static EventHubCompatibleEndpointProperties EventHubCompatibleEndpointProperties(long? retentionTimeInDays = default, int? partitionCount = default, IEnumerable<string> partitionIds = default, string eventHubCompatibleName = default, string endpoint = default)
+        {
+            partitionIds ??= new ChangeTrackingList<string>();
+
+            return new EventHubCompatibleEndpointProperties(
+                retentionTimeInDays,
+                partitionCount,
+                (partitionIds ?? new ChangeTrackingList<string>()).ToList(),
+                eventHubCompatibleName,
+                endpoint,
+                default);
+        }
+
+        /// <param name="endpoints"> The properties related to the custom endpoints to which your IoT hub routes messages based on the routing rules. A maximum of 10 custom endpoints are allowed across all endpoint types for paid hubs and only 1 custom endpoint is allowed across all endpoint types for free hubs. </param>
+        /// <param name="routes"> The list of user-provided routing rules that the IoT hub uses to route messages to built-in and custom endpoints. A maximum of 100 routing rules are allowed for paid hubs and a maximum of 5 routing rules are allowed for free hubs. </param>
+        /// <param name="fallbackRoute"> The properties of the route that is used as a fall-back route when none of the conditions specified in the 'routes' section are met. This is an optional parameter. When this property is not set, the messages which do not meet any of the conditions specified in the 'routes' section get routed to the built-in eventhub endpoint. </param>
+        /// <param name="enrichments"> The list of user-provided enrichments that the IoT hub applies to messages to be delivered to built-in and custom endpoints. See: https://aka.ms/telemetryoneventgrid. </param>
+        /// <returns> A new <see cref="Models.IotHubRoutingProperties"/> instance for mocking. </returns>
+        public static IotHubRoutingProperties IotHubRoutingProperties(RoutingEndpoints endpoints = default, IEnumerable<RoutingRuleProperties> routes = default, IotHubFallbackRouteProperties fallbackRoute = default, IEnumerable<IotHubEnrichmentProperties> enrichments = default)
+        {
+            routes ??= new ChangeTrackingList<RoutingRuleProperties>();
+            enrichments ??= new ChangeTrackingList<IotHubEnrichmentProperties>();
+
+            return new IotHubRoutingProperties(endpoints, (routes ?? new ChangeTrackingList<RoutingRuleProperties>()).ToList(), fallbackRoute, (enrichments ?? new ChangeTrackingList<IotHubEnrichmentProperties>()).ToList(), default);
+        }
+
+        /// <param name="serviceBusQueues"> The list of Service Bus queue endpoints that IoT hub routes the messages to, based on the routing rules. </param>
+        /// <param name="serviceBusTopics"> The list of Service Bus topic endpoints that the IoT hub routes the messages to, based on the routing rules. </param>
+        /// <param name="eventHubs"> The list of Event Hubs endpoints that IoT hub routes messages to, based on the routing rules. This list does not include the built-in Event Hubs endpoint. </param>
+        /// <param name="storageContainers"> The list of storage container endpoints that IoT hub routes messages to, based on the routing rules. </param>
+        /// <param name="cosmosDBSqlContainers"> The list of Cosmos DB container endpoints that IoT hub routes messages to, based on the routing rules. </param>
+        /// <returns> A new <see cref="Models.RoutingEndpoints"/> instance for mocking. </returns>
+        public static RoutingEndpoints RoutingEndpoints(IEnumerable<RoutingServiceBusQueueEndpointProperties> serviceBusQueues = default, IEnumerable<RoutingServiceBusTopicEndpointProperties> serviceBusTopics = default, IEnumerable<RoutingEventHubProperties> eventHubs = default, IEnumerable<RoutingStorageContainerProperties> storageContainers = default, IEnumerable<RoutingCosmosDBSqlApiProperties> cosmosDBSqlContainers = default)
+        {
+            serviceBusQueues ??= new ChangeTrackingList<RoutingServiceBusQueueEndpointProperties>();
+            serviceBusTopics ??= new ChangeTrackingList<RoutingServiceBusTopicEndpointProperties>();
+            eventHubs ??= new ChangeTrackingList<RoutingEventHubProperties>();
+            storageContainers ??= new ChangeTrackingList<RoutingStorageContainerProperties>();
+            cosmosDBSqlContainers ??= new ChangeTrackingList<RoutingCosmosDBSqlApiProperties>();
+
+            return new RoutingEndpoints(
+                (serviceBusQueues ?? new ChangeTrackingList<RoutingServiceBusQueueEndpointProperties>()).ToList(),
+                (serviceBusTopics ?? new ChangeTrackingList<RoutingServiceBusTopicEndpointProperties>()).ToList(),
+                (eventHubs ?? new ChangeTrackingList<RoutingEventHubProperties>()).ToList(),
+                (storageContainers ?? new ChangeTrackingList<RoutingStorageContainerProperties>()).ToList(),
+                (cosmosDBSqlContainers ?? new ChangeTrackingList<RoutingCosmosDBSqlApiProperties>()).ToList(),
+                default);
+        }
+
+        /// <param name="id"> Id of the service bus queue endpoint. </param>
+        /// <param name="connectionString"> The connection string of the service bus queue endpoint. </param>
+        /// <param name="endpoint"> The url of the service bus queue endpoint. It must include the protocol sb://. </param>
+        /// <param name="entityPath"> Queue name on the service bus namespace. </param>
+        /// <param name="authenticationType"> Method used to authenticate against the service bus queue endpoint. </param>
+        /// <param name="userAssignedIdentity"> The user assigned identity. </param>
+        /// <param name="name"> The name that identifies this endpoint. The name can only include alphanumeric characters, periods, underscores, hyphens and has a maximum length of 64 characters. The following names are reserved:  events, fileNotifications, $default. Endpoint names must be unique across endpoint types. The name need not be the same as the actual queue name. </param>
+        /// <param name="subscriptionId"> The subscription identifier of the service bus queue endpoint. </param>
+        /// <param name="resourceGroup"> The name of the resource group of the service bus queue endpoint. </param>
+        /// <returns> A new <see cref="Models.RoutingServiceBusQueueEndpointProperties"/> instance for mocking. </returns>
+        public static RoutingServiceBusQueueEndpointProperties RoutingServiceBusQueueEndpointProperties(Guid? id = default, string connectionString = default, string endpoint = default, string entityPath = default, IotHubAuthenticationType? authenticationType = default, ResourceIdentifier userAssignedIdentity = default, string name = default, string subscriptionId = default, string resourceGroup = default)
+        {
+            return new RoutingServiceBusQueueEndpointProperties(
+                id,
+                connectionString,
+                endpoint,
+                entityPath,
+                authenticationType,
+                userAssignedIdentity is null ? default : new ManagedIdentity(userAssignedIdentity, default),
+                name,
+                subscriptionId,
+                resourceGroup,
+                default);
+        }
+
+        /// <param name="id"> Id of the service bus topic endpoint. </param>
+        /// <param name="connectionString"> The connection string of the service bus topic endpoint. </param>
+        /// <param name="endpoint"> The url of the service bus topic endpoint. It must include the protocol sb://. </param>
+        /// <param name="entityPath"> Queue name on the service bus topic. </param>
+        /// <param name="authenticationType"> Method used to authenticate against the service bus topic endpoint. </param>
+        /// <param name="userAssignedIdentity"> The user assigned identity. </param>
+        /// <param name="name"> The name that identifies this endpoint. The name can only include alphanumeric characters, periods, underscores, hyphens and has a maximum length of 64 characters. The following names are reserved:  events, fileNotifications, $default. Endpoint names must be unique across endpoint types.  The name need not be the same as the actual topic name. </param>
+        /// <param name="subscriptionId"> The subscription identifier of the service bus topic endpoint. </param>
+        /// <param name="resourceGroup"> The name of the resource group of the service bus topic endpoint. </param>
+        /// <returns> A new <see cref="Models.RoutingServiceBusTopicEndpointProperties"/> instance for mocking. </returns>
+        public static RoutingServiceBusTopicEndpointProperties RoutingServiceBusTopicEndpointProperties(Guid? id = default, string connectionString = default, string endpoint = default, string entityPath = default, IotHubAuthenticationType? authenticationType = default, ResourceIdentifier userAssignedIdentity = default, string name = default, string subscriptionId = default, string resourceGroup = default)
+        {
+            return new RoutingServiceBusTopicEndpointProperties(
+                id,
+                connectionString,
+                endpoint,
+                entityPath,
+                authenticationType,
+                userAssignedIdentity is null ? default : new ManagedIdentity(userAssignedIdentity, default),
+                name,
+                subscriptionId,
+                resourceGroup,
+                default);
+        }
+
+        /// <param name="id"> Id of the event hub endpoint. </param>
+        /// <param name="connectionString"> The connection string of the event hub endpoint. </param>
+        /// <param name="endpoint"> The url of the event hub endpoint. It must include the protocol sb://. </param>
+        /// <param name="entityPath"> Event hub name on the event hub namespace. </param>
+        /// <param name="authenticationType"> Method used to authenticate against the event hub endpoint. </param>
+        /// <param name="userAssignedIdentity"> The user assigned identity. </param>
+        /// <param name="name"> The name that identifies this endpoint. The name can only include alphanumeric characters, periods, underscores, hyphens and has a maximum length of 64 characters. The following names are reserved:  events, fileNotifications, $default. Endpoint names must be unique across endpoint types. </param>
+        /// <param name="subscriptionId"> The subscription identifier of the event hub endpoint. </param>
+        /// <param name="resourceGroup"> The name of the resource group of the event hub endpoint. </param>
+        /// <returns> A new <see cref="Models.RoutingEventHubProperties"/> instance for mocking. </returns>
+        public static RoutingEventHubProperties RoutingEventHubProperties(Guid? id = default, string connectionString = default, string endpoint = default, string entityPath = default, IotHubAuthenticationType? authenticationType = default, ResourceIdentifier userAssignedIdentity = default, string name = default, string subscriptionId = default, string resourceGroup = default)
+        {
+            return new RoutingEventHubProperties(
+                id,
+                connectionString,
+                endpoint,
+                entityPath,
+                authenticationType,
+                userAssignedIdentity is null ? default : new ManagedIdentity(userAssignedIdentity, default),
+                name,
+                subscriptionId,
+                resourceGroup,
+                default);
+        }
+
+        /// <param name="id"> Id of the storage container endpoint. </param>
+        /// <param name="connectionString"> The connection string of the storage account. </param>
+        /// <param name="endpoint"> The url of the storage endpoint. It must include the protocol https://. </param>
+        /// <param name="authenticationType"> Method used to authenticate against the storage endpoint. </param>
+        /// <param name="userAssignedIdentity"> The user assigned identity. </param>
+        /// <param name="name"> The name that identifies this endpoint. The name can only include alphanumeric characters, periods, underscores, hyphens and has a maximum length of 64 characters. The following names are reserved:  events, fileNotifications, $default. Endpoint names must be unique across endpoint types. </param>
+        /// <param name="subscriptionId"> The subscription identifier of the storage account. </param>
+        /// <param name="resourceGroup"> The name of the resource group of the storage account. </param>
+        /// <param name="containerName"> The name of storage container in the storage account. </param>
+        /// <param name="fileNameFormat"> File name format for the blob. Default format is {iothub}/{partition}/{YYYY}/{MM}/{DD}/{HH}/{mm}. All parameters are mandatory but can be reordered. </param>
+        /// <param name="batchFrequencyInSeconds"> Time interval at which blobs are written to storage. Value should be between 60 and 720 seconds. Default value is 300 seconds. </param>
+        /// <param name="maxChunkSizeInBytes"> Maximum number of bytes for each blob written to storage. Value should be between 10485760(10MB) and 524288000(500MB). Default value is 314572800(300MB). </param>
+        /// <param name="encoding"> Encoding that is used to serialize messages to blobs. Supported values are 'avro', 'avrodeflate', and 'JSON'. Default value is 'avro'. </param>
+        /// <returns> A new <see cref="Models.RoutingStorageContainerProperties"/> instance for mocking. </returns>
+        public static RoutingStorageContainerProperties RoutingStorageContainerProperties(Guid? id = default, string connectionString = default, string endpoint = default, IotHubAuthenticationType? authenticationType = default, ResourceIdentifier userAssignedIdentity = default, string name = default, string subscriptionId = default, string resourceGroup = default, string containerName = default, string fileNameFormat = default, int? batchFrequencyInSeconds = default, int? maxChunkSizeInBytes = default, RoutingStorageContainerPropertiesEncoding? encoding = default)
+        {
+            return new RoutingStorageContainerProperties(
+                id,
+                connectionString,
+                endpoint,
+                authenticationType,
+                userAssignedIdentity is null ? default : new ManagedIdentity(userAssignedIdentity, default),
+                name,
+                subscriptionId,
+                resourceGroup,
+                containerName,
+                fileNameFormat,
+                batchFrequencyInSeconds,
+                maxChunkSizeInBytes,
+                encoding,
+                default);
+        }
+
+        /// <param name="name"> The name that identifies this endpoint. The name can only include alphanumeric characters, periods, underscores, hyphens and has a maximum length of 64 characters. The following names are reserved:  events, fileNotifications, $default. Endpoint names must be unique across endpoint types. </param>
+        /// <param name="id"> Id of the cosmos DB sql container endpoint. </param>
+        /// <param name="subscriptionId"> The subscription identifier of the cosmos DB account. </param>
+        /// <param name="resourceGroup"> The name of the resource group of the cosmos DB account. </param>
+        /// <param name="endpointUri"> The url of the cosmos DB account. It must include the protocol https://. </param>
+        /// <param name="authenticationType"> Method used to authenticate against the cosmos DB sql container endpoint. </param>
+        /// <param name="userAssignedIdentity"> The user assigned identity. </param>
+        /// <param name="primaryKey"> The primary key of the cosmos DB account. </param>
+        /// <param name="secondaryKey"> The secondary key of the cosmos DB account. </param>
+        /// <param name="databaseName"> The name of the cosmos DB database in the cosmos DB account. </param>
+        /// <param name="containerName"> The name of the cosmos DB sql container in the cosmos DB database. </param>
+        /// <param name="partitionKeyName"> The name of the partition key associated with this cosmos DB sql container if one exists. This is an optional parameter. </param>
+        /// <param name="partitionKeyTemplate"> The template for generating a synthetic partition key value for use with this cosmos DB sql container. The template must include at least one of the following placeholders: {iothub}, {deviceid}, {DD}, {MM}, and {YYYY}. Any one placeholder may be specified at most once, but order and non-placeholder components are arbitrary. This parameter is only required if PartitionKeyName is specified. </param>
+        /// <returns> A new <see cref="Models.RoutingCosmosDBSqlApiProperties"/> instance for mocking. </returns>
+        public static RoutingCosmosDBSqlApiProperties RoutingCosmosDBSqlApiProperties(string name = default, string id = default, string subscriptionId = default, string resourceGroup = default, Uri endpointUri = default, IotHubAuthenticationType? authenticationType = default, ResourceIdentifier userAssignedIdentity = default, string primaryKey = default, string secondaryKey = default, string databaseName = default, string containerName = default, string partitionKeyName = default, string partitionKeyTemplate = default)
+        {
+            return new RoutingCosmosDBSqlApiProperties(
+                name,
+                id,
+                subscriptionId,
+                resourceGroup,
+                endpointUri,
+                authenticationType,
+                userAssignedIdentity is null ? default : new ManagedIdentity(userAssignedIdentity, default),
+                primaryKey,
+                secondaryKey,
+                databaseName,
+                containerName,
+                partitionKeyName,
+                partitionKeyTemplate,
+                default);
+        }
+
+        /// <param name="name"> The name of the route. The name can only include alphanumeric characters, periods, underscores, hyphens, has a maximum length of 64 characters, and must be unique. </param>
+        /// <param name="source"> The source that the routing rule is to be applied to, such as DeviceMessages. </param>
+        /// <param name="condition"> The condition that is evaluated to apply the routing rule. If no condition is provided, it evaluates to true by default. For grammar, see: https://docs.microsoft.com/azure/iot-hub/iot-hub-devguide-query-language. </param>
+        /// <param name="endpointNames"> The list of endpoints to which messages that satisfy the condition are routed. Currently only one endpoint is allowed. </param>
+        /// <param name="isEnabled"> Used to specify whether a route is enabled. </param>
+        /// <returns> A new <see cref="Models.RoutingRuleProperties"/> instance for mocking. </returns>
+        public static RoutingRuleProperties RoutingRuleProperties(string name = default, IotHubRoutingSource source = default, string condition = default, IEnumerable<string> endpointNames = default, bool isEnabled = default)
+        {
+            endpointNames ??= new ChangeTrackingList<string>();
+
+            return new RoutingRuleProperties(
+                name,
+                source,
+                condition,
+                (endpointNames ?? new ChangeTrackingList<string>()).ToList(),
+                isEnabled,
+                default);
+        }
+
+        /// <param name="name"> The name of the route. The name can only include alphanumeric characters, periods, underscores, hyphens, has a maximum length of 64 characters, and must be unique. </param>
+        /// <param name="source"> The source to which the routing rule is to be applied to. For example, DeviceMessages. </param>
+        /// <param name="condition"> The condition which is evaluated in order to apply the fallback route. If the condition is not provided it will evaluate to true by default. For grammar, See: https://docs.microsoft.com/azure/iot-hub/iot-hub-devguide-query-language. </param>
+        /// <param name="endpointNames"> The list of endpoints to which the messages that satisfy the condition are routed to. Currently only 1 endpoint is allowed. </param>
+        /// <param name="isEnabled"> Used to specify whether the fallback route is enabled. </param>
+        /// <returns> A new <see cref="Models.IotHubFallbackRouteProperties"/> instance for mocking. </returns>
+        public static IotHubFallbackRouteProperties IotHubFallbackRouteProperties(string name = default, IotHubRoutingSource source = default, string condition = default, IEnumerable<string> endpointNames = default, bool isEnabled = default)
+        {
+            endpointNames ??= new ChangeTrackingList<string>();
+
+            return new IotHubFallbackRouteProperties(
+                name,
+                source,
+                condition,
+                (endpointNames ?? new ChangeTrackingList<string>()).ToList(),
+                isEnabled,
+                default);
+        }
+
+        /// <param name="key"> The key or name for the enrichment property. </param>
+        /// <param name="value"> The value for the enrichment property. </param>
+        /// <param name="endpointNames"> The list of endpoints for which the enrichment is applied to the message. </param>
+        /// <returns> A new <see cref="Models.IotHubEnrichmentProperties"/> instance for mocking. </returns>
+        public static IotHubEnrichmentProperties IotHubEnrichmentProperties(string key = default, string value = default, IEnumerable<string> endpointNames = default)
+        {
+            endpointNames ??= new ChangeTrackingList<string>();
+
+            return new IotHubEnrichmentProperties(key, value, (endpointNames ?? new ChangeTrackingList<string>()).ToList(), default);
+        }
+
+        /// <param name="sasTtlAsIso8601"> The period of time for which the SAS URI generated by IoT Hub for file upload is valid. See: https://docs.microsoft.com/azure/iot-hub/iot-hub-devguide-file-upload#file-upload-notification-configuration-options. </param>
+        /// <param name="connectionString"> The connection string for the Azure Storage account to which files are uploaded. </param>
+        /// <param name="containerName"> The name of the root container where you upload files. The container need not exist but should be creatable using the connectionString specified. </param>
+        /// <param name="authenticationType"> Specifies authentication type being used for connecting to the storage account. </param>
+        /// <param name="userAssignedIdentity"> The user assigned identity. </param>
+        /// <returns> A new <see cref="Models.IotHubStorageEndpointProperties"/> instance for mocking. </returns>
+        public static IotHubStorageEndpointProperties IotHubStorageEndpointProperties(TimeSpan? sasTtlAsIso8601 = default, string connectionString = default, string containerName = default, IotHubAuthenticationType? authenticationType = default, ResourceIdentifier userAssignedIdentity = default)
+        {
+            return new IotHubStorageEndpointProperties(
+                sasTtlAsIso8601,
+                connectionString,
+                containerName,
+                authenticationType,
+                userAssignedIdentity is null ? default : new ManagedIdentity(userAssignedIdentity, default),
+                default);
+        }
+
+        /// <param name="lockDurationAsIso8601"> The lock duration. See: https://docs.microsoft.com/azure/iot-hub/iot-hub-devguide-file-upload. </param>
+        /// <param name="ttlAsIso8601"> The period of time for which a message is available to consume before it is expired by the IoT hub. See: https://docs.microsoft.com/azure/iot-hub/iot-hub-devguide-file-upload. </param>
+        /// <param name="maxDeliveryCount"> The number of times the IoT hub attempts to deliver a message. See: https://docs.microsoft.com/azure/iot-hub/iot-hub-devguide-file-upload. </param>
+        /// <returns> A new <see cref="Models.MessagingEndpointProperties"/> instance for mocking. </returns>
+        public static MessagingEndpointProperties MessagingEndpointProperties(TimeSpan? lockDurationAsIso8601 = default, TimeSpan? ttlAsIso8601 = default, int? maxDeliveryCount = default)
+        {
+            return new MessagingEndpointProperties(lockDurationAsIso8601, ttlAsIso8601, maxDeliveryCount, default);
+        }
+
+        /// <param name="maxDeliveryCount"> The max delivery count for cloud-to-device messages in the device queue. See: https://docs.microsoft.com/azure/iot-hub/iot-hub-devguide-messaging#cloud-to-device-messages. </param>
+        /// <param name="defaultTtlAsIso8601"> The default time to live for cloud-to-device messages in the device queue. See: https://docs.microsoft.com/azure/iot-hub/iot-hub-devguide-messaging#cloud-to-device-messages. </param>
+        /// <param name="feedback"> The properties of the feedback queue for cloud-to-device messages. </param>
+        /// <returns> A new <see cref="Models.CloudToDeviceProperties"/> instance for mocking. </returns>
+        public static CloudToDeviceProperties CloudToDeviceProperties(int? maxDeliveryCount = default, TimeSpan? defaultTtlAsIso8601 = default, CloudToDeviceFeedbackQueueProperties feedback = default)
+        {
+            return new CloudToDeviceProperties(maxDeliveryCount, defaultTtlAsIso8601, feedback, default);
+        }
+
+        /// <param name="lockDurationAsIso8601"> The lock duration for the feedback queue. See: https://docs.microsoft.com/azure/iot-hub/iot-hub-devguide-messaging#cloud-to-device-messages. </param>
+        /// <param name="ttlAsIso8601"> The period of time for which a message is available to consume before it is expired by the IoT hub. See: https://docs.microsoft.com/azure/iot-hub/iot-hub-devguide-messaging#cloud-to-device-messages. </param>
+        /// <param name="maxDeliveryCount"> The number of times the IoT hub attempts to deliver a message on the feedback queue. See: https://docs.microsoft.com/azure/iot-hub/iot-hub-devguide-messaging#cloud-to-device-messages. </param>
+        /// <returns> A new <see cref="Models.CloudToDeviceFeedbackQueueProperties"/> instance for mocking. </returns>
+        public static CloudToDeviceFeedbackQueueProperties CloudToDeviceFeedbackQueueProperties(TimeSpan? lockDurationAsIso8601 = default, TimeSpan? ttlAsIso8601 = default, int? maxDeliveryCount = default)
+        {
+            return new CloudToDeviceFeedbackQueueProperties(lockDurationAsIso8601, ttlAsIso8601, maxDeliveryCount, default);
+        }
+
+        /// <param name="keySource"> The source of the key. </param>
+        /// <param name="keyVaultProperties"> The properties of the KeyVault key. </param>
+        /// <returns> A new <see cref="Models.IotHubEncryptionProperties"/> instance for mocking. </returns>
+        public static IotHubEncryptionProperties IotHubEncryptionProperties(string keySource = default, IEnumerable<IotHubKeyVaultKeyProperties> keyVaultProperties = default)
+        {
+            keyVaultProperties ??= new ChangeTrackingList<IotHubKeyVaultKeyProperties>();
+
+            return new IotHubEncryptionProperties(keySource, (keyVaultProperties ?? new ChangeTrackingList<IotHubKeyVaultKeyProperties>()).ToList(), default);
+        }
+
+        /// <param name="keyIdentifier"> The identifier of the key. </param>
+        /// <param name="userAssignedIdentity"> The user assigned identity. </param>
+        /// <returns> A new <see cref="Models.IotHubKeyVaultKeyProperties"/> instance for mocking. </returns>
+        public static IotHubKeyVaultKeyProperties IotHubKeyVaultKeyProperties(string keyIdentifier = default, ResourceIdentifier userAssignedIdentity = default)
+        {
+            return new IotHubKeyVaultKeyProperties(keyIdentifier, userAssignedIdentity is null ? default : new ManagedIdentity(userAssignedIdentity, default), default);
+        }
+
+        /// <param name="location"> The name of the Azure region. </param>
+        /// <param name="role"> The role of the region, can be either primary or secondary. The primary region is where the IoT hub is currently provisioned. The secondary region is the Azure disaster recovery (DR) paired region and also the region where the IoT hub can failover to. </param>
+        /// <returns> A new <see cref="Models.IotHubLocationDescription"/> instance for mocking. </returns>
+        public static IotHubLocationDescription IotHubLocationDescription(AzureLocation? location = default, IotHubReplicaRoleType? role = default)
+        {
+            return new IotHubLocationDescription(location, role, default);
+        }
+
+        /// <param name="isRootCertificateV2Enabled"> This property when set to true, hub will use G2 cert; while it's set to false, hub uses Baltimore Cert. </param>
+        /// <param name="lastUpdatedOn"> the last update time to root certificate flag. </param>
+        /// <returns> A new <see cref="Models.IotHubRootCertificateProperties"/> instance for mocking. </returns>
+        public static IotHubRootCertificateProperties IotHubRootCertificateProperties(bool? isRootCertificateV2Enabled = default, DateTimeOffset? lastUpdatedOn = default)
+        {
+            return new IotHubRootCertificateProperties(isRootCertificateV2Enabled, lastUpdatedOn, default);
+        }
+
+        /// <param name="namespaceResourceId"> The identifier of the Azure Device Registry namespace associated with the GEN2 SKU hub. </param>
+        /// <param name="identityResourceId"> The identity used to manage the ADR namespace from the data plane. </param>
+        /// <returns> A new <see cref="Models.IotHubDeviceRegistry"/> instance for mocking. </returns>
+        public static IotHubDeviceRegistry IotHubDeviceRegistry(ResourceIdentifier namespaceResourceId = default, ResourceIdentifier identityResourceId = default)
+        {
+            return new IotHubDeviceRegistry(namespaceResourceId, identityResourceId, default);
+        }
+
+        /// <param name="name"> The name of the SKU. </param>
+        /// <param name="tier"> The billing tier for the IoT hub. </param>
+        /// <param name="capacity"> The number of provisioned IoT Hub units. See: https://docs.microsoft.com/azure/azure-subscription-service-limits#iot-hub-limits. </param>
+        /// <returns> A new <see cref="Models.IotHubSkuInfo"/> instance for mocking. </returns>
+        public static IotHubSkuInfo IotHubSkuInfo(IotHubSku name = default, IotHubSkuTier? tier = default, long? capacity = default)
+        {
+            return new IotHubSkuInfo(name, tier, capacity, default);
+        }
+
+        /// <param name="tags"> Resource tags. </param>
+        /// <returns> A new <see cref="Models.IotHubDescriptionPatch"/> instance for mocking. </returns>
+        public static IotHubDescriptionPatch IotHubDescriptionPatch(IDictionary<string, string> tags = default)
+        {
+            tags ??= new ChangeTrackingDictionary<string, string>();
+
+            return new IotHubDescriptionPatch(tags ?? new ChangeTrackingDictionary<string, string>(), default);
+        }
+
+        /// <param name="resourceType"> The type of the resource. </param>
+        /// <param name="sku"> The type of the resource. </param>
+        /// <param name="capacity"> IotHub capacity. </param>
+        /// <returns> A new <see cref="Models.IotHubSkuDescription"/> instance for mocking. </returns>
+        public static IotHubSkuDescription IotHubSkuDescription(ResourceType? resourceType = default, IotHubSkuInfo sku = default, IotHubCapacity capacity = default)
+        {
+            return new IotHubSkuDescription(resourceType, sku, capacity, default);
+        }
+
+        /// <param name="minimum"> The minimum number of units. </param>
+        /// <param name="maximum"> The maximum number of units. </param>
+        /// <param name="default"> The default number of units. </param>
+        /// <param name="scaleType"> The type of the scaling enabled. </param>
+        /// <returns> A new <see cref="Models.IotHubCapacity"/> instance for mocking. </returns>
+        public static IotHubCapacity IotHubCapacity(long? minimum = default, long? maximum = default, long? @default = default, IotHubScaleType? scaleType = default)
+        {
+            return new IotHubCapacity(minimum, maximum, @default, scaleType, default);
+        }
+
+        /// <param name="jobId"> The job identifier. </param>
+        /// <param name="startOn"> The start time of the job. </param>
+        /// <param name="endOn"> The time the job stopped processing. </param>
+        /// <param name="jobType"> The type of the job. </param>
+        /// <param name="status"> The status of the job. </param>
+        /// <param name="failureReason"> If status == failed, this string containing the reason for the failure. </param>
+        /// <param name="statusMessage"> The status message for the job. </param>
+        /// <param name="parentJobId"> The job identifier of the parent job, if any. </param>
+        /// <returns> A new <see cref="Models.IotHubJobInfo"/> instance for mocking. </returns>
+        public static IotHubJobInfo IotHubJobInfo(string jobId = default, DateTimeOffset? startOn = default, DateTimeOffset? endOn = default, IotHubJobType? jobType = default, IotHubJobStatus? status = default, string failureReason = default, string statusMessage = default, string parentJobId = default)
+        {
+            return new IotHubJobInfo(
+                jobId,
+                startOn,
+                endOn,
+                jobType,
+                status,
+                failureReason,
+                statusMessage,
+                parentJobId,
+                default);
+        }
+
+        /// <param name="name"> The name of the quota metric. </param>
+        /// <param name="currentValue"> The current value for the quota metric. </param>
+        /// <param name="maxValue"> The maximum value of the quota metric. </param>
+        /// <returns> A new <see cref="Models.IotHubQuotaMetricInfo"/> instance for mocking. </returns>
+        public static IotHubQuotaMetricInfo IotHubQuotaMetricInfo(string name = default, long? currentValue = default, long? maxValue = default)
+        {
+            return new IotHubQuotaMetricInfo(name, currentValue, maxValue, default);
+        }
+
+        /// <param name="endpointId"> Id of the endpoint. </param>
+        /// <param name="healthStatus"> Health statuses have following meanings. The 'healthy' status shows that the endpoint is accepting messages as expected. The 'unhealthy' status shows that the endpoint is not accepting messages as expected and IoT Hub is retrying to send data to this endpoint. The status of an unhealthy endpoint will be updated to healthy when IoT Hub has established an eventually consistent state of health. The 'dead' status shows that the endpoint is not accepting messages, after IoT Hub retried sending messages for the retrial period. See IoT Hub metrics to identify errors and monitor issues with endpoints. The 'unknown' status shows that the IoT Hub has not established a connection with the endpoint. No messages have been delivered to or rejected from this endpoint. </param>
+        /// <param name="lastKnownError"> Last error obtained when a message failed to be delivered to iot hub. </param>
+        /// <param name="lastKnownErrorOn"> Time at which the last known error occurred. </param>
+        /// <param name="lastSuccessfulSendAttemptOn"> Last time iot hub successfully sent a message to the endpoint. </param>
+        /// <param name="lastSendAttemptOn"> Last time iot hub tried to send a message to the endpoint. </param>
+        /// <returns> A new <see cref="Models.IotHubEndpointHealthInfo"/> instance for mocking. </returns>
+        public static IotHubEndpointHealthInfo IotHubEndpointHealthInfo(string endpointId = default, IotHubEndpointHealthStatus? healthStatus = default, string lastKnownError = default, DateTimeOffset? lastKnownErrorOn = default, DateTimeOffset? lastSuccessfulSendAttemptOn = default, DateTimeOffset? lastSendAttemptOn = default)
+        {
+            return new IotHubEndpointHealthInfo(
+                endpointId,
+                healthStatus,
+                lastKnownError,
+                lastKnownErrorOn,
+                lastSuccessfulSendAttemptOn,
+                lastSendAttemptOn,
+                default);
+        }
+
+        /// <param name="routingSource"> Routing source. </param>
+        /// <param name="message"> Routing message. </param>
+        /// <param name="twin"> Routing Twin Reference. </param>
+        /// <returns> A new <see cref="Models.IotHubTestAllRoutesContent"/> instance for mocking. </returns>
+        public static IotHubTestAllRoutesContent IotHubTestAllRoutesContent(IotHubRoutingSource? routingSource = default, RoutingMessage message = default, RoutingTwin twin = default)
+        {
+            return new IotHubTestAllRoutesContent(routingSource, message, twin, default);
+        }
+
+        /// <param name="body"> Body of routing message. </param>
+        /// <param name="appProperties"> App properties. </param>
+        /// <param name="systemProperties"> System properties. </param>
+        /// <returns> A new <see cref="Models.RoutingMessage"/> instance for mocking. </returns>
+        public static RoutingMessage RoutingMessage(string body = default, IDictionary<string, string> appProperties = default, IDictionary<string, string> systemProperties = default)
+        {
+            appProperties ??= new ChangeTrackingDictionary<string, string>();
+            systemProperties ??= new ChangeTrackingDictionary<string, string>();
+
+            return new RoutingMessage(body, appProperties ?? new ChangeTrackingDictionary<string, string>(), systemProperties ?? new ChangeTrackingDictionary<string, string>(), default);
+        }
+
+        /// <param name="tags"> Twin Tags. </param>
+        /// <param name="properties"></param>
+        /// <returns> A new <see cref="Models.RoutingTwin"/> instance for mocking. </returns>
+        public static RoutingTwin RoutingTwin(BinaryData tags = default, RoutingTwinProperties properties = default)
+        {
+            return new RoutingTwin(tags, properties, default);
+        }
+
+        /// <param name="desired"> Twin desired properties. </param>
+        /// <param name="reported"> Twin reported properties. </param>
+        /// <returns> A new <see cref="Models.RoutingTwinProperties"/> instance for mocking. </returns>
+        public static RoutingTwinProperties RoutingTwinProperties(BinaryData desired = default, BinaryData reported = default)
+        {
+            return new RoutingTwinProperties(desired, reported, default);
+        }
+
+        /// <param name="routes"> JSON-serialized array of matched routes. </param>
+        /// <returns> A new <see cref="Models.IotHubTestAllRoutesResult"/> instance for mocking. </returns>
+        public static IotHubTestAllRoutesResult IotHubTestAllRoutesResult(IEnumerable<IotHubMatchedRoute> routes = default)
+        {
+            routes ??= new ChangeTrackingList<IotHubMatchedRoute>();
+
+            return new IotHubTestAllRoutesResult((routes ?? new ChangeTrackingList<IotHubMatchedRoute>()).ToList(), default);
+        }
+
+        /// <param name="properties"> Properties of routes that matched. </param>
+        /// <returns> A new <see cref="Models.IotHubMatchedRoute"/> instance for mocking. </returns>
+        public static IotHubMatchedRoute IotHubMatchedRoute(RoutingRuleProperties properties = default)
+        {
+            return new IotHubMatchedRoute(properties, default);
+        }
+
+        /// <param name="message"> Routing message. </param>
+        /// <param name="route"> Route properties. </param>
+        /// <param name="twin"> Routing Twin Reference. </param>
+        /// <returns> A new <see cref="Models.IotHubTestRouteContent"/> instance for mocking. </returns>
+        public static IotHubTestRouteContent IotHubTestRouteContent(RoutingMessage message = default, RoutingRuleProperties route = default, RoutingTwin twin = default)
+        {
+            return new IotHubTestRouteContent(message, route, twin, default);
+        }
+
+        /// <param name="result"> Result of testing route. </param>
+        /// <param name="detailsCompilationErrors"> JSON-serialized list of route compilation errors. </param>
+        /// <returns> A new <see cref="Models.IotHubTestRouteResult"/> instance for mocking. </returns>
+        public static IotHubTestRouteResult IotHubTestRouteResult(IotHubTestResultStatus? result = default, IEnumerable<RouteCompilationError> detailsCompilationErrors = default)
+        {
+            return new IotHubTestRouteResult(result, detailsCompilationErrors is null ? default : new IotHubTestRouteResultDetails((detailsCompilationErrors ?? new ChangeTrackingList<RouteCompilationError>()).ToList(), default), default);
+        }
+
+        /// <param name="message"> Route error message. </param>
+        /// <param name="severity"> Severity of the route error. </param>
+        /// <param name="location"> Location where the route error happened. </param>
+        /// <returns> A new <see cref="Models.RouteCompilationError"/> instance for mocking. </returns>
+        public static RouteCompilationError RouteCompilationError(string message = default, RouteErrorSeverity? severity = default, RouteErrorRange location = default)
+        {
+            return new RouteCompilationError(message, severity, location, default);
+        }
+
+        /// <param name="start"> Start where the route error happened. </param>
+        /// <param name="end"> End where the route error happened. </param>
+        /// <returns> A new <see cref="Models.RouteErrorRange"/> instance for mocking. </returns>
+        public static RouteErrorRange RouteErrorRange(RouteErrorPosition start = default, RouteErrorPosition end = default)
+        {
+            return new RouteErrorRange(start, end, default);
+        }
+
+        /// <param name="line"> Line where the route error happened. </param>
+        /// <param name="column"> Column where the route error happened. </param>
+        /// <returns> A new <see cref="Models.RouteErrorPosition"/> instance for mocking. </returns>
+        public static RouteErrorPosition RouteErrorPosition(int? line = default, int? column = default)
+        {
+            return new RouteErrorPosition(line, column, default);
+        }
+
+        /// <param name="exportBlobContainerUri"> The export blob container URI. </param>
+        /// <param name="excludeKeys"> The value indicating whether keys should be excluded during export. </param>
+        /// <param name="exportBlobName"> The name of the blob that will be created in the provided output blob container. This blob will contain the exported device registry information for the IoT Hub. </param>
+        /// <param name="authenticationType"> Specifies authentication type being used for connecting to the storage account. </param>
+        /// <param name="userAssignedIdentity"> The user assigned identity. </param>
+        /// <param name="includeConfigurations"> The value indicating whether configurations should be exported. </param>
+        /// <param name="configurationsBlobName"> The name of the blob that will be created in the provided output blob container. This blob will contain the exported configurations for the Iot Hub. </param>
+        /// <returns> A new <see cref="Models.ExportDevicesContent"/> instance for mocking. </returns>
+        public static ExportDevicesContent ExportDevicesContent(Uri exportBlobContainerUri = default, bool excludeKeys = default, string exportBlobName = default, IotHubAuthenticationType? authenticationType = default, ResourceIdentifier userAssignedIdentity = default, bool? includeConfigurations = default, string configurationsBlobName = default)
+        {
+            return new ExportDevicesContent(
+                exportBlobContainerUri,
+                excludeKeys,
+                exportBlobName,
+                authenticationType,
+                userAssignedIdentity is null ? default : new ManagedIdentity(userAssignedIdentity, default),
+                includeConfigurations,
+                configurationsBlobName,
+                default);
+        }
+
+        /// <param name="inputBlobContainerUri"> The input blob container URI. </param>
+        /// <param name="outputBlobContainerUri"> The output blob container URI. </param>
+        /// <param name="inputBlobName"> The blob name to be used when importing from the provided input blob container. </param>
+        /// <param name="outputBlobName"> The blob name to use for storing the status of the import job. </param>
+        /// <param name="authenticationType"> Specifies authentication type being used for connecting to the storage account. </param>
+        /// <param name="userAssignedIdentity"> The user assigned identity. </param>
+        /// <param name="includeConfigurations"> The value indicating whether configurations should be imported. </param>
+        /// <param name="configurationsBlobName"> The blob name to be used when importing configurations from the provided input blob container. </param>
+        /// <returns> A new <see cref="Models.IotHubImportDevicesContent"/> instance for mocking. </returns>
+        public static IotHubImportDevicesContent IotHubImportDevicesContent(Uri inputBlobContainerUri = default, Uri outputBlobContainerUri = default, string inputBlobName = default, string outputBlobName = default, IotHubAuthenticationType? authenticationType = default, ResourceIdentifier userAssignedIdentity = default, bool? includeConfigurations = default, string configurationsBlobName = default)
+        {
+            return new IotHubImportDevicesContent(
+                inputBlobContainerUri,
+                outputBlobContainerUri,
+                inputBlobName,
+                outputBlobName,
+                authenticationType,
+                userAssignedIdentity is null ? default : new ManagedIdentity(userAssignedIdentity, default),
+                includeConfigurations,
+                configurationsBlobName,
+                default);
+        }
+
+        /// <param name="failoverRegion"> Region the hub will be failed over to. </param>
+        /// <returns> A new <see cref="Models.IotHubFailoverContent"/> instance for mocking. </returns>
+        public static IotHubFailoverContent IotHubFailoverContent(string failoverRegion = default)
+        {
+            return new IotHubFailoverContent(failoverRegion, default);
+        }
+
+        /// <param name="totalDeviceCount"> The total count of devices in the identity registry. </param>
+        /// <param name="enabledDeviceCount"> The count of enabled devices in the identity registry. </param>
+        /// <param name="disabledDeviceCount"> The count of disabled devices in the identity registry. </param>
+        /// <returns> A new <see cref="Models.IotHubRegistryStatistics"/> instance for mocking. </returns>
+        public static IotHubRegistryStatistics IotHubRegistryStatistics(long? totalDeviceCount = default, long? enabledDeviceCount = default, long? disabledDeviceCount = default)
+        {
+            return new IotHubRegistryStatistics(totalDeviceCount, enabledDeviceCount, disabledDeviceCount, default);
+        }
+
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="properties"> The tags. </param>
+        /// <param name="etag"> The etag. </param>
+        /// <returns> A new <see cref="IotHub.EventHubConsumerGroupInfoData"/> instance for mocking. </returns>
+        public static EventHubConsumerGroupInfoData EventHubConsumerGroupInfoData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IReadOnlyDictionary<string, BinaryData> properties = default, ETag? etag = default)
+        {
+            properties ??= new ChangeTrackingDictionary<string, BinaryData>();
+
+            return new EventHubConsumerGroupInfoData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                properties ?? new ChangeTrackingDictionary<string, BinaryData>(),
+                etag,
+                default);
+        }
+
+        /// <param name="name"> EventHub consumer group name. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
+        /// <returns> A new <see cref="Models.EventHubConsumerGroupInfoCreateOrUpdateContent"/> instance for mocking. </returns>
+        public static EventHubConsumerGroupInfoCreateOrUpdateContent EventHubConsumerGroupInfoCreateOrUpdateContent(string name = default)
+        {
+            return new EventHubConsumerGroupInfoCreateOrUpdateContent(default, default);
+        }
+
+        /// <param name="name"> The name of the IoT hub to check. </param>
+        /// <returns> A new <see cref="Models.IotHubNameAvailabilityContent"/> instance for mocking. </returns>
+        public static IotHubNameAvailabilityContent IotHubNameAvailabilityContent(string name = default)
+        {
+            return new IotHubNameAvailabilityContent(name, default);
+        }
+
+        /// <param name="isNameAvailable"> The value which indicates whether the provided name is available. </param>
+        /// <param name="reason"> The reason for unavailability. </param>
+        /// <param name="message"> The detailed reason message. </param>
+        /// <returns> A new <see cref="Models.IotHubNameAvailabilityResponse"/> instance for mocking. </returns>
+        public static IotHubNameAvailabilityResponse IotHubNameAvailabilityResponse(bool? isNameAvailable = default, IotHubNameUnavailableReason? reason = default, string message = default)
+        {
+            return new IotHubNameAvailabilityResponse(isNameAvailable, reason, message, default);
+        }
+
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="properties"> The description of an X509 CA Certificate. </param>
+        /// <param name="etag"> The entity tag. </param>
+        /// <returns> A new <see cref="IotHub.IotHubCertificateDescriptionData"/> instance for mocking. </returns>
+        public static IotHubCertificateDescriptionData IotHubCertificateDescriptionData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IotHubCertificateProperties properties = default, ETag? etag = default)
+        {
+            return new IotHubCertificateDescriptionData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                properties,
+                etag,
+                default);
+        }
+
+        /// <param name="subject"> The certificate's subject name. </param>
+        /// <param name="expireOn"> The certificate's expiration date and time. </param>
+        /// <param name="thumbprintString"> The certificate's thumbprint. </param>
+        /// <param name="isVerified"> Determines whether certificate has been verified. </param>
+        /// <param name="createdOn"> The certificate's create date and time. </param>
+        /// <param name="updatedOn"> The certificate's last update date and time. </param>
+        /// <param name="certificate"> The certificate content. </param>
+        /// <param name="policyResourceId"> The reference to policy stored in Azure Device Registry (ADR). </param>
+        /// <returns> A new <see cref="Models.IotHubCertificateProperties"/> instance for mocking. </returns>
+        public static IotHubCertificateProperties IotHubCertificateProperties(string subject = default, DateTimeOffset? expireOn = default, string thumbprintString = default, bool? isVerified = default, DateTimeOffset? createdOn = default, DateTimeOffset? updatedOn = default, BinaryData certificate = default, ResourceIdentifier policyResourceId = default)
+        {
+            return new IotHubCertificateProperties(
+                subject,
+                expireOn,
+                thumbprintString,
+                isVerified,
+                createdOn,
+                updatedOn,
+                certificate,
+                policyResourceId,
+                default);
+        }
+
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="properties"> The description of an X509 CA Certificate including the challenge nonce issued for the Proof-Of-Possession flow. </param>
+        /// <param name="etag"> The entity tag. </param>
+        /// <returns> A new <see cref="Models.IotHubCertificateWithNonceDescription"/> instance for mocking. </returns>
+        public static IotHubCertificateWithNonceDescription IotHubCertificateWithNonceDescription(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IotHubCertificatePropertiesWithNonce properties = default, ETag? etag = default)
+        {
+            return new IotHubCertificateWithNonceDescription(
+                id,
+                name,
+                resourceType,
+                systemData,
+                properties,
+                etag,
+                default);
+        }
+
+        /// <param name="subject"> The certificate's subject name. </param>
+        /// <param name="expireOn"> The certificate's expiration date and time. </param>
+        /// <param name="thumbprintString"> The certificate's thumbprint. </param>
+        /// <param name="isVerified"> Determines whether certificate has been verified. </param>
+        /// <param name="createdOn"> The certificate's create date and time. </param>
+        /// <param name="updatedOn"> The certificate's last update date and time. </param>
+        /// <param name="verificationCode"> The certificate's verification code that will be used for proof of possession. </param>
+        /// <param name="certificate"> The certificate content. </param>
+        /// <param name="policyResourceId"> The reference to policy stored in Azure Device Registry (ADR). </param>
+        /// <returns> A new <see cref="Models.IotHubCertificatePropertiesWithNonce"/> instance for mocking. </returns>
+        public static IotHubCertificatePropertiesWithNonce IotHubCertificatePropertiesWithNonce(string subject = default, DateTimeOffset? expireOn = default, string thumbprintString = default, bool? isVerified = default, DateTimeOffset? createdOn = default, DateTimeOffset? updatedOn = default, string verificationCode = default, BinaryData certificate = default, ResourceIdentifier policyResourceId = default)
+        {
+            return new IotHubCertificatePropertiesWithNonce(
+                subject,
+                expireOn,
+                thumbprintString,
+                isVerified,
+                createdOn,
+                updatedOn,
+                verificationCode,
+                certificate,
+                policyResourceId,
+                default);
+        }
+
+        /// <param name="certificate"> base-64 representation of X509 certificate .cer file or just .pem file content. </param>
+        /// <returns> A new <see cref="Models.IotHubCertificateVerificationContent"/> instance for mocking. </returns>
+        public static IotHubCertificateVerificationContent IotHubCertificateVerificationContent(BinaryData certificate = default)
+        {
+            return new IotHubCertificateVerificationContent(certificate, default);
+        }
+
+        /// <param name="iotHubTypeId"> IotHub type id. </param>
+        /// <param name="userSubscriptionQuotaType"> Response type. </param>
+        /// <param name="unit"> Unit of IotHub type. </param>
+        /// <param name="currentValue"> Current number of IotHub type. </param>
+        /// <param name="limit"> Numerical limit on IotHub type. </param>
+        /// <param name="name"> IotHub type. </param>
+        /// <returns> A new <see cref="Models.IotHubUserSubscriptionQuota"/> instance for mocking. </returns>
+        public static IotHubUserSubscriptionQuota IotHubUserSubscriptionQuota(string iotHubTypeId = default, string userSubscriptionQuotaType = default, string unit = default, int? currentValue = default, int? limit = default, IotHubTypeName name = default)
+        {
+            return new IotHubUserSubscriptionQuota(
+                iotHubTypeId,
+                userSubscriptionQuotaType,
+                unit,
+                currentValue,
+                limit,
+                name,
+                default);
+        }
+
+        /// <param name="value"> IotHub type. </param>
+        /// <param name="localizedValue"> Localized value of name. </param>
+        /// <returns> A new <see cref="Models.IotHubTypeName"/> instance for mocking. </returns>
+        public static IotHubTypeName IotHubTypeName(string value = default, string localizedValue = default)
+        {
+            return new IotHubTypeName(value, localizedValue, default);
+        }
+
+        /// <param name="groupId"> The group id. </param>
+        /// <param name="requiredMembers"> The required members for a specific group id. </param>
+        /// <param name="requiredDnsZoneNames"> The required DNS zones for a specific group id. </param>
+        /// <returns> A new <see cref="Models.IotHubPrivateEndpointGroupInformationProperties"/> instance for mocking. </returns>
+        public static IotHubPrivateEndpointGroupInformationProperties IotHubPrivateEndpointGroupInformationProperties(string groupId = default, IEnumerable<string> requiredMembers = default, IEnumerable<string> requiredDnsZoneNames = default)
+        {
+            requiredMembers ??= new ChangeTrackingList<string>();
+            requiredDnsZoneNames ??= new ChangeTrackingList<string>();
+
+            return new IotHubPrivateEndpointGroupInformationProperties(groupId, (requiredMembers ?? new ChangeTrackingList<string>()).ToList(), (requiredDnsZoneNames ?? new ChangeTrackingList<string>()).ToList(), default);
+        }
+
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="properties"> The properties for a group information object. </param>
+        /// <returns> A new <see cref="IotHub.IotHubPrivateEndpointGroupInformationData"/> instance for mocking. </returns>
+        public static IotHubPrivateEndpointGroupInformationData IotHubPrivateEndpointGroupInformationData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IotHubPrivateEndpointGroupInformationProperties properties = default)
+        {
+            return new IotHubPrivateEndpointGroupInformationData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                properties,
+                default);
+        }
+
         /// <summary> Initializes a new instance of <see cref="IotHub.IotHubDescriptionData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
@@ -29,22 +982,21 @@ namespace Azure.ResourceManager.IotHub.Models
         /// <param name="sku"> IotHub SKU info. </param>
         /// <param name="identity"> The managed identities for the IotHub. </param>
         /// <returns> A new <see cref="IotHub.IotHubDescriptionData"/> instance for mocking. </returns>
-        public static IotHubDescriptionData IotHubDescriptionData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IDictionary<string, string> tags = null, AzureLocation location = default, ETag? etag = null, IotHubProperties properties = null, IotHubSkuInfo sku = null, ManagedServiceIdentity identity = null)
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static IotHubDescriptionData IotHubDescriptionData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, ETag? etag = default, IotHubProperties properties = default, IotHubSkuInfo sku = default, ManagedServiceIdentity identity = default)
         {
-            tags ??= new Dictionary<string, string>();
-
             return new IotHubDescriptionData(
                 id,
                 name,
                 resourceType,
                 systemData,
-                tags,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
                 location,
-                etag,
                 properties,
+                etag,
                 sku,
                 identity,
-                serializedAdditionalRawData: null);
+                default);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.IotHubProperties"/>. </summary>
@@ -69,437 +1021,47 @@ namespace Azure.ResourceManager.IotHub.Models
         /// <param name="enableFileUploadNotifications"> If True, file upload notifications are enabled. </param>
         /// <param name="cloudToDevice"> The IoT hub cloud-to-device messaging properties. </param>
         /// <param name="comments"> IoT hub comments. </param>
-        /// <param name="deviceStreamsStreamingEndpoints"> The device streams properties of iothub. </param>
         /// <param name="features"> The capabilities and features enabled for the IoT hub. </param>
-        /// <param name="encryption"> The encryption properties for the IoT hub. </param>
         /// <param name="locations"> Primary and secondary location for iot hub. </param>
         /// <param name="enableDataResidency"> This property when set to true, will enable data residency, thus, disabling disaster recovery. </param>
-        /// <param name="rootCertificate"> This property store root certificate related information. </param>
-        /// <param name="ipVersion"> This property specifies the IP Version the hub is currently utilizing. </param>
-        /// <param name="deviceRegistry"> Represents properties related to the Azure Device Registry (ADR). </param>
         /// <returns> A new <see cref="Models.IotHubProperties"/> instance for mocking. </returns>
-        public static IotHubProperties IotHubProperties(IEnumerable<SharedAccessSignatureAuthorizationRule> authorizationPolicies = null, bool? disableLocalAuth = null, bool? disableDeviceSas = null, bool? disableModuleSas = null, bool? restrictOutboundNetworkAccess = null, IEnumerable<string> allowedFqdns = null, IotHubPublicNetworkAccess? publicNetworkAccess = null, IEnumerable<IotHubIPFilterRule> ipFilterRules = null, IotHubNetworkRuleSetProperties networkRuleSets = null, string minTlsVersion = null, IEnumerable<IotHubPrivateEndpointConnectionData> privateEndpointConnections = null, string provisioningState = null, string state = null, string hostName = null, IDictionary<string, EventHubCompatibleEndpointProperties> eventHubEndpoints = null, IotHubRoutingProperties routing = null, IDictionary<string, IotHubStorageEndpointProperties> storageEndpoints = null, IDictionary<string, MessagingEndpointProperties> messagingEndpoints = null, bool? enableFileUploadNotifications = null, CloudToDeviceProperties cloudToDevice = null, string comments = null, IEnumerable<string> deviceStreamsStreamingEndpoints = null, IotHubCapability? features = null, IotHubEncryptionProperties encryption = null, IEnumerable<IotHubLocationDescription> locations = null, bool? enableDataResidency = null, IotHubRootCertificateProperties rootCertificate = null, IotHubIPVersion? ipVersion = null, IotHubDeviceRegistry deviceRegistry = null)
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static IotHubProperties IotHubProperties(IEnumerable<SharedAccessSignatureAuthorizationRule> authorizationPolicies = default, bool? disableLocalAuth = default, bool? disableDeviceSas = default, bool? disableModuleSas = default, bool? restrictOutboundNetworkAccess = default, IEnumerable<string> allowedFqdns = default, IotHubPublicNetworkAccess? publicNetworkAccess = default, IEnumerable<IotHubIPFilterRule> ipFilterRules = default, IotHubNetworkRuleSetProperties networkRuleSets = default, string minTlsVersion = default, IEnumerable<IotHubPrivateEndpointConnectionData> privateEndpointConnections = default, string provisioningState = default, string state = default, string hostName = default, IDictionary<string, EventHubCompatibleEndpointProperties> eventHubEndpoints = default, IotHubRoutingProperties routing = default, IDictionary<string, IotHubStorageEndpointProperties> storageEndpoints = default, IDictionary<string, MessagingEndpointProperties> messagingEndpoints = default, bool? enableFileUploadNotifications = default, CloudToDeviceProperties cloudToDevice = default, string comments = default, IotHubCapability? features = default, IEnumerable<IotHubLocationDescription> locations = default, bool? enableDataResidency = default)
         {
-            authorizationPolicies ??= new List<SharedAccessSignatureAuthorizationRule>();
-            allowedFqdns ??= new List<string>();
-            ipFilterRules ??= new List<IotHubIPFilterRule>();
-            privateEndpointConnections ??= new List<IotHubPrivateEndpointConnectionData>();
-            eventHubEndpoints ??= new Dictionary<string, EventHubCompatibleEndpointProperties>();
-            storageEndpoints ??= new Dictionary<string, IotHubStorageEndpointProperties>();
-            messagingEndpoints ??= new Dictionary<string, MessagingEndpointProperties>();
-            deviceStreamsStreamingEndpoints ??= new List<string>();
-            locations ??= new List<IotHubLocationDescription>();
-
             return new IotHubProperties(
-                authorizationPolicies?.ToList(),
+                (authorizationPolicies ?? new ChangeTrackingList<SharedAccessSignatureAuthorizationRule>()).ToList(),
                 disableLocalAuth,
                 disableDeviceSas,
                 disableModuleSas,
                 restrictOutboundNetworkAccess,
-                allowedFqdns?.ToList(),
+                (allowedFqdns ?? new ChangeTrackingList<string>()).ToList(),
                 publicNetworkAccess,
-                ipFilterRules?.ToList(),
+                (ipFilterRules ?? new ChangeTrackingList<IotHubIPFilterRule>()).ToList(),
                 networkRuleSets,
                 minTlsVersion,
-                privateEndpointConnections?.ToList(),
+                (privateEndpointConnections ?? new ChangeTrackingList<IotHubPrivateEndpointConnectionData>()).ToList(),
                 provisioningState,
                 state,
                 hostName,
-                eventHubEndpoints,
+                default,
+                default,
+                eventHubEndpoints ?? new ChangeTrackingDictionary<string, EventHubCompatibleEndpointProperties>(),
                 routing,
-                storageEndpoints,
-                messagingEndpoints,
+                storageEndpoints ?? new ChangeTrackingDictionary<string, IotHubStorageEndpointProperties>(),
+                messagingEndpoints ?? new ChangeTrackingDictionary<string, MessagingEndpointProperties>(),
                 enableFileUploadNotifications,
                 cloudToDevice,
                 comments,
-                deviceStreamsStreamingEndpoints != null ? new IotHubPropertiesDeviceStreams(deviceStreamsStreamingEndpoints?.ToList(), serializedAdditionalRawData: null) : null,
+                default,
                 features,
-                encryption,
-                locations?.ToList(),
+                default,
+                (locations ?? new ChangeTrackingList<IotHubLocationDescription>()).ToList(),
                 enableDataResidency,
-                rootCertificate,
-                ipVersion,
-                deviceRegistry,
-                serializedAdditionalRawData: null);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="IotHub.IotHubPrivateEndpointConnectionData"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="properties"> The properties of a private endpoint connection. </param>
-        /// <returns> A new <see cref="IotHub.IotHubPrivateEndpointConnectionData"/> instance for mocking. </returns>
-        public static IotHubPrivateEndpointConnectionData IotHubPrivateEndpointConnectionData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IotHubPrivateEndpointConnectionProperties properties = null)
-        {
-            return new IotHubPrivateEndpointConnectionData(
-                id,
-                name,
-                resourceType,
-                systemData,
-                properties,
-                serializedAdditionalRawData: null);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Models.EventHubCompatibleEndpointProperties"/>. </summary>
-        /// <param name="retentionTimeInDays"> The retention time for device-to-cloud messages in days. See: https://docs.microsoft.com/azure/iot-hub/iot-hub-devguide-messaging#device-to-cloud-messages. </param>
-        /// <param name="partitionCount"> The number of partitions for receiving device-to-cloud messages in the Event Hub-compatible endpoint. See: https://docs.microsoft.com/azure/iot-hub/iot-hub-devguide-messaging#device-to-cloud-messages. </param>
-        /// <param name="partitionIds"> The partition ids in the Event Hub-compatible endpoint. </param>
-        /// <param name="eventHubCompatibleName"> The Event Hub-compatible name. </param>
-        /// <param name="endpoint"> The Event Hub-compatible endpoint. </param>
-        /// <returns> A new <see cref="Models.EventHubCompatibleEndpointProperties"/> instance for mocking. </returns>
-        public static EventHubCompatibleEndpointProperties EventHubCompatibleEndpointProperties(long? retentionTimeInDays = null, int? partitionCount = null, IEnumerable<string> partitionIds = null, string eventHubCompatibleName = null, string endpoint = null)
-        {
-            partitionIds ??= new List<string>();
-
-            return new EventHubCompatibleEndpointProperties(
-                retentionTimeInDays,
-                partitionCount,
-                partitionIds?.ToList(),
-                eventHubCompatibleName,
-                endpoint,
-                serializedAdditionalRawData: null);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Models.RoutingCosmosDBSqlApiProperties"/>. </summary>
-        /// <param name="name"> The name that identifies this endpoint. The name can only include alphanumeric characters, periods, underscores, hyphens and has a maximum length of 64 characters. The following names are reserved:  events, fileNotifications, $default. Endpoint names must be unique across endpoint types. </param>
-        /// <param name="id"> Id of the cosmos DB sql container endpoint. </param>
-        /// <param name="subscriptionId"> The subscription identifier of the cosmos DB account. </param>
-        /// <param name="resourceGroup"> The name of the resource group of the cosmos DB account. </param>
-        /// <param name="endpointUri"> The url of the cosmos DB account. It must include the protocol https://. </param>
-        /// <param name="authenticationType"> Method used to authenticate against the cosmos DB sql container endpoint. </param>
-        /// <param name="userAssignedIdentity"> Managed identity properties of routing cosmos DB container endpoint. </param>
-        /// <param name="primaryKey"> The primary key of the cosmos DB account. </param>
-        /// <param name="secondaryKey"> The secondary key of the cosmos DB account. </param>
-        /// <param name="databaseName"> The name of the cosmos DB database in the cosmos DB account. </param>
-        /// <param name="containerName"> The name of the cosmos DB sql container in the cosmos DB database. </param>
-        /// <param name="partitionKeyName"> The name of the partition key associated with this cosmos DB sql container if one exists. This is an optional parameter. </param>
-        /// <param name="partitionKeyTemplate"> The template for generating a synthetic partition key value for use with this cosmos DB sql container. The template must include at least one of the following placeholders: {iothub}, {deviceid}, {DD}, {MM}, and {YYYY}. Any one placeholder may be specified at most once, but order and non-placeholder components are arbitrary. This parameter is only required if PartitionKeyName is specified. </param>
-        /// <returns> A new <see cref="Models.RoutingCosmosDBSqlApiProperties"/> instance for mocking. </returns>
-        public static RoutingCosmosDBSqlApiProperties RoutingCosmosDBSqlApiProperties(string name = null, string id = null, string subscriptionId = null, string resourceGroup = null, Uri endpointUri = null, IotHubAuthenticationType? authenticationType = null, ResourceIdentifier userAssignedIdentity = null, string primaryKey = null, string secondaryKey = null, string databaseName = null, string containerName = null, string partitionKeyName = null, string partitionKeyTemplate = null)
-        {
-            return new RoutingCosmosDBSqlApiProperties(
-                name,
-                id,
-                subscriptionId,
-                resourceGroup,
-                endpointUri,
-                authenticationType,
-                userAssignedIdentity != null ? new ManagedIdentity(userAssignedIdentity, serializedAdditionalRawData: null) : null,
-                primaryKey,
-                secondaryKey,
-                databaseName,
-                containerName,
-                partitionKeyName,
-                partitionKeyTemplate,
-                serializedAdditionalRawData: null);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Models.IotHubLocationDescription"/>. </summary>
-        /// <param name="location"> The name of the Azure region. </param>
-        /// <param name="role"> The role of the region, can be either primary or secondary. The primary region is where the IoT hub is currently provisioned. The secondary region is the Azure disaster recovery (DR) paired region and also the region where the IoT hub can failover to. </param>
-        /// <returns> A new <see cref="Models.IotHubLocationDescription"/> instance for mocking. </returns>
-        public static IotHubLocationDescription IotHubLocationDescription(AzureLocation? location = null, IotHubReplicaRoleType? role = null)
-        {
-            return new IotHubLocationDescription(location, role, serializedAdditionalRawData: null);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Models.IotHubRootCertificateProperties"/>. </summary>
-        /// <param name="isRootCertificateV2Enabled"> This property when set to true, hub will use G2 cert; while it's set to false, hub uses Baltimore Cert. </param>
-        /// <param name="lastUpdatedOn"> the last update time to root certificate flag. </param>
-        /// <returns> A new <see cref="Models.IotHubRootCertificateProperties"/> instance for mocking. </returns>
-        public static IotHubRootCertificateProperties IotHubRootCertificateProperties(bool? isRootCertificateV2Enabled = null, DateTimeOffset? lastUpdatedOn = null)
-        {
-            return new IotHubRootCertificateProperties(isRootCertificateV2Enabled, lastUpdatedOn, serializedAdditionalRawData: null);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Models.IotHubSkuInfo"/>. </summary>
-        /// <param name="name"> The name of the SKU. </param>
-        /// <param name="tier"> The billing tier for the IoT hub. </param>
-        /// <param name="capacity"> The number of provisioned IoT Hub units. See: https://docs.microsoft.com/azure/azure-subscription-service-limits#iot-hub-limits. </param>
-        /// <returns> A new <see cref="Models.IotHubSkuInfo"/> instance for mocking. </returns>
-        public static IotHubSkuInfo IotHubSkuInfo(IotHubSku name = default, IotHubSkuTier? tier = null, long? capacity = null)
-        {
-            return new IotHubSkuInfo(name, tier, capacity, serializedAdditionalRawData: null);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Models.IotHubRegistryStatistics"/>. </summary>
-        /// <param name="totalDeviceCount"> The total count of devices in the identity registry. </param>
-        /// <param name="enabledDeviceCount"> The count of enabled devices in the identity registry. </param>
-        /// <param name="disabledDeviceCount"> The count of disabled devices in the identity registry. </param>
-        /// <returns> A new <see cref="Models.IotHubRegistryStatistics"/> instance for mocking. </returns>
-        public static IotHubRegistryStatistics IotHubRegistryStatistics(long? totalDeviceCount = null, long? enabledDeviceCount = null, long? disabledDeviceCount = null)
-        {
-            return new IotHubRegistryStatistics(totalDeviceCount, enabledDeviceCount, disabledDeviceCount, serializedAdditionalRawData: null);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Models.IotHubSkuDescription"/>. </summary>
-        /// <param name="resourceType"> The type of the resource. </param>
-        /// <param name="sku"> The type of the resource. </param>
-        /// <param name="capacity"> IotHub capacity. </param>
-        /// <returns> A new <see cref="Models.IotHubSkuDescription"/> instance for mocking. </returns>
-        public static IotHubSkuDescription IotHubSkuDescription(ResourceType? resourceType = null, IotHubSkuInfo sku = null, IotHubCapacity capacity = null)
-        {
-            return new IotHubSkuDescription(resourceType, sku, capacity, serializedAdditionalRawData: null);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Models.IotHubCapacity"/>. </summary>
-        /// <param name="minimum"> The minimum number of units. </param>
-        /// <param name="maximum"> The maximum number of units. </param>
-        /// <param name="default"> The default number of units. </param>
-        /// <param name="scaleType"> The type of the scaling enabled. </param>
-        /// <returns> A new <see cref="Models.IotHubCapacity"/> instance for mocking. </returns>
-        public static IotHubCapacity IotHubCapacity(long? minimum = null, long? maximum = null, long? @default = null, IotHubScaleType? scaleType = null)
-        {
-            return new IotHubCapacity(minimum, maximum, @default, scaleType, serializedAdditionalRawData: null);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="IotHub.EventHubConsumerGroupInfoData"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="properties"> The tags. </param>
-        /// <param name="etag"> The etag. </param>
-        /// <returns> A new <see cref="IotHub.EventHubConsumerGroupInfoData"/> instance for mocking. </returns>
-        public static EventHubConsumerGroupInfoData EventHubConsumerGroupInfoData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IReadOnlyDictionary<string, BinaryData> properties = null, ETag? etag = null)
-        {
-            properties ??= new Dictionary<string, BinaryData>();
-
-            return new EventHubConsumerGroupInfoData(
-                id,
-                name,
-                resourceType,
-                systemData,
-                properties,
-                etag,
-                serializedAdditionalRawData: null);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Models.IotHubJobInfo"/>. </summary>
-        /// <param name="jobId"> The job identifier. </param>
-        /// <param name="startOn"> The start time of the job. </param>
-        /// <param name="endOn"> The time the job stopped processing. </param>
-        /// <param name="jobType"> The type of the job. </param>
-        /// <param name="status"> The status of the job. </param>
-        /// <param name="failureReason"> If status == failed, this string containing the reason for the failure. </param>
-        /// <param name="statusMessage"> The status message for the job. </param>
-        /// <param name="parentJobId"> The job identifier of the parent job, if any. </param>
-        /// <returns> A new <see cref="Models.IotHubJobInfo"/> instance for mocking. </returns>
-        public static IotHubJobInfo IotHubJobInfo(string jobId = null, DateTimeOffset? startOn = null, DateTimeOffset? endOn = null, IotHubJobType? jobType = null, IotHubJobStatus? status = null, string failureReason = null, string statusMessage = null, string parentJobId = null)
-        {
-            return new IotHubJobInfo(
-                jobId,
-                startOn,
-                endOn,
-                jobType,
-                status,
-                failureReason,
-                statusMessage,
-                parentJobId,
-                serializedAdditionalRawData: null);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Models.IotHubQuotaMetricInfo"/>. </summary>
-        /// <param name="name"> The name of the quota metric. </param>
-        /// <param name="currentValue"> The current value for the quota metric. </param>
-        /// <param name="maxValue"> The maximum value of the quota metric. </param>
-        /// <returns> A new <see cref="Models.IotHubQuotaMetricInfo"/> instance for mocking. </returns>
-        public static IotHubQuotaMetricInfo IotHubQuotaMetricInfo(string name = null, long? currentValue = null, long? maxValue = null)
-        {
-            return new IotHubQuotaMetricInfo(name, currentValue, maxValue, serializedAdditionalRawData: null);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Models.IotHubEndpointHealthInfo"/>. </summary>
-        /// <param name="endpointId"> Id of the endpoint. </param>
-        /// <param name="healthStatus"> Health statuses have following meanings. The 'healthy' status shows that the endpoint is accepting messages as expected. The 'unhealthy' status shows that the endpoint is not accepting messages as expected and IoT Hub is retrying to send data to this endpoint. The status of an unhealthy endpoint will be updated to healthy when IoT Hub has established an eventually consistent state of health. The 'dead' status shows that the endpoint is not accepting messages, after IoT Hub retried sending messages for the retrial period. See IoT Hub metrics to identify errors and monitor issues with endpoints. The 'unknown' status shows that the IoT Hub has not established a connection with the endpoint. No messages have been delivered to or rejected from this endpoint. </param>
-        /// <param name="lastKnownError"> Last error obtained when a message failed to be delivered to iot hub. </param>
-        /// <param name="lastKnownErrorOn"> Time at which the last known error occurred. </param>
-        /// <param name="lastSuccessfulSendAttemptOn"> Last time iot hub successfully sent a message to the endpoint. </param>
-        /// <param name="lastSendAttemptOn"> Last time iot hub tried to send a message to the endpoint. </param>
-        /// <returns> A new <see cref="Models.IotHubEndpointHealthInfo"/> instance for mocking. </returns>
-        public static IotHubEndpointHealthInfo IotHubEndpointHealthInfo(string endpointId = null, IotHubEndpointHealthStatus? healthStatus = null, string lastKnownError = null, DateTimeOffset? lastKnownErrorOn = null, DateTimeOffset? lastSuccessfulSendAttemptOn = null, DateTimeOffset? lastSendAttemptOn = null)
-        {
-            return new IotHubEndpointHealthInfo(
-                endpointId,
-                healthStatus,
-                lastKnownError,
-                lastKnownErrorOn,
-                lastSuccessfulSendAttemptOn,
-                lastSendAttemptOn,
-                serializedAdditionalRawData: null);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Models.IotHubNameAvailabilityResponse"/>. </summary>
-        /// <param name="isNameAvailable"> The value which indicates whether the provided name is available. </param>
-        /// <param name="reason"> The reason for unavailability. </param>
-        /// <param name="message"> The detailed reason message. </param>
-        /// <returns> A new <see cref="Models.IotHubNameAvailabilityResponse"/> instance for mocking. </returns>
-        public static IotHubNameAvailabilityResponse IotHubNameAvailabilityResponse(bool? isNameAvailable = null, IotHubNameUnavailableReason? reason = null, string message = null)
-        {
-            return new IotHubNameAvailabilityResponse(isNameAvailable, reason, message, serializedAdditionalRawData: null);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Models.IotHubUserSubscriptionQuota"/>. </summary>
-        /// <param name="iotHubTypeId"> IotHub type id. </param>
-        /// <param name="userSubscriptionQuotaType"> Response type. </param>
-        /// <param name="unit"> Unit of IotHub type. </param>
-        /// <param name="currentValue"> Current number of IotHub type. </param>
-        /// <param name="limit"> Numerical limit on IotHub type. </param>
-        /// <param name="name"> IotHub type. </param>
-        /// <returns> A new <see cref="Models.IotHubUserSubscriptionQuota"/> instance for mocking. </returns>
-        public static IotHubUserSubscriptionQuota IotHubUserSubscriptionQuota(string iotHubTypeId = null, string userSubscriptionQuotaType = null, string unit = null, int? currentValue = null, int? limit = null, IotHubTypeName name = null)
-        {
-            return new IotHubUserSubscriptionQuota(
-                iotHubTypeId,
-                userSubscriptionQuotaType,
-                unit,
-                currentValue,
-                limit,
-                name,
-                serializedAdditionalRawData: null);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Models.IotHubTypeName"/>. </summary>
-        /// <param name="value"> IotHub type. </param>
-        /// <param name="localizedValue"> Localized value of name. </param>
-        /// <returns> A new <see cref="Models.IotHubTypeName"/> instance for mocking. </returns>
-        public static IotHubTypeName IotHubTypeName(string value = null, string localizedValue = null)
-        {
-            return new IotHubTypeName(value, localizedValue, serializedAdditionalRawData: null);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Models.IotHubTestAllRoutesResult"/>. </summary>
-        /// <param name="routes"> JSON-serialized array of matched routes. </param>
-        /// <returns> A new <see cref="Models.IotHubTestAllRoutesResult"/> instance for mocking. </returns>
-        public static IotHubTestAllRoutesResult IotHubTestAllRoutesResult(IEnumerable<IotHubMatchedRoute> routes = null)
-        {
-            routes ??= new List<IotHubMatchedRoute>();
-
-            return new IotHubTestAllRoutesResult(routes?.ToList(), serializedAdditionalRawData: null);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Models.IotHubMatchedRoute"/>. </summary>
-        /// <param name="properties"> Properties of routes that matched. </param>
-        /// <returns> A new <see cref="Models.IotHubMatchedRoute"/> instance for mocking. </returns>
-        public static IotHubMatchedRoute IotHubMatchedRoute(RoutingRuleProperties properties = null)
-        {
-            return new IotHubMatchedRoute(properties, serializedAdditionalRawData: null);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Models.IotHubTestRouteContent"/>. </summary>
-        /// <param name="message"> Routing message. </param>
-        /// <param name="route"> Route properties. </param>
-        /// <param name="twin"> Routing Twin Reference. </param>
-        /// <returns> A new <see cref="Models.IotHubTestRouteContent"/> instance for mocking. </returns>
-        public static IotHubTestRouteContent IotHubTestRouteContent(RoutingMessage message = null, RoutingRuleProperties route = null, RoutingTwin twin = null)
-        {
-            return new IotHubTestRouteContent(message, route, twin, serializedAdditionalRawData: null);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Models.IotHubTestRouteResult"/>. </summary>
-        /// <param name="result"> Result of testing route. </param>
-        /// <param name="detailsCompilationErrors"> Detailed result of testing route. </param>
-        /// <returns> A new <see cref="Models.IotHubTestRouteResult"/> instance for mocking. </returns>
-        public static IotHubTestRouteResult IotHubTestRouteResult(IotHubTestResultStatus? result = null, IEnumerable<RouteCompilationError> detailsCompilationErrors = null)
-        {
-            detailsCompilationErrors ??= new List<RouteCompilationError>();
-
-            return new IotHubTestRouteResult(result, detailsCompilationErrors != null ? new IotHubTestRouteResultDetails(detailsCompilationErrors?.ToList(), serializedAdditionalRawData: null) : null, serializedAdditionalRawData: null);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Models.RouteCompilationError"/>. </summary>
-        /// <param name="message"> Route error message. </param>
-        /// <param name="severity"> Severity of the route error. </param>
-        /// <param name="location"> Location where the route error happened. </param>
-        /// <returns> A new <see cref="Models.RouteCompilationError"/> instance for mocking. </returns>
-        public static RouteCompilationError RouteCompilationError(string message = null, RouteErrorSeverity? severity = null, RouteErrorRange location = null)
-        {
-            return new RouteCompilationError(message, severity, location, serializedAdditionalRawData: null);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Models.RouteErrorRange"/>. </summary>
-        /// <param name="start"> Start where the route error happened. </param>
-        /// <param name="end"> End where the route error happened. </param>
-        /// <returns> A new <see cref="Models.RouteErrorRange"/> instance for mocking. </returns>
-        public static RouteErrorRange RouteErrorRange(RouteErrorPosition start = null, RouteErrorPosition end = null)
-        {
-            return new RouteErrorRange(start, end, serializedAdditionalRawData: null);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Models.RouteErrorPosition"/>. </summary>
-        /// <param name="line"> Line where the route error happened. </param>
-        /// <param name="column"> Column where the route error happened. </param>
-        /// <returns> A new <see cref="Models.RouteErrorPosition"/> instance for mocking. </returns>
-        public static RouteErrorPosition RouteErrorPosition(int? line = null, int? column = null)
-        {
-            return new RouteErrorPosition(line, column, serializedAdditionalRawData: null);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Models.ExportDevicesContent"/>. </summary>
-        /// <param name="exportBlobContainerUri"> The export blob container URI. </param>
-        /// <param name="excludeKeys"> The value indicating whether keys should be excluded during export. </param>
-        /// <param name="exportBlobName"> The name of the blob that will be created in the provided output blob container. This blob will contain the exported device registry information for the IoT Hub. </param>
-        /// <param name="authenticationType"> Specifies authentication type being used for connecting to the storage account. </param>
-        /// <param name="userAssignedIdentity"> Managed identity properties of storage endpoint for export devices. </param>
-        /// <param name="includeConfigurations"> The value indicating whether configurations should be exported. </param>
-        /// <param name="configurationsBlobName"> The name of the blob that will be created in the provided output blob container. This blob will contain the exported configurations for the Iot Hub. </param>
-        /// <returns> A new <see cref="Models.ExportDevicesContent"/> instance for mocking. </returns>
-        public static ExportDevicesContent ExportDevicesContent(Uri exportBlobContainerUri = null, bool excludeKeys = default, string exportBlobName = null, IotHubAuthenticationType? authenticationType = null, ResourceIdentifier userAssignedIdentity = null, bool? includeConfigurations = null, string configurationsBlobName = null)
-        {
-            return new ExportDevicesContent(
-                exportBlobContainerUri,
-                excludeKeys,
-                exportBlobName,
-                authenticationType,
-                userAssignedIdentity != null ? new ManagedIdentity(userAssignedIdentity, serializedAdditionalRawData: null) : null,
-                includeConfigurations,
-                configurationsBlobName,
-                serializedAdditionalRawData: null);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Models.IotHubImportDevicesContent"/>. </summary>
-        /// <param name="inputBlobContainerUri"> The input blob container URI. </param>
-        /// <param name="outputBlobContainerUri"> The output blob container URI. </param>
-        /// <param name="inputBlobName"> The blob name to be used when importing from the provided input blob container. </param>
-        /// <param name="outputBlobName"> The blob name to use for storing the status of the import job. </param>
-        /// <param name="authenticationType"> Specifies authentication type being used for connecting to the storage account. </param>
-        /// <param name="userAssignedIdentity"> Managed identity properties of storage endpoint for import devices. </param>
-        /// <param name="includeConfigurations"> The value indicating whether configurations should be imported. </param>
-        /// <param name="configurationsBlobName"> The blob name to be used when importing configurations from the provided input blob container. </param>
-        /// <returns> A new <see cref="Models.IotHubImportDevicesContent"/> instance for mocking. </returns>
-        public static IotHubImportDevicesContent IotHubImportDevicesContent(Uri inputBlobContainerUri = null, Uri outputBlobContainerUri = null, string inputBlobName = null, string outputBlobName = null, IotHubAuthenticationType? authenticationType = null, ResourceIdentifier userAssignedIdentity = null, bool? includeConfigurations = null, string configurationsBlobName = null)
-        {
-            return new IotHubImportDevicesContent(
-                inputBlobContainerUri,
-                outputBlobContainerUri,
-                inputBlobName,
-                outputBlobName,
-                authenticationType,
-                userAssignedIdentity != null ? new ManagedIdentity(userAssignedIdentity, serializedAdditionalRawData: null) : null,
-                includeConfigurations,
-                configurationsBlobName,
-                serializedAdditionalRawData: null);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="IotHub.IotHubCertificateDescriptionData"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="properties"> The description of an X509 CA Certificate. </param>
-        /// <param name="etag"> The entity tag. </param>
-        /// <returns> A new <see cref="IotHub.IotHubCertificateDescriptionData"/> instance for mocking. </returns>
-        public static IotHubCertificateDescriptionData IotHubCertificateDescriptionData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IotHubCertificateProperties properties = null, ETag? etag = null)
-        {
-            return new IotHubCertificateDescriptionData(
-                id,
-                name,
-                resourceType,
-                systemData,
-                properties,
-                etag,
-                serializedAdditionalRawData: null);
+                default,
+                default,
+                default,
+                default,
+                default);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.IotHubCertificateProperties"/>. </summary>
@@ -510,9 +1072,9 @@ namespace Azure.ResourceManager.IotHub.Models
         /// <param name="createdOn"> The certificate's create date and time. </param>
         /// <param name="updatedOn"> The certificate's last update date and time. </param>
         /// <param name="certificate"> The certificate content. </param>
-        /// <param name="policyResourceId"> The reference to policy stored in Azure Device Registry (ADR). </param>
         /// <returns> A new <see cref="Models.IotHubCertificateProperties"/> instance for mocking. </returns>
-        public static IotHubCertificateProperties IotHubCertificateProperties(string subject = null, DateTimeOffset? expireOn = null, string thumbprintString = null, bool? isVerified = null, DateTimeOffset? createdOn = null, DateTimeOffset? updatedOn = null, BinaryData certificate = null, ResourceIdentifier policyResourceId = null)
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static IotHubCertificateProperties IotHubCertificateProperties(string subject = default, DateTimeOffset? expireOn = default, string thumbprintString = default, bool? isVerified = default, DateTimeOffset? createdOn = default, DateTimeOffset? updatedOn = default, BinaryData certificate = default)
         {
             return new IotHubCertificateProperties(
                 subject,
@@ -522,28 +1084,8 @@ namespace Azure.ResourceManager.IotHub.Models
                 createdOn,
                 updatedOn,
                 certificate,
-                policyResourceId,
-                serializedAdditionalRawData: null);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Models.IotHubCertificateWithNonceDescription"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="properties"> The description of an X509 CA Certificate including the challenge nonce issued for the Proof-Of-Possession flow. </param>
-        /// <param name="etag"> The entity tag. </param>
-        /// <returns> A new <see cref="Models.IotHubCertificateWithNonceDescription"/> instance for mocking. </returns>
-        public static IotHubCertificateWithNonceDescription IotHubCertificateWithNonceDescription(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IotHubCertificatePropertiesWithNonce properties = null, ETag? etag = null)
-        {
-            return new IotHubCertificateWithNonceDescription(
-                id,
-                name,
-                resourceType,
-                systemData,
-                properties,
-                etag,
-                serializedAdditionalRawData: null);
+                default,
+                default);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.IotHubCertificatePropertiesWithNonce"/>. </summary>
@@ -555,9 +1097,9 @@ namespace Azure.ResourceManager.IotHub.Models
         /// <param name="updatedOn"> The certificate's last update date and time. </param>
         /// <param name="verificationCode"> The certificate's verification code that will be used for proof of possession. </param>
         /// <param name="certificate"> The certificate content. </param>
-        /// <param name="policyResourceId"> The reference to policy stored in Azure Device Registry (ADR). </param>
         /// <returns> A new <see cref="Models.IotHubCertificatePropertiesWithNonce"/> instance for mocking. </returns>
-        public static IotHubCertificatePropertiesWithNonce IotHubCertificatePropertiesWithNonce(string subject = null, DateTimeOffset? expireOn = null, string thumbprintString = null, bool? isVerified = null, DateTimeOffset? createdOn = null, DateTimeOffset? updatedOn = null, string verificationCode = null, BinaryData certificate = null, ResourceIdentifier policyResourceId = null)
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static IotHubCertificatePropertiesWithNonce IotHubCertificatePropertiesWithNonce(string subject = default, DateTimeOffset? expireOn = default, string thumbprintString = default, bool? isVerified = default, DateTimeOffset? createdOn = default, DateTimeOffset? updatedOn = default, string verificationCode = default, BinaryData certificate = default)
         {
             return new IotHubCertificatePropertiesWithNonce(
                 subject,
@@ -568,102 +1110,8 @@ namespace Azure.ResourceManager.IotHub.Models
                 updatedOn,
                 verificationCode,
                 certificate,
-                policyResourceId,
-                serializedAdditionalRawData: null);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="IotHub.IotHubPrivateEndpointGroupInformationData"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="properties"> The properties for a group information object. </param>
-        /// <returns> A new <see cref="IotHub.IotHubPrivateEndpointGroupInformationData"/> instance for mocking. </returns>
-        public static IotHubPrivateEndpointGroupInformationData IotHubPrivateEndpointGroupInformationData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IotHubPrivateEndpointGroupInformationProperties properties = null)
-        {
-            return new IotHubPrivateEndpointGroupInformationData(
-                id,
-                name,
-                resourceType,
-                systemData,
-                properties,
-                serializedAdditionalRawData: null);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Models.IotHubPrivateEndpointGroupInformationProperties"/>. </summary>
-        /// <param name="groupId"> The group id. </param>
-        /// <param name="requiredMembers"> The required members for a specific group id. </param>
-        /// <param name="requiredDnsZoneNames"> The required DNS zones for a specific group id. </param>
-        /// <returns> A new <see cref="Models.IotHubPrivateEndpointGroupInformationProperties"/> instance for mocking. </returns>
-        public static IotHubPrivateEndpointGroupInformationProperties IotHubPrivateEndpointGroupInformationProperties(string groupId = null, IEnumerable<string> requiredMembers = null, IEnumerable<string> requiredDnsZoneNames = null)
-        {
-            requiredMembers ??= new List<string>();
-            requiredDnsZoneNames ??= new List<string>();
-
-            return new IotHubPrivateEndpointGroupInformationProperties(groupId, requiredMembers?.ToList(), requiredDnsZoneNames?.ToList(), serializedAdditionalRawData: null);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="T:Azure.ResourceManager.IotHub.Models.IotHubProperties" />. </summary>
-        /// <param name="authorizationPolicies"> The shared access policies you can use to secure a connection to the IoT hub. </param>
-        /// <param name="disableLocalAuth"> If true, SAS tokens with Iot hub scoped SAS keys cannot be used for authentication. </param>
-        /// <param name="disableDeviceSas"> If true, all device(including Edge devices but excluding modules) scoped SAS keys cannot be used for authentication. </param>
-        /// <param name="disableModuleSas"> If true, all module scoped SAS keys cannot be used for authentication. </param>
-        /// <param name="restrictOutboundNetworkAccess"> If true, egress from IotHub will be restricted to only the allowed FQDNs that are configured via allowedFqdnList. </param>
-        /// <param name="allowedFqdns"> List of allowed FQDNs(Fully Qualified Domain Name) for egress from Iot Hub. </param>
-        /// <param name="publicNetworkAccess"> Whether requests from Public Network are allowed. </param>
-        /// <param name="ipFilterRules"> The IP filter rules. </param>
-        /// <param name="networkRuleSets"> Network Rule Set Properties of IotHub. </param>
-        /// <param name="minTlsVersion"> Specifies the minimum TLS version to support for this hub. Can be set to "1.2" to have clients that use a TLS version below 1.2 to be rejected. </param>
-        /// <param name="privateEndpointConnections"> Private endpoint connections created on this IotHub. </param>
-        /// <param name="provisioningState"> The provisioning state. </param>
-        /// <param name="state"> The hub state. </param>
-        /// <param name="hostName"> The name of the host. </param>
-        /// <param name="eventHubEndpoints"> The Event Hub-compatible endpoint properties. The only possible keys to this dictionary is events. This key has to be present in the dictionary while making create or update calls for the IoT hub. </param>
-        /// <param name="routing"> The routing related properties of the IoT hub. See: https://docs.microsoft.com/azure/iot-hub/iot-hub-devguide-messaging. </param>
-        /// <param name="storageEndpoints"> The list of Azure Storage endpoints where you can upload files. Currently you can configure only one Azure Storage account and that MUST have its key as $default. Specifying more than one storage account causes an error to be thrown. Not specifying a value for this property when the enableFileUploadNotifications property is set to True, causes an error to be thrown. </param>
-        /// <param name="messagingEndpoints"> The messaging endpoint properties for the file upload notification queue. </param>
-        /// <param name="enableFileUploadNotifications"> If True, file upload notifications are enabled. </param>
-        /// <param name="cloudToDevice"> The IoT hub cloud-to-device messaging properties. </param>
-        /// <param name="comments"> IoT hub comments. </param>
-        /// <param name="features"> The capabilities and features enabled for the IoT hub. </param>
-        /// <param name="locations"> Primary and secondary location for iot hub. </param>
-        /// <param name="enableDataResidency"> This property when set to true, will enable data residency, thus, disabling disaster recovery. </param>
-        /// <returns> A new <see cref="T:Azure.ResourceManager.IotHub.Models.IotHubProperties" /> instance for mocking. </returns>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public static IotHubProperties IotHubProperties(IEnumerable<SharedAccessSignatureAuthorizationRule> authorizationPolicies, bool? disableLocalAuth, bool? disableDeviceSas, bool? disableModuleSas, bool? restrictOutboundNetworkAccess, IEnumerable<string> allowedFqdns, IotHubPublicNetworkAccess? publicNetworkAccess, IEnumerable<IotHubIPFilterRule> ipFilterRules, IotHubNetworkRuleSetProperties networkRuleSets, string minTlsVersion, IEnumerable<IotHubPrivateEndpointConnectionData> privateEndpointConnections, string provisioningState, string state, string hostName, IDictionary<string, EventHubCompatibleEndpointProperties> eventHubEndpoints, IotHubRoutingProperties routing, IDictionary<string, IotHubStorageEndpointProperties> storageEndpoints, IDictionary<string, MessagingEndpointProperties> messagingEndpoints, bool? enableFileUploadNotifications, CloudToDeviceProperties cloudToDevice, string comments, IotHubCapability? features, IEnumerable<IotHubLocationDescription> locations, bool? enableDataResidency)
-        {
-            return IotHubProperties(authorizationPolicies: authorizationPolicies, disableLocalAuth: disableLocalAuth, disableDeviceSas: disableDeviceSas, disableModuleSas: disableModuleSas, restrictOutboundNetworkAccess: restrictOutboundNetworkAccess, allowedFqdns: allowedFqdns, publicNetworkAccess: publicNetworkAccess, ipFilterRules: ipFilterRules, networkRuleSets: networkRuleSets, minTlsVersion: minTlsVersion, privateEndpointConnections: privateEndpointConnections, provisioningState: provisioningState, state: state, hostName: hostName, eventHubEndpoints: eventHubEndpoints, routing: routing, storageEndpoints: storageEndpoints, messagingEndpoints: messagingEndpoints, enableFileUploadNotifications: enableFileUploadNotifications, cloudToDevice: cloudToDevice, comments: comments, deviceStreamsStreamingEndpoints: default, features: features, encryption: default, locations: locations, enableDataResidency: enableDataResidency, rootCertificate: default, ipVersion: default, deviceRegistry: default);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="T:Azure.ResourceManager.IotHub.Models.IotHubCertificateProperties" />. </summary>
-        /// <param name="subject"> The certificate's subject name. </param>
-        /// <param name="expireOn"> The certificate's expiration date and time. </param>
-        /// <param name="thumbprintString"> The certificate's thumbprint. </param>
-        /// <param name="isVerified"> Determines whether certificate has been verified. </param>
-        /// <param name="createdOn"> The certificate's create date and time. </param>
-        /// <param name="updatedOn"> The certificate's last update date and time. </param>
-        /// <param name="certificate"> The certificate content. </param>
-        /// <returns> A new <see cref="T:Azure.ResourceManager.IotHub.Models.IotHubCertificateProperties" /> instance for mocking. </returns>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public static IotHubCertificateProperties IotHubCertificateProperties(string subject, DateTimeOffset? expireOn, string thumbprintString, bool? isVerified, DateTimeOffset? createdOn, DateTimeOffset? updatedOn, BinaryData certificate)
-        {
-            return IotHubCertificateProperties(subject: subject, expireOn: expireOn, thumbprintString: thumbprintString, isVerified: isVerified, createdOn: createdOn, updatedOn: updatedOn, certificate: certificate, policyResourceId: default);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="T:Azure.ResourceManager.IotHub.Models.IotHubCertificatePropertiesWithNonce" />. </summary>
-        /// <param name="subject"> The certificate's subject name. </param>
-        /// <param name="expireOn"> The certificate's expiration date and time. </param>
-        /// <param name="thumbprintString"> The certificate's thumbprint. </param>
-        /// <param name="isVerified"> Determines whether certificate has been verified. </param>
-        /// <param name="createdOn"> The certificate's create date and time. </param>
-        /// <param name="updatedOn"> The certificate's last update date and time. </param>
-        /// <param name="verificationCode"> The certificate's verification code that will be used for proof of possession. </param>
-        /// <param name="certificate"> The certificate content. </param>
-        /// <returns> A new <see cref="T:Azure.ResourceManager.IotHub.Models.IotHubCertificatePropertiesWithNonce" /> instance for mocking. </returns>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public static IotHubCertificatePropertiesWithNonce IotHubCertificatePropertiesWithNonce(string subject, DateTimeOffset? expireOn, string thumbprintString, bool? isVerified, DateTimeOffset? createdOn, DateTimeOffset? updatedOn, string verificationCode, BinaryData certificate)
-        {
-            return IotHubCertificatePropertiesWithNonce(subject: subject, expireOn: expireOn, thumbprintString: thumbprintString, isVerified: isVerified, createdOn: createdOn, updatedOn: updatedOn, verificationCode: verificationCode, certificate: certificate, policyResourceId: default);
+                default,
+                default);
         }
     }
 }

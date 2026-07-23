@@ -7,126 +7,140 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.Core;
+using Azure;
 using Azure.ResourceManager.Models;
 using Azure.ResourceManager.Network.Models;
 
 namespace Azure.ResourceManager.Network
 {
-    /// <summary>
-    /// A class representing the PacketCapture data model.
-    /// Information about packet capture session.
-    /// </summary>
+    /// <summary> Information about packet capture session. </summary>
     public partial class PacketCaptureData : ResourceData
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="PacketCaptureData"/>. </summary>
         internal PacketCaptureData()
         {
-            Filters = new ChangeTrackingList<PacketCaptureFilter>();
         }
 
         /// <summary> Initializes a new instance of <see cref="PacketCaptureData"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="etag"> A unique read-only string that changes whenever the resource is updated. </param>
-        /// <param name="target"> The ID of the targeted resource, only AzureVM and AzureVMSS as target type are currently supported. </param>
-        /// <param name="scope"> A list of AzureVMSS instances which can be included or excluded to run packet capture. If both included and excluded are empty, then the packet capture will run on all instances of AzureVMSS. </param>
-        /// <param name="targetType"> Target type of the resource provided. </param>
-        /// <param name="bytesToCapturePerPacket"> Number of bytes captured per packet, the remaining bytes are truncated. </param>
-        /// <param name="totalBytesPerSession"> Maximum size of the capture output. </param>
-        /// <param name="timeLimitInSeconds"> Maximum duration of the capture session in seconds. </param>
-        /// <param name="storageLocation"> The storage location for a packet capture session. </param>
-        /// <param name="filters"> A list of packet capture filters. </param>
-        /// <param name="isContinuousCapture"> This continuous capture is a nullable boolean, which can hold 'null', 'true' or 'false' value. If we do not pass this parameter, it would be consider as 'null', default value is 'null'. </param>
-        /// <param name="captureSettings"> The capture setting holds the 'FileCount', 'FileSizeInBytes', 'SessionTimeLimitInSeconds' values. </param>
-        /// <param name="provisioningState"> The provisioning state of the packet capture session. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal PacketCaptureData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, ETag? etag, string target, PacketCaptureMachineScope scope, PacketCaptureTargetType? targetType, long? bytesToCapturePerPacket, long? totalBytesPerSession, int? timeLimitInSeconds, PacketCaptureStorageLocation storageLocation, IReadOnlyList<PacketCaptureFilter> filters, bool? isContinuousCapture, PacketCaptureSettings captureSettings, NetworkProvisioningState? provisioningState, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
+        /// <param name="eTag"> A unique read-only string that changes whenever the resource is updated. </param>
+        /// <param name="properties"> Properties of the packet capture result. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal PacketCaptureData(ETag? eTag, PacketCaptureResultProperties properties, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
-            ETag = etag;
-            Target = target;
-            Scope = scope;
-            TargetType = targetType;
-            BytesToCapturePerPacket = bytesToCapturePerPacket;
-            TotalBytesPerSession = totalBytesPerSession;
-            TimeLimitInSeconds = timeLimitInSeconds;
-            StorageLocation = storageLocation;
-            Filters = filters;
-            IsContinuousCapture = isContinuousCapture;
-            CaptureSettings = captureSettings;
-            ProvisioningState = provisioningState;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            ETag = eTag;
+            Properties = properties;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> A unique read-only string that changes whenever the resource is updated. </summary>
         [WirePath("etag")]
         public ETag? ETag { get; }
+
+        /// <summary> Properties of the packet capture result. </summary>
+        [WirePath("properties")]
+        internal PacketCaptureResultProperties Properties { get; }
+
         /// <summary> The ID of the targeted resource, only AzureVM and AzureVMSS as target type are currently supported. </summary>
         [WirePath("properties.target")]
-        public string Target { get; }
+        public string Target
+        {
+            get
+            {
+                return Properties is null ? default : Properties.Target;
+            }
+        }
+
         /// <summary> A list of AzureVMSS instances which can be included or excluded to run packet capture. If both included and excluded are empty, then the packet capture will run on all instances of AzureVMSS. </summary>
         [WirePath("properties.scope")]
-        public PacketCaptureMachineScope Scope { get; }
+        public PacketCaptureMachineScope Scope
+        {
+            get
+            {
+                return Properties is null ? default : Properties.Scope;
+            }
+        }
+
         /// <summary> Target type of the resource provided. </summary>
         [WirePath("properties.targetType")]
-        public PacketCaptureTargetType? TargetType { get; }
+        public PacketCaptureTargetType? TargetType
+        {
+            get
+            {
+                return Properties is null ? default : Properties.TargetType;
+            }
+        }
+
         /// <summary> Number of bytes captured per packet, the remaining bytes are truncated. </summary>
         [WirePath("properties.bytesToCapturePerPacket")]
-        public long? BytesToCapturePerPacket { get; }
+        public long? BytesToCapturePerPacket
+        {
+            get
+            {
+                return Properties is null ? default : Properties.BytesToCapturePerPacket;
+            }
+        }
+
         /// <summary> Maximum size of the capture output. </summary>
         [WirePath("properties.totalBytesPerSession")]
-        public long? TotalBytesPerSession { get; }
+        public long? TotalBytesPerSession
+        {
+            get
+            {
+                return Properties is null ? default : Properties.TotalBytesPerSession;
+            }
+        }
+
         /// <summary> Maximum duration of the capture session in seconds. </summary>
         [WirePath("properties.timeLimitInSeconds")]
-        public int? TimeLimitInSeconds { get; }
+        public int? TimeLimitInSeconds
+        {
+            get
+            {
+                return Properties is null ? default : Properties.TimeLimitInSeconds;
+            }
+        }
+
         /// <summary> The storage location for a packet capture session. </summary>
         [WirePath("properties.storageLocation")]
-        public PacketCaptureStorageLocation StorageLocation { get; }
-        /// <summary> A list of packet capture filters. </summary>
-        [WirePath("properties.filters")]
-        public IReadOnlyList<PacketCaptureFilter> Filters { get; }
+        public PacketCaptureStorageLocation StorageLocation
+        {
+            get
+            {
+                return Properties is null ? default : Properties.StorageLocation;
+            }
+        }
+
         /// <summary> This continuous capture is a nullable boolean, which can hold 'null', 'true' or 'false' value. If we do not pass this parameter, it would be consider as 'null', default value is 'null'. </summary>
         [WirePath("properties.continuousCapture")]
-        public bool? IsContinuousCapture { get; }
+        public bool? ContinuousCapture
+        {
+            get
+            {
+                return Properties is null ? default : Properties.ContinuousCapture;
+            }
+        }
+
         /// <summary> The capture setting holds the 'FileCount', 'FileSizeInBytes', 'SessionTimeLimitInSeconds' values. </summary>
         [WirePath("properties.captureSettings")]
-        public PacketCaptureSettings CaptureSettings { get; }
+        public PacketCaptureSettings CaptureSettings
+        {
+            get
+            {
+                return Properties is null ? default : Properties.CaptureSettings;
+            }
+        }
+
         /// <summary> The provisioning state of the packet capture session. </summary>
         [WirePath("properties.provisioningState")]
-        public NetworkProvisioningState? ProvisioningState { get; }
+        public NetworkProvisioningState? ProvisioningState
+        {
+            get
+            {
+                return Properties is null ? default : Properties.ProvisioningState;
+            }
+        }
     }
 }

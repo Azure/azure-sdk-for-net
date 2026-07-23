@@ -113,11 +113,16 @@ namespace Azure.ResourceManager.CognitiveServices.Models
             {
                 writer.WritePropertyName("safetyProviders"u8);
                 writer.WriteStartArray();
-                foreach (SafetyProviderConfig item in SafetyProviders)
+                foreach (RaiSafetyProviderSourceConfig item in SafetyProviders)
                 {
                     writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
+            }
+            if (Optional.IsDefined(EgressPolicy))
+            {
+                writer.WritePropertyName("egressPolicy"u8);
+                writer.WriteObjectValue(EgressPolicy, options);
             }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
@@ -166,7 +171,8 @@ namespace Azure.ResourceManager.CognitiveServices.Models
             string basePolicyName = default;
             IList<RaiPolicyContentFilter> contentFilters = default;
             IList<CustomBlocklistConfig> customBlocklists = default;
-            IList<SafetyProviderConfig> safetyProviders = default;
+            IList<RaiSafetyProviderSourceConfig> safetyProviders = default;
+            RaiEgressPolicyConfig egressPolicy = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -227,12 +233,21 @@ namespace Azure.ResourceManager.CognitiveServices.Models
                     {
                         continue;
                     }
-                    List<SafetyProviderConfig> array = new List<SafetyProviderConfig>();
+                    List<RaiSafetyProviderSourceConfig> array = new List<RaiSafetyProviderSourceConfig>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(SafetyProviderConfig.DeserializeSafetyProviderConfig(item, options));
+                        array.Add(RaiSafetyProviderSourceConfig.DeserializeRaiSafetyProviderSourceConfig(item, options));
                     }
                     safetyProviders = array;
+                    continue;
+                }
+                if (prop.NameEquals("egressPolicy"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    egressPolicy = RaiEgressPolicyConfig.DeserializeRaiEgressPolicyConfig(prop.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
@@ -246,7 +261,8 @@ namespace Azure.ResourceManager.CognitiveServices.Models
                 basePolicyName,
                 contentFilters ?? new ChangeTrackingList<RaiPolicyContentFilter>(),
                 customBlocklists ?? new ChangeTrackingList<CustomBlocklistConfig>(),
-                safetyProviders ?? new ChangeTrackingList<SafetyProviderConfig>(),
+                safetyProviders ?? new ChangeTrackingList<RaiSafetyProviderSourceConfig>(),
+                egressPolicy,
                 additionalBinaryDataProperties);
         }
     }

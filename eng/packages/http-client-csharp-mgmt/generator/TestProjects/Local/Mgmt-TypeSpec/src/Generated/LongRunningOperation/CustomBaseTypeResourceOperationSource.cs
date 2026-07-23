@@ -32,7 +32,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
         CustomBaseTypeResource IOperationSource<CustomBaseTypeResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
             using JsonDocument document = JsonDocument.Parse(response.ContentStream);
-            CustomBaseTypeResourceData data = CustomBaseTypeResourceData.DeserializeCustomBaseTypeResourceData(document.RootElement, ModelSerializationExtensions.WireOptions);
+            CustomBaseTypeResourceCustomData data = CustomBaseTypeResourceCustomData.DeserializeCustomBaseTypeResourceCustomData(document.RootElement, ModelSerializationExtensions.WireOptions);
             return new CustomBaseTypeResource(_client, data);
         }
 
@@ -42,7 +42,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
         async ValueTask<CustomBaseTypeResource> IOperationSource<CustomBaseTypeResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using JsonDocument document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-            CustomBaseTypeResourceData data = CustomBaseTypeResourceData.DeserializeCustomBaseTypeResourceData(document.RootElement, ModelSerializationExtensions.WireOptions);
+            CustomBaseTypeResourceCustomData data = CustomBaseTypeResourceCustomData.DeserializeCustomBaseTypeResourceCustomData(document.RootElement, ModelSerializationExtensions.WireOptions);
             return new CustomBaseTypeResource(_client, data);
         }
     }

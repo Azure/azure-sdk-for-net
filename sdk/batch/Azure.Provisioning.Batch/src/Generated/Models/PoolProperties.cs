@@ -399,6 +399,10 @@ namespace Azure.Provisioning.Batch
             _resizeOperationStatus = DefineModelProperty<BatchResizeOperationStatus>(nameof(ResizeOperationStatus), new string[] { "resizeOperationStatus" }, isOutput: true);
             _mountConfiguration = DefineListProperty<BatchMountConfiguration>(nameof(MountConfiguration), new string[] { "mountConfiguration" });
             _upgradePolicy = DefineModelProperty<UpgradePolicy>(nameof(UpgradePolicy), new string[] { "upgradePolicy" });
+            DefineAdditionalProperties();
         }
+
+        /// <summary> Define additional provisionable properties for PoolProperties that are not part of the generated code. </summary>
+        partial void DefineAdditionalProperties();
     }
 }

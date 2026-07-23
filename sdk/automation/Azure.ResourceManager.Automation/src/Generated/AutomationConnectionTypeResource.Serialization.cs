@@ -11,19 +11,29 @@ using System.Text.Json;
 
 namespace Azure.ResourceManager.Automation
 {
+    /// <summary></summary>
     public partial class AutomationConnectionTypeResource : IJsonModel<AutomationConnectionTypeData>
     {
-        private static AutomationConnectionTypeData s_dataDeserializationInstance;
-        private static AutomationConnectionTypeData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+        private static IJsonModel<AutomationConnectionTypeData> s_dataDeserializationInstance;
 
+        private static IJsonModel<AutomationConnectionTypeData> DataDeserializationInstance => s_dataDeserializationInstance ??= new AutomationConnectionTypeData();
+
+        /// <param name="writer"> The writer to serialize the model to. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<AutomationConnectionTypeData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<AutomationConnectionTypeData>)Data).Write(writer, options);
 
-        AutomationConnectionTypeData IJsonModel<AutomationConnectionTypeData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<AutomationConnectionTypeData>)DataDeserializationInstance).Create(ref reader, options);
+        /// <param name="reader"> The reader for deserializing the model. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        AutomationConnectionTypeData IJsonModel<AutomationConnectionTypeData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => DataDeserializationInstance.Create(ref reader, options);
 
+        /// <param name="options"> The client options for reading and writing models. </param>
         BinaryData IPersistableModel<AutomationConnectionTypeData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<AutomationConnectionTypeData>(Data, options, AzureResourceManagerAutomationContext.Default);
 
+        /// <param name="data"> The binary data to be processed. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         AutomationConnectionTypeData IPersistableModel<AutomationConnectionTypeData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<AutomationConnectionTypeData>(data, options, AzureResourceManagerAutomationContext.Default);
 
-        string IPersistableModel<AutomationConnectionTypeData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<AutomationConnectionTypeData>)DataDeserializationInstance).GetFormatFromOptions(options);
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<AutomationConnectionTypeData>.GetFormatFromOptions(ModelReaderWriterOptions options) => DataDeserializationInstance.GetFormatFromOptions(options);
     }
 }

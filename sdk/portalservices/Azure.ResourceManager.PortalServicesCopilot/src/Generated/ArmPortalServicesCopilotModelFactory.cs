@@ -36,19 +36,19 @@ namespace Azure.ResourceManager.PortalServicesCopilot.Models
                 default);
         }
 
-        /// <param name="accessControlEnabled"> Boolean indicating if role-based access control is enabled for copilot in this tenant. </param>
+        /// <param name="isAccessControlEnabled"> Boolean indicating if role-based access control is enabled for copilot in this tenant. </param>
         /// <param name="provisioningState"> The status of the last provisioning operation performed on the resource. </param>
         /// <returns> A new <see cref="Models.PortalServicesCopilotSettingsProperties"/> instance for mocking. </returns>
-        public static PortalServicesCopilotSettingsProperties PortalServicesCopilotSettingsProperties(bool accessControlEnabled = default, PortalServicesResourceProvisioningState? provisioningState = default)
+        public static PortalServicesCopilotSettingsProperties PortalServicesCopilotSettingsProperties(bool isAccessControlEnabled = default, PortalServicesResourceProvisioningState? provisioningState = default)
         {
-            return new PortalServicesCopilotSettingsProperties(accessControlEnabled, provisioningState, default);
+            return new PortalServicesCopilotSettingsProperties(isAccessControlEnabled, provisioningState, default);
         }
 
-        /// <param name="accessControlEnabled"> Boolean indicating if role-based access control is enabled for copilot in this tenant. </param>
+        /// <param name="isAccessControlEnabled"> Boolean indicating if role-based access control is enabled for copilot in this tenant. </param>
         /// <returns> A new <see cref="Models.PortalServicesCopilotSettingPatch"/> instance for mocking. </returns>
-        public static PortalServicesCopilotSettingPatch PortalServicesCopilotSettingPatch(bool? accessControlEnabled = default)
+        public static PortalServicesCopilotSettingPatch PortalServicesCopilotSettingPatch(bool? isAccessControlEnabled = default)
         {
-            return new PortalServicesCopilotSettingPatch(accessControlEnabled is null ? default : new CopilotSettingsResourceUpdateProperties(accessControlEnabled, default), default);
+            return new PortalServicesCopilotSettingPatch(isAccessControlEnabled is null ? default : new CopilotSettingsResourceUpdateProperties(isAccessControlEnabled, default), default);
         }
     }
 }

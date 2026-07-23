@@ -37,6 +37,7 @@ namespace Azure.Core.Diagnostics
         private const int PipelineTransportOptionsNotAppliedEvent = 23;
         private const int FailedToDecodeCaeChallengeClaimsEvent = 24;
         private const int FailedToUpdateTransportEvent = 25;
+        private const int TokenBindingEvent = 26;
 
         private AzureCoreEventSource() : base(EventSourceName) { }
 
@@ -341,6 +342,15 @@ namespace Azure.Core.Diagnostics
             if (IsEnabled(EventLevel.Error, EventKeywords.None))
             {
                 WriteEvent(FailedToUpdateTransportEvent, reason);
+            }
+        }
+
+        [Event(TokenBindingEvent, Level = EventLevel.Verbose, Message = "TokenBinding: {0}")]
+        public void TokenBinding(string reason)
+        {
+            if (IsEnabled(EventLevel.Verbose, EventKeywords.None))
+            {
+                WriteEvent(TokenBindingEvent, reason);
             }
         }
     }

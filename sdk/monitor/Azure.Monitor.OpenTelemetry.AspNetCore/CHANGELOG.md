@@ -8,6 +8,9 @@
 
 ### Bugs Fixed
 
+- Hardened Azure Monitor ingestion and Live Metrics redirect handling to prevent credentials and telemetry from being forwarded to untrusted destinations.
+  ([#61244](https://github.com/Azure/azure-sdk-for-net/pull/61244))
+
 ### Other Changes
 
 ## 1.5.0 (2026-04-30)

@@ -60,13 +60,13 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
         {
             TryGetApiVersion(ResourceType, out string fooApiVersion);
             _foosClientDiagnostics = new ClientDiagnostics("Azure.Generator.MgmtTypeSpec.Tests", ResourceType.Namespace, Diagnostics);
-            _foosRestClient = new Foos(_foosClientDiagnostics, Pipeline, Endpoint, fooApiVersion ?? "2024-05-01");
+            _foosRestClient = new Foos(_foosClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, fooApiVersion ?? "2024-05-01");
             _entityResourceReproClientDiagnostics = new ClientDiagnostics("Azure.Generator.MgmtTypeSpec.Tests", ResourceType.Namespace, Diagnostics);
-            _entityResourceReproRestClient = new EntityResourceRepro(_entityResourceReproClientDiagnostics, Pipeline, Endpoint, fooApiVersion ?? "2024-05-01");
+            _entityResourceReproRestClient = new EntityResourceRepro(_entityResourceReproClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, fooApiVersion ?? "2024-05-01");
             _grandparentFlattenReproClientDiagnostics = new ClientDiagnostics("Azure.Generator.MgmtTypeSpec.Tests", ResourceType.Namespace, Diagnostics);
-            _grandparentFlattenReproRestClient = new GrandparentFlattenRepro(_grandparentFlattenReproClientDiagnostics, Pipeline, Endpoint, fooApiVersion ?? "2024-05-01");
+            _grandparentFlattenReproRestClient = new GrandparentFlattenRepro(_grandparentFlattenReproClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, fooApiVersion ?? "2024-05-01");
             _sharedParamReproClientDiagnostics = new ClientDiagnostics("Azure.Generator.MgmtTypeSpec.Tests", ResourceType.Namespace, Diagnostics);
-            _sharedParamReproRestClient = new SharedParamRepro(_sharedParamReproClientDiagnostics, Pipeline, Endpoint, fooApiVersion ?? "2024-05-01");
+            _sharedParamReproRestClient = new SharedParamRepro(_sharedParamReproClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, fooApiVersion ?? "2024-05-01");
             ValidateResourceId(id);
         }
 
@@ -1621,6 +1621,39 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
             Argument.AssertNotNullOrEmpty(multiFlattenTestName, nameof(multiFlattenTestName));
 
             return GetMultiFlattenTests().Get(multiFlattenTestName, cancellationToken);
+        }
+
+        /// <summary> Gets a collection of DeleteFinalResultTests in the <see cref="FooResource"/>. </summary>
+        /// <returns> An object representing collection of DeleteFinalResultTests and their operations over a DeleteFinalResultTestResource. </returns>
+        public virtual DeleteFinalResultTestCollection GetDeleteFinalResultTests()
+        {
+            return GetCachedClient(client => new DeleteFinalResultTestCollection(client, Id));
+        }
+
+        /// <summary> Get a DeleteFinalResultTest. </summary>
+        /// <param name="deleteFinalResultTestName"> The name of the DeleteFinalResultTest. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="deleteFinalResultTestName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="deleteFinalResultTestName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual async Task<Response<DeleteFinalResultTestResource>> GetDeleteFinalResultTestAsync(string deleteFinalResultTestName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(deleteFinalResultTestName, nameof(deleteFinalResultTestName));
+
+            return await GetDeleteFinalResultTests().GetAsync(deleteFinalResultTestName, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary> Get a DeleteFinalResultTest. </summary>
+        /// <param name="deleteFinalResultTestName"> The name of the DeleteFinalResultTest. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="deleteFinalResultTestName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="deleteFinalResultTestName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual Response<DeleteFinalResultTestResource> GetDeleteFinalResultTest(string deleteFinalResultTestName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(deleteFinalResultTestName, nameof(deleteFinalResultTestName));
+
+            return GetDeleteFinalResultTests().Get(deleteFinalResultTestName, cancellationToken);
         }
 
         /// <summary> Gets a collection of Bars in the <see cref="FooResource"/>. </summary>

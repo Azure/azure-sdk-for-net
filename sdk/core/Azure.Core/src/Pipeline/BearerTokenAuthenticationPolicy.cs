@@ -3,8 +3,10 @@
 
 using System;
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using System.Net;
+using System.Security.Cryptography.X509Certificates;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
@@ -15,10 +17,18 @@ namespace Azure.Core.Pipeline
     /// <summary>
     /// A policy that sends an <see cref="AccessToken"/> provided by a <see cref="TokenCredential"/> as an <see cref="HttpHeader.Names.Authorization"/> header.
     /// </summary>
-    public class BearerTokenAuthenticationPolicy : HttpPipelinePolicy
+    public class BearerTokenAuthenticationPolicy : HttpPipelinePolicy, ISupportsTransportUpdate
     {
         private string[] _scopes;
         private readonly AccessTokenCache _accessTokenCache;
+        private readonly HttpPipelineTransportOptions? _transportOptions;
+        private X509Certificate2? _lastBindingCertificate;
+
+        /// <summary>
+        /// Event that is triggered when the transport needs to be updated.
+        /// </summary>
+        [Experimental("AZID0004")]
+        public event Action<HttpPipelineTransportOptions>? TransportOptionsChanged;
 
         /// <summary>
         /// Creates a new instance of <see cref="BearerTokenAuthenticationPolicy"/> using provided token credential and scope to authenticate for.
@@ -26,6 +36,15 @@ namespace Azure.Core.Pipeline
         /// <param name="credential">The token credential to use for authentication.</param>
         /// <param name="scope">The scope to be included in acquired tokens.</param>
         public BearerTokenAuthenticationPolicy(TokenCredential credential, string scope) : this(credential, new[] { scope }) { }
+
+        /// <summary>
+        /// Creates a new instance of <see cref="BearerTokenAuthenticationPolicy"/> using provided token credential and scope to authenticate for.
+        /// </summary>
+        /// <param name="credential">The token credential to use for authentication.</param>
+        /// <param name="scope">The scope to be included in acquired tokens.</param>
+        /// <param name="transportOptions">The <see cref="HttpPipelineTransportOptions"/> to use as a base when updating transport options. If provided, a clone of this instance will be used when updating the transport with new client certificates.</param>
+        [Experimental("AZID0004")]
+        public BearerTokenAuthenticationPolicy(TokenCredential credential, string scope, HttpPipelineTransportOptions transportOptions) : this(credential, new[] { scope }, transportOptions) { }
 
         /// <summary>
         /// Creates a new instance of <see cref="BearerTokenAuthenticationPolicy"/> using provided token credential and scopes to authenticate for.
@@ -37,17 +56,31 @@ namespace Azure.Core.Pipeline
             : this(credential, scopes, TimeSpan.FromMinutes(5), TimeSpan.FromSeconds(30))
         { }
 
+        /// <summary>
+        /// Creates a new instance of <see cref="BearerTokenAuthenticationPolicy"/> using provided token credential and scopes to authenticate for.
+        /// </summary>
+        /// <param name="credential">The token credential to use for authentication.</param>
+        /// <param name="scopes">Scopes to be included in acquired tokens.</param>
+        /// <param name="transportOptions">The <see cref="HttpPipelineTransportOptions"/> to use as a base when updating transport options. If provided, a clone of this instance will be used when updating the transport with new client certificates.</param>
+        /// <exception cref="ArgumentNullException">When <paramref name="credential"/> or <paramref name="scopes"/> is null.</exception>
+        [Experimental("AZID0004")]
+        public BearerTokenAuthenticationPolicy(TokenCredential credential, IEnumerable<string> scopes, HttpPipelineTransportOptions transportOptions)
+            : this(credential, scopes, TimeSpan.FromMinutes(5), TimeSpan.FromSeconds(30), transportOptions)
+        { }
+
         internal BearerTokenAuthenticationPolicy(
             TokenCredential credential,
             IEnumerable<string> scopes,
             TimeSpan tokenRefreshOffset,
-            TimeSpan tokenRefreshRetryDelay)
+            TimeSpan tokenRefreshRetryDelay,
+            HttpPipelineTransportOptions? transportOptions = null)
         {
             Argument.AssertNotNull(credential, nameof(credential));
             Argument.AssertNotNull(scopes, nameof(scopes));
 
             _scopes = scopes.ToArray();
             _accessTokenCache = new AccessTokenCache(credential, tokenRefreshOffset, tokenRefreshRetryDelay);
+            _transportOptions = transportOptions;
         }
 
         /// <inheritdoc />
@@ -234,8 +267,9 @@ namespace Azure.Core.Pipeline
         /// <param name="context">The <see cref="TokenRequestContext"/> used to authorize the <see cref="Request"/>.</param>
         protected async ValueTask AuthenticateAndAuthorizeRequestAsync(HttpMessage message, TokenRequestContext context)
         {
-            string headerValue = await _accessTokenCache.GetAuthHeaderValueAsync(message, context, true).ConfigureAwait(false);
-            message.Request.Headers.SetValue(HttpHeader.Names.Authorization, headerValue);
+            var headerValueInfo = await _accessTokenCache.GetAuthHeaderValueAsync(message, context, true).ConfigureAwait(false);
+            message.Request.Headers.SetValue(HttpHeader.Names.Authorization, headerValueInfo.HeaderValue);
+            UpdateTransportOptionsIfNeeded(headerValueInfo);
         }
 
         /// <summary>
@@ -245,8 +279,42 @@ namespace Azure.Core.Pipeline
         /// <param name="context">The <see cref="TokenRequestContext"/> used to authorize the <see cref="Request"/>.</param>
         protected void AuthenticateAndAuthorizeRequest(HttpMessage message, TokenRequestContext context)
         {
-            string headerValue = _accessTokenCache.GetAuthHeaderValueAsync(message, context, false).EnsureCompleted();
-            message.Request.Headers.SetValue(HttpHeader.Names.Authorization, headerValue);
+            var headerValueInfo = _accessTokenCache.GetAuthHeaderValueAsync(message, context, false).EnsureCompleted();
+            message.Request.Headers.SetValue(HttpHeader.Names.Authorization, headerValueInfo.HeaderValue);
+            UpdateTransportOptionsIfNeeded(headerValueInfo);
+        }
+
+        /// <summary>
+        /// Triggers the <see cref="TransportOptionsChanged"/> event to update the transport with new options.
+        /// This can be used to trigger transport updates when token refreshes happen in the background and new tokens have different requirements for the transport, such as a different client certificate.
+        /// </summary>
+        /// <param name="options">The updated <see cref="HttpPipelineTransportOptions"/> to apply to the transport, typically containing new client certificates for mTLS token binding.</param>
+        [Experimental("AZID0004")]
+        protected virtual void OnTransportOptionsChanged(HttpPipelineTransportOptions options)
+        {
+            TransportOptionsChanged?.Invoke(options);
+        }
+
+        private void UpdateTransportOptionsIfNeeded(AccessTokenCache.AuthHeaderValueInfo headerValueInfo)
+        {
+            var newCert = headerValueInfo.BindingCertificate;
+            if (newCert == null)
+            {
+                return;
+            }
+
+            if (_lastBindingCertificate != null && _lastBindingCertificate.Equals(newCert))
+            {
+                return;
+            }
+
+            _lastBindingCertificate = newCert;
+            var options = _transportOptions?.Clone() ?? new HttpPipelineTransportOptions();
+            options.ClientCertificates.Add(newCert);
+            AzureCoreEventSource.Singleton.TokenBinding("Updating transport options with a new binding certificate.");
+#pragma warning disable AZID0004 // Internal usage of experimental token binding API
+            OnTransportOptionsChanged(options);
+#pragma warning restore AZID0004
         }
 
         // Composes a stable host:port string from the request URI builder without invoking
@@ -272,7 +340,7 @@ namespace Azure.Core.Pipeline
                 _tokenRefreshRetryDelay = tokenRefreshRetryDelay;
             }
 
-            public async ValueTask<string> GetAuthHeaderValueAsync(HttpMessage message, TokenRequestContext context, bool async)
+            public async ValueTask<AuthHeaderValueInfo> GetAuthHeaderValueAsync(HttpMessage message, TokenRequestContext context, bool async)
             {
                 bool shouldRefreshFromCredential;
                 int maxCancellationRetries = 3;
@@ -288,7 +356,7 @@ namespace Azure.Core.Pipeline
                         {
                             headerValueInfo = await localState.GetCurrentHeaderValue(async, false, message.CancellationToken).ConfigureAwait(false);
                             _ = Task.Run(() => GetHeaderValueFromCredentialInBackgroundAsync(localState.BackgroundTokenUpdateTcs, headerValueInfo, context, async));
-                            return headerValueInfo.HeaderValue;
+                            return headerValueInfo;
                         }
 
                         try
@@ -310,7 +378,7 @@ namespace Azure.Core.Pipeline
                     try
                     {
                         headerValueInfo = await localState.GetCurrentHeaderValue(async, true, message.CancellationToken).ConfigureAwait(false);
-                        return headerValueInfo.HeaderValue;
+                        return headerValueInfo;
                     }
                     catch (TaskCanceledException) when (!message.CancellationToken.IsCancellationRequested)
                     {
@@ -414,12 +482,12 @@ namespace Azure.Core.Pipeline
                 }
                 catch (OperationCanceledException oce) when (cts.IsCancellationRequested)
                 {
-                    backgroundUpdateTcs.SetResult(new AuthHeaderValueInfo(currentAuthHeaderInfo.HeaderValue, currentAuthHeaderInfo.ExpiresOn, DateTimeOffset.UtcNow));
+                    backgroundUpdateTcs.SetResult(new AuthHeaderValueInfo(currentAuthHeaderInfo.HeaderValue, currentAuthHeaderInfo.ExpiresOn, DateTimeOffset.UtcNow, currentAuthHeaderInfo.BindingCertificate));
                     AzureCoreEventSource.Singleton.BackgroundRefreshFailed(context.ParentRequestId ?? string.Empty, oce.ToString());
                 }
                 catch (Exception e)
                 {
-                    backgroundUpdateTcs.SetResult(new AuthHeaderValueInfo(currentAuthHeaderInfo.HeaderValue, currentAuthHeaderInfo.ExpiresOn, DateTimeOffset.UtcNow + _tokenRefreshRetryDelay));
+                    backgroundUpdateTcs.SetResult(new AuthHeaderValueInfo(currentAuthHeaderInfo.HeaderValue, currentAuthHeaderInfo.ExpiresOn, DateTimeOffset.UtcNow + _tokenRefreshRetryDelay, currentAuthHeaderInfo.BindingCertificate));
                     AzureCoreEventSource.Singleton.BackgroundRefreshFailed(context.ParentRequestId ?? string.Empty, e.ToString());
                 }
                 finally
@@ -440,8 +508,11 @@ namespace Azure.Core.Pipeline
                     false when _tokenRefreshOffset.Ticks > token.ExpiresOn.Ticks => token.ExpiresOn,
                     _ => token.ExpiresOn - _tokenRefreshOffset
                 };
-
-                targetTcs.SetResult(new AuthHeaderValueInfo("Bearer " + token.Token, token.ExpiresOn, refreshOn));
+                if (token.BindingCertificate != null)
+                {
+                    AzureCoreEventSource.Singleton.TokenBinding("Token acquired with a binding certificate.");
+                }
+                targetTcs.SetResult(new AuthHeaderValueInfo(token.TokenType + " " + token.Token, token.ExpiresOn, refreshOn, token.BindingCertificate));
             }
 
             internal readonly struct AuthHeaderValueInfo
@@ -449,12 +520,14 @@ namespace Azure.Core.Pipeline
                 public string HeaderValue { get; }
                 public DateTimeOffset ExpiresOn { get; }
                 public DateTimeOffset RefreshOn { get; }
+                public X509Certificate2? BindingCertificate { get; }
 
-                public AuthHeaderValueInfo(string headerValue, DateTimeOffset expiresOn, DateTimeOffset refreshOn)
+                public AuthHeaderValueInfo(string headerValue, DateTimeOffset expiresOn, DateTimeOffset refreshOn, X509Certificate2? bindingCertificate = null)
                 {
                     HeaderValue = headerValue;
                     ExpiresOn = expiresOn;
                     RefreshOn = refreshOn;
+                    BindingCertificate = bindingCertificate;
                 }
             }
 

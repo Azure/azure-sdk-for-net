@@ -18,16 +18,16 @@ namespace Microsoft.Azure.WebPubSub.Common.Tests
 
             WebPubSubClientCertificate cert = JsonSerializer.Deserialize<WebPubSubClientCertificate>(payload, JsonSerializationOptions);
 
-            Assert.NotNull(cert);
-            Assert.AreEqual("abc123", cert.Thumbprint);
-            Assert.AreEqual("certContent", cert.Content);
+            Assert.That(cert, Is.Not.Null);
+            Assert.That(cert.Thumbprint, Is.EqualTo("abc123"));
+            Assert.That(cert.Content, Is.EqualTo("certContent"));
 
             string serialized = JsonSerializer.Serialize(cert, JsonSerializationOptions);
             WebPubSubClientCertificate converted = JsonSerializer.Deserialize<WebPubSubClientCertificate>(serialized, JsonSerializationOptions);
 
-            Assert.NotNull(converted);
-            Assert.AreEqual("abc123", converted.Thumbprint);
-            Assert.AreEqual("certContent", converted.Content);
+            Assert.That(converted, Is.Not.Null);
+            Assert.That(converted.Thumbprint, Is.EqualTo("abc123"));
+            Assert.That(converted.Content, Is.EqualTo("certContent"));
         }
 
         [Test]
@@ -37,16 +37,16 @@ namespace Microsoft.Azure.WebPubSub.Common.Tests
 
             WebPubSubClientCertificate cert = JsonSerializer.Deserialize<WebPubSubClientCertificate>(payload, JsonSerializationOptions);
 
-            Assert.NotNull(cert);
-            Assert.AreEqual("abc123", cert.Thumbprint);
-            Assert.IsNull(cert.Content);
+            Assert.That(cert, Is.Not.Null);
+            Assert.That(cert.Thumbprint, Is.EqualTo("abc123"));
+            Assert.That(cert.Content, Is.Null);
 
             string serialized = JsonSerializer.Serialize(cert, JsonSerializationOptions);
             WebPubSubClientCertificate converted = JsonSerializer.Deserialize<WebPubSubClientCertificate>(serialized, JsonSerializationOptions);
 
-            Assert.NotNull(converted);
-            Assert.AreEqual("abc123", converted.Thumbprint);
-            Assert.IsNull(converted.Content);
+            Assert.That(converted, Is.Not.Null);
+            Assert.That(converted.Thumbprint, Is.EqualTo("abc123"));
+            Assert.That(converted.Content, Is.Null);
         }
     }
 }

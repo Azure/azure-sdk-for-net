@@ -7,61 +7,107 @@
 
 using System;
 using System.Collections.Generic;
+using Azure;
 using Azure.Core;
 using Azure.ResourceManager.Network.Models;
 
 namespace Azure.ResourceManager.Network
 {
-    /// <summary>
-    /// A class representing the RouteFilterRule data model.
-    /// Route Filter Rule Resource.
-    /// </summary>
+    /// <summary> Route Filter Rule Resource. </summary>
     public partial class RouteFilterRuleData : NetworkResourceData
     {
         /// <summary> Initializes a new instance of <see cref="RouteFilterRuleData"/>. </summary>
         public RouteFilterRuleData()
         {
-            Communities = new ChangeTrackingList<string>();
         }
 
         /// <summary> Initializes a new instance of <see cref="RouteFilterRuleData"/>. </summary>
         /// <param name="id"> Resource ID. </param>
-        /// <param name="name"> Resource name. </param>
-        /// <param name="resourceType"> Resource type. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="name"> Name of the resource. </param>
+        /// <param name="type"> Resource type. </param>
+        /// <param name="properties"> Properties of the route filter rule. </param>
         /// <param name="location"> Resource location. </param>
-        /// <param name="etag"> A unique read-only string that changes whenever the resource is updated. </param>
-        /// <param name="access"> The access type of the rule. </param>
-        /// <param name="routeFilterRuleType"> The rule type of the rule. </param>
-        /// <param name="communities"> The collection for bgp community values to filter on. e.g. ['12076:5010','12076:5020']. </param>
-        /// <param name="provisioningState"> The provisioning state of the route filter rule resource. </param>
-        internal RouteFilterRuleData(ResourceIdentifier id, string name, ResourceType? resourceType, IDictionary<string, BinaryData> serializedAdditionalRawData, AzureLocation? location, ETag? etag, NetworkAccess? access, RouteFilterRuleType? routeFilterRuleType, IList<string> communities, NetworkProvisioningState? provisioningState) : base(id, name, resourceType, serializedAdditionalRawData)
+        /// <param name="eTag"> A unique read-only string that changes whenever the resource is updated. </param>
+        internal RouteFilterRuleData(ResourceIdentifier id, IDictionary<string, BinaryData> additionalBinaryDataProperties, string name, string @type, RouteFilterRulePropertiesFormat properties, AzureLocation? location, ETag? eTag) : base(id, additionalBinaryDataProperties, name, @type)
         {
+            Properties = properties;
             Location = location;
-            ETag = etag;
-            Access = access;
-            RouteFilterRuleType = routeFilterRuleType;
-            Communities = communities;
-            ProvisioningState = provisioningState;
+            ETag = eTag;
         }
 
-        /// <summary> Resource location. </summary>
-        [WirePath("location")]
-        public AzureLocation? Location { get; set; }
+        /// <summary> Properties of the route filter rule. </summary>
+        [WirePath("properties")]
+        internal RouteFilterRulePropertiesFormat Properties { get; set; }
+
         /// <summary> A unique read-only string that changes whenever the resource is updated. </summary>
         [WirePath("etag")]
         public ETag? ETag { get; }
+
         /// <summary> The access type of the rule. </summary>
         [WirePath("properties.access")]
-        public NetworkAccess? Access { get; set; }
+        public NetworkAccess? Access
+        {
+            get
+            {
+                return Properties is null ? default : Properties.Access;
+            }
+            set
+            {
+                if (value.HasValue)
+                {
+                    if (Properties is null)
+                    {
+                        Properties = new RouteFilterRulePropertiesFormat();
+                    }
+                    Properties.Access = value.Value;
+                }
+            }
+        }
+
         /// <summary> The rule type of the rule. </summary>
         [WirePath("properties.routeFilterRuleType")]
-        public RouteFilterRuleType? RouteFilterRuleType { get; set; }
+        public RouteFilterRuleType? RouteFilterRuleType
+        {
+            get
+            {
+                return Properties is null ? default : Properties.RouteFilterRuleType;
+            }
+            set
+            {
+                if (value.HasValue)
+                {
+                    if (Properties is null)
+                    {
+                        Properties = new RouteFilterRulePropertiesFormat();
+                    }
+                    Properties.RouteFilterRuleType = value.Value;
+                }
+            }
+        }
+
         /// <summary> The collection for bgp community values to filter on. e.g. ['12076:5010','12076:5020']. </summary>
         [WirePath("properties.communities")]
-        public IList<string> Communities { get; }
+        public IList<string> Communities
+        {
+            get
+            {
+                if (Properties is null)
+                {
+                    Properties = new RouteFilterRulePropertiesFormat();
+                }
+                return Properties.Communities;
+            }
+        }
+
         /// <summary> The provisioning state of the route filter rule resource. </summary>
         [WirePath("properties.provisioningState")]
-        public NetworkProvisioningState? ProvisioningState { get; }
+        public NetworkProvisioningState? ProvisioningState
+        {
+            get
+            {
+                return Properties is null ? default : Properties.ProvisioningState;
+            }
+        }
     }
 }

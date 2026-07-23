@@ -40,6 +40,10 @@ namespace Azure.Provisioning.ContainerService
         {
             base.DefineProvisionableProperties();
             _defaultIngressControllerType = DefineProperty<NginxIngressControllerType>(nameof(DefaultIngressControllerType), new string[] { "defaultIngressControllerType" });
+            DefineAdditionalProperties();
         }
+
+        /// <summary> Define additional provisionable properties for ManagedClusterIngressProfileNginx that are not part of the generated code. </summary>
+        partial void DefineAdditionalProperties();
     }
 }

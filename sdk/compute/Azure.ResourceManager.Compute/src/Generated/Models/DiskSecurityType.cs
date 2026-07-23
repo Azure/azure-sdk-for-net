@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.Compute;
 
 namespace Azure.ResourceManager.Compute.Models
 {
@@ -14,47 +15,72 @@ namespace Azure.ResourceManager.Compute.Models
     public readonly partial struct DiskSecurityType : IEquatable<DiskSecurityType>
     {
         private readonly string _value;
+        /// <summary> Trusted Launch provides security features such as secure boot and virtual Trusted Platform Module (vTPM). </summary>
+        private const string TrustedLaunchValue = "TrustedLaunch";
+        /// <summary> Indicates Confidential VM disk with only VM guest state encrypted. </summary>
+        private const string ConfidentialVmGuestStateOnlyEncryptedWithPlatformKeyValue = "ConfidentialVM_VMGuestStateOnlyEncryptedWithPlatformKey";
+        /// <summary> Indicates Confidential VM disk with both OS disk and VM guest state encrypted with a platform managed key. </summary>
+        private const string ConfidentialVmDiskEncryptedWithPlatformKeyValue = "ConfidentialVM_DiskEncryptedWithPlatformKey";
+        /// <summary> Indicates Confidential VM disk with both OS disk and VM guest state encrypted with a customer managed key. </summary>
+        private const string ConfidentialVmDiskEncryptedWithCustomerKeyValue = "ConfidentialVM_DiskEncryptedWithCustomerKey";
+        /// <summary> Indicates Confidential VM disk with a ephemeral vTPM. vTPM state is not persisted across VM reboots. </summary>
+        private const string ConfidentialVmNonPersistedTPMValue = "ConfidentialVM_NonPersistedTPM";
 
         /// <summary> Initializes a new instance of <see cref="DiskSecurityType"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public DiskSecurityType(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string TrustedLaunchValue = "TrustedLaunch";
-        private const string ConfidentialVmGuestStateOnlyEncryptedWithPlatformKeyValue = "ConfidentialVM_VMGuestStateOnlyEncryptedWithPlatformKey";
-        private const string ConfidentialVmDiskEncryptedWithPlatformKeyValue = "ConfidentialVM_DiskEncryptedWithPlatformKey";
-        private const string ConfidentialVmDiskEncryptedWithCustomerKeyValue = "ConfidentialVM_DiskEncryptedWithCustomerKey";
-        private const string ConfidentialVmNonPersistedTPMValue = "ConfidentialVM_NonPersistedTPM";
+            _value = value;
+        }
 
         /// <summary> Trusted Launch provides security features such as secure boot and virtual Trusted Platform Module (vTPM). </summary>
         public static DiskSecurityType TrustedLaunch { get; } = new DiskSecurityType(TrustedLaunchValue);
+
         /// <summary> Indicates Confidential VM disk with only VM guest state encrypted. </summary>
         public static DiskSecurityType ConfidentialVmGuestStateOnlyEncryptedWithPlatformKey { get; } = new DiskSecurityType(ConfidentialVmGuestStateOnlyEncryptedWithPlatformKeyValue);
+
         /// <summary> Indicates Confidential VM disk with both OS disk and VM guest state encrypted with a platform managed key. </summary>
         public static DiskSecurityType ConfidentialVmDiskEncryptedWithPlatformKey { get; } = new DiskSecurityType(ConfidentialVmDiskEncryptedWithPlatformKeyValue);
+
         /// <summary> Indicates Confidential VM disk with both OS disk and VM guest state encrypted with a customer managed key. </summary>
         public static DiskSecurityType ConfidentialVmDiskEncryptedWithCustomerKey { get; } = new DiskSecurityType(ConfidentialVmDiskEncryptedWithCustomerKeyValue);
+
         /// <summary> Indicates Confidential VM disk with a ephemeral vTPM. vTPM state is not persisted across VM reboots. </summary>
         public static DiskSecurityType ConfidentialVmNonPersistedTPM { get; } = new DiskSecurityType(ConfidentialVmNonPersistedTPMValue);
+
         /// <summary> Determines if two <see cref="DiskSecurityType"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(DiskSecurityType left, DiskSecurityType right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="DiskSecurityType"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(DiskSecurityType left, DiskSecurityType right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="DiskSecurityType"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="DiskSecurityType"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator DiskSecurityType(string value) => new DiskSecurityType(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="DiskSecurityType"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator DiskSecurityType?(string value) => value == null ? null : new DiskSecurityType(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is DiskSecurityType other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(DiskSecurityType other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

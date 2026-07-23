@@ -20,7 +20,6 @@ namespace Azure.Generator.Management.Providers.OperationMethodProviders
     internal class PageableOperationMethodProvider
     {
         private readonly TypeProvider _enclosingType;
-        private readonly OperationContext _operationContext;
         private readonly RestClientInfo _restClientInfo;
         private readonly InputPagingServiceMethod _method;
         private readonly MethodProvider _convenienceMethod;
@@ -37,7 +36,7 @@ namespace Azure.Generator.Management.Providers.OperationMethodProviders
 
         public PageableOperationMethodProvider(
             TypeProvider enclosingType,
-            OperationContext operationContext,
+            ParameterContextRegistry parameterMappings,
             RestClientInfo restClientInfo,
             InputPagingServiceMethod method,
             bool isAsync,
@@ -46,16 +45,16 @@ namespace Azure.Generator.Management.Providers.OperationMethodProviders
             ParameterProvider? scopeParameter = null)
         {
             _enclosingType = enclosingType;
-            _operationContext = operationContext;
             _scopeParameter = scopeParameter;
             _restClientInfo = restClientInfo;
             _method = method;
-            _parameterMappings = operationContext.BuildParameterMapping(new RequestPathPattern(method.Operation.Path));
+            _parameterMappings = parameterMappings;
             _convenienceMethod = restClientInfo.RestClientProvider.GetConvenienceMethodByOperation(_method.Operation, isAsync);
             _isAsync = isAsync;
             _itemType = _convenienceMethod.Signature.ReturnType!.Arguments[0]; // a paging method's return type should be `Pageable<T>` or `AsyncPageable<T>`, so we can safely access the first argument as the item type.
             InitializeTypeInfo(
                 _itemType,
+                _enclosingType,
                 ref _actualItemType!,
                 ref _itemResourceClient,
                 explicitResourceClient
@@ -67,6 +66,7 @@ namespace Azure.Generator.Management.Providers.OperationMethodProviders
 
         private static void InitializeTypeInfo(
             CSharpType itemType,
+            TypeProvider enclosingType,
             ref CSharpType actualItemType,
             ref ResourceClientProvider? resourceClient,
             ResourceClientProvider? explicitResourceClient = null
@@ -74,9 +74,21 @@ namespace Azure.Generator.Management.Providers.OperationMethodProviders
         {
             actualItemType = itemType;
             // If explicit resource client is provided, use it to avoid incorrect lookup when multiple resources share same model
-            if (explicitResourceClient != null && explicitResourceClient.ResourceData.Type.Equals(itemType))
+            if (explicitResourceClient != null && explicitResourceClient.IsResourceDataType(itemType))
             {
                 resourceClient = explicitResourceClient;
+                actualItemType = resourceClient.Type;
+            }
+            else if (enclosingType is ResourceCollectionClientProvider collectionProvider &&
+                collectionProvider.Resource.IsResourceDataType(itemType))
+            {
+                resourceClient = collectionProvider.Resource;
+                actualItemType = resourceClient.Type;
+            }
+            else if (enclosingType is ResourceClientProvider resourceProvider &&
+                resourceProvider.IsResourceDataType(itemType))
+            {
+                resourceClient = resourceProvider;
                 actualItemType = resourceClient.Type;
             }
             else if (ManagementClientGenerator.Instance.OutputLibrary.TryGetResourceClientProvider(itemType, out resourceClient))

@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.HybridNetwork;
 
 namespace Azure.ResourceManager.HybridNetwork.Models
 {
@@ -14,14 +15,6 @@ namespace Azure.ResourceManager.HybridNetwork.Models
     public readonly partial struct ArtifactManifestState : IEquatable<ArtifactManifestState>
     {
         private readonly string _value;
-
-        /// <summary> Initializes a new instance of <see cref="ArtifactManifestState"/>. </summary>
-        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        public ArtifactManifestState(string value)
-        {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
-
         private const string UnknownValue = "Unknown";
         private const string UploadingValue = "Uploading";
         private const string UploadedValue = "Uploaded";
@@ -29,35 +22,64 @@ namespace Azure.ResourceManager.HybridNetwork.Models
         private const string ValidationFailedValue = "ValidationFailed";
         private const string SucceededValue = "Succeeded";
 
-        /// <summary> Unknown. </summary>
+        /// <summary> Initializes a new instance of <see cref="ArtifactManifestState"/>. </summary>
+        /// <param name="value"> The value. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
+        public ArtifactManifestState(string value)
+        {
+            Argument.AssertNotNull(value, nameof(value));
+
+            _value = value;
+        }
+
+        /// <summary> Gets the Unknown. </summary>
         public static ArtifactManifestState Unknown { get; } = new ArtifactManifestState(UnknownValue);
-        /// <summary> Uploading. </summary>
+
+        /// <summary> Gets the Uploading. </summary>
         public static ArtifactManifestState Uploading { get; } = new ArtifactManifestState(UploadingValue);
-        /// <summary> Uploaded. </summary>
+
+        /// <summary> Gets the Uploaded. </summary>
         public static ArtifactManifestState Uploaded { get; } = new ArtifactManifestState(UploadedValue);
-        /// <summary> Validating. </summary>
+
+        /// <summary> Gets the Validating. </summary>
         public static ArtifactManifestState Validating { get; } = new ArtifactManifestState(ValidatingValue);
-        /// <summary> ValidationFailed. </summary>
+
+        /// <summary> Gets the ValidationFailed. </summary>
         public static ArtifactManifestState ValidationFailed { get; } = new ArtifactManifestState(ValidationFailedValue);
-        /// <summary> Succeeded. </summary>
+
+        /// <summary> Gets the Succeeded. </summary>
         public static ArtifactManifestState Succeeded { get; } = new ArtifactManifestState(SucceededValue);
+
         /// <summary> Determines if two <see cref="ArtifactManifestState"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(ArtifactManifestState left, ArtifactManifestState right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="ArtifactManifestState"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(ArtifactManifestState left, ArtifactManifestState right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="ArtifactManifestState"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="ArtifactManifestState"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator ArtifactManifestState(string value) => new ArtifactManifestState(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="ArtifactManifestState"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator ArtifactManifestState?(string value) => value == null ? null : new ArtifactManifestState(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is ArtifactManifestState other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(ArtifactManifestState other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

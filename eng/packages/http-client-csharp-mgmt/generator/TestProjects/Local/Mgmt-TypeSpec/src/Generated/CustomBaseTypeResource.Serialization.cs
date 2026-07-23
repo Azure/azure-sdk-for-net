@@ -13,28 +13,28 @@ using Azure.ResourceManager;
 namespace Azure.Generator.MgmtTypeSpec.Tests
 {
     /// <summary></summary>
-    public partial class CustomBaseTypeResource : ArmResource, IJsonModel<CustomBaseTypeResourceData>
+    public partial class CustomBaseTypeResource : ArmResource, IJsonModel<CustomBaseTypeResourceCustomData>
     {
-        private static IJsonModel<CustomBaseTypeResourceData> s_dataDeserializationInstance;
+        private static IJsonModel<CustomBaseTypeResourceCustomData> s_dataDeserializationInstance;
 
-        private static IJsonModel<CustomBaseTypeResourceData> DataDeserializationInstance => s_dataDeserializationInstance ??= new CustomBaseTypeResourceData();
+        private static IJsonModel<CustomBaseTypeResourceCustomData> DataDeserializationInstance => s_dataDeserializationInstance ??= new CustomBaseTypeResourceCustomData();
 
         /// <param name="writer"> The writer to serialize the model to. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<CustomBaseTypeResourceData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<CustomBaseTypeResourceData>)Data).Write(writer, options);
+        void IJsonModel<CustomBaseTypeResourceCustomData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<CustomBaseTypeResourceCustomData>)Data).Write(writer, options);
 
         /// <param name="reader"> The reader for deserializing the model. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        CustomBaseTypeResourceData IJsonModel<CustomBaseTypeResourceData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => DataDeserializationInstance.Create(ref reader, options);
+        CustomBaseTypeResourceCustomData IJsonModel<CustomBaseTypeResourceCustomData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => DataDeserializationInstance.Create(ref reader, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<CustomBaseTypeResourceData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<CustomBaseTypeResourceData>(Data, options, AzureGeneratorMgmtTypeSpecTestsContext.Default);
+        BinaryData IPersistableModel<CustomBaseTypeResourceCustomData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<CustomBaseTypeResourceCustomData>(Data, options, AzureGeneratorMgmtTypeSpecTestsContext.Default);
 
         /// <param name="data"> The binary data to be processed. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        CustomBaseTypeResourceData IPersistableModel<CustomBaseTypeResourceData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<CustomBaseTypeResourceData>(data, options, AzureGeneratorMgmtTypeSpecTestsContext.Default);
+        CustomBaseTypeResourceCustomData IPersistableModel<CustomBaseTypeResourceCustomData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<CustomBaseTypeResourceCustomData>(data, options, AzureGeneratorMgmtTypeSpecTestsContext.Default);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<CustomBaseTypeResourceData>.GetFormatFromOptions(ModelReaderWriterOptions options) => DataDeserializationInstance.GetFormatFromOptions(options);
+        string IPersistableModel<CustomBaseTypeResourceCustomData>.GetFormatFromOptions(ModelReaderWriterOptions options) => DataDeserializationInstance.GetFormatFromOptions(options);
     }
 }

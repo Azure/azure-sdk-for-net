@@ -15,70 +15,107 @@ namespace Azure.ResourceManager.DataFactory.Models
     public partial class AzureBatchLinkedService : DataFactoryLinkedServiceProperties
     {
         /// <summary> Initializes a new instance of <see cref="AzureBatchLinkedService"/>. </summary>
-        /// <param name="accountName"> The Azure Batch account name. Type: string (or Expression with resultType string). </param>
-        /// <param name="batchUri"> The Azure Batch URI. Type: string (or Expression with resultType string). </param>
-        /// <param name="poolName"> The Azure Batch pool name. Type: string (or Expression with resultType string). </param>
-        /// <param name="linkedServiceName"> The Azure Storage linked service reference. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="accountName"/>, <paramref name="batchUri"/>, <paramref name="poolName"/> or <paramref name="linkedServiceName"/> is null. </exception>
-        public AzureBatchLinkedService(DataFactoryElement<string> accountName, DataFactoryElement<string> batchUri, DataFactoryElement<string> poolName, DataFactoryLinkedServiceReference linkedServiceName)
-        {
-            Argument.AssertNotNull(accountName, nameof(accountName));
-            Argument.AssertNotNull(batchUri, nameof(batchUri));
-            Argument.AssertNotNull(poolName, nameof(poolName));
-            Argument.AssertNotNull(linkedServiceName, nameof(linkedServiceName));
-
-            AccountName = accountName;
-            BatchUri = batchUri;
-            PoolName = poolName;
-            LinkedServiceName = linkedServiceName;
-            LinkedServiceType = "AzureBatch";
-        }
-
-        /// <summary> Initializes a new instance of <see cref="AzureBatchLinkedService"/>. </summary>
         /// <param name="linkedServiceType"> Type of linked service. </param>
         /// <param name="linkedServiceVersion"> Version of the linked service. </param>
         /// <param name="connectVia"> The integration runtime reference. </param>
         /// <param name="description"> Linked service description. </param>
         /// <param name="parameters"> Parameters for linked service. </param>
         /// <param name="annotations"> List of tags that can be used for describing the linked service. </param>
-        /// <param name="additionalProperties"> Additional Properties. </param>
-        /// <param name="accountName"> The Azure Batch account name. Type: string (or Expression with resultType string). </param>
-        /// <param name="accessKey"> The Azure Batch account access key. </param>
-        /// <param name="batchUri"> The Azure Batch URI. Type: string (or Expression with resultType string). </param>
-        /// <param name="poolName"> The Azure Batch pool name. Type: string (or Expression with resultType string). </param>
-        /// <param name="linkedServiceName"> The Azure Storage linked service reference. </param>
-        /// <param name="encryptedCredential"> The encrypted credential used for authentication. Credentials are encrypted using the integration runtime credential manager. Type: string. </param>
-        /// <param name="credential"> The credential reference containing authentication information. </param>
-        internal AzureBatchLinkedService(string linkedServiceType, string linkedServiceVersion, IntegrationRuntimeReference connectVia, string description, IDictionary<string, EntityParameterSpecification> parameters, IList<BinaryData> annotations, IDictionary<string, BinaryData> additionalProperties, DataFactoryElement<string> accountName, DataFactorySecret accessKey, DataFactoryElement<string> batchUri, DataFactoryElement<string> poolName, DataFactoryLinkedServiceReference linkedServiceName, string encryptedCredential, DataFactoryCredentialReference credential) : base(linkedServiceType, linkedServiceVersion, connectVia, description, parameters, annotations, additionalProperties)
+        /// <param name="additionalProperties"></param>
+        /// <param name="typeProperties"> Azure Batch linked service properties. </param>
+        /// <param name="linkedServiceName"></param>
+        internal AzureBatchLinkedService(string linkedServiceType, string linkedServiceVersion, IntegrationRuntimeReference connectVia, string description, IDictionary<string, EntityParameterSpecification> parameters, IList<BinaryData> annotations, IDictionary<string, BinaryData> additionalProperties, AzureBatchLinkedServiceTypeProperties typeProperties, DataFactoryLinkedServiceReference linkedServiceName) : base(linkedServiceType, linkedServiceVersion, connectVia, description, parameters, annotations, additionalProperties)
         {
-            AccountName = accountName;
-            AccessKey = accessKey;
-            BatchUri = batchUri;
-            PoolName = poolName;
+            TypeProperties = typeProperties;
             LinkedServiceName = linkedServiceName;
-            EncryptedCredential = encryptedCredential;
-            Credential = credential;
-            LinkedServiceType = linkedServiceType ?? "AzureBatch";
         }
 
-        /// <summary> Initializes a new instance of <see cref="AzureBatchLinkedService"/> for deserialization. </summary>
-        internal AzureBatchLinkedService()
-        {
-        }
+        /// <summary> Azure Batch linked service properties. </summary>
+        internal AzureBatchLinkedServiceTypeProperties TypeProperties { get; set; }
 
         /// <summary> The Azure Batch account name. Type: string (or Expression with resultType string). </summary>
-        public DataFactoryElement<string> AccountName { get; set; }
-        /// <summary> The Azure Batch account access key. </summary>
-        public DataFactorySecret AccessKey { get; set; }
+        public DataFactoryElement<string> AccountName
+        {
+            get
+            {
+                return TypeProperties is null ? default : TypeProperties.AccountName;
+            }
+            set
+            {
+                if (TypeProperties is null)
+                {
+                    TypeProperties = new AzureBatchLinkedServiceTypeProperties();
+                }
+                TypeProperties.AccountName = value;
+            }
+        }
+
         /// <summary> The Azure Batch URI. Type: string (or Expression with resultType string). </summary>
-        public DataFactoryElement<string> BatchUri { get; set; }
+        public DataFactoryElement<string> BatchUri
+        {
+            get
+            {
+                return TypeProperties is null ? default : TypeProperties.BatchUri;
+            }
+            set
+            {
+                if (TypeProperties is null)
+                {
+                    TypeProperties = new AzureBatchLinkedServiceTypeProperties();
+                }
+                TypeProperties.BatchUri = value;
+            }
+        }
+
         /// <summary> The Azure Batch pool name. Type: string (or Expression with resultType string). </summary>
-        public DataFactoryElement<string> PoolName { get; set; }
-        /// <summary> The Azure Storage linked service reference. </summary>
-        public DataFactoryLinkedServiceReference LinkedServiceName { get; set; }
+        public DataFactoryElement<string> PoolName
+        {
+            get
+            {
+                return TypeProperties is null ? default : TypeProperties.PoolName;
+            }
+            set
+            {
+                if (TypeProperties is null)
+                {
+                    TypeProperties = new AzureBatchLinkedServiceTypeProperties();
+                }
+                TypeProperties.PoolName = value;
+            }
+        }
+
         /// <summary> The encrypted credential used for authentication. Credentials are encrypted using the integration runtime credential manager. Type: string. </summary>
-        public string EncryptedCredential { get; set; }
+        public string EncryptedCredential
+        {
+            get
+            {
+                return TypeProperties is null ? default : TypeProperties.EncryptedCredential;
+            }
+            set
+            {
+                if (TypeProperties is null)
+                {
+                    TypeProperties = new AzureBatchLinkedServiceTypeProperties();
+                }
+                TypeProperties.EncryptedCredential = value;
+            }
+        }
+
         /// <summary> The credential reference containing authentication information. </summary>
-        public DataFactoryCredentialReference Credential { get; set; }
+        public DataFactoryCredentialReference Credential
+        {
+            get
+            {
+                return TypeProperties is null ? default : TypeProperties.Credential;
+            }
+            set
+            {
+                if (TypeProperties is null)
+                {
+                    TypeProperties = new AzureBatchLinkedServiceTypeProperties();
+                }
+                TypeProperties.Credential = value;
+            }
+        }
     }
 }

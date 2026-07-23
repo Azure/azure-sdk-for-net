@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.Network;
 
 namespace Azure.ResourceManager.Network.Models
 {
@@ -14,41 +15,62 @@ namespace Azure.ResourceManager.Network.Models
     public readonly partial struct VpnLinkConnectionMode : IEquatable<VpnLinkConnectionMode>
     {
         private readonly string _value;
+        /// <summary> Default. </summary>
+        private const string DefaultValue = "Default";
+        /// <summary> ResponderOnly. </summary>
+        private const string ResponderOnlyValue = "ResponderOnly";
+        /// <summary> InitiatorOnly. </summary>
+        private const string InitiatorOnlyValue = "InitiatorOnly";
 
         /// <summary> Initializes a new instance of <see cref="VpnLinkConnectionMode"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public VpnLinkConnectionMode(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string DefaultValue = "Default";
-        private const string ResponderOnlyValue = "ResponderOnly";
-        private const string InitiatorOnlyValue = "InitiatorOnly";
+            _value = value;
+        }
 
         /// <summary> Default. </summary>
         public static VpnLinkConnectionMode Default { get; } = new VpnLinkConnectionMode(DefaultValue);
+
         /// <summary> ResponderOnly. </summary>
         public static VpnLinkConnectionMode ResponderOnly { get; } = new VpnLinkConnectionMode(ResponderOnlyValue);
+
         /// <summary> InitiatorOnly. </summary>
         public static VpnLinkConnectionMode InitiatorOnly { get; } = new VpnLinkConnectionMode(InitiatorOnlyValue);
+
         /// <summary> Determines if two <see cref="VpnLinkConnectionMode"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(VpnLinkConnectionMode left, VpnLinkConnectionMode right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="VpnLinkConnectionMode"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(VpnLinkConnectionMode left, VpnLinkConnectionMode right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="VpnLinkConnectionMode"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="VpnLinkConnectionMode"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator VpnLinkConnectionMode(string value) => new VpnLinkConnectionMode(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="VpnLinkConnectionMode"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator VpnLinkConnectionMode?(string value) => value == null ? null : new VpnLinkConnectionMode(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is VpnLinkConnectionMode other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(VpnLinkConnectionMode other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

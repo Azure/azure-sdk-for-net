@@ -144,6 +144,16 @@ namespace Azure.ResourceManager.ContainerService.Models
                 writer.WritePropertyName("seccompDefault"u8);
                 writer.WriteStringValue(SeccompDefault.Value.ToString());
             }
+            if (Optional.IsDefined(KubeReserved))
+            {
+                writer.WritePropertyName("kubeReserved"u8);
+                writer.WriteObjectValue(KubeReserved, options);
+            }
+            if (Optional.IsDefined(HardEvictionThreshold))
+            {
+                writer.WritePropertyName("hardEvictionThreshold"u8);
+                writer.WriteObjectValue(HardEvictionThreshold, options);
+            }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
                 foreach (var item in _additionalBinaryDataProperties)
@@ -198,6 +208,8 @@ namespace Azure.ResourceManager.ContainerService.Models
             int? containerLogMaxFiles = default;
             int? podMaxPids = default;
             SeccompDefault? seccompDefault = default;
+            KubeletReservedResources kubeReserved = default;
+            KubeletHardEvictionThreshold hardEvictionThreshold = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -309,6 +321,24 @@ namespace Azure.ResourceManager.ContainerService.Models
                     seccompDefault = new SeccompDefault(prop.Value.GetString());
                     continue;
                 }
+                if (prop.NameEquals("kubeReserved"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    kubeReserved = KubeletReservedResources.DeserializeKubeletReservedResources(prop.Value, options);
+                    continue;
+                }
+                if (prop.NameEquals("hardEvictionThreshold"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    hardEvictionThreshold = KubeletHardEvictionThreshold.DeserializeKubeletHardEvictionThreshold(prop.Value, options);
+                    continue;
+                }
                 if (options.Format != "W")
                 {
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
@@ -327,6 +357,8 @@ namespace Azure.ResourceManager.ContainerService.Models
                 containerLogMaxFiles,
                 podMaxPids,
                 seccompDefault,
+                kubeReserved,
+                hardEvictionThreshold,
                 additionalBinaryDataProperties);
         }
     }

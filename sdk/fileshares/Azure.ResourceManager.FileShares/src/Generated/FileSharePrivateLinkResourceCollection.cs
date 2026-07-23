@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.FileShares
         {
             TryGetApiVersion(FileSharePrivateLinkResource.ResourceType, out string fileSharePrivateLinkResourceApiVersion);
             _privateLinkResourcesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.FileShares", FileSharePrivateLinkResource.ResourceType.Namespace, Diagnostics);
-            _privateLinkResourcesRestClient = new PrivateLinkResources(_privateLinkResourcesClientDiagnostics, Pipeline, Endpoint, fileSharePrivateLinkResourceApiVersion ?? "2026-06-01");
+            _privateLinkResourcesRestClient = new PrivateLinkResources(_privateLinkResourcesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, fileSharePrivateLinkResourceApiVersion ?? "2026-06-01");
             ValidateResourceId(id);
         }
 

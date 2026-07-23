@@ -76,8 +76,6 @@ namespace Azure.AI.Projects
                 throw new FormatException($"The model {nameof(OpenApiTool)} does not support writing '{format}' format.");
             }
             base.JsonModelWriteCore(writer, options);
-            writer.WritePropertyName("openapi"u8);
-            writer.WriteObjectValue(Openapi, options);
             if (Optional.IsCollectionDefined(ToolConfigs))
             {
                 writer.WritePropertyName("tool_configs"u8);
@@ -89,6 +87,8 @@ namespace Azure.AI.Projects
                 }
                 writer.WriteEndObject();
             }
+            writer.WritePropertyName("openapi"u8);
+            writer.WriteObjectValue(Openapi, options);
         }
 
         /// <param name="reader"> The JSON reader. </param>
@@ -118,18 +118,13 @@ namespace Azure.AI.Projects
             }
             ToolType @type = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
-            OpenApiFunctionDefinition openapi = default;
             IDictionary<string, ToolConfig> toolConfigs = default;
+            OpenApiFunctionDefinition openapi = default;
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("type"u8))
                 {
                     @type = new ToolType(prop.Value.GetString());
-                    continue;
-                }
-                if (prop.NameEquals("openapi"u8))
-                {
-                    openapi = OpenApiFunctionDefinition.DeserializeOpenApiFunctionDefinition(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("tool_configs"u8))
@@ -146,12 +141,17 @@ namespace Azure.AI.Projects
                     toolConfigs = dictionary;
                     continue;
                 }
+                if (prop.NameEquals("openapi"u8))
+                {
+                    openapi = OpenApiFunctionDefinition.DeserializeOpenApiFunctionDefinition(prop.Value, options);
+                    continue;
+                }
                 if (options.Format != "W")
                 {
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new OpenApiTool(@type, additionalBinaryDataProperties, openapi, toolConfigs ?? new ChangeTrackingDictionary<string, ToolConfig>());
+            return new OpenApiTool(@type, additionalBinaryDataProperties, toolConfigs ?? new ChangeTrackingDictionary<string, ToolConfig>(), openapi);
         }
     }
 }

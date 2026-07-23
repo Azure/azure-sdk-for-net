@@ -1,6 +1,17 @@
 # Release History
 
-## 1.3.0-beta.2 (Unreleased)
+## 1.3.0 (2026-07-17)
+
+### Features Added
+
+- Added support for the `2026-01-01` API version.
+- Added the `IPAddressType` property (`EventHubsIPAddressType.IPv4` / `EventHubsIPAddressType.DualStack`) to the Event Hubs namespace, enabling IPv4-only or dual-stack (IPv4 and IPv6) namespaces.
+
+### Breaking Changes
+
+- The namespace update (PATCH) operation is now synchronous in API version `2026-01-01`. The long-running `Update(WaitUntil, EventHubsNamespaceData, CancellationToken)` and `UpdateAsync(WaitUntil, EventHubsNamespaceData, CancellationToken)` overloads on `EventHubsNamespaceResource` have been removed; use `Update(EventHubsNamespaceData, CancellationToken)` / `UpdateAsync(EventHubsNamespaceData, CancellationToken)` instead.
+
+## 1.3.0-beta.2 (2026-06-06)
 
 ### Features Added
 
@@ -12,6 +23,8 @@
 ### Other Changes
 
 - `EventHubsNetworkSecurityPerimeterConfiguration` is now a proper ARM resource with `EventHubsNetworkSecurityPerimeterConfigurationResource`, `EventHubsNetworkSecurityPerimeterConfigurationData`, and `EventHubsNetworkSecurityPerimeterConfigurationCollection`
+- Upgraded dependent Azure.Core to 1.58.0.
+- Upgraded dependent Azure.ResourceManager to 1.14.0.
 
 ## 1.3.0-beta.1 (2025-11-27)
 

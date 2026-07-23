@@ -19,19 +19,19 @@ namespace Microsoft.Azure.WebPubSub.Common.Tests
 
             MqttConnectProperties properties = JsonSerializer.Deserialize<MqttConnectProperties>(payload, JsonSerializationOptions);
 
-            Assert.NotNull(properties);
-            Assert.AreEqual(MqttProtocolVersion.V500, properties.ProtocolVersion);
-            Assert.AreEqual("username", properties.Username);
-            Assert.AreEqual("password", properties.Password);
-            Assert.AreEqual("x", properties.UserProperties.Single().Name);
+            Assert.That(properties, Is.Not.Null);
+            Assert.That(properties.ProtocolVersion, Is.EqualTo(MqttProtocolVersion.V500));
+            Assert.That(properties.Username, Is.EqualTo("username"));
+            Assert.That(properties.Password, Is.EqualTo("password"));
+            Assert.That(properties.UserProperties.Single().Name, Is.EqualTo("x"));
 
             string serialized = JsonSerializer.Serialize(properties, JsonSerializationOptions);
             MqttConnectProperties converted = JsonSerializer.Deserialize<MqttConnectProperties>(serialized, JsonSerializationOptions);
 
-            Assert.NotNull(converted);
-            Assert.AreEqual(properties.ProtocolVersion, converted.ProtocolVersion);
-            Assert.AreEqual(properties.Username, converted.Username);
-            Assert.AreEqual(properties.UserProperties.Single().Value, converted.UserProperties.Single().Value);
+            Assert.That(converted, Is.Not.Null);
+            Assert.That(converted.ProtocolVersion, Is.EqualTo(properties.ProtocolVersion));
+            Assert.That(converted.Username, Is.EqualTo(properties.Username));
+            Assert.That(converted.UserProperties.Single().Value, Is.EqualTo(properties.UserProperties.Single().Value));
         }
 
         [Test]
@@ -41,19 +41,19 @@ namespace Microsoft.Azure.WebPubSub.Common.Tests
 
             MqttConnectProperties properties = JsonSerializer.Deserialize<MqttConnectProperties>(payload, JsonSerializationOptions);
 
-            Assert.NotNull(properties);
-            Assert.AreEqual(MqttProtocolVersion.V311, properties.ProtocolVersion);
-            Assert.IsNull(properties.Username);
-            Assert.IsNull(properties.Password);
-            Assert.IsNull(properties.UserProperties);
+            Assert.That(properties, Is.Not.Null);
+            Assert.That(properties.ProtocolVersion, Is.EqualTo(MqttProtocolVersion.V311));
+            Assert.That(properties.Username, Is.Null);
+            Assert.That(properties.Password, Is.Null);
+            Assert.That(properties.UserProperties, Is.Null);
 
             string serialized = JsonSerializer.Serialize(properties, JsonSerializationOptions);
             MqttConnectProperties converted = JsonSerializer.Deserialize<MqttConnectProperties>(serialized, JsonSerializationOptions);
 
-            Assert.NotNull(converted);
-            Assert.IsNull(converted.Username);
-            Assert.IsNull(converted.Password);
-            Assert.IsNull(converted.UserProperties);
+            Assert.That(converted, Is.Not.Null);
+            Assert.That(converted.Username, Is.Null);
+            Assert.That(converted.Password, Is.Null);
+            Assert.That(converted.UserProperties, Is.Null);
         }
 
         [Test]
@@ -72,16 +72,16 @@ namespace Microsoft.Azure.WebPubSub.Common.Tests
 
             MqttConnectProperties properties = JsonSerializer.Deserialize<MqttConnectProperties>(payload, JsonSerializationOptions);
 
-            Assert.NotNull(properties);
-            Assert.AreEqual(2, properties.UserProperties.Count);
+            Assert.That(properties, Is.Not.Null);
+            Assert.That(properties.UserProperties.Count, Is.EqualTo(2));
 
             string serialized = JsonSerializer.Serialize(properties, JsonSerializationOptions);
             MqttConnectProperties converted = JsonSerializer.Deserialize<MqttConnectProperties>(serialized, JsonSerializationOptions);
 
-            Assert.NotNull(converted);
-            Assert.AreEqual(2, converted.UserProperties.Count);
-            Assert.AreEqual("a", converted.UserProperties[0].Name);
-            Assert.AreEqual("2", converted.UserProperties[1].Value);
+            Assert.That(converted, Is.Not.Null);
+            Assert.That(converted.UserProperties.Count, Is.EqualTo(2));
+            Assert.That(converted.UserProperties[0].Name, Is.EqualTo("a"));
+            Assert.That(converted.UserProperties[1].Value, Is.EqualTo("2"));
         }
     }
 }

@@ -52,8 +52,8 @@ namespace Azure.ResourceManager.DataMigration
                     yield break;
                 }
                 QuotaList result = QuotaList.FromResponse(response);
-                yield return Page<DataMigrationQuota>.FromValues((IReadOnlyList<DataMigrationQuota>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 nextPage = result.NextLink;
+                yield return Page<DataMigrationQuota>.FromValues((IReadOnlyList<DataMigrationQuota>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 if (nextPage == null)
                 {
                     yield break;

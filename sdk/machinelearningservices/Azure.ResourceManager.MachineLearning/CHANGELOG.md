@@ -4,11 +4,26 @@
 
 ### Features Added
 
+- Upgraded api-version tag from 'package-2024-04' to 'package-2025-12'.
+
 ### Breaking Changes
+
+- Some model constructors have updated parameter order to match TypeSpec-based generation while preserving compatibility overloads where possible.
+- Several generic model names are now emitted with MachineLearning-specific names to avoid collisions with other SDK namespaces.
+- This beta moves the library to the 2025-12 service API version and TypeSpec-based generation, which may change generated API surface shape from the previous AutoRest-based beta.
 
 ### Bugs Fixed
 
 ### Other Changes
+
+- Migrated Azure.ResourceManager.MachineLearning from Swagger/AutoRest to TypeSpec-based generation.
+
+## 1.2.4 (2026-06-13)
+
+### Other Changes
+
+- Upgraded dependent Azure.Core to 1.59.0.
+- Upgraded dependent Azure.ResourceManager to 1.14.0.
 
 ## 1.2.3 (2025-08-11)
 

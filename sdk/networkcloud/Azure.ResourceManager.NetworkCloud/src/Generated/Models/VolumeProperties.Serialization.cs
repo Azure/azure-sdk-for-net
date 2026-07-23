@@ -92,6 +92,11 @@ namespace Azure.ResourceManager.NetworkCloud.Models
                 writer.WritePropertyName("allocatedSizeMiB"u8);
                 writer.WriteNumberValue(AllocatedInSizeMiB.Value);
             }
+            if (options.Format != "W" && Optional.IsDefined(AssignedStorageApplianceId))
+            {
+                writer.WritePropertyName("assignedStorageApplianceId"u8);
+                writer.WriteStringValue(AssignedStorageApplianceId);
+            }
             if (options.Format != "W" && Optional.IsCollectionDefined(AttachedTo))
             {
                 writer.WritePropertyName("attachedTo"u8);
@@ -172,6 +177,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
             long sizeInMiB = default;
             ResourceIdentifier storageApplianceId = default;
             long? allocatedInSizeMiB = default;
+            ResourceIdentifier assignedStorageApplianceId = default;
             IReadOnlyList<string> attachedTo = default;
             VolumeDetailedStatus? detailedStatus = default;
             string detailedStatusMessage = default;
@@ -201,6 +207,15 @@ namespace Azure.ResourceManager.NetworkCloud.Models
                         continue;
                     }
                     allocatedInSizeMiB = prop.Value.GetInt64();
+                    continue;
+                }
+                if (prop.NameEquals("assignedStorageApplianceId"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    assignedStorageApplianceId = new ResourceIdentifier(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("attachedTo"u8))
@@ -261,6 +276,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
                 sizeInMiB,
                 storageApplianceId,
                 allocatedInSizeMiB,
+                assignedStorageApplianceId,
                 attachedTo ?? new ChangeTrackingList<string>(),
                 detailedStatus,
                 detailedStatusMessage,

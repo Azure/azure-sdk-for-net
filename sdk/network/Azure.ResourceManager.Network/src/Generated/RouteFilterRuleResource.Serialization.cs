@@ -11,19 +11,29 @@ using System.Text.Json;
 
 namespace Azure.ResourceManager.Network
 {
+    /// <summary></summary>
     public partial class RouteFilterRuleResource : IJsonModel<RouteFilterRuleData>
     {
-        private static RouteFilterRuleData s_dataDeserializationInstance;
-        private static RouteFilterRuleData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+        private static IJsonModel<RouteFilterRuleData> s_dataDeserializationInstance;
 
+        private static IJsonModel<RouteFilterRuleData> DataDeserializationInstance => s_dataDeserializationInstance ??= new RouteFilterRuleData();
+
+        /// <param name="writer"> The writer to serialize the model to. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<RouteFilterRuleData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<RouteFilterRuleData>)Data).Write(writer, options);
 
-        RouteFilterRuleData IJsonModel<RouteFilterRuleData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<RouteFilterRuleData>)DataDeserializationInstance).Create(ref reader, options);
+        /// <param name="reader"> The reader for deserializing the model. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        RouteFilterRuleData IJsonModel<RouteFilterRuleData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => DataDeserializationInstance.Create(ref reader, options);
 
+        /// <param name="options"> The client options for reading and writing models. </param>
         BinaryData IPersistableModel<RouteFilterRuleData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<RouteFilterRuleData>(Data, options, AzureResourceManagerNetworkContext.Default);
 
+        /// <param name="data"> The binary data to be processed. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         RouteFilterRuleData IPersistableModel<RouteFilterRuleData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<RouteFilterRuleData>(data, options, AzureResourceManagerNetworkContext.Default);
 
-        string IPersistableModel<RouteFilterRuleData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<RouteFilterRuleData>)DataDeserializationInstance).GetFormatFromOptions(options);
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<RouteFilterRuleData>.GetFormatFromOptions(ModelReaderWriterOptions options) => DataDeserializationInstance.GetFormatFromOptions(options);
     }
 }

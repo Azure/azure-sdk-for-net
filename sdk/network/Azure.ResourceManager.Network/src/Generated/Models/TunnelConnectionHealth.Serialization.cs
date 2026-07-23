@@ -8,16 +8,56 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
-using System.Text;
 using System.Text.Json;
-using Azure.Core;
+using Azure.ResourceManager.Network;
 
 namespace Azure.ResourceManager.Network.Models
 {
-    public partial class TunnelConnectionHealth : IUtf8JsonSerializable, IJsonModel<TunnelConnectionHealth>
+    /// <summary> VirtualNetworkGatewayConnection properties. </summary>
+    public partial class TunnelConnectionHealth : IJsonModel<TunnelConnectionHealth>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<TunnelConnectionHealth>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual TunnelConnectionHealth PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<TunnelConnectionHealth>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    {
+                        return DeserializeTunnelConnectionHealth(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(TunnelConnectionHealth)} does not support reading '{options.Format}' format.");
+            }
+        }
 
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<TunnelConnectionHealth>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerNetworkContext.Default);
+                default:
+                    throw new FormatException($"The model {nameof(TunnelConnectionHealth)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<TunnelConnectionHealth>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        TunnelConnectionHealth IPersistableModel<TunnelConnectionHealth>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<TunnelConnectionHealth>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<TunnelConnectionHealth>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
@@ -29,12 +69,11 @@ namespace Azure.ResourceManager.Network.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<TunnelConnectionHealth>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<TunnelConnectionHealth>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(TunnelConnectionHealth)} does not support writing '{format}' format.");
             }
-
             if (options.Format != "W" && Optional.IsDefined(Tunnel))
             {
                 writer.WritePropertyName("tunnel"u8);
@@ -55,20 +94,20 @@ namespace Azure.ResourceManager.Network.Models
                 writer.WritePropertyName("egressBytesTransferred"u8);
                 writer.WriteNumberValue(EgressBytesTransferred.Value);
             }
-            if (options.Format != "W" && Optional.IsDefined(LastConnectionEstablishedOn))
+            if (options.Format != "W" && Optional.IsDefined(LastConnectionEstablishedUtcTime))
             {
                 writer.WritePropertyName("lastConnectionEstablishedUtcTime"u8);
-                writer.WriteStringValue(LastConnectionEstablishedOn);
+                writer.WriteStringValue(LastConnectionEstablishedUtcTime);
             }
-            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
-                foreach (var item in _serializedAdditionalRawData)
+                foreach (var item in _additionalBinaryDataProperties)
                 {
                     writer.WritePropertyName(item.Key);
 #if NET6_0_OR_GREATER
-				writer.WriteRawValue(item.Value);
+                    writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value, ModelSerializationExtensions.JsonDocumentOptions))
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
                     {
                         JsonSerializer.Serialize(writer, document.RootElement);
                     }
@@ -77,22 +116,27 @@ namespace Azure.ResourceManager.Network.Models
             }
         }
 
-        TunnelConnectionHealth IJsonModel<TunnelConnectionHealth>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        TunnelConnectionHealth IJsonModel<TunnelConnectionHealth>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual TunnelConnectionHealth JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<TunnelConnectionHealth>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<TunnelConnectionHealth>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(TunnelConnectionHealth)} does not support reading '{format}' format.");
             }
-
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
             return DeserializeTunnelConnectionHealth(document.RootElement, options);
         }
 
-        internal static TunnelConnectionHealth DeserializeTunnelConnectionHealth(JsonElement element, ModelReaderWriterOptions options = null)
+        /// <param name="element"> The JSON element to deserialize. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        internal static TunnelConnectionHealth DeserializeTunnelConnectionHealth(JsonElement element, ModelReaderWriterOptions options)
         {
-            options ??= ModelSerializationExtensions.WireOptions;
-
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -102,199 +146,58 @@ namespace Azure.ResourceManager.Network.Models
             long? ingressBytesTransferred = default;
             long? egressBytesTransferred = default;
             string lastConnectionEstablishedUtcTime = default;
-            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
-            foreach (var property in element.EnumerateObject())
+            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            foreach (var prop in element.EnumerateObject())
             {
-                if (property.NameEquals("tunnel"u8))
+                if (prop.NameEquals("tunnel"u8))
                 {
-                    tunnel = property.Value.GetString();
+                    tunnel = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("connectionStatus"u8))
+                if (prop.NameEquals("connectionStatus"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    connectionStatus = new VirtualNetworkGatewayConnectionStatus(property.Value.GetString());
+                    connectionStatus = new VirtualNetworkGatewayConnectionStatus(prop.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("ingressBytesTransferred"u8))
+                if (prop.NameEquals("ingressBytesTransferred"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    ingressBytesTransferred = property.Value.GetInt64();
+                    ingressBytesTransferred = prop.Value.GetInt64();
                     continue;
                 }
-                if (property.NameEquals("egressBytesTransferred"u8))
+                if (prop.NameEquals("egressBytesTransferred"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    egressBytesTransferred = property.Value.GetInt64();
+                    egressBytesTransferred = prop.Value.GetInt64();
                     continue;
                 }
-                if (property.NameEquals("lastConnectionEstablishedUtcTime"u8))
+                if (prop.NameEquals("lastConnectionEstablishedUtcTime"u8))
                 {
-                    lastConnectionEstablishedUtcTime = property.Value.GetString();
+                    lastConnectionEstablishedUtcTime = prop.Value.GetString();
                     continue;
                 }
                 if (options.Format != "W")
                 {
-                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = rawDataDictionary;
             return new TunnelConnectionHealth(
                 tunnel,
                 connectionStatus,
                 ingressBytesTransferred,
                 egressBytesTransferred,
                 lastConnectionEstablishedUtcTime,
-                serializedAdditionalRawData);
+                additionalBinaryDataProperties);
         }
-
-        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
-        {
-            StringBuilder builder = new StringBuilder();
-            BicepModelReaderWriterOptions bicepOptions = options as BicepModelReaderWriterOptions;
-            IDictionary<string, string> propertyOverrides = null;
-            bool hasObjectOverride = bicepOptions != null && bicepOptions.PropertyOverrides.TryGetValue(this, out propertyOverrides);
-            bool hasPropertyOverride = false;
-            string propertyOverride = null;
-
-            builder.AppendLine("{");
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Tunnel), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  tunnel: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(Tunnel))
-                {
-                    builder.Append("  tunnel: ");
-                    if (Tunnel.Contains(Environment.NewLine))
-                    {
-                        builder.AppendLine("'''");
-                        builder.AppendLine($"{Tunnel}'''");
-                    }
-                    else
-                    {
-                        builder.AppendLine($"'{Tunnel}'");
-                    }
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ConnectionStatus), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  connectionStatus: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(ConnectionStatus))
-                {
-                    builder.Append("  connectionStatus: ");
-                    builder.AppendLine($"'{ConnectionStatus.Value.ToString()}'");
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(IngressBytesTransferred), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  ingressBytesTransferred: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(IngressBytesTransferred))
-                {
-                    builder.Append("  ingressBytesTransferred: ");
-                    builder.AppendLine($"'{IngressBytesTransferred.Value.ToString()}'");
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(EgressBytesTransferred), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  egressBytesTransferred: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(EgressBytesTransferred))
-                {
-                    builder.Append("  egressBytesTransferred: ");
-                    builder.AppendLine($"'{EgressBytesTransferred.Value.ToString()}'");
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(LastConnectionEstablishedOn), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  lastConnectionEstablishedUtcTime: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(LastConnectionEstablishedOn))
-                {
-                    builder.Append("  lastConnectionEstablishedUtcTime: ");
-                    if (LastConnectionEstablishedOn.Contains(Environment.NewLine))
-                    {
-                        builder.AppendLine("'''");
-                        builder.AppendLine($"{LastConnectionEstablishedOn}'''");
-                    }
-                    else
-                    {
-                        builder.AppendLine($"'{LastConnectionEstablishedOn}'");
-                    }
-                }
-            }
-
-            builder.AppendLine("}");
-            return BinaryData.FromString(builder.ToString());
-        }
-
-        BinaryData IPersistableModel<TunnelConnectionHealth>.Write(ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<TunnelConnectionHealth>)this).GetFormatFromOptions(options) : options.Format;
-
-            switch (format)
-            {
-                case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerNetworkContext.Default);
-                case "bicep":
-                    return SerializeBicep(options);
-                default:
-                    throw new FormatException($"The model {nameof(TunnelConnectionHealth)} does not support writing '{options.Format}' format.");
-            }
-        }
-
-        TunnelConnectionHealth IPersistableModel<TunnelConnectionHealth>.Create(BinaryData data, ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<TunnelConnectionHealth>)this).GetFormatFromOptions(options) : options.Format;
-
-            switch (format)
-            {
-                case "J":
-                    {
-                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
-                        return DeserializeTunnelConnectionHealth(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(TunnelConnectionHealth)} does not support reading '{options.Format}' format.");
-            }
-        }
-
-        string IPersistableModel<TunnelConnectionHealth>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

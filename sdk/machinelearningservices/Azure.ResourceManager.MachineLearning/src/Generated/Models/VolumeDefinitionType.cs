@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.MachineLearning;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
@@ -14,44 +15,63 @@ namespace Azure.ResourceManager.MachineLearning.Models
     public readonly partial struct VolumeDefinitionType : IEquatable<VolumeDefinitionType>
     {
         private readonly string _value;
-
-        /// <summary> Initializes a new instance of <see cref="VolumeDefinitionType"/>. </summary>
-        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        public VolumeDefinitionType(string value)
-        {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
-
         private const string BindValue = "bind";
         private const string VolumeValue = "volume";
         private const string TmpfsValue = "tmpfs";
         private const string NpipeValue = "npipe";
 
-        /// <summary> bind. </summary>
+        /// <summary> Initializes a new instance of <see cref="VolumeDefinitionType"/>. </summary>
+        /// <param name="value"> The value. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
+        public VolumeDefinitionType(string value)
+        {
+            Argument.AssertNotNull(value, nameof(value));
+
+            _value = value;
+        }
+
+        /// <summary> Gets the Bind. </summary>
         public static VolumeDefinitionType Bind { get; } = new VolumeDefinitionType(BindValue);
-        /// <summary> volume. </summary>
+
+        /// <summary> Gets the Volume. </summary>
         public static VolumeDefinitionType Volume { get; } = new VolumeDefinitionType(VolumeValue);
-        /// <summary> tmpfs. </summary>
+
+        /// <summary> Gets the Tmpfs. </summary>
         public static VolumeDefinitionType Tmpfs { get; } = new VolumeDefinitionType(TmpfsValue);
-        /// <summary> npipe. </summary>
+
+        /// <summary> Gets the Npipe. </summary>
         public static VolumeDefinitionType Npipe { get; } = new VolumeDefinitionType(NpipeValue);
+
         /// <summary> Determines if two <see cref="VolumeDefinitionType"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(VolumeDefinitionType left, VolumeDefinitionType right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="VolumeDefinitionType"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(VolumeDefinitionType left, VolumeDefinitionType right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="VolumeDefinitionType"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="VolumeDefinitionType"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator VolumeDefinitionType(string value) => new VolumeDefinitionType(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="VolumeDefinitionType"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator VolumeDefinitionType?(string value) => value == null ? null : new VolumeDefinitionType(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is VolumeDefinitionType other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(VolumeDefinitionType other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

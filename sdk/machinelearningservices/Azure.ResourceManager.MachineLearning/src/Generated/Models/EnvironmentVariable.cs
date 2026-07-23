@@ -7,66 +7,42 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.MachineLearning;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
-    /// <summary> Environment Variables for the container. </summary>
+    /// <summary> The EnvironmentVariable. </summary>
     public partial class EnvironmentVariable
     {
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+
         /// <summary> Initializes a new instance of <see cref="EnvironmentVariable"/>. </summary>
         public EnvironmentVariable()
         {
-            AdditionalProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            _additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
         }
 
         /// <summary> Initializes a new instance of <see cref="EnvironmentVariable"/>. </summary>
-        /// <param name="variableType"> Type of the Environment Variable. Possible values are: local - For local variable. </param>
+        /// <param name="type"> Type of the Environment Variable. Possible values are: local - For local variable. </param>
         /// <param name="value"> Value of the Environment variable. </param>
-        /// <param name="additionalProperties"> Additional Properties. </param>
-        internal EnvironmentVariable(EnvironmentVariableType? variableType, string value, IDictionary<string, BinaryData> additionalProperties)
+        /// <param name="additionalProperties"></param>
+        internal EnvironmentVariable(EnvironmentVariableType? @type, string value, IDictionary<string, BinaryData> additionalProperties)
         {
-            VariableType = variableType;
+            Type = @type;
             Value = value;
-            AdditionalProperties = additionalProperties;
+            _additionalBinaryDataProperties = additionalProperties;
         }
 
         /// <summary> Type of the Environment Variable. Possible values are: local - For local variable. </summary>
         [WirePath("type")]
-        public EnvironmentVariableType? VariableType { get; set; }
+        public EnvironmentVariableType? Type { get; set; }
+
         /// <summary> Value of the Environment variable. </summary>
         [WirePath("value")]
         public string Value { get; set; }
-        /// <summary>
-        /// Additional Properties
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        [WirePath("AdditionalProperties")]
-        public IDictionary<string, BinaryData> AdditionalProperties { get; }
+
+        /// <summary> Gets the AdditionalProperties. </summary>
+        public IDictionary<string, BinaryData> AdditionalProperties => _additionalBinaryDataProperties;
     }
 }

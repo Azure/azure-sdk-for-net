@@ -35,6 +35,7 @@ namespace OpenAI
         private const string MemorySearchPreviewValue = "memory_search_preview";
         private const string WorkIqPreviewValue = "work_iq_preview";
         private const string FabricIqPreviewValue = "fabric_iq_preview";
+        private const string WebIqPreviewValue = "web_iq_preview";
         private const string ToolboxSearchPreviewValue = "toolbox_search_preview";
         private const string AzureAiSearchValue = "azure_ai_search";
         private const string AzureFunctionValue = "azure_function";
@@ -120,6 +121,9 @@ namespace OpenAI
 
         /// <summary> Gets the FabricIqPreview. </summary>
         public static ToolType FabricIqPreview { get; } = new ToolType(FabricIqPreviewValue);
+
+        /// <summary> Gets the WebIqPreview. </summary>
+        public static ToolType WebIqPreview { get; } = new ToolType(WebIqPreviewValue);
 
         /// <summary> Gets the ToolboxSearchPreview. </summary>
         public static ToolType ToolboxSearchPreview { get; } = new ToolType(ToolboxSearchPreviewValue);

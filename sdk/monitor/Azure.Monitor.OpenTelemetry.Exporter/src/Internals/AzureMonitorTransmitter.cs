@@ -9,6 +9,7 @@ using Azure.Core.Pipeline;
 using Azure.Monitor.OpenTelemetry.Exporter.Internals.ConnectionString;
 using Azure.Monitor.OpenTelemetry.Exporter.Internals.CustomerSdkStats;
 using Azure.Monitor.OpenTelemetry.Exporter.Internals.Diagnostics;
+using Azure.Monitor.OpenTelemetry.Exporter.Internals.NetworkSdkStats;
 using Azure.Monitor.OpenTelemetry.Exporter.Internals.PersistentStorage;
 using Azure.Monitor.OpenTelemetry.Exporter.Internals.Platform;
 using Azure.Monitor.OpenTelemetry.Exporter.Internals.Statsbeat;
@@ -51,12 +52,12 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
 
             _fileBlobProvider = InitializeOfflineStorage(platform, _connectionVars, options.DisableOfflineStorage, options.StorageDirectory);
 
+            _statsbeat = InitializeStatsbeat(options, _connectionVars, platform);
+
             if (_fileBlobProvider != null)
             {
-                _transmitFromStorageHandler = new TransmitFromStorageHandler(_applicationInsightsRestClient, _fileBlobProvider, _transmissionStateManager, _connectionVars, _isAadEnabled);
+                _transmitFromStorageHandler = new TransmitFromStorageHandler(_applicationInsightsRestClient, _fileBlobProvider, _transmissionStateManager, _connectionVars, _isAadEnabled, _statsbeat?.NetworkSdkStatsManager);
             }
-
-            _statsbeat = InitializeStatsbeat(options, _connectionVars, platform);
         }
 
         internal static ConnectionVars InitializeConnectionVars(AzureMonitorExporterOptions options, IPlatform platform)
@@ -167,20 +168,58 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
                 return result;
             }
 
+            var networkSdkStats = _statsbeat?.NetworkSdkStatsManager;
+
             try
             {
                 if (_transmissionStateManager.State == TransmissionState.Closed)
                 {
+                    var stopwatch = networkSdkStats != null ? System.Diagnostics.Stopwatch.StartNew() : null;
+
                     using var httpMessage = async ?
                     await _applicationInsightsRestClient.InternalTrackAsync(telemetryItems, cancellationToken).ConfigureAwait(false) :
                     _applicationInsightsRestClient.InternalTrackAsync(telemetryItems, cancellationToken).Result;
 
+                    stopwatch?.Stop();
+
                     result = HttpPipelineHelper.IsSuccess(httpMessage, telemetrySchemaTypeCounter);
+
+                    if (networkSdkStats != null)
+                    {
+                        var requestHost = httpMessage.Request.Uri.Host;
+
+                        if (httpMessage.HasResponse)
+                        {
+                            // Request_Duration is recorded for every request that received a
+                            // response, regardless of outcome.
+                            networkSdkStats.TrackDuration(requestHost, stopwatch!.Elapsed.TotalMilliseconds);
+                        }
+
+                        if (result == ExportResult.Success)
+                        {
+                            // Record Network SDKStats Request_Success_Count for HTTP 200.
+                            // request.Uri reflects any redirect followed by IngestionRedirectPolicy,
+                            // so the host recorded matches the stamp that returned the response.
+                            networkSdkStats.TrackSuccess(requestHost);
+                        }
+                        else if (httpMessage.HasResponse)
+                        {
+                            // Classify the top-level non-success response as retry / throttle /
+                            // failure. 206 partial-success per-envelope handling happens in
+                            // HttpPipelineHelper.HandlePartialSuccess.
+                            networkSdkStats.TrackResponseFailure(requestHost, httpMessage.Response.Status);
+                        }
+                        else
+                        {
+                            // No response code received: count as an exception.
+                            networkSdkStats.TrackException(requestHost, exceptionType: null);
+                        }
+                    }
 
                     if (result == ExportResult.Failure && _fileBlobProvider != null)
                     {
                         _transmissionStateManager.EnableBackOff(httpMessage.HasResponse ? httpMessage.Response : null);
-                        var transmissionResult = HttpPipelineHelper.ProcessTransmissionResult(httpMessage, _fileBlobProvider, null, _connectionVars, origin, _isAadEnabled, telemetrySchemaTypeCounter);
+                        var transmissionResult = HttpPipelineHelper.ProcessTransmissionResult(httpMessage, _fileBlobProvider, null, _connectionVars, origin, _isAadEnabled, telemetrySchemaTypeCounter, networkSdkStats);
                         result = transmissionResult.ExportResult;
                     }
                     else
@@ -210,6 +249,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
             }
             catch (Exception ex)
             {
+                networkSdkStats?.TrackException(requestHost: null, exceptionType: ex.GetType().FullName);
                 AzureMonitorExporterEventSource.Log.TransmitterFailed(origin, _isAadEnabled, _connectionVars.InstrumentationKey, ex);
                 CustomerSdkStatsHelper.TrackDropped(telemetrySchemaTypeCounter, (int)DropCode.ClientException, CustomerSdkStatsHelper.GetDropReason(ex));
             }

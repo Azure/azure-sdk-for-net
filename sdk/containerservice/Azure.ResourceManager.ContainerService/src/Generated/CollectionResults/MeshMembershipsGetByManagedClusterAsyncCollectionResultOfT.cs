@@ -56,8 +56,8 @@ namespace Azure.ResourceManager.ContainerService
                     yield break;
                 }
                 MeshMembershipsListResult result = MeshMembershipsListResult.FromResponse(response);
-                yield return Page<ManagedClusterMeshMembershipData>.FromValues((IReadOnlyList<ManagedClusterMeshMembershipData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 nextPage = result.NextLink;
+                yield return Page<ManagedClusterMeshMembershipData>.FromValues((IReadOnlyList<ManagedClusterMeshMembershipData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 if (nextPage == null)
                 {
                     yield break;

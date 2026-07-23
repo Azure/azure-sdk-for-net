@@ -755,6 +755,73 @@ namespace Azure.ResourceManager.ContainerInstance.Models
                 default);
         }
 
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="tags"> Resource tags. </param>
+        /// <param name="location"> The geo-location where the resource lives. </param>
+        /// <param name="sku"> The SKU for a container group. </param>
+        /// <param name="encryptionProperties"> The encryption properties for a container group. </param>
+        /// <param name="containers"> The containers within the container group. </param>
+        /// <param name="initContainers"> The init containers for a container group. </param>
+        /// <param name="extensions"> extensions used by virtual kubelet. </param>
+        /// <param name="imageRegistryCredentials"> The image registry credentials by which the container group is created from. </param>
+        /// <param name="restartPolicy">
+        /// Restart policy for all containers within the container group.
+        /// <list type="bullet"><item><description>`Always` Always restart</description></item><item><description>`OnFailure` Restart on failure</description></item><item><description>`Never` Never restart</description></item></list>
+        /// </param>
+        /// <param name="shutdownGracePeriod"> Shutdown grace period for containers in a container group. </param>
+        /// <param name="ipAddress"> The IP address type of the container group. </param>
+        /// <param name="timeToLive"> Post completion time to live for containers of a CG. </param>
+        /// <param name="osType"> The operating system type required by the containers in the container group. </param>
+        /// <param name="volumes"> The list of volumes that can be mounted by containers in this container group. </param>
+        /// <param name="priority"> The priority of the container group. </param>
+        /// <param name="securityContext"> The container security properties. </param>
+        /// <param name="revision"> Container group profile current revision number. </param>
+        /// <param name="registeredRevisions"> Registered revisions are calculated at request time based off the records in the table logs. </param>
+        /// <param name="useKrypton"> Gets or sets Krypton use property. </param>
+        /// <param name="diagnosticsLogAnalytics"> Container group log analytics information. </param>
+        /// <param name="confidentialComputeCcePolicy"> The base64 encoded confidential compute enforcement policy. </param>
+        /// <param name="zones"> The availability zones. </param>
+        /// <returns> A new <see cref="ContainerInstance.ContainerGroupProfileData"/> instance for mocking. </returns>
+        public static ContainerGroupProfileData ContainerGroupProfileData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, ContainerGroupSku? sku = default, ContainerGroupEncryptionProperties encryptionProperties = default, IEnumerable<ContainerInstanceContainer> containers = default, IEnumerable<InitContainerDefinitionContent> initContainers = default, IEnumerable<DeploymentExtensionSpec> extensions = default, IEnumerable<ContainerGroupImageRegistryCredential> imageRegistryCredentials = default, ContainerGroupRestartPolicy? restartPolicy = default, DateTimeOffset? shutdownGracePeriod = default, ContainerGroupIPAddress ipAddress = default, DateTimeOffset? timeToLive = default, ContainerInstanceOperatingSystemType? osType = default, IEnumerable<ContainerVolume> volumes = default, ContainerGroupPriority? priority = default, ContainerSecurityContextDefinition securityContext = default, int? revision = default, IEnumerable<int> registeredRevisions = default, bool? useKrypton = default, ContainerGroupLogAnalytics diagnosticsLogAnalytics = default, string confidentialComputeCcePolicy = default, IEnumerable<string> zones = default)
+        {
+            tags ??= new ChangeTrackingDictionary<string, string>();
+            zones ??= new ChangeTrackingList<string>();
+
+            return new ContainerGroupProfileData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                location,
+                sku is null && encryptionProperties is null && containers is null && initContainers is null && extensions is null && imageRegistryCredentials is null && restartPolicy is null && shutdownGracePeriod is null && ipAddress is null && timeToLive is null && osType is null && volumes is null && diagnosticsLogAnalytics is null && priority is null && confidentialComputeCcePolicy is null && securityContext is null && revision is null && registeredRevisions is null && useKrypton is null ? default : new ContainerGroupProfileProperties(
+                    sku,
+                    encryptionProperties,
+                    (containers ?? new ChangeTrackingList<ContainerInstanceContainer>()).ToList(),
+                    (initContainers ?? new ChangeTrackingList<InitContainerDefinitionContent>()).ToList(),
+                    (extensions ?? new ChangeTrackingList<DeploymentExtensionSpec>()).ToList(),
+                    (imageRegistryCredentials ?? new ChangeTrackingList<ContainerGroupImageRegistryCredential>()).ToList(),
+                    restartPolicy,
+                    shutdownGracePeriod,
+                    ipAddress,
+                    timeToLive,
+                    osType.GetValueOrDefault(),
+                    (volumes ?? new ChangeTrackingList<ContainerVolume>()).ToList(),
+                    new ContainerGroupDiagnostics(diagnosticsLogAnalytics, default),
+                    priority,
+                    new ConfidentialComputeProperties(confidentialComputeCcePolicy, default),
+                    securityContext,
+                    revision,
+                    (registeredRevisions ?? new ChangeTrackingList<int>()).ToList(),
+                    useKrypton,
+                    default),
+                (zones ?? new ChangeTrackingList<string>()).ToList(),
+                default);
+        }
+
         /// <param name="tags"> Resource tags. </param>
         /// <returns> A new <see cref="Models.ContainerGroupProfilePatch"/> instance for mocking. </returns>
         public static ContainerGroupProfilePatch ContainerGroupProfilePatch(IDictionary<string, string> tags = default)
@@ -1131,7 +1198,7 @@ namespace Azure.ResourceManager.ContainerInstance.Models
                     shutdownGracePeriod,
                     ipAddress,
                     timeToLive,
-                    osType,
+                    osType.GetValueOrDefault(),
                     (volumes ?? new ChangeTrackingList<ContainerVolume>()).ToList(),
                     new ContainerGroupDiagnostics(diagnosticsLogAnalytics, default),
                     priority,

@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.StorageMover
         {
             TryGetApiVersion(ResourceType, out string storageMoverConnectionApiVersion);
             _connectionsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.StorageMover", ResourceType.Namespace, Diagnostics);
-            _connectionsRestClient = new Connections(_connectionsClientDiagnostics, Pipeline, Endpoint, storageMoverConnectionApiVersion ?? "2025-12-01");
+            _connectionsRestClient = new Connections(_connectionsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, storageMoverConnectionApiVersion ?? "2025-12-01");
             ValidateResourceId(id);
         }
 

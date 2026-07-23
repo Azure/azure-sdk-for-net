@@ -9,12 +9,13 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure.Core;
 using Azure.ResourceManager.ContainerService;
 
 namespace Azure.ResourceManager.ContainerService.Models
 {
     /// <summary> Settings for hosted system addons. </summary>
-    internal partial class ManagedClusterHostedSystemProfile : IJsonModel<ManagedClusterHostedSystemProfile>
+    public partial class ManagedClusterHostedSystemProfile : IJsonModel<ManagedClusterHostedSystemProfile>
     {
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
@@ -79,6 +80,16 @@ namespace Azure.ResourceManager.ContainerService.Models
                 writer.WritePropertyName("enabled"u8);
                 writer.WriteBooleanValue(IsHostedSystemAddonsEnabled.Value);
             }
+            if (Optional.IsDefined(SystemNodeSubnetId))
+            {
+                writer.WritePropertyName("systemNodeSubnetID"u8);
+                writer.WriteStringValue(SystemNodeSubnetId);
+            }
+            if (Optional.IsDefined(NodeSubnetId))
+            {
+                writer.WritePropertyName("nodeSubnetID"u8);
+                writer.WriteStringValue(NodeSubnetId);
+            }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
                 foreach (var item in _additionalBinaryDataProperties)
@@ -122,6 +133,8 @@ namespace Azure.ResourceManager.ContainerService.Models
                 return null;
             }
             bool? isHostedSystemAddonsEnabled = default;
+            ResourceIdentifier systemNodeSubnetId = default;
+            ResourceIdentifier nodeSubnetId = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -134,12 +147,30 @@ namespace Azure.ResourceManager.ContainerService.Models
                     isHostedSystemAddonsEnabled = prop.Value.GetBoolean();
                     continue;
                 }
+                if (prop.NameEquals("systemNodeSubnetID"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    systemNodeSubnetId = new ResourceIdentifier(prop.Value.GetString());
+                    continue;
+                }
+                if (prop.NameEquals("nodeSubnetID"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    nodeSubnetId = new ResourceIdentifier(prop.Value.GetString());
+                    continue;
+                }
                 if (options.Format != "W")
                 {
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new ManagedClusterHostedSystemProfile(isHostedSystemAddonsEnabled, additionalBinaryDataProperties);
+            return new ManagedClusterHostedSystemProfile(isHostedSystemAddonsEnabled, systemNodeSubnetId, nodeSubnetId, additionalBinaryDataProperties);
         }
     }
 }
