@@ -4,7 +4,13 @@
 
 ### Features Added
 
+- Added experimental (`SCME0002`) `AzureCredentialResolver.Default` public static property so standalone callers can share the process-wide credential cache used by DI-resolved paths.
+- `AzureCredentialResolver` now resolves every `ChainedTokenCredential` `Sources[]` entry through the active resolver chain, so any registered `CredentialResolver` (built-in, broker, or third-party) can claim or override an entry. Entries are constructed as chained, so transient failures surface as `CredentialUnavailableException` and the chain falls through.
+
 ### Breaking Changes
+
+- `AzureCredentialResolver` now resolves a top-level single source (e.g. `CredentialSource: AzureCliCredential`) to the concrete credential type (`AzureCliCredential`) rather than a `DefaultAzureCredential` wrapper. Construction is unchanged (it uses the same `DefaultAzureCredentialFactory` helpers) — only the returned type differs; callers using `CredentialSettings.TokenProvider` as a `TokenCredential` are unaffected.
+- `AzureCredentialResolver` no longer claims top-level `BrokerCredential` sections (canonical name or `broker` alias); they now require `BrokerCredentialResolver` from `Azure.Identity.Broker` 1.7.0+ (e.g. via `AddBrokerCredentialResolver()`). `BrokerCredential` entries nested inside a `ChainedTokenCredential` continue to resolve.
 
 ### Bugs Fixed
 
