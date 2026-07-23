@@ -32,6 +32,9 @@
   <ItemGroup Condition="$([MSBuild]::IsTargetFrameworkCompatible('$(TargetFramework)', 'net8.0'))">
     <ProjectReference Include="..\src\Azure.AI.AgentServer.Activity.csproj" />
     <ProjectReference Include="..\..\Azure.AI.AgentServer.Core\src\Azure.AI.AgentServer.Core.csproj" />
+    <!-- Referenced only so the Tier 2 multi-protocol composition snippet
+         (Activity + Invocations on one host) in Sample9 compiles. -->
+    <ProjectReference Include="..\..\Azure.AI.AgentServer.Invocations\src\Azure.AI.AgentServer.Invocations.csproj" />
   </ItemGroup>
 
   <!-- Exclude all test source files for legacy frameworks — no source project to test -->

@@ -21,7 +21,7 @@ description: Samples for the Azure.AI.AgentServer.Activity client library.
 ## Hosting tiers
 
 - [Tier 1 — Customize the One-Liner](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/agentserver/Azure.AI.AgentServer.Activity/samples/Sample8_Tier1HostingCustomize.md) — `ActivityServer.Run()` with options and builder customization
-- [Tier 2 — Builder](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/agentserver/Azure.AI.AgentServer.Activity/samples/Sample9_Tier2HostingBuilder.md) — `AgentHost.CreateBuilder()` + `builder.AddActivity<TAgent>()`
+- [Tier 2 — Builder](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/agentserver/Azure.AI.AgentServer.Activity/samples/Sample9_Tier2HostingBuilder.md) — `AgentHost.CreateBuilder()` + `builder.AddActivity<TAgent>()`, incl. composing multiple protocols (Activity + Invocations) on one host
 - [Tier 3 — Self-Hosted](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/agentserver/Azure.AI.AgentServer.Activity/samples/Sample10_Tier3SelfHosting.md) — Add Activity endpoints to your own ASP.NET Core app (`AddActivityServer` / `MapActivityServer`)
 
 ## Activity scenarios

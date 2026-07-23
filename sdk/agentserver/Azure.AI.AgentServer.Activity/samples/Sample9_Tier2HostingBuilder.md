@@ -109,6 +109,63 @@ var app = builder.Build();
 app.Run();
 ```
 
+## Compose multiple protocols on one host
+
+The main reason to reach for Tier 2 is **composition** — hosting more than one agent
+protocol on a single server. Because every `Add*` extension returns the same
+`AgentHostBuilder`, you can chain them; each protocol registers its own endpoints on the
+shared Core pipeline (OpenTelemetry, health probes, identity/session headers, graceful
+shutdown), and everything runs on one port.
+
+Add a second protocol package alongside Activity:
+
+```dotnetcli
+dotnet add package Azure.AI.AgentServer.Invocations --prerelease
+```
+
+Here the Activity agent (Teams/channel conversations at `POST /activity/messages`) is
+composed with an Invocations handler (synchronous request/response at `POST /invocations`)
+on the same host:
+
+```C# Snippet:Activity_Sample9_OpsInvocationHandler
+// A second protocol hosted on the same server: a simple Invocations handler
+// that exposes an operational "ping" endpoint at POST /invocations. Composition
+// means the Activity agent and this handler share one host, port, and pipeline.
+public sealed class OpsInvocationHandler : InvocationHandler
+{
+    public override async Task HandleAsync(
+        HttpRequest request, HttpResponse response,
+        InvocationContext context, CancellationToken cancellationToken)
+    {
+        response.ContentType = "application/json";
+        await response.WriteAsJsonAsync(
+            new { status = "ok", session_id = context.SessionId },
+            cancellationToken);
+    }
+}
+```
+
+```C# Snippet:Activity_Sample9_ComposeProtocols
+var builder = AgentHost.CreateBuilder(args);
+
+builder.Services.AddSingleton<IStorage, MemoryStorage>();
+
+// Compose multiple protocols on a single host. Each Add* call registers its
+// own endpoints on the shared Core pipeline (OpenTelemetry, health probes,
+// identity/session headers, graceful shutdown):
+//   - Activity     -> POST /activity/messages   (Teams/channel conversations)
+//   - Invocations  -> POST /invocations         (synchronous request/response)
+builder
+    .AddActivity<EchoAgent>()
+    .AddInvocations<OpsInvocationHandler>();
+
+var app = builder.Build();
+app.Run();
+```
+
+The same pattern extends to the Responses protocol (`builder.AddResponses<THandler>()`) —
+mix and match whichever protocols your agent needs.
+
 ## Test the endpoint
 
 Message activities require `from` + `recipient`; the reply is delivered asynchronously to the
@@ -119,6 +176,14 @@ curl -X POST http://localhost:8088/activity/messages \
   -H "Content-Type: application/json" \
   -d '{"type":"message","text":"hello","from":{"id":"u1"},"recipient":{"id":"b1"},"conversation":{"id":"c1"},"channelId":"msteams","serviceUrl":"http://localhost:9099/","id":"a1"}'
 # -> HTTP/1.1 202 Accepted
+```
+
+When you compose the Invocations protocol (above), its endpoint is served on the same host:
+
+```bash
+curl -X POST http://localhost:8088/invocations \
+  -H "Content-Type: application/json" -d '{}'
+# -> {"status":"ok","session_id":"..."}
 ```
 
 ## When to use Tier 2

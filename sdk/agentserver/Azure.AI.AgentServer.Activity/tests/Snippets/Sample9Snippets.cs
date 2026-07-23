@@ -6,6 +6,8 @@ using System.Threading;
 using System.Threading.Tasks;
 using Azure.AI.AgentServer.Activity;
 using Azure.AI.AgentServer.Core;
+using Azure.AI.AgentServer.Invocations;
+using Microsoft.AspNetCore.Http;
 using Microsoft.Agents.Builder;
 using Microsoft.Agents.Builder.App;
 using Microsoft.Agents.Builder.State;
