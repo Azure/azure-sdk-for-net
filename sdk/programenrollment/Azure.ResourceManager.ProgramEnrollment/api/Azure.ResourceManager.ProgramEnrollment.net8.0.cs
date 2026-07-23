@@ -1,5 +1,12 @@
 namespace Azure.ResourceManager.ProgramEnrollment
 {
+    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.Models.SystemData))]
+    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.ProgramEnrollment.EduEnrollmentData))]
+    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.ProgramEnrollment.EduEnrollmentResource))]
+    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.ProgramEnrollment.Models.EduEnrollmentPatch))]
+    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.ProgramEnrollment.Models.EduEnrollmentProperties))]
+    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.ProgramEnrollment.Models.ProgramEnrollmentDomainGroup))]
+    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResponseError))]
     public partial class AzureResourceManagerProgramEnrollmentContext : System.ClientModel.Primitives.ModelReaderWriterContext
     {
         internal AzureResourceManagerProgramEnrollmentContext() { }
