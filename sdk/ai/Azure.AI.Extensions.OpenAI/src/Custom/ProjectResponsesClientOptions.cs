@@ -1,47 +1,15 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-using System;
-using System.ClientModel;
-using OpenAI.Responses;
-
 namespace Azure.AI.Extensions.OpenAI;
 
 /// <summary> Represents options for configuring a project responses client. </summary>
-public partial class ProjectResponsesClientOptions : ResponsesClientOptions
+public partial class ProjectResponsesClientOptions : ProjectOAIResponsesClientOptions
 {
-    private string _apiVersion;
-    private string _agentName;
-
     /// <summary> Initializes a new instance of <see cref="ProjectResponsesClientOptions"/>. </summary>
     public ProjectResponsesClientOptions() : base()
     {
-        _apiVersion = "v1";
     }
-
-    /// <summary> Gets or sets the API version used for project OpenAI requests. </summary>
-    public string ApiVersion
-    {
-        get => _apiVersion;
-        set
-        {
-            AssertNotFrozen();
-            _apiVersion = value;
-        }
-    }
-
-    /// <summary> Gets or sets the agent name used when building an agent endpoint. </summary>
-    public string AgentName
-    {
-        get => _agentName;
-        set
-        {
-            AssertNotFrozen();
-            _agentName = value;
-        }
-    }
-
-    internal AuthenticationTokenProvider TokenProvider { get; set; }
 
     /// <summary>
     /// Implicitly converts a <see cref="ProjectOpenAIClientOptions"/> instance to a new
@@ -52,8 +20,8 @@ public partial class ProjectResponsesClientOptions : ResponsesClientOptions
     /// project-specific properties. It does not carry internal pipeline policy lists
     /// (<c>PerCallPolicies</c>, <c>PerTryPolicies</c>, <c>BeforeTransportPolicies</c>) because the
     /// HTTP pipeline is built from the source instance before this conversion is needed; the
-    /// destination instance is only consulted by <see cref="ResponsesClient"/> for its own
-    /// properties such as <see cref="ResponsesClientOptions.Endpoint"/>.
+    /// destination instance is only consulted by the responses client for its own
+    /// properties such as endpoint.
     /// </remarks>
     /// <param name="source"> The source options instance to convert. </param>
     public static implicit operator ProjectResponsesClientOptions(ProjectOpenAIClientOptions source)

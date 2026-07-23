@@ -22,9 +22,11 @@ namespace Azure.AI.Extensions.OpenAI
     public partial class A2AToolCall : OpenAI.Responses.ResponseItem, System.ClientModel.Primitives.IJsonModel<Azure.AI.Extensions.OpenAI.A2AToolCall>, System.ClientModel.Primitives.IPersistableModel<Azure.AI.Extensions.OpenAI.A2AToolCall>
     {
         public A2AToolCall(string callId, string name, string arguments, Azure.AI.Extensions.OpenAI.ToolCallStatus status) : base (default(OpenAI.Responses.ResponseItemKind)) { }
+        public Azure.AI.Extensions.OpenAI.AgentReference AgentReference { get { throw null; } }
         public string Arguments { get { throw null; } set { } }
         public string CallId { get { throw null; } set { } }
         public string Name { get { throw null; } set { } }
+        public string ResponseId { get { throw null; } }
         public Azure.AI.Extensions.OpenAI.ToolCallStatus Status { get { throw null; } set { } }
         protected override OpenAI.Responses.ResponseItem JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
@@ -74,7 +76,9 @@ namespace Azure.AI.Extensions.OpenAI
     public partial class AgentStructuredOutputsResponseItem : OpenAI.Responses.ResponseItem, System.ClientModel.Primitives.IJsonModel<Azure.AI.Extensions.OpenAI.AgentStructuredOutputsResponseItem>, System.ClientModel.Primitives.IPersistableModel<Azure.AI.Extensions.OpenAI.AgentStructuredOutputsResponseItem>
     {
         public AgentStructuredOutputsResponseItem(System.BinaryData output) : base (default(OpenAI.Responses.ResponseItemKind)) { }
+        public Azure.AI.Extensions.OpenAI.AgentReference AgentReference { get { throw null; } }
         public System.BinaryData Output { get { throw null; } set { } }
+        public string ResponseId { get { throw null; } }
         protected override OpenAI.Responses.ResponseItem JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         protected override OpenAI.Responses.ResponseItem PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -124,17 +128,11 @@ namespace Azure.AI.Extensions.OpenAI
     }
     public static partial class AzureAIExtensions
     {
-        [System.Diagnostics.CodeAnalysis.ExperimentalAttribute("AAIP001")]
-        public static System.ClientModel.ClientResult<OpenAI.Responses.ResponseResult> CreateResponse(this OpenAI.Responses.ResponsesClient responseClient, OpenAI.Conversations.ConversationResource conversation, Azure.AI.Extensions.OpenAI.AgentReference agentRef, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        [System.Diagnostics.CodeAnalysis.ExperimentalAttribute("AAIP001")]
-        public static System.Threading.Tasks.Task<System.ClientModel.ClientResult<OpenAI.Responses.ResponseResult>> CreateResponseAsync(this OpenAI.Responses.ResponsesClient responseClient, OpenAI.Conversations.ConversationResource conversation, Azure.AI.Extensions.OpenAI.AgentReference agentRef, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public static string GetAzureFileStatus(this OpenAI.Files.OpenAIFile file) { throw null; }
         public static Azure.AI.Extensions.OpenAI.AgentReference get_Agent(OpenAI.Responses.CreateResponseOptions options) { throw null; }
         public static Azure.AI.Extensions.OpenAI.AgentReference get_Agent(OpenAI.Responses.ResponseResult response) { throw null; }
         public static string get_AgentConversationId(OpenAI.Responses.CreateResponseOptions options) { throw null; }
         public static string get_AgentConversationId(OpenAI.Responses.ResponseResult response) { throw null; }
-        public static Azure.AI.Extensions.OpenAI.AgentReference get_AgentReference(OpenAI.Responses.ResponseItem item) { throw null; }
-        public static string get_ResponseId(OpenAI.Responses.ResponseItem item) { throw null; }
         public static void set_Agent(OpenAI.Responses.CreateResponseOptions options, Azure.AI.Extensions.OpenAI.AgentReference value) { }
         public static void set_AgentConversationId(OpenAI.Responses.CreateResponseOptions options, string value) { }
         public sealed partial class <G>$9441C364D6D7BED1E759B10623E362FD
@@ -159,18 +157,6 @@ namespace Azure.AI.Extensions.OpenAI
             public static partial class <M>$9CB7C4485EAB7B97A3544F52CBDBA0F9
             {
                 public static void <Extension>$(OpenAI.Responses.ResponseResult response) { }
-            }
-        }
-        public sealed partial class <G>$F3F0025ADD8FA456F8E93354548ADC99
-        {
-            internal <G>$F3F0025ADD8FA456F8E93354548ADC99() { }
-            [System.Runtime.CompilerServices.ExtensionMarkerAttribute("<M>$55FD76F5F858FB95E40EB4395B6AC950")]
-            public Azure.AI.Extensions.OpenAI.AgentReference AgentReference { [System.Runtime.CompilerServices.ExtensionMarkerAttribute("<M>$55FD76F5F858FB95E40EB4395B6AC950")] get { throw null; } }
-            [System.Runtime.CompilerServices.ExtensionMarkerAttribute("<M>$55FD76F5F858FB95E40EB4395B6AC950")]
-            public string ResponseId { [System.Runtime.CompilerServices.ExtensionMarkerAttribute("<M>$55FD76F5F858FB95E40EB4395B6AC950")] get { throw null; } }
-            public static partial class <M>$55FD76F5F858FB95E40EB4395B6AC950
-            {
-                public static void <Extension>$(OpenAI.Responses.ResponseItem item) { }
             }
         }
     }
@@ -220,8 +206,10 @@ namespace Azure.AI.Extensions.OpenAI
     public partial class AzureAISearchToolCall : OpenAI.Responses.ResponseItem, System.ClientModel.Primitives.IJsonModel<Azure.AI.Extensions.OpenAI.AzureAISearchToolCall>, System.ClientModel.Primitives.IPersistableModel<Azure.AI.Extensions.OpenAI.AzureAISearchToolCall>
     {
         public AzureAISearchToolCall(string callId, string arguments, Azure.AI.Extensions.OpenAI.ToolCallStatus status) : base (default(OpenAI.Responses.ResponseItemKind)) { }
+        public Azure.AI.Extensions.OpenAI.AgentReference AgentReference { get { throw null; } }
         public string Arguments { get { throw null; } set { } }
         public string CallId { get { throw null; } set { } }
+        public string ResponseId { get { throw null; } }
         public Azure.AI.Extensions.OpenAI.ToolCallStatus Status { get { throw null; } set { } }
         protected override OpenAI.Responses.ResponseItem JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
@@ -530,8 +518,10 @@ namespace Azure.AI.Extensions.OpenAI
     public partial class BingGroundingToolCall : OpenAI.Responses.ResponseItem, System.ClientModel.Primitives.IJsonModel<Azure.AI.Extensions.OpenAI.BingGroundingToolCall>, System.ClientModel.Primitives.IPersistableModel<Azure.AI.Extensions.OpenAI.BingGroundingToolCall>
     {
         public BingGroundingToolCall(string callId, string arguments, Azure.AI.Extensions.OpenAI.ToolCallStatus status) : base (default(OpenAI.Responses.ResponseItemKind)) { }
+        public Azure.AI.Extensions.OpenAI.AgentReference AgentReference { get { throw null; } }
         public string Arguments { get { throw null; } set { } }
         public string CallId { get { throw null; } set { } }
+        public string ResponseId { get { throw null; } }
         public Azure.AI.Extensions.OpenAI.ToolCallStatus Status { get { throw null; } set { } }
         protected override OpenAI.Responses.ResponseItem JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
@@ -546,8 +536,10 @@ namespace Azure.AI.Extensions.OpenAI
     public partial class BingGroundingToolCallOutput : OpenAI.Responses.ResponseItem, System.ClientModel.Primitives.IJsonModel<Azure.AI.Extensions.OpenAI.BingGroundingToolCallOutput>, System.ClientModel.Primitives.IPersistableModel<Azure.AI.Extensions.OpenAI.BingGroundingToolCallOutput>
     {
         public BingGroundingToolCallOutput(string callId, Azure.AI.Extensions.OpenAI.ToolCallStatus status) : base (default(OpenAI.Responses.ResponseItemKind)) { }
+        public Azure.AI.Extensions.OpenAI.AgentReference AgentReference { get { throw null; } }
         public string CallId { get { throw null; } set { } }
         public System.BinaryData Output { get { throw null; } set { } }
+        public string ResponseId { get { throw null; } }
         public Azure.AI.Extensions.OpenAI.ToolCallStatus Status { get { throw null; } set { } }
         protected override OpenAI.Responses.ResponseItem JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
@@ -669,6 +661,11 @@ namespace Azure.AI.Extensions.OpenAI
         string System.ClientModel.Primitives.IPersistableModel<Azure.AI.Extensions.OpenAI.ChatSummaryMemoryItem>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.AI.Extensions.OpenAI.ChatSummaryMemoryItem>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
+    public partial class ContainerReferenceResource : Azure.AI.Extensions.OpenAI.FunctionShellCallEnvironment
+    {
+        public ContainerReferenceResource(string containerId) { }
+        public string ContainerId { get { throw null; } }
+    }
     public partial class ContentFilterConfiguration
     {
         public ContentFilterConfiguration(string policyName) { }
@@ -734,6 +731,7 @@ namespace Azure.AI.Extensions.OpenAI
         public static Azure.AI.Extensions.OpenAI.FabricDataAgentToolOptions FabricDataAgentToolOptions(System.Collections.Generic.IEnumerable<Azure.AI.Extensions.OpenAI.ToolProjectConnection> projectConnections = null) { throw null; }
         [System.Diagnostics.CodeAnalysis.ExperimentalAttribute("AAIP001")]
         public static Azure.AI.Extensions.OpenAI.FabricIQPreviewTool FabricIQPreviewTool(string projectConnectionId = null, string serverLabel = null, System.Uri serverUri = null, Azure.AI.Extensions.OpenAI.FabricIQPreviewToolRequireApprovalChoice requireApproval = null) { throw null; }
+        public static Azure.AI.Extensions.OpenAI.Internal.LocalShellExecAction LocalShellExecAction(System.Collections.Generic.IEnumerable<string> command = null, long? timeoutMs = default(long?), string workingDirectory = null, System.Collections.Generic.IDictionary<string, string> env = null, string user = null) { throw null; }
         public static Azure.AI.Extensions.OpenAI.Internal.MCPToolRequireApproval MCPToolRequireApproval(OpenAI.Responses.McpToolFilter always = null, OpenAI.Responses.McpToolFilter never = null) { throw null; }
         [System.Diagnostics.CodeAnalysis.ExperimentalAttribute("AAIP001")]
         public static Azure.AI.Extensions.OpenAI.MemoryCommandToolCall MemoryCommandToolCall(OpenAI.Responses.ResponseItemKind type = default(OpenAI.Responses.ResponseItemKind), string id = null, Azure.AI.Extensions.OpenAI.AgentReference agentReference = null, string responseId = null, string callId = null, string arguments = null, Azure.AI.Extensions.OpenAI.ToolCallStatus status = Azure.AI.Extensions.OpenAI.ToolCallStatus.InProgress) { throw null; }
@@ -749,7 +747,7 @@ namespace Azure.AI.Extensions.OpenAI
         public static Azure.AI.Extensions.OpenAI.MemorySearchToolCall MemorySearchToolCall(OpenAI.Responses.ResponseItemKind type = default(OpenAI.Responses.ResponseItemKind), string id = null, Azure.AI.Extensions.OpenAI.AgentReference agentReference = null, string responseId = null, Azure.AI.Extensions.OpenAI.ToolCallStatus status = Azure.AI.Extensions.OpenAI.ToolCallStatus.InProgress, System.Collections.Generic.IEnumerable<Azure.AI.Extensions.OpenAI.MemoryOutputItem> memories = null) { throw null; }
         [System.Diagnostics.CodeAnalysis.ExperimentalAttribute("AAIP001")]
         public static Azure.AI.Extensions.OpenAI.MicrosoftFabricPreviewTool MicrosoftFabricPreviewTool(Azure.AI.Extensions.OpenAI.FabricDataAgentToolOptions toolOptions = null) { throw null; }
-        public static Azure.AI.Extensions.OpenAI.OAuthConsentRequestResponseItem OAuthConsentRequestResponseItem(OpenAI.Responses.ResponseItemKind type = default(OpenAI.Responses.ResponseItemKind), string id = null, Azure.AI.Extensions.OpenAI.AgentReference agentReference = null, string responseId = null, string internalConsentLink = null, string serverLabel = null) { throw null; }
+        public static Azure.AI.Extensions.OpenAI.OAuthConsentRequestResponseItem OAuthConsentRequestResponseItem(OpenAI.Responses.ResponseItemKind type = default(OpenAI.Responses.ResponseItemKind), string id = null, Azure.AI.Extensions.OpenAI.AgentReference agentReference = null, string responseId = null, string itemId = null, string internalConsentLink = null, string serverLabel = null) { throw null; }
         public static Azure.AI.Extensions.OpenAI.OpenAPIAnonymousAuthenticationDetails OpenAPIAnonymousAuthenticationDetails() { throw null; }
         public static Azure.AI.Extensions.OpenAI.OpenApiAuthenticationDetails OpenApiAuthenticationDetails(string type = null) { throw null; }
         public static Azure.AI.Extensions.OpenAI.OpenApiFunctionDefinition OpenApiFunctionDefinition(string name = null, string description = null, System.Collections.Generic.IDictionary<string, System.BinaryData> specification = null, Azure.AI.Extensions.OpenAI.OpenApiAuthenticationDetails auth = null, System.Collections.Generic.IEnumerable<string> defaultParams = null, System.Collections.Generic.IEnumerable<Azure.AI.Extensions.OpenAI.OpenApiFunctionDefinitionFunction> functions = null) { throw null; }
@@ -761,8 +759,14 @@ namespace Azure.AI.Extensions.OpenAI
         public static Azure.AI.Extensions.OpenAI.OpenAPITool OpenAPITool(System.Collections.Generic.IDictionary<string, Azure.AI.Extensions.OpenAI.ToolConfig> toolConfigs = null, Azure.AI.Extensions.OpenAI.OpenApiFunctionDefinition functionDefinition = null) { throw null; }
         public static Azure.AI.Extensions.OpenAI.OpenApiToolCall OpenApiToolCall(OpenAI.Responses.ResponseItemKind type = default(OpenAI.Responses.ResponseItemKind), string id = null, Azure.AI.Extensions.OpenAI.AgentReference agentReference = null, string responseId = null, string callId = null, string name = null, string arguments = null, Azure.AI.Extensions.OpenAI.ToolCallStatus status = Azure.AI.Extensions.OpenAI.ToolCallStatus.InProgress) { throw null; }
         public static Azure.AI.Extensions.OpenAI.OpenApiToolCallOutput OpenApiToolCallOutput(OpenAI.Responses.ResponseItemKind type = default(OpenAI.Responses.ResponseItemKind), string id = null, Azure.AI.Extensions.OpenAI.AgentReference agentReference = null, string responseId = null, string callId = null, string name = null, System.BinaryData output = null, Azure.AI.Extensions.OpenAI.ToolCallStatus status = Azure.AI.Extensions.OpenAI.ToolCallStatus.InProgress) { throw null; }
+        public static Azure.AI.Extensions.OpenAI.Internal.OutputItemCompactionBody OutputItemCompactionBody(OpenAI.Responses.ResponseItemKind type = default(OpenAI.Responses.ResponseItemKind), string id = null, Azure.AI.Extensions.OpenAI.AgentReference agentReference = null, string responseId = null, string encryptedContent = null, string createdBy = null) { throw null; }
+        public static Azure.AI.Extensions.OpenAI.OutputItemFunctionShellCall OutputItemFunctionShellCall(OpenAI.Responses.ResponseItemKind type = default(OpenAI.Responses.ResponseItemKind), string id = null, Azure.AI.Extensions.OpenAI.AgentReference agentReference = null, string responseId = null, string itemId = null, string callId = null, Azure.AI.Extensions.OpenAI.FunctionShellAction action = null, Azure.AI.Extensions.OpenAI.LocalShellCallStatus status = Azure.AI.Extensions.OpenAI.LocalShellCallStatus.InProgress, Azure.AI.Extensions.OpenAI.FunctionShellCallEnvironment environment = null, string createdBy = null) { throw null; }
+        public static Azure.AI.Extensions.OpenAI.OutputItemFunctionShellCallOutput OutputItemFunctionShellCallOutput(OpenAI.Responses.ResponseItemKind type = default(OpenAI.Responses.ResponseItemKind), string id = null, Azure.AI.Extensions.OpenAI.AgentReference agentReference = null, string responseId = null, string itemId = null, string callId = null, Azure.AI.Extensions.OpenAI.LocalShellCallOutputStatusEnum status = Azure.AI.Extensions.OpenAI.LocalShellCallOutputStatusEnum.InProgress, System.Collections.Generic.IEnumerable<Azure.AI.Extensions.OpenAI.FunctionShellCallOutputContent> output = null, long? maxOutputLength = default(long?), string createdBy = null) { throw null; }
+        public static Azure.AI.Extensions.OpenAI.Internal.OutputItemLocalShellToolCall OutputItemLocalShellToolCall(string id = null, Azure.AI.Extensions.OpenAI.AgentReference agentReference = null, string responseId = null, string callId = null, Azure.AI.Extensions.OpenAI.Internal.LocalShellExecAction action = null, Azure.AI.Extensions.OpenAI.Internal.InputItemLocalShellToolCallStatus status = Azure.AI.Extensions.OpenAI.Internal.InputItemLocalShellToolCallStatus.InProgress) { throw null; }
+        public static Azure.AI.Extensions.OpenAI.Internal.OutputItemLocalShellToolCallOutput OutputItemLocalShellToolCallOutput(OpenAI.Responses.ResponseItemKind type = default(OpenAI.Responses.ResponseItemKind), string id = null, Azure.AI.Extensions.OpenAI.AgentReference agentReference = null, string responseId = null, string output = null, Azure.AI.Extensions.OpenAI.Internal.InputItemLocalShellToolCallOutputStatus? status = default(Azure.AI.Extensions.OpenAI.Internal.InputItemLocalShellToolCallOutputStatus?)) { throw null; }
         [System.Diagnostics.CodeAnalysis.ExperimentalAttribute("AAIP001")]
         public static Azure.AI.Extensions.OpenAI.ProceduralMemoryItem ProceduralMemoryItem(string memoryId = null, System.DateTimeOffset updatedAt = default(System.DateTimeOffset), string scope = null, string content = null) { throw null; }
+        public static Azure.AI.Extensions.OpenAI.ProjectConversation ProjectConversation(string id = null, System.Collections.Generic.IDictionary<string, string> metadata = null, System.DateTimeOffset createdAt = default(System.DateTimeOffset)) { throw null; }
         [System.Diagnostics.CodeAnalysis.ExperimentalAttribute("AAIP001")]
         public static Azure.AI.Extensions.OpenAI.SharepointGroundingToolCall SharepointGroundingToolCall(OpenAI.Responses.ResponseItemKind type = default(OpenAI.Responses.ResponseItemKind), string id = null, Azure.AI.Extensions.OpenAI.AgentReference agentReference = null, string responseId = null, string callId = null, string arguments = null, Azure.AI.Extensions.OpenAI.ToolCallStatus status = Azure.AI.Extensions.OpenAI.ToolCallStatus.InProgress) { throw null; }
         [System.Diagnostics.CodeAnalysis.ExperimentalAttribute("AAIP001")]
@@ -859,6 +863,138 @@ namespace Azure.AI.Extensions.OpenAI
         Azure.AI.Extensions.OpenAI.FabricIQPreviewToolRequireApprovalChoice System.ClientModel.Primitives.IPersistableModel<Azure.AI.Extensions.OpenAI.FabricIQPreviewToolRequireApprovalChoice>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         string System.ClientModel.Primitives.IPersistableModel<Azure.AI.Extensions.OpenAI.FabricIQPreviewToolRequireApprovalChoice>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.AI.Extensions.OpenAI.FabricIQPreviewToolRequireApprovalChoice>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
+    public partial class FunctionShellAction
+    {
+        public FunctionShellAction(System.Collections.Generic.IEnumerable<string> commands, long? timeoutMs = default(long?), long? maxOutputLength = default(long?)) { }
+        public System.Collections.Generic.IList<string> Commands { get { throw null; } }
+        public long? MaxOutputLength { get { throw null; } }
+        public long? TimeoutMs { get { throw null; } }
+    }
+    public partial class FunctionShellActionParam
+    {
+        public FunctionShellActionParam(System.Collections.Generic.IEnumerable<string> commands, long? timeoutMs = default(long?), long? maxOutputLength = default(long?)) { }
+        public System.Collections.Generic.IList<string> Commands { get { throw null; } }
+        public long? MaxOutputLength { get { throw null; } }
+        public long? TimeoutMs { get { throw null; } }
+    }
+    public abstract partial class FunctionShellCallEnvironment
+    {
+        protected FunctionShellCallEnvironment() { }
+    }
+    public partial class FunctionShellCallItemParam
+    {
+        public FunctionShellCallItemParam(string callId, Azure.AI.Extensions.OpenAI.FunctionShellActionParam action) { }
+        public Azure.AI.Extensions.OpenAI.FunctionShellActionParam Action { get { throw null; } }
+        public string CallId { get { throw null; } }
+        public Azure.AI.Extensions.OpenAI.FunctionShellCallItemParamEnvironment Environment { get { throw null; } set { } }
+        public string Id { get { throw null; } set { } }
+        public Azure.AI.Extensions.OpenAI.FunctionShellCallItemStatus? Status { get { throw null; } set { } }
+    }
+    public abstract partial class FunctionShellCallItemParamEnvironment
+    {
+        protected FunctionShellCallItemParamEnvironment() { }
+    }
+    public partial class FunctionShellCallItemParamEnvironmentContainerReferenceParam : Azure.AI.Extensions.OpenAI.FunctionShellCallItemParamEnvironment
+    {
+        public FunctionShellCallItemParamEnvironmentContainerReferenceParam(string containerId) { }
+        public string ContainerId { get { throw null; } }
+    }
+    public partial class FunctionShellCallItemParamEnvironmentLocalEnvironmentParam : Azure.AI.Extensions.OpenAI.FunctionShellCallItemParamEnvironment
+    {
+        public FunctionShellCallItemParamEnvironmentLocalEnvironmentParam() { }
+    }
+    public enum FunctionShellCallItemStatus
+    {
+        InProgress = 0,
+        Completed = 1,
+        Incomplete = 2,
+    }
+    public partial class FunctionShellCallOutputContent
+    {
+        public FunctionShellCallOutputContent(string stdout, string stderr, Azure.AI.Extensions.OpenAI.FunctionShellCallOutputOutcome outcome) { }
+        public Azure.AI.Extensions.OpenAI.FunctionShellCallOutputOutcome Outcome { get { throw null; } }
+        public string Stderr { get { throw null; } }
+        public string Stdout { get { throw null; } }
+    }
+    public partial class FunctionShellCallOutputContentParam
+    {
+        public FunctionShellCallOutputContentParam(string stdout, string stderr, Azure.AI.Extensions.OpenAI.FunctionShellCallOutputOutcomeParam outcome) { }
+        public Azure.AI.Extensions.OpenAI.FunctionShellCallOutputOutcomeParam Outcome { get { throw null; } }
+        public string Stderr { get { throw null; } }
+        public string Stdout { get { throw null; } }
+    }
+    public partial class FunctionShellCallOutputExitOutcome : Azure.AI.Extensions.OpenAI.FunctionShellCallOutputOutcome
+    {
+        public FunctionShellCallOutputExitOutcome(long exitCode) { }
+        public long ExitCode { get { throw null; } }
+    }
+    public partial class FunctionShellCallOutputExitOutcomeParam : Azure.AI.Extensions.OpenAI.FunctionShellCallOutputOutcomeParam
+    {
+        public FunctionShellCallOutputExitOutcomeParam(long exitCode) { }
+        public long ExitCode { get { throw null; } }
+    }
+    public partial class FunctionShellCallOutputItemParam
+    {
+        public FunctionShellCallOutputItemParam(string callId, System.Collections.Generic.IEnumerable<Azure.AI.Extensions.OpenAI.FunctionShellCallOutputContentParam> output) { }
+        public string CallId { get { throw null; } }
+        public string Id { get { throw null; } set { } }
+        public long? MaxOutputLength { get { throw null; } set { } }
+        public System.Collections.Generic.IList<Azure.AI.Extensions.OpenAI.FunctionShellCallOutputContentParam> Output { get { throw null; } }
+    }
+    public abstract partial class FunctionShellCallOutputOutcome
+    {
+        protected FunctionShellCallOutputOutcome() { }
+    }
+    public abstract partial class FunctionShellCallOutputOutcomeParam
+    {
+        protected FunctionShellCallOutputOutcomeParam() { }
+    }
+    public partial class FunctionShellCallOutputTimeoutOutcome : Azure.AI.Extensions.OpenAI.FunctionShellCallOutputOutcome
+    {
+        public FunctionShellCallOutputTimeoutOutcome() { }
+    }
+    public partial class FunctionShellCallOutputTimeoutOutcomeParam : Azure.AI.Extensions.OpenAI.FunctionShellCallOutputOutcomeParam
+    {
+        public FunctionShellCallOutputTimeoutOutcomeParam() { }
+    }
+    public enum ItemLocalShellToolCallOutputStatus
+    {
+        InProgress = 0,
+        Completed = 1,
+        Incomplete = 2,
+    }
+    public enum ItemLocalShellToolCallStatus
+    {
+        InProgress = 0,
+        Completed = 1,
+        Incomplete = 2,
+    }
+    public partial class LocalEnvironmentResource : Azure.AI.Extensions.OpenAI.FunctionShellCallEnvironment
+    {
+        public LocalEnvironmentResource() { }
+    }
+    public enum LocalShellCallOutputStatusEnum
+    {
+        InProgress = 0,
+        Completed = 1,
+        Incomplete = 2,
+    }
+    public enum LocalShellCallStatus
+    {
+        InProgress = 0,
+        Completed = 1,
+        Incomplete = 2,
+    }
+    public partial class LocalShellExecAction
+    {
+        public LocalShellExecAction(System.Collections.Generic.IEnumerable<string> command, System.Collections.Generic.IDictionary<string, string> env = null) { }
+        public System.Collections.Generic.IList<string> Command { get { throw null; } }
+        public System.Collections.Generic.IDictionary<string, string> Env { get { throw null; } }
+        public long? TimeoutMs { get { throw null; } set { } }
+        public string Type { get { throw null; } }
+        public string User { get { throw null; } set { } }
+        public string WorkingDirectory { get { throw null; } set { } }
     }
     [System.Diagnostics.CodeAnalysis.ExperimentalAttribute("AAIP001")]
     public partial class MemoryCommandToolCall : OpenAI.Responses.ResponseItem, System.ClientModel.Primitives.IJsonModel<Azure.AI.Extensions.OpenAI.MemoryCommandToolCall>, System.ClientModel.Primitives.IPersistableModel<Azure.AI.Extensions.OpenAI.MemoryCommandToolCall>
@@ -978,8 +1114,10 @@ namespace Azure.AI.Extensions.OpenAI
     public partial class OAuthConsentRequestResponseItem : OpenAI.Responses.ResponseItem, System.ClientModel.Primitives.IJsonModel<Azure.AI.Extensions.OpenAI.OAuthConsentRequestResponseItem>, System.ClientModel.Primitives.IPersistableModel<Azure.AI.Extensions.OpenAI.OAuthConsentRequestResponseItem>
     {
         public OAuthConsentRequestResponseItem(string consentLink, string serverLabel) : base (default(OpenAI.Responses.ResponseItemKind)) { }
+        public OAuthConsentRequestResponseItem(string id, string internalConsentLink, string serverLabel) : base (default(OpenAI.Responses.ResponseItemKind)) { }
         public OAuthConsentRequestResponseItem(System.Uri consentLink, string serverLabel) : base (default(OpenAI.Responses.ResponseItemKind)) { }
         public System.Uri ConsentLink { get { throw null; } }
+        public new string Id { get { throw null; } set { } }
         public string ServerLabel { get { throw null; } set { } }
         protected override OpenAI.Responses.ResponseItem JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
@@ -1158,6 +1296,89 @@ namespace Azure.AI.Extensions.OpenAI
         string System.ClientModel.Primitives.IPersistableModel<Azure.AI.Extensions.OpenAI.OpenApiToolCallOutput>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.AI.Extensions.OpenAI.OpenApiToolCallOutput>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
+    public partial class OutputItemCompactionBody : OpenAI.Responses.ResponseItem
+    {
+        public OutputItemCompactionBody(string id, string encryptedContent) : base (default(OpenAI.Responses.ResponseItemKind)) { }
+        public string EncryptedContent { get { throw null; } }
+        public new string Id { get { throw null; } set { } }
+    }
+    public partial class OutputItemComputerToolCallOutput
+    {
+        public OutputItemComputerToolCallOutput() { }
+    }
+    public partial class OutputItemFunctionShellCall : OpenAI.Responses.ResponseItem, System.ClientModel.Primitives.IJsonModel<Azure.AI.Extensions.OpenAI.OutputItemFunctionShellCall>, System.ClientModel.Primitives.IPersistableModel<Azure.AI.Extensions.OpenAI.OutputItemFunctionShellCall>
+    {
+        public OutputItemFunctionShellCall(string id, string callId, Azure.AI.Extensions.OpenAI.FunctionShellAction action, Azure.AI.Extensions.OpenAI.LocalShellCallStatus status, Azure.AI.Extensions.OpenAI.FunctionShellCallEnvironment environment) : base (default(OpenAI.Responses.ResponseItemKind)) { }
+        public Azure.AI.Extensions.OpenAI.FunctionShellAction Action { get { throw null; } }
+        public string CallId { get { throw null; } }
+        public string CreatedBy { get { throw null; } }
+        public Azure.AI.Extensions.OpenAI.FunctionShellCallEnvironment Environment { get { throw null; } }
+        public new string Id { get { throw null; } set { } }
+        public Azure.AI.Extensions.OpenAI.LocalShellCallStatus Status { get { throw null; } }
+        protected override OpenAI.Responses.ResponseItem JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected override OpenAI.Responses.ResponseItem PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected override System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        Azure.AI.Extensions.OpenAI.OutputItemFunctionShellCall System.ClientModel.Primitives.IJsonModel<Azure.AI.Extensions.OpenAI.OutputItemFunctionShellCall>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.AI.Extensions.OpenAI.OutputItemFunctionShellCall>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.AI.Extensions.OpenAI.OutputItemFunctionShellCall System.ClientModel.Primitives.IPersistableModel<Azure.AI.Extensions.OpenAI.OutputItemFunctionShellCall>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.AI.Extensions.OpenAI.OutputItemFunctionShellCall>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.AI.Extensions.OpenAI.OutputItemFunctionShellCall>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
+    public partial class OutputItemFunctionShellCallOutput : OpenAI.Responses.ResponseItem, System.ClientModel.Primitives.IJsonModel<Azure.AI.Extensions.OpenAI.OutputItemFunctionShellCallOutput>, System.ClientModel.Primitives.IPersistableModel<Azure.AI.Extensions.OpenAI.OutputItemFunctionShellCallOutput>
+    {
+        public OutputItemFunctionShellCallOutput(string id, string callId, Azure.AI.Extensions.OpenAI.LocalShellCallOutputStatusEnum status, System.Collections.Generic.IEnumerable<Azure.AI.Extensions.OpenAI.FunctionShellCallOutputContent> output, long? maxOutputLength) : base (default(OpenAI.Responses.ResponseItemKind)) { }
+        public string CallId { get { throw null; } }
+        public string CreatedBy { get { throw null; } }
+        public new string Id { get { throw null; } set { } }
+        public long? MaxOutputLength { get { throw null; } }
+        public System.Collections.Generic.IList<Azure.AI.Extensions.OpenAI.FunctionShellCallOutputContent> Output { get { throw null; } }
+        public Azure.AI.Extensions.OpenAI.LocalShellCallOutputStatusEnum Status { get { throw null; } }
+        protected override OpenAI.Responses.ResponseItem JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected override OpenAI.Responses.ResponseItem PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected override System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        Azure.AI.Extensions.OpenAI.OutputItemFunctionShellCallOutput System.ClientModel.Primitives.IJsonModel<Azure.AI.Extensions.OpenAI.OutputItemFunctionShellCallOutput>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.AI.Extensions.OpenAI.OutputItemFunctionShellCallOutput>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.AI.Extensions.OpenAI.OutputItemFunctionShellCallOutput System.ClientModel.Primitives.IPersistableModel<Azure.AI.Extensions.OpenAI.OutputItemFunctionShellCallOutput>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.AI.Extensions.OpenAI.OutputItemFunctionShellCallOutput>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.AI.Extensions.OpenAI.OutputItemFunctionShellCallOutput>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
+    public partial class OutputItemFunctionToolCallOutput
+    {
+        public OutputItemFunctionToolCallOutput() { }
+    }
+    public partial class OutputItemLocalShellToolCall : OpenAI.Responses.ResponseItem
+    {
+        public OutputItemLocalShellToolCall(string id, string callId, Azure.AI.Extensions.OpenAI.LocalShellExecAction action, Azure.AI.Extensions.OpenAI.ItemLocalShellToolCallStatus status) : base (default(OpenAI.Responses.ResponseItemKind)) { }
+        public Azure.AI.Extensions.OpenAI.LocalShellExecAction Action { get { throw null; } }
+        public string CallId { get { throw null; } }
+        public new string Id { get { throw null; } set { } }
+        public Azure.AI.Extensions.OpenAI.ItemLocalShellToolCallStatus Status { get { throw null; } }
+    }
+    public partial class OutputItemLocalShellToolCallOutput : OpenAI.Responses.ResponseItem
+    {
+        public OutputItemLocalShellToolCallOutput(string id, string output) : base (default(OpenAI.Responses.ResponseItemKind)) { }
+        public new string Id { get { throw null; } set { } }
+        public string Output { get { throw null; } }
+        public Azure.AI.Extensions.OpenAI.ItemLocalShellToolCallOutputStatus? Status { get { throw null; } set { } }
+    }
+    public abstract partial class OutputMessageContent
+    {
+        protected OutputMessageContent() { }
+    }
+    public partial class OutputMessageContentOutputTextContent : Azure.AI.Extensions.OpenAI.OutputMessageContent
+    {
+        public OutputMessageContentOutputTextContent(string text, dynamic annotations, dynamic logprobs) { }
+        public dynamic Annotations { get { throw null; } }
+        public dynamic Logprobs { get { throw null; } }
+        public string Text { get { throw null; } }
+    }
+    public partial class OutputMessageContentRefusalContent : Azure.AI.Extensions.OpenAI.OutputMessageContent
+    {
+        public OutputMessageContentRefusalContent(string refusal) { }
+        public string Refusal { get { throw null; } }
+    }
     [System.Diagnostics.CodeAnalysis.ExperimentalAttribute("AAIP001")]
     public partial class ProceduralMemoryItem : Azure.AI.Extensions.OpenAI.MemoryOutputItem, System.ClientModel.Primitives.IJsonModel<Azure.AI.Extensions.OpenAI.ProceduralMemoryItem>, System.ClientModel.Primitives.IPersistableModel<Azure.AI.Extensions.OpenAI.ProceduralMemoryItem>
     {
@@ -1172,28 +1393,83 @@ namespace Azure.AI.Extensions.OpenAI
         string System.ClientModel.Primitives.IPersistableModel<Azure.AI.Extensions.OpenAI.ProceduralMemoryItem>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.AI.Extensions.OpenAI.ProceduralMemoryItem>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
+    public partial class ProjectConversation : System.ClientModel.Primitives.IJsonModel<Azure.AI.Extensions.OpenAI.ProjectConversation>, System.ClientModel.Primitives.IPersistableModel<Azure.AI.Extensions.OpenAI.ProjectConversation>
+    {
+        internal ProjectConversation() { }
+        public System.DateTimeOffset CreatedAt { get { throw null; } }
+        public string Id { get { throw null; } }
+        public System.Collections.Generic.IDictionary<string, string> Metadata { get { throw null; } }
+        protected virtual Azure.AI.Extensions.OpenAI.ProjectConversation JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        public static implicit operator string (Azure.AI.Extensions.OpenAI.ProjectConversation conversation) { throw null; }
+        protected virtual Azure.AI.Extensions.OpenAI.ProjectConversation PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        Azure.AI.Extensions.OpenAI.ProjectConversation System.ClientModel.Primitives.IJsonModel<Azure.AI.Extensions.OpenAI.ProjectConversation>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.AI.Extensions.OpenAI.ProjectConversation>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.AI.Extensions.OpenAI.ProjectConversation System.ClientModel.Primitives.IPersistableModel<Azure.AI.Extensions.OpenAI.ProjectConversation>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.AI.Extensions.OpenAI.ProjectConversation>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.AI.Extensions.OpenAI.ProjectConversation>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
+    public partial class ProjectConversationCreationOptions : System.ClientModel.Primitives.IJsonModel<Azure.AI.Extensions.OpenAI.ProjectConversationCreationOptions>, System.ClientModel.Primitives.IPersistableModel<Azure.AI.Extensions.OpenAI.ProjectConversationCreationOptions>
+    {
+        public ProjectConversationCreationOptions() { }
+        public System.Collections.Generic.IList<OpenAI.Responses.ResponseItem> Items { get { throw null; } }
+        public System.Collections.Generic.IDictionary<string, string> Metadata { get { throw null; } }
+        protected virtual Azure.AI.Extensions.OpenAI.ProjectConversationCreationOptions JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        public static implicit operator System.ClientModel.BinaryContent (Azure.AI.Extensions.OpenAI.ProjectConversationCreationOptions projectConversationCreationOptions) { throw null; }
+        protected virtual Azure.AI.Extensions.OpenAI.ProjectConversationCreationOptions PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        Azure.AI.Extensions.OpenAI.ProjectConversationCreationOptions System.ClientModel.Primitives.IJsonModel<Azure.AI.Extensions.OpenAI.ProjectConversationCreationOptions>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.AI.Extensions.OpenAI.ProjectConversationCreationOptions>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.AI.Extensions.OpenAI.ProjectConversationCreationOptions System.ClientModel.Primitives.IPersistableModel<Azure.AI.Extensions.OpenAI.ProjectConversationCreationOptions>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.AI.Extensions.OpenAI.ProjectConversationCreationOptions>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.AI.Extensions.OpenAI.ProjectConversationCreationOptions>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
     public partial class ProjectConversationsClient : OpenAI.Conversations.ConversationClient
     {
         protected ProjectConversationsClient() { }
         public ProjectConversationsClient(System.ClientModel.Primitives.ClientPipeline pipeline, OpenAI.OpenAIClientOptions options) { }
-        public virtual System.ClientModel.ClientResult<OpenAI.Conversations.ConversationResource> CreateProjectConversation(OpenAI.Conversations.ConversationCreationOptions options = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<System.ClientModel.ClientResult<OpenAI.Conversations.ConversationResource>> CreateProjectConversationAsync(OpenAI.Conversations.ConversationCreationOptions options = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.ClientModel.ClientResult<Azure.AI.Extensions.OpenAI.ProjectConversation> CreateProjectConversation(Azure.AI.Extensions.OpenAI.ProjectConversationCreationOptions options = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<System.ClientModel.ClientResult<Azure.AI.Extensions.OpenAI.ProjectConversation>> CreateProjectConversationAsync(Azure.AI.Extensions.OpenAI.ProjectConversationCreationOptions options = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.ClientModel.ClientResult<System.Collections.ObjectModel.ReadOnlyCollection<OpenAI.Responses.ResponseItem>> CreateProjectConversationItems(string conversationId, System.Collections.Generic.IEnumerable<OpenAI.Responses.ResponseItem> items, System.Collections.Generic.IEnumerable<OpenAI.Conversations.IncludedConversationItemProperty> include = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<System.ClientModel.ClientResult<System.Collections.ObjectModel.ReadOnlyCollection<OpenAI.Responses.ResponseItem>>> CreateProjectConversationItemsAsync(string conversationId, System.Collections.Generic.IEnumerable<OpenAI.Responses.ResponseItem> items, System.Collections.Generic.IEnumerable<OpenAI.Conversations.IncludedConversationItemProperty> include = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.ClientModel.ClientResult<OpenAI.Conversations.ConversationResource> GetProjectConversation(string conversationId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<System.ClientModel.ClientResult<OpenAI.Conversations.ConversationResource>> GetProjectConversationAsync(string conversationId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.ClientModel.ClientResult<Azure.AI.Extensions.OpenAI.ProjectConversation> GetProjectConversation(string conversationId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<System.ClientModel.ClientResult<Azure.AI.Extensions.OpenAI.ProjectConversation>> GetProjectConversationAsync(string conversationId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.ClientModel.ClientResult<OpenAI.Responses.ResponseItem> GetProjectConversationItem(string conversationId, string itemId, System.Collections.Generic.IEnumerable<OpenAI.Conversations.IncludedConversationItemProperty> include = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<System.ClientModel.ClientResult<OpenAI.Responses.ResponseItem>> GetProjectConversationItemAsync(string conversationId, string itemId, System.Collections.Generic.IEnumerable<OpenAI.Conversations.IncludedConversationItemProperty> include = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.ClientModel.CollectionResult<OpenAI.Responses.ResponseItem> GetProjectConversationItems(string conversationId, OpenAI.Responses.ResponseItemKind? itemKind = default(OpenAI.Responses.ResponseItemKind?), int? limit = default(int?), string order = null, string after = null, string before = null, System.Collections.Generic.IEnumerable<OpenAI.Conversations.IncludedConversationItemProperty> include = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.ClientModel.AsyncCollectionResult<OpenAI.Responses.ResponseItem> GetProjectConversationItemsAsync(string conversationId, OpenAI.Responses.ResponseItemKind? itemKind = default(OpenAI.Responses.ResponseItemKind?), int? limit = default(int?), string order = null, string after = null, string before = null, System.Collections.Generic.IEnumerable<OpenAI.Conversations.IncludedConversationItemProperty> include = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.ClientModel.CollectionResult<OpenAI.Conversations.ConversationResource> GetProjectConversations(Azure.AI.Extensions.OpenAI.AgentReference agent = null, int? limit = default(int?), string order = null, string after = null, string before = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.ClientModel.AsyncCollectionResult<OpenAI.Conversations.ConversationResource> GetProjectConversationsAsync(Azure.AI.Extensions.OpenAI.AgentReference agent = null, int? limit = default(int?), string order = null, string after = null, string before = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.ClientModel.ClientResult<OpenAI.Conversations.ConversationResource> UpdateProjectConversation(string conversationId, OpenAI.Conversations.ConversationUpdateOptions options, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<System.ClientModel.ClientResult<OpenAI.Conversations.ConversationResource>> UpdateProjectConversationAsync(string conversationId, OpenAI.Conversations.ConversationUpdateOptions options, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.ClientModel.CollectionResult<Azure.AI.Extensions.OpenAI.ProjectConversation> GetProjectConversations(Azure.AI.Extensions.OpenAI.AgentReference agent = null, int? limit = default(int?), string order = null, string after = null, string before = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.ClientModel.AsyncCollectionResult<Azure.AI.Extensions.OpenAI.ProjectConversation> GetProjectConversationsAsync(Azure.AI.Extensions.OpenAI.AgentReference agent = null, int? limit = default(int?), string order = null, string after = null, string before = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.ClientModel.ClientResult<Azure.AI.Extensions.OpenAI.ProjectConversation> UpdateProjectConversation(string conversationId, Azure.AI.Extensions.OpenAI.ProjectConversationUpdateOptions options, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<System.ClientModel.ClientResult<Azure.AI.Extensions.OpenAI.ProjectConversation>> UpdateProjectConversationAsync(string conversationId, Azure.AI.Extensions.OpenAI.ProjectConversationUpdateOptions options, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+    }
+    public partial class ProjectConversationUpdateOptions : System.ClientModel.Primitives.IJsonModel<Azure.AI.Extensions.OpenAI.ProjectConversationUpdateOptions>, System.ClientModel.Primitives.IPersistableModel<Azure.AI.Extensions.OpenAI.ProjectConversationUpdateOptions>
+    {
+        public ProjectConversationUpdateOptions() { }
+        public System.Collections.Generic.IDictionary<string, string> Metadata { get { throw null; } }
+        protected virtual Azure.AI.Extensions.OpenAI.ProjectConversationUpdateOptions JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        public static implicit operator System.ClientModel.BinaryContent (Azure.AI.Extensions.OpenAI.ProjectConversationUpdateOptions ProjectConversationUpdateOptions) { throw null; }
+        protected virtual Azure.AI.Extensions.OpenAI.ProjectConversationUpdateOptions PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        Azure.AI.Extensions.OpenAI.ProjectConversationUpdateOptions System.ClientModel.Primitives.IJsonModel<Azure.AI.Extensions.OpenAI.ProjectConversationUpdateOptions>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.AI.Extensions.OpenAI.ProjectConversationUpdateOptions>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.AI.Extensions.OpenAI.ProjectConversationUpdateOptions System.ClientModel.Primitives.IPersistableModel<Azure.AI.Extensions.OpenAI.ProjectConversationUpdateOptions>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.AI.Extensions.OpenAI.ProjectConversationUpdateOptions>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.AI.Extensions.OpenAI.ProjectConversationUpdateOptions>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
     public partial class ProjectFilesClient : OpenAI.Files.OpenAIFileClient
     {
         protected ProjectFilesClient() { }
+    }
+    public partial class ProjectOAIResponsesClientOptions : OpenAI.Responses.ResponsesClientOptions
+    {
+        public ProjectOAIResponsesClientOptions() { }
+        public string AgentName { get { throw null; } set { } }
+        public string ApiVersion { get { throw null; } set { } }
+        public static implicit operator Azure.AI.Extensions.OpenAI.ProjectOAIResponsesClientOptions (Azure.AI.Extensions.OpenAI.ProjectOpenAIClientOptions source) { throw null; }
     }
     public partial class ProjectOpenAIClient : OpenAI.OpenAIClient
     {
@@ -1232,26 +1508,24 @@ namespace Azure.AI.Extensions.OpenAI
         protected ProjectResponsesClient() { }
         public ProjectResponsesClient(System.ClientModel.AuthenticationTokenProvider tokenProvider) { }
         public ProjectResponsesClient(System.ClientModel.AuthenticationTokenProvider tokenProvider, Azure.AI.Extensions.OpenAI.AgentReference defaultAgent, string defaultConversationId = null) { }
+        public ProjectResponsesClient(System.ClientModel.AuthenticationTokenProvider tokenProvider, Azure.AI.Extensions.OpenAI.ProjectOAIResponsesClientOptions options) { }
+        public ProjectResponsesClient(System.ClientModel.AuthenticationTokenProvider tokenProvider, Azure.AI.Extensions.OpenAI.ProjectOAIResponsesClientOptions options, Azure.AI.Extensions.OpenAI.AgentReference defaultAgent = null, string defaultConversationId = null) { }
         public ProjectResponsesClient(System.ClientModel.AuthenticationTokenProvider tokenProvider, Azure.AI.Extensions.OpenAI.ProjectResponsesClientOptions options) { }
-        public ProjectResponsesClient(System.ClientModel.AuthenticationTokenProvider tokenProvider, Azure.AI.Extensions.OpenAI.ProjectResponsesClientOptions options, Azure.AI.Extensions.OpenAI.AgentReference defaultAgent = null, string defaultConversationId = null) { }
+        public ProjectResponsesClient(System.ClientModel.AuthenticationTokenProvider tokenProvider, Azure.AI.Extensions.OpenAI.ProjectResponsesClientOptions options = null, Azure.AI.Extensions.OpenAI.AgentReference defaultAgent = null, string defaultConversationId = null) { }
         public ProjectResponsesClient(System.Uri projectEndpoint, System.ClientModel.AuthenticationTokenProvider tokenProvider) { }
         public ProjectResponsesClient(System.Uri projectEndpoint, System.ClientModel.AuthenticationTokenProvider tokenProvider, Azure.AI.Extensions.OpenAI.AgentReference defaultAgent, string defaultConversationId = null) { }
-        public ProjectResponsesClient(System.Uri projectEndpoint, System.ClientModel.AuthenticationTokenProvider tokenProvider, Azure.AI.Extensions.OpenAI.AgentReference defaultAgent, string defaultConversationId, Azure.AI.Extensions.OpenAI.ProjectResponsesClientOptions options) { }
-        public ProjectResponsesClient(System.Uri projectEndpoint, System.ClientModel.AuthenticationTokenProvider tokenProvider, Azure.AI.Extensions.OpenAI.ProjectResponsesClientOptions options) { }
-        [System.Diagnostics.CodeAnalysis.ExperimentalAttribute("AAIP001")]
+        public ProjectResponsesClient(System.Uri projectEndpoint, System.ClientModel.AuthenticationTokenProvider tokenProvider, Azure.AI.Extensions.OpenAI.AgentReference defaultAgent, string defaultConversationId, Azure.AI.Extensions.OpenAI.ProjectOAIResponsesClientOptions options) { }
+        public ProjectResponsesClient(System.Uri projectEndpoint, System.ClientModel.AuthenticationTokenProvider tokenProvider, Azure.AI.Extensions.OpenAI.AgentReference defaultAgent, string defaultConversationId = null, Azure.AI.Extensions.OpenAI.ProjectResponsesClientOptions options = null) { }
+        public ProjectResponsesClient(System.Uri projectEndpoint, System.ClientModel.AuthenticationTokenProvider tokenProvider, Azure.AI.Extensions.OpenAI.ProjectOAIResponsesClientOptions options) { }
+        public ProjectResponsesClient(System.Uri projectEndpoint, System.ClientModel.AuthenticationTokenProvider tokenProvider, Azure.AI.Extensions.OpenAI.ProjectResponsesClientOptions options = null) { }
         public override System.ClientModel.ClientResult<OpenAI.Responses.ResponseResult> CreateResponse(OpenAI.Responses.CreateResponseOptions options, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.ClientModel.ClientResult<OpenAI.Responses.ResponseResult> CreateResponse(System.Collections.Generic.IEnumerable<OpenAI.Responses.ResponseItem> inputItems, string previousResponseId = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        [System.Diagnostics.CodeAnalysis.ExperimentalAttribute("AAIP001")]
         public override System.ClientModel.ClientResult<OpenAI.Responses.ResponseResult> CreateResponse(string model, System.Collections.Generic.IEnumerable<OpenAI.Responses.ResponseItem> inputItems, string previousResponseId = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        [System.Diagnostics.CodeAnalysis.ExperimentalAttribute("AAIP001")]
         public override System.ClientModel.ClientResult<OpenAI.Responses.ResponseResult> CreateResponse(string model, string userInputText, string previousResponseId = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.ClientModel.ClientResult<OpenAI.Responses.ResponseResult> CreateResponse(string userInputText, string previousResponseId = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        [System.Diagnostics.CodeAnalysis.ExperimentalAttribute("AAIP001")]
         public override System.Threading.Tasks.Task<System.ClientModel.ClientResult<OpenAI.Responses.ResponseResult>> CreateResponseAsync(OpenAI.Responses.CreateResponseOptions options, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<System.ClientModel.ClientResult<OpenAI.Responses.ResponseResult>> CreateResponseAsync(System.Collections.Generic.IEnumerable<OpenAI.Responses.ResponseItem> inputItems, string previousResponseId = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        [System.Diagnostics.CodeAnalysis.ExperimentalAttribute("AAIP001")]
         public override System.Threading.Tasks.Task<System.ClientModel.ClientResult<OpenAI.Responses.ResponseResult>> CreateResponseAsync(string model, System.Collections.Generic.IEnumerable<OpenAI.Responses.ResponseItem> inputItems, string previousResponseId = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        [System.Diagnostics.CodeAnalysis.ExperimentalAttribute("AAIP001")]
         public override System.Threading.Tasks.Task<System.ClientModel.ClientResult<OpenAI.Responses.ResponseResult>> CreateResponseAsync(string model, string userInputText, string previousResponseId = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<System.ClientModel.ClientResult<OpenAI.Responses.ResponseResult>> CreateResponseAsync(string userInputText, string previousResponseId = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public override System.ClientModel.CollectionResult<OpenAI.Responses.StreamingResponseUpdate> CreateResponseStreaming(OpenAI.Responses.CreateResponseOptions options, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
@@ -1264,25 +1538,17 @@ namespace Azure.AI.Extensions.OpenAI
         public override System.ClientModel.AsyncCollectionResult<OpenAI.Responses.StreamingResponseUpdate> CreateResponseStreamingAsync(string model, System.Collections.Generic.IEnumerable<OpenAI.Responses.ResponseItem> inputItems, string previousResponseId = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public override System.ClientModel.AsyncCollectionResult<OpenAI.Responses.StreamingResponseUpdate> CreateResponseStreamingAsync(string model, string userInputText, string previousResponseId = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.ClientModel.AsyncCollectionResult<OpenAI.Responses.StreamingResponseUpdate> CreateResponseStreamingAsync(string userInputText, string previousResponseId = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        [System.Diagnostics.CodeAnalysis.ExperimentalAttribute("AAIP001")]
         public virtual System.ClientModel.CollectionResult<OpenAI.Responses.ResponseResult> GetProjectResponses(Azure.AI.Extensions.OpenAI.AgentReference agent = null, string conversationId = null, int? limit = default(int?), string order = null, string after = null, string before = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        [System.Diagnostics.CodeAnalysis.ExperimentalAttribute("AAIP001")]
         public virtual System.ClientModel.AsyncCollectionResult<OpenAI.Responses.ResponseResult> GetProjectResponsesAsync(Azure.AI.Extensions.OpenAI.AgentReference agent = null, string conversationId = null, int? limit = default(int?), string order = null, string after = null, string before = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        [System.Diagnostics.CodeAnalysis.ExperimentalAttribute("AAIP001")]
         public override System.ClientModel.ClientResult<OpenAI.Responses.ResponseResult> GetResponse(OpenAI.Responses.GetResponseOptions options, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        [System.Diagnostics.CodeAnalysis.ExperimentalAttribute("AAIP001")]
         public override System.ClientModel.ClientResult<OpenAI.Responses.ResponseResult> GetResponse(string responseId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        [System.Diagnostics.CodeAnalysis.ExperimentalAttribute("AAIP001")]
         public override System.Threading.Tasks.Task<System.ClientModel.ClientResult<OpenAI.Responses.ResponseResult>> GetResponseAsync(OpenAI.Responses.GetResponseOptions options, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        [System.Diagnostics.CodeAnalysis.ExperimentalAttribute("AAIP001")]
         public override System.Threading.Tasks.Task<System.ClientModel.ClientResult<OpenAI.Responses.ResponseResult>> GetResponseAsync(string responseId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
-    public partial class ProjectResponsesClientOptions : OpenAI.Responses.ResponsesClientOptions
+    public partial class ProjectResponsesClientOptions : Azure.AI.Extensions.OpenAI.ProjectOAIResponsesClientOptions
     {
         public ProjectResponsesClientOptions() { }
-        public string AgentName { get { throw null; } set { } }
-        public string ApiVersion { get { throw null; } set { } }
-        public static implicit operator Azure.AI.Extensions.OpenAI.ProjectResponsesClientOptions (Azure.AI.Extensions.OpenAI.ProjectOpenAIClientOptions source) { throw null; }
+        public static new implicit operator Azure.AI.Extensions.OpenAI.ProjectResponsesClientOptions (Azure.AI.Extensions.OpenAI.ProjectOpenAIClientOptions source) { throw null; }
     }
     public partial class ProjectVectorStoresClient : OpenAI.VectorStores.VectorStoreClient
     {
@@ -1302,8 +1568,13 @@ namespace Azure.AI.Extensions.OpenAI
         public static OpenAI.Responses.ResponseItemKind get_BingGroundingCallOutput() { throw null; }
         public static OpenAI.Responses.ResponseItemKind get_BrowserAutomationPreviewCall() { throw null; }
         public static OpenAI.Responses.ResponseItemKind get_BrowserAutomationPreviewCallOutput() { throw null; }
+        public static OpenAI.Responses.ResponseItemKind get_Compaction() { throw null; }
         public static OpenAI.Responses.ResponseItemKind get_FabricDataAgentPreviewCall() { throw null; }
         public static OpenAI.Responses.ResponseItemKind get_FabricDataAgentPreviewCallOutput() { throw null; }
+        public static OpenAI.Responses.ResponseItemKind get_FunctionShellCall() { throw null; }
+        public static OpenAI.Responses.ResponseItemKind get_FunctionShellCallOutput() { throw null; }
+        public static OpenAI.Responses.ResponseItemKind get_LocalShellCall() { throw null; }
+        public static OpenAI.Responses.ResponseItemKind get_LocalShellCallOutput() { throw null; }
         public static OpenAI.Responses.ResponseItemKind get_MemoryCommandPreviewCall() { throw null; }
         public static OpenAI.Responses.ResponseItemKind get_MemoryCommandPreviewCallOutput() { throw null; }
         public static OpenAI.Responses.ResponseItemKind get_MemorySearchCall() { throw null; }
@@ -1342,9 +1613,19 @@ namespace Azure.AI.Extensions.OpenAI
             [System.Runtime.CompilerServices.ExtensionMarkerAttribute("<M>$85D7243A15CC11DE156F995836A4C406")]
             public static OpenAI.Responses.ResponseItemKind BrowserAutomationPreviewCallOutput { [System.Runtime.CompilerServices.ExtensionMarkerAttribute("<M>$85D7243A15CC11DE156F995836A4C406")] get { throw null; } }
             [System.Runtime.CompilerServices.ExtensionMarkerAttribute("<M>$85D7243A15CC11DE156F995836A4C406")]
+            public static OpenAI.Responses.ResponseItemKind Compaction { [System.Runtime.CompilerServices.ExtensionMarkerAttribute("<M>$85D7243A15CC11DE156F995836A4C406")] get { throw null; } }
+            [System.Runtime.CompilerServices.ExtensionMarkerAttribute("<M>$85D7243A15CC11DE156F995836A4C406")]
             public static OpenAI.Responses.ResponseItemKind FabricDataAgentPreviewCall { [System.Runtime.CompilerServices.ExtensionMarkerAttribute("<M>$85D7243A15CC11DE156F995836A4C406")] get { throw null; } }
             [System.Runtime.CompilerServices.ExtensionMarkerAttribute("<M>$85D7243A15CC11DE156F995836A4C406")]
             public static OpenAI.Responses.ResponseItemKind FabricDataAgentPreviewCallOutput { [System.Runtime.CompilerServices.ExtensionMarkerAttribute("<M>$85D7243A15CC11DE156F995836A4C406")] get { throw null; } }
+            [System.Runtime.CompilerServices.ExtensionMarkerAttribute("<M>$85D7243A15CC11DE156F995836A4C406")]
+            public static OpenAI.Responses.ResponseItemKind FunctionShellCall { [System.Runtime.CompilerServices.ExtensionMarkerAttribute("<M>$85D7243A15CC11DE156F995836A4C406")] get { throw null; } }
+            [System.Runtime.CompilerServices.ExtensionMarkerAttribute("<M>$85D7243A15CC11DE156F995836A4C406")]
+            public static OpenAI.Responses.ResponseItemKind FunctionShellCallOutput { [System.Runtime.CompilerServices.ExtensionMarkerAttribute("<M>$85D7243A15CC11DE156F995836A4C406")] get { throw null; } }
+            [System.Runtime.CompilerServices.ExtensionMarkerAttribute("<M>$85D7243A15CC11DE156F995836A4C406")]
+            public static OpenAI.Responses.ResponseItemKind LocalShellCall { [System.Runtime.CompilerServices.ExtensionMarkerAttribute("<M>$85D7243A15CC11DE156F995836A4C406")] get { throw null; } }
+            [System.Runtime.CompilerServices.ExtensionMarkerAttribute("<M>$85D7243A15CC11DE156F995836A4C406")]
+            public static OpenAI.Responses.ResponseItemKind LocalShellCallOutput { [System.Runtime.CompilerServices.ExtensionMarkerAttribute("<M>$85D7243A15CC11DE156F995836A4C406")] get { throw null; } }
             [System.Runtime.CompilerServices.ExtensionMarkerAttribute("<M>$85D7243A15CC11DE156F995836A4C406")]
             public static OpenAI.Responses.ResponseItemKind MemoryCommandPreviewCall { [System.Runtime.CompilerServices.ExtensionMarkerAttribute("<M>$85D7243A15CC11DE156F995836A4C406")] get { throw null; } }
             [System.Runtime.CompilerServices.ExtensionMarkerAttribute("<M>$85D7243A15CC11DE156F995836A4C406")]
@@ -1593,6 +1874,37 @@ namespace Azure.AI.Extensions.OpenAI
 }
 namespace Azure.AI.Extensions.OpenAI.Internal
 {
+    public enum InputItemLocalShellToolCallOutputStatus
+    {
+        InProgress = 0,
+        Completed = 1,
+        Incomplete = 2,
+    }
+    public enum InputItemLocalShellToolCallStatus
+    {
+        InProgress = 0,
+        Completed = 1,
+        Incomplete = 2,
+    }
+    public partial class LocalShellExecAction : System.ClientModel.Primitives.IJsonModel<Azure.AI.Extensions.OpenAI.Internal.LocalShellExecAction>, System.ClientModel.Primitives.IPersistableModel<Azure.AI.Extensions.OpenAI.Internal.LocalShellExecAction>
+    {
+        internal LocalShellExecAction() { }
+        public System.Collections.Generic.IList<string> Command { get { throw null; } }
+        public System.Collections.Generic.IDictionary<string, string> Env { get { throw null; } }
+        public long? TimeoutMs { get { throw null; } }
+        public string Type { get { throw null; } }
+        public string User { get { throw null; } }
+        public string WorkingDirectory { get { throw null; } }
+        protected virtual Azure.AI.Extensions.OpenAI.Internal.LocalShellExecAction JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.AI.Extensions.OpenAI.Internal.LocalShellExecAction PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        Azure.AI.Extensions.OpenAI.Internal.LocalShellExecAction System.ClientModel.Primitives.IJsonModel<Azure.AI.Extensions.OpenAI.Internal.LocalShellExecAction>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.AI.Extensions.OpenAI.Internal.LocalShellExecAction>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.AI.Extensions.OpenAI.Internal.LocalShellExecAction System.ClientModel.Primitives.IPersistableModel<Azure.AI.Extensions.OpenAI.Internal.LocalShellExecAction>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.AI.Extensions.OpenAI.Internal.LocalShellExecAction>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.AI.Extensions.OpenAI.Internal.LocalShellExecAction>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
     public partial class MCPToolRequireApproval : System.ClientModel.Primitives.IJsonModel<Azure.AI.Extensions.OpenAI.Internal.MCPToolRequireApproval>, System.ClientModel.Primitives.IPersistableModel<Azure.AI.Extensions.OpenAI.Internal.MCPToolRequireApproval>
     {
         public MCPToolRequireApproval() { }
@@ -1607,6 +1919,58 @@ namespace Azure.AI.Extensions.OpenAI.Internal
         Azure.AI.Extensions.OpenAI.Internal.MCPToolRequireApproval System.ClientModel.Primitives.IPersistableModel<Azure.AI.Extensions.OpenAI.Internal.MCPToolRequireApproval>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         string System.ClientModel.Primitives.IPersistableModel<Azure.AI.Extensions.OpenAI.Internal.MCPToolRequireApproval>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.AI.Extensions.OpenAI.Internal.MCPToolRequireApproval>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
+    public partial class OutputItemCompactionBody : OpenAI.Responses.ResponseItem, System.ClientModel.Primitives.IJsonModel<Azure.AI.Extensions.OpenAI.Internal.OutputItemCompactionBody>, System.ClientModel.Primitives.IPersistableModel<Azure.AI.Extensions.OpenAI.Internal.OutputItemCompactionBody>
+    {
+        internal OutputItemCompactionBody() : base (default(OpenAI.Responses.ResponseItemKind)) { }
+        public string CreatedBy { get { throw null; } }
+        public string EncryptedContent { get { throw null; } }
+        protected override OpenAI.Responses.ResponseItem JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected override OpenAI.Responses.ResponseItem PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected override System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        Azure.AI.Extensions.OpenAI.Internal.OutputItemCompactionBody System.ClientModel.Primitives.IJsonModel<Azure.AI.Extensions.OpenAI.Internal.OutputItemCompactionBody>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.AI.Extensions.OpenAI.Internal.OutputItemCompactionBody>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.AI.Extensions.OpenAI.Internal.OutputItemCompactionBody System.ClientModel.Primitives.IPersistableModel<Azure.AI.Extensions.OpenAI.Internal.OutputItemCompactionBody>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.AI.Extensions.OpenAI.Internal.OutputItemCompactionBody>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.AI.Extensions.OpenAI.Internal.OutputItemCompactionBody>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
+    public partial class OutputItemLocalShellToolCall : OpenAI.Responses.ResponseItem, System.ClientModel.Primitives.IJsonModel<Azure.AI.Extensions.OpenAI.Internal.OutputItemLocalShellToolCall>, System.ClientModel.Primitives.IPersistableModel<Azure.AI.Extensions.OpenAI.Internal.OutputItemLocalShellToolCall>
+    {
+        internal OutputItemLocalShellToolCall() : base (default(OpenAI.Responses.ResponseItemKind)) { }
+        public Azure.AI.Extensions.OpenAI.Internal.LocalShellExecAction Action { get { throw null; } }
+        public string CallId { get { throw null; } }
+        public Azure.AI.Extensions.OpenAI.Internal.InputItemLocalShellToolCallStatus Status { get { throw null; } }
+        protected override OpenAI.Responses.ResponseItem JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected override OpenAI.Responses.ResponseItem PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected override System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        Azure.AI.Extensions.OpenAI.Internal.OutputItemLocalShellToolCall System.ClientModel.Primitives.IJsonModel<Azure.AI.Extensions.OpenAI.Internal.OutputItemLocalShellToolCall>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.AI.Extensions.OpenAI.Internal.OutputItemLocalShellToolCall>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.AI.Extensions.OpenAI.Internal.OutputItemLocalShellToolCall System.ClientModel.Primitives.IPersistableModel<Azure.AI.Extensions.OpenAI.Internal.OutputItemLocalShellToolCall>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.AI.Extensions.OpenAI.Internal.OutputItemLocalShellToolCall>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.AI.Extensions.OpenAI.Internal.OutputItemLocalShellToolCall>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
+    public partial class OutputItemLocalShellToolCallOutput : OpenAI.Responses.ResponseItem, System.ClientModel.Primitives.IJsonModel<Azure.AI.Extensions.OpenAI.Internal.OutputItemLocalShellToolCallOutput>, System.ClientModel.Primitives.IPersistableModel<Azure.AI.Extensions.OpenAI.Internal.OutputItemLocalShellToolCallOutput>
+    {
+        internal OutputItemLocalShellToolCallOutput() : base (default(OpenAI.Responses.ResponseItemKind)) { }
+        public string Output { get { throw null; } }
+        public Azure.AI.Extensions.OpenAI.Internal.InputItemLocalShellToolCallOutputStatus? Status { get { throw null; } }
+        protected override OpenAI.Responses.ResponseItem JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected override OpenAI.Responses.ResponseItem PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected override System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        Azure.AI.Extensions.OpenAI.Internal.OutputItemLocalShellToolCallOutput System.ClientModel.Primitives.IJsonModel<Azure.AI.Extensions.OpenAI.Internal.OutputItemLocalShellToolCallOutput>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.AI.Extensions.OpenAI.Internal.OutputItemLocalShellToolCallOutput>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.AI.Extensions.OpenAI.Internal.OutputItemLocalShellToolCallOutput System.ClientModel.Primitives.IPersistableModel<Azure.AI.Extensions.OpenAI.Internal.OutputItemLocalShellToolCallOutput>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.AI.Extensions.OpenAI.Internal.OutputItemLocalShellToolCallOutput>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.AI.Extensions.OpenAI.Internal.OutputItemLocalShellToolCallOutput>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
+    public abstract partial class ResponseItem : OpenAI.Responses.ResponseItem
+    {
+        protected ResponseItem(OpenAI.Responses.ResponseItemKind kind) : base (default(OpenAI.Responses.ResponseItemKind)) { }
+        public Azure.AI.Extensions.OpenAI.AgentReference AgentReference { get { throw null; } }
+        public string ResponseId { get { throw null; } }
     }
 }
 namespace Azure.AI.Projects

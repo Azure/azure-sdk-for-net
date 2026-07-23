@@ -28,7 +28,7 @@ public partial class FabricDataAgentToolCall
     }
 
     /// <summary> Initializes a new instance of <see cref="FabricDataAgentToolCall"/> for deserialization. </summary>
-    internal FabricDataAgentToolCall(): base(ResponseItemKind.FabricDataAgentPreviewCall)
+    internal FabricDataAgentToolCall() : base(ResponseItemKind.FabricDataAgentPreviewCall)
     {
     }
 
@@ -46,7 +46,6 @@ public partial class FabricDataAgentToolCall
     /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
     internal FabricDataAgentToolCall(ResponseItemKind @type, string id, AgentReference agentReference, string responseId, string callId, string arguments, ToolCallStatus status, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(@type)
     {
-        this.ApplyAgentAttribution(agentReference, responseId, additionalBinaryDataProperties);
         CallId = callId;
         Arguments = arguments;
         Status = status;

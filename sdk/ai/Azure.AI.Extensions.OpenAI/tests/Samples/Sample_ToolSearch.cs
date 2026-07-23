@@ -49,7 +49,7 @@ public class Sample_ToolSearch : ProjectsOpenAITestBase
                 CodeInterpreterToolContainerConfiguration.CreateAutomaticContainerConfiguration([])
             )
         };
-        ToolSearchToolboxTool searchTool = new()
+        ToolboxSearchPreviewToolboxTool searchTool = new()
         {
             Name = "ToolBoxSearch",
             Description = "Search for the toolboxes"
@@ -165,7 +165,7 @@ public class Sample_ToolSearch : ProjectsOpenAITestBase
                 CodeInterpreterToolContainerConfiguration.CreateAutomaticContainerConfiguration([])
             )
         };
-        ToolSearchToolboxTool searchTool = new()
+        ToolboxSearchPreviewToolboxTool searchTool = new()
         {
             Name = "ToolBoxSearch",
             Description = "Search for the toolboxes"

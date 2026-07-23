@@ -9,7 +9,6 @@ using OpenAI;
 using OpenAI.Responses;
 
 namespace Azure.AI.Extensions.OpenAI.Tests;
-#pragma warning disable AAIP001
 
 [Category("Smoke")]
 [Parallelizable(ParallelScope.All)]
@@ -143,4 +142,3 @@ public class StreamingUpdateNormalizationTests
             "Echoed tools on a completed update's response should also be normalized.");
     }
 }
-#pragma warning restore AAIP01

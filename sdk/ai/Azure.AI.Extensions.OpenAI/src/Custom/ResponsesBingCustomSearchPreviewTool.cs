@@ -15,7 +15,7 @@ namespace Azure.AI.Extensions.OpenAI
         // constructor). We add the chain here and supply the "bing_custom_search_preview"
         // discriminator so the tool kind is set correctly during deserialization.
         /// <summary> Initializes a new instance of <see cref="BingCustomSearchPreviewTool"/> for deserialization. </summary>
-        internal BingCustomSearchPreviewTool(): base(ResponseToolKind.BingCustomSearchPreview)
+        internal BingCustomSearchPreviewTool() : base(ResponseToolKind.BingCustomSearchPreview)
         {
         }
     }

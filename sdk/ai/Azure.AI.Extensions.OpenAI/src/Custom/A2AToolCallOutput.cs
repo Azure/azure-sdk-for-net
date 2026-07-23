@@ -41,7 +41,7 @@ public partial class A2AToolCallOutput
     }
 
     /// <summary> Initializes a new instance of <see cref="A2AToolCallOutput"/> for deserialization. </summary>
-    internal A2AToolCallOutput(): base(ResponseItemKind.A2APreviewCallOutput)
+    internal A2AToolCallOutput() : base(ResponseItemKind.A2APreviewCallOutput)
     {
     }
 
@@ -60,7 +60,6 @@ public partial class A2AToolCallOutput
     /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
     internal A2AToolCallOutput(ResponseItemKind @type, string id, AgentReference agentReference, string responseId, string callId, string name, BinaryData output, ToolCallStatus status, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(@type)
     {
-        this.ApplyAgentAttribution(agentReference, responseId, additionalBinaryDataProperties);
         CallId = callId;
         Name = name;
         Output = output;

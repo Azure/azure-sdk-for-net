@@ -8,7 +8,9 @@ namespace Azure.AI.Extensions.OpenAI;
 [CodeGenType("A2APreviewTool")] public partial class A2APreviewTool { }
 [CodeGenType("AzureFunctionBinding")] public partial class AzureFunctionBinding { }
 [CodeGenType("AzureFunctionDefinition")] public partial class AzureFunctionDefinition { }
-[CodeGenType("AzureFunctionDefinitionFunction")] public partial class AzureFunctionDefinitionFunction {
+[CodeGenType("AzureFunctionDefinitionFunction")]
+public partial class AzureFunctionDefinitionFunction
+{
     /// <summary> The JSON-encoded parameter schema for the Azure Function. </summary>
     // Customization: retain IDictionary<string, BinaryData> despite Record<unknown> basis
     [CodeGenMember("parameters")]

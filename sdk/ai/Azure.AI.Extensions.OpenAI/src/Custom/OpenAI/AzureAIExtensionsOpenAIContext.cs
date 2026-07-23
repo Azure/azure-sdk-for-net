@@ -2,8 +2,8 @@
 // Licensed under the MIT License.
 
 using System;
-using System.Collections.Generic;
 using System.ClientModel.Primitives;
+using System.Collections.Generic;
 using OpenAI.Responses;
 
 namespace Azure.AI.Extensions.OpenAI
@@ -22,6 +22,7 @@ namespace Azure.AI.Extensions.OpenAI
             factories[typeof(ResponseItemKind)] = static () => new ResponseItemKindTypeBuilder();
             factories[typeof(ResponseTool)] = static () => new AzureResponseToolTypeBuilder();
             factories[typeof(ResponseToolKind)] = static () => new ResponseToolKindTypeBuilder();
+            factories[typeof(ProjectConversation)] = static () => new ProjectConversationTypeBuilder();
         }
     }
 }

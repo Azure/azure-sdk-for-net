@@ -9,4 +9,3 @@ namespace Azure.AI.Extensions.OpenAI;
 [CodeGenType("WorkflowActionOutputItemStatus")] public readonly partial struct AgentWorkflowPreviewActionStatus { }
 [CodeGenType("ItemFieldComputerToolCallOutputStatus")] internal readonly partial struct ItemFieldComputerToolCallOutputStatus { }
 [CodeGenType("ItemFieldFunctionToolCallOutputStatus")] internal readonly partial struct ItemFieldFunctionToolCallOutputStatus { }
-[CodeGenType("ItemLocalShellToolCallOutputStatus ")] internal readonly partial struct ItemLocalShellToolCallOutputStatus { }

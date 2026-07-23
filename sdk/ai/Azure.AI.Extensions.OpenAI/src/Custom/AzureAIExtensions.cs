@@ -5,20 +5,18 @@ using System;
 using System.ClientModel;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
-using System.Diagnostics.CodeAnalysis;
 using System.IO;
 using System.Text;
 using System.Text.Json;
 using System.Text.Json.Nodes;
 using System.Threading;
 using System.Threading.Tasks;
-using OpenAI.Conversations;
 using OpenAI.Files;
 using OpenAI.Responses;
 
 namespace Azure.AI.Extensions.OpenAI;
 
-//#pragma warning disable SCME0001
+#pragma warning disable SCME0001
 
 /// <summary>
 /// The class containing various extension methods.
@@ -39,14 +37,12 @@ public static partial class AzureAIExtensions
     // package can strongly type (per UnknownAzureResponseItem's dispatch table) and it is not already that concrete
     // type. Keying off the known-discriminator set — rather than matching OpenAI's internal opaque type name — means
     // an upstream rename of that fallback cannot silently disable normalization, and it is naturally idempotent.
-    [Experimental("AAIP001")]
     private static bool NeedsAgentItemNormalization(ResponseItem item)
         => item is not null
             && UnknownAzureResponseItem.TryGetAzureItemType(item.Kind, out Type azureType)
             && !azureType.IsInstanceOfType(item);
 
     // Returns the strongly-typed Azure subtype for an item that needs it, or the item unchanged otherwise.
-    [Experimental("AAIP001")]
     private static ResponseItem NormalizeAgentResponseItem(ResponseItem item)
         => NeedsAgentItemNormalization(item) ? item.AsAgentResponseItem() : item;
 
@@ -77,7 +73,6 @@ public static partial class AzureAIExtensions
     /// them. This is a temporary client-side bridge until nested-item deserialization is handled
     /// by the serialization proxy.
     /// </summary>
-    [Experimental("AAIP001")]
     internal static void NormalizeAgentOutputItems(ResponseResult response)
     {
         if (response is null)
@@ -135,7 +130,6 @@ public static partial class AzureAIExtensions
     /// Normalizes both the output items and the echoed tool definitions of a response, so callers
     /// receive strongly-typed Azure subtypes across the whole result. Null-safe.
     /// </summary>
-    [Experimental("AAIP001")]
     internal static void NormalizeAgentResponse(ResponseResult response)
     {
         NormalizeAgentOutputItems(response);
@@ -152,7 +146,6 @@ public static partial class AzureAIExtensions
     /// say, a failed update must still see typed items. Other update kinds pass through unchanged.
     /// Temporary client-side bridge, mirroring <see cref="NormalizeAgentResponse"/>.
     /// </summary>
-    [Experimental("AAIP001")]
     internal static StreamingResponseUpdate NormalizeStreamingUpdate(StreamingResponseUpdate update)
     {
         switch (update)
@@ -186,96 +179,14 @@ public static partial class AzureAIExtensions
         return update;
     }
 
-    // ResponseItem
-    extension(ResponseItem item)
-    {
-        /// <summary> Gets the agent that produced this response item, when reported by the service. </summary>
-        [Experimental("SCME0001")]
-        public AgentReference AgentReference
-        {
-            get => item.Patch.GetJsonModelEx<AgentReference>("$.agent_reference"u8);
-        }
-
-        /// <summary> Gets the ID of the response on which this item was created, when reported by the service. </summary>
-        [Experimental("SCME0001")]
-        public string ResponseId
-        {
-            get => item.Patch.GetStringEx("$.response_id"u8);
-        }
-    }
-
     // ResponseResult
     extension(ResponseResult response)
     {
         /// <summary> Gets the agent associated with the response result. </summary>
-        [Experimental("SCME0001")]
-        public AgentReference Agent
-        {
-            get => response.Patch.GetJsonModelEx<AgentReference>("$.agent_reference"u8);
-        }
+        public AgentReference Agent => response.Patch.GetJsonModelEx<AgentReference>("$.agent_reference"u8);
 
         /// <summary> Gets the agent conversation ID associated with the response result. </summary>
-        [Experimental("SCME0001")]
-        public string AgentConversationId
-        {
-            get => response.Patch.GetStringEx("$.conversation.id"u8);
-        }
-    }
-
-    // ResponsesClient
-    /// <summary> Creates a response for an existing project conversation and agent. </summary>
-    /// <param name="responseClient"> The response client used to send the request. </param>
-    /// <param name="conversation"> The project conversation to continue. </param>
-    /// <param name="agentRef"> The agent that should create the response. </param>
-    /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-    /// <returns> The created response result. </returns>
-    [Experimental("AAIP001")]
-    public static ClientResult<ResponseResult> CreateResponse(this ResponsesClient responseClient, ConversationResource conversation, AgentReference agentRef, CancellationToken cancellationToken = default)
-    {
-        using BinaryContent content = RemoveItems(conversation: conversation, agentRef: agentRef);
-        ClientResult protocolResult = responseClient.CreateResponse(
-            content,
-            cancellationToken.ToRequestOptions() ?? new RequestOptions()
-        );
-        ResponseResult convenienceValue = (ResponseResult)protocolResult;
-        NormalizeAgentResponse(convenienceValue);
-        return ClientResult.FromValue(convenienceValue, protocolResult.GetRawResponse());
-    }
-
-    /// <summary> Asynchronously creates a response for an existing project conversation and agent. </summary>
-    /// <param name="responseClient"> The response client used to send the request. </param>
-    /// <param name="conversation"> The project conversation to continue. </param>
-    /// <param name="agentRef"> The agent that should create the response. </param>
-    /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-    /// <returns> The created response result. </returns>
-    [Experimental("AAIP001")]
-    public static async Task<ClientResult<ResponseResult>> CreateResponseAsync(this ResponsesClient responseClient, ConversationResource conversation, AgentReference agentRef, CancellationToken cancellationToken = default)
-    {
-        using BinaryContent content = RemoveItems(conversation: conversation, agentRef: agentRef);
-        ClientResult protocolResult = await responseClient.CreateResponseAsync(
-            content,
-            cancellationToken.ToRequestOptions() ?? new RequestOptions()
-        ).ConfigureAwait(false);
-        ResponseResult convenienceValue = (ResponseResult)protocolResult;
-        NormalizeAgentResponse(convenienceValue);
-        return ClientResult.FromValue(convenienceValue, protocolResult.GetRawResponse());
-    }
-
-    [Experimental("SCME0001")]
-    private static BinaryContent RemoveItems(ConversationResource conversation, AgentReference agentRef)
-    {
-        CreateResponseOptions responseOptions = new()
-        {
-            Agent = agentRef,
-            AgentConversationId = conversation.Id,
-        };
-        using BinaryContent contentBytes = BinaryContent.Create(responseOptions, ModelSerializationExtensions.WireOptions);
-        using var stream = new MemoryStream();
-        contentBytes.WriteTo(stream);
-        string json = Encoding.UTF8.GetString(stream.ToArray());
-        JsonObject options = JsonObject.Parse(json).AsObject();
-        options.Remove("input");
-        return BinaryContent.CreateJson(options.ToJsonString());
+        public string AgentConversationId => response.Patch.GetStringEx("$.conversation.id"u8);
     }
 
     /// <summary> Gets the Azure file status value recorded on an OpenAI file. </summary>
@@ -302,7 +213,6 @@ public static partial class AzureAIExtensions
     extension(CreateResponseOptions options)
     {
         /// <summary> Gets or sets the agent associated with the response options. </summary>
-        [Experimental("SCME0001")]
         public AgentReference Agent
         {
             get => options.Patch.GetJsonModelEx<AgentReference>("$.agent_reference"u8);
@@ -310,7 +220,6 @@ public static partial class AzureAIExtensions
         }
 
         /// <summary> Gets or sets the agent conversation ID associated with the response options. </summary>
-        [Experimental("SCME0001")]
         public string AgentConversationId
         {
             get => options.Patch.GetStringEx("$.conversation.id"u8);

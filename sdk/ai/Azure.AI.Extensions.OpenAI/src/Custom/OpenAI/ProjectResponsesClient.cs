@@ -5,7 +5,7 @@ using System;
 using System.ClientModel;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
-using System.Diagnostics.CodeAnalysis;
+using System.ComponentModel;
 using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
@@ -30,13 +30,14 @@ public partial class ProjectResponsesClient : ResponsesClient
     /// </summary>
     /// <remarks>
     /// This constructor automatically constructs the base URI for requests from the supplied <paramref name="projectEndpoint"/>
-    /// value. To use a base URI directly, use the alternative constructor and set
-    /// <see cref="ResponsesClientOptions.Endpoint"/> on the supplied options.
+    /// value. To use a base URI directly, use the alternative constructor and set <see cref="OpenAIClientOptions.Endpoint"/> on the
+    /// supplied options.
     /// </remarks>
     /// <param name="projectEndpoint"> The Azure AI project endpoint. </param>
     /// <param name="tokenProvider"> The token provider used to authenticate requests. </param>
     /// <param name="options"> The options used to configure the client. </param>
-    public ProjectResponsesClient(Uri projectEndpoint, AuthenticationTokenProvider tokenProvider, ProjectResponsesClientOptions options)
+    [EditorBrowsable(EditorBrowsableState.Never)]
+    public ProjectResponsesClient(Uri projectEndpoint, AuthenticationTokenProvider tokenProvider, ProjectResponsesClientOptions options = null)
         : this(projectEndpoint, tokenProvider, defaultAgent: null, defaultConversationId: null, options)
     { }
 
@@ -48,7 +49,59 @@ public partial class ProjectResponsesClient : ResponsesClient
     /// <param name="defaultAgent"> The default agent used for response requests. </param>
     /// <param name="defaultConversationId"> The default conversation ID used for response requests. </param>
     /// <param name="options"> The options used to configure the client. </param>
-    public ProjectResponsesClient(Uri projectEndpoint, AuthenticationTokenProvider tokenProvider, AgentReference defaultAgent, string defaultConversationId, ProjectResponsesClientOptions options)
+    [EditorBrowsable(EditorBrowsableState.Never)]
+    public ProjectResponsesClient(Uri projectEndpoint, AuthenticationTokenProvider tokenProvider, AgentReference defaultAgent, string defaultConversationId = null, ProjectResponsesClientOptions options = null)
+        : this(projectEndpoint, tokenProvider, defaultAgent, defaultConversationId, (ProjectOAIResponsesClientOptions)options)
+    { }
+
+    /// <summary>
+    /// Creates a new instance of <see cref="ProjectResponsesClient"/>.
+    /// </summary>
+    /// <remarks>
+    /// This constructor directly uses the supplied value from the provided <see cref="OpenAIClientOptions.Endpoint"/>
+    /// and performs no additional automatic resolution.
+    /// </remarks>
+    /// <param name="tokenProvider"> The token provider used to authenticate requests. </param>
+    /// <param name="options"> The options used to configure the client. </param>
+    [EditorBrowsable(EditorBrowsableState.Never)]
+    public ProjectResponsesClient(AuthenticationTokenProvider tokenProvider, ProjectResponsesClientOptions options)
+        : this(projectEndpoint: null, tokenProvider, defaultAgent: null, defaultConversationId: null, options)
+    { }
+
+    /// <summary> Initializes a new instance of <see cref="ProjectResponsesClient"/>. </summary>
+    /// <param name="tokenProvider"> The token provider used to authenticate requests. </param>
+    /// <param name="options"> The options used to configure the client. </param>
+    /// <param name="defaultAgent"> The default agent used for response requests. </param>
+    /// <param name="defaultConversationId"> The default conversation ID used for response requests. </param>
+    [EditorBrowsable(EditorBrowsableState.Never)]
+    public ProjectResponsesClient(AuthenticationTokenProvider tokenProvider, ProjectResponsesClientOptions options = null, AgentReference defaultAgent = null, string defaultConversationId = null)
+        : this(projectEndpoint: null, tokenProvider, defaultAgent, defaultConversationId, options)
+    { }
+
+    /// <summary>
+    /// Creates a new instance of <see cref="ProjectResponsesClient"/>.
+    /// </summary>
+    /// <remarks>
+    /// This constructor automatically constructs the base URI for requests from the supplied <paramref name="projectEndpoint"/>
+    /// value. To use a base URI directly, use the alternative constructor and set
+    /// <see cref="ResponsesClientOptions.Endpoint"/> on the supplied options.
+    /// </remarks>
+    /// <param name="projectEndpoint"> The Azure AI project endpoint. </param>
+    /// <param name="tokenProvider"> The token provider used to authenticate requests. </param>
+    /// <param name="options"> The options used to configure the client. </param>
+    public ProjectResponsesClient(Uri projectEndpoint, AuthenticationTokenProvider tokenProvider, ProjectOAIResponsesClientOptions options)
+        : this(projectEndpoint, tokenProvider, defaultAgent: null, defaultConversationId: null, options)
+    { }
+
+    /// <summary>
+    /// Creates a new instance of <see cref="ProjectResponsesClient"/> with default agent settings.
+    /// </summary>
+    /// <param name="projectEndpoint"> The Azure AI project endpoint. </param>
+    /// <param name="tokenProvider"> The token provider used to authenticate requests. </param>
+    /// <param name="defaultAgent"> The default agent used for response requests. </param>
+    /// <param name="defaultConversationId"> The default conversation ID used for response requests. </param>
+    /// <param name="options"> The options used to configure the client. </param>
+    public ProjectResponsesClient(Uri projectEndpoint, AuthenticationTokenProvider tokenProvider, AgentReference defaultAgent, string defaultConversationId, ProjectOAIResponsesClientOptions options)
         : this(
               pipeline: CreatePipeline(
                   CreateAuthenticationPolicy(
@@ -69,7 +122,7 @@ public partial class ProjectResponsesClient : ResponsesClient
     /// </remarks>
     /// <param name="tokenProvider"> The token provider used to authenticate requests. </param>
     /// <param name="options"> The options used to configure the client. </param>
-    public ProjectResponsesClient(AuthenticationTokenProvider tokenProvider, ProjectResponsesClientOptions options)
+    public ProjectResponsesClient(AuthenticationTokenProvider tokenProvider, ProjectOAIResponsesClientOptions options)
         : this(projectEndpoint: null, tokenProvider, defaultAgent: null, defaultConversationId: null, options)
     { }
 
@@ -78,7 +131,7 @@ public partial class ProjectResponsesClient : ResponsesClient
     /// <param name="options"> The options used to configure the client. </param>
     /// <param name="defaultAgent"> The default agent used for response requests. </param>
     /// <param name="defaultConversationId"> The default conversation ID used for response requests. </param>
-    public ProjectResponsesClient(AuthenticationTokenProvider tokenProvider, ProjectResponsesClientOptions options, AgentReference defaultAgent = null, string defaultConversationId = null)
+    public ProjectResponsesClient(AuthenticationTokenProvider tokenProvider, ProjectOAIResponsesClientOptions options, AgentReference defaultAgent = null, string defaultConversationId = null)
         : this(projectEndpoint: null, tokenProvider, defaultAgent, defaultConversationId, options)
     { }
 
@@ -92,7 +145,7 @@ public partial class ProjectResponsesClient : ResponsesClient
     /// <param name="projectEndpoint"> The Azure AI project endpoint. </param>
     /// <param name="tokenProvider"> The token provider used to authenticate requests. </param>
     public ProjectResponsesClient(Uri projectEndpoint, AuthenticationTokenProvider tokenProvider)
-        : this(projectEndpoint, tokenProvider, (ProjectResponsesClientOptions)null)
+        : this(projectEndpoint, tokenProvider, (ProjectOAIResponsesClientOptions)null)
     { }
 
     /// <summary>
@@ -104,7 +157,7 @@ public partial class ProjectResponsesClient : ResponsesClient
     /// <param name="defaultAgent"> The default agent used for response requests. </param>
     /// <param name="defaultConversationId"> The default conversation ID used for response requests. </param>
     public ProjectResponsesClient(Uri projectEndpoint, AuthenticationTokenProvider tokenProvider, AgentReference defaultAgent, string defaultConversationId = null)
-        : this(projectEndpoint, tokenProvider, defaultAgent, defaultConversationId, (ProjectResponsesClientOptions)null)
+        : this(projectEndpoint, tokenProvider, defaultAgent, defaultConversationId, (ProjectOAIResponsesClientOptions)null)
     { }
 
     /// <summary>
@@ -112,7 +165,7 @@ public partial class ProjectResponsesClient : ResponsesClient
     /// </summary>
     /// <param name="tokenProvider"> The token provider used to authenticate requests. </param>
     public ProjectResponsesClient(AuthenticationTokenProvider tokenProvider)
-        : this(tokenProvider, (ProjectResponsesClientOptions)null)
+        : this(tokenProvider, (ProjectOAIResponsesClientOptions)null)
     { }
 
     /// <summary>
@@ -122,10 +175,10 @@ public partial class ProjectResponsesClient : ResponsesClient
     /// <param name="defaultAgent"> The default agent used for response requests. </param>
     /// <param name="defaultConversationId"> The default conversation ID used for response requests. </param>
     public ProjectResponsesClient(AuthenticationTokenProvider tokenProvider, AgentReference defaultAgent, string defaultConversationId = null)
-        : this(tokenProvider, (ProjectResponsesClientOptions)null, defaultAgent, defaultConversationId)
+        : this(tokenProvider, (ProjectOAIResponsesClientOptions)null, defaultAgent, defaultConversationId)
     { }
 
-    internal ProjectResponsesClient(ClientPipeline pipeline, ProjectResponsesClientOptions options, AgentReference defaultAgent, string defaultConversationId)
+    internal ProjectResponsesClient(ClientPipeline pipeline, ProjectOAIResponsesClientOptions options, AgentReference defaultAgent, string defaultConversationId)
         : base(pipeline, options)
     {
         if (defaultAgent?.Name?.ToLowerInvariant()?.StartsWith("model:") == true)
@@ -148,7 +201,6 @@ public partial class ProjectResponsesClient : ResponsesClient
     /// <param name="options"> The options used to create the response. </param>
     /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
     /// <returns> The created response result. </returns>
-    [Experimental("AAIP001")]
     public override ClientResult<ResponseResult> CreateResponse(CreateResponseOptions options, CancellationToken cancellationToken = default)
     {
         Argument.AssertNotNull(options, nameof(options));
@@ -184,7 +236,6 @@ public partial class ProjectResponsesClient : ResponsesClient
     /// <param name="previousResponseId"> The ID of the previous response to continue. </param>
     /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
     /// <returns> The created response result. </returns>
-    [Experimental("AAIP001")]
     public override ClientResult<ResponseResult> CreateResponse(string model, IEnumerable<ResponseItem> inputItems, string previousResponseId = null, CancellationToken cancellationToken = default)
     {
         Argument.AssertNotNull(inputItems, nameof(inputItems));
@@ -219,7 +270,6 @@ public partial class ProjectResponsesClient : ResponsesClient
     /// <param name="previousResponseId"> The ID of the previous response to continue. </param>
     /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
     /// <returns> The created response result. </returns>
-    [Experimental("AAIP001")]
     public override ClientResult<ResponseResult> CreateResponse(string model, string userInputText, string previousResponseId = null, CancellationToken cancellationToken = default)
     {
         Argument.AssertNotNullOrEmpty(userInputText, nameof(userInputText));
@@ -249,7 +299,6 @@ public partial class ProjectResponsesClient : ResponsesClient
     /// <param name="options"> The options used to create the response. </param>
     /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
     /// <returns> The created response result. </returns>
-    [Experimental("AAIP001")]
     public override async Task<ClientResult<ResponseResult>> CreateResponseAsync(CreateResponseOptions options, CancellationToken cancellationToken = default)
     {
         Argument.AssertNotNull(options, nameof(options));
@@ -285,7 +334,6 @@ public partial class ProjectResponsesClient : ResponsesClient
     /// <param name="previousResponseId"> The ID of the previous response to continue. </param>
     /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
     /// <returns> The created response result. </returns>
-    [Experimental("AAIP001")]
     public override async Task<ClientResult<ResponseResult>> CreateResponseAsync(string model, IEnumerable<ResponseItem> inputItems, string previousResponseId = null, CancellationToken cancellationToken = default)
     {
         Argument.AssertNotNull(inputItems, nameof(inputItems));
@@ -330,7 +378,6 @@ public partial class ProjectResponsesClient : ResponsesClient
     /// <param name="previousResponseId"> The ID of the previous response to continue. </param>
     /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
     /// <returns> The created response result. </returns>
-    [Experimental("AAIP001")]
     public async override Task<ClientResult<ResponseResult>> CreateResponseAsync(string model, string userInputText, string previousResponseId = null, CancellationToken cancellationToken = default)
     {
         Argument.AssertNotNullOrEmpty(userInputText, nameof(userInputText));
@@ -550,7 +597,6 @@ public partial class ProjectResponsesClient : ResponsesClient
     /// <param name="before"> The response ID before which results should be returned. </param>
     /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
     /// <returns> The project responses. </returns>
-    [Experimental("AAIP001")]
     public virtual CollectionResult<ResponseResult> GetProjectResponses(AgentReference agent = null, string conversationId = null, int? limit = default, string order = null, string after = default, string before = default, CancellationToken cancellationToken = default)
     {
         Dictionary<string, string> extraQueryForProtocol = new()
@@ -586,7 +632,6 @@ public partial class ProjectResponsesClient : ResponsesClient
     /// <param name="before"> The response ID before which results should be returned. </param>
     /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
     /// <returns> The project responses. </returns>
-    [Experimental("AAIP001")]
     public virtual AsyncCollectionResult<ResponseResult> GetProjectResponsesAsync(AgentReference agent = null, string conversationId = null, int? limit = default, string order = null, string after = default, string before = default, CancellationToken cancellationToken = default)
     {
         Dictionary<string, string> extraQueryForProtocol = new()
@@ -617,7 +662,6 @@ public partial class ProjectResponsesClient : ResponsesClient
     /// <param name="options"> The options identifying the response to retrieve. </param>
     /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
     /// <returns> The retrieved response result. </returns>
-    [Experimental("AAIP001")]
     public override ClientResult<ResponseResult> GetResponse(GetResponseOptions options, CancellationToken cancellationToken = default)
     {
         var result = base.GetResponse(options, cancellationToken);
@@ -629,7 +673,6 @@ public partial class ProjectResponsesClient : ResponsesClient
     /// <param name="options"> The options identifying the response to retrieve. </param>
     /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
     /// <returns> The retrieved response result. </returns>
-    [Experimental("AAIP001")]
     public override async Task<ClientResult<ResponseResult>> GetResponseAsync(GetResponseOptions options, CancellationToken cancellationToken = default)
     {
         var result = await base.GetResponseAsync(options, cancellationToken).ConfigureAwait(false);
@@ -641,7 +684,6 @@ public partial class ProjectResponsesClient : ResponsesClient
     /// <param name="responseId"> The ID of the response to retrieve. </param>
     /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
     /// <returns> The retrieved response result. </returns>
-    [Experimental("AAIP001")]
     public override ClientResult<ResponseResult> GetResponse(string responseId, CancellationToken cancellationToken = default)
     {
         var result = base.GetResponse(responseId, cancellationToken);
@@ -653,7 +695,6 @@ public partial class ProjectResponsesClient : ResponsesClient
     /// <param name="responseId"> The ID of the response to retrieve. </param>
     /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
     /// <returns> The retrieved response result. </returns>
-    [Experimental("AAIP001")]
     public override async Task<ClientResult<ResponseResult>> GetResponseAsync(string responseId, CancellationToken cancellationToken = default)
     {
         var result = await base.GetResponseAsync(responseId, cancellationToken).ConfigureAwait(false);
@@ -681,7 +722,6 @@ public partial class ProjectResponsesClient : ResponsesClient
         }
     }
 
-    [Experimental("AAIP001")]
     private static ResponseResult DeserializeResponseResult(JsonElement element, ModelReaderWriterOptions options)
     {
         ResponseResult result = ModelReaderWriter.Read<ResponseResult>(
@@ -692,9 +732,9 @@ public partial class ProjectResponsesClient : ResponsesClient
         return result;
     }
 
-    internal static ClientPipeline CreatePipeline(AuthenticationPolicy authenticationPolicy, ProjectResponsesClientOptions options)
+    internal static ClientPipeline CreatePipeline(AuthenticationPolicy authenticationPolicy, ProjectOAIResponsesClientOptions options)
     {
-        options ??= new ProjectResponsesClientOptions();
+        options ??= new ProjectOAIResponsesClientOptions();
 
         TelemetryDetails telemetryDetails = new(typeof(OpenAIClient).Assembly, default);
         string prefix = "AIProjectClient";
@@ -715,10 +755,10 @@ public partial class ProjectResponsesClient : ResponsesClient
         return ClientPipeline.Create(options: options, perCallPolicies: [], perTryPolicies: [authenticationPolicy], beforeTransportPolicies: []);
     }
 
-    internal static AuthenticationPolicy CreateAuthenticationPolicy(AuthenticationTokenProvider tokenProvider, ProjectResponsesClientOptions options = null)
+    internal static AuthenticationPolicy CreateAuthenticationPolicy(AuthenticationTokenProvider tokenProvider, ProjectOAIResponsesClientOptions options = null)
         => ProjectOpenAIClient.CreateAuthenticationPolicy(tokenProvider);
 
-    internal static ProjectResponsesClientOptions GetMergedOptions(Uri projectEndpoint, AuthenticationTokenProvider tokenProvider, ProjectResponsesClientOptions options = null)
+    internal static ProjectOAIResponsesClientOptions GetMergedOptions(Uri projectEndpoint, AuthenticationTokenProvider tokenProvider, ProjectOAIResponsesClientOptions options = null)
     {
         if (projectEndpoint is null)
         {

@@ -35,15 +35,17 @@ public partial class A2AToolCall
     /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
     internal A2AToolCall(string id, AgentReference agentReference, string responseId, string callId, string name, string arguments, ToolCallStatus status, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(ResponseItemKind.A2APreviewCall)
     {
+        AgentReference = agentReference;
+        ResponseId = responseId;
         CallId = callId;
         Name = name;
         Arguments = arguments;
         Status = status;
-        _additionalBinaryDataProperties = additionalBinaryDataProperties;
+        _additionalBinaryDataProperties = ResponseItemAttribution.AddToAdditionalProperties(additionalBinaryDataProperties, agentReference, responseId);
     }
 
     /// <summary> Initializes a new instance of <see cref="A2AToolCall"/> for deserialization. </summary>
-    internal A2AToolCall(): base(ResponseItemKind.A2APreviewCall)
+    internal A2AToolCall() : base(ResponseItemKind.A2APreviewCall)
     {
     }
 
@@ -62,11 +64,12 @@ public partial class A2AToolCall
     /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
     internal A2AToolCall(ResponseItemKind @type, string id, AgentReference agentReference, string responseId, string callId, string name, string arguments, ToolCallStatus status, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(@type)
     {
-        this.ApplyAgentAttribution(agentReference, responseId, additionalBinaryDataProperties);
+        AgentReference = agentReference;
+        ResponseId = responseId;
         CallId = callId;
         Name = name;
         Arguments = arguments;
         Status = status;
-        _additionalBinaryDataProperties = additionalBinaryDataProperties;
+        _additionalBinaryDataProperties = ResponseItemAttribution.AddToAdditionalProperties(additionalBinaryDataProperties, agentReference, responseId);
     }
 }
