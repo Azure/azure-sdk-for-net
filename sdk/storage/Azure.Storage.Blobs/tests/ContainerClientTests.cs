@@ -3806,15 +3806,11 @@ namespace Azure.Storage.Blobs.Test
                     Prefix = "dir1/dir2/",
                     ResponseFormat = StorageResponseFormat.Arrow
                 };
-                List<BlobHierarchyItem> blobHierarchyItems = new List<BlobHierarchyItem>();
-                await foreach (BlobHierarchyItem blobItem in test.Container.GetBlobsByHierarchyAsync(options: options))
-                {
-                    blobHierarchyItems.Add(blobItem);
-                }
+                item = await test.Container.GetBlobsByHierarchyAsync(options: options).FirstAsync();
 
                 // Assert
-                Assert.IsTrue(blobHierarchyItems.Last().IsBlob);
-                Assert.AreEqual(blobName, blobHierarchyItems.Last().Blob.Name);
+                Assert.IsTrue(item.IsBlob);
+                Assert.AreEqual(blobName, item.Blob.Name);
             }
             else
             {
@@ -4011,7 +4007,7 @@ namespace Azure.Storage.Blobs.Test
 
         [RecordedTest]
         [ServiceVersion(Min = BlobClientOptions.ServiceVersion.V2026_06_06)]
-           public async Task ListBlobsHierarchySegmentAsync_UseApacheArrow_MaxResults()
+        public async Task ListBlobsHierarchySegmentAsync_UseApacheArrow_MaxResults()
         {
             await using DisposingContainer test = await GetTestContainerAsync();
 
@@ -4354,15 +4350,11 @@ namespace Azure.Storage.Blobs.Test
                     Prefix = "dir1/dir2/",
                     ResponseFormat = StorageResponseFormat.Arrow
                 };
-                List<BlobHierarchyItem> blobHierarchyItems = new List<BlobHierarchyItem>();
-                await foreach (BlobHierarchyItem blobItem in test.Container.GetBlobsByHierarchyAsync(options: options))
-                {
-                    blobHierarchyItems.Add(blobItem);
-                }
+                item = await test.Container.GetBlobsByHierarchyAsync(options: options).FirstAsync();
 
                 // Assert
-                Assert.IsTrue(blobHierarchyItems.Last().IsBlob);
-                Assert.AreEqual(blobName, blobHierarchyItems.Last().Blob.Name);
+                Assert.IsTrue(item.IsBlob);
+                Assert.AreEqual(blobName, item.Blob.Name);
             }
             else
             {
