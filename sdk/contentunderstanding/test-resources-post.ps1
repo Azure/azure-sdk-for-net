@@ -411,6 +411,26 @@ if ($allDeploymentsReady) {
     if ($updatePrimaryResult -and $updateCopyTargetResult) {
         Write-Host ""
         Write-Host "Content Understanding defaults updated successfully for both resources!" -ForegroundColor Green
+
+        # UpdateDefaults returns success as soon as CU writes the entry to its
+        # defaults-storage path, but CU's separate LLM-invocation cache lags by
+        # up to ~16 minutes (empirically observed). Tests that call Analyze*
+        # operations use the invocation path and get DeploymentIdNotFound during
+        # that window. Sleep 15 minutes here to let the invocation cache catch
+        # up before the test step starts. This is a blunt workaround; a proper
+        # fix would probe the invocation path with a lightweight Analyze call
+        # and retry until it succeeds. Track service-side improvement separately.
+        $warmupMinutes = 15
+        Write-Host ""
+        Write-Host "Waiting $warmupMinutes minutes for CU's LLM invocation cache to catch up with the freshly-registered model deployments before tests start..." -ForegroundColor Cyan
+        $warmupSeconds = $warmupMinutes * 60
+        $tickSeconds = 60
+        for ($elapsed = 0; $elapsed -lt $warmupSeconds; $elapsed += $tickSeconds) {
+            Start-Sleep -Seconds $tickSeconds
+            $remaining = [Math]::Max(0, $warmupSeconds - $elapsed - $tickSeconds)
+            Write-Host ("  ... {0} min elapsed, ~{1} min remaining" -f (($elapsed + $tickSeconds) / 60), ([Math]::Ceiling($remaining / 60)))
+        }
+        Write-Host "Warmup wait complete." -ForegroundColor Green
     }
     else {
         # Fail the deploy step loudly rather than letting live tests run against
