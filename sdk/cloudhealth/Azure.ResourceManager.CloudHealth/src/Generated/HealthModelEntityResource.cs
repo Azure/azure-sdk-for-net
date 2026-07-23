@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.CloudHealth
         {
             TryGetApiVersion(ResourceType, out string healthModelEntityApiVersion);
             _entitiesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.CloudHealth", ResourceType.Namespace, Diagnostics);
-            _entitiesRestClient = new Entities(_entitiesClientDiagnostics, Pipeline, Endpoint, healthModelEntityApiVersion ?? "2026-05-01-preview");
+            _entitiesRestClient = new Entities(_entitiesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, healthModelEntityApiVersion ?? "2026-05-01-preview");
             ValidateResourceId(id);
         }
 

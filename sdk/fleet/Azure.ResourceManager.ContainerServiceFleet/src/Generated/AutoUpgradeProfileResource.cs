@@ -53,9 +53,9 @@ namespace Azure.ResourceManager.ContainerServiceFleet
         {
             TryGetApiVersion(ResourceType, out string autoUpgradeProfileApiVersion);
             _autoUpgradeProfilesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ContainerServiceFleet", ResourceType.Namespace, Diagnostics);
-            _autoUpgradeProfilesRestClient = new AutoUpgradeProfiles(_autoUpgradeProfilesClientDiagnostics, Pipeline, Endpoint, autoUpgradeProfileApiVersion ?? "2026-03-02-preview");
+            _autoUpgradeProfilesRestClient = new AutoUpgradeProfiles(_autoUpgradeProfilesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, autoUpgradeProfileApiVersion ?? "2026-03-02-preview");
             _autoUpgradeProfileOperationsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ContainerServiceFleet", ResourceType.Namespace, Diagnostics);
-            _autoUpgradeProfileOperationsRestClient = new AutoUpgradeProfileOperations(_autoUpgradeProfileOperationsClientDiagnostics, Pipeline, Endpoint, autoUpgradeProfileApiVersion ?? "2026-03-02-preview");
+            _autoUpgradeProfileOperationsRestClient = new AutoUpgradeProfileOperations(_autoUpgradeProfileOperationsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, autoUpgradeProfileApiVersion ?? "2026-03-02-preview");
             ValidateResourceId(id);
         }
 

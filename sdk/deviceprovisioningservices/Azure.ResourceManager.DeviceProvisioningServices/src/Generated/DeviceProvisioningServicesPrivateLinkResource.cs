@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.DeviceProvisioningServices
         {
             TryGetApiVersion(ResourceType, out string deviceProvisioningServicesPrivateLinkResourceApiVersion);
             _groupIdInformationsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.DeviceProvisioningServices", ResourceType.Namespace, Diagnostics);
-            _groupIdInformationsRestClient = new GroupIdInformations(_groupIdInformationsClientDiagnostics, Pipeline, Endpoint, deviceProvisioningServicesPrivateLinkResourceApiVersion ?? "2025-02-01-preview");
+            _groupIdInformationsRestClient = new GroupIdInformations(_groupIdInformationsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, deviceProvisioningServicesPrivateLinkResourceApiVersion ?? "2025-02-01-preview");
             ValidateResourceId(id);
         }
 

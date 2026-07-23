@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.Cdn
         {
             TryGetApiVersion(ResourceType, out string frontDoorOriginGroupApiVersion);
             _frontDoorOriginGroupsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Cdn", ResourceType.Namespace, Diagnostics);
-            _frontDoorOriginGroupsRestClient = new FrontDoorOriginGroups(_frontDoorOriginGroupsClientDiagnostics, Pipeline, Endpoint, frontDoorOriginGroupApiVersion ?? "2025-09-01-preview");
+            _frontDoorOriginGroupsRestClient = new FrontDoorOriginGroups(_frontDoorOriginGroupsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, frontDoorOriginGroupApiVersion ?? "2025-09-01-preview");
             ValidateResourceId(id);
         }
 

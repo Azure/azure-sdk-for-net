@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.SecurityInsights
         {
             TryGetApiVersion(SecurityInsightsFileImportResource.ResourceType, out string securityInsightsFileImportApiVersion);
             _fileImportsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.SecurityInsights", SecurityInsightsFileImportResource.ResourceType.Namespace, Diagnostics);
-            _fileImportsRestClient = new FileImports(_fileImportsClientDiagnostics, Pipeline, Endpoint, securityInsightsFileImportApiVersion ?? "2025-07-01-preview");
+            _fileImportsRestClient = new FileImports(_fileImportsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, securityInsightsFileImportApiVersion ?? "2025-07-01-preview");
             ValidateResourceId(id);
         }
 

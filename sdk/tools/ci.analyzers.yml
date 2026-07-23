@@ -38,3 +38,4 @@ extends:
     Artifacts:
     - name: Azure.SdkAnalyzers
       safeName: AzureSdkAnalyzers
+      skipCodeownersVerification: true

@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.CosmosDB
         {
             TryGetApiVersion(MongoDBRoleDefinitionResource.ResourceType, out string mongoDBRoleDefinitionApiVersion);
             _mongoDBResourcesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.CosmosDB", MongoDBRoleDefinitionResource.ResourceType.Namespace, Diagnostics);
-            _mongoDBResourcesRestClient = new MongoDBResources(_mongoDBResourcesClientDiagnostics, Pipeline, Endpoint, mongoDBRoleDefinitionApiVersion ?? "2026-03-15");
+            _mongoDBResourcesRestClient = new MongoDBResources(_mongoDBResourcesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, mongoDBRoleDefinitionApiVersion ?? "2026-03-15");
             ValidateResourceId(id);
         }
 

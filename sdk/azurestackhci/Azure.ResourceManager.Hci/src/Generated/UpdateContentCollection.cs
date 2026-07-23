@@ -45,7 +45,7 @@ namespace Azure.ResourceManager.Hci
             TryGetApiVersion(UpdateContentResource.ResourceType, out string updateContentApiVersion);
             _location = location;
             _updateContentsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Hci", UpdateContentResource.ResourceType.Namespace, Diagnostics);
-            _updateContentsRestClient = new UpdateContents(_updateContentsClientDiagnostics, Pipeline, Endpoint, updateContentApiVersion ?? "2026-05-01-preview");
+            _updateContentsRestClient = new UpdateContents(_updateContentsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, updateContentApiVersion ?? "2026-05-01-preview");
             ValidateResourceId(id);
         }
 

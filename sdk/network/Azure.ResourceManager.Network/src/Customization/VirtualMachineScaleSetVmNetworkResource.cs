@@ -231,10 +231,10 @@ namespace Azure.ResourceManager.Network
             => new ClientDiagnostics("Azure.ResourceManager.Network", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
         private VirtualMachineScaleSetNetworkInterfaces CreateVirtualMachineScaleSetVmNetworkRestClient()
-            => new VirtualMachineScaleSetNetworkInterfaces(CreateClientDiagnostics(), Pipeline, Endpoint, "2018-10-01");
+            => new VirtualMachineScaleSetNetworkInterfaces(CreateClientDiagnostics(), Pipeline, Diagnostics.ApplicationId, Endpoint, "2018-10-01");
 
         private VirtualMachineScaleSetNetworkInterfaceIPConfigurationPublicIPAddresses CreateVirtualMachineScaleSetNetworkInterfaceIPConfigurationPublicIPAddressesRestClient()
-            => new VirtualMachineScaleSetNetworkInterfaceIPConfigurationPublicIPAddresses(CreateClientDiagnostics(), Pipeline, Endpoint, "2018-10-01");
+            => new VirtualMachineScaleSetNetworkInterfaceIPConfigurationPublicIPAddresses(CreateClientDiagnostics(), Pipeline, Diagnostics.ApplicationId, Endpoint, "2018-10-01");
 
         private VirtualMachineScaleSetNetworkInterfaceResource GetVirtualMachineScaleSetNetworkInterfaceResource(string virtualMachineScaleSetName, string networkInterfaceName)
             => Client.GetVirtualMachineScaleSetNetworkInterfaceResource(VirtualMachineScaleSetNetworkInterfaceResource.CreateResourceIdentifier(Id.SubscriptionId, Id.ResourceGroupName, virtualMachineScaleSetName, Id.Name, networkInterfaceName));

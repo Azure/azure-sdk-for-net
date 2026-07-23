@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.Compute
         {
             TryGetApiVersion(ResourceType, out string availabilitySetApiVersion);
             _availabilitySetsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Compute", ResourceType.Namespace, Diagnostics);
-            _availabilitySetsRestClient = new AvailabilitySets(_availabilitySetsClientDiagnostics, Pipeline, Endpoint, availabilitySetApiVersion ?? "2026-03-01");
+            _availabilitySetsRestClient = new AvailabilitySets(_availabilitySetsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, availabilitySetApiVersion ?? "2026-03-01");
             ValidateResourceId(id);
         }
 
