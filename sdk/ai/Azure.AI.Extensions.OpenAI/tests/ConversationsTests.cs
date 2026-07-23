@@ -1,4 +1,4 @@
-﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 using System;
 using System.ClientModel;
@@ -9,6 +9,7 @@ using System.Threading.Tasks;
 using Azure.AI.Projects.Agents;
 using Microsoft.ClientModel.TestFramework;
 using NUnit.Framework;
+using OpenAI.Conversations;
 using OpenAI.Responses;
 
 namespace Azure.AI.Extensions.OpenAI.Tests;
@@ -26,8 +27,8 @@ public class ConversationsTests : ProjectsOpenAITestBase
     public async Task ConversationOperationsWork()
     {
         ProjectOpenAIClient client = GetTestProjectOpenAIClient();
-        ProjectConversation conversation = await client.GetProjectConversationsClient().CreateProjectConversationAsync(
-            new ProjectConversationCreationOptions()
+        ConversationResource conversation = await client.GetProjectConversationsClient().CreateProjectConversationAsync(
+            new ConversationCreationOptions()
             {
                 Items =
                 {
@@ -38,11 +39,11 @@ public class ConversationsTests : ProjectsOpenAITestBase
                 },
             });
 
-        ProjectConversation retrievedConversation = await client.GetProjectConversationsClient().GetProjectConversationAsync(conversation.Id);
+        ConversationResource retrievedConversation = await client.GetProjectConversationsClient().GetProjectConversationAsync(conversation.Id);
         Assert.That(retrievedConversation.Id, Is.EqualTo(conversation.Id));
 
         retrievedConversation = null;
-        await foreach (ProjectConversation listedConversation in client.GetProjectConversationsClient().GetProjectConversationsAsync(limit: 10))
+        await foreach (ConversationResource listedConversation in client.GetProjectConversationsClient().GetProjectConversationsAsync(limit: 10))
         {
             if (listedConversation.Id == conversation.Id)
             {
@@ -89,7 +90,7 @@ public class ConversationsTests : ProjectsOpenAITestBase
 
         int conversationsChecked = 0;
 
-        await foreach (ProjectConversation listedConversation in client.GetProjectConversationsClient().GetProjectConversationsAsync(limit: 10))
+        await foreach (ConversationResource listedConversation in client.GetProjectConversationsClient().GetProjectConversationsAsync(limit: 10))
         {
             if (listedConversation.Id == conversation.Id)
             {
@@ -109,7 +110,7 @@ public class ConversationsTests : ProjectsOpenAITestBase
         ProjectOpenAIClient client = GetTestProjectOpenAIClient();
 
         // Create a conversation
-        ProjectConversation conversation = await client.GetProjectConversationsClient().CreateProjectConversationAsync();
+        ConversationResource conversation = await client.GetProjectConversationsClient().CreateProjectConversationAsync();
         Assert.That(conversation?.Id, Does.StartWith("conv_"));
 
         // Create 40 messages for the conversation

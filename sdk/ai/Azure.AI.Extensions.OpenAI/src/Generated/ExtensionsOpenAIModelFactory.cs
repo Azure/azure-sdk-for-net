@@ -537,28 +537,6 @@ namespace Azure.AI.Extensions.OpenAI
             return new WebSearchConfiguration(projectConnectionId, instanceName, additionalBinaryDataProperties: null);
         }
 
-        /// <summary> Local shell exec action. </summary>
-        /// <param name="command"> The command to run. </param>
-        /// <param name="timeoutMs"></param>
-        /// <param name="workingDirectory"></param>
-        /// <param name="env"> Environment variables to set for the command. </param>
-        /// <param name="user"></param>
-        /// <returns> A new <see cref="Internal.LocalShellExecAction"/> instance for mocking. </returns>
-        public static Internal.LocalShellExecAction LocalShellExecAction(IEnumerable<string> command = default, long? timeoutMs = default, string workingDirectory = default, IDictionary<string, string> env = default, string user = default)
-        {
-            command ??= new ChangeTrackingList<string>();
-            env ??= new ChangeTrackingDictionary<string, string>();
-
-            return new Internal.LocalShellExecAction(
-                "exec",
-                command.ToList(),
-                timeoutMs,
-                workingDirectory,
-                env,
-                user,
-                additionalBinaryDataProperties: null);
-        }
-
         /// <summary> The AgentReference. </summary>
         /// <param name="name"> The name of the agent. </param>
         /// <param name="version"> The version identifier of the agent. </param>
@@ -613,22 +591,21 @@ namespace Azure.AI.Extensions.OpenAI
         }
 
         /// <summary> Request from the service for the user to perform OAuth consent. </summary>
-        /// <param name="type"></param>
         /// <param name="id"></param>
-        /// <param name="agentReference"></param>
-        /// <param name="responseId"></param>
-        /// <param name="itemId"></param>
-        /// <param name="internalConsentLink"></param>
-        /// <param name="serverLabel"></param>
+        /// <param name="agentReference"> The agent that created the item. </param>
+        /// <param name="responseId"> The response on which the item is created. </param>
+        /// <param name="id0"></param>
+        /// <param name="internalConsentLink"> The link the user can use to perform OAuth consent. </param>
+        /// <param name="serverLabel"> The server label for the OAuth consent request. </param>
         /// <returns> A new <see cref="OpenAI.OAuthConsentRequestResponseItem"/> instance for mocking. </returns>
-        public static OAuthConsentRequestResponseItem OAuthConsentRequestResponseItem(ResponseItemKind @type = default, string id = default, AgentReference agentReference = default, string responseId = default, string itemId = default, string internalConsentLink = default, string serverLabel = default)
+        public static OAuthConsentRequestResponseItem OAuthConsentRequestResponseItem(string id = default, AgentReference agentReference = default, string responseId = default, string id0 = default, string internalConsentLink = default, string serverLabel = default)
         {
             return new OAuthConsentRequestResponseItem(
-                @type,
+                "oauth_consent_request",
                 id,
                 agentReference,
                 responseId,
-                itemId,
+                id,
                 internalConsentLink,
                 serverLabel,
                 additionalBinaryDataProperties: null);
@@ -1194,140 +1171,6 @@ namespace Azure.AI.Extensions.OpenAI
                 callId,
                 status,
                 additionalBinaryDataProperties: null);
-        }
-
-        /// <summary> Compaction item. </summary>
-        /// <param name="type"></param>
-        /// <param name="id"></param>
-        /// <param name="agentReference"></param>
-        /// <param name="responseId"></param>
-        /// <param name="encryptedContent"></param>
-        /// <param name="createdBy"></param>
-        /// <returns> A new <see cref="Internal.OutputItemCompactionBody"/> instance for mocking. </returns>
-        public static Internal.OutputItemCompactionBody OutputItemCompactionBody(ResponseItemKind @type = default, string id = default, AgentReference agentReference = default, string responseId = default, string encryptedContent = default, string createdBy = default)
-        {
-            return new Internal.OutputItemCompactionBody(
-                @type,
-                id,
-                agentReference,
-                responseId,
-                encryptedContent,
-                createdBy,
-                additionalBinaryDataProperties: null);
-        }
-
-        /// <summary> Local shell call. </summary>
-        /// <param name="id"></param>
-        /// <param name="agentReference"> The agent that created the item. </param>
-        /// <param name="responseId"> The response on which the item is created. </param>
-        /// <param name="callId"> The unique ID of the local shell tool call generated by the model. </param>
-        /// <param name="action"></param>
-        /// <param name="status"> The status of the local shell call. </param>
-        /// <returns> A new <see cref="Internal.OutputItemLocalShellToolCall"/> instance for mocking. </returns>
-        public static Internal.OutputItemLocalShellToolCall OutputItemLocalShellToolCall(string id = default, AgentReference agentReference = default, string responseId = default, string callId = default, Internal.LocalShellExecAction action = default, InputItemLocalShellToolCallStatus status = default)
-        {
-            return new Internal.OutputItemLocalShellToolCall(
-                "local_shell_call",
-                id,
-                agentReference,
-                responseId,
-                callId,
-                action,
-                status,
-                additionalBinaryDataProperties: null);
-        }
-
-        /// <summary> Local shell call output. </summary>
-        /// <param name="type"></param>
-        /// <param name="id"></param>
-        /// <param name="agentReference"></param>
-        /// <param name="responseId"></param>
-        /// <param name="output"></param>
-        /// <param name="status"></param>
-        /// <returns> A new <see cref="Internal.OutputItemLocalShellToolCallOutput"/> instance for mocking. </returns>
-        public static Internal.OutputItemLocalShellToolCallOutput OutputItemLocalShellToolCallOutput(ResponseItemKind @type = default, string id = default, AgentReference agentReference = default, string responseId = default, string output = default, Internal.InputItemLocalShellToolCallOutputStatus? status = default)
-        {
-            return new Internal.OutputItemLocalShellToolCallOutput(
-                @type,
-                id,
-                agentReference,
-                responseId,
-                output,
-                status,
-                additionalBinaryDataProperties: null);
-        }
-
-        /// <summary> Shell tool call. </summary>
-        /// <param name="type"></param>
-        /// <param name="id"></param>
-        /// <param name="agentReference"></param>
-        /// <param name="responseId"></param>
-        /// <param name="itemId"></param>
-        /// <param name="callId"></param>
-        /// <param name="action"></param>
-        /// <param name="status"></param>
-        /// <param name="environment"></param>
-        /// <param name="createdBy"></param>
-        /// <returns> A new <see cref="OpenAI.OutputItemFunctionShellCall"/> instance for mocking. </returns>
-        public static OutputItemFunctionShellCall OutputItemFunctionShellCall(ResponseItemKind @type = default, string id = default, AgentReference agentReference = default, string responseId = default, string itemId = default, string callId = default, FunctionShellAction action = default, LocalShellCallStatus status = default, FunctionShellCallEnvironment environment = default, string createdBy = default)
-        {
-            return new OutputItemFunctionShellCall(
-                @type,
-                id,
-                agentReference,
-                responseId,
-                itemId,
-                callId,
-                action,
-                status,
-                environment,
-                createdBy,
-                additionalBinaryDataProperties: null);
-        }
-
-        /// <summary> Shell call output. </summary>
-        /// <param name="type"></param>
-        /// <param name="id"></param>
-        /// <param name="agentReference"></param>
-        /// <param name="responseId"></param>
-        /// <param name="itemId"></param>
-        /// <param name="callId"></param>
-        /// <param name="status"></param>
-        /// <param name="output"></param>
-        /// <param name="maxOutputLength"></param>
-        /// <param name="createdBy"></param>
-        /// <returns> A new <see cref="OpenAI.OutputItemFunctionShellCallOutput"/> instance for mocking. </returns>
-        public static OutputItemFunctionShellCallOutput OutputItemFunctionShellCallOutput(ResponseItemKind @type = default, string id = default, AgentReference agentReference = default, string responseId = default, string itemId = default, string callId = default, LocalShellCallOutputStatusEnum status = default, IEnumerable<FunctionShellCallOutputContent> output = default, long? maxOutputLength = default, string createdBy = default)
-        {
-            output ??= new ChangeTrackingList<FunctionShellCallOutputContent>();
-
-            return new OutputItemFunctionShellCallOutput(
-                @type,
-                id,
-                agentReference,
-                responseId,
-                itemId,
-                callId,
-                status,
-                output.ToList(),
-                maxOutputLength,
-                createdBy,
-                additionalBinaryDataProperties: null);
-        }
-
-        /// <summary> The ProjectConversation. </summary>
-        /// <param name="id"> The unique ID of the conversation. </param>
-        /// <param name="metadata">
-        /// Set of 16 key-value pairs that can be attached to an object. This can be         useful for storing additional information about the object in a structured         format, and querying for objects via API or the dashboard.
-        ///   Keys are strings with a maximum length of 64 characters. Values are strings         with a maximum length of 512 characters.
-        /// </param>
-        /// <param name="createdAt"> The time at which the conversation was created, measured in seconds since the Unix epoch. </param>
-        /// <returns> A new <see cref="OpenAI.ProjectConversation"/> instance for mocking. </returns>
-        public static ProjectConversation ProjectConversation(string id = default, IDictionary<string, string> metadata = default, DateTimeOffset createdAt = default)
-        {
-            metadata ??= new ChangeTrackingDictionary<string, string>();
-
-            return new ProjectConversation(id, "conversation", metadata, createdAt, additionalBinaryDataProperties: null);
         }
     }
 }

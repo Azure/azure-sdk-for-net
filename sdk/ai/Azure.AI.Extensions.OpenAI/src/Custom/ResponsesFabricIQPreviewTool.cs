@@ -16,7 +16,7 @@ namespace Azure.AI.Extensions.OpenAI
         // constructor). We add the chain here and supply the "fabric_iq_preview" discriminator so
         // the tool kind is set correctly during deserialization.
         /// <summary> Initializes a new instance of <see cref="FabricIQPreviewTool"/> for deserialization. </summary>
-        internal FabricIQPreviewTool() : base(ResponseToolKind.FabricIQPreview)
+        internal FabricIQPreviewTool(): base(ResponseToolKind.FabricIQPreview)
         {
         }
 

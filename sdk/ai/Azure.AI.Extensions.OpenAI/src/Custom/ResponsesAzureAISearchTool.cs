@@ -15,7 +15,7 @@ namespace Azure.AI.Extensions.OpenAI
         // constructor). We add the chain here and supply the "azure_ai_search" discriminator so
         // the tool kind is set correctly during deserialization.
         /// <summary> Initializes a new instance of <see cref="AzureAISearchTool"/> for deserialization. </summary>
-        internal AzureAISearchTool() : base(ResponseToolKind.AzureAISearch)
+        internal AzureAISearchTool(): base(ResponseToolKind.AzureAISearch)
         {
         }
     }

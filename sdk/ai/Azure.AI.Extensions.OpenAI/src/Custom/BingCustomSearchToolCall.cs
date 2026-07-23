@@ -39,7 +39,7 @@ public partial class BingCustomSearchToolCall
     }
 
     /// <summary> Initializes a new instance of <see cref="BingCustomSearchToolCall"/> for deserialization. </summary>
-    internal BingCustomSearchToolCall() : base(ResponseItemKind.BingCustomSearchPreviewCall)
+    internal BingCustomSearchToolCall(): base(ResponseItemKind.BingCustomSearchPreviewCall)
     {
     }
 
@@ -57,6 +57,7 @@ public partial class BingCustomSearchToolCall
     /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
     internal BingCustomSearchToolCall(ResponseItemKind @type, string id, AgentReference agentReference, string responseId, string callId, string arguments, ToolCallStatus status, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(@type)
     {
+        this.ApplyAgentAttribution(agentReference, responseId, additionalBinaryDataProperties);
         CallId = callId;
         Arguments = arguments;
         Status = status;

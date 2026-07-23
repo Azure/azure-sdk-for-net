@@ -15,7 +15,7 @@ namespace Azure.AI.Extensions.OpenAI
         // constructor). We add the chain here and supply the "work_iq_preview" discriminator so
         // the tool kind is set correctly during deserialization.
         /// <summary> Initializes a new instance of <see cref="WorkIQPreviewTool"/> for deserialization. </summary>
-        internal WorkIQPreviewTool() : base(ResponseToolKind.WorkIQPreview)
+        internal WorkIQPreviewTool(): base(ResponseToolKind.WorkIQPreview)
         {
         }
     }

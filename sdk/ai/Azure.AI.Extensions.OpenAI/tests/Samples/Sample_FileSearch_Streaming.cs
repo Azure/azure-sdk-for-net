@@ -1,4 +1,4 @@
-﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
 using System;
@@ -10,6 +10,7 @@ using Azure.Identity;
 using Microsoft.ClientModel.TestFramework;
 using NUnit.Framework;
 using OpenAI.Files;
+using OpenAI.Conversations;
 using OpenAI.Responses;
 using OpenAI.VectorStores;
 
@@ -100,7 +101,7 @@ public class Sample_FileSearch_Streaming : ProjectsOpenAITestBase
         );
         #endregion
         #region Snippet:Sample_CreateResponse_FileSearch_Streaming_Async
-        ProjectConversation conversation = await projectClient.ProjectOpenAIClient.GetProjectConversationsClient().CreateProjectConversationAsync();
+        ConversationResource conversation = await projectClient.ProjectOpenAIClient.GetProjectConversationsClient().CreateProjectConversationAsync();
         CreateResponseOptions responseOptions = new()
         {
             Agent = new(name: agentVersion.Name, version: agentVersion.Version),
@@ -175,7 +176,7 @@ public class Sample_FileSearch_Streaming : ProjectsOpenAITestBase
         );
         #endregion
         #region Snippet:Sample_CreateResponse_FileSearch_Streaming_Sync
-        ProjectConversation conversation = projectClient.ProjectOpenAIClient.GetProjectConversationsClient().CreateProjectConversation();
+        ConversationResource conversation = projectClient.ProjectOpenAIClient.GetProjectConversationsClient().CreateProjectConversation();
         CreateResponseOptions responseOptions = new()
         {
             Agent = new(name: agentVersion.Name, version: agentVersion.Version),

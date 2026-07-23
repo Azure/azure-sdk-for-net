@@ -15,7 +15,7 @@ namespace Azure.AI.Extensions.OpenAI
         // constructor). We add the chain here and supply the "fabric_dataagent_preview"
         // discriminator so the tool kind is set correctly during deserialization.
         /// <summary> Initializes a new instance of <see cref="MicrosoftFabricPreviewTool"/> for deserialization. </summary>
-        internal MicrosoftFabricPreviewTool() : base(ResponseToolKind.FabricDataAgentPreview)
+        internal MicrosoftFabricPreviewTool(): base(ResponseToolKind.FabricDataAgentPreview)
         {
         }
     }

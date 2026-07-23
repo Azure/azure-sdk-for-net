@@ -5,9 +5,7 @@
 using System;
 using System.ClientModel;
 using System.ClientModel.Primitives;
-using System.Threading;
 using System.Threading.Tasks;
-using Azure.AI.Extensions.OpenAI.Internal;
 
 namespace Azure.AI.Extensions.OpenAI
 {
@@ -66,48 +64,6 @@ namespace Azure.AI.Extensions.OpenAI
         {
             using PipelineMessage message = CreateCompactconversationRequest(content, options);
             return ClientResult.FromResponse(await Pipeline.ProcessMessageAsync(message, options).ConfigureAwait(false));
-        }
-
-        /// <summary> Compacts a conversation into a response object suitable for long-running and zero-data-retention scenarios. </summary>
-        /// <param name="model"> The model deployment to use for the compaction of this response. </param>
-        /// <param name="input"></param>
-        /// <param name="previousResponseId"></param>
-        /// <param name="instructions"></param>
-        /// <param name="promptCacheKey"></param>
-        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
-        public virtual ClientResult<CompactResource> Compactconversation(string model, BinaryData input = default, string previousResponseId = default, string instructions = default, string promptCacheKey = default, CancellationToken cancellationToken = default)
-        {
-            CompactResponseMethodPublicBody spreadModel = new CompactResponseMethodPublicBody(
-                model,
-                input,
-                previousResponseId,
-                instructions,
-                promptCacheKey,
-                default);
-            ClientResult result = Compactconversation(spreadModel, cancellationToken.ToRequestOptions());
-            return ClientResult.FromValue((CompactResource)result, result.GetRawResponse());
-        }
-
-        /// <summary> Compacts a conversation into a response object suitable for long-running and zero-data-retention scenarios. </summary>
-        /// <param name="model"> The model deployment to use for the compaction of this response. </param>
-        /// <param name="input"></param>
-        /// <param name="previousResponseId"></param>
-        /// <param name="instructions"></param>
-        /// <param name="promptCacheKey"></param>
-        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
-        public virtual async Task<ClientResult<CompactResource>> CompactconversationAsync(string model, BinaryData input = default, string previousResponseId = default, string instructions = default, string promptCacheKey = default, CancellationToken cancellationToken = default)
-        {
-            CompactResponseMethodPublicBody spreadModel = new CompactResponseMethodPublicBody(
-                model,
-                input,
-                previousResponseId,
-                instructions,
-                promptCacheKey,
-                default);
-            ClientResult result = await CompactconversationAsync(spreadModel, cancellationToken.ToRequestOptions()).ConfigureAwait(false);
-            return ClientResult.FromValue((CompactResource)result, result.GetRawResponse());
         }
     }
 }

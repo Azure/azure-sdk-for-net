@@ -26,7 +26,7 @@ public partial class MemorySearchToolCall
     }
 
     /// <summary> Initializes a new instance of <see cref="MemorySearchToolCall"/> for deserialization. </summary>
-    internal MemorySearchToolCall() : base(ResponseItemKind.MemorySearchCall)
+    internal MemorySearchToolCall(): base(ResponseItemKind.MemorySearchCall)
     {
     }
 
@@ -43,6 +43,7 @@ public partial class MemorySearchToolCall
     /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
     internal MemorySearchToolCall(ResponseItemKind @type, string id, AgentReference agentReference, string responseId, ToolCallStatus status, IList<MemoryOutputItem> memories, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(@type)
     {
+        this.ApplyAgentAttribution(agentReference, responseId, additionalBinaryDataProperties);
         Status = status;
         Memories = memories;
         _additionalBinaryDataProperties = additionalBinaryDataProperties;

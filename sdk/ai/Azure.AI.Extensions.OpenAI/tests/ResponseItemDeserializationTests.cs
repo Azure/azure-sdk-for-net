@@ -8,6 +8,7 @@ using NUnit.Framework;
 using OpenAI.Responses;
 
 namespace Azure.AI.Extensions.OpenAI.Tests;
+#pragma warning disable AAIP001
 
 [Category("Smoke")]
 [Parallelizable(ParallelScope.All)]
@@ -73,3 +74,4 @@ public class ResponseItemDeserializationTests
         Assert.That(agentItem, Is.InstanceOf(expectedType), $"AsAgentResponseItem for '{discriminator}' should yield {expectedType.Name} but was {agentItem?.GetType().Name}.");
     }
 }
+#pragma warning restore AAIP001

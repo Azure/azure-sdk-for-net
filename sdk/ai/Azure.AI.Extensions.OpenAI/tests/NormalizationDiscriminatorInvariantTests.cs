@@ -9,6 +9,7 @@ using OpenAI;
 using OpenAI.Responses;
 
 namespace Azure.AI.Extensions.OpenAI.Tests;
+#pragma warning disable AAIP001
 
 // Client-side normalization (AzureAIExtensions.NormalizeAgentResponse and friends) decides whether an
 // already-materialized item/tool still needs re-dispatch by reading its "type" discriminator (exposed as
@@ -78,3 +79,4 @@ public class NormalizationDiscriminatorInvariantTests
             "A discriminator this package does not know should not be altered by normalization.");
     }
 }
+#pragma warning restore AAIP001

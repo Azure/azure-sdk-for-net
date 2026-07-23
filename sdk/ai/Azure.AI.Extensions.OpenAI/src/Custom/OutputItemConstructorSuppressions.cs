@@ -15,13 +15,11 @@ public partial class A2AToolCall
 {
     internal A2AToolCall(ResponseItemKind type, AgentReference agentReference, string responseId, string callId, string name, string arguments, ToolCallStatus status, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(type)
     {
-        AgentReference = agentReference;
-        ResponseId = responseId;
         CallId = callId;
         Name = name;
         Arguments = arguments;
         Status = status;
-        _additionalBinaryDataProperties = ResponseItemAttribution.AddToAdditionalProperties(additionalBinaryDataProperties, agentReference, responseId);
+        _additionalBinaryDataProperties = additionalBinaryDataProperties;
     }
 }
 
@@ -43,10 +41,8 @@ public partial class AgentStructuredOutputsResponseItem
 {
     internal AgentStructuredOutputsResponseItem(ResponseItemKind type, AgentReference agentReference, string responseId, BinaryData output, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(type)
     {
-        AgentReference = agentReference;
-        ResponseId = responseId;
         Output = output;
-        _additionalBinaryDataProperties = ResponseItemAttribution.AddToAdditionalProperties(additionalBinaryDataProperties, agentReference, responseId);
+        _additionalBinaryDataProperties = additionalBinaryDataProperties;
     }
 }
 
@@ -69,12 +65,10 @@ public partial class AzureAISearchToolCall
 {
     internal AzureAISearchToolCall(ResponseItemKind type, AgentReference agentReference, string responseId, string callId, string arguments, ToolCallStatus status, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(type)
     {
-        AgentReference = agentReference;
-        ResponseId = responseId;
         CallId = callId;
         Arguments = arguments;
         Status = status;
-        _additionalBinaryDataProperties = ResponseItemAttribution.AddToAdditionalProperties(additionalBinaryDataProperties, agentReference, responseId);
+        _additionalBinaryDataProperties = additionalBinaryDataProperties;
     }
 }
 
@@ -145,12 +139,10 @@ public partial class BingGroundingToolCall
 {
     internal BingGroundingToolCall(ResponseItemKind type, AgentReference agentReference, string responseId, string callId, string arguments, ToolCallStatus status, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(type)
     {
-        AgentReference = agentReference;
-        ResponseId = responseId;
         CallId = callId;
         Arguments = arguments;
         Status = status;
-        _additionalBinaryDataProperties = ResponseItemAttribution.AddToAdditionalProperties(additionalBinaryDataProperties, agentReference, responseId);
+        _additionalBinaryDataProperties = additionalBinaryDataProperties;
     }
 }
 
@@ -159,12 +151,10 @@ public partial class BingGroundingToolCallOutput
 {
     internal BingGroundingToolCallOutput(ResponseItemKind type, AgentReference agentReference, string responseId, string callId, BinaryData output, ToolCallStatus status, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(type)
     {
-        AgentReference = agentReference;
-        ResponseId = responseId;
         CallId = callId;
         Output = output;
         Status = status;
-        _additionalBinaryDataProperties = ResponseItemAttribution.AddToAdditionalProperties(additionalBinaryDataProperties, agentReference, responseId);
+        _additionalBinaryDataProperties = additionalBinaryDataProperties;
     }
 }
 
@@ -277,20 +267,6 @@ public partial class OpenApiToolCall
         Status = status;
         _additionalBinaryDataProperties = additionalBinaryDataProperties;
     }
-}
-
-/// <summary> Output from a computer tool call. </summary>
-[CodeGenSuppress(nameof(Status))]
-public partial class OutputItemComputerToolCallOutput
-{
-    internal ItemFieldComputerToolCallOutputStatus? Status { get; set; }
-}
-
-/// <summary> Output from a function tool call. </summary>
-[CodeGenSuppress(nameof(Status))]
-public partial class OutputItemFunctionToolCallOutput
-{
-    internal ItemFieldFunctionToolCallOutputStatus? Status { get; set; }
 }
 
 [CodeGenSuppress(nameof(OpenApiToolCallOutput), typeof(ResponseItemKind), typeof(AgentReference), typeof(string), typeof(string), typeof(string), typeof(BinaryData), typeof(ToolCallStatus), typeof(IDictionary<string, BinaryData>))]

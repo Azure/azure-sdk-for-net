@@ -37,7 +37,7 @@ public partial class BrowserAutomationToolCallOutput
     }
 
     /// <summary> Initializes a new instance of <see cref="BrowserAutomationToolCallOutput"/> for deserialization. </summary>
-    internal BrowserAutomationToolCallOutput() : base(ResponseItemKind.BrowserAutomationPreviewCallOutput)
+    internal BrowserAutomationToolCallOutput(): base(ResponseItemKind.BrowserAutomationPreviewCallOutput)
     {
     }
 
@@ -55,6 +55,7 @@ public partial class BrowserAutomationToolCallOutput
     /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
     internal BrowserAutomationToolCallOutput(ResponseItemKind @type, string id, AgentReference agentReference, string responseId, string callId, BinaryData output, ToolCallStatus status, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(@type)
     {
+        this.ApplyAgentAttribution(agentReference, responseId, additionalBinaryDataProperties);
         CallId = callId;
         Output = output;
         Status = status;

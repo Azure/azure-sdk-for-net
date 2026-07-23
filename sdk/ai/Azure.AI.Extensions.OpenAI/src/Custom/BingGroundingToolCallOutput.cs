@@ -30,16 +30,14 @@ public partial class BingGroundingToolCallOutput
     /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
     internal BingGroundingToolCallOutput(string id, AgentReference agentReference, string responseId, string callId, BinaryData output, ToolCallStatus status, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(ResponseItemKind.BingGroundingCallOutput)
     {
-        AgentReference = agentReference;
-        ResponseId = responseId;
         CallId = callId;
         Output = output;
         Status = status;
-        _additionalBinaryDataProperties = ResponseItemAttribution.AddToAdditionalProperties(additionalBinaryDataProperties, agentReference, responseId);
+        _additionalBinaryDataProperties = additionalBinaryDataProperties;
     }
 
     /// <summary> Initializes a new instance of <see cref="BingGroundingToolCallOutput"/> for deserialization. </summary>
-    internal BingGroundingToolCallOutput() : base(ResponseItemKind.BingGroundingCallOutput)
+    internal BingGroundingToolCallOutput(): base(ResponseItemKind.BingGroundingCallOutput)
     {
     }
 
@@ -57,11 +55,10 @@ public partial class BingGroundingToolCallOutput
     /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
     internal BingGroundingToolCallOutput(ResponseItemKind @type, string id, AgentReference agentReference, string responseId, string callId, BinaryData output, ToolCallStatus status, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(@type)
     {
-        AgentReference = agentReference;
-        ResponseId = responseId;
+        this.ApplyAgentAttribution(agentReference, responseId, additionalBinaryDataProperties);
         CallId = callId;
         Output = output;
         Status = status;
-        _additionalBinaryDataProperties = ResponseItemAttribution.AddToAdditionalProperties(additionalBinaryDataProperties, agentReference, responseId);
+        _additionalBinaryDataProperties = additionalBinaryDataProperties;
     }
 }

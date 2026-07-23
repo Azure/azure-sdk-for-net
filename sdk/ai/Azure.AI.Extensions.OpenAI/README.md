@@ -284,8 +284,8 @@ set the conversation parameter while calling `GetProjectResponsesClientForAgent`
 ```C# Snippet:ConversationClient
 CreateResponseOptions CreateResponseOptions = new();
 // Optionally, use a conversation to automatically maintain state between calls.
-ProjectConversation conversation = await projectClient.ProjectOpenAIClient.GetProjectConversationsClient().CreateProjectConversationAsync();
-ProjectResponsesClient responseClient = projectClient.ProjectOpenAIClient.GetProjectResponsesClientForAgent(FOUNDRY_AGENT_NAME, conversation);
+ConversationResource conversation = await projectClient.ProjectOpenAIClient.GetProjectConversationsClient().CreateProjectConversationAsync();
+ProjectResponsesClient responseClient = projectClient.ProjectOpenAIClient.GetProjectResponsesClientForAgent(FOUNDRY_AGENT_NAME, conversation.Id);
 ```
 
 Conversations may be deleted to clean up the resources.
@@ -297,12 +297,12 @@ await openAIClient.GetConversationClient().DeleteConversationAsync(conversation.
 The conversation may be used to communicate messages to the agent.
 
 ```C# Snippet:ExistingConversations
-ProjectConversationCreationOptions conversationOptions = new()
+ConversationCreationOptions conversationOptions = new()
 {
     Items = { ResponseItem.CreateSystemMessageItem("Your preferred genre of story today is: horror.") },
     Metadata = { ["foo"] = "bar" },
 };
-ProjectConversation conversation = await projectClient.ProjectOpenAIClient.GetProjectConversationsClient().CreateProjectConversationAsync(conversationOptions);
+ConversationResource conversation = await projectClient.ProjectOpenAIClient.GetProjectConversationsClient().CreateProjectConversationAsync(conversationOptions);
 
 //
 // Add items to an existing conversation to supplement the interaction state
@@ -483,12 +483,6 @@ Console.WriteLine(response.GetOutputText());
 
 
 ### Hosted Agents
-
-**Note:** This feature is in the preview, to use it, please disable the `AAIP001` warning.
-
-```C#
-#pragma warning disable AAIP001
-```
 
 Hosted agents simplify the custom agent deployment on fully controlled environment [see more](https://learn.microsoft.com/azure/ai-foundry/agents/concepts/hosted-agents).
 

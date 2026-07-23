@@ -26,14 +26,12 @@ public partial class AgentStructuredOutputsResponseItem
     /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
     internal AgentStructuredOutputsResponseItem(string id, AgentReference agentReference, string responseId, BinaryData output, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(ResponseItemKind.StructuredOutputs)
     {
-        AgentReference = agentReference;
-        ResponseId = responseId;
         Output = output;
-        _additionalBinaryDataProperties = ResponseItemAttribution.AddToAdditionalProperties(additionalBinaryDataProperties, agentReference, responseId);
+        _additionalBinaryDataProperties = additionalBinaryDataProperties;
     }
 
     /// <summary> Initializes a new instance of <see cref="AgentStructuredOutputsResponseItem"/> for deserialization. </summary>
-    internal AgentStructuredOutputsResponseItem() : base(ResponseItemKind.StructuredOutputs)
+    internal AgentStructuredOutputsResponseItem(): base(ResponseItemKind.StructuredOutputs)
     {
     }
 
@@ -46,9 +44,8 @@ public partial class AgentStructuredOutputsResponseItem
     /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
     internal AgentStructuredOutputsResponseItem(ResponseItemKind @type, string id, AgentReference agentReference, string responseId, BinaryData output, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(@type)
     {
-        AgentReference = agentReference;
-        ResponseId = responseId;
+        this.ApplyAgentAttribution(agentReference, responseId, additionalBinaryDataProperties);
         Output = output;
-        _additionalBinaryDataProperties = ResponseItemAttribution.AddToAdditionalProperties(additionalBinaryDataProperties, agentReference, responseId);
+        _additionalBinaryDataProperties = additionalBinaryDataProperties;
     }
 }

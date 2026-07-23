@@ -32,16 +32,14 @@ public partial class BingGroundingToolCall
     /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
     internal BingGroundingToolCall(string id, AgentReference agentReference, string responseId, string callId, string arguments, ToolCallStatus status, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(ResponseItemKind.BingGroundingCall)
     {
-        AgentReference = agentReference;
-        ResponseId = responseId;
         CallId = callId;
         Arguments = arguments;
         Status = status;
-        _additionalBinaryDataProperties = ResponseItemAttribution.AddToAdditionalProperties(additionalBinaryDataProperties, agentReference, responseId);
+        _additionalBinaryDataProperties = additionalBinaryDataProperties;
     }
 
     /// <summary> Initializes a new instance of <see cref="BingGroundingToolCall"/> for deserialization. </summary>
-    internal BingGroundingToolCall() : base(ResponseItemKind.BingGroundingCall)
+    internal BingGroundingToolCall(): base(ResponseItemKind.BingGroundingCall)
     {
     }
 
@@ -59,11 +57,10 @@ public partial class BingGroundingToolCall
     /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
     internal BingGroundingToolCall(ResponseItemKind @type, string id, AgentReference agentReference, string responseId, string callId, string arguments, ToolCallStatus status, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(@type)
     {
-        AgentReference = agentReference;
-        ResponseId = responseId;
+        this.ApplyAgentAttribution(agentReference, responseId, additionalBinaryDataProperties);
         CallId = callId;
         Arguments = arguments;
         Status = status;
-        _additionalBinaryDataProperties = ResponseItemAttribution.AddToAdditionalProperties(additionalBinaryDataProperties, agentReference, responseId);
+        _additionalBinaryDataProperties = additionalBinaryDataProperties;
     }
 }
