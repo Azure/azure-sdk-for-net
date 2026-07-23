@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.ContainerServiceSafeguards
         {
             TryGetApiVersion(ResourceType, out string deploymentSafeguardApiVersion);
             _deploymentSafeguardsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ContainerServiceSafeguards", ResourceType.Namespace, Diagnostics);
-            _deploymentSafeguardsRestClient = new DeploymentSafeguards(_deploymentSafeguardsClientDiagnostics, Pipeline, Endpoint, deploymentSafeguardApiVersion ?? "2025-07-01");
+            _deploymentSafeguardsRestClient = new DeploymentSafeguards(_deploymentSafeguardsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, deploymentSafeguardApiVersion ?? "2025-07-01");
             ValidateResourceId(id);
         }
 
