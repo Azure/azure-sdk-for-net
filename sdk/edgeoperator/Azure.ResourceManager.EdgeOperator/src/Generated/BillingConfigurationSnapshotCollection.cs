@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.EdgeOperator
         {
             TryGetApiVersion(BillingConfigurationSnapshotResource.ResourceType, out string billingConfigurationSnapshotApiVersion);
             _billingConfigurationSnapshotsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.EdgeOperator", BillingConfigurationSnapshotResource.ResourceType.Namespace, Diagnostics);
-            _billingConfigurationSnapshotsRestClient = new BillingConfigurationSnapshots(_billingConfigurationSnapshotsClientDiagnostics, Pipeline, Endpoint, billingConfigurationSnapshotApiVersion ?? "2024-09-01");
+            _billingConfigurationSnapshotsRestClient = new BillingConfigurationSnapshots(_billingConfigurationSnapshotsClientDiagnostics, Pipeline, Endpoint, billingConfigurationSnapshotApiVersion ?? "2026-06-01-preview");
             ValidateResourceId(id);
         }
 
@@ -67,7 +67,7 @@ namespace Azure.ResourceManager.EdgeOperator
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2024-09-01. </description>
+        /// <description> 2026-06-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -116,7 +116,7 @@ namespace Azure.ResourceManager.EdgeOperator
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2024-09-01. </description>
+        /// <description> 2026-06-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -154,6 +154,13 @@ namespace Azure.ResourceManager.EdgeOperator
 
         /// <summary>
         /// Lists all historical snapshots of billing configurations for the subscription.
+        /// <b>Expected volume:</b> Snapshots are created only when the customer replaces the active
+        /// billing configuration via PUT /billingConfigurations/default. Customers are expected
+        /// to update at most once per year; in the worst case (e.g., a mid-year plan change)
+        /// no more than twice per year. Even accounting for edge cases such as corrections or
+        /// retries, the total number of snapshots per subscription is expected to remain low
+        /// (low tens) over the lifetime of a subscription. Snapshots are never
+        /// deleted. Callers should not need to traverse more than one page in practice.
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>
@@ -165,7 +172,7 @@ namespace Azure.ResourceManager.EdgeOperator
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2024-09-01. </description>
+        /// <description> 2026-06-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -182,6 +189,13 @@ namespace Azure.ResourceManager.EdgeOperator
 
         /// <summary>
         /// Lists all historical snapshots of billing configurations for the subscription.
+        /// <b>Expected volume:</b> Snapshots are created only when the customer replaces the active
+        /// billing configuration via PUT /billingConfigurations/default. Customers are expected
+        /// to update at most once per year; in the worst case (e.g., a mid-year plan change)
+        /// no more than twice per year. Even accounting for edge cases such as corrections or
+        /// retries, the total number of snapshots per subscription is expected to remain low
+        /// (low tens) over the lifetime of a subscription. Snapshots are never
+        /// deleted. Callers should not need to traverse more than one page in practice.
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>
@@ -193,7 +207,7 @@ namespace Azure.ResourceManager.EdgeOperator
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2024-09-01. </description>
+        /// <description> 2026-06-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -221,7 +235,7 @@ namespace Azure.ResourceManager.EdgeOperator
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2024-09-01. </description>
+        /// <description> 2026-06-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -278,7 +292,7 @@ namespace Azure.ResourceManager.EdgeOperator
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2024-09-01. </description>
+        /// <description> 2026-06-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -335,7 +349,7 @@ namespace Azure.ResourceManager.EdgeOperator
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2024-09-01. </description>
+        /// <description> 2026-06-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -396,7 +410,7 @@ namespace Azure.ResourceManager.EdgeOperator
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2024-09-01. </description>
+        /// <description> 2026-06-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>

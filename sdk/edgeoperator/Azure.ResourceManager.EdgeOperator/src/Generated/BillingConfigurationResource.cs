@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.EdgeOperator
         {
             TryGetApiVersion(ResourceType, out string billingConfigurationApiVersion);
             _billingConfigurationsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.EdgeOperator", ResourceType.Namespace, Diagnostics);
-            _billingConfigurationsRestClient = new BillingConfigurations(_billingConfigurationsClientDiagnostics, Pipeline, Endpoint, billingConfigurationApiVersion ?? "2024-09-01");
+            _billingConfigurationsRestClient = new BillingConfigurations(_billingConfigurationsClientDiagnostics, Pipeline, Endpoint, billingConfigurationApiVersion ?? "2026-06-01-preview");
             ValidateResourceId(id);
         }
 
@@ -104,7 +104,7 @@ namespace Azure.ResourceManager.EdgeOperator
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2024-09-01. </description>
+        /// <description> 2026-06-01-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -114,9 +114,10 @@ namespace Azure.ResourceManager.EdgeOperator
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="data"> Resource create parameters. </param>
+        /// <param name="matchConditions"> The content to send as the request conditions of the request. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
-        public virtual async Task<ArmOperation<BillingConfigurationResource>> CreateOrUpdateAsync(WaitUntil waitUntil, BillingConfigurationData data, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation<BillingConfigurationResource>> CreateOrUpdateAsync(WaitUntil waitUntil, BillingConfigurationData data, MatchConditions matchConditions = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(data, nameof(data));
 
@@ -128,7 +129,7 @@ namespace Azure.ResourceManager.EdgeOperator
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _billingConfigurationsRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), BillingConfigurationData.ToRequestContent(data), context);
+                HttpMessage message = _billingConfigurationsRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), BillingConfigurationData.ToRequestContent(data), matchConditions, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<BillingConfigurationData> response = Response.FromValue(BillingConfigurationData.FromResponse(result), result);
                 RequestUriBuilder uri = message.Request.Uri;
@@ -162,7 +163,7 @@ namespace Azure.ResourceManager.EdgeOperator
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2024-09-01. </description>
+        /// <description> 2026-06-01-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -172,9 +173,10 @@ namespace Azure.ResourceManager.EdgeOperator
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="data"> Resource create parameters. </param>
+        /// <param name="matchConditions"> The content to send as the request conditions of the request. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
-        public virtual ArmOperation<BillingConfigurationResource> CreateOrUpdate(WaitUntil waitUntil, BillingConfigurationData data, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<BillingConfigurationResource> CreateOrUpdate(WaitUntil waitUntil, BillingConfigurationData data, MatchConditions matchConditions = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(data, nameof(data));
 
@@ -186,7 +188,7 @@ namespace Azure.ResourceManager.EdgeOperator
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _billingConfigurationsRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), BillingConfigurationData.ToRequestContent(data), context);
+                HttpMessage message = _billingConfigurationsRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), BillingConfigurationData.ToRequestContent(data), matchConditions, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<BillingConfigurationData> response = Response.FromValue(BillingConfigurationData.FromResponse(result), result);
                 RequestUriBuilder uri = message.Request.Uri;
@@ -218,7 +220,7 @@ namespace Azure.ResourceManager.EdgeOperator
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2024-09-01. </description>
+        /// <description> 2026-06-01-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -266,7 +268,7 @@ namespace Azure.ResourceManager.EdgeOperator
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2024-09-01. </description>
+        /// <description> 2026-06-01-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>

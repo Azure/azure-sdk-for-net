@@ -60,7 +60,7 @@ namespace Azure.ResourceManager.EdgeOperator
             return message;
         }
 
-        internal HttpMessage CreateCreateOrUpdateRequest(Guid subscriptionId, RequestContent content, RequestContext context)
+        internal HttpMessage CreateCreateOrUpdateRequest(Guid subscriptionId, RequestContent content, MatchConditions matchConditions, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -75,6 +75,10 @@ namespace Azure.ResourceManager.EdgeOperator
             Request request = message.Request;
             request.Uri = uri;
             request.Method = RequestMethod.Put;
+            if (matchConditions != null)
+            {
+                request.Headers.Add(matchConditions);
+            }
             request.Headers.SetValue("Content-Type", "application/json");
             request.Headers.SetValue("Accept", "application/json");
             request.Content = content;
