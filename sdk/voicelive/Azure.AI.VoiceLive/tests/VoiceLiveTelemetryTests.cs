@@ -525,8 +525,7 @@ namespace Azure.AI.VoiceLive.Tests
             fake.EnqueueTextMessage(
                 @"{""type"":""session.created"",""event_id"":""e1"",""session"":{""id"":""session_test"",""model"":""gpt-4o""}}");
 
-            await foreach (var _ in session.GetUpdatesAsync())
-                break;
+            await foreach (var _ in session.GetUpdatesAsync()) break;
 
             session._tracer.EndConnectActivity();
 
@@ -552,8 +551,7 @@ namespace Azure.AI.VoiceLive.Tests
                 }
             }");
 
-            await foreach (var _ in session.GetUpdatesAsync())
-                break;
+            await foreach (var _ in session.GetUpdatesAsync()) break;
 
             session._tracer.EndConnectActivity();
 
@@ -574,8 +572,7 @@ namespace Azure.AI.VoiceLive.Tests
             fake.EnqueueTextMessage(
                 @"{""type"":""response.text.delta"",""event_id"":""e3"",""delta"":""hello""}");
 
-            await foreach (var _ in session.GetUpdatesAsync())
-                break;
+            await foreach (var _ in session.GetUpdatesAsync()) break;
 
             session._tracer.EndConnectActivity();
 
@@ -593,8 +590,7 @@ namespace Azure.AI.VoiceLive.Tests
             fake.EnqueueTextMessage(
                 @"{""type"":""response.audio_transcript.delta"",""event_id"":""e4"",""delta"":""hello ""}");
 
-            await foreach (var _ in session.GetUpdatesAsync())
-                break;
+            await foreach (var _ in session.GetUpdatesAsync()) break;
 
             session._tracer.EndConnectActivity();
 
@@ -612,8 +608,7 @@ namespace Azure.AI.VoiceLive.Tests
             fake.EnqueueTextMessage(
                 @"{""type"":""response.mcp_call.completed"",""event_id"":""e5"",""server_label"":""my-mcp"",""tool_name"":""list_files""}");
 
-            await foreach (var _ in session.GetUpdatesAsync())
-                break;
+            await foreach (var _ in session.GetUpdatesAsync()) break;
 
             session._tracer.EndConnectActivity();
 
@@ -853,8 +848,7 @@ namespace Azure.AI.VoiceLive.Tests
             fake.EnqueueTextMessage(
                 @"{""type"":""error"",""event_id"":""e_err"",""error"":{""code"":""invalid_session"",""message"":""bad session""}}");
 
-            await foreach (var _ in session.GetUpdatesAsync())
-                break;
+            await foreach (var _ in session.GetUpdatesAsync()) break;
 
             session._tracer.EndConnectActivity();
 
@@ -877,8 +871,7 @@ namespace Azure.AI.VoiceLive.Tests
                 ""response"": { ""id"": ""resp_1"", ""status"": ""completed"", ""usage"": { ""input_tokens"": 5, ""output_tokens"": 10 } }
             }");
 
-            await foreach (var _ in session.GetUpdatesAsync())
-                break;
+            await foreach (var _ in session.GetUpdatesAsync()) break;
 
             session._tracer.EndConnectActivity();
 
@@ -998,8 +991,7 @@ namespace Azure.AI.VoiceLive.Tests
             fake.EnqueueTextMessage(
                 @"{""type"":""response.text.done"",""event_id"":""e_td"",""text"":""Hello!""}");
 
-            await foreach (var _ in session.GetUpdatesAsync())
-                break;
+            await foreach (var _ in session.GetUpdatesAsync()) break;
 
             session._tracer.EndConnectActivity();
 
@@ -1203,8 +1195,7 @@ namespace Azure.AI.VoiceLive.Tests
             fake.EnqueueTextMessage(
                 @"{""type"":""response.created"",""event_id"":""e_rc"",""response"":{""id"":""resp_rc"",""conversation_id"":""conv_rc""}}");
 
-            await foreach (var _ in session.GetUpdatesAsync())
-                break;
+            await foreach (var _ in session.GetUpdatesAsync()) break;
 
             session._tracer.EndConnectActivity();
 
@@ -1248,8 +1239,7 @@ namespace Azure.AI.VoiceLive.Tests
             fake.EnqueueTextMessage(
                 @"{""type"":""rate_limits.updated"",""event_id"":""e_rl"",""rate_limits"":[{""name"":""requests"",""limit"":100,""remaining"":99}]}");
 
-            await foreach (var _ in session.GetUpdatesAsync())
-                break;
+            await foreach (var _ in session.GetUpdatesAsync()) break;
 
             session._tracer.EndConnectActivity();
 
@@ -1286,10 +1276,8 @@ namespace Azure.AI.VoiceLive.Tests
                     if (instrument.Name == "gen_ai.client.operation.duration")
                     {
                         var d = new Dictionary<string, object>();
-                        foreach (var kv in tags)
-                            d[kv.Key] = kv.Value;
-                        lock (_lock)
-                            Durations.Add((value, d));
+                        foreach (var kv in tags) d[kv.Key] = kv.Value;
+                        lock (_lock) Durations.Add((value, d));
                     }
                 });
                 _listener.SetMeasurementEventCallback<long>((instrument, value, tags, _) =>
@@ -1297,10 +1285,8 @@ namespace Azure.AI.VoiceLive.Tests
                     if (instrument.Name == "gen_ai.client.token.usage")
                     {
                         var d = new Dictionary<string, object>();
-                        foreach (var kv in tags)
-                            d[kv.Key] = kv.Value;
-                        lock (_lock)
-                            Tokens.Add((value, d));
+                        foreach (var kv in tags) d[kv.Key] = kv.Value;
+                        lock (_lock) Tokens.Add((value, d));
                     }
                 });
                 _listener.Start();
@@ -1398,8 +1384,7 @@ namespace Azure.AI.VoiceLive.Tests
             string msg = @"{""type"":""session.created"",""event_id"":""e_ms"",""session"":{""id"":""session_ms"",""model"":""gpt-4o""}}";
             fake.EnqueueTextMessage(msg);
 
-            await foreach (var _ in session.GetUpdatesAsync())
-                break;
+            await foreach (var _ in session.GetUpdatesAsync()) break;
 
             session._tracer.EndConnectActivity();
 

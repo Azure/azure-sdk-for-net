@@ -61,12 +61,12 @@ namespace Azure.AI.VoiceLive.Tests
             var spanNames = activities.Select(a => a.DisplayName).ToList();
 
             var connectSpan = activities.FirstOrDefault(a => a.DisplayName == "connect");
-            var recvSpan = activities.FirstOrDefault(a => a.DisplayName == "recv session.updated");
-            var sendSpan = activities.FirstOrDefault(a => a.DisplayName == "send session.update");
+            var recvSpan    = activities.FirstOrDefault(a => a.DisplayName == "recv session.updated");
+            var sendSpan    = activities.FirstOrDefault(a => a.DisplayName == "send session.update");
 
             Assert.IsNotNull(connectSpan, $"Expected 'connect' span. Got: [{string.Join(", ", spanNames)}]");
-            Assert.IsNotNull(recvSpan, $"Expected 'recv session.updated'. Got: [{string.Join(", ", spanNames)}]");
-            Assert.IsNotNull(sendSpan, $"Expected 'send session.update'. Got: [{string.Join(", ", spanNames)}]");
+            Assert.IsNotNull(recvSpan,    $"Expected 'recv session.updated'. Got: [{string.Join(", ", spanNames)}]");
+            Assert.IsNotNull(sendSpan,    $"Expected 'send session.update'. Got: [{string.Join(", ", spanNames)}]");
 
             // Verify connect span carries standard GenAI attributes.
             Assert.AreEqual("connect", connectSpan!.GetTagItem("gen_ai.operation.name")?.ToString(),
