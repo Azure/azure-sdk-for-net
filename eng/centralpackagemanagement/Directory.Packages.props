@@ -113,7 +113,7 @@
     <PackageVersion Include="Azure.Data.Tables" Version="12.11.0" />
     <PackageVersion Include="Azure.Identity.Broker" Version="1.7.0" />
     <PackageVersion Include="Azure.Messaging.EventGrid" Version="4.21.0" />
-    <PackageVersion Include="Azure.Messaging.EventGrid.SystemEvents" Version="1.0.0" />
+    <PackageVersion Include="Azure.Messaging.EventGrid.SystemEvents" Version="1.1.0" />
     <PackageVersion Include="Azure.Messaging.EventHubs" Version="5.12.2" />
     <PackageVersion Include="Azure.Messaging.ServiceBus" Version="7.20.2" />
     <PackageVersion Include="Azure.Messaging.WebPubSub" Version="1.6.0" />

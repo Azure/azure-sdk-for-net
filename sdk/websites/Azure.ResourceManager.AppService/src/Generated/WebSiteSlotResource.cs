@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.AppService
         {
             TryGetApiVersion(ResourceType, out string webSiteSlotApiVersion);
             _webAppsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.AppService", ResourceType.Namespace, Diagnostics);
-            _webAppsRestClient = new WebApps(_webAppsClientDiagnostics, Pipeline, Endpoint, webSiteSlotApiVersion ?? "2026-03-15");
+            _webAppsRestClient = new WebApps(_webAppsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, webSiteSlotApiVersion ?? "2026-03-15");
             ValidateResourceId(id);
         }
 

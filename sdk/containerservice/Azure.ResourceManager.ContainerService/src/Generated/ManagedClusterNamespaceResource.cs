@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.ContainerService
         {
             TryGetApiVersion(ResourceType, out string managedClusterNamespaceApiVersion);
             _managedNamespacesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ContainerService", ResourceType.Namespace, Diagnostics);
-            _managedNamespacesRestClient = new ManagedNamespaces(_managedNamespacesClientDiagnostics, Pipeline, Endpoint, managedClusterNamespaceApiVersion ?? "2026-04-02-preview");
+            _managedNamespacesRestClient = new ManagedNamespaces(_managedNamespacesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, managedClusterNamespaceApiVersion ?? "2026-04-02-preview");
             ValidateResourceId(id);
         }
 

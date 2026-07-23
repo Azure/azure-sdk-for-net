@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.Avs
         {
             TryGetApiVersion(AvsPrivateCloudAddonResource.ResourceType, out string avsPrivateCloudAddonApiVersion);
             _addonsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Avs", AvsPrivateCloudAddonResource.ResourceType.Namespace, Diagnostics);
-            _addonsRestClient = new Addons(_addonsClientDiagnostics, Pipeline, Endpoint, avsPrivateCloudAddonApiVersion ?? "2025-09-01");
+            _addonsRestClient = new Addons(_addonsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, avsPrivateCloudAddonApiVersion ?? "2025-09-01");
             ValidateResourceId(id);
         }
 

@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.MachineLearning
         {
             TryGetApiVersion(MachineLearningComputeResource.ResourceType, out string machineLearningComputeApiVersion);
             _computeClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.MachineLearning", MachineLearningComputeResource.ResourceType.Namespace, Diagnostics);
-            _computeRestClient = new Compute(_computeClientDiagnostics, Pipeline, Endpoint, machineLearningComputeApiVersion ?? "2026-03-15-preview");
+            _computeRestClient = new Compute(_computeClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, machineLearningComputeApiVersion ?? "2026-03-15-preview");
             ValidateResourceId(id);
         }
 

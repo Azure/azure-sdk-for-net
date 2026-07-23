@@ -40,11 +40,11 @@ namespace Azure.ResourceManager.AppService.Mocking
 
         private ClientDiagnostics WebClientClientDiagnostics => _webClientClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.AppService.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private WebClient WebClientRestClient => _webClientRestClient ??= new WebClient(WebClientClientDiagnostics, Pipeline, Endpoint, "2026-03-15");
+        private WebClient WebClientRestClient => _webClientRestClient ??= new WebClient(WebClientClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2026-03-15");
 
         private ClientDiagnostics ProviderOperationGroupClientDiagnostics => _providerOperationGroupClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.AppService.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private ProviderOperationGroup ProviderOperationGroupRestClient => _providerOperationGroupRestClient ??= new ProviderOperationGroup(ProviderOperationGroupClientDiagnostics, Pipeline, Endpoint, "2026-03-15");
+        private ProviderOperationGroup ProviderOperationGroupRestClient => _providerOperationGroupRestClient ??= new ProviderOperationGroup(ProviderOperationGroupClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2026-03-15");
 
         /// <summary>
         /// Description for Gets publishing user

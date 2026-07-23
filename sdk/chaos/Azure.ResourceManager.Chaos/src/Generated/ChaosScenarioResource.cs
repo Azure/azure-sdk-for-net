@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.Chaos
         {
             TryGetApiVersion(ResourceType, out string chaosScenarioApiVersion);
             _scenariosClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Chaos", ResourceType.Namespace, Diagnostics);
-            _scenariosRestClient = new Scenarios(_scenariosClientDiagnostics, Pipeline, Endpoint, chaosScenarioApiVersion ?? "2026-05-01-preview");
+            _scenariosRestClient = new Scenarios(_scenariosClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, chaosScenarioApiVersion ?? "2026-05-01-preview");
             ValidateResourceId(id);
         }
 

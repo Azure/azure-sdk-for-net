@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.Network
         {
             TryGetApiVersion(ResourceType, out string virtualHubApiVersion);
             _virtualHubsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Network", ResourceType.Namespace, Diagnostics);
-            _virtualHubsRestClient = new VirtualHubs(_virtualHubsClientDiagnostics, Pipeline, Endpoint, virtualHubApiVersion ?? "2025-07-01");
+            _virtualHubsRestClient = new VirtualHubs(_virtualHubsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, virtualHubApiVersion ?? "2025-07-01");
             ValidateResourceId(id);
         }
 

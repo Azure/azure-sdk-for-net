@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.Network
         {
             TryGetApiVersion(ResourceType, out string cloudServiceSwapApiVersion);
             _vipSwapClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Network", ResourceType.Namespace, Diagnostics);
-            _vipSwapRestClient = new VipSwap(_vipSwapClientDiagnostics, Pipeline, Endpoint, cloudServiceSwapApiVersion ?? "2025-07-01");
+            _vipSwapRestClient = new VipSwap(_vipSwapClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, cloudServiceSwapApiVersion ?? "2025-07-01");
             ValidateResourceId(id);
         }
 
