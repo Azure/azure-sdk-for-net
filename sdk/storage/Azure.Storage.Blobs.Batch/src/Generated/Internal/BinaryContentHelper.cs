@@ -140,21 +140,5 @@ namespace Azure.Storage.Blobs.Batch
 #endif
             return content;
         }
-
-        /// <param name="enumerable"></param>
-        /// <param name="rootNameHint"></param>
-        /// <param name="childNameHint"></param>
-        public static RequestContent FromEnumerable<T>(IEnumerable<T> enumerable, string rootNameHint, string childNameHint)
-            where T : notnull
-        {
-            XmlWriterContent content = new XmlWriterContent();
-            content.XmlWriter.WriteStartElement(rootNameHint);
-            foreach (var item in enumerable)
-            {
-                content.XmlWriter.WriteObjectValue(item, ModelSerializationExtensions.WireOptions, childNameHint);
-            }
-            content.XmlWriter.WriteEndElement();
-            return content;
-        }
     }
 }
