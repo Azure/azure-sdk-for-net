@@ -2,15 +2,14 @@
 # See eng/analyzerallowlist/README.md for the file format and review policy.
 
 # TestProxyClient and TestProxyAdminClient are generated System.ClientModel clients
-# that return ClientResult / ClientResult<T> and take an options bag. AZC0007 and
-# AZC0015 encode Azure.Core client-design rules (options-less constructor overloads,
-# Response<T>-family return types) that do not apply to unbranded System.ClientModel
-# clients, so they are suppressed for these two types.
+# that return ClientResult / ClientResult<T>. AZC0015 encodes the Azure.Core
+# client-method return-type rule (Response<T>-family), which does not apply to
+# unbranded System.ClientModel clients, so it is suppressed for these two types.
 #
-# INTERIM: a follow-up will make AZC0007 and AZC0015 SCM-aware (recognize SCM options
-# and ClientResult return types) in Azure.SdkAnalyzers, after which these entries can
-# be removed.
-nowarn:AZC0007 T:Microsoft.ClientModel.TestFramework.TestProxy.TestProxyClient
+# INTERIM: AZC0015 is now SCM-aware in Azure.SdkAnalyzers (it accepts ClientResult),
+# but the azure-sdk-tools ClientMethodsAnalyzer still emits AZC0015 until it is
+# removed there and the package is bumped here; these entries can be dropped then.
+# (AZC0007 was already made SCM-aware in ClientConstructorAnalyzer, so its entries
+# were dropped.)
 nowarn:AZC0015 T:Microsoft.ClientModel.TestFramework.TestProxy.TestProxyClient
-nowarn:AZC0007 T:Microsoft.ClientModel.TestFramework.TestProxy.Admin.TestProxyAdminClient
 nowarn:AZC0015 T:Microsoft.ClientModel.TestFramework.TestProxy.Admin.TestProxyAdminClient
