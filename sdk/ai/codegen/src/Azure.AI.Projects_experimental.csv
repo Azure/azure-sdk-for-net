@@ -84,6 +84,7 @@ class;Azure.AI.Projects.FoundryModelSourceType
 class;Azure.AI.Projects.FoundryModelWarning
 class;Azure.AI.Projects.FoundryModelWarningCode
 class;Azure.AI.Projects.FoundryModelWeightType
+class;Azure.AI.Projects.GenerationWarningType
 class;Azure.AI.Projects.GitHubIssueEvent
 class;Azure.AI.Projects.GitHubIssueRoutineTrigger
 class;Azure.AI.Projects.HourlyRecurrenceSchedule
@@ -150,6 +151,10 @@ class;Azure.AI.Projects.RoutineRunStatus
 class;Azure.AI.Projects.RoutineTrigger
 class;Azure.AI.Projects.RoutineTriggerKind
 class;Azure.AI.Projects.RubricBasedEvaluatorDefinition
+class;Azure.AI.Projects.RubricGenerationInputQualityWarning
+class;Azure.AI.Projects.RubricGenerationInputQualityWarningCode
+class;Azure.AI.Projects.RubricGenerationInputQualityWarningSeverity
+class;Azure.AI.Projects.RubricGenerationInputQualityWarningSource
 class;Azure.AI.Projects.SampleType
 class;Azure.AI.Projects.ScheduleProvisioningStatus
 class;Azure.AI.Projects.ScheduleRoutineTrigger
@@ -172,6 +177,7 @@ class;Azure.AI.Projects.Trigger
 class;Azure.AI.Projects.TriggerType
 class;Azure.AI.Projects.UpdateModelVersionOptions
 class;Azure.AI.Projects.UserProfileMemoryItem
+class;Azure.AI.Projects.WebIQPreviewTool
 class;Azure.AI.Projects.WeeklyRecurrenceSchedule
 class;Azure.AI.Projects.WorkIQPreviewTool
 field;Azure.AI.Projects.EvaluationRule::action

@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.CognitiveServices
         {
             TryGetApiVersion(CommitmentPlanAccountAssociationResource.ResourceType, out string commitmentPlanAccountAssociationApiVersion);
             _commitmentPlanAccountAssociationsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.CognitiveServices", CommitmentPlanAccountAssociationResource.ResourceType.Namespace, Diagnostics);
-            _commitmentPlanAccountAssociationsRestClient = new CommitmentPlanAccountAssociations(_commitmentPlanAccountAssociationsClientDiagnostics, Pipeline, Endpoint, commitmentPlanAccountAssociationApiVersion ?? "2026-05-15-preview");
+            _commitmentPlanAccountAssociationsRestClient = new CommitmentPlanAccountAssociations(_commitmentPlanAccountAssociationsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, commitmentPlanAccountAssociationApiVersion ?? "2026-05-15-preview");
             ValidateResourceId(id);
         }
 

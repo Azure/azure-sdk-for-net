@@ -5,7 +5,7 @@ using Azure.Generator.Management.Models;
 using Microsoft.TypeSpec.Generator.Input;
 using System;
 using System.Collections.Generic;
-using System.Linq;
+using System.Text.Json;
 
 namespace Azure.Generator.Provisioning.Primitives
 {
@@ -15,30 +15,35 @@ namespace Azure.Generator.Provisioning.Primitives
     /// </summary>
     internal sealed class ProvisioningResourceProjection
     {
-        private ProvisioningResourceProjection(IReadOnlyList<ArmResourceMetadata> metadata)
+        internal ProvisioningResourceProjection(
+            InputModelType resourceModel,
+            string resourceName,
+            string resourceType,
+            string? singletonResourceName,
+            RequestPathPattern? parentResourceId,
+            ArmResourceNameConstraints nameConstraints,
+            IReadOnlyList<RequestPathPattern> resourceIdPatterns,
+            IReadOnlyList<string> apiVersions,
+            IReadOnlyList<ResourceMethod> methods,
+            IReadOnlyList<ArmResourceRbacRole> rbacRoles,
+            IReadOnlyList<ResourceScope> readableScopes,
+            IReadOnlyList<ResourceScope> writableScopes,
+            bool isExtensionResource)
         {
-            Metadata = metadata;
-            ResourceModel = GetSameResourceModel(metadata);
-            ResourceType = GetSameResourceType(metadata);
-            ResourceName = GetSameValueOrDefault(metadata.Select(resource => resource.ResourceName), ResourceModel.Name, StringComparer.Ordinal);
-            SingletonResourceName = GetSameNullableValueOrDefault(metadata.Select(resource => resource.SingletonResourceName), null, StringComparer.Ordinal);
-            ParentResourceId = GetSameNullableValueOrDefault(metadata.Select(resource => resource.ParentResourceId), null);
-            NameConstraints = GetSameValueOrDefault(
-                metadata.Select(resource => resource.NameConstraints),
-                new ArmResourceNameConstraints(null, null, null));
-            ResourceIdPatterns = [.. CollectResourceIdPatterns(metadata)];
-            ApiVersions = [.. CollectApiVersions(metadata)];
-            Methods = [.. CollectMethods(metadata)];
-            RbacRoles = [.. CollectRbacRoles(metadata)];
-            ReadableScopes = CollectScopes(metadata, IsReadableOperation);
-            WritableScopes = CollectScopes(metadata, IsWritableOperation);
+            ResourceModel = resourceModel;
+            ResourceName = resourceName;
+            ResourceType = resourceType;
+            SingletonResourceName = singletonResourceName;
+            ParentResourceId = parentResourceId;
+            NameConstraints = nameConstraints;
+            ResourceIdPatterns = resourceIdPatterns;
+            ApiVersions = apiVersions;
+            Methods = methods;
+            RbacRoles = rbacRoles;
+            ReadableScopes = readableScopes;
+            WritableScopes = writableScopes;
+            IsExtensionResource = isExtensionResource;
         }
-
-        /// <summary>
-        /// Gets the raw management resource metadata entries represented by this
-        /// provisioning resource projection.
-        /// </summary>
-        internal IReadOnlyList<ArmResourceMetadata> Metadata { get; }
 
         /// <summary>
         /// Gets the resource body model shared by all collapsed metadata entries.
@@ -106,138 +111,111 @@ namespace Azure.Generator.Provisioning.Primitives
         /// Gets whether this resource should be emitted as a Bicep extension
         /// resource with a language-level <c>scope</c> relationship.
         /// </summary>
-        internal bool IsExtensionResource => WritableScopes.Contains(ResourceScope.Extension);
+        internal bool IsExtensionResource { get; }
 
-        internal static IReadOnlyList<ProvisioningResourceProjection> Create(IReadOnlyList<ArmResourceMetadata> metadata)
+        internal static ProvisioningResourceProjection Deserialize(
+            JsonElement element,
+            IReadOnlyDictionary<string, InputModelType> modelsById,
+            IReadOnlyDictionary<string, ResourceMethod> methodsById)
         {
-            var groups = new Dictionary<(string ResourceType, InputModelType ResourceModel), List<ArmResourceMetadata>>();
-            var orderedGroups = new List<List<ArmResourceMetadata>>();
-
-            foreach (var resource in metadata)
+            var resourceModelId = GetRequiredString(element, "resourceModelId");
+            if (!modelsById.TryGetValue(resourceModelId, out var resourceModel))
             {
-                var key = (resource.ResourceType, resource.ResourceModel);
-                if (!groups.TryGetValue(key, out var group))
+                throw new JsonException($"Provisioning resource model '{resourceModelId}' was not found in the code model.");
+            }
+
+            var methods = new List<ResourceMethod>();
+            foreach (var methodIdElement in element.GetProperty("methodIds").EnumerateArray())
+            {
+                var methodId = methodIdElement.GetString()
+                    ?? throw new JsonException("A provisioning resource method ID cannot be null.");
+                if (!methodsById.TryGetValue(methodId, out var method))
                 {
-                    group = [];
-                    groups.Add(key, group);
-                    orderedGroups.Add(group);
+                    throw new JsonException($"Provisioning resource method '{methodId}' was not found in the ARM provider schema.");
                 }
-                group.Add(resource);
+                methods.Add(method);
             }
 
-            return [.. orderedGroups.Select(group => new ProvisioningResourceProjection(group))];
-        }
+            var nameConstraintsElement = element.GetProperty("nameConstraints");
+            var nameConstraints = new ArmResourceNameConstraints(
+                GetOptionalString(nameConstraintsElement, "pattern"),
+                GetOptionalInt32(nameConstraintsElement, "minLength"),
+                GetOptionalInt32(nameConstraintsElement, "maxLength"));
 
-        private static InputModelType GetSameResourceModel(IReadOnlyList<ArmResourceMetadata> metadata)
-        {
-            var resourceModel = metadata[0].ResourceModel;
-            if (metadata.Any(resource => !ReferenceEquals(resource.ResourceModel, resourceModel)))
+            var rbacRoles = new List<ArmResourceRbacRole>();
+            foreach (var roleElement in element.GetProperty("rbacRoles").EnumerateArray())
             {
-                throw new InvalidOperationException("Collapsed provisioning resources must share the same resource model.");
+                rbacRoles.Add(new ArmResourceRbacRole(
+                    GetRequiredString(roleElement, "name"),
+                    GetRequiredString(roleElement, "value")));
             }
-            return resourceModel;
+
+            return new(
+                resourceModel,
+                GetRequiredString(element, "resourceName"),
+                GetRequiredString(element, "resourceType"),
+                GetOptionalString(element, "singletonResourceName"),
+                GetOptionalString(element, "parentResourceId") is string parentResourceId
+                    ? new RequestPathPattern(parentResourceId)
+                    : null,
+                nameConstraints,
+                DeserializeRequestPaths(element.GetProperty("resourceIdPatterns")),
+                DeserializeStrings(element.GetProperty("apiVersions")),
+                methods,
+                rbacRoles,
+                DeserializeScopes(element.GetProperty("readableScopes")),
+                DeserializeScopes(element.GetProperty("writableScopes")),
+                element.GetProperty("isExtensionResource").GetBoolean());
         }
 
-        private static string GetSameResourceType(IReadOnlyList<ArmResourceMetadata> metadata)
+        private static IReadOnlyList<RequestPathPattern> DeserializeRequestPaths(JsonElement element)
         {
-            var resourceType = metadata[0].ResourceType;
-            if (metadata.Any(resource => !string.Equals(resource.ResourceType, resourceType, StringComparison.Ordinal)))
+            var paths = new List<RequestPathPattern>();
+            foreach (var item in element.EnumerateArray())
             {
-                throw new InvalidOperationException("Collapsed provisioning resources must share the same resource type.");
+                paths.Add(new RequestPathPattern(
+                    item.GetString() ?? throw new JsonException("A provisioning resource path cannot be null.")));
             }
-            return resourceType;
+            return paths;
         }
 
-        private static T GetSameValueOrDefault<T>(IEnumerable<T> values, T defaultValue, IEqualityComparer<T>? comparer = null)
-            where T : notnull
+        private static IReadOnlyList<string> DeserializeStrings(JsonElement element)
         {
-            var distinctValues = values.Distinct(comparer).Take(2).ToArray();
-            return distinctValues.Length == 1 ? distinctValues[0] : defaultValue;
-        }
-
-        private static T? GetSameNullableValueOrDefault<T>(IEnumerable<T?> values, T? defaultValue, IEqualityComparer<T?>? comparer = null)
-        {
-            var distinctValues = values.Distinct(comparer).Take(2).ToArray();
-            return distinctValues.Length == 1 ? distinctValues[0] : defaultValue;
-        }
-
-        private static IEnumerable<RequestPathPattern> CollectResourceIdPatterns(IReadOnlyList<ArmResourceMetadata> metadata)
-        {
-            var seen = new HashSet<RequestPathPattern>();
-            foreach (var resource in metadata)
+            var values = new List<string>();
+            foreach (var item in element.EnumerateArray())
             {
-                if (seen.Add(resource.ResourceIdPattern))
-                {
-                    yield return resource.ResourceIdPattern;
-                }
+                values.Add(item.GetString() ?? throw new JsonException("A provisioning string value cannot be null."));
             }
+            return values;
         }
 
-        private static IEnumerable<string> CollectApiVersions(IReadOnlyList<ArmResourceMetadata> metadata)
+        private static IReadOnlyList<ResourceScope> DeserializeScopes(JsonElement element)
         {
-            var seen = new HashSet<string>();
-            foreach (var resource in metadata)
-            {
-                foreach (var apiVersion in resource.ApiVersions)
-                {
-                    if (seen.Add(apiVersion))
-                    {
-                        yield return apiVersion;
-                    }
-                }
-            }
-        }
-
-        private static IEnumerable<ResourceMethod> CollectMethods(IReadOnlyList<ArmResourceMetadata> metadata)
-        {
-            var seen = new HashSet<ResourceMethod>();
-            foreach (var resource in metadata)
-            {
-                foreach (var method in resource.Methods)
-                {
-                    if (seen.Add(method))
-                    {
-                        yield return method;
-                    }
-                }
-            }
-        }
-
-        private static IEnumerable<ArmResourceRbacRole> CollectRbacRoles(IReadOnlyList<ArmResourceMetadata> metadata)
-        {
-            var seen = new HashSet<ArmResourceRbacRole>();
-            foreach (var resource in metadata)
-            {
-                foreach (var role in resource.RbacRoles)
-                {
-                    if (seen.Add(role))
-                    {
-                        yield return role;
-                    }
-                }
-            }
-        }
-
-        private static IReadOnlyList<ResourceScope> CollectScopes(
-            IReadOnlyList<ArmResourceMetadata> metadata,
-            Func<ResourceOperationKind, bool> operationSelector)
-        {
-            var seen = new HashSet<ResourceScope>();
             var scopes = new List<ResourceScope>();
-            foreach (var resource in metadata)
+            foreach (var item in element.EnumerateArray())
             {
-                if (resource.Methods.Any(method => operationSelector(method.Kind)) && seen.Add(resource.Scope.Kind))
+                var value = item.GetString() ?? throw new JsonException("A provisioning resource scope cannot be null.");
+                if (!Enum.TryParse<ResourceScope>(value, out var scope))
                 {
-                    scopes.Add(resource.Scope.Kind);
+                    throw new JsonException($"Provisioning resource scope '{value}' is invalid.");
                 }
+                scopes.Add(scope);
             }
             return scopes;
         }
 
-        private static bool IsReadableOperation(ResourceOperationKind kind)
-            => kind == ResourceOperationKind.Read;
+        private static string GetRequiredString(JsonElement element, string propertyName)
+            => element.GetProperty(propertyName).GetString()
+                ?? throw new JsonException($"Required provisioning property '{propertyName}' cannot be null.");
 
-        private static bool IsWritableOperation(ResourceOperationKind kind)
-            => kind == ResourceOperationKind.Create || kind == ResourceOperationKind.Update;
+        private static string? GetOptionalString(JsonElement element, string propertyName)
+            => element.TryGetProperty(propertyName, out var property) && property.ValueKind != JsonValueKind.Null
+                ? property.GetString()
+                : null;
+
+        private static int? GetOptionalInt32(JsonElement element, string propertyName)
+            => element.TryGetProperty(propertyName, out var property) && property.ValueKind != JsonValueKind.Null
+                ? property.GetInt32()
+                : null;
     }
 }

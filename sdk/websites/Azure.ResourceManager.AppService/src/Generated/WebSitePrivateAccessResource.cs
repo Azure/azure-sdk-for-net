@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.AppService
         {
             TryGetApiVersion(ResourceType, out string webSitePrivateAccessApiVersion);
             _privateAccessesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.AppService", ResourceType.Namespace, Diagnostics);
-            _privateAccessesRestClient = new PrivateAccesses(_privateAccessesClientDiagnostics, Pipeline, Endpoint, webSitePrivateAccessApiVersion ?? "2026-03-15");
+            _privateAccessesRestClient = new PrivateAccesses(_privateAccessesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, webSitePrivateAccessApiVersion ?? "2026-03-15");
             ValidateResourceId(id);
         }
 

@@ -66,63 +66,63 @@ namespace Azure.ResourceManager.AppService.Mocking
 
         private ClientDiagnostics AppServiceEnvironmentResourcesClientDiagnostics => _appServiceEnvironmentResourcesClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.AppService.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private AppServiceEnvironmentResources AppServiceEnvironmentResourcesRestClient => _appServiceEnvironmentResourcesRestClient ??= new AppServiceEnvironmentResources(AppServiceEnvironmentResourcesClientDiagnostics, Pipeline, Endpoint, "2026-03-15");
+        private AppServiceEnvironmentResources AppServiceEnvironmentResourcesRestClient => _appServiceEnvironmentResourcesRestClient ??= new AppServiceEnvironmentResources(AppServiceEnvironmentResourcesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2026-03-15");
 
         private ClientDiagnostics AppServicePlansClientDiagnostics => _appServicePlansClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.AppService.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private AppServicePlans AppServicePlansRestClient => _appServicePlansRestClient ??= new AppServicePlans(AppServicePlansClientDiagnostics, Pipeline, Endpoint, "2026-03-15");
+        private AppServicePlans AppServicePlansRestClient => _appServicePlansRestClient ??= new AppServicePlans(AppServicePlansClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2026-03-15");
 
         private ClientDiagnostics CertificatesClientDiagnostics => _certificatesClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.AppService.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private Certificates CertificatesRestClient => _certificatesRestClient ??= new Certificates(CertificatesClientDiagnostics, Pipeline, Endpoint, "2026-03-15");
+        private Certificates CertificatesRestClient => _certificatesRestClient ??= new Certificates(CertificatesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2026-03-15");
 
         private ClientDiagnostics KubeEnvironmentsClientDiagnostics => _kubeEnvironmentsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.AppService.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private KubeEnvironments KubeEnvironmentsRestClient => _kubeEnvironmentsRestClient ??= new KubeEnvironments(KubeEnvironmentsClientDiagnostics, Pipeline, Endpoint, "2026-03-15");
+        private KubeEnvironments KubeEnvironmentsRestClient => _kubeEnvironmentsRestClient ??= new KubeEnvironments(KubeEnvironmentsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2026-03-15");
 
         private ClientDiagnostics SitesClientDiagnostics => _sitesClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.AppService.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private Sites SitesRestClient => _sitesRestClient ??= new Sites(SitesClientDiagnostics, Pipeline, Endpoint, "2026-03-15");
+        private Sites SitesRestClient => _sitesRestClient ??= new Sites(SitesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2026-03-15");
 
         private ClientDiagnostics StaticSiteARMResourcesClientDiagnostics => _staticSiteARMResourcesClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.AppService.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private StaticSiteARMResources StaticSiteARMResourcesRestClient => _staticSiteARMResourcesRestClient ??= new StaticSiteARMResources(StaticSiteARMResourcesClientDiagnostics, Pipeline, Endpoint, "2026-03-15");
+        private StaticSiteARMResources StaticSiteARMResourcesRestClient => _staticSiteARMResourcesRestClient ??= new StaticSiteARMResources(StaticSiteARMResourcesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2026-03-15");
 
         private ClientDiagnostics AiGatewaysClientDiagnostics => _aiGatewaysClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.AppService.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private AiGateways AiGatewaysRestClient => _aiGatewaysRestClient ??= new AiGateways(AiGatewaysClientDiagnostics, Pipeline, Endpoint, "2026-03-15");
+        private AiGateways AiGatewaysRestClient => _aiGatewaysRestClient ??= new AiGateways(AiGatewaysClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2026-03-15");
 
         private ClientDiagnostics WebClientClientDiagnostics => _webClientClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.AppService.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private WebClient WebClientRestClient => _webClientRestClient ??= new WebClient(WebClientClientDiagnostics, Pipeline, Endpoint, "2026-03-15");
+        private WebClient WebClientRestClient => _webClientRestClient ??= new WebClient(WebClientClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2026-03-15");
 
         private ClientDiagnostics StaticSitesAsyncOperationsClientDiagnostics => _staticSitesAsyncOperationsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.AppService.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private StaticSitesAsyncOperations StaticSitesAsyncOperationsRestClient => _staticSitesAsyncOperationsRestClient ??= new StaticSitesAsyncOperations(StaticSitesAsyncOperationsClientDiagnostics, Pipeline, Endpoint, "2026-03-15");
+        private StaticSitesAsyncOperations StaticSitesAsyncOperationsRestClient => _staticSitesAsyncOperationsRestClient ??= new StaticSitesAsyncOperations(StaticSitesAsyncOperationsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2026-03-15");
 
         private ClientDiagnostics GlobalOperationGroupClientDiagnostics => _globalOperationGroupClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.AppService.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private GlobalOperationGroup GlobalOperationGroupRestClient => _globalOperationGroupRestClient ??= new GlobalOperationGroup(GlobalOperationGroupClientDiagnostics, Pipeline, Endpoint, "2026-03-15");
+        private GlobalOperationGroup GlobalOperationGroupRestClient => _globalOperationGroupRestClient ??= new GlobalOperationGroup(GlobalOperationGroupClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2026-03-15");
 
         private ClientDiagnostics ProviderOperationGroupClientDiagnostics => _providerOperationGroupClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.AppService.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private ProviderOperationGroup ProviderOperationGroupRestClient => _providerOperationGroupRestClient ??= new ProviderOperationGroup(ProviderOperationGroupClientDiagnostics, Pipeline, Endpoint, "2026-03-15");
+        private ProviderOperationGroup ProviderOperationGroupRestClient => _providerOperationGroupRestClient ??= new ProviderOperationGroup(ProviderOperationGroupClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2026-03-15");
 
         private ClientDiagnostics RecommendationsOperationGroupClientDiagnostics => _recommendationsOperationGroupClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.AppService.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private RecommendationsOperationGroup RecommendationsOperationGroupRestClient => _recommendationsOperationGroupRestClient ??= new RecommendationsOperationGroup(RecommendationsOperationGroupClientDiagnostics, Pipeline, Endpoint, "2026-03-15");
+        private RecommendationsOperationGroup RecommendationsOperationGroupRestClient => _recommendationsOperationGroupRestClient ??= new RecommendationsOperationGroup(RecommendationsOperationGroupClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2026-03-15");
 
         private ClientDiagnostics ResourceHealthMetadataNonResourceOperationGroupClientDiagnostics => _resourceHealthMetadataNonResourceOperationGroupClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.AppService.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private ResourceHealthMetadataNonResourceOperationGroup ResourceHealthMetadataNonResourceOperationGroupRestClient => _resourceHealthMetadataNonResourceOperationGroupRestClient ??= new ResourceHealthMetadataNonResourceOperationGroup(ResourceHealthMetadataNonResourceOperationGroupClientDiagnostics, Pipeline, Endpoint, "2026-03-15");
+        private ResourceHealthMetadataNonResourceOperationGroup ResourceHealthMetadataNonResourceOperationGroupRestClient => _resourceHealthMetadataNonResourceOperationGroupRestClient ??= new ResourceHealthMetadataNonResourceOperationGroup(ResourceHealthMetadataNonResourceOperationGroupClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2026-03-15");
 
         private ClientDiagnostics GetUsagesInLocationOperationGroupClientDiagnostics => _getUsagesInLocationOperationGroupClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.AppService.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private GetUsagesInLocationOperationGroup GetUsagesInLocationOperationGroupRestClient => _getUsagesInLocationOperationGroupRestClient ??= new GetUsagesInLocationOperationGroup(GetUsagesInLocationOperationGroupClientDiagnostics, Pipeline, Endpoint, "2026-03-15");
+        private GetUsagesInLocationOperationGroup GetUsagesInLocationOperationGroupRestClient => _getUsagesInLocationOperationGroupRestClient ??= new GetUsagesInLocationOperationGroup(GetUsagesInLocationOperationGroupClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2026-03-15");
 
         private ClientDiagnostics StaticSitesOperationGroupClientDiagnostics => _staticSitesOperationGroupClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.AppService.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private StaticSitesOperationGroup StaticSitesOperationGroupRestClient => _staticSitesOperationGroupRestClient ??= new StaticSitesOperationGroup(StaticSitesOperationGroupClientDiagnostics, Pipeline, Endpoint, "2026-03-15");
+        private StaticSitesOperationGroup StaticSitesOperationGroupRestClient => _staticSitesOperationGroupRestClient ??= new StaticSitesOperationGroup(StaticSitesOperationGroupClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2026-03-15");
 
         /// <summary> Gets a collection of DeletedSiteAtLocations in the <see cref="SubscriptionResource"/>. </summary>
         /// <param name="location"> The location for the resource. </param>

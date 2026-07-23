@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.AppService
         {
             TryGetApiVersion(ResourceType, out string slotConfigNamesResourceApiVersion);
             _slotConfigNamesResourcesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.AppService", ResourceType.Namespace, Diagnostics);
-            _slotConfigNamesResourcesRestClient = new SlotConfigNamesResources(_slotConfigNamesResourcesClientDiagnostics, Pipeline, Endpoint, slotConfigNamesResourceApiVersion ?? "2026-03-15");
+            _slotConfigNamesResourcesRestClient = new SlotConfigNamesResources(_slotConfigNamesResourcesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, slotConfigNamesResourceApiVersion ?? "2026-03-15");
             ValidateResourceId(id);
         }
 

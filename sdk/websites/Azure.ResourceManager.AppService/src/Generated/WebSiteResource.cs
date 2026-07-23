@@ -58,11 +58,11 @@ namespace Azure.ResourceManager.AppService
         {
             TryGetApiVersion(ResourceType, out string webSiteApiVersion);
             _sitesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.AppService", ResourceType.Namespace, Diagnostics);
-            _sitesRestClient = new Sites(_sitesClientDiagnostics, Pipeline, Endpoint, webSiteApiVersion ?? "2026-03-15");
+            _sitesRestClient = new Sites(_sitesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, webSiteApiVersion ?? "2026-03-15");
             _siteRecommendationsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.AppService", ResourceType.Namespace, Diagnostics);
-            _siteRecommendationsRestClient = new SiteRecommendations(_siteRecommendationsClientDiagnostics, Pipeline, Endpoint, webSiteApiVersion ?? "2026-03-15");
+            _siteRecommendationsRestClient = new SiteRecommendations(_siteRecommendationsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, webSiteApiVersion ?? "2026-03-15");
             _siteWorkflowsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.AppService", ResourceType.Namespace, Diagnostics);
-            _siteWorkflowsRestClient = new SiteWorkflows(_siteWorkflowsClientDiagnostics, Pipeline, Endpoint, webSiteApiVersion ?? "2026-03-15");
+            _siteWorkflowsRestClient = new SiteWorkflows(_siteWorkflowsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, webSiteApiVersion ?? "2026-03-15");
             ValidateResourceId(id);
         }
 

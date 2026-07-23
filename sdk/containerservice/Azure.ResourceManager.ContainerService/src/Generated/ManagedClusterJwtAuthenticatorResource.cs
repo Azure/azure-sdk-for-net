@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.ContainerService
         {
             TryGetApiVersion(ResourceType, out string managedClusterJwtAuthenticatorApiVersion);
             _jwtAuthenticatorsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ContainerService", ResourceType.Namespace, Diagnostics);
-            _jwtAuthenticatorsRestClient = new JWTAuthenticators(_jwtAuthenticatorsClientDiagnostics, Pipeline, Endpoint, managedClusterJwtAuthenticatorApiVersion ?? "2026-04-02-preview");
+            _jwtAuthenticatorsRestClient = new JWTAuthenticators(_jwtAuthenticatorsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, managedClusterJwtAuthenticatorApiVersion ?? "2026-04-02-preview");
             ValidateResourceId(id);
         }
 

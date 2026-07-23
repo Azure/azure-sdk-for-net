@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.Redis
         {
             TryGetApiVersion(ResourceType, out string redisPatchScheduleApiVersion);
             _redisPatchSchedulesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Redis", ResourceType.Namespace, Diagnostics);
-            _redisPatchSchedulesRestClient = new RedisPatchSchedules(_redisPatchSchedulesClientDiagnostics, Pipeline, Endpoint, redisPatchScheduleApiVersion ?? "2025-08-01-preview");
+            _redisPatchSchedulesRestClient = new RedisPatchSchedules(_redisPatchSchedulesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, redisPatchScheduleApiVersion ?? "2025-08-01-preview");
             ValidateResourceId(id);
         }
 

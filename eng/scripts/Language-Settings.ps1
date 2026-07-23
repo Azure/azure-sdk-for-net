@@ -8,6 +8,7 @@ $GithubUri = "https://github.com/Azure/azure-sdk-for-net"
 $PackageRepositoryUri = "https://www.nuget.org/packages"
 
 . "$PSScriptRoot/docs/Docs-ToC.ps1"
+. "$PSScriptRoot/ProjectScopedEngFiles.ps1"
 function Get-AllPackageInfoFromRepo($serviceDirectory)
 {
   $allPackageProps = @()
@@ -94,6 +95,21 @@ function Get-dotnet-AdditionalValidationPackagesFromPackageSet($LocatedPackages,
 {
   $additionalValidationPackages = @()
 
+  # Changes to a package's project-scoped engineering files (ApiCompat baselines,
+  # analyzer/NoWarn allow-lists, CPM overrides) live under eng/ and so are invisible to
+  # the eng/common diff-to-package detection, which only maps files under a package's
+  # sdk/<service>/<package> directory. Map those changes back to their owning package so
+  # validation rebuilds it (and re-runs ApiCompat). Without this a baseline deletion can
+  # silently ship an ApiCompat regression because the package is never rebuilt (see #60837).
+  foreach ($pkg in (Get-PackagesFromEngFileChanges -DiffObj $diffObj -AllPkgProps $AllPkgProps)) {
+    if ($LocatedPackages -notcontains $pkg -and $additionalValidationPackages -notcontains $pkg) {
+      $pkgDisplayName = if ($pkg.ArtifactName) { $pkg.ArtifactName } else { $pkg.Name }
+      Write-Host "Including '$pkgDisplayName' because one of its project-scoped engineering files changed."
+      $pkg.IncludedForValidation = $true
+      $additionalValidationPackages += $pkg
+    }
+  }
+
   # Use all directly changed packages for dependency calculation. This ensures that
   # when any package changes, all cross-service packages that depend on it are included
   # as indirect packages for validation testing.
@@ -129,7 +145,7 @@ function Get-dotnet-AdditionalValidationPackagesFromPackageSet($LocatedPackages,
         continue
       }
 
-      if ($pkg -and $LocatedPackages -notcontains $pkg) {
+      if ($pkg -and $LocatedPackages -notcontains $pkg -and $additionalValidationPackages -notcontains $pkg) {
         $pkg.IncludedForValidation = $true
         $additionalValidationPackages += $pkg
       }

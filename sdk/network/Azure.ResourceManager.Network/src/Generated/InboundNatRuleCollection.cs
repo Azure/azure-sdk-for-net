@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.Network
         {
             TryGetApiVersion(InboundNatRuleResource.ResourceType, out string inboundNatRuleApiVersion);
             _inboundNatRulesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Network", InboundNatRuleResource.ResourceType.Namespace, Diagnostics);
-            _inboundNatRulesRestClient = new InboundNatRules(_inboundNatRulesClientDiagnostics, Pipeline, Endpoint, inboundNatRuleApiVersion ?? "2025-07-01");
+            _inboundNatRulesRestClient = new InboundNatRules(_inboundNatRulesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, inboundNatRuleApiVersion ?? "2025-07-01");
             ValidateResourceId(id);
         }
 

@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.CognitiveServices
         {
             TryGetApiVersion(RaiBlocklistResource.ResourceType, out string raiBlocklistApiVersion);
             _raiBlocklistsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.CognitiveServices", RaiBlocklistResource.ResourceType.Namespace, Diagnostics);
-            _raiBlocklistsRestClient = new RaiBlocklists(_raiBlocklistsClientDiagnostics, Pipeline, Endpoint, raiBlocklistApiVersion ?? "2026-05-15-preview");
+            _raiBlocklistsRestClient = new RaiBlocklists(_raiBlocklistsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, raiBlocklistApiVersion ?? "2026-05-15-preview");
             ValidateResourceId(id);
         }
 

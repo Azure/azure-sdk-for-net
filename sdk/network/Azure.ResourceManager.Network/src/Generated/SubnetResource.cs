@@ -55,11 +55,11 @@ namespace Azure.ResourceManager.Network
         {
             TryGetApiVersion(ResourceType, out string subnetApiVersion);
             _subnetsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Network", ResourceType.Namespace, Diagnostics);
-            _subnetsRestClient = new Subnets(_subnetsClientDiagnostics, Pipeline, Endpoint, subnetApiVersion ?? "2025-07-01");
+            _subnetsRestClient = new Subnets(_subnetsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, subnetApiVersion ?? "2025-07-01");
             _resourceNavigationLinksClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Network", ResourceType.Namespace, Diagnostics);
-            _resourceNavigationLinksRestClient = new ResourceNavigationLinks(_resourceNavigationLinksClientDiagnostics, Pipeline, Endpoint, subnetApiVersion ?? "2025-07-01");
+            _resourceNavigationLinksRestClient = new ResourceNavigationLinks(_resourceNavigationLinksClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, subnetApiVersion ?? "2025-07-01");
             _serviceAssociationLinksClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Network", ResourceType.Namespace, Diagnostics);
-            _serviceAssociationLinksRestClient = new ServiceAssociationLinks(_serviceAssociationLinksClientDiagnostics, Pipeline, Endpoint, subnetApiVersion ?? "2025-07-01");
+            _serviceAssociationLinksRestClient = new ServiceAssociationLinks(_serviceAssociationLinksClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, subnetApiVersion ?? "2025-07-01");
             ValidateResourceId(id);
         }
 

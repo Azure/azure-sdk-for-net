@@ -49,7 +49,7 @@ namespace Azure.ResourceManager.Compute
             _location = location;
             _publisherName = publisherName;
             _virtualMachineExtensionImagesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Compute", VirtualMachineExtensionImageResource.ResourceType.Namespace, Diagnostics);
-            _virtualMachineExtensionImagesRestClient = new VirtualMachineExtensionImages(_virtualMachineExtensionImagesClientDiagnostics, Pipeline, Endpoint, virtualMachineExtensionImageApiVersion ?? "2026-03-01");
+            _virtualMachineExtensionImagesRestClient = new VirtualMachineExtensionImages(_virtualMachineExtensionImagesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, virtualMachineExtensionImageApiVersion ?? "2026-03-01");
             ValidateResourceId(id);
         }
 

@@ -55,11 +55,11 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
         {
             TryGetApiVersion(ResourceType, out string siteRecoveryReplicationProtectionClusterResourceApiVersion);
             _replicationProtectionClustersClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.RecoveryServicesSiteRecovery", ResourceType.Namespace, Diagnostics);
-            _replicationProtectionClustersRestClient = new ReplicationProtectionClusters(_replicationProtectionClustersClientDiagnostics, Pipeline, Endpoint, siteRecoveryReplicationProtectionClusterResourceApiVersion ?? "2026-02-01");
+            _replicationProtectionClustersRestClient = new ReplicationProtectionClusters(_replicationProtectionClustersClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, siteRecoveryReplicationProtectionClusterResourceApiVersion ?? "2026-02-01");
             _clusterRecoveryPointsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.RecoveryServicesSiteRecovery", ResourceType.Namespace, Diagnostics);
-            _clusterRecoveryPointsRestClient = new ClusterRecoveryPoints(_clusterRecoveryPointsClientDiagnostics, Pipeline, Endpoint, siteRecoveryReplicationProtectionClusterResourceApiVersion ?? "2026-02-01");
+            _clusterRecoveryPointsRestClient = new ClusterRecoveryPoints(_clusterRecoveryPointsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, siteRecoveryReplicationProtectionClusterResourceApiVersion ?? "2026-02-01");
             _clusterRecoveryPointClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.RecoveryServicesSiteRecovery", ResourceType.Namespace, Diagnostics);
-            _clusterRecoveryPointRestClient = new ClusterRecoveryPoint(_clusterRecoveryPointClientDiagnostics, Pipeline, Endpoint, siteRecoveryReplicationProtectionClusterResourceApiVersion ?? "2026-02-01");
+            _clusterRecoveryPointRestClient = new ClusterRecoveryPoint(_clusterRecoveryPointClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, siteRecoveryReplicationProtectionClusterResourceApiVersion ?? "2026-02-01");
             ValidateResourceId(id);
         }
 

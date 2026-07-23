@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
         {
             TryGetApiVersion(ResourceType, out string backupResourceConfigApiVersion);
             _backupResourceStorageConfigsNonCRRClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.RecoveryServicesBackup", ResourceType.Namespace, Diagnostics);
-            _backupResourceStorageConfigsNonCRRRestClient = new BackupResourceStorageConfigsNonCRR(_backupResourceStorageConfigsNonCRRClientDiagnostics, Pipeline, Endpoint, backupResourceConfigApiVersion ?? "2026-01-31-preview");
+            _backupResourceStorageConfigsNonCRRRestClient = new BackupResourceStorageConfigsNonCRR(_backupResourceStorageConfigsNonCRRClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, backupResourceConfigApiVersion ?? "2026-01-31-preview");
             ValidateResourceId(id);
         }
 

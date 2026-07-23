@@ -1,16 +1,14 @@
 # Release History
 
-## 1.5.0-beta.1 (Unreleased)
+## 1.5.0 (2026-07-20)
 
 ### Features Added
 
-### Breaking Changes
-
-### Bugs Fixed
+- Upgraded api-version to `2026-03-15`.
 
 ### Other Changes
 
-- Migrated from Swagger to TypeSpec-based generation
+- Migrated from Swagger to TypeSpec-based generation.
 
 ## 1.4.1 (2026-06-03)
 
