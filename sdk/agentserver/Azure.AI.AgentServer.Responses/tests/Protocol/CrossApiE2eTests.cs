@@ -129,7 +129,7 @@ public class CrossApiE2eTests : ProtocolTestBase
         // Use a separate client since the first one is blocked on the POST
         var getResponse = await GetResponseAsync("resp_placeholder");
         // We need the actual response ID — extract from handler context
-        var responseId = Handler.LastContext!.ResponseId;
+        var responseId = Handler.LastContext!.Id;
         getResponse = await GetResponseAsync(responseId);
         Assert.That(getResponse.StatusCode, Is.EqualTo(HttpStatusCode.NotFound));
 
@@ -183,7 +183,7 @@ public class CrossApiE2eTests : ProtocolTestBase
         var postTask = Task.Run(() => PostResponsesAsync(new { model = "test" }));
         await handlerStarted.Task.WaitAsync(TimeSpan.FromSeconds(5));
 
-        var responseId = Handler.LastContext!.ResponseId;
+        var responseId = Handler.LastContext!.Id;
         var cancelResponse = await CancelResponseAsync(responseId);
         Assert.That(cancelResponse.StatusCode, Is.EqualTo(HttpStatusCode.NotFound));
 
@@ -209,7 +209,7 @@ public class CrossApiE2eTests : ProtocolTestBase
         var postTask = Client.PostAsync("/responses", content, cts.Token);
         await handlerStarted.Task.WaitAsync(TimeSpan.FromSeconds(5));
 
-        var responseId = Handler.LastContext!.ResponseId;
+        var responseId = Handler.LastContext!.Id;
 
         // Disconnect
         cts.Cancel();
@@ -261,7 +261,7 @@ public class CrossApiE2eTests : ProtocolTestBase
         var postTask = Client.PostAsync("/responses", postContent, cts.Token);
 
         await handlerStarted.Task.WaitAsync(TimeSpan.FromSeconds(5));
-        var responseId = Handler.LastContext!.ResponseId;
+        var responseId = Handler.LastContext!.Id;
 
         // GET during stream → 404
         var getResponse = await GetResponseAsync(responseId);
@@ -317,7 +317,7 @@ public class CrossApiE2eTests : ProtocolTestBase
         var postTask = Client.PostAsync("/responses", postContent, cts.Token);
 
         await handlerStarted.Task.WaitAsync(TimeSpan.FromSeconds(5));
-        var responseId = Handler.LastContext!.ResponseId;
+        var responseId = Handler.LastContext!.Id;
 
         var cancelResponse = await CancelResponseAsync(responseId);
         Assert.That(cancelResponse.StatusCode, Is.EqualTo(HttpStatusCode.NotFound));
@@ -345,7 +345,7 @@ public class CrossApiE2eTests : ProtocolTestBase
         var postTask = Client.PostAsync("/responses", postContent, cts.Token);
 
         await handlerStarted.Task.WaitAsync(TimeSpan.FromSeconds(5));
-        var responseId = Handler.LastContext!.ResponseId;
+        var responseId = Handler.LastContext!.Id;
 
         cts.Cancel();
         await handlerCancelled.Task.WaitAsync(TimeSpan.FromSeconds(5));

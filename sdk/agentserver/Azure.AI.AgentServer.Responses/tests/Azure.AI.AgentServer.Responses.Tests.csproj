@@ -6,7 +6,7 @@
     <IsPackable>false</IsPackable>
     <IsTestProject>true</IsTestProject>
     <Nullable>annotations</Nullable>
-    <NoWarn>$(NoWarn);CS1591</NoWarn>
+    <NoWarn>$(NoWarn);CS1591;OPENAI001;OPENAICUA001</NoWarn>
   </PropertyGroup>
 
   <!-- Mirror the global using that NuGet consumers get via Core's build props.
@@ -32,6 +32,7 @@
   <ItemGroup Condition="$([MSBuild]::IsTargetFrameworkCompatible('$(TargetFramework)', 'net8.0'))">
     <ProjectReference Include="..\src\Azure.AI.AgentServer.Responses.csproj" />
     <ProjectReference Include="..\..\Azure.AI.AgentServer.Core\src\Azure.AI.AgentServer.Core.csproj" />
+    <Compile Include="..\src\Custom\GeneratedModelAliases.cs" Link="GeneratedModelAliases.cs" />
   </ItemGroup>
 
   <!-- Exclude all test source files for legacy frameworks — no source project to test -->

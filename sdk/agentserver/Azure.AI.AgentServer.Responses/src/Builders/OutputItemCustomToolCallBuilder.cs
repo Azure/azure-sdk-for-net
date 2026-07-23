@@ -42,18 +42,23 @@ public class OutputItemCustomToolCallBuilder : OutputItemBuilder<OutputItemCusto
     /// <summary>The tool name.</summary>
     public string Name => _name;
 
+    /// <summary>The tool name.</summary>
+    public string FunctionName => _name;
+
+    /// <summary>The accumulated tool input, if emitted.</summary>
+    public string? FunctionArguments => _finalInput;
+
     /// <summary>
     /// Produces a <c>response.output_item.added</c> event with a custom tool call item.
     /// </summary>
     /// <returns>A <see cref="ResponseOutputItemAddedEvent"/> for this custom tool call.</returns>
     public virtual ResponseOutputItemAddedEvent EmitAdded()
     {
-        var item = new OutputItemCustomToolCall(
-            callId: _callId,
-            name: _name,
-            input: "",
-            status: FunctionCallStatus.InProgress);
-        item.Id = _itemId;
+        var item = new OutputItemCustomToolCall(_callId, _name, BinaryData.FromString(""))
+        {
+            Id = _itemId,
+            Status = OpenAI.Responses.FunctionCallStatus.InProgress,
+        };
         return EmitAdded(item);
     }
 
@@ -64,8 +69,13 @@ public class OutputItemCustomToolCallBuilder : OutputItemBuilder<OutputItemCusto
     /// <returns>A <see cref="ResponseCustomToolCallInputDeltaEvent"/> with the delta.</returns>
     public virtual ResponseCustomToolCallInputDeltaEvent EmitInputDelta(string delta)
     {
-        return new ResponseCustomToolCallInputDeltaEvent(
-            _stream.NextSequenceNumber(), _outputIndex, _itemId, delta);
+        return new ResponseCustomToolCallInputDeltaEvent
+        {
+            SequenceNumber = checked((int)_stream.NextSequenceNumber()),
+            OutputIndex = checked((int)_outputIndex),
+            ItemId = _itemId,
+            Delta = BinaryData.FromString(delta),
+        };
     }
 
     /// <summary>
@@ -76,8 +86,14 @@ public class OutputItemCustomToolCallBuilder : OutputItemBuilder<OutputItemCusto
     public virtual ResponseCustomToolCallInputDoneEvent EmitInputDone(string input)
     {
         _finalInput = input;
-        return new ResponseCustomToolCallInputDoneEvent(
-            _stream.NextSequenceNumber(), _outputIndex, _itemId, input);
+        return new ResponseCustomToolCallInputDoneEvent
+        {
+            SequenceNumber = checked((int)_stream.NextSequenceNumber()),
+            OutputIndex = checked((int)_outputIndex),
+            ItemId = _itemId,
+            FunctionName = _name,
+            FunctionArguments = BinaryData.FromString(input),
+        };
     }
 
     /// <summary>
@@ -117,12 +133,11 @@ public class OutputItemCustomToolCallBuilder : OutputItemBuilder<OutputItemCusto
     /// <returns>A <see cref="ResponseOutputItemDoneEvent"/> for this custom tool call.</returns>
     public virtual ResponseOutputItemDoneEvent EmitDone()
     {
-        var item = new OutputItemCustomToolCall(
-            callId: _callId,
-            name: _name,
-            input: _finalInput ?? "",
-            status: FunctionCallStatus.Completed);
-        item.Id = _itemId;
+        var item = new OutputItemCustomToolCall(_callId, _name, BinaryData.FromString(_finalInput ?? ""))
+        {
+            Id = _itemId,
+            Status = OpenAI.Responses.FunctionCallStatus.Completed,
+        };
         return EmitDone(item);
     }
 }

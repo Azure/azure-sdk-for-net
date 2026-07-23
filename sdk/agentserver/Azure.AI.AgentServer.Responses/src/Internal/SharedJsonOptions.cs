@@ -27,6 +27,8 @@ internal static class SharedJsonOptions
             PropertyNamingPolicy = JsonNamingPolicy.SnakeCaseLower,
             DefaultIgnoreCondition = System.Text.Json.Serialization.JsonIgnoreCondition.WhenWritingNull,
         };
+        options.Converters.Add(new CreateResponseJsonConverter());
+        options.Converters.Add(new ResponseObjectJsonConverter());
         options.Converters.Add(new TypeSpecModelConverterFactory());
         options.Converters.Add(new BinaryDataConverter());
         return options;

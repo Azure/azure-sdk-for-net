@@ -2,6 +2,9 @@
 // Licensed under the MIT License.
 
 using System.ClientModel.Primitives;
+using System.Text.Json;
+using Azure.AI.AgentServer.Responses.Internal;
+using OpenAI.Responses;
 
 namespace Azure.AI.AgentServer.Responses.Models;
 
@@ -29,9 +32,52 @@ public static class ResponseSnapshotExtensions
     /// </remarks>
     public static ResponseObject Snapshot(this ResponseObject response)
     {
-        BinaryData data = ModelReaderWriter.Write(response, ModelReaderWriterOptions.Json, AzureAIAgentServerResponsesContext.Default);
-        return ModelReaderWriter.Read<ResponseObject>(data, ModelReaderWriterOptions.Json, AzureAIAgentServerResponsesContext.Default)
+        BinaryData data = BinaryData.FromString(JsonSerializer.Serialize(response, SharedJsonOptions.Instance));
+        return JsonSerializer.Deserialize<ResponseObject>(data, SharedJsonOptions.Instance)
             ?? throw new InvalidOperationException($"Failed to deserialize snapshot of {nameof(ResponseObject)}.");
+    }
+
+    /// <summary>
+    /// Creates an AgentServer response snapshot from an OpenAI response object.
+    /// </summary>
+    public static ResponseObject Snapshot(this ResponseResult response)
+    {
+        if (response is ResponseObject responseObject)
+        {
+            return responseObject.Snapshot();
+        }
+
+        var snapshot = new ResponseObject(response.Id, response.Model ?? string.Empty)
+        {
+            Status = response.Status,
+            CreatedAt = response.CreatedAt,
+            Error = response.Error,
+            IncompleteDetails = response.IncompleteStatusDetails,
+            Usage = response.Usage,
+            PreviousResponseId = response.PreviousResponseId,
+            Background = response.BackgroundModeEnabled,
+            MaxOutputTokenCount = response.MaxOutputTokenCount,
+            ParallelToolCallsEnabled = response.ParallelToolCallsEnabled,
+            Temperature = response.Temperature,
+            TopP = response.TopP,
+        };
+
+        foreach (var metadata in response.Metadata)
+        {
+            snapshot.Metadata[metadata.Key] = metadata.Value;
+        }
+
+        foreach (var item in response.OutputItems)
+        {
+            snapshot.Output.Add(item);
+        }
+
+        if (response.ConversationOptions?.ConversationId is string conversationId)
+        {
+            snapshot.Conversation = new ConversationParam(conversationId);
+        }
+
+        return snapshot;
     }
 
     /// <summary>

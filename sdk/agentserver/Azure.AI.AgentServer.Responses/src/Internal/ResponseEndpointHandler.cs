@@ -117,9 +117,9 @@ internal sealed class ResponseEndpointHandler
         }
 
         // Detect mode flags (read-only on generated model)
-        var isStreaming = request.Stream == true;
-        var isBackground = request.Background == true;
-        var store = request.Store ?? true;
+        var isStreaming = request.StreamingEnabled == true;
+        var isBackground = request.BackgroundModeEnabled == true;
+        var store = request.StoredOutputEnabled ?? true;
 
         // B13: background=true requires store=true
         if (isBackground && !store)
@@ -169,19 +169,18 @@ internal sealed class ResponseEndpointHandler
 
         // B39: Resolve session ID — request payload → environment variable → deterministic derivation.
         // Stamp on the request so the orchestrator can propagate it to the ResponseObject.
-        if (string.IsNullOrEmpty(request.AgentSessionId))
+        if (string.IsNullOrEmpty(request.GetAgentSessionId()))
         {
-            request.AgentSessionId = !string.IsNullOrEmpty(FoundryEnvironment.SessionId)
+            request.SetAgentSessionId(!string.IsNullOrEmpty(FoundryEnvironment.SessionId)
                 ? FoundryEnvironment.SessionId
                 : SessionIdDerivation.Derive(
                     conversationId,
                     request.PreviousResponseId,
-                    responseId,
-                    request.AgentReference);
+                    request.GetAgentReference()));
         }
 
         // Store resolved session ID for the response header filter (§8).
-        httpContext.Items[SessionIdResponseHeaderFilter.SessionIdKey] = request.AgentSessionId;
+        httpContext.Items[SessionIdResponseHeaderFilter.SessionIdKey] = request.GetAgentSessionId();
 
         // Propagate baggage for downstream correlation (no invoke_agent span —
         // W3C context propagation is handled by ASP.NET Core automatically)
@@ -205,7 +204,7 @@ internal sealed class ResponseEndpointHandler
         // Record the creation-time session ID and user ID key on the execution
         // so subsequent GET/Cancel/Delete can emit x-agent-session-id even before
         // the handler yields response.created (when execution.Response is still null).
-        execution.AgentSessionId = request.AgentSessionId;
+        execution.AgentSessionId = request.GetAgentSessionId();
         execution.UserIdKey = platformContext.UserIdKey;
 
         var context = new ResponseContextImpl(

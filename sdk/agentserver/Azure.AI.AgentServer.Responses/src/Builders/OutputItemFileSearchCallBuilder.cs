@@ -33,10 +33,11 @@ public class OutputItemFileSearchCallBuilder : OutputItemBuilder<OutputItemFileS
     /// <returns>A <see cref="ResponseOutputItemAddedEvent"/> for this file search call.</returns>
     public virtual ResponseOutputItemAddedEvent EmitAdded()
     {
-        var item = new OutputItemFileSearchToolCall(
-            id: _itemId,
-            status: ItemFileSearchToolCallStatus.InProgress,
-            queries: Array.Empty<string>());
+        var item = new OutputItemFileSearchToolCall(Array.Empty<string>())
+        {
+            Id = _itemId,
+            Status = OpenAI.Responses.FileSearchCallStatus.InProgress,
+        };
         return EmitAdded(item);
     }
 
@@ -46,8 +47,12 @@ public class OutputItemFileSearchCallBuilder : OutputItemBuilder<OutputItemFileS
     /// <returns>A <see cref="ResponseFileSearchCallInProgressEvent"/>.</returns>
     public virtual ResponseFileSearchCallInProgressEvent EmitInProgress()
     {
-        return new ResponseFileSearchCallInProgressEvent(
-            _stream.NextSequenceNumber(), _outputIndex, _itemId);
+        return new ResponseFileSearchCallInProgressEvent
+        {
+            SequenceNumber = checked((int)_stream.NextSequenceNumber()),
+            OutputIndex = checked((int)_outputIndex),
+            ItemId = _itemId,
+        };
     }
 
     /// <summary>
@@ -56,8 +61,12 @@ public class OutputItemFileSearchCallBuilder : OutputItemBuilder<OutputItemFileS
     /// <returns>A <see cref="ResponseFileSearchCallSearchingEvent"/>.</returns>
     public virtual ResponseFileSearchCallSearchingEvent EmitSearching()
     {
-        return new ResponseFileSearchCallSearchingEvent(
-            _stream.NextSequenceNumber(), _outputIndex, _itemId);
+        return new ResponseFileSearchCallSearchingEvent
+        {
+            SequenceNumber = checked((int)_stream.NextSequenceNumber()),
+            OutputIndex = checked((int)_outputIndex),
+            ItemId = _itemId,
+        };
     }
 
     /// <summary>
@@ -66,8 +75,12 @@ public class OutputItemFileSearchCallBuilder : OutputItemBuilder<OutputItemFileS
     /// <returns>A <see cref="ResponseFileSearchCallCompletedEvent"/>.</returns>
     public virtual ResponseFileSearchCallCompletedEvent EmitCompleted()
     {
-        return new ResponseFileSearchCallCompletedEvent(
-            _stream.NextSequenceNumber(), _outputIndex, _itemId);
+        return new ResponseFileSearchCallCompletedEvent
+        {
+            SequenceNumber = checked((int)_stream.NextSequenceNumber()),
+            OutputIndex = checked((int)_outputIndex),
+            ItemId = _itemId,
+        };
     }
 
     /// <summary>
@@ -76,10 +89,11 @@ public class OutputItemFileSearchCallBuilder : OutputItemBuilder<OutputItemFileS
     /// <returns>A <see cref="ResponseOutputItemDoneEvent"/> for this file search call.</returns>
     public virtual ResponseOutputItemDoneEvent EmitDone()
     {
-        var item = new OutputItemFileSearchToolCall(
-            id: _itemId,
-            status: ItemFileSearchToolCallStatus.Completed,
-            queries: Array.Empty<string>());
+        var item = new OutputItemFileSearchToolCall(Array.Empty<string>())
+        {
+            Id = _itemId,
+            Status = OpenAI.Responses.FileSearchCallStatus.Completed,
+        };
         return EmitDone(item);
     }
 }

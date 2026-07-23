@@ -93,7 +93,7 @@ public class CancelConsistencyTests : IDisposable
 
         var lastUpdate = updates[^1];
         Assert.That(lastUpdate.Status?.ToString().ToLowerInvariant(), Is.EqualTo("cancelled"));
-        Assert.That(lastUpdate.Output, Is.Empty);
+        Assert.That(lastUpdate.OutputItems, Is.Empty);
     }
 
     // ═══════════════════════════════════════════════════════════════════════
@@ -176,7 +176,7 @@ public class CancelConsistencyTests : IDisposable
         [EnumeratorCancellation] CancellationToken ct = default)
     {
         var response = new Models.ResponseObject(ctx.ResponseId, "test");
-        yield return new ResponseCreatedEvent(0, response);
+        yield return new ResponseCreatedEvent { SequenceNumber = checked((int)(0)), Response = response };
         started.TrySetResult();
 
         // Wait for either cancellation or gate signal
@@ -191,7 +191,7 @@ public class CancelConsistencyTests : IDisposable
         }
 
         response.SetCompleted();
-        yield return new ResponseCompletedEvent(0, response);
+        yield return new ResponseCompletedEvent { SequenceNumber = checked((int)(0)), Response = response };
     }
 
     /// <summary>

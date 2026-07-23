@@ -171,10 +171,10 @@ public class ProviderDiIntegrationTests : IDisposable
         [EnumeratorCancellation] CancellationToken ct)
     {
         var response = new Models.ResponseObject(ctx.ResponseId, "test");
-        yield return new ResponseCreatedEvent(0, response);
+        yield return new ResponseCreatedEvent { SequenceNumber = checked((int)(0)), Response = response };
         await delayTask.WaitAsync(ct);
         response.SetCompleted();
-        yield return new ResponseCompletedEvent(0, response);
+        yield return new ResponseCompletedEvent { SequenceNumber = checked((int)(0)), Response = response };
     }
 
     public void Dispose()
@@ -433,10 +433,10 @@ public class DefaultProviderZeroRegressionTests : ProtocolTestBase
         [EnumeratorCancellation] CancellationToken ct)
     {
         var response = new Models.ResponseObject(ctx.ResponseId, "test");
-        yield return new ResponseCreatedEvent(0, response);
+        yield return new ResponseCreatedEvent { SequenceNumber = checked((int)(0)), Response = response };
         await delayTask.WaitAsync(ct);
         response.SetCompleted();
-        yield return new ResponseCompletedEvent(0, response);
+        yield return new ResponseCompletedEvent { SequenceNumber = checked((int)(0)), Response = response };
     }
 }
 
@@ -605,10 +605,10 @@ public class PartialProviderOverrideTests : IDisposable
         [EnumeratorCancellation] CancellationToken ct)
     {
         var response = new Models.ResponseObject(ctx.ResponseId, "test");
-        yield return new ResponseCreatedEvent(0, response);
+        yield return new ResponseCreatedEvent { SequenceNumber = checked((int)(0)), Response = response };
         await delayTask.WaitAsync(ct);
         response.SetCompleted();
-        yield return new ResponseCompletedEvent(0, response);
+        yield return new ResponseCompletedEvent { SequenceNumber = checked((int)(0)), Response = response };
     }
 
     public void Dispose()

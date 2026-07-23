@@ -10,7 +10,7 @@ namespace Azure.AI.AgentServer.Responses.Tests.Protocol;
 
 /// <summary>
 /// E2E protocol tests for ResponseCreatedEvent validation rules.
-/// Validates S-031 (Models.ResponseObject.Id must match ResponseContext.ResponseId) and
+/// Validates S-031 (Models.ResponseObject.Id must match ResponseContext.Id) and
 /// B6/B8 (Models.ResponseObject.Status must be non-terminal on ResponseCreatedEvent).
 /// </summary>
 public class ResponseCreatedValidationTests : ProtocolTestBase
@@ -20,7 +20,7 @@ public class ResponseCreatedValidationTests : ProtocolTestBase
     [Test]
     public async Task POST_Responses_MismatchedResponseId_ReturnsBadHandlerError()
     {
-        // Handler emits ResponseCreatedEvent with a different ID than ResponseContext.ResponseId
+        // Handler emits ResponseCreatedEvent with a different ID than ResponseContext.Id
         // → SDK rejects with bad handler error (S-031)
         Handler.EventFactory = (req, ctx, ct) => MismatchedIdStream(ctx);
 
@@ -129,9 +129,9 @@ public class ResponseCreatedValidationTests : ProtocolTestBase
         {
             Status = ResponseStatus.InProgress,
         };
-        yield return new ResponseCreatedEvent(0, response);
+        yield return new ResponseCreatedEvent { SequenceNumber = checked((int)(0)), Response = response };
         response.SetCompleted();
-        yield return new ResponseCompletedEvent(1, response);
+        yield return new ResponseCompletedEvent { SequenceNumber = checked((int)(1)), Response = response };
     }
 
     private static async IAsyncEnumerable<ResponseStreamEvent> TerminalInitialStatusStream(
@@ -144,7 +144,7 @@ public class ResponseCreatedValidationTests : ProtocolTestBase
         {
             Status = ResponseStatus.Failed,
         };
-        yield return new ResponseCreatedEvent(0, response);
+        yield return new ResponseCreatedEvent { SequenceNumber = checked((int)(0)), Response = response };
     }
 
     private static async IAsyncEnumerable<ResponseStreamEvent> NullStatusStream(
@@ -154,20 +154,20 @@ public class ResponseCreatedValidationTests : ProtocolTestBase
         await Task.CompletedTask;
         // Deliberately omit Status — SDK should auto-stamp InProgress (B31)
         var response = new Models.ResponseObject(ctx.ResponseId, "test");
-        yield return new ResponseCreatedEvent(0, response);
+        yield return new ResponseCreatedEvent { SequenceNumber = checked((int)(0)), Response = response };
 
         var textContent = new MessageContentOutputTextContent(
             "Hello", Array.Empty<Annotation>(), Array.Empty<LogProb>());
-        var msg = new OutputItemMessage(
+        var msg = TestModels.OutputItemMessage(
             "msg_1",
             MessageStatus.Completed,
             new MessageContent[] { textContent });
-        yield return new ResponseOutputItemAddedEvent(1, 0, msg);
-        yield return new ResponseOutputItemDoneEvent(2, 0, msg);
+        yield return new ResponseOutputItemAddedEvent { SequenceNumber = checked((int)(1)), OutputIndex = checked((int)(0)), Item = msg };
+        yield return new ResponseOutputItemDoneEvent { SequenceNumber = checked((int)(2)), OutputIndex = checked((int)(0)), Item = msg };
 
         var completedResponse = new Models.ResponseObject(ctx.ResponseId, "test");
-        completedResponse.Output.Add(msg);
+        completedResponse.OutputItems.Add(msg);
         completedResponse.SetCompleted();
-        yield return new ResponseCompletedEvent(3, completedResponse);
+        yield return new ResponseCompletedEvent { SequenceNumber = checked((int)(3)), Response = completedResponse };
     }
 }

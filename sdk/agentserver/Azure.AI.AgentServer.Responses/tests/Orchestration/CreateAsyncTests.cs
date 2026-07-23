@@ -41,8 +41,8 @@ public class CreateAsyncTests : IDisposable
         var response = new Models.ResponseObject("resp_create_01", "test") { Status = ResponseStatus.InProgress };
         var completedResponse = new Models.ResponseObject("resp_create_01", "test") { Status = ResponseStatus.Completed };
         _handler.EventFactory = (req, ctx, ct) => YieldEvents(
-            new ResponseCreatedEvent(0, response),
-            new ResponseCompletedEvent(1, completedResponse));
+            new ResponseCreatedEvent { SequenceNumber = checked((int)(0)), Response = response },
+            new ResponseCompletedEvent { SequenceNumber = checked((int)(1)), Response = completedResponse });
 
         var execution = CreateExecution("resp_create_01", isStreaming: false, isBackground: false);
         var context = new ResponseContext("resp_create_01");
@@ -60,8 +60,8 @@ public class CreateAsyncTests : IDisposable
         var response = new Models.ResponseObject("resp_create_02", "test") { Status = ResponseStatus.InProgress };
         var completedResponse = new Models.ResponseObject("resp_create_02", "test") { Status = ResponseStatus.Completed };
         _handler.EventFactory = (req, ctx, ct) => YieldEvents(
-            new ResponseCreatedEvent(0, response),
-            new ResponseCompletedEvent(1, completedResponse));
+            new ResponseCreatedEvent { SequenceNumber = checked((int)(0)), Response = response },
+            new ResponseCompletedEvent { SequenceNumber = checked((int)(1)), Response = completedResponse });
 
         var execution = CreateExecution("resp_create_02", isStreaming: false, isBackground: true);
         var context = new ResponseContext("resp_create_02");
@@ -79,8 +79,8 @@ public class CreateAsyncTests : IDisposable
         var response = new Models.ResponseObject("resp_create_03", "test") { Status = ResponseStatus.InProgress };
         var completedResponse = new Models.ResponseObject("resp_create_03", "test") { Status = ResponseStatus.Completed };
         _handler.EventFactory = (req, ctx, ct) => YieldEvents(
-            new ResponseCreatedEvent(0, response),
-            new ResponseCompletedEvent(1, completedResponse));
+            new ResponseCreatedEvent { SequenceNumber = checked((int)(0)), Response = response },
+            new ResponseCompletedEvent { SequenceNumber = checked((int)(1)), Response = completedResponse });
 
         var execution = CreateExecution("resp_create_03", isStreaming: true, isBackground: false);
         var context = new ResponseContext("resp_create_03");
@@ -109,8 +109,8 @@ public class CreateAsyncTests : IDisposable
         var response = new Models.ResponseObject("resp_create_04", "test") { Status = ResponseStatus.InProgress };
         var completedResponse = new Models.ResponseObject("resp_create_04", "test") { Status = ResponseStatus.Completed };
         _handler.EventFactory = (req, ctx, ct) => YieldEvents(
-            new ResponseCreatedEvent(0, response),
-            new ResponseCompletedEvent(1, completedResponse));
+            new ResponseCreatedEvent { SequenceNumber = checked((int)(0)), Response = response },
+            new ResponseCompletedEvent { SequenceNumber = checked((int)(1)), Response = completedResponse });
 
         var execution = CreateExecution("resp_create_04", isStreaming: true, isBackground: true);
         var context = new ResponseContext("resp_create_04");
@@ -152,8 +152,8 @@ public class CreateAsyncTests : IDisposable
         var response = new Models.ResponseObject("resp_create_06", "test") { Status = ResponseStatus.InProgress };
         var completedResponse = new Models.ResponseObject("resp_create_06", "test") { Status = ResponseStatus.Completed };
         _handler.EventFactory = (req, ctx, ct) => YieldEvents(
-            new ResponseCreatedEvent(0, response),
-            new ResponseCompletedEvent(1, completedResponse));
+            new ResponseCreatedEvent { SequenceNumber = checked((int)(0)), Response = response },
+            new ResponseCompletedEvent { SequenceNumber = checked((int)(1)), Response = completedResponse });
 
         var execution = CreateExecution("resp_create_06", isStreaming: false, isBackground: false);
         var context = new ResponseContext("resp_create_06");
@@ -171,8 +171,8 @@ public class CreateAsyncTests : IDisposable
         var response = new Models.ResponseObject("resp_create_07", "test") { Status = ResponseStatus.InProgress };
         var completedResponse = new Models.ResponseObject("resp_create_07", "test") { Status = ResponseStatus.Completed };
         _handler.EventFactory = (req, ctx, ct) => YieldEvents(
-            new ResponseCreatedEvent(0, response),
-            new ResponseCompletedEvent(1, completedResponse));
+            new ResponseCreatedEvent { SequenceNumber = checked((int)(0)), Response = response },
+            new ResponseCompletedEvent { SequenceNumber = checked((int)(1)), Response = completedResponse });
 
         var execution = CreateExecution("resp_create_07", isStreaming: true, isBackground: false);
         var context = new ResponseContext("resp_create_07");
@@ -196,8 +196,8 @@ public class CreateAsyncTests : IDisposable
         // B32/S-015: handler ends without emitting a terminal event
         var response = new Models.ResponseObject("resp_create_08", "test") { Status = ResponseStatus.InProgress };
         _handler.EventFactory = (req, ctx, ct) => YieldEvents(
-            new ResponseCreatedEvent(0, response),
-            new ResponseInProgressEvent(1, response));
+            new ResponseCreatedEvent { SequenceNumber = checked((int)(0)), Response = response },
+            new ResponseInProgressEvent { SequenceNumber = checked((int)(1)), Response = response });
         // No completed/failed/incomplete event
 
         var execution = CreateExecution("resp_create_08", isStreaming: false, isBackground: false);
@@ -232,7 +232,7 @@ public class CreateAsyncTests : IDisposable
         string responseId)
     {
         var response = new Models.ResponseObject(responseId, "test") { Status = ResponseStatus.InProgress };
-        yield return new ResponseCreatedEvent(0, response);
+        yield return new ResponseCreatedEvent { SequenceNumber = checked((int)(0)), Response = response };
         await Task.CompletedTask;
         throw new InvalidOperationException("handler error");
     }

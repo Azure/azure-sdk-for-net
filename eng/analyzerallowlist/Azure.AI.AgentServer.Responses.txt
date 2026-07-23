@@ -16,3 +16,11 @@ nowarn:AZC0100
 # would either deadlock under ASP.NET Core or duplicate code without value.
 # Same exemption as the parent Azure.AI.AgentServer.Core (and AMQP-based SDKs).
 nowarn:AZC0004
+
+# AgentServer intentionally exposes and composes shared OpenAI response-model
+# types so it can interoperate with Azure.AI.Extensions.OpenAI and avoid
+# re-emitting duplicate Responses API models. These OpenAI types are marked
+# experimental upstream, so the dependency cannot be narrowed without undoing
+# the shared ownership strategy.
+nowarn:OPENAI001
+nowarn:OPENAICUA001

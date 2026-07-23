@@ -262,9 +262,9 @@ public sealed class SpanParentChildHierarchyTests : IDisposable
 
         // Yield default lifecycle
         var response = new ResponseObject(context.ResponseId, request.Model ?? "test-model");
-        yield return new ResponseCreatedEvent(0, response);
+        yield return new ResponseCreatedEvent { SequenceNumber = checked((int)(0)), Response = response };
         response.SetCompleted();
-        yield return new ResponseCompletedEvent(0, response);
+        yield return new ResponseCompletedEvent { SequenceNumber = checked((int)(0)), Response = response };
     }
 
     private async IAsyncEnumerable<ResponseStreamEvent> HandlerWithMultipleFrameworkSpans(
@@ -291,9 +291,9 @@ public sealed class SpanParentChildHierarchyTests : IDisposable
         }
 
         var response = new ResponseObject(context.ResponseId, request.Model ?? "test-model");
-        yield return new ResponseCreatedEvent(0, response);
+        yield return new ResponseCreatedEvent { SequenceNumber = checked((int)(0)), Response = response };
         response.SetCompleted();
-        yield return new ResponseCompletedEvent(0, response);
+        yield return new ResponseCompletedEvent { SequenceNumber = checked((int)(0)), Response = response };
     }
 
     private async IAsyncEnumerable<ResponseStreamEvent> HandlerWithNestedSpans(
@@ -314,9 +314,9 @@ public sealed class SpanParentChildHierarchyTests : IDisposable
             ActivityKind.Client);
 
         var response = new ResponseObject(context.ResponseId, request.Model ?? "test-model");
-        yield return new ResponseCreatedEvent(0, response);
+        yield return new ResponseCreatedEvent { SequenceNumber = checked((int)(0)), Response = response };
         response.SetCompleted();
-        yield return new ResponseCompletedEvent(0, response);
+        yield return new ResponseCompletedEvent { SequenceNumber = checked((int)(0)), Response = response };
     }
 
     private async IAsyncEnumerable<ResponseStreamEvent> HandlerWithAsyncBoundarySpan(
@@ -335,8 +335,8 @@ public sealed class SpanParentChildHierarchyTests : IDisposable
             ActivityKind.Client);
 
         var response = new ResponseObject(context.ResponseId, request.Model ?? "test-model");
-        yield return new ResponseCreatedEvent(0, response);
+        yield return new ResponseCreatedEvent { SequenceNumber = checked((int)(0)), Response = response };
         response.SetCompleted();
-        yield return new ResponseCompletedEvent(0, response);
+        yield return new ResponseCompletedEvent { SequenceNumber = checked((int)(0)), Response = response };
     }
 }

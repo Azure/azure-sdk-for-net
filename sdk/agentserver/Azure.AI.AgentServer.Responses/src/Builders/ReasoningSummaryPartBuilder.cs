@@ -57,9 +57,14 @@ public class ReasoningSummaryPartBuilder
             throw new InvalidOperationException($"Cannot call EmitAdded — builder is in '{_lifecycleState}' state.");
         _lifecycleState = BuilderLifecycleState.Added;
 
-        var part = new ResponseReasoningSummaryPartAddedEventPart(text: "");
-        return new ResponseReasoningSummaryPartAddedEvent(
-            _stream.NextSequenceNumber(), _itemId, _outputIndex, _summaryIndex, part);
+        return new ResponseReasoningSummaryPartAddedEvent
+        {
+            SequenceNumber = checked((int)_stream.NextSequenceNumber()),
+            ItemId = _itemId,
+            OutputIndex = checked((int)_outputIndex),
+            SummaryIndex = checked((int)_summaryIndex),
+            Part = new OpenAI.Responses.ReasoningSummaryTextPart(string.Empty),
+        };
     }
 
     /// <summary>
@@ -74,8 +79,14 @@ public class ReasoningSummaryPartBuilder
         if (_finalText is not null)
             throw new InvalidOperationException("Cannot emit deltas after EmitTextDone has been called.");
 
-        return new ResponseReasoningSummaryTextDeltaEvent(
-            _stream.NextSequenceNumber(), _itemId, _outputIndex, _summaryIndex, text);
+        return new ResponseReasoningSummaryTextDeltaEvent
+        {
+            SequenceNumber = checked((int)_stream.NextSequenceNumber()),
+            ItemId = _itemId,
+            OutputIndex = checked((int)_outputIndex),
+            SummaryIndex = checked((int)_summaryIndex),
+            Delta = text,
+        };
     }
 
     /// <summary>
@@ -91,8 +102,14 @@ public class ReasoningSummaryPartBuilder
             throw new InvalidOperationException("EmitTextDone has already been called.");
 
         _finalText = finalText;
-        return new ResponseReasoningSummaryTextDoneEvent(
-            _stream.NextSequenceNumber(), _itemId, _outputIndex, _summaryIndex, finalText);
+        return new ResponseReasoningSummaryTextDoneEvent
+        {
+            SequenceNumber = checked((int)_stream.NextSequenceNumber()),
+            ItemId = _itemId,
+            OutputIndex = checked((int)_outputIndex),
+            SummaryIndex = checked((int)_summaryIndex),
+            Text = finalText,
+        };
     }
 
     /// <summary>
@@ -105,8 +122,13 @@ public class ReasoningSummaryPartBuilder
             throw new InvalidOperationException($"Cannot call EmitDone — builder is in '{_lifecycleState}' state.");
         _lifecycleState = BuilderLifecycleState.Done;
 
-        var part = new ResponseReasoningSummaryPartDoneEventPart(text: _finalText ?? string.Empty);
-        return new ResponseReasoningSummaryPartDoneEvent(
-            _stream.NextSequenceNumber(), _itemId, _outputIndex, _summaryIndex, part);
+        return new ResponseReasoningSummaryPartDoneEvent
+        {
+            SequenceNumber = checked((int)_stream.NextSequenceNumber()),
+            ItemId = _itemId,
+            OutputIndex = checked((int)_outputIndex),
+            SummaryIndex = checked((int)_summaryIndex),
+            Part = new OpenAI.Responses.ReasoningSummaryTextPart(_finalText ?? string.Empty),
+        };
     }
 }

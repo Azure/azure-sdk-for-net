@@ -43,12 +43,12 @@ public static class ResponsesModelFactory
             output: output);
     }
 
-    /// <summary>Creates a <see cref="Models.ResponseErrorInfo"/> instance for mocking.</summary>
+    /// <summary>Creates a <see cref="OpenAI.Responses.ResponseError"/> instance for mocking.</summary>
     /// <param name="code">The error code.</param>
     /// <param name="message">The error message.</param>
-    /// <returns>A new <see cref="Models.ResponseErrorInfo"/> instance.</returns>
+    /// <returns>A new <see cref="OpenAI.Responses.ResponseError"/> instance.</returns>
     public static ResponseErrorInfo ResponseErrorInfo(
-        ResponseErrorCode code = default,
+        OpenAI.Responses.ResponseErrorCode code = default,
         string message = default!)
     {
         return AgentServerResponsesModelFactory.ResponseErrorInfo(
@@ -56,10 +56,10 @@ public static class ResponsesModelFactory
             message: message);
     }
 
-    /// <summary>Creates a <see cref="Models.ResponseCreatedEvent"/> instance for mocking.</summary>
+    /// <summary>Creates a <see cref="OpenAI.Responses.StreamingResponseCreatedUpdate"/> instance for mocking.</summary>
     /// <param name="response">The response object.</param>
     /// <param name="sequenceNumber">The SSE sequence number.</param>
-    /// <returns>A new <see cref="Models.ResponseCreatedEvent"/> instance.</returns>
+    /// <returns>A new <see cref="OpenAI.Responses.StreamingResponseCreatedUpdate"/> instance.</returns>
     public static ResponseCreatedEvent ResponseCreatedEvent(
         ResponseObject response = default!,
         long sequenceNumber = default)
@@ -69,9 +69,9 @@ public static class ResponsesModelFactory
             sequenceNumber: sequenceNumber);
     }
 
-    /// <summary>Creates a <see cref="Models.DeleteResponseResult"/> instance for mocking.</summary>
+    /// <summary>Creates a <see cref="OpenAI.Responses.ResponseDeletionResult"/> instance for mocking.</summary>
     /// <param name="id">The ID of the deleted response.</param>
-    /// <returns>A new <see cref="Models.DeleteResponseResult"/> instance with <c>Deleted</c> set to <c>true</c>.</returns>
+    /// <returns>A new <see cref="OpenAI.Responses.ResponseDeletionResult"/> instance with <c>Deleted</c> set to <c>true</c>.</returns>
     public static DeleteResponseResult DeleteResponseResult(
         string id = default!)
     {

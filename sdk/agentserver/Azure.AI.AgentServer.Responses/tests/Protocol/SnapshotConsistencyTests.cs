@@ -235,7 +235,7 @@ public class SnapshotConsistencyTests : ProtocolTestBase
         [EnumeratorCancellation] CancellationToken ct)
     {
         var response = new Models.ResponseObject(ctx.ResponseId, "test-model") { Status = ResponseStatus.InProgress };
-        yield return new ResponseCreatedEvent(0, response);
+        yield return new ResponseCreatedEvent { SequenceNumber = checked((int)(0)), Response = response };
         handlerStarted.TrySetResult();
 
         var items = new List<OutputItem>();
@@ -245,11 +245,11 @@ public class SnapshotConsistencyTests : ProtocolTestBase
             // Wait for the test to release the gate before emitting the next item
             await continueGate.WaitAsync(ct);
 
-            var msg = new OutputItemMessage(
+            var msg = TestModels.OutputItemMessage(
                 $"msg_{i}", MessageStatus.Completed, MessageRole.Assistant,
                 Array.Empty<MessageContent>());
             items.Add(msg);
-            yield return new ResponseOutputItemAddedEvent(0, i, msg);
+            yield return new ResponseOutputItemAddedEvent { SequenceNumber = checked((int)(0)), OutputIndex = checked((int)(i)), Item = msg };
 
             // Signal the test that this item has been yielded
             itemEmitted.Release();
@@ -257,9 +257,9 @@ public class SnapshotConsistencyTests : ProtocolTestBase
 
         var completedResponse = new Models.ResponseObject(ctx.ResponseId, "test-model") { Status = ResponseStatus.Completed };
         foreach (var item in items)
-            completedResponse.Output.Add(item);
-        completedResponse.CompletedAt = DateTimeOffset.UtcNow;
-        yield return new ResponseCompletedEvent(0, completedResponse);
+            completedResponse.OutputItems.Add(item);
+        completedResponse.CreatedAt = DateTimeOffset.UtcNow;
+        yield return new ResponseCompletedEvent { SequenceNumber = checked((int)(0)), Response = completedResponse };
     }
 
     /// <summary>
@@ -269,25 +269,25 @@ public class SnapshotConsistencyTests : ProtocolTestBase
         ResponseContext ctx)
     {
         var response = new Models.ResponseObject(ctx.ResponseId, "test-model") { Status = ResponseStatus.InProgress };
-        yield return new ResponseCreatedEvent(0, response);
+        yield return new ResponseCreatedEvent { SequenceNumber = checked((int)(0)), Response = response };
 
-        var msg1 = new OutputItemMessage(
+        var msg1 = TestModels.OutputItemMessage(
             "msg_1", MessageStatus.Completed, MessageRole.Assistant,
             Array.Empty<MessageContent>());
-        yield return new ResponseOutputItemAddedEvent(0, 0, msg1);
+        yield return new ResponseOutputItemAddedEvent { SequenceNumber = checked((int)(0)), OutputIndex = checked((int)(0)), Item = msg1 };
 
         await Task.Yield(); // Ensure async
 
-        var msg2 = new OutputItemMessage(
+        var msg2 = TestModels.OutputItemMessage(
             "msg_2", MessageStatus.Completed, MessageRole.Assistant,
             Array.Empty<MessageContent>());
-        yield return new ResponseOutputItemAddedEvent(0, 1, msg2);
+        yield return new ResponseOutputItemAddedEvent { SequenceNumber = checked((int)(0)), OutputIndex = checked((int)(1)), Item = msg2 };
 
         var completedResponse = new Models.ResponseObject(ctx.ResponseId, "test-model") { Status = ResponseStatus.Completed };
-        completedResponse.Output.Add(msg1);
-        completedResponse.Output.Add(msg2);
-        completedResponse.CompletedAt = DateTimeOffset.UtcNow;
-        yield return new ResponseCompletedEvent(0, completedResponse);
+        completedResponse.OutputItems.Add(msg1);
+        completedResponse.OutputItems.Add(msg2);
+        completedResponse.CreatedAt = DateTimeOffset.UtcNow;
+        yield return new ResponseCompletedEvent { SequenceNumber = checked((int)(0)), Response = completedResponse };
     }
 
     /// <summary>
@@ -297,12 +297,12 @@ public class SnapshotConsistencyTests : ProtocolTestBase
         ResponseContext ctx, TaskCompletionSource done)
     {
         var response = new Models.ResponseObject(ctx.ResponseId, "test-model") { Status = ResponseStatus.InProgress };
-        yield return new ResponseCreatedEvent(0, response);
+        yield return new ResponseCreatedEvent { SequenceNumber = checked((int)(0)), Response = response };
 
         await done.Task;
 
         var completedResponse = new Models.ResponseObject(ctx.ResponseId, "test-model") { Status = ResponseStatus.Completed };
-        completedResponse.CompletedAt = DateTimeOffset.UtcNow;
-        yield return new ResponseCompletedEvent(0, completedResponse);
+        completedResponse.CreatedAt = DateTimeOffset.UtcNow;
+        yield return new ResponseCompletedEvent { SequenceNumber = checked((int)(0)), Response = completedResponse };
     }
 }

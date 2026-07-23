@@ -41,9 +41,11 @@ public class OutputItemMcpListToolsBuilder : OutputItemBuilder<OutputItemMcpList
     public virtual ResponseOutputItemAddedEvent EmitAdded()
     {
         var item = new OutputItemMcpListTools(
-            id: _itemId,
-            serverLabel: _serverLabel,
-            tools: Array.Empty<MCPListToolsTool>());
+            _serverLabel,
+            Array.Empty<OpenAI.Responses.McpToolDefinition>())
+        {
+            Id = _itemId,
+        };
         return EmitAdded(item);
     }
 
@@ -53,8 +55,12 @@ public class OutputItemMcpListToolsBuilder : OutputItemBuilder<OutputItemMcpList
     /// <returns>A <see cref="ResponseMCPListToolsInProgressEvent"/>.</returns>
     public virtual ResponseMCPListToolsInProgressEvent EmitInProgress()
     {
-        return new ResponseMCPListToolsInProgressEvent(
-            _stream.NextSequenceNumber(), _itemId, _outputIndex);
+        return new ResponseMCPListToolsInProgressEvent
+        {
+            SequenceNumber = checked((int)_stream.NextSequenceNumber()),
+            ItemId = _itemId,
+            OutputIndex = checked((int)_outputIndex),
+        };
     }
 
     /// <summary>
@@ -64,8 +70,12 @@ public class OutputItemMcpListToolsBuilder : OutputItemBuilder<OutputItemMcpList
     /// <returns>A <see cref="ResponseMCPListToolsCompletedEvent"/>.</returns>
     public virtual ResponseMCPListToolsCompletedEvent EmitCompleted()
     {
-        return new ResponseMCPListToolsCompletedEvent(
-            _stream.NextSequenceNumber(), _itemId, _outputIndex);
+        return new ResponseMCPListToolsCompletedEvent
+        {
+            SequenceNumber = checked((int)_stream.NextSequenceNumber()),
+            ItemId = _itemId,
+            OutputIndex = checked((int)_outputIndex),
+        };
     }
 
     /// <summary>
@@ -75,8 +85,12 @@ public class OutputItemMcpListToolsBuilder : OutputItemBuilder<OutputItemMcpList
     /// <returns>A <see cref="ResponseMCPListToolsFailedEvent"/>.</returns>
     public virtual ResponseMCPListToolsFailedEvent EmitFailed()
     {
-        return new ResponseMCPListToolsFailedEvent(
-            _stream.NextSequenceNumber(), _itemId, _outputIndex);
+        return new ResponseMCPListToolsFailedEvent
+        {
+            SequenceNumber = checked((int)_stream.NextSequenceNumber()),
+            ItemId = _itemId,
+            OutputIndex = checked((int)_outputIndex),
+        };
     }
 
     /// <summary>
@@ -88,9 +102,11 @@ public class OutputItemMcpListToolsBuilder : OutputItemBuilder<OutputItemMcpList
     public virtual ResponseOutputItemDoneEvent EmitDone()
     {
         var item = new OutputItemMcpListTools(
-            id: _itemId,
-            serverLabel: _serverLabel,
-            tools: Array.Empty<MCPListToolsTool>());
+            _serverLabel,
+            Array.Empty<OpenAI.Responses.McpToolDefinition>())
+        {
+            Id = _itemId,
+        };
         return EmitDone(item);
     }
 }

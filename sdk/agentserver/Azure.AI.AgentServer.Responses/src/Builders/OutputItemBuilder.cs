@@ -56,7 +56,12 @@ public class OutputItemBuilder<T> where T : OutputItem
     {
         EnsureTransition(BuilderLifecycleState.NotStarted, BuilderLifecycleState.Added);
         ApplyAutoStamps(item);
-        return new ResponseOutputItemAddedEvent(_stream.NextSequenceNumber(), _outputIndex, item);
+        return new ResponseOutputItemAddedEvent
+        {
+            SequenceNumber = checked((int)_stream.NextSequenceNumber()),
+            OutputIndex = checked((int)_outputIndex),
+            Item = item,
+        };
     }
 
     /// <summary>
@@ -70,7 +75,12 @@ public class OutputItemBuilder<T> where T : OutputItem
         EnsureTransition(BuilderLifecycleState.Added, BuilderLifecycleState.Done);
         _stream.TrackCompletedOutputItem(item, _outputIndex);
         ApplyAutoStamps(item);
-        return new ResponseOutputItemDoneEvent(_stream.NextSequenceNumber(), _outputIndex, item);
+        return new ResponseOutputItemDoneEvent
+        {
+            SequenceNumber = checked((int)_stream.NextSequenceNumber()),
+            OutputIndex = checked((int)_outputIndex),
+            Item = item,
+        };
     }
 
     /// <summary>
@@ -110,14 +120,8 @@ public class OutputItemBuilder<T> where T : OutputItem
     /// </summary>
     private void ApplyAutoStamps(T item)
     {
-        if (string.IsNullOrEmpty(item.ResponseId))
-        {
-            item.ResponseId = _stream.ResponseId;
-        }
-
-        if (item.AgentReference is null && _stream.AgentReference is not null)
-        {
-            item.AgentReference = _stream.AgentReference;
-        }
+        // OpenAI-owned ResponseItem instances do not expose AgentServer's former
+        // generated ResponseId/AgentReference stamp fields. Ownership moved to
+        // OpenAI/Extensions; response-level stamping remains on ResponseResult.
     }
 }

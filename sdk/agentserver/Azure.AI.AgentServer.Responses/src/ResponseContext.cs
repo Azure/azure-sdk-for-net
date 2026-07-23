@@ -30,18 +30,20 @@ public class ResponseContext
     /// <summary>Gets the unique response identifier.</summary>
     public string ResponseId { get; }
 
+    /// <summary>Gets the unique response identifier.</summary>
+    public string Id => ResponseId;
+
     /// <summary>
     /// Gets the stable identifier for the multi-turn conversation chain this response belongs to.
     /// <para>
     /// Every response in the same logical conversation shares this value, so handlers can use it
     /// as a key into their own application-side conversation state (e.g., upstream SDK session IDs,
     /// per-conversation rate limits, conversation indexes). When derived from the request's
-    /// conversation context, it is a native identifier that embeds the chain's partition key and
-    /// carries a deterministic <c>(agent, session)</c> scope: <c>cchain_{partition}{scope}</c> for a
-    /// conversation-scoped chain, or <c>rchain_{partition}{scope}</c> for a response-linkage chain.
-    /// The partition is extracted from the request's conversation ID, the <c>previous_response_id</c>
-    /// chain, or this response's own ID, and the prefix namespaces the chain kinds. Including the
-    /// agent name and session ID in the scope makes the value distinct across agents and sessions.
+    /// conversation context, it is the first 32 characters of the lowercase hex SHA-256 digest of
+    /// <c>{agentName}:{sessionId}:{discriminator}:{partition}</c>, where the partition is extracted
+    /// from the request's conversation ID, the <c>previous_response_id</c> chain, or this response's
+    /// own ID, and the discriminator namespaces the partition by source type. Including the agent
+    /// name and session ID scopes the value so it does not collide across agents or sessions.
     /// </para>
     /// <para>
     /// The base implementation returns <see cref="ResponseId"/>; enhanced contexts override this to
@@ -71,9 +73,9 @@ public class ResponseContext
     /// for each <paramref name="resolveReferences"/> mode.
     /// </summary>
     /// <param name="resolveReferences">
-    /// When <c>true</c> (the default), <see cref="Models.ItemReferenceParam"/> items
+    /// When <c>true</c> (the default), item reference parameters
     /// are resolved via the provider and returned as their concrete <see cref="Item"/> subtype.
-    /// When <c>false</c>, item references are left as <see cref="Models.ItemReferenceParam"/>
+    /// When <c>false</c>, item references are left as references
     /// in the returned list.
     /// </param>
     /// <param name="cancellationToken">A token to cancel the operation.</param>
@@ -94,7 +96,7 @@ public class ResponseContext
 
     /// <summary>
     /// Resolves input items and extracts all text content as a single string.
-    /// Filters for <see cref="Models.ItemMessage"/> items, expands their content,
+    /// Filters for message items, expands their content,
     /// and joins all text values with newline separators.
     /// </summary>
     /// <param name="resolveReferences">

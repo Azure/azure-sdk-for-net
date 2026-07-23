@@ -108,7 +108,7 @@ public class CodeInterpreterCallBuilderTests
         var builder = stream.AddOutputItemCodeInterpreterCall();
         var evt = builder.EmitCodeDelta("import ");
         XAssert.IsType<ResponseCodeInterpreterCallCodeDeltaEvent>(evt);
-        Assert.That(evt.Delta, Is.EqualTo("import "));
+        Assert.That(evt.Delta.ToString(), Is.EqualTo("import "));
         Assert.That(evt.ItemId, Is.EqualTo(builder.ItemId));
         Assert.That(evt.OutputIndex, Is.EqualTo(builder.OutputIndex));
     }
@@ -120,8 +120,8 @@ public class CodeInterpreterCallBuilderTests
         var builder = stream.AddOutputItemCodeInterpreterCall();
         var d1 = builder.EmitCodeDelta("import ");
         var d2 = builder.EmitCodeDelta("math\n");
-        Assert.That(d1.Delta, Is.EqualTo("import "));
-        Assert.That(d2.Delta, Is.EqualTo("math\n"));
+        Assert.That(d1.Delta.ToString(), Is.EqualTo("import "));
+        Assert.That(d2.Delta.ToString(), Is.EqualTo("math\n"));
     }
 
     [Test]

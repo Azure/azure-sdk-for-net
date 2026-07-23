@@ -51,7 +51,7 @@ public class CreateResponseTests : IDisposable
         await _client.PostAsync("/responses", content);
 
         Assert.That(_handler.LastRequest, Is.Not.Null);
-        Assert.That(_handler.LastRequest.Stream, Is.False);
+        Assert.That(_handler.LastRequest.StreamingEnabled, Is.False);
         Assert.That(_handler.LastRequest.Background, Is.False);
     }
 
@@ -110,7 +110,7 @@ public class CreateResponseTests : IDisposable
         await _client.PostAsync("/responses", content);
 
         Assert.That(_handler.LastContext, Is.Not.Null);
-        XAssert.StartsWith("caresp_", _handler.LastContext.ResponseId);
+        XAssert.StartsWith("caresp_", _handler.LastContext.Id);
     }
 
     [Test]
@@ -148,7 +148,7 @@ public class CreateResponseTests : IDisposable
 
         await _client.PostAsync("/responses", content);
 
-        var responseId = _handler.LastContext!.ResponseId;
+        var responseId = _handler.LastContext!.Id;
         var actualPk = IdGenerator.ExtractPartitionKey(responseId);
 
         Assert.That(actualPk, Is.EqualTo(expectedPk));
@@ -168,7 +168,7 @@ public class CreateResponseTests : IDisposable
 
         await _client.PostAsync("/responses", content);
 
-        var responseId = _handler.LastContext!.ResponseId;
+        var responseId = _handler.LastContext!.Id;
         var actualPk = IdGenerator.ExtractPartitionKey(responseId);
 
         Assert.That(actualPk, Is.EqualTo(expectedPk));
@@ -183,10 +183,10 @@ public class CreateResponseTests : IDisposable
         var content = new StringContent(requestBody, Encoding.UTF8, "application/json");
 
         await _client.PostAsync("/responses", content);
-        var responseId1 = _handler.LastContext!.ResponseId;
+        var responseId1 = _handler.LastContext!.Id;
 
         await _client.PostAsync("/responses", new StringContent(requestBody, Encoding.UTF8, "application/json"));
-        var responseId2 = _handler.LastContext!.ResponseId;
+        var responseId2 = _handler.LastContext!.Id;
 
         // Two requests without hints should have different partition keys
         var pk1 = IdGenerator.ExtractPartitionKey(responseId1);
@@ -201,7 +201,7 @@ public class CreateResponseTests : IDisposable
         string responseId,
         [EnumeratorCancellation] CancellationToken cancellationToken = default)
     {
-        yield return new ResponseCreatedEvent(0, new Models.ResponseObject(responseId, "test-model"));
+        yield return new ResponseCreatedEvent { SequenceNumber = 0, Response = new Models.ResponseObject(responseId, "test-model") };
         await Task.CompletedTask;
         throw new InvalidOperationException("Simulated handler failure");
     }

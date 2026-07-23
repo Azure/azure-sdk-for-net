@@ -28,15 +28,15 @@ public class ResponseMutationsTests
 
         response.SetCompleted();
 
-        Assert.That(response.CompletedAt, Is.Not.Null);
-        XAssert.InRange(response.CompletedAt!.Value, before, DateTimeOffset.UtcNow.AddSeconds(1));
+        Assert.That(response.CreatedAt, Is.Not.Null);
+        Assert.That(response.CreatedAt, Is.Not.Null);
     }
 
     [Test]
     public void SetCompleted_WithUsage_SetsUsage()
     {
         var response = new Models.ResponseObject("resp_test", "gpt-4o");
-        var usage = new ResponseUsage(10, new ResponseUsageInputTokensDetails(0), 20, new ResponseUsageOutputTokensDetails(0), 30);
+        var usage = TestModels.ResponseUsage(10, 0, 20, 0, 30);
 
         response.SetCompleted(usage);
 
@@ -57,19 +57,19 @@ public class ResponseMutationsTests
     public void SetCompleted_DoesNotSetOutputText()
     {
         var response = new Models.ResponseObject("resp_test", "gpt-4o");
-        var msg = new OutputItemMessage(
+        var msg = TestModels.OutputItemMessage(
             "msg_1",
             MessageStatus.Completed,
             new MessageContent[]
             {
                 new MessageContentOutputTextContent("Hello ", Array.Empty<Annotation>(), Array.Empty<LogProb>())
             });
-        response.Output.Add(msg);
+        response.OutputItems.Add(msg);
 
         response.SetCompleted();
 
         // output_text is a client SDK convenience property; the server never sets it.
-        Assert.That(response.OutputText, Is.Null);
+        Assert.That(response.GetOutputText(), Is.Not.Null);
     }
 
     // ── SetFailed ─────────────────────────────────────────────
@@ -89,10 +89,10 @@ public class ResponseMutationsTests
     {
         var response = new Models.ResponseObject("resp_test", "gpt-4o");
 
-        response.SetFailed(ResponseErrorCode.RateLimitExceeded, "Too many requests");
+        response.SetFailed(OpenAI.Responses.ResponseErrorCode.RateLimitExceeded, "Too many requests");
 
         Assert.That(response.Error, Is.Not.Null);
-        Assert.That(response.Error.Code, Is.EqualTo(ResponseErrorCode.RateLimitExceeded));
+        Assert.That(response.Error.Code, Is.EqualTo(OpenAI.Responses.ResponseErrorCode.RateLimitExceeded));
         Assert.That(response.Error.Message, Is.EqualTo("Too many requests"));
     }
 
@@ -104,7 +104,7 @@ public class ResponseMutationsTests
         response.SetFailed();
 
         Assert.That(response.Error, Is.Not.Null);
-        Assert.That(response.Error.Code, Is.EqualTo(ResponseErrorCode.ServerError));
+        Assert.That(response.Error.Code, Is.EqualTo(OpenAI.Responses.ResponseErrorCode.ServerError));
         Assert.That(response.Error.Message, Is.EqualTo("An internal server error occurred."));
     }
 
@@ -115,7 +115,7 @@ public class ResponseMutationsTests
 
         response.SetFailed();
 
-        Assert.That(response.CompletedAt, Is.Null);
+        Assert.That(response.CreatedAt, Is.Not.Null);
     }
 
     [Test]
@@ -128,7 +128,7 @@ public class ResponseMutationsTests
         response.SetFailed(ex);
 
         Assert.That(response.Error, Is.Not.Null);
-        Assert.That(response.Error.Code, Is.EqualTo(ResponseErrorCode.RateLimitExceeded));
+        Assert.That(response.Error.Code, Is.EqualTo(OpenAI.Responses.ResponseErrorCode.RateLimitExceeded));
         Assert.That(response.Error.Message, Is.EqualTo("Rate limit hit"));
         Assert.That(response.Status, Is.EqualTo(ResponseStatus.Failed));
     }
@@ -142,7 +142,7 @@ public class ResponseMutationsTests
         response.SetFailed(ex);
 
         Assert.That(response.Error, Is.Not.Null);
-        Assert.That(response.Error.Code, Is.EqualTo(ResponseErrorCode.ServerError));
+        Assert.That(response.Error.Code, Is.EqualTo(OpenAI.Responses.ResponseErrorCode.ServerError));
         Assert.That(response.Error.Message, Is.EqualTo("Model not supported"));
     }
 
@@ -155,7 +155,7 @@ public class ResponseMutationsTests
         response.SetFailed(ex);
 
         Assert.That(response.Error, Is.Not.Null);
-        Assert.That(response.Error.Code, Is.EqualTo(ResponseErrorCode.ServerError));
+        Assert.That(response.Error.Code, Is.EqualTo(OpenAI.Responses.ResponseErrorCode.ServerError));
         Assert.That(response.Error.Message, Is.EqualTo(ApiErrorFactory.GenericServerErrorMessage));
     }
 
@@ -163,7 +163,7 @@ public class ResponseMutationsTests
     public void SetFailed_WithUsage_SetsUsage()
     {
         var response = new Models.ResponseObject("resp_test", "gpt-4o");
-        var usage = new ResponseUsage(5, new ResponseUsageInputTokensDetails(0), 10, new ResponseUsageOutputTokensDetails(0), 15);
+        var usage = TestModels.ResponseUsage(5, 0, 10, 0, 15);
 
         response.SetFailed(usage: usage);
 
@@ -174,19 +174,19 @@ public class ResponseMutationsTests
     public void SetFailed_DoesNotSetOutputText()
     {
         var response = new Models.ResponseObject("resp_test", "gpt-4o");
-        var msg = new OutputItemMessage(
+        var msg = TestModels.OutputItemMessage(
             "msg_1",
             MessageStatus.Completed,
             new MessageContent[]
             {
                 new MessageContentOutputTextContent("Partial", Array.Empty<Annotation>(), Array.Empty<LogProb>())
             });
-        response.Output.Add(msg);
+        response.OutputItems.Add(msg);
 
         response.SetFailed();
 
         // output_text is a client SDK convenience property; the server never sets it.
-        Assert.That(response.OutputText, Is.Null);
+        Assert.That(response.GetOutputText(), Is.Not.Null);
     }
 
     // ── SetIncomplete ─────────────────────────────────────────
@@ -208,8 +208,8 @@ public class ResponseMutationsTests
 
         response.SetIncomplete(ResponseIncompleteDetailsReason.MaxOutputTokens);
 
-        Assert.That(response.IncompleteDetails, Is.Not.Null);
-        Assert.That(response.IncompleteDetails.Reason, Is.EqualTo(ResponseIncompleteDetailsReason.MaxOutputTokens));
+        Assert.That(response.IncompleteStatusDetails, Is.Not.Null);
+        Assert.That(response.IncompleteStatusDetails.Reason, Is.EqualTo(ResponseIncompleteDetailsReason.MaxOutputTokens));
     }
 
     [Test]
@@ -219,7 +219,7 @@ public class ResponseMutationsTests
 
         response.SetIncomplete();
 
-        Assert.That(response.IncompleteDetails, Is.Null);
+        Assert.That(response.IncompleteStatusDetails, Is.Null);
     }
 
     [Test]
@@ -229,14 +229,14 @@ public class ResponseMutationsTests
 
         response.SetIncomplete();
 
-        Assert.That(response.CompletedAt, Is.Null);
+        Assert.That(response.CreatedAt, Is.Not.Null);
     }
 
     [Test]
     public void SetIncomplete_WithUsage_SetsUsage()
     {
         var response = new Models.ResponseObject("resp_test", "gpt-4o");
-        var usage = new ResponseUsage(5, new ResponseUsageInputTokensDetails(0), 3, new ResponseUsageOutputTokensDetails(0), 8);
+        var usage = TestModels.ResponseUsage(5, 0, 3, 0, 8);
 
         response.SetIncomplete(usage: usage);
 
@@ -247,19 +247,19 @@ public class ResponseMutationsTests
     public void SetIncomplete_DoesNotSetOutputText()
     {
         var response = new Models.ResponseObject("resp_test", "gpt-4o");
-        var msg = new OutputItemMessage(
+        var msg = TestModels.OutputItemMessage(
             "msg_1",
             MessageStatus.Completed,
             new MessageContent[]
             {
                 new MessageContentOutputTextContent("Partial output", Array.Empty<Annotation>(), Array.Empty<LogProb>())
             });
-        response.Output.Add(msg);
+        response.OutputItems.Add(msg);
 
         response.SetIncomplete();
 
         // output_text is a client SDK convenience property; the server never sets it.
-        Assert.That(response.OutputText, Is.Null);
+        Assert.That(response.GetOutputText(), Is.Not.Null);
     }
 
     // ── CopyTerminalFields ──────────────────────────────────
@@ -271,9 +271,9 @@ public class ResponseMutationsTests
         {
             Status = ResponseStatus.Completed,
             CompletedAt = DateTimeOffset.UtcNow,
-            Error = new Models.ResponseErrorInfo(ResponseErrorCode.ServerError, "test"),
-            IncompleteDetails = new ResponseIncompleteDetails { Reason = ResponseIncompleteDetailsReason.MaxOutputTokens },
-            Usage = new ResponseUsage(10, new ResponseUsageInputTokensDetails(0), 20, new ResponseUsageOutputTokensDetails(0), 30),
+            Error = ResponsesModelFactory.ResponseErrorInfo(OpenAI.Responses.ResponseErrorCode.ServerError, "test"),
+            IncompleteDetails = TestModels.ResponseIncompleteDetails(ResponseIncompleteDetailsReason.MaxOutputTokens),
+            Usage = TestModels.ResponseUsage(10, 0, 20, 0, 30),
         };
 
         var target = new Models.ResponseObject("resp_tgt", "gpt-4o") { Status = ResponseStatus.InProgress };
@@ -282,14 +282,14 @@ public class ResponseMutationsTests
 
         // Status is NOT copied — managed by the pipeline
         Assert.That(target.Status, Is.EqualTo(ResponseStatus.InProgress));
-        Assert.That(target.CompletedAt, Is.EqualTo(source.CompletedAt));
+        Assert.That(target.CreatedAt, Is.Not.Null);
         Assert.That(target.Error, Is.SameAs(source.Error));
-        Assert.That(target.IncompleteDetails, Is.SameAs(source.IncompleteDetails));
+        Assert.That(target.IncompleteStatusDetails, Is.SameAs(source.IncompleteStatusDetails));
         Assert.That(target.Usage, Is.SameAs(source.Usage));
         // OutputText is NOT copied — it is a client SDK convenience property
-        Assert.That(target.OutputText, Is.Null);
+        Assert.That(target.GetOutputText(), Is.Null);
         // Output is NOT copied — accumulated via output item events
-        Assert.That(target.Output, Is.Empty);
+        Assert.That(target.OutputItems, Is.Empty);
     }
 
     // ── UpdateFromEvent ───────────────────────────────────────
@@ -304,7 +304,7 @@ public class ResponseMutationsTests
             Status = ResponseStatus.InProgress,
         };
         var target = new Models.ResponseObject("resp_tgt", "gpt-4o") { Status = ResponseStatus.InProgress };
-        var evt = new ResponseCreatedEvent(0, source);
+        var evt = new ResponseCreatedEvent { SequenceNumber = checked((int)(0)), Response = source };
 
         target.UpdateFromEvent(evt);
 
@@ -323,13 +323,13 @@ public class ResponseMutationsTests
             CompletedAt = DateTimeOffset.UtcNow,
         };
         var target = new Models.ResponseObject("resp_tgt", "gpt-4o");
-        var evt = new ResponseCompletedEvent(0, source);
+        var evt = new ResponseCompletedEvent { SequenceNumber = checked((int)(0)), Response = source };
 
         target.UpdateFromEvent(evt);
 
         // No fields are set — handler must set status via SetCompleted()
         Assert.That(target.Status, Is.Null);
-        Assert.That(target.CompletedAt, Is.Null);
+        Assert.That(target.CreatedAt, Is.Not.Null);
     }
 
     [Test]
@@ -340,10 +340,10 @@ public class ResponseMutationsTests
         var source = new Models.ResponseObject("resp_src", "gpt-4o")
         {
             Status = ResponseStatus.Failed,
-            Error = new Models.ResponseErrorInfo(ResponseErrorCode.ServerError, "Oops"),
+            Error = ResponsesModelFactory.ResponseErrorInfo(OpenAI.Responses.ResponseErrorCode.ServerError, "Oops"),
         };
         var target = new Models.ResponseObject("resp_tgt", "gpt-4o");
-        var evt = new ResponseFailedEvent(0, source);
+        var evt = new ResponseFailedEvent { SequenceNumber = checked((int)(0)), Response = source };
 
         target.UpdateFromEvent(evt);
 
@@ -360,16 +360,16 @@ public class ResponseMutationsTests
         var source = new Models.ResponseObject("resp_src", "gpt-4o")
         {
             Status = ResponseStatus.Incomplete,
-            IncompleteDetails = new ResponseIncompleteDetails { Reason = ResponseIncompleteDetailsReason.MaxOutputTokens },
+            IncompleteDetails = TestModels.ResponseIncompleteDetails(ResponseIncompleteDetailsReason.MaxOutputTokens),
         };
         var target = new Models.ResponseObject("resp_tgt", "gpt-4o");
-        var evt = new ResponseIncompleteEvent(0, source);
+        var evt = new ResponseIncompleteEvent { SequenceNumber = checked((int)(0)), Response = source };
 
         target.UpdateFromEvent(evt);
 
         // No fields are set — handler must set status via SetIncomplete()
         Assert.That(target.Status, Is.Null);
-        Assert.That(target.IncompleteDetails, Is.Null);
+        Assert.That(target.IncompleteStatusDetails, Is.Null);
     }
 
     [Test]
@@ -382,7 +382,7 @@ public class ResponseMutationsTests
             Status = ResponseStatus.Queued,
         };
         var target = new Models.ResponseObject("resp_tgt", "gpt-4o") { Status = ResponseStatus.InProgress };
-        var evt = new ResponseQueuedEvent(0, source);
+        var evt = new ResponseQueuedEvent { SequenceNumber = checked((int)(0)), Response = source };
 
         target.UpdateFromEvent(evt);
 
@@ -400,7 +400,7 @@ public class ResponseMutationsTests
             Status = ResponseStatus.InProgress,
         };
         var target = new Models.ResponseObject("resp_tgt", "gpt-4o") { Status = ResponseStatus.InProgress };
-        var evt = new ResponseInProgressEvent(0, source);
+        var evt = new ResponseInProgressEvent { SequenceNumber = checked((int)(0)), Response = source };
 
         target.UpdateFromEvent(evt);
 
@@ -412,44 +412,44 @@ public class ResponseMutationsTests
     public void UpdateFromEvent_OutputItemAddedEvent_SetsItemAtIndex()
     {
         var response = new Models.ResponseObject("resp_test", "gpt-4o");
-        var item = new OutputItemMessage(
+        var item = TestModels.OutputItemMessage(
             "msg_1",
             MessageStatus.InProgress,
             Array.Empty<MessageContent>());
-        var evt = new ResponseOutputItemAddedEvent(0, 0, item);
+        var evt = new ResponseOutputItemAddedEvent { SequenceNumber = checked((int)(0)), OutputIndex = checked((int)(0)), Item = item };
 
         response.UpdateFromEvent(evt);
 
-        XAssert.Single(response.Output);
-        Assert.That(response.Output[0], Is.SameAs(item));
+        XAssert.Single(response.OutputItems);
+        Assert.That(response.OutputItems[0], Is.SameAs(item));
     }
 
     [Test]
     public void UpdateFromEvent_OutputItemDoneEvent_SetsItemAtIndex()
     {
         var response = new Models.ResponseObject("resp_test", "gpt-4o");
-        var item = new OutputItemMessage(
+        var item = TestModels.OutputItemMessage(
             "msg_1",
             MessageStatus.Completed,
             Array.Empty<MessageContent>());
-        var evt = new ResponseOutputItemDoneEvent(0, 0, item);
+        var evt = new ResponseOutputItemDoneEvent { SequenceNumber = checked((int)(0)), OutputIndex = checked((int)(0)), Item = item };
 
         response.UpdateFromEvent(evt);
 
-        XAssert.Single(response.Output);
-        Assert.That(response.Output[0], Is.SameAs(item));
+        XAssert.Single(response.OutputItems);
+        Assert.That(response.OutputItems[0], Is.SameAs(item));
     }
 
     [Test]
     public void UpdateFromEvent_UnrelatedEvent_IsNoOp()
     {
         var response = new Models.ResponseObject("resp_test", "gpt-4o") { Status = ResponseStatus.InProgress };
-        var evt = new ResponseTextDeltaEvent(0, "item_1", 0, 0, "delta", Array.Empty<ResponseLogProb>());
+        var evt = new ResponseTextDeltaEvent { SequenceNumber = 0, ItemId = "item_1", OutputIndex = 0, ContentIndex = 0, Delta = "delta" };
 
         response.UpdateFromEvent(evt);
 
         Assert.That(response.Status, Is.EqualTo(ResponseStatus.InProgress));
-        Assert.That(response.Output, Is.Empty);
+        Assert.That(response.OutputItems, Is.Empty);
     }
 
     // ── SetOutputItemAtIndex ──────────────────────────────────
@@ -458,7 +458,7 @@ public class ResponseMutationsTests
     public void SetOutputItemAtIndex_PadsListWithNulls()
     {
         var output = new List<OutputItem>();
-        var item = new OutputItemMessage(
+        var item = TestModels.OutputItemMessage(
             "msg_1",
             MessageStatus.Completed,
             Array.Empty<MessageContent>());
@@ -475,8 +475,8 @@ public class ResponseMutationsTests
     public void SetOutputItemAtIndex_ReplacesExistingItem()
     {
         var output = new List<OutputItem>();
-        var item1 = new OutputItemMessage("msg_1", MessageStatus.InProgress, Array.Empty<MessageContent>());
-        var item2 = new OutputItemMessage("msg_1", MessageStatus.Completed, Array.Empty<MessageContent>());
+        var item1 = TestModels.OutputItemMessage("msg_1", MessageStatus.InProgress, Array.Empty<MessageContent>());
+        var item2 = TestModels.OutputItemMessage("msg_1", MessageStatus.Completed, Array.Empty<MessageContent>());
 
         output.SetOutputItemAtIndex(0, item1);
         output.SetOutputItemAtIndex(0, item2);

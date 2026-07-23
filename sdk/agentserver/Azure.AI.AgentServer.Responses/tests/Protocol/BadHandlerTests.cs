@@ -222,7 +222,7 @@ public class BadHandlerTests : ProtocolTestBase
         var response = new Models.ResponseObject(ctx.ResponseId, "test");
         // Yield a completed event directly — violates contract
         response.SetCompleted();
-        yield return new ResponseCompletedEvent(0, response);
+        yield return new ResponseCompletedEvent { SequenceNumber = checked((int)(0)), Response = response };
     }
 
     /// <summary>

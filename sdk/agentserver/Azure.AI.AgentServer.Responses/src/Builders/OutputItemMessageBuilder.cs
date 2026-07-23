@@ -41,10 +41,7 @@ public class OutputItemMessageBuilder : OutputItemBuilder<OutputItemMessage>
     /// <returns>A <see cref="ResponseOutputItemAddedEvent"/> for this message.</returns>
     public virtual ResponseOutputItemAddedEvent EmitAdded()
     {
-        var message = new OutputItemMessage(
-            id: _itemId,
-            status: MessageStatus.InProgress,
-            content: Array.Empty<MessageContent>());
+        var message = CreateAssistantMessage(_itemId, OpenAI.Responses.MessageStatus.InProgress);
         return EmitAdded(message);
     }
 
@@ -195,7 +192,6 @@ public class OutputItemMessageBuilder : OutputItemBuilder<OutputItemMessage>
             ]);
         }
 
-        var completedContents = new List<MessageContent>();
         for (int i = 0; i < _contentBuilders.Count; i++)
         {
             object builder = _contentBuilders[i];
@@ -208,11 +204,6 @@ public class OutputItemMessageBuilder : OutputItemBuilder<OutputItemMessage>
                         new ValidationError($"$.content[{i}]", "Text content builder must complete its full lifecycle (EmitTextDone + EmitDone) before message EmitDone().")
                     ]);
                 }
-
-                completedContents.Add(new MessageContentOutputTextContent(
-                    text: tc.FinalText!,
-                    annotations: tc.Annotations,
-                    logprobs: Array.Empty<LogProb>()));
             }
             else if (builder is RefusalContentBuilder rc)
             {
@@ -223,16 +214,62 @@ public class OutputItemMessageBuilder : OutputItemBuilder<OutputItemMessage>
                         new ValidationError($"$.content[{i}]", "Refusal content builder must complete its full lifecycle (EmitRefusalDone + EmitDone) before message EmitDone().")
                     ]);
                 }
-
-                completedContents.Add(new MessageContentRefusalContent(
-                    refusal: rc.FinalRefusal!));
             }
         }
 
-        var message = new OutputItemMessage(
-            id: _itemId,
-            status: MessageStatus.Completed,
-            content: completedContents);
+        var message = CreateAssistantMessage(_itemId, OpenAI.Responses.MessageStatus.Completed, BuildContentParts());
         return EmitDone(message);
+    }
+
+    private IReadOnlyList<OpenAI.Responses.ResponseContentPart> BuildContentParts()
+    {
+        var content = new List<OpenAI.Responses.ResponseContentPart>();
+        foreach (object builder in _contentBuilders)
+        {
+            if (builder is TextContentBuilder text)
+            {
+                content.Add(OpenAI.Responses.ResponseContentPart.CreateOutputTextPart(
+                    text.FinalText ?? string.Empty,
+                    text.Annotations.Select(TextContentBuilder.ToOpenAIAnnotation).ToArray()));
+            }
+            else if (builder is RefusalContentBuilder refusal)
+            {
+                content.Add(OpenAI.Responses.ResponseContentPart.CreateRefusalPart(refusal.FinalRefusal ?? string.Empty));
+            }
+        }
+
+        return content;
+    }
+
+    private static OutputItemMessage CreateAssistantMessage(
+        string id,
+        OpenAI.Responses.MessageStatus status,
+        IReadOnlyList<OpenAI.Responses.ResponseContentPart>? content = null)
+    {
+        var contentJson = string.Join(",", (content ?? Array.Empty<OpenAI.Responses.ResponseContentPart>())
+            .Select(part =>
+            {
+#pragma warning disable AZC0150 // OpenAI response models do not expose this package's ModelReaderWriterContext.
+                return System.ClientModel.Primitives.ModelReaderWriter.Write(part).ToString();
+#pragma warning restore AZC0150
+            }));
+        var data = BinaryData.FromString($$"""
+        {
+            "id": {{System.Text.Json.JsonSerializer.Serialize(id)}},
+            "type": "message",
+            "status": {{System.Text.Json.JsonSerializer.Serialize(ToWireStatus(status))}},
+            "role": "assistant",
+            "content": [{{contentJson}}]
+        }
+        """);
+#pragma warning disable AZC0150 // OpenAI response models do not expose this package's ModelReaderWriterContext.
+        var message = System.ClientModel.Primitives.ModelReaderWriter.Read<OutputItemMessage>(data)!;
+#pragma warning restore AZC0150
+        return message;
+    }
+
+    private static string ToWireStatus(OpenAI.Responses.MessageStatus status)
+    {
+        return status == OpenAI.Responses.MessageStatus.InProgress ? "in_progress" : "completed";
     }
 }

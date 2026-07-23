@@ -105,7 +105,7 @@ namespace Azure.AI.AgentServer.Responses.Tests.Snippets
                     },
                 });
 
-                var item = new StructuredOutputsOutputItem(payload, builder.ItemId);
+                var item = new StructuredOutputsOutputItem(payload) { Id = builder.ItemId };
                 yield return builder.EmitAdded(item);
                 yield return builder.EmitDone(item);
 

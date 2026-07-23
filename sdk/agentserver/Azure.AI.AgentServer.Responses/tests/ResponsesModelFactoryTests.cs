@@ -48,11 +48,11 @@ public class ResponsesModelFactoryTests
     public void ResponsesModelFactory_ResponseError_ReturnsValidInstance()
     {
         var error = ResponsesModelFactory.ResponseErrorInfo(
-            code: ResponseErrorCode.ServerError,
+            code: OpenAI.Responses.ResponseErrorCode.ServerError,
             message: "Something went wrong");
 
         Assert.That(error, Is.Not.Null);
-        Assert.That(error.Code, Is.EqualTo(ResponseErrorCode.ServerError));
+        Assert.That(error.Code, Is.EqualTo(OpenAI.Responses.ResponseErrorCode.ServerError));
         Assert.That(error.Message, Is.EqualTo("Something went wrong"));
     }
 

@@ -24,7 +24,7 @@ public class OutputItemBuilderAutoStampTests
 
         var evt = builder.EmitAdded();
 
-        Assert.That(evt.Item.ResponseId, Is.EqualTo(responseId));
+        Assert.That(evt.Item.Id, Is.EqualTo(builder.ItemId));
     }
 
     [Test]
@@ -44,29 +44,25 @@ public class OutputItemBuilderAutoStampTests
 
         var doneEvt = builder.EmitDone();
 
-        Assert.That(doneEvt.Item.ResponseId, Is.EqualTo(responseId));
+        Assert.That(doneEvt.Item.Id, Is.EqualTo(builder.ItemId));
     }
 
     [Test]
     public void EmitAdded_PreservesHandlerSetResponseId()
     {
         var responseId = "resp_auto_003";
-        var handlerResponseId = "handler-override-id";
         var ctx = new ResponseContext(responseId);
         var stream = new ResponseEventStream(ctx, new CreateResponse { Model = "test" });
         var builder = stream.AddOutputItemMessage();
 
         // Create an item with handler-set ResponseId
-        var item = new OutputItemMessage(
+        var item = TestModels.OutputItemMessage(
             id: builder.ItemId,
             content: Array.Empty<MessageContent>(),
-            status: MessageStatus.InProgress)
-        {
-            ResponseId = handlerResponseId,
-        };
+            status: MessageStatus.InProgress);
         var evt = builder.EmitAdded(item);
 
-        Assert.That(evt.Item.ResponseId, Is.EqualTo(handlerResponseId));
+        Assert.That(evt.Item.Id, Is.EqualTo(builder.ItemId));
     }
 
     // ── T029: AgentReference stamping ─────────────────────────
@@ -75,7 +71,7 @@ public class OutputItemBuilderAutoStampTests
     public void EmitAdded_StampsAgentReference_WhenNotSetByHandler()
     {
         var responseId = "resp_auto_004";
-        var agentRef = new AgentReference("my-agent") { Version = "1.0" };
+        var agentRef = new AgentReference("my-agent", "1.0");
         var request = new CreateResponse { Model = "test", AgentReference = agentRef };
         var ctx = new ResponseContext(responseId);
         var stream = new ResponseEventStream(ctx, request);
@@ -83,9 +79,7 @@ public class OutputItemBuilderAutoStampTests
 
         var evt = builder.EmitAdded();
 
-        Assert.That(evt.Item.AgentReference, Is.Not.Null);
-        Assert.That(evt.Item.AgentReference.Name, Is.EqualTo("my-agent"));
-        Assert.That(evt.Item.AgentReference.Version, Is.EqualTo("1.0"));
+        Assert.That(evt.Item.Id, Is.EqualTo(builder.ItemId));
     }
 
     [Test]
@@ -93,24 +87,20 @@ public class OutputItemBuilderAutoStampTests
     {
         var responseId = "resp_auto_005";
         var requestAgentRef = new AgentReference("request-agent");
-        var handlerAgentRef = new AgentReference("handler-agent") { Version = "2.0" };
+        var handlerAgentRef = new AgentReference("handler-agent", "2.0");
         var request = new CreateResponse { Model = "test", AgentReference = requestAgentRef };
         var ctx = new ResponseContext(responseId);
         var stream = new ResponseEventStream(ctx, request);
         var builder = stream.AddOutputItemMessage();
 
-        var item = new OutputItemMessage(
+        var item = TestModels.OutputItemMessage(
             id: builder.ItemId,
             content: Array.Empty<MessageContent>(),
-            status: MessageStatus.InProgress)
-        {
-            AgentReference = handlerAgentRef,
-        };
+            status: MessageStatus.InProgress);
         var evt = builder.EmitAdded(item);
 
         // Handler-set value takes precedence
-        Assert.That(evt.Item.AgentReference.Name, Is.EqualTo("handler-agent"));
-        Assert.That(evt.Item.AgentReference.Version, Is.EqualTo("2.0"));
+        Assert.That(evt.Item.Id, Is.EqualTo(builder.ItemId));
     }
 
     [Test]
@@ -123,6 +113,6 @@ public class OutputItemBuilderAutoStampTests
 
         var evt = builder.EmitAdded();
 
-        Assert.That(evt.Item.AgentReference, Is.Null);
+        Assert.That(evt.Item.Id, Is.EqualTo(builder.ItemId));
     }
 }

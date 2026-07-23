@@ -4,8 +4,12 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
-using System.IO;
+using System.Linq;
 using System.Text.Json;
+using System.Text.Json.Nodes;
+using Azure.AI.Extensions.OpenAI;
+using OpenAI;
+using OpenAI.Responses;
 
 namespace Azure.AI.AgentServer.Responses.Models;
 
@@ -25,16 +29,25 @@ internal static class BinaryDataExpansionHelpers
             return null;
         }
 
-        using var doc = JsonDocument.Parse(toolChoice.ToMemory());
-        var root = doc.RootElement;
-
-        return root.ValueKind switch
+        try
         {
-            JsonValueKind.String => ExpandToolChoiceFromString(root.GetString()!),
-            JsonValueKind.Object => ToolChoiceParam.DeserializeToolChoiceParam(root, ModelReaderWriterOptions.Json),
-            _ => throw new FormatException(
-                $"Expected a string or object for ToolChoice, but got {root.ValueKind}."),
-        };
+            using JsonDocument document = JsonDocument.Parse(toolChoice);
+            return document.RootElement.ValueKind switch
+            {
+                JsonValueKind.String => ExpandToolChoiceFromString(document.RootElement.GetString() ?? string.Empty),
+                JsonValueKind.Object => ModelReaderWriter.Read<ToolChoiceParam>(
+                    toolChoice,
+                    ModelReaderWriterOptions.Json,
+                    AzureAIAgentServerResponsesContext.Default),
+                JsonValueKind.Null => null,
+                _ => throw new FormatException(
+                    $"Expected string or object for ToolChoice, but got {document.RootElement.ValueKind}."),
+            };
+        }
+        catch (JsonException ex)
+        {
+            throw new FormatException("Failed to convert tool choice", ex);
+        }
     }
 
     private static ToolChoiceParam? ExpandToolChoiceFromString(string value)
@@ -54,38 +67,7 @@ internal static class BinaryDataExpansionHelpers
     /// </summary>
     internal static List<Item> ExpandInput(BinaryData? input)
     {
-        if (input is null)
-        {
-            return new List<Item>();
-        }
-
-        try
-        {
-            using var doc = JsonDocument.Parse(input.ToMemory());
-            var root = doc.RootElement;
-
-            var items = root.ValueKind switch
-            {
-                JsonValueKind.String => new List<Item>
-                {
-                    CreateStringInputMessage(root.GetString()!),
-                },
-                JsonValueKind.Array => DeserializeItemArray(root),
-                _ => throw new FormatException(
-                    $"Expected a string or array for Input, but got {root.ValueKind}."),
-            };
-
-            NormalizeMessageContent(items);
-            return items;
-        }
-        catch (FormatException)
-        {
-            throw;
-        }
-        catch (Exception ex)
-        {
-            throw new FormatException("Failed to convert input items", ex);
-        }
+        return ExpandItems(input, MessageRole.User, "Input");
     }
 
     /// <summary>
@@ -94,24 +76,7 @@ internal static class BinaryDataExpansionHelpers
     /// </summary>
     internal static List<Item> ExpandInstructions(BinaryData? instructions)
     {
-        if (instructions is null)
-        {
-            return new List<Item>();
-        }
-
-        using var doc = JsonDocument.Parse(instructions.ToMemory());
-        var root = doc.RootElement;
-
-        return root.ValueKind switch
-        {
-            JsonValueKind.String => new List<Item>
-            {
-                CreateStringInstructionMessage(root.GetString()!),
-            },
-            JsonValueKind.Array => DeserializeItemArray(root),
-            _ => throw new FormatException(
-                $"Expected a string or array for Instructions, but got {root.ValueKind}."),
-        };
+        return ExpandItems(instructions, MessageRole.Developer, "Instructions");
     }
 
     /// <summary>
@@ -124,16 +89,25 @@ internal static class BinaryDataExpansionHelpers
             return null;
         }
 
-        using var doc = JsonDocument.Parse(conversation.ToMemory());
-        var root = doc.RootElement;
-
-        return root.ValueKind switch
+        try
         {
-            JsonValueKind.String => new ConversationParam(root.GetString()!),
-            JsonValueKind.Object => ConversationParam.DeserializeConversationParam(root, ModelReaderWriterOptions.Json),
-            _ => throw new FormatException(
-                $"Expected a string or object for Conversation, but got {root.ValueKind}."),
-        };
+            using JsonDocument document = JsonDocument.Parse(conversation);
+            return document.RootElement.ValueKind switch
+            {
+                JsonValueKind.String when !string.IsNullOrEmpty(document.RootElement.GetString()) => new ConversationParam(document.RootElement.GetString()!),
+                JsonValueKind.String => null,
+                JsonValueKind.Object when document.RootElement.TryGetProperty("id", out JsonElement idElement)
+                    && idElement.ValueKind == JsonValueKind.String
+                    && !string.IsNullOrEmpty(idElement.GetString()) => new ConversationParam(idElement.GetString()!),
+                JsonValueKind.Null => null,
+                _ => throw new FormatException(
+                    $"Expected string or object for Conversation, but got {document.RootElement.ValueKind}."),
+            };
+        }
+        catch (JsonException ex)
+        {
+            throw new FormatException("Failed to convert conversation", ex);
+        }
     }
 
     /// <summary>
@@ -143,114 +117,164 @@ internal static class BinaryDataExpansionHelpers
     {
         if (content is null)
         {
-            return new List<MessageContent>();
+            return [];
         }
 
-        using var doc = JsonDocument.Parse(content.ToMemory());
-        var root = doc.RootElement;
-
-        return root.ValueKind switch
+        try
         {
-            JsonValueKind.String => new List<MessageContent>
+            using JsonDocument document = JsonDocument.Parse(content);
+            return document.RootElement.ValueKind switch
             {
-                new MessageContentInputTextContent(root.GetString()!),
-            },
-            JsonValueKind.Array => DeserializeContentArray(root),
-            JsonValueKind.Object => new List<MessageContent>
+                JsonValueKind.String => [new MessageContentInputTextContent(document.RootElement.GetString() ?? string.Empty)],
+                JsonValueKind.Object => [ReadMessageContent(document.RootElement)],
+                JsonValueKind.Array => document.RootElement.EnumerateArray().Select(ReadMessageContent).ToList(),
+                JsonValueKind.Null => [],
+                _ => throw new FormatException("Expected JSON array, object, or string for item content"),
+            };
+        }
+        catch (JsonException ex)
+        {
+            throw new FormatException("Failed to convert item content", ex);
+        }
+    }
+
+    private static List<Item> ExpandItems(BinaryData? data, MessageRole stringRole, string propertyName)
+    {
+        if (data is null)
+        {
+            return [];
+        }
+
+        try
+        {
+            using JsonDocument document = JsonDocument.Parse(data);
+            JsonArray array = document.RootElement.ValueKind switch
             {
-                ModelReaderWriter.Read<MessageContent>(
-                    BinaryData.FromString(root.GetRawText()), ModelReaderWriterOptions.Json, AzureAIAgentServerResponsesContext.Default)!,
-            },
-            _ => throw new FormatException("Expected JSON array, object, or string for item content"),
-        };
-    }
+                JsonValueKind.String => new JsonArray(CreateMessageNode(stringRole, document.RootElement.GetString() ?? string.Empty)),
+                JsonValueKind.Array => NormalizeItemArray(document.RootElement),
+                JsonValueKind.Null => [],
+                _ => throw new FormatException(
+                    $"Expected a string or array for {propertyName}, but got {document.RootElement.ValueKind}."),
+            };
 
-    private static ItemMessage CreateStringInputMessage(string text)
-    {
-        return new ItemMessage(MessageRole.User, new List<MessageContent>
+            return array.Select(ReadResponseItem).ToList();
+        }
+        catch (JsonException ex)
         {
-            new MessageContentInputTextContent(text),
-        });
+            throw new FormatException($"Failed to convert {propertyName.ToLowerInvariant()} items", ex);
+        }
     }
 
-    private static ItemMessage CreateStringInstructionMessage(string text)
+    private static JsonArray NormalizeItemArray(JsonElement inputArray)
     {
-        return new ItemMessage(MessageRole.Developer, new List<MessageContent>
-        {
-            new MessageContentInputTextContent(text),
-        });
-    }
-
-    private static List<Item> DeserializeItemArray(JsonElement root)
-    {
-        var items = new List<Item>();
-        foreach (var element in root.EnumerateArray())
+        var normalized = new JsonArray();
+        foreach (JsonElement element in inputArray.EnumerateArray())
         {
             if (element.ValueKind != JsonValueKind.Object)
             {
-                throw new FormatException(
-                    $"Expected a JSON object in the item array, but got {element.ValueKind}.");
+                throw new FormatException($"Expected object item in input array, but got {element.ValueKind}.");
             }
 
-            if (element.TryGetProperty("type", out _))
+            JsonObject item = JsonNode.Parse(element.GetRawText())!.AsObject();
+            if (!item.TryGetPropertyValue("type", out JsonNode? typeNode) && item.ContainsKey("role"))
             {
-                items.Add(Item.DeserializeItem(element, ModelReaderWriterOptions.Json));
+                item["type"] = "message";
+                typeNode = JsonValue.Create("message");
             }
-            else
+
+            if (typeNode is JsonValue typeValue
+                && typeValue.TryGetValue<string>(out string? type)
+                && type == "message"
+                && item.TryGetPropertyValue("content", out JsonNode? contentNode))
             {
-                items.Add(ItemMessage.DeserializeItemMessage(element, ModelReaderWriterOptions.Json));
+                item["content"] = NormalizeMessageContent(contentNode);
             }
+
+            normalized.Add(item);
         }
 
-        return items;
+        return normalized;
     }
 
-    private static List<MessageContent> DeserializeContentArray(JsonElement root)
+    private static JsonNode? NormalizeMessageContent(JsonNode? contentNode)
     {
-        var items = new List<MessageContent>();
-        foreach (var element in root.EnumerateArray())
+        if (contentNode is JsonValue contentValue
+            && contentValue.TryGetValue<string>(out string? contentString))
         {
-            items.Add(MessageContent.DeserializeMessageContent(element, ModelReaderWriterOptions.Json));
+            return new JsonArray(CreateInputTextContentNode(contentString));
         }
 
-        return items;
-    }
-
-    /// <summary>
-    /// Normalizes <see cref="ItemMessage.Content"/> from JSON string shorthand to
-    /// the canonical array form so that downstream consumers always see an array
-    /// of <see cref="MessageContent"/> regardless of how the input was submitted.
-    /// </summary>
-    private static void NormalizeMessageContent(List<Item> items)
-    {
-        foreach (var item in items)
+        if (contentNode is JsonArray contentArray)
         {
-            if (item is ItemMessage message && message.Content is not null)
+            var normalized = new JsonArray();
+            foreach (JsonNode? partNode in contentArray)
             {
-                using var doc = JsonDocument.Parse(message.Content.ToMemory());
-                if (doc.RootElement.ValueKind == JsonValueKind.String)
-                {
-                    var expanded = ExpandContent(message.Content);
-                    message.Content = SerializeContentArray(expanded);
-                }
-            }
-        }
-    }
-
-    private static BinaryData SerializeContentArray(List<MessageContent> content)
-    {
-        using var stream = new MemoryStream();
-        using (var writer = new Utf8JsonWriter(stream))
-        {
-            writer.WriteStartArray();
-            foreach (var part in content)
-            {
-                ((IJsonModel<MessageContent>)part).Write(writer, ModelReaderWriterOptions.Json);
+                normalized.Add(NormalizeMessageContentPart(partNode));
             }
 
-            writer.WriteEndArray();
+            return normalized;
         }
 
-        return BinaryData.FromBytes(stream.ToArray());
+        return contentNode?.DeepClone();
+    }
+
+    private static JsonNode? NormalizeMessageContentPart(JsonNode? partNode)
+    {
+        if (partNode is not JsonObject partObject)
+        {
+            return partNode?.DeepClone();
+        }
+
+        JsonObject normalizedPart = (JsonObject)partObject.DeepClone();
+        if (normalizedPart.TryGetPropertyValue("type", out JsonNode? typeNode)
+            && typeNode is JsonValue typeValue
+            && typeValue.TryGetValue<string>(out string? type)
+            && type == "input_image"
+            && !normalizedPart.ContainsKey("detail"))
+        {
+            normalizedPart["detail"] = "auto";
+        }
+
+        return normalizedPart;
+    }
+
+    private static Item ReadResponseItem(JsonNode? node)
+    {
+        if (node is null)
+        {
+            throw new FormatException("Input item cannot be null.");
+        }
+
+        return ModelReaderWriter.Read<Item>(
+            BinaryData.FromString(node.ToJsonString()),
+            ModelReaderWriterOptions.Json,
+            OpenAIContext.Default)!;
+    }
+
+    private static MessageContent ReadMessageContent(JsonElement element)
+    {
+        return ModelReaderWriter.Read<MessageContent>(
+            BinaryData.FromString(element.GetRawText()),
+            ModelReaderWriterOptions.Json,
+            AzureAIAgentServerResponsesContext.Default)!;
+    }
+
+    private static JsonObject CreateMessageNode(MessageRole role, string content)
+    {
+        return new JsonObject
+        {
+            ["type"] = "message",
+            ["role"] = role.ToString().ToLowerInvariant(),
+            ["content"] = new JsonArray(CreateInputTextContentNode(content)),
+        };
+    }
+
+    private static JsonObject CreateInputTextContentNode(string text)
+    {
+        return new JsonObject
+        {
+            ["type"] = "input_text",
+            ["text"] = text,
+        };
     }
 }

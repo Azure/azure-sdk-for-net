@@ -226,10 +226,10 @@ public class TtlConfigurationTests : IDisposable
         [EnumeratorCancellation] CancellationToken ct = default)
     {
         var response = new Models.ResponseObject(ctx.ResponseId, "test");
-        yield return new ResponseCreatedEvent(0, response);
-        yield return new ResponseOutputItemDoneEvent();
+        yield return new ResponseCreatedEvent { SequenceNumber = checked((int)(0)), Response = response };
+        yield return TestModels.ResponseOutputItemDoneEvent(0, TestModels.OutputItemMessage("msg_test", MessageStatus.Completed, Array.Empty<MessageContent>()));
         response.SetCompleted();
-        yield return new ResponseCompletedEvent(0, response);
+        yield return new ResponseCompletedEvent { SequenceNumber = checked((int)(0)), Response = response };
     }
 
     private static async Task WaitForBackgroundCompletion(

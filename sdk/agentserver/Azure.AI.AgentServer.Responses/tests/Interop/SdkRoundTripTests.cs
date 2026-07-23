@@ -289,7 +289,7 @@ public class SdkRoundTripTests
         var items = captured!.GetInputExpanded();
         Assert.That(items, Has.Count.EqualTo(1));
         var msg = XAssert.IsType<ItemMessage>(items[0]);
-        Assert.That(msg.Role, Is.EqualTo(AzureMessageRole.User));
+        Assert.That(msg.Role, Is.EqualTo(OpenAI.Responses.MessageRole.User));
         var content = msg.GetContentExpanded();
         Assert.That(content, Has.Count.EqualTo(1));
         var text = XAssert.IsType<MessageContentInputTextContent>(content[0]);
@@ -317,7 +317,7 @@ public class SdkRoundTripTests
         Assert.That(captured, Is.Not.Null);
         var items = captured!.GetInputExpanded();
         Assert.That(items, Has.Count.EqualTo(1));
-        var fco = XAssert.IsType<FunctionCallOutputItemParam>(items[0]);
+        var fco = XAssert.IsType<FunctionCallOutputResponseItem>(items[0]);
         Assert.That(fco.CallId, Is.EqualTo("call_sdk_001"));
     }
 
@@ -347,7 +347,7 @@ public class SdkRoundTripTests
         Assert.That(items, Has.Count.EqualTo(3));
         XAssert.IsType<ItemMessage>(items[0]);
         XAssert.IsType<ItemFunctionToolCall>(items[1]);
-        XAssert.IsType<FunctionCallOutputItemParam>(items[2]);
+        XAssert.IsType<FunctionCallOutputResponseItem>(items[2]);
     }
 
     // ═══════════════════════════════════════════════════════════════════
@@ -379,7 +379,7 @@ public class SdkRoundTripTests
         Assert.That(captured!.Instructions, Is.EqualTo("Be helpful"));
         Assert.That(captured.Temperature, Is.EqualTo(0.7f).Within(0.01f));
         Assert.That(captured.TopP, Is.EqualTo(0.9f).Within(0.01f));
-        Assert.That(captured.MaxOutputTokens, Is.EqualTo(1024));  // Server model uses MaxOutputTokens
+        Assert.That(captured.MaxOutputTokenCount, Is.EqualTo(1024));  // Server model uses MaxOutputTokens
     }
 
     // ═══════════════════════════════════════════════════════════════════

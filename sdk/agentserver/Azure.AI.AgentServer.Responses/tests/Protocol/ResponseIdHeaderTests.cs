@@ -130,7 +130,7 @@ public class ResponseIdHeaderTests : ProtocolTestBase
             "x-agent-response-id", customId);
 
         Assert.That(Handler.LastContext, Is.Not.Null);
-        Assert.That(Handler.LastContext!.ResponseId, Is.EqualTo(customId));
+        Assert.That(Handler.LastContext!.Id, Is.EqualTo(customId));
     }
 
     // ── Helper ──

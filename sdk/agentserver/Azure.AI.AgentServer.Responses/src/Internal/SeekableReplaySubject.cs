@@ -239,7 +239,7 @@ internal sealed class SeekableReplaySubject : IDisposable
             try
             {
                 var seqNo = _subject._nextSequenceId++;
-                value.SequenceNumber = seqNo;
+                value.SequenceNumber = checked((int)seqNo);
                 var timestamp = _subject._timeProvider.GetUtcNow();
                 _subject._buffer.Add(new BufferedItem(seqNo, value, timestamp));
                 _subject.PruneExpired();

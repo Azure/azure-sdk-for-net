@@ -1,6 +1,7 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using System.Linq;
 using Azure.AI.AgentServer.Responses.Internal;
 using Azure.AI.AgentServer.Responses.Models;
 
@@ -29,13 +30,11 @@ public class ResponseEventStream
         _context = context ?? throw new ArgumentNullException(nameof(context));
         ArgumentNullException.ThrowIfNull(request);
 
-        var conversationId = request.GetConversationId();
         _response = new Models.ResponseObject(context.ResponseId, request.Model ?? string.Empty)
         {
-            Metadata = request.Metadata!,
-            AgentReference = request.AgentReference,
-            Background = request.Background,
-            Conversation = conversationId != null ? new ConversationReference(conversationId) : null,
+            Metadata = new Dictionary<string, string>(request.Metadata),
+            Background = request.BackgroundModeEnabled,
+            Conversation = request.GetConversationExpanded(),
             PreviousResponseId = request.PreviousResponseId,
         };
     }
@@ -77,7 +76,11 @@ public class ResponseEventStream
     public virtual ResponseQueuedEvent EmitQueued()
     {
         _response.Status = ResponseStatus.Queued;
-        return new ResponseQueuedEvent(NextSequenceNumber(), _response);
+        return new ResponseQueuedEvent
+        {
+            SequenceNumber = checked((int)NextSequenceNumber()),
+            Response = _response,
+        };
     }
 
     /// <summary>
@@ -94,7 +97,11 @@ public class ResponseEventStream
     public virtual ResponseCreatedEvent EmitCreated(ResponseStatus status = ResponseStatus.InProgress)
     {
         _response.Status = status;
-        return new ResponseCreatedEvent(NextSequenceNumber(), _response);
+        return new ResponseCreatedEvent
+        {
+            SequenceNumber = checked((int)NextSequenceNumber()),
+            Response = _response,
+        };
     }
 
     /// <summary>
@@ -105,7 +112,11 @@ public class ResponseEventStream
     public virtual ResponseInProgressEvent EmitInProgress()
     {
         _response.Status = ResponseStatus.InProgress;
-        return new ResponseInProgressEvent(NextSequenceNumber(), _response);
+        return new ResponseInProgressEvent
+        {
+            SequenceNumber = checked((int)NextSequenceNumber()),
+            Response = _response,
+        };
     }
 
     /// <summary>
@@ -118,7 +129,11 @@ public class ResponseEventStream
     public virtual ResponseCompletedEvent EmitCompleted(ResponseUsage? usage = null)
     {
         _response.SetCompleted(usage);
-        return new ResponseCompletedEvent(NextSequenceNumber(), _response);
+        return new ResponseCompletedEvent
+        {
+            SequenceNumber = checked((int)NextSequenceNumber()),
+            Response = _response,
+        };
     }
 
     /// <summary>
@@ -136,7 +151,11 @@ public class ResponseEventStream
         ResponseUsage? usage = null)
     {
         _response.SetFailed(code, message, usage);
-        return new ResponseFailedEvent(NextSequenceNumber(), _response);
+        return new ResponseFailedEvent
+        {
+            SequenceNumber = checked((int)NextSequenceNumber()),
+            Response = _response,
+        };
     }
 
     /// <summary>
@@ -165,7 +184,11 @@ public class ResponseEventStream
         ResponseUsage? usage = null)
     {
         _response.SetIncomplete(reason, usage);
-        return new ResponseIncompleteEvent(NextSequenceNumber(), _response);
+        return new ResponseIncompleteEvent
+        {
+            SequenceNumber = checked((int)NextSequenceNumber()),
+            Response = _response,
+        };
     }
 
     // ── Output Item Accumulation ──────────────────────────────
@@ -479,7 +502,7 @@ public class ResponseEventStream
     /// <returns>A new <see cref="OutputItemBuilder{T}"/> for the output item.</returns>
     /// <exception cref="ArgumentNullException"><paramref name="itemId"/> is <c>null</c>.</exception>
     /// <exception cref="ArgumentException"><paramref name="itemId"/> is not in a valid ID format.</exception>
-    public virtual OutputItemBuilder<T> AddOutputItem<T>(string itemId) where T : Models.OutputItem
+    public virtual OutputItemBuilder<T> AddOutputItem<T>(string itemId) where T : OutputItem
     {
         ArgumentNullException.ThrowIfNull(itemId);
 
@@ -599,16 +622,10 @@ public class ResponseEventStream
     {
         var itemId = IdGenerator.NewFunctionCallOutputItemId(_context.ResponseId);
         var builder = AddOutputItem<OutputItemFunctionToolCallOutput>(itemId);
-        var item = new OutputItemFunctionToolCallOutput(
-            OutputItemType.FunctionCallOutput,
-            createdBy: null,
-            agentReference: null,
-            responseId: null,
-            additionalBinaryDataProperties: null,
-            id: itemId,
-            callId: callId,
-            output: output,
-            status: null);
+        var item = new OutputItemFunctionToolCallOutput(callId, output.ToString())
+        {
+            Id = itemId,
+        };
         yield return builder.EmitAdded(item);
         yield return builder.EmitDone(item);
     }
@@ -697,7 +714,10 @@ public class ResponseEventStream
     public IEnumerable<ResponseStreamEvent> OutputItemStructuredOutputs(BinaryData output)
     {
         var builder = AddOutputItemStructuredOutputs();
-        var item = new StructuredOutputsOutputItem(output, builder.ItemId);
+        var item = new StructuredOutputsOutputItem(output)
+        {
+            Id = builder.ItemId,
+        };
         yield return builder.EmitAdded(item);
         yield return builder.EmitDone(item);
     }
@@ -719,8 +739,14 @@ public class ResponseEventStream
         ItemComputerToolCallStatus status)
     {
         var builder = AddOutputItemComputerCall();
-        var item = new OutputItemComputerToolCall(builder.ItemId, callId, pendingSafetyChecks, status);
-        item.Action = action;
+        var item = new OutputItemComputerToolCall(
+            callId,
+            action.Translate().To<OpenAI.Responses.ComputerCallAction>(),
+            pendingSafetyChecks.Select(safetyCheck => safetyCheck.Translate().To<OpenAI.Responses.ComputerCallSafetyCheck>()))
+        {
+            Id = builder.ItemId,
+            Status = ToOpenAIComputerCallStatus(status),
+        };
         yield return builder.EmitAdded(item);
         yield return builder.EmitDone(item);
     }
@@ -738,17 +764,10 @@ public class ResponseEventStream
         ComputerScreenshotImage output)
     {
         var builder = AddOutputItemComputerCallOutput();
-        var item = new OutputItemComputerToolCallOutput(
-            OutputItemType.ComputerCallOutput,
-            createdBy: null,
-            agentReference: null,
-            responseId: null,
-            additionalBinaryDataProperties: null,
-            id: builder.ItemId,
-            callId: callId,
-            acknowledgedSafetyChecks: null,
-            output: output,
-            status: null);
+        var item = new OutputItemComputerToolCallOutput(callId, output.Translate().To<OpenAI.Responses.ComputerCallOutput>())
+        {
+            Id = builder.ItemId,
+        };
         yield return builder.EmitAdded(item);
         yield return builder.EmitDone(item);
     }
@@ -847,7 +866,11 @@ public class ResponseEventStream
         ApplyPatchFileOperation operation)
     {
         var builder = AddOutputItemApplyPatchCall();
-        var item = new OutputItemApplyPatchToolCall(builder.ItemId, callId, status, operation);
+        var item = new OutputItemApplyPatchToolCall(callId, operation.Translate().To<OpenAI.Responses.ApplyPatchOperation>())
+        {
+            Id = builder.ItemId,
+            Status = ToOpenAIApplyPatchCallStatus(status),
+        };
         yield return builder.EmitAdded(item);
         yield return builder.EmitDone(item);
     }
@@ -865,7 +888,10 @@ public class ResponseEventStream
         ApplyPatchCallOutputStatus status)
     {
         var builder = AddOutputItemApplyPatchCallOutput();
-        var item = new OutputItemApplyPatchToolCallOutput(builder.ItemId, callId, status);
+        var item = new OutputItemApplyPatchToolCallOutput(callId, ToOpenAIApplyPatchCallOutputStatus(status))
+        {
+            Id = builder.ItemId,
+        };
         yield return builder.EmitAdded(item);
         yield return builder.EmitDone(item);
     }
@@ -881,8 +907,11 @@ public class ResponseEventStream
     public IEnumerable<ResponseStreamEvent> OutputItemCustomToolCallOutput(string callId, BinaryData output)
     {
         var builder = AddOutputItemCustomToolCallOutput();
-        var item = new OutputItemCustomToolCallOutput(callId, output, FunctionCallOutputStatusEnum.Completed);
-        item.Id = builder.ItemId;
+        var item = new OutputItemCustomToolCallOutput(callId, output.ToString())
+        {
+            Id = builder.ItemId,
+            Status = OpenAI.Responses.FunctionCallOutputStatus.Completed,
+        };
         yield return builder.EmitAdded(item);
         yield return builder.EmitDone(item);
     }
@@ -902,7 +931,7 @@ public class ResponseEventStream
         string arguments)
     {
         var builder = AddOutputItemMcpApprovalRequest();
-        var item = new OutputItemMcpApprovalRequest(builder.ItemId, serverLabel, name, arguments);
+        var item = new OutputItemMcpApprovalRequest(builder.ItemId, serverLabel, name, BinaryData.FromString(arguments));
         yield return builder.EmitAdded(item);
         yield return builder.EmitDone(item);
     }
@@ -920,7 +949,10 @@ public class ResponseEventStream
         bool approve)
     {
         var builder = AddOutputItemMcpApprovalResponse();
-        var item = new OutputItemMcpApprovalResponseResource(builder.ItemId, approvalRequestId, approve);
+        var item = new OutputItemMcpApprovalResponseResource(approvalRequestId, approve)
+        {
+            Id = builder.ItemId,
+        };
         yield return builder.EmitAdded(item);
         yield return builder.EmitDone(item);
     }
@@ -939,6 +971,28 @@ public class ResponseEventStream
         yield return builder.EmitAdded(item);
         yield return builder.EmitDone(item);
     }
+
+    private static OpenAI.Responses.ApplyPatchCallStatus ToOpenAIApplyPatchCallStatus(ApplyPatchCallStatus status)
+        => status switch
+        {
+            ApplyPatchCallStatus.Completed => OpenAI.Responses.ApplyPatchCallStatus.Completed,
+            _ => OpenAI.Responses.ApplyPatchCallStatus.InProgress,
+        };
+
+    private static OpenAI.Responses.ComputerCallStatus ToOpenAIComputerCallStatus(ItemComputerToolCallStatus status)
+        => status switch
+        {
+            ItemComputerToolCallStatus.Completed => OpenAI.Responses.ComputerCallStatus.Completed,
+            ItemComputerToolCallStatus.Incomplete => OpenAI.Responses.ComputerCallStatus.Incomplete,
+            _ => OpenAI.Responses.ComputerCallStatus.InProgress,
+        };
+
+    private static OpenAI.Responses.ApplyPatchCallOutputStatus ToOpenAIApplyPatchCallOutputStatus(ApplyPatchCallOutputStatus status)
+        => status switch
+        {
+            ApplyPatchCallOutputStatus.Failed => OpenAI.Responses.ApplyPatchCallOutputStatus.Failed,
+            _ => OpenAI.Responses.ApplyPatchCallOutputStatus.Completed,
+        };
 
     // ── Raw Event Interop ─────────────────────────────────────
 

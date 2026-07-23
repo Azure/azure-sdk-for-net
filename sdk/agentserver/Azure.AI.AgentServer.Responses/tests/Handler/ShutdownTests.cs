@@ -204,7 +204,7 @@ public class ShutdownTests : IDisposable
         Action<bool> captureIsShutdown)
     {
         var response = new Models.ResponseObject(context.ResponseId, "test");
-        yield return new ResponseCreatedEvent(0, response);
+        yield return new ResponseCreatedEvent { SequenceNumber = checked((int)(0)), Response = response };
 
         handlerStarted.TrySetResult();
 
@@ -222,7 +222,7 @@ public class ShutdownTests : IDisposable
         if (wasShutdown)
         {
             response.SetIncomplete();
-            yield return new ResponseIncompleteEvent(0, response);
+            yield return new ResponseIncompleteEvent { SequenceNumber = checked((int)(0)), Response = response };
         }
     }
 
@@ -233,7 +233,7 @@ public class ShutdownTests : IDisposable
         TaskCompletionSource handlerDone)
     {
         var response = new Models.ResponseObject(context.ResponseId, "test");
-        yield return new ResponseCreatedEvent(0, response);
+        yield return new ResponseCreatedEvent { SequenceNumber = checked((int)(0)), Response = response };
 
         handlerStarted.TrySetResult();
 
@@ -250,7 +250,7 @@ public class ShutdownTests : IDisposable
         if (wasShutdown)
         {
             response.SetIncomplete();
-            yield return new ResponseIncompleteEvent(0, response);
+            yield return new ResponseIncompleteEvent { SequenceNumber = checked((int)(0)), Response = response };
         }
 
         handlerDone.TrySetResult();
@@ -261,7 +261,7 @@ public class ShutdownTests : IDisposable
         TaskCompletionSource handlerStarted)
     {
         var response = new Models.ResponseObject(context.ResponseId, "test");
-        yield return new ResponseCreatedEvent(0, response);
+        yield return new ResponseCreatedEvent { SequenceNumber = checked((int)(0)), Response = response };
 
         handlerStarted.TrySetResult();
 
@@ -269,7 +269,7 @@ public class ShutdownTests : IDisposable
         await Task.Delay(TimeSpan.FromSeconds(30));
 
         response.SetCompleted();
-        yield return new ResponseCompletedEvent(0, response);
+        yield return new ResponseCompletedEvent { SequenceNumber = checked((int)(0)), Response = response };
     }
 
     public void Dispose()

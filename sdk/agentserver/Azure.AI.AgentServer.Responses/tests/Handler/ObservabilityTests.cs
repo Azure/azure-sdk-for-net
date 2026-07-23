@@ -61,9 +61,9 @@ public class ObservabilityTests : IDisposable
         }
 
         var response = new ResponseObject(context.ResponseId, request.Model ?? "test-model");
-        yield return new ResponseCreatedEvent(0, response);
+        yield return new ResponseCreatedEvent { SequenceNumber = checked((int)(0)), Response = response };
         response.SetCompleted();
-        yield return new ResponseCompletedEvent(0, response);
+        yield return new ResponseCompletedEvent { SequenceNumber = checked((int)(0)), Response = response };
     }
 
     [Test]

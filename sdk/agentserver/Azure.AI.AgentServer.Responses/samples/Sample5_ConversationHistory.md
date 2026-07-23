@@ -37,7 +37,7 @@ public class StudyTutorHandler : ResponseHandler
 
                 var lastMessage = history.OfType<OutputItemMessage>().LastOrDefault();
                 var lastText = lastMessage?.Content
-                    .OfType<MessageContentOutputTextContent>()
+                    .Where(part => part.Kind == OpenAI.Responses.ResponseContentPartKind.OutputText)
                     .FirstOrDefault()?.Text ?? "(none)";
 
                 return $"[Turn {turnNumber}] Building on our previous discussion " +

@@ -292,9 +292,9 @@ public sealed class CustomActivitySourceProtocolTests
             }
 
             var response = new Models.ResponseObject(context.ResponseId, request.Model ?? "test");
-            yield return new ResponseCreatedEvent(0, response);
+            yield return new ResponseCreatedEvent { SequenceNumber = checked((int)(0)), Response = response };
             response.SetCompleted();
-            yield return new ResponseCompletedEvent(0, response);
+            yield return new ResponseCompletedEvent { SequenceNumber = checked((int)(0)), Response = response };
         }
 
         public async Task PostAsync(object payload)

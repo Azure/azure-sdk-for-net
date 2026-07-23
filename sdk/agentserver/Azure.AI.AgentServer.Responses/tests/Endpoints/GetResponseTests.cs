@@ -172,10 +172,10 @@ public class GetResponseTests : IDisposable
     {
         await Task.CompletedTask;
         var response = new Models.ResponseObject(ctx.ResponseId, "test") { Status = ResponseStatus.InProgress };
-        yield return new ResponseCreatedEvent(0, response);
-        yield return new ResponseOutputItemDoneEvent();
+        yield return new ResponseCreatedEvent { SequenceNumber = checked((int)(0)), Response = response };
+        yield return TestModels.ResponseOutputItemDoneEvent(0, TestModels.OutputItemMessage("msg_test", MessageStatus.Completed, Array.Empty<MessageContent>()));
         response.SetCompleted();
-        yield return new ResponseCompletedEvent(0, response);
+        yield return new ResponseCompletedEvent { SequenceNumber = checked((int)(0)), Response = response };
     }
 
     private static async IAsyncEnumerable<ResponseStreamEvent> WaitingEventStream(
@@ -184,10 +184,10 @@ public class GetResponseTests : IDisposable
         [EnumeratorCancellation] CancellationToken ct = default)
     {
         var response = new Models.ResponseObject(ctx.ResponseId, "test") { Status = ResponseStatus.InProgress };
-        yield return new ResponseCreatedEvent(0, response);
+        yield return new ResponseCreatedEvent { SequenceNumber = checked((int)(0)), Response = response };
         await delayTask.WaitAsync(ct);
         response.SetCompleted();
-        yield return new ResponseCompletedEvent(0, response);
+        yield return new ResponseCompletedEvent { SequenceNumber = checked((int)(0)), Response = response };
     }
 
     public void Dispose()

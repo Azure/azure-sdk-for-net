@@ -201,7 +201,7 @@ public class ApiErrorFactoryTests
 
         var result = ApiErrorFactory.ToResponseError(ex);
 
-        Assert.That(result.Code, Is.EqualTo(ResponseErrorCode.RateLimitExceeded));
+        Assert.That(result.Code, Is.EqualTo(OpenAI.Responses.ResponseErrorCode.RateLimitExceeded));
         Assert.That(result.Message, Is.EqualTo("Too many requests"));
     }
 
@@ -224,7 +224,7 @@ public class ApiErrorFactoryTests
 
         var result = ApiErrorFactory.ToResponseError(ex);
 
-        Assert.That(result.Code, Is.EqualTo(ResponseErrorCode.ServerError));
+        Assert.That(result.Code, Is.EqualTo(OpenAI.Responses.ResponseErrorCode.ServerError));
         Assert.That(result.Message, Is.EqualTo("Model not found"));
     }
 
@@ -236,7 +236,7 @@ public class ApiErrorFactoryTests
 
         var result = ApiErrorFactory.ToResponseError(ex);
 
-        Assert.That(result.Code, Is.EqualTo(ResponseErrorCode.ServerError));
+        Assert.That(result.Code, Is.EqualTo(OpenAI.Responses.ResponseErrorCode.ServerError));
         Assert.That(result.Message, Is.EqualTo(ApiErrorFactory.GenericServerErrorMessage));
     }
 
@@ -247,7 +247,7 @@ public class ApiErrorFactoryTests
 
         var result = ApiErrorFactory.ToResponseError(ex);
 
-        Assert.That(result.Code, Is.EqualTo(ResponseErrorCode.ServerError));
+        Assert.That(result.Code, Is.EqualTo(OpenAI.Responses.ResponseErrorCode.ServerError));
         Assert.That(result.Message, Is.EqualTo(ApiErrorFactory.GenericServerErrorMessage));
     }
 
@@ -259,7 +259,7 @@ public class ApiErrorFactoryTests
 
         var result = ApiErrorFactory.ToResponseError(ex);
 
-        Assert.That(result.Code, Is.EqualTo(ResponseErrorCode.ServerError));
+        Assert.That(result.Code, Is.EqualTo(OpenAI.Responses.ResponseErrorCode.ServerError));
         XAssert.Contains("Input is required", result.Message);
     }
 
@@ -270,7 +270,7 @@ public class ApiErrorFactoryTests
 
         var result = ApiErrorFactory.ToResponseError(ex);
 
-        Assert.That(result.Code, Is.EqualTo(ResponseErrorCode.ServerError));
+        Assert.That(result.Code, Is.EqualTo(OpenAI.Responses.ResponseErrorCode.ServerError));
         Assert.That(result.Message, Is.EqualTo("Response 'resp_abc' not found."));
     }
 

@@ -15,7 +15,7 @@ public class OutputItemMcpCallBuilder : OutputItemBuilder<OutputItemMcpToolCall>
     private readonly string _serverLabel;
     private readonly string _name;
     private string? _finalArguments;
-    private MCPToolCallStatus? _terminalStatus;
+    private bool _failed;
 
     /// <summary>
     /// Initializes a new instance of <see cref="OutputItemMcpCallBuilder"/>.
@@ -43,18 +43,22 @@ public class OutputItemMcpCallBuilder : OutputItemBuilder<OutputItemMcpToolCall>
     /// <summary>The MCP tool name.</summary>
     public string Name => _name;
 
+    /// <summary>The MCP tool arguments, if emitted.</summary>
+    public string? ToolArguments => _finalArguments;
+
+    /// <summary>The MCP tool arguments, if emitted.</summary>
+    public string? FunctionArguments => _finalArguments;
+
     /// <summary>
     /// Produces a <c>response.output_item.added</c> event with an in-progress MCP tool call item.
     /// </summary>
     /// <returns>A <see cref="ResponseOutputItemAddedEvent"/> for this MCP call.</returns>
     public virtual ResponseOutputItemAddedEvent EmitAdded()
     {
-        var item = new OutputItemMcpToolCall(
-            id: _itemId,
-            serverLabel: _serverLabel,
-            name: _name,
-            arguments: "");
-        item.Status = MCPToolCallStatus.InProgress;
+        var item = new OutputItemMcpToolCall(_serverLabel, _name, BinaryData.FromString(""))
+        {
+            Id = _itemId,
+        };
         return EmitAdded(item);
     }
 
@@ -64,8 +68,12 @@ public class OutputItemMcpCallBuilder : OutputItemBuilder<OutputItemMcpToolCall>
     /// <returns>A <see cref="ResponseMCPCallInProgressEvent"/>.</returns>
     public virtual ResponseMCPCallInProgressEvent EmitInProgress()
     {
-        return new ResponseMCPCallInProgressEvent(
-            _stream.NextSequenceNumber(), _outputIndex, _itemId);
+        return new ResponseMCPCallInProgressEvent
+        {
+            SequenceNumber = checked((int)_stream.NextSequenceNumber()),
+            OutputIndex = checked((int)_outputIndex),
+            ItemId = _itemId,
+        };
     }
 
     /// <summary>
@@ -75,8 +83,13 @@ public class OutputItemMcpCallBuilder : OutputItemBuilder<OutputItemMcpToolCall>
     /// <returns>A <see cref="ResponseMCPCallArgumentsDeltaEvent"/> with the delta.</returns>
     public virtual ResponseMCPCallArgumentsDeltaEvent EmitArgumentsDelta(string delta)
     {
-        return new ResponseMCPCallArgumentsDeltaEvent(
-            _stream.NextSequenceNumber(), _outputIndex, _itemId, delta);
+        return new ResponseMCPCallArgumentsDeltaEvent
+        {
+            SequenceNumber = checked((int)_stream.NextSequenceNumber()),
+            OutputIndex = checked((int)_outputIndex),
+            ItemId = _itemId,
+            Delta = BinaryData.FromString(delta),
+        };
     }
 
     /// <summary>
@@ -87,8 +100,13 @@ public class OutputItemMcpCallBuilder : OutputItemBuilder<OutputItemMcpToolCall>
     public virtual ResponseMCPCallArgumentsDoneEvent EmitArgumentsDone(string arguments)
     {
         _finalArguments = arguments;
-        return new ResponseMCPCallArgumentsDoneEvent(
-            _stream.NextSequenceNumber(), _outputIndex, _itemId, arguments);
+        return new ResponseMCPCallArgumentsDoneEvent
+        {
+            SequenceNumber = checked((int)_stream.NextSequenceNumber()),
+            OutputIndex = checked((int)_outputIndex),
+            ItemId = _itemId,
+            ToolArguments = BinaryData.FromString(arguments),
+        };
     }
 
     // ── Sub-Item Convenience Generators (S-053/S-054/S-055) ────
@@ -129,42 +147,48 @@ public class OutputItemMcpCallBuilder : OutputItemBuilder<OutputItemMcpToolCall>
 
     /// <summary>
     /// Produces a <c>response.mcp_call.completed</c> event and records the terminal
-    /// status so that <see cref="EmitDone"/> uses <see cref="MCPToolCallStatus.Completed"/> (S-060).
+    /// status so that <see cref="EmitDone"/> uses the completed state (S-060).
     /// </summary>
     /// <returns>A <see cref="ResponseMCPCallCompletedEvent"/>.</returns>
     public virtual ResponseMCPCallCompletedEvent EmitCompleted()
     {
-        _terminalStatus = MCPToolCallStatus.Completed;
-        return new ResponseMCPCallCompletedEvent(
-            _stream.NextSequenceNumber(), _itemId, _outputIndex);
+        _failed = false;
+        return new ResponseMCPCallCompletedEvent
+        {
+            SequenceNumber = checked((int)_stream.NextSequenceNumber()),
+            ItemId = _itemId,
+            OutputIndex = checked((int)_outputIndex),
+        };
     }
 
     /// <summary>
     /// Produces a <c>response.mcp_call.failed</c> event and records the terminal
-    /// status so that <see cref="EmitDone"/> uses <see cref="MCPToolCallStatus.Failed"/> (S-060).
+    /// status so that <see cref="EmitDone"/> uses the failed state (S-060).
     /// </summary>
     /// <returns>A <see cref="ResponseMCPCallFailedEvent"/>.</returns>
     public virtual ResponseMCPCallFailedEvent EmitFailed()
     {
-        _terminalStatus = MCPToolCallStatus.Failed;
-        return new ResponseMCPCallFailedEvent(
-            _stream.NextSequenceNumber(), _itemId, _outputIndex);
+        _failed = true;
+        return new ResponseMCPCallFailedEvent
+        {
+            SequenceNumber = checked((int)_stream.NextSequenceNumber()),
+            ItemId = _itemId,
+            OutputIndex = checked((int)_outputIndex),
+        };
     }
 
     /// <summary>
     /// Produces a <c>response.output_item.done</c> event with the completed MCP tool call item.
-    /// Uses the terminal status recorded by <see cref="EmitCompleted"/> or <see cref="EmitFailed"/>,
-    /// defaulting to <see cref="MCPToolCallStatus.Completed"/> if neither was called (S-060).
+    /// Uses the terminal status recorded by <see cref="EmitCompleted"/> or <see cref="EmitFailed"/>.
     /// </summary>
     /// <returns>A <see cref="ResponseOutputItemDoneEvent"/> for this MCP call.</returns>
     public virtual ResponseOutputItemDoneEvent EmitDone()
     {
-        var item = new OutputItemMcpToolCall(
-            id: _itemId,
-            serverLabel: _serverLabel,
-            name: _name,
-            arguments: _finalArguments ?? "");
-        item.Status = _terminalStatus ?? MCPToolCallStatus.Completed;
+        var item = new OutputItemMcpToolCall(_serverLabel, _name, BinaryData.FromString(_finalArguments ?? ""))
+        {
+            Id = _itemId,
+            Error = _failed ? BinaryData.FromString("{}") : null,
+        };
         return EmitDone(item);
     }
 }

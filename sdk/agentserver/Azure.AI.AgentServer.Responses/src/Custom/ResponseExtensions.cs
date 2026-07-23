@@ -62,7 +62,13 @@ public static class ResponseExtensions
     public static void SetToolChoice(this ResponseObject response, ToolChoiceOptions toolChoice)
     {
         Argument.AssertNotNull(response, nameof(response));
-        response.ToolChoice = BinaryData.FromObjectAsJson(toolChoice.ToSerialString());
+        response.ToolChoice = toolChoice.Kind switch
+        {
+            OpenAI.Responses.ResponseToolChoiceKind.Auto => BinaryData.FromObjectAsJson("auto"),
+            OpenAI.Responses.ResponseToolChoiceKind.Required => BinaryData.FromObjectAsJson("required"),
+            OpenAI.Responses.ResponseToolChoiceKind.None => BinaryData.FromObjectAsJson("none"),
+            _ => ModelReaderWriter.Write(toolChoice, ModelReaderWriterOptions.Json, OpenAI.OpenAIContext.Default),
+        };
     }
 
     /// <summary>

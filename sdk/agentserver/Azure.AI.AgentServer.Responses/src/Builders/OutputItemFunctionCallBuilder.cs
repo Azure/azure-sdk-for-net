@@ -40,8 +40,14 @@ public class OutputItemFunctionCallBuilder : OutputItemBuilder<OutputItemFunctio
     /// <summary>The function name.</summary>
     public string Name => _name;
 
+    /// <summary>The function name.</summary>
+    public string FunctionName => _name;
+
     /// <summary>The call ID.</summary>
     public string CallId => _callId;
+
+    /// <summary>The accumulated function arguments, if emitted.</summary>
+    public string? FunctionArguments => _finalArguments;
 
     /// <summary>
     /// Produces a <c>response.output_item.added</c> event with a function call output item.
@@ -49,18 +55,11 @@ public class OutputItemFunctionCallBuilder : OutputItemBuilder<OutputItemFunctio
     /// <returns>A <see cref="ResponseOutputItemAddedEvent"/> for this function call.</returns>
     public virtual ResponseOutputItemAddedEvent EmitAdded()
     {
-        var item = new OutputItemFunctionToolCall(
-            OutputItemType.FunctionCall,
-            createdBy: null,
-            agentReference: null,
-            responseId: null,
-            additionalBinaryDataProperties: null,
-            id: _itemId,
-            callId: _callId,
-            @namespace: null,
-            name: _name,
-            arguments: "",
-            status: ItemFunctionToolCallStatus.InProgress);
+        var item = new OutputItemFunctionToolCall(_callId, _name, BinaryData.FromString(""))
+        {
+            Id = _itemId,
+            Status = OpenAI.Responses.FunctionCallStatus.InProgress,
+        };
         return EmitAdded(item);
     }
 
@@ -71,8 +70,13 @@ public class OutputItemFunctionCallBuilder : OutputItemBuilder<OutputItemFunctio
     /// <returns>A <see cref="ResponseFunctionCallArgumentsDeltaEvent"/> with the delta.</returns>
     public virtual ResponseFunctionCallArgumentsDeltaEvent EmitArgumentsDelta(string delta)
     {
-        return new ResponseFunctionCallArgumentsDeltaEvent(
-            _stream.NextSequenceNumber(), _itemId, _outputIndex, delta);
+        return new ResponseFunctionCallArgumentsDeltaEvent
+        {
+            SequenceNumber = checked((int)_stream.NextSequenceNumber()),
+            ItemId = _itemId,
+            OutputIndex = checked((int)_outputIndex),
+            Delta = BinaryData.FromString(delta),
+        };
     }
 
     /// <summary>
@@ -83,8 +87,14 @@ public class OutputItemFunctionCallBuilder : OutputItemBuilder<OutputItemFunctio
     public virtual ResponseFunctionCallArgumentsDoneEvent EmitArgumentsDone(string arguments)
     {
         _finalArguments = arguments;
-        return new ResponseFunctionCallArgumentsDoneEvent(
-            _stream.NextSequenceNumber(), _itemId, _name, _outputIndex, arguments);
+        return new ResponseFunctionCallArgumentsDoneEvent
+        {
+            SequenceNumber = checked((int)_stream.NextSequenceNumber()),
+            ItemId = _itemId,
+            FunctionName = _name,
+            OutputIndex = checked((int)_outputIndex),
+            FunctionArguments = BinaryData.FromString(arguments),
+        };
     }
 
     // ── Sub-Item Convenience Generators (S-053/S-054/S-055) ────
@@ -129,18 +139,11 @@ public class OutputItemFunctionCallBuilder : OutputItemBuilder<OutputItemFunctio
     /// <returns>A <see cref="ResponseOutputItemDoneEvent"/> for this function call.</returns>
     public virtual ResponseOutputItemDoneEvent EmitDone()
     {
-        var item = new OutputItemFunctionToolCall(
-            OutputItemType.FunctionCall,
-            createdBy: null,
-            agentReference: null,
-            responseId: null,
-            additionalBinaryDataProperties: null,
-            id: _itemId,
-            callId: _callId,
-            @namespace: null,
-            name: _name,
-            arguments: _finalArguments ?? "",
-            status: ItemFunctionToolCallStatus.Completed);
+        var item = new OutputItemFunctionToolCall(_callId, _name, BinaryData.FromString(_finalArguments ?? ""))
+        {
+            Id = _itemId,
+            Status = OpenAI.Responses.FunctionCallStatus.Completed,
+        };
         return EmitDone(item);
     }
 }

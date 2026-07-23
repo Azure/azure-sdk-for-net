@@ -105,12 +105,12 @@ public class InMemoryResponsesProviderTests : IDisposable
 
     private static ResponseOutputItemAddedEvent CreateItemAddedEvent(int index)
     {
-        var msg = new OutputItemMessage(
+        var msg = TestModels.OutputItemMessage(
             $"msg_{index}",
             MessageStatus.Completed,
             MessageRole.Assistant,
             Array.Empty<MessageContent>());
-        return new ResponseOutputItemAddedEvent(0, index, msg);
+        return new ResponseOutputItemAddedEvent { SequenceNumber = checked((int)(0)), OutputIndex = checked((int)(index)), Item = msg };
     }
 
     [Test]

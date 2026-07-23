@@ -40,10 +40,11 @@ public class OutputItemReasoningItemBuilder : OutputItemBuilder<OutputItemReason
     /// <returns>A <see cref="ResponseOutputItemAddedEvent"/> for this reasoning item.</returns>
     public virtual ResponseOutputItemAddedEvent EmitAdded()
     {
-        var item = new OutputItemReasoningItem(
-            id: _itemId,
-            summary: Array.Empty<SummaryTextContent>());
-        item.Status = ItemReasoningItemStatus.InProgress;
+        var item = new OutputItemReasoningItem(Array.Empty<OpenAI.Responses.ReasoningSummaryPart>())
+        {
+            Id = _itemId,
+            Status = OpenAI.Responses.ReasoningStatus.InProgress,
+        };
         return EmitAdded(item);
     }
 
@@ -112,7 +113,7 @@ public class OutputItemReasoningItemBuilder : OutputItemBuilder<OutputItemReason
     /// <returns>A <see cref="ResponseOutputItemDoneEvent"/> for this reasoning item.</returns>
     public virtual ResponseOutputItemDoneEvent EmitDone()
     {
-        var completedSummaries = new List<SummaryTextContent>();
+        var summaryParts = new List<OpenAI.Responses.ReasoningSummaryPart>();
         for (int i = 0; i < _summaryBuilders.Count; i++)
         {
             var builder = _summaryBuilders[i];
@@ -124,14 +125,14 @@ public class OutputItemReasoningItemBuilder : OutputItemBuilder<OutputItemReason
                 ]);
             }
 
-            completedSummaries.Add(new SummaryTextContent(
-                text: builder.FinalText));
+            summaryParts.Add(new OpenAI.Responses.ReasoningSummaryTextPart(builder.FinalText ?? string.Empty));
         }
 
-        var item = new OutputItemReasoningItem(
-            id: _itemId,
-            summary: completedSummaries);
-        item.Status = ItemReasoningItemStatus.Completed;
+        var item = new OutputItemReasoningItem(summaryParts)
+        {
+            Id = _itemId,
+            Status = OpenAI.Responses.ReasoningStatus.Completed,
+        };
         return EmitDone(item);
     }
 }

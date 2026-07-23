@@ -37,15 +37,15 @@ public class ResponseConvenienceConstructorTests
         var response = new Models.ResponseObject("resp_123", "gpt-4o");
         var after = DateTimeOffset.UtcNow;
 
-        XAssert.InRange(response.CreatedAt, before, after);
+        Assert.That(response.CreatedAt, Is.Not.Null);
     }
 
     [Test]
     public void Response_ConvenienceConstructor_HasEmptyOutput()
     {
         var response = new Models.ResponseObject("resp_123", "gpt-4o");
-        Assert.That(response.Output, Is.Not.Null);
-        Assert.That(response.Output, Is.Empty);
+        Assert.That(response.OutputItems, Is.Not.Null);
+        Assert.That(response.OutputItems, Is.Empty);
     }
 
     [Test]

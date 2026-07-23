@@ -174,13 +174,15 @@ public class AgentReferenceAutoStampProtocolTests : ProtocolTestBase
         yield return stream.EmitCreated();
 
         var message = stream.AddOutputItemMessage();
-        var item = new OutputItemMessage(
+        var item = TestModels.OutputItemMessage(
             id: message.ItemId,
             content: Array.Empty<MessageContent>(),
-            status: MessageStatus.InProgress)
-        {
-            AgentReference = new AgentReference("handler-agent") { Version = "9.0" },
-        };
+            status: MessageStatus.InProgress);
+#pragma warning disable SCME0001 // Test simulates a handler-provided extension field on an OpenAI-owned response item.
+        item.Patch.Set("$.agent_reference"u8, BinaryData.FromString("""
+            {"type":"agent_reference","name":"handler-agent","version":"1.0"}
+            """));
+#pragma warning restore SCME0001
         yield return message.EmitAdded(item);
         yield return message.EmitDone(item);
 
@@ -198,17 +200,17 @@ public class AgentReferenceAutoStampProtocolTests : ProtocolTestBase
         await Task.CompletedTask;
         var response = new Models.ResponseObject(ctx.ResponseId, "test");
 
-        yield return new ResponseCreatedEvent(0, response);
+        yield return new ResponseCreatedEvent { SequenceNumber = checked((int)(0)), Response = response };
 
         // Directly construct output item without setting AgentReference
-        var outputItem = new OutputItemMessage(
+        var outputItem = TestModels.OutputItemMessage(
             id: "msg_direct_agref_001",
             content: Array.Empty<MessageContent>(),
             status: MessageStatus.InProgress);
-        yield return new ResponseOutputItemAddedEvent(0, 0, outputItem);
-        yield return new ResponseOutputItemDoneEvent(0, 0, outputItem);
+        yield return new ResponseOutputItemAddedEvent { SequenceNumber = checked((int)(0)), OutputIndex = checked((int)(0)), Item = outputItem };
+        yield return new ResponseOutputItemDoneEvent { SequenceNumber = checked((int)(0)), OutputIndex = checked((int)(0)), Item = outputItem };
 
         response.SetCompleted();
-        yield return new ResponseCompletedEvent(0, response);
+        yield return new ResponseCompletedEvent { SequenceNumber = checked((int)(0)), Response = response };
     }
 }

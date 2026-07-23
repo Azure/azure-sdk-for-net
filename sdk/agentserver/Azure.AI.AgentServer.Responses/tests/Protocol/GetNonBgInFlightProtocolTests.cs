@@ -31,7 +31,7 @@ public class GetNonBgInFlightProtocolTests : ProtocolTestBase
         var postTask = Task.Run(() => PostResponsesAsync(new { model = "test" }));
 
         await handlerStarted.Task.WaitAsync(TimeSpan.FromSeconds(5));
-        var responseId = Handler.LastContext!.ResponseId;
+        var responseId = Handler.LastContext!.Id;
 
         // GET during in-flight → 404
         var getResponse = await GetResponseAsync(responseId);
@@ -64,7 +64,7 @@ public class GetNonBgInFlightProtocolTests : ProtocolTestBase
         var postTask = Client.PostAsync("/responses", postContent, cts.Token);
 
         await handlerStarted.Task.WaitAsync(TimeSpan.FromSeconds(5));
-        var responseId = Handler.LastContext!.ResponseId;
+        var responseId = Handler.LastContext!.Id;
 
         // GET during streaming → 404
         var getResponse = await GetResponseAsync(responseId);
