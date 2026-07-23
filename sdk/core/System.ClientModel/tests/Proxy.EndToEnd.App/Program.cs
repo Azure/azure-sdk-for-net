@@ -65,9 +65,9 @@ Console.WriteLine("===========================");
 
 // --- Case 3: plain OpenAI client, no proxy -> base fallback (proves the proxy is what changes behavior) ---
 {
-    ModelReaderWriterOptions options = new ModelReaderWriterOptions("J"); // no proxy registered
     var transport = new CannedResponseTransport("{\"type\":\"azure_search\",\"index_name\":\"docs\"}");
-    var client = new ResponseToolsClient(new ClientPipelineOptions { Transport = transport }, options);
+    // No ModelReaderWriterOptions set on the pipeline options -> no proxy.
+    var client = new ResponseToolsClient(new ClientPipelineOptions { Transport = transport });
 
     ResponseTool tool = client.GetTool("tool-3");
 

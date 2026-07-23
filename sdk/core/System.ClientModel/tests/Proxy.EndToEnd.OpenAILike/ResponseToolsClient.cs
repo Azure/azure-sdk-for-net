@@ -8,29 +8,37 @@ namespace System.ClientModel.Tests.Proxy.OpenAILike
     /// <summary>
     /// A minimal "OpenAI-like" client. It mirrors a generated SDK client: it owns a
     /// <see cref="ClientPipeline"/> and, on each call, sends a request, reads the response body, and
-    /// deserializes it through <see cref="ModelReaderWriter"/> using the caller-provided
-    /// <see cref="ModelReaderWriterOptions"/>. Because those options can carry a registered proxy, this
-    /// <c>Read</c> is the exact join point where a conditional proxy takes over — which makes a call to
+    /// deserializes it through <see cref="ModelReaderWriter"/> using the <see cref="ModelReaderWriterOptions"/>
+    /// carried on its <see cref="ClientPipelineOptions"/>. Because those options can carry a registered proxy,
+    /// this <c>Read</c> is the exact join point where a conditional proxy takes over — which makes a call to
     /// this client a true end-to-end exercise of the proxy feature.
     /// </summary>
+    /// <remarks>
+    /// PROTOTYPE (MRW proxy E2E): reading the options from <see cref="ClientPipelineOptions"/> simulates what
+    /// a generated client would do once the generator injects the carried options at (de)serialization time.
+    /// </remarks>
     public class ResponseToolsClient
     {
         private readonly ClientPipeline _pipeline;
         private readonly ModelReaderWriterOptions _mrwOptions;
         private readonly Uri _endpoint;
 
-        /// <summary>Creates a client against a mock endpoint using the supplied pipeline and MRW options.</summary>
-        public ResponseToolsClient(ClientPipelineOptions pipelineOptions, ModelReaderWriterOptions mrwOptions)
-            : this(new Uri("https://mock.openai.test"), pipelineOptions, mrwOptions)
+        /// <summary>Creates a client against a mock endpoint using the supplied pipeline options.</summary>
+        public ResponseToolsClient(ClientPipelineOptions pipelineOptions)
+            : this(new Uri("https://mock.openai.test"), pipelineOptions)
         {
         }
 
-        /// <summary>Creates a client against <paramref name="endpoint"/> using the supplied pipeline and MRW options.</summary>
-        public ResponseToolsClient(Uri endpoint, ClientPipelineOptions pipelineOptions, ModelReaderWriterOptions mrwOptions)
+        /// <summary>Creates a client against <paramref name="endpoint"/> using the supplied pipeline options.</summary>
+        public ResponseToolsClient(Uri endpoint, ClientPipelineOptions pipelineOptions)
         {
             _endpoint = endpoint ?? throw new ArgumentNullException(nameof(endpoint));
-            _pipeline = ClientPipeline.Create(pipelineOptions ?? new ClientPipelineOptions());
-            _mrwOptions = mrwOptions ?? new ModelReaderWriterOptions("J");
+            pipelineOptions ??= new ClientPipelineOptions();
+
+            // Store the caller-provided MRW options (with any proxies) so serialization uses them
+            // automatically — the join point a generated client would receive from the generator.
+            _mrwOptions = pipelineOptions.ModelReaderWriterOptions ?? new ModelReaderWriterOptions("J");
+            _pipeline = ClientPipeline.Create(pipelineOptions);
         }
 
         /// <summary>

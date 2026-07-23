@@ -28,10 +28,11 @@ namespace System.ClientModel.Tests.ModelReaderWriterTests
 
             var pipelineOptions = new ClientPipelineOptions
             {
-                Transport = new CannedResponseTransport(cannedResponseJson)
+                Transport = new CannedResponseTransport(cannedResponseJson),
+                ModelReaderWriterOptions = mrwOptions
             };
 
-            return new ResponseToolsClient(pipelineOptions, mrwOptions);
+            return new ResponseToolsClient(pipelineOptions);
         }
 
         private static void RegisterBothProxies(ModelReaderWriterOptions options)

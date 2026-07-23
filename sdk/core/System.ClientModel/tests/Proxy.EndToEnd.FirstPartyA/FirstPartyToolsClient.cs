@@ -16,21 +16,26 @@ namespace System.ClientModel.Tests.Proxy.FirstPartyA
     public class FirstPartyToolsClient : ResponseToolsClient
     {
         /// <summary>
-        /// Creates the client with the first-party proxy registered internally. An optional
+        /// Creates the client with the first-party proxy registered internally on the pipeline options'
+        /// <see cref="ClientPipelineOptions.ModelReaderWriterOptions"/>. An optional
         /// <paramref name="configureAdditional"/> lets the consumer layer on extra proxies from other
         /// libraries (e.g. an independent third party) without the first-party proxy being exposed.
         /// </summary>
         public FirstPartyToolsClient(ClientPipelineOptions pipelineOptions, Action<ModelReaderWriterOptions>? configureAdditional = null)
-            : base(pipelineOptions, BuildOptions(configureAdditional))
+            : base(InjectOptions(pipelineOptions, configureAdditional))
         {
         }
 
-        private static ModelReaderWriterOptions BuildOptions(Action<ModelReaderWriterOptions>? configureAdditional)
+        private static ClientPipelineOptions InjectOptions(ClientPipelineOptions pipelineOptions, Action<ModelReaderWriterOptions>? configureAdditional)
         {
-            // Register the first-party proxy here so it is invisible to the end user.
+            pipelineOptions ??= new ClientPipelineOptions();
+
+            // Inject the first-party proxy by carrying it on the pipeline options, the way a first-party
+            // library would when constructing the underlying client. The end user never sees AddProxy.
             ModelReaderWriterOptions options = new ModelReaderWriterOptions("J").AddAzureTools();
             configureAdditional?.Invoke(options);
-            return options;
+            pipelineOptions.ModelReaderWriterOptions = options;
+            return pipelineOptions;
         }
     }
 }
