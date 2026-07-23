@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.EdgeOperator.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2024-09-01. </description>
+        /// <description> 2026-06-01-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>

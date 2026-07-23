@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.ResourceManager.EdgeOperator;
 
 namespace Azure.ResourceManager.EdgeOperator.Models
 {
@@ -19,56 +18,40 @@ namespace Azure.ResourceManager.EdgeOperator.Models
 
         /// <summary> Initializes a new instance of <see cref="BillingPeriodDetails"/>. </summary>
         /// <param name="cores"> Number of cores allocated for this billing period. Must be greater than zero. </param>
-        /// <param name="pricingModel">
-        /// The pricing model applied to this billing period.
-        /// Known values: `Trial`, `Annual`, `Capacity`. Server-side validation enforces accepted values.
-        /// </param>
-        /// <param name="startDate"> The start date of this billing period in YYYY-MM-DD format. </param>
-        /// <param name="endDate"> The end date of this billing period in YYYY-MM-DD format. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="pricingModel"/>, <paramref name="startDate"/> or <paramref name="endDate"/> is null. </exception>
-        public BillingPeriodDetails(int cores, string pricingModel, string startDate, string endDate)
+        /// <param name="pricingModel"> The pricing model applied to this billing period. </param>
+        /// <param name="startOn"> The start date of this billing period in YYYY-MM-DD format. </param>
+        public BillingPeriodDetails(int cores, PricingModel pricingModel, DateTimeOffset startOn)
         {
-            Argument.AssertNotNull(pricingModel, nameof(pricingModel));
-            Argument.AssertNotNull(startDate, nameof(startDate));
-            Argument.AssertNotNull(endDate, nameof(endDate));
-
             Cores = cores;
             PricingModel = pricingModel;
-            StartDate = startDate;
-            EndDate = endDate;
+            StartOn = startOn;
         }
 
         /// <summary> Initializes a new instance of <see cref="BillingPeriodDetails"/>. </summary>
         /// <param name="cores"> Number of cores allocated for this billing period. Must be greater than zero. </param>
-        /// <param name="pricingModel">
-        /// The pricing model applied to this billing period.
-        /// Known values: `Trial`, `Annual`, `Capacity`. Server-side validation enforces accepted values.
-        /// </param>
-        /// <param name="startDate"> The start date of this billing period in YYYY-MM-DD format. </param>
-        /// <param name="endDate"> The end date of this billing period in YYYY-MM-DD format. </param>
+        /// <param name="pricingModel"> The pricing model applied to this billing period. </param>
+        /// <param name="startOn"> The start date of this billing period in YYYY-MM-DD format. </param>
+        /// <param name="endOn"> The end date of this billing period in YYYY-MM-DD format. Absent for open-ended periods. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal BillingPeriodDetails(int cores, string pricingModel, string startDate, string endDate, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal BillingPeriodDetails(int cores, PricingModel pricingModel, DateTimeOffset startOn, DateTimeOffset? endOn, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Cores = cores;
             PricingModel = pricingModel;
-            StartDate = startDate;
-            EndDate = endDate;
+            StartOn = startOn;
+            EndOn = endOn;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> Number of cores allocated for this billing period. Must be greater than zero. </summary>
         public int Cores { get; set; }
 
-        /// <summary>
-        /// The pricing model applied to this billing period.
-        /// Known values: `Trial`, `Annual`, `Capacity`. Server-side validation enforces accepted values.
-        /// </summary>
-        public string PricingModel { get; set; }
+        /// <summary> The pricing model applied to this billing period. </summary>
+        public PricingModel PricingModel { get; set; }
 
         /// <summary> The start date of this billing period in YYYY-MM-DD format. </summary>
-        public string StartDate { get; set; }
+        public DateTimeOffset StartOn { get; set; }
 
-        /// <summary> The end date of this billing period in YYYY-MM-DD format. </summary>
-        public string EndDate { get; set; }
+        /// <summary> The end date of this billing period in YYYY-MM-DD format. Absent for open-ended periods. </summary>
+        public DateTimeOffset? EndOn { get; set; }
     }
 }

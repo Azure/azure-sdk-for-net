@@ -18,20 +18,12 @@ namespace Azure.ResourceManager.EdgeOperator.Models
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="BillingConfigurationDetails"/>. </summary>
-        /// <param name="autoRenew">
-        /// Auto-renewal setting for the billing configuration.
-        /// Known values: `Enabled`, `Disabled`. Server-side validation enforces accepted values.
-        /// </param>
-        /// <param name="billingStatus">
-        /// The current billing status. Preserved verbatim in historical snapshots.
-        /// Known values: `Enabled`, `Disabled`, `Paused`. Server-side validation enforces accepted values.
-        /// </param>
+        /// <param name="autoRenew"> Auto-renewal setting for the billing configuration. </param>
+        /// <param name="billingStatus"> The current billing status. Preserved verbatim in historical snapshots. </param>
         /// <param name="current"> The current active billing period. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="autoRenew"/>, <paramref name="billingStatus"/> or <paramref name="current"/> is null. </exception>
-        public BillingConfigurationDetails(string autoRenew, string billingStatus, BillingPeriodDetails current)
+        /// <exception cref="ArgumentNullException"> <paramref name="current"/> is null. </exception>
+        public BillingConfigurationDetails(AutoRenew autoRenew, BillingStatus billingStatus, BillingPeriodDetails current)
         {
-            Argument.AssertNotNull(autoRenew, nameof(autoRenew));
-            Argument.AssertNotNull(billingStatus, nameof(billingStatus));
             Argument.AssertNotNull(current, nameof(current));
 
             AutoRenew = autoRenew;
@@ -40,18 +32,12 @@ namespace Azure.ResourceManager.EdgeOperator.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="BillingConfigurationDetails"/>. </summary>
-        /// <param name="autoRenew">
-        /// Auto-renewal setting for the billing configuration.
-        /// Known values: `Enabled`, `Disabled`. Server-side validation enforces accepted values.
-        /// </param>
-        /// <param name="billingStatus">
-        /// The current billing status. Preserved verbatim in historical snapshots.
-        /// Known values: `Enabled`, `Disabled`, `Paused`. Server-side validation enforces accepted values.
-        /// </param>
+        /// <param name="autoRenew"> Auto-renewal setting for the billing configuration. </param>
+        /// <param name="billingStatus"> The current billing status. Preserved verbatim in historical snapshots. </param>
         /// <param name="current"> The current active billing period. </param>
         /// <param name="upcoming"> The upcoming billing period. Present only when a future period has been scheduled. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal BillingConfigurationDetails(string autoRenew, string billingStatus, BillingPeriodDetails current, BillingPeriodDetails upcoming, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal BillingConfigurationDetails(AutoRenew autoRenew, BillingStatus billingStatus, BillingPeriodDetails current, BillingPeriodDetails upcoming, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             AutoRenew = autoRenew;
             BillingStatus = billingStatus;
@@ -60,17 +46,11 @@ namespace Azure.ResourceManager.EdgeOperator.Models
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
-        /// <summary>
-        /// Auto-renewal setting for the billing configuration.
-        /// Known values: `Enabled`, `Disabled`. Server-side validation enforces accepted values.
-        /// </summary>
-        public string AutoRenew { get; set; }
+        /// <summary> Auto-renewal setting for the billing configuration. </summary>
+        public AutoRenew AutoRenew { get; set; }
 
-        /// <summary>
-        /// The current billing status. Preserved verbatim in historical snapshots.
-        /// Known values: `Enabled`, `Disabled`, `Paused`. Server-side validation enforces accepted values.
-        /// </summary>
-        public string BillingStatus { get; set; }
+        /// <summary> The current billing status. Preserved verbatim in historical snapshots. </summary>
+        public BillingStatus BillingStatus { get; set; }
 
         /// <summary> The current active billing period. </summary>
         public BillingPeriodDetails Current { get; set; }

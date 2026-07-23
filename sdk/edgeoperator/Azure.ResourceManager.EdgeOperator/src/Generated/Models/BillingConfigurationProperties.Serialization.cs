@@ -9,6 +9,7 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure.Core;
 using Azure.ResourceManager.EdgeOperator;
 
 namespace Azure.ResourceManager.EdgeOperator.Models
@@ -16,9 +17,9 @@ namespace Azure.ResourceManager.EdgeOperator.Models
     /// <summary>
     /// Properties shared by billing configurations and their snapshots.
     /// This payload originates from Azure and is uploaded by the customer to Azure Local (ALDO)
-    /// via this API. All fields are required because ALDO performs server-side signature validation
-    /// on the received JSON to verify it has not been tampered with since it was issued by Azure.
-    /// Missing or null fields would cause signature verification to fail.
+    /// via this API. ALDO performs server-side signature validation on the received JSON to verify
+    /// it has not been tampered with since it was issued by Azure. The payload must be forwarded
+    /// verbatim — any modification to field values will cause signature verification to fail.
     /// ARM populates `provisioningState`, `etag`, and `systemData` on the envelope automatically.
     /// </summary>
     public partial class BillingConfigurationProperties : IJsonModel<BillingConfigurationProperties>
@@ -95,13 +96,21 @@ namespace Azure.ResourceManager.EdgeOperator.Models
             writer.WritePropertyName("location"u8);
             writer.WriteStringValue(Location);
             writer.WritePropertyName("billingModel"u8);
-            writer.WriteStringValue(BillingModel);
+            writer.WriteStringValue(BillingModel.ToString());
             writer.WritePropertyName("connectionIntent"u8);
-            writer.WriteStringValue(ConnectionIntent);
-            writer.WritePropertyName("cloud"u8);
-            writer.WriteStringValue(Cloud);
+            writer.WriteStringValue(ConnectionIntent.ToString());
+            if (Optional.IsDefined(Cloud))
+            {
+                writer.WritePropertyName("cloud"u8);
+                writer.WriteStringValue(Cloud);
+            }
             writer.WritePropertyName("billingConfiguration"u8);
             writer.WriteObjectValue(BillingConfiguration, options);
+            if (Optional.IsDefined(BenefitPlans))
+            {
+                writer.WritePropertyName("benefitPlans"u8);
+                writer.WriteObjectValue(BenefitPlans, options);
+            }
             if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
             {
                 writer.WritePropertyName("provisioningState"u8);
@@ -149,21 +158,22 @@ namespace Azure.ResourceManager.EdgeOperator.Models
             {
                 return null;
             }
-            string resourceId = default;
+            ResourceIdentifier resourceId = default;
             string resourceName = default;
             string stampId = default;
             string location = default;
-            string billingModel = default;
-            string connectionIntent = default;
+            BillingModel billingModel = default;
+            ConnectionIntent connectionIntent = default;
             string cloud = default;
             BillingConfigurationDetails billingConfiguration = default;
+            BenefitPlans benefitPlans = default;
             ResourceProvisioningState? provisioningState = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("resourceId"u8))
                 {
-                    resourceId = prop.Value.GetString();
+                    resourceId = new ResourceIdentifier(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("resourceName"u8))
@@ -183,12 +193,12 @@ namespace Azure.ResourceManager.EdgeOperator.Models
                 }
                 if (prop.NameEquals("billingModel"u8))
                 {
-                    billingModel = prop.Value.GetString();
+                    billingModel = new BillingModel(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("connectionIntent"u8))
                 {
-                    connectionIntent = prop.Value.GetString();
+                    connectionIntent = new ConnectionIntent(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("cloud"u8))
@@ -199,6 +209,15 @@ namespace Azure.ResourceManager.EdgeOperator.Models
                 if (prop.NameEquals("billingConfiguration"u8))
                 {
                     billingConfiguration = BillingConfigurationDetails.DeserializeBillingConfigurationDetails(prop.Value, options);
+                    continue;
+                }
+                if (prop.NameEquals("benefitPlans"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    benefitPlans = BenefitPlans.DeserializeBenefitPlans(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("provisioningState"u8))
@@ -224,6 +243,7 @@ namespace Azure.ResourceManager.EdgeOperator.Models
                 connectionIntent,
                 cloud,
                 billingConfiguration,
+                benefitPlans,
                 provisioningState,
                 additionalBinaryDataProperties);
         }

@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.EdgeOperator
         {
             TryGetApiVersion(ResourceType, out string billingConfigurationSnapshotApiVersion);
             _billingConfigurationSnapshotsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.EdgeOperator", ResourceType.Namespace, Diagnostics);
-            _billingConfigurationSnapshotsRestClient = new BillingConfigurationSnapshots(_billingConfigurationSnapshotsClientDiagnostics, Pipeline, Endpoint, billingConfigurationSnapshotApiVersion ?? "2024-09-01");
+            _billingConfigurationSnapshotsRestClient = new BillingConfigurationSnapshots(_billingConfigurationSnapshotsClientDiagnostics, Pipeline, Endpoint, billingConfigurationSnapshotApiVersion ?? "2026-06-01-preview");
             ValidateResourceId(id);
         }
 
@@ -102,7 +102,7 @@ namespace Azure.ResourceManager.EdgeOperator
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2024-09-01. </description>
+        /// <description> 2026-06-01-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -150,7 +150,7 @@ namespace Azure.ResourceManager.EdgeOperator
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2024-09-01. </description>
+        /// <description> 2026-06-01-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>

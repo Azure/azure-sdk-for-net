@@ -20,8 +20,6 @@ namespace Azure.ResourceManager.EdgeOperator
     /// <summary>
     /// An immutable historical snapshot of a billing configuration.
     /// Snapshots are created by the RP after each successful PUT on `billingConfigurations/default`.
-    /// The snapshot name uses the format `{etag}_{lastModifiedAt-ticks}` to ensure idempotency
-    /// across RPaaS retries while uniquely identifying each customer-initiated write.
     /// </summary>
     public partial class BillingConfigurationSnapshotData : ResourceData, IJsonModel<BillingConfigurationSnapshotData>
     {
@@ -96,6 +94,11 @@ namespace Azure.ResourceManager.EdgeOperator
                 writer.WritePropertyName("properties"u8);
                 writer.WriteObjectValue(Properties, options);
             }
+            if (options.Format != "W" && Optional.IsDefined(ETag))
+            {
+                writer.WritePropertyName("eTag"u8);
+                writer.WriteStringValue(ETag);
+            }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
                 foreach (var item in _additionalBinaryDataProperties)
@@ -143,6 +146,7 @@ namespace Azure.ResourceManager.EdgeOperator
             ResourceType resourceType = default;
             SystemData systemData = default;
             BillingConfigurationProperties properties = default;
+            string eTag = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -187,6 +191,11 @@ namespace Azure.ResourceManager.EdgeOperator
                     properties = BillingConfigurationProperties.DeserializeBillingConfigurationProperties(prop.Value, options);
                     continue;
                 }
+                if (prop.NameEquals("eTag"u8))
+                {
+                    eTag = prop.Value.GetString();
+                    continue;
+                }
                 if (options.Format != "W")
                 {
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
@@ -198,6 +207,7 @@ namespace Azure.ResourceManager.EdgeOperator
                 resourceType,
                 systemData,
                 properties,
+                eTag,
                 additionalBinaryDataProperties);
         }
     }

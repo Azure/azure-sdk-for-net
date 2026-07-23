@@ -80,9 +80,9 @@ namespace Azure.ResourceManager.EdgeOperator.Models
                 throw new FormatException($"The model {nameof(BillingConfigurationDetails)} does not support writing '{format}' format.");
             }
             writer.WritePropertyName("autoRenew"u8);
-            writer.WriteStringValue(AutoRenew);
+            writer.WriteStringValue(AutoRenew.ToString());
             writer.WritePropertyName("billingStatus"u8);
-            writer.WriteStringValue(BillingStatus);
+            writer.WriteStringValue(BillingStatus.ToString());
             writer.WritePropertyName("current"u8);
             writer.WriteObjectValue(Current, options);
             if (Optional.IsDefined(Upcoming))
@@ -132,8 +132,8 @@ namespace Azure.ResourceManager.EdgeOperator.Models
             {
                 return null;
             }
-            string autoRenew = default;
-            string billingStatus = default;
+            AutoRenew autoRenew = default;
+            BillingStatus billingStatus = default;
             BillingPeriodDetails current = default;
             BillingPeriodDetails upcoming = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
@@ -141,12 +141,12 @@ namespace Azure.ResourceManager.EdgeOperator.Models
             {
                 if (prop.NameEquals("autoRenew"u8))
                 {
-                    autoRenew = prop.Value.GetString();
+                    autoRenew = new AutoRenew(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("billingStatus"u8))
                 {
-                    billingStatus = prop.Value.GetString();
+                    billingStatus = new BillingStatus(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("current"u8))
