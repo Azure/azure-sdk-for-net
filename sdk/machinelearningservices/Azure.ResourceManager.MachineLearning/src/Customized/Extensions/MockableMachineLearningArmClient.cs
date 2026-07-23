@@ -3,6 +3,7 @@
 
 #nullable disable
 
+using System;
 using Azure.Core;
 using Microsoft.TypeSpec.Generator.Customizations;
 
@@ -28,6 +29,7 @@ namespace Azure.ResourceManager.MachineLearning.Mocking
         /// <summary> Gets an object representing a <see cref="MachineLearninRegistryComponentContainerResource"/> along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="MachineLearninRegistryComponentContainerResource"/> object. </returns>
+        [Obsolete("GetMachineLearninRegistryComponentContainerResource is obsolete and will be removed in a future release. Please use GetMachineLearningRegistryComponentContainerResource instead.")]
         public virtual MachineLearninRegistryComponentContainerResource GetMachineLearninRegistryComponentContainerResource(ResourceIdentifier id)
         {
             MachineLearninRegistryComponentContainerResource.ValidateResourceId(id);
@@ -37,6 +39,7 @@ namespace Azure.ResourceManager.MachineLearning.Mocking
         /// <summary> Gets an object representing a <see cref="MachineLearninRegistryComponentVersionResource"/> along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="MachineLearninRegistryComponentVersionResource"/> object. </returns>
+        [Obsolete("GetMachineLearninRegistryComponentVersionResource is obsolete and will be removed in a future release. Please use GetMachineLearningRegistryComponentVersionResource instead.")]
         public virtual MachineLearninRegistryComponentVersionResource GetMachineLearninRegistryComponentVersionResource(ResourceIdentifier id)
         {
             MachineLearninRegistryComponentVersionResource.ValidateResourceId(id);

@@ -24,6 +24,7 @@ namespace Azure.ResourceManager.MachineLearning
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
         /// <returns> Returns a <see cref="MachineLearninRegistryComponentContainerResource"/> object. </returns>
+        [Obsolete("GetMachineLearninRegistryComponentContainerResource is obsolete and will be removed in a future release. Please use GetMachineLearningRegistryComponentContainerResource instead.")]
         public static MachineLearninRegistryComponentContainerResource GetMachineLearninRegistryComponentContainerResource(this ArmClient client, ResourceIdentifier id)
         {
             Argument.AssertNotNull(client, nameof(client));
@@ -42,6 +43,7 @@ namespace Azure.ResourceManager.MachineLearning
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
         /// <returns> Returns a <see cref="MachineLearninRegistryComponentVersionResource"/> object. </returns>
+        [Obsolete("GetMachineLearninRegistryComponentVersionResource is obsolete and will be removed in a future release. Please use GetMachineLearningRegistryComponentVersionResource instead.")]
         public static MachineLearninRegistryComponentVersionResource GetMachineLearninRegistryComponentVersionResource(this ArmClient client, ResourceIdentifier id)
         {
             Argument.AssertNotNull(client, nameof(client));

@@ -3,18 +3,19 @@
 
 #nullable disable
 
+using System;
+using System.ComponentModel;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
-using Azure.ResourceManager;
-
 namespace Azure.ResourceManager.MachineLearning
 {
     // Customized: the client.tsp resource-name override generates the corrected MachineLearning* resource,
     // while the previously shipped MachineLearnin* resource must remain for compatibility. Inherit the
     // corrected implementation and project invariant operation and response values to the legacy type.
     /// <summary> A class representing a MachineLearninRegistryComponentContainer along with the instance operations that can be performed on it. </summary>
+    [EditorBrowsable(EditorBrowsableState.Never)]
+    [Obsolete("MachineLearninRegistryComponentContainerResource is obsolete and will be removed in a future release. Please use MachineLearningRegistryComponentContainerResource instead.")]
     public partial class MachineLearninRegistryComponentContainerResource : MachineLearningRegistryComponentContainerResource
     {
         /// <summary> Gets the resource type for the operations. </summary>

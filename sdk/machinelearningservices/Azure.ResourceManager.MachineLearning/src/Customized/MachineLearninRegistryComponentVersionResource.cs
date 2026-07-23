@@ -3,11 +3,11 @@
 
 #nullable disable
 
+using System;
+using System.ComponentModel;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
-using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.MachineLearning
 {
@@ -15,6 +15,8 @@ namespace Azure.ResourceManager.MachineLearning
     // while the previously shipped MachineLearnin* resource must remain for compatibility. Inherit the
     // corrected implementation and project invariant operation and response values to the legacy type.
     /// <summary> A class representing a MachineLearninRegistryComponentVersion along with the instance operations that can be performed on it. </summary>
+    [EditorBrowsable(EditorBrowsableState.Never)]
+    [Obsolete("MachineLearninRegistryComponentVersionResource is obsolete and will be removed in a future release. Please use MachineLearningRegistryComponentVersionResource instead.")]
     public partial class MachineLearninRegistryComponentVersionResource : MachineLearningRegistryComponentVersionResource
     {
         /// <summary> Gets the resource type for the operations. </summary>

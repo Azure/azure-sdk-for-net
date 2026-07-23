@@ -1114,7 +1114,9 @@ namespace Azure.ResourceManager.MachineLearning
         public static Azure.Pageable<Azure.ResourceManager.MachineLearning.MachineLearningWorkspaceResource> GetMachineLearningWorkspaces(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, string resourceGroupName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public static Azure.AsyncPageable<Azure.ResourceManager.MachineLearning.MachineLearningWorkspaceResource> GetMachineLearningWorkspacesAsync(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, string kind = null, string skip = null, string aiCapabilities = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public static Azure.AsyncPageable<Azure.ResourceManager.MachineLearning.MachineLearningWorkspaceResource> GetMachineLearningWorkspacesAsync(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, string resourceGroupName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        [System.ObsoleteAttribute("GetMachineLearninRegistryComponentContainerResource is obsolete and will be removed in a future release. Please use GetMachineLearningRegistryComponentContainerResource instead.")]
         public static Azure.ResourceManager.MachineLearning.MachineLearninRegistryComponentContainerResource GetMachineLearninRegistryComponentContainerResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
+        [System.ObsoleteAttribute("GetMachineLearninRegistryComponentVersionResource is obsolete and will be removed in a future release. Please use GetMachineLearningRegistryComponentVersionResource instead.")]
         public static Azure.ResourceManager.MachineLearning.MachineLearninRegistryComponentVersionResource GetMachineLearninRegistryComponentVersionResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
         public static Azure.ResourceManager.MachineLearning.ManagedNetworkOutboundRuleBasicResource GetManagedNetworkOutboundRuleBasicResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
         public static Azure.ResourceManager.MachineLearning.RaiBlocklistItemResource GetRaiBlocklistItemResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
@@ -2352,8 +2354,11 @@ namespace Azure.ResourceManager.MachineLearning
         public virtual Azure.Response<Azure.ResourceManager.MachineLearning.MachineLearningRegistryModelContainerResource> GetMachineLearningRegistryModelContainer(string modelName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.MachineLearning.MachineLearningRegistryModelContainerResource>> GetMachineLearningRegistryModelContainerAsync(string modelName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.ResourceManager.MachineLearning.MachineLearningRegistryModelContainerCollection GetMachineLearningRegistryModelContainers() { throw null; }
+        [System.ObsoleteAttribute("GetMachineLearninRegistryComponentContainer is obsolete and will be removed in a future release. Please use GetMachineLearningRegistryComponentContainer instead.")]
         public virtual Azure.Response<Azure.ResourceManager.MachineLearning.MachineLearninRegistryComponentContainerResource> GetMachineLearninRegistryComponentContainer(string componentName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        [System.ObsoleteAttribute("GetMachineLearninRegistryComponentContainerAsync is obsolete and will be removed in a future release. Please use GetMachineLearningRegistryComponentContainerAsync instead.")]
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.MachineLearning.MachineLearninRegistryComponentContainerResource>> GetMachineLearninRegistryComponentContainerAsync(string componentName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        [System.ObsoleteAttribute("GetMachineLearninRegistryComponentContainers is obsolete and will be removed in a future release. Please use GetMachineLearningRegistryComponentContainers instead.")]
         public virtual Azure.ResourceManager.MachineLearning.MachineLearninRegistryComponentContainerCollection GetMachineLearninRegistryComponentContainers() { throw null; }
         public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.MachineLearning.MachineLearningRegistryResource> RemoveRegions(Azure.WaitUntil waitUntil, Azure.ResourceManager.MachineLearning.MachineLearningRegistryData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.MachineLearning.MachineLearningRegistryResource>> RemoveRegionsAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.MachineLearning.MachineLearningRegistryData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
@@ -2805,6 +2810,7 @@ namespace Azure.ResourceManager.MachineLearning
         public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.MachineLearning.MachineLearningWorkspaceResource> Update(Azure.WaitUntil waitUntil, Azure.ResourceManager.MachineLearning.Models.MachineLearningWorkspacePatch patch, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.MachineLearning.MachineLearningWorkspaceResource>> UpdateAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.MachineLearning.Models.MachineLearningWorkspacePatch patch, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
+    [System.ObsoleteAttribute("MachineLearninRegistryComponentContainerCollection is obsolete and will be removed in a future release. Please use MachineLearningRegistryComponentContainerCollection instead.")]
     public partial class MachineLearninRegistryComponentContainerCollection : Azure.ResourceManager.MachineLearning.MachineLearningRegistryComponentContainerCollection, System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.MachineLearning.MachineLearninRegistryComponentContainerResource>, System.Collections.Generic.IEnumerable<Azure.ResourceManager.MachineLearning.MachineLearninRegistryComponentContainerResource>, System.Collections.IEnumerable
     {
         protected MachineLearninRegistryComponentContainerCollection() { }
@@ -2820,6 +2826,7 @@ namespace Azure.ResourceManager.MachineLearning
         System.Collections.Generic.IEnumerator<Azure.ResourceManager.MachineLearning.MachineLearninRegistryComponentContainerResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.MachineLearning.MachineLearninRegistryComponentContainerResource>.GetEnumerator() { throw null; }
         System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
     }
+    [System.ObsoleteAttribute("MachineLearninRegistryComponentContainerResource is obsolete and will be removed in a future release. Please use MachineLearningRegistryComponentContainerResource instead.")]
     public partial class MachineLearninRegistryComponentContainerResource : Azure.ResourceManager.MachineLearning.MachineLearningRegistryComponentContainerResource
     {
         public static readonly new Azure.Core.ResourceType ResourceType;
@@ -2832,6 +2839,7 @@ namespace Azure.ResourceManager.MachineLearning
         public virtual new Azure.ResourceManager.ArmOperation<Azure.ResourceManager.MachineLearning.MachineLearninRegistryComponentContainerResource> Update(Azure.WaitUntil waitUntil, Azure.ResourceManager.MachineLearning.MachineLearningComponentContainerData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual new System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.MachineLearning.MachineLearninRegistryComponentContainerResource>> UpdateAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.MachineLearning.MachineLearningComponentContainerData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
+    [System.ObsoleteAttribute("MachineLearninRegistryComponentVersionCollection is obsolete and will be removed in a future release. Please use MachineLearningRegistryComponentVersionCollection instead.")]
     public partial class MachineLearninRegistryComponentVersionCollection : Azure.ResourceManager.MachineLearning.MachineLearningRegistryComponentVersionCollection, System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.MachineLearning.MachineLearninRegistryComponentVersionResource>, System.Collections.Generic.IEnumerable<Azure.ResourceManager.MachineLearning.MachineLearninRegistryComponentVersionResource>, System.Collections.IEnumerable
     {
         protected MachineLearninRegistryComponentVersionCollection() { }
@@ -2847,6 +2855,7 @@ namespace Azure.ResourceManager.MachineLearning
         System.Collections.Generic.IEnumerator<Azure.ResourceManager.MachineLearning.MachineLearninRegistryComponentVersionResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.MachineLearning.MachineLearninRegistryComponentVersionResource>.GetEnumerator() { throw null; }
         System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
     }
+    [System.ObsoleteAttribute("MachineLearninRegistryComponentVersionResource is obsolete and will be removed in a future release. Please use MachineLearningRegistryComponentVersionResource instead.")]
     public partial class MachineLearninRegistryComponentVersionResource : Azure.ResourceManager.MachineLearning.MachineLearningRegistryComponentVersionResource
     {
         public static readonly new Azure.Core.ResourceType ResourceType;
@@ -3104,7 +3113,9 @@ namespace Azure.ResourceManager.MachineLearning.Mocking
         public virtual Azure.ResourceManager.MachineLearning.MachineLearningWorkspaceConnectionDeploymentResource GetMachineLearningWorkspaceConnectionDeploymentResource(Azure.Core.ResourceIdentifier id) { throw null; }
         public virtual Azure.ResourceManager.MachineLearning.MachineLearningWorkspaceConnectionResource GetMachineLearningWorkspaceConnectionResource(Azure.Core.ResourceIdentifier id) { throw null; }
         public virtual Azure.ResourceManager.MachineLearning.MachineLearningWorkspaceResource GetMachineLearningWorkspaceResource(Azure.Core.ResourceIdentifier id) { throw null; }
+        [System.ObsoleteAttribute("GetMachineLearninRegistryComponentContainerResource is obsolete and will be removed in a future release. Please use GetMachineLearningRegistryComponentContainerResource instead.")]
         public virtual Azure.ResourceManager.MachineLearning.MachineLearninRegistryComponentContainerResource GetMachineLearninRegistryComponentContainerResource(Azure.Core.ResourceIdentifier id) { throw null; }
+        [System.ObsoleteAttribute("GetMachineLearninRegistryComponentVersionResource is obsolete and will be removed in a future release. Please use GetMachineLearningRegistryComponentVersionResource instead.")]
         public virtual Azure.ResourceManager.MachineLearning.MachineLearninRegistryComponentVersionResource GetMachineLearninRegistryComponentVersionResource(Azure.Core.ResourceIdentifier id) { throw null; }
         public virtual Azure.ResourceManager.MachineLearning.ManagedNetworkOutboundRuleBasicResource GetManagedNetworkOutboundRuleBasicResource(Azure.Core.ResourceIdentifier id) { throw null; }
         public virtual Azure.ResourceManager.MachineLearning.RaiBlocklistItemResource GetRaiBlocklistItemResource(Azure.Core.ResourceIdentifier id) { throw null; }

@@ -3,13 +3,13 @@
 
 #nullable disable
 
+using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
-using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.MachineLearning
 {
@@ -17,6 +17,8 @@ namespace Azure.ResourceManager.MachineLearning
     // while the previously shipped MachineLearnin* collection must remain for compatibility. Inherit the
     // corrected implementation and project invariant operation, response, and pageable values to the legacy type.
     /// <summary> A class representing a collection of <see cref="MachineLearninRegistryComponentVersionResource"/> and their operations. </summary>
+    [EditorBrowsable(EditorBrowsableState.Never)]
+    [Obsolete("MachineLearninRegistryComponentVersionCollection is obsolete and will be removed in a future release. Please use MachineLearningRegistryComponentVersionCollection instead.")]
     public partial class MachineLearninRegistryComponentVersionCollection : MachineLearningRegistryComponentVersionCollection, IEnumerable<MachineLearninRegistryComponentVersionResource>, IAsyncEnumerable<MachineLearninRegistryComponentVersionResource>
     {
         /// <summary> Initializes a new instance of MachineLearninRegistryComponentVersionCollection for mocking. </summary>
