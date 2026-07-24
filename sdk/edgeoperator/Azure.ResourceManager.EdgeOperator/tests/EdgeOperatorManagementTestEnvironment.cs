@@ -29,14 +29,14 @@ namespace Azure.ResourceManager.EdgeOperator.Tests
         /// project still compiles and runs against public Azure if ever needed.
         /// </summary>
         public Uri ArmEndpoint =>
-            new Uri(GetRecordedOptionalVariable("EDGEOPERATOR_ARM_ENDPOINT") ?? "https://management.azure.com");
+            new Uri(GetRecordedOptionalVariable("EDGEOPERATOR_ARM_ENDPOINT", options => options.IsSecret("https://sanitized.local/")) ?? "https://management.azure.com");
 
         /// <summary>
         /// The token audience (scope) for the ALDO ARM endpoint. Set
         /// <c>EDGEOPERATOR_ARM_AUDIENCE</c> before recording. Defaults to the public ARM audience.
         /// </summary>
         public string ArmAudience =>
-            GetRecordedOptionalVariable("EDGEOPERATOR_ARM_AUDIENCE") ?? "https://management.azure.com/";
+            GetRecordedOptionalVariable("EDGEOPERATOR_ARM_AUDIENCE", options => options.IsSecret("https://sanitized.local/")) ?? "https://management.azure.com/";
 
         /// <summary>
         /// Record runs for this package are frequently executed from headless devbox terminals,

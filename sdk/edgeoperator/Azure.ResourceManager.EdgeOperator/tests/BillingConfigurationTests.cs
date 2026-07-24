@@ -107,7 +107,9 @@ namespace Azure.ResourceManager.EdgeOperator.Tests
 
             AssertResponseShape(response.Value);
             Assert.That(response.Value.Data.Properties.ResourceName, Is.EqualTo("billing-test-cluster"));
-            Assert.That(response.Value.Data.Properties.StampId, Is.EqualTo("401ECB09-83EC-4777-A56C-6FFF26BCC815"));
+            Assert.That(
+                response.Value.Data.Properties.StampId,
+                Is.EqualTo("401ECB09-83EC-4777-A56C-6FFF26BCC815").Or.EqualTo(SanitizeValue));
         }
 
         [RecordedTest]
