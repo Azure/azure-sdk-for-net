@@ -75,6 +75,8 @@ namespace Azure.AI.Extensions.OpenAI
                 throw new FormatException($"The model {nameof(OAuthConsentRequestResponseItem)} does not support writing '{format}' format.");
             }
             base.JsonModelWriteCore(writer, options);
+            writer.WritePropertyName("id"u8);
+            writer.WriteStringValue(Id);
             writer.WritePropertyName("consent_link"u8);
             writer.WriteStringValue(InternalConsentLink);
             writer.WritePropertyName("server_label"u8);
@@ -128,6 +130,7 @@ namespace Azure.AI.Extensions.OpenAI
             string id = default;
             AgentReference agentReference = default;
             string responseId = default;
+            string id0 = default;
             string internalConsentLink = default;
             string serverLabel = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
@@ -157,6 +160,11 @@ namespace Azure.AI.Extensions.OpenAI
                     responseId = prop.Value.GetString();
                     continue;
                 }
+                if (prop.NameEquals("id"u8))
+                {
+                    id0 = prop.Value.GetString();
+                    continue;
+                }
                 if (prop.NameEquals("consent_link"u8))
                 {
                     internalConsentLink = prop.Value.GetString();
@@ -177,6 +185,7 @@ namespace Azure.AI.Extensions.OpenAI
                 id,
                 agentReference,
                 responseId,
+                id0,
                 internalConsentLink,
                 serverLabel,
                 additionalBinaryDataProperties);
