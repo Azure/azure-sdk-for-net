@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using Azure.Core;
 using Azure.Provisioning;
 using Azure.Provisioning.Primitives;
 
@@ -31,7 +32,7 @@ namespace Azure.Provisioning.DomainRegistration
         private DomainPurchaseConsent _consent;
         private BicepList<DomainNotRenewableReason> _domainNotRenewableReasons;
         private BicepValue<AppServiceDnsType> _dnsType;
-        private BicepValue<string> _dnsZoneId;
+        private BicepValue<ResourceIdentifier> _dnsZoneId;
         private BicepValue<AppServiceDnsType> _targetDnsType;
         private BicepValue<string> _authCode;
 
@@ -251,7 +252,7 @@ namespace Azure.Provisioning.DomainRegistration
         }
 
         /// <summary> Gets or sets the DnsZoneId. </summary>
-        public BicepValue<string> DnsZoneId
+        public BicepValue<ResourceIdentifier> DnsZoneId
         {
             get
             {
@@ -316,7 +317,7 @@ namespace Azure.Provisioning.DomainRegistration
             _consent = DefineModelProperty<DomainPurchaseConsent>(nameof(Consent), new string[] { "consent" }, isRequired: true);
             _domainNotRenewableReasons = DefineListProperty<DomainNotRenewableReason>(nameof(DomainNotRenewableReasons), new string[] { "domainNotRenewableReasons" }, isOutput: true);
             _dnsType = DefineProperty<AppServiceDnsType>(nameof(DnsType), new string[] { "dnsType" });
-            _dnsZoneId = DefineProperty<string>(nameof(DnsZoneId), new string[] { "dnsZoneId" });
+            _dnsZoneId = DefineProperty<ResourceIdentifier>(nameof(DnsZoneId), new string[] { "dnsZoneId" });
             _targetDnsType = DefineProperty<AppServiceDnsType>(nameof(TargetDnsType), new string[] { "targetDnsType" });
             _authCode = DefineProperty<string>(nameof(AuthCode), new string[] { "authCode" });
             DefineAdditionalProperties();

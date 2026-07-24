@@ -381,7 +381,7 @@ namespace Azure.Provisioning.DomainRegistration
         }
 
         /// <summary> Gets or sets the DnsZoneId. </summary>
-        public BicepValue<string> DnsZoneId
+        public BicepValue<ResourceIdentifier> DnsZoneId
         {
             get
             {

@@ -16,7 +16,7 @@ namespace Azure.Provisioning.DomainRegistration
         public Azure.Provisioning.DomainRegistration.RegistrationContactInfo ContactTech { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<System.DateTimeOffset> CreatedOn { get { throw null; } }
         public Azure.Provisioning.BicepValue<Azure.Provisioning.DomainRegistration.AppServiceDnsType> DnsType { get { throw null; } set { } }
-        public Azure.Provisioning.BicepValue<string> DnsZoneId { get { throw null; } set { } }
+        public Azure.Provisioning.BicepValue<Azure.Core.ResourceIdentifier> DnsZoneId { get { throw null; } set { } }
         public Azure.Provisioning.BicepList<Azure.Provisioning.DomainRegistration.DomainNotRenewableReason> DomainNotRenewableReasons { get { throw null; } }
         public Azure.Provisioning.BicepValue<System.DateTimeOffset> ExpireOn { get { throw null; } }
         public Azure.Provisioning.BicepValue<Azure.Core.ResourceIdentifier> Id { get { throw null; } }
