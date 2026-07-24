@@ -84,7 +84,7 @@ namespace Azure.AI.Extensions.OpenAI
             }
             if (Optional.IsDefined(Language))
             {
-                writer.WritePropertyName("set_lang"u8);
+                writer.WritePropertyName("Language"u8);
                 writer.WriteStringValue(Language);
             }
             if (Optional.IsDefined(Count))
@@ -157,7 +157,7 @@ namespace Azure.AI.Extensions.OpenAI
                     market = prop.Value.GetString();
                     continue;
                 }
-                if (prop.NameEquals("set_lang"u8))
+                if (prop.NameEquals("Language"u8))
                 {
                     language = prop.Value.GetString();
                     continue;

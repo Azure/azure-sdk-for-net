@@ -25,7 +25,6 @@ namespace Azure.AI.Extensions.OpenAI
     [ModelReaderWriterBuildable(typeof(AgentReference))]
     [ModelReaderWriterBuildable(typeof(AgentStructuredOutputsResponseItem))]
     [ModelReaderWriterBuildable(typeof(AgentWorkflowPreviewActionResponseItem))]
-    [ModelReaderWriterBuildable(typeof(ApplyPatchOperation))]
     [ModelReaderWriterBuildable(typeof(AzureAISearchTool))]
     [ModelReaderWriterBuildable(typeof(AzureAISearchToolCall))]
     [ModelReaderWriterBuildable(typeof(AzureAISearchToolCallOutput))]
@@ -100,7 +99,6 @@ namespace Azure.AI.Extensions.OpenAI
     [ModelReaderWriterBuildable(typeof(Internal.FunctionShellCallOutputOutcomeParam))]
     [ModelReaderWriterBuildable(typeof(Internal.FunctionShellCallOutputTimeoutOutcomeParam))]
     [ModelReaderWriterBuildable(typeof(InternalImageGenToolInputImageMask))]
-    [ModelReaderWriterBuildable(typeof(InternalMetadataContainer))]
     [ModelReaderWriterBuildable(typeof(LocalSkillParam))]
     [ModelReaderWriterBuildable(typeof(McpToolDefinition))]
 #pragma warning disable AAIP001 // global::Azure.AI.Extensions.OpenAI.MemoryCommandToolCall is experimental and may change in future versions.
@@ -144,10 +142,6 @@ namespace Azure.AI.Extensions.OpenAI
     [ModelReaderWriterBuildable(typeof(Internal.OutputMessageContentRefusalContent))]
 #pragma warning disable AAIP001 // global::Azure.AI.Extensions.OpenAI.ProceduralMemoryItem is experimental and may change in future versions.
     [ModelReaderWriterBuildable(typeof(ProceduralMemoryItem))]
-#pragma warning restore AAIP001 // global::Azure.AI.Extensions.OpenAI.ProceduralMemoryItem is experimental and may change in future versions.
-    [ModelReaderWriterBuildable(typeof(ProjectConversation))]
-    [ModelReaderWriterBuildable(typeof(ProjectConversationCreationOptions))]
-    [ModelReaderWriterBuildable(typeof(ProjectConversationUpdateOptions))]
     [ModelReaderWriterBuildable(typeof(ResponseMessageAnnotation))]
     [ModelReaderWriterBuildable(typeof(ResponseTokenLogProbabilityDetails))]
     [ModelReaderWriterBuildable(typeof(ResponseTokenTopLogProbabilityDetails))]

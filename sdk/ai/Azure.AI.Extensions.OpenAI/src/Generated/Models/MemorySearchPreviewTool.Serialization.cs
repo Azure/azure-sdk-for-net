@@ -83,7 +83,7 @@ namespace Azure.AI.Extensions.OpenAI
             }
             if (Optional.IsDefined(UpdateDelayInSeconds))
             {
-                writer.WritePropertyName("update_delay"u8);
+                writer.WritePropertyName("UpdateDelayInSeconds"u8);
                 writer.WriteNumberValue(UpdateDelayInSeconds.Value);
             }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
@@ -160,7 +160,7 @@ namespace Azure.AI.Extensions.OpenAI
                     searchOptions = MemorySearchOptions.DeserializeMemorySearchOptions(prop.Value, options);
                     continue;
                 }
-                if (prop.NameEquals("update_delay"u8))
+                if (prop.NameEquals("UpdateDelayInSeconds"u8))
                 {
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {

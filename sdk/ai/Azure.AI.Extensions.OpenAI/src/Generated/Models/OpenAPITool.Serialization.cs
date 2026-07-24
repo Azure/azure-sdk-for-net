@@ -83,7 +83,7 @@ namespace Azure.AI.Extensions.OpenAI
                 }
                 writer.WriteEndObject();
             }
-            writer.WritePropertyName("openapi"u8);
+            writer.WritePropertyName("FunctionDefinition"u8);
             writer.WriteObjectValue(FunctionDefinition, options);
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
@@ -152,7 +152,7 @@ namespace Azure.AI.Extensions.OpenAI
                     toolConfigs = dictionary;
                     continue;
                 }
-                if (prop.NameEquals("openapi"u8))
+                if (prop.NameEquals("FunctionDefinition"u8))
                 {
                     functionDefinition = OpenApiFunctionDefinition.DeserializeOpenApiFunctionDefinition(prop.Value, options);
                     continue;

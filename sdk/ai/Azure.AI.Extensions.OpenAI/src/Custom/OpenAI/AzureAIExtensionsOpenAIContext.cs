@@ -22,7 +22,6 @@ namespace Azure.AI.Extensions.OpenAI
             factories[typeof(ResponseItemKind)] = static () => new ResponseItemKindTypeBuilder();
             factories[typeof(ResponseTool)] = static () => new AzureResponseToolTypeBuilder();
             factories[typeof(ResponseToolKind)] = static () => new ResponseToolKindTypeBuilder();
-            factories[typeof(ProjectConversation)] = static () => new ProjectConversationTypeBuilder();
         }
     }
 }

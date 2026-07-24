@@ -75,7 +75,7 @@ namespace Azure.AI.Extensions.OpenAI
             {
                 throw new FormatException($"The model {nameof(AzureFunctionBinding)} does not support writing '{format}' format.");
             }
-            writer.WritePropertyName("type"u8);
+            writer.WritePropertyName("Kind"u8);
             writer.WriteStringValue(Kind);
             writer.WritePropertyName("storage_queue"u8);
             writer.WriteObjectValue(StorageQueue, options);
@@ -126,7 +126,7 @@ namespace Azure.AI.Extensions.OpenAI
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
-                if (prop.NameEquals("type"u8))
+                if (prop.NameEquals("Kind"u8))
                 {
                     kind = prop.Value.GetString();
                     continue;

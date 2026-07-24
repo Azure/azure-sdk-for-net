@@ -93,7 +93,7 @@ namespace Azure.AI.Extensions.OpenAI
                 }
                 writer.WriteEndObject();
             }
-            writer.WritePropertyName("outputs"u8);
+            writer.WritePropertyName("OutputDefinition"u8);
             writer.WriteObjectValue(OutputDefinition, options);
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
@@ -174,7 +174,7 @@ namespace Azure.AI.Extensions.OpenAI
                     toolConfigs = dictionary;
                     continue;
                 }
-                if (prop.NameEquals("outputs"u8))
+                if (prop.NameEquals("OutputDefinition"u8))
                 {
                     outputDefinition = StructuredOutputDefinition.DeserializeStructuredOutputDefinition(prop.Value, options);
                     continue;

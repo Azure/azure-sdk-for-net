@@ -72,7 +72,7 @@ namespace Azure.AI.Extensions.OpenAI
                 throw new FormatException($"The model {nameof(SharepointPreviewTool)} does not support writing '{format}' format.");
             }
             base.JsonModelWriteCore(writer, options);
-            writer.WritePropertyName("sharepoint_grounding_preview"u8);
+            writer.WritePropertyName("ToolOptions"u8);
             writer.WriteObjectValue(ToolOptions, options);
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
@@ -126,7 +126,7 @@ namespace Azure.AI.Extensions.OpenAI
                     @type = new ResponseToolKind(prop.Value.GetString());
                     continue;
                 }
-                if (prop.NameEquals("sharepoint_grounding_preview"u8))
+                if (prop.NameEquals("ToolOptions"u8))
                 {
                     toolOptions = SharePointGroundingToolOptions.DeserializeSharePointGroundingToolOptions(prop.Value, options);
                     continue;
