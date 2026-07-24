@@ -1,6 +1,6 @@
 # Eval authoring guide
 
-One guide for writing Vally evals in this repo, whatever you're testing: a single MCP **tool**, an Agent **skill**'s routing/behavior, or a multi-step **workflow**. Read this once. The three `azsdk-common-eval-authoring-*` skills exist only to route you here with the right category already identified — they don't duplicate this content.
+One guide for writing Vally evals in this repo, whatever you're testing: a single MCP **tool**, an Agent **skill**'s routing/behavior, or a multi-step **workflow**. Read this once. The three `eval-authoring-*` skills exist only to route you here with the right category already identified — they don't duplicate this content.
 
 This doc lives under `eng/common/knowledge/` because it's synced as-is to every repo that consumes the shared eval pipeline. Everything here is grader- and process-level, not tied to one repo's file layout — where **your** repo's evals actually live is one lookup away (Step 0 below), not hardcoded in this guide.
 
