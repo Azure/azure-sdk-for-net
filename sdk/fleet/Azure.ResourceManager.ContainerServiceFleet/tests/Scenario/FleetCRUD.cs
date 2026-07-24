@@ -391,6 +391,51 @@ namespace Azure.ResourceManager.ContainerServiceFleet.Tests.Scenario
             bool doesAutoUpgradeProfileExist = await autoUpgradeProfileCollection.ExistsAsync(autoUpgradeProfileName);
             Debug.Assert(doesAutoUpgradeProfileExist == false, "AutoUpgradeProfile was not deleted.");
 
+            // ===== ClusterMeshProfile =====
+            // Create ClusterMeshProfile
+            ClusterMeshProfileCollection clusterMeshProfileCollection = fleetResource.GetClusterMeshProfiles();
+            string clusterMeshProfileName = "clustermeshprofile1";
+            ClusterMeshProfileData clusterMeshProfileData = new ClusterMeshProfileData()
+            {
+                MemberSelectorByLabel = "team=fleet"
+            };
+            ArmOperation<ClusterMeshProfileResource> createClusterMeshProfileLRO = await clusterMeshProfileCollection.CreateOrUpdateAsync(WaitUntil.Completed, clusterMeshProfileName, clusterMeshProfileData);
+            ClusterMeshProfileResource clusterMeshProfileResource = createClusterMeshProfileLRO.Value;
+            Debug.Assert(clusterMeshProfileResource.HasData, "CreateOrUpdateAsync ClusterMeshProfile data was not valid");
+
+            // List ClusterMeshProfiles
+            int clusterMeshProfileCount = 0;
+            await foreach (ClusterMeshProfileResource item in clusterMeshProfileCollection.GetAllAsync())
+            {
+                clusterMeshProfileCount++;
+            }
+            Debug.Assert(clusterMeshProfileCount == 1, "Unexpected amount of cluster mesh profiles exist");
+
+            // Get ClusterMeshProfile
+            ClusterMeshProfileResource getClusterMeshProfileResult = await clusterMeshProfileCollection.GetAsync(clusterMeshProfileName);
+            Debug.Assert(getClusterMeshProfileResult.HasData, "GetAsync ClusterMeshProfile data was not valid");
+            Debug.Assert(getClusterMeshProfileResult.Data.MemberSelectorByLabel == "team=fleet", "ClusterMeshProfile MemberSelectorByLabel mismatch");
+
+            // Update ClusterMeshProfile
+            ClusterMeshProfileData updateClusterMeshProfileData = new ClusterMeshProfileData()
+            {
+                MemberSelectorByLabel = "env=production"
+            };
+            ArmOperation<ClusterMeshProfileResource> updateClusterMeshProfileLRO = await clusterMeshProfileResource.UpdateAsync(WaitUntil.Completed, updateClusterMeshProfileData);
+            ClusterMeshProfileResource updateClusterMeshProfileResult = updateClusterMeshProfileLRO.Value;
+            Debug.Assert(updateClusterMeshProfileResult.HasData, "UpdateAsync ClusterMeshProfile data was not valid");
+            Debug.Assert(updateClusterMeshProfileResult.Data.MemberSelectorByLabel == "env=production", "ClusterMeshProfile MemberSelectorByLabel was not successfully updated");
+
+            // Apply ClusterMeshProfile
+            ArmOperation<ClusterMeshProfileResource> applyClusterMeshProfileLRO = await updateClusterMeshProfileResult.ApplyAsync(WaitUntil.Completed);
+            ClusterMeshProfileResource applyClusterMeshProfileResult = applyClusterMeshProfileLRO.Value;
+            Debug.Assert(applyClusterMeshProfileResult.HasData, "ApplyAsync ClusterMeshProfile data was not valid");
+
+            // Delete ClusterMeshProfile
+            await applyClusterMeshProfileResult.DeleteAsync(WaitUntil.Completed);
+            bool doesClusterMeshProfileExist = await clusterMeshProfileCollection.ExistsAsync(clusterMeshProfileName);
+            Debug.Assert(doesClusterMeshProfileExist == false, "ClusterMeshProfile was not deleted.");
+
             // Delete UpdateRun
             await updateRunResource.DeleteAsync(WaitUntil.Completed, ifMatch: (string)null);
             bool doesUpdateRunExist = await updateRunCollection.ExistsAsync(updateRunName);
