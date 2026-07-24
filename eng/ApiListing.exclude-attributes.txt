@@ -23,6 +23,9 @@ T:Microsoft.TypeSpec.Generator.Customizations.CodeGenSerializationAttribute
 T:Microsoft.TypeSpec.Generator.Customizations.CodeGenSuppressAttribute
 T:Microsoft.TypeSpec.Generator.Customizations.CodeGenTypeAttribute
 T:Microsoft.Cci.DummyTypeReference
+# ApiCompat misclassifies additions to this repeatable attribute as incompatible changes.
+# See https://github.com/dotnet/sdk/issues/35542.
+T:System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute
 T:Azure.Data.AppConfiguration.CodeGenMemberAttribute
 T:Azure.Data.AppConfiguration.CodeGenSerializationAttribute
 T:Azure.Data.AppConfiguration.CodeGenSuppressAttribute
