@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.Compute.BulkActions.Models
         /// <param name="type"> Type of notification to be sent. </param>
         /// <param name="language"> The language the notification should be sent on. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="destination"/> is null. </exception>
-        public NotificationProperties(string destination, NotificationType @type, Language language)
+        public NotificationProperties(string destination, NotificationType @type, ScheduledActionLanguage language)
         {
             Argument.AssertNotNull(destination, nameof(destination));
 
@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.Compute.BulkActions.Models
         /// <param name="language"> The language the notification should be sent on. </param>
         /// <param name="disabled"> Tells if the notification is enabled or not. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal NotificationProperties(string destination, NotificationType @type, Language language, bool? disabled, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal NotificationProperties(string destination, NotificationType @type, ScheduledActionLanguage language, bool? disabled, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Destination = destination;
             Type = @type;
@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.Compute.BulkActions.Models
         public NotificationType Type { get; set; }
 
         /// <summary> The language the notification should be sent on. </summary>
-        public Language Language { get; set; }
+        public ScheduledActionLanguage Language { get; set; }
 
         /// <summary> Tells if the notification is enabled or not. </summary>
         public bool? Disabled { get; set; }

@@ -11,7 +11,7 @@ using System.Collections.Generic;
 namespace Azure.ResourceManager.Compute.BulkActions.Models
 {
     /// <summary> Describes a network interface reference. </summary>
-    public partial class NetworkInterfaceReference : SubResource
+    public partial class NetworkInterfaceReference : ComputeBulkActionsSubResource
     {
         /// <summary> Initializes a new instance of <see cref="NetworkInterfaceReference"/>. </summary>
         public NetworkInterfaceReference()

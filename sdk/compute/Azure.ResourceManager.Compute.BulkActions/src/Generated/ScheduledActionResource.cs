@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.Compute.BulkActions
         private readonly ScheduledActions _scheduledActionsRestClient;
         private readonly ScheduledActionData _data;
         /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly Core.ResourceType ResourceType = "Microsoft.Compute/scheduledActions";
+        public static readonly ResourceType ResourceType = "Microsoft.Compute/scheduledActions";
 
         /// <summary> Initializes a new instance of ScheduledActionResource for mocking. </summary>
         protected ScheduledActionResource()

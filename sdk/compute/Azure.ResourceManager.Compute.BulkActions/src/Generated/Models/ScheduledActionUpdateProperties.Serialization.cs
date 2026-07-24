@@ -156,11 +156,11 @@ namespace Azure.ResourceManager.Compute.BulkActions.Models
             {
                 return null;
             }
-            ResourceType? resourceType = default;
+            ComputeBulkActionsResourceType? resourceType = default;
             ScheduledActionType? actionType = default;
             DateTimeOffset? startOn = default;
             DateTimeOffset? endOn = default;
-            ScheduledActionsScheduleUpdate schedule = default;
+            ScheduledActionsSchedulePatch schedule = default;
             IList<NotificationProperties> notificationSettings = default;
             bool? disabled = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
@@ -172,7 +172,7 @@ namespace Azure.ResourceManager.Compute.BulkActions.Models
                     {
                         continue;
                     }
-                    resourceType = new ResourceType(prop.Value.GetString());
+                    resourceType = new ComputeBulkActionsResourceType(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("actionType"u8))
@@ -208,7 +208,7 @@ namespace Azure.ResourceManager.Compute.BulkActions.Models
                     {
                         continue;
                     }
-                    schedule = ScheduledActionsScheduleUpdate.DeserializeScheduledActionsScheduleUpdate(prop.Value, options);
+                    schedule = ScheduledActionsSchedulePatch.DeserializeScheduledActionsSchedulePatch(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("notificationSettings"u8))

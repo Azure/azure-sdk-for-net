@@ -135,7 +135,7 @@ namespace Azure.ResourceManager.Compute.BulkActions
             }
             ResourceIdentifier id = default;
             string name = default;
-            Core.ResourceType resourceType = default;
+            ResourceType resourceType = default;
             SystemData systemData = default;
             OccurrenceProperties properties = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
@@ -161,7 +161,7 @@ namespace Azure.ResourceManager.Compute.BulkActions
                     {
                         continue;
                     }
-                    resourceType = new Core.ResourceType(prop.Value.GetString());
+                    resourceType = new ResourceType(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("systemData"u8))

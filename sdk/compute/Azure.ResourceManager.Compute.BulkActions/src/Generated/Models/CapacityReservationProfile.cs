@@ -24,14 +24,14 @@ namespace Azure.ResourceManager.Compute.BulkActions.Models
         /// <summary> Initializes a new instance of <see cref="CapacityReservationProfile"/>. </summary>
         /// <param name="capacityReservationGroup"> Specifies the capacity reservation group resource id that should be used for allocating the virtual machine provided enough capacity has been reserved. Please refer to https://aka.ms/CapacityReservation for more details. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal CapacityReservationProfile(SubResource capacityReservationGroup, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal CapacityReservationProfile(ComputeBulkActionsSubResource capacityReservationGroup, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             CapacityReservationGroup = capacityReservationGroup;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> Specifies the capacity reservation group resource id that should be used for allocating the virtual machine provided enough capacity has been reserved. Please refer to https://aka.ms/CapacityReservation for more details. </summary>
-        internal SubResource CapacityReservationGroup { get; set; }
+        internal ComputeBulkActionsSubResource CapacityReservationGroup { get; set; }
 
         /// <summary> The ID of the sub-resource. </summary>
         public string CapacityReservationGroupId
@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.Compute.BulkActions.Models
             {
                 if (CapacityReservationGroup is null)
                 {
-                    CapacityReservationGroup = new SubResource();
+                    CapacityReservationGroup = new ComputeBulkActionsSubResource();
                 }
                 CapacityReservationGroup.Id = value;
             }

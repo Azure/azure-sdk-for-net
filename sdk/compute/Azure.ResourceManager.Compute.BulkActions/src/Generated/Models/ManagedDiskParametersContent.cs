@@ -11,7 +11,7 @@ using System.Collections.Generic;
 namespace Azure.ResourceManager.Compute.BulkActions.Models
 {
     /// <summary> The parameters of a managed disk. </summary>
-    public partial class ManagedDiskParametersContent : SubResource
+    public partial class ManagedDiskParametersContent : ComputeBulkActionsSubResource
     {
         /// <summary> Initializes a new instance of <see cref="ManagedDiskParametersContent"/>. </summary>
         public ManagedDiskParametersContent()

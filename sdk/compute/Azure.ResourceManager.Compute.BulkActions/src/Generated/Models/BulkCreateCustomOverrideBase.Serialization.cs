@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.Compute.BulkActions.Models
             {
                 writer.WritePropertyName("extensions"u8);
                 writer.WriteStartArray();
-                foreach (BulkactionVMExtension item in Extensions)
+                foreach (BulkActionVMExtension item in Extensions)
                 {
                     writer.WriteObjectValue(item, options);
                 }
@@ -163,7 +163,7 @@ namespace Azure.ResourceManager.Compute.BulkActions.Models
             IDictionary<string, string> tags = default;
             VirtualMachineIdentity identity = default;
             ArmPlan plan = default;
-            IList<BulkactionVMExtension> extensions = default;
+            IList<BulkActionVMExtension> extensions = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -221,10 +221,10 @@ namespace Azure.ResourceManager.Compute.BulkActions.Models
                     {
                         continue;
                     }
-                    List<BulkactionVMExtension> array = new List<BulkactionVMExtension>();
+                    List<BulkActionVMExtension> array = new List<BulkActionVMExtension>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(BulkactionVMExtension.DeserializeBulkactionVMExtension(item, options));
+                        array.Add(BulkActionVMExtension.DeserializeBulkActionVMExtension(item, options));
                     }
                     extensions = array;
                     continue;
@@ -239,7 +239,7 @@ namespace Azure.ResourceManager.Compute.BulkActions.Models
                 tags ?? new ChangeTrackingDictionary<string, string>(),
                 identity,
                 plan,
-                extensions ?? new ChangeTrackingList<BulkactionVMExtension>(),
+                extensions ?? new ChangeTrackingList<BulkActionVMExtension>(),
                 additionalBinaryDataProperties);
         }
     }

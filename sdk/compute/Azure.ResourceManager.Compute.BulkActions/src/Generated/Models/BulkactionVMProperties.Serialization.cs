@@ -148,7 +148,7 @@ namespace Azure.ResourceManager.Compute.BulkActions.Models
             {
                 writer.WritePropertyName("vmExtensions"u8);
                 writer.WriteStartArray();
-                foreach (BulkactionVMExtension item in VmExtensions)
+                foreach (BulkActionVMExtension item in VmExtensions)
                 {
                     writer.WriteObjectValue(item, options);
                 }
@@ -210,7 +210,7 @@ namespace Azure.ResourceManager.Compute.BulkActions.Models
             string userData = default;
             CapacityReservationProfile capacityReservation = default;
             ApplicationProfile applicationProfile = default;
-            IList<BulkactionVMExtension> vmExtensions = default;
+            IList<BulkActionVMExtension> vmExtensions = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -334,10 +334,10 @@ namespace Azure.ResourceManager.Compute.BulkActions.Models
                     {
                         continue;
                     }
-                    List<BulkactionVMExtension> array = new List<BulkactionVMExtension>();
+                    List<BulkActionVMExtension> array = new List<BulkActionVMExtension>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(BulkactionVMExtension.DeserializeBulkactionVMExtension(item, options));
+                        array.Add(BulkActionVMExtension.DeserializeBulkActionVMExtension(item, options));
                     }
                     vmExtensions = array;
                     continue;
@@ -362,7 +362,7 @@ namespace Azure.ResourceManager.Compute.BulkActions.Models
                 userData,
                 capacityReservation,
                 applicationProfile,
-                vmExtensions ?? new ChangeTrackingList<BulkactionVMExtension>(),
+                vmExtensions ?? new ChangeTrackingList<BulkActionVMExtension>(),
                 additionalBinaryDataProperties);
         }
     }

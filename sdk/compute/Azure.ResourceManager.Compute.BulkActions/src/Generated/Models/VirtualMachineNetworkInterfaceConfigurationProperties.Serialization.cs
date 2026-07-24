@@ -184,15 +184,15 @@ namespace Azure.ResourceManager.Compute.BulkActions.Models
                 return null;
             }
             bool? primary = default;
-            DeleteOptions? deleteOption = default;
+            DeleteConfig? deleteOption = default;
             bool? enableAcceleratedNetworking = default;
             bool? disableTcpStateTracking = default;
             bool? enableFpga = default;
             bool? enableIPForwarding = default;
-            SubResource networkSecurityGroup = default;
+            ComputeBulkActionsSubResource networkSecurityGroup = default;
             VirtualMachineNetworkInterfaceDnsSettingsConfiguration dnsSettings = default;
             IList<VirtualMachineNetworkInterfaceIPConfiguration> ipConfigurations = default;
-            SubResource dscpConfiguration = default;
+            ComputeBulkActionsSubResource dscpConfiguration = default;
             NetworkInterfaceAuxiliaryMode? auxiliaryMode = default;
             NetworkInterfaceAuxiliarySku? auxiliarySku = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
@@ -213,7 +213,7 @@ namespace Azure.ResourceManager.Compute.BulkActions.Models
                     {
                         continue;
                     }
-                    deleteOption = new DeleteOptions(prop.Value.GetString());
+                    deleteOption = new DeleteConfig(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("enableAcceleratedNetworking"u8))
@@ -258,7 +258,7 @@ namespace Azure.ResourceManager.Compute.BulkActions.Models
                     {
                         continue;
                     }
-                    networkSecurityGroup = SubResource.DeserializeSubResource(prop.Value, options);
+                    networkSecurityGroup = ComputeBulkActionsSubResource.DeserializeComputeBulkActionsSubResource(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("dnsSettings"u8))
@@ -286,7 +286,7 @@ namespace Azure.ResourceManager.Compute.BulkActions.Models
                     {
                         continue;
                     }
-                    dscpConfiguration = SubResource.DeserializeSubResource(prop.Value, options);
+                    dscpConfiguration = ComputeBulkActionsSubResource.DeserializeComputeBulkActionsSubResource(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("auxiliaryMode"u8))

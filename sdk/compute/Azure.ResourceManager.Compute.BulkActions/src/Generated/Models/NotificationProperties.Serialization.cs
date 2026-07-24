@@ -134,7 +134,7 @@ namespace Azure.ResourceManager.Compute.BulkActions.Models
             }
             string destination = default;
             NotificationType @type = default;
-            Language language = default;
+            ScheduledActionLanguage language = default;
             bool? disabled = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
@@ -151,7 +151,7 @@ namespace Azure.ResourceManager.Compute.BulkActions.Models
                 }
                 if (prop.NameEquals("language"u8))
                 {
-                    language = new Language(prop.Value.GetString());
+                    language = new ScheduledActionLanguage(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("disabled"u8))

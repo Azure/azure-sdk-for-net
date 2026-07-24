@@ -45,7 +45,7 @@ namespace Azure.ResourceManager.Compute.BulkActions.Models
         /// <param name="overridesProfile"> Per-VM overrides and the shared name prefix, specified when the operation is created. </param>
         /// <param name="executionParameters"> Extra parameters that control how the request is executed, including the retry policy. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal BulkCreateCustomProperties(DateTimeOffset? createdOn, ProvisioningState? provisioningState, int capacity, CapacityType? capacityType, BulkCreateCustomPriorityProfile priorityProfile, IList<BulkCreateCustomVmSizeProfile> vmSizesProfile, ComputeProfile computeProfile, BulkCreateCustomZoneAllocationPolicy zoneAllocationPolicy, BulkCreateCustomOverridesProfile overridesProfile, BulkActionExecutionParameterDetail executionParameters, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal BulkCreateCustomProperties(DateTimeOffset? createdOn, BulkInstancesOperationProvisioningState? provisioningState, int capacity, CapacityType? capacityType, BulkCreateCustomPriorityProfile priorityProfile, IList<BulkCreateCustomVmSizeProfile> vmSizesProfile, ComputeProfile computeProfile, BulkCreateCustomZoneAllocationPolicy zoneAllocationPolicy, BulkCreateCustomOverridesProfile overridesProfile, BulkActionExecutionParameterDetail executionParameters, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             CreatedOn = createdOn;
             ProvisioningState = provisioningState;
@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.Compute.BulkActions.Models
         public DateTimeOffset? CreatedOn { get; }
 
         /// <summary> The status of the last operation. </summary>
-        public ProvisioningState? ProvisioningState { get; }
+        public BulkInstancesOperationProvisioningState? ProvisioningState { get; }
 
         /// <summary> Total capacity to achieve. It can be in terms of VMs or vCPUs. </summary>
         public int Capacity { get; set; }

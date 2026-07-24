@@ -85,7 +85,7 @@ namespace Azure.ResourceManager.Compute.BulkActions.Models
             {
                 writer.WritePropertyName("extensions"u8);
                 writer.WriteStartArray();
-                foreach (BulkactionVMExtension item in Extensions)
+                foreach (BulkActionVMExtension item in Extensions)
                 {
                     writer.WriteObjectValue(item, options);
                 }
@@ -139,7 +139,7 @@ namespace Azure.ResourceManager.Compute.BulkActions.Models
                 return null;
             }
             BulkactionVMProperties virtualMachineProfile = default;
-            IList<BulkactionVMExtension> extensions = default;
+            IList<BulkActionVMExtension> extensions = default;
             string computeApiVersion = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
@@ -155,10 +155,10 @@ namespace Azure.ResourceManager.Compute.BulkActions.Models
                     {
                         continue;
                     }
-                    List<BulkactionVMExtension> array = new List<BulkactionVMExtension>();
+                    List<BulkActionVMExtension> array = new List<BulkActionVMExtension>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(BulkactionVMExtension.DeserializeBulkactionVMExtension(item, options));
+                        array.Add(BulkActionVMExtension.DeserializeBulkActionVMExtension(item, options));
                     }
                     extensions = array;
                     continue;
@@ -173,7 +173,7 @@ namespace Azure.ResourceManager.Compute.BulkActions.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new ComputeProfile(virtualMachineProfile, extensions ?? new ChangeTrackingList<BulkactionVMExtension>(), computeApiVersion, additionalBinaryDataProperties);
+            return new ComputeProfile(virtualMachineProfile, extensions ?? new ChangeTrackingList<BulkActionVMExtension>(), computeApiVersion, additionalBinaryDataProperties);
         }
     }
 }

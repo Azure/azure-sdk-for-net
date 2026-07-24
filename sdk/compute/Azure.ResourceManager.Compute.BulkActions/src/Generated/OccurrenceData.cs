@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.Compute.BulkActions
         /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
         /// <param name="properties"> The resource-specific properties for this resource. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal OccurrenceData(ResourceIdentifier id, string name, Core.ResourceType resourceType, SystemData systemData, OccurrenceProperties properties, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(id, name, resourceType, systemData)
+        internal OccurrenceData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, OccurrenceProperties properties, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(id, name, resourceType, systemData)
         {
             Properties = properties;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;

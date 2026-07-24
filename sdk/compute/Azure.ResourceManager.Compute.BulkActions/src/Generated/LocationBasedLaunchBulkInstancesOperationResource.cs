@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.Compute.BulkActions
         private readonly LaunchBulkInstancesOperation _launchBulkInstancesOperationRestClient;
         private readonly LocationBasedLaunchBulkInstancesOperationData _data;
         /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly Core.ResourceType ResourceType = "Microsoft.Compute/locations/launchBulkInstancesOperations";
+        public static readonly ResourceType ResourceType = "Microsoft.Compute/locations/launchBulkInstancesOperations";
 
         /// <summary> Initializes a new instance of LocationBasedLaunchBulkInstancesOperationResource for mocking. </summary>
         protected LocationBasedLaunchBulkInstancesOperationResource()

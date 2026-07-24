@@ -12,20 +12,20 @@ using Azure.ResourceManager.Compute.BulkActions;
 namespace Azure.ResourceManager.Compute.BulkActions.Models
 {
     /// <summary> Schedule properties for update (PATCH). All properties are optional so individual fields can be patched (merge semantics); omitting a property preserves the current value. </summary>
-    public partial class ScheduledActionsScheduleUpdate
+    public partial class ScheduledActionsSchedulePatch
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="ScheduledActionsScheduleUpdate"/>. </summary>
-        public ScheduledActionsScheduleUpdate()
+        /// <summary> Initializes a new instance of <see cref="ScheduledActionsSchedulePatch"/>. </summary>
+        public ScheduledActionsSchedulePatch()
         {
             RequestedWeekDays = new ChangeTrackingList<WeekDay>();
             RequestedMonths = new ChangeTrackingList<Month>();
             RequestedDaysOfTheMonth = new ChangeTrackingList<int>();
         }
 
-        /// <summary> Initializes a new instance of <see cref="ScheduledActionsScheduleUpdate"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="ScheduledActionsSchedulePatch"/>. </summary>
         /// <param name="scheduledTime"> The time the scheduled action is supposed to run on. </param>
         /// <param name="timeZone"> The timezone the scheduled time is specified on. </param>
         /// <param name="requestedWeekDays"> The week days the scheduled action is supposed to run on. If empty, it means it will run on every week day. </param>
@@ -34,7 +34,7 @@ namespace Azure.ResourceManager.Compute.BulkActions.Models
         /// <param name="executionParameters"> The execution parameters the scheduled action is supposed to follow. </param>
         /// <param name="deadlineType"> The type of deadline the scheduled action is supposed to follow for the schedule. If no value is passed, it will default to InitiateAt. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ScheduledActionsScheduleUpdate(TimeSpan? scheduledTime, string timeZone, IList<WeekDay> requestedWeekDays, IList<Month> requestedMonths, IList<int> requestedDaysOfTheMonth, BulkActionsRecurringScheduledActionsExecutionParametersContent executionParameters, RecurringScheduledActionsDeadlineType? deadlineType, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ScheduledActionsSchedulePatch(TimeSpan? scheduledTime, string timeZone, IList<WeekDay> requestedWeekDays, IList<Month> requestedMonths, IList<int> requestedDaysOfTheMonth, BulkActionsRecurringScheduledActionsExecutionParametersContent executionParameters, RecurringScheduledActionsDeadlineType? deadlineType, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             ScheduledTime = scheduledTime;
             TimeZone = timeZone;

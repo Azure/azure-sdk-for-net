@@ -25,7 +25,7 @@ namespace Azure.ResourceManager.Compute.BulkActions.Models
         /// <param name="schedule"> The schedule the scheduled action is supposed to follow. </param>
         /// <param name="notificationSettings"> The notification settings for the scheduled action. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="schedule"/> or <paramref name="notificationSettings"/> is null. </exception>
-        public ScheduledActionProperties(ResourceType resourceType, ScheduledActionType actionType, DateTimeOffset startOn, ScheduledActionsSchedule schedule, IEnumerable<NotificationProperties> notificationSettings)
+        public ScheduledActionProperties(ComputeBulkActionsResourceType resourceType, ScheduledActionType actionType, DateTimeOffset startOn, ScheduledActionsSchedule schedule, IEnumerable<NotificationProperties> notificationSettings)
         {
             Argument.AssertNotNull(schedule, nameof(schedule));
             Argument.AssertNotNull(notificationSettings, nameof(notificationSettings));
@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.Compute.BulkActions.Models
         /// <param name="disabled"> Tell if the scheduled action is disabled or not. </param>
         /// <param name="provisioningState"> The status of the last provisioning operation performed on the resource. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ScheduledActionProperties(ResourceType resourceType, ScheduledActionType actionType, DateTimeOffset startOn, DateTimeOffset? endOn, ScheduledActionsSchedule schedule, IList<NotificationProperties> notificationSettings, bool? disabled, RecurringScheduledActionsProvisioningState? provisioningState, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ScheduledActionProperties(ComputeBulkActionsResourceType resourceType, ScheduledActionType actionType, DateTimeOffset startOn, DateTimeOffset? endOn, ScheduledActionsSchedule schedule, IList<NotificationProperties> notificationSettings, bool? disabled, RecurringScheduledActionsProvisioningState? provisioningState, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             ResourceType = resourceType;
             ActionType = actionType;
@@ -61,7 +61,7 @@ namespace Azure.ResourceManager.Compute.BulkActions.Models
         }
 
         /// <summary> The type of resource the scheduled action is targeting. </summary>
-        public ResourceType ResourceType { get; set; }
+        public ComputeBulkActionsResourceType ResourceType { get; set; }
 
         /// <summary> The action the scheduled action should perform in the resources. </summary>
         public ScheduledActionType ActionType { get; set; }

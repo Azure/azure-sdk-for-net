@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.TestFramework
                 "Azure.ResourceManager.Compute.BulkActions.Models.OccurrenceExtensionResource",
                 "Azure.ResourceManager.Compute.BulkActions.Models.OccurrenceResource",
                 "Azure.ResourceManager.Compute.BulkActions.Models.ScheduledActionResource",
-                "Azure.ResourceManager.Compute.BulkActions.Models.SubResource",
+                "Azure.ResourceManager.Compute.BulkActions.Models.ComputeBulkActionsSubResource",
             };
         }
     }

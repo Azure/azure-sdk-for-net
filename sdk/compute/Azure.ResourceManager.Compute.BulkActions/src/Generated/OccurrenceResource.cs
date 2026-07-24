@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.Compute.BulkActions
         private readonly Occurrences _occurrencesRestClient;
         private readonly OccurrenceData _data;
         /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly Core.ResourceType ResourceType = "Microsoft.Compute/scheduledActions/occurrences";
+        public static readonly ResourceType ResourceType = "Microsoft.Compute/scheduledActions/occurrences";
 
         /// <summary> Initializes a new instance of OccurrenceResource for mocking. </summary>
         protected OccurrenceResource()

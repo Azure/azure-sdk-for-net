@@ -157,10 +157,10 @@ namespace Azure.ResourceManager.Compute.BulkActions.Models
                 return null;
             }
             int? idleTimeoutInMinutes = default;
-            DeleteOptions? deleteOption = default;
+            DeleteConfig? deleteOption = default;
             VirtualMachinePublicIPAddressDnsSettingsConfiguration dnsSettings = default;
             IList<VirtualMachineIpTag> ipTags = default;
-            SubResource publicIPPrefix = default;
+            ComputeBulkActionsSubResource publicIPPrefix = default;
             IPVersions? publicIPAddressVersion = default;
             PublicIPAllocationMethod? publicIPAllocationMethod = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
@@ -181,7 +181,7 @@ namespace Azure.ResourceManager.Compute.BulkActions.Models
                     {
                         continue;
                     }
-                    deleteOption = new DeleteOptions(prop.Value.GetString());
+                    deleteOption = new DeleteConfig(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("dnsSettings"u8))
@@ -213,7 +213,7 @@ namespace Azure.ResourceManager.Compute.BulkActions.Models
                     {
                         continue;
                     }
-                    publicIPPrefix = SubResource.DeserializeSubResource(prop.Value, options);
+                    publicIPPrefix = ComputeBulkActionsSubResource.DeserializeComputeBulkActionsSubResource(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("publicIPAddressVersion"u8))

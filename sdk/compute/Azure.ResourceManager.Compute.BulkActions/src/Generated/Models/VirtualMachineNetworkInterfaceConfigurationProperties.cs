@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.Compute.BulkActions.Models
         /// <param name="auxiliaryMode"> Specifies whether the Auxiliary mode is enabled for the Network Interface resource. </param>
         /// <param name="auxiliarySku"> Specifies whether the Auxiliary sku is enabled for the Network Interface resource. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal VirtualMachineNetworkInterfaceConfigurationProperties(bool? primary, DeleteOptions? deleteOption, bool? enableAcceleratedNetworking, bool? disableTcpStateTracking, bool? enableFpga, bool? enableIPForwarding, SubResource networkSecurityGroup, VirtualMachineNetworkInterfaceDnsSettingsConfiguration dnsSettings, IList<VirtualMachineNetworkInterfaceIPConfiguration> ipConfigurations, SubResource dscpConfiguration, NetworkInterfaceAuxiliaryMode? auxiliaryMode, NetworkInterfaceAuxiliarySku? auxiliarySku, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal VirtualMachineNetworkInterfaceConfigurationProperties(bool? primary, DeleteConfig? deleteOption, bool? enableAcceleratedNetworking, bool? disableTcpStateTracking, bool? enableFpga, bool? enableIPForwarding, ComputeBulkActionsSubResource networkSecurityGroup, VirtualMachineNetworkInterfaceDnsSettingsConfiguration dnsSettings, IList<VirtualMachineNetworkInterfaceIPConfiguration> ipConfigurations, ComputeBulkActionsSubResource dscpConfiguration, NetworkInterfaceAuxiliaryMode? auxiliaryMode, NetworkInterfaceAuxiliarySku? auxiliarySku, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Primary = primary;
             DeleteOption = deleteOption;
@@ -63,7 +63,7 @@ namespace Azure.ResourceManager.Compute.BulkActions.Models
         public bool? Primary { get; set; }
 
         /// <summary> Specify what happens to the network interface when the VM is deleted. </summary>
-        public DeleteOptions? DeleteOption { get; set; }
+        public DeleteConfig? DeleteOption { get; set; }
 
         /// <summary> Specifies whether the network interface is accelerated networking-enabled. </summary>
         public bool? EnableAcceleratedNetworking { get; set; }
@@ -78,7 +78,7 @@ namespace Azure.ResourceManager.Compute.BulkActions.Models
         public bool? EnableIPForwarding { get; set; }
 
         /// <summary> The network security group. </summary>
-        internal SubResource NetworkSecurityGroup { get; set; }
+        internal ComputeBulkActionsSubResource NetworkSecurityGroup { get; set; }
 
         /// <summary> The dns settings to be applied on the network interfaces. </summary>
         internal VirtualMachineNetworkInterfaceDnsSettingsConfiguration DnsSettings { get; set; }
@@ -87,7 +87,7 @@ namespace Azure.ResourceManager.Compute.BulkActions.Models
         public IList<VirtualMachineNetworkInterfaceIPConfiguration> IpConfigurations { get; }
 
         /// <summary> The DSCP configuration for the network interface. </summary>
-        internal SubResource DscpConfiguration { get; set; }
+        internal ComputeBulkActionsSubResource DscpConfiguration { get; set; }
 
         /// <summary> Specifies whether the Auxiliary mode is enabled for the Network Interface resource. </summary>
         public NetworkInterfaceAuxiliaryMode? AuxiliaryMode { get; set; }
@@ -106,7 +106,7 @@ namespace Azure.ResourceManager.Compute.BulkActions.Models
             {
                 if (NetworkSecurityGroup is null)
                 {
-                    NetworkSecurityGroup = new SubResource();
+                    NetworkSecurityGroup = new ComputeBulkActionsSubResource();
                 }
                 NetworkSecurityGroup.Id = value;
             }
@@ -136,7 +136,7 @@ namespace Azure.ResourceManager.Compute.BulkActions.Models
             {
                 if (DscpConfiguration is null)
                 {
-                    DscpConfiguration = new SubResource();
+                    DscpConfiguration = new ComputeBulkActionsSubResource();
                 }
                 DscpConfiguration.Id = value;
             }

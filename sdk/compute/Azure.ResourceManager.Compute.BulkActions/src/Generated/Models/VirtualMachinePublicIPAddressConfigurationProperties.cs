@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.Compute.BulkActions.Models
         /// <param name="publicIPAddressVersion"> Available from Api-Version 2019-07-01 onwards, it represents whether the specific ipconfiguration is IPv4 or IPv6. Default is taken as IPv4. Possible values are: 'IPv4' and 'IPv6'. </param>
         /// <param name="publicIPAllocationMethod"> Specify the public IP allocation type. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal VirtualMachinePublicIPAddressConfigurationProperties(int? idleTimeoutInMinutes, DeleteOptions? deleteOption, VirtualMachinePublicIPAddressDnsSettingsConfiguration dnsSettings, IList<VirtualMachineIpTag> ipTags, SubResource publicIPPrefix, IPVersions? publicIPAddressVersion, PublicIPAllocationMethod? publicIPAllocationMethod, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal VirtualMachinePublicIPAddressConfigurationProperties(int? idleTimeoutInMinutes, DeleteConfig? deleteOption, VirtualMachinePublicIPAddressDnsSettingsConfiguration dnsSettings, IList<VirtualMachineIpTag> ipTags, ComputeBulkActionsSubResource publicIPPrefix, IPVersions? publicIPAddressVersion, PublicIPAllocationMethod? publicIPAllocationMethod, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             IdleTimeoutInMinutes = idleTimeoutInMinutes;
             DeleteOption = deleteOption;
@@ -48,7 +48,7 @@ namespace Azure.ResourceManager.Compute.BulkActions.Models
         public int? IdleTimeoutInMinutes { get; set; }
 
         /// <summary> Specify what happens to the public IP address when the VM is deleted. </summary>
-        public DeleteOptions? DeleteOption { get; set; }
+        public DeleteConfig? DeleteOption { get; set; }
 
         /// <summary> The dns settings to be applied on the publicIP addresses . </summary>
         public VirtualMachinePublicIPAddressDnsSettingsConfiguration DnsSettings { get; set; }
@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.Compute.BulkActions.Models
         public IList<VirtualMachineIpTag> IpTags { get; }
 
         /// <summary> The PublicIPPrefix from which to allocate publicIP addresses. </summary>
-        internal SubResource PublicIPPrefix { get; set; }
+        internal ComputeBulkActionsSubResource PublicIPPrefix { get; set; }
 
         /// <summary> Available from Api-Version 2019-07-01 onwards, it represents whether the specific ipconfiguration is IPv4 or IPv6. Default is taken as IPv4. Possible values are: 'IPv4' and 'IPv6'. </summary>
         public IPVersions? PublicIPAddressVersion { get; set; }
@@ -76,7 +76,7 @@ namespace Azure.ResourceManager.Compute.BulkActions.Models
             {
                 if (PublicIPPrefix is null)
                 {
-                    PublicIPPrefix = new SubResource();
+                    PublicIPPrefix = new ComputeBulkActionsSubResource();
                 }
                 PublicIPPrefix.Id = value;
             }

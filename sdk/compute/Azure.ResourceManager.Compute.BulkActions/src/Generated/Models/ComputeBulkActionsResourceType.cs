@@ -12,7 +12,7 @@ using Azure.ResourceManager.Compute.BulkActions;
 namespace Azure.ResourceManager.Compute.BulkActions.Models
 {
     /// <summary> The type of resource being targeted. </summary>
-    public readonly partial struct ResourceType : IEquatable<ResourceType>
+    public readonly partial struct ComputeBulkActionsResourceType : IEquatable<ComputeBulkActionsResourceType>
     {
         private readonly string _value;
         /// <summary> Resources defined are Virtual Machines. </summary>
@@ -20,10 +20,10 @@ namespace Azure.ResourceManager.Compute.BulkActions.Models
         /// <summary> Resources defined are Virtual Machines Scale Sets. </summary>
         private const string VirtualMachineScaleSetValue = "VirtualMachineScaleSet";
 
-        /// <summary> Initializes a new instance of <see cref="ResourceType"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="ComputeBulkActionsResourceType"/>. </summary>
         /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        public ResourceType(string value)
+        public ComputeBulkActionsResourceType(string value)
         {
             Argument.AssertNotNull(value, nameof(value));
 
@@ -31,35 +31,35 @@ namespace Azure.ResourceManager.Compute.BulkActions.Models
         }
 
         /// <summary> Resources defined are Virtual Machines. </summary>
-        public static ResourceType VirtualMachine { get; } = new ResourceType(VirtualMachineValue);
+        public static ComputeBulkActionsResourceType VirtualMachine { get; } = new ComputeBulkActionsResourceType(VirtualMachineValue);
 
         /// <summary> Resources defined are Virtual Machines Scale Sets. </summary>
-        public static ResourceType VirtualMachineScaleSet { get; } = new ResourceType(VirtualMachineScaleSetValue);
+        public static ComputeBulkActionsResourceType VirtualMachineScaleSet { get; } = new ComputeBulkActionsResourceType(VirtualMachineScaleSetValue);
 
-        /// <summary> Determines if two <see cref="ResourceType"/> values are the same. </summary>
+        /// <summary> Determines if two <see cref="ComputeBulkActionsResourceType"/> values are the same. </summary>
         /// <param name="left"> The left value to compare. </param>
         /// <param name="right"> The right value to compare. </param>
-        public static bool operator ==(ResourceType left, ResourceType right) => left.Equals(right);
+        public static bool operator ==(ComputeBulkActionsResourceType left, ComputeBulkActionsResourceType right) => left.Equals(right);
 
-        /// <summary> Determines if two <see cref="ResourceType"/> values are not the same. </summary>
+        /// <summary> Determines if two <see cref="ComputeBulkActionsResourceType"/> values are not the same. </summary>
         /// <param name="left"> The left value to compare. </param>
         /// <param name="right"> The right value to compare. </param>
-        public static bool operator !=(ResourceType left, ResourceType right) => !left.Equals(right);
+        public static bool operator !=(ComputeBulkActionsResourceType left, ComputeBulkActionsResourceType right) => !left.Equals(right);
 
-        /// <summary> Converts a string to a <see cref="ResourceType"/>. </summary>
+        /// <summary> Converts a string to a <see cref="ComputeBulkActionsResourceType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator ResourceType(string value) => new ResourceType(value);
+        public static implicit operator ComputeBulkActionsResourceType(string value) => new ComputeBulkActionsResourceType(value);
 
-        /// <summary> Converts a string to a <see cref="ResourceType"/>. </summary>
+        /// <summary> Converts a string to a <see cref="ComputeBulkActionsResourceType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator ResourceType?(string value) => value == null ? null : new ResourceType(value);
+        public static implicit operator ComputeBulkActionsResourceType?(string value) => value == null ? null : new ComputeBulkActionsResourceType(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public override bool Equals(object obj) => obj is ResourceType other && Equals(other);
+        public override bool Equals(object obj) => obj is ComputeBulkActionsResourceType other && Equals(other);
 
         /// <inheritdoc/>
-        public bool Equals(ResourceType other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
+        public bool Equals(ComputeBulkActionsResourceType other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

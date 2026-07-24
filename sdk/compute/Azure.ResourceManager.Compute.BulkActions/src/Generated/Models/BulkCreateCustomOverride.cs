@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.Compute.BulkActions.Models
         public BulkCreateCustomOverride()
         {
             Tags = new ChangeTrackingDictionary<string, string>();
-            Extensions = new ChangeTrackingList<BulkactionVMExtension>();
+            Extensions = new ChangeTrackingList<BulkActionVMExtension>();
         }
 
         /// <summary> Initializes a new instance of <see cref="BulkCreateCustomOverride"/>. </summary>
@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.Compute.BulkActions.Models
         /// <param name="plan"> Plan overriding the operation-level plan. </param>
         /// <param name="extensions"> Extensions. When non-empty they replace the operation-level extensions; when omitted the operation-level extensions are inherited. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal BulkCreateCustomOverride(string virtualMachineName, BulkactionVMProperties virtualMachineProfile, IDictionary<string, string> tags, VirtualMachineIdentity identity, ArmPlan plan, IList<BulkactionVMExtension> extensions, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal BulkCreateCustomOverride(string virtualMachineName, BulkactionVMProperties virtualMachineProfile, IDictionary<string, string> tags, VirtualMachineIdentity identity, ArmPlan plan, IList<BulkActionVMExtension> extensions, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             VirtualMachineName = virtualMachineName;
             VirtualMachineProfile = virtualMachineProfile;
@@ -60,6 +60,6 @@ namespace Azure.ResourceManager.Compute.BulkActions.Models
         public ArmPlan Plan { get; set; }
 
         /// <summary> Extensions. When non-empty they replace the operation-level extensions; when omitted the operation-level extensions are inherited. </summary>
-        public IList<BulkactionVMExtension> Extensions { get; }
+        public IList<BulkActionVMExtension> Extensions { get; }
     }
 }
