@@ -224,6 +224,7 @@ namespace Azure.ResourceManager.HybridCompute.Models
         /// <param name="agentUpgrade"> The info of the machine w.r.t Agent Upgrade. </param>
         /// <param name="osProfile"> Specifies the operating system settings for the hybrid machine. </param>
         /// <param name="licenseProfile"> Specifies the License related properties for a machine. </param>
+        /// <param name="statusReason"> Indicates whether the service has detected that this Arc machine is a clone of another onboarded machine. Service-computed; not settable by the user. </param>
         /// <param name="provisioningState"> The provisioning state, which only appears in the response. </param>
         /// <param name="status"> The status of the hybrid machine agent. </param>
         /// <param name="lastStatusChange"> The time of the last status change. </param>
@@ -257,7 +258,7 @@ namespace Azure.ResourceManager.HybridCompute.Models
         /// <param name="identity"> Identity for the resource. </param>
         /// <param name="kind"> Indicates which kind of Arc machine placement on-premises, such as HCI, SCVMM or VMware etc. </param>
         /// <returns> A new <see cref="HybridCompute.HybridComputeMachineData"/> instance for mocking. </returns>
-        public static HybridComputeMachineData HybridComputeMachineData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, HybridComputeLocation locationData = default, AgentConfiguration agentConfiguration = default, HybridComputeServiceStatuses serviceStatuses = default, HybridComputeHardwareProfile hardwareProfile = default, HybridComputeFirmwareProfile firmwareProfile = default, AgentUpgrade agentUpgrade = default, HybridComputeOSProfile osProfile = default, LicenseProfileMachineInstanceView licenseProfile = default, string provisioningState = default, HybridComputeStatusType? status = default, DateTimeOffset? lastStatusChange = default, IEnumerable<ResponseError> errorDetails = default, string agentVersion = default, Guid? vmId = default, string displayName = default, string machineFqdn = default, string clientPublicKey = default, HybridComputeIdentityKeyStore? identityKeyStore = default, string tpmEkCertificate = default, string osName = default, string osVersion = default, string osType = default, Guid? vmUuid = default, IEnumerable<MachineExtensionInstanceView> extensions = default, string osSku = default, string osEdition = default, string domainName = default, string adFqdn = default, string dnsFqdn = default, ResourceIdentifier privateLinkScopeResourceId = default, ResourceIdentifier parentClusterResourceId = default, ResourceIdentifier hardwareResourceId = default, string msSqlDiscovered = default, IReadOnlyDictionary<string, string> detectedProperties = default, IEnumerable<HybridComputeDisk> storageDisks = default, string cloudMetadataProvider = default, IEnumerable<HybridComputeNetworkInterface> networkInterfaces = default, IEnumerable<HybridComputeMachineExtensionData> resources = default, ManagedServiceIdentity identity = default, ArcKindEnum? kind = default)
+        public static HybridComputeMachineData HybridComputeMachineData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, HybridComputeLocation locationData = default, AgentConfiguration agentConfiguration = default, HybridComputeServiceStatuses serviceStatuses = default, HybridComputeHardwareProfile hardwareProfile = default, HybridComputeFirmwareProfile firmwareProfile = default, AgentUpgrade agentUpgrade = default, HybridComputeOSProfile osProfile = default, LicenseProfileMachineInstanceView licenseProfile = default, MachineStatusReason? statusReason = default, string provisioningState = default, HybridComputeStatusType? status = default, DateTimeOffset? lastStatusChange = default, IEnumerable<ResponseError> errorDetails = default, string agentVersion = default, Guid? vmId = default, string displayName = default, string machineFqdn = default, string clientPublicKey = default, HybridComputeIdentityKeyStore? identityKeyStore = default, string tpmEkCertificate = default, string osName = default, string osVersion = default, string osType = default, Guid? vmUuid = default, IEnumerable<MachineExtensionInstanceView> extensions = default, string osSku = default, string osEdition = default, string domainName = default, string adFqdn = default, string dnsFqdn = default, ResourceIdentifier privateLinkScopeResourceId = default, ResourceIdentifier parentClusterResourceId = default, ResourceIdentifier hardwareResourceId = default, string msSqlDiscovered = default, IReadOnlyDictionary<string, string> detectedProperties = default, IEnumerable<HybridComputeDisk> storageDisks = default, string cloudMetadataProvider = default, IEnumerable<HybridComputeNetworkInterface> networkInterfaces = default, IEnumerable<HybridComputeMachineExtensionData> resources = default, ManagedServiceIdentity identity = default, ArcKindEnum? kind = default)
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
             resources ??= new ChangeTrackingList<HybridComputeMachineExtensionData>();
@@ -269,7 +270,7 @@ namespace Azure.ResourceManager.HybridCompute.Models
                 systemData,
                 tags ?? new ChangeTrackingDictionary<string, string>(),
                 location,
-                locationData is null && agentConfiguration is null && serviceStatuses is null && hardwareProfile is null && storageDisks is null && firmwareProfile is null && cloudMetadataProvider is null && agentUpgrade is null && osProfile is null && licenseProfile is null && provisioningState is null && status is null && lastStatusChange is null && errorDetails is null && agentVersion is null && vmId is null && displayName is null && machineFqdn is null && clientPublicKey is null && identityKeyStore is null && tpmEkCertificate is null && osName is null && osVersion is null && osType is null && vmUuid is null && extensions is null && osSku is null && osEdition is null && domainName is null && adFqdn is null && dnsFqdn is null && privateLinkScopeResourceId is null && parentClusterResourceId is null && hardwareResourceId is null && msSqlDiscovered is null && detectedProperties is null && networkInterfaces is null ? default : new MachineProperties(
+                locationData is null && agentConfiguration is null && serviceStatuses is null && hardwareProfile is null && storageDisks is null && firmwareProfile is null && cloudMetadataProvider is null && agentUpgrade is null && osProfile is null && licenseProfile is null && statusReason is null && provisioningState is null && status is null && lastStatusChange is null && errorDetails is null && agentVersion is null && vmId is null && displayName is null && machineFqdn is null && clientPublicKey is null && identityKeyStore is null && tpmEkCertificate is null && osName is null && osVersion is null && osType is null && vmUuid is null && extensions is null && osSku is null && osEdition is null && domainName is null && adFqdn is null && dnsFqdn is null && privateLinkScopeResourceId is null && parentClusterResourceId is null && hardwareResourceId is null && msSqlDiscovered is null && detectedProperties is null && networkInterfaces is null ? default : new MachineProperties(
                     locationData,
                     agentConfiguration,
                     serviceStatuses,
@@ -280,6 +281,7 @@ namespace Azure.ResourceManager.HybridCompute.Models
                     agentUpgrade,
                     osProfile,
                     licenseProfile,
+                    statusReason,
                     provisioningState,
                     status,
                     lastStatusChange,
@@ -1016,8 +1018,9 @@ namespace Azure.ResourceManager.HybridCompute.Models
         /// <param name="gatewayType"> The type of the Gateway resource. </param>
         /// <param name="gatewayEndpoint"> The endpoint fqdn for the Gateway. </param>
         /// <param name="allowedFeatures"> Specifies the list of features that are enabled for this Gateway. </param>
+        /// <param name="gatewayBypass"> Specifies the list of domain names that should bypass the gateway. Each entry must be a valid DNS hostname. </param>
         /// <returns> A new <see cref="HybridCompute.ArcGatewayData"/> instance for mocking. </returns>
-        public static ArcGatewayData ArcGatewayData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, HybridComputeProvisioningState? provisioningState = default, ResourceIdentifier gatewayId = default, ArcGatewayType? gatewayType = default, string gatewayEndpoint = default, IEnumerable<string> allowedFeatures = default)
+        public static ArcGatewayData ArcGatewayData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, HybridComputeProvisioningState? provisioningState = default, ResourceIdentifier gatewayId = default, ArcGatewayType? gatewayType = default, string gatewayEndpoint = default, IEnumerable<string> allowedFeatures = default, IEnumerable<string> gatewayBypass = default)
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
 
@@ -1028,24 +1031,26 @@ namespace Azure.ResourceManager.HybridCompute.Models
                 systemData,
                 tags ?? new ChangeTrackingDictionary<string, string>(),
                 location,
-                provisioningState is null && gatewayId is null && gatewayType is null && gatewayEndpoint is null && allowedFeatures is null ? default : new GatewayProperties(
+                provisioningState is null && gatewayId is null && gatewayType is null && gatewayEndpoint is null && allowedFeatures is null && gatewayBypass is null ? default : new GatewayProperties(
                     provisioningState,
                     gatewayId,
                     gatewayType,
                     gatewayEndpoint,
                     (allowedFeatures ?? new ChangeTrackingList<string>()).ToList(),
+                    (gatewayBypass ?? new ChangeTrackingList<string>()).ToList(),
                     default),
                 default);
         }
 
         /// <param name="tags"> Resource tags. </param>
         /// <param name="allowedFeatures"> Specifies the list of features that are enabled for this Gateway. </param>
+        /// <param name="gatewayBypass"> Specifies the list of domain names that should bypass the gateway. Each entry must be a valid DNS hostname. </param>
         /// <returns> A new <see cref="Models.ArcGatewayPatch"/> instance for mocking. </returns>
-        public static ArcGatewayPatch ArcGatewayPatch(IDictionary<string, string> tags = default, IEnumerable<string> allowedFeatures = default)
+        public static ArcGatewayPatch ArcGatewayPatch(IDictionary<string, string> tags = default, IEnumerable<string> allowedFeatures = default, IEnumerable<string> gatewayBypass = default)
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
 
-            return new ArcGatewayPatch(tags ?? new ChangeTrackingDictionary<string, string>(), default, allowedFeatures is null ? default : new GatewayUpdateProperties((allowedFeatures ?? new ChangeTrackingList<string>()).ToList(), default));
+            return new ArcGatewayPatch(tags ?? new ChangeTrackingDictionary<string, string>(), default, allowedFeatures is null && gatewayBypass is null ? default : new GatewayUpdateProperties((allowedFeatures ?? new ChangeTrackingList<string>()).ToList(), (gatewayBypass ?? new ChangeTrackingList<string>()).ToList(), default));
         }
 
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
