@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.CommvaultContentStore
         {
             TryGetApiVersion(ResourceType, out string roleMappingApiVersion);
             _roleMappingsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.CommvaultContentStore", ResourceType.Namespace, Diagnostics);
-            _roleMappingsRestClient = new RoleMappings(_roleMappingsClientDiagnostics, Pipeline, Endpoint, roleMappingApiVersion ?? "2026-07-03-preview");
+            _roleMappingsRestClient = new RoleMappings(_roleMappingsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, roleMappingApiVersion ?? "2026-07-03-preview");
             ValidateResourceId(id);
         }
 

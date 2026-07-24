@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.CommvaultContentStore
         {
             TryGetApiVersion(ProtectedItemResource.ResourceType, out string protectedItemApiVersion);
             _protectedItemsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.CommvaultContentStore", ProtectedItemResource.ResourceType.Namespace, Diagnostics);
-            _protectedItemsRestClient = new ProtectedItems(_protectedItemsClientDiagnostics, Pipeline, Endpoint, protectedItemApiVersion ?? "2026-07-03-preview");
+            _protectedItemsRestClient = new ProtectedItems(_protectedItemsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, protectedItemApiVersion ?? "2026-07-03-preview");
             ValidateResourceId(id);
         }
 

@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.CommvaultContentStore
         {
             TryGetApiVersion(CloudAccountResource.ResourceType, out string cloudAccountApiVersion);
             _cloudAccountsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.CommvaultContentStore", CloudAccountResource.ResourceType.Namespace, Diagnostics);
-            _cloudAccountsRestClient = new CloudAccounts(_cloudAccountsClientDiagnostics, Pipeline, Endpoint, cloudAccountApiVersion ?? "2026-07-03-preview");
+            _cloudAccountsRestClient = new CloudAccounts(_cloudAccountsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, cloudAccountApiVersion ?? "2026-07-03-preview");
             ValidateResourceId(id);
         }
 

@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.CommvaultContentStore.Mocking
 
         private ClientDiagnostics ProtectedItemsOperationGroupClientDiagnostics => _protectedItemsOperationGroupClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.CommvaultContentStore.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private ProtectedItemsOperationGroup ProtectedItemsOperationGroupRestClient => _protectedItemsOperationGroupRestClient ??= new ProtectedItemsOperationGroup(ProtectedItemsOperationGroupClientDiagnostics, Pipeline, Endpoint, "2026-07-03-preview");
+        private ProtectedItemsOperationGroup ProtectedItemsOperationGroupRestClient => _protectedItemsOperationGroupRestClient ??= new ProtectedItemsOperationGroup(ProtectedItemsOperationGroupClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2026-07-03-preview");
 
         /// <summary>
         /// Gets the count of protected items for provided CCA resource IDs across subscriptions.

@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.CommvaultContentStore
         {
             TryGetApiVersion(ResourceType, out string protectionGroupApiVersion);
             _protectionGroupsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.CommvaultContentStore", ResourceType.Namespace, Diagnostics);
-            _protectionGroupsRestClient = new ProtectionGroups(_protectionGroupsClientDiagnostics, Pipeline, Endpoint, protectionGroupApiVersion ?? "2026-07-03-preview");
+            _protectionGroupsRestClient = new ProtectionGroups(_protectionGroupsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, protectionGroupApiVersion ?? "2026-07-03-preview");
             ValidateResourceId(id);
         }
 

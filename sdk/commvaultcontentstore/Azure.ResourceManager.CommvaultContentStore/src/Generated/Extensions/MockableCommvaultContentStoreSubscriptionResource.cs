@@ -40,11 +40,11 @@ namespace Azure.ResourceManager.CommvaultContentStore.Mocking
 
         private ClientDiagnostics CloudAccountsClientDiagnostics => _cloudAccountsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.CommvaultContentStore.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private CloudAccounts CloudAccountsRestClient => _cloudAccountsRestClient ??= new CloudAccounts(CloudAccountsClientDiagnostics, Pipeline, Endpoint, "2026-07-03-preview");
+        private CloudAccounts CloudAccountsRestClient => _cloudAccountsRestClient ??= new CloudAccounts(CloudAccountsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2026-07-03-preview");
 
         private ClientDiagnostics SaaSOperationGroupClientDiagnostics => _saaSOperationGroupClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.CommvaultContentStore.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private SaaSOperationGroup SaaSOperationGroupRestClient => _saaSOperationGroupRestClient ??= new SaaSOperationGroup(SaaSOperationGroupClientDiagnostics, Pipeline, Endpoint, "2026-07-03-preview");
+        private SaaSOperationGroup SaaSOperationGroupRestClient => _saaSOperationGroupRestClient ??= new SaaSOperationGroup(SaaSOperationGroupClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2026-07-03-preview");
 
         /// <summary>
         /// List CloudAccount resources by subscription ID
