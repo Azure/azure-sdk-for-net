@@ -110,26 +110,25 @@ namespace Extensions.Plugin.Visitors
         /// <inheritdoc />
         protected override TypeProvider VisitType(TypeProvider type)
         {
-            // Diagnostic code for troubleshooting.
-            //if (string.Equals(type.Type.Name, "ProjectsAgentVersion"))
-            //{
-            //    throw new InvalidOperationException(
-            //        $"================================================\n" +
-            //        $"{GetRealName(type)}\n" +
-            //        $"Is already experimental: {_attributedTypes.Contains(type.Type.FullyQualifiedName)}\n" +
-            //        $"Has experimental parent: {HasExperimentalAncestor(type.Type)}\n" +
-            //        $"Implements experimental interface: {ImplementsExperimrental(type)}\n" +
-            //        $"Has the experimental attribute: {type.Attributes.Any(attr => attr.Type.Equals(typeof(ExperimentalAttribute)))}\n" +
-            //        $"Is explicitly marked as experimental: {SupportedPackages.IsExperimental(GetRealName(type))}\n" +
-            //        $"================================================\n");
-            //}
+            // Never touch the generated ModelReaderWriterContext. GetRealName below reads the type's Attributes
+            // and serialization providers; doing so for the context forces the base generator to build the
+            // context's buildable set eagerly. Because this visitor runs before OpenAIExperimentalVisitor, that
+            // happens before the OpenAI-dependency (AAIP002) markings are applied, caching the buildables as
+            // non-experimental and dropping the #pragma wrappers the base generator otherwise emits around them.
+            // The context exposes no experimental surface of its own, so skipping it loses no marking.
+            if (string.Equals(type.Type.BaseType?.Name, "ModelReaderWriterContext", StringComparison.Ordinal))
+            {
+                return type;
+            }
             // First check if the whole class needs to be marked as experimental.
             string typeRealName = GetRealName(type);
 
-            // A prior visitor (OpenAIExperimentalVisitor) may have already marked this type experimental with
-            // a more specific OpenAI diagnostic id (OPENAI001 / OPENAICUA001). ExperimentalAttribute is
-            // AllowMultiple=false, so treat the type as already covered — do not add AAIP001 to it or its
-            // members. The OpenAI id is the more accurate signal for downstream consumers, so it wins.
+            // If this declaration already carries an [Experimental] attribute — e.g. authored in custom code —
+            // ExperimentalAttribute is AllowMultiple=false, so treat the type as already covered and do not add
+            // AAIP001 to it or its members. This visitor runs before OpenAIExperimentalVisitor, so our
+            // intentional AAIP001 marking takes precedence for any declaration that is experimental both because
+            // we intend it to be and because it exposes OpenAI-experimental surface; the OpenAI-dependency
+            // visitor then only stamps AAIP002 on declarations we did not already mark.
             if (HasExperimental(type.Attributes))
             {
                 _attributedTypes.Add(type.Type.FullyQualifiedName);
@@ -153,8 +152,8 @@ namespace Extensions.Plugin.Visitors
             // Constructors
             List<ConstructorProvider> constructors = [];
             // In a first run we will check if all the constructors are experimental and if it is the case, mark class experimental.
-            // Skip this promotion if a prior visitor already marked any constructor experimental, so we defer to
-            // per-member marking below and avoid mixing a whole-type AAIP001 with member-level OpenAI ids.
+            // Skip this promotion if any constructor already carries an [Experimental] attribute, so we defer to
+            // per-member marking below rather than mixing a whole-type AAIP001 with pre-existing member-level ids.
             if (type.Constructors.Count > 0
                 && type.Constructors.All(x => x.Signature.Parameters.Any(x => IsExperimental(x.Type)))
                 && !type.Constructors.Any(x => HasExperimental(x.Signature.Attributes)))

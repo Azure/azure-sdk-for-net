@@ -10,7 +10,7 @@ using OpenAI.Responses;
 namespace Azure.AI.Extensions.OpenAI
 {
     /// <summary> Request from the service for the user to perform OAuth consent. </summary>
-    [Experimental("OPENAI001")]
+    [Experimental("AAIP002")]
     public partial class OAuthConsentRequestResponseItem : ResponseItem
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>

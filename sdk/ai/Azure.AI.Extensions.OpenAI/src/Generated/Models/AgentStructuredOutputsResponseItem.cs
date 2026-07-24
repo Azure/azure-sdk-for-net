@@ -11,7 +11,7 @@ using OpenAI.Responses;
 namespace Azure.AI.Extensions.OpenAI
 {
     /// <summary> The AgentStructuredOutputsResponseItem. </summary>
-    [Experimental("OPENAI001")]
+    [Experimental("AAIP002")]
     public partial class AgentStructuredOutputsResponseItem : ResponseItem
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>

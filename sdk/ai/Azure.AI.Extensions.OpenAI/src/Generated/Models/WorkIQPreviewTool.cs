@@ -10,7 +10,7 @@ using OpenAI.Responses;
 namespace Azure.AI.Extensions.OpenAI
 {
     /// <summary> A WorkIQ server-side tool. </summary>
-    [Experimental("OPENAI001")]
+    [Experimental("AAIP001")]
     public partial class WorkIQPreviewTool : ResponseTool
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>

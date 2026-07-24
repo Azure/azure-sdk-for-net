@@ -10,7 +10,7 @@ using OpenAI.Responses;
 namespace Azure.AI.Extensions.OpenAI
 {
     /// <summary> A Bing custom search tool call. </summary>
-    [Experimental("OPENAI001")]
+    [Experimental("AAIP001")]
     public partial class BingCustomSearchToolCall : ResponseItem
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>

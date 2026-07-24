@@ -10,7 +10,7 @@ using OpenAI.Responses;
 namespace Azure.AI.Extensions.OpenAI
 {
     /// <summary> The AgentWorkflowPreviewActionResponseItem. </summary>
-    [Experimental("OPENAI001")]
+    [Experimental("AAIP002")]
     public partial class AgentWorkflowPreviewActionResponseItem : ResponseItem
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>

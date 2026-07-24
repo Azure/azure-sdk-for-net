@@ -10,7 +10,7 @@ using OpenAI.Responses;
 namespace Azure.AI.Extensions.OpenAI
 {
     /// <summary> A Bing grounding tool call. </summary>
-    [Experimental("OPENAI001")]
+    [Experimental("AAIP002")]
     public partial class BingGroundingToolCall : ResponseItem
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>

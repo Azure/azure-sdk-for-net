@@ -11,7 +11,7 @@ using OpenAI.Responses;
 namespace Azure.AI.Extensions.OpenAI
 {
     /// <summary> The output of a Fabric data agent tool call. </summary>
-    [Experimental("OPENAI001")]
+    [Experimental("AAIP001")]
     public partial class FabricDataAgentToolCallOutput : ResponseItem
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>

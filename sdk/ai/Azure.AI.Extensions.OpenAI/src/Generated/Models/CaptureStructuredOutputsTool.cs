@@ -10,7 +10,7 @@ using OpenAI.Responses;
 namespace Azure.AI.Extensions.OpenAI
 {
     /// <summary> A tool for capturing structured outputs. </summary>
-    [Experimental("OPENAI001")]
+    [Experimental("AAIP002")]
     public partial class CaptureStructuredOutputsTool : ResponseTool
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>

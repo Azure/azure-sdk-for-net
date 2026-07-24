@@ -10,7 +10,7 @@ using OpenAI.Responses;
 namespace Azure.AI.Extensions.OpenAI
 {
     /// <summary> The input definition information for a Browser Automation Tool, as used to configure an Agent. </summary>
-    [Experimental("OPENAI001")]
+    [Experimental("AAIP001")]
     public partial class BrowserAutomationPreviewTool : ResponseTool
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>

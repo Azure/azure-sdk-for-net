@@ -17,11 +17,14 @@ namespace Extensions.Plugin
         public override void Apply(CodeModelGenerator generator)
         {
             generator.AddVisitor(new SerializationOverrideVisitor());
-            // Runs before ExperimentalAttributeVisitor so declarations exposing OpenAI-experimental types
-            // are attributed with the correct OpenAI diagnostic id (OPENAI001/OPENAICUA001); the AAIP001
-            // visitor then only marks our own new/preview surface. Both skip already-attributed declarations.
-            generator.AddVisitor(new OpenAIExperimentalVisitor());
+            // ExperimentalAttributeVisitor runs first so our intentional AAIP001 marking (driven by the
+            // typespec x-ms-foundry-meta CSV tables) wins for any declaration that is experimental both because
+            // we intend it to be and because it exposes OpenAI-experimental surface. OpenAIExperimentalVisitor
+            // then marks the remaining OpenAI-dependency surface with AAIP002. Both skip already-attributed
+            // declarations, and because C# suppresses experimental references inside any [Experimental] scope
+            // regardless of id, neither ordering requires an assembly-wide NoWarn.
             generator.AddVisitor(new ExperimentalAttributeVisitor());
+            generator.AddVisitor(new OpenAIExperimentalVisitor());
         }
     }
 }

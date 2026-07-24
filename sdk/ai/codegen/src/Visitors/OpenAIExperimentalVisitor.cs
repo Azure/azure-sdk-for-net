@@ -14,15 +14,18 @@ using Microsoft.TypeSpec.Generator.Statements;
 namespace Extensions.Plugin.Visitors
 {
     /// <summary>
-    /// A visitor that propagates the consumed OpenAI library's experimental markers
-    /// (e.g. <c>OPENAI001</c>, <c>OPENAICUA001</c>) onto the generated public surface that exposes
-    /// OpenAI-experimental types. This replaces the blanket assembly-wide <c>nowarn</c> suppression for
-    /// generated code with correct, per-symbol attribution driven by reflection over the OpenAI assembly.
+    /// A visitor that marks the generated public surface that exposes OpenAI-experimental types with a
+    /// dedicated <c>AAIP002</c> experimental id, meaning "experimental because it depends on OpenAI-experimental
+    /// surface, not because Azure is actively changing it". This replaces the blanket assembly-wide
+    /// <c>nowarn</c> suppression for generated code with correct, per-symbol attribution driven by reflection
+    /// over the OpenAI assembly.
     /// </summary>
     /// <remarks>
     /// <para>
-    /// The experimental status is sourced from <see cref="OpenAIExperimentalCatalog"/>, which reads the
-    /// OpenAI assembly the SDK compiles against, so no hand-maintained list is required.
+    /// The set of experimental OpenAI types is sourced from <see cref="OpenAIExperimentalCatalog"/>, which reads
+    /// the OpenAI assembly the SDK compiles against, so no hand-maintained list is required. Only membership is
+    /// used: OpenAI's own diagnostic id is intentionally not propagated — the single <c>AAIP002</c> id is stamped
+    /// instead so downstream consumers acknowledge one stable Azure-owned id decoupled from OpenAI's id churn.
     /// </para>
     /// <para>
     /// Granularity: a generated type is marked <see cref="ExperimentalAttribute"/> at the <em>type</em> level
@@ -32,96 +35,105 @@ namespace Extensions.Plugin.Visitors
     /// warning-free for downstream consumers.
     /// </para>
     /// <para>
-    /// This visitor runs before <see cref="ExperimentalAttributeVisitor"/> so declarations exposing OpenAI
-    /// types carry the correct OpenAI diagnostic id; both visitors skip declarations that already have an
-    /// <see cref="ExperimentalAttribute"/>, avoiding double-marking.
+    /// This visitor runs <em>after</em> <see cref="ExperimentalAttributeVisitor"/> so that a declaration which is
+    /// experimental for both reasons keeps our intentional <c>AAIP001</c> id (the stronger signal); both visitors
+    /// skip declarations that already have an <see cref="ExperimentalAttribute"/>, avoiding double-marking.
+    /// Because C# suppresses every experimental reference inside any <c>[Experimental]</c> scope regardless of id,
+    /// stamping <c>AAIP002</c> (or <c>AAIP001</c>) still silences the internal references to OpenAI-experimental
+    /// types without any assembly-wide <c>NoWarn</c>.
     /// </para>
     /// </remarks>
     public class OpenAIExperimentalVisitor : ScmLibraryVisitor
     {
+        /// <summary>
+        /// Diagnostic id stamped by this visitor. Distinct from OpenAI's own ids (<c>OPENAI001</c>, …): it
+        /// signals that the declaration is experimental <em>because it exposes OpenAI-experimental surface</em>,
+        /// not because Azure is actively changing it. Because C# suppresses every experimental reference inside
+        /// any <c>[Experimental]</c> scope regardless of id, stamping our own id still silences the internal
+        /// references to OpenAI-experimental types without an assembly-wide <c>NoWarn</c>.
+        /// </summary>
+        private const string DiagnosticId = "AAIP002";
+
         private readonly HashSet<string> _attributedTypes = new(StringComparer.Ordinal);
 
         private static bool HasExperimentalAttribute(IEnumerable<AttributeStatement> attributes)
             => attributes.Any(attr => attr.Type.Equals(typeof(ExperimentalAttribute)));
 
-        /// <summary>Returns the experimental diagnostic id of the nearest experimental base type, or null.</summary>
-        private static string GetAncestorExperimentalId(CSharpType theType)
+        /// <summary>Returns whether the nearest base type is an OpenAI-experimental type.</summary>
+        private static bool HasExperimentalAncestor(CSharpType theType)
         {
             if (theType.BaseType is null)
             {
-                return null;
+                return false;
             }
-            if (OpenAIExperimentalCatalog.Instance.TryGetId(theType.BaseType.FullyQualifiedName, out string id))
+            if (OpenAIExperimentalCatalog.Instance.IsExperimental(theType.BaseType.FullyQualifiedName))
             {
-                return id;
+                return true;
             }
-            return GetAncestorExperimentalId(theType.BaseType);
+            return HasExperimentalAncestor(theType.BaseType);
         }
 
-        /// <summary>Returns the experimental diagnostic id of an experimental implemented interface, or null.</summary>
-        private static string GetInterfaceExperimentalId(TypeProvider theType)
+        /// <summary>Returns whether the type implements an OpenAI-experimental interface.</summary>
+        private static bool ImplementsExperimental(TypeProvider theType)
         {
             foreach (CSharpType theInterface in theType.Implements)
             {
-                if (OpenAIExperimentalCatalog.Instance.TryGetId(theInterface.FullyQualifiedName, out string id))
+                if (OpenAIExperimentalCatalog.Instance.IsExperimental(theInterface.FullyQualifiedName))
                 {
-                    return id;
+                    return true;
                 }
                 if (theInterface.IsGenericType)
                 {
                     foreach (CSharpType generic in theInterface.Arguments)
                     {
-                        string genericId = GetExperimentalId(generic);
-                        if (genericId is not null)
+                        if (IsExperimental(generic))
                         {
-                            return genericId;
+                            return true;
                         }
                     }
                 }
             }
-            return null;
+            return false;
         }
 
         /// <summary>
-        /// Returns the experimental diagnostic id when the supplied type (unwrapping nested/generic element
-        /// types and inspecting generic arguments and base types) references an OpenAI-experimental type.
+        /// Returns whether the supplied type (unwrapping nested/generic element types and inspecting generic
+        /// arguments and base types) references an OpenAI-experimental type.
         /// </summary>
-        public static string GetExperimentalId(CSharpType theType)
+        public static bool IsExperimental(CSharpType theType)
         {
             if (theType is null)
             {
-                return null;
+                return false;
             }
             theType = theType.GetNestedElementType();
-            if (OpenAIExperimentalCatalog.Instance.TryGetId(theType.FullyQualifiedName, out string id))
+            if (OpenAIExperimentalCatalog.Instance.IsExperimental(theType.FullyQualifiedName))
             {
-                return id;
+                return true;
             }
             if (theType.IsGenericType)
             {
                 foreach (CSharpType generic in theType.Arguments)
                 {
-                    string genericId = GetExperimentalId(generic);
-                    if (genericId is not null)
+                    if (IsExperimental(generic))
                     {
-                        return genericId;
+                        return true;
                     }
                 }
             }
-            return GetAncestorExperimentalId(theType);
+            return HasExperimentalAncestor(theType);
         }
 
-        private static string GetSignatureExperimentalId(IReadOnlyList<ParameterProvider> parameters, CSharpType returnType = null)
+        private static bool SignatureIsExperimental(IReadOnlyList<ParameterProvider> parameters, CSharpType returnType = null)
         {
             foreach (ParameterProvider parameter in parameters)
             {
-                string id = GetExperimentalId(parameter.Type);
-                if (id is not null)
+                if (IsExperimental(parameter.Type))
                 {
-                    return id;
+                    return true;
                 }
             }
-            return returnType is null ? null : GetExperimentalId(returnType);
+            return returnType is not null && IsExperimental(returnType);
         }
 
         /// <inheritdoc />
@@ -129,8 +141,7 @@ namespace Extensions.Plugin.Visitors
         {
             // Never touch the generated ModelReaderWriterContext. Reading its Attributes here forces the base
             // generator to build the context's buildable set eagerly, which caches every buildable type's
-            // CanonicalView. Because this visitor runs before ExperimentalAttributeVisitor, doing so before
-            // AAIP001 markings are applied drops the #pragma wrappers the base generator otherwise emits around
+            // CanonicalView. Doing so can drop the #pragma wrappers the base generator otherwise emits around
             // those buildables. The context exposes no OpenAI-experimental surface of its own, so skipping it
             // loses no propagation; its external experimental registrations remain covered by the assembly-wide
             // suppression.
@@ -139,10 +150,13 @@ namespace Extensions.Plugin.Visitors
                 return type;
             }
 
-            // Skip declarations already carrying an [Experimental] attribute (e.g. marked by a prior visitor)
-            // so the two experimental visitors never double-mark the same declaration.
+            // Skip declarations already carrying an [Experimental] attribute (e.g. our own AAIP001 applied by
+            // the prior ExperimentalAttributeVisitor). Record the FQN so the type's serialization partial —
+            // visited via base.VisitType below and which shares the same FQN and OpenAI-experimental ancestor —
+            // is not independently marked, which would place a second [Experimental] on the same partial type.
             if (HasExperimentalAttribute(type.Attributes))
             {
+                _attributedTypes.Add(type.Type.FullyQualifiedName);
                 return base.VisitType(type);
             }
 
@@ -152,13 +166,19 @@ namespace Extensions.Plugin.Visitors
             // without needing local suppression. A type that merely references an experimental type in a
             // subset of members is left to member-level marking below so its stable members stay
             // warning-free for downstream consumers.
-            string typeId = GetAncestorExperimentalId(type.Type)
-                ?? GetInterfaceExperimentalId(type);
-            if (typeId is not null && _attributedTypes.Add(type.Type.FullyQualifiedName))
+            if ((HasExperimentalAncestor(type.Type) || ImplementsExperimental(type))
+                && _attributedTypes.Add(type.Type.FullyQualifiedName))
             {
                 type.Update(
-                    attributes: [.. type.Attributes, new(typeof(ExperimentalAttribute), Snippet.Literal(typeId))]);
+                    attributes: [.. type.Attributes, new(typeof(ExperimentalAttribute), Snippet.Literal(DiagnosticId))]);
                 return type;
+            }
+
+            // If the type was already marked at the type level (for example via its model partial), its
+            // members — including this serialization partial's — are already covered; do not mark them again.
+            if (_attributedTypes.Contains(type.Type.FullyQualifiedName))
+            {
+                return base.VisitType(type);
             }
 
             bool isDirty = false;
@@ -167,11 +187,10 @@ namespace Extensions.Plugin.Visitors
             List<ConstructorProvider> constructors = [];
             foreach (ConstructorProvider constructor in type.Constructors)
             {
-                string id = GetSignatureExperimentalId(constructor.Signature.Parameters);
-                if (id is not null && !HasExperimentalAttribute(constructor.Signature.Attributes))
+                if (SignatureIsExperimental(constructor.Signature.Parameters) && !HasExperimentalAttribute(constructor.Signature.Attributes))
                 {
                     constructor.Signature.Update(
-                        attributes: [.. constructor.Signature.Attributes, new(typeof(ExperimentalAttribute), Snippet.Literal(id))]);
+                        attributes: [.. constructor.Signature.Attributes, new(typeof(ExperimentalAttribute), Snippet.Literal(DiagnosticId))]);
                     isDirty = true;
                 }
                 constructors.Add(constructor);
@@ -181,11 +200,10 @@ namespace Extensions.Plugin.Visitors
             List<MethodProvider> methods = [];
             foreach (MethodProvider method in type.Methods)
             {
-                string id = GetSignatureExperimentalId(method.Signature.Parameters, method.Signature.ReturnType);
-                if (id is not null && !HasExperimentalAttribute(method.Signature.Attributes))
+                if (SignatureIsExperimental(method.Signature.Parameters, method.Signature.ReturnType) && !HasExperimentalAttribute(method.Signature.Attributes))
                 {
                     method.Signature.Update(
-                        attributes: [.. method.Signature.Attributes, new(typeof(ExperimentalAttribute), Snippet.Literal(id))]);
+                        attributes: [.. method.Signature.Attributes, new(typeof(ExperimentalAttribute), Snippet.Literal(DiagnosticId))]);
                     isDirty = true;
                 }
                 methods.Add(method);
@@ -195,11 +213,10 @@ namespace Extensions.Plugin.Visitors
             List<FieldProvider> fields = [];
             foreach (FieldProvider field in type.Fields)
             {
-                string id = GetExperimentalId(field.Type);
-                if (id is not null && !HasExperimentalAttribute(field.Attributes))
+                if (IsExperimental(field.Type) && !HasExperimentalAttribute(field.Attributes))
                 {
                     field.Update(
-                        attributes: [.. field.Attributes, new(typeof(ExperimentalAttribute), Snippet.Literal(id))]);
+                        attributes: [.. field.Attributes, new(typeof(ExperimentalAttribute), Snippet.Literal(DiagnosticId))]);
                     isDirty = true;
                 }
                 fields.Add(field);
@@ -209,11 +226,10 @@ namespace Extensions.Plugin.Visitors
             List<PropertyProvider> properties = [];
             foreach (PropertyProvider property in type.Properties)
             {
-                string id = GetExperimentalId(property.Type);
-                if (id is not null && !HasExperimentalAttribute(property.Attributes))
+                if (IsExperimental(property.Type) && !HasExperimentalAttribute(property.Attributes))
                 {
                     property.Update(
-                        attributes: [.. property.Attributes, new(typeof(ExperimentalAttribute), Snippet.Literal(id))]);
+                        attributes: [.. property.Attributes, new(typeof(ExperimentalAttribute), Snippet.Literal(DiagnosticId))]);
                     isDirty = true;
                 }
                 properties.Add(property);
@@ -240,15 +256,12 @@ namespace Extensions.Plugin.Visitors
             {
                 return base.VisitMethod(method);
             }
-            if (!HasExperimentalAttribute(method.Signature.Attributes))
+            if (!HasExperimentalAttribute(method.Signature.Attributes)
+                && SignatureIsExperimental(method.Signature.Parameters, method.Signature.ReturnType))
             {
-                string id = GetSignatureExperimentalId(method.Signature.Parameters, method.Signature.ReturnType);
-                if (id is not null)
-                {
-                    method.Signature.Update(
-                        attributes: [.. method.Signature.Attributes, new(typeof(ExperimentalAttribute), Snippet.Literal(id))]);
-                    return method;
-                }
+                method.Signature.Update(
+                    attributes: [.. method.Signature.Attributes, new(typeof(ExperimentalAttribute), Snippet.Literal(DiagnosticId))]);
+                return method;
             }
             return base.VisitMethod(method);
         }
