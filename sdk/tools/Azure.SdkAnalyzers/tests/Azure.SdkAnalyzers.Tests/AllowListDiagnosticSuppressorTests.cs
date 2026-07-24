@@ -266,6 +266,87 @@ namespace TestNs
             Assert.That(d.IsSuppressed, Is.False);
         }
 
+        [Test]
+        public void SupportedSuppressions_IncludeOpenAI001()
+        {
+            var suppressor = new AllowListDiagnosticSuppressor();
+            IEnumerable<string> ids = suppressor.SupportedSuppressions.Select(s => s.SuppressedDiagnosticId);
+            Assert.That(ids, Does.Contain("OPENAI001"), "OPENAI001 should be opted into scoped suppression.");
+        }
+
+        [Test]
+        public void SupportedSuppressions_IncludeOpenAICua001()
+        {
+            var suppressor = new AllowListDiagnosticSuppressor();
+            IEnumerable<string> ids = suppressor.SupportedSuppressions.Select(s => s.SuppressedDiagnosticId);
+            Assert.That(ids, Does.Contain("OPENAICUA001"), "OPENAICUA001 should be opted into scoped suppression.");
+        }
+
+        [Test]
+        public async Task SourceGeneratedScope_SuppressesInDotGCsFile()
+        {
+            IReadOnlyList<Diagnostic> diagnostics = await RunAsync(
+                ObsoleteConsumerSource,
+                "nowarn:CS0618 SourceGenerated",
+                sourcePath: "AzureAIExtensionsOpenAIContext.g.cs");
+
+            Diagnostic cs0618 = diagnostics.Single(d => d.Id == "CS0618");
+            Assert.That(cs0618.IsSuppressed, Is.True, "CS0618 in a .g.cs file should be suppressed by a SourceGenerated-scope entry.");
+        }
+
+        [Test]
+        public async Task SourceGeneratedScope_DoesNotSuppressInGeneratedFolder()
+        {
+            IReadOnlyList<Diagnostic> diagnostics = await RunAsync(
+                ObsoleteConsumerSource,
+                "nowarn:CS0618 SourceGenerated",
+                sourcePath: @"C:\sdk\ai\Azure.AI.Extensions.OpenAI\src\Generated\Models\Foo.cs");
+
+            Diagnostic cs0618 = diagnostics.Single(d => d.Id == "CS0618");
+            Assert.That(cs0618.IsSuppressed, Is.False, "CS0618 in a checked-in Generated/ folder file (not .g.cs) should NOT be suppressed by a SourceGenerated-scope entry.");
+        }
+
+        [Test]
+        public async Task SourceGeneratedScope_DoesNotSuppressInCustomFile()
+        {
+            IReadOnlyList<Diagnostic> diagnostics = await RunAsync(
+                ObsoleteConsumerSource,
+                "nowarn:CS0618 SourceGenerated",
+                sourcePath: @"C:\sdk\ai\Azure.AI.Extensions.OpenAI\src\Custom\Foo.cs");
+
+            Diagnostic cs0618 = diagnostics.Single(d => d.Id == "CS0618");
+            Assert.That(cs0618.IsSuppressed, Is.False, "CS0618 in hand-written custom code should NOT be suppressed by a SourceGenerated-scope entry.");
+        }
+
+        [Test]
+        public async Task SourceGeneratedScope_WithWarnAsError_StillSuppresses()
+        {
+            IReadOnlyList<Diagnostic> diagnostics = await RunAsync(
+                ObsoleteConsumerSource,
+                "nowarn:CS0618 SourceGenerated",
+                generalDiagnosticOption: ReportDiagnostic.Error,
+                sourcePath: "Foo.g.cs");
+
+            Diagnostic cs0618 = diagnostics.Single(d => d.Id == "CS0618");
+            Assert.That(cs0618.Severity, Is.EqualTo(DiagnosticSeverity.Error));
+            Assert.That(cs0618.IsSuppressed, Is.True, "Warning-as-error does not block SourceGenerated-scope suppression of a warning-severity diagnostic.");
+        }
+
+        private const string ObsoleteConsumerSource = @"
+namespace TestNs
+{
+    [System.Obsolete(""use the new one"")]
+    public class OldType
+    {
+        public static int Make() => 42;
+    }
+
+    public class Consumer
+    {
+        public int Use() => OldType.Make();
+    }
+}";
+
         private static Diagnostic SingleFor(IReadOnlyList<Diagnostic> diagnostics, string typeName)
         {
             return diagnostics.Single(d => d.Id == "AZC0034" && d.GetMessage().Contains("'" + typeName + "'"));
@@ -276,12 +357,13 @@ namespace TestNs
             string? allowListText,
             ReportDiagnostic generalDiagnosticOption = ReportDiagnostic.Default,
             IDictionary<string, ReportDiagnostic>? specificDiagnosticOptions = null,
-            bool useErrorSeverityDescriptor = false)
+            bool useErrorSeverityDescriptor = false,
+            string? sourcePath = null)
         {
             var refAssemblies = await AzureTestReferences.DefaultReferenceAssemblies.ResolveAsync(
                 LanguageNames.CSharp, CancellationToken.None);
 
-            SyntaxTree tree = CSharpSyntaxTree.ParseText(source);
+            SyntaxTree tree = CSharpSyntaxTree.ParseText(source, path: sourcePath ?? string.Empty);
             var compilationOptions = new CSharpCompilationOptions(
                 OutputKind.DynamicallyLinkedLibrary,
                 generalDiagnosticOption: generalDiagnosticOption,
