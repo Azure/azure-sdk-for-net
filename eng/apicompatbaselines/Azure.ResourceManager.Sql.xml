@@ -29,20 +29,4 @@
     <DiagnosticId>CP0014</DiagnosticId>
     <Target>P:Azure.ResourceManager.Sql.Models.ManagedInstanceResourceGetTopQueriesOptions.StartTime:[T:Azure.ResourceManager.Sql.WirePathAttribute]</Target>
   </Suppression>
-  <Suppression>
-    <DiagnosticId>CP0017</DiagnosticId>
-    <Target>M:Azure.ResourceManager.Sql.Models.ArmSqlModelFactory.ManagedInstanceVcoresCapability(System.String,System.Nullable{System.Int32},Azure.ResourceManager.Sql.Models.MaxLimitRangeCapability,Azure.ResourceManager.Sql.Models.MaxLimitRangeCapability,Azure.ResourceManager.Sql.Models.MaxSizeCapability,System.Collections.Generic.IEnumerable{Azure.ResourceManager.Sql.Models.MaxSizeRangeCapability},System.Nullable{System.Int64},Azure.ResourceManager.Sql.Models.MaxLimitRangeCapability,System.Nullable{System.Double},System.Nullable{System.Double},System.Nullable{System.Int64},Azure.ResourceManager.Sql.Models.MaxLimitRangeCapability,System.Nullable{System.Double},System.Nullable{System.Double},System.Nullable{System.Boolean},System.Nullable{System.Boolean},System.Collections.Generic.IEnumerable{Azure.ResourceManager.Sql.Models.ManagedInstanceMaintenanceConfigurationCapability},System.Nullable{Azure.ResourceManager.Sql.Models.SqlCapabilityStatus},System.String)$2</Target>
-  </Suppression>
-  <Suppression>
-    <DiagnosticId>CP0017</DiagnosticId>
-    <Target>M:Azure.ResourceManager.Sql.Models.ArmSqlModelFactory.ManagedInstanceVcoresCapability(System.String,System.Nullable{System.Int32},Azure.ResourceManager.Sql.Models.MaxLimitRangeCapability,Azure.ResourceManager.Sql.Models.MaxLimitRangeCapability,Azure.ResourceManager.Sql.Models.MaxSizeCapability,System.Collections.Generic.IEnumerable{Azure.ResourceManager.Sql.Models.MaxSizeRangeCapability},System.Nullable{System.Int64},Azure.ResourceManager.Sql.Models.MaxLimitRangeCapability,System.Nullable{System.Double},System.Nullable{System.Double},System.Nullable{System.Int64},Azure.ResourceManager.Sql.Models.MaxLimitRangeCapability,System.Nullable{System.Double},System.Nullable{System.Double},System.Nullable{System.Boolean},System.Nullable{System.Boolean},System.Collections.Generic.IEnumerable{Azure.ResourceManager.Sql.Models.ManagedInstanceMaintenanceConfigurationCapability},System.Nullable{Azure.ResourceManager.Sql.Models.SqlCapabilityStatus},System.String)$3</Target>
-  </Suppression>
-  <Suppression>
-    <DiagnosticId>CP0017</DiagnosticId>
-    <Target>M:Azure.ResourceManager.Sql.Models.ArmSqlModelFactory.TdeCertificate(Azure.Core.ResourceIdentifier,System.String,Azure.Core.ResourceType,Azure.ResourceManager.Models.SystemData,System.String,System.String)$4</Target>
-  </Suppression>
-  <Suppression>
-    <DiagnosticId>CP0017</DiagnosticId>
-    <Target>M:Azure.ResourceManager.Sql.Models.ArmSqlModelFactory.TdeCertificate(Azure.Core.ResourceIdentifier,System.String,Azure.Core.ResourceType,Azure.ResourceManager.Models.SystemData,System.String,System.String)$5</Target>
-  </Suppression>
 </Suppressions>

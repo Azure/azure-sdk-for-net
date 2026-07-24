@@ -41,12 +41,4 @@
     <DiagnosticId>CP0015</DiagnosticId>
     <Target>P:Azure.ResourceManager.Billing.Models.ReservationPurchaseRequest.InstanceFlexibilityPropertiesReservedResourcePropertiesInstanceFlexibility:[T:Azure.ResourceManager.Billing.WirePathAttribute]</Target>
   </Suppression>
-  <Suppression>
-    <DiagnosticId>CP0017</DiagnosticId>
-    <Target>M:Azure.ResourceManager.Billing.BillingAccountResource.CancelPaymentTerms(Azure.WaitUntil,System.DateTimeOffset,System.Threading.CancellationToken)$1</Target>
-  </Suppression>
-  <Suppression>
-    <DiagnosticId>CP0017</DiagnosticId>
-    <Target>M:Azure.ResourceManager.Billing.BillingAccountResource.CancelPaymentTermsAsync(Azure.WaitUntil,System.DateTimeOffset,System.Threading.CancellationToken)$1</Target>
-  </Suppression>
 </Suppressions>
