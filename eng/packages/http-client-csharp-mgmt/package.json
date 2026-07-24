@@ -39,11 +39,11 @@
   ],
   "dependencies": {
     "@azure-typespec/http-client-csharp": "1.0.0-alpha.20260722.5",
-    "@typespec/http-client-csharp": "1.0.0-alpha.20260722.4"
+    "@typespec/http-client-csharp": "1.0.0-alpha.20260723.5"
   },
   "devDependencies": {
     "@azure-tools/azure-http-specs": "0.1.0-alpha.43",
-    "@azure-tools/typespec-autorest": "0.70.0",
+    "@azure-tools/typespec-autorest": "0.70.1",
     "@azure-tools/typespec-azure-core": "0.70.0",
     "@azure-tools/typespec-azure-resource-manager": "0.70.0",
     "@azure-tools/typespec-azure-rulesets": "0.70.0",
@@ -56,12 +56,12 @@
     "@typespec/compiler": "1.14.0",
     "@typespec/events": "0.84.0",
     "@typespec/http": "1.14.0",
-    "@typespec/http-specs": "0.1.0-alpha.39",
+    "@typespec/http-specs": "0.1.0-alpha.40",
     "@typespec/openapi": "1.14.0",
     "@typespec/rest": "0.84.0",
     "@typespec/sse": "0.84.0",
     "@typespec/streams": "0.84.0",
-    "@typespec/tspd": "0.75.0",
+    "@typespec/tspd": "0.76.0",
     "@typespec/versioning": "0.84.0",
     "@typespec/xml": "0.84.0",
     "@vitest/coverage-v8": "^4.1.9",
