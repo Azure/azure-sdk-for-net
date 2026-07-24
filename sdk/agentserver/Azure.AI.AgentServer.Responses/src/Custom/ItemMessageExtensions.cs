@@ -18,8 +18,8 @@ public static class ItemMessageExtensions
 {
     /// <summary>
     /// Expands the <see cref="ItemMessage.Content"/> BinaryData into a typed list of
-    /// <see cref="MessageContent"/> objects. A plain JSON string is wrapped as a
-    /// <see cref="MessageContentInputTextContent"/>. A JSON array is deserialized
+    /// <see cref="MessageContent"/> objects. A plain JSON string is wrapped as an
+    /// input text content part. A JSON array is deserialized
     /// element-by-element via <see cref="MessageContent"/> polymorphic deserialization.
     /// </summary>
     /// <param name="message">The item message to expand content from.</param>
@@ -86,25 +86,23 @@ public static class ItemMessageExtensions
     {
         return part.Kind switch
         {
-            ResponseContentPartKind.InputText => new MessageContentInputTextContent(part.Text ?? string.Empty),
-            ResponseContentPartKind.OutputText => new MessageContentOutputTextContent(
+            ResponseContentPartKind.InputText => ResponseContentPart.CreateInputTextPart(part.Text ?? string.Empty),
+            ResponseContentPartKind.OutputText => ResponseContentPart.CreateOutputTextPart(
                 part.Text ?? string.Empty,
-                Array.Empty<Annotation>(),
-                Array.Empty<LogProb>()),
-            ResponseContentPartKind.Refusal => new MessageContentRefusalContent(part.Refusal ?? string.Empty),
-            ResponseContentPartKind.InputImage => new MessageContentInputImageContent(
-                MessageContentType.InputImage,
-                new Dictionary<string, BinaryData>(),
-                part.InputImageUri is null ? null! : new Uri(part.InputImageUri, UriKind.RelativeOrAbsolute),
+                part.OutputTextAnnotations),
+            ResponseContentPartKind.Refusal => ResponseContentPart.CreateRefusalPart(part.Refusal ?? string.Empty),
+            ResponseContentPartKind.InputImage when part.InputImageUri is not null => ResponseContentPart.CreateInputImagePart(
+                new Uri(part.InputImageUri, UriKind.RelativeOrAbsolute),
+                part.InputImageDetailLevel),
+            ResponseContentPartKind.InputImage => ResponseContentPart.CreateInputImagePart(
                 part.InputImageFileId,
-                ToImageDetail(part.InputImageDetailLevel?.ToString())),
-            ResponseContentPartKind.InputFile => new MessageContentInputFileContent(
-                MessageContentType.InputFile,
-                new Dictionary<string, BinaryData>(),
-                part.InputFileId,
-                part.InputFilename,
-                ToFileData(part.InputFileBytes),
-                part.InputFileUri),
+                part.InputImageDetailLevel),
+            ResponseContentPartKind.InputFile when part.InputFileBytes is not null => ResponseContentPart.CreateInputFilePart(
+                part.InputFileBytes,
+                part.InputFileBytesMediaType,
+                part.InputFilename),
+            ResponseContentPartKind.InputFile when part.InputFileUri is not null => ResponseContentPart.CreateInputFilePart(part.InputFileUri),
+            ResponseContentPartKind.InputFile => ResponseContentPart.CreateInputFilePart(part.InputFileId),
             _ => throw new FormatException($"Unsupported message content part kind '{part.Kind}'."),
         };
     }

@@ -34,7 +34,7 @@ namespace Azure.AI.AgentServer.Responses.Models
         }
 
         /// <summary> The type of the output. Always `image`. </summary>
-        public string Type { get; } = "image";
+        internal string Type { get; } = "image";
 
         /// <summary> The URL of the image output from the code interpreter. </summary>
         public Uri Url { get; }

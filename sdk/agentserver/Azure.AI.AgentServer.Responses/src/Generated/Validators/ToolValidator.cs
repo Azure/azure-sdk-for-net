@@ -106,6 +106,7 @@ internal static partial class ToolValidator
         "sharepoint_grounding_preview" => SharepointPreviewToolValidator.Validate(element),
         "shell" => FunctionShellToolParamValidator.Validate(element),
         "tool_search" => ToolSearchToolParamValidator.Validate(element),
+        "web_iq_preview" => WebIQPreviewToolValidator.Validate(element),
         "web_search" => WebSearchToolValidator.Validate(element),
         "web_search_preview" => WebSearchPreviewToolValidator.Validate(element),
         "work_iq_preview" => WorkIQPreviewToolValidator.Validate(element),

@@ -186,36 +186,5 @@ public class TextContentBuilder
         };
     }
 
-    internal static OpenAI.Responses.ResponseMessageAnnotation ToOpenAIAnnotation(Annotation annotation)
-    {
-        BinaryData data = annotation switch
-        {
-            UrlCitationBody urlCitation => BinaryData.FromObjectAsJson(new
-            {
-                type = "url_citation",
-                url = urlCitation.Url,
-                start_index = urlCitation.StartIndex,
-                end_index = urlCitation.EndIndex,
-                title = urlCitation.Title,
-            }),
-            FileCitationBody fileCitation => BinaryData.FromObjectAsJson(new
-            {
-                type = "file_citation",
-                file_id = fileCitation.FileId,
-                index = fileCitation.Index,
-                filename = fileCitation.Filename,
-            }),
-            FilePath filePath => BinaryData.FromObjectAsJson(new
-            {
-                type = "file_path",
-                file_id = filePath.FileId,
-                index = filePath.Index,
-            }),
-            _ => throw new FormatException($"Unsupported annotation type '{annotation.GetType().Name}'."),
-        };
-
-#pragma warning disable AZC0150 // OpenAI response models do not expose this package's ModelReaderWriterContext.
-        return ModelReaderWriter.Read<OpenAI.Responses.ResponseMessageAnnotation>(data)!;
-#pragma warning restore AZC0150
-    }
+    internal static OpenAI.Responses.ResponseMessageAnnotation ToOpenAIAnnotation(Annotation annotation) => annotation;
 }

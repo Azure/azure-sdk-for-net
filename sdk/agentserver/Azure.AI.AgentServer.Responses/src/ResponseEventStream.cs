@@ -973,11 +973,9 @@ public class ResponseEventStream
     }
 
     private static OpenAI.Responses.ApplyPatchCallStatus ToOpenAIApplyPatchCallStatus(ApplyPatchCallStatus status)
-        => status switch
-        {
-            ApplyPatchCallStatus.Completed => OpenAI.Responses.ApplyPatchCallStatus.Completed,
-            _ => OpenAI.Responses.ApplyPatchCallStatus.InProgress,
-        };
+        => status == ApplyPatchCallStatus.Completed
+            ? OpenAI.Responses.ApplyPatchCallStatus.Completed
+            : OpenAI.Responses.ApplyPatchCallStatus.InProgress;
 
     private static OpenAI.Responses.ComputerCallStatus ToOpenAIComputerCallStatus(ItemComputerToolCallStatus status)
         => status switch
@@ -988,11 +986,9 @@ public class ResponseEventStream
         };
 
     private static OpenAI.Responses.ApplyPatchCallOutputStatus ToOpenAIApplyPatchCallOutputStatus(ApplyPatchCallOutputStatus status)
-        => status switch
-        {
-            ApplyPatchCallOutputStatus.Failed => OpenAI.Responses.ApplyPatchCallOutputStatus.Failed,
-            _ => OpenAI.Responses.ApplyPatchCallOutputStatus.Completed,
-        };
+        => status == ApplyPatchCallOutputStatus.Failed
+            ? OpenAI.Responses.ApplyPatchCallOutputStatus.Failed
+            : OpenAI.Responses.ApplyPatchCallOutputStatus.Completed;
 
     // ── Raw Event Interop ─────────────────────────────────────
 

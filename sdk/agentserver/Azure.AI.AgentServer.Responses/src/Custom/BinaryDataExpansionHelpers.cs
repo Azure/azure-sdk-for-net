@@ -125,7 +125,7 @@ internal static class BinaryDataExpansionHelpers
             using JsonDocument document = JsonDocument.Parse(content);
             return document.RootElement.ValueKind switch
             {
-                JsonValueKind.String => [new MessageContentInputTextContent(document.RootElement.GetString() ?? string.Empty)],
+                JsonValueKind.String => [MessageContent.CreateInputTextPart(document.RootElement.GetString() ?? string.Empty)],
                 JsonValueKind.Object => [ReadMessageContent(document.RootElement)],
                 JsonValueKind.Array => document.RootElement.EnumerateArray().Select(ReadMessageContent).ToList(),
                 JsonValueKind.Null => [],
@@ -256,7 +256,7 @@ internal static class BinaryDataExpansionHelpers
         return ModelReaderWriter.Read<MessageContent>(
             BinaryData.FromString(element.GetRawText()),
             ModelReaderWriterOptions.Json,
-            AzureAIAgentServerResponsesContext.Default)!;
+            OpenAIContext.Default)!;
     }
 
     private static JsonObject CreateMessageNode(MessageRole role, string content)

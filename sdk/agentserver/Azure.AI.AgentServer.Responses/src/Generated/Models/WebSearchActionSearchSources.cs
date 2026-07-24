@@ -34,7 +34,7 @@ namespace Azure.AI.AgentServer.Responses.Models
         }
 
         /// <summary> Gets the Type. </summary>
-        public string Type { get; } = "url";
+        internal string Type { get; } = "url";
 
         /// <summary> Gets the Url. </summary>
         public string Url { get; }

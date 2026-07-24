@@ -166,7 +166,7 @@ public static class CreateResponseExtensions
     /// Expands the input via <see cref="GetInputExpanded"/>, filters for
     /// <see cref="ItemMessage"/> items, expands their content via
     /// <see cref="ItemMessageExtensions.GetContentExpanded"/>, and joins all
-    /// <see cref="MessageContentInputTextContent.Text"/> values with newline separators.
+    /// input text content values with newline separators.
     /// </summary>
     /// <param name="request">The create-response request.</param>
     /// <returns>
@@ -184,8 +184,8 @@ public static class CreateResponseExtensions
         var texts = items
             .OfType<ItemMessage>()
             .SelectMany(msg => msg.GetContentExpanded())
-            .OfType<MessageContentInputTextContent>()
-            .Select(tc => tc.Text);
+            .Where(content => content.Kind == OpenAI.Responses.ResponseContentPartKind.InputText)
+            .Select(content => content.Text);
 
         return string.Join("\n", texts);
     }

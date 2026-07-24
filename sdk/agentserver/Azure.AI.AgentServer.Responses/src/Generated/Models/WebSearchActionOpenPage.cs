@@ -32,7 +32,7 @@ namespace Azure.AI.AgentServer.Responses.Models
         }
 
         /// <summary> The action type. </summary>
-        public string Type { get; } = "open_page";
+        internal string Type { get; } = "open_page";
 
         /// <summary> The URL opened by the model. </summary>
         public Uri Url { get; }

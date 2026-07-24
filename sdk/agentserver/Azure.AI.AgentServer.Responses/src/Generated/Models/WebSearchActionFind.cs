@@ -38,7 +38,7 @@ namespace Azure.AI.AgentServer.Responses.Models
         }
 
         /// <summary> The action type. </summary>
-        public string Type { get; } = "find_in_page";
+        internal string Type { get; } = "find_in_page";
 
         /// <summary> The URL of the page searched for the pattern. </summary>
         public Uri Url { get; }

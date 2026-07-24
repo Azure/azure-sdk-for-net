@@ -41,7 +41,7 @@ namespace Azure.AI.AgentServer.Responses.Models
         }
 
         /// <summary> The action type. </summary>
-        public string Type { get; } = "search";
+        internal string Type { get; } = "search";
 
         /// <summary> [DEPRECATED] The search query. </summary>
         public string Query { get; }

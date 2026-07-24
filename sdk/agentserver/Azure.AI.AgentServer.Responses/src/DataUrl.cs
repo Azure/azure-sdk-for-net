@@ -10,9 +10,8 @@ namespace Azure.AI.AgentServer.Responses;
 /// (e.g., <c>data:image/png;base64,iVBOR...</c> or <c>data:text/plain;base64,SGVs...</c>).
 /// <para>
 /// Data URLs follow the format <c>data:[&lt;mediatype&gt;][;base64],&lt;data&gt;</c>.
-/// These utilities help handlers extract the raw bytes and media type from
-/// <see cref="Models.MessageContentInputImageContent.ImageUrl"/> and
-/// <see cref="Models.MessageContentInputFileContent.FileData"/> values.
+/// These utilities help handlers extract the raw bytes and media type from image
+/// and file content values.
 /// </para>
 /// </summary>
 public static class DataUrl

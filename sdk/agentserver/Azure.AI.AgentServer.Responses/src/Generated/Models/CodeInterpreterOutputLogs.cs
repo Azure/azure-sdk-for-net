@@ -34,7 +34,7 @@ namespace Azure.AI.AgentServer.Responses.Models
         }
 
         /// <summary> The type of the output. Always `logs`. </summary>
-        public string Type { get; } = "logs";
+        internal string Type { get; } = "logs";
 
         /// <summary> The logs output from the code interpreter. </summary>
         public string Logs { get; }

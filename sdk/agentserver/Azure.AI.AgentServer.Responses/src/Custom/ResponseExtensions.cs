@@ -74,7 +74,7 @@ public static class ResponseExtensions
     /// <summary>
     /// Expands the <see cref="ResponseObject.Instructions"/> BinaryData into a typed list of
     /// <see cref="Item"/> objects. A plain string is wrapped as a single <see cref="ItemMessage"/>
-    /// with <see cref="MessageRole.Developer"/> role and the instruction text.
+    /// with developer role and the instruction text.
     /// </summary>
     /// <param name="response">The response.</param>
     /// <returns>
