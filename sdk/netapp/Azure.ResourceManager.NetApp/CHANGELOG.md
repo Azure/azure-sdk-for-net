@@ -1,15 +1,5 @@
 # Release History
 
-## 1.19.0-beta.1 (Unreleased)
-
-### Features Added
-
-### Breaking Changes
-
-### Bugs Fixed
-
-### Other Changes
-
 ## 1.18.0 (2026-07-15)
 
 ### Features Added
