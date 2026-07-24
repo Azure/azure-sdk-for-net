@@ -428,31 +428,6 @@ namespace Azure.Communication.CallAutomation.Tests.Events
         }
 
         [Test]
-        public void RecordingStateChangedEventParsed_Test()
-        {
-            RecordingStateChanged @event = CallAutomationModelFactory.RecordingStateChanged(
-                callConnectionId: "callConnectionId",
-                serverCallId: "serverCallId",
-                correlationId: "correlationId",
-                recordingId: "recordingId",
-                state: RecordingState.Active,
-                startDateTime: DateTimeOffset.UtcNow);
-            JsonSerializerOptions jsonOptions = new() { PropertyNamingPolicy = JsonNamingPolicy.CamelCase };
-            string jsonEvent = JsonSerializer.Serialize(@event, jsonOptions);
-            var parsedEvent = CallAutomationEventParser.Parse(jsonEvent, "Microsoft.Communication.RecordingStateChanged");
-            if (parsedEvent is RecordingStateChanged recordingEvent)
-            {
-                Assert.That(recordingEvent.RecordingId, Is.EqualTo("recordingId"));
-                Assert.That(recordingEvent.ServerCallId, Is.EqualTo("serverCallId"));
-                Assert.That(recordingEvent.State, Is.EqualTo(RecordingState.Active));
-            }
-            else
-            {
-                Assert.Fail("Event parsed wrongfully");
-            }
-        }
-
-        [Test]
         public void PlayCompletedEventParsed_Test()
         {
             PlayCompleted @event = CallAutomationModelFactory.PlayCompleted(
@@ -1084,7 +1059,7 @@ namespace Azure.Communication.CallAutomation.Tests.Events
                 correlationId: "correlationId",
                 operationContext: "operationContext",
                 resultInformation: new ResultInformation(code: 200, subCode: 0, message: "Action completed successfully"),
-                transcriptionUpdateResult: new TranscriptionUpdate(TranscriptionStatus.TranscriptionStarted, TranscriptionStatusDetails.SubscriptionStarted));
+                transcriptionUpdateResult: new TranscriptionUpdated());
             JsonSerializerOptions jsonOptions = new() { PropertyNamingPolicy = JsonNamingPolicy.CamelCase };
             string jsonEvent = JsonSerializer.Serialize(@event, jsonOptions);
             var parsedEvent = CallAutomationEventParser.Parse(jsonEvent, "Microsoft.Communication.TranscriptionStarted");
@@ -1095,8 +1070,6 @@ namespace Azure.Communication.CallAutomation.Tests.Events
                 Assert.That(transcriptionStarted.ServerCallId, Is.EqualTo("serverCallId"));
                 Assert.That(transcriptionStarted.OperationContext, Is.EqualTo("operationContext"));
                 Assert.That(transcriptionStarted.ResultInformation?.Code, Is.EqualTo(200));
-                Assert.That(transcriptionStarted.TranscriptionUpdateResult.TranscriptionStatus, Is.EqualTo(TranscriptionStatus.TranscriptionStarted));
-                Assert.That(transcriptionStarted.TranscriptionUpdateResult.TranscriptionStatusDetails, Is.EqualTo(TranscriptionStatusDetails.SubscriptionStarted));
             }
             else
             {
@@ -1113,7 +1086,7 @@ namespace Azure.Communication.CallAutomation.Tests.Events
                 correlationId: "correlationId",
                 operationContext: "operationContext",
                 resultInformation: new ResultInformation(code: 200, subCode: 0, message: "Action completed successfully"),
-                transcriptionUpdateResult: new TranscriptionUpdate(TranscriptionStatus.TranscriptionUpdated, TranscriptionStatusDetails.StreamConnectionReestablished));
+                transcriptionUpdateResult: new TranscriptionUpdated());
             JsonSerializerOptions jsonOptions = new() { PropertyNamingPolicy = JsonNamingPolicy.CamelCase };
             string jsonEvent = JsonSerializer.Serialize(@event, jsonOptions);
             var parsedEvent = CallAutomationEventParser.Parse(jsonEvent, "Microsoft.Communication.TranscriptionUpdated");
@@ -1124,8 +1097,6 @@ namespace Azure.Communication.CallAutomation.Tests.Events
                 Assert.That(transcriptionUpdated.ServerCallId, Is.EqualTo("serverCallId"));
                 Assert.That(transcriptionUpdated.OperationContext, Is.EqualTo("operationContext"));
                 Assert.That(transcriptionUpdated.ResultInformation?.Code, Is.EqualTo(200));
-                Assert.That(transcriptionUpdated.TranscriptionUpdateResult.TranscriptionStatus, Is.EqualTo(TranscriptionStatus.TranscriptionUpdated));
-                Assert.That(transcriptionUpdated.TranscriptionUpdateResult.TranscriptionStatusDetails, Is.EqualTo(TranscriptionStatusDetails.StreamConnectionReestablished));
             }
             else
             {
@@ -1142,7 +1113,7 @@ namespace Azure.Communication.CallAutomation.Tests.Events
                 correlationId: "correlationId",
                 operationContext: "operationContext",
                 resultInformation: new ResultInformation(code: 200, subCode: 0, message: "Action completed successfully"),
-                transcriptionUpdateResult: new TranscriptionUpdate(transcriptionStatus: TranscriptionStatus.TranscriptionStopped, transcriptionStatusDetails: TranscriptionStatusDetails.SubscriptionStopped));
+                transcriptionUpdateResult: new TranscriptionUpdated());
             JsonSerializerOptions jsonOptions = new() { PropertyNamingPolicy = JsonNamingPolicy.CamelCase };
             string jsonEvent = JsonSerializer.Serialize(@event, jsonOptions);
             var parsedEvent = CallAutomationEventParser.Parse(jsonEvent, "Microsoft.Communication.TranscriptionStopped");
@@ -1153,8 +1124,6 @@ namespace Azure.Communication.CallAutomation.Tests.Events
                 Assert.That(transcriptionStopped.ServerCallId, Is.EqualTo("serverCallId"));
                 Assert.That(transcriptionStopped.OperationContext, Is.EqualTo("operationContext"));
                 Assert.That(transcriptionStopped.ResultInformation?.Code, Is.EqualTo(200));
-                Assert.That(transcriptionStopped.TranscriptionUpdateResult.TranscriptionStatus, Is.EqualTo(TranscriptionStatus.TranscriptionStopped));
-                Assert.That(transcriptionStopped.TranscriptionUpdateResult.TranscriptionStatusDetails, Is.EqualTo(TranscriptionStatusDetails.SubscriptionStopped));
             }
             else
             {
@@ -1171,7 +1140,7 @@ namespace Azure.Communication.CallAutomation.Tests.Events
                 correlationId: "correlationId",
                 operationContext: "operationContext",
                 resultInformation: new ResultInformation(code: 200, subCode: 0, message: "Action completed successfully"),
-                transcriptionUpdateResult: new TranscriptionUpdate(transcriptionStatus: TranscriptionStatus.TranscriptionFailed, transcriptionStatusDetails: TranscriptionStatusDetails.UnspecifiedError));
+                transcriptionUpdateResult: new TranscriptionUpdated());
             JsonSerializerOptions jsonOptions = new() { PropertyNamingPolicy = JsonNamingPolicy.CamelCase };
             string jsonEvent = JsonSerializer.Serialize(@event, jsonOptions);
             var parsedEvent = CallAutomationEventParser.Parse(jsonEvent, "Microsoft.Communication.TranscriptionFailed");
@@ -1182,8 +1151,6 @@ namespace Azure.Communication.CallAutomation.Tests.Events
                 Assert.That(transcriptionFailed.ServerCallId, Is.EqualTo("serverCallId"));
                 Assert.That(transcriptionFailed.OperationContext, Is.EqualTo("operationContext"));
                 Assert.That(transcriptionFailed.ResultInformation?.Code, Is.EqualTo(200));
-                Assert.That(transcriptionFailed.TranscriptionUpdateResult.TranscriptionStatus, Is.EqualTo(TranscriptionStatus.TranscriptionFailed));
-                Assert.That(transcriptionFailed.TranscriptionUpdateResult.TranscriptionStatusDetails, Is.EqualTo(TranscriptionStatusDetails.UnspecifiedError));
             }
             else
             {
@@ -1323,7 +1290,7 @@ namespace Azure.Communication.CallAutomation.Tests.Events
             MediaStreamingStarted @event = CallAutomationModelFactory.MediaStreamingStarted(
                 operationContext: "operationContext",
                 resultInformation: new ResultInformation(code: 200, subCode: 0, message: "Action completed successfully"),
-                mediaStreamingUpdate: new MediaStreamingUpdate("contentType", MediaStreamingStatus.MediaStreamingStarted, MediaStreamingStatusDetails.SubscriptionStarted),
+                mediaStreamingUpdate: new MediaStreamingUpdated(),
                 callConnectionId: "callConnectionId",
                 serverCallId: "serverCallId",
                 correlationId: "correlationId");
@@ -1337,8 +1304,6 @@ namespace Azure.Communication.CallAutomation.Tests.Events
                 Assert.That(mediaStreamingStarted.ServerCallId, Is.EqualTo("serverCallId"));
                 Assert.That(mediaStreamingStarted.OperationContext, Is.EqualTo("operationContext"));
                 Assert.That(mediaStreamingStarted.ResultInformation?.Code, Is.EqualTo(200));
-                Assert.That(mediaStreamingStarted.MediaStreamingUpdate.MediaStreamingStatus, Is.EqualTo(MediaStreamingStatus.MediaStreamingStarted));
-                Assert.That(mediaStreamingStarted.MediaStreamingUpdate.MediaStreamingStatusDetails, Is.EqualTo(MediaStreamingStatusDetails.SubscriptionStarted));
             }
             else
             {
@@ -1352,7 +1317,7 @@ namespace Azure.Communication.CallAutomation.Tests.Events
             MediaStreamingUpdated @event = CallAutomationModelFactory.MediaStreamingUpdated(
                 operationContext: "operationContext",
                 resultInformation: new ResultInformation(code: 200, subCode: 0, message: "Action completed successfully"),
-                mediaStreamingUpdate: new MediaStreamingUpdate("contentType", MediaStreamingStatus.MediaStreamingUpdated, MediaStreamingStatusDetails.StreamUrlUpdated),
+                mediaStreamingUpdate: new MediaStreamingUpdated(),
                 callConnectionId: "callConnectionId",
                 serverCallId: "serverCallId",
                 correlationId: "correlationId",
@@ -1368,8 +1333,6 @@ namespace Azure.Communication.CallAutomation.Tests.Events
                 Assert.That(mediaStreamingUpdated.OperationContext, Is.EqualTo("operationContext"));
                 Assert.That(mediaStreamingUpdated.StreamUrl, Is.EqualTo("https://streamurl/test"));
                 Assert.That(mediaStreamingUpdated.ResultInformation?.Code, Is.EqualTo(200));
-                Assert.That(mediaStreamingUpdated.MediaStreamingUpdate.MediaStreamingStatus, Is.EqualTo(MediaStreamingStatus.MediaStreamingUpdated));
-                Assert.That(mediaStreamingUpdated.MediaStreamingUpdate.MediaStreamingStatusDetails, Is.EqualTo(MediaStreamingStatusDetails.StreamUrlUpdated));
             }
             else
             {
@@ -1383,7 +1346,7 @@ namespace Azure.Communication.CallAutomation.Tests.Events
             MediaStreamingStopped @event = CallAutomationModelFactory.MediaStreamingStopped(
                 operationContext: "operationContext",
                 resultInformation: new ResultInformation(code: 200, subCode: 0, message: "Action completed successfully"),
-                mediaStreamingUpdate: new MediaStreamingUpdate("contentType", MediaStreamingStatus.MediaStreamingStarted, MediaStreamingStatusDetails.SubscriptionStarted),
+                mediaStreamingUpdate: new MediaStreamingUpdated(),
                 callConnectionId: "callConnectionId",
                 serverCallId: "serverCallId",
                 correlationId: "correlationId");
@@ -1397,8 +1360,6 @@ namespace Azure.Communication.CallAutomation.Tests.Events
                 Assert.That(mediaStreamingStopped.ServerCallId, Is.EqualTo("serverCallId"));
                 Assert.That(mediaStreamingStopped.OperationContext, Is.EqualTo("operationContext"));
                 Assert.That(mediaStreamingStopped.ResultInformation?.Code, Is.EqualTo(200));
-                Assert.That(mediaStreamingStopped.MediaStreamingUpdate.MediaStreamingStatus, Is.EqualTo(MediaStreamingStatus.MediaStreamingStarted));
-                Assert.That(mediaStreamingStopped.MediaStreamingUpdate.MediaStreamingStatusDetails, Is.EqualTo(MediaStreamingStatusDetails.SubscriptionStarted));
             }
             else
             {
@@ -1412,7 +1373,7 @@ namespace Azure.Communication.CallAutomation.Tests.Events
             MediaStreamingFailed @event = CallAutomationModelFactory.MediaStreamingFailed(
                 operationContext: "operationContext",
                 resultInformation: new ResultInformation(code: 200, subCode: 0, message: "Action completed successfully"),
-                mediaStreamingUpdate: new MediaStreamingUpdate("contentType", MediaStreamingStatus.MediaStreamingStarted, MediaStreamingStatusDetails.SubscriptionStarted),
+                mediaStreamingUpdate: new MediaStreamingUpdated(),
                 callConnectionId: "callConnectionId",
                 serverCallId: "serverCallId",
                 correlationId: "correlationId");
@@ -1426,8 +1387,6 @@ namespace Azure.Communication.CallAutomation.Tests.Events
                 Assert.That(mediaStreamingFailed.ServerCallId, Is.EqualTo("serverCallId"));
                 Assert.That(mediaStreamingFailed.OperationContext, Is.EqualTo("operationContext"));
                 Assert.That(mediaStreamingFailed.ResultInformation?.Code, Is.EqualTo(200));
-                Assert.That(mediaStreamingFailed.MediaStreamingUpdate.MediaStreamingStatus, Is.EqualTo(MediaStreamingStatus.MediaStreamingStarted));
-                Assert.That(mediaStreamingFailed.MediaStreamingUpdate.MediaStreamingStatusDetails, Is.EqualTo(MediaStreamingStatusDetails.SubscriptionStarted));
             }
             else
             {

@@ -8,7 +8,7 @@ namespace Azure.Communication.CallAutomation
     /// <summary>
     /// Media streaming auido channel.
     /// </summary>
-    [CodeGenModel("MediaStreamingAudioChannelType", Usage = new string[] { "input" }, Formats = new string[] { "json" })]
+    [CodeGenModel("MediaStreamingAudioChannelTypeDto", Usage = new string[] { "input" }, Formats = new string[] { "json" })]
     public readonly partial struct MediaStreamingAudioChannel
     {
     }

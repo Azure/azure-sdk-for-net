@@ -109,8 +109,6 @@ namespace Azure.Communication.CallAutomation
                     return ConnectFailed.Deserialize(eventData);
                 case nameof(ParticipantsUpdated):
                     return ParticipantsUpdated.Deserialize(eventData);
-                case nameof(RecordingStateChanged):
-                    return RecordingStateChanged.Deserialize(eventData);
                 case nameof(StartRecordingFailed):
                     return StartRecordingFailed.Deserialize(eventData);
                 case nameof(PlayCompleted):

@@ -13,10 +13,7 @@ namespace Azure.Communication.CallAutomation
     internal partial class UnholdRequestInternal
     {
         /// <summary> Initializes a new instance of <see cref="UnholdRequestInternal"/>. </summary>
-        /// <param name="targetParticipant">
-        /// Participants to be hold from the call.
-        /// Only ACS Users are supported.
-        /// </param>
+        /// <param name="targetParticipant"> Identifies a participant in Azure Communication services. A participant is, for example, a phone number or an Azure communication user. This model is polymorphic: Apart from kind and rawId, at most one further property may be set which must match the kind enum value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="targetParticipant"/> is null. </exception>
         public UnholdRequestInternal(CommunicationIdentifierModel targetParticipant)
         {
@@ -26,10 +23,7 @@ namespace Azure.Communication.CallAutomation
         }
 
         /// <summary> Initializes a new instance of <see cref="UnholdRequestInternal"/>. </summary>
-        /// <param name="targetParticipant">
-        /// Participants to be hold from the call.
-        /// Only ACS Users are supported.
-        /// </param>
+        /// <param name="targetParticipant"> Identifies a participant in Azure Communication services. A participant is, for example, a phone number or an Azure communication user. This model is polymorphic: Apart from kind and rawId, at most one further property may be set which must match the kind enum value. </param>
         /// <param name="operationContext"> Used by customers when calling mid-call actions to correlate the request to the response event. </param>
         internal UnholdRequestInternal(CommunicationIdentifierModel targetParticipant, string operationContext)
         {
@@ -37,10 +31,7 @@ namespace Azure.Communication.CallAutomation
             OperationContext = operationContext;
         }
 
-        /// <summary>
-        /// Participants to be hold from the call.
-        /// Only ACS Users are supported.
-        /// </summary>
+        /// <summary> Identifies a participant in Azure Communication services. A participant is, for example, a phone number or an Azure communication user. This model is polymorphic: Apart from kind and rawId, at most one further property may be set which must match the kind enum value. </summary>
         public CommunicationIdentifierModel TargetParticipant { get; }
         /// <summary> Used by customers when calling mid-call actions to correlate the request to the response event. </summary>
         public string OperationContext { get; set; }

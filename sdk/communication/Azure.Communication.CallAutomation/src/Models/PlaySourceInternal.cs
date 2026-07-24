@@ -6,7 +6,7 @@ using Azure.Core;
 namespace Azure.Communication.CallAutomation
 {
     [CodeGenModel("PlaySource")]
-    internal partial class PlaySourceInternal
+    public partial class PlaySourceInternal
     {
     }
 }

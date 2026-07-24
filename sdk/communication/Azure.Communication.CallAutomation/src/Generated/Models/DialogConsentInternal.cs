@@ -16,45 +16,41 @@ namespace Azure.Communication.CallAutomation
         }
 
         /// <summary> Initializes a new instance of <see cref="DialogConsentInternal"/>. </summary>
-        /// <param name="userConsent"></param>
-        /// <param name="operationContext"></param>
-        /// <param name="resultInformation"></param>
-        /// <param name="dialogInputType"> Determines the type of the dialog. </param>
-        /// <param name="dialogId"></param>
-        /// <param name="ivrContext"> Any object. </param>
         /// <param name="callConnectionId"> Call connection ID. </param>
         /// <param name="serverCallId"> Server call ID. </param>
         /// <param name="correlationId"> Correlation ID for event to call correlation. Also called ChainId for skype chain ID. </param>
-        internal DialogConsentInternal(UserConsent userConsent, string operationContext, ResultInformation resultInformation, DialogInputType? dialogInputType, string dialogId, object ivrContext, string callConnectionId, string serverCallId, string correlationId)
+        /// <param name="operationContext"> Used by customers when calling answerCall action to correlate the request to the response event. </param>
+        /// <param name="resultInformation"></param>
+        /// <param name="dialogInputType"> Defines the type of the dialog input. </param>
+        /// <param name="userConsent"></param>
+        /// <param name="dialogId"> Dialog ID. </param>
+        internal DialogConsentInternal(string callConnectionId, string serverCallId, string correlationId, string operationContext, ResultInformation resultInformation, DialogInputType? dialogInputType, UserConsent userConsent, string dialogId)
         {
-            UserConsent = userConsent;
-            OperationContext = operationContext;
-            ResultInformation = resultInformation;
-            DialogInputType = dialogInputType;
-            DialogId = dialogId;
-            IvrContext = ivrContext;
             CallConnectionId = callConnectionId;
             ServerCallId = serverCallId;
             CorrelationId = correlationId;
+            OperationContext = operationContext;
+            ResultInformation = resultInformation;
+            DialogInputType = dialogInputType;
+            UserConsent = userConsent;
+            DialogId = dialogId;
         }
 
-        /// <summary> Gets the user consent. </summary>
-        public UserConsent UserConsent { get; }
-        /// <summary> Gets the operation context. </summary>
-        public string OperationContext { get; }
-        /// <summary> Gets the result information. </summary>
-        public ResultInformation ResultInformation { get; }
-        /// <summary> Determines the type of the dialog. </summary>
-        public DialogInputType? DialogInputType { get; }
-        /// <summary> Gets the dialog id. </summary>
-        public string DialogId { get; }
-        /// <summary> Any object. </summary>
-        public object IvrContext { get; }
         /// <summary> Call connection ID. </summary>
         public string CallConnectionId { get; }
         /// <summary> Server call ID. </summary>
         public string ServerCallId { get; }
         /// <summary> Correlation ID for event to call correlation. Also called ChainId for skype chain ID. </summary>
         public string CorrelationId { get; }
+        /// <summary> Used by customers when calling answerCall action to correlate the request to the response event. </summary>
+        public string OperationContext { get; }
+        /// <summary> Gets the result information. </summary>
+        public ResultInformation ResultInformation { get; }
+        /// <summary> Defines the type of the dialog input. </summary>
+        public DialogInputType? DialogInputType { get; }
+        /// <summary> Gets the user consent. </summary>
+        public UserConsent UserConsent { get; }
+        /// <summary> Dialog ID. </summary>
+        public string DialogId { get; }
     }
 }

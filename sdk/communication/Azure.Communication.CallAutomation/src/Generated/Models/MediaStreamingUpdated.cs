@@ -23,7 +23,7 @@ namespace Azure.Communication.CallAutomation
         /// <param name="correlationId"> Correlation ID for event to call correlation. Also called ChainId for skype chain ID. </param>
         /// <param name="operationContext"> Used by customers when calling mid-call actions to correlate the request to the response event. </param>
         /// <param name="resultInformation"> Contains the resulting SIP code, sub-code and message. </param>
-        internal MediaStreamingUpdated(MediaStreamingUpdate mediaStreamingUpdate, string streamUrl, string callConnectionId, string serverCallId, string correlationId, string operationContext, ResultInformation resultInformation)
+        internal MediaStreamingUpdated(MediaStreamingUpdated mediaStreamingUpdate, string streamUrl, string callConnectionId, string serverCallId, string correlationId, string operationContext, ResultInformation resultInformation)
         {
             MediaStreamingUpdate = mediaStreamingUpdate;
             StreamUrl = streamUrl;
@@ -35,7 +35,7 @@ namespace Azure.Communication.CallAutomation
         }
 
         /// <summary> Defines the result for MediaStreamingUpdate with the current status and the details about the status. </summary>
-        public MediaStreamingUpdate MediaStreamingUpdate { get; }
+        public MediaStreamingUpdated MediaStreamingUpdate { get; }
         /// <summary> Gets the URL of the media stream associated with this instance. </summary>
         public string StreamUrl { get; }
     }
