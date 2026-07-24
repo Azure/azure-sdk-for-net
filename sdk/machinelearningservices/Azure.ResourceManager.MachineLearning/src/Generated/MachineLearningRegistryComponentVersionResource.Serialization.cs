@@ -12,7 +12,7 @@ using System.Text.Json;
 namespace Azure.ResourceManager.MachineLearning
 {
     /// <summary></summary>
-    public partial class MachineLearninRegistryComponentVersionResource : IJsonModel<MachineLearningComponentVersionData>
+    public partial class MachineLearningRegistryComponentVersionResource : IJsonModel<MachineLearningComponentVersionData>
     {
         private static IJsonModel<MachineLearningComponentVersionData> s_dataDeserializationInstance;
 
