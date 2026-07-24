@@ -3115,11 +3115,11 @@ namespace Azure.Provisioning.Compute
     }
     public partial class VirtualMachineScaleSetLifecycleHookEvent : Azure.Provisioning.Primitives.ProvisionableResource
     {
-        public VirtualMachineScaleSetLifecycleHookEvent(string bicepIdentifier, string resourceVersion = null) : base (default(string), default(Azure.Core.ResourceType), default(string)) { }
+        internal VirtualMachineScaleSetLifecycleHookEvent() : base (default(string), default(Azure.Core.ResourceType), default(string)) { }
         public Azure.Provisioning.BicepValue<Azure.Core.ResourceIdentifier> Id { get { throw null; } }
         public Azure.Provisioning.BicepValue<string> Name { get { throw null; } set { } }
         public Azure.Provisioning.Compute.VirtualMachineScaleSet Parent { get { throw null; } set { } }
-        public Azure.Provisioning.Compute.VirtualMachineScaleSetLifecycleHookEventProperties Properties { get { throw null; } set { } }
+        public Azure.Provisioning.Compute.VirtualMachineScaleSetLifecycleHookEventProperties Properties { get { throw null; } }
         public Azure.Provisioning.Resources.SystemData SystemData { get { throw null; } }
         protected override void DefineProvisionableProperties() { }
         public static Azure.Provisioning.Compute.VirtualMachineScaleSetLifecycleHookEvent FromExisting(string bicepIdentifier, string resourceVersion = null) { throw null; }
@@ -3132,14 +3132,14 @@ namespace Azure.Provisioning.Compute
     public partial class VirtualMachineScaleSetLifecycleHookEventProperties : Azure.Provisioning.Primitives.ProvisionableConstruct
     {
         public VirtualMachineScaleSetLifecycleHookEventProperties() { }
-        public Azure.Provisioning.BicepValue<string> AdditionalContextPriority { get { throw null; } set { } }
+        public Azure.Provisioning.BicepValue<string> AdditionalContextPriority { get { throw null; } }
         public Azure.Provisioning.BicepValue<Azure.Provisioning.Compute.VirtualMachineScaleSetLifecycleHookAction> DefaultAction { get { throw null; } }
-        public Azure.Provisioning.BicepValue<Azure.Provisioning.Compute.VirtualMachineScaleSetLifecycleHookEventType> EventType { get { throw null; } set { } }
+        public Azure.Provisioning.BicepValue<Azure.Provisioning.Compute.VirtualMachineScaleSetLifecycleHookEventType> EventType { get { throw null; } }
         public Azure.Provisioning.BicepValue<string> MaxWaitUntil { get { throw null; } }
         public Azure.Provisioning.BicepValue<Azure.Provisioning.Compute.VirtualMachineScaleSetLifecycleHookEventState> State { get { throw null; } }
-        public Azure.Provisioning.BicepList<Azure.Provisioning.Compute.VirtualMachineScaleSetLifecycleHookEventTarget> TargetResources { get { throw null; } set { } }
+        public Azure.Provisioning.BicepList<Azure.Provisioning.Compute.VirtualMachineScaleSetLifecycleHookEventTarget> TargetResources { get { throw null; } }
         public Azure.Provisioning.BicepValue<string> TimeCreated { get { throw null; } }
-        public Azure.Provisioning.BicepValue<string> WaitUntil { get { throw null; } set { } }
+        public Azure.Provisioning.BicepValue<string> WaitUntil { get { throw null; } }
         protected override void DefineProvisionableProperties() { }
     }
     public enum VirtualMachineScaleSetLifecycleHookEventState
@@ -3150,8 +3150,8 @@ namespace Azure.Provisioning.Compute
     public partial class VirtualMachineScaleSetLifecycleHookEventTarget : Azure.Provisioning.Primitives.ProvisionableConstruct
     {
         public VirtualMachineScaleSetLifecycleHookEventTarget() { }
-        public Azure.Provisioning.BicepValue<Azure.Provisioning.Compute.VirtualMachineScaleSetLifecycleHookActionState> ActionState { get { throw null; } set { } }
-        public Azure.Provisioning.BicepValue<Azure.Core.ResourceIdentifier> ResourceId { get { throw null; } set { } }
+        public Azure.Provisioning.BicepValue<Azure.Provisioning.Compute.VirtualMachineScaleSetLifecycleHookActionState> ActionState { get { throw null; } }
+        public Azure.Provisioning.BicepValue<Azure.Core.ResourceIdentifier> ResourceId { get { throw null; } }
         protected override void DefineProvisionableProperties() { }
     }
     public enum VirtualMachineScaleSetLifecycleHookEventType

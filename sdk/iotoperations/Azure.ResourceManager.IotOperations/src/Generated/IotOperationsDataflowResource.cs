@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.IotOperations
         {
             TryGetApiVersion(ResourceType, out string iotOperationsDataflowApiVersion);
             _dataflowClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.IotOperations", ResourceType.Namespace, Diagnostics);
-            _dataflowRestClient = new Dataflow(_dataflowClientDiagnostics, Pipeline, Endpoint, iotOperationsDataflowApiVersion ?? "2025-10-01");
+            _dataflowRestClient = new Dataflow(_dataflowClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, iotOperationsDataflowApiVersion ?? "2025-10-01");
             ValidateResourceId(id);
         }
 

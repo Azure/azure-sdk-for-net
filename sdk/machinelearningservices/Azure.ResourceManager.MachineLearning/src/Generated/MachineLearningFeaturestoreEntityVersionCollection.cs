@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.MachineLearning
         {
             TryGetApiVersion(MachineLearningFeaturestoreEntityVersionResource.ResourceType, out string machineLearningFeaturestoreEntityVersionApiVersion);
             _featurestoreEntityVersionsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.MachineLearning", MachineLearningFeaturestoreEntityVersionResource.ResourceType.Namespace, Diagnostics);
-            _featurestoreEntityVersionsRestClient = new FeaturestoreEntityVersions(_featurestoreEntityVersionsClientDiagnostics, Pipeline, Endpoint, machineLearningFeaturestoreEntityVersionApiVersion ?? "2026-03-15-preview");
+            _featurestoreEntityVersionsRestClient = new FeaturestoreEntityVersions(_featurestoreEntityVersionsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, machineLearningFeaturestoreEntityVersionApiVersion ?? "2026-03-15-preview");
             ValidateResourceId(id);
         }
 

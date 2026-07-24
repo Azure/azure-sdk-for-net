@@ -45,7 +45,7 @@ namespace Azure.ResourceManager.Sql
             TryGetApiVersion(InstanceFailoverGroupResource.ResourceType, out string instanceFailoverGroupApiVersion);
             _locationName = locationName;
             _instanceFailoverGroupsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Sql", InstanceFailoverGroupResource.ResourceType.Namespace, Diagnostics);
-            _instanceFailoverGroupsRestClient = new InstanceFailoverGroups(_instanceFailoverGroupsClientDiagnostics, Pipeline, Endpoint, instanceFailoverGroupApiVersion ?? "2025-02-01-preview");
+            _instanceFailoverGroupsRestClient = new InstanceFailoverGroups(_instanceFailoverGroupsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, instanceFailoverGroupApiVersion ?? "2025-02-01-preview");
             ValidateResourceId(id);
         }
 

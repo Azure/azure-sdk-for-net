@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.ServiceBus
         {
             TryGetApiVersion(ServiceBusTopicAuthorizationRuleResource.ResourceType, out string serviceBusTopicAuthorizationRuleApiVersion);
             _topicsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ServiceBus", ServiceBusTopicAuthorizationRuleResource.ResourceType.Namespace, Diagnostics);
-            _topicsRestClient = new Topics(_topicsClientDiagnostics, Pipeline, Endpoint, serviceBusTopicAuthorizationRuleApiVersion ?? "2026-01-01");
+            _topicsRestClient = new Topics(_topicsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, serviceBusTopicAuthorizationRuleApiVersion ?? "2026-01-01");
             ValidateResourceId(id);
         }
 

@@ -16,7 +16,7 @@ namespace Azure.AI.VoiceLive
     /// synthesis than standard Azure voices. Only valid when using the
     /// `azure-realtime` model.
     /// </summary>
-    public partial class AzureRealtimeNativeVoice
+    internal partial class AzureRealtimeNativeVoice
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;

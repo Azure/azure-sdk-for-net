@@ -350,22 +350,22 @@ namespace Azure.ResourceManager.MachineLearning.Mocking
             return new MachineLearningRegistryCodeVersionResource(Client, id);
         }
 
-        /// <summary> Gets an object representing a <see cref="MachineLearninRegistryComponentContainerResource"/> along with the instance operations that can be performed on it but with no data. </summary>
+        /// <summary> Gets an object representing a <see cref="MachineLearningRegistryComponentContainerResource"/> along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="MachineLearninRegistryComponentContainerResource"/> object. </returns>
-        public virtual MachineLearninRegistryComponentContainerResource GetMachineLearninRegistryComponentContainerResource(ResourceIdentifier id)
+        /// <returns> Returns a <see cref="MachineLearningRegistryComponentContainerResource"/> object. </returns>
+        public virtual MachineLearningRegistryComponentContainerResource GetMachineLearningRegistryComponentContainerResource(ResourceIdentifier id)
         {
-            MachineLearninRegistryComponentContainerResource.ValidateResourceId(id);
-            return new MachineLearninRegistryComponentContainerResource(Client, id);
+            MachineLearningRegistryComponentContainerResource.ValidateResourceId(id);
+            return new MachineLearningRegistryComponentContainerResource(Client, id);
         }
 
-        /// <summary> Gets an object representing a <see cref="MachineLearninRegistryComponentVersionResource"/> along with the instance operations that can be performed on it but with no data. </summary>
+        /// <summary> Gets an object representing a <see cref="MachineLearningRegistryComponentVersionResource"/> along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="MachineLearninRegistryComponentVersionResource"/> object. </returns>
-        public virtual MachineLearninRegistryComponentVersionResource GetMachineLearninRegistryComponentVersionResource(ResourceIdentifier id)
+        /// <returns> Returns a <see cref="MachineLearningRegistryComponentVersionResource"/> object. </returns>
+        public virtual MachineLearningRegistryComponentVersionResource GetMachineLearningRegistryComponentVersionResource(ResourceIdentifier id)
         {
-            MachineLearninRegistryComponentVersionResource.ValidateResourceId(id);
-            return new MachineLearninRegistryComponentVersionResource(Client, id);
+            MachineLearningRegistryComponentVersionResource.ValidateResourceId(id);
+            return new MachineLearningRegistryComponentVersionResource(Client, id);
         }
 
         /// <summary> Gets an object representing a <see cref="MachineLearningRegistryDataContainerResource"/> along with the instance operations that can be performed on it but with no data. </summary>

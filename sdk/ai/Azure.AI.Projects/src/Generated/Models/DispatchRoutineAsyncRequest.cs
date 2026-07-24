@@ -29,6 +29,7 @@ namespace Azure.AI.Projects
         }
 
         /// <summary> A direct action-input override sent downstream when testing a routine. </summary>
+        [Experimental("AAIP001")]
         public RoutineDispatchPayload Payload { get; }
     }
 }

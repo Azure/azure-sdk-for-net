@@ -919,6 +919,7 @@ namespace Azure.AI.Projects
         public Azure.AI.Projects.DataGenerationTokenUsage TokenUsage { get { throw null; } }
         protected virtual Azure.AI.Projects.DataGenerationJobResult JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        public static explicit operator Azure.AI.Projects.DataGenerationJobResult (System.ClientModel.ClientResult result) { throw null; }
         protected virtual Azure.AI.Projects.DataGenerationJobResult PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.AI.Projects.DataGenerationJobResult System.ClientModel.Primitives.IJsonModel<Azure.AI.Projects.DataGenerationJobResult>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }

@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.Sql
         {
             TryGetApiVersion(ResourceType, out string sqlServerJobVersionStepApiVersion);
             _jobStepsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Sql", ResourceType.Namespace, Diagnostics);
-            _jobStepsRestClient = new JobSteps(_jobStepsClientDiagnostics, Pipeline, Endpoint, sqlServerJobVersionStepApiVersion ?? "2025-02-01-preview");
+            _jobStepsRestClient = new JobSteps(_jobStepsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, sqlServerJobVersionStepApiVersion ?? "2025-02-01-preview");
             ValidateResourceId(id);
         }
 

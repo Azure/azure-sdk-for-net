@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.ApiManagement
         {
             TryGetApiVersion(ResourceType, out string apiManagementPortalSignUpSettingApiVersion);
             _signUpSettingsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ApiManagement", ResourceType.Namespace, Diagnostics);
-            _signUpSettingsRestClient = new SignUpSettings(_signUpSettingsClientDiagnostics, Pipeline, Endpoint, apiManagementPortalSignUpSettingApiVersion ?? "2025-09-01-preview");
+            _signUpSettingsRestClient = new SignUpSettings(_signUpSettingsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, apiManagementPortalSignUpSettingApiVersion ?? "2025-09-01-preview");
             ValidateResourceId(id);
         }
 

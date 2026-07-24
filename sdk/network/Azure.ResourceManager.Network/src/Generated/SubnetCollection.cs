@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.Network
         {
             TryGetApiVersion(SubnetResource.ResourceType, out string subnetApiVersion);
             _subnetsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Network", SubnetResource.ResourceType.Namespace, Diagnostics);
-            _subnetsRestClient = new Subnets(_subnetsClientDiagnostics, Pipeline, Endpoint, subnetApiVersion ?? "2025-07-01");
+            _subnetsRestClient = new Subnets(_subnetsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, subnetApiVersion ?? "2025-07-01");
             ValidateResourceId(id);
         }
 
