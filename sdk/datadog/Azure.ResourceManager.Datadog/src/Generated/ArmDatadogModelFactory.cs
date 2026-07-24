@@ -250,13 +250,13 @@ namespace Azure.ResourceManager.Datadog.Models
             return new DatadogMonitoredSubscriptionItem(subscriptionId, status, error, tagRules, default);
         }
 
-        /// <param name="saaSGuid"> SaaS guid of marketplace saas subscription to be activated. </param>
+        /// <param name="saaSResourceId"> SaaS resource id of marketplace saas subscription to be activated. </param>
         /// <param name="userInfo"> User information of the person activating the SaaS resource. </param>
         /// <param name="datadogOrganizationProperties"> Datadog organization properties to link the Saas resource to. </param>
         /// <returns> A new <see cref="Models.DatadogActivateSaaSContent"/> instance for mocking. </returns>
-        public static DatadogActivateSaaSContent DatadogActivateSaaSContent(Guid saaSGuid = default, DatadogUserInfo userInfo = default, DatadogOrganizationProperties datadogOrganizationProperties = default)
+        public static DatadogActivateSaaSContent DatadogActivateSaaSContent(ResourceIdentifier saaSResourceId = default, DatadogUserInfo userInfo = default, DatadogOrganizationProperties datadogOrganizationProperties = default)
         {
-            return new DatadogActivateSaaSContent(saaSGuid, userInfo, datadogOrganizationProperties, default);
+            return new DatadogActivateSaaSContent(saaSResourceId, userInfo, datadogOrganizationProperties, default);
         }
 
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
