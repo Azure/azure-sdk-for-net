@@ -33,14 +33,9 @@
     <None Remove="TypeSpec/tsp-output/**" />
   </ItemGroup>
 
-  <!-- Re-include hand-written custom partials (Optional, CodeGenStubs, etc.) -->
+  <!-- Re-include hand-written customization stubs that shape generation. -->
   <ItemGroup>
     <Compile Include="TypeSpec/tsp-output/src/Custom/*.cs" />
-    <Compile Remove="TypeSpec/tsp-output/src/Custom/AgentsPagedResultOutputItem.cs" />
-    <Compile Remove="TypeSpec/tsp-output/src/Custom/ItemMessage.cs" />
-    <Compile Remove="TypeSpec/tsp-output/src/Custom/Optional.cs" />
-    <Compile Remove="TypeSpec/tsp-output/src/Custom/OutputItemMessage.cs" />
-    <Compile Remove="TypeSpec/tsp-output/src/Custom/ResponseStreamEvent.cs" />
   </ItemGroup>
 
 

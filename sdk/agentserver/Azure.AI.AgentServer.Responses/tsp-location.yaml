@@ -1,5 +1,5 @@
 directory: specification/ai-foundry/data-plane/Foundry/src/sdk-csharp-azure-ai-agent-contracts
-commit: 120f25b59c5905d6547a616810b7feb197d315d6
+commit: 0ad5b6f5217617100833e466ca98a247c865d400
 repo: Azure/azure-rest-api-specs
 emitterPackageJsonPath: eng/http-client-csharp-emitter-package.json
 entrypointFile: client.tsp

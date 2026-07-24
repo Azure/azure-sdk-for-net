@@ -1444,11 +1444,11 @@ namespace Azure.AI.AgentServer.Responses.Models
     }
     public partial class FunctionAndCustomToolCallOutputInputFileContent : Azure.AI.AgentServer.Responses.Models.FunctionAndCustomToolCallOutput, System.ClientModel.Primitives.IJsonModel<Azure.AI.AgentServer.Responses.Models.FunctionAndCustomToolCallOutputInputFileContent>, System.ClientModel.Primitives.IPersistableModel<Azure.AI.AgentServer.Responses.Models.FunctionAndCustomToolCallOutputInputFileContent>
     {
-        public FunctionAndCustomToolCallOutputInputFileContent() { }
-        public string FileData { get { throw null; } set { } }
-        public string FileId { get { throw null; } set { } }
-        public string Filename { get { throw null; } set { } }
-        public System.Uri FileUrl { get { throw null; } set { } }
+        internal FunctionAndCustomToolCallOutputInputFileContent() { }
+        public string FileData { get { throw null; } }
+        public string FileId { get { throw null; } }
+        public string Filename { get { throw null; } }
+        public System.Uri FileUrl { get { throw null; } }
         protected override Azure.AI.AgentServer.Responses.Models.FunctionAndCustomToolCallOutput JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         protected override Azure.AI.AgentServer.Responses.Models.FunctionAndCustomToolCallOutput PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -1461,10 +1461,10 @@ namespace Azure.AI.AgentServer.Responses.Models
     }
     public partial class FunctionAndCustomToolCallOutputInputImageContent : Azure.AI.AgentServer.Responses.Models.FunctionAndCustomToolCallOutput, System.ClientModel.Primitives.IJsonModel<Azure.AI.AgentServer.Responses.Models.FunctionAndCustomToolCallOutputInputImageContent>, System.ClientModel.Primitives.IPersistableModel<Azure.AI.AgentServer.Responses.Models.FunctionAndCustomToolCallOutputInputImageContent>
     {
-        public FunctionAndCustomToolCallOutputInputImageContent(Azure.AI.AgentServer.Responses.Models.ImageDetail detail) { }
-        public Azure.AI.AgentServer.Responses.Models.ImageDetail Detail { get { throw null; } set { } }
-        public string FileId { get { throw null; } set { } }
-        public System.Uri ImageUrl { get { throw null; } set { } }
+        internal FunctionAndCustomToolCallOutputInputImageContent() { }
+        public Azure.AI.AgentServer.Responses.Models.ImageDetail Detail { get { throw null; } }
+        public string FileId { get { throw null; } }
+        public System.Uri ImageUrl { get { throw null; } }
         protected override Azure.AI.AgentServer.Responses.Models.FunctionAndCustomToolCallOutput JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         protected override Azure.AI.AgentServer.Responses.Models.FunctionAndCustomToolCallOutput PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -1477,8 +1477,8 @@ namespace Azure.AI.AgentServer.Responses.Models
     }
     public partial class FunctionAndCustomToolCallOutputInputTextContent : Azure.AI.AgentServer.Responses.Models.FunctionAndCustomToolCallOutput, System.ClientModel.Primitives.IJsonModel<Azure.AI.AgentServer.Responses.Models.FunctionAndCustomToolCallOutputInputTextContent>, System.ClientModel.Primitives.IPersistableModel<Azure.AI.AgentServer.Responses.Models.FunctionAndCustomToolCallOutputInputTextContent>
     {
-        public FunctionAndCustomToolCallOutputInputTextContent(string text) { }
-        public string Text { get { throw null; } set { } }
+        internal FunctionAndCustomToolCallOutputInputTextContent() { }
+        public string Text { get { throw null; } }
         protected override Azure.AI.AgentServer.Responses.Models.FunctionAndCustomToolCallOutput JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         protected override Azure.AI.AgentServer.Responses.Models.FunctionAndCustomToolCallOutput PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -2709,14 +2709,6 @@ namespace Azure.AI.AgentServer.Responses.Models
         string System.ClientModel.Primitives.IPersistableModel<Azure.AI.AgentServer.Responses.Models.OtlpTelemetryEndpoint>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.AI.AgentServer.Responses.Models.OtlpTelemetryEndpoint>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class OutputItemCustomToolCall
-    {
-        public OutputItemCustomToolCall() { }
-    }
-    public partial class OutputItemCustomToolCallOutput
-    {
-        public OutputItemCustomToolCallOutput() { }
-    }
     public static partial class OutputItemExtensions
     {
         public static string GetId(this OpenAI.Responses.ResponseItem item) { throw null; }
@@ -2927,10 +2919,6 @@ namespace Azure.AI.AgentServer.Responses.Models
         Azure.AI.AgentServer.Responses.Models.RemoteToolChoiceParam System.ClientModel.Primitives.IPersistableModel<Azure.AI.AgentServer.Responses.Models.RemoteToolChoiceParam>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         string System.ClientModel.Primitives.IPersistableModel<Azure.AI.AgentServer.Responses.Models.RemoteToolChoiceParam>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.AI.AgentServer.Responses.Models.RemoteToolChoiceParam>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-    }
-    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential, Size=1)]
-    public readonly partial struct ResponseErrorCode
-    {
     }
     public static partial class ResponseExtensions
     {
