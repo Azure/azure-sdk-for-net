@@ -34,6 +34,6 @@ public static partial class ResponseItemExtensions
 
         /// <summary> Gets the agent conversation ID associated with the response result. </summary>
         [Experimental("SCME0001")]
-        public string ResponseId => response.Patch.GetStringEx("$.response.id"u8);
+        public string ResponseId => response.Patch.GetStringEx("$.response_id"u8);
     }
 }
