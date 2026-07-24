@@ -138,7 +138,7 @@ namespace Azure.AI.Extensions.OpenAI
             {
                 if (prop.NameEquals("type"u8))
                 {
-                    @type = ModelReaderWriter.Read<ResponseToolKind>(prop.Value.GetUtf8Bytes(), ModelSerializationExtensions.WireOptions, AzureAIExtensionsOpenAIContext.Default);
+                    @type = new ResponseToolKind(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("memory_store_name"u8))

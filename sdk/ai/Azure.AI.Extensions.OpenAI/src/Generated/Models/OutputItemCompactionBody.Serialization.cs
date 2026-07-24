@@ -73,6 +73,8 @@ namespace Azure.AI.Extensions.OpenAI.Internal
                 throw new FormatException($"The model {nameof(OutputItemCompactionBody)} does not support writing '{format}' format.");
             }
             base.JsonModelWriteCore(writer, options);
+            writer.WritePropertyName("ItemId"u8);
+            writer.WriteStringValue(ItemId);
             writer.WritePropertyName("encrypted_content"u8);
             writer.WriteStringValue(EncryptedContent);
             if (Optional.IsDefined(CreatedBy))
@@ -126,6 +128,7 @@ namespace Azure.AI.Extensions.OpenAI.Internal
             string id = default;
             AgentReference agentReference = default;
             string responseId = default;
+            string itemId = default;
             string encryptedContent = default;
             string createdBy = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
@@ -133,7 +136,7 @@ namespace Azure.AI.Extensions.OpenAI.Internal
             {
                 if (prop.NameEquals("type"u8))
                 {
-                    @type = ModelReaderWriter.Read<ResponseItemKind>(prop.Value.GetUtf8Bytes(), ModelSerializationExtensions.WireOptions, AzureAIExtensionsOpenAIContext.Default);
+                    @type = new ResponseItemKind(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("id"u8))
@@ -153,6 +156,11 @@ namespace Azure.AI.Extensions.OpenAI.Internal
                 if (prop.NameEquals("response_id"u8))
                 {
                     responseId = prop.Value.GetString();
+                    continue;
+                }
+                if (prop.NameEquals("ItemId"u8))
+                {
+                    itemId = prop.Value.GetString();
                     continue;
                 }
                 if (prop.NameEquals("encrypted_content"u8))
@@ -175,6 +183,7 @@ namespace Azure.AI.Extensions.OpenAI.Internal
                 id,
                 agentReference,
                 responseId,
+                itemId,
                 encryptedContent,
                 createdBy,
                 additionalBinaryDataProperties);

@@ -72,8 +72,8 @@ namespace Azure.AI.Extensions.OpenAI
                 throw new FormatException($"The model {nameof(OutputItemFunctionShellCall)} does not support writing '{format}' format.");
             }
             base.JsonModelWriteCore(writer, options);
-            writer.WritePropertyName("id"u8);
-            writer.WriteStringValue(Id);
+            writer.WritePropertyName("ItemId"u8);
+            writer.WriteStringValue(ItemId);
             writer.WritePropertyName("call_id"u8);
             writer.WriteStringValue(CallId);
             writer.WritePropertyName("action"u8);
@@ -140,7 +140,7 @@ namespace Azure.AI.Extensions.OpenAI
             string id = default;
             AgentReference agentReference = default;
             string responseId = default;
-            string id0 = default;
+            string itemId = default;
             string callId = default;
             FunctionShellAction action = default;
             LocalShellCallStatus status = default;
@@ -151,7 +151,7 @@ namespace Azure.AI.Extensions.OpenAI
             {
                 if (prop.NameEquals("type"u8))
                 {
-                    @type = ModelReaderWriter.Read<ResponseItemKind>(prop.Value.GetUtf8Bytes(), ModelSerializationExtensions.WireOptions, AzureAIExtensionsOpenAIContext.Default);
+                    @type = new ResponseItemKind(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("id"u8))
@@ -173,9 +173,9 @@ namespace Azure.AI.Extensions.OpenAI
                     responseId = prop.Value.GetString();
                     continue;
                 }
-                if (prop.NameEquals("id"u8))
+                if (prop.NameEquals("ItemId"u8))
                 {
-                    id0 = prop.Value.GetString();
+                    itemId = prop.Value.GetString();
                     continue;
                 }
                 if (prop.NameEquals("call_id"u8))
@@ -218,7 +218,7 @@ namespace Azure.AI.Extensions.OpenAI
                 id,
                 agentReference,
                 responseId,
-                id0,
+                itemId,
                 callId,
                 action,
                 status,

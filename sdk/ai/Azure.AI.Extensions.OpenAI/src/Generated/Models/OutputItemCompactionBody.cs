@@ -15,11 +15,16 @@ namespace Azure.AI.Extensions.OpenAI.Internal
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="OutputItemCompactionBody"/>. </summary>
+        /// <param name="itemId"> The unique ID of the compaction item. </param>
         /// <param name="encryptedContent"> The encrypted content that was produced by compaction. </param>
-        internal OutputItemCompactionBody(string encryptedContent) : base("compaction")
+        internal OutputItemCompactionBody(string itemId, string encryptedContent) : base("compaction")
         {
+            ItemId = itemId;
             EncryptedContent = encryptedContent;
         }
+
+        /// <summary> The unique ID of the compaction item. </summary>
+        public string ItemId { get; }
 
         /// <summary> The encrypted content that was produced by compaction. </summary>
         public string EncryptedContent { get; }

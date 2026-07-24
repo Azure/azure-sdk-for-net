@@ -73,10 +73,10 @@ namespace Azure.AI.Extensions.OpenAI.Internal
                 throw new FormatException($"The model {nameof(OutputItemLocalShellToolCall)} does not support writing '{format}' format.");
             }
             base.JsonModelWriteCore(writer, options);
+            writer.WritePropertyName("ItemId"u8);
+            writer.WriteStringValue(ItemId);
             writer.WritePropertyName("call_id"u8);
             writer.WriteStringValue(CallId);
-            writer.WritePropertyName("action"u8);
-            writer.WriteObjectValue(Action, options);
             writer.WritePropertyName("status"u8);
             writer.WriteStringValue(Status.ToSerialString());
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
@@ -125,15 +125,15 @@ namespace Azure.AI.Extensions.OpenAI.Internal
             string id = default;
             AgentReference agentReference = default;
             string responseId = default;
+            string itemId = default;
             string callId = default;
-            LocalShellExecAction action = default;
-            InputItemLocalShellToolCallStatus status = default;
+            OutputItemLocalShellToolCallStatus status = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("type"u8))
                 {
-                    @type = ModelReaderWriter.Read<ResponseItemKind>(prop.Value.GetUtf8Bytes(), ModelSerializationExtensions.WireOptions, AzureAIExtensionsOpenAIContext.Default);
+                    @type = new ResponseItemKind(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("id"u8))
@@ -155,19 +155,19 @@ namespace Azure.AI.Extensions.OpenAI.Internal
                     responseId = prop.Value.GetString();
                     continue;
                 }
+                if (prop.NameEquals("ItemId"u8))
+                {
+                    itemId = prop.Value.GetString();
+                    continue;
+                }
                 if (prop.NameEquals("call_id"u8))
                 {
                     callId = prop.Value.GetString();
                     continue;
                 }
-                if (prop.NameEquals("action"u8))
-                {
-                    action = LocalShellExecAction.DeserializeLocalShellExecAction(prop.Value, options);
-                    continue;
-                }
                 if (prop.NameEquals("status"u8))
                 {
-                    status = prop.Value.GetString().ToInputItemLocalShellToolCallStatus();
+                    status = prop.Value.GetString().ToOutputItemLocalShellToolCallStatus();
                     continue;
                 }
                 if (options.Format != "W")
@@ -180,8 +180,8 @@ namespace Azure.AI.Extensions.OpenAI.Internal
                 id,
                 agentReference,
                 responseId,
+                itemId,
                 callId,
-                action,
                 status,
                 additionalBinaryDataProperties);
         }

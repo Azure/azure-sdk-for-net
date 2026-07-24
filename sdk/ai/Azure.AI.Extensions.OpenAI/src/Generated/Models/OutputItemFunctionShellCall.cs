@@ -14,6 +14,9 @@ namespace Azure.AI.Extensions.OpenAI
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
+        /// <summary> The unique ID of the shell tool call. Populated when this item is returned via API. </summary>
+        public string ItemId { get; }
+
         /// <summary> The ID of the entity that created this tool call. </summary>
         public string CreatedBy { get; }
     }
