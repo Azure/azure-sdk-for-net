@@ -11,22 +11,22 @@ using Azure.ResourceManager.ContainerService;
 
 namespace Azure.ResourceManager.ContainerService.Models
 {
-    /// <summary> Identity information used by Defender security gating to access container registries. </summary>
-    public partial class ManagedClusterSecurityProfileDefenderSecurityGatingIdentitiesItem
+    /// <summary> Identity mapping used by Defender security gating for registry access. </summary>
+    public partial class ManagedClusterSecurityProfileDefenderSecurityGatingIdentity
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="ManagedClusterSecurityProfileDefenderSecurityGatingIdentitiesItem"/>. </summary>
-        public ManagedClusterSecurityProfileDefenderSecurityGatingIdentitiesItem()
+        /// <summary> Initializes a new instance of <see cref="ManagedClusterSecurityProfileDefenderSecurityGatingIdentity"/>. </summary>
+        public ManagedClusterSecurityProfileDefenderSecurityGatingIdentity()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="ManagedClusterSecurityProfileDefenderSecurityGatingIdentitiesItem"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="ManagedClusterSecurityProfileDefenderSecurityGatingIdentity"/>. </summary>
         /// <param name="azureContainerRegistry"> The container registry for which the identity will be used; the identity specified here should have a federated identity credential attached to it. </param>
         /// <param name="identity"> The identity object used to access the registry. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ManagedClusterSecurityProfileDefenderSecurityGatingIdentitiesItem(string azureContainerRegistry, ContainerServiceUserAssignedIdentity identity, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ManagedClusterSecurityProfileDefenderSecurityGatingIdentity(string azureContainerRegistry, ContainerServiceUserAssignedIdentity identity, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             AzureContainerRegistry = azureContainerRegistry;
             Identity = identity;
