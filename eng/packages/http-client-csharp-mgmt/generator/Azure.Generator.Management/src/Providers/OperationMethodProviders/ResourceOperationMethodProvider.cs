@@ -237,26 +237,37 @@ namespace Azure.Generator.Management.Providers.OperationMethodProviders
 
         private IReadOnlyList<CSharpType> BuildBodyDependencyTypes()
         {
-            if (!ShouldApplyLroHandling ||
-                IsFakeLongRunningOperation ||
-                !HasTypedResultForPublicSurface)
+            if (!ShouldApplyLroHandling)
             {
                 return [];
             }
 
             var outputLibrary = ManagementClientGenerator.Instance.OutputLibrary;
+            var dependencies = new List<CSharpType>
+            {
+                HasTypedResultForPublicSurface
+                    ? outputLibrary.ArmOperationOfT.Type
+                    : outputLibrary.ArmOperation.Type
+            };
+
+            if (IsFakeLongRunningOperation || !HasTypedResultForPublicSurface)
+            {
+                return dependencies;
+            }
+
             if (_returnBodyResourceClient != null)
             {
-                return [outputLibrary.GetOperationSource(_returnBodyResourceClient).Type];
+                dependencies.Add(outputLibrary.GetOperationSource(_returnBodyResourceClient).Type);
+                return dependencies;
             }
 
             if (_originalBodyType != null &&
                 outputLibrary.OperationSourceDict.TryGetValue(_originalBodyType, out var operationSource))
             {
-                return [operationSource.Type];
+                dependencies.Add(operationSource.Type);
             }
 
-            return [];
+            return dependencies;
         }
 
         protected virtual MethodBodyStatement[] BuildBodyStatements()
