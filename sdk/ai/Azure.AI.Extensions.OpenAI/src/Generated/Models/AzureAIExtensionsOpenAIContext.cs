@@ -106,6 +106,7 @@ namespace Azure.AI.Extensions.OpenAI
     [ModelReaderWriterBuildable(typeof(FunctionShellCallOutputOutcomeParam))]
     [ModelReaderWriterBuildable(typeof(FunctionShellCallOutputTimeoutOutcome))]
     [ModelReaderWriterBuildable(typeof(FunctionShellCallOutputTimeoutOutcomeParam))]
+    [ModelReaderWriterBuildable(typeof(OpenAI.FunctionToolCallOutput))]
     [ModelReaderWriterBuildable(typeof(HybridSearchOptions))]
     [ModelReaderWriterBuildable(typeof(InputContent))]
     [ModelReaderWriterBuildable(typeof(InputContentInputFileContent))]
@@ -173,6 +174,7 @@ namespace Azure.AI.Extensions.OpenAI
     [ModelReaderWriterBuildable(typeof(InternalOutputItemCodeInterpreterToolCall))]
     [ModelReaderWriterBuildable(typeof(InternalOutputItemCompactionBody))]
     [ModelReaderWriterBuildable(typeof(InternalOutputItemComputerToolCall))]
+    [ModelReaderWriterBuildable(typeof(OpenAI.InternalOutputItemCustomToolCall))]
     [ModelReaderWriterBuildable(typeof(InternalOutputItemCustomToolCallResource))]
     [ModelReaderWriterBuildable(typeof(InternalOutputItemFileSearchToolCall))]
     [ModelReaderWriterBuildable(typeof(InternalOutputItemFunctionShellCall))]
@@ -206,6 +208,7 @@ namespace Azure.AI.Extensions.OpenAI
     [ModelReaderWriterBuildable(typeof(ItemFieldCompactionBody))]
     [ModelReaderWriterBuildable(typeof(ItemFieldComputerToolCall))]
     [ModelReaderWriterBuildable(typeof(ItemFieldComputerToolCallOutput))]
+    [ModelReaderWriterBuildable(typeof(OpenAI.ItemFieldComputerToolCallOutputResource))]
     [ModelReaderWriterBuildable(typeof(ItemFieldCustomToolCall))]
     [ModelReaderWriterBuildable(typeof(ItemFieldCustomToolCallOutput))]
     [ModelReaderWriterBuildable(typeof(ItemFieldFileSearchToolCall))]
@@ -244,6 +247,8 @@ namespace Azure.AI.Extensions.OpenAI
 #pragma warning disable AAIP001 // global::Azure.AI.Extensions.OpenAI.MemorySearchToolCall is experimental and may change in future versions.
     [ModelReaderWriterBuildable(typeof(MemorySearchToolCall))]
 #pragma warning restore AAIP001 // global::Azure.AI.Extensions.OpenAI.MemorySearchToolCall is experimental and may change in future versions.
+    [ModelReaderWriterBuildable(typeof(OpenAI.MemorySearchToolCallResponseItem))]
+    [ModelReaderWriterBuildable(typeof(OpenAI.MemoryToolSearchItem))]
     [ModelReaderWriterBuildable(typeof(MessageContentInputFileContent))]
     [ModelReaderWriterBuildable(typeof(MessageContentInputImageContent))]
     [ModelReaderWriterBuildable(typeof(MessageContentInputTextContent))]
