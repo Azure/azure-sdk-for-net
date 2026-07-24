@@ -592,6 +592,7 @@ namespace Azure.AI.Extensions.OpenAI
         /// <param name="id"></param>
         /// <param name="agentReference"></param>
         /// <param name="responseId"></param>
+        /// <param name="id0"></param>
         /// <param name="internalConsentLink"></param>
         /// <param name="serverLabel"></param>
         /// <returns> A new <see cref="OpenAI.OAuthConsentRequestResponseItem"/> instance for mocking. </returns>
@@ -603,6 +604,7 @@ namespace Azure.AI.Extensions.OpenAI
                 id,
                 agentReference,
                 responseId,
+                id0,
                 internalConsentLink,
                 serverLabel,
                 additionalBinaryDataProperties: null);
