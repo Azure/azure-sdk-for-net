@@ -10,10 +10,7 @@ using Azure.Provisioning.Primitives;
 
 namespace Azure.Provisioning.Cdn
 {
-    /// <summary>
-    /// The JSON object that contains the properties to secure a custom domain.
-    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="CdnManagedHttpsContent"/> and <see cref="UserManagedHttpsContent"/>.
-    /// </summary>
+    /// <summary> The JSON object that contains the properties to secure a custom domain. </summary>
     public partial class CustomDomainHttpsContent : ProvisionableConstruct
     {
         private BicepValue<SecureDeliveryProtocolType> _protocolType;

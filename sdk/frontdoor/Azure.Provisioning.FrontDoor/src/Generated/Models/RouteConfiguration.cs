@@ -9,10 +9,7 @@ using Azure.Provisioning.Primitives;
 
 namespace Azure.Provisioning.FrontDoor
 {
-    /// <summary>
-    /// Base class for all types of Route.
-    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="ForwardingConfiguration"/> and <see cref="RedirectConfiguration"/>.
-    /// </summary>
+    /// <summary> Base class for all types of Route. </summary>
     public partial class RouteConfiguration : ProvisionableConstruct
     {
         /// <summary> Creates a new RouteConfiguration. </summary>
