@@ -10,10 +10,7 @@ using Azure.Provisioning.Primitives;
 
 namespace Azure.Provisioning.ServiceFabric
 {
-    /// <summary>
-    /// The service resource properties.
-    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="StatefulServiceProperties"/> and <see cref="StatelessServiceProperties"/>.
-    /// </summary>
+    /// <summary> The service resource properties. </summary>
     public partial class ServiceResourceProperties : ProvisionableConstruct
     {
         private BicepValue<string> _provisioningState;
