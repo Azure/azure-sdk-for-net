@@ -189,34 +189,6 @@ namespace Azure.Search.Documents.Indexes
             }
         }
 
-        /// <summary> Deletes a datasource. </summary>
-        /// <param name="dataSourceConnectionName"> The name of the datasource. </param>
-        /// <param name="matchConditions"> The content to send as the request conditions of the request. </param>
-        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="dataSourceConnectionName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="dataSourceConnectionName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual Response DeleteDataSourceConnection(string dataSourceConnectionName, MatchConditions matchConditions = default, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(dataSourceConnectionName, nameof(dataSourceConnectionName));
-
-            return DeleteDataSourceConnection(dataSourceConnectionName, matchConditions, cancellationToken.ToRequestContext());
-        }
-
-        /// <summary> Deletes a datasource. </summary>
-        /// <param name="dataSourceConnectionName"> The name of the datasource. </param>
-        /// <param name="matchConditions"> The content to send as the request conditions of the request. </param>
-        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="dataSourceConnectionName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="dataSourceConnectionName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual async Task<Response> DeleteDataSourceConnectionAsync(string dataSourceConnectionName, MatchConditions matchConditions = default, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(dataSourceConnectionName, nameof(dataSourceConnectionName));
-
-            return await DeleteDataSourceConnectionAsync(dataSourceConnectionName, matchConditions, cancellationToken.ToRequestContext()).ConfigureAwait(false);
-        }
-
         /// <summary>
         /// [Protocol Method] Retrieves a datasource definition.
         /// <list type="bullet">
@@ -803,34 +775,6 @@ namespace Azure.Search.Documents.Indexes
             }
         }
 
-        /// <summary> Deletes an indexer. </summary>
-        /// <param name="indexerName"> The name of the indexer. </param>
-        /// <param name="matchConditions"> The content to send as the request conditions of the request. </param>
-        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="indexerName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="indexerName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual Response DeleteIndexer(string indexerName, MatchConditions matchConditions = default, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(indexerName, nameof(indexerName));
-
-            return DeleteIndexer(indexerName, matchConditions, cancellationToken.ToRequestContext());
-        }
-
-        /// <summary> Deletes an indexer. </summary>
-        /// <param name="indexerName"> The name of the indexer. </param>
-        /// <param name="matchConditions"> The content to send as the request conditions of the request. </param>
-        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="indexerName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="indexerName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual async Task<Response> DeleteIndexerAsync(string indexerName, MatchConditions matchConditions = default, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(indexerName, nameof(indexerName));
-
-            return await DeleteIndexerAsync(indexerName, matchConditions, cancellationToken.ToRequestContext()).ConfigureAwait(false);
-        }
-
         /// <summary>
         /// [Protocol Method] Retrieves an indexer definition.
         /// <list type="bullet">
@@ -1327,34 +1271,6 @@ namespace Azure.Search.Documents.Indexes
                 scope.Failed(e);
                 throw;
             }
-        }
-
-        /// <summary> Deletes a skillset in a search service. </summary>
-        /// <param name="skillsetName"> The name of the skillset. </param>
-        /// <param name="matchConditions"> The content to send as the request conditions of the request. </param>
-        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="skillsetName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="skillsetName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual Response DeleteSkillset(string skillsetName, MatchConditions matchConditions = default, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(skillsetName, nameof(skillsetName));
-
-            return DeleteSkillset(skillsetName, matchConditions, cancellationToken.ToRequestContext());
-        }
-
-        /// <summary> Deletes a skillset in a search service. </summary>
-        /// <param name="skillsetName"> The name of the skillset. </param>
-        /// <param name="matchConditions"> The content to send as the request conditions of the request. </param>
-        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="skillsetName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="skillsetName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual async Task<Response> DeleteSkillsetAsync(string skillsetName, MatchConditions matchConditions = default, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(skillsetName, nameof(skillsetName));
-
-            return await DeleteSkillsetAsync(skillsetName, matchConditions, cancellationToken.ToRequestContext()).ConfigureAwait(false);
         }
 
         /// <summary>
