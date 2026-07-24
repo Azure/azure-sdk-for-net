@@ -2,10 +2,6 @@
 
 ## 1.6.0 (2026-07-24)
 
-### Features Added
-
-### Breaking Changes
-
 ### Bugs Fixed
 
 - Hardened Azure Monitor ingestion and Live Metrics redirect handling to prevent credentials and telemetry from being forwarded to untrusted destinations.
