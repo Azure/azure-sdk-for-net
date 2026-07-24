@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- https://learn.microsoft.com/dotnet/fundamentals/package-validation/diagnostic-ids -->
+<Suppressions xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <Suppression>
+    <DiagnosticId>CP0015</DiagnosticId>
+    <Target>T:Azure.ResourceManager.Consumption.Models.ConsumptionChargeSummary:[T:System.ClientModel.Primitives.PersistableModelProxyAttribute]</Target>
+  </Suppression>
+  <Suppression>
+    <DiagnosticId>CP0015</DiagnosticId>
+    <Target>T:Azure.ResourceManager.Consumption.Models.ConsumptionReservationRecommendation:[T:System.ClientModel.Primitives.PersistableModelProxyAttribute]</Target>
+  </Suppression>
+  <Suppression>
+    <DiagnosticId>CP0015</DiagnosticId>
+    <Target>T:Azure.ResourceManager.Consumption.Models.ConsumptionUsageDetail:[T:System.ClientModel.Primitives.PersistableModelProxyAttribute]</Target>
+  </Suppression>
+  <Suppression>
+    <DiagnosticId>CP0017</DiagnosticId>
+    <Target>M:Azure.ResourceManager.Consumption.ConsumptionExtensions.GetConsumptionReservationRecommendationDetails(Azure.ResourceManager.ArmClient,Azure.Core.ResourceIdentifier,Azure.ResourceManager.Consumption.Models.ConsumptionReservationRecommendationScope,System.String,Azure.ResourceManager.Consumption.Models.ConsumptionReservationRecommendationTerm,Azure.ResourceManager.Consumption.Models.ConsumptionReservationRecommendationLookBackPeriod,System.String,System.Threading.CancellationToken)$2</Target>
+  </Suppression>
+  <Suppression>
+    <DiagnosticId>CP0017</DiagnosticId>
+    <Target>M:Azure.ResourceManager.Consumption.ConsumptionExtensions.GetConsumptionReservationRecommendationDetailsAsync(Azure.ResourceManager.ArmClient,Azure.Core.ResourceIdentifier,Azure.ResourceManager.Consumption.Models.ConsumptionReservationRecommendationScope,System.String,Azure.ResourceManager.Consumption.Models.ConsumptionReservationRecommendationTerm,Azure.ResourceManager.Consumption.Models.ConsumptionReservationRecommendationLookBackPeriod,System.String,System.Threading.CancellationToken)$2</Target>
+  </Suppression>
+</Suppressions>

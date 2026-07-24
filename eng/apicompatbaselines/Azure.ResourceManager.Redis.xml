@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- https://learn.microsoft.com/dotnet/fundamentals/package-validation/diagnostic-ids -->
+<Suppressions xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <Suppression>
+    <DiagnosticId>CP0014</DiagnosticId>
+    <Target>P:Azure.ResourceManager.Redis.Models.RedisCommonConfiguration.AdditionalProperties:[T:Azure.ResourceManager.Redis.WirePathAttribute]</Target>
+  </Suppression>
+  <Suppression>
+    <DiagnosticId>CP0017</DiagnosticId>
+    <Target>M:Azure.ResourceManager.Redis.RedisPatchScheduleCollection.CreateOrUpdate(Azure.WaitUntil,Azure.ResourceManager.Redis.Models.RedisPatchScheduleDefaultName,Azure.ResourceManager.Redis.RedisPatchScheduleData,System.Threading.CancellationToken)$1</Target>
+  </Suppression>
+  <Suppression>
+    <DiagnosticId>CP0017</DiagnosticId>
+    <Target>M:Azure.ResourceManager.Redis.RedisPatchScheduleCollection.CreateOrUpdateAsync(Azure.WaitUntil,Azure.ResourceManager.Redis.Models.RedisPatchScheduleDefaultName,Azure.ResourceManager.Redis.RedisPatchScheduleData,System.Threading.CancellationToken)$1</Target>
+  </Suppression>
+  <Suppression>
+    <DiagnosticId>CP0017</DiagnosticId>
+    <Target>M:Azure.ResourceManager.Redis.RedisPatchScheduleCollection.Exists(Azure.ResourceManager.Redis.Models.RedisPatchScheduleDefaultName,System.Threading.CancellationToken)$0</Target>
+  </Suppression>
+  <Suppression>
+    <DiagnosticId>CP0017</DiagnosticId>
+    <Target>M:Azure.ResourceManager.Redis.RedisPatchScheduleCollection.ExistsAsync(Azure.ResourceManager.Redis.Models.RedisPatchScheduleDefaultName,System.Threading.CancellationToken)$0</Target>
+  </Suppression>
+  <Suppression>
+    <DiagnosticId>CP0017</DiagnosticId>
+    <Target>M:Azure.ResourceManager.Redis.RedisPatchScheduleCollection.Get(Azure.ResourceManager.Redis.Models.RedisPatchScheduleDefaultName,System.Threading.CancellationToken)$0</Target>
+  </Suppression>
+  <Suppression>
+    <DiagnosticId>CP0017</DiagnosticId>
+    <Target>M:Azure.ResourceManager.Redis.RedisPatchScheduleCollection.GetAsync(Azure.ResourceManager.Redis.Models.RedisPatchScheduleDefaultName,System.Threading.CancellationToken)$0</Target>
+  </Suppression>
+  <Suppression>
+    <DiagnosticId>CP0017</DiagnosticId>
+    <Target>M:Azure.ResourceManager.Redis.RedisPatchScheduleCollection.GetIfExists(Azure.ResourceManager.Redis.Models.RedisPatchScheduleDefaultName,System.Threading.CancellationToken)$0</Target>
+  </Suppression>
+  <Suppression>
+    <DiagnosticId>CP0017</DiagnosticId>
+    <Target>M:Azure.ResourceManager.Redis.RedisPatchScheduleCollection.GetIfExistsAsync(Azure.ResourceManager.Redis.Models.RedisPatchScheduleDefaultName,System.Threading.CancellationToken)$0</Target>
+  </Suppression>
+  <Suppression>
+    <DiagnosticId>CP0017</DiagnosticId>
+    <Target>M:Azure.ResourceManager.Redis.RedisResource.GetRedisPatchSchedule(Azure.ResourceManager.Redis.Models.RedisPatchScheduleDefaultName,System.Threading.CancellationToken)$0</Target>
+  </Suppression>
+  <Suppression>
+    <DiagnosticId>CP0017</DiagnosticId>
+    <Target>M:Azure.ResourceManager.Redis.RedisResource.GetRedisPatchScheduleAsync(Azure.ResourceManager.Redis.Models.RedisPatchScheduleDefaultName,System.Threading.CancellationToken)$0</Target>
+  </Suppression>
+</Suppressions>
