@@ -735,21 +735,21 @@ namespace Azure.Provisioning.Automation
     }
     public partial class DscNode : Azure.Provisioning.Primitives.ProvisionableResource
     {
-        public DscNode(string bicepIdentifier, string resourceVersion = null) : base (default(string), default(Azure.Core.ResourceType), default(string)) { }
-        public Azure.Provisioning.BicepValue<string> AccountId { get { throw null; } set { } }
-        public Azure.Provisioning.BicepValue<Azure.ETag> ETag { get { throw null; } set { } }
-        public Azure.Provisioning.BicepList<Azure.Provisioning.Automation.DscNodeExtensionHandlerAssociationProperty> ExtensionHandler { get { throw null; } set { } }
+        internal DscNode() : base (default(string), default(Azure.Core.ResourceType), default(string)) { }
+        public Azure.Provisioning.BicepValue<string> AccountId { get { throw null; } }
+        public Azure.Provisioning.BicepValue<Azure.ETag> ETag { get { throw null; } }
+        public Azure.Provisioning.BicepList<Azure.Provisioning.Automation.DscNodeExtensionHandlerAssociationProperty> ExtensionHandler { get { throw null; } }
         public Azure.Provisioning.BicepValue<Azure.Core.ResourceIdentifier> Id { get { throw null; } }
-        public Azure.Provisioning.BicepValue<string> IP { get { throw null; } set { } }
-        public Azure.Provisioning.BicepValue<System.DateTimeOffset> LastSeenOn { get { throw null; } set { } }
+        public Azure.Provisioning.BicepValue<string> IP { get { throw null; } }
+        public Azure.Provisioning.BicepValue<System.DateTimeOffset> LastSeenOn { get { throw null; } }
         public Azure.Provisioning.BicepValue<string> Name { get { throw null; } set { } }
-        public Azure.Provisioning.BicepValue<string> NamePropertiesNodeConfigurationName { get { throw null; } set { } }
-        public Azure.Provisioning.BicepValue<string> NodeId { get { throw null; } set { } }
+        public Azure.Provisioning.BicepValue<string> NamePropertiesNodeConfigurationName { get { throw null; } }
+        public Azure.Provisioning.BicepValue<string> NodeId { get { throw null; } }
         public Azure.Provisioning.Automation.AutomationAccount Parent { get { throw null; } set { } }
-        public Azure.Provisioning.BicepValue<System.DateTimeOffset> RegistrationOn { get { throw null; } set { } }
-        public Azure.Provisioning.BicepValue<string> Status { get { throw null; } set { } }
+        public Azure.Provisioning.BicepValue<System.DateTimeOffset> RegistrationOn { get { throw null; } }
+        public Azure.Provisioning.BicepValue<string> Status { get { throw null; } }
         public Azure.Provisioning.Resources.SystemData SystemData { get { throw null; } }
-        public Azure.Provisioning.BicepValue<int> TotalCount { get { throw null; } set { } }
+        public Azure.Provisioning.BicepValue<int> TotalCount { get { throw null; } }
         protected override void DefineProvisionableProperties() { }
         public static Azure.Provisioning.Automation.DscNode FromExisting(string bicepIdentifier, string resourceVersion = null) { throw null; }
         public static partial class ResourceVersions
@@ -780,8 +780,8 @@ namespace Azure.Provisioning.Automation
     public partial class DscNodeExtensionHandlerAssociationProperty : Azure.Provisioning.Primitives.ProvisionableConstruct
     {
         public DscNodeExtensionHandlerAssociationProperty() { }
-        public Azure.Provisioning.BicepValue<string> Name { get { throw null; } set { } }
-        public Azure.Provisioning.BicepValue<string> Version { get { throw null; } set { } }
+        public Azure.Provisioning.BicepValue<string> Name { get { throw null; } }
+        public Azure.Provisioning.BicepValue<string> Version { get { throw null; } }
         protected override void DefineProvisionableProperties() { }
     }
     public enum EncryptionKeySourceType
