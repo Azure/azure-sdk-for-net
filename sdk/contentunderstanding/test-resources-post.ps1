@@ -231,20 +231,22 @@ function Update-ContentUnderstandingDefaults {
     # Method: PATCH, Content-Type: application/merge-patch+json
     $apiUrl = "$($Endpoint.TrimEnd('/'))/contentunderstanding/defaults?api-version=2025-11-01"
 
-    # Acquire a bearer token from Az PowerShell for the Cognitive Services audience.
-    # We use Invoke-RestMethod (native PowerShell) rather than `az rest` because
-    # on Windows cmd.exe strips inner double-quotes from `az rest --body`, which
-    # corrupts JSON payloads. Invoke-RestMethod runs entirely in-process and
-    # matches the convention used by other .NET SDK post-scripts such as
-    # sdk/ai/test-resources-post.ps1.
-    $token = Get-AzAccessToken -ResourceUrl 'https://cognitiveservices.azure.com'
-    # Az PowerShell 12+ returns Token as a SecureString; earlier versions return plaintext.
-    $accessToken = if ($token.Token -is [System.Security.SecureString]) {
-        [System.Net.NetworkCredential]::new('', $token.Token).Password
+    # Acquire a bearer token for the Cognitive Services audience via `az`.
+    # We deliberately do NOT use `Get-AzAccessToken` here: this script runs in an
+    # AzureCLI@2 task (because tests.yml sets PersistOidcToken: true), which
+    # authenticates `az` via OIDC but does NOT call Connect-AzAccount, so the
+    # Az PowerShell context has no session and Get-AzAccessToken fails.
+    # We also don't use `az rest` for the request itself: on Windows cmd.exe
+    # strips inner double-quotes from `az rest --body`, corrupting JSON
+    # payloads. Instead we use `az` only to fetch the token and then hand it
+    # to Invoke-RestMethod, which runs natively in PowerShell and avoids the
+    # shell entirely.
+    $tokenJson = az account get-access-token --resource 'https://cognitiveservices.azure.com' --output json 2>&1
+    if ($LASTEXITCODE -ne 0) {
+        Write-Error "Failed to acquire access token via 'az account get-access-token' (exit $LASTEXITCODE): $tokenJson" -ErrorAction Continue
+        return $false
     }
-    else {
-        $token.Token
-    }
+    $accessToken = ($tokenJson | ConvertFrom-Json).accessToken
     $authHeader = @{ Authorization = "Bearer $accessToken" }
 
     $attempt = 0
