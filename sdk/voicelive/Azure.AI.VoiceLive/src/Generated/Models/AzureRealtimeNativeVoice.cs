@@ -10,13 +10,7 @@ using System.Collections.Generic;
 
 namespace Azure.AI.VoiceLive
 {
-    /// <summary>
-    /// Azure realtime native voice configuration. These voices are natively
-    /// supported by the `azure-realtime` model and offer higher quality speech
-    /// synthesis than standard Azure voices. Only valid when using the
-    /// `azure-realtime` model.
-    /// </summary>
-    internal partial class AzureRealtimeNativeVoice
+    internal partial class AzureRealtimeNativeVoice : VoiceProvider
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;

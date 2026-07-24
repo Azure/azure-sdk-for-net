@@ -12,13 +12,7 @@ using System.Text.Json;
 
 namespace Azure.AI.VoiceLive
 {
-    /// <summary>
-    /// Azure realtime native voice configuration. These voices are natively
-    /// supported by the `azure-realtime` model and offer higher quality speech
-    /// synthesis than standard Azure voices. Only valid when using the
-    /// `azure-realtime` model.
-    /// </summary>
-    internal partial class AzureRealtimeNativeVoice : IJsonModel<AzureRealtimeNativeVoice>
+    internal partial class AzureRealtimeNativeVoice : VoiceProvider, IJsonModel<AzureRealtimeNativeVoice>
     {
         /// <summary> Initializes a new instance of <see cref="AzureRealtimeNativeVoice"/> for deserialization. </summary>
         internal AzureRealtimeNativeVoice()
