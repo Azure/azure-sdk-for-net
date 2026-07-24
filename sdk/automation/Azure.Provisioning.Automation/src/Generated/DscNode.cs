@@ -26,7 +26,7 @@ namespace Azure.Provisioning.Automation
         /// <summary> Creates a new DscNode. </summary>
         /// <param name="bicepIdentifier"> The bicep identifier name. </param>
         /// <param name="resourceVersion"> The resource API version. </param>
-        public DscNode(string bicepIdentifier, string resourceVersion = null) : base(bicepIdentifier, "Microsoft.Automation/automationAccounts/nodes", resourceVersion ?? "2024-10-23")
+        internal DscNode(string bicepIdentifier, string resourceVersion = null) : base(bicepIdentifier, "Microsoft.Automation/automationAccounts/nodes", resourceVersion ?? "2024-10-23")
         {
         }
 
@@ -65,18 +65,13 @@ namespace Azure.Provisioning.Automation
             }
         }
 
-        /// <summary> Gets or sets the Properties. </summary>
+        /// <summary> Gets the Properties. </summary>
         internal DscNodeProperties Properties
         {
             get
             {
                 Initialize();
                 return _properties;
-            }
-            set
-            {
-                Initialize();
-                AssignOrReplace(ref _properties, value);
             }
         }
 
@@ -95,173 +90,93 @@ namespace Azure.Provisioning.Automation
             }
         }
 
-        /// <summary> Gets or sets the LastSeenOn. </summary>
+        /// <summary> Gets the LastSeenOn. </summary>
         public BicepValue<DateTimeOffset> LastSeenOn
         {
             get
             {
-                return Properties is null ? default : Properties.LastSeenOn;
-            }
-            set
-            {
-                if (Properties is null)
-                {
-                    Properties = new DscNodeProperties();
-                }
-                Properties.LastSeenOn = value;
+                return Properties.LastSeenOn;
             }
         }
 
-        /// <summary> Gets or sets the RegistrationOn. </summary>
+        /// <summary> Gets the RegistrationOn. </summary>
         public BicepValue<DateTimeOffset> RegistrationOn
         {
             get
             {
-                return Properties is null ? default : Properties.RegistrationOn;
-            }
-            set
-            {
-                if (Properties is null)
-                {
-                    Properties = new DscNodeProperties();
-                }
-                Properties.RegistrationOn = value;
+                return Properties.RegistrationOn;
             }
         }
 
-        /// <summary> Gets or sets the IP. </summary>
+        /// <summary> Gets the IP. </summary>
         public BicepValue<string> IP
         {
             get
             {
-                return Properties is null ? default : Properties.IP;
-            }
-            set
-            {
-                if (Properties is null)
-                {
-                    Properties = new DscNodeProperties();
-                }
-                Properties.IP = value;
+                return Properties.IP;
             }
         }
 
-        /// <summary> Gets or sets the AccountId. </summary>
+        /// <summary> Gets the AccountId. </summary>
         public BicepValue<string> AccountId
         {
             get
             {
-                return Properties is null ? default : Properties.AccountId;
-            }
-            set
-            {
-                if (Properties is null)
-                {
-                    Properties = new DscNodeProperties();
-                }
-                Properties.AccountId = value;
+                return Properties.AccountId;
             }
         }
 
-        /// <summary> Gets or sets the Status. </summary>
+        /// <summary> Gets the Status. </summary>
         public BicepValue<string> Status
         {
             get
             {
-                return Properties is null ? default : Properties.Status;
-            }
-            set
-            {
-                if (Properties is null)
-                {
-                    Properties = new DscNodeProperties();
-                }
-                Properties.Status = value;
+                return Properties.Status;
             }
         }
 
-        /// <summary> Gets or sets the NodeId. </summary>
+        /// <summary> Gets the NodeId. </summary>
         public BicepValue<string> NodeId
         {
             get
             {
-                return Properties is null ? default : Properties.NodeId;
-            }
-            set
-            {
-                if (Properties is null)
-                {
-                    Properties = new DscNodeProperties();
-                }
-                Properties.NodeId = value;
+                return Properties.NodeId;
             }
         }
 
-        /// <summary> Gets or sets the ETag. </summary>
+        /// <summary> Gets the ETag. </summary>
         public BicepValue<ETag> ETag
         {
             get
             {
-                return Properties is null ? default : Properties.ETag;
-            }
-            set
-            {
-                if (Properties is null)
-                {
-                    Properties = new DscNodeProperties();
-                }
-                Properties.ETag = value;
+                return Properties.ETag;
             }
         }
 
-        /// <summary> Gets or sets the TotalCount. </summary>
+        /// <summary> Gets the TotalCount. </summary>
         public BicepValue<int> TotalCount
         {
             get
             {
-                return Properties is null ? default : Properties.TotalCount;
-            }
-            set
-            {
-                if (Properties is null)
-                {
-                    Properties = new DscNodeProperties();
-                }
-                Properties.TotalCount = value;
+                return Properties.TotalCount;
             }
         }
 
-        /// <summary> Gets or sets the ExtensionHandler. </summary>
+        /// <summary> Gets the ExtensionHandler. </summary>
         public BicepList<DscNodeExtensionHandlerAssociationProperty> ExtensionHandler
         {
             get
             {
-                return Properties is null ? default : Properties.ExtensionHandler;
-            }
-            set
-            {
-                if (Properties is null)
-                {
-                    Properties = new DscNodeProperties();
-                }
-                Properties.ExtensionHandler = value;
+                return Properties.ExtensionHandler;
             }
         }
 
-        /// <summary> Gets or sets the NamePropertiesNodeConfigurationName. </summary>
+        /// <summary> Gets the NamePropertiesNodeConfigurationName. </summary>
         public BicepValue<string> NamePropertiesNodeConfigurationName
         {
             get
             {
-                return Properties is null ? default : Properties.NamePropertiesNodeConfigurationName;
-            }
-            set
-            {
-                if (Properties is null)
-                {
-                    Properties = new DscNodeProperties();
-                }
-                Properties.NamePropertiesNodeConfigurationName = value;
+                return Properties.NamePropertiesNodeConfigurationName;
             }
         }
 

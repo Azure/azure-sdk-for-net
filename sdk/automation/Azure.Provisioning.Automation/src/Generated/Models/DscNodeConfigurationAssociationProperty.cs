@@ -20,18 +20,13 @@ namespace Azure.Provisioning.Automation
         {
         }
 
-        /// <summary> Gets or sets the NamePropertiesNodeConfigurationName. </summary>
+        /// <summary> Gets the NamePropertiesNodeConfigurationName. </summary>
         public BicepValue<string> NamePropertiesNodeConfigurationName
         {
             get
             {
                 Initialize();
                 return _namePropertiesNodeConfigurationName;
-            }
-            set
-            {
-                Initialize();
-                _namePropertiesNodeConfigurationName.Assign(value);
             }
         }
 

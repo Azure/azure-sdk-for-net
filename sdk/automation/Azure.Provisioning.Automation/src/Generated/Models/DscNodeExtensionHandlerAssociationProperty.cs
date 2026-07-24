@@ -21,7 +21,7 @@ namespace Azure.Provisioning.Automation
         {
         }
 
-        /// <summary> Gets or sets the Name. </summary>
+        /// <summary> Gets the Name. </summary>
         public BicepValue<string> Name
         {
             get
@@ -29,25 +29,15 @@ namespace Azure.Provisioning.Automation
                 Initialize();
                 return _name;
             }
-            set
-            {
-                Initialize();
-                _name.Assign(value);
-            }
         }
 
-        /// <summary> Gets or sets the Version. </summary>
+        /// <summary> Gets the Version. </summary>
         public BicepValue<string> Version
         {
             get
             {
                 Initialize();
                 return _version;
-            }
-            set
-            {
-                Initialize();
-                _version.Assign(value);
             }
         }
 

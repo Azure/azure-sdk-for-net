@@ -31,7 +31,7 @@ namespace Azure.Provisioning.Automation
         {
         }
 
-        /// <summary> Gets or sets the LastSeenOn. </summary>
+        /// <summary> Gets the LastSeenOn. </summary>
         public BicepValue<DateTimeOffset> LastSeenOn
         {
             get
@@ -39,14 +39,9 @@ namespace Azure.Provisioning.Automation
                 Initialize();
                 return _lastSeenOn;
             }
-            set
-            {
-                Initialize();
-                _lastSeenOn.Assign(value);
-            }
         }
 
-        /// <summary> Gets or sets the RegistrationOn. </summary>
+        /// <summary> Gets the RegistrationOn. </summary>
         public BicepValue<DateTimeOffset> RegistrationOn
         {
             get
@@ -54,14 +49,9 @@ namespace Azure.Provisioning.Automation
                 Initialize();
                 return _registrationOn;
             }
-            set
-            {
-                Initialize();
-                _registrationOn.Assign(value);
-            }
         }
 
-        /// <summary> Gets or sets the IP. </summary>
+        /// <summary> Gets the IP. </summary>
         public BicepValue<string> IP
         {
             get
@@ -69,14 +59,9 @@ namespace Azure.Provisioning.Automation
                 Initialize();
                 return _ip;
             }
-            set
-            {
-                Initialize();
-                _ip.Assign(value);
-            }
         }
 
-        /// <summary> Gets or sets the AccountId. </summary>
+        /// <summary> Gets the AccountId. </summary>
         public BicepValue<string> AccountId
         {
             get
@@ -84,14 +69,9 @@ namespace Azure.Provisioning.Automation
                 Initialize();
                 return _accountId;
             }
-            set
-            {
-                Initialize();
-                _accountId.Assign(value);
-            }
         }
 
-        /// <summary> Gets or sets the NodeConfiguration. </summary>
+        /// <summary> Gets the NodeConfiguration. </summary>
         internal DscNodeConfigurationAssociationProperty NodeConfiguration
         {
             get
@@ -99,14 +79,9 @@ namespace Azure.Provisioning.Automation
                 Initialize();
                 return _nodeConfiguration;
             }
-            set
-            {
-                Initialize();
-                AssignOrReplace(ref _nodeConfiguration, value);
-            }
         }
 
-        /// <summary> Gets or sets the Status. </summary>
+        /// <summary> Gets the Status. </summary>
         public BicepValue<string> Status
         {
             get
@@ -114,14 +89,9 @@ namespace Azure.Provisioning.Automation
                 Initialize();
                 return _status;
             }
-            set
-            {
-                Initialize();
-                _status.Assign(value);
-            }
         }
 
-        /// <summary> Gets or sets the NodeId. </summary>
+        /// <summary> Gets the NodeId. </summary>
         public BicepValue<string> NodeId
         {
             get
@@ -129,14 +99,9 @@ namespace Azure.Provisioning.Automation
                 Initialize();
                 return _nodeId;
             }
-            set
-            {
-                Initialize();
-                _nodeId.Assign(value);
-            }
         }
 
-        /// <summary> Gets or sets the ETag. </summary>
+        /// <summary> Gets the ETag. </summary>
         public BicepValue<ETag> ETag
         {
             get
@@ -144,14 +109,9 @@ namespace Azure.Provisioning.Automation
                 Initialize();
                 return _eTag;
             }
-            set
-            {
-                Initialize();
-                _eTag.Assign(value);
-            }
         }
 
-        /// <summary> Gets or sets the TotalCount. </summary>
+        /// <summary> Gets the TotalCount. </summary>
         public BicepValue<int> TotalCount
         {
             get
@@ -159,14 +119,9 @@ namespace Azure.Provisioning.Automation
                 Initialize();
                 return _totalCount;
             }
-            set
-            {
-                Initialize();
-                _totalCount.Assign(value);
-            }
         }
 
-        /// <summary> Gets or sets the ExtensionHandler. </summary>
+        /// <summary> Gets the ExtensionHandler. </summary>
         public BicepList<DscNodeExtensionHandlerAssociationProperty> ExtensionHandler
         {
             get
@@ -174,27 +129,14 @@ namespace Azure.Provisioning.Automation
                 Initialize();
                 return _extensionHandler;
             }
-            set
-            {
-                Initialize();
-                _extensionHandler.Assign(value);
-            }
         }
 
-        /// <summary> Gets or sets the NamePropertiesNodeConfigurationName. </summary>
+        /// <summary> Gets the NamePropertiesNodeConfigurationName. </summary>
         public BicepValue<string> NamePropertiesNodeConfigurationName
         {
             get
             {
                 return NodeConfiguration is null ? default : NodeConfiguration.NamePropertiesNodeConfigurationName;
-            }
-            set
-            {
-                if (NodeConfiguration is null)
-                {
-                    NodeConfiguration = new DscNodeConfigurationAssociationProperty();
-                }
-                NodeConfiguration.NamePropertiesNodeConfigurationName = value;
             }
         }
 
