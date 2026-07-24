@@ -90,7 +90,8 @@ namespace Azure.ResourceManager.KeyVault.Tests
             VaultProperties.EnableSoftDelete = true;
             VaultProperties.SoftDeleteRetentionInDays = DefSoftDeleteRetentionInDays;
             VaultProperties.VaultUri = new Uri("http://vaulturi.com");
-            VaultProperties.NetworkRuleSet = new KeyVaultNetworkRuleSet() {
+            VaultProperties.NetworkRuleSet = new KeyVaultNetworkRuleSet()
+            {
                 Bypass = "AzureServices",
                 DefaultAction = "Allow",
                 IPRules =

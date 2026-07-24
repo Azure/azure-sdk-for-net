@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.Storage
         {
             TryGetApiVersion(ResourceType, out string storageTaskAssignmentApiVersion);
             _storageTaskAssignmentsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Storage", ResourceType.Namespace, Diagnostics);
-            _storageTaskAssignmentsRestClient = new StorageTaskAssignments(_storageTaskAssignmentsClientDiagnostics, Pipeline, Endpoint, storageTaskAssignmentApiVersion ?? "2025-08-01");
+            _storageTaskAssignmentsRestClient = new StorageTaskAssignments(_storageTaskAssignmentsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, storageTaskAssignmentApiVersion ?? "2025-08-01");
             ValidateResourceId(id);
         }
 

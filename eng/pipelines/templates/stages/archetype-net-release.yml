@@ -72,7 +72,6 @@ stages:
                   ne(variables['SetDevVersion'], 'true'),
                   ne(variables['Skip.Release'], 'true'),
                   ne(variables['Build.Repository.Name'], 'Azure/azure-sdk-for-net-pr'),
-                  eq(dependencies.AutoReleasePrepare.outputs['ResolveAutoReleasePackages.resolve.AutoReleaseLabelPresent'], 'true'),
                   eq(dependencies.AutoReleasePrepare.outputs['ResolveAutoReleasePackages.resolve.ReleaseArtifact_${{artifact.safeName}}'], 'true'))
           ${{ else }}:
             # Manual release path: unchanged existing behavior.

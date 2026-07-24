@@ -32,4 +32,5 @@ class;Azure.AI.Extensions.OpenAI.SharepointGroundingToolCallOutput
 class;Azure.AI.Extensions.OpenAI.SharepointGroundingToolParameters
 class;Azure.AI.Extensions.OpenAI.SharepointPreviewTool
 class;Azure.AI.Extensions.OpenAI.UserProfileMemoryItem
+class;Azure.AI.Extensions.OpenAI.WebIQPreviewTool
 class;Azure.AI.Extensions.OpenAI.WorkIQPreviewTool

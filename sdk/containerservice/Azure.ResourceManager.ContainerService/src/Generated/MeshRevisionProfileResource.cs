@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.ContainerService
         {
             TryGetApiVersion(ResourceType, out string meshRevisionProfileApiVersion);
             _meshRevisionProfilesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ContainerService", ResourceType.Namespace, Diagnostics);
-            _meshRevisionProfilesRestClient = new MeshRevisionProfiles(_meshRevisionProfilesClientDiagnostics, Pipeline, Endpoint, meshRevisionProfileApiVersion ?? "2026-04-02-preview");
+            _meshRevisionProfilesRestClient = new MeshRevisionProfiles(_meshRevisionProfilesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, meshRevisionProfileApiVersion ?? "2026-04-02-preview");
             ValidateResourceId(id);
         }
 

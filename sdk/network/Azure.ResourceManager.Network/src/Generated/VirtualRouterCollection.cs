@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.Network
         {
             TryGetApiVersion(VirtualRouterResource.ResourceType, out string virtualRouterApiVersion);
             _virtualRoutersClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Network", VirtualRouterResource.ResourceType.Namespace, Diagnostics);
-            _virtualRoutersRestClient = new VirtualRouters(_virtualRoutersClientDiagnostics, Pipeline, Endpoint, virtualRouterApiVersion ?? "2025-07-01");
+            _virtualRoutersRestClient = new VirtualRouters(_virtualRoutersClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, virtualRouterApiVersion ?? "2025-07-01");
             ValidateResourceId(id);
         }
 

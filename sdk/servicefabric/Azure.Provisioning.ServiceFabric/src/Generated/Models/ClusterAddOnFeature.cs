@@ -11,12 +11,12 @@ namespace Azure.Provisioning.ServiceFabric
     public enum ClusterAddOnFeature
     {
         /// <summary> Add on RepairManager. </summary>
-        RepairManager,
+        RepairManager = 0,
         /// <summary> Add on DnsService. </summary>
-        DnsService,
+        DnsService = 1,
         /// <summary> Add on BackupRestoreService. </summary>
-        BackupRestoreService,
+        BackupRestoreService = 2,
         /// <summary> Add on ResourceMonitorService. </summary>
-        ResourceMonitorService
+        ResourceMonitorService = 3
     }
 }

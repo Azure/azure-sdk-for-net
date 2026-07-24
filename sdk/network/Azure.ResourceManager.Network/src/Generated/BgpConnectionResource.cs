@@ -52,9 +52,9 @@ namespace Azure.ResourceManager.Network
         {
             TryGetApiVersion(ResourceType, out string bgpConnectionApiVersion);
             _virtualHubBgpConnectionClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Network", ResourceType.Namespace, Diagnostics);
-            _virtualHubBgpConnectionRestClient = new VirtualHubBgpConnection(_virtualHubBgpConnectionClientDiagnostics, Pipeline, Endpoint, bgpConnectionApiVersion ?? "2025-07-01");
+            _virtualHubBgpConnectionRestClient = new VirtualHubBgpConnection(_virtualHubBgpConnectionClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, bgpConnectionApiVersion ?? "2025-07-01");
             _virtualHubBgpConnectionsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Network", ResourceType.Namespace, Diagnostics);
-            _virtualHubBgpConnectionsRestClient = new VirtualHubBgpConnections(_virtualHubBgpConnectionsClientDiagnostics, Pipeline, Endpoint, bgpConnectionApiVersion ?? "2025-07-01");
+            _virtualHubBgpConnectionsRestClient = new VirtualHubBgpConnections(_virtualHubBgpConnectionsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, bgpConnectionApiVersion ?? "2025-07-01");
             ValidateResourceId(id);
         }
 

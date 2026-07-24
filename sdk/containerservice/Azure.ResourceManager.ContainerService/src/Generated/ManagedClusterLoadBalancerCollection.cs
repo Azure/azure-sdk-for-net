@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.ContainerService
         {
             TryGetApiVersion(ManagedClusterLoadBalancerResource.ResourceType, out string managedClusterLoadBalancerApiVersion);
             _loadBalancersClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ContainerService", ManagedClusterLoadBalancerResource.ResourceType.Namespace, Diagnostics);
-            _loadBalancersRestClient = new LoadBalancers(_loadBalancersClientDiagnostics, Pipeline, Endpoint, managedClusterLoadBalancerApiVersion ?? "2026-04-02-preview");
+            _loadBalancersRestClient = new LoadBalancers(_loadBalancersClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, managedClusterLoadBalancerApiVersion ?? "2026-04-02-preview");
             ValidateResourceId(id);
         }
 

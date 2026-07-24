@@ -23,6 +23,7 @@ namespace Azure.Generator.Provisioning
         private Dictionary<string, ProvisioningResourceProvider>? _resourcesByIdPattern;
         private Dictionary<InputModelType, List<ProvisioningResourceProvider>>? _resourcesByModel;
         private BuiltInRoleProvider? _builtInRole;
+        private CodeGenEnumValueAttributeDefinition? _codeGenEnumValueAttributeDefinition;
 
         /// <summary>
         /// Gets the BuiltInRole type provider if any resources define RBAC roles.
@@ -35,6 +36,8 @@ namespace Azure.Generator.Provisioning
                 return _builtInRole;
             }
         }
+
+        internal CodeGenEnumValueAttributeDefinition CodeGenEnumValueAttributeDefinition => _codeGenEnumValueAttributeDefinition ??= new();
 
         /// <summary>
         /// Gets all provisioning resource providers.
@@ -150,20 +153,27 @@ namespace Azure.Generator.Provisioning
             {
                 providers.Add(BuiltInRole);
             }
+            providers.Add(CodeGenEnumValueAttributeDefinition);
 
             // Build models and enums via TypeFactory — our overridden CreateModel/CreateEnum
             // return ProvisioningModelProvider/ProvisioningResourceProvider/EnumProvider.
             // Only emit models/enums reachable from resource models' property graphs. This
             // avoids emitting dead types like list-result envelopes, patch/request wrappers,
             // and error models that have no place in a Provisioning library.
-            foreach (var inputModel in ProvisioningGenerator.Instance.InputLibrary.ReachableModels)
+            foreach (var inputModel in ProvisioningGenerator.Instance.InputLibrary.InputNamespace.Models)
             {
+                if (TryGetResourcesByModel(inputModel, out _))
+                {
+                    // Resource providers were pre-created above, but resource models remain in
+                    // InputNamespace so management-plane metadata and customization caches can
+                    // inspect them.
+                    continue;
+                }
+
                 var model = ProvisioningGenerator.Instance.TypeFactory.CreateModel(inputModel);
                 if (model is not null)
                 {
                     providers.Add(model);
-                    // CollectReachableTypes excludes models already backed by ArmProviderSchema.Resources,
-                    // so this does not duplicate the pre-created resource providers added above.
                     // CreateModel can still return a resource provider here for discriminator-derived
                     // models whose base chain is a resource, and those providers must also be kept.
                     if (model is ProvisioningResourceProvider resource)
@@ -173,7 +183,7 @@ namespace Azure.Generator.Provisioning
                 }
             }
 
-            foreach (var inputEnum in ProvisioningGenerator.Instance.InputLibrary.ReachableEnums)
+            foreach (var inputEnum in ProvisioningGenerator.Instance.InputLibrary.InputNamespace.Enums)
             {
                 var enumProvider = ProvisioningGenerator.Instance.TypeFactory.CreateEnum(inputEnum);
                 if (enumProvider != null)

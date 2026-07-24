@@ -14,21 +14,21 @@ namespace Azure.Provisioning.Cdn
     {
         /// <summary> Ecdhe_Rsa_Aes128_Gcm_Sha256. </summary>
         [DataMember(Name = "ECDHE_RSA_AES128_GCM_SHA256")]
-        Ecdhe_Rsa_Aes128_Gcm_Sha256,
+        Ecdhe_Rsa_Aes128_Gcm_Sha256 = 0,
         /// <summary> Ecdhe_Rsa_Aes256_Gcm_Sha384. </summary>
         [DataMember(Name = "ECDHE_RSA_AES256_GCM_SHA384")]
-        Ecdhe_Rsa_Aes256_Gcm_Sha384,
+        Ecdhe_Rsa_Aes256_Gcm_Sha384 = 1,
         /// <summary> Dhe_Rsa_Aes256_Gcm_Sha384. </summary>
         [DataMember(Name = "DHE_RSA_AES256_GCM_SHA384")]
-        Dhe_Rsa_Aes256_Gcm_Sha384,
+        Dhe_Rsa_Aes256_Gcm_Sha384 = 2,
         /// <summary> Dhe_Rsa_Aes128_Gcm_Sha256. </summary>
         [DataMember(Name = "DHE_RSA_AES128_GCM_SHA256")]
-        Dhe_Rsa_Aes128_Gcm_Sha256,
+        Dhe_Rsa_Aes128_Gcm_Sha256 = 3,
         /// <summary> Ecdhe_Rsa_Aes128_Sha256. </summary>
         [DataMember(Name = "ECDHE_RSA_AES128_SHA256")]
-        Ecdhe_Rsa_Aes128_Sha256,
+        Ecdhe_Rsa_Aes128_Sha256 = 4,
         /// <summary> Ecdhe_Rsa_Aes256_Sha384. </summary>
         [DataMember(Name = "ECDHE_RSA_AES256_SHA384")]
-        Ecdhe_Rsa_Aes256_Sha384
+        Ecdhe_Rsa_Aes256_Sha384 = 5
     }
 }

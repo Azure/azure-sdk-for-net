@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.AgriculturePlatform.Mocking
 
         private ClientDiagnostics AgriServiceClientDiagnostics => _agriServiceClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.AgriculturePlatform.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private AgriService AgriServiceRestClient => _agriServiceRestClient ??= new AgriService(AgriServiceClientDiagnostics, Pipeline, Endpoint, "2024-06-01-preview");
+        private AgriService AgriServiceRestClient => _agriServiceRestClient ??= new AgriService(AgriServiceClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2024-06-01-preview");
 
         /// <summary>
         /// List AgriServiceResource resources by subscription ID

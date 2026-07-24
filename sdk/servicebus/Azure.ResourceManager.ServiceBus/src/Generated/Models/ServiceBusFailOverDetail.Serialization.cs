@@ -79,10 +79,10 @@ namespace Azure.ResourceManager.ServiceBus.Models
                 writer.WritePropertyName("primaryLocation"u8);
                 writer.WriteStringValue(PrimaryLocation);
             }
-            if (Optional.IsDefined(Force))
+            if (Optional.IsDefined(IsForced))
             {
                 writer.WritePropertyName("force"u8);
-                writer.WriteBooleanValue(Force.Value);
+                writer.WriteBooleanValue(IsForced.Value);
             }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
@@ -127,7 +127,7 @@ namespace Azure.ResourceManager.ServiceBus.Models
                 return null;
             }
             string primaryLocation = default;
-            bool? force = default;
+            bool? isForced = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -142,7 +142,7 @@ namespace Azure.ResourceManager.ServiceBus.Models
                     {
                         continue;
                     }
-                    force = prop.Value.GetBoolean();
+                    isForced = prop.Value.GetBoolean();
                     continue;
                 }
                 if (options.Format != "W")
@@ -150,7 +150,7 @@ namespace Azure.ResourceManager.ServiceBus.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new ServiceBusFailOverDetail(primaryLocation, force, additionalBinaryDataProperties);
+            return new ServiceBusFailOverDetail(primaryLocation, isForced, additionalBinaryDataProperties);
         }
     }
 }

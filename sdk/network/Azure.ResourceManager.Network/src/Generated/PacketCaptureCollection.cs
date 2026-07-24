@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.Network
         {
             TryGetApiVersion(PacketCaptureResource.ResourceType, out string packetCaptureApiVersion);
             _packetCapturesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Network", PacketCaptureResource.ResourceType.Namespace, Diagnostics);
-            _packetCapturesRestClient = new PacketCaptures(_packetCapturesClientDiagnostics, Pipeline, Endpoint, packetCaptureApiVersion ?? "2025-07-01");
+            _packetCapturesRestClient = new PacketCaptures(_packetCapturesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, packetCaptureApiVersion ?? "2025-07-01");
             ValidateResourceId(id);
         }
 

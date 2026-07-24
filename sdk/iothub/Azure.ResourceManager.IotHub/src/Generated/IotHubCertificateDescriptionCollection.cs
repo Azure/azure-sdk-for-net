@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.IotHub
         {
             TryGetApiVersion(IotHubCertificateDescriptionResource.ResourceType, out string iotHubCertificateDescriptionApiVersion);
             _certificatesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.IotHub", IotHubCertificateDescriptionResource.ResourceType.Namespace, Diagnostics);
-            _certificatesRestClient = new Certificates(_certificatesClientDiagnostics, Pipeline, Endpoint, iotHubCertificateDescriptionApiVersion ?? "2026-03-01-preview");
+            _certificatesRestClient = new Certificates(_certificatesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, iotHubCertificateDescriptionApiVersion ?? "2026-03-01-preview");
             ValidateResourceId(id);
         }
 

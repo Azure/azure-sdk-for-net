@@ -3,8 +3,6 @@
 
 import { EmitContext } from "@typespec/compiler";
 
-import { CodeModel, CSharpEmitterContext } from "@typespec/http-client-csharp";
-
 import { emitAzureCodeModel } from "@azure-typespec/http-client-csharp";
 import {
   azureSDKContextOptions,
@@ -22,8 +20,23 @@ import {
   deduplicateApiVersionEnums,
   fixClientApiVersions
 } from "./api-version-fixer.js";
+import type {
+  CodeModel,
+  CodeModelMutator,
+  CSharpEmitterContext
+} from "./code-model-types.js";
+import { ArmProviderSchema } from "./resource-metadata.js";
 
-export async function $onEmit(context: EmitContext<AzureMgmtEmitterOptions>) {
+export type ManagementCodeModelTransformer = (
+  codeModel: CodeModel,
+  sdkContext: CSharpEmitterContext,
+  armProviderSchema: ArmProviderSchema
+) => CodeModel;
+
+export async function emitManagementCodeModel(
+  context: EmitContext<AzureMgmtEmitterOptions>,
+  transform?: ManagementCodeModelTransformer
+) {
   context.options["generator-name"] ??= "ManagementClientGenerator";
   context.options["emitter-extension-path"] ??= import.meta.url;
   context.options["sdk-context-options"] ??= azureSDKContextOptions;
@@ -34,7 +47,7 @@ export async function $onEmit(context: EmitContext<AzureMgmtEmitterOptions>) {
   function updateCodeModel(
     codeModel: CodeModel,
     sdkContext: CSharpEmitterContext
-  ): CodeModel {
+  ): ReturnType<CodeModelMutator> {
     // Transform subscriptionId parameters from client scope to method scope
     // This must happen before other transformations that may depend on method parameters
     transformSubscriptionIdParameters(codeModel);
@@ -49,11 +62,19 @@ export async function $onEmit(context: EmitContext<AzureMgmtEmitterOptions>) {
     // inherit from parents. In mgmt SDK we flatten the hierarchy, so we infer from methods instead.
     fixClientApiVersions(codeModel, sdkContext);
 
-    updateClients(codeModel, sdkContext, context.options);
+    const armProviderSchema = updateClients(
+      codeModel,
+      sdkContext,
+      context.options
+    );
     setFlattenProperty(codeModel, sdkContext);
     setHasClientNameOverride(codeModel, sdkContext);
-    return codeModel;
+    return transform?.(codeModel, sdkContext, armProviderSchema) ?? codeModel;
   }
+}
+
+export async function $onEmit(context: EmitContext<AzureMgmtEmitterOptions>) {
+  return emitManagementCodeModel(context);
 }
 
 function setFlattenProperty(

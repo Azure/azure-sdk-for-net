@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.ComputeLimit
         {
             TryGetApiVersion(ResourceType, out string computeLimitVmFamilyApiVersion);
             _vmFamiliesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ComputeLimit", ResourceType.Namespace, Diagnostics);
-            _vmFamiliesRestClient = new VmFamilies(_vmFamiliesClientDiagnostics, Pipeline, Endpoint, computeLimitVmFamilyApiVersion ?? "2026-07-01");
+            _vmFamiliesRestClient = new VmFamilies(_vmFamiliesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, computeLimitVmFamilyApiVersion ?? "2026-07-01");
             ValidateResourceId(id);
         }
 

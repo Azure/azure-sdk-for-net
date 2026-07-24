@@ -53,9 +53,9 @@ namespace Azure.ResourceManager.Sql
         {
             TryGetApiVersion(ResourceType, out string managedDatabaseColumnApiVersion);
             _managedDatabaseColumnsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Sql", ResourceType.Namespace, Diagnostics);
-            _managedDatabaseColumnsRestClient = new ManagedDatabaseColumns(_managedDatabaseColumnsClientDiagnostics, Pipeline, Endpoint, managedDatabaseColumnApiVersion ?? "2025-02-01-preview");
+            _managedDatabaseColumnsRestClient = new ManagedDatabaseColumns(_managedDatabaseColumnsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, managedDatabaseColumnApiVersion ?? "2025-02-01-preview");
             _managedDatabaseSensitivityLabelsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Sql", ResourceType.Namespace, Diagnostics);
-            _managedDatabaseSensitivityLabelsRestClient = new ManagedDatabaseSensitivityLabels(_managedDatabaseSensitivityLabelsClientDiagnostics, Pipeline, Endpoint, managedDatabaseColumnApiVersion ?? "2025-02-01-preview");
+            _managedDatabaseSensitivityLabelsRestClient = new ManagedDatabaseSensitivityLabels(_managedDatabaseSensitivityLabelsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, managedDatabaseColumnApiVersion ?? "2025-02-01-preview");
             ValidateResourceId(id);
         }
 

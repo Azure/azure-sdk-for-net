@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.ResilienceManagement
         {
             TryGetApiVersion(ResourceType, out string usagePlanEnrollmentApiVersion);
             _enrollmentsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ResilienceManagement", ResourceType.Namespace, Diagnostics);
-            _enrollmentsRestClient = new Enrollments(_enrollmentsClientDiagnostics, Pipeline, Endpoint, usagePlanEnrollmentApiVersion ?? "2026-04-01-preview");
+            _enrollmentsRestClient = new Enrollments(_enrollmentsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, usagePlanEnrollmentApiVersion ?? "2026-04-01-preview");
             ValidateResourceId(id);
         }
 

@@ -65,6 +65,11 @@ public class Sample_SessionsCRUD : SamplesBase
         ProjectAgentSession session = await agentsClient.GetSessionAsync(agentName: agentVersion.Name, sessionId: session2.AgentSessionId);
         Console.WriteLine($"Retrieved session with ID {session.AgentSessionId}");
         #endregion
+        #region Snippet:Sample_Stop_SessionsCRUD_Async
+        await agentsClient.StopSessionAsync(agentName: agentVersion.Name, sessionId: session.AgentSessionId);
+        session = await agentsClient.GetSessionAsync(agentName: agentVersion.Name, sessionId: session.AgentSessionId);
+        Console.WriteLine($"Session {session.AgentSessionId} status is now {session.Status}");
+        #endregion
         #region Snippet:Sample_List_SessionsCRUD_Async
         List<ProjectAgentSession> sessions = await agentsClient.GetSessionsAsync(agentName: agentVersion.Name).ToListAsync();
         Console.WriteLine($"Found {sessions.Count} sessions.");
@@ -128,6 +133,11 @@ public class Sample_SessionsCRUD : SamplesBase
         #region Snippet:Sample_Get_SessionsCRUD_Sync
         ProjectAgentSession session = agentsClient.GetSession(agentName: agentVersion.Name, sessionId: session2.AgentSessionId);
         Console.WriteLine($"Retrieved session with ID {session.AgentSessionId}");
+        #endregion
+        #region Snippet:Sample_Stop_SessionsCRUD_Sync
+        agentsClient.StopSession(agentName: agentVersion.Name, sessionId: session.AgentSessionId);
+        session = agentsClient.GetSession(agentName: agentVersion.Name, sessionId: session.AgentSessionId);
+        Console.WriteLine($"Session {session.AgentSessionId} status is now {session.Status}");
         #endregion
         #region Snippet:Sample_List_SessionsCRUD_Sync
         List<ProjectAgentSession> sessions = [..agentsClient.GetSessions(agentName: agentVersion.Name)];

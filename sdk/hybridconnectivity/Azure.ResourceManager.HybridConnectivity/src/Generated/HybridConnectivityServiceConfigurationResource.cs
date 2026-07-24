@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.HybridConnectivity
         {
             TryGetApiVersion(ResourceType, out string hybridConnectivityServiceConfigurationApiVersion);
             _serviceConfigurationResourcesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.HybridConnectivity", ResourceType.Namespace, Diagnostics);
-            _serviceConfigurationResourcesRestClient = new ServiceConfigurationResources(_serviceConfigurationResourcesClientDiagnostics, Pipeline, Endpoint, hybridConnectivityServiceConfigurationApiVersion ?? "2024-12-01");
+            _serviceConfigurationResourcesRestClient = new ServiceConfigurationResources(_serviceConfigurationResourcesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, hybridConnectivityServiceConfigurationApiVersion ?? "2024-12-01");
             ValidateResourceId(id);
         }
 

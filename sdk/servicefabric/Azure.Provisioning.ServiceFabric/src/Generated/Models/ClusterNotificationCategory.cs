@@ -11,6 +11,6 @@ namespace Azure.Provisioning.ServiceFabric
     public enum ClusterNotificationCategory
     {
         /// <summary> Notification will be regarding wave progress. </summary>
-        WaveProgress
+        WaveProgress = 0
     }
 }

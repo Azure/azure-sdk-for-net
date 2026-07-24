@@ -11,10 +11,10 @@ namespace Azure.Provisioning.ServiceFabric
     public enum ClusterUpgradeCadence
     {
         /// <summary> Cluster upgrade starts immediately after a new version is rolled out. Recommended for Test/Dev clusters. </summary>
-        Wave0,
+        Wave0 = 0,
         /// <summary> Cluster upgrade starts 7 days after a new version is rolled out. Recommended for Pre-prod clusters. </summary>
-        Wave1,
+        Wave1 = 1,
         /// <summary> Cluster upgrade starts 14 days after a new version is rolled out. Recommended for Production clusters. </summary>
-        Wave2
+        Wave2 = 2
     }
 }
