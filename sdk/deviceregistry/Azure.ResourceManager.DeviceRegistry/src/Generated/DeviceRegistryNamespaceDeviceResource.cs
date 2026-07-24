@@ -407,7 +407,7 @@ namespace Azure.ResourceManager.DeviceRegistry
         }
 
         /// <summary>
-        /// A long-running resource action.
+        /// Revoke
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>
@@ -460,7 +460,7 @@ namespace Azure.ResourceManager.DeviceRegistry
         }
 
         /// <summary>
-        /// A long-running resource action.
+        /// Revoke
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>
