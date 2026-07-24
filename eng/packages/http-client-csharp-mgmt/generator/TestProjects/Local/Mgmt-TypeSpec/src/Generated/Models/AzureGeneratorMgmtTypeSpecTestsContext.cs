@@ -71,7 +71,6 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
     [ModelReaderWriterBuildable(typeof(CycleTestStoreData))]
     [ModelReaderWriterBuildable(typeof(CycleTestStoreProperties))]
     [ModelReaderWriterBuildable(typeof(CycleTestStoreResource))]
-    [ModelReaderWriterBuildable(typeof(DeleteFinalResultPayload))]
     [ModelReaderWriterBuildable(typeof(DeleteFinalResultTestData))]
     [ModelReaderWriterBuildable(typeof(DeleteFinalResultTestProperties))]
     [ModelReaderWriterBuildable(typeof(DeleteFinalResultTestResource))]

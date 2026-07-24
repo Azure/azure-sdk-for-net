@@ -237,7 +237,9 @@ namespace Azure.Generator.Management.Providers.OperationMethodProviders
 
         private IReadOnlyList<CSharpType> BuildBodyDependencyTypes()
         {
-            if (!ShouldApplyLroHandling)
+            if (!ShouldApplyLroHandling ||
+                IsFakeLongRunningOperation ||
+                !HasTypedResultForPublicSurface)
             {
                 return [];
             }

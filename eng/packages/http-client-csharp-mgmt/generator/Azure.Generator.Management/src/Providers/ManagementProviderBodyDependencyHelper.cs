@@ -1,7 +1,6 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-using Azure.ResourceManager;
 using Microsoft.TypeSpec.Generator.ClientModel.Providers;
 using Microsoft.TypeSpec.Generator.Primitives;
 using Microsoft.TypeSpec.Generator.Providers;
@@ -45,7 +44,6 @@ namespace Azure.Generator.Management.Providers
                 }
 
                 AddPageableWrapperDependency(dependencies, method.Signature.ReturnType, outputLibrary);
-                AddOperationSourceDependency(dependencies, method.Signature.ReturnType, outputLibrary);
                 if (_bodyDependencyTypes.TryGetValue(method, out var bodyDependencyTypes))
                 {
                     dependencies.AddRange(bodyDependencyTypes.Values);
@@ -74,30 +72,6 @@ namespace Azure.Generator.Management.Providers
             dependencies.Add(unwrappedReturnType.Equals(typeof(AsyncPageable<>))
                 ? outputLibrary.AsyncPageableWrapper.Type
                 : outputLibrary.PageableWrapper.Type);
-        }
-
-        private static void AddOperationSourceDependency(List<CSharpType> dependencies, CSharpType? returnType, ManagementOutputLibrary outputLibrary)
-        {
-            var unwrappedReturnType = UnwrapTask(returnType);
-            if (unwrappedReturnType == null ||
-                !unwrappedReturnType.Equals(typeof(ArmOperation<>)) ||
-                unwrappedReturnType.Arguments.Count == 0)
-            {
-                return;
-            }
-
-            var resultType = unwrappedReturnType.Arguments[0];
-            var resourceProvider = outputLibrary.ResourceProviders.FirstOrDefault(resource => resource.Type.Equals(resultType));
-            if (resourceProvider != null)
-            {
-                dependencies.Add(outputLibrary.GetOperationSource(resourceProvider).Type);
-                return;
-            }
-
-            if (outputLibrary.OperationSourceDict.TryGetValue(resultType, out var operationSource))
-            {
-                dependencies.Add(operationSource.Type);
-            }
         }
 
         private static CSharpType? UnwrapTask(CSharpType? type)
