@@ -261,16 +261,41 @@ namespace Azure.Generator.Management
 
         private InputNamespace BuildInputNamespaceInternal()
         {
-            // For MPG, we always generate convenience methods for all operations.
-            foreach (var client in base.InputNamespace.Clients)
+            var inputNamespace = base.InputNamespace;
+            var rootClients = inputNamespace.RootClients.Where(TransformClient).ToArray();
+
+            return new InputNamespace(
+                inputNamespace.Name,
+                inputNamespace.ApiVersions,
+                inputNamespace.Constants,
+                inputNamespace.Enums,
+                inputNamespace.Models,
+                rootClients,
+                inputNamespace.Auth)
             {
-                foreach (var method in client.Methods)
-                {
-                    method.Operation.Update(generateConvenienceMethod: true);
-                }
+                InvalidNamespaceSegments = inputNamespace.InvalidNamespaceSegments
+            };
+        }
+
+        private static bool TransformClient(InputClient client)
+        {
+            var methods = client.Methods
+                .Where(method => !_methodsToOmit.Contains(method.CrossLanguageDefinitionId))
+                .ToArray();
+            var children = client.Children.Where(TransformClient).ToArray();
+
+            // For MPG, we always generate convenience methods for all operations.
+            foreach (var method in methods)
+            {
+                method.Operation.Update(generateConvenienceMethod: true);
             }
 
-            return base.InputNamespace;
+            if (methods.Length != client.Methods.Count || children.Length != client.Children.Count)
+            {
+                client.Update(methods: methods, children: children);
+            }
+
+            return methods.Length > 0 || children.Length > 0;
         }
 
         // Resource-model checks must use the model's semantic identity rather than InputModelType object identity.
@@ -421,7 +446,7 @@ namespace Azure.Generator.Management
                 var schema = ArmProviderSchema.Deserialize(
                     decorator.Arguments,
                     this,
-                    methodFilter: m => !_methodsToOmit.Contains(m.InputMethod.CrossLanguageDefinitionId));
+                    methodFilter: methodId => !_methodsToOmit.Contains(methodId));
 
                 foreach (var resource in schema.Resources)
                 {
