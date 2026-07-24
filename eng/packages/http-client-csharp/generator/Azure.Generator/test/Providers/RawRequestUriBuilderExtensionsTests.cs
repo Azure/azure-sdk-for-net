@@ -19,6 +19,7 @@ namespace Azure.Generator.Tests.Providers
             MockHelpers.LoadMockGenerator();
             var uriBuilderDefinition = new RawRequestUriBuilderExtensionsDefinition();
 
+            Assert.AreEqual("InternalHelperProvider", uriBuilderDefinition.GetType().BaseType?.Name);
             var writer = new TypeProviderWriter(uriBuilderDefinition);
             var file = writer.Write();
             Assert.AreEqual(Helpers.GetExpectedFromFile(), file.Content);
