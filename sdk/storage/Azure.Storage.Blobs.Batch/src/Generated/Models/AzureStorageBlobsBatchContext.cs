@@ -6,7 +6,6 @@
 #nullable disable
 
 using System.ClientModel.Primitives;
-using Azure.Storage.Blobs.Batch.Models;
 
 namespace Azure.Storage.Blobs.Batch
 {
