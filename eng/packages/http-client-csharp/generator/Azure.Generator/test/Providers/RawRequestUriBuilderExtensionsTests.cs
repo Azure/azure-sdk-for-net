@@ -14,12 +14,20 @@ namespace Azure.Generator.Tests.Providers
     public class RawRequestUriBuilderExtensionsTests
     {
         [Test]
-        public void AddsAppendExtensionMethods()
+        public void IsInternalHelperProvider()
         {
             MockHelpers.LoadMockGenerator();
             var uriBuilderDefinition = new RawRequestUriBuilderExtensionsDefinition();
 
             Assert.AreEqual("InternalHelperProvider", uriBuilderDefinition.GetType().BaseType?.Name);
+        }
+
+        [Test]
+        public void AddsAppendExtensionMethods()
+        {
+            MockHelpers.LoadMockGenerator();
+            var uriBuilderDefinition = new RawRequestUriBuilderExtensionsDefinition();
+
             var writer = new TypeProviderWriter(uriBuilderDefinition);
             var file = writer.Write();
             Assert.AreEqual(Helpers.GetExpectedFromFile(), file.Content);
