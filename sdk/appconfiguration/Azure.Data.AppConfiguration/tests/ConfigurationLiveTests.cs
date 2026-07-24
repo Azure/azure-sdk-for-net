@@ -76,8 +76,6 @@ namespace Azure.Data.AppConfiguration.Tests
         private ConfigurationClient GetClient(bool skipClientInstrumentation = false)
         {
             ConfigurationClientOptions options = InstrumentClientOptions(new ConfigurationClientOptions(_serviceVersion));
-            // Set audience AFTER InstrumentClientOptions, as it might reset the options
-            options.Audience = TestEnvironment.GetAudience();
             ConfigurationClient client = new ConfigurationClient(new Uri(TestEnvironment.Endpoint), TestEnvironment.Credential, options);
 
             if (!skipClientInstrumentation)
@@ -94,8 +92,6 @@ namespace Azure.Data.AppConfiguration.Tests
             TokenCredential credential = TestEnvironment.Credential;
             ConfigurationClientOptions configurationClientOptions = clientOptions ?? new ConfigurationClientOptions(_serviceVersion);
             ConfigurationClientOptions options = InstrumentClientOptions(configurationClientOptions);
-            // Set audience AFTER InstrumentClientOptions, as it might reset the options
-            options.Audience = TestEnvironment.GetAudience();
             return InstrumentClient(new ConfigurationClient(new Uri(endpoint), credential, options));
         }
 

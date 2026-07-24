@@ -27,8 +27,6 @@ namespace Azure.Data.AppConfiguration.Tests
             FeatureFlagClientOptions clientOptions = new FeatureFlagClientOptions(
                 (FeatureFlagClientOptions.ServiceVersion)Enum.Parse(typeof(FeatureFlagClientOptions.ServiceVersion), _serviceVersion.ToString()));
             FeatureFlagClientOptions options = InstrumentClientOptions(clientOptions);
-            // Set audience AFTER InstrumentClientOptions, as it might reset the options
-            options.Audience = TestEnvironment.GetAudience();
             FeatureFlagClient client = new FeatureFlagClient(new System.Uri(TestEnvironment.Endpoint), TestEnvironment.Credential, options);
             // Conditional paging relies on the concrete pageable type, which client instrumentation
             // wraps; such tests opt out of instrumentation and provide explicit sync/async variants.
