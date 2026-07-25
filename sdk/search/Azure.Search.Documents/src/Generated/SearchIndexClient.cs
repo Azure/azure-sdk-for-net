@@ -190,34 +190,6 @@ namespace Azure.Search.Documents.Indexes
             }
         }
 
-        /// <summary> Deletes a synonym map. </summary>
-        /// <param name="synonymMapName"> The name of the synonym map. </param>
-        /// <param name="matchConditions"> The content to send as the request conditions of the request. </param>
-        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="synonymMapName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="synonymMapName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual Response DeleteSynonymMap(string synonymMapName, MatchConditions matchConditions = default, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(synonymMapName, nameof(synonymMapName));
-
-            return DeleteSynonymMap(synonymMapName, matchConditions, cancellationToken.ToRequestContext());
-        }
-
-        /// <summary> Deletes a synonym map. </summary>
-        /// <param name="synonymMapName"> The name of the synonym map. </param>
-        /// <param name="matchConditions"> The content to send as the request conditions of the request. </param>
-        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="synonymMapName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="synonymMapName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual async Task<Response> DeleteSynonymMapAsync(string synonymMapName, MatchConditions matchConditions = default, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(synonymMapName, nameof(synonymMapName));
-
-            return await DeleteSynonymMapAsync(synonymMapName, matchConditions, cancellationToken.ToRequestContext()).ConfigureAwait(false);
-        }
-
         /// <summary>
         /// [Protocol Method] Retrieves a synonym map definition.
         /// <list type="bullet">
@@ -626,34 +598,6 @@ namespace Azure.Search.Documents.Indexes
                 scope.Failed(e);
                 throw;
             }
-        }
-
-        /// <summary> Deletes a search index and all the documents it contains. This operation is permanent, with no recovery option. Make sure you have a master copy of your index definition, data ingestion code, and a backup of the primary data source in case you need to re-build the index. </summary>
-        /// <param name="indexName"> The name of the index. </param>
-        /// <param name="matchConditions"> The content to send as the request conditions of the request. </param>
-        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="indexName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="indexName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual Response DeleteIndex(string indexName, MatchConditions matchConditions = default, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(indexName, nameof(indexName));
-
-            return DeleteIndex(indexName, matchConditions, cancellationToken.ToRequestContext());
-        }
-
-        /// <summary> Deletes a search index and all the documents it contains. This operation is permanent, with no recovery option. Make sure you have a master copy of your index definition, data ingestion code, and a backup of the primary data source in case you need to re-build the index. </summary>
-        /// <param name="indexName"> The name of the index. </param>
-        /// <param name="matchConditions"> The content to send as the request conditions of the request. </param>
-        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="indexName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="indexName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual async Task<Response> DeleteIndexAsync(string indexName, MatchConditions matchConditions = default, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(indexName, nameof(indexName));
-
-            return await DeleteIndexAsync(indexName, matchConditions, cancellationToken.ToRequestContext()).ConfigureAwait(false);
         }
 
         /// <summary>

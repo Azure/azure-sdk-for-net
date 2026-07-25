@@ -115,6 +115,30 @@ namespace Azure.Search.Documents.Indexes
             return await DeleteSkillsetAsync(skillsetName, matchConditions: null, cancellationToken).ConfigureAwait(false);
         }
 
+        /// <summary> Deletes a skillset in a search service. </summary>
+        /// <param name="skillsetName"> The name of the skillset. </param>
+        /// <param name="matchConditions"> The content to send as the request conditions of the request. </param>
+        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        public virtual Response DeleteSkillset(string skillsetName, MatchConditions matchConditions, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(skillsetName, nameof(skillsetName));
+
+            return DeleteSkillset(skillsetName, matchConditions, cancellationToken.ToRequestContext());
+        }
+
+        /// <summary> Deletes a skillset in a search service. </summary>
+        /// <param name="skillsetName"> The name of the skillset. </param>
+        /// <param name="matchConditions"> The content to send as the request conditions of the request. </param>
+        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        public virtual async Task<Response> DeleteSkillsetAsync(string skillsetName, MatchConditions matchConditions, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(skillsetName, nameof(skillsetName));
+
+            return await DeleteSkillsetAsync(skillsetName, matchConditions, cancellationToken.ToRequestContext()).ConfigureAwait(false);
+        }
+
         /// <summary>
         /// Deletes a skillset.
         /// </summary>

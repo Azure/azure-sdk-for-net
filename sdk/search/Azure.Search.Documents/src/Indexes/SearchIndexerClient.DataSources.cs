@@ -106,6 +106,30 @@ namespace Azure.Search.Documents.Indexes
             return await DeleteDataSourceConnectionAsync(dataSourceConnectionName, matchConditions: null, cancellationToken).ConfigureAwait(false);
         }
 
+        /// <summary> Deletes a datasource. </summary>
+        /// <param name="dataSourceConnectionName"> The name of the datasource. </param>
+        /// <param name="matchConditions"> The content to send as the request conditions of the request. </param>
+        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        public virtual Response DeleteDataSourceConnection(string dataSourceConnectionName, MatchConditions matchConditions, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(dataSourceConnectionName, nameof(dataSourceConnectionName));
+
+            return DeleteDataSourceConnection(dataSourceConnectionName, matchConditions, cancellationToken.ToRequestContext());
+        }
+
+        /// <summary> Deletes a datasource. </summary>
+        /// <param name="dataSourceConnectionName"> The name of the datasource. </param>
+        /// <param name="matchConditions"> The content to send as the request conditions of the request. </param>
+        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        public virtual async Task<Response> DeleteDataSourceConnectionAsync(string dataSourceConnectionName, MatchConditions matchConditions, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(dataSourceConnectionName, nameof(dataSourceConnectionName));
+
+            return await DeleteDataSourceConnectionAsync(dataSourceConnectionName, matchConditions, cancellationToken.ToRequestContext()).ConfigureAwait(false);
+        }
+
         /// <summary>
         /// Deletes a data source connection.
         /// </summary>

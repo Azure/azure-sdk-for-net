@@ -229,6 +229,30 @@ namespace Azure.Search.Documents.Indexes
             return await DeleteIndexerAsync(indexerName, matchConditions: null, cancellationToken).ConfigureAwait(false);
         }
 
+        /// <summary> Deletes an indexer. </summary>
+        /// <param name="indexerName"> The name of the indexer. </param>
+        /// <param name="matchConditions"> The content to send as the request conditions of the request. </param>
+        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        public virtual Response DeleteIndexer(string indexerName, MatchConditions matchConditions, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(indexerName, nameof(indexerName));
+
+            return DeleteIndexer(indexerName, matchConditions, cancellationToken.ToRequestContext());
+        }
+
+        /// <summary> Deletes an indexer. </summary>
+        /// <param name="indexerName"> The name of the indexer. </param>
+        /// <param name="matchConditions"> The content to send as the request conditions of the request. </param>
+        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        public virtual async Task<Response> DeleteIndexerAsync(string indexerName, MatchConditions matchConditions, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(indexerName, nameof(indexerName));
+
+            return await DeleteIndexerAsync(indexerName, matchConditions, cancellationToken.ToRequestContext()).ConfigureAwait(false);
+        }
+
         /// <summary>
         /// Deletes an indexer.
         /// </summary>

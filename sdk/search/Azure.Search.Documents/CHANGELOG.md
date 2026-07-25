@@ -1,5 +1,20 @@
 # Release History
 
+## 12.1.0 (Unreleased)
+
+### Features Added
+
+- Added knowledge base activity detail records and their argument models for agentic retrieval diagnostics: `KnowledgeBaseAzureBlobActivityRecord`, `KnowledgeBaseIndexedOneLakeActivityRecord`, `KnowledgeBaseSearchIndexActivityRecord`, and `KnowledgeBaseWebActivityRecord`, along with `KnowledgeBaseAzureBlobActivityArguments`, `KnowledgeBaseIndexedOneLakeActivityArguments`, `KnowledgeBaseSearchIndexActivityArguments`, and `KnowledgeBaseWebActivityArguments`.
+
+### Bugs Fixed
+
+- Fixed the ambiguous overload compile error (`CS0121`) when calling the single-name delete methods (for example `DeleteIndex("name")`, `DeleteSkillset("name")`, `DeleteIndexer("name")`, `DeleteDataSourceConnection("name")`, and `DeleteSynonymMap("name")`). The generated `MatchConditions`-based convenience overloads now require the `matchConditions` argument so they no longer collide with the friendly `Delete*(string, CancellationToken)` overloads.
+- Fixed `System.Text.Json.JsonException` / `InvalidOperationException: Cannot skip tokens on partial JSON` thrown when asynchronously deserializing a `SearchDocument` (for example `SearchAsync<SearchDocument>`) whose result elements are large and contain OData (`@search.*`) properties. The internal converter now uses `Utf8JsonReader.TrySkip()` instead of `Skip()` so these properties can be skipped even when the converter is invoked over a non-final JSON block. ([#40768](https://github.com/Azure/azure-sdk-for-net/issues/40768))
+
+### Other Changes
+
+- Regenerated the client library from the `2026-04-01` service specification (commit `18ebae7`).
+
 ## 12.0.0 (2026-05-01)
 
 ### Features Added

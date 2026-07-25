@@ -312,6 +312,30 @@ namespace Azure.Search.Documents.Indexes
             CancellationToken cancellationToken = default) =>
             await DeleteIndexAsync(indexName, matchConditions: null, cancellationToken).ConfigureAwait(false);
 
+        /// <summary> Deletes a search index and all the documents it contains. </summary>
+        /// <param name="indexName"> The name of the index. </param>
+        /// <param name="matchConditions"> The content to send as the request conditions of the request. </param>
+        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        public virtual Response DeleteIndex(string indexName, MatchConditions matchConditions, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(indexName, nameof(indexName));
+
+            return DeleteIndex(indexName, matchConditions, cancellationToken.ToRequestContext());
+        }
+
+        /// <summary> Deletes a search index and all the documents it contains. </summary>
+        /// <param name="indexName"> The name of the index. </param>
+        /// <param name="matchConditions"> The content to send as the request conditions of the request. </param>
+        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        public virtual async Task<Response> DeleteIndexAsync(string indexName, MatchConditions matchConditions, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(indexName, nameof(indexName));
+
+            return await DeleteIndexAsync(indexName, matchConditions, cancellationToken.ToRequestContext()).ConfigureAwait(false);
+        }
+
         /// <summary>
         /// Deletes a search index and all the documents it contains.
         /// </summary>
@@ -533,6 +557,30 @@ namespace Azure.Search.Documents.Indexes
             string synonymMapName,
             CancellationToken cancellationToken = default) =>
             await DeleteSynonymMapAsync(synonymMapName, matchConditions: null, cancellationToken).ConfigureAwait(false);
+
+        /// <summary> Deletes a synonym map. </summary>
+        /// <param name="synonymMapName"> The name of the synonym map. </param>
+        /// <param name="matchConditions"> The content to send as the request conditions of the request. </param>
+        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        public virtual Response DeleteSynonymMap(string synonymMapName, MatchConditions matchConditions, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(synonymMapName, nameof(synonymMapName));
+
+            return DeleteSynonymMap(synonymMapName, matchConditions, cancellationToken.ToRequestContext());
+        }
+
+        /// <summary> Deletes a synonym map. </summary>
+        /// <param name="synonymMapName"> The name of the synonym map. </param>
+        /// <param name="matchConditions"> The content to send as the request conditions of the request. </param>
+        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        public virtual async Task<Response> DeleteSynonymMapAsync(string synonymMapName, MatchConditions matchConditions, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(synonymMapName, nameof(synonymMapName));
+
+            return await DeleteSynonymMapAsync(synonymMapName, matchConditions, cancellationToken.ToRequestContext()).ConfigureAwait(false);
+        }
 
         /// <summary>
         /// Deletes a synonym map.
