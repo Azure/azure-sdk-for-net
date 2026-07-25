@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.Discovery.Models
 
         /// <summary> Initializes a new instance of <see cref="BookshelfListResult"/>. </summary>
         /// <param name="value"> The Bookshelf items on this page. </param>
-        internal BookshelfListResult(IEnumerable<BookshelfData> value)
+        internal BookshelfListResult(IEnumerable<DiscoveryBookshelfData> value)
         {
             Value = value.ToList();
         }
@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.Discovery.Models
         /// <param name="value"> The Bookshelf items on this page. </param>
         /// <param name="nextLink"> The link to the next page of items. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal BookshelfListResult(IList<BookshelfData> value, Uri nextLink, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal BookshelfListResult(IList<DiscoveryBookshelfData> value, Uri nextLink, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Value = value;
             NextLink = nextLink;
@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.Discovery.Models
         }
 
         /// <summary> The Bookshelf items on this page. </summary>
-        public IList<BookshelfData> Value { get; }
+        public IList<DiscoveryBookshelfData> Value { get; }
 
         /// <summary> The link to the next page of items. </summary>
         public Uri NextLink { get; }

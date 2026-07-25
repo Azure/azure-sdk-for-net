@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.Discovery.Models
         ///       This identity must have ManagedIdentityOperator role on the clusterIdentity.
         /// </param>
         /// <exception cref="ArgumentNullException"> <paramref name="clusterIdentity"/> or <paramref name="kubeletIdentity"/> is null. </exception>
-        public SupercomputerIdentities(Identity clusterIdentity, Identity kubeletIdentity)
+        public SupercomputerIdentities(DiscoveryManagedIdentityReference clusterIdentity, DiscoveryManagedIdentityReference kubeletIdentity)
         {
             Argument.AssertNotNull(clusterIdentity, nameof(clusterIdentity));
             Argument.AssertNotNull(kubeletIdentity, nameof(kubeletIdentity));
@@ -45,7 +45,7 @@ namespace Azure.ResourceManager.Discovery.Models
         /// </param>
         /// <param name="workloadIdentities"> User assigned identity IDs to be used by workloads as federated credentials running on supercomputer. The key value must be the resource ID of the identity resource. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal SupercomputerIdentities(Identity clusterIdentity, Identity kubeletIdentity, IDictionary<string, UserAssignedIdentity> workloadIdentities, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal SupercomputerIdentities(DiscoveryManagedIdentityReference clusterIdentity, DiscoveryManagedIdentityReference kubeletIdentity, IDictionary<string, UserAssignedIdentity> workloadIdentities, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             ClusterIdentity = clusterIdentity;
             KubeletIdentity = kubeletIdentity;
@@ -54,14 +54,14 @@ namespace Azure.ResourceManager.Discovery.Models
         }
 
         /// <summary> Cluster identity ID. </summary>
-        public Identity ClusterIdentity { get; set; }
+        public DiscoveryManagedIdentityReference ClusterIdentity { get; set; }
 
         /// <summary>
         /// Kubelet identity ID used by the supercomputer.
         ///       This identity is used by the supercomputer at node level to access Azure resources.
         ///       This identity must have ManagedIdentityOperator role on the clusterIdentity.
         /// </summary>
-        public Identity KubeletIdentity { get; set; }
+        public DiscoveryManagedIdentityReference KubeletIdentity { get; set; }
 
         /// <summary> User assigned identity IDs to be used by workloads as federated credentials running on supercomputer. The key value must be the resource ID of the identity resource. </summary>
         public IDictionary<string, UserAssignedIdentity> WorkloadIdentities { get; }

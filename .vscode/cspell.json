@@ -217,14 +217,6 @@
       ]
     },
     {
-      "filename": "**/sdk/discovery/**/*.cs",
-      "words": [
-        "adms",
-        "mobo",
-        "rgname"
-      ]
-    },
-    {
       "filename": "**/sdk/analysisservices/**/*.cs",
       "words": [
         "dmts"

@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.Discovery.Models
         /// <param name="managedOnBehalfOfConfiguration"> Managed-On-Behalf-Of configuration properties. This configuration exists for the resources where a resource provider manages those resources on behalf of the resource owner. </param>
         /// <param name="bookshelfUri"> The bookshelf data plane API URI. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal BookshelfProperties(ProvisioningState? provisioningState, IDictionary<string, UserAssignedIdentity> workloadIdentities, CustomerManagedKeys? customerManagedKeys, BookshelfKeyVaultProperties keyVaultProperties, ResourceIdentifier logAnalyticsClusterId, IReadOnlyList<DiscoveryPrivateEndpointConnection> privateEndpointConnections, PublicNetworkAccess? publicNetworkAccess, ResourceIdentifier privateEndpointSubnetId, ResourceIdentifier searchSubnetId, string managedResourceGroup, WithMoboBrokerResources managedOnBehalfOfConfiguration, Uri bookshelfUri, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal BookshelfProperties(DiscoveryProvisioningState? provisioningState, IDictionary<string, UserAssignedIdentity> workloadIdentities, CustomerManagedKeys? customerManagedKeys, BookshelfKeyVaultProperties keyVaultProperties, ResourceIdentifier logAnalyticsClusterId, IReadOnlyList<DiscoveryPrivateEndpointConnection> privateEndpointConnections, DiscoveryPublicNetworkAccess? publicNetworkAccess, ResourceIdentifier privateEndpointSubnetId, ResourceIdentifier searchSubnetId, string managedResourceGroup, WithMoboBrokerResources managedOnBehalfOfConfiguration, Uri bookshelfUri, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             ProvisioningState = provisioningState;
             WorkloadIdentities = workloadIdentities;
@@ -58,7 +58,7 @@ namespace Azure.ResourceManager.Discovery.Models
         }
 
         /// <summary> The status of the last operation. </summary>
-        public ProvisioningState? ProvisioningState { get; }
+        public DiscoveryProvisioningState? ProvisioningState { get; }
 
         /// <summary> User assigned identity IDs to be used by knowledgebase workloads. The key value must be the resource ID of the identity resource. </summary>
         public IDictionary<string, UserAssignedIdentity> WorkloadIdentities { get; }
@@ -76,7 +76,7 @@ namespace Azure.ResourceManager.Discovery.Models
         public IReadOnlyList<DiscoveryPrivateEndpointConnection> PrivateEndpointConnections { get; }
 
         /// <summary> Whether or not public network access is allowed for this resource. For security reasons, it is recommended to disable it whenever possible. </summary>
-        public PublicNetworkAccess? PublicNetworkAccess { get; set; }
+        public DiscoveryPublicNetworkAccess? PublicNetworkAccess { get; set; }
 
         /// <summary> Private Endpoint Subnet ID for private endpoint connections. </summary>
         public ResourceIdentifier PrivateEndpointSubnetId { get; set; }

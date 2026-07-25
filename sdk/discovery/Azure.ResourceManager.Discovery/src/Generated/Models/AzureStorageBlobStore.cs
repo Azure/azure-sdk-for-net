@@ -13,7 +13,7 @@ using Azure.ResourceManager.Discovery;
 namespace Azure.ResourceManager.Discovery.Models
 {
     /// <summary> The Azure storage blob properties. </summary>
-    public partial class AzureStorageBlobStore : StorageStore
+    public partial class AzureStorageBlobStore : DiscoveryStorageStore
     {
         /// <summary> Initializes a new instance of <see cref="AzureStorageBlobStore"/>. </summary>
         /// <param name="storageAccountId"> The associated Azure Storage Account ID. </param>

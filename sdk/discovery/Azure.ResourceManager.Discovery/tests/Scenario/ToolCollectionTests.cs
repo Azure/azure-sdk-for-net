@@ -21,16 +21,16 @@ namespace Azure.ResourceManager.Discovery.Tests.Scenario
         [SetUp]
         public void Setup() => InitializeClient();
 
-        private ToolCollection GetToolCollection()
+        private DiscoveryToolCollection GetDiscoveryToolCollection()
             => GetResourceGroupReference(ResourceGroupName).GetTools();
 
-        private ToolResource GetToolReference()
-            => Client.GetToolResource(ToolResource.CreateResourceIdentifier(TestEnvironment.SubscriptionId, ResourceGroupName, ToolName));
+        private DiscoveryToolResource GetToolReference()
+            => Client.GetDiscoveryToolResource(DiscoveryToolResource.CreateResourceIdentifier(TestEnvironment.SubscriptionId, ResourceGroupName, ToolName));
 
         [RecordedTest]
         public async Task CreateOrUpdate()
         {
-            ArmOperation<ToolResource> operation = await GetToolCollection().CreateOrUpdateAsync(WaitUntil.Completed, ToolName, new ToolData(AzureLocation.UKSouth));
+            ArmOperation<DiscoveryToolResource> operation = await GetDiscoveryToolCollection().CreateOrUpdateAsync(WaitUntil.Completed, ToolName, new DiscoveryToolData(AzureLocation.UKSouth));
 
             Assert.That(operation.HasValue, Is.True);
             Assert.That(operation.Value.Data.Name, Is.EqualTo(ToolName));
@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.Discovery.Tests.Scenario
         [RecordedTest]
         public async Task Get()
         {
-            Response<ToolResource> response = await GetToolCollection().GetAsync(ToolName);
+            Response<DiscoveryToolResource> response = await GetDiscoveryToolCollection().GetAsync(ToolName);
 
             Assert.That(response.Value.Data.Name, Is.EqualTo(ToolName));
         }
@@ -47,8 +47,8 @@ namespace Azure.ResourceManager.Discovery.Tests.Scenario
         [RecordedTest]
         public async Task ListByResourceGroup()
         {
-            List<ToolResource> items = new List<ToolResource>();
-            await foreach (ToolResource item in GetToolCollection().GetAllAsync())
+            List<DiscoveryToolResource> items = new List<DiscoveryToolResource>();
+            await foreach (DiscoveryToolResource item in GetDiscoveryToolCollection().GetAllAsync())
             {
                 items.Add(item);
             }
@@ -59,8 +59,8 @@ namespace Azure.ResourceManager.Discovery.Tests.Scenario
         [RecordedTest]
         public async Task ListBySubscription()
         {
-            List<ToolResource> items = new List<ToolResource>();
-            await foreach (ToolResource item in GetSubscriptionReference().GetToolsAsync())
+            List<DiscoveryToolResource> items = new List<DiscoveryToolResource>();
+            await foreach (DiscoveryToolResource item in GetSubscriptionReference().GetToolsAsync())
             {
                 items.Add(item);
             }
@@ -71,7 +71,7 @@ namespace Azure.ResourceManager.Discovery.Tests.Scenario
         [RecordedTest]
         public async Task Update()
         {
-            ArmOperation<ToolResource> operation = await GetToolReference().UpdateAsync(WaitUntil.Completed, new ToolData(AzureLocation.UKSouth));
+            ArmOperation<DiscoveryToolResource> operation = await GetToolReference().UpdateAsync(WaitUntil.Completed, new DiscoveryToolData(AzureLocation.UKSouth));
 
             Assert.That(operation.Value.Data.Name, Is.EqualTo(ToolName));
         }

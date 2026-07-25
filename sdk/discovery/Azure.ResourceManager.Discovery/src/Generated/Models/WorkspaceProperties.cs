@@ -21,7 +21,7 @@ namespace Azure.ResourceManager.Discovery.Models
         /// <summary> Initializes a new instance of <see cref="WorkspaceProperties"/>. </summary>
         /// <param name="workspaceIdentity"> Identity IDs used for leveraging Workspace resources. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="workspaceIdentity"/> is null. </exception>
-        public WorkspaceProperties(Identity workspaceIdentity)
+        public WorkspaceProperties(DiscoveryManagedIdentityReference workspaceIdentity)
         {
             Argument.AssertNotNull(workspaceIdentity, nameof(workspaceIdentity));
 
@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.Discovery.Models
         /// <param name="managedResourceGroup"> The resource group for resources managed on behalf of customer. </param>
         /// <param name="managedOnBehalfOfConfiguration"> Managed-On-Behalf-Of configuration properties. This configuration exists for the resources where a resource provider manages those resources on behalf of the resource owner. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal WorkspaceProperties(ProvisioningState? provisioningState, IList<ResourceIdentifier> supercomputerIds, Uri workspaceApiUri, Uri workspaceUiUri, Identity workspaceIdentity, CustomerManagedKeys? customerManagedKeys, KeyVaultProperties keyVaultProperties, ResourceIdentifier logAnalyticsClusterId, IReadOnlyList<DiscoveryPrivateEndpointConnection> privateEndpointConnections, PublicNetworkAccess? publicNetworkAccess, ResourceIdentifier agentSubnetId, ResourceIdentifier privateEndpointSubnetId, ResourceIdentifier workspaceSubnetId, string managedResourceGroup, WithMoboBrokerResources managedOnBehalfOfConfiguration, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal WorkspaceProperties(DiscoveryProvisioningState? provisioningState, IList<ResourceIdentifier> supercomputerIds, Uri workspaceApiUri, Uri workspaceUiUri, DiscoveryManagedIdentityReference workspaceIdentity, CustomerManagedKeys? customerManagedKeys, DiscoveryKeyVaultProperties keyVaultProperties, ResourceIdentifier logAnalyticsClusterId, IReadOnlyList<DiscoveryPrivateEndpointConnection> privateEndpointConnections, DiscoveryPublicNetworkAccess? publicNetworkAccess, ResourceIdentifier agentSubnetId, ResourceIdentifier privateEndpointSubnetId, ResourceIdentifier workspaceSubnetId, string managedResourceGroup, WithMoboBrokerResources managedOnBehalfOfConfiguration, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             ProvisioningState = provisioningState;
             SupercomputerIds = supercomputerIds;
@@ -68,7 +68,7 @@ namespace Azure.ResourceManager.Discovery.Models
         }
 
         /// <summary> The status of the last operation. </summary>
-        public ProvisioningState? ProvisioningState { get; }
+        public DiscoveryProvisioningState? ProvisioningState { get; }
 
         /// <summary> List of linked SuperComputers. </summary>
         public IList<ResourceIdentifier> SupercomputerIds { get; }
@@ -80,13 +80,13 @@ namespace Azure.ResourceManager.Discovery.Models
         public Uri WorkspaceUiUri { get; }
 
         /// <summary> Identity IDs used for leveraging Workspace resources. </summary>
-        public Identity WorkspaceIdentity { get; set; }
+        public DiscoveryManagedIdentityReference WorkspaceIdentity { get; set; }
 
         /// <summary> Whether or not to use a customer managed key when encrypting data at rest. </summary>
         public CustomerManagedKeys? CustomerManagedKeys { get; set; }
 
         /// <summary> The key to use for encrypting data at rest when customer managed keys are enabled. </summary>
-        public KeyVaultProperties KeyVaultProperties { get; set; }
+        public DiscoveryKeyVaultProperties KeyVaultProperties { get; set; }
 
         /// <summary> The Log Analytics Cluster to use for debug logs. This is required when Customer Managed Keys are enabled. </summary>
         public ResourceIdentifier LogAnalyticsClusterId { get; set; }
@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.Discovery.Models
         public IReadOnlyList<DiscoveryPrivateEndpointConnection> PrivateEndpointConnections { get; }
 
         /// <summary> Whether or not public network access is allowed for this resource. For security reasons, it is recommended to disable it whenever possible. </summary>
-        public PublicNetworkAccess? PublicNetworkAccess { get; set; }
+        public DiscoveryPublicNetworkAccess? PublicNetworkAccess { get; set; }
 
         /// <summary> Agent Subnet ID for agent resources. </summary>
         public ResourceIdentifier AgentSubnetId { get; set; }

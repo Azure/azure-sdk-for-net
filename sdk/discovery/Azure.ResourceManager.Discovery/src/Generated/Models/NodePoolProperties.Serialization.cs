@@ -158,12 +158,12 @@ namespace Azure.ResourceManager.Discovery.Models
             {
                 return null;
             }
-            ProvisioningState? provisioningState = default;
+            DiscoveryProvisioningState? provisioningState = default;
             ResourceIdentifier subnetId = default;
-            VmSize vmSize = default;
+            DiscoveryVmSize vmSize = default;
             int maxNodeCount = default;
             int? minNodeCount = default;
-            ScaleSetPriority? scaleSetPriority = default;
+            DiscoveryScaleSetPriority? scaleSetPriority = default;
             int? osDiskSizeGb = default;
             int? imageCacheLowerThreshold = default;
             int? imageCacheUpperThreshold = default;
@@ -176,7 +176,7 @@ namespace Azure.ResourceManager.Discovery.Models
                     {
                         continue;
                     }
-                    provisioningState = new ProvisioningState(prop.Value.GetString());
+                    provisioningState = new DiscoveryProvisioningState(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("subnetId"u8))
@@ -186,7 +186,7 @@ namespace Azure.ResourceManager.Discovery.Models
                 }
                 if (prop.NameEquals("vmSize"u8))
                 {
-                    vmSize = new VmSize(prop.Value.GetString());
+                    vmSize = new DiscoveryVmSize(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("maxNodeCount"u8))
@@ -209,7 +209,7 @@ namespace Azure.ResourceManager.Discovery.Models
                     {
                         continue;
                     }
-                    scaleSetPriority = new ScaleSetPriority(prop.Value.GetString());
+                    scaleSetPriority = new DiscoveryScaleSetPriority(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("osDiskSizeGb"u8))

@@ -20,8 +20,8 @@ namespace Azure.ResourceManager.Discovery
 {
     /// <summary>
     /// A class representing a collection of <see cref="BookshelfPrivateLinkResource"/> and their operations.
-    /// Each <see cref="BookshelfPrivateLinkResource"/> in the collection will belong to the same instance of <see cref="BookshelfResource"/>.
-    /// To get a <see cref="BookshelfPrivateLinkResourceCollection"/> instance call the GetBookshelfPrivateLinkResources method from an instance of <see cref="BookshelfResource"/>.
+    /// Each <see cref="BookshelfPrivateLinkResource"/> in the collection will belong to the same instance of <see cref="DiscoveryBookshelfResource"/>.
+    /// To get a <see cref="BookshelfPrivateLinkResourceCollection"/> instance call the GetBookshelfPrivateLinkResources method from an instance of <see cref="DiscoveryBookshelfResource"/>.
     /// </summary>
     public partial class BookshelfPrivateLinkResourceCollection : ArmCollection, IEnumerable<BookshelfPrivateLinkResource>, IAsyncEnumerable<BookshelfPrivateLinkResource>
     {
@@ -48,9 +48,9 @@ namespace Azure.ResourceManager.Discovery
         [Conditional("DEBUG")]
         internal static void ValidateResourceId(ResourceIdentifier id)
         {
-            if (id.ResourceType != BookshelfResource.ResourceType)
+            if (id.ResourceType != DiscoveryBookshelfResource.ResourceType)
             {
-                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, BookshelfResource.ResourceType), nameof(id));
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, DiscoveryBookshelfResource.ResourceType), nameof(id));
             }
         }
 

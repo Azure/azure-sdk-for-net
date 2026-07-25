@@ -143,20 +143,20 @@ namespace Azure.ResourceManager.Discovery.Models
             {
                 return null;
             }
-            Identity clusterIdentity = default;
-            Identity kubeletIdentity = default;
+            DiscoveryManagedIdentityReference clusterIdentity = default;
+            DiscoveryManagedIdentityReference kubeletIdentity = default;
             IDictionary<string, UserAssignedIdentity> workloadIdentities = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("clusterIdentity"u8))
                 {
-                    clusterIdentity = Identity.DeserializeIdentity(prop.Value, options);
+                    clusterIdentity = DiscoveryManagedIdentityReference.DeserializeDiscoveryManagedIdentityReference(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("kubeletIdentity"u8))
                 {
-                    kubeletIdentity = Identity.DeserializeIdentity(prop.Value, options);
+                    kubeletIdentity = DiscoveryManagedIdentityReference.DeserializeDiscoveryManagedIdentityReference(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("workloadIdentities"u8))

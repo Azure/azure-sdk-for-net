@@ -28,9 +28,6 @@ namespace Azure.ResourceManager.Discovery.Models
             _value = value;
         }
 
-        /// <summary> NFS protocol. Version of NFS used may vary based on storage type. </summary>
-        public static NetAppMountProtocol NFS { get; } = new NetAppMountProtocol(NFSValue);
-
         /// <summary> Determines if two <see cref="NetAppMountProtocol"/> values are the same. </summary>
         /// <param name="left"> The left value to compare. </param>
         /// <param name="right"> The right value to compare. </param>

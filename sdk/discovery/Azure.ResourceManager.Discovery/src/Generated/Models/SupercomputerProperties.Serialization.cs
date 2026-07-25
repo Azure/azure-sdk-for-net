@@ -171,11 +171,11 @@ namespace Azure.ResourceManager.Discovery.Models
             {
                 return null;
             }
-            ProvisioningState? provisioningState = default;
+            DiscoveryProvisioningState? provisioningState = default;
             ResourceIdentifier subnetId = default;
             ResourceIdentifier managementSubnetId = default;
-            NetworkEgressType? outboundType = default;
-            SystemSku? systemSku = default;
+            DiscoveryNetworkEgressType? outboundType = default;
+            DiscoverySystemSku? systemSku = default;
             SupercomputerIdentities identities = default;
             CustomerManagedKeys? customerManagedKeys = default;
             ResourceIdentifier diskEncryptionSetId = default;
@@ -191,7 +191,7 @@ namespace Azure.ResourceManager.Discovery.Models
                     {
                         continue;
                     }
-                    provisioningState = new ProvisioningState(prop.Value.GetString());
+                    provisioningState = new DiscoveryProvisioningState(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("subnetId"u8))
@@ -214,7 +214,7 @@ namespace Azure.ResourceManager.Discovery.Models
                     {
                         continue;
                     }
-                    outboundType = new NetworkEgressType(prop.Value.GetString());
+                    outboundType = new DiscoveryNetworkEgressType(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("systemSku"u8))
@@ -223,7 +223,7 @@ namespace Azure.ResourceManager.Discovery.Models
                     {
                         continue;
                     }
-                    systemSku = new SystemSku(prop.Value.GetString());
+                    systemSku = new DiscoverySystemSku(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("identities"u8))

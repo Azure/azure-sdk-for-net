@@ -134,7 +134,7 @@ namespace Azure.ResourceManager.Discovery.Models
                 return null;
             }
             string description = default;
-            ProvisioningState? provisioningState = default;
+            DiscoveryProvisioningState? provisioningState = default;
             string path = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
@@ -150,7 +150,7 @@ namespace Azure.ResourceManager.Discovery.Models
                     {
                         continue;
                     }
-                    provisioningState = new ProvisioningState(prop.Value.GetString());
+                    provisioningState = new DiscoveryProvisioningState(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("path"u8))

@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.Discovery.Models
         /// <summary> Initializes a new instance of <see cref="StorageContainerProperties"/>. </summary>
         /// <param name="storageStore"> Storage store properties. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="storageStore"/> is null. </exception>
-        public StorageContainerProperties(StorageStore storageStore)
+        public StorageContainerProperties(DiscoveryStorageStore storageStore)
         {
             Argument.AssertNotNull(storageStore, nameof(storageStore));
 
@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.Discovery.Models
         /// <param name="provisioningState"> The status of the last operation. </param>
         /// <param name="storageStore"> Storage store properties. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal StorageContainerProperties(ProvisioningState? provisioningState, StorageStore storageStore, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal StorageContainerProperties(DiscoveryProvisioningState? provisioningState, DiscoveryStorageStore storageStore, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             ProvisioningState = provisioningState;
             StorageStore = storageStore;
@@ -39,9 +39,9 @@ namespace Azure.ResourceManager.Discovery.Models
         }
 
         /// <summary> The status of the last operation. </summary>
-        public ProvisioningState? ProvisioningState { get; }
+        public DiscoveryProvisioningState? ProvisioningState { get; }
 
         /// <summary> Storage store properties. </summary>
-        public StorageStore StorageStore { get; set; }
+        public DiscoveryStorageStore StorageStore { get; set; }
     }
 }

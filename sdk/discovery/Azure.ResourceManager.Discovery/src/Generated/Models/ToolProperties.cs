@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.Discovery.Models
         /// <param name="environmentVariables"> Environment variables to make available. </param>
         /// <param name="definitionContent"> The JSON content for defining a resource. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ToolProperties(ProvisioningState? provisioningState, string version, IDictionary<string, string> environmentVariables, IDictionary<string, BinaryData> definitionContent, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ToolProperties(DiscoveryProvisioningState? provisioningState, string version, IDictionary<string, string> environmentVariables, IDictionary<string, BinaryData> definitionContent, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             ProvisioningState = provisioningState;
             Version = version;
@@ -48,7 +48,7 @@ namespace Azure.ResourceManager.Discovery.Models
         }
 
         /// <summary> The status of the last operation. </summary>
-        public ProvisioningState? ProvisioningState { get; }
+        public DiscoveryProvisioningState? ProvisioningState { get; }
 
         /// <summary> The version of a resource definition. </summary>
         public string Version { get; set; }

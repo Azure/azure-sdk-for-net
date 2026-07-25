@@ -15,7 +15,7 @@ using Azure.ResourceManager.Discovery.Models;
 
 namespace Azure.ResourceManager.Discovery
 {
-    internal partial class SupercomputersGetByResourceGroupAsyncCollectionResultOfT : AsyncPageable<SupercomputerData>
+    internal partial class SupercomputersGetByResourceGroupAsyncCollectionResultOfT : AsyncPageable<DiscoverySupercomputerData>
     {
         private readonly Supercomputers _client;
         private readonly Guid _subscriptionId;
@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.Discovery
         /// <param name="continuationToken"> A continuation token indicating where to resume paging. </param>
         /// <param name="pageSizeHint"> The number of items per page. </param>
         /// <returns> The pages of SupercomputersGetByResourceGroupAsyncCollectionResultOfT as an enumerable collection. </returns>
-        public override async IAsyncEnumerable<Page<SupercomputerData>> AsPages(string continuationToken, int? pageSizeHint)
+        public override async IAsyncEnumerable<Page<DiscoverySupercomputerData>> AsPages(string continuationToken, int? pageSizeHint)
         {
             Uri nextPage = continuationToken != null ? new Uri(continuationToken) : null;
             while (true)
@@ -54,7 +54,7 @@ namespace Azure.ResourceManager.Discovery
                 }
                 SupercomputerListResult result = SupercomputerListResult.FromResponse(response);
                 nextPage = result.NextLink;
-                yield return Page<SupercomputerData>.FromValues((IReadOnlyList<SupercomputerData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
+                yield return Page<DiscoverySupercomputerData>.FromValues((IReadOnlyList<DiscoverySupercomputerData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 if (nextPage == null)
                 {
                     yield break;

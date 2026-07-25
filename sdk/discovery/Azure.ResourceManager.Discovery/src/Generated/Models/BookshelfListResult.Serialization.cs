@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.Discovery.Models
             }
             writer.WritePropertyName("value"u8);
             writer.WriteStartArray();
-            foreach (BookshelfData item in Value)
+            foreach (DiscoveryBookshelfData item in Value)
             {
                 writer.WriteObjectValue(item, options);
             }
@@ -141,17 +141,17 @@ namespace Azure.ResourceManager.Discovery.Models
             {
                 return null;
             }
-            IList<BookshelfData> value = default;
+            IList<DiscoveryBookshelfData> value = default;
             Uri nextLink = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("value"u8))
                 {
-                    List<BookshelfData> array = new List<BookshelfData>();
+                    List<DiscoveryBookshelfData> array = new List<DiscoveryBookshelfData>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(BookshelfData.DeserializeBookshelfData(item, options));
+                        array.Add(DiscoveryBookshelfData.DeserializeDiscoveryBookshelfData(item, options));
                     }
                     value = array;
                     continue;

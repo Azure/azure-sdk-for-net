@@ -80,14 +80,14 @@ namespace Azure.ResourceManager.Discovery.Mocking
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="BookshelfResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<BookshelfResource> GetBookshelvesAsync(CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="DiscoveryBookshelfResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<DiscoveryBookshelfResource> GetBookshelvesAsync(CancellationToken cancellationToken = default)
         {
             RequestContext context = new RequestContext
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<BookshelfData, BookshelfResource>(new BookshelvesGetBySubscriptionAsyncCollectionResultOfT(BookshelvesRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableDiscoverySubscriptionResource.GetBookshelves"), data => new BookshelfResource(Client, data));
+            return new AsyncPageableWrapper<DiscoveryBookshelfData, DiscoveryBookshelfResource>(new BookshelvesGetBySubscriptionAsyncCollectionResultOfT(BookshelvesRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableDiscoverySubscriptionResource.GetBookshelves"), data => new DiscoveryBookshelfResource(Client, data));
         }
 
         /// <summary>
@@ -108,14 +108,14 @@ namespace Azure.ResourceManager.Discovery.Mocking
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="BookshelfResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<BookshelfResource> GetBookshelves(CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="DiscoveryBookshelfResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<DiscoveryBookshelfResource> GetBookshelves(CancellationToken cancellationToken = default)
         {
             RequestContext context = new RequestContext
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<BookshelfData, BookshelfResource>(new BookshelvesGetBySubscriptionCollectionResultOfT(BookshelvesRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableDiscoverySubscriptionResource.GetBookshelves"), data => new BookshelfResource(Client, data));
+            return new PageableWrapper<DiscoveryBookshelfData, DiscoveryBookshelfResource>(new BookshelvesGetBySubscriptionCollectionResultOfT(BookshelvesRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableDiscoverySubscriptionResource.GetBookshelves"), data => new DiscoveryBookshelfResource(Client, data));
         }
 
         /// <summary>
@@ -136,14 +136,14 @@ namespace Azure.ResourceManager.Discovery.Mocking
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="ToolResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<ToolResource> GetToolsAsync(CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="DiscoveryToolResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<DiscoveryToolResource> GetToolsAsync(CancellationToken cancellationToken = default)
         {
             RequestContext context = new RequestContext
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<ToolData, ToolResource>(new ToolsGetBySubscriptionAsyncCollectionResultOfT(ToolsRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableDiscoverySubscriptionResource.GetTools"), data => new ToolResource(Client, data));
+            return new AsyncPageableWrapper<DiscoveryToolData, DiscoveryToolResource>(new ToolsGetBySubscriptionAsyncCollectionResultOfT(ToolsRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableDiscoverySubscriptionResource.GetTools"), data => new DiscoveryToolResource(Client, data));
         }
 
         /// <summary>
@@ -164,14 +164,14 @@ namespace Azure.ResourceManager.Discovery.Mocking
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="ToolResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<ToolResource> GetTools(CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="DiscoveryToolResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<DiscoveryToolResource> GetTools(CancellationToken cancellationToken = default)
         {
             RequestContext context = new RequestContext
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<ToolData, ToolResource>(new ToolsGetBySubscriptionCollectionResultOfT(ToolsRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableDiscoverySubscriptionResource.GetTools"), data => new ToolResource(Client, data));
+            return new PageableWrapper<DiscoveryToolData, DiscoveryToolResource>(new ToolsGetBySubscriptionCollectionResultOfT(ToolsRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableDiscoverySubscriptionResource.GetTools"), data => new DiscoveryToolResource(Client, data));
         }
 
         /// <summary>
@@ -192,14 +192,14 @@ namespace Azure.ResourceManager.Discovery.Mocking
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="WorkspaceResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<WorkspaceResource> GetWorkspacesAsync(CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="DiscoveryWorkspaceResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<DiscoveryWorkspaceResource> GetWorkspacesAsync(CancellationToken cancellationToken = default)
         {
             RequestContext context = new RequestContext
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<WorkspaceData, WorkspaceResource>(new WorkspacesGetBySubscriptionAsyncCollectionResultOfT(WorkspacesRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableDiscoverySubscriptionResource.GetWorkspaces"), data => new WorkspaceResource(Client, data));
+            return new AsyncPageableWrapper<DiscoveryWorkspaceData, DiscoveryWorkspaceResource>(new WorkspacesGetBySubscriptionAsyncCollectionResultOfT(WorkspacesRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableDiscoverySubscriptionResource.GetWorkspaces"), data => new DiscoveryWorkspaceResource(Client, data));
         }
 
         /// <summary>
@@ -220,14 +220,14 @@ namespace Azure.ResourceManager.Discovery.Mocking
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="WorkspaceResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<WorkspaceResource> GetWorkspaces(CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="DiscoveryWorkspaceResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<DiscoveryWorkspaceResource> GetWorkspaces(CancellationToken cancellationToken = default)
         {
             RequestContext context = new RequestContext
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<WorkspaceData, WorkspaceResource>(new WorkspacesGetBySubscriptionCollectionResultOfT(WorkspacesRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableDiscoverySubscriptionResource.GetWorkspaces"), data => new WorkspaceResource(Client, data));
+            return new PageableWrapper<DiscoveryWorkspaceData, DiscoveryWorkspaceResource>(new WorkspacesGetBySubscriptionCollectionResultOfT(WorkspacesRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableDiscoverySubscriptionResource.GetWorkspaces"), data => new DiscoveryWorkspaceResource(Client, data));
         }
 
         /// <summary>
@@ -248,14 +248,14 @@ namespace Azure.ResourceManager.Discovery.Mocking
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="SupercomputerResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<SupercomputerResource> GetSupercomputersAsync(CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="DiscoverySupercomputerResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<DiscoverySupercomputerResource> GetSupercomputersAsync(CancellationToken cancellationToken = default)
         {
             RequestContext context = new RequestContext
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<SupercomputerData, SupercomputerResource>(new SupercomputersGetBySubscriptionAsyncCollectionResultOfT(SupercomputersRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableDiscoverySubscriptionResource.GetSupercomputers"), data => new SupercomputerResource(Client, data));
+            return new AsyncPageableWrapper<DiscoverySupercomputerData, DiscoverySupercomputerResource>(new SupercomputersGetBySubscriptionAsyncCollectionResultOfT(SupercomputersRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableDiscoverySubscriptionResource.GetSupercomputers"), data => new DiscoverySupercomputerResource(Client, data));
         }
 
         /// <summary>
@@ -276,14 +276,14 @@ namespace Azure.ResourceManager.Discovery.Mocking
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="SupercomputerResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<SupercomputerResource> GetSupercomputers(CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="DiscoverySupercomputerResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<DiscoverySupercomputerResource> GetSupercomputers(CancellationToken cancellationToken = default)
         {
             RequestContext context = new RequestContext
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<SupercomputerData, SupercomputerResource>(new SupercomputersGetBySubscriptionCollectionResultOfT(SupercomputersRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableDiscoverySubscriptionResource.GetSupercomputers"), data => new SupercomputerResource(Client, data));
+            return new PageableWrapper<DiscoverySupercomputerData, DiscoverySupercomputerResource>(new SupercomputersGetBySubscriptionCollectionResultOfT(SupercomputersRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableDiscoverySubscriptionResource.GetSupercomputers"), data => new DiscoverySupercomputerResource(Client, data));
         }
 
         /// <summary>

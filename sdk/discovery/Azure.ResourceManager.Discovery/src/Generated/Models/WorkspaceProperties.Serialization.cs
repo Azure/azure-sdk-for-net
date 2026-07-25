@@ -209,16 +209,16 @@ namespace Azure.ResourceManager.Discovery.Models
             {
                 return null;
             }
-            ProvisioningState? provisioningState = default;
+            DiscoveryProvisioningState? provisioningState = default;
             IList<ResourceIdentifier> supercomputerIds = default;
             Uri workspaceApiUri = default;
             Uri workspaceUiUri = default;
-            Identity workspaceIdentity = default;
+            DiscoveryManagedIdentityReference workspaceIdentity = default;
             CustomerManagedKeys? customerManagedKeys = default;
-            KeyVaultProperties keyVaultProperties = default;
+            DiscoveryKeyVaultProperties keyVaultProperties = default;
             ResourceIdentifier logAnalyticsClusterId = default;
             IReadOnlyList<DiscoveryPrivateEndpointConnection> privateEndpointConnections = default;
-            PublicNetworkAccess? publicNetworkAccess = default;
+            DiscoveryPublicNetworkAccess? publicNetworkAccess = default;
             ResourceIdentifier agentSubnetId = default;
             ResourceIdentifier privateEndpointSubnetId = default;
             ResourceIdentifier workspaceSubnetId = default;
@@ -233,7 +233,7 @@ namespace Azure.ResourceManager.Discovery.Models
                     {
                         continue;
                     }
-                    provisioningState = new ProvisioningState(prop.Value.GetString());
+                    provisioningState = new DiscoveryProvisioningState(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("supercomputerIds"u8))
@@ -277,7 +277,7 @@ namespace Azure.ResourceManager.Discovery.Models
                 }
                 if (prop.NameEquals("workspaceIdentity"u8))
                 {
-                    workspaceIdentity = Identity.DeserializeIdentity(prop.Value, options);
+                    workspaceIdentity = DiscoveryManagedIdentityReference.DeserializeDiscoveryManagedIdentityReference(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("customerManagedKeys"u8))
@@ -295,7 +295,7 @@ namespace Azure.ResourceManager.Discovery.Models
                     {
                         continue;
                     }
-                    keyVaultProperties = KeyVaultProperties.DeserializeKeyVaultProperties(prop.Value, options);
+                    keyVaultProperties = DiscoveryKeyVaultProperties.DeserializeDiscoveryKeyVaultProperties(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("logAnalyticsClusterId"u8))
@@ -327,7 +327,7 @@ namespace Azure.ResourceManager.Discovery.Models
                     {
                         continue;
                     }
-                    publicNetworkAccess = new PublicNetworkAccess(prop.Value.GetString());
+                    publicNetworkAccess = new DiscoveryPublicNetworkAccess(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("agentSubnetId"u8))

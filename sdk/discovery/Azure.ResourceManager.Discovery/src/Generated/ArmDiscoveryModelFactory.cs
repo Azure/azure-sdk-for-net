@@ -26,12 +26,12 @@ namespace Azure.ResourceManager.Discovery.Models
         /// <param name="tags"> Resource tags. </param>
         /// <param name="location"> The geo-location where the resource lives. </param>
         /// <param name="properties"> The resource-specific properties for this resource. </param>
-        /// <returns> A new <see cref="Discovery.BookshelfData"/> instance for mocking. </returns>
-        public static BookshelfData BookshelfData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, BookshelfProperties properties = default)
+        /// <returns> A new <see cref="Discovery.DiscoveryBookshelfData"/> instance for mocking. </returns>
+        public static DiscoveryBookshelfData DiscoveryBookshelfData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, BookshelfProperties properties = default)
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
 
-            return new BookshelfData(
+            return new DiscoveryBookshelfData(
                 id,
                 name,
                 resourceType,
@@ -55,7 +55,7 @@ namespace Azure.ResourceManager.Discovery.Models
         /// <param name="managedOnBehalfOfMoboBrokerResources"> Managed-On-Behalf-Of broker resources. </param>
         /// <param name="bookshelfUri"> The bookshelf data plane API URI. </param>
         /// <returns> A new <see cref="Models.BookshelfProperties"/> instance for mocking. </returns>
-        public static BookshelfProperties BookshelfProperties(ProvisioningState? provisioningState = default, IDictionary<string, UserAssignedIdentity> workloadIdentities = default, CustomerManagedKeys? customerManagedKeys = default, BookshelfKeyVaultProperties keyVaultProperties = default, ResourceIdentifier logAnalyticsClusterId = default, IEnumerable<DiscoveryPrivateEndpointConnection> privateEndpointConnections = default, PublicNetworkAccess? publicNetworkAccess = default, ResourceIdentifier privateEndpointSubnetId = default, ResourceIdentifier searchSubnetId = default, string managedResourceGroup = default, IEnumerable<MoboBrokerResource> managedOnBehalfOfMoboBrokerResources = default, Uri bookshelfUri = default)
+        public static BookshelfProperties BookshelfProperties(DiscoveryProvisioningState? provisioningState = default, IDictionary<string, UserAssignedIdentity> workloadIdentities = default, CustomerManagedKeys? customerManagedKeys = default, BookshelfKeyVaultProperties keyVaultProperties = default, ResourceIdentifier logAnalyticsClusterId = default, IEnumerable<DiscoveryPrivateEndpointConnection> privateEndpointConnections = default, DiscoveryPublicNetworkAccess? publicNetworkAccess = default, ResourceIdentifier privateEndpointSubnetId = default, ResourceIdentifier searchSubnetId = default, string managedResourceGroup = default, IEnumerable<MoboBrokerResource> managedOnBehalfOfMoboBrokerResources = default, Uri bookshelfUri = default)
         {
             workloadIdentities ??= new ChangeTrackingDictionary<string, UserAssignedIdentity>();
             privateEndpointConnections ??= new ChangeTrackingList<DiscoveryPrivateEndpointConnection>();
@@ -92,7 +92,7 @@ namespace Azure.ResourceManager.Discovery.Models
         /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
         /// <param name="properties"> The private endpoint connection properties. </param>
         /// <returns> A new <see cref="Models.DiscoveryPrivateEndpointConnection"/> instance for mocking. </returns>
-        public static DiscoveryPrivateEndpointConnection DiscoveryPrivateEndpointConnection(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, PrivateEndpointConnectionProperties properties = default)
+        public static DiscoveryPrivateEndpointConnection DiscoveryPrivateEndpointConnection(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, DiscoveryPrivateEndpointConnectionProperties properties = default)
         {
             return new DiscoveryPrivateEndpointConnection(
                 id,
@@ -107,12 +107,12 @@ namespace Azure.ResourceManager.Discovery.Models
         /// <param name="privateEndpointId"> The resource identifier of the private endpoint. </param>
         /// <param name="privateLinkServiceConnectionState"> A collection of information about the state of the connection between service consumer and provider. </param>
         /// <param name="provisioningState"> The provisioning state of the private endpoint connection resource. </param>
-        /// <returns> A new <see cref="Models.PrivateEndpointConnectionProperties"/> instance for mocking. </returns>
-        public static PrivateEndpointConnectionProperties PrivateEndpointConnectionProperties(IEnumerable<string> groupIds = default, ResourceIdentifier privateEndpointId = default, DiscoveryPrivateLinkServiceConnectionState privateLinkServiceConnectionState = default, DiscoveryPrivateEndpointConnectionProvisioningState? provisioningState = default)
+        /// <returns> A new <see cref="Models.DiscoveryPrivateEndpointConnectionProperties"/> instance for mocking. </returns>
+        public static DiscoveryPrivateEndpointConnectionProperties DiscoveryPrivateEndpointConnectionProperties(IEnumerable<string> groupIds = default, ResourceIdentifier privateEndpointId = default, DiscoveryPrivateLinkServiceConnectionState privateLinkServiceConnectionState = default, DiscoveryPrivateEndpointConnectionProvisioningState? provisioningState = default)
         {
             groupIds ??= new ChangeTrackingList<string>();
 
-            return new PrivateEndpointConnectionProperties((groupIds ?? new ChangeTrackingList<string>()).ToList(), privateEndpointId is null ? default : new PrivateEndpoint(privateEndpointId, default), privateLinkServiceConnectionState, provisioningState, default);
+            return new DiscoveryPrivateEndpointConnectionProperties((groupIds ?? new ChangeTrackingList<string>()).ToList(), privateEndpointId is null ? default : new PrivateEndpoint(privateEndpointId, default), privateLinkServiceConnectionState, provisioningState, default);
         }
 
         /// <param name="status"> Indicates whether the connection has been Approved/Rejected/Removed by the owner of the service. </param>
@@ -137,7 +137,7 @@ namespace Azure.ResourceManager.Discovery.Models
         /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
         /// <param name="properties"> The resource-specific properties for this resource. </param>
         /// <returns> A new <see cref="Discovery.BookshelfPrivateEndpointConnectionData"/> instance for mocking. </returns>
-        public static BookshelfPrivateEndpointConnectionData BookshelfPrivateEndpointConnectionData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, PrivateEndpointConnectionProperties properties = default)
+        public static BookshelfPrivateEndpointConnectionData BookshelfPrivateEndpointConnectionData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, DiscoveryPrivateEndpointConnectionProperties properties = default)
         {
             return new BookshelfPrivateEndpointConnectionData(
                 id,
@@ -184,12 +184,12 @@ namespace Azure.ResourceManager.Discovery.Models
         /// <param name="tags"> Resource tags. </param>
         /// <param name="location"> The geo-location where the resource lives. </param>
         /// <param name="properties"> The resource-specific properties for this resource. </param>
-        /// <returns> A new <see cref="Discovery.ToolData"/> instance for mocking. </returns>
-        public static ToolData ToolData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, ToolProperties properties = default)
+        /// <returns> A new <see cref="Discovery.DiscoveryToolData"/> instance for mocking. </returns>
+        public static DiscoveryToolData DiscoveryToolData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, ToolProperties properties = default)
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
 
-            return new ToolData(
+            return new DiscoveryToolData(
                 id,
                 name,
                 resourceType,
@@ -205,7 +205,7 @@ namespace Azure.ResourceManager.Discovery.Models
         /// <param name="environmentVariables"> Environment variables to make available. </param>
         /// <param name="definitionContent"> The JSON content for defining a resource. </param>
         /// <returns> A new <see cref="Models.ToolProperties"/> instance for mocking. </returns>
-        public static ToolProperties ToolProperties(ProvisioningState? provisioningState = default, string version = default, IDictionary<string, string> environmentVariables = default, IDictionary<string, BinaryData> definitionContent = default)
+        public static ToolProperties ToolProperties(DiscoveryProvisioningState? provisioningState = default, string version = default, IDictionary<string, string> environmentVariables = default, IDictionary<string, BinaryData> definitionContent = default)
         {
             environmentVariables ??= new ChangeTrackingDictionary<string, string>();
             definitionContent ??= new ChangeTrackingDictionary<string, BinaryData>();
@@ -220,12 +220,12 @@ namespace Azure.ResourceManager.Discovery.Models
         /// <param name="tags"> Resource tags. </param>
         /// <param name="location"> The geo-location where the resource lives. </param>
         /// <param name="properties"> The resource-specific properties for this resource. </param>
-        /// <returns> A new <see cref="Discovery.ProjectData"/> instance for mocking. </returns>
-        public static ProjectData ProjectData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, ProjectProperties properties = default)
+        /// <returns> A new <see cref="Discovery.DiscoveryProjectData"/> instance for mocking. </returns>
+        public static DiscoveryProjectData DiscoveryProjectData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, ProjectProperties properties = default)
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
 
-            return new ProjectData(
+            return new DiscoveryProjectData(
                 id,
                 name,
                 resourceType,
@@ -241,7 +241,7 @@ namespace Azure.ResourceManager.Discovery.Models
         /// <param name="storageContainerIds"> Allowed StorageContainers (Control plane resource references). </param>
         /// <param name="behaviorPreferences"> Default preferences to guide AI behaviors in this project. </param>
         /// <returns> A new <see cref="Models.ProjectProperties"/> instance for mocking. </returns>
-        public static ProjectProperties ProjectProperties(ProvisioningState? provisioningState = default, Uri foundryProjectEndpoint = default, IEnumerable<ResourceIdentifier> storageContainerIds = default, string behaviorPreferences = default)
+        public static ProjectProperties ProjectProperties(DiscoveryProvisioningState? provisioningState = default, Uri foundryProjectEndpoint = default, IEnumerable<ResourceIdentifier> storageContainerIds = default, string behaviorPreferences = default)
         {
             storageContainerIds ??= new ChangeTrackingList<ResourceIdentifier>();
 
@@ -255,12 +255,12 @@ namespace Azure.ResourceManager.Discovery.Models
         /// <param name="tags"> Resource tags. </param>
         /// <param name="location"> The geo-location where the resource lives. </param>
         /// <param name="properties"> The resource-specific properties for this resource. </param>
-        /// <returns> A new <see cref="Discovery.WorkspaceData"/> instance for mocking. </returns>
-        public static WorkspaceData WorkspaceData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, WorkspaceProperties properties = default)
+        /// <returns> A new <see cref="Discovery.DiscoveryWorkspaceData"/> instance for mocking. </returns>
+        public static DiscoveryWorkspaceData DiscoveryWorkspaceData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, WorkspaceProperties properties = default)
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
 
-            return new WorkspaceData(
+            return new DiscoveryWorkspaceData(
                 id,
                 name,
                 resourceType,
@@ -287,7 +287,7 @@ namespace Azure.ResourceManager.Discovery.Models
         /// <param name="managedResourceGroup"> The resource group for resources managed on behalf of customer. </param>
         /// <param name="managedOnBehalfOfMoboBrokerResources"> Managed-On-Behalf-Of broker resources. </param>
         /// <returns> A new <see cref="Models.WorkspaceProperties"/> instance for mocking. </returns>
-        public static WorkspaceProperties WorkspaceProperties(ProvisioningState? provisioningState = default, IEnumerable<ResourceIdentifier> supercomputerIds = default, Uri workspaceApiUri = default, Uri workspaceUiUri = default, Identity workspaceIdentity = default, CustomerManagedKeys? customerManagedKeys = default, KeyVaultProperties keyVaultProperties = default, ResourceIdentifier logAnalyticsClusterId = default, IEnumerable<DiscoveryPrivateEndpointConnection> privateEndpointConnections = default, PublicNetworkAccess? publicNetworkAccess = default, ResourceIdentifier agentSubnetId = default, ResourceIdentifier privateEndpointSubnetId = default, ResourceIdentifier workspaceSubnetId = default, string managedResourceGroup = default, IEnumerable<MoboBrokerResource> managedOnBehalfOfMoboBrokerResources = default)
+        public static WorkspaceProperties WorkspaceProperties(DiscoveryProvisioningState? provisioningState = default, IEnumerable<ResourceIdentifier> supercomputerIds = default, Uri workspaceApiUri = default, Uri workspaceUiUri = default, DiscoveryManagedIdentityReference workspaceIdentity = default, CustomerManagedKeys? customerManagedKeys = default, DiscoveryKeyVaultProperties keyVaultProperties = default, ResourceIdentifier logAnalyticsClusterId = default, IEnumerable<DiscoveryPrivateEndpointConnection> privateEndpointConnections = default, DiscoveryPublicNetworkAccess? publicNetworkAccess = default, ResourceIdentifier agentSubnetId = default, ResourceIdentifier privateEndpointSubnetId = default, ResourceIdentifier workspaceSubnetId = default, string managedResourceGroup = default, IEnumerable<MoboBrokerResource> managedOnBehalfOfMoboBrokerResources = default)
         {
             supercomputerIds ??= new ChangeTrackingList<ResourceIdentifier>();
             privateEndpointConnections ??= new ChangeTrackingList<DiscoveryPrivateEndpointConnection>();
@@ -314,19 +314,19 @@ namespace Azure.ResourceManager.Discovery.Models
         /// <param name="id"> The resource ID of the user assigned identity. </param>
         /// <param name="principalId"> The principal ID of the assigned identity. </param>
         /// <param name="clientId"> The client ID of the assigned identity. </param>
-        /// <returns> A new <see cref="Models.Identity"/> instance for mocking. </returns>
-        public static Identity Identity(ResourceIdentifier id = default, Guid? principalId = default, Guid? clientId = default)
+        /// <returns> A new <see cref="Models.DiscoveryManagedIdentityReference"/> instance for mocking. </returns>
+        public static DiscoveryManagedIdentityReference DiscoveryManagedIdentityReference(ResourceIdentifier id = default, Guid? principalId = default, Guid? clientId = default)
         {
-            return new Identity(id, principalId, clientId, default);
+            return new DiscoveryManagedIdentityReference(id, principalId, clientId, default);
         }
 
         /// <param name="keyVaultUri"> The Key Vault URI. </param>
         /// <param name="keyName"> The Key Name in Key Vault. </param>
         /// <param name="keyVersion"> The Key Version in Key Vault. </param>
-        /// <returns> A new <see cref="Models.KeyVaultProperties"/> instance for mocking. </returns>
-        public static KeyVaultProperties KeyVaultProperties(Uri keyVaultUri = default, string keyName = default, string keyVersion = default)
+        /// <returns> A new <see cref="Models.DiscoveryKeyVaultProperties"/> instance for mocking. </returns>
+        public static DiscoveryKeyVaultProperties DiscoveryKeyVaultProperties(Uri keyVaultUri = default, string keyName = default, string keyVersion = default)
         {
-            return new KeyVaultProperties(keyVaultUri, keyName, keyVersion, default);
+            return new DiscoveryKeyVaultProperties(keyVaultUri, keyName, keyVersion, default);
         }
 
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
@@ -335,7 +335,7 @@ namespace Azure.ResourceManager.Discovery.Models
         /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
         /// <param name="properties"> The resource-specific properties for this resource. </param>
         /// <returns> A new <see cref="Discovery.WorkspacePrivateEndpointConnectionData"/> instance for mocking. </returns>
-        public static WorkspacePrivateEndpointConnectionData WorkspacePrivateEndpointConnectionData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, PrivateEndpointConnectionProperties properties = default)
+        public static WorkspacePrivateEndpointConnectionData WorkspacePrivateEndpointConnectionData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, DiscoveryPrivateEndpointConnectionProperties properties = default)
         {
             return new WorkspacePrivateEndpointConnectionData(
                 id,
@@ -376,7 +376,7 @@ namespace Azure.ResourceManager.Discovery.Models
         /// <param name="skuName"> SKU tier used by this chat model deployment. </param>
         /// <param name="capacity"> Provisioned SKU capacity units for this chat model deployment. </param>
         /// <returns> A new <see cref="Models.ChatModelDeploymentProperties"/> instance for mocking. </returns>
-        public static ChatModelDeploymentProperties ChatModelDeploymentProperties(ProvisioningState? provisioningState = default, string modelFormat = default, string modelName = default, string modelVersion = default, string skuName = default, int? capacity = default)
+        public static ChatModelDeploymentProperties ChatModelDeploymentProperties(DiscoveryProvisioningState? provisioningState = default, string modelFormat = default, string modelName = default, string modelVersion = default, string skuName = default, int? capacity = default)
         {
             return new ChatModelDeploymentProperties(
                 provisioningState,
@@ -438,7 +438,7 @@ namespace Azure.ResourceManager.Discovery.Models
         /// <param name="imageCacheLowerThreshold"> The percent of disk usage before which image garbage collection is never run. This cannot be set higher than imageCacheUpperThreshold. The default is 40%. </param>
         /// <param name="imageCacheUpperThreshold"> The percent of disk usage after which image garbage collection is guaranteed to run. The default is 60%. </param>
         /// <returns> A new <see cref="Models.NodePoolProperties"/> instance for mocking. </returns>
-        public static NodePoolProperties NodePoolProperties(ProvisioningState? provisioningState = default, ResourceIdentifier subnetId = default, VmSize vmSize = default, int maxNodeCount = default, int? minNodeCount = default, ScaleSetPriority? scaleSetPriority = default, int? osDiskSizeGb = default, int? imageCacheLowerThreshold = default, int? imageCacheUpperThreshold = default)
+        public static NodePoolProperties NodePoolProperties(DiscoveryProvisioningState? provisioningState = default, ResourceIdentifier subnetId = default, DiscoveryVmSize vmSize = default, int maxNodeCount = default, int? minNodeCount = default, DiscoveryScaleSetPriority? scaleSetPriority = default, int? osDiskSizeGb = default, int? imageCacheLowerThreshold = default, int? imageCacheUpperThreshold = default)
         {
             return new NodePoolProperties(
                 provisioningState,
@@ -461,12 +461,12 @@ namespace Azure.ResourceManager.Discovery.Models
         /// <param name="location"> The geo-location where the resource lives. </param>
         /// <param name="properties"> The resource-specific properties for this resource. </param>
         /// <param name="identity"> The managed service identities assigned to this resource. </param>
-        /// <returns> A new <see cref="Discovery.SupercomputerData"/> instance for mocking. </returns>
-        public static SupercomputerData SupercomputerData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, SupercomputerProperties properties = default, SystemAssignedServiceIdentity identity = default)
+        /// <returns> A new <see cref="Discovery.DiscoverySupercomputerData"/> instance for mocking. </returns>
+        public static DiscoverySupercomputerData DiscoverySupercomputerData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, SupercomputerProperties properties = default, DiscoverySystemAssignedServiceIdentity identity = default)
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
 
-            return new SupercomputerData(
+            return new DiscoverySupercomputerData(
                 id,
                 name,
                 resourceType,
@@ -500,7 +500,7 @@ namespace Azure.ResourceManager.Discovery.Models
         /// <param name="managedResourceGroup"> The resource group for resources managed on behalf of customer. </param>
         /// <param name="managedOnBehalfOfMoboBrokerResources"> Managed-On-Behalf-Of broker resources. </param>
         /// <returns> A new <see cref="Models.SupercomputerProperties"/> instance for mocking. </returns>
-        public static SupercomputerProperties SupercomputerProperties(ProvisioningState? provisioningState = default, ResourceIdentifier subnetId = default, ResourceIdentifier managementSubnetId = default, NetworkEgressType? outboundType = default, SystemSku? systemSku = default, SupercomputerIdentities identities = default, CustomerManagedKeys? customerManagedKeys = default, ResourceIdentifier diskEncryptionSetId = default, ResourceIdentifier logAnalyticsClusterId = default, string managedResourceGroup = default, IEnumerable<MoboBrokerResource> managedOnBehalfOfMoboBrokerResources = default)
+        public static SupercomputerProperties SupercomputerProperties(DiscoveryProvisioningState? provisioningState = default, ResourceIdentifier subnetId = default, ResourceIdentifier managementSubnetId = default, DiscoveryNetworkEgressType? outboundType = default, DiscoverySystemSku? systemSku = default, SupercomputerIdentities identities = default, CustomerManagedKeys? customerManagedKeys = default, ResourceIdentifier diskEncryptionSetId = default, ResourceIdentifier logAnalyticsClusterId = default, string managedResourceGroup = default, IEnumerable<MoboBrokerResource> managedOnBehalfOfMoboBrokerResources = default)
         {
             return new SupercomputerProperties(
                 provisioningState,
@@ -525,7 +525,7 @@ namespace Azure.ResourceManager.Discovery.Models
         /// </param>
         /// <param name="workloadIdentities"> User assigned identity IDs to be used by workloads as federated credentials running on supercomputer. The key value must be the resource ID of the identity resource. </param>
         /// <returns> A new <see cref="Models.SupercomputerIdentities"/> instance for mocking. </returns>
-        public static SupercomputerIdentities SupercomputerIdentities(Identity clusterIdentity = default, Identity kubeletIdentity = default, IDictionary<string, UserAssignedIdentity> workloadIdentities = default)
+        public static SupercomputerIdentities SupercomputerIdentities(DiscoveryManagedIdentityReference clusterIdentity = default, DiscoveryManagedIdentityReference kubeletIdentity = default, IDictionary<string, UserAssignedIdentity> workloadIdentities = default)
         {
             workloadIdentities ??= new ChangeTrackingDictionary<string, UserAssignedIdentity>();
 
@@ -535,10 +535,10 @@ namespace Azure.ResourceManager.Discovery.Models
         /// <param name="principalId"> The service principal ID of the system assigned identity. This property will only be provided for a system assigned identity. </param>
         /// <param name="tenantId"> The tenant ID of the system assigned identity. This property will only be provided for a system assigned identity. </param>
         /// <param name="type"> The type of managed identity assigned to this resource. </param>
-        /// <returns> A new <see cref="Models.SystemAssignedServiceIdentity"/> instance for mocking. </returns>
-        public static SystemAssignedServiceIdentity SystemAssignedServiceIdentity(Guid? principalId = default, Guid? tenantId = default, SystemAssignedServiceIdentityType @type = default)
+        /// <returns> A new <see cref="Models.DiscoverySystemAssignedServiceIdentity"/> instance for mocking. </returns>
+        public static DiscoverySystemAssignedServiceIdentity DiscoverySystemAssignedServiceIdentity(Guid? principalId = default, Guid? tenantId = default, DiscoverySystemAssignedServiceIdentityType @type = default)
         {
-            return new SystemAssignedServiceIdentity(principalId, tenantId, @type, default);
+            return new DiscoverySystemAssignedServiceIdentity(principalId, tenantId, @type, default);
         }
 
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
@@ -568,7 +568,7 @@ namespace Azure.ResourceManager.Discovery.Models
         /// <param name="provisioningState"> The status of the last operation. </param>
         /// <param name="path"> The path to the data within its parent container. This should be relative to the root of the parent container. </param>
         /// <returns> A new <see cref="Models.StorageAssetProperties"/> instance for mocking. </returns>
-        public static StorageAssetProperties StorageAssetProperties(string description = default, ProvisioningState? provisioningState = default, string path = default)
+        public static StorageAssetProperties StorageAssetProperties(string description = default, DiscoveryProvisioningState? provisioningState = default, string path = default)
         {
             return new StorageAssetProperties(description, provisioningState, path, default);
         }
@@ -599,14 +599,14 @@ namespace Azure.ResourceManager.Discovery.Models
         /// <param name="provisioningState"> The status of the last operation. </param>
         /// <param name="storageStore"> Storage store properties. </param>
         /// <returns> A new <see cref="Models.StorageContainerProperties"/> instance for mocking. </returns>
-        public static StorageContainerProperties StorageContainerProperties(ProvisioningState? provisioningState = default, StorageStore storageStore = default)
+        public static StorageContainerProperties StorageContainerProperties(DiscoveryProvisioningState? provisioningState = default, DiscoveryStorageStore storageStore = default)
         {
             return new StorageContainerProperties(provisioningState, storageStore, default);
         }
 
         /// <param name="kind"> The storage store kind. </param>
-        /// <returns> A new <see cref="Models.StorageStore"/> instance for mocking. </returns>
-        public static StorageStore StorageStore(string kind = default)
+        /// <returns> A new <see cref="Models.DiscoveryStorageStore"/> instance for mocking. </returns>
+        public static DiscoveryStorageStore DiscoveryStorageStore(string kind = default)
         {
             return new UnknownStorageStore(default, default);
         }

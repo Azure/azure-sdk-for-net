@@ -23,7 +23,7 @@ namespace Azure.ResourceManager.Discovery.Models
         /// <param name="vmSize"> The size of the underlying Azure VM. </param>
         /// <param name="maxNodeCount"> The maximum number of nodes. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subnetId"/> is null. </exception>
-        public NodePoolProperties(ResourceIdentifier subnetId, VmSize vmSize, int maxNodeCount)
+        public NodePoolProperties(ResourceIdentifier subnetId, DiscoveryVmSize vmSize, int maxNodeCount)
         {
             Argument.AssertNotNull(subnetId, nameof(subnetId));
 
@@ -43,7 +43,7 @@ namespace Azure.ResourceManager.Discovery.Models
         /// <param name="imageCacheLowerThreshold"> The percent of disk usage before which image garbage collection is never run. This cannot be set higher than imageCacheUpperThreshold. The default is 40%. </param>
         /// <param name="imageCacheUpperThreshold"> The percent of disk usage after which image garbage collection is guaranteed to run. The default is 60%. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal NodePoolProperties(ProvisioningState? provisioningState, ResourceIdentifier subnetId, VmSize vmSize, int maxNodeCount, int? minNodeCount, ScaleSetPriority? scaleSetPriority, int? osDiskSizeGb, int? imageCacheLowerThreshold, int? imageCacheUpperThreshold, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal NodePoolProperties(DiscoveryProvisioningState? provisioningState, ResourceIdentifier subnetId, DiscoveryVmSize vmSize, int maxNodeCount, int? minNodeCount, DiscoveryScaleSetPriority? scaleSetPriority, int? osDiskSizeGb, int? imageCacheLowerThreshold, int? imageCacheUpperThreshold, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             ProvisioningState = provisioningState;
             SubnetId = subnetId;
@@ -58,13 +58,13 @@ namespace Azure.ResourceManager.Discovery.Models
         }
 
         /// <summary> The status of the last operation. </summary>
-        public ProvisioningState? ProvisioningState { get; }
+        public DiscoveryProvisioningState? ProvisioningState { get; }
 
         /// <summary> The node pool subnet. </summary>
         public ResourceIdentifier SubnetId { get; set; }
 
         /// <summary> The size of the underlying Azure VM. </summary>
-        public VmSize VmSize { get; set; }
+        public DiscoveryVmSize VmSize { get; set; }
 
         /// <summary> The maximum number of nodes. </summary>
         public int MaxNodeCount { get; set; }
@@ -73,7 +73,7 @@ namespace Azure.ResourceManager.Discovery.Models
         public int? MinNodeCount { get; set; }
 
         /// <summary> The Virtual Machine Scale Set priority. If not specified, the default is 'Regular'. </summary>
-        public ScaleSetPriority? ScaleSetPriority { get; set; }
+        public DiscoveryScaleSetPriority? ScaleSetPriority { get; set; }
 
         /// <summary> The size of the OS disk in GB. If not specified, the default is 120 GB. </summary>
         public int? OsDiskSizeGb { get; set; }

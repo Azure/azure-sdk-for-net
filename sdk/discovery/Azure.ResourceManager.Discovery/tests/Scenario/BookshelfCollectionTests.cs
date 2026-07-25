@@ -21,16 +21,16 @@ namespace Azure.ResourceManager.Discovery.Tests.Scenario
         [SetUp]
         public void Setup() => InitializeClient();
 
-        private BookshelfCollection GetBookshelfCollection()
+        private DiscoveryBookshelfCollection GetDiscoveryBookshelfCollection()
             => GetResourceGroupReference(ResourceGroupName).GetBookshelves();
 
-        private BookshelfResource GetBookshelfReference()
-            => Client.GetBookshelfResource(BookshelfResource.CreateResourceIdentifier(TestEnvironment.SubscriptionId, ResourceGroupName, BookshelfName));
+        private DiscoveryBookshelfResource GetBookshelfReference()
+            => Client.GetDiscoveryBookshelfResource(DiscoveryBookshelfResource.CreateResourceIdentifier(TestEnvironment.SubscriptionId, ResourceGroupName, BookshelfName));
 
         [RecordedTest]
         public async Task CreateOrUpdate()
         {
-            ArmOperation<BookshelfResource> operation = await GetBookshelfCollection().CreateOrUpdateAsync(WaitUntil.Completed, BookshelfName, new BookshelfData(AzureLocation.UKSouth));
+            ArmOperation<DiscoveryBookshelfResource> operation = await GetDiscoveryBookshelfCollection().CreateOrUpdateAsync(WaitUntil.Completed, BookshelfName, new DiscoveryBookshelfData(AzureLocation.UKSouth));
 
             Assert.That(operation.HasValue, Is.True);
             Assert.That(operation.Value.Data.Name, Is.EqualTo(BookshelfName));
@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.Discovery.Tests.Scenario
         [RecordedTest]
         public async Task Get()
         {
-            Response<BookshelfResource> response = await GetBookshelfCollection().GetAsync(BookshelfName);
+            Response<DiscoveryBookshelfResource> response = await GetDiscoveryBookshelfCollection().GetAsync(BookshelfName);
 
             Assert.That(response.Value.Data.Name, Is.EqualTo(BookshelfName));
         }
@@ -47,8 +47,8 @@ namespace Azure.ResourceManager.Discovery.Tests.Scenario
         [RecordedTest]
         public async Task ListByResourceGroup()
         {
-            List<BookshelfResource> items = new List<BookshelfResource>();
-            await foreach (BookshelfResource item in GetBookshelfCollection().GetAllAsync())
+            List<DiscoveryBookshelfResource> items = new List<DiscoveryBookshelfResource>();
+            await foreach (DiscoveryBookshelfResource item in GetDiscoveryBookshelfCollection().GetAllAsync())
             {
                 items.Add(item);
             }
@@ -59,8 +59,8 @@ namespace Azure.ResourceManager.Discovery.Tests.Scenario
         [RecordedTest]
         public async Task ListBySubscription()
         {
-            List<BookshelfResource> items = new List<BookshelfResource>();
-            await foreach (BookshelfResource item in GetSubscriptionReference().GetBookshelvesAsync())
+            List<DiscoveryBookshelfResource> items = new List<DiscoveryBookshelfResource>();
+            await foreach (DiscoveryBookshelfResource item in GetSubscriptionReference().GetBookshelvesAsync())
             {
                 items.Add(item);
             }
@@ -71,7 +71,7 @@ namespace Azure.ResourceManager.Discovery.Tests.Scenario
         [RecordedTest]
         public async Task Update()
         {
-            ArmOperation<BookshelfResource> operation = await GetBookshelfReference().UpdateAsync(WaitUntil.Completed, new BookshelfData(AzureLocation.UKSouth));
+            ArmOperation<DiscoveryBookshelfResource> operation = await GetBookshelfReference().UpdateAsync(WaitUntil.Completed, new DiscoveryBookshelfData(AzureLocation.UKSouth));
 
             Assert.That(operation.Value.Data.Name, Is.EqualTo(BookshelfName));
         }

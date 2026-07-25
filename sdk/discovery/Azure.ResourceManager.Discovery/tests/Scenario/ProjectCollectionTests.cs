@@ -22,13 +22,13 @@ namespace Azure.ResourceManager.Discovery.Tests.Scenario
         [SetUp]
         public void Setup() => InitializeClient();
 
-        private ProjectCollection GetProjectCollection()
-            => Client.GetWorkspaceResource(WorkspaceResource.CreateResourceIdentifier(TestEnvironment.SubscriptionId, ResourceGroupName, WorkspaceName)).GetProjects();
+        private DiscoveryProjectCollection GetDiscoveryProjectCollection()
+            => Client.GetDiscoveryWorkspaceResource(DiscoveryWorkspaceResource.CreateResourceIdentifier(TestEnvironment.SubscriptionId, ResourceGroupName, WorkspaceName)).GetProjects();
 
         [RecordedTest]
         public async Task CreateOrUpdate()
         {
-            ArmOperation<ProjectResource> operation = await GetProjectCollection().CreateOrUpdateAsync(WaitUntil.Completed, ProjectName, new ProjectData(AzureLocation.UKSouth));
+            ArmOperation<DiscoveryProjectResource> operation = await GetDiscoveryProjectCollection().CreateOrUpdateAsync(WaitUntil.Completed, ProjectName, new DiscoveryProjectData(AzureLocation.UKSouth));
 
             Assert.That(operation.HasValue, Is.True);
             Assert.That(operation.Value.Data.Name, Is.EqualTo(ProjectName));
@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.Discovery.Tests.Scenario
         [RecordedTest]
         public async Task Get()
         {
-            Response<ProjectResource> response = await GetProjectCollection().GetAsync(ProjectName);
+            Response<DiscoveryProjectResource> response = await GetDiscoveryProjectCollection().GetAsync(ProjectName);
 
             Assert.That(response.Value.Data.Name, Is.EqualTo(ProjectName));
         }
@@ -45,8 +45,8 @@ namespace Azure.ResourceManager.Discovery.Tests.Scenario
         [RecordedTest]
         public async Task ListByWorkspace()
         {
-            List<ProjectResource> items = new List<ProjectResource>();
-            await foreach (ProjectResource item in GetProjectCollection().GetAllAsync())
+            List<DiscoveryProjectResource> items = new List<DiscoveryProjectResource>();
+            await foreach (DiscoveryProjectResource item in GetDiscoveryProjectCollection().GetAllAsync())
             {
                 items.Add(item);
             }

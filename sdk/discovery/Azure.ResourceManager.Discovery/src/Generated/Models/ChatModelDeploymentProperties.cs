@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.Discovery.Models
         /// <param name="skuName"> SKU tier used by this chat model deployment. </param>
         /// <param name="capacity"> Provisioned SKU capacity units for this chat model deployment. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ChatModelDeploymentProperties(ProvisioningState? provisioningState, string modelFormat, string modelName, string modelVersion, string skuName, int? capacity, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ChatModelDeploymentProperties(DiscoveryProvisioningState? provisioningState, string modelFormat, string modelName, string modelVersion, string skuName, int? capacity, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             ProvisioningState = provisioningState;
             ModelFormat = modelFormat;
@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.Discovery.Models
         }
 
         /// <summary> The status of the last operation. </summary>
-        public ProvisioningState? ProvisioningState { get; }
+        public DiscoveryProvisioningState? ProvisioningState { get; }
 
         /// <summary> Model format as published by the provider. Verify supported formats per region using the Model Catalog API. </summary>
         public string ModelFormat { get; set; }

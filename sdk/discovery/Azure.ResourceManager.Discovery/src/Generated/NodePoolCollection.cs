@@ -20,8 +20,8 @@ namespace Azure.ResourceManager.Discovery
 {
     /// <summary>
     /// A class representing a collection of <see cref="NodePoolResource"/> and their operations.
-    /// Each <see cref="NodePoolResource"/> in the collection will belong to the same instance of <see cref="SupercomputerResource"/>.
-    /// To get a <see cref="NodePoolCollection"/> instance call the GetNodePools method from an instance of <see cref="SupercomputerResource"/>.
+    /// Each <see cref="NodePoolResource"/> in the collection will belong to the same instance of <see cref="DiscoverySupercomputerResource"/>.
+    /// To get a <see cref="NodePoolCollection"/> instance call the GetNodePools method from an instance of <see cref="DiscoverySupercomputerResource"/>.
     /// </summary>
     public partial class NodePoolCollection : ArmCollection, IEnumerable<NodePoolResource>, IAsyncEnumerable<NodePoolResource>
     {
@@ -48,9 +48,9 @@ namespace Azure.ResourceManager.Discovery
         [Conditional("DEBUG")]
         internal static void ValidateResourceId(ResourceIdentifier id)
         {
-            if (id.ResourceType != SupercomputerResource.ResourceType)
+            if (id.ResourceType != DiscoverySupercomputerResource.ResourceType)
             {
-                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, SupercomputerResource.ResourceType), nameof(id));
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, DiscoverySupercomputerResource.ResourceType), nameof(id));
             }
         }
 

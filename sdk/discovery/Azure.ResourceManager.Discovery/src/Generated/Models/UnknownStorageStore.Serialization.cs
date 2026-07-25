@@ -13,7 +13,7 @@ using Azure.ResourceManager.Discovery;
 
 namespace Azure.ResourceManager.Discovery.Models
 {
-    internal partial class UnknownStorageStore : StorageStore, IJsonModel<StorageStore>
+    internal partial class UnknownStorageStore : DiscoveryStorageStore, IJsonModel<DiscoveryStorageStore>
     {
         /// <summary> Initializes a new instance of <see cref="UnknownStorageStore"/> for deserialization. </summary>
         internal UnknownStorageStore()
@@ -22,50 +22,50 @@ namespace Azure.ResourceManager.Discovery.Models
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected override StorageStore PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        protected override DiscoveryStorageStore PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<StorageStore>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<DiscoveryStorageStore>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeStorageStore(document.RootElement, options);
+                        return DeserializeDiscoveryStorageStore(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(StorageStore)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(DiscoveryStorageStore)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<StorageStore>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<DiscoveryStorageStore>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options, AzureResourceManagerDiscoveryContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(StorageStore)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(DiscoveryStorageStore)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<StorageStore>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<DiscoveryStorageStore>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        StorageStore IPersistableModel<StorageStore>.Create(BinaryData data, ModelReaderWriterOptions options)
+        DiscoveryStorageStore IPersistableModel<DiscoveryStorageStore>.Create(BinaryData data, ModelReaderWriterOptions options)
         {
             return PersistableModelCreateCore(data, options);
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<StorageStore>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<DiscoveryStorageStore>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<StorageStore>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<DiscoveryStorageStore>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -76,32 +76,32 @@ namespace Azure.ResourceManager.Discovery.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<StorageStore>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<DiscoveryStorageStore>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(StorageStore)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(DiscoveryStorageStore)} does not support writing '{format}' format.");
             }
             base.JsonModelWriteCore(writer, options);
         }
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        StorageStore IJsonModel<StorageStore>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        DiscoveryStorageStore IJsonModel<DiscoveryStorageStore>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
             return JsonModelCreateCore(ref reader, options);
         }
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected override StorageStore JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        protected override DiscoveryStorageStore JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<StorageStore>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<DiscoveryStorageStore>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(StorageStore)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(DiscoveryStorageStore)} does not support reading '{format}' format.");
             }
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeStorageStore(document.RootElement, options);
+            return DeserializeDiscoveryStorageStore(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>

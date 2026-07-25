@@ -13,7 +13,7 @@ using Azure.ResourceManager.Discovery;
 namespace Azure.ResourceManager.Discovery.Models
 {
     /// <summary> The Azure NetApp Files properties. </summary>
-    public partial class AzureNetAppFilesStore : StorageStore
+    public partial class AzureNetAppFilesStore : DiscoveryStorageStore
     {
         /// <summary> Initializes a new instance of <see cref="AzureNetAppFilesStore"/>. </summary>
         /// <param name="netAppVolumeId"> The associated Azure NetApp Files volume ID. </param>

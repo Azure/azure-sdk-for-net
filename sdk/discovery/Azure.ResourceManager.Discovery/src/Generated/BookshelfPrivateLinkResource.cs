@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.Discovery
     /// <summary>
     /// A class representing a BookshelfPrivateLinkResource along with the instance operations that can be performed on it.
     /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="BookshelfPrivateLinkResource"/> from an instance of <see cref="ArmClient"/> using the GetResource method.
-    /// Otherwise you can get one from its parent resource <see cref="BookshelfResource"/> using the GetBookshelfPrivateLinkResources method.
+    /// Otherwise you can get one from its parent resource <see cref="DiscoveryBookshelfResource"/> using the GetBookshelfPrivateLinkResources method.
     /// </summary>
     public partial class BookshelfPrivateLinkResource : ArmResource
     {

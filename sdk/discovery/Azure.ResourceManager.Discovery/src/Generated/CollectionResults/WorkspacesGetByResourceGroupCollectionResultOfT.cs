@@ -14,7 +14,7 @@ using Azure.ResourceManager.Discovery.Models;
 
 namespace Azure.ResourceManager.Discovery
 {
-    internal partial class WorkspacesGetByResourceGroupCollectionResultOfT : Pageable<WorkspaceData>
+    internal partial class WorkspacesGetByResourceGroupCollectionResultOfT : Pageable<DiscoveryWorkspaceData>
     {
         private readonly Workspaces _client;
         private readonly Guid _subscriptionId;
@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.Discovery
         /// <param name="continuationToken"> A continuation token indicating where to resume paging. </param>
         /// <param name="pageSizeHint"> The number of items per page. </param>
         /// <returns> The pages of WorkspacesGetByResourceGroupCollectionResultOfT as an enumerable collection. </returns>
-        public override IEnumerable<Page<WorkspaceData>> AsPages(string continuationToken, int? pageSizeHint)
+        public override IEnumerable<Page<DiscoveryWorkspaceData>> AsPages(string continuationToken, int? pageSizeHint)
         {
             Uri nextPage = continuationToken != null ? new Uri(continuationToken) : null;
             while (true)
@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.Discovery
                 }
                 WorkspaceListResult result = WorkspaceListResult.FromResponse(response);
                 nextPage = result.NextLink;
-                yield return Page<WorkspaceData>.FromValues((IReadOnlyList<WorkspaceData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
+                yield return Page<DiscoveryWorkspaceData>.FromValues((IReadOnlyList<DiscoveryWorkspaceData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 if (nextPage == null)
                 {
                     yield break;

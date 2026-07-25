@@ -145,7 +145,7 @@ namespace Azure.ResourceManager.Discovery.Models
             {
                 return null;
             }
-            ProvisioningState? provisioningState = default;
+            DiscoveryProvisioningState? provisioningState = default;
             string modelFormat = default;
             string modelName = default;
             string modelVersion = default;
@@ -160,7 +160,7 @@ namespace Azure.ResourceManager.Discovery.Models
                     {
                         continue;
                     }
-                    provisioningState = new ProvisioningState(prop.Value.GetString());
+                    provisioningState = new DiscoveryProvisioningState(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("modelFormat"u8))

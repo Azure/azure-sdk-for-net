@@ -21,16 +21,16 @@ namespace Azure.ResourceManager.Discovery.Tests.Scenario
         [SetUp]
         public void Setup() => InitializeClient();
 
-        private SupercomputerCollection GetSupercomputerCollection()
+        private DiscoverySupercomputerCollection GetDiscoverySupercomputerCollection()
             => GetResourceGroupReference(ResourceGroupName).GetSupercomputers();
 
-        private SupercomputerResource GetSupercomputerReference()
-            => Client.GetSupercomputerResource(SupercomputerResource.CreateResourceIdentifier(TestEnvironment.SubscriptionId, ResourceGroupName, SupercomputerName));
+        private DiscoverySupercomputerResource GetSupercomputerReference()
+            => Client.GetDiscoverySupercomputerResource(DiscoverySupercomputerResource.CreateResourceIdentifier(TestEnvironment.SubscriptionId, ResourceGroupName, SupercomputerName));
 
         [RecordedTest]
         public async Task CreateOrUpdate()
         {
-            ArmOperation<SupercomputerResource> operation = await GetSupercomputerCollection().CreateOrUpdateAsync(WaitUntil.Completed, SupercomputerName, new SupercomputerData(AzureLocation.UKSouth));
+            ArmOperation<DiscoverySupercomputerResource> operation = await GetDiscoverySupercomputerCollection().CreateOrUpdateAsync(WaitUntil.Completed, SupercomputerName, new DiscoverySupercomputerData(AzureLocation.UKSouth));
 
             Assert.That(operation.HasValue, Is.True);
             Assert.That(operation.Value.Data.Name, Is.EqualTo(SupercomputerName));
@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.Discovery.Tests.Scenario
         [RecordedTest]
         public async Task Get()
         {
-            Response<SupercomputerResource> response = await GetSupercomputerCollection().GetAsync(SupercomputerName);
+            Response<DiscoverySupercomputerResource> response = await GetDiscoverySupercomputerCollection().GetAsync(SupercomputerName);
 
             Assert.That(response.Value.Data.Name, Is.EqualTo(SupercomputerName));
         }
@@ -47,8 +47,8 @@ namespace Azure.ResourceManager.Discovery.Tests.Scenario
         [RecordedTest]
         public async Task ListByResourceGroup()
         {
-            List<SupercomputerResource> items = new List<SupercomputerResource>();
-            await foreach (SupercomputerResource item in GetSupercomputerCollection().GetAllAsync())
+            List<DiscoverySupercomputerResource> items = new List<DiscoverySupercomputerResource>();
+            await foreach (DiscoverySupercomputerResource item in GetDiscoverySupercomputerCollection().GetAllAsync())
             {
                 items.Add(item);
             }
@@ -59,8 +59,8 @@ namespace Azure.ResourceManager.Discovery.Tests.Scenario
         [RecordedTest]
         public async Task ListBySubscription()
         {
-            List<SupercomputerResource> items = new List<SupercomputerResource>();
-            await foreach (SupercomputerResource item in GetSubscriptionReference().GetSupercomputersAsync())
+            List<DiscoverySupercomputerResource> items = new List<DiscoverySupercomputerResource>();
+            await foreach (DiscoverySupercomputerResource item in GetSubscriptionReference().GetSupercomputersAsync())
             {
                 items.Add(item);
             }

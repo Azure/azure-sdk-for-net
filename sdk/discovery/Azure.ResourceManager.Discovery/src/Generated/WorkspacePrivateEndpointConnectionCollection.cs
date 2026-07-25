@@ -20,8 +20,8 @@ namespace Azure.ResourceManager.Discovery
 {
     /// <summary>
     /// A class representing a collection of <see cref="WorkspacePrivateEndpointConnectionResource"/> and their operations.
-    /// Each <see cref="WorkspacePrivateEndpointConnectionResource"/> in the collection will belong to the same instance of <see cref="WorkspaceResource"/>.
-    /// To get a <see cref="WorkspacePrivateEndpointConnectionCollection"/> instance call the GetWorkspacePrivateEndpointConnections method from an instance of <see cref="WorkspaceResource"/>.
+    /// Each <see cref="WorkspacePrivateEndpointConnectionResource"/> in the collection will belong to the same instance of <see cref="DiscoveryWorkspaceResource"/>.
+    /// To get a <see cref="WorkspacePrivateEndpointConnectionCollection"/> instance call the GetWorkspacePrivateEndpointConnections method from an instance of <see cref="DiscoveryWorkspaceResource"/>.
     /// </summary>
     public partial class WorkspacePrivateEndpointConnectionCollection : ArmCollection, IEnumerable<WorkspacePrivateEndpointConnectionResource>, IAsyncEnumerable<WorkspacePrivateEndpointConnectionResource>
     {
@@ -48,9 +48,9 @@ namespace Azure.ResourceManager.Discovery
         [Conditional("DEBUG")]
         internal static void ValidateResourceId(ResourceIdentifier id)
         {
-            if (id.ResourceType != WorkspaceResource.ResourceType)
+            if (id.ResourceType != DiscoveryWorkspaceResource.ResourceType)
             {
-                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, WorkspaceResource.ResourceType), nameof(id));
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, DiscoveryWorkspaceResource.ResourceType), nameof(id));
             }
         }
 

@@ -21,7 +21,7 @@ namespace Azure.ResourceManager.Discovery
     /// <summary>
     /// A class representing a ChatModelDeployment along with the instance operations that can be performed on it.
     /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="ChatModelDeploymentResource"/> from an instance of <see cref="ArmClient"/> using the GetResource method.
-    /// Otherwise you can get one from its parent resource <see cref="WorkspaceResource"/> using the GetChatModelDeployments method.
+    /// Otherwise you can get one from its parent resource <see cref="DiscoveryWorkspaceResource"/> using the GetChatModelDeployments method.
     /// </summary>
     public partial class ChatModelDeploymentResource : ArmResource
     {

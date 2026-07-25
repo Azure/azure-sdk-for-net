@@ -147,7 +147,7 @@ namespace Azure.ResourceManager.Discovery
             string name = default;
             ResourceType resourceType = default;
             SystemData systemData = default;
-            PrivateEndpointConnectionProperties properties = default;
+            DiscoveryPrivateEndpointConnectionProperties properties = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -189,7 +189,7 @@ namespace Azure.ResourceManager.Discovery
                     {
                         continue;
                     }
-                    properties = PrivateEndpointConnectionProperties.DeserializePrivateEndpointConnectionProperties(prop.Value, options);
+                    properties = DiscoveryPrivateEndpointConnectionProperties.DeserializeDiscoveryPrivateEndpointConnectionProperties(prop.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

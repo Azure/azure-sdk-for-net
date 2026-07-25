@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.Discovery.Models
         /// <param name="storageContainerIds"> Allowed StorageContainers (Control plane resource references). </param>
         /// <param name="settings"> Settings for the project. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ProjectProperties(ProvisioningState? provisioningState, Uri foundryProjectEndpoint, IList<ResourceIdentifier> storageContainerIds, ProjectSettings settings, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ProjectProperties(DiscoveryProvisioningState? provisioningState, Uri foundryProjectEndpoint, IList<ResourceIdentifier> storageContainerIds, ProjectSettings settings, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             ProvisioningState = provisioningState;
             FoundryProjectEndpoint = foundryProjectEndpoint;
@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.Discovery.Models
         }
 
         /// <summary> The status of the last operation. </summary>
-        public ProvisioningState? ProvisioningState { get; }
+        public DiscoveryProvisioningState? ProvisioningState { get; }
 
         /// <summary> Foundry project endpoint URI. </summary>
         public Uri FoundryProjectEndpoint { get; }

@@ -164,7 +164,7 @@ namespace Azure.ResourceManager.Discovery.Models
             {
                 return null;
             }
-            ProvisioningState? provisioningState = default;
+            DiscoveryProvisioningState? provisioningState = default;
             string version = default;
             IDictionary<string, string> environmentVariables = default;
             IDictionary<string, BinaryData> definitionContent = default;
@@ -177,7 +177,7 @@ namespace Azure.ResourceManager.Discovery.Models
                     {
                         continue;
                     }
-                    provisioningState = new ProvisioningState(prop.Value.GetString());
+                    provisioningState = new DiscoveryProvisioningState(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("version"u8))

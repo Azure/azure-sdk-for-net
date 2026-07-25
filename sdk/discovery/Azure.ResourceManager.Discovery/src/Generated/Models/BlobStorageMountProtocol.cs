@@ -30,9 +30,6 @@ namespace Azure.ResourceManager.Discovery.Models
             _value = value;
         }
 
-        /// <summary> NFS protocol. Version of NFS used may vary based on storage type. </summary>
-        public static BlobStorageMountProtocol NFS { get; } = new BlobStorageMountProtocol(NFSValue);
-
         /// <summary> Blobfuse in file cache mode. </summary>
         public static BlobStorageMountProtocol BlobfuseCaching { get; } = new BlobStorageMountProtocol(BlobfuseCachingValue);
 

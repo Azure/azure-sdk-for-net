@@ -195,13 +195,13 @@ namespace Azure.ResourceManager.Discovery.Models
             {
                 return null;
             }
-            ProvisioningState? provisioningState = default;
+            DiscoveryProvisioningState? provisioningState = default;
             IDictionary<string, UserAssignedIdentity> workloadIdentities = default;
             CustomerManagedKeys? customerManagedKeys = default;
             BookshelfKeyVaultProperties keyVaultProperties = default;
             ResourceIdentifier logAnalyticsClusterId = default;
             IReadOnlyList<DiscoveryPrivateEndpointConnection> privateEndpointConnections = default;
-            PublicNetworkAccess? publicNetworkAccess = default;
+            DiscoveryPublicNetworkAccess? publicNetworkAccess = default;
             ResourceIdentifier privateEndpointSubnetId = default;
             ResourceIdentifier searchSubnetId = default;
             string managedResourceGroup = default;
@@ -216,7 +216,7 @@ namespace Azure.ResourceManager.Discovery.Models
                     {
                         continue;
                     }
-                    provisioningState = new ProvisioningState(prop.Value.GetString());
+                    provisioningState = new DiscoveryProvisioningState(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("workloadIdentities"u8))
@@ -287,7 +287,7 @@ namespace Azure.ResourceManager.Discovery.Models
                     {
                         continue;
                     }
-                    publicNetworkAccess = new PublicNetworkAccess(prop.Value.GetString());
+                    publicNetworkAccess = new DiscoveryPublicNetworkAccess(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("privateEndpointSubnetId"u8))

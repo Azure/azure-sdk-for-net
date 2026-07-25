@@ -20,8 +20,8 @@ namespace Azure.ResourceManager.Discovery
 {
     /// <summary>
     /// A class representing a collection of <see cref="ChatModelDeploymentResource"/> and their operations.
-    /// Each <see cref="ChatModelDeploymentResource"/> in the collection will belong to the same instance of <see cref="WorkspaceResource"/>.
-    /// To get a <see cref="ChatModelDeploymentCollection"/> instance call the GetChatModelDeployments method from an instance of <see cref="WorkspaceResource"/>.
+    /// Each <see cref="ChatModelDeploymentResource"/> in the collection will belong to the same instance of <see cref="DiscoveryWorkspaceResource"/>.
+    /// To get a <see cref="ChatModelDeploymentCollection"/> instance call the GetChatModelDeployments method from an instance of <see cref="DiscoveryWorkspaceResource"/>.
     /// </summary>
     public partial class ChatModelDeploymentCollection : ArmCollection, IEnumerable<ChatModelDeploymentResource>, IAsyncEnumerable<ChatModelDeploymentResource>
     {
@@ -48,9 +48,9 @@ namespace Azure.ResourceManager.Discovery
         [Conditional("DEBUG")]
         internal static void ValidateResourceId(ResourceIdentifier id)
         {
-            if (id.ResourceType != WorkspaceResource.ResourceType)
+            if (id.ResourceType != DiscoveryWorkspaceResource.ResourceType)
             {
-                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, WorkspaceResource.ResourceType), nameof(id));
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, DiscoveryWorkspaceResource.ResourceType), nameof(id));
             }
         }
 

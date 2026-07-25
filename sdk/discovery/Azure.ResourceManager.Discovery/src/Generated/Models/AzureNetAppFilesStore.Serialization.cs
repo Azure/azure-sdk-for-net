@@ -15,7 +15,7 @@ using Azure.ResourceManager.Discovery;
 namespace Azure.ResourceManager.Discovery.Models
 {
     /// <summary> The Azure NetApp Files properties. </summary>
-    public partial class AzureNetAppFilesStore : StorageStore, IJsonModel<AzureNetAppFilesStore>
+    public partial class AzureNetAppFilesStore : DiscoveryStorageStore, IJsonModel<AzureNetAppFilesStore>
     {
         /// <summary> Initializes a new instance of <see cref="AzureNetAppFilesStore"/> for deserialization. </summary>
         internal AzureNetAppFilesStore()
@@ -24,7 +24,7 @@ namespace Azure.ResourceManager.Discovery.Models
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected override StorageStore PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        protected override DiscoveryStorageStore PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
             string format = options.Format == "W" ? ((IPersistableModel<AzureNetAppFilesStore>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
@@ -96,7 +96,7 @@ namespace Azure.ResourceManager.Discovery.Models
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected override StorageStore JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        protected override DiscoveryStorageStore JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
             string format = options.Format == "W" ? ((IPersistableModel<AzureNetAppFilesStore>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")

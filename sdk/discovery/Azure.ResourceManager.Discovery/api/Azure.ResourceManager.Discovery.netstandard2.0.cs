@@ -6,37 +6,6 @@ namespace Azure.ResourceManager.Discovery
         public static Azure.ResourceManager.Discovery.AzureResourceManagerDiscoveryContext Default { get { throw null; } }
         protected override bool TryGetTypeBuilderCore(System.Type type, out System.ClientModel.Primitives.ModelReaderWriterTypeBuilder builder) { throw null; }
     }
-    public partial class BookshelfCollection : Azure.ResourceManager.ArmCollection, System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.Discovery.BookshelfResource>, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Discovery.BookshelfResource>, System.Collections.IEnumerable
-    {
-        protected BookshelfCollection() { }
-        public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Discovery.BookshelfResource> CreateOrUpdate(Azure.WaitUntil waitUntil, string bookshelfName, Azure.ResourceManager.Discovery.BookshelfData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Discovery.BookshelfResource>> CreateOrUpdateAsync(Azure.WaitUntil waitUntil, string bookshelfName, Azure.ResourceManager.Discovery.BookshelfData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<bool> Exists(string bookshelfName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<bool>> ExistsAsync(string bookshelfName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<Azure.ResourceManager.Discovery.BookshelfResource> Get(string bookshelfName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Pageable<Azure.ResourceManager.Discovery.BookshelfResource> GetAll(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.AsyncPageable<Azure.ResourceManager.Discovery.BookshelfResource> GetAllAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Discovery.BookshelfResource>> GetAsync(string bookshelfName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.NullableResponse<Azure.ResourceManager.Discovery.BookshelfResource> GetIfExists(string bookshelfName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.NullableResponse<Azure.ResourceManager.Discovery.BookshelfResource>> GetIfExistsAsync(string bookshelfName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        System.Collections.Generic.IAsyncEnumerator<Azure.ResourceManager.Discovery.BookshelfResource> System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.Discovery.BookshelfResource>.GetAsyncEnumerator(System.Threading.CancellationToken cancellationToken) { throw null; }
-        System.Collections.Generic.IEnumerator<Azure.ResourceManager.Discovery.BookshelfResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.Discovery.BookshelfResource>.GetEnumerator() { throw null; }
-        System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
-    }
-    public partial class BookshelfData : Azure.ResourceManager.Models.TrackedResourceData, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Discovery.BookshelfData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Discovery.BookshelfData>
-    {
-        public BookshelfData(Azure.Core.AzureLocation location) { }
-        public Azure.ResourceManager.Discovery.Models.BookshelfProperties Properties { get { throw null; } set { } }
-        protected virtual Azure.ResourceManager.Models.ResourceData JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        protected virtual Azure.ResourceManager.Models.ResourceData PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        Azure.ResourceManager.Discovery.BookshelfData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Discovery.BookshelfData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Discovery.BookshelfData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        Azure.ResourceManager.Discovery.BookshelfData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Discovery.BookshelfData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Discovery.BookshelfData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Discovery.BookshelfData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-    }
     public partial class BookshelfPrivateEndpointConnectionCollection : Azure.ResourceManager.ArmCollection, System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.Discovery.BookshelfPrivateEndpointConnectionResource>, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Discovery.BookshelfPrivateEndpointConnectionResource>, System.Collections.IEnumerable
     {
         protected BookshelfPrivateEndpointConnectionCollection() { }
@@ -57,7 +26,7 @@ namespace Azure.ResourceManager.Discovery
     public partial class BookshelfPrivateEndpointConnectionData : Azure.ResourceManager.Models.ResourceData, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Discovery.BookshelfPrivateEndpointConnectionData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Discovery.BookshelfPrivateEndpointConnectionData>
     {
         public BookshelfPrivateEndpointConnectionData() { }
-        public Azure.ResourceManager.Discovery.Models.PrivateEndpointConnectionProperties Properties { get { throw null; } set { } }
+        public Azure.ResourceManager.Discovery.Models.DiscoveryPrivateEndpointConnectionProperties Properties { get { throw null; } set { } }
         protected virtual Azure.ResourceManager.Models.ResourceData JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         protected virtual Azure.ResourceManager.Models.ResourceData PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -131,37 +100,6 @@ namespace Azure.ResourceManager.Discovery
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Discovery.BookshelfPrivateLinkResourceData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Discovery.BookshelfPrivateLinkResourceData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class BookshelfResource : Azure.ResourceManager.ArmResource, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Discovery.BookshelfData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Discovery.BookshelfData>
-    {
-        public static readonly Azure.Core.ResourceType ResourceType;
-        protected BookshelfResource() { }
-        public virtual Azure.ResourceManager.Discovery.BookshelfData Data { get { throw null; } }
-        public virtual bool HasData { get { throw null; } }
-        public virtual Azure.Response<Azure.ResourceManager.Discovery.BookshelfResource> AddTag(string key, string value, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Discovery.BookshelfResource>> AddTagAsync(string key, string value, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public static Azure.Core.ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string bookshelfName) { throw null; }
-        public virtual Azure.ResourceManager.ArmOperation Delete(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation> DeleteAsync(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<Azure.ResourceManager.Discovery.BookshelfResource> Get(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Discovery.BookshelfResource>> GetAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<Azure.ResourceManager.Discovery.BookshelfPrivateEndpointConnectionResource> GetBookshelfPrivateEndpointConnection(string privateEndpointConnectionName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Discovery.BookshelfPrivateEndpointConnectionResource>> GetBookshelfPrivateEndpointConnectionAsync(string privateEndpointConnectionName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.ResourceManager.Discovery.BookshelfPrivateEndpointConnectionCollection GetBookshelfPrivateEndpointConnections() { throw null; }
-        public virtual Azure.Response<Azure.ResourceManager.Discovery.BookshelfPrivateLinkResource> GetBookshelfPrivateLinkResource(string privateLinkResourceName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Discovery.BookshelfPrivateLinkResource>> GetBookshelfPrivateLinkResourceAsync(string privateLinkResourceName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.ResourceManager.Discovery.BookshelfPrivateLinkResourceCollection GetBookshelfPrivateLinkResources() { throw null; }
-        public virtual Azure.Response<Azure.ResourceManager.Discovery.BookshelfResource> RemoveTag(string key, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Discovery.BookshelfResource>> RemoveTagAsync(string key, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<Azure.ResourceManager.Discovery.BookshelfResource> SetTags(System.Collections.Generic.IDictionary<string, string> tags, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Discovery.BookshelfResource>> SetTagsAsync(System.Collections.Generic.IDictionary<string, string> tags, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        Azure.ResourceManager.Discovery.BookshelfData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Discovery.BookshelfData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Discovery.BookshelfData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        Azure.ResourceManager.Discovery.BookshelfData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Discovery.BookshelfData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Discovery.BookshelfData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Discovery.BookshelfData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Discovery.BookshelfResource> Update(Azure.WaitUntil waitUntil, Azure.ResourceManager.Discovery.BookshelfData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Discovery.BookshelfResource>> UpdateAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.Discovery.BookshelfData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-    }
     public partial class ChatModelDeploymentCollection : Azure.ResourceManager.ArmCollection, System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.Discovery.ChatModelDeploymentResource>, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Discovery.ChatModelDeploymentResource>, System.Collections.IEnumerable
     {
         protected ChatModelDeploymentCollection() { }
@@ -218,19 +156,84 @@ namespace Azure.ResourceManager.Discovery
         public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Discovery.ChatModelDeploymentResource> Update(Azure.WaitUntil waitUntil, Azure.ResourceManager.Discovery.ChatModelDeploymentData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Discovery.ChatModelDeploymentResource>> UpdateAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.Discovery.ChatModelDeploymentData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
+    public partial class DiscoveryBookshelfCollection : Azure.ResourceManager.ArmCollection, System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.Discovery.DiscoveryBookshelfResource>, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Discovery.DiscoveryBookshelfResource>, System.Collections.IEnumerable
+    {
+        protected DiscoveryBookshelfCollection() { }
+        public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Discovery.DiscoveryBookshelfResource> CreateOrUpdate(Azure.WaitUntil waitUntil, string bookshelfName, Azure.ResourceManager.Discovery.DiscoveryBookshelfData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Discovery.DiscoveryBookshelfResource>> CreateOrUpdateAsync(Azure.WaitUntil waitUntil, string bookshelfName, Azure.ResourceManager.Discovery.DiscoveryBookshelfData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<bool> Exists(string bookshelfName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<bool>> ExistsAsync(string bookshelfName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.Discovery.DiscoveryBookshelfResource> Get(string bookshelfName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Pageable<Azure.ResourceManager.Discovery.DiscoveryBookshelfResource> GetAll(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.AsyncPageable<Azure.ResourceManager.Discovery.DiscoveryBookshelfResource> GetAllAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Discovery.DiscoveryBookshelfResource>> GetAsync(string bookshelfName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.NullableResponse<Azure.ResourceManager.Discovery.DiscoveryBookshelfResource> GetIfExists(string bookshelfName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.NullableResponse<Azure.ResourceManager.Discovery.DiscoveryBookshelfResource>> GetIfExistsAsync(string bookshelfName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        System.Collections.Generic.IAsyncEnumerator<Azure.ResourceManager.Discovery.DiscoveryBookshelfResource> System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.Discovery.DiscoveryBookshelfResource>.GetAsyncEnumerator(System.Threading.CancellationToken cancellationToken) { throw null; }
+        System.Collections.Generic.IEnumerator<Azure.ResourceManager.Discovery.DiscoveryBookshelfResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.Discovery.DiscoveryBookshelfResource>.GetEnumerator() { throw null; }
+        System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
+    }
+    public partial class DiscoveryBookshelfData : Azure.ResourceManager.Models.TrackedResourceData, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Discovery.DiscoveryBookshelfData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Discovery.DiscoveryBookshelfData>
+    {
+        public DiscoveryBookshelfData(Azure.Core.AzureLocation location) { }
+        public Azure.ResourceManager.Discovery.Models.BookshelfProperties Properties { get { throw null; } set { } }
+        protected virtual Azure.ResourceManager.Models.ResourceData JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.Models.ResourceData PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        Azure.ResourceManager.Discovery.DiscoveryBookshelfData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Discovery.DiscoveryBookshelfData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Discovery.DiscoveryBookshelfData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.Discovery.DiscoveryBookshelfData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Discovery.DiscoveryBookshelfData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Discovery.DiscoveryBookshelfData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Discovery.DiscoveryBookshelfData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
+    public partial class DiscoveryBookshelfResource : Azure.ResourceManager.ArmResource, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Discovery.DiscoveryBookshelfData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Discovery.DiscoveryBookshelfData>
+    {
+        public static readonly Azure.Core.ResourceType ResourceType;
+        protected DiscoveryBookshelfResource() { }
+        public virtual Azure.ResourceManager.Discovery.DiscoveryBookshelfData Data { get { throw null; } }
+        public virtual bool HasData { get { throw null; } }
+        public virtual Azure.Response<Azure.ResourceManager.Discovery.DiscoveryBookshelfResource> AddTag(string key, string value, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Discovery.DiscoveryBookshelfResource>> AddTagAsync(string key, string value, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public static Azure.Core.ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string bookshelfName) { throw null; }
+        public virtual Azure.ResourceManager.ArmOperation Delete(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation> DeleteAsync(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.Discovery.DiscoveryBookshelfResource> Get(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Discovery.DiscoveryBookshelfResource>> GetAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.Discovery.BookshelfPrivateEndpointConnectionResource> GetBookshelfPrivateEndpointConnection(string privateEndpointConnectionName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Discovery.BookshelfPrivateEndpointConnectionResource>> GetBookshelfPrivateEndpointConnectionAsync(string privateEndpointConnectionName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.ResourceManager.Discovery.BookshelfPrivateEndpointConnectionCollection GetBookshelfPrivateEndpointConnections() { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.Discovery.BookshelfPrivateLinkResource> GetBookshelfPrivateLinkResource(string privateLinkResourceName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Discovery.BookshelfPrivateLinkResource>> GetBookshelfPrivateLinkResourceAsync(string privateLinkResourceName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.ResourceManager.Discovery.BookshelfPrivateLinkResourceCollection GetBookshelfPrivateLinkResources() { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.Discovery.DiscoveryBookshelfResource> RemoveTag(string key, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Discovery.DiscoveryBookshelfResource>> RemoveTagAsync(string key, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.Discovery.DiscoveryBookshelfResource> SetTags(System.Collections.Generic.IDictionary<string, string> tags, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Discovery.DiscoveryBookshelfResource>> SetTagsAsync(System.Collections.Generic.IDictionary<string, string> tags, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        Azure.ResourceManager.Discovery.DiscoveryBookshelfData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Discovery.DiscoveryBookshelfData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Discovery.DiscoveryBookshelfData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.Discovery.DiscoveryBookshelfData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Discovery.DiscoveryBookshelfData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Discovery.DiscoveryBookshelfData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Discovery.DiscoveryBookshelfData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Discovery.DiscoveryBookshelfResource> Update(Azure.WaitUntil waitUntil, Azure.ResourceManager.Discovery.DiscoveryBookshelfData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Discovery.DiscoveryBookshelfResource>> UpdateAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.Discovery.DiscoveryBookshelfData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+    }
     public static partial class DiscoveryExtensions
     {
-        public static Azure.Response<Azure.ResourceManager.Discovery.BookshelfResource> GetBookshelf(this Azure.ResourceManager.Resources.ResourceGroupResource resourceGroupResource, string bookshelfName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public static System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Discovery.BookshelfResource>> GetBookshelfAsync(this Azure.ResourceManager.Resources.ResourceGroupResource resourceGroupResource, string bookshelfName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public static Azure.Response<Azure.ResourceManager.Discovery.DiscoveryBookshelfResource> GetBookshelf(this Azure.ResourceManager.Resources.ResourceGroupResource resourceGroupResource, string bookshelfName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public static System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Discovery.DiscoveryBookshelfResource>> GetBookshelfAsync(this Azure.ResourceManager.Resources.ResourceGroupResource resourceGroupResource, string bookshelfName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public static Azure.ResourceManager.Discovery.BookshelfPrivateEndpointConnectionResource GetBookshelfPrivateEndpointConnectionResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
         public static Azure.ResourceManager.Discovery.BookshelfPrivateLinkResource GetBookshelfPrivateLinkResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
-        public static Azure.ResourceManager.Discovery.BookshelfResource GetBookshelfResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
-        public static Azure.ResourceManager.Discovery.BookshelfCollection GetBookshelves(this Azure.ResourceManager.Resources.ResourceGroupResource resourceGroupResource) { throw null; }
-        public static Azure.Pageable<Azure.ResourceManager.Discovery.BookshelfResource> GetBookshelves(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public static Azure.AsyncPageable<Azure.ResourceManager.Discovery.BookshelfResource> GetBookshelvesAsync(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public static Azure.ResourceManager.Discovery.DiscoveryBookshelfCollection GetBookshelves(this Azure.ResourceManager.Resources.ResourceGroupResource resourceGroupResource) { throw null; }
+        public static Azure.Pageable<Azure.ResourceManager.Discovery.DiscoveryBookshelfResource> GetBookshelves(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public static Azure.AsyncPageable<Azure.ResourceManager.Discovery.DiscoveryBookshelfResource> GetBookshelvesAsync(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public static Azure.ResourceManager.Discovery.ChatModelDeploymentResource GetChatModelDeploymentResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
+        public static Azure.ResourceManager.Discovery.DiscoveryBookshelfResource GetDiscoveryBookshelfResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
+        public static Azure.ResourceManager.Discovery.DiscoveryProjectResource GetDiscoveryProjectResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
+        public static Azure.ResourceManager.Discovery.DiscoverySupercomputerResource GetDiscoverySupercomputerResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
+        public static Azure.ResourceManager.Discovery.DiscoveryToolResource GetDiscoveryToolResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
+        public static Azure.ResourceManager.Discovery.DiscoveryWorkspaceResource GetDiscoveryWorkspaceResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
         public static Azure.ResourceManager.Discovery.NodePoolResource GetNodePoolResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
-        public static Azure.ResourceManager.Discovery.ProjectResource GetProjectResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
         public static Azure.ResourceManager.Discovery.StorageAssetResource GetStorageAssetResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
         public static Azure.Response<Azure.ResourceManager.Discovery.StorageContainerResource> GetStorageContainer(this Azure.ResourceManager.Resources.ResourceGroupResource resourceGroupResource, string storageContainerName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public static System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Discovery.StorageContainerResource>> GetStorageContainerAsync(this Azure.ResourceManager.Resources.ResourceGroupResource resourceGroupResource, string storageContainerName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
@@ -238,26 +241,263 @@ namespace Azure.ResourceManager.Discovery
         public static Azure.ResourceManager.Discovery.StorageContainerCollection GetStorageContainers(this Azure.ResourceManager.Resources.ResourceGroupResource resourceGroupResource) { throw null; }
         public static Azure.Pageable<Azure.ResourceManager.Discovery.StorageContainerResource> GetStorageContainers(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public static Azure.AsyncPageable<Azure.ResourceManager.Discovery.StorageContainerResource> GetStorageContainersAsync(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public static Azure.Response<Azure.ResourceManager.Discovery.SupercomputerResource> GetSupercomputer(this Azure.ResourceManager.Resources.ResourceGroupResource resourceGroupResource, string supercomputerName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public static System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Discovery.SupercomputerResource>> GetSupercomputerAsync(this Azure.ResourceManager.Resources.ResourceGroupResource resourceGroupResource, string supercomputerName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public static Azure.ResourceManager.Discovery.SupercomputerResource GetSupercomputerResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
-        public static Azure.ResourceManager.Discovery.SupercomputerCollection GetSupercomputers(this Azure.ResourceManager.Resources.ResourceGroupResource resourceGroupResource) { throw null; }
-        public static Azure.Pageable<Azure.ResourceManager.Discovery.SupercomputerResource> GetSupercomputers(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public static Azure.AsyncPageable<Azure.ResourceManager.Discovery.SupercomputerResource> GetSupercomputersAsync(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public static Azure.Response<Azure.ResourceManager.Discovery.ToolResource> GetTool(this Azure.ResourceManager.Resources.ResourceGroupResource resourceGroupResource, string toolName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public static System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Discovery.ToolResource>> GetToolAsync(this Azure.ResourceManager.Resources.ResourceGroupResource resourceGroupResource, string toolName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public static Azure.ResourceManager.Discovery.ToolResource GetToolResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
-        public static Azure.ResourceManager.Discovery.ToolCollection GetTools(this Azure.ResourceManager.Resources.ResourceGroupResource resourceGroupResource) { throw null; }
-        public static Azure.Pageable<Azure.ResourceManager.Discovery.ToolResource> GetTools(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public static Azure.AsyncPageable<Azure.ResourceManager.Discovery.ToolResource> GetToolsAsync(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public static Azure.Response<Azure.ResourceManager.Discovery.WorkspaceResource> GetWorkspace(this Azure.ResourceManager.Resources.ResourceGroupResource resourceGroupResource, string workspaceName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public static System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Discovery.WorkspaceResource>> GetWorkspaceAsync(this Azure.ResourceManager.Resources.ResourceGroupResource resourceGroupResource, string workspaceName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public static Azure.Response<Azure.ResourceManager.Discovery.DiscoverySupercomputerResource> GetSupercomputer(this Azure.ResourceManager.Resources.ResourceGroupResource resourceGroupResource, string supercomputerName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public static System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Discovery.DiscoverySupercomputerResource>> GetSupercomputerAsync(this Azure.ResourceManager.Resources.ResourceGroupResource resourceGroupResource, string supercomputerName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public static Azure.ResourceManager.Discovery.DiscoverySupercomputerCollection GetSupercomputers(this Azure.ResourceManager.Resources.ResourceGroupResource resourceGroupResource) { throw null; }
+        public static Azure.Pageable<Azure.ResourceManager.Discovery.DiscoverySupercomputerResource> GetSupercomputers(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public static Azure.AsyncPageable<Azure.ResourceManager.Discovery.DiscoverySupercomputerResource> GetSupercomputersAsync(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public static Azure.Response<Azure.ResourceManager.Discovery.DiscoveryToolResource> GetTool(this Azure.ResourceManager.Resources.ResourceGroupResource resourceGroupResource, string toolName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public static System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Discovery.DiscoveryToolResource>> GetToolAsync(this Azure.ResourceManager.Resources.ResourceGroupResource resourceGroupResource, string toolName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public static Azure.ResourceManager.Discovery.DiscoveryToolCollection GetTools(this Azure.ResourceManager.Resources.ResourceGroupResource resourceGroupResource) { throw null; }
+        public static Azure.Pageable<Azure.ResourceManager.Discovery.DiscoveryToolResource> GetTools(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public static Azure.AsyncPageable<Azure.ResourceManager.Discovery.DiscoveryToolResource> GetToolsAsync(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public static Azure.Response<Azure.ResourceManager.Discovery.DiscoveryWorkspaceResource> GetWorkspace(this Azure.ResourceManager.Resources.ResourceGroupResource resourceGroupResource, string workspaceName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public static System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Discovery.DiscoveryWorkspaceResource>> GetWorkspaceAsync(this Azure.ResourceManager.Resources.ResourceGroupResource resourceGroupResource, string workspaceName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public static Azure.ResourceManager.Discovery.WorkspacePrivateEndpointConnectionResource GetWorkspacePrivateEndpointConnectionResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
         public static Azure.ResourceManager.Discovery.WorkspacePrivateLinkResource GetWorkspacePrivateLinkResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
-        public static Azure.ResourceManager.Discovery.WorkspaceResource GetWorkspaceResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
-        public static Azure.ResourceManager.Discovery.WorkspaceCollection GetWorkspaces(this Azure.ResourceManager.Resources.ResourceGroupResource resourceGroupResource) { throw null; }
-        public static Azure.Pageable<Azure.ResourceManager.Discovery.WorkspaceResource> GetWorkspaces(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public static Azure.AsyncPageable<Azure.ResourceManager.Discovery.WorkspaceResource> GetWorkspacesAsync(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public static Azure.ResourceManager.Discovery.DiscoveryWorkspaceCollection GetWorkspaces(this Azure.ResourceManager.Resources.ResourceGroupResource resourceGroupResource) { throw null; }
+        public static Azure.Pageable<Azure.ResourceManager.Discovery.DiscoveryWorkspaceResource> GetWorkspaces(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public static Azure.AsyncPageable<Azure.ResourceManager.Discovery.DiscoveryWorkspaceResource> GetWorkspacesAsync(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+    }
+    public partial class DiscoveryProjectCollection : Azure.ResourceManager.ArmCollection, System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.Discovery.DiscoveryProjectResource>, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Discovery.DiscoveryProjectResource>, System.Collections.IEnumerable
+    {
+        protected DiscoveryProjectCollection() { }
+        public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Discovery.DiscoveryProjectResource> CreateOrUpdate(Azure.WaitUntil waitUntil, string projectName, Azure.ResourceManager.Discovery.DiscoveryProjectData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Discovery.DiscoveryProjectResource>> CreateOrUpdateAsync(Azure.WaitUntil waitUntil, string projectName, Azure.ResourceManager.Discovery.DiscoveryProjectData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<bool> Exists(string projectName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<bool>> ExistsAsync(string projectName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.Discovery.DiscoveryProjectResource> Get(string projectName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Pageable<Azure.ResourceManager.Discovery.DiscoveryProjectResource> GetAll(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.AsyncPageable<Azure.ResourceManager.Discovery.DiscoveryProjectResource> GetAllAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Discovery.DiscoveryProjectResource>> GetAsync(string projectName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.NullableResponse<Azure.ResourceManager.Discovery.DiscoveryProjectResource> GetIfExists(string projectName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.NullableResponse<Azure.ResourceManager.Discovery.DiscoveryProjectResource>> GetIfExistsAsync(string projectName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        System.Collections.Generic.IAsyncEnumerator<Azure.ResourceManager.Discovery.DiscoveryProjectResource> System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.Discovery.DiscoveryProjectResource>.GetAsyncEnumerator(System.Threading.CancellationToken cancellationToken) { throw null; }
+        System.Collections.Generic.IEnumerator<Azure.ResourceManager.Discovery.DiscoveryProjectResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.Discovery.DiscoveryProjectResource>.GetEnumerator() { throw null; }
+        System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
+    }
+    public partial class DiscoveryProjectData : Azure.ResourceManager.Models.TrackedResourceData, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Discovery.DiscoveryProjectData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Discovery.DiscoveryProjectData>
+    {
+        public DiscoveryProjectData(Azure.Core.AzureLocation location) { }
+        public Azure.ResourceManager.Discovery.Models.ProjectProperties Properties { get { throw null; } set { } }
+        protected virtual Azure.ResourceManager.Models.ResourceData JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.Models.ResourceData PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        Azure.ResourceManager.Discovery.DiscoveryProjectData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Discovery.DiscoveryProjectData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Discovery.DiscoveryProjectData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.Discovery.DiscoveryProjectData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Discovery.DiscoveryProjectData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Discovery.DiscoveryProjectData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Discovery.DiscoveryProjectData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
+    public partial class DiscoveryProjectResource : Azure.ResourceManager.ArmResource, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Discovery.DiscoveryProjectData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Discovery.DiscoveryProjectData>
+    {
+        public static readonly Azure.Core.ResourceType ResourceType;
+        protected DiscoveryProjectResource() { }
+        public virtual Azure.ResourceManager.Discovery.DiscoveryProjectData Data { get { throw null; } }
+        public virtual bool HasData { get { throw null; } }
+        public virtual Azure.Response<Azure.ResourceManager.Discovery.DiscoveryProjectResource> AddTag(string key, string value, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Discovery.DiscoveryProjectResource>> AddTagAsync(string key, string value, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public static Azure.Core.ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string workspaceName, string projectName) { throw null; }
+        public virtual Azure.ResourceManager.ArmOperation Delete(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation> DeleteAsync(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.Discovery.DiscoveryProjectResource> Get(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Discovery.DiscoveryProjectResource>> GetAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.Discovery.DiscoveryProjectResource> RemoveTag(string key, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Discovery.DiscoveryProjectResource>> RemoveTagAsync(string key, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.Discovery.DiscoveryProjectResource> SetTags(System.Collections.Generic.IDictionary<string, string> tags, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Discovery.DiscoveryProjectResource>> SetTagsAsync(System.Collections.Generic.IDictionary<string, string> tags, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        Azure.ResourceManager.Discovery.DiscoveryProjectData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Discovery.DiscoveryProjectData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Discovery.DiscoveryProjectData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.Discovery.DiscoveryProjectData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Discovery.DiscoveryProjectData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Discovery.DiscoveryProjectData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Discovery.DiscoveryProjectData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Discovery.DiscoveryProjectResource> Update(Azure.WaitUntil waitUntil, Azure.ResourceManager.Discovery.DiscoveryProjectData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Discovery.DiscoveryProjectResource>> UpdateAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.Discovery.DiscoveryProjectData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+    }
+    public partial class DiscoverySupercomputerCollection : Azure.ResourceManager.ArmCollection, System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.Discovery.DiscoverySupercomputerResource>, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Discovery.DiscoverySupercomputerResource>, System.Collections.IEnumerable
+    {
+        protected DiscoverySupercomputerCollection() { }
+        public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Discovery.DiscoverySupercomputerResource> CreateOrUpdate(Azure.WaitUntil waitUntil, string supercomputerName, Azure.ResourceManager.Discovery.DiscoverySupercomputerData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Discovery.DiscoverySupercomputerResource>> CreateOrUpdateAsync(Azure.WaitUntil waitUntil, string supercomputerName, Azure.ResourceManager.Discovery.DiscoverySupercomputerData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<bool> Exists(string supercomputerName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<bool>> ExistsAsync(string supercomputerName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.Discovery.DiscoverySupercomputerResource> Get(string supercomputerName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Pageable<Azure.ResourceManager.Discovery.DiscoverySupercomputerResource> GetAll(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.AsyncPageable<Azure.ResourceManager.Discovery.DiscoverySupercomputerResource> GetAllAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Discovery.DiscoverySupercomputerResource>> GetAsync(string supercomputerName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.NullableResponse<Azure.ResourceManager.Discovery.DiscoverySupercomputerResource> GetIfExists(string supercomputerName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.NullableResponse<Azure.ResourceManager.Discovery.DiscoverySupercomputerResource>> GetIfExistsAsync(string supercomputerName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        System.Collections.Generic.IAsyncEnumerator<Azure.ResourceManager.Discovery.DiscoverySupercomputerResource> System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.Discovery.DiscoverySupercomputerResource>.GetAsyncEnumerator(System.Threading.CancellationToken cancellationToken) { throw null; }
+        System.Collections.Generic.IEnumerator<Azure.ResourceManager.Discovery.DiscoverySupercomputerResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.Discovery.DiscoverySupercomputerResource>.GetEnumerator() { throw null; }
+        System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
+    }
+    public partial class DiscoverySupercomputerData : Azure.ResourceManager.Models.TrackedResourceData, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Discovery.DiscoverySupercomputerData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Discovery.DiscoverySupercomputerData>
+    {
+        public DiscoverySupercomputerData(Azure.Core.AzureLocation location) { }
+        public Azure.ResourceManager.Discovery.Models.DiscoverySystemAssignedServiceIdentity Identity { get { throw null; } set { } }
+        public Azure.ResourceManager.Discovery.Models.SupercomputerProperties Properties { get { throw null; } set { } }
+        protected virtual Azure.ResourceManager.Models.ResourceData JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.Models.ResourceData PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        Azure.ResourceManager.Discovery.DiscoverySupercomputerData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Discovery.DiscoverySupercomputerData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Discovery.DiscoverySupercomputerData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.Discovery.DiscoverySupercomputerData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Discovery.DiscoverySupercomputerData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Discovery.DiscoverySupercomputerData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Discovery.DiscoverySupercomputerData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
+    public partial class DiscoverySupercomputerResource : Azure.ResourceManager.ArmResource, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Discovery.DiscoverySupercomputerData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Discovery.DiscoverySupercomputerData>
+    {
+        public static readonly Azure.Core.ResourceType ResourceType;
+        protected DiscoverySupercomputerResource() { }
+        public virtual Azure.ResourceManager.Discovery.DiscoverySupercomputerData Data { get { throw null; } }
+        public virtual bool HasData { get { throw null; } }
+        public virtual Azure.Response<Azure.ResourceManager.Discovery.DiscoverySupercomputerResource> AddTag(string key, string value, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Discovery.DiscoverySupercomputerResource>> AddTagAsync(string key, string value, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public static Azure.Core.ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string supercomputerName) { throw null; }
+        public virtual Azure.ResourceManager.ArmOperation Delete(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation> DeleteAsync(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.Discovery.DiscoverySupercomputerResource> Get(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Discovery.DiscoverySupercomputerResource>> GetAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.Discovery.NodePoolResource> GetNodePool(string nodePoolName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Discovery.NodePoolResource>> GetNodePoolAsync(string nodePoolName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.ResourceManager.Discovery.NodePoolCollection GetNodePools() { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.Discovery.DiscoverySupercomputerResource> RemoveTag(string key, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Discovery.DiscoverySupercomputerResource>> RemoveTagAsync(string key, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.Discovery.DiscoverySupercomputerResource> SetTags(System.Collections.Generic.IDictionary<string, string> tags, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Discovery.DiscoverySupercomputerResource>> SetTagsAsync(System.Collections.Generic.IDictionary<string, string> tags, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        Azure.ResourceManager.Discovery.DiscoverySupercomputerData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Discovery.DiscoverySupercomputerData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Discovery.DiscoverySupercomputerData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.Discovery.DiscoverySupercomputerData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Discovery.DiscoverySupercomputerData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Discovery.DiscoverySupercomputerData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Discovery.DiscoverySupercomputerData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Discovery.DiscoverySupercomputerResource> Update(Azure.WaitUntil waitUntil, Azure.ResourceManager.Discovery.DiscoverySupercomputerData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Discovery.DiscoverySupercomputerResource>> UpdateAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.Discovery.DiscoverySupercomputerData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+    }
+    public partial class DiscoveryToolCollection : Azure.ResourceManager.ArmCollection, System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.Discovery.DiscoveryToolResource>, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Discovery.DiscoveryToolResource>, System.Collections.IEnumerable
+    {
+        protected DiscoveryToolCollection() { }
+        public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Discovery.DiscoveryToolResource> CreateOrUpdate(Azure.WaitUntil waitUntil, string toolName, Azure.ResourceManager.Discovery.DiscoveryToolData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Discovery.DiscoveryToolResource>> CreateOrUpdateAsync(Azure.WaitUntil waitUntil, string toolName, Azure.ResourceManager.Discovery.DiscoveryToolData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<bool> Exists(string toolName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<bool>> ExistsAsync(string toolName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.Discovery.DiscoveryToolResource> Get(string toolName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Pageable<Azure.ResourceManager.Discovery.DiscoveryToolResource> GetAll(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.AsyncPageable<Azure.ResourceManager.Discovery.DiscoveryToolResource> GetAllAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Discovery.DiscoveryToolResource>> GetAsync(string toolName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.NullableResponse<Azure.ResourceManager.Discovery.DiscoveryToolResource> GetIfExists(string toolName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.NullableResponse<Azure.ResourceManager.Discovery.DiscoveryToolResource>> GetIfExistsAsync(string toolName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        System.Collections.Generic.IAsyncEnumerator<Azure.ResourceManager.Discovery.DiscoveryToolResource> System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.Discovery.DiscoveryToolResource>.GetAsyncEnumerator(System.Threading.CancellationToken cancellationToken) { throw null; }
+        System.Collections.Generic.IEnumerator<Azure.ResourceManager.Discovery.DiscoveryToolResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.Discovery.DiscoveryToolResource>.GetEnumerator() { throw null; }
+        System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
+    }
+    public partial class DiscoveryToolData : Azure.ResourceManager.Models.TrackedResourceData, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Discovery.DiscoveryToolData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Discovery.DiscoveryToolData>
+    {
+        public DiscoveryToolData(Azure.Core.AzureLocation location) { }
+        public Azure.ResourceManager.Discovery.Models.ToolProperties Properties { get { throw null; } set { } }
+        protected virtual Azure.ResourceManager.Models.ResourceData JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.Models.ResourceData PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        Azure.ResourceManager.Discovery.DiscoveryToolData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Discovery.DiscoveryToolData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Discovery.DiscoveryToolData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.Discovery.DiscoveryToolData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Discovery.DiscoveryToolData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Discovery.DiscoveryToolData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Discovery.DiscoveryToolData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
+    public partial class DiscoveryToolResource : Azure.ResourceManager.ArmResource, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Discovery.DiscoveryToolData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Discovery.DiscoveryToolData>
+    {
+        public static readonly Azure.Core.ResourceType ResourceType;
+        protected DiscoveryToolResource() { }
+        public virtual Azure.ResourceManager.Discovery.DiscoveryToolData Data { get { throw null; } }
+        public virtual bool HasData { get { throw null; } }
+        public virtual Azure.Response<Azure.ResourceManager.Discovery.DiscoveryToolResource> AddTag(string key, string value, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Discovery.DiscoveryToolResource>> AddTagAsync(string key, string value, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public static Azure.Core.ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string toolName) { throw null; }
+        public virtual Azure.ResourceManager.ArmOperation Delete(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation> DeleteAsync(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.Discovery.DiscoveryToolResource> Get(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Discovery.DiscoveryToolResource>> GetAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.Discovery.DiscoveryToolResource> RemoveTag(string key, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Discovery.DiscoveryToolResource>> RemoveTagAsync(string key, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.Discovery.DiscoveryToolResource> SetTags(System.Collections.Generic.IDictionary<string, string> tags, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Discovery.DiscoveryToolResource>> SetTagsAsync(System.Collections.Generic.IDictionary<string, string> tags, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        Azure.ResourceManager.Discovery.DiscoveryToolData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Discovery.DiscoveryToolData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Discovery.DiscoveryToolData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.Discovery.DiscoveryToolData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Discovery.DiscoveryToolData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Discovery.DiscoveryToolData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Discovery.DiscoveryToolData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Discovery.DiscoveryToolResource> Update(Azure.WaitUntil waitUntil, Azure.ResourceManager.Discovery.DiscoveryToolData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Discovery.DiscoveryToolResource>> UpdateAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.Discovery.DiscoveryToolData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+    }
+    public partial class DiscoveryWorkspaceCollection : Azure.ResourceManager.ArmCollection, System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.Discovery.DiscoveryWorkspaceResource>, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Discovery.DiscoveryWorkspaceResource>, System.Collections.IEnumerable
+    {
+        protected DiscoveryWorkspaceCollection() { }
+        public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Discovery.DiscoveryWorkspaceResource> CreateOrUpdate(Azure.WaitUntil waitUntil, string workspaceName, Azure.ResourceManager.Discovery.DiscoveryWorkspaceData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Discovery.DiscoveryWorkspaceResource>> CreateOrUpdateAsync(Azure.WaitUntil waitUntil, string workspaceName, Azure.ResourceManager.Discovery.DiscoveryWorkspaceData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<bool> Exists(string workspaceName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<bool>> ExistsAsync(string workspaceName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.Discovery.DiscoveryWorkspaceResource> Get(string workspaceName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Pageable<Azure.ResourceManager.Discovery.DiscoveryWorkspaceResource> GetAll(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.AsyncPageable<Azure.ResourceManager.Discovery.DiscoveryWorkspaceResource> GetAllAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Discovery.DiscoveryWorkspaceResource>> GetAsync(string workspaceName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.NullableResponse<Azure.ResourceManager.Discovery.DiscoveryWorkspaceResource> GetIfExists(string workspaceName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.NullableResponse<Azure.ResourceManager.Discovery.DiscoveryWorkspaceResource>> GetIfExistsAsync(string workspaceName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        System.Collections.Generic.IAsyncEnumerator<Azure.ResourceManager.Discovery.DiscoveryWorkspaceResource> System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.Discovery.DiscoveryWorkspaceResource>.GetAsyncEnumerator(System.Threading.CancellationToken cancellationToken) { throw null; }
+        System.Collections.Generic.IEnumerator<Azure.ResourceManager.Discovery.DiscoveryWorkspaceResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.Discovery.DiscoveryWorkspaceResource>.GetEnumerator() { throw null; }
+        System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
+    }
+    public partial class DiscoveryWorkspaceData : Azure.ResourceManager.Models.TrackedResourceData, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Discovery.DiscoveryWorkspaceData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Discovery.DiscoveryWorkspaceData>
+    {
+        public DiscoveryWorkspaceData(Azure.Core.AzureLocation location) { }
+        public Azure.ResourceManager.Discovery.Models.WorkspaceProperties Properties { get { throw null; } set { } }
+        protected virtual Azure.ResourceManager.Models.ResourceData JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.Models.ResourceData PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        Azure.ResourceManager.Discovery.DiscoveryWorkspaceData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Discovery.DiscoveryWorkspaceData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Discovery.DiscoveryWorkspaceData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.Discovery.DiscoveryWorkspaceData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Discovery.DiscoveryWorkspaceData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Discovery.DiscoveryWorkspaceData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Discovery.DiscoveryWorkspaceData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
+    public partial class DiscoveryWorkspaceResource : Azure.ResourceManager.ArmResource, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Discovery.DiscoveryWorkspaceData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Discovery.DiscoveryWorkspaceData>
+    {
+        public static readonly Azure.Core.ResourceType ResourceType;
+        protected DiscoveryWorkspaceResource() { }
+        public virtual Azure.ResourceManager.Discovery.DiscoveryWorkspaceData Data { get { throw null; } }
+        public virtual bool HasData { get { throw null; } }
+        public virtual Azure.Response<Azure.ResourceManager.Discovery.DiscoveryWorkspaceResource> AddTag(string key, string value, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Discovery.DiscoveryWorkspaceResource>> AddTagAsync(string key, string value, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public static Azure.Core.ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string workspaceName) { throw null; }
+        public virtual Azure.ResourceManager.ArmOperation Delete(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation> DeleteAsync(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.Discovery.DiscoveryWorkspaceResource> Get(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Discovery.DiscoveryWorkspaceResource>> GetAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.Discovery.ChatModelDeploymentResource> GetChatModelDeployment(string chatModelDeploymentName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Discovery.ChatModelDeploymentResource>> GetChatModelDeploymentAsync(string chatModelDeploymentName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.ResourceManager.Discovery.ChatModelDeploymentCollection GetChatModelDeployments() { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.Discovery.DiscoveryProjectResource> GetProject(string projectName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Discovery.DiscoveryProjectResource>> GetProjectAsync(string projectName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.ResourceManager.Discovery.DiscoveryProjectCollection GetProjects() { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.Discovery.WorkspacePrivateEndpointConnectionResource> GetWorkspacePrivateEndpointConnection(string privateEndpointConnectionName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Discovery.WorkspacePrivateEndpointConnectionResource>> GetWorkspacePrivateEndpointConnectionAsync(string privateEndpointConnectionName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.ResourceManager.Discovery.WorkspacePrivateEndpointConnectionCollection GetWorkspacePrivateEndpointConnections() { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.Discovery.WorkspacePrivateLinkResource> GetWorkspacePrivateLinkResource(string privateLinkResourceName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Discovery.WorkspacePrivateLinkResource>> GetWorkspacePrivateLinkResourceAsync(string privateLinkResourceName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.ResourceManager.Discovery.WorkspacePrivateLinkResourceCollection GetWorkspacePrivateLinkResources() { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.Discovery.DiscoveryWorkspaceResource> RemoveTag(string key, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Discovery.DiscoveryWorkspaceResource>> RemoveTagAsync(string key, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.Discovery.DiscoveryWorkspaceResource> SetTags(System.Collections.Generic.IDictionary<string, string> tags, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Discovery.DiscoveryWorkspaceResource>> SetTagsAsync(System.Collections.Generic.IDictionary<string, string> tags, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        Azure.ResourceManager.Discovery.DiscoveryWorkspaceData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Discovery.DiscoveryWorkspaceData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Discovery.DiscoveryWorkspaceData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.Discovery.DiscoveryWorkspaceData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Discovery.DiscoveryWorkspaceData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Discovery.DiscoveryWorkspaceData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Discovery.DiscoveryWorkspaceData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Discovery.DiscoveryWorkspaceResource> Update(Azure.WaitUntil waitUntil, Azure.ResourceManager.Discovery.DiscoveryWorkspaceData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Discovery.DiscoveryWorkspaceResource>> UpdateAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.Discovery.DiscoveryWorkspaceData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
     public partial class NodePoolCollection : Azure.ResourceManager.ArmCollection, System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.Discovery.NodePoolResource>, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Discovery.NodePoolResource>, System.Collections.IEnumerable
     {
@@ -314,62 +554,6 @@ namespace Azure.ResourceManager.Discovery
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Discovery.NodePoolData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Discovery.NodePoolResource> Update(Azure.WaitUntil waitUntil, Azure.ResourceManager.Discovery.NodePoolData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Discovery.NodePoolResource>> UpdateAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.Discovery.NodePoolData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-    }
-    public partial class ProjectCollection : Azure.ResourceManager.ArmCollection, System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.Discovery.ProjectResource>, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Discovery.ProjectResource>, System.Collections.IEnumerable
-    {
-        protected ProjectCollection() { }
-        public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Discovery.ProjectResource> CreateOrUpdate(Azure.WaitUntil waitUntil, string projectName, Azure.ResourceManager.Discovery.ProjectData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Discovery.ProjectResource>> CreateOrUpdateAsync(Azure.WaitUntil waitUntil, string projectName, Azure.ResourceManager.Discovery.ProjectData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<bool> Exists(string projectName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<bool>> ExistsAsync(string projectName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<Azure.ResourceManager.Discovery.ProjectResource> Get(string projectName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Pageable<Azure.ResourceManager.Discovery.ProjectResource> GetAll(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.AsyncPageable<Azure.ResourceManager.Discovery.ProjectResource> GetAllAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Discovery.ProjectResource>> GetAsync(string projectName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.NullableResponse<Azure.ResourceManager.Discovery.ProjectResource> GetIfExists(string projectName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.NullableResponse<Azure.ResourceManager.Discovery.ProjectResource>> GetIfExistsAsync(string projectName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        System.Collections.Generic.IAsyncEnumerator<Azure.ResourceManager.Discovery.ProjectResource> System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.Discovery.ProjectResource>.GetAsyncEnumerator(System.Threading.CancellationToken cancellationToken) { throw null; }
-        System.Collections.Generic.IEnumerator<Azure.ResourceManager.Discovery.ProjectResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.Discovery.ProjectResource>.GetEnumerator() { throw null; }
-        System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
-    }
-    public partial class ProjectData : Azure.ResourceManager.Models.TrackedResourceData, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Discovery.ProjectData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Discovery.ProjectData>
-    {
-        public ProjectData(Azure.Core.AzureLocation location) { }
-        public Azure.ResourceManager.Discovery.Models.ProjectProperties Properties { get { throw null; } set { } }
-        protected virtual Azure.ResourceManager.Models.ResourceData JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        protected virtual Azure.ResourceManager.Models.ResourceData PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        Azure.ResourceManager.Discovery.ProjectData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Discovery.ProjectData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Discovery.ProjectData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        Azure.ResourceManager.Discovery.ProjectData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Discovery.ProjectData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Discovery.ProjectData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Discovery.ProjectData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-    }
-    public partial class ProjectResource : Azure.ResourceManager.ArmResource, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Discovery.ProjectData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Discovery.ProjectData>
-    {
-        public static readonly Azure.Core.ResourceType ResourceType;
-        protected ProjectResource() { }
-        public virtual Azure.ResourceManager.Discovery.ProjectData Data { get { throw null; } }
-        public virtual bool HasData { get { throw null; } }
-        public virtual Azure.Response<Azure.ResourceManager.Discovery.ProjectResource> AddTag(string key, string value, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Discovery.ProjectResource>> AddTagAsync(string key, string value, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public static Azure.Core.ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string workspaceName, string projectName) { throw null; }
-        public virtual Azure.ResourceManager.ArmOperation Delete(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation> DeleteAsync(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<Azure.ResourceManager.Discovery.ProjectResource> Get(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Discovery.ProjectResource>> GetAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<Azure.ResourceManager.Discovery.ProjectResource> RemoveTag(string key, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Discovery.ProjectResource>> RemoveTagAsync(string key, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<Azure.ResourceManager.Discovery.ProjectResource> SetTags(System.Collections.Generic.IDictionary<string, string> tags, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Discovery.ProjectResource>> SetTagsAsync(System.Collections.Generic.IDictionary<string, string> tags, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        Azure.ResourceManager.Discovery.ProjectData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Discovery.ProjectData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Discovery.ProjectData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        Azure.ResourceManager.Discovery.ProjectData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Discovery.ProjectData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Discovery.ProjectData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Discovery.ProjectData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Discovery.ProjectResource> Update(Azure.WaitUntil waitUntil, Azure.ResourceManager.Discovery.ProjectData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Discovery.ProjectResource>> UpdateAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.Discovery.ProjectData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
     public partial class StorageAssetCollection : Azure.ResourceManager.ArmCollection, System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.Discovery.StorageAssetResource>, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Discovery.StorageAssetResource>, System.Collections.IEnumerable
     {
@@ -486,153 +670,6 @@ namespace Azure.ResourceManager.Discovery
         public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Discovery.StorageContainerResource> Update(Azure.WaitUntil waitUntil, Azure.ResourceManager.Discovery.StorageContainerData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Discovery.StorageContainerResource>> UpdateAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.Discovery.StorageContainerData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
-    public partial class SupercomputerCollection : Azure.ResourceManager.ArmCollection, System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.Discovery.SupercomputerResource>, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Discovery.SupercomputerResource>, System.Collections.IEnumerable
-    {
-        protected SupercomputerCollection() { }
-        public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Discovery.SupercomputerResource> CreateOrUpdate(Azure.WaitUntil waitUntil, string supercomputerName, Azure.ResourceManager.Discovery.SupercomputerData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Discovery.SupercomputerResource>> CreateOrUpdateAsync(Azure.WaitUntil waitUntil, string supercomputerName, Azure.ResourceManager.Discovery.SupercomputerData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<bool> Exists(string supercomputerName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<bool>> ExistsAsync(string supercomputerName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<Azure.ResourceManager.Discovery.SupercomputerResource> Get(string supercomputerName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Pageable<Azure.ResourceManager.Discovery.SupercomputerResource> GetAll(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.AsyncPageable<Azure.ResourceManager.Discovery.SupercomputerResource> GetAllAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Discovery.SupercomputerResource>> GetAsync(string supercomputerName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.NullableResponse<Azure.ResourceManager.Discovery.SupercomputerResource> GetIfExists(string supercomputerName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.NullableResponse<Azure.ResourceManager.Discovery.SupercomputerResource>> GetIfExistsAsync(string supercomputerName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        System.Collections.Generic.IAsyncEnumerator<Azure.ResourceManager.Discovery.SupercomputerResource> System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.Discovery.SupercomputerResource>.GetAsyncEnumerator(System.Threading.CancellationToken cancellationToken) { throw null; }
-        System.Collections.Generic.IEnumerator<Azure.ResourceManager.Discovery.SupercomputerResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.Discovery.SupercomputerResource>.GetEnumerator() { throw null; }
-        System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
-    }
-    public partial class SupercomputerData : Azure.ResourceManager.Models.TrackedResourceData, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Discovery.SupercomputerData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Discovery.SupercomputerData>
-    {
-        public SupercomputerData(Azure.Core.AzureLocation location) { }
-        public Azure.ResourceManager.Discovery.Models.SystemAssignedServiceIdentity Identity { get { throw null; } set { } }
-        public Azure.ResourceManager.Discovery.Models.SupercomputerProperties Properties { get { throw null; } set { } }
-        protected virtual Azure.ResourceManager.Models.ResourceData JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        protected virtual Azure.ResourceManager.Models.ResourceData PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        Azure.ResourceManager.Discovery.SupercomputerData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Discovery.SupercomputerData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Discovery.SupercomputerData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        Azure.ResourceManager.Discovery.SupercomputerData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Discovery.SupercomputerData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Discovery.SupercomputerData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Discovery.SupercomputerData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-    }
-    public partial class SupercomputerResource : Azure.ResourceManager.ArmResource, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Discovery.SupercomputerData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Discovery.SupercomputerData>
-    {
-        public static readonly Azure.Core.ResourceType ResourceType;
-        protected SupercomputerResource() { }
-        public virtual Azure.ResourceManager.Discovery.SupercomputerData Data { get { throw null; } }
-        public virtual bool HasData { get { throw null; } }
-        public virtual Azure.Response<Azure.ResourceManager.Discovery.SupercomputerResource> AddTag(string key, string value, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Discovery.SupercomputerResource>> AddTagAsync(string key, string value, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public static Azure.Core.ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string supercomputerName) { throw null; }
-        public virtual Azure.ResourceManager.ArmOperation Delete(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation> DeleteAsync(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<Azure.ResourceManager.Discovery.SupercomputerResource> Get(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Discovery.SupercomputerResource>> GetAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<Azure.ResourceManager.Discovery.NodePoolResource> GetNodePool(string nodePoolName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Discovery.NodePoolResource>> GetNodePoolAsync(string nodePoolName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.ResourceManager.Discovery.NodePoolCollection GetNodePools() { throw null; }
-        public virtual Azure.Response<Azure.ResourceManager.Discovery.SupercomputerResource> RemoveTag(string key, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Discovery.SupercomputerResource>> RemoveTagAsync(string key, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<Azure.ResourceManager.Discovery.SupercomputerResource> SetTags(System.Collections.Generic.IDictionary<string, string> tags, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Discovery.SupercomputerResource>> SetTagsAsync(System.Collections.Generic.IDictionary<string, string> tags, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        Azure.ResourceManager.Discovery.SupercomputerData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Discovery.SupercomputerData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Discovery.SupercomputerData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        Azure.ResourceManager.Discovery.SupercomputerData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Discovery.SupercomputerData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Discovery.SupercomputerData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Discovery.SupercomputerData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Discovery.SupercomputerResource> Update(Azure.WaitUntil waitUntil, Azure.ResourceManager.Discovery.SupercomputerData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Discovery.SupercomputerResource>> UpdateAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.Discovery.SupercomputerData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-    }
-    public partial class ToolCollection : Azure.ResourceManager.ArmCollection, System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.Discovery.ToolResource>, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Discovery.ToolResource>, System.Collections.IEnumerable
-    {
-        protected ToolCollection() { }
-        public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Discovery.ToolResource> CreateOrUpdate(Azure.WaitUntil waitUntil, string toolName, Azure.ResourceManager.Discovery.ToolData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Discovery.ToolResource>> CreateOrUpdateAsync(Azure.WaitUntil waitUntil, string toolName, Azure.ResourceManager.Discovery.ToolData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<bool> Exists(string toolName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<bool>> ExistsAsync(string toolName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<Azure.ResourceManager.Discovery.ToolResource> Get(string toolName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Pageable<Azure.ResourceManager.Discovery.ToolResource> GetAll(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.AsyncPageable<Azure.ResourceManager.Discovery.ToolResource> GetAllAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Discovery.ToolResource>> GetAsync(string toolName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.NullableResponse<Azure.ResourceManager.Discovery.ToolResource> GetIfExists(string toolName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.NullableResponse<Azure.ResourceManager.Discovery.ToolResource>> GetIfExistsAsync(string toolName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        System.Collections.Generic.IAsyncEnumerator<Azure.ResourceManager.Discovery.ToolResource> System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.Discovery.ToolResource>.GetAsyncEnumerator(System.Threading.CancellationToken cancellationToken) { throw null; }
-        System.Collections.Generic.IEnumerator<Azure.ResourceManager.Discovery.ToolResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.Discovery.ToolResource>.GetEnumerator() { throw null; }
-        System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
-    }
-    public partial class ToolData : Azure.ResourceManager.Models.TrackedResourceData, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Discovery.ToolData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Discovery.ToolData>
-    {
-        public ToolData(Azure.Core.AzureLocation location) { }
-        public Azure.ResourceManager.Discovery.Models.ToolProperties Properties { get { throw null; } set { } }
-        protected virtual Azure.ResourceManager.Models.ResourceData JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        protected virtual Azure.ResourceManager.Models.ResourceData PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        Azure.ResourceManager.Discovery.ToolData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Discovery.ToolData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Discovery.ToolData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        Azure.ResourceManager.Discovery.ToolData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Discovery.ToolData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Discovery.ToolData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Discovery.ToolData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-    }
-    public partial class ToolResource : Azure.ResourceManager.ArmResource, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Discovery.ToolData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Discovery.ToolData>
-    {
-        public static readonly Azure.Core.ResourceType ResourceType;
-        protected ToolResource() { }
-        public virtual Azure.ResourceManager.Discovery.ToolData Data { get { throw null; } }
-        public virtual bool HasData { get { throw null; } }
-        public virtual Azure.Response<Azure.ResourceManager.Discovery.ToolResource> AddTag(string key, string value, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Discovery.ToolResource>> AddTagAsync(string key, string value, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public static Azure.Core.ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string toolName) { throw null; }
-        public virtual Azure.ResourceManager.ArmOperation Delete(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation> DeleteAsync(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<Azure.ResourceManager.Discovery.ToolResource> Get(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Discovery.ToolResource>> GetAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<Azure.ResourceManager.Discovery.ToolResource> RemoveTag(string key, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Discovery.ToolResource>> RemoveTagAsync(string key, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<Azure.ResourceManager.Discovery.ToolResource> SetTags(System.Collections.Generic.IDictionary<string, string> tags, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Discovery.ToolResource>> SetTagsAsync(System.Collections.Generic.IDictionary<string, string> tags, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        Azure.ResourceManager.Discovery.ToolData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Discovery.ToolData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Discovery.ToolData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        Azure.ResourceManager.Discovery.ToolData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Discovery.ToolData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Discovery.ToolData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Discovery.ToolData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Discovery.ToolResource> Update(Azure.WaitUntil waitUntil, Azure.ResourceManager.Discovery.ToolData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Discovery.ToolResource>> UpdateAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.Discovery.ToolData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-    }
-    public partial class WorkspaceCollection : Azure.ResourceManager.ArmCollection, System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.Discovery.WorkspaceResource>, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Discovery.WorkspaceResource>, System.Collections.IEnumerable
-    {
-        protected WorkspaceCollection() { }
-        public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Discovery.WorkspaceResource> CreateOrUpdate(Azure.WaitUntil waitUntil, string workspaceName, Azure.ResourceManager.Discovery.WorkspaceData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Discovery.WorkspaceResource>> CreateOrUpdateAsync(Azure.WaitUntil waitUntil, string workspaceName, Azure.ResourceManager.Discovery.WorkspaceData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<bool> Exists(string workspaceName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<bool>> ExistsAsync(string workspaceName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<Azure.ResourceManager.Discovery.WorkspaceResource> Get(string workspaceName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Pageable<Azure.ResourceManager.Discovery.WorkspaceResource> GetAll(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.AsyncPageable<Azure.ResourceManager.Discovery.WorkspaceResource> GetAllAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Discovery.WorkspaceResource>> GetAsync(string workspaceName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.NullableResponse<Azure.ResourceManager.Discovery.WorkspaceResource> GetIfExists(string workspaceName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.NullableResponse<Azure.ResourceManager.Discovery.WorkspaceResource>> GetIfExistsAsync(string workspaceName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        System.Collections.Generic.IAsyncEnumerator<Azure.ResourceManager.Discovery.WorkspaceResource> System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.Discovery.WorkspaceResource>.GetAsyncEnumerator(System.Threading.CancellationToken cancellationToken) { throw null; }
-        System.Collections.Generic.IEnumerator<Azure.ResourceManager.Discovery.WorkspaceResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.Discovery.WorkspaceResource>.GetEnumerator() { throw null; }
-        System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
-    }
-    public partial class WorkspaceData : Azure.ResourceManager.Models.TrackedResourceData, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Discovery.WorkspaceData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Discovery.WorkspaceData>
-    {
-        public WorkspaceData(Azure.Core.AzureLocation location) { }
-        public Azure.ResourceManager.Discovery.Models.WorkspaceProperties Properties { get { throw null; } set { } }
-        protected virtual Azure.ResourceManager.Models.ResourceData JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        protected virtual Azure.ResourceManager.Models.ResourceData PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        Azure.ResourceManager.Discovery.WorkspaceData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Discovery.WorkspaceData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Discovery.WorkspaceData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        Azure.ResourceManager.Discovery.WorkspaceData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Discovery.WorkspaceData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Discovery.WorkspaceData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Discovery.WorkspaceData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-    }
     public partial class WorkspacePrivateEndpointConnectionCollection : Azure.ResourceManager.ArmCollection, System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.Discovery.WorkspacePrivateEndpointConnectionResource>, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Discovery.WorkspacePrivateEndpointConnectionResource>, System.Collections.IEnumerable
     {
         protected WorkspacePrivateEndpointConnectionCollection() { }
@@ -653,7 +690,7 @@ namespace Azure.ResourceManager.Discovery
     public partial class WorkspacePrivateEndpointConnectionData : Azure.ResourceManager.Models.ResourceData, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Discovery.WorkspacePrivateEndpointConnectionData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Discovery.WorkspacePrivateEndpointConnectionData>
     {
         public WorkspacePrivateEndpointConnectionData() { }
-        public Azure.ResourceManager.Discovery.Models.PrivateEndpointConnectionProperties Properties { get { throw null; } set { } }
+        public Azure.ResourceManager.Discovery.Models.DiscoveryPrivateEndpointConnectionProperties Properties { get { throw null; } set { } }
         protected virtual Azure.ResourceManager.Models.ResourceData JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         protected virtual Azure.ResourceManager.Models.ResourceData PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -727,43 +764,6 @@ namespace Azure.ResourceManager.Discovery
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Discovery.WorkspacePrivateLinkResourceData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Discovery.WorkspacePrivateLinkResourceData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class WorkspaceResource : Azure.ResourceManager.ArmResource, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Discovery.WorkspaceData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Discovery.WorkspaceData>
-    {
-        public static readonly Azure.Core.ResourceType ResourceType;
-        protected WorkspaceResource() { }
-        public virtual Azure.ResourceManager.Discovery.WorkspaceData Data { get { throw null; } }
-        public virtual bool HasData { get { throw null; } }
-        public virtual Azure.Response<Azure.ResourceManager.Discovery.WorkspaceResource> AddTag(string key, string value, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Discovery.WorkspaceResource>> AddTagAsync(string key, string value, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public static Azure.Core.ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string workspaceName) { throw null; }
-        public virtual Azure.ResourceManager.ArmOperation Delete(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation> DeleteAsync(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<Azure.ResourceManager.Discovery.WorkspaceResource> Get(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Discovery.WorkspaceResource>> GetAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<Azure.ResourceManager.Discovery.ChatModelDeploymentResource> GetChatModelDeployment(string chatModelDeploymentName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Discovery.ChatModelDeploymentResource>> GetChatModelDeploymentAsync(string chatModelDeploymentName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.ResourceManager.Discovery.ChatModelDeploymentCollection GetChatModelDeployments() { throw null; }
-        public virtual Azure.Response<Azure.ResourceManager.Discovery.ProjectResource> GetProject(string projectName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Discovery.ProjectResource>> GetProjectAsync(string projectName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.ResourceManager.Discovery.ProjectCollection GetProjects() { throw null; }
-        public virtual Azure.Response<Azure.ResourceManager.Discovery.WorkspacePrivateEndpointConnectionResource> GetWorkspacePrivateEndpointConnection(string privateEndpointConnectionName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Discovery.WorkspacePrivateEndpointConnectionResource>> GetWorkspacePrivateEndpointConnectionAsync(string privateEndpointConnectionName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.ResourceManager.Discovery.WorkspacePrivateEndpointConnectionCollection GetWorkspacePrivateEndpointConnections() { throw null; }
-        public virtual Azure.Response<Azure.ResourceManager.Discovery.WorkspacePrivateLinkResource> GetWorkspacePrivateLinkResource(string privateLinkResourceName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Discovery.WorkspacePrivateLinkResource>> GetWorkspacePrivateLinkResourceAsync(string privateLinkResourceName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.ResourceManager.Discovery.WorkspacePrivateLinkResourceCollection GetWorkspacePrivateLinkResources() { throw null; }
-        public virtual Azure.Response<Azure.ResourceManager.Discovery.WorkspaceResource> RemoveTag(string key, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Discovery.WorkspaceResource>> RemoveTagAsync(string key, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<Azure.ResourceManager.Discovery.WorkspaceResource> SetTags(System.Collections.Generic.IDictionary<string, string> tags, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Discovery.WorkspaceResource>> SetTagsAsync(System.Collections.Generic.IDictionary<string, string> tags, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        Azure.ResourceManager.Discovery.WorkspaceData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Discovery.WorkspaceData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Discovery.WorkspaceData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        Azure.ResourceManager.Discovery.WorkspaceData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Discovery.WorkspaceData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Discovery.WorkspaceData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Discovery.WorkspaceData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Discovery.WorkspaceResource> Update(Azure.WaitUntil waitUntil, Azure.ResourceManager.Discovery.WorkspaceData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Discovery.WorkspaceResource>> UpdateAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.Discovery.WorkspaceData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-    }
 }
 namespace Azure.ResourceManager.Discovery.Mocking
 {
@@ -772,50 +772,50 @@ namespace Azure.ResourceManager.Discovery.Mocking
         protected MockableDiscoveryArmClient() { }
         public virtual Azure.ResourceManager.Discovery.BookshelfPrivateEndpointConnectionResource GetBookshelfPrivateEndpointConnectionResource(Azure.Core.ResourceIdentifier id) { throw null; }
         public virtual Azure.ResourceManager.Discovery.BookshelfPrivateLinkResource GetBookshelfPrivateLinkResource(Azure.Core.ResourceIdentifier id) { throw null; }
-        public virtual Azure.ResourceManager.Discovery.BookshelfResource GetBookshelfResource(Azure.Core.ResourceIdentifier id) { throw null; }
         public virtual Azure.ResourceManager.Discovery.ChatModelDeploymentResource GetChatModelDeploymentResource(Azure.Core.ResourceIdentifier id) { throw null; }
+        public virtual Azure.ResourceManager.Discovery.DiscoveryBookshelfResource GetDiscoveryBookshelfResource(Azure.Core.ResourceIdentifier id) { throw null; }
+        public virtual Azure.ResourceManager.Discovery.DiscoveryProjectResource GetDiscoveryProjectResource(Azure.Core.ResourceIdentifier id) { throw null; }
+        public virtual Azure.ResourceManager.Discovery.DiscoverySupercomputerResource GetDiscoverySupercomputerResource(Azure.Core.ResourceIdentifier id) { throw null; }
+        public virtual Azure.ResourceManager.Discovery.DiscoveryToolResource GetDiscoveryToolResource(Azure.Core.ResourceIdentifier id) { throw null; }
+        public virtual Azure.ResourceManager.Discovery.DiscoveryWorkspaceResource GetDiscoveryWorkspaceResource(Azure.Core.ResourceIdentifier id) { throw null; }
         public virtual Azure.ResourceManager.Discovery.NodePoolResource GetNodePoolResource(Azure.Core.ResourceIdentifier id) { throw null; }
-        public virtual Azure.ResourceManager.Discovery.ProjectResource GetProjectResource(Azure.Core.ResourceIdentifier id) { throw null; }
         public virtual Azure.ResourceManager.Discovery.StorageAssetResource GetStorageAssetResource(Azure.Core.ResourceIdentifier id) { throw null; }
         public virtual Azure.ResourceManager.Discovery.StorageContainerResource GetStorageContainerResource(Azure.Core.ResourceIdentifier id) { throw null; }
-        public virtual Azure.ResourceManager.Discovery.SupercomputerResource GetSupercomputerResource(Azure.Core.ResourceIdentifier id) { throw null; }
-        public virtual Azure.ResourceManager.Discovery.ToolResource GetToolResource(Azure.Core.ResourceIdentifier id) { throw null; }
         public virtual Azure.ResourceManager.Discovery.WorkspacePrivateEndpointConnectionResource GetWorkspacePrivateEndpointConnectionResource(Azure.Core.ResourceIdentifier id) { throw null; }
         public virtual Azure.ResourceManager.Discovery.WorkspacePrivateLinkResource GetWorkspacePrivateLinkResource(Azure.Core.ResourceIdentifier id) { throw null; }
-        public virtual Azure.ResourceManager.Discovery.WorkspaceResource GetWorkspaceResource(Azure.Core.ResourceIdentifier id) { throw null; }
     }
     public partial class MockableDiscoveryResourceGroupResource : Azure.ResourceManager.ArmResource
     {
         protected MockableDiscoveryResourceGroupResource() { }
-        public virtual Azure.Response<Azure.ResourceManager.Discovery.BookshelfResource> GetBookshelf(string bookshelfName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Discovery.BookshelfResource>> GetBookshelfAsync(string bookshelfName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.ResourceManager.Discovery.BookshelfCollection GetBookshelves() { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.Discovery.DiscoveryBookshelfResource> GetBookshelf(string bookshelfName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Discovery.DiscoveryBookshelfResource>> GetBookshelfAsync(string bookshelfName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.ResourceManager.Discovery.DiscoveryBookshelfCollection GetBookshelves() { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.Discovery.StorageContainerResource> GetStorageContainer(string storageContainerName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Discovery.StorageContainerResource>> GetStorageContainerAsync(string storageContainerName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.ResourceManager.Discovery.StorageContainerCollection GetStorageContainers() { throw null; }
-        public virtual Azure.Response<Azure.ResourceManager.Discovery.SupercomputerResource> GetSupercomputer(string supercomputerName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Discovery.SupercomputerResource>> GetSupercomputerAsync(string supercomputerName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.ResourceManager.Discovery.SupercomputerCollection GetSupercomputers() { throw null; }
-        public virtual Azure.Response<Azure.ResourceManager.Discovery.ToolResource> GetTool(string toolName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Discovery.ToolResource>> GetToolAsync(string toolName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.ResourceManager.Discovery.ToolCollection GetTools() { throw null; }
-        public virtual Azure.Response<Azure.ResourceManager.Discovery.WorkspaceResource> GetWorkspace(string workspaceName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Discovery.WorkspaceResource>> GetWorkspaceAsync(string workspaceName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.ResourceManager.Discovery.WorkspaceCollection GetWorkspaces() { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.Discovery.DiscoverySupercomputerResource> GetSupercomputer(string supercomputerName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Discovery.DiscoverySupercomputerResource>> GetSupercomputerAsync(string supercomputerName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.ResourceManager.Discovery.DiscoverySupercomputerCollection GetSupercomputers() { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.Discovery.DiscoveryToolResource> GetTool(string toolName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Discovery.DiscoveryToolResource>> GetToolAsync(string toolName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.ResourceManager.Discovery.DiscoveryToolCollection GetTools() { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.Discovery.DiscoveryWorkspaceResource> GetWorkspace(string workspaceName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Discovery.DiscoveryWorkspaceResource>> GetWorkspaceAsync(string workspaceName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.ResourceManager.Discovery.DiscoveryWorkspaceCollection GetWorkspaces() { throw null; }
     }
     public partial class MockableDiscoverySubscriptionResource : Azure.ResourceManager.ArmResource
     {
         protected MockableDiscoverySubscriptionResource() { }
-        public virtual Azure.Pageable<Azure.ResourceManager.Discovery.BookshelfResource> GetBookshelves(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.AsyncPageable<Azure.ResourceManager.Discovery.BookshelfResource> GetBookshelvesAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Pageable<Azure.ResourceManager.Discovery.DiscoveryBookshelfResource> GetBookshelves(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.AsyncPageable<Azure.ResourceManager.Discovery.DiscoveryBookshelfResource> GetBookshelvesAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Pageable<Azure.ResourceManager.Discovery.StorageContainerResource> GetStorageContainers(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.AsyncPageable<Azure.ResourceManager.Discovery.StorageContainerResource> GetStorageContainersAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Pageable<Azure.ResourceManager.Discovery.SupercomputerResource> GetSupercomputers(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.AsyncPageable<Azure.ResourceManager.Discovery.SupercomputerResource> GetSupercomputersAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Pageable<Azure.ResourceManager.Discovery.ToolResource> GetTools(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.AsyncPageable<Azure.ResourceManager.Discovery.ToolResource> GetToolsAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Pageable<Azure.ResourceManager.Discovery.WorkspaceResource> GetWorkspaces(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.AsyncPageable<Azure.ResourceManager.Discovery.WorkspaceResource> GetWorkspacesAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Pageable<Azure.ResourceManager.Discovery.DiscoverySupercomputerResource> GetSupercomputers(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.AsyncPageable<Azure.ResourceManager.Discovery.DiscoverySupercomputerResource> GetSupercomputersAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Pageable<Azure.ResourceManager.Discovery.DiscoveryToolResource> GetTools(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.AsyncPageable<Azure.ResourceManager.Discovery.DiscoveryToolResource> GetToolsAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Pageable<Azure.ResourceManager.Discovery.DiscoveryWorkspaceResource> GetWorkspaces(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.AsyncPageable<Azure.ResourceManager.Discovery.DiscoveryWorkspaceResource> GetWorkspacesAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
 }
 namespace Azure.ResourceManager.Discovery.Models
@@ -824,48 +824,48 @@ namespace Azure.ResourceManager.Discovery.Models
     {
         public static Azure.ResourceManager.Discovery.Models.AzureNetAppFilesStore AzureNetAppFilesStore(Azure.ResourceManager.Discovery.Models.NetAppMountProtocol? mountProtocol = default(Azure.ResourceManager.Discovery.Models.NetAppMountProtocol?), Azure.Core.ResourceIdentifier netAppVolumeId = null) { throw null; }
         public static Azure.ResourceManager.Discovery.Models.AzureStorageBlobStore AzureStorageBlobStore(Azure.ResourceManager.Discovery.Models.BlobStorageMountProtocol? mountProtocol = default(Azure.ResourceManager.Discovery.Models.BlobStorageMountProtocol?), Azure.Core.ResourceIdentifier storageAccountId = null) { throw null; }
-        public static Azure.ResourceManager.Discovery.BookshelfData BookshelfData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, System.Collections.Generic.IDictionary<string, string> tags = null, Azure.Core.AzureLocation location = default(Azure.Core.AzureLocation), Azure.ResourceManager.Discovery.Models.BookshelfProperties properties = null) { throw null; }
         public static Azure.ResourceManager.Discovery.Models.BookshelfKeyVaultProperties BookshelfKeyVaultProperties(System.Uri keyVaultUri = null, string keyName = null, string keyVersion = null, string identityClientId = null) { throw null; }
-        public static Azure.ResourceManager.Discovery.BookshelfPrivateEndpointConnectionData BookshelfPrivateEndpointConnectionData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, Azure.ResourceManager.Discovery.Models.PrivateEndpointConnectionProperties properties = null) { throw null; }
+        public static Azure.ResourceManager.Discovery.BookshelfPrivateEndpointConnectionData BookshelfPrivateEndpointConnectionData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, Azure.ResourceManager.Discovery.Models.DiscoveryPrivateEndpointConnectionProperties properties = null) { throw null; }
         public static Azure.ResourceManager.Discovery.BookshelfPrivateLinkResourceData BookshelfPrivateLinkResourceData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, Azure.ResourceManager.Discovery.Models.DiscoveryPrivateLinkResourceProperties properties = null) { throw null; }
-        public static Azure.ResourceManager.Discovery.Models.BookshelfProperties BookshelfProperties(Azure.ResourceManager.Discovery.Models.ProvisioningState? provisioningState = default(Azure.ResourceManager.Discovery.Models.ProvisioningState?), System.Collections.Generic.IDictionary<string, Azure.ResourceManager.Models.UserAssignedIdentity> workloadIdentities = null, Azure.ResourceManager.Discovery.Models.CustomerManagedKeys? customerManagedKeys = default(Azure.ResourceManager.Discovery.Models.CustomerManagedKeys?), Azure.ResourceManager.Discovery.Models.BookshelfKeyVaultProperties keyVaultProperties = null, Azure.Core.ResourceIdentifier logAnalyticsClusterId = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Discovery.Models.DiscoveryPrivateEndpointConnection> privateEndpointConnections = null, Azure.ResourceManager.Discovery.Models.PublicNetworkAccess? publicNetworkAccess = default(Azure.ResourceManager.Discovery.Models.PublicNetworkAccess?), Azure.Core.ResourceIdentifier privateEndpointSubnetId = null, Azure.Core.ResourceIdentifier searchSubnetId = null, string managedResourceGroup = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Discovery.Models.MoboBrokerResource> managedOnBehalfOfMoboBrokerResources = null, System.Uri bookshelfUri = null) { throw null; }
+        public static Azure.ResourceManager.Discovery.Models.BookshelfProperties BookshelfProperties(Azure.ResourceManager.Discovery.Models.DiscoveryProvisioningState? provisioningState = default(Azure.ResourceManager.Discovery.Models.DiscoveryProvisioningState?), System.Collections.Generic.IDictionary<string, Azure.ResourceManager.Models.UserAssignedIdentity> workloadIdentities = null, Azure.ResourceManager.Discovery.Models.CustomerManagedKeys? customerManagedKeys = default(Azure.ResourceManager.Discovery.Models.CustomerManagedKeys?), Azure.ResourceManager.Discovery.Models.BookshelfKeyVaultProperties keyVaultProperties = null, Azure.Core.ResourceIdentifier logAnalyticsClusterId = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Discovery.Models.DiscoveryPrivateEndpointConnection> privateEndpointConnections = null, Azure.ResourceManager.Discovery.Models.DiscoveryPublicNetworkAccess? publicNetworkAccess = default(Azure.ResourceManager.Discovery.Models.DiscoveryPublicNetworkAccess?), Azure.Core.ResourceIdentifier privateEndpointSubnetId = null, Azure.Core.ResourceIdentifier searchSubnetId = null, string managedResourceGroup = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Discovery.Models.MoboBrokerResource> managedOnBehalfOfMoboBrokerResources = null, System.Uri bookshelfUri = null) { throw null; }
         public static Azure.ResourceManager.Discovery.ChatModelDeploymentData ChatModelDeploymentData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, System.Collections.Generic.IDictionary<string, string> tags = null, Azure.Core.AzureLocation location = default(Azure.Core.AzureLocation), Azure.ResourceManager.Discovery.Models.ChatModelDeploymentProperties properties = null) { throw null; }
-        public static Azure.ResourceManager.Discovery.Models.ChatModelDeploymentProperties ChatModelDeploymentProperties(Azure.ResourceManager.Discovery.Models.ProvisioningState? provisioningState = default(Azure.ResourceManager.Discovery.Models.ProvisioningState?), string modelFormat = null, string modelName = null, string modelVersion = null, string skuName = null, int? capacity = default(int?)) { throw null; }
-        public static Azure.ResourceManager.Discovery.Models.DiscoveryPrivateEndpointConnection DiscoveryPrivateEndpointConnection(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, Azure.ResourceManager.Discovery.Models.PrivateEndpointConnectionProperties properties = null) { throw null; }
+        public static Azure.ResourceManager.Discovery.Models.ChatModelDeploymentProperties ChatModelDeploymentProperties(Azure.ResourceManager.Discovery.Models.DiscoveryProvisioningState? provisioningState = default(Azure.ResourceManager.Discovery.Models.DiscoveryProvisioningState?), string modelFormat = null, string modelName = null, string modelVersion = null, string skuName = null, int? capacity = default(int?)) { throw null; }
+        public static Azure.ResourceManager.Discovery.DiscoveryBookshelfData DiscoveryBookshelfData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, System.Collections.Generic.IDictionary<string, string> tags = null, Azure.Core.AzureLocation location = default(Azure.Core.AzureLocation), Azure.ResourceManager.Discovery.Models.BookshelfProperties properties = null) { throw null; }
+        public static Azure.ResourceManager.Discovery.Models.DiscoveryKeyVaultProperties DiscoveryKeyVaultProperties(System.Uri keyVaultUri = null, string keyName = null, string keyVersion = null) { throw null; }
+        public static Azure.ResourceManager.Discovery.Models.DiscoveryManagedIdentityReference DiscoveryManagedIdentityReference(Azure.Core.ResourceIdentifier id = null, System.Guid? principalId = default(System.Guid?), System.Guid? clientId = default(System.Guid?)) { throw null; }
+        public static Azure.ResourceManager.Discovery.Models.DiscoveryPrivateEndpointConnection DiscoveryPrivateEndpointConnection(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, Azure.ResourceManager.Discovery.Models.DiscoveryPrivateEndpointConnectionProperties properties = null) { throw null; }
+        public static Azure.ResourceManager.Discovery.Models.DiscoveryPrivateEndpointConnectionProperties DiscoveryPrivateEndpointConnectionProperties(System.Collections.Generic.IEnumerable<string> groupIds = null, Azure.Core.ResourceIdentifier privateEndpointId = null, Azure.ResourceManager.Discovery.Models.DiscoveryPrivateLinkServiceConnectionState privateLinkServiceConnectionState = null, Azure.ResourceManager.Discovery.Models.DiscoveryPrivateEndpointConnectionProvisioningState? provisioningState = default(Azure.ResourceManager.Discovery.Models.DiscoveryPrivateEndpointConnectionProvisioningState?)) { throw null; }
         public static Azure.ResourceManager.Discovery.Models.DiscoveryPrivateLinkResourceProperties DiscoveryPrivateLinkResourceProperties(string groupId = null, System.Collections.Generic.IEnumerable<string> requiredMembers = null, System.Collections.Generic.IEnumerable<string> requiredZoneNames = null) { throw null; }
         public static Azure.ResourceManager.Discovery.Models.DiscoveryPrivateLinkServiceConnectionState DiscoveryPrivateLinkServiceConnectionState(Azure.ResourceManager.Discovery.Models.DiscoveryPrivateEndpointServiceConnectionStatus? status = default(Azure.ResourceManager.Discovery.Models.DiscoveryPrivateEndpointServiceConnectionStatus?), string description = null, string actionsRequired = null) { throw null; }
-        public static Azure.ResourceManager.Discovery.Models.Identity Identity(Azure.Core.ResourceIdentifier id = null, System.Guid? principalId = default(System.Guid?), System.Guid? clientId = default(System.Guid?)) { throw null; }
-        public static Azure.ResourceManager.Discovery.Models.KeyVaultProperties KeyVaultProperties(System.Uri keyVaultUri = null, string keyName = null, string keyVersion = null) { throw null; }
+        public static Azure.ResourceManager.Discovery.DiscoveryProjectData DiscoveryProjectData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, System.Collections.Generic.IDictionary<string, string> tags = null, Azure.Core.AzureLocation location = default(Azure.Core.AzureLocation), Azure.ResourceManager.Discovery.Models.ProjectProperties properties = null) { throw null; }
+        public static Azure.ResourceManager.Discovery.Models.DiscoveryStorageStore DiscoveryStorageStore(string kind = null) { throw null; }
+        public static Azure.ResourceManager.Discovery.DiscoverySupercomputerData DiscoverySupercomputerData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, System.Collections.Generic.IDictionary<string, string> tags = null, Azure.Core.AzureLocation location = default(Azure.Core.AzureLocation), Azure.ResourceManager.Discovery.Models.SupercomputerProperties properties = null, Azure.ResourceManager.Discovery.Models.DiscoverySystemAssignedServiceIdentity identity = null) { throw null; }
+        public static Azure.ResourceManager.Discovery.Models.DiscoverySystemAssignedServiceIdentity DiscoverySystemAssignedServiceIdentity(System.Guid? principalId = default(System.Guid?), System.Guid? tenantId = default(System.Guid?), Azure.ResourceManager.Discovery.Models.DiscoverySystemAssignedServiceIdentityType type = default(Azure.ResourceManager.Discovery.Models.DiscoverySystemAssignedServiceIdentityType)) { throw null; }
+        public static Azure.ResourceManager.Discovery.DiscoveryToolData DiscoveryToolData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, System.Collections.Generic.IDictionary<string, string> tags = null, Azure.Core.AzureLocation location = default(Azure.Core.AzureLocation), Azure.ResourceManager.Discovery.Models.ToolProperties properties = null) { throw null; }
+        public static Azure.ResourceManager.Discovery.DiscoveryWorkspaceData DiscoveryWorkspaceData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, System.Collections.Generic.IDictionary<string, string> tags = null, Azure.Core.AzureLocation location = default(Azure.Core.AzureLocation), Azure.ResourceManager.Discovery.Models.WorkspaceProperties properties = null) { throw null; }
         public static Azure.ResourceManager.Discovery.Models.MoboBrokerResource MoboBrokerResource(Azure.Core.ResourceIdentifier id = null) { throw null; }
         public static Azure.ResourceManager.Discovery.NodePoolData NodePoolData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, System.Collections.Generic.IDictionary<string, string> tags = null, Azure.Core.AzureLocation location = default(Azure.Core.AzureLocation), Azure.ResourceManager.Discovery.Models.NodePoolProperties properties = null) { throw null; }
-        public static Azure.ResourceManager.Discovery.Models.NodePoolProperties NodePoolProperties(Azure.ResourceManager.Discovery.Models.ProvisioningState? provisioningState = default(Azure.ResourceManager.Discovery.Models.ProvisioningState?), Azure.Core.ResourceIdentifier subnetId = null, Azure.ResourceManager.Discovery.Models.VmSize vmSize = default(Azure.ResourceManager.Discovery.Models.VmSize), int maxNodeCount = 0, int? minNodeCount = default(int?), Azure.ResourceManager.Discovery.Models.ScaleSetPriority? scaleSetPriority = default(Azure.ResourceManager.Discovery.Models.ScaleSetPriority?), int? osDiskSizeGb = default(int?), int? imageCacheLowerThreshold = default(int?), int? imageCacheUpperThreshold = default(int?)) { throw null; }
-        public static Azure.ResourceManager.Discovery.Models.PrivateEndpointConnectionProperties PrivateEndpointConnectionProperties(System.Collections.Generic.IEnumerable<string> groupIds = null, Azure.Core.ResourceIdentifier privateEndpointId = null, Azure.ResourceManager.Discovery.Models.DiscoveryPrivateLinkServiceConnectionState privateLinkServiceConnectionState = null, Azure.ResourceManager.Discovery.Models.DiscoveryPrivateEndpointConnectionProvisioningState? provisioningState = default(Azure.ResourceManager.Discovery.Models.DiscoveryPrivateEndpointConnectionProvisioningState?)) { throw null; }
-        public static Azure.ResourceManager.Discovery.ProjectData ProjectData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, System.Collections.Generic.IDictionary<string, string> tags = null, Azure.Core.AzureLocation location = default(Azure.Core.AzureLocation), Azure.ResourceManager.Discovery.Models.ProjectProperties properties = null) { throw null; }
-        public static Azure.ResourceManager.Discovery.Models.ProjectProperties ProjectProperties(Azure.ResourceManager.Discovery.Models.ProvisioningState? provisioningState = default(Azure.ResourceManager.Discovery.Models.ProvisioningState?), System.Uri foundryProjectEndpoint = null, System.Collections.Generic.IEnumerable<Azure.Core.ResourceIdentifier> storageContainerIds = null, string behaviorPreferences = null) { throw null; }
+        public static Azure.ResourceManager.Discovery.Models.NodePoolProperties NodePoolProperties(Azure.ResourceManager.Discovery.Models.DiscoveryProvisioningState? provisioningState = default(Azure.ResourceManager.Discovery.Models.DiscoveryProvisioningState?), Azure.Core.ResourceIdentifier subnetId = null, Azure.ResourceManager.Discovery.Models.DiscoveryVmSize vmSize = default(Azure.ResourceManager.Discovery.Models.DiscoveryVmSize), int maxNodeCount = 0, int? minNodeCount = default(int?), Azure.ResourceManager.Discovery.Models.DiscoveryScaleSetPriority? scaleSetPriority = default(Azure.ResourceManager.Discovery.Models.DiscoveryScaleSetPriority?), int? osDiskSizeGb = default(int?), int? imageCacheLowerThreshold = default(int?), int? imageCacheUpperThreshold = default(int?)) { throw null; }
+        public static Azure.ResourceManager.Discovery.Models.ProjectProperties ProjectProperties(Azure.ResourceManager.Discovery.Models.DiscoveryProvisioningState? provisioningState = default(Azure.ResourceManager.Discovery.Models.DiscoveryProvisioningState?), System.Uri foundryProjectEndpoint = null, System.Collections.Generic.IEnumerable<Azure.Core.ResourceIdentifier> storageContainerIds = null, string behaviorPreferences = null) { throw null; }
         public static Azure.ResourceManager.Discovery.StorageAssetData StorageAssetData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, System.Collections.Generic.IDictionary<string, string> tags = null, Azure.Core.AzureLocation location = default(Azure.Core.AzureLocation), Azure.ResourceManager.Discovery.Models.StorageAssetProperties properties = null) { throw null; }
-        public static Azure.ResourceManager.Discovery.Models.StorageAssetProperties StorageAssetProperties(string description = null, Azure.ResourceManager.Discovery.Models.ProvisioningState? provisioningState = default(Azure.ResourceManager.Discovery.Models.ProvisioningState?), string path = null) { throw null; }
+        public static Azure.ResourceManager.Discovery.Models.StorageAssetProperties StorageAssetProperties(string description = null, Azure.ResourceManager.Discovery.Models.DiscoveryProvisioningState? provisioningState = default(Azure.ResourceManager.Discovery.Models.DiscoveryProvisioningState?), string path = null) { throw null; }
         public static Azure.ResourceManager.Discovery.StorageContainerData StorageContainerData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, System.Collections.Generic.IDictionary<string, string> tags = null, Azure.Core.AzureLocation location = default(Azure.Core.AzureLocation), Azure.ResourceManager.Discovery.Models.StorageContainerProperties properties = null) { throw null; }
-        public static Azure.ResourceManager.Discovery.Models.StorageContainerProperties StorageContainerProperties(Azure.ResourceManager.Discovery.Models.ProvisioningState? provisioningState = default(Azure.ResourceManager.Discovery.Models.ProvisioningState?), Azure.ResourceManager.Discovery.Models.StorageStore storageStore = null) { throw null; }
-        public static Azure.ResourceManager.Discovery.Models.StorageStore StorageStore(string kind = null) { throw null; }
-        public static Azure.ResourceManager.Discovery.SupercomputerData SupercomputerData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, System.Collections.Generic.IDictionary<string, string> tags = null, Azure.Core.AzureLocation location = default(Azure.Core.AzureLocation), Azure.ResourceManager.Discovery.Models.SupercomputerProperties properties = null, Azure.ResourceManager.Discovery.Models.SystemAssignedServiceIdentity identity = null) { throw null; }
-        public static Azure.ResourceManager.Discovery.Models.SupercomputerIdentities SupercomputerIdentities(Azure.ResourceManager.Discovery.Models.Identity clusterIdentity = null, Azure.ResourceManager.Discovery.Models.Identity kubeletIdentity = null, System.Collections.Generic.IDictionary<string, Azure.ResourceManager.Models.UserAssignedIdentity> workloadIdentities = null) { throw null; }
-        public static Azure.ResourceManager.Discovery.Models.SupercomputerProperties SupercomputerProperties(Azure.ResourceManager.Discovery.Models.ProvisioningState? provisioningState = default(Azure.ResourceManager.Discovery.Models.ProvisioningState?), Azure.Core.ResourceIdentifier subnetId = null, Azure.Core.ResourceIdentifier managementSubnetId = null, Azure.ResourceManager.Discovery.Models.NetworkEgressType? outboundType = default(Azure.ResourceManager.Discovery.Models.NetworkEgressType?), Azure.ResourceManager.Discovery.Models.SystemSku? systemSku = default(Azure.ResourceManager.Discovery.Models.SystemSku?), Azure.ResourceManager.Discovery.Models.SupercomputerIdentities identities = null, Azure.ResourceManager.Discovery.Models.CustomerManagedKeys? customerManagedKeys = default(Azure.ResourceManager.Discovery.Models.CustomerManagedKeys?), Azure.Core.ResourceIdentifier diskEncryptionSetId = null, Azure.Core.ResourceIdentifier logAnalyticsClusterId = null, string managedResourceGroup = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Discovery.Models.MoboBrokerResource> managedOnBehalfOfMoboBrokerResources = null) { throw null; }
-        public static Azure.ResourceManager.Discovery.Models.SystemAssignedServiceIdentity SystemAssignedServiceIdentity(System.Guid? principalId = default(System.Guid?), System.Guid? tenantId = default(System.Guid?), Azure.ResourceManager.Discovery.Models.SystemAssignedServiceIdentityType type = default(Azure.ResourceManager.Discovery.Models.SystemAssignedServiceIdentityType)) { throw null; }
-        public static Azure.ResourceManager.Discovery.ToolData ToolData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, System.Collections.Generic.IDictionary<string, string> tags = null, Azure.Core.AzureLocation location = default(Azure.Core.AzureLocation), Azure.ResourceManager.Discovery.Models.ToolProperties properties = null) { throw null; }
-        public static Azure.ResourceManager.Discovery.Models.ToolProperties ToolProperties(Azure.ResourceManager.Discovery.Models.ProvisioningState? provisioningState = default(Azure.ResourceManager.Discovery.Models.ProvisioningState?), string version = null, System.Collections.Generic.IDictionary<string, string> environmentVariables = null, System.Collections.Generic.IDictionary<string, System.BinaryData> definitionContent = null) { throw null; }
-        public static Azure.ResourceManager.Discovery.WorkspaceData WorkspaceData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, System.Collections.Generic.IDictionary<string, string> tags = null, Azure.Core.AzureLocation location = default(Azure.Core.AzureLocation), Azure.ResourceManager.Discovery.Models.WorkspaceProperties properties = null) { throw null; }
-        public static Azure.ResourceManager.Discovery.WorkspacePrivateEndpointConnectionData WorkspacePrivateEndpointConnectionData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, Azure.ResourceManager.Discovery.Models.PrivateEndpointConnectionProperties properties = null) { throw null; }
+        public static Azure.ResourceManager.Discovery.Models.StorageContainerProperties StorageContainerProperties(Azure.ResourceManager.Discovery.Models.DiscoveryProvisioningState? provisioningState = default(Azure.ResourceManager.Discovery.Models.DiscoveryProvisioningState?), Azure.ResourceManager.Discovery.Models.DiscoveryStorageStore storageStore = null) { throw null; }
+        public static Azure.ResourceManager.Discovery.Models.SupercomputerIdentities SupercomputerIdentities(Azure.ResourceManager.Discovery.Models.DiscoveryManagedIdentityReference clusterIdentity = null, Azure.ResourceManager.Discovery.Models.DiscoveryManagedIdentityReference kubeletIdentity = null, System.Collections.Generic.IDictionary<string, Azure.ResourceManager.Models.UserAssignedIdentity> workloadIdentities = null) { throw null; }
+        public static Azure.ResourceManager.Discovery.Models.SupercomputerProperties SupercomputerProperties(Azure.ResourceManager.Discovery.Models.DiscoveryProvisioningState? provisioningState = default(Azure.ResourceManager.Discovery.Models.DiscoveryProvisioningState?), Azure.Core.ResourceIdentifier subnetId = null, Azure.Core.ResourceIdentifier managementSubnetId = null, Azure.ResourceManager.Discovery.Models.DiscoveryNetworkEgressType? outboundType = default(Azure.ResourceManager.Discovery.Models.DiscoveryNetworkEgressType?), Azure.ResourceManager.Discovery.Models.DiscoverySystemSku? systemSku = default(Azure.ResourceManager.Discovery.Models.DiscoverySystemSku?), Azure.ResourceManager.Discovery.Models.SupercomputerIdentities identities = null, Azure.ResourceManager.Discovery.Models.CustomerManagedKeys? customerManagedKeys = default(Azure.ResourceManager.Discovery.Models.CustomerManagedKeys?), Azure.Core.ResourceIdentifier diskEncryptionSetId = null, Azure.Core.ResourceIdentifier logAnalyticsClusterId = null, string managedResourceGroup = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Discovery.Models.MoboBrokerResource> managedOnBehalfOfMoboBrokerResources = null) { throw null; }
+        public static Azure.ResourceManager.Discovery.Models.ToolProperties ToolProperties(Azure.ResourceManager.Discovery.Models.DiscoveryProvisioningState? provisioningState = default(Azure.ResourceManager.Discovery.Models.DiscoveryProvisioningState?), string version = null, System.Collections.Generic.IDictionary<string, string> environmentVariables = null, System.Collections.Generic.IDictionary<string, System.BinaryData> definitionContent = null) { throw null; }
+        public static Azure.ResourceManager.Discovery.WorkspacePrivateEndpointConnectionData WorkspacePrivateEndpointConnectionData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, Azure.ResourceManager.Discovery.Models.DiscoveryPrivateEndpointConnectionProperties properties = null) { throw null; }
         public static Azure.ResourceManager.Discovery.WorkspacePrivateLinkResourceData WorkspacePrivateLinkResourceData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, Azure.ResourceManager.Discovery.Models.DiscoveryPrivateLinkResourceProperties properties = null) { throw null; }
-        public static Azure.ResourceManager.Discovery.Models.WorkspaceProperties WorkspaceProperties(Azure.ResourceManager.Discovery.Models.ProvisioningState? provisioningState = default(Azure.ResourceManager.Discovery.Models.ProvisioningState?), System.Collections.Generic.IEnumerable<Azure.Core.ResourceIdentifier> supercomputerIds = null, System.Uri workspaceApiUri = null, System.Uri workspaceUiUri = null, Azure.ResourceManager.Discovery.Models.Identity workspaceIdentity = null, Azure.ResourceManager.Discovery.Models.CustomerManagedKeys? customerManagedKeys = default(Azure.ResourceManager.Discovery.Models.CustomerManagedKeys?), Azure.ResourceManager.Discovery.Models.KeyVaultProperties keyVaultProperties = null, Azure.Core.ResourceIdentifier logAnalyticsClusterId = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Discovery.Models.DiscoveryPrivateEndpointConnection> privateEndpointConnections = null, Azure.ResourceManager.Discovery.Models.PublicNetworkAccess? publicNetworkAccess = default(Azure.ResourceManager.Discovery.Models.PublicNetworkAccess?), Azure.Core.ResourceIdentifier agentSubnetId = null, Azure.Core.ResourceIdentifier privateEndpointSubnetId = null, Azure.Core.ResourceIdentifier workspaceSubnetId = null, string managedResourceGroup = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Discovery.Models.MoboBrokerResource> managedOnBehalfOfMoboBrokerResources = null) { throw null; }
+        public static Azure.ResourceManager.Discovery.Models.WorkspaceProperties WorkspaceProperties(Azure.ResourceManager.Discovery.Models.DiscoveryProvisioningState? provisioningState = default(Azure.ResourceManager.Discovery.Models.DiscoveryProvisioningState?), System.Collections.Generic.IEnumerable<Azure.Core.ResourceIdentifier> supercomputerIds = null, System.Uri workspaceApiUri = null, System.Uri workspaceUiUri = null, Azure.ResourceManager.Discovery.Models.DiscoveryManagedIdentityReference workspaceIdentity = null, Azure.ResourceManager.Discovery.Models.CustomerManagedKeys? customerManagedKeys = default(Azure.ResourceManager.Discovery.Models.CustomerManagedKeys?), Azure.ResourceManager.Discovery.Models.DiscoveryKeyVaultProperties keyVaultProperties = null, Azure.Core.ResourceIdentifier logAnalyticsClusterId = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Discovery.Models.DiscoveryPrivateEndpointConnection> privateEndpointConnections = null, Azure.ResourceManager.Discovery.Models.DiscoveryPublicNetworkAccess? publicNetworkAccess = default(Azure.ResourceManager.Discovery.Models.DiscoveryPublicNetworkAccess?), Azure.Core.ResourceIdentifier agentSubnetId = null, Azure.Core.ResourceIdentifier privateEndpointSubnetId = null, Azure.Core.ResourceIdentifier workspaceSubnetId = null, string managedResourceGroup = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Discovery.Models.MoboBrokerResource> managedOnBehalfOfMoboBrokerResources = null) { throw null; }
     }
-    public partial class AzureNetAppFilesStore : Azure.ResourceManager.Discovery.Models.StorageStore, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Discovery.Models.AzureNetAppFilesStore>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Discovery.Models.AzureNetAppFilesStore>
+    public partial class AzureNetAppFilesStore : Azure.ResourceManager.Discovery.Models.DiscoveryStorageStore, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Discovery.Models.AzureNetAppFilesStore>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Discovery.Models.AzureNetAppFilesStore>
     {
         public AzureNetAppFilesStore(Azure.Core.ResourceIdentifier netAppVolumeId) { }
         public Azure.ResourceManager.Discovery.Models.NetAppMountProtocol? MountProtocol { get { throw null; } set { } }
         public Azure.Core.ResourceIdentifier NetAppVolumeId { get { throw null; } set { } }
-        protected override Azure.ResourceManager.Discovery.Models.StorageStore JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected override Azure.ResourceManager.Discovery.Models.DiscoveryStorageStore JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        protected override Azure.ResourceManager.Discovery.Models.StorageStore PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected override Azure.ResourceManager.Discovery.Models.DiscoveryStorageStore PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected override System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.Discovery.Models.AzureNetAppFilesStore System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Discovery.Models.AzureNetAppFilesStore>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Discovery.Models.AzureNetAppFilesStore>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
@@ -873,14 +873,14 @@ namespace Azure.ResourceManager.Discovery.Models
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Discovery.Models.AzureNetAppFilesStore>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Discovery.Models.AzureNetAppFilesStore>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class AzureStorageBlobStore : Azure.ResourceManager.Discovery.Models.StorageStore, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Discovery.Models.AzureStorageBlobStore>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Discovery.Models.AzureStorageBlobStore>
+    public partial class AzureStorageBlobStore : Azure.ResourceManager.Discovery.Models.DiscoveryStorageStore, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Discovery.Models.AzureStorageBlobStore>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Discovery.Models.AzureStorageBlobStore>
     {
         public AzureStorageBlobStore(Azure.Core.ResourceIdentifier storageAccountId) { }
         public Azure.ResourceManager.Discovery.Models.BlobStorageMountProtocol? MountProtocol { get { throw null; } set { } }
         public Azure.Core.ResourceIdentifier StorageAccountId { get { throw null; } set { } }
-        protected override Azure.ResourceManager.Discovery.Models.StorageStore JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected override Azure.ResourceManager.Discovery.Models.DiscoveryStorageStore JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        protected override Azure.ResourceManager.Discovery.Models.StorageStore PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected override Azure.ResourceManager.Discovery.Models.DiscoveryStorageStore PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected override System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.Discovery.Models.AzureStorageBlobStore System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Discovery.Models.AzureStorageBlobStore>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Discovery.Models.AzureStorageBlobStore>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
@@ -895,7 +895,7 @@ namespace Azure.ResourceManager.Discovery.Models
         private readonly int _dummyPrimitive;
         public BlobStorageMountProtocol(string value) { throw null; }
         public static Azure.ResourceManager.Discovery.Models.BlobStorageMountProtocol BlobfuseCaching { get { throw null; } }
-        public static Azure.ResourceManager.Discovery.Models.BlobStorageMountProtocol NFS { get { throw null; } }
+        public static Azure.ResourceManager.Discovery.Models.BlobStorageMountProtocol Nfs { get { throw null; } }
         public bool Equals(Azure.ResourceManager.Discovery.Models.BlobStorageMountProtocol other) { throw null; }
         public override bool Equals(object obj) { throw null; }
         public override int GetHashCode() { throw null; }
@@ -933,8 +933,8 @@ namespace Azure.ResourceManager.Discovery.Models
         public string ManagedResourceGroup { get { throw null; } }
         public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.Discovery.Models.DiscoveryPrivateEndpointConnection> PrivateEndpointConnections { get { throw null; } }
         public Azure.Core.ResourceIdentifier PrivateEndpointSubnetId { get { throw null; } set { } }
-        public Azure.ResourceManager.Discovery.Models.ProvisioningState? ProvisioningState { get { throw null; } }
-        public Azure.ResourceManager.Discovery.Models.PublicNetworkAccess? PublicNetworkAccess { get { throw null; } set { } }
+        public Azure.ResourceManager.Discovery.Models.DiscoveryProvisioningState? ProvisioningState { get { throw null; } }
+        public Azure.ResourceManager.Discovery.Models.DiscoveryPublicNetworkAccess? PublicNetworkAccess { get { throw null; } set { } }
         public Azure.Core.ResourceIdentifier SearchSubnetId { get { throw null; } set { } }
         public System.Collections.Generic.IDictionary<string, Azure.ResourceManager.Models.UserAssignedIdentity> WorkloadIdentities { get { throw null; } }
         protected virtual Azure.ResourceManager.Discovery.Models.BookshelfProperties JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -954,7 +954,7 @@ namespace Azure.ResourceManager.Discovery.Models
         public string ModelFormat { get { throw null; } set { } }
         public string ModelName { get { throw null; } set { } }
         public string ModelVersion { get { throw null; } set { } }
-        public Azure.ResourceManager.Discovery.Models.ProvisioningState? ProvisioningState { get { throw null; } }
+        public Azure.ResourceManager.Discovery.Models.DiscoveryProvisioningState? ProvisioningState { get { throw null; } }
         public string SkuName { get { throw null; } set { } }
         protected virtual Azure.ResourceManager.Discovery.Models.ChatModelDeploymentProperties JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
@@ -983,10 +983,59 @@ namespace Azure.ResourceManager.Discovery.Models
         public static bool operator !=(Azure.ResourceManager.Discovery.Models.CustomerManagedKeys left, Azure.ResourceManager.Discovery.Models.CustomerManagedKeys right) { throw null; }
         public override string ToString() { throw null; }
     }
+    public partial class DiscoveryKeyVaultProperties : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Discovery.Models.DiscoveryKeyVaultProperties>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Discovery.Models.DiscoveryKeyVaultProperties>
+    {
+        public DiscoveryKeyVaultProperties(System.Uri keyVaultUri, string keyName) { }
+        public string KeyName { get { throw null; } set { } }
+        public System.Uri KeyVaultUri { get { throw null; } set { } }
+        public string KeyVersion { get { throw null; } set { } }
+        protected virtual Azure.ResourceManager.Discovery.Models.DiscoveryKeyVaultProperties JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.Discovery.Models.DiscoveryKeyVaultProperties PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        Azure.ResourceManager.Discovery.Models.DiscoveryKeyVaultProperties System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Discovery.Models.DiscoveryKeyVaultProperties>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Discovery.Models.DiscoveryKeyVaultProperties>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.Discovery.Models.DiscoveryKeyVaultProperties System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Discovery.Models.DiscoveryKeyVaultProperties>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Discovery.Models.DiscoveryKeyVaultProperties>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Discovery.Models.DiscoveryKeyVaultProperties>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
+    public partial class DiscoveryManagedIdentityReference : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Discovery.Models.DiscoveryManagedIdentityReference>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Discovery.Models.DiscoveryManagedIdentityReference>
+    {
+        public DiscoveryManagedIdentityReference(Azure.Core.ResourceIdentifier id) { }
+        public System.Guid? ClientId { get { throw null; } }
+        public Azure.Core.ResourceIdentifier Id { get { throw null; } set { } }
+        public System.Guid? PrincipalId { get { throw null; } }
+        protected virtual Azure.ResourceManager.Discovery.Models.DiscoveryManagedIdentityReference JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.Discovery.Models.DiscoveryManagedIdentityReference PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        Azure.ResourceManager.Discovery.Models.DiscoveryManagedIdentityReference System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Discovery.Models.DiscoveryManagedIdentityReference>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Discovery.Models.DiscoveryManagedIdentityReference>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.Discovery.Models.DiscoveryManagedIdentityReference System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Discovery.Models.DiscoveryManagedIdentityReference>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Discovery.Models.DiscoveryManagedIdentityReference>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Discovery.Models.DiscoveryManagedIdentityReference>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct DiscoveryNetworkEgressType : System.IEquatable<Azure.ResourceManager.Discovery.Models.DiscoveryNetworkEgressType>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public DiscoveryNetworkEgressType(string value) { throw null; }
+        public static Azure.ResourceManager.Discovery.Models.DiscoveryNetworkEgressType LoadBalancer { get { throw null; } }
+        public static Azure.ResourceManager.Discovery.Models.DiscoveryNetworkEgressType None { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.Discovery.Models.DiscoveryNetworkEgressType other) { throw null; }
+        public override bool Equals(object obj) { throw null; }
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.ResourceManager.Discovery.Models.DiscoveryNetworkEgressType left, Azure.ResourceManager.Discovery.Models.DiscoveryNetworkEgressType right) { throw null; }
+        public static implicit operator Azure.ResourceManager.Discovery.Models.DiscoveryNetworkEgressType (string value) { throw null; }
+        public static implicit operator Azure.ResourceManager.Discovery.Models.DiscoveryNetworkEgressType? (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.Discovery.Models.DiscoveryNetworkEgressType left, Azure.ResourceManager.Discovery.Models.DiscoveryNetworkEgressType right) { throw null; }
+        public override string ToString() { throw null; }
+    }
     public partial class DiscoveryPrivateEndpointConnection : Azure.ResourceManager.Models.ResourceData, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Discovery.Models.DiscoveryPrivateEndpointConnection>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Discovery.Models.DiscoveryPrivateEndpointConnection>
     {
         internal DiscoveryPrivateEndpointConnection() { }
-        public Azure.ResourceManager.Discovery.Models.PrivateEndpointConnectionProperties Properties { get { throw null; } }
+        public Azure.ResourceManager.Discovery.Models.DiscoveryPrivateEndpointConnectionProperties Properties { get { throw null; } }
         protected virtual Azure.ResourceManager.Models.ResourceData JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         protected virtual Azure.ResourceManager.Models.ResourceData PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -996,6 +1045,23 @@ namespace Azure.ResourceManager.Discovery.Models
         Azure.ResourceManager.Discovery.Models.DiscoveryPrivateEndpointConnection System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Discovery.Models.DiscoveryPrivateEndpointConnection>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Discovery.Models.DiscoveryPrivateEndpointConnection>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Discovery.Models.DiscoveryPrivateEndpointConnection>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
+    public partial class DiscoveryPrivateEndpointConnectionProperties : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Discovery.Models.DiscoveryPrivateEndpointConnectionProperties>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Discovery.Models.DiscoveryPrivateEndpointConnectionProperties>
+    {
+        public DiscoveryPrivateEndpointConnectionProperties(Azure.ResourceManager.Discovery.Models.DiscoveryPrivateLinkServiceConnectionState privateLinkServiceConnectionState) { }
+        public System.Collections.Generic.IReadOnlyList<string> GroupIds { get { throw null; } }
+        public Azure.Core.ResourceIdentifier PrivateEndpointId { get { throw null; } }
+        public Azure.ResourceManager.Discovery.Models.DiscoveryPrivateLinkServiceConnectionState PrivateLinkServiceConnectionState { get { throw null; } set { } }
+        public Azure.ResourceManager.Discovery.Models.DiscoveryPrivateEndpointConnectionProvisioningState? ProvisioningState { get { throw null; } }
+        protected virtual Azure.ResourceManager.Discovery.Models.DiscoveryPrivateEndpointConnectionProperties JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.Discovery.Models.DiscoveryPrivateEndpointConnectionProperties PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        Azure.ResourceManager.Discovery.Models.DiscoveryPrivateEndpointConnectionProperties System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Discovery.Models.DiscoveryPrivateEndpointConnectionProperties>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Discovery.Models.DiscoveryPrivateEndpointConnectionProperties>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.Discovery.Models.DiscoveryPrivateEndpointConnectionProperties System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Discovery.Models.DiscoveryPrivateEndpointConnectionProperties>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Discovery.Models.DiscoveryPrivateEndpointConnectionProperties>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Discovery.Models.DiscoveryPrivateEndpointConnectionProperties>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct DiscoveryPrivateEndpointConnectionProvisioningState : System.IEquatable<Azure.ResourceManager.Discovery.Models.DiscoveryPrivateEndpointConnectionProvisioningState>
@@ -1066,37 +1132,154 @@ namespace Azure.ResourceManager.Discovery.Models
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Discovery.Models.DiscoveryPrivateLinkServiceConnectionState>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Discovery.Models.DiscoveryPrivateLinkServiceConnectionState>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class Identity : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Discovery.Models.Identity>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Discovery.Models.Identity>
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct DiscoveryProvisioningState : System.IEquatable<Azure.ResourceManager.Discovery.Models.DiscoveryProvisioningState>
     {
-        public Identity(Azure.Core.ResourceIdentifier id) { }
-        public System.Guid? ClientId { get { throw null; } }
-        public Azure.Core.ResourceIdentifier Id { get { throw null; } set { } }
-        public System.Guid? PrincipalId { get { throw null; } }
-        protected virtual Azure.ResourceManager.Discovery.Models.Identity JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        protected virtual Azure.ResourceManager.Discovery.Models.Identity PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        Azure.ResourceManager.Discovery.Models.Identity System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Discovery.Models.Identity>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Discovery.Models.Identity>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        Azure.ResourceManager.Discovery.Models.Identity System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Discovery.Models.Identity>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Discovery.Models.Identity>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Discovery.Models.Identity>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public DiscoveryProvisioningState(string value) { throw null; }
+        public static Azure.ResourceManager.Discovery.Models.DiscoveryProvisioningState Accepted { get { throw null; } }
+        public static Azure.ResourceManager.Discovery.Models.DiscoveryProvisioningState Canceled { get { throw null; } }
+        public static Azure.ResourceManager.Discovery.Models.DiscoveryProvisioningState Deleting { get { throw null; } }
+        public static Azure.ResourceManager.Discovery.Models.DiscoveryProvisioningState Failed { get { throw null; } }
+        public static Azure.ResourceManager.Discovery.Models.DiscoveryProvisioningState Provisioning { get { throw null; } }
+        public static Azure.ResourceManager.Discovery.Models.DiscoveryProvisioningState Succeeded { get { throw null; } }
+        public static Azure.ResourceManager.Discovery.Models.DiscoveryProvisioningState Updating { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.Discovery.Models.DiscoveryProvisioningState other) { throw null; }
+        public override bool Equals(object obj) { throw null; }
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.ResourceManager.Discovery.Models.DiscoveryProvisioningState left, Azure.ResourceManager.Discovery.Models.DiscoveryProvisioningState right) { throw null; }
+        public static implicit operator Azure.ResourceManager.Discovery.Models.DiscoveryProvisioningState (string value) { throw null; }
+        public static implicit operator Azure.ResourceManager.Discovery.Models.DiscoveryProvisioningState? (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.Discovery.Models.DiscoveryProvisioningState left, Azure.ResourceManager.Discovery.Models.DiscoveryProvisioningState right) { throw null; }
+        public override string ToString() { throw null; }
     }
-    public partial class KeyVaultProperties : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Discovery.Models.KeyVaultProperties>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Discovery.Models.KeyVaultProperties>
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct DiscoveryPublicNetworkAccess : System.IEquatable<Azure.ResourceManager.Discovery.Models.DiscoveryPublicNetworkAccess>
     {
-        public KeyVaultProperties(System.Uri keyVaultUri, string keyName) { }
-        public string KeyName { get { throw null; } set { } }
-        public System.Uri KeyVaultUri { get { throw null; } set { } }
-        public string KeyVersion { get { throw null; } set { } }
-        protected virtual Azure.ResourceManager.Discovery.Models.KeyVaultProperties JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public DiscoveryPublicNetworkAccess(string value) { throw null; }
+        public static Azure.ResourceManager.Discovery.Models.DiscoveryPublicNetworkAccess Disabled { get { throw null; } }
+        public static Azure.ResourceManager.Discovery.Models.DiscoveryPublicNetworkAccess Enabled { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.Discovery.Models.DiscoveryPublicNetworkAccess other) { throw null; }
+        public override bool Equals(object obj) { throw null; }
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.ResourceManager.Discovery.Models.DiscoveryPublicNetworkAccess left, Azure.ResourceManager.Discovery.Models.DiscoveryPublicNetworkAccess right) { throw null; }
+        public static implicit operator Azure.ResourceManager.Discovery.Models.DiscoveryPublicNetworkAccess (string value) { throw null; }
+        public static implicit operator Azure.ResourceManager.Discovery.Models.DiscoveryPublicNetworkAccess? (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.Discovery.Models.DiscoveryPublicNetworkAccess left, Azure.ResourceManager.Discovery.Models.DiscoveryPublicNetworkAccess right) { throw null; }
+        public override string ToString() { throw null; }
+    }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct DiscoveryScaleSetPriority : System.IEquatable<Azure.ResourceManager.Discovery.Models.DiscoveryScaleSetPriority>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public DiscoveryScaleSetPriority(string value) { throw null; }
+        public static Azure.ResourceManager.Discovery.Models.DiscoveryScaleSetPriority Regular { get { throw null; } }
+        public static Azure.ResourceManager.Discovery.Models.DiscoveryScaleSetPriority Spot { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.Discovery.Models.DiscoveryScaleSetPriority other) { throw null; }
+        public override bool Equals(object obj) { throw null; }
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.ResourceManager.Discovery.Models.DiscoveryScaleSetPriority left, Azure.ResourceManager.Discovery.Models.DiscoveryScaleSetPriority right) { throw null; }
+        public static implicit operator Azure.ResourceManager.Discovery.Models.DiscoveryScaleSetPriority (string value) { throw null; }
+        public static implicit operator Azure.ResourceManager.Discovery.Models.DiscoveryScaleSetPriority? (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.Discovery.Models.DiscoveryScaleSetPriority left, Azure.ResourceManager.Discovery.Models.DiscoveryScaleSetPriority right) { throw null; }
+        public override string ToString() { throw null; }
+    }
+    public abstract partial class DiscoveryStorageStore : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Discovery.Models.DiscoveryStorageStore>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Discovery.Models.DiscoveryStorageStore>
+    {
+        internal DiscoveryStorageStore() { }
+        protected virtual Azure.ResourceManager.Discovery.Models.DiscoveryStorageStore JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        protected virtual Azure.ResourceManager.Discovery.Models.KeyVaultProperties PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual Azure.ResourceManager.Discovery.Models.DiscoveryStorageStore PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        Azure.ResourceManager.Discovery.Models.KeyVaultProperties System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Discovery.Models.KeyVaultProperties>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Discovery.Models.KeyVaultProperties>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        Azure.ResourceManager.Discovery.Models.KeyVaultProperties System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Discovery.Models.KeyVaultProperties>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Discovery.Models.KeyVaultProperties>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Discovery.Models.KeyVaultProperties>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        Azure.ResourceManager.Discovery.Models.DiscoveryStorageStore System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Discovery.Models.DiscoveryStorageStore>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Discovery.Models.DiscoveryStorageStore>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.Discovery.Models.DiscoveryStorageStore System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Discovery.Models.DiscoveryStorageStore>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Discovery.Models.DiscoveryStorageStore>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Discovery.Models.DiscoveryStorageStore>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
+    public partial class DiscoverySystemAssignedServiceIdentity : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Discovery.Models.DiscoverySystemAssignedServiceIdentity>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Discovery.Models.DiscoverySystemAssignedServiceIdentity>
+    {
+        public DiscoverySystemAssignedServiceIdentity(Azure.ResourceManager.Discovery.Models.DiscoverySystemAssignedServiceIdentityType type) { }
+        public System.Guid? PrincipalId { get { throw null; } }
+        public System.Guid? TenantId { get { throw null; } }
+        public Azure.ResourceManager.Discovery.Models.DiscoverySystemAssignedServiceIdentityType Type { get { throw null; } set { } }
+        protected virtual Azure.ResourceManager.Discovery.Models.DiscoverySystemAssignedServiceIdentity JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.Discovery.Models.DiscoverySystemAssignedServiceIdentity PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        Azure.ResourceManager.Discovery.Models.DiscoverySystemAssignedServiceIdentity System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Discovery.Models.DiscoverySystemAssignedServiceIdentity>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Discovery.Models.DiscoverySystemAssignedServiceIdentity>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.Discovery.Models.DiscoverySystemAssignedServiceIdentity System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Discovery.Models.DiscoverySystemAssignedServiceIdentity>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Discovery.Models.DiscoverySystemAssignedServiceIdentity>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Discovery.Models.DiscoverySystemAssignedServiceIdentity>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct DiscoverySystemAssignedServiceIdentityType : System.IEquatable<Azure.ResourceManager.Discovery.Models.DiscoverySystemAssignedServiceIdentityType>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public DiscoverySystemAssignedServiceIdentityType(string value) { throw null; }
+        public static Azure.ResourceManager.Discovery.Models.DiscoverySystemAssignedServiceIdentityType None { get { throw null; } }
+        public static Azure.ResourceManager.Discovery.Models.DiscoverySystemAssignedServiceIdentityType SystemAssigned { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.Discovery.Models.DiscoverySystemAssignedServiceIdentityType other) { throw null; }
+        public override bool Equals(object obj) { throw null; }
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.ResourceManager.Discovery.Models.DiscoverySystemAssignedServiceIdentityType left, Azure.ResourceManager.Discovery.Models.DiscoverySystemAssignedServiceIdentityType right) { throw null; }
+        public static implicit operator Azure.ResourceManager.Discovery.Models.DiscoverySystemAssignedServiceIdentityType (string value) { throw null; }
+        public static implicit operator Azure.ResourceManager.Discovery.Models.DiscoverySystemAssignedServiceIdentityType? (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.Discovery.Models.DiscoverySystemAssignedServiceIdentityType left, Azure.ResourceManager.Discovery.Models.DiscoverySystemAssignedServiceIdentityType right) { throw null; }
+        public override string ToString() { throw null; }
+    }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct DiscoverySystemSku : System.IEquatable<Azure.ResourceManager.Discovery.Models.DiscoverySystemSku>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public DiscoverySystemSku(string value) { throw null; }
+        public static Azure.ResourceManager.Discovery.Models.DiscoverySystemSku StandardD4sV4 { get { throw null; } }
+        public static Azure.ResourceManager.Discovery.Models.DiscoverySystemSku StandardD4sV5 { get { throw null; } }
+        public static Azure.ResourceManager.Discovery.Models.DiscoverySystemSku StandardD4sV6 { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.Discovery.Models.DiscoverySystemSku other) { throw null; }
+        public override bool Equals(object obj) { throw null; }
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.ResourceManager.Discovery.Models.DiscoverySystemSku left, Azure.ResourceManager.Discovery.Models.DiscoverySystemSku right) { throw null; }
+        public static implicit operator Azure.ResourceManager.Discovery.Models.DiscoverySystemSku (string value) { throw null; }
+        public static implicit operator Azure.ResourceManager.Discovery.Models.DiscoverySystemSku? (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.Discovery.Models.DiscoverySystemSku left, Azure.ResourceManager.Discovery.Models.DiscoverySystemSku right) { throw null; }
+        public override string ToString() { throw null; }
+    }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct DiscoveryVmSize : System.IEquatable<Azure.ResourceManager.Discovery.Models.DiscoveryVmSize>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public DiscoveryVmSize(string value) { throw null; }
+        public static Azure.ResourceManager.Discovery.Models.DiscoveryVmSize StandardNC16asT4V3 { get { throw null; } }
+        public static Azure.ResourceManager.Discovery.Models.DiscoveryVmSize StandardNC24adsA100V4 { get { throw null; } }
+        public static Azure.ResourceManager.Discovery.Models.DiscoveryVmSize StandardNC48adsA100V4 { get { throw null; } }
+        public static Azure.ResourceManager.Discovery.Models.DiscoveryVmSize StandardNC4asT4V3 { get { throw null; } }
+        public static Azure.ResourceManager.Discovery.Models.DiscoveryVmSize StandardNC64asT4V3 { get { throw null; } }
+        public static Azure.ResourceManager.Discovery.Models.DiscoveryVmSize StandardNC8asT4V3 { get { throw null; } }
+        public static Azure.ResourceManager.Discovery.Models.DiscoveryVmSize StandardNC96adsA100V4 { get { throw null; } }
+        public static Azure.ResourceManager.Discovery.Models.DiscoveryVmSize StandardND40rsV2 { get { throw null; } }
+        public static Azure.ResourceManager.Discovery.Models.DiscoveryVmSize StandardNV12adsA10V5 { get { throw null; } }
+        public static Azure.ResourceManager.Discovery.Models.DiscoveryVmSize StandardNV24adsA10V5 { get { throw null; } }
+        public static Azure.ResourceManager.Discovery.Models.DiscoveryVmSize StandardNV36admsA10V5 { get { throw null; } }
+        public static Azure.ResourceManager.Discovery.Models.DiscoveryVmSize StandardNV36adsA10V5 { get { throw null; } }
+        public static Azure.ResourceManager.Discovery.Models.DiscoveryVmSize StandardNV6adsA10V5 { get { throw null; } }
+        public static Azure.ResourceManager.Discovery.Models.DiscoveryVmSize StandardNV72adsA10V5 { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.Discovery.Models.DiscoveryVmSize other) { throw null; }
+        public override bool Equals(object obj) { throw null; }
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.ResourceManager.Discovery.Models.DiscoveryVmSize left, Azure.ResourceManager.Discovery.Models.DiscoveryVmSize right) { throw null; }
+        public static implicit operator Azure.ResourceManager.Discovery.Models.DiscoveryVmSize (string value) { throw null; }
+        public static implicit operator Azure.ResourceManager.Discovery.Models.DiscoveryVmSize? (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.Discovery.Models.DiscoveryVmSize left, Azure.ResourceManager.Discovery.Models.DiscoveryVmSize right) { throw null; }
+        public override string ToString() { throw null; }
     }
     public partial class MoboBrokerResource : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Discovery.Models.MoboBrokerResource>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Discovery.Models.MoboBrokerResource>
     {
@@ -1118,7 +1301,7 @@ namespace Azure.ResourceManager.Discovery.Models
         private readonly object _dummy;
         private readonly int _dummyPrimitive;
         public NetAppMountProtocol(string value) { throw null; }
-        public static Azure.ResourceManager.Discovery.Models.NetAppMountProtocol NFS { get { throw null; } }
+        public static Azure.ResourceManager.Discovery.Models.NetAppMountProtocol Nfs { get { throw null; } }
         public bool Equals(Azure.ResourceManager.Discovery.Models.NetAppMountProtocol other) { throw null; }
         public override bool Equals(object obj) { throw null; }
         public override int GetHashCode() { throw null; }
@@ -1128,35 +1311,18 @@ namespace Azure.ResourceManager.Discovery.Models
         public static bool operator !=(Azure.ResourceManager.Discovery.Models.NetAppMountProtocol left, Azure.ResourceManager.Discovery.Models.NetAppMountProtocol right) { throw null; }
         public override string ToString() { throw null; }
     }
-    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
-    public readonly partial struct NetworkEgressType : System.IEquatable<Azure.ResourceManager.Discovery.Models.NetworkEgressType>
-    {
-        private readonly object _dummy;
-        private readonly int _dummyPrimitive;
-        public NetworkEgressType(string value) { throw null; }
-        public static Azure.ResourceManager.Discovery.Models.NetworkEgressType LoadBalancer { get { throw null; } }
-        public static Azure.ResourceManager.Discovery.Models.NetworkEgressType None { get { throw null; } }
-        public bool Equals(Azure.ResourceManager.Discovery.Models.NetworkEgressType other) { throw null; }
-        public override bool Equals(object obj) { throw null; }
-        public override int GetHashCode() { throw null; }
-        public static bool operator ==(Azure.ResourceManager.Discovery.Models.NetworkEgressType left, Azure.ResourceManager.Discovery.Models.NetworkEgressType right) { throw null; }
-        public static implicit operator Azure.ResourceManager.Discovery.Models.NetworkEgressType (string value) { throw null; }
-        public static implicit operator Azure.ResourceManager.Discovery.Models.NetworkEgressType? (string value) { throw null; }
-        public static bool operator !=(Azure.ResourceManager.Discovery.Models.NetworkEgressType left, Azure.ResourceManager.Discovery.Models.NetworkEgressType right) { throw null; }
-        public override string ToString() { throw null; }
-    }
     public partial class NodePoolProperties : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Discovery.Models.NodePoolProperties>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Discovery.Models.NodePoolProperties>
     {
-        public NodePoolProperties(Azure.Core.ResourceIdentifier subnetId, Azure.ResourceManager.Discovery.Models.VmSize vmSize, int maxNodeCount) { }
+        public NodePoolProperties(Azure.Core.ResourceIdentifier subnetId, Azure.ResourceManager.Discovery.Models.DiscoveryVmSize vmSize, int maxNodeCount) { }
         public int? ImageCacheLowerThreshold { get { throw null; } set { } }
         public int? ImageCacheUpperThreshold { get { throw null; } set { } }
         public int MaxNodeCount { get { throw null; } set { } }
         public int? MinNodeCount { get { throw null; } set { } }
         public int? OsDiskSizeGb { get { throw null; } set { } }
-        public Azure.ResourceManager.Discovery.Models.ProvisioningState? ProvisioningState { get { throw null; } }
-        public Azure.ResourceManager.Discovery.Models.ScaleSetPriority? ScaleSetPriority { get { throw null; } set { } }
+        public Azure.ResourceManager.Discovery.Models.DiscoveryProvisioningState? ProvisioningState { get { throw null; } }
+        public Azure.ResourceManager.Discovery.Models.DiscoveryScaleSetPriority? ScaleSetPriority { get { throw null; } set { } }
         public Azure.Core.ResourceIdentifier SubnetId { get { throw null; } set { } }
-        public Azure.ResourceManager.Discovery.Models.VmSize VmSize { get { throw null; } set { } }
+        public Azure.ResourceManager.Discovery.Models.DiscoveryVmSize VmSize { get { throw null; } set { } }
         protected virtual Azure.ResourceManager.Discovery.Models.NodePoolProperties JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         protected virtual Azure.ResourceManager.Discovery.Models.NodePoolProperties PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -1167,29 +1333,12 @@ namespace Azure.ResourceManager.Discovery.Models
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Discovery.Models.NodePoolProperties>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Discovery.Models.NodePoolProperties>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class PrivateEndpointConnectionProperties : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Discovery.Models.PrivateEndpointConnectionProperties>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Discovery.Models.PrivateEndpointConnectionProperties>
-    {
-        public PrivateEndpointConnectionProperties(Azure.ResourceManager.Discovery.Models.DiscoveryPrivateLinkServiceConnectionState privateLinkServiceConnectionState) { }
-        public System.Collections.Generic.IReadOnlyList<string> GroupIds { get { throw null; } }
-        public Azure.Core.ResourceIdentifier PrivateEndpointId { get { throw null; } }
-        public Azure.ResourceManager.Discovery.Models.DiscoveryPrivateLinkServiceConnectionState PrivateLinkServiceConnectionState { get { throw null; } set { } }
-        public Azure.ResourceManager.Discovery.Models.DiscoveryPrivateEndpointConnectionProvisioningState? ProvisioningState { get { throw null; } }
-        protected virtual Azure.ResourceManager.Discovery.Models.PrivateEndpointConnectionProperties JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        protected virtual Azure.ResourceManager.Discovery.Models.PrivateEndpointConnectionProperties PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        Azure.ResourceManager.Discovery.Models.PrivateEndpointConnectionProperties System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Discovery.Models.PrivateEndpointConnectionProperties>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Discovery.Models.PrivateEndpointConnectionProperties>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        Azure.ResourceManager.Discovery.Models.PrivateEndpointConnectionProperties System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Discovery.Models.PrivateEndpointConnectionProperties>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Discovery.Models.PrivateEndpointConnectionProperties>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Discovery.Models.PrivateEndpointConnectionProperties>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-    }
     public partial class ProjectProperties : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Discovery.Models.ProjectProperties>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Discovery.Models.ProjectProperties>
     {
         public ProjectProperties() { }
         public string BehaviorPreferences { get { throw null; } set { } }
         public System.Uri FoundryProjectEndpoint { get { throw null; } }
-        public Azure.ResourceManager.Discovery.Models.ProvisioningState? ProvisioningState { get { throw null; } }
+        public Azure.ResourceManager.Discovery.Models.DiscoveryProvisioningState? ProvisioningState { get { throw null; } }
         public System.Collections.Generic.IList<Azure.Core.ResourceIdentifier> StorageContainerIds { get { throw null; } }
         protected virtual Azure.ResourceManager.Discovery.Models.ProjectProperties JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
@@ -1201,68 +1350,12 @@ namespace Azure.ResourceManager.Discovery.Models
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Discovery.Models.ProjectProperties>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Discovery.Models.ProjectProperties>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
-    public readonly partial struct ProvisioningState : System.IEquatable<Azure.ResourceManager.Discovery.Models.ProvisioningState>
-    {
-        private readonly object _dummy;
-        private readonly int _dummyPrimitive;
-        public ProvisioningState(string value) { throw null; }
-        public static Azure.ResourceManager.Discovery.Models.ProvisioningState Accepted { get { throw null; } }
-        public static Azure.ResourceManager.Discovery.Models.ProvisioningState Canceled { get { throw null; } }
-        public static Azure.ResourceManager.Discovery.Models.ProvisioningState Deleting { get { throw null; } }
-        public static Azure.ResourceManager.Discovery.Models.ProvisioningState Failed { get { throw null; } }
-        public static Azure.ResourceManager.Discovery.Models.ProvisioningState Provisioning { get { throw null; } }
-        public static Azure.ResourceManager.Discovery.Models.ProvisioningState Succeeded { get { throw null; } }
-        public static Azure.ResourceManager.Discovery.Models.ProvisioningState Updating { get { throw null; } }
-        public bool Equals(Azure.ResourceManager.Discovery.Models.ProvisioningState other) { throw null; }
-        public override bool Equals(object obj) { throw null; }
-        public override int GetHashCode() { throw null; }
-        public static bool operator ==(Azure.ResourceManager.Discovery.Models.ProvisioningState left, Azure.ResourceManager.Discovery.Models.ProvisioningState right) { throw null; }
-        public static implicit operator Azure.ResourceManager.Discovery.Models.ProvisioningState (string value) { throw null; }
-        public static implicit operator Azure.ResourceManager.Discovery.Models.ProvisioningState? (string value) { throw null; }
-        public static bool operator !=(Azure.ResourceManager.Discovery.Models.ProvisioningState left, Azure.ResourceManager.Discovery.Models.ProvisioningState right) { throw null; }
-        public override string ToString() { throw null; }
-    }
-    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
-    public readonly partial struct PublicNetworkAccess : System.IEquatable<Azure.ResourceManager.Discovery.Models.PublicNetworkAccess>
-    {
-        private readonly object _dummy;
-        private readonly int _dummyPrimitive;
-        public PublicNetworkAccess(string value) { throw null; }
-        public static Azure.ResourceManager.Discovery.Models.PublicNetworkAccess Disabled { get { throw null; } }
-        public static Azure.ResourceManager.Discovery.Models.PublicNetworkAccess Enabled { get { throw null; } }
-        public bool Equals(Azure.ResourceManager.Discovery.Models.PublicNetworkAccess other) { throw null; }
-        public override bool Equals(object obj) { throw null; }
-        public override int GetHashCode() { throw null; }
-        public static bool operator ==(Azure.ResourceManager.Discovery.Models.PublicNetworkAccess left, Azure.ResourceManager.Discovery.Models.PublicNetworkAccess right) { throw null; }
-        public static implicit operator Azure.ResourceManager.Discovery.Models.PublicNetworkAccess (string value) { throw null; }
-        public static implicit operator Azure.ResourceManager.Discovery.Models.PublicNetworkAccess? (string value) { throw null; }
-        public static bool operator !=(Azure.ResourceManager.Discovery.Models.PublicNetworkAccess left, Azure.ResourceManager.Discovery.Models.PublicNetworkAccess right) { throw null; }
-        public override string ToString() { throw null; }
-    }
-    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
-    public readonly partial struct ScaleSetPriority : System.IEquatable<Azure.ResourceManager.Discovery.Models.ScaleSetPriority>
-    {
-        private readonly object _dummy;
-        private readonly int _dummyPrimitive;
-        public ScaleSetPriority(string value) { throw null; }
-        public static Azure.ResourceManager.Discovery.Models.ScaleSetPriority Regular { get { throw null; } }
-        public static Azure.ResourceManager.Discovery.Models.ScaleSetPriority Spot { get { throw null; } }
-        public bool Equals(Azure.ResourceManager.Discovery.Models.ScaleSetPriority other) { throw null; }
-        public override bool Equals(object obj) { throw null; }
-        public override int GetHashCode() { throw null; }
-        public static bool operator ==(Azure.ResourceManager.Discovery.Models.ScaleSetPriority left, Azure.ResourceManager.Discovery.Models.ScaleSetPriority right) { throw null; }
-        public static implicit operator Azure.ResourceManager.Discovery.Models.ScaleSetPriority (string value) { throw null; }
-        public static implicit operator Azure.ResourceManager.Discovery.Models.ScaleSetPriority? (string value) { throw null; }
-        public static bool operator !=(Azure.ResourceManager.Discovery.Models.ScaleSetPriority left, Azure.ResourceManager.Discovery.Models.ScaleSetPriority right) { throw null; }
-        public override string ToString() { throw null; }
-    }
     public partial class StorageAssetProperties : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Discovery.Models.StorageAssetProperties>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Discovery.Models.StorageAssetProperties>
     {
         public StorageAssetProperties(string description) { }
         public string Description { get { throw null; } set { } }
         public string Path { get { throw null; } set { } }
-        public Azure.ResourceManager.Discovery.Models.ProvisioningState? ProvisioningState { get { throw null; } }
+        public Azure.ResourceManager.Discovery.Models.DiscoveryProvisioningState? ProvisioningState { get { throw null; } }
         protected virtual Azure.ResourceManager.Discovery.Models.StorageAssetProperties JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         protected virtual Azure.ResourceManager.Discovery.Models.StorageAssetProperties PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -1275,9 +1368,9 @@ namespace Azure.ResourceManager.Discovery.Models
     }
     public partial class StorageContainerProperties : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Discovery.Models.StorageContainerProperties>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Discovery.Models.StorageContainerProperties>
     {
-        public StorageContainerProperties(Azure.ResourceManager.Discovery.Models.StorageStore storageStore) { }
-        public Azure.ResourceManager.Discovery.Models.ProvisioningState? ProvisioningState { get { throw null; } }
-        public Azure.ResourceManager.Discovery.Models.StorageStore StorageStore { get { throw null; } set { } }
+        public StorageContainerProperties(Azure.ResourceManager.Discovery.Models.DiscoveryStorageStore storageStore) { }
+        public Azure.ResourceManager.Discovery.Models.DiscoveryProvisioningState? ProvisioningState { get { throw null; } }
+        public Azure.ResourceManager.Discovery.Models.DiscoveryStorageStore StorageStore { get { throw null; } set { } }
         protected virtual Azure.ResourceManager.Discovery.Models.StorageContainerProperties JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         protected virtual Azure.ResourceManager.Discovery.Models.StorageContainerProperties PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -1288,24 +1381,11 @@ namespace Azure.ResourceManager.Discovery.Models
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Discovery.Models.StorageContainerProperties>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Discovery.Models.StorageContainerProperties>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public abstract partial class StorageStore : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Discovery.Models.StorageStore>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Discovery.Models.StorageStore>
-    {
-        internal StorageStore() { }
-        protected virtual Azure.ResourceManager.Discovery.Models.StorageStore JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        protected virtual Azure.ResourceManager.Discovery.Models.StorageStore PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        Azure.ResourceManager.Discovery.Models.StorageStore System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Discovery.Models.StorageStore>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Discovery.Models.StorageStore>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        Azure.ResourceManager.Discovery.Models.StorageStore System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Discovery.Models.StorageStore>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Discovery.Models.StorageStore>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Discovery.Models.StorageStore>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-    }
     public partial class SupercomputerIdentities : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Discovery.Models.SupercomputerIdentities>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Discovery.Models.SupercomputerIdentities>
     {
-        public SupercomputerIdentities(Azure.ResourceManager.Discovery.Models.Identity clusterIdentity, Azure.ResourceManager.Discovery.Models.Identity kubeletIdentity) { }
-        public Azure.ResourceManager.Discovery.Models.Identity ClusterIdentity { get { throw null; } set { } }
-        public Azure.ResourceManager.Discovery.Models.Identity KubeletIdentity { get { throw null; } set { } }
+        public SupercomputerIdentities(Azure.ResourceManager.Discovery.Models.DiscoveryManagedIdentityReference clusterIdentity, Azure.ResourceManager.Discovery.Models.DiscoveryManagedIdentityReference kubeletIdentity) { }
+        public Azure.ResourceManager.Discovery.Models.DiscoveryManagedIdentityReference ClusterIdentity { get { throw null; } set { } }
+        public Azure.ResourceManager.Discovery.Models.DiscoveryManagedIdentityReference KubeletIdentity { get { throw null; } set { } }
         public System.Collections.Generic.IDictionary<string, Azure.ResourceManager.Models.UserAssignedIdentity> WorkloadIdentities { get { throw null; } }
         protected virtual Azure.ResourceManager.Discovery.Models.SupercomputerIdentities JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
@@ -1327,10 +1407,10 @@ namespace Azure.ResourceManager.Discovery.Models
         public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.Discovery.Models.MoboBrokerResource> ManagedOnBehalfOfMoboBrokerResources { get { throw null; } }
         public string ManagedResourceGroup { get { throw null; } }
         public Azure.Core.ResourceIdentifier ManagementSubnetId { get { throw null; } set { } }
-        public Azure.ResourceManager.Discovery.Models.NetworkEgressType? OutboundType { get { throw null; } set { } }
-        public Azure.ResourceManager.Discovery.Models.ProvisioningState? ProvisioningState { get { throw null; } }
+        public Azure.ResourceManager.Discovery.Models.DiscoveryNetworkEgressType? OutboundType { get { throw null; } set { } }
+        public Azure.ResourceManager.Discovery.Models.DiscoveryProvisioningState? ProvisioningState { get { throw null; } }
         public Azure.Core.ResourceIdentifier SubnetId { get { throw null; } set { } }
-        public Azure.ResourceManager.Discovery.Models.SystemSku? SystemSku { get { throw null; } set { } }
+        public Azure.ResourceManager.Discovery.Models.DiscoverySystemSku? SystemSku { get { throw null; } set { } }
         protected virtual Azure.ResourceManager.Discovery.Models.SupercomputerProperties JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         protected virtual Azure.ResourceManager.Discovery.Models.SupercomputerProperties PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -1341,63 +1421,12 @@ namespace Azure.ResourceManager.Discovery.Models
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Discovery.Models.SupercomputerProperties>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Discovery.Models.SupercomputerProperties>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class SystemAssignedServiceIdentity : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Discovery.Models.SystemAssignedServiceIdentity>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Discovery.Models.SystemAssignedServiceIdentity>
-    {
-        public SystemAssignedServiceIdentity(Azure.ResourceManager.Discovery.Models.SystemAssignedServiceIdentityType type) { }
-        public System.Guid? PrincipalId { get { throw null; } }
-        public System.Guid? TenantId { get { throw null; } }
-        public Azure.ResourceManager.Discovery.Models.SystemAssignedServiceIdentityType Type { get { throw null; } set { } }
-        protected virtual Azure.ResourceManager.Discovery.Models.SystemAssignedServiceIdentity JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        protected virtual Azure.ResourceManager.Discovery.Models.SystemAssignedServiceIdentity PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        Azure.ResourceManager.Discovery.Models.SystemAssignedServiceIdentity System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Discovery.Models.SystemAssignedServiceIdentity>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Discovery.Models.SystemAssignedServiceIdentity>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        Azure.ResourceManager.Discovery.Models.SystemAssignedServiceIdentity System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Discovery.Models.SystemAssignedServiceIdentity>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Discovery.Models.SystemAssignedServiceIdentity>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Discovery.Models.SystemAssignedServiceIdentity>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-    }
-    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
-    public readonly partial struct SystemAssignedServiceIdentityType : System.IEquatable<Azure.ResourceManager.Discovery.Models.SystemAssignedServiceIdentityType>
-    {
-        private readonly object _dummy;
-        private readonly int _dummyPrimitive;
-        public SystemAssignedServiceIdentityType(string value) { throw null; }
-        public static Azure.ResourceManager.Discovery.Models.SystemAssignedServiceIdentityType None { get { throw null; } }
-        public static Azure.ResourceManager.Discovery.Models.SystemAssignedServiceIdentityType SystemAssigned { get { throw null; } }
-        public bool Equals(Azure.ResourceManager.Discovery.Models.SystemAssignedServiceIdentityType other) { throw null; }
-        public override bool Equals(object obj) { throw null; }
-        public override int GetHashCode() { throw null; }
-        public static bool operator ==(Azure.ResourceManager.Discovery.Models.SystemAssignedServiceIdentityType left, Azure.ResourceManager.Discovery.Models.SystemAssignedServiceIdentityType right) { throw null; }
-        public static implicit operator Azure.ResourceManager.Discovery.Models.SystemAssignedServiceIdentityType (string value) { throw null; }
-        public static implicit operator Azure.ResourceManager.Discovery.Models.SystemAssignedServiceIdentityType? (string value) { throw null; }
-        public static bool operator !=(Azure.ResourceManager.Discovery.Models.SystemAssignedServiceIdentityType left, Azure.ResourceManager.Discovery.Models.SystemAssignedServiceIdentityType right) { throw null; }
-        public override string ToString() { throw null; }
-    }
-    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
-    public readonly partial struct SystemSku : System.IEquatable<Azure.ResourceManager.Discovery.Models.SystemSku>
-    {
-        private readonly object _dummy;
-        private readonly int _dummyPrimitive;
-        public SystemSku(string value) { throw null; }
-        public static Azure.ResourceManager.Discovery.Models.SystemSku StandardD4sV4 { get { throw null; } }
-        public static Azure.ResourceManager.Discovery.Models.SystemSku StandardD4sV5 { get { throw null; } }
-        public static Azure.ResourceManager.Discovery.Models.SystemSku StandardD4sV6 { get { throw null; } }
-        public bool Equals(Azure.ResourceManager.Discovery.Models.SystemSku other) { throw null; }
-        public override bool Equals(object obj) { throw null; }
-        public override int GetHashCode() { throw null; }
-        public static bool operator ==(Azure.ResourceManager.Discovery.Models.SystemSku left, Azure.ResourceManager.Discovery.Models.SystemSku right) { throw null; }
-        public static implicit operator Azure.ResourceManager.Discovery.Models.SystemSku (string value) { throw null; }
-        public static implicit operator Azure.ResourceManager.Discovery.Models.SystemSku? (string value) { throw null; }
-        public static bool operator !=(Azure.ResourceManager.Discovery.Models.SystemSku left, Azure.ResourceManager.Discovery.Models.SystemSku right) { throw null; }
-        public override string ToString() { throw null; }
-    }
     public partial class ToolProperties : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Discovery.Models.ToolProperties>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Discovery.Models.ToolProperties>
     {
         public ToolProperties(string version, System.Collections.Generic.IDictionary<string, System.BinaryData> definitionContent) { }
         public System.Collections.Generic.IDictionary<string, System.BinaryData> DefinitionContent { get { throw null; } }
         public System.Collections.Generic.IDictionary<string, string> EnvironmentVariables { get { throw null; } }
-        public Azure.ResourceManager.Discovery.Models.ProvisioningState? ProvisioningState { get { throw null; } }
+        public Azure.ResourceManager.Discovery.Models.DiscoveryProvisioningState? ProvisioningState { get { throw null; } }
         public string Version { get { throw null; } set { } }
         protected virtual Azure.ResourceManager.Discovery.Models.ToolProperties JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
@@ -1409,51 +1438,22 @@ namespace Azure.ResourceManager.Discovery.Models
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Discovery.Models.ToolProperties>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Discovery.Models.ToolProperties>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
-    public readonly partial struct VmSize : System.IEquatable<Azure.ResourceManager.Discovery.Models.VmSize>
-    {
-        private readonly object _dummy;
-        private readonly int _dummyPrimitive;
-        public VmSize(string value) { throw null; }
-        public static Azure.ResourceManager.Discovery.Models.VmSize StandardNC16asT4V3 { get { throw null; } }
-        public static Azure.ResourceManager.Discovery.Models.VmSize StandardNC24adsA100V4 { get { throw null; } }
-        public static Azure.ResourceManager.Discovery.Models.VmSize StandardNC48adsA100V4 { get { throw null; } }
-        public static Azure.ResourceManager.Discovery.Models.VmSize StandardNC4asT4V3 { get { throw null; } }
-        public static Azure.ResourceManager.Discovery.Models.VmSize StandardNC64asT4V3 { get { throw null; } }
-        public static Azure.ResourceManager.Discovery.Models.VmSize StandardNC8asT4V3 { get { throw null; } }
-        public static Azure.ResourceManager.Discovery.Models.VmSize StandardNC96adsA100V4 { get { throw null; } }
-        public static Azure.ResourceManager.Discovery.Models.VmSize StandardND40rsV2 { get { throw null; } }
-        public static Azure.ResourceManager.Discovery.Models.VmSize StandardNV12adsA10V5 { get { throw null; } }
-        public static Azure.ResourceManager.Discovery.Models.VmSize StandardNV24adsA10V5 { get { throw null; } }
-        public static Azure.ResourceManager.Discovery.Models.VmSize StandardNV36admsA10V5 { get { throw null; } }
-        public static Azure.ResourceManager.Discovery.Models.VmSize StandardNV36adsA10V5 { get { throw null; } }
-        public static Azure.ResourceManager.Discovery.Models.VmSize StandardNV6adsA10V5 { get { throw null; } }
-        public static Azure.ResourceManager.Discovery.Models.VmSize StandardNV72adsA10V5 { get { throw null; } }
-        public bool Equals(Azure.ResourceManager.Discovery.Models.VmSize other) { throw null; }
-        public override bool Equals(object obj) { throw null; }
-        public override int GetHashCode() { throw null; }
-        public static bool operator ==(Azure.ResourceManager.Discovery.Models.VmSize left, Azure.ResourceManager.Discovery.Models.VmSize right) { throw null; }
-        public static implicit operator Azure.ResourceManager.Discovery.Models.VmSize (string value) { throw null; }
-        public static implicit operator Azure.ResourceManager.Discovery.Models.VmSize? (string value) { throw null; }
-        public static bool operator !=(Azure.ResourceManager.Discovery.Models.VmSize left, Azure.ResourceManager.Discovery.Models.VmSize right) { throw null; }
-        public override string ToString() { throw null; }
-    }
     public partial class WorkspaceProperties : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Discovery.Models.WorkspaceProperties>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Discovery.Models.WorkspaceProperties>
     {
-        public WorkspaceProperties(Azure.ResourceManager.Discovery.Models.Identity workspaceIdentity) { }
+        public WorkspaceProperties(Azure.ResourceManager.Discovery.Models.DiscoveryManagedIdentityReference workspaceIdentity) { }
         public Azure.Core.ResourceIdentifier AgentSubnetId { get { throw null; } set { } }
         public Azure.ResourceManager.Discovery.Models.CustomerManagedKeys? CustomerManagedKeys { get { throw null; } set { } }
-        public Azure.ResourceManager.Discovery.Models.KeyVaultProperties KeyVaultProperties { get { throw null; } set { } }
+        public Azure.ResourceManager.Discovery.Models.DiscoveryKeyVaultProperties KeyVaultProperties { get { throw null; } set { } }
         public Azure.Core.ResourceIdentifier LogAnalyticsClusterId { get { throw null; } set { } }
         public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.Discovery.Models.MoboBrokerResource> ManagedOnBehalfOfMoboBrokerResources { get { throw null; } }
         public string ManagedResourceGroup { get { throw null; } }
         public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.Discovery.Models.DiscoveryPrivateEndpointConnection> PrivateEndpointConnections { get { throw null; } }
         public Azure.Core.ResourceIdentifier PrivateEndpointSubnetId { get { throw null; } set { } }
-        public Azure.ResourceManager.Discovery.Models.ProvisioningState? ProvisioningState { get { throw null; } }
-        public Azure.ResourceManager.Discovery.Models.PublicNetworkAccess? PublicNetworkAccess { get { throw null; } set { } }
+        public Azure.ResourceManager.Discovery.Models.DiscoveryProvisioningState? ProvisioningState { get { throw null; } }
+        public Azure.ResourceManager.Discovery.Models.DiscoveryPublicNetworkAccess? PublicNetworkAccess { get { throw null; } set { } }
         public System.Collections.Generic.IList<Azure.Core.ResourceIdentifier> SupercomputerIds { get { throw null; } }
         public System.Uri WorkspaceApiUri { get { throw null; } }
-        public Azure.ResourceManager.Discovery.Models.Identity WorkspaceIdentity { get { throw null; } set { } }
+        public Azure.ResourceManager.Discovery.Models.DiscoveryManagedIdentityReference WorkspaceIdentity { get { throw null; } set { } }
         public Azure.Core.ResourceIdentifier WorkspaceSubnetId { get { throw null; } set { } }
         public System.Uri WorkspaceUiUri { get { throw null; } }
         protected virtual Azure.ResourceManager.Discovery.Models.WorkspaceProperties JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }

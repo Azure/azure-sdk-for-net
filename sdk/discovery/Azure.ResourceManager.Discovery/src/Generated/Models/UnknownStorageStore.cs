@@ -10,7 +10,7 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.Discovery.Models
 {
-    internal partial class UnknownStorageStore : StorageStore
+    internal partial class UnknownStorageStore : DiscoveryStorageStore
     {
         /// <summary> Initializes a new instance of <see cref="UnknownStorageStore"/>. </summary>
         /// <param name="kind"> The storage store kind. </param>

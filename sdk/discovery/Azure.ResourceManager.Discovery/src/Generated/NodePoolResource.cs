@@ -21,7 +21,7 @@ namespace Azure.ResourceManager.Discovery
     /// <summary>
     /// A class representing a NodePool along with the instance operations that can be performed on it.
     /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="NodePoolResource"/> from an instance of <see cref="ArmClient"/> using the GetResource method.
-    /// Otherwise you can get one from its parent resource <see cref="SupercomputerResource"/> using the GetNodePools method.
+    /// Otherwise you can get one from its parent resource <see cref="DiscoverySupercomputerResource"/> using the GetNodePools method.
     /// </summary>
     public partial class NodePoolResource : ArmResource
     {

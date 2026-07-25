@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.Discovery.Models
             }
             writer.WritePropertyName("value"u8);
             writer.WriteStartArray();
-            foreach (SupercomputerData item in Value)
+            foreach (DiscoverySupercomputerData item in Value)
             {
                 writer.WriteObjectValue(item, options);
             }
@@ -141,17 +141,17 @@ namespace Azure.ResourceManager.Discovery.Models
             {
                 return null;
             }
-            IList<SupercomputerData> value = default;
+            IList<DiscoverySupercomputerData> value = default;
             Uri nextLink = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("value"u8))
                 {
-                    List<SupercomputerData> array = new List<SupercomputerData>();
+                    List<DiscoverySupercomputerData> array = new List<DiscoverySupercomputerData>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(SupercomputerData.DeserializeSupercomputerData(item, options));
+                        array.Add(DiscoverySupercomputerData.DeserializeDiscoverySupercomputerData(item, options));
                     }
                     value = array;
                     continue;

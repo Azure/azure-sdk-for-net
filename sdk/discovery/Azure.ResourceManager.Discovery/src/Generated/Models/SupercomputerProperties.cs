@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.Discovery.Models
         /// <param name="managedResourceGroup"> The resource group for resources managed on behalf of customer. </param>
         /// <param name="managedOnBehalfOfConfiguration"> Managed-On-Behalf-Of configuration properties. This configuration exists for the resources where a resource provider manages those resources on behalf of the resource owner. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal SupercomputerProperties(ProvisioningState? provisioningState, ResourceIdentifier subnetId, ResourceIdentifier managementSubnetId, NetworkEgressType? outboundType, SystemSku? systemSku, SupercomputerIdentities identities, CustomerManagedKeys? customerManagedKeys, ResourceIdentifier diskEncryptionSetId, ResourceIdentifier logAnalyticsClusterId, string managedResourceGroup, WithMoboBrokerResources managedOnBehalfOfConfiguration, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal SupercomputerProperties(DiscoveryProvisioningState? provisioningState, ResourceIdentifier subnetId, ResourceIdentifier managementSubnetId, DiscoveryNetworkEgressType? outboundType, DiscoverySystemSku? systemSku, SupercomputerIdentities identities, CustomerManagedKeys? customerManagedKeys, ResourceIdentifier diskEncryptionSetId, ResourceIdentifier logAnalyticsClusterId, string managedResourceGroup, WithMoboBrokerResources managedOnBehalfOfConfiguration, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             ProvisioningState = provisioningState;
             SubnetId = subnetId;
@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.Discovery.Models
         }
 
         /// <summary> The status of the last operation. </summary>
-        public ProvisioningState? ProvisioningState { get; }
+        public DiscoveryProvisioningState? ProvisioningState { get; }
 
         /// <summary>
         /// System Subnet ID associated with managed NodePool for system resources.
@@ -93,10 +93,10 @@ namespace Azure.ResourceManager.Discovery.Models
         ///     Defaults to LoadBalancer if not specified.
         ///     If None is specified, the customer is responsible for providing outbound connectivity for Supercomputer functionality.
         /// </summary>
-        public NetworkEgressType? OutboundType { get; set; }
+        public DiscoveryNetworkEgressType? OutboundType { get; set; }
 
         /// <summary> The SKU to use for the system node pool. </summary>
-        public SystemSku? SystemSku { get; set; }
+        public DiscoverySystemSku? SystemSku { get; set; }
 
         /// <summary> Dictionary of identity properties. </summary>
         public SupercomputerIdentities Identities { get; set; }

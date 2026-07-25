@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.Discovery.Models
         /// <param name="provisioningState"> The status of the last operation. </param>
         /// <param name="path"> The path to the data within its parent container. This should be relative to the root of the parent container. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal StorageAssetProperties(string description, ProvisioningState? provisioningState, string path, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal StorageAssetProperties(string description, DiscoveryProvisioningState? provisioningState, string path, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Description = description;
             ProvisioningState = provisioningState;
@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.Discovery.Models
         public string Description { get; set; }
 
         /// <summary> The status of the last operation. </summary>
-        public ProvisioningState? ProvisioningState { get; }
+        public DiscoveryProvisioningState? ProvisioningState { get; }
 
         /// <summary> The path to the data within its parent container. This should be relative to the root of the parent container. </summary>
         public string Path { get; set; }

@@ -38,21 +38,21 @@ namespace Azure.ResourceManager.Discovery
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="BookshelfResource"/> along with the instance operations that can be performed on it but with no data.
+        /// Gets an object representing a <see cref="DiscoveryBookshelfResource"/> along with the instance operations that can be performed on it but with no data.
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableDiscoveryArmClient.GetBookshelfResource(ResourceIdentifier)"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockableDiscoveryArmClient.GetDiscoveryBookshelfResource(ResourceIdentifier)"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient"/> the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
-        /// <returns> Returns a <see cref="BookshelfResource"/> object. </returns>
-        public static BookshelfResource GetBookshelfResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="DiscoveryBookshelfResource"/> object. </returns>
+        public static DiscoveryBookshelfResource GetDiscoveryBookshelfResource(this ArmClient client, ResourceIdentifier id)
         {
             Argument.AssertNotNull(client, nameof(client));
 
-            return GetMockableDiscoveryArmClient(client).GetBookshelfResource(id);
+            return GetMockableDiscoveryArmClient(client).GetDiscoveryBookshelfResource(id);
         }
 
         /// <summary>
@@ -92,57 +92,57 @@ namespace Azure.ResourceManager.Discovery
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="ToolResource"/> along with the instance operations that can be performed on it but with no data.
+        /// Gets an object representing a <see cref="DiscoveryToolResource"/> along with the instance operations that can be performed on it but with no data.
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableDiscoveryArmClient.GetToolResource(ResourceIdentifier)"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockableDiscoveryArmClient.GetDiscoveryToolResource(ResourceIdentifier)"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient"/> the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
-        /// <returns> Returns a <see cref="ToolResource"/> object. </returns>
-        public static ToolResource GetToolResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="DiscoveryToolResource"/> object. </returns>
+        public static DiscoveryToolResource GetDiscoveryToolResource(this ArmClient client, ResourceIdentifier id)
         {
             Argument.AssertNotNull(client, nameof(client));
 
-            return GetMockableDiscoveryArmClient(client).GetToolResource(id);
+            return GetMockableDiscoveryArmClient(client).GetDiscoveryToolResource(id);
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="ProjectResource"/> along with the instance operations that can be performed on it but with no data.
+        /// Gets an object representing a <see cref="DiscoveryProjectResource"/> along with the instance operations that can be performed on it but with no data.
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableDiscoveryArmClient.GetProjectResource(ResourceIdentifier)"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockableDiscoveryArmClient.GetDiscoveryProjectResource(ResourceIdentifier)"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient"/> the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
-        /// <returns> Returns a <see cref="ProjectResource"/> object. </returns>
-        public static ProjectResource GetProjectResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="DiscoveryProjectResource"/> object. </returns>
+        public static DiscoveryProjectResource GetDiscoveryProjectResource(this ArmClient client, ResourceIdentifier id)
         {
             Argument.AssertNotNull(client, nameof(client));
 
-            return GetMockableDiscoveryArmClient(client).GetProjectResource(id);
+            return GetMockableDiscoveryArmClient(client).GetDiscoveryProjectResource(id);
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="WorkspaceResource"/> along with the instance operations that can be performed on it but with no data.
+        /// Gets an object representing a <see cref="DiscoveryWorkspaceResource"/> along with the instance operations that can be performed on it but with no data.
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableDiscoveryArmClient.GetWorkspaceResource(ResourceIdentifier)"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockableDiscoveryArmClient.GetDiscoveryWorkspaceResource(ResourceIdentifier)"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient"/> the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
-        /// <returns> Returns a <see cref="WorkspaceResource"/> object. </returns>
-        public static WorkspaceResource GetWorkspaceResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="DiscoveryWorkspaceResource"/> object. </returns>
+        public static DiscoveryWorkspaceResource GetDiscoveryWorkspaceResource(this ArmClient client, ResourceIdentifier id)
         {
             Argument.AssertNotNull(client, nameof(client));
 
-            return GetMockableDiscoveryArmClient(client).GetWorkspaceResource(id);
+            return GetMockableDiscoveryArmClient(client).GetDiscoveryWorkspaceResource(id);
         }
 
         /// <summary>
@@ -218,21 +218,21 @@ namespace Azure.ResourceManager.Discovery
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="SupercomputerResource"/> along with the instance operations that can be performed on it but with no data.
+        /// Gets an object representing a <see cref="DiscoverySupercomputerResource"/> along with the instance operations that can be performed on it but with no data.
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableDiscoveryArmClient.GetSupercomputerResource(ResourceIdentifier)"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockableDiscoveryArmClient.GetDiscoverySupercomputerResource(ResourceIdentifier)"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient"/> the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
-        /// <returns> Returns a <see cref="SupercomputerResource"/> object. </returns>
-        public static SupercomputerResource GetSupercomputerResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="DiscoverySupercomputerResource"/> object. </returns>
+        public static DiscoverySupercomputerResource GetDiscoverySupercomputerResource(this ArmClient client, ResourceIdentifier id)
         {
             Argument.AssertNotNull(client, nameof(client));
 
-            return GetMockableDiscoveryArmClient(client).GetSupercomputerResource(id);
+            return GetMockableDiscoveryArmClient(client).GetDiscoverySupercomputerResource(id);
         }
 
         /// <summary>
@@ -280,8 +280,8 @@ namespace Azure.ResourceManager.Discovery
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
-        /// <returns> An object representing collection of Bookshelves and their operations over a BookshelfResource. </returns>
-        public static BookshelfCollection GetBookshelves(this ResourceGroupResource resourceGroupResource)
+        /// <returns> An object representing collection of Bookshelves and their operations over a DiscoveryBookshelfResource. </returns>
+        public static DiscoveryBookshelfCollection GetBookshelves(this ResourceGroupResource resourceGroupResource)
         {
             Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
 
@@ -300,7 +300,7 @@ namespace Azure.ResourceManager.Discovery
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
         [ForwardsClientCalls]
-        public static async Task<Response<BookshelfResource>> GetBookshelfAsync(this ResourceGroupResource resourceGroupResource, string bookshelfName, CancellationToken cancellationToken = default)
+        public static async Task<Response<DiscoveryBookshelfResource>> GetBookshelfAsync(this ResourceGroupResource resourceGroupResource, string bookshelfName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
 
@@ -319,7 +319,7 @@ namespace Azure.ResourceManager.Discovery
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
         [ForwardsClientCalls]
-        public static Response<BookshelfResource> GetBookshelf(this ResourceGroupResource resourceGroupResource, string bookshelfName, CancellationToken cancellationToken = default)
+        public static Response<DiscoveryBookshelfResource> GetBookshelf(this ResourceGroupResource resourceGroupResource, string bookshelfName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
 
@@ -335,8 +335,8 @@ namespace Azure.ResourceManager.Discovery
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
-        /// <returns> An object representing collection of Tools and their operations over a ToolResource. </returns>
-        public static ToolCollection GetTools(this ResourceGroupResource resourceGroupResource)
+        /// <returns> An object representing collection of Tools and their operations over a DiscoveryToolResource. </returns>
+        public static DiscoveryToolCollection GetTools(this ResourceGroupResource resourceGroupResource)
         {
             Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
 
@@ -355,7 +355,7 @@ namespace Azure.ResourceManager.Discovery
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
         [ForwardsClientCalls]
-        public static async Task<Response<ToolResource>> GetToolAsync(this ResourceGroupResource resourceGroupResource, string toolName, CancellationToken cancellationToken = default)
+        public static async Task<Response<DiscoveryToolResource>> GetToolAsync(this ResourceGroupResource resourceGroupResource, string toolName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
 
@@ -374,7 +374,7 @@ namespace Azure.ResourceManager.Discovery
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
         [ForwardsClientCalls]
-        public static Response<ToolResource> GetTool(this ResourceGroupResource resourceGroupResource, string toolName, CancellationToken cancellationToken = default)
+        public static Response<DiscoveryToolResource> GetTool(this ResourceGroupResource resourceGroupResource, string toolName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
 
@@ -390,8 +390,8 @@ namespace Azure.ResourceManager.Discovery
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
-        /// <returns> An object representing collection of Workspaces and their operations over a WorkspaceResource. </returns>
-        public static WorkspaceCollection GetWorkspaces(this ResourceGroupResource resourceGroupResource)
+        /// <returns> An object representing collection of Workspaces and their operations over a DiscoveryWorkspaceResource. </returns>
+        public static DiscoveryWorkspaceCollection GetWorkspaces(this ResourceGroupResource resourceGroupResource)
         {
             Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
 
@@ -410,7 +410,7 @@ namespace Azure.ResourceManager.Discovery
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
         [ForwardsClientCalls]
-        public static async Task<Response<WorkspaceResource>> GetWorkspaceAsync(this ResourceGroupResource resourceGroupResource, string workspaceName, CancellationToken cancellationToken = default)
+        public static async Task<Response<DiscoveryWorkspaceResource>> GetWorkspaceAsync(this ResourceGroupResource resourceGroupResource, string workspaceName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
 
@@ -429,7 +429,7 @@ namespace Azure.ResourceManager.Discovery
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
         [ForwardsClientCalls]
-        public static Response<WorkspaceResource> GetWorkspace(this ResourceGroupResource resourceGroupResource, string workspaceName, CancellationToken cancellationToken = default)
+        public static Response<DiscoveryWorkspaceResource> GetWorkspace(this ResourceGroupResource resourceGroupResource, string workspaceName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
 
@@ -445,8 +445,8 @@ namespace Azure.ResourceManager.Discovery
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
-        /// <returns> An object representing collection of Supercomputers and their operations over a SupercomputerResource. </returns>
-        public static SupercomputerCollection GetSupercomputers(this ResourceGroupResource resourceGroupResource)
+        /// <returns> An object representing collection of Supercomputers and their operations over a DiscoverySupercomputerResource. </returns>
+        public static DiscoverySupercomputerCollection GetSupercomputers(this ResourceGroupResource resourceGroupResource)
         {
             Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
 
@@ -465,7 +465,7 @@ namespace Azure.ResourceManager.Discovery
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
         [ForwardsClientCalls]
-        public static async Task<Response<SupercomputerResource>> GetSupercomputerAsync(this ResourceGroupResource resourceGroupResource, string supercomputerName, CancellationToken cancellationToken = default)
+        public static async Task<Response<DiscoverySupercomputerResource>> GetSupercomputerAsync(this ResourceGroupResource resourceGroupResource, string supercomputerName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
 
@@ -484,7 +484,7 @@ namespace Azure.ResourceManager.Discovery
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
         [ForwardsClientCalls]
-        public static Response<SupercomputerResource> GetSupercomputer(this ResourceGroupResource resourceGroupResource, string supercomputerName, CancellationToken cancellationToken = default)
+        public static Response<DiscoverySupercomputerResource> GetSupercomputer(this ResourceGroupResource resourceGroupResource, string supercomputerName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
 
@@ -556,8 +556,8 @@ namespace Azure.ResourceManager.Discovery
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource"/> the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
-        /// <returns> A collection of <see cref="BookshelfResource"/> that may take multiple service requests to iterate over. </returns>
-        public static AsyncPageable<BookshelfResource> GetBookshelvesAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="DiscoveryBookshelfResource"/> that may take multiple service requests to iterate over. </returns>
+        public static AsyncPageable<DiscoveryBookshelfResource> GetBookshelvesAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
@@ -574,8 +574,8 @@ namespace Azure.ResourceManager.Discovery
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource"/> the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
-        /// <returns> A collection of <see cref="BookshelfResource"/> that may take multiple service requests to iterate over. </returns>
-        public static Pageable<BookshelfResource> GetBookshelves(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="DiscoveryBookshelfResource"/> that may take multiple service requests to iterate over. </returns>
+        public static Pageable<DiscoveryBookshelfResource> GetBookshelves(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
@@ -592,8 +592,8 @@ namespace Azure.ResourceManager.Discovery
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource"/> the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
-        /// <returns> A collection of <see cref="ToolResource"/> that may take multiple service requests to iterate over. </returns>
-        public static AsyncPageable<ToolResource> GetToolsAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="DiscoveryToolResource"/> that may take multiple service requests to iterate over. </returns>
+        public static AsyncPageable<DiscoveryToolResource> GetToolsAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
@@ -610,8 +610,8 @@ namespace Azure.ResourceManager.Discovery
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource"/> the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
-        /// <returns> A collection of <see cref="ToolResource"/> that may take multiple service requests to iterate over. </returns>
-        public static Pageable<ToolResource> GetTools(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="DiscoveryToolResource"/> that may take multiple service requests to iterate over. </returns>
+        public static Pageable<DiscoveryToolResource> GetTools(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
@@ -628,8 +628,8 @@ namespace Azure.ResourceManager.Discovery
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource"/> the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
-        /// <returns> A collection of <see cref="WorkspaceResource"/> that may take multiple service requests to iterate over. </returns>
-        public static AsyncPageable<WorkspaceResource> GetWorkspacesAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="DiscoveryWorkspaceResource"/> that may take multiple service requests to iterate over. </returns>
+        public static AsyncPageable<DiscoveryWorkspaceResource> GetWorkspacesAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
@@ -646,8 +646,8 @@ namespace Azure.ResourceManager.Discovery
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource"/> the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
-        /// <returns> A collection of <see cref="WorkspaceResource"/> that may take multiple service requests to iterate over. </returns>
-        public static Pageable<WorkspaceResource> GetWorkspaces(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="DiscoveryWorkspaceResource"/> that may take multiple service requests to iterate over. </returns>
+        public static Pageable<DiscoveryWorkspaceResource> GetWorkspaces(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
@@ -664,8 +664,8 @@ namespace Azure.ResourceManager.Discovery
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource"/> the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
-        /// <returns> A collection of <see cref="SupercomputerResource"/> that may take multiple service requests to iterate over. </returns>
-        public static AsyncPageable<SupercomputerResource> GetSupercomputersAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="DiscoverySupercomputerResource"/> that may take multiple service requests to iterate over. </returns>
+        public static AsyncPageable<DiscoverySupercomputerResource> GetSupercomputersAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
@@ -682,8 +682,8 @@ namespace Azure.ResourceManager.Discovery
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource"/> the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
-        /// <returns> A collection of <see cref="SupercomputerResource"/> that may take multiple service requests to iterate over. </returns>
-        public static Pageable<SupercomputerResource> GetSupercomputers(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="DiscoverySupercomputerResource"/> that may take multiple service requests to iterate over. </returns>
+        public static Pageable<DiscoverySupercomputerResource> GetSupercomputers(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 

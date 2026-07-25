@@ -26,13 +26,13 @@ namespace Azure.ResourceManager.Discovery.Mocking
         {
         }
 
-        /// <summary> Gets an object representing a <see cref="BookshelfResource"/> along with the instance operations that can be performed on it but with no data. </summary>
+        /// <summary> Gets an object representing a <see cref="DiscoveryBookshelfResource"/> along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="BookshelfResource"/> object. </returns>
-        public virtual BookshelfResource GetBookshelfResource(ResourceIdentifier id)
+        /// <returns> Returns a <see cref="DiscoveryBookshelfResource"/> object. </returns>
+        public virtual DiscoveryBookshelfResource GetDiscoveryBookshelfResource(ResourceIdentifier id)
         {
-            BookshelfResource.ValidateResourceId(id);
-            return new BookshelfResource(Client, id);
+            DiscoveryBookshelfResource.ValidateResourceId(id);
+            return new DiscoveryBookshelfResource(Client, id);
         }
 
         /// <summary> Gets an object representing a <see cref="BookshelfPrivateEndpointConnectionResource"/> along with the instance operations that can be performed on it but with no data. </summary>
@@ -53,31 +53,31 @@ namespace Azure.ResourceManager.Discovery.Mocking
             return new BookshelfPrivateLinkResource(Client, id);
         }
 
-        /// <summary> Gets an object representing a <see cref="ToolResource"/> along with the instance operations that can be performed on it but with no data. </summary>
+        /// <summary> Gets an object representing a <see cref="DiscoveryToolResource"/> along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="ToolResource"/> object. </returns>
-        public virtual ToolResource GetToolResource(ResourceIdentifier id)
+        /// <returns> Returns a <see cref="DiscoveryToolResource"/> object. </returns>
+        public virtual DiscoveryToolResource GetDiscoveryToolResource(ResourceIdentifier id)
         {
-            ToolResource.ValidateResourceId(id);
-            return new ToolResource(Client, id);
+            DiscoveryToolResource.ValidateResourceId(id);
+            return new DiscoveryToolResource(Client, id);
         }
 
-        /// <summary> Gets an object representing a <see cref="ProjectResource"/> along with the instance operations that can be performed on it but with no data. </summary>
+        /// <summary> Gets an object representing a <see cref="DiscoveryProjectResource"/> along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="ProjectResource"/> object. </returns>
-        public virtual ProjectResource GetProjectResource(ResourceIdentifier id)
+        /// <returns> Returns a <see cref="DiscoveryProjectResource"/> object. </returns>
+        public virtual DiscoveryProjectResource GetDiscoveryProjectResource(ResourceIdentifier id)
         {
-            ProjectResource.ValidateResourceId(id);
-            return new ProjectResource(Client, id);
+            DiscoveryProjectResource.ValidateResourceId(id);
+            return new DiscoveryProjectResource(Client, id);
         }
 
-        /// <summary> Gets an object representing a <see cref="WorkspaceResource"/> along with the instance operations that can be performed on it but with no data. </summary>
+        /// <summary> Gets an object representing a <see cref="DiscoveryWorkspaceResource"/> along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="WorkspaceResource"/> object. </returns>
-        public virtual WorkspaceResource GetWorkspaceResource(ResourceIdentifier id)
+        /// <returns> Returns a <see cref="DiscoveryWorkspaceResource"/> object. </returns>
+        public virtual DiscoveryWorkspaceResource GetDiscoveryWorkspaceResource(ResourceIdentifier id)
         {
-            WorkspaceResource.ValidateResourceId(id);
-            return new WorkspaceResource(Client, id);
+            DiscoveryWorkspaceResource.ValidateResourceId(id);
+            return new DiscoveryWorkspaceResource(Client, id);
         }
 
         /// <summary> Gets an object representing a <see cref="WorkspacePrivateEndpointConnectionResource"/> along with the instance operations that can be performed on it but with no data. </summary>
@@ -116,13 +116,13 @@ namespace Azure.ResourceManager.Discovery.Mocking
             return new NodePoolResource(Client, id);
         }
 
-        /// <summary> Gets an object representing a <see cref="SupercomputerResource"/> along with the instance operations that can be performed on it but with no data. </summary>
+        /// <summary> Gets an object representing a <see cref="DiscoverySupercomputerResource"/> along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="SupercomputerResource"/> object. </returns>
-        public virtual SupercomputerResource GetSupercomputerResource(ResourceIdentifier id)
+        /// <returns> Returns a <see cref="DiscoverySupercomputerResource"/> object. </returns>
+        public virtual DiscoverySupercomputerResource GetDiscoverySupercomputerResource(ResourceIdentifier id)
         {
-            SupercomputerResource.ValidateResourceId(id);
-            return new SupercomputerResource(Client, id);
+            DiscoverySupercomputerResource.ValidateResourceId(id);
+            return new DiscoverySupercomputerResource(Client, id);
         }
 
         /// <summary> Gets an object representing a <see cref="StorageAssetResource"/> along with the instance operations that can be performed on it but with no data. </summary>

@@ -147,7 +147,7 @@ namespace Azure.ResourceManager.Discovery.Models
             {
                 return null;
             }
-            ProvisioningState? provisioningState = default;
+            DiscoveryProvisioningState? provisioningState = default;
             Uri foundryProjectEndpoint = default;
             IList<ResourceIdentifier> storageContainerIds = default;
             ProjectSettings settings = default;
@@ -160,7 +160,7 @@ namespace Azure.ResourceManager.Discovery.Models
                     {
                         continue;
                     }
-                    provisioningState = new ProvisioningState(prop.Value.GetString());
+                    provisioningState = new DiscoveryProvisioningState(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("foundryProjectEndpoint"u8))

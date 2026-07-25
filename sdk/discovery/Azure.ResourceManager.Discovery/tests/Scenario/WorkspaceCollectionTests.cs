@@ -22,17 +22,17 @@ namespace Azure.ResourceManager.Discovery.Tests.Scenario
         [SetUp]
         public void Setup() => InitializeClient();
 
-        private WorkspaceCollection GetWorkspaceCollection()
+        private DiscoveryWorkspaceCollection GetDiscoveryWorkspaceCollection()
             => GetResourceGroupReference(ResourceGroupName).GetWorkspaces();
 
-        private WorkspaceResource GetWorkspaceReference()
-            => Client.GetWorkspaceResource(WorkspaceResource.CreateResourceIdentifier(TestEnvironment.SubscriptionId, ResourceGroupName, WorkspaceName));
+        private DiscoveryWorkspaceResource GetWorkspaceReference()
+            => Client.GetDiscoveryWorkspaceResource(DiscoveryWorkspaceResource.CreateResourceIdentifier(TestEnvironment.SubscriptionId, ResourceGroupName, WorkspaceName));
 
         [RecordedTest]
         public async Task CreateOrUpdate()
         {
-            WorkspaceData data = new WorkspaceData(AzureLocation.UKSouth);
-            ArmOperation<WorkspaceResource> operation = await GetWorkspaceCollection().CreateOrUpdateAsync(WaitUntil.Completed, WorkspaceName, data);
+            DiscoveryWorkspaceData data = new DiscoveryWorkspaceData(AzureLocation.UKSouth);
+            ArmOperation<DiscoveryWorkspaceResource> operation = await GetDiscoveryWorkspaceCollection().CreateOrUpdateAsync(WaitUntil.Completed, WorkspaceName, data);
 
             Assert.That(operation.HasCompleted, Is.True);
             Assert.That(operation.HasValue, Is.True);
@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.Discovery.Tests.Scenario
         [RecordedTest]
         public async Task Get()
         {
-            Response<WorkspaceResource> response = await GetWorkspaceCollection().GetAsync(WorkspaceName);
+            Response<DiscoveryWorkspaceResource> response = await GetDiscoveryWorkspaceCollection().GetAsync(WorkspaceName);
 
             Assert.That(response.Value.Data.Name, Is.EqualTo(WorkspaceName));
         }
@@ -50,8 +50,8 @@ namespace Azure.ResourceManager.Discovery.Tests.Scenario
         [RecordedTest]
         public async Task ListByResourceGroup()
         {
-            List<WorkspaceResource> workspaces = new List<WorkspaceResource>();
-            await foreach (WorkspaceResource workspace in GetWorkspaceCollection().GetAllAsync())
+            List<DiscoveryWorkspaceResource> workspaces = new List<DiscoveryWorkspaceResource>();
+            await foreach (DiscoveryWorkspaceResource workspace in GetDiscoveryWorkspaceCollection().GetAllAsync())
             {
                 workspaces.Add(workspace);
             }
@@ -62,8 +62,8 @@ namespace Azure.ResourceManager.Discovery.Tests.Scenario
         [RecordedTest]
         public async Task ListBySubscription()
         {
-            List<WorkspaceResource> workspaces = new List<WorkspaceResource>();
-            await foreach (WorkspaceResource workspace in GetSubscriptionReference().GetWorkspacesAsync())
+            List<DiscoveryWorkspaceResource> workspaces = new List<DiscoveryWorkspaceResource>();
+            await foreach (DiscoveryWorkspaceResource workspace in GetSubscriptionReference().GetWorkspacesAsync())
             {
                 workspaces.Add(workspace);
             }
@@ -74,8 +74,8 @@ namespace Azure.ResourceManager.Discovery.Tests.Scenario
         [RecordedTest]
         public async Task Update()
         {
-            WorkspaceData data = new WorkspaceData(AzureLocation.UKSouth);
-            ArmOperation<WorkspaceResource> operation = await GetWorkspaceReference().UpdateAsync(WaitUntil.Completed, data);
+            DiscoveryWorkspaceData data = new DiscoveryWorkspaceData(AzureLocation.UKSouth);
+            ArmOperation<DiscoveryWorkspaceResource> operation = await GetWorkspaceReference().UpdateAsync(WaitUntil.Completed, data);
 
             Assert.That(operation.HasValue, Is.True);
             Assert.That(operation.Value.Data.Name, Is.EqualTo(WorkspaceName));
