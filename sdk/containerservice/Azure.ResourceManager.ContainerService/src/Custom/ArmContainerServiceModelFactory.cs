@@ -70,7 +70,7 @@ namespace Azure.ResourceManager.ContainerService.Models
                 name,
                 resourceType,
                 systemData,
-                new AgentPoolUpgradeProfileProperties(kubernetesVersion, osType, (upgrades ?? new List<AgentPoolUpgradeProfilePropertiesUpgradesItem>()).ToList(), new ChangeTrackingList<KubernetesVersionComponents>(), (recentlyUsedVersions ?? new List<AgentPoolRecentlyUsedVersion>()).ToList(), latestNodeImageVersion, null),
+                new AgentPoolUpgradeProfileProperties(kubernetesVersion, osType, (upgrades ?? new List<AgentPoolUpgradeProfilePropertiesUpgradesItem>()).ToList(), (recentlyUsedVersions ?? new List<AgentPoolRecentlyUsedVersion>()).ToList(), latestNodeImageVersion, null),
                 additionalBinaryDataProperties: null);
         }
 
@@ -90,7 +90,7 @@ namespace Azure.ResourceManager.ContainerService.Models
                     IsAppMonitoringAutoInstrumentationEnabled = isAppMonitoringAutoInstrumentationEnabled
                 };
             }
-            return ManagedClusterAzureMonitorProfile(metrics, null, appMonitoring);
+            return new ManagedClusterAzureMonitorProfile(metrics, appMonitoring, null);
         }
 
         // This factory method is retained for backward compatibility. The generated factory now exposes
@@ -104,7 +104,10 @@ namespace Azure.ResourceManager.ContainerService.Models
             ManagedClusterVerticalPodAutoscaler verticalPodAutoscaler = isVpaEnabled.HasValue
                 ? new ManagedClusterVerticalPodAutoscaler(isVpaEnabled.Value)
                 : null;
-            return ManagedClusterWorkloadAutoScalerProfile(isKedaEnabled, verticalPodAutoscaler);
+            ManagedClusterWorkloadAutoScalerProfileKeda keda = isKedaEnabled.HasValue
+                ? new ManagedClusterWorkloadAutoScalerProfileKeda(isKedaEnabled.Value)
+                : null;
+            return new ManagedClusterWorkloadAutoScalerProfile(keda, verticalPodAutoscaler, null);
         }
 
         // This factory method is retained for backward compatibility. The generated factory added the
@@ -131,7 +134,7 @@ namespace Azure.ResourceManager.ContainerService.Models
             ManagedClusterManagedOutboundIPProfile managedOutboundIPProfile = managedOutboundIPCount.HasValue
                 ? new ManagedClusterManagedOutboundIPProfile { Count = managedOutboundIPCount }
                 : null;
-            return ManagedClusterNatGatewayProfile(managedOutboundIPProfile, effectiveOutboundIPs, null, null, idleTimeoutInMinutes);
+            return new ManagedClusterNatGatewayProfile(managedOutboundIPProfile, effectiveOutboundIPs?.ToList(), idleTimeoutInMinutes, null);
         }
 
         // This factory method is retained for backward compatibility. The generated factory added the
@@ -148,7 +151,13 @@ namespace Azure.ResourceManager.ContainerService.Models
         /// <returns> A new <see cref="Models.ManagedClusterLoadBalancerProfile"/> instance for mocking. </returns>
         public static ManagedClusterLoadBalancerProfile ManagedClusterLoadBalancerProfile(ManagedClusterLoadBalancerProfileManagedOutboundIPs managedOutboundIPs, IEnumerable<WritableSubResource> outboundPublicIPPrefixes, IEnumerable<WritableSubResource> outboundPublicIPs, IEnumerable<WritableSubResource> effectiveOutboundIPs, int? allocatedOutboundPorts, int? idleTimeoutInMinutes, bool? isMultipleStandardLoadBalancersEnabled, ManagedClusterLoadBalancerBackendPoolType? backendPoolType)
         {
-            return ManagedClusterLoadBalancerProfile(managedOutboundIPs, outboundPublicIPPrefixes, outboundPublicIPs, effectiveOutboundIPs, allocatedOutboundPorts, idleTimeoutInMinutes, isMultipleStandardLoadBalancersEnabled, backendPoolType, null);
+            ManagedClusterLoadBalancerProfileOutboundIPPrefixes outboundIPPrefixes = outboundPublicIPPrefixes is null
+                ? null
+                : new ManagedClusterLoadBalancerProfileOutboundIPPrefixes(outboundPublicIPPrefixes.ToList(), null);
+            ManagedClusterLoadBalancerProfileOutboundIPs outboundIPs = outboundPublicIPs is null
+                ? null
+                : new ManagedClusterLoadBalancerProfileOutboundIPs(outboundPublicIPs.ToList(), null);
+            return new ManagedClusterLoadBalancerProfile(managedOutboundIPs, outboundIPPrefixes, outboundIPs, effectiveOutboundIPs?.ToList(), allocatedOutboundPorts, idleTimeoutInMinutes, isMultipleStandardLoadBalancersEnabled, backendPoolType, null);
         }
 
         // This factory method is retained for backward compatibility. The generated factory added the
@@ -162,7 +171,7 @@ namespace Azure.ResourceManager.ContainerService.Models
         /// <returns> A new <see cref="Models.ManagedClusterIngressProfileWebAppRouting"/> instance for mocking. </returns>
         public static ManagedClusterIngressProfileWebAppRouting ManagedClusterIngressProfileWebAppRouting(bool? isEnabled, GatewayApiIstioMode? gatewayApiImplementationsIstioMode, IEnumerable<ResourceIdentifier> dnsZoneResourceIds, NginxIngressControllerType? nginxDefaultIngressControllerType, ContainerServiceUserAssignedIdentity identity)
         {
-            return ManagedClusterIngressProfileWebAppRouting(isEnabled, gatewayApiImplementationsIstioMode, dnsZoneResourceIds, nginxDefaultIngressControllerType, identity, null);
+            return ManagedClusterIngressProfileWebAppRouting(isEnabled, dnsZoneResourceIds, nginxDefaultIngressControllerType, identity);
         }
 
         // This factory method is retained for backward compatibility. The generated factory added the
@@ -173,7 +182,10 @@ namespace Azure.ResourceManager.ContainerService.Models
         /// <returns> A new <see cref="Models.ManagedClusterIngressProfile"/> instance for mocking. </returns>
         public static ManagedClusterIngressProfile ManagedClusterIngressProfile(ManagedClusterIngressProfileWebAppRouting webAppRouting, ManagedGatewayType? gatewayApiInstallation)
         {
-            return ManagedClusterIngressProfile(webAppRouting, gatewayApiInstallation, null);
+            ManagedClusterIngressProfileGatewayConfiguration gatewayApi = gatewayApiInstallation.HasValue
+                ? new ManagedClusterIngressProfileGatewayConfiguration(gatewayApiInstallation, null)
+                : null;
+            return new ManagedClusterIngressProfile(webAppRouting, gatewayApi, null);
         }
 
         // This factory method is retained for backward compatibility. The generated factory inserted the
@@ -187,7 +199,7 @@ namespace Azure.ResourceManager.ContainerService.Models
         /// <returns> A new <see cref="Models.AgentPoolUpgradeSettings"/> instance for mocking. </returns>
         public static AgentPoolUpgradeSettings AgentPoolUpgradeSettings(string maxSurge, string maxUnavailable, int? drainTimeoutInMinutes, int? nodeSoakDurationInMinutes, UndrainableNodeBehavior? undrainableNodeBehavior)
         {
-            return AgentPoolUpgradeSettings(maxSurge, maxUnavailable, null, drainTimeoutInMinutes, nodeSoakDurationInMinutes, undrainableNodeBehavior);
+            return new AgentPoolUpgradeSettings(maxSurge, maxUnavailable, drainTimeoutInMinutes, nodeSoakDurationInMinutes, undrainableNodeBehavior, null);
         }
 
         /// <summary> Initializes a new instance of <see cref="ContainerService.AgentPoolUpgradeProfileData"/>. </summary>
@@ -270,13 +282,7 @@ namespace Azure.ResourceManager.ContainerService.Models
                 enableEncryptionAtHost: enableEncryptionAtHost,
                 enableFips: enableFips,
                 enableUltraSsd: enableUltraSsd,
-                upgradeStrategy: default,
-                isOSDiskFullCachingEnabled: default,
-                upgradeSettingsBlueGreen: default,
-                nodeInitializationTaints: default,
-                gpuProfile: default,
-                virtualMachinesScale: default,
-                preparedImageSpecificationId: default);
+                virtualMachinesScale: default);
             return result;
         }
 
@@ -343,13 +349,7 @@ namespace Azure.ResourceManager.ContainerService.Models
                 extendedLocation: extendedLocation,
                 clusterIdentity: clusterIdentity,
                 kind: kind,
-                isFipsEnabled: default,
-                isNamespaceResourcesEnabled: default,
-                healthMonitorProfile: default,
-                creationDataSourceResourceId: default,
-                upstreamSchedulerConfigMode: default,
-                scalingSize: default,
-                nodeDisruptionPolicy: default);
+                upstreamSchedulerConfigMode: default);
             return result;
         }
 
@@ -413,13 +413,7 @@ namespace Azure.ResourceManager.ContainerService.Models
                 statusProvisioningError: statusProvisioningError,
                 localDnsProfile: localDnsProfile,
                 name: name,
-                upgradeStrategy: default,
-                isOSDiskFullCachingEnabled: default,
-                upgradeSettingsBlueGreen: default,
-                nodeInitializationTaints: default,
-                gpuProfile: default,
-                virtualMachinesScale: default,
-                preparedImageSpecificationId: default);
+                virtualMachinesScale: default);
             result.GpuDriver = gpuDriver;
             if (virtualMachinesScaleManual != null)
             {
@@ -490,13 +484,7 @@ namespace Azure.ResourceManager.ContainerService.Models
                 virtualMachineNodesStatus: virtualMachineNodesStatus,
                 statusProvisioningError: statusProvisioningError,
                 localDnsProfile: localDnsProfile,
-                upgradeStrategy: default,
-                isOSDiskFullCachingEnabled: default,
-                upgradeSettingsBlueGreen: default,
-                nodeInitializationTaints: default,
-                gpuProfile: default,
-                virtualMachinesScale: default,
-                preparedImageSpecificationId: default);
+                virtualMachinesScale: default);
             result.GpuDriver = gpuDriver;
             if (virtualMachinesScaleManual != null)
             {
