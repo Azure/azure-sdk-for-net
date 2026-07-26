@@ -57,13 +57,13 @@ namespace Azure.ResourceManager.ApiManagement
         {
             TryGetApiVersion(ResourceType, out string apiManagementProductApiVersion);
             _productClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ApiManagement", ResourceType.Namespace, Diagnostics);
-            _productRestClient = new Product(_productClientDiagnostics, Pipeline, Endpoint, apiManagementProductApiVersion ?? "2025-09-01-preview");
+            _productRestClient = new Product(_productClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, apiManagementProductApiVersion ?? "2025-09-01-preview");
             _productApiClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ApiManagement", ResourceType.Namespace, Diagnostics);
-            _productApiRestClient = new ProductApi(_productApiClientDiagnostics, Pipeline, Endpoint, apiManagementProductApiVersion ?? "2025-09-01-preview");
+            _productApiRestClient = new ProductApi(_productApiClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, apiManagementProductApiVersion ?? "2025-09-01-preview");
             _productSubscriptionsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ApiManagement", ResourceType.Namespace, Diagnostics);
-            _productSubscriptionsRestClient = new ProductSubscriptions(_productSubscriptionsClientDiagnostics, Pipeline, Endpoint, apiManagementProductApiVersion ?? "2025-09-01-preview");
+            _productSubscriptionsRestClient = new ProductSubscriptions(_productSubscriptionsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, apiManagementProductApiVersion ?? "2025-09-01-preview");
             _productGroupClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ApiManagement", ResourceType.Namespace, Diagnostics);
-            _productGroupRestClient = new ProductGroup(_productGroupClientDiagnostics, Pipeline, Endpoint, apiManagementProductApiVersion ?? "2025-09-01-preview");
+            _productGroupRestClient = new ProductGroup(_productGroupClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, apiManagementProductApiVersion ?? "2025-09-01-preview");
             ValidateResourceId(id);
         }
 

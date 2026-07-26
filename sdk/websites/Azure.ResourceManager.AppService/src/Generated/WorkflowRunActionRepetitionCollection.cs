@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.AppService
         {
             TryGetApiVersion(WorkflowRunActionRepetitionResource.ResourceType, out string workflowRunActionRepetitionApiVersion);
             _workflowRunActionRepetitionDefinitionsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.AppService", WorkflowRunActionRepetitionResource.ResourceType.Namespace, Diagnostics);
-            _workflowRunActionRepetitionDefinitionsRestClient = new WorkflowRunActionRepetitionDefinitions(_workflowRunActionRepetitionDefinitionsClientDiagnostics, Pipeline, Endpoint, workflowRunActionRepetitionApiVersion ?? "2026-03-15");
+            _workflowRunActionRepetitionDefinitionsRestClient = new WorkflowRunActionRepetitionDefinitions(_workflowRunActionRepetitionDefinitionsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, workflowRunActionRepetitionApiVersion ?? "2026-03-15");
             ValidateResourceId(id);
         }
 

@@ -9,8 +9,8 @@ import { globFiles } from "./lib/glob.ts";
 import { syncRepo } from "./sync-eval-git-repo.ts";
 
 export const DEFAULT_PATTERNS = [
-  "evals/tools/*.eval.yaml",
-  "evals/workflow-scenarios/mock/*.eval.yaml",
+  "tools/*.eval.yaml",
+  "workflows/mock/*.eval.yaml",
 ];
 
 // Repos we know how to clone efficiently (cone-sparse to the spec folders the fixtures touch).

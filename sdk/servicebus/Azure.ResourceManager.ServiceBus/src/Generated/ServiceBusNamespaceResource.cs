@@ -57,11 +57,11 @@ namespace Azure.ResourceManager.ServiceBus
         {
             TryGetApiVersion(ResourceType, out string serviceBusNamespaceApiVersion);
             _namespacesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ServiceBus", ResourceType.Namespace, Diagnostics);
-            _namespacesRestClient = new Namespaces(_namespacesClientDiagnostics, Pipeline, Endpoint, serviceBusNamespaceApiVersion ?? "2026-01-01");
+            _namespacesRestClient = new Namespaces(_namespacesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, serviceBusNamespaceApiVersion ?? "2026-01-01");
             _sbNamespacesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ServiceBus", ResourceType.Namespace, Diagnostics);
-            _sbNamespacesRestClient = new SBNamespaces(_sbNamespacesClientDiagnostics, Pipeline, Endpoint, serviceBusNamespaceApiVersion ?? "2026-01-01");
+            _sbNamespacesRestClient = new SBNamespaces(_sbNamespacesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, serviceBusNamespaceApiVersion ?? "2026-01-01");
             _privateLinkResourcesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ServiceBus", ResourceType.Namespace, Diagnostics);
-            _privateLinkResourcesRestClient = new PrivateLinkResources(_privateLinkResourcesClientDiagnostics, Pipeline, Endpoint, serviceBusNamespaceApiVersion ?? "2026-01-01");
+            _privateLinkResourcesRestClient = new PrivateLinkResources(_privateLinkResourcesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, serviceBusNamespaceApiVersion ?? "2026-01-01");
             ValidateResourceId(id);
         }
 

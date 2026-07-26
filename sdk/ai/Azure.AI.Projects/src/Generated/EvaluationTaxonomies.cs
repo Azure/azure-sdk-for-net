@@ -5,7 +5,6 @@
 using System;
 using System.ClientModel;
 using System.ClientModel.Primitives;
-using System.Diagnostics.CodeAnalysis;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.AI.Projects;
@@ -112,7 +111,6 @@ namespace Azure.AI.Projects.Evaluation
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
-        [Experimental("AAIP001")]
         public virtual ClientResult<EvaluationTaxonomy> Get(string name, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(name, nameof(name));
@@ -127,7 +125,6 @@ namespace Azure.AI.Projects.Evaluation
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
-        [Experimental("AAIP001")]
         public virtual async Task<ClientResult<EvaluationTaxonomy>> GetAsync(string name, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(name, nameof(name));
@@ -197,7 +194,6 @@ namespace Azure.AI.Projects.Evaluation
         /// <param name="inputType"> Filter by taxonomy input type. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
         /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
-        [Experimental("AAIP001")]
         public virtual CollectionResult<EvaluationTaxonomy> GetAll(string inputName = default, string inputType = default, CancellationToken cancellationToken = default)
         {
             return new EvaluationTaxonomiesGetAllCollectionResultOfT(this, inputName, inputType, cancellationToken.ToRequestOptions());
@@ -208,7 +204,6 @@ namespace Azure.AI.Projects.Evaluation
         /// <param name="inputType"> Filter by taxonomy input type. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
         /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
-        [Experimental("AAIP001")]
         public virtual AsyncCollectionResult<EvaluationTaxonomy> GetAllAsync(string inputName = default, string inputType = default, CancellationToken cancellationToken = default)
         {
             return new EvaluationTaxonomiesGetAllAsyncCollectionResultOfT(this, inputName, inputType, cancellationToken.ToRequestOptions());

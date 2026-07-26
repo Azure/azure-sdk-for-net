@@ -40,11 +40,11 @@ namespace Azure.ResourceManager.NapsterOmniagentApi.Mocking
 
         private ClientDiagnostics OrganizationsClientDiagnostics => _organizationsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.NapsterOmniagentApi.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private Organizations OrganizationsRestClient => _organizationsRestClient ??= new Organizations(OrganizationsClientDiagnostics, Pipeline, Endpoint, "2025-12-24-preview");
+        private Organizations OrganizationsRestClient => _organizationsRestClient ??= new Organizations(OrganizationsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2025-12-24-preview");
 
         private ClientDiagnostics SaaSOperationGroupClientDiagnostics => _saaSOperationGroupClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.NapsterOmniagentApi.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private SaaSOperationGroup SaaSOperationGroupRestClient => _saaSOperationGroupRestClient ??= new SaaSOperationGroup(SaaSOperationGroupClientDiagnostics, Pipeline, Endpoint, "2025-12-24-preview");
+        private SaaSOperationGroup SaaSOperationGroupRestClient => _saaSOperationGroupRestClient ??= new SaaSOperationGroup(SaaSOperationGroupClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2025-12-24-preview");
 
         /// <summary>
         /// List OrganizationResource resources by subscription ID

@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.DataBoxEdge
         {
             TryGetApiVersion(DataBoxEdgeRoleAddonResource.ResourceType, out string dataBoxEdgeRoleAddonApiVersion);
             _addonsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.DataBoxEdge", DataBoxEdgeRoleAddonResource.ResourceType.Namespace, Diagnostics);
-            _addonsRestClient = new Addons(_addonsClientDiagnostics, Pipeline, Endpoint, dataBoxEdgeRoleAddonApiVersion ?? "2023-12-01");
+            _addonsRestClient = new Addons(_addonsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, dataBoxEdgeRoleAddonApiVersion ?? "2023-12-01");
             ValidateResourceId(id);
         }
 

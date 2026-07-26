@@ -54,9 +54,9 @@ namespace Azure.ResourceManager.ServiceGroups
         {
             TryGetApiVersion(ResourceType, out string serviceGroupApiVersion);
             _managementClientClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ServiceGroups", ResourceType.Namespace, Diagnostics);
-            _managementClientRestClient = new ManagementClient(_managementClientClientDiagnostics, Pipeline, Endpoint, serviceGroupApiVersion ?? "2024-02-01-preview");
+            _managementClientRestClient = new ManagementClient(_managementClientClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, serviceGroupApiVersion ?? "2024-02-01-preview");
             _serviceGroupsOperationGroupClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ServiceGroups", ResourceType.Namespace, Diagnostics);
-            _serviceGroupsOperationGroupRestClient = new ServiceGroupsOperationGroup(_serviceGroupsOperationGroupClientDiagnostics, Pipeline, Endpoint, serviceGroupApiVersion ?? "2024-02-01-preview");
+            _serviceGroupsOperationGroupRestClient = new ServiceGroupsOperationGroup(_serviceGroupsOperationGroupClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, serviceGroupApiVersion ?? "2024-02-01-preview");
             ValidateResourceId(id);
         }
 

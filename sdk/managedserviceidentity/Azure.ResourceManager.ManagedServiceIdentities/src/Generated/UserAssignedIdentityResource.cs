@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.ManagedServiceIdentities
         {
             TryGetApiVersion(ResourceType, out string userAssignedIdentityApiVersion);
             _userAssignedIdentitiesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ManagedServiceIdentities", ResourceType.Namespace, Diagnostics);
-            _userAssignedIdentitiesRestClient = new UserAssignedIdentities(_userAssignedIdentitiesClientDiagnostics, Pipeline, Endpoint, userAssignedIdentityApiVersion ?? "2025-05-31-preview");
+            _userAssignedIdentitiesRestClient = new UserAssignedIdentities(_userAssignedIdentitiesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, userAssignedIdentityApiVersion ?? "2025-05-31-preview");
             ValidateResourceId(id);
         }
 

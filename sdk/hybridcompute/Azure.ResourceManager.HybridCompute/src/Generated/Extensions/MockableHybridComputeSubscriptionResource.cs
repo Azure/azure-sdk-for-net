@@ -44,19 +44,19 @@ namespace Azure.ResourceManager.HybridCompute.Mocking
 
         private ClientDiagnostics LicensesClientDiagnostics => _licensesClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.HybridCompute.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private Licenses LicensesRestClient => _licensesRestClient ??= new Licenses(LicensesClientDiagnostics, Pipeline, Endpoint, "2025-09-16-preview");
+        private Licenses LicensesRestClient => _licensesRestClient ??= new Licenses(LicensesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2025-09-16-preview");
 
         private ClientDiagnostics MachinesClientDiagnostics => _machinesClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.HybridCompute.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private Machines MachinesRestClient => _machinesRestClient ??= new Machines(MachinesClientDiagnostics, Pipeline, Endpoint, "2025-09-16-preview");
+        private Machines MachinesRestClient => _machinesRestClient ??= new Machines(MachinesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2025-09-16-preview");
 
         private ClientDiagnostics GatewaysClientDiagnostics => _gatewaysClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.HybridCompute.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private Gateways GatewaysRestClient => _gatewaysRestClient ??= new Gateways(GatewaysClientDiagnostics, Pipeline, Endpoint, "2025-09-16-preview");
+        private Gateways GatewaysRestClient => _gatewaysRestClient ??= new Gateways(GatewaysClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2025-09-16-preview");
 
         private ClientDiagnostics PrivateLinkScopesClientDiagnostics => _privateLinkScopesClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.HybridCompute.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private PrivateLinkScopes PrivateLinkScopesRestClient => _privateLinkScopesRestClient ??= new PrivateLinkScopes(PrivateLinkScopesClientDiagnostics, Pipeline, Endpoint, "2025-09-16-preview");
+        private PrivateLinkScopes PrivateLinkScopesRestClient => _privateLinkScopesRestClient ??= new PrivateLinkScopes(PrivateLinkScopesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2025-09-16-preview");
 
         /// <summary> Gets a collection of HybridComputeExtensionValues in the <see cref="SubscriptionResource"/>. </summary>
         /// <param name="location"> The location for the resource. </param>

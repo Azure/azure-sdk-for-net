@@ -55,9 +55,9 @@ namespace Azure.ResourceManager.Monitor
         {
             TryGetApiVersion(ResourceType, out string metricAlertApiVersion);
             _metricAlertsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Monitor", ResourceType.Namespace, Diagnostics);
-            _metricAlertsRestClient = new MetricAlerts(_metricAlertsClientDiagnostics, Pipeline, Endpoint, metricAlertApiVersion ?? "2026-01-01");
+            _metricAlertsRestClient = new MetricAlerts(_metricAlertsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, metricAlertApiVersion ?? "2026-01-01");
             _metricAlertsStatusClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Monitor", ResourceType.Namespace, Diagnostics);
-            _metricAlertsStatusRestClient = new MetricAlertsStatus(_metricAlertsStatusClientDiagnostics, Pipeline, Endpoint, metricAlertApiVersion ?? "2026-01-01");
+            _metricAlertsStatusRestClient = new MetricAlertsStatus(_metricAlertsStatusClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, metricAlertApiVersion ?? "2026-01-01");
             ValidateResourceId(id);
         }
 

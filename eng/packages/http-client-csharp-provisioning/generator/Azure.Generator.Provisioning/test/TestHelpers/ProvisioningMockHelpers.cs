@@ -8,9 +8,10 @@ using Moq;
 using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using System.Reflection;
-using Azure.Generator.Management;
 using Azure.Generator.Management.Models;
+using Azure.Generator.Provisioning.Primitives;
 
 namespace Azure.Generator.Provisioning.Tests.TestHelpers
 {
@@ -45,9 +46,16 @@ namespace Azure.Generator.Provisioning.Tests.TestHelpers
             mockInputLibrary.Setup(p => p.InputNamespace).Returns(mockInputNamespace.Object);
             if (armProviderSchema is not null)
             {
-                typeof(ManagementInputLibrary)
-                    .GetField("_providerSchema", BindingFlags.Instance | BindingFlags.NonPublic)!
-                    .SetValue(mockInputLibrary.Object, armProviderSchema());
+                typeof(ProvisioningInputLibrary)
+                    .GetField("_resourceProjections", BindingFlags.Instance | BindingFlags.NonPublic)!
+                    .SetValue(
+                        mockInputLibrary.Object,
+                        armProviderSchema().Resources.Select(CreateProjection).ToArray());
+                typeof(ProvisioningInputLibrary)
+                    .GetField("_modelSettableUsage", BindingFlags.Instance | BindingFlags.NonPublic)!
+                    .SetValue(
+                        mockInputLibrary.Object,
+                        inputNsModels.ToDictionary(model => model.CrossLanguageDefinitionId, _ => true));
             }
 
             var loadMethod = typeof(Configuration).GetMethod("Load", BindingFlags.Static | BindingFlags.NonPublic);
@@ -61,6 +69,30 @@ namespace Azure.Generator.Provisioning.Tests.TestHelpers
             codeModelInstance!.SetValue(null, mockGenerator.Object);
 
             return mockGenerator;
+        }
+
+        private static ProvisioningResourceProjection CreateProjection(ArmResourceMetadata metadata)
+        {
+            var readableScopes = metadata.Methods.Any(method => method.Kind == ResourceOperationKind.Read)
+                ? new[] { metadata.Scope.Kind }
+                : [];
+            var writableScopes = metadata.Methods.Any(method => method.Kind == ResourceOperationKind.Create)
+                ? new[] { metadata.Scope.Kind }
+                : [];
+            return new(
+                metadata.ResourceModel,
+                metadata.ResourceName,
+                metadata.ResourceType.SerializedResourceType,
+                metadata.SingletonResourceName,
+                metadata.ParentResourceId,
+                metadata.NameConstraints,
+                [metadata.ResourceIdPattern],
+                metadata.ApiVersions,
+                metadata.Methods,
+                metadata.RbacRoles,
+                readableScopes,
+                writableScopes,
+                writableScopes.Contains(ResourceScope.Extension));
         }
     }
 }

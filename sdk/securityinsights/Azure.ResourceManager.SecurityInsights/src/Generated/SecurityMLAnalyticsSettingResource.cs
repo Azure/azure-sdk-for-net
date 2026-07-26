@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.SecurityInsights
         {
             TryGetApiVersion(ResourceType, out string securityMLAnalyticsSettingApiVersion);
             _securityMLAnalyticsSettingsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.SecurityInsights", ResourceType.Namespace, Diagnostics);
-            _securityMLAnalyticsSettingsRestClient = new SecurityMLAnalyticsSettings(_securityMLAnalyticsSettingsClientDiagnostics, Pipeline, Endpoint, securityMLAnalyticsSettingApiVersion ?? "2025-07-01-preview");
+            _securityMLAnalyticsSettingsRestClient = new SecurityMLAnalyticsSettings(_securityMLAnalyticsSettingsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, securityMLAnalyticsSettingApiVersion ?? "2025-07-01-preview");
             ValidateResourceId(id);
         }
 

@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.IotOperations
         {
             TryGetApiVersion(IotOperationsAkriConnectorTemplateResource.ResourceType, out string iotOperationsAkriConnectorTemplateApiVersion);
             _akriConnectorTemplateClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.IotOperations", IotOperationsAkriConnectorTemplateResource.ResourceType.Namespace, Diagnostics);
-            _akriConnectorTemplateRestClient = new AkriConnectorTemplate(_akriConnectorTemplateClientDiagnostics, Pipeline, Endpoint, iotOperationsAkriConnectorTemplateApiVersion ?? "2025-10-01");
+            _akriConnectorTemplateRestClient = new AkriConnectorTemplate(_akriConnectorTemplateClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, iotOperationsAkriConnectorTemplateApiVersion ?? "2025-10-01");
             ValidateResourceId(id);
         }
 

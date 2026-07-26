@@ -40,11 +40,11 @@ namespace Azure.ResourceManager.DomainRegistration.Mocking
 
         private ClientDiagnostics DomainsClientDiagnostics => _domainsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.DomainRegistration.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private Domains DomainsRestClient => _domainsRestClient ??= new Domains(DomainsClientDiagnostics, Pipeline, Endpoint, "2024-11-01");
+        private Domains DomainsRestClient => _domainsRestClient ??= new Domains(DomainsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2024-11-01");
 
         private ClientDiagnostics DomainsOperationGroupClientDiagnostics => _domainsOperationGroupClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.DomainRegistration.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private DomainsOperationGroup DomainsOperationGroupRestClient => _domainsOperationGroupRestClient ??= new DomainsOperationGroup(DomainsOperationGroupClientDiagnostics, Pipeline, Endpoint, "2024-11-01");
+        private DomainsOperationGroup DomainsOperationGroupRestClient => _domainsOperationGroupRestClient ??= new DomainsOperationGroup(DomainsOperationGroupClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2024-11-01");
 
         /// <summary> Gets a collection of TopLevelDomains in the <see cref="SubscriptionResource"/>. </summary>
         /// <returns> An object representing collection of TopLevelDomains and their operations over a TopLevelDomainResource. </returns>

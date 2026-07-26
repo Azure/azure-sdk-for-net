@@ -58,47 +58,47 @@ namespace Azure.ResourceManager.Monitor.Mocking
 
         private ClientDiagnostics DataCollectionEndpointsClientDiagnostics => _dataCollectionEndpointsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Monitor.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private DataCollectionEndpoints DataCollectionEndpointsRestClient => _dataCollectionEndpointsRestClient ??= new DataCollectionEndpoints(DataCollectionEndpointsClientDiagnostics, Pipeline, Endpoint, "2024-03-11");
+        private DataCollectionEndpoints DataCollectionEndpointsRestClient => _dataCollectionEndpointsRestClient ??= new DataCollectionEndpoints(DataCollectionEndpointsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2024-03-11");
 
         private ClientDiagnostics DataCollectionRulesClientDiagnostics => _dataCollectionRulesClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Monitor.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private DataCollectionRules DataCollectionRulesRestClient => _dataCollectionRulesRestClient ??= new DataCollectionRules(DataCollectionRulesClientDiagnostics, Pipeline, Endpoint, "2024-03-11");
+        private DataCollectionRules DataCollectionRulesRestClient => _dataCollectionRulesRestClient ??= new DataCollectionRules(DataCollectionRulesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2024-03-11");
 
         private ClientDiagnostics PrivateLinkScopesClientDiagnostics => _privateLinkScopesClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Monitor.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private PrivateLinkScopes PrivateLinkScopesRestClient => _privateLinkScopesRestClient ??= new PrivateLinkScopes(PrivateLinkScopesClientDiagnostics, Pipeline, Endpoint, "2023-06-01-preview");
+        private PrivateLinkScopes PrivateLinkScopesRestClient => _privateLinkScopesRestClient ??= new PrivateLinkScopes(PrivateLinkScopesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2023-06-01-preview");
 
         private ClientDiagnostics AutoscaleSettingsClientDiagnostics => _autoscaleSettingsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Monitor.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private AutoscaleSettings AutoscaleSettingsRestClient => _autoscaleSettingsRestClient ??= new AutoscaleSettings(AutoscaleSettingsClientDiagnostics, Pipeline, Endpoint, "2022-10-01");
+        private AutoscaleSettings AutoscaleSettingsRestClient => _autoscaleSettingsRestClient ??= new AutoscaleSettings(AutoscaleSettingsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2022-10-01");
 
         private ClientDiagnostics ActivityLogAlertsClientDiagnostics => _activityLogAlertsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Monitor.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private ActivityLogAlerts ActivityLogAlertsRestClient => _activityLogAlertsRestClient ??= new ActivityLogAlerts(ActivityLogAlertsClientDiagnostics, Pipeline, Endpoint, "2023-01-01-preview");
+        private ActivityLogAlerts ActivityLogAlertsRestClient => _activityLogAlertsRestClient ??= new ActivityLogAlerts(ActivityLogAlertsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2023-01-01-preview");
 
         private ClientDiagnostics MetricAlertsClientDiagnostics => _metricAlertsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Monitor.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private MetricAlerts MetricAlertsRestClient => _metricAlertsRestClient ??= new MetricAlerts(MetricAlertsClientDiagnostics, Pipeline, Endpoint, "2026-01-01");
+        private MetricAlerts MetricAlertsRestClient => _metricAlertsRestClient ??= new MetricAlerts(MetricAlertsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2026-01-01");
 
         private ClientDiagnostics ScheduledQueryRulesClientDiagnostics => _scheduledQueryRulesClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Monitor.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private ScheduledQueryRules ScheduledQueryRulesRestClient => _scheduledQueryRulesRestClient ??= new ScheduledQueryRules(ScheduledQueryRulesClientDiagnostics, Pipeline, Endpoint, "2025-01-01-preview");
+        private ScheduledQueryRules ScheduledQueryRulesRestClient => _scheduledQueryRulesRestClient ??= new ScheduledQueryRules(ScheduledQueryRulesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2025-01-01-preview");
 
         private ClientDiagnostics ActionGroupsClientDiagnostics => _actionGroupsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Monitor.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private ActionGroups ActionGroupsRestClient => _actionGroupsRestClient ??= new ActionGroups(ActionGroupsClientDiagnostics, Pipeline, Endpoint, "2024-10-01-preview");
+        private ActionGroups ActionGroupsRestClient => _actionGroupsRestClient ??= new ActionGroups(ActionGroupsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2024-10-01-preview");
 
         private ClientDiagnostics ActivityLogsClientDiagnostics => _activityLogsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Monitor.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private ActivityLogs ActivityLogsRestClient => _activityLogsRestClient ??= new ActivityLogs(ActivityLogsClientDiagnostics, Pipeline, Endpoint, "2015-04-01");
+        private ActivityLogs ActivityLogsRestClient => _activityLogsRestClient ??= new ActivityLogs(ActivityLogsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2015-04-01");
 
         private ClientDiagnostics MetricDefinitionsClientDiagnostics => _metricDefinitionsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Monitor.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private MetricDefinitions MetricDefinitionsRestClient => _metricDefinitionsRestClient ??= new MetricDefinitions(MetricDefinitionsClientDiagnostics, Pipeline, Endpoint, "2024-02-01");
+        private MetricDefinitions MetricDefinitionsRestClient => _metricDefinitionsRestClient ??= new MetricDefinitions(MetricDefinitionsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2024-02-01");
 
         private ClientDiagnostics MetricsClientDiagnostics => _metricsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Monitor.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private Metrics MetricsRestClient => _metricsRestClient ??= new Metrics(MetricsClientDiagnostics, Pipeline, Endpoint, "2024-02-01");
+        private Metrics MetricsRestClient => _metricsRestClient ??= new Metrics(MetricsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2024-02-01");
 
         /// <summary> Gets a collection of LogProfiles in the <see cref="SubscriptionResource"/>. </summary>
         /// <returns> An object representing collection of LogProfiles and their operations over a LogProfileResource. </returns>

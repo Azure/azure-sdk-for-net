@@ -93,14 +93,14 @@ namespace Azure.AI.Extensions.OpenAI
         }
 
         /// <summary> Compacts a conversation into a response object suitable for long-running and zero-data-retention scenarios. </summary>
-        /// <param name="model"></param>
+        /// <param name="model"> The model deployment to use for the compaction of this response. </param>
         /// <param name="input"></param>
         /// <param name="previousResponseId"></param>
         /// <param name="instructions"></param>
         /// <param name="promptCacheKey"></param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
         /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
-        public virtual ClientResult<CompactResource> Compactconversation(ModelIdsCompaction? model, BinaryData input = default, string previousResponseId = default, string instructions = default, string promptCacheKey = default, CancellationToken cancellationToken = default)
+        public virtual ClientResult<CompactResource> Compactconversation(string model, BinaryData input = default, string previousResponseId = default, string instructions = default, string promptCacheKey = default, CancellationToken cancellationToken = default)
         {
             CompactResponseMethodPublicBody spreadModel = new CompactResponseMethodPublicBody(
                 model,
@@ -114,14 +114,14 @@ namespace Azure.AI.Extensions.OpenAI
         }
 
         /// <summary> Compacts a conversation into a response object suitable for long-running and zero-data-retention scenarios. </summary>
-        /// <param name="model"></param>
+        /// <param name="model"> The model deployment to use for the compaction of this response. </param>
         /// <param name="input"></param>
         /// <param name="previousResponseId"></param>
         /// <param name="instructions"></param>
         /// <param name="promptCacheKey"></param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
         /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
-        public virtual async Task<ClientResult<CompactResource>> CompactconversationAsync(ModelIdsCompaction? model, BinaryData input = default, string previousResponseId = default, string instructions = default, string promptCacheKey = default, CancellationToken cancellationToken = default)
+        public virtual async Task<ClientResult<CompactResource>> CompactconversationAsync(string model, BinaryData input = default, string previousResponseId = default, string instructions = default, string promptCacheKey = default, CancellationToken cancellationToken = default)
         {
             CompactResponseMethodPublicBody spreadModel = new CompactResponseMethodPublicBody(
                 model,
