@@ -45,7 +45,7 @@ namespace Azure.ResourceManager.ComputeLimit
             TryGetApiVersion(TrustedHostSubscriptionResource.ResourceType, out string trustedHostSubscriptionApiVersion);
             _location = location;
             _trustedHostSubscriptionsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ComputeLimit", TrustedHostSubscriptionResource.ResourceType.Namespace, Diagnostics);
-            _trustedHostSubscriptionsRestClient = new TrustedHostSubscriptions(_trustedHostSubscriptionsClientDiagnostics, Pipeline, Endpoint, trustedHostSubscriptionApiVersion ?? "2026-07-31");
+            _trustedHostSubscriptionsRestClient = new TrustedHostSubscriptions(_trustedHostSubscriptionsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, trustedHostSubscriptionApiVersion ?? "2026-07-31");
             ValidateResourceId(id);
         }
 
