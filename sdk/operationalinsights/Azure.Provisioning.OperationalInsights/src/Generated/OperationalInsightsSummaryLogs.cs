@@ -95,7 +95,7 @@ namespace Azure.Provisioning.OperationalInsights
         }
 
         /// <summary> Gets or sets the RuleType. </summary>
-        public BicepValue<OperationalInsightsNetworkSecurityPerimeterRuleType> RuleType
+        public BicepValue<OperationalInsightsSummaryLogsRuleType> RuleType
         {
             get
             {
@@ -159,7 +159,7 @@ namespace Azure.Provisioning.OperationalInsights
         }
 
         /// <summary> Gets the StatusCode. </summary>
-        public BicepValue<OperationalInsightsNetworkSecurityPerimeterStatusCode> StatusCode
+        public BicepValue<OperationalInsightsSummaryLogsStatusCode> StatusCode
         {
             get
             {
@@ -172,7 +172,7 @@ namespace Azure.Provisioning.OperationalInsights
         }
 
         /// <summary> Gets the ProvisioningState. </summary>
-        public BicepValue<OperationalInsightsNetworkSecurityPerimeterProvisioningState> ProvisioningState
+        public BicepValue<OperationalInsightsSummaryLogsProvisioningState> ProvisioningState
         {
             get
             {

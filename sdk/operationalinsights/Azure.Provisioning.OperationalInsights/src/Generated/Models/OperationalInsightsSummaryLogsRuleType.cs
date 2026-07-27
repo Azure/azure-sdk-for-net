@@ -8,7 +8,7 @@
 namespace Azure.Provisioning.OperationalInsights
 {
     /// <summary> SummaryRules rule type: User. </summary>
-    public enum OperationalInsightsNetworkSecurityPerimeterRuleType
+    public enum OperationalInsightsSummaryLogsRuleType
     {
         /// <summary> User defined summary rule. This is the definition for rules created and defined by users. </summary>
         User = 0

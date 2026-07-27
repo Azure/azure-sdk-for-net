@@ -13,12 +13,12 @@ namespace Azure.Provisioning.OperationalInsights
     /// <summary> Summary rule properties. </summary>
     internal partial class SummaryLogsProperties : ProvisionableConstruct
     {
-        private BicepValue<OperationalInsightsNetworkSecurityPerimeterRuleType> _ruleType;
+        private BicepValue<OperationalInsightsSummaryLogsRuleType> _ruleType;
         private BicepValue<string> _displayName;
         private BicepValue<string> _description;
         private BicepValue<bool> _isActive;
-        private BicepValue<OperationalInsightsNetworkSecurityPerimeterStatusCode> _statusCode;
-        private BicepValue<OperationalInsightsNetworkSecurityPerimeterProvisioningState> _provisioningState;
+        private BicepValue<OperationalInsightsSummaryLogsStatusCode> _statusCode;
+        private BicepValue<OperationalInsightsSummaryLogsProvisioningState> _provisioningState;
         private OperationalInsightsSummaryRule _ruleDefinition;
 
         /// <summary> Creates a new SummaryLogsProperties. </summary>
@@ -27,7 +27,7 @@ namespace Azure.Provisioning.OperationalInsights
         }
 
         /// <summary> Gets or sets the RuleType. </summary>
-        public BicepValue<OperationalInsightsNetworkSecurityPerimeterRuleType> RuleType
+        public BicepValue<OperationalInsightsSummaryLogsRuleType> RuleType
         {
             get
             {
@@ -82,7 +82,7 @@ namespace Azure.Provisioning.OperationalInsights
         }
 
         /// <summary> Gets the StatusCode. </summary>
-        public BicepValue<OperationalInsightsNetworkSecurityPerimeterStatusCode> StatusCode
+        public BicepValue<OperationalInsightsSummaryLogsStatusCode> StatusCode
         {
             get
             {
@@ -92,7 +92,7 @@ namespace Azure.Provisioning.OperationalInsights
         }
 
         /// <summary> Gets the ProvisioningState. </summary>
-        public BicepValue<OperationalInsightsNetworkSecurityPerimeterProvisioningState> ProvisioningState
+        public BicepValue<OperationalInsightsSummaryLogsProvisioningState> ProvisioningState
         {
             get
             {
@@ -120,12 +120,12 @@ namespace Azure.Provisioning.OperationalInsights
         protected override void DefineProvisionableProperties()
         {
             base.DefineProvisionableProperties();
-            _ruleType = DefineProperty<OperationalInsightsNetworkSecurityPerimeterRuleType>(nameof(RuleType), new string[] { "ruleType" });
+            _ruleType = DefineProperty<OperationalInsightsSummaryLogsRuleType>(nameof(RuleType), new string[] { "ruleType" });
             _displayName = DefineProperty<string>(nameof(DisplayName), new string[] { "displayName" });
             _description = DefineProperty<string>(nameof(Description), new string[] { "description" });
             _isActive = DefineProperty<bool>(nameof(IsActive), new string[] { "isActive" }, isOutput: true);
-            _statusCode = DefineProperty<OperationalInsightsNetworkSecurityPerimeterStatusCode>(nameof(StatusCode), new string[] { "statusCode" }, isOutput: true);
-            _provisioningState = DefineProperty<OperationalInsightsNetworkSecurityPerimeterProvisioningState>(nameof(ProvisioningState), new string[] { "provisioningState" }, isOutput: true);
+            _statusCode = DefineProperty<OperationalInsightsSummaryLogsStatusCode>(nameof(StatusCode), new string[] { "statusCode" }, isOutput: true);
+            _provisioningState = DefineProperty<OperationalInsightsSummaryLogsProvisioningState>(nameof(ProvisioningState), new string[] { "provisioningState" }, isOutput: true);
             _ruleDefinition = DefineModelProperty<OperationalInsightsSummaryRule>(nameof(RuleDefinition), new string[] { "ruleDefinition" });
             DefineAdditionalProperties();
         }

@@ -8,7 +8,7 @@
 namespace Azure.Provisioning.OperationalInsights
 {
     /// <summary> Table's current provisioning state. If set to 'updating', indicates a resource lock due to ongoing operation, forbidding any update to the table until the ongoing operation is concluded. </summary>
-    public enum OperationalInsightsNetworkSecurityPerimeterProvisioningState
+    public enum OperationalInsightsSummaryLogsProvisioningState
     {
         /// <summary> Table schema is still being built and updated, table is currently locked for any changes till the procedure is done. </summary>
         Updating = 0,

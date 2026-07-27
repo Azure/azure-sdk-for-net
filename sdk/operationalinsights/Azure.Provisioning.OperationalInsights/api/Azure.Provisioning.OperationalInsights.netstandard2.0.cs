@@ -369,23 +369,6 @@ namespace Azure.Provisioning.OperationalInsights
             public static readonly string V2025_07_01;
         }
     }
-    public enum OperationalInsightsNetworkSecurityPerimeterProvisioningState
-    {
-        Updating = 0,
-        Succeeded = 1,
-        Deleting = 2,
-        Failed = 3,
-        Canceled = 4,
-    }
-    public enum OperationalInsightsNetworkSecurityPerimeterRuleType
-    {
-        User = 0,
-    }
-    public enum OperationalInsightsNetworkSecurityPerimeterStatusCode
-    {
-        UserAction = 0,
-        DataPlaneError = 1,
-    }
     public partial class OperationalInsightsPrivateLinkScopedResourceInfo : Azure.Provisioning.Primitives.ProvisionableConstruct
     {
         public OperationalInsightsPrivateLinkScopedResourceInfo() { }
@@ -460,10 +443,10 @@ namespace Azure.Provisioning.OperationalInsights
         public Azure.Provisioning.BicepValue<bool> IsActive { get { throw null; } }
         public Azure.Provisioning.BicepValue<string> Name { get { throw null; } set { } }
         public Azure.Provisioning.OperationalInsights.OperationalInsightsWorkspace Parent { get { throw null; } set { } }
-        public Azure.Provisioning.BicepValue<Azure.Provisioning.OperationalInsights.OperationalInsightsNetworkSecurityPerimeterProvisioningState> ProvisioningState { get { throw null; } }
+        public Azure.Provisioning.BicepValue<Azure.Provisioning.OperationalInsights.OperationalInsightsSummaryLogsProvisioningState> ProvisioningState { get { throw null; } }
         public Azure.Provisioning.OperationalInsights.OperationalInsightsSummaryRule RuleDefinition { get { throw null; } set { } }
-        public Azure.Provisioning.BicepValue<Azure.Provisioning.OperationalInsights.OperationalInsightsNetworkSecurityPerimeterRuleType> RuleType { get { throw null; } set { } }
-        public Azure.Provisioning.BicepValue<Azure.Provisioning.OperationalInsights.OperationalInsightsNetworkSecurityPerimeterStatusCode> StatusCode { get { throw null; } }
+        public Azure.Provisioning.BicepValue<Azure.Provisioning.OperationalInsights.OperationalInsightsSummaryLogsRuleType> RuleType { get { throw null; } set { } }
+        public Azure.Provisioning.BicepValue<Azure.Provisioning.OperationalInsights.OperationalInsightsSummaryLogsStatusCode> StatusCode { get { throw null; } }
         public Azure.Provisioning.Resources.SystemData SystemData { get { throw null; } }
         protected override void DefineProvisionableProperties() { }
         public static Azure.Provisioning.OperationalInsights.OperationalInsightsSummaryLogs FromExisting(string bicepIdentifier, string resourceVersion = null) { throw null; }
@@ -472,6 +455,23 @@ namespace Azure.Provisioning.OperationalInsights
         {
             public static readonly string V2025_07_01;
         }
+    }
+    public enum OperationalInsightsSummaryLogsProvisioningState
+    {
+        Updating = 0,
+        Succeeded = 1,
+        Deleting = 2,
+        Failed = 3,
+        Canceled = 4,
+    }
+    public enum OperationalInsightsSummaryLogsRuleType
+    {
+        User = 0,
+    }
+    public enum OperationalInsightsSummaryLogsStatusCode
+    {
+        UserAction = 0,
+        DataPlaneError = 1,
     }
     public partial class OperationalInsightsSummaryRule : Azure.Provisioning.Primitives.ProvisionableConstruct
     {

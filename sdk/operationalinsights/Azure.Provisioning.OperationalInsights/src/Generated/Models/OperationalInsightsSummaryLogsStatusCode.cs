@@ -8,7 +8,7 @@
 namespace Azure.Provisioning.OperationalInsights
 {
     /// <summary> Indicates the reason for rule deactivation. </summary>
-    public enum OperationalInsightsNetworkSecurityPerimeterStatusCode
+    public enum OperationalInsightsSummaryLogsStatusCode
     {
         /// <summary> Summary rule stop originated from a user action (Stop was called). </summary>
         UserAction = 0,
