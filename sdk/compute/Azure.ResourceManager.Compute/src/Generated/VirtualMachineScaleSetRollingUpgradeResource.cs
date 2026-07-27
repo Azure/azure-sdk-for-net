@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.Compute
         {
             TryGetApiVersion(ResourceType, out string virtualMachineScaleSetRollingUpgradeApiVersion);
             _rollingUpgradeStatusInfosClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Compute", ResourceType.Namespace, Diagnostics);
-            _rollingUpgradeStatusInfosRestClient = new RollingUpgradeStatusInfos(_rollingUpgradeStatusInfosClientDiagnostics, Pipeline, Endpoint, virtualMachineScaleSetRollingUpgradeApiVersion ?? "2026-03-01");
+            _rollingUpgradeStatusInfosRestClient = new RollingUpgradeStatusInfos(_rollingUpgradeStatusInfosClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, virtualMachineScaleSetRollingUpgradeApiVersion ?? "2026-03-01");
             ValidateResourceId(id);
         }
 

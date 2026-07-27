@@ -11,8 +11,8 @@ namespace Azure.Provisioning.Compute
     public enum HyperVGeneration
     {
         /// <summary> V1. </summary>
-        V1,
+        V1 = 0,
         /// <summary> V2. </summary>
-        V2
+        V2 = 1
     }
 }

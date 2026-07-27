@@ -39,11 +39,11 @@ namespace Azure.ResourceManager.SecurityCenter.Mocking
 
         private ClientDiagnostics ServerVulnerabilityAssessmentClientDiagnostics => _serverVulnerabilityAssessmentClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.SecurityCenter.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private ServerVulnerabilityAssessment ServerVulnerabilityAssessmentRestClient => _serverVulnerabilityAssessmentRestClient ??= new ServerVulnerabilityAssessment(ServerVulnerabilityAssessmentClientDiagnostics, Pipeline, Endpoint, "2020-01-01");
+        private ServerVulnerabilityAssessment ServerVulnerabilityAssessmentRestClient => _serverVulnerabilityAssessmentRestClient ??= new ServerVulnerabilityAssessment(ServerVulnerabilityAssessmentClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2020-01-01");
 
         private ClientDiagnostics SubAssessmentsClientDiagnostics => _subAssessmentsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.SecurityCenter.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private SubAssessments SubAssessmentsRestClient => _subAssessmentsRestClient ??= new SubAssessments(SubAssessmentsClientDiagnostics, Pipeline, Endpoint, "2019-01-01-preview");
+        private SubAssessments SubAssessmentsRestClient => _subAssessmentsRestClient ??= new SubAssessments(SubAssessmentsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2019-01-01-preview");
 
         /// <summary> Gets an object representing a <see cref="SubscriptionSecurityAlertResource"/> along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>

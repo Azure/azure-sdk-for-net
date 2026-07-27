@@ -11,10 +11,10 @@ namespace Azure.Provisioning.Compute
     public enum WindowsVmGuestPatchMode
     {
         /// <summary> Manual. </summary>
-        Manual,
+        Manual = 0,
         /// <summary> AutomaticByOS. </summary>
-        AutomaticByOS,
+        AutomaticByOS = 1,
         /// <summary> AutomaticByPlatform. </summary>
-        AutomaticByPlatform
+        AutomaticByPlatform = 2
     }
 }

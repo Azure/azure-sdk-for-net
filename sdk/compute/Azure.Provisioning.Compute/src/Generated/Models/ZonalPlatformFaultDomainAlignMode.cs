@@ -11,10 +11,10 @@ namespace Azure.Provisioning.Compute
     public enum ZonalPlatformFaultDomainAlignMode
     {
         /// <summary> Aligned. </summary>
-        Aligned,
+        Aligned = 0,
         /// <summary> Unaligned. </summary>
-        Unaligned,
+        Unaligned = 1,
         /// <summary> Offload Alignment to VMSS. VMSS aligns disks that support enough Storage Fault Domains, while keeping others unaligned. </summary>
-        BestEffortAligned
+        BestEffortAligned = 2
     }
 }

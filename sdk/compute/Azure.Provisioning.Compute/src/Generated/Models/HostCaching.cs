@@ -11,10 +11,10 @@ namespace Azure.Provisioning.Compute
     public enum HostCaching
     {
         /// <summary> None. </summary>
-        None,
+        None = 0,
         /// <summary> ReadOnly. </summary>
-        ReadOnly,
+        ReadOnly = 1,
         /// <summary> ReadWrite. </summary>
-        ReadWrite
+        ReadWrite = 2
     }
 }

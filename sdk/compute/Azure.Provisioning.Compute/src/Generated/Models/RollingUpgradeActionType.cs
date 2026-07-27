@@ -11,8 +11,8 @@ namespace Azure.Provisioning.Compute
     public enum RollingUpgradeActionType
     {
         /// <summary> Start. </summary>
-        Start,
+        Start = 0,
         /// <summary> Cancel. </summary>
-        Cancel
+        Cancel = 1
     }
 }

@@ -60,13 +60,13 @@ namespace Azure.ResourceManager.Automation
         {
             TryGetApiVersion(ResourceType, out string automationRunbookApiVersion);
             _runbookClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Automation", ResourceType.Namespace, Diagnostics);
-            _runbookRestClient = new Runbook(_runbookClientDiagnostics, Pipeline, Endpoint, automationRunbookApiVersion ?? "2024-10-23");
+            _runbookRestClient = new Runbook(_runbookClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, automationRunbookApiVersion ?? "2024-10-23");
             _testJobClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Automation", ResourceType.Namespace, Diagnostics);
-            _testJobRestClient = new TestJob(_testJobClientDiagnostics, Pipeline, Endpoint, automationRunbookApiVersion ?? "2024-10-23");
+            _testJobRestClient = new TestJob(_testJobClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, automationRunbookApiVersion ?? "2024-10-23");
             _runbookDraftClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Automation", ResourceType.Namespace, Diagnostics);
-            _runbookDraftRestClient = new RunbookDraft(_runbookDraftClientDiagnostics, Pipeline, Endpoint, automationRunbookApiVersion ?? "2024-10-23");
+            _runbookDraftRestClient = new RunbookDraft(_runbookDraftClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, automationRunbookApiVersion ?? "2024-10-23");
             _testJobStreamsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Automation", ResourceType.Namespace, Diagnostics);
-            _testJobStreamsRestClient = new TestJobStreams(_testJobStreamsClientDiagnostics, Pipeline, Endpoint, automationRunbookApiVersion ?? "2024-10-23");
+            _testJobStreamsRestClient = new TestJobStreams(_testJobStreamsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, automationRunbookApiVersion ?? "2024-10-23");
             ValidateResourceId(id);
         }
 

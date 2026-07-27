@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.Network
         {
             TryGetApiVersion(ResourceType, out string routeMapApiVersion);
             _routeMapsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Network", ResourceType.Namespace, Diagnostics);
-            _routeMapsRestClient = new RouteMaps(_routeMapsClientDiagnostics, Pipeline, Endpoint, routeMapApiVersion ?? "2025-07-01");
+            _routeMapsRestClient = new RouteMaps(_routeMapsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, routeMapApiVersion ?? "2025-07-01");
             ValidateResourceId(id);
         }
 

@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.ComputeLimit
         {
             TryGetApiVersion(ResourceType, out string computeLimitSharedLimitApiVersion);
             _sharedLimitsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ComputeLimit", ResourceType.Namespace, Diagnostics);
-            _sharedLimitsRestClient = new SharedLimits(_sharedLimitsClientDiagnostics, Pipeline, Endpoint, computeLimitSharedLimitApiVersion ?? "2026-07-01");
+            _sharedLimitsRestClient = new SharedLimits(_sharedLimitsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, computeLimitSharedLimitApiVersion ?? "2026-07-01");
             ValidateResourceId(id);
         }
 

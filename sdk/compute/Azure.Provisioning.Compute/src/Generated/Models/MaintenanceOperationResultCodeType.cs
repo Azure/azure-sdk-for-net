@@ -11,12 +11,12 @@ namespace Azure.Provisioning.Compute
     public enum MaintenanceOperationResultCodeType
     {
         /// <summary> None. </summary>
-        None,
+        None = 0,
         /// <summary> RetryLater. </summary>
-        RetryLater,
+        RetryLater = 1,
         /// <summary> MaintenanceAborted. </summary>
-        MaintenanceAborted,
+        MaintenanceAborted = 2,
         /// <summary> MaintenanceCompleted. </summary>
-        MaintenanceCompleted
+        MaintenanceCompleted = 3
     }
 }

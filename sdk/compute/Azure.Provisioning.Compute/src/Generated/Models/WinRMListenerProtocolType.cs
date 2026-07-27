@@ -11,8 +11,8 @@ namespace Azure.Provisioning.Compute
     public enum WinRMListenerProtocolType
     {
         /// <summary> Http. </summary>
-        Http,
+        Http = 0,
         /// <summary> Https. </summary>
-        Https
+        Https = 1
     }
 }

@@ -10,7 +10,7 @@ namespace Azure.AI.Projects.Agents
 {
     /// <summary>
     /// An abstract representation of a tool stored in a toolbox.
-    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="FabricIQPreviewToolboxTool"/>, <see cref="CodeInterpreterToolboxTool"/>, <see cref="FileSearchToolboxTool"/>, <see cref="WebSearchToolboxTool"/>, <see cref="MCPToolboxTool"/>, <see cref="AzureAISearchToolboxTool"/>, <see cref="OpenApiToolboxTool"/>, <see cref="A2APreviewToolboxTool"/>, <see cref="BrowserAutomationPreviewToolboxTool"/>, <see cref="ReminderPreviewToolboxTool"/>, <see cref="WorkIQPreviewToolboxTool"/>, and <see cref="ToolboxSearchPreviewToolboxTool"/>.
+    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="FabricIQPreviewToolboxTool"/>, <see cref="CodeInterpreterToolboxTool"/>, <see cref="FileSearchToolboxTool"/>, <see cref="WebSearchToolboxTool"/>, <see cref="MCPToolboxTool"/>, <see cref="AzureAISearchToolboxTool"/>, <see cref="OpenApiToolboxTool"/>, <see cref="A2APreviewToolboxTool"/>, <see cref="BrowserAutomationPreviewToolboxTool"/>, <see cref="ReminderPreviewToolboxTool"/>, <see cref="WorkIQPreviewToolboxTool"/>, <see cref="ToolboxSearchPreviewToolboxTool"/>, and <see cref="ToolSearchToolboxTool"/>.
     /// </summary>
     [PersistableModelProxy(typeof(UnknownToolboxTool))]
     public abstract partial class ToolboxTool : IJsonModel<ToolboxTool>
@@ -171,6 +171,8 @@ namespace Azure.AI.Projects.Agents
                         return WorkIQPreviewToolboxTool.DeserializeWorkIQPreviewToolboxTool(element, options);
                     case "toolbox_search_preview":
                         return ToolboxSearchPreviewToolboxTool.DeserializeToolboxSearchPreviewToolboxTool(element, options);
+                    case "toolbox_search":
+                        return ToolSearchToolboxTool.DeserializeToolSearchToolboxTool(element, options);
                 }
             }
             return UnknownToolboxTool.DeserializeUnknownToolboxTool(element, options);

@@ -11,10 +11,10 @@ namespace Azure.Provisioning.Compute
     public enum ConsistencyModeType
     {
         /// <summary> CrashConsistent. </summary>
-        CrashConsistent,
+        CrashConsistent = 0,
         /// <summary> FileSystemConsistent. </summary>
-        FileSystemConsistent,
+        FileSystemConsistent = 1,
         /// <summary> ApplicationConsistent. </summary>
-        ApplicationConsistent
+        ApplicationConsistent = 2
     }
 }

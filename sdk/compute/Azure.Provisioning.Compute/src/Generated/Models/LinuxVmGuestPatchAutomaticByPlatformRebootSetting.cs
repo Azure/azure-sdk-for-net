@@ -11,12 +11,12 @@ namespace Azure.Provisioning.Compute
     public enum LinuxVmGuestPatchAutomaticByPlatformRebootSetting
     {
         /// <summary> Unknown. </summary>
-        Unknown,
+        Unknown = 0,
         /// <summary> IfRequired. </summary>
-        IfRequired,
+        IfRequired = 1,
         /// <summary> Never. </summary>
-        Never,
+        Never = 2,
         /// <summary> Always. </summary>
-        Always
+        Always = 3
     }
 }

@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.Hci.Vm
         {
             TryGetApiVersion(HciVmMarketplaceGalleryImageResource.ResourceType, out string hciVmMarketplaceGalleryImageApiVersion);
             _marketplaceGalleryImagesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Hci.Vm", HciVmMarketplaceGalleryImageResource.ResourceType.Namespace, Diagnostics);
-            _marketplaceGalleryImagesRestClient = new MarketplaceGalleryImages(_marketplaceGalleryImagesClientDiagnostics, Pipeline, Endpoint, hciVmMarketplaceGalleryImageApiVersion ?? "2025-09-01-preview");
+            _marketplaceGalleryImagesRestClient = new MarketplaceGalleryImages(_marketplaceGalleryImagesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, hciVmMarketplaceGalleryImageApiVersion ?? "2025-09-01-preview");
             ValidateResourceId(id);
         }
 

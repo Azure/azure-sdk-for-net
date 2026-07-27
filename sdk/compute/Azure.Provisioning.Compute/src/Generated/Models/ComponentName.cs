@@ -14,6 +14,6 @@ namespace Azure.Provisioning.Compute
     {
         /// <summary> MicrosoftWindowsShellSetup. </summary>
         [DataMember(Name = "Microsoft-Windows-Shell-Setup")]
-        MicrosoftWindowsShellSetup
+        MicrosoftWindowsShellSetup = 0
     }
 }

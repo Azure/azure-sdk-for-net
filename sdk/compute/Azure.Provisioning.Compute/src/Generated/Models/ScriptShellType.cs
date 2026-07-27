@@ -11,8 +11,8 @@ namespace Azure.Provisioning.Compute
     public enum ScriptShellType
     {
         /// <summary> Default script shell type. </summary>
-        Default,
+        Default = 0,
         /// <summary> Powershell7 script shell type. </summary>
-        Powershell7
+        Powershell7 = 1
     }
 }

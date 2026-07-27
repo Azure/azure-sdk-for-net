@@ -11,18 +11,18 @@ namespace Azure.Provisioning.Compute
     public enum ExecutionState
     {
         /// <summary> Unknown. </summary>
-        Unknown,
+        Unknown = 0,
         /// <summary> Pending. </summary>
-        Pending,
+        Pending = 1,
         /// <summary> Running. </summary>
-        Running,
+        Running = 2,
         /// <summary> Failed. </summary>
-        Failed,
+        Failed = 3,
         /// <summary> Succeeded. </summary>
-        Succeeded,
+        Succeeded = 4,
         /// <summary> TimedOut. </summary>
-        TimedOut,
+        TimedOut = 5,
         /// <summary> Canceled. </summary>
-        Canceled
+        Canceled = 6
     }
 }

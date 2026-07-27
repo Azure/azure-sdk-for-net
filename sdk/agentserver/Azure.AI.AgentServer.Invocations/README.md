@@ -57,7 +57,7 @@ For more control over the host (adding services, configuring middleware, composi
 
 ### InvocationHandler
 
-The abstract base class you subclass for HTTP-only handlers. Only `HandleAsync` is abstract — the remaining operations (`GetAsync`, `CancelAsync`, `GetOpenApiAsync`) return 404 by default and can be overridden as needed.
+The abstract base class you subclass for HTTP-only handlers. Only `HandleAsync` is abstract — the remaining operations (`GetAsync`, `CancelAsync`, `GetOpenApiAsync`, `GetAsyncApiJsonAsync`, `GetAsyncApiYamlAsync`) return 404 by default and can be overridden as needed.
 
 ### InvocationWebSocketHandler
 
@@ -87,6 +87,28 @@ When you need to add services, configure middleware, or compose multiple protoco
 ### Handler lifetime
 
 Handlers registered via `AddInvocations<THandler>()` or `InvocationsServer.Run<THandler>()` are resolved per request by default (scoped lifetime). Instance fields on your `InvocationHandler` subclass will not persist across requests. Store long-lived state in separate services or storage keyed by `InvocationContext.SessionId` or `InvocationContext.InvocationId`, or register a singleton handler explicitly if you require a single shared instance.
+
+### Serving discovery specs (OpenAPI / AsyncAPI)
+
+The Invocations host exposes three optional discovery endpoints for machine-readable agent contracts. Override the corresponding methods on your `InvocationHandler`; each returns `404` by default.
+
+| Method | Endpoint | Response media type |
+|---|---|---|
+| `GetOpenApiAsync` | `GET /invocations/docs/openapi.json` | `application/json` |
+| `GetAsyncApiJsonAsync` | `GET /invocations/docs/asyncapi.json` | `application/json` |
+| `GetAsyncApiYamlAsync` | `GET /invocations/docs/asyncapi.yaml` | `application/yaml` |
+
+AsyncAPI is the companion to OpenAPI for event-driven / streaming surfaces (e.g. the `invocations_ws` WebSocket protocol) that OpenAPI cannot express. The path extension is authoritative for the returned content type — there is no `Accept` negotiation and no format conversion between the JSON and YAML representations. Override `GetAsyncApiJsonAsync` and `GetAsyncApiYamlAsync` independently; publishing both is recommended for tooling compatibility.
+
+```C#
+public override async Task GetAsyncApiJsonAsync(
+    HttpRequest request, HttpResponse response, CancellationToken cancellationToken)
+{
+    response.StatusCode = 200;
+    response.ContentType = "application/json";
+    await response.WriteAsync(_asyncApiJson, cancellationToken);
+}
+```
 
 ### WebSocket protocol (`invocations_ws`)
 

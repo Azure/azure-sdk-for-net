@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.NewRelicObservability
         {
             TryGetApiVersion(NewRelicMonitoredSubscriptionResource.ResourceType, out string newRelicMonitoredSubscriptionApiVersion);
             _monitoredSubscriptionsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.NewRelicObservability", NewRelicMonitoredSubscriptionResource.ResourceType.Namespace, Diagnostics);
-            _monitoredSubscriptionsRestClient = new MonitoredSubscriptions(_monitoredSubscriptionsClientDiagnostics, Pipeline, Endpoint, newRelicMonitoredSubscriptionApiVersion ?? "2025-05-01-preview");
+            _monitoredSubscriptionsRestClient = new MonitoredSubscriptions(_monitoredSubscriptionsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, newRelicMonitoredSubscriptionApiVersion ?? "2025-05-01-preview");
             ValidateResourceId(id);
         }
 

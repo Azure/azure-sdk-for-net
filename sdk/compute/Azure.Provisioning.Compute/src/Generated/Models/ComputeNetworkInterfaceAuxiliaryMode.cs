@@ -11,10 +11,10 @@ namespace Azure.Provisioning.Compute
     public enum ComputeNetworkInterfaceAuxiliaryMode
     {
         /// <summary> None. </summary>
-        None,
+        None = 0,
         /// <summary> AcceleratedConnections. </summary>
-        AcceleratedConnections,
+        AcceleratedConnections = 1,
         /// <summary> Floating. </summary>
-        Floating
+        Floating = 2
     }
 }

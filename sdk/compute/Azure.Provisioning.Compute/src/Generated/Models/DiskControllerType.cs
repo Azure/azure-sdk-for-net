@@ -14,8 +14,8 @@ namespace Azure.Provisioning.Compute
     {
         /// <summary> Scsi. </summary>
         [DataMember(Name = "SCSI")]
-        Scsi,
+        Scsi = 0,
         /// <summary> NVMe. </summary>
-        NVMe
+        NVMe = 1
     }
 }

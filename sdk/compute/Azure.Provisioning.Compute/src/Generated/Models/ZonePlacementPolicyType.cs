@@ -11,8 +11,8 @@ namespace Azure.Provisioning.Compute
     public enum ZonePlacementPolicyType
     {
         /// <summary> Any. </summary>
-        Any,
+        Any = 0,
         /// <summary> Automatic zone placement in a Virtual Machine Scale Set. </summary>
-        Auto
+        Auto = 1
     }
 }

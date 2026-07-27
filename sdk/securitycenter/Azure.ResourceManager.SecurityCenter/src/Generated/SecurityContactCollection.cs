@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.SecurityCenter
         {
             TryGetApiVersion(SecurityContactResource.ResourceType, out string securityContactApiVersion);
             _securityContactsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.SecurityCenter", SecurityContactResource.ResourceType.Namespace, Diagnostics);
-            _securityContactsRestClient = new SecurityContacts(_securityContactsClientDiagnostics, Pipeline, Endpoint, securityContactApiVersion ?? "2023-12-01-preview");
+            _securityContactsRestClient = new SecurityContacts(_securityContactsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, securityContactApiVersion ?? "2023-12-01-preview");
             ValidateResourceId(id);
         }
 

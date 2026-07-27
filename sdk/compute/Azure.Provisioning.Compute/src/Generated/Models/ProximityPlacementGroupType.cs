@@ -11,8 +11,8 @@ namespace Azure.Provisioning.Compute
     public enum ProximityPlacementGroupType
     {
         /// <summary> Standard. </summary>
-        Standard,
+        Standard = 0,
         /// <summary> Ultra. </summary>
-        Ultra
+        Ultra = 1
     }
 }

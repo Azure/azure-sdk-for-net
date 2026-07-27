@@ -11,8 +11,8 @@ namespace Azure.Provisioning.Compute
     public enum OrchestrationMode
     {
         /// <summary> Uniform. </summary>
-        Uniform,
+        Uniform = 0,
         /// <summary> Flexible. </summary>
-        Flexible
+        Flexible = 1
     }
 }

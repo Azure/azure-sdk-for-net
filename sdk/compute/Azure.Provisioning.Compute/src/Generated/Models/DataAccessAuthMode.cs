@@ -11,8 +11,8 @@ namespace Azure.Provisioning.Compute
     public enum DataAccessAuthMode
     {
         /// <summary> When export/upload URL is used, the system checks if the user has an identity in Azure Active Directory and has necessary permissions to export/upload the data. Please refer to aka.ms/DisksAzureADAuth. </summary>
-        AzureActiveDirectory,
+        AzureActiveDirectory = 0,
         /// <summary> No additional authentication would be performed when accessing export/upload URL. </summary>
-        None
+        None = 1
     }
 }

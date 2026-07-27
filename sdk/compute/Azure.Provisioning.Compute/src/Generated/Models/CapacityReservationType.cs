@@ -11,8 +11,8 @@ namespace Azure.Provisioning.Compute
     public enum CapacityReservationType
     {
         /// <summary> To consume on demand allocated capacity reservation when a capacity reservation group is provided. </summary>
-        Targeted,
+        Targeted = 0,
         /// <summary> To consume scheduled allocated block capacity reservation when a capacity reservation group is provided. </summary>
-        Block
+        Block = 1
     }
 }
