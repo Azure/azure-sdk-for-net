@@ -84,7 +84,7 @@ EnforcedSettings = {},
 },
 }, new RoleManagementPolicyNotificationRule
 {
-RoleManagementNotificationDeliveryType = RoleManagementNotificationDeliveryType.Email,
+NotificationDeliveryType = NotificationDeliveryType.Email,
 NotificationLevel = RoleManagementPolicyNotificationLevel.Critical,
 RecipientType = RoleManagementPolicyRecipientType.Admin,
 NotificationRecipients = {"admin_admin_eligible@test.com"},
@@ -148,7 +148,7 @@ EnforcedSettings = {},
 },
 }, new RoleManagementPolicyNotificationRule
 {
-RoleManagementNotificationDeliveryType = RoleManagementNotificationDeliveryType.Email,
+NotificationDeliveryType = NotificationDeliveryType.Email,
 NotificationLevel = RoleManagementPolicyNotificationLevel.Critical,
 RecipientType = RoleManagementPolicyRecipientType.Admin,
 NotificationRecipients = {"admin_admin_eligible@test.com"},
@@ -165,7 +165,7 @@ EnforcedSettings = {},
 },
 }, new RoleManagementPolicyNotificationRule
 {
-RoleManagementNotificationDeliveryType = RoleManagementNotificationDeliveryType.Email,
+NotificationDeliveryType = NotificationDeliveryType.Email,
 NotificationLevel = RoleManagementPolicyNotificationLevel.Critical,
 RecipientType = RoleManagementPolicyRecipientType.Requestor,
 NotificationRecipients = {"requestor_admin_eligible@test.com"},
@@ -182,7 +182,7 @@ EnforcedSettings = {},
 },
 }, new RoleManagementPolicyNotificationRule
 {
-RoleManagementNotificationDeliveryType = RoleManagementNotificationDeliveryType.Email,
+NotificationDeliveryType = NotificationDeliveryType.Email,
 NotificationLevel = RoleManagementPolicyNotificationLevel.Critical,
 RecipientType = RoleManagementPolicyRecipientType.Approver,
 NotificationRecipients = {"approver_admin_eligible@test.com"},
@@ -239,7 +239,7 @@ EnforcedSettings = {},
 },
 }, new RoleManagementPolicyNotificationRule
 {
-RoleManagementNotificationDeliveryType = RoleManagementNotificationDeliveryType.Email,
+NotificationDeliveryType = NotificationDeliveryType.Email,
 NotificationLevel = RoleManagementPolicyNotificationLevel.Critical,
 RecipientType = RoleManagementPolicyRecipientType.Admin,
 NotificationRecipients = {"admin_admin_member@test.com"},
@@ -256,7 +256,7 @@ EnforcedSettings = {},
 },
 }, new RoleManagementPolicyNotificationRule
 {
-RoleManagementNotificationDeliveryType = RoleManagementNotificationDeliveryType.Email,
+NotificationDeliveryType = NotificationDeliveryType.Email,
 NotificationLevel = RoleManagementPolicyNotificationLevel.Critical,
 RecipientType = RoleManagementPolicyRecipientType.Requestor,
 NotificationRecipients = {"requestor_admin_member@test.com"},
@@ -273,7 +273,7 @@ EnforcedSettings = {},
 },
 }, new RoleManagementPolicyNotificationRule
 {
-RoleManagementNotificationDeliveryType = RoleManagementNotificationDeliveryType.Email,
+NotificationDeliveryType = NotificationDeliveryType.Email,
 NotificationLevel = RoleManagementPolicyNotificationLevel.Critical,
 RecipientType = RoleManagementPolicyRecipientType.Approver,
 NotificationRecipients = {"approver_admin_member@test.com"},
@@ -371,7 +371,7 @@ EnforcedSettings = {},
 },
 }, new RoleManagementPolicyNotificationRule
 {
-RoleManagementNotificationDeliveryType = RoleManagementNotificationDeliveryType.Email,
+NotificationDeliveryType = NotificationDeliveryType.Email,
 NotificationLevel = RoleManagementPolicyNotificationLevel.Critical,
 RecipientType = RoleManagementPolicyRecipientType.Admin,
 NotificationRecipients = {"admin_enduser_member@test.com"},
@@ -388,7 +388,7 @@ EnforcedSettings = {},
 },
 }, new RoleManagementPolicyNotificationRule
 {
-RoleManagementNotificationDeliveryType = RoleManagementNotificationDeliveryType.Email,
+NotificationDeliveryType = NotificationDeliveryType.Email,
 NotificationLevel = RoleManagementPolicyNotificationLevel.Critical,
 RecipientType = RoleManagementPolicyRecipientType.Requestor,
 NotificationRecipients = {"requestor_enduser_member@test.com"},
@@ -405,7 +405,7 @@ EnforcedSettings = {},
 },
 }, new RoleManagementPolicyNotificationRule
 {
-RoleManagementNotificationDeliveryType = RoleManagementNotificationDeliveryType.Email,
+NotificationDeliveryType = NotificationDeliveryType.Email,
 NotificationLevel = RoleManagementPolicyNotificationLevel.Critical,
 RecipientType = RoleManagementPolicyRecipientType.Approver,
 NotificationRecipients = {},

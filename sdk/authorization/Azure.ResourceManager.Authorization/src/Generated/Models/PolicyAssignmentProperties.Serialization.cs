@@ -10,76 +10,58 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text;
 using System.Text.Json;
-using Azure;
 using Azure.Core;
-using Azure.ResourceManager.Authorization.Models;
+using Azure.ResourceManager.Authorization;
 using Azure.ResourceManager.Models;
 
-namespace Azure.ResourceManager.Authorization
+namespace Azure.ResourceManager.Authorization.Models
 {
-    /// <summary> Role management policy. </summary>
-    public partial class RoleManagementPolicyAssignmentData : ResourceData, IJsonModel<RoleManagementPolicyAssignmentData>
+    /// <summary> Expanded info of resource scope, role definition and policy. </summary>
+    public partial class PolicyAssignmentProperties : ResourceData, IJsonModel<PolicyAssignmentProperties>
     {
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual ResourceData PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<RoleManagementPolicyAssignmentData>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<PolicyAssignmentProperties>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeRoleManagementPolicyAssignmentData(document.RootElement, options);
+                        return DeserializePolicyAssignmentProperties(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(RoleManagementPolicyAssignmentData)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(PolicyAssignmentProperties)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<RoleManagementPolicyAssignmentData>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<PolicyAssignmentProperties>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options, AzureResourceManagerAuthorizationContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(RoleManagementPolicyAssignmentData)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(PolicyAssignmentProperties)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<RoleManagementPolicyAssignmentData>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<PolicyAssignmentProperties>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        RoleManagementPolicyAssignmentData IPersistableModel<RoleManagementPolicyAssignmentData>.Create(BinaryData data, ModelReaderWriterOptions options) => (RoleManagementPolicyAssignmentData)PersistableModelCreateCore(data, options);
+        PolicyAssignmentProperties IPersistableModel<PolicyAssignmentProperties>.Create(BinaryData data, ModelReaderWriterOptions options) => (PolicyAssignmentProperties)PersistableModelCreateCore(data, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<RoleManagementPolicyAssignmentData>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
-
-        /// <param name="roleManagementPolicyAssignmentData"> The <see cref="RoleManagementPolicyAssignmentData"/> to serialize into <see cref="RequestContent"/>. </param>
-        internal static RequestContent ToRequestContent(RoleManagementPolicyAssignmentData roleManagementPolicyAssignmentData)
-        {
-            if (roleManagementPolicyAssignmentData == null)
-            {
-                return null;
-            }
-            return RequestContent.Create(roleManagementPolicyAssignmentData, ModelSerializationExtensions.WireOptions);
-        }
-
-        /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="RoleManagementPolicyAssignmentData"/> from. </param>
-        internal static RoleManagementPolicyAssignmentData FromResponse(Response response)
-        {
-            using JsonDocument document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
-            return DeserializeRoleManagementPolicyAssignmentData(document.RootElement, ModelSerializationExtensions.WireOptions);
-        }
+        string IPersistableModel<PolicyAssignmentProperties>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<RoleManagementPolicyAssignmentData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<PolicyAssignmentProperties>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -90,16 +72,26 @@ namespace Azure.ResourceManager.Authorization
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<RoleManagementPolicyAssignmentData>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<PolicyAssignmentProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(RoleManagementPolicyAssignmentData)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(PolicyAssignmentProperties)} does not support writing '{format}' format.");
             }
             base.JsonModelWriteCore(writer, options);
-            if (Optional.IsDefined(Properties))
+            if (Optional.IsDefined(Scope))
             {
-                writer.WritePropertyName("properties"u8);
-                writer.WriteObjectValue(Properties, options);
+                writer.WritePropertyName("scope"u8);
+                writer.WriteObjectValue(Scope, options);
+            }
+            if (Optional.IsDefined(RoleDefinition))
+            {
+                writer.WritePropertyName("roleDefinition"u8);
+                writer.WriteObjectValue(RoleDefinition, options);
+            }
+            if (Optional.IsDefined(Policy))
+            {
+                writer.WritePropertyName("policy"u8);
+                writer.WriteObjectValue(Policy, options);
             }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
@@ -120,24 +112,24 @@ namespace Azure.ResourceManager.Authorization
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        RoleManagementPolicyAssignmentData IJsonModel<RoleManagementPolicyAssignmentData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => (RoleManagementPolicyAssignmentData)JsonModelCreateCore(ref reader, options);
+        PolicyAssignmentProperties IJsonModel<PolicyAssignmentProperties>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => (PolicyAssignmentProperties)JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual ResourceData JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<RoleManagementPolicyAssignmentData>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<PolicyAssignmentProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(RoleManagementPolicyAssignmentData)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(PolicyAssignmentProperties)} does not support reading '{format}' format.");
             }
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeRoleManagementPolicyAssignmentData(document.RootElement, options);
+            return DeserializePolicyAssignmentProperties(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        internal static RoleManagementPolicyAssignmentData DeserializeRoleManagementPolicyAssignmentData(JsonElement element, ModelReaderWriterOptions options)
+        internal static PolicyAssignmentProperties DeserializePolicyAssignmentProperties(JsonElement element, ModelReaderWriterOptions options)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -147,7 +139,9 @@ namespace Azure.ResourceManager.Authorization
             string name = default;
             ResourceType resourceType = default;
             SystemData systemData = default;
-            RoleManagementPolicyAssignmentProperties properties = default;
+            PolicyAssignmentPropertiesScope scope = default;
+            PolicyAssignmentPropertiesRoleDefinition roleDefinition = default;
+            PolicyAssignmentPropertiesPolicy policy = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -183,13 +177,31 @@ namespace Azure.ResourceManager.Authorization
                     systemData = ModelReaderWriter.Read<SystemData>(new BinaryData(Encoding.UTF8.GetBytes(prop.Value.GetRawText())), ModelSerializationExtensions.WireOptions, AzureResourceManagerAuthorizationContext.Default);
                     continue;
                 }
-                if (prop.NameEquals("properties"u8))
+                if (prop.NameEquals("scope"u8))
                 {
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    properties = RoleManagementPolicyAssignmentProperties.DeserializeRoleManagementPolicyAssignmentProperties(prop.Value, options);
+                    scope = PolicyAssignmentPropertiesScope.DeserializePolicyAssignmentPropertiesScope(prop.Value, options);
+                    continue;
+                }
+                if (prop.NameEquals("roleDefinition"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    roleDefinition = PolicyAssignmentPropertiesRoleDefinition.DeserializePolicyAssignmentPropertiesRoleDefinition(prop.Value, options);
+                    continue;
+                }
+                if (prop.NameEquals("policy"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    policy = PolicyAssignmentPropertiesPolicy.DeserializePolicyAssignmentPropertiesPolicy(prop.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
@@ -197,12 +209,14 @@ namespace Azure.ResourceManager.Authorization
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new RoleManagementPolicyAssignmentData(
+            return new PolicyAssignmentProperties(
                 id,
                 name,
                 resourceType,
                 systemData,
-                properties,
+                scope,
+                roleDefinition,
+                policy,
                 additionalBinaryDataProperties);
         }
     }

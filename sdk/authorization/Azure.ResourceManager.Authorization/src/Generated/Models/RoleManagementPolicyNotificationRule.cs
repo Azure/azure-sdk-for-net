@@ -25,14 +25,14 @@ namespace Azure.ResourceManager.Authorization.Models
         /// <param name="ruleType"> The type of rule. </param>
         /// <param name="target"> The target of the current rule. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        /// <param name="roleManagementNotificationDeliveryType"> The type of notification. </param>
+        /// <param name="notificationDeliveryType"> The type of notification. </param>
         /// <param name="notificationLevel"> The notification level. </param>
         /// <param name="recipientType"> The recipient type. </param>
         /// <param name="notificationRecipients"> The list of notification recipients. </param>
         /// <param name="isDefaultRecipientsEnabled"> Determines if the notification will be sent to the recipient type specified in the policy rule. </param>
-        internal RoleManagementPolicyNotificationRule(string id, RoleManagementPolicyRuleType ruleType, RoleManagementPolicyRuleTarget target, IDictionary<string, BinaryData> additionalBinaryDataProperties, RoleManagementNotificationDeliveryType? roleManagementNotificationDeliveryType, RoleManagementPolicyNotificationLevel? notificationLevel, RoleManagementPolicyRecipientType? recipientType, IList<string> notificationRecipients, bool? isDefaultRecipientsEnabled) : base(id, ruleType, target, additionalBinaryDataProperties)
+        internal RoleManagementPolicyNotificationRule(string id, RoleManagementPolicyRuleType ruleType, RoleManagementPolicyRuleTarget target, IDictionary<string, BinaryData> additionalBinaryDataProperties, NotificationDeliveryType? notificationDeliveryType, RoleManagementPolicyNotificationLevel? notificationLevel, RoleManagementPolicyRecipientType? recipientType, IList<string> notificationRecipients, bool? isDefaultRecipientsEnabled) : base(id, ruleType, target, additionalBinaryDataProperties)
         {
-            RoleManagementNotificationDeliveryType = roleManagementNotificationDeliveryType;
+            NotificationDeliveryType = notificationDeliveryType;
             NotificationLevel = notificationLevel;
             RecipientType = recipientType;
             NotificationRecipients = notificationRecipients;
@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.Authorization.Models
 
         /// <summary> The type of notification. </summary>
         [WirePath("notificationType")]
-        public RoleManagementNotificationDeliveryType? RoleManagementNotificationDeliveryType { get; set; }
+        public NotificationDeliveryType? NotificationDeliveryType { get; set; }
 
         /// <summary> The notification level. </summary>
         [WirePath("notificationLevel")]

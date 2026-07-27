@@ -5,11 +5,13 @@
 ### Features Added
 
 - Added support for creating, updating, and deleting deny assignments. `DenyAssignmentCollection` now exposes `CreateOrUpdate`/`CreateOrUpdateAsync` and `DenyAssignmentResource` now exposes `Update`/`UpdateAsync` and `Delete`/`DeleteAsync`, generated from the `2024-07-01-preview` deny assignment API.
-- Added writable `DeniedPrincipals`, `ExcludedPrincipals`, `DeniedPermissions`, `DenyAssignmentEffect` (`Enforced`/`Audit`), `Condition`, and `ConditionVersion` properties, and read-only `CreatedOn`, `UpdatedOn`, `CreatedBy`, and `UpdatedBy` properties to `DenyAssignmentData`. The previously shipped read-only collection names remain available as hidden obsolete compatibility properties.
-- Added public constructors to `DenyAssignmentPermission` and `RoleManagementPrincipal`. Their model-factory helpers remain available but are hidden for backward compatibility.
-- Added the contextual `RoleManagementNotificationDeliveryType` and `RoleManagementPolicyAssignmentProperties` names. The previously shipped names remain available as hidden obsolete compatibility APIs.
+- Added the writable `DenyAssignmentEffect` (`Enforced`/`Audit`), `Condition`, and `ConditionVersion` properties, and the read-only `CreatedOn`, `UpdatedOn`, `CreatedBy`, and `UpdatedBy` properties to `DenyAssignmentData`.
 
 ### Breaking Changes
+
+- `DenyAssignmentData` is now a writable model to support create/update. Its `Principals`, `ExcludePrincipals`, and `Permissions` collection properties changed from `IReadOnlyList<T>` to `IList<T>`, and the type now has a public constructor.
+- `DenyAssignmentPermission` is now a writable model. Its `Actions`, `NotActions`, `DataActions`, and `NotDataActions` collection properties changed from `IReadOnlyList<string>` to `IList<string>`, and the type now has a public constructor. The `ArmAuthorizationModelFactory.DenyAssignmentPermission(...)` helper is retained for backward compatibility but hidden (`EditorBrowsable(Never)`); prefer constructing the model directly via its public constructor.
+- `RoleManagementPrincipal` now has a public constructor. The `ArmAuthorizationModelFactory.RoleManagementPrincipal(...)` helper is retained for backward compatibility but hidden (`EditorBrowsable(Never)`); prefer constructing the model directly via its public constructor.
 
 ### Bugs Fixed
 

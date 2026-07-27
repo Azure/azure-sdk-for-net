@@ -9,138 +9,56 @@ using System;
 using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.Authorization;
-using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.Authorization.Models
 {
-    /// <summary> Expanded info of resource scope, role definition and policy. </summary>
-    public partial class RoleManagementPolicyAssignmentProperties : ResourceData
+    /// <summary> Role management policy assignment properties with scope. </summary>
+    internal partial class RoleManagementPolicyAssignmentProperties
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="RoleManagementPolicyAssignmentProperties"/>. </summary>
-        internal RoleManagementPolicyAssignmentProperties()
+        public RoleManagementPolicyAssignmentProperties()
         {
+            EffectiveRules = new ChangeTrackingList<RoleManagementPolicyRule>();
         }
 
         /// <summary> Initializes a new instance of <see cref="RoleManagementPolicyAssignmentProperties"/>. </summary>
-        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
-        /// <param name="name"> The name of the resource. </param>
-        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
-        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
-        /// <param name="scope"> Details of the resource scope. </param>
-        /// <param name="roleDefinition"> Details of role definition. </param>
-        /// <param name="policy"> Details of the policy. </param>
+        /// <param name="scope"> The role management policy scope. </param>
+        /// <param name="roleDefinitionId"> The role definition of management policy assignment. </param>
+        /// <param name="policyId"> The policy id role management policy assignment. </param>
+        /// <param name="effectiveRules"> The readonly computed rule applied to the policy. </param>
+        /// <param name="policyAssignmentProperties"> Additional properties of scope, role definition and policy. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal RoleManagementPolicyAssignmentProperties(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, PolicyAssignmentPropertiesScope scope, PolicyAssignmentPropertiesRoleDefinition roleDefinition, PolicyAssignmentPropertiesPolicy policy, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(id, name, resourceType, systemData)
+        internal RoleManagementPolicyAssignmentProperties(string scope, ResourceIdentifier roleDefinitionId, ResourceIdentifier policyId, IReadOnlyList<RoleManagementPolicyRule> effectiveRules, PolicyAssignmentProperties policyAssignmentProperties, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Scope = scope;
-            RoleDefinition = roleDefinition;
-            Policy = policy;
+            RoleDefinitionId = roleDefinitionId;
+            PolicyId = policyId;
+            EffectiveRules = effectiveRules;
+            PolicyAssignmentProperties = policyAssignmentProperties;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
-        /// <summary> Details of the resource scope. </summary>
+        /// <summary> The role management policy scope. </summary>
         [WirePath("scope")]
-        internal PolicyAssignmentPropertiesScope Scope { get; }
+        public string Scope { get; set; }
 
-        /// <summary> Details of role definition. </summary>
-        [WirePath("roleDefinition")]
-        internal PolicyAssignmentPropertiesRoleDefinition RoleDefinition { get; }
+        /// <summary> The role definition of management policy assignment. </summary>
+        [WirePath("roleDefinitionId")]
+        public ResourceIdentifier RoleDefinitionId { get; set; }
 
-        /// <summary> Details of the policy. </summary>
-        [WirePath("policy")]
-        internal PolicyAssignmentPropertiesPolicy Policy { get; }
+        /// <summary> The policy id role management policy assignment. </summary>
+        [WirePath("policyId")]
+        public ResourceIdentifier PolicyId { get; set; }
 
-        /// <summary> Scope id of the resource. </summary>
-        [WirePath("scope.id")]
-        public ResourceIdentifier ScopeId
-        {
-            get
-            {
-                return Scope is null ? default : Scope.ScopeId;
-            }
-        }
+        /// <summary> The readonly computed rule applied to the policy. </summary>
+        [WirePath("effectiveRules")]
+        public IReadOnlyList<RoleManagementPolicyRule> EffectiveRules { get; } = new ChangeTrackingList<RoleManagementPolicyRule>();
 
-        /// <summary> Display name of the resource. </summary>
-        [WirePath("scope.displayName")]
-        public string ScopeDisplayName
-        {
-            get
-            {
-                return Scope is null ? default : Scope.ScopeDisplayName;
-            }
-        }
-
-        /// <summary> Type of the resource. </summary>
-        [WirePath("scope.type")]
-        public RoleManagementScopeType? ScopeType
-        {
-            get
-            {
-                return Scope is null ? default : Scope.ScopeType;
-            }
-        }
-
-        /// <summary> Id of the role definition. </summary>
-        [WirePath("roleDefinition.id")]
-        public ResourceIdentifier RoleDefinitionId
-        {
-            get
-            {
-                return RoleDefinition is null ? default : RoleDefinition.RoleDefinitionId;
-            }
-        }
-
-        /// <summary> Display name of the role definition. </summary>
-        [WirePath("roleDefinition.displayName")]
-        public string RoleDefinitionDisplayName
-        {
-            get
-            {
-                return RoleDefinition is null ? default : RoleDefinition.RoleDefinitionDisplayName;
-            }
-        }
-
-        /// <summary> Type of the role definition. </summary>
-        [WirePath("roleDefinition.type")]
-        public AuthorizationRoleType? RoleType
-        {
-            get
-            {
-                return RoleDefinition is null ? default : RoleDefinition.RoleType;
-            }
-        }
-
-        /// <summary> Id of the policy. </summary>
-        [WirePath("policy.id")]
-        public ResourceIdentifier PolicyId
-        {
-            get
-            {
-                return Policy is null ? default : Policy.PolicyId;
-            }
-        }
-
-        /// <summary> The name of the entity last modified it. </summary>
-        [WirePath("policy.lastModifiedBy")]
-        public RoleManagementPrincipal LastModifiedBy
-        {
-            get
-            {
-                return Policy is null ? default : Policy.LastModifiedBy;
-            }
-        }
-
-        /// <summary> The last modified date time. </summary>
-        [WirePath("policy.lastModifiedDateTime")]
-        public DateTimeOffset? LastModifiedOn
-        {
-            get
-            {
-                return Policy is null ? default : Policy.LastModifiedOn;
-            }
-        }
+        /// <summary> Additional properties of scope, role definition and policy. </summary>
+        [WirePath("policyAssignmentProperties")]
+        public PolicyAssignmentProperties PolicyAssignmentProperties { get; }
     }
 }

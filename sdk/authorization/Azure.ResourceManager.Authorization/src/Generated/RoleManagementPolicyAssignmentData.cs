@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.Authorization
         /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
         /// <param name="properties"> Role management policy properties. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal RoleManagementPolicyAssignmentData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, RoleManagementPolicyAssignmentDataProperties properties, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(id, name, resourceType, systemData)
+        internal RoleManagementPolicyAssignmentData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, RoleManagementPolicyAssignmentProperties properties, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(id, name, resourceType, systemData)
         {
             Properties = properties;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.Authorization
 
         /// <summary> Role management policy properties. </summary>
         [WirePath("properties")]
-        internal RoleManagementPolicyAssignmentDataProperties Properties { get; set; }
+        internal RoleManagementPolicyAssignmentProperties Properties { get; set; }
 
         /// <summary> The role management policy scope. </summary>
         [WirePath("properties.scope")]
@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.Authorization
             {
                 if (Properties is null)
                 {
-                    Properties = new RoleManagementPolicyAssignmentDataProperties();
+                    Properties = new RoleManagementPolicyAssignmentProperties();
                 }
                 Properties.Scope = value;
             }
@@ -71,7 +71,7 @@ namespace Azure.ResourceManager.Authorization
             {
                 if (Properties is null)
                 {
-                    Properties = new RoleManagementPolicyAssignmentDataProperties();
+                    Properties = new RoleManagementPolicyAssignmentProperties();
                 }
                 Properties.RoleDefinitionId = value;
             }
@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.Authorization
             {
                 if (Properties is null)
                 {
-                    Properties = new RoleManagementPolicyAssignmentDataProperties();
+                    Properties = new RoleManagementPolicyAssignmentProperties();
                 }
                 Properties.PolicyId = value;
             }
@@ -103,7 +103,7 @@ namespace Azure.ResourceManager.Authorization
             {
                 if (Properties is null)
                 {
-                    Properties = new RoleManagementPolicyAssignmentDataProperties();
+                    Properties = new RoleManagementPolicyAssignmentProperties();
                 }
                 return Properties.EffectiveRules;
             }
@@ -111,11 +111,11 @@ namespace Azure.ResourceManager.Authorization
 
         /// <summary> Additional properties of scope, role definition and policy. </summary>
         [WirePath("properties.policyAssignmentProperties")]
-        public RoleManagementPolicyAssignmentProperties RoleManagementPolicyAssignmentProperties
+        public PolicyAssignmentProperties PolicyAssignmentProperties
         {
             get
             {
-                return Properties is null ? default : Properties.RoleManagementPolicyAssignmentProperties;
+                return Properties is null ? default : Properties.PolicyAssignmentProperties;
             }
         }
     }
