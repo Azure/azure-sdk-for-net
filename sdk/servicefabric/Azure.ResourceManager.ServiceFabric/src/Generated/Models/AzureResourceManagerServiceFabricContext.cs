@@ -6,6 +6,7 @@
 #nullable disable
 
 using System.ClientModel.Primitives;
+using Azure;
 using Azure.ResourceManager.Models;
 using Azure.ResourceManager.ServiceFabric.Models;
 
@@ -54,6 +55,7 @@ namespace Azure.ResourceManager.ServiceFabric
     [ModelReaderWriterBuildable(typeof(ManagedServiceIdentity))]
     [ModelReaderWriterBuildable(typeof(NamedPartitionSchemeDescription))]
     [ModelReaderWriterBuildable(typeof(PartitionSchemeDescription))]
+    [ModelReaderWriterBuildable(typeof(ResponseError))]
     [ModelReaderWriterBuildable(typeof(ServiceCorrelationDescription))]
     [ModelReaderWriterBuildable(typeof(ServiceFabricApplicationData))]
     [ModelReaderWriterBuildable(typeof(ServiceFabricApplicationPatch))]

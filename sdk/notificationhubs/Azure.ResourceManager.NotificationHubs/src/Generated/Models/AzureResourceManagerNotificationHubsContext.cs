@@ -6,6 +6,7 @@
 #nullable disable
 
 using System.ClientModel.Primitives;
+using Azure;
 using Azure.ResourceManager.Models;
 using Azure.ResourceManager.NotificationHubs.Models;
 
@@ -66,6 +67,7 @@ namespace Azure.ResourceManager.NotificationHubs
     [ModelReaderWriterBuildable(typeof(PublicInternetAuthorizationRule))]
     [ModelReaderWriterBuildable(typeof(RemotePrivateEndpointConnection))]
     [ModelReaderWriterBuildable(typeof(RemotePrivateLinkServiceConnectionState))]
+    [ModelReaderWriterBuildable(typeof(ResponseError))]
     [ModelReaderWriterBuildable(typeof(SharedAccessAuthorizationRuleListResult))]
     [ModelReaderWriterBuildable(typeof(SharedAccessAuthorizationRuleProperties))]
     [ModelReaderWriterBuildable(typeof(SystemData))]

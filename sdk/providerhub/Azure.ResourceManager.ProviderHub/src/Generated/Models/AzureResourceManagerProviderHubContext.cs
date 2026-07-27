@@ -6,6 +6,7 @@
 #nullable disable
 
 using System.ClientModel.Primitives;
+using Azure;
 using Azure.ResourceManager.Models;
 using Azure.ResourceManager.ProviderHub.Models;
 
@@ -154,6 +155,7 @@ namespace Azure.ResourceManager.ProviderHub
     [ModelReaderWriterBuildable(typeof(ResourceTypeSkuResource))]
     [ModelReaderWriterBuildable(typeof(ResourceTypeSkuSetting))]
     [ModelReaderWriterBuildable(typeof(ResourceTypeSkuZoneDetail))]
+    [ModelReaderWriterBuildable(typeof(ResponseError))]
     [ModelReaderWriterBuildable(typeof(RolloutStatusBase))]
     [ModelReaderWriterBuildable(typeof(ServiceTreeInfo))]
     [ModelReaderWriterBuildable(typeof(SubscriberSetting))]

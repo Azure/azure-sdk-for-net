@@ -6,6 +6,7 @@
 #nullable disable
 
 using System.ClientModel.Primitives;
+using Azure;
 using Azure.ResourceManager.EdgeActions.Models;
 using Azure.ResourceManager.Models;
 
@@ -37,6 +38,7 @@ namespace Azure.ResourceManager.EdgeActions
     [ModelReaderWriterBuildable(typeof(EdgeActionVersionProperties))]
     [ModelReaderWriterBuildable(typeof(EdgeActionVersionResource))]
     [ModelReaderWriterBuildable(typeof(EdgeActionVersionUpdateProperties))]
+    [ModelReaderWriterBuildable(typeof(ResponseError))]
     [ModelReaderWriterBuildable(typeof(SystemData))]
     public partial class AzureResourceManagerEdgeActionsContext : ModelReaderWriterContext
     {

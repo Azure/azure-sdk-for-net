@@ -6,6 +6,7 @@
 #nullable disable
 
 using System.ClientModel.Primitives;
+using Azure;
 using Azure.ResourceManager.Models;
 using Azure.ResourceManager.SecurityInsights.Models;
 
@@ -360,6 +361,7 @@ namespace Azure.ResourceManager.SecurityInsights
     [ModelReaderWriterBuildable(typeof(RepositoryAccessObject))]
     [ModelReaderWriterBuildable(typeof(RepositoryAccessProperties))]
     [ModelReaderWriterBuildable(typeof(RepositoryResourceInfo))]
+    [ModelReaderWriterBuildable(typeof(ResponseError))]
     [ModelReaderWriterBuildable(typeof(RestApiPollerDataConnector))]
     [ModelReaderWriterBuildable(typeof(RestApiPollerDataConnectorProperties))]
     [ModelReaderWriterBuildable(typeof(RestApiPollerRequestConfig))]

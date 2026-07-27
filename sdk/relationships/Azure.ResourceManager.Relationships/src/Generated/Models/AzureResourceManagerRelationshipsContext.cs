@@ -6,6 +6,7 @@
 #nullable disable
 
 using System.ClientModel.Primitives;
+using Azure;
 using Azure.ResourceManager.Models;
 using Azure.ResourceManager.Relationships.Models;
 
@@ -20,6 +21,7 @@ namespace Azure.ResourceManager.Relationships
     [ModelReaderWriterBuildable(typeof(DependencyOfRelationshipResource))]
     [ModelReaderWriterBuildable(typeof(RelationshipMetadata))]
     [ModelReaderWriterBuildable(typeof(RelationshipOriginInformation))]
+    [ModelReaderWriterBuildable(typeof(ResponseError))]
     [ModelReaderWriterBuildable(typeof(ServiceGroupMemberRelationshipData))]
     [ModelReaderWriterBuildable(typeof(ServiceGroupMemberRelationshipProperties))]
     [ModelReaderWriterBuildable(typeof(ServiceGroupMemberRelationshipResource))]

@@ -6,6 +6,7 @@
 #nullable disable
 
 using System.ClientModel.Primitives;
+using Azure;
 using Azure.ResourceManager.IotHub.Models;
 using Azure.ResourceManager.Models;
 
@@ -84,6 +85,7 @@ namespace Azure.ResourceManager.IotHub
     [ModelReaderWriterBuildable(typeof(MessagingEndpointProperties))]
     [ModelReaderWriterBuildable(typeof(PrivateEndpoint))]
     [ModelReaderWriterBuildable(typeof(Models.PrivateLinkResources))]
+    [ModelReaderWriterBuildable(typeof(ResponseError))]
     [ModelReaderWriterBuildable(typeof(RouteCompilationError))]
     [ModelReaderWriterBuildable(typeof(RouteErrorPosition))]
     [ModelReaderWriterBuildable(typeof(RouteErrorRange))]

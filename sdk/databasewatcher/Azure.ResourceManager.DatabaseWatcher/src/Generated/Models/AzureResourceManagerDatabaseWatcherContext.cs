@@ -6,6 +6,7 @@
 #nullable disable
 
 using System.ClientModel.Primitives;
+using Azure;
 using Azure.ResourceManager.DatabaseWatcher.Models;
 using Azure.ResourceManager.Models;
 
@@ -37,6 +38,7 @@ namespace Azure.ResourceManager.DatabaseWatcher
     [ModelReaderWriterBuildable(typeof(DatabaseWatcherUpdateProperties))]
     [ModelReaderWriterBuildable(typeof(HealthValidationListResult))]
     [ModelReaderWriterBuildable(typeof(ManagedServiceIdentity))]
+    [ModelReaderWriterBuildable(typeof(ResponseError))]
     [ModelReaderWriterBuildable(typeof(SharedPrivateLinkResourceListResult))]
     [ModelReaderWriterBuildable(typeof(SqlDBElasticPoolTargetProperties))]
     [ModelReaderWriterBuildable(typeof(SqlDBSingleDatabaseTargetProperties))]

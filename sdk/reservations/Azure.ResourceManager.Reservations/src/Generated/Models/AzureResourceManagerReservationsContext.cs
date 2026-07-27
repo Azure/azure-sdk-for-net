@@ -6,6 +6,7 @@
 #nullable disable
 
 using System.ClientModel.Primitives;
+using Azure;
 using Azure.ResourceManager.Models;
 using Azure.ResourceManager.Reservations.Models;
 
@@ -101,6 +102,7 @@ namespace Azure.ResourceManager.Reservations
     [ModelReaderWriterBuildable(typeof(ReservationToReturn))]
     [ModelReaderWriterBuildable(typeof(ReservationToReturnForExchange))]
     [ModelReaderWriterBuildable(typeof(ReservationUtilizationAggregates))]
+    [ModelReaderWriterBuildable(typeof(ResponseError))]
     [ModelReaderWriterBuildable(typeof(SavingsPlanPurchase))]
     [ModelReaderWriterBuildable(typeof(SavingsPlanPurchaseRequestProperties))]
     [ModelReaderWriterBuildable(typeof(SavingsPlanToPurchaseCalculateExchange))]

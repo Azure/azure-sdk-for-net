@@ -6,6 +6,7 @@
 #nullable disable
 
 using System.ClientModel.Primitives;
+using Azure;
 using Azure.ResourceManager.DevHub.Models;
 using Azure.ResourceManager.Models;
 
@@ -70,6 +71,7 @@ namespace Azure.ResourceManager.DevHub
     [ModelReaderWriterBuildable(typeof(IacProfileListResult))]
     [ModelReaderWriterBuildable(typeof(IacProfileProperties))]
     [ModelReaderWriterBuildable(typeof(IacProfileResource))]
+    [ModelReaderWriterBuildable(typeof(ResponseError))]
     [ModelReaderWriterBuildable(typeof(SystemData))]
     [ModelReaderWriterBuildable(typeof(TemplateListResult))]
     [ModelReaderWriterBuildable(typeof(TerraformProfile))]

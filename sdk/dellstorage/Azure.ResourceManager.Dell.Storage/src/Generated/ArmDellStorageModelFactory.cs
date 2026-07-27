@@ -7,6 +7,8 @@
 
 using System;
 using System.Collections.Generic;
+using System.Linq;
+using Azure;
 using Azure.Core;
 using Azure.ResourceManager.Dell.Storage;
 using Azure.ResourceManager.Models;

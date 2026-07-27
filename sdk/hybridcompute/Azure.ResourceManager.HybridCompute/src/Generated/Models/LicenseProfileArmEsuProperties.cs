@@ -12,7 +12,7 @@ using Azure.ResourceManager.HybridCompute;
 namespace Azure.ResourceManager.HybridCompute.Models
 {
     /// <summary> Describes the properties of a License Profile ARM model. </summary>
-    internal partial class LicenseProfileArmEsuProperties : LicenseProfileArmEsuPropertiesWithoutAssignedLicense
+    public partial class LicenseProfileArmEsuProperties : LicenseProfileArmEsuPropertiesWithoutAssignedLicense
     {
         /// <summary> Initializes a new instance of <see cref="LicenseProfileArmEsuProperties"/>. </summary>
         public LicenseProfileArmEsuProperties()

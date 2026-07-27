@@ -6,6 +6,7 @@
 #nullable disable
 
 using System.ClientModel.Primitives;
+using Azure;
 using Azure.ResourceManager.ImpactReporting.Models;
 using Azure.ResourceManager.Models;
 
@@ -39,6 +40,7 @@ namespace Azure.ResourceManager.ImpactReporting
     [ModelReaderWriterBuildable(typeof(ImpactSourceOrTarget))]
     [ModelReaderWriterBuildable(typeof(InsightListResult))]
     [ModelReaderWriterBuildable(typeof(RequiredImpactProperties))]
+    [ModelReaderWriterBuildable(typeof(ResponseError))]
     [ModelReaderWriterBuildable(typeof(SystemData))]
     [ModelReaderWriterBuildable(typeof(WorkloadImpactData))]
     [ModelReaderWriterBuildable(typeof(WorkloadImpactListResult))]

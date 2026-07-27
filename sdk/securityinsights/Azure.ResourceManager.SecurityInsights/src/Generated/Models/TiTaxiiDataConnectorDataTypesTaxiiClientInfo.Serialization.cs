@@ -14,7 +14,7 @@ using Azure.ResourceManager.SecurityInsights;
 namespace Azure.ResourceManager.SecurityInsights.Models
 {
     /// <summary> Data type for TAXII connector. </summary>
-    internal partial class TiTaxiiDataConnectorDataTypesTaxiiClientInfo : DataConnectorDataTypeCommon, IJsonModel<TiTaxiiDataConnectorDataTypesTaxiiClientInfo>
+    public partial class TiTaxiiDataConnectorDataTypesTaxiiClientInfo : DataConnectorDataTypeCommon, IJsonModel<TiTaxiiDataConnectorDataTypesTaxiiClientInfo>
     {
         /// <summary> Initializes a new instance of <see cref="TiTaxiiDataConnectorDataTypesTaxiiClientInfo"/> for deserialization. </summary>
         internal TiTaxiiDataConnectorDataTypesTaxiiClientInfo()

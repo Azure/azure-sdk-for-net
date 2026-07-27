@@ -6,6 +6,7 @@
 #nullable disable
 
 using System.ClientModel.Primitives;
+using Azure;
 using Azure.ResourceManager.HybridNetwork.Models;
 using Azure.ResourceManager.Models;
 
@@ -147,6 +148,7 @@ namespace Azure.ResourceManager.HybridNetwork
     [ModelReaderWriterBuildable(typeof(ReferencedResourceById))]
     [ModelReaderWriterBuildable(typeof(RequestMetadata))]
     [ModelReaderWriterBuildable(typeof(ResourceElementTemplate))]
+    [ModelReaderWriterBuildable(typeof(ResponseError))]
     [ModelReaderWriterBuildable(typeof(SecretDeploymentResourceReference))]
     [ModelReaderWriterBuildable(typeof(SiteData))]
     [ModelReaderWriterBuildable(typeof(SiteListResult))]

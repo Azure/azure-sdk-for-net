@@ -6,6 +6,7 @@
 #nullable disable
 
 using System.ClientModel.Primitives;
+using Azure;
 using Azure.ResourceManager.Models;
 using Azure.ResourceManager.Quantum.Models;
 
@@ -38,6 +39,7 @@ namespace Azure.ResourceManager.Quantum
     [ModelReaderWriterBuildable(typeof(QuantumWorkspacePatch))]
     [ModelReaderWriterBuildable(typeof(QuantumWorkspaceProperties))]
     [ModelReaderWriterBuildable(typeof(QuantumWorkspaceResource))]
+    [ModelReaderWriterBuildable(typeof(ResponseError))]
     [ModelReaderWriterBuildable(typeof(SystemData))]
     [ModelReaderWriterBuildable(typeof(UserAssignedIdentity))]
     [ModelReaderWriterBuildable(typeof(WorkspaceApiKey))]

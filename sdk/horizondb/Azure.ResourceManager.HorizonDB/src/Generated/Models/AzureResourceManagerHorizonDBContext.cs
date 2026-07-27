@@ -6,6 +6,7 @@
 #nullable disable
 
 using System.ClientModel.Primitives;
+using Azure;
 using Azure.ResourceManager.HorizonDB.Models;
 using Azure.ResourceManager.Models;
 
@@ -59,6 +60,7 @@ namespace Azure.ResourceManager.HorizonDB
     [ModelReaderWriterBuildable(typeof(Network))]
     [ModelReaderWriterBuildable(typeof(PrivateEndpoint))]
     [ModelReaderWriterBuildable(typeof(PrivateEndpointConnectionResourceListResult))]
+    [ModelReaderWriterBuildable(typeof(ResponseError))]
     [ModelReaderWriterBuildable(typeof(SystemData))]
     public partial class AzureResourceManagerHorizonDBContext : ModelReaderWriterContext
     {

@@ -6,6 +6,7 @@
 #nullable disable
 
 using System.ClientModel.Primitives;
+using Azure;
 using Azure.ResourceManager.CosmosDBForPostgreSql.Models;
 using Azure.ResourceManager.Models;
 
@@ -60,6 +61,7 @@ namespace Azure.ResourceManager.CosmosDBForPostgreSql
     [ModelReaderWriterBuildable(typeof(PrivateEndpointConnectionProperties))]
     [ModelReaderWriterBuildable(typeof(PrivateEndpointConnectionSimpleProperties))]
     [ModelReaderWriterBuildable(typeof(PrivateEndpointProperty))]
+    [ModelReaderWriterBuildable(typeof(ResponseError))]
     [ModelReaderWriterBuildable(typeof(RoleListResult))]
     [ModelReaderWriterBuildable(typeof(RoleProperties))]
     [ModelReaderWriterBuildable(typeof(RolePropertiesExternalIdentity))]

@@ -13,7 +13,7 @@ using Azure.Core;
 namespace Azure.ResourceManager.ManagedNetworkFabric.Models
 {
     /// <summary> Network Interface Properties defines the properties of the resource. </summary>
-    internal partial class NetworkInterfaceProperties : AnnotationResourceProperties
+    public partial class NetworkInterfaceProperties : AnnotationResourceProperties
     {
         /// <summary> Initializes a new instance of <see cref="NetworkInterfaceProperties"/>. </summary>
         public NetworkInterfaceProperties()

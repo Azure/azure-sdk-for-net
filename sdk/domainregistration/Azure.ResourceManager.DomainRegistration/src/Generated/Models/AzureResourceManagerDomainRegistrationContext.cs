@@ -6,6 +6,7 @@
 #nullable disable
 
 using System.ClientModel.Primitives;
+using Azure;
 using Azure.ResourceManager.DomainRegistration.Models;
 using Azure.ResourceManager.Models;
 
@@ -34,6 +35,7 @@ namespace Azure.ResourceManager.DomainRegistration
     [ModelReaderWriterBuildable(typeof(DomainRecommendationSearchContent))]
     [ModelReaderWriterBuildable(typeof(RegistrationAddressInfo))]
     [ModelReaderWriterBuildable(typeof(RegistrationContactInfo))]
+    [ModelReaderWriterBuildable(typeof(ResponseError))]
     [ModelReaderWriterBuildable(typeof(SystemData))]
     [ModelReaderWriterBuildable(typeof(TldLegalAgreementCollection))]
     [ModelReaderWriterBuildable(typeof(TopLevelDomainAgreementContent))]

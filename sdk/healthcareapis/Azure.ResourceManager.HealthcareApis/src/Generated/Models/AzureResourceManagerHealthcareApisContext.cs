@@ -6,6 +6,7 @@
 #nullable disable
 
 using System.ClientModel.Primitives;
+using Azure;
 using Azure.ResourceManager.HealthcareApis.Models;
 using Azure.ResourceManager.Models;
 
@@ -88,6 +89,7 @@ namespace Azure.ResourceManager.HealthcareApis
     [ModelReaderWriterBuildable(typeof(PrivateEndpointConnectionListResultDescription))]
     [ModelReaderWriterBuildable(typeof(PrivateEndpointConnectionProperties))]
     [ModelReaderWriterBuildable(typeof(PrivateLinkResourceListResultDescription))]
+    [ModelReaderWriterBuildable(typeof(ResponseError))]
     [ModelReaderWriterBuildable(typeof(ServiceExportConfigurationInfo))]
     [ModelReaderWriterBuildable(typeof(ServicesDescriptionListResult))]
     [ModelReaderWriterBuildable(typeof(ServiceSpecification))]

@@ -6,6 +6,7 @@
 #nullable disable
 
 using System.ClientModel.Primitives;
+using Azure;
 using Azure.ResourceManager.Models;
 using Azure.ResourceManager.RecoveryServicesBackup.Models;
 using Azure.ResourceManager.Resources.Models;
@@ -193,6 +194,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
     [ModelReaderWriterBuildable(typeof(ResourceHealthDetails))]
     [ModelReaderWriterBuildable(typeof(ResourceList))]
     [ModelReaderWriterBuildable(typeof(ResourceProtectionIntent))]
+    [ModelReaderWriterBuildable(typeof(ResponseError))]
     [ModelReaderWriterBuildable(typeof(RestoreContent))]
     [ModelReaderWriterBuildable(typeof(RestoreFileSpecs))]
     [ModelReaderWriterBuildable(typeof(RetentionDuration))]

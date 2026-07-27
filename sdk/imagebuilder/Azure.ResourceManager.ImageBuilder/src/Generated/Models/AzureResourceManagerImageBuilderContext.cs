@@ -6,6 +6,7 @@
 #nullable disable
 
 using System.ClientModel.Primitives;
+using Azure;
 using Azure.ResourceManager.ImageBuilder.Models;
 using Azure.ResourceManager.Models;
 
@@ -62,6 +63,7 @@ namespace Azure.ResourceManager.ImageBuilder
     [ModelReaderWriterBuildable(typeof(ImageTemplateWindowsUpdateCustomizer))]
     [ModelReaderWriterBuildable(typeof(ImageTemplateWorkloadOptimization))]
     [ModelReaderWriterBuildable(typeof(PlatformImagePurchasePlan))]
+    [ModelReaderWriterBuildable(typeof(ResponseError))]
     [ModelReaderWriterBuildable(typeof(RunOutputListResult))]
     [ModelReaderWriterBuildable(typeof(RunOutputProperties))]
     [ModelReaderWriterBuildable(typeof(SourceImageTriggerProperties))]

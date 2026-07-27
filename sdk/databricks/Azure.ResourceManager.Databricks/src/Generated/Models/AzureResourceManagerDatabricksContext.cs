@@ -6,6 +6,7 @@
 #nullable disable
 
 using System.ClientModel.Primitives;
+using Azure;
 using Azure.ResourceManager.Databricks.Models;
 using Azure.ResourceManager.Models;
 
@@ -56,6 +57,7 @@ namespace Azure.ResourceManager.Databricks
     [ModelReaderWriterBuildable(typeof(PrivateEndpoint))]
     [ModelReaderWriterBuildable(typeof(PrivateEndpointConnectionsList))]
     [ModelReaderWriterBuildable(typeof(PrivateLinkResourcesList))]
+    [ModelReaderWriterBuildable(typeof(ResponseError))]
     [ModelReaderWriterBuildable(typeof(SystemData))]
     [ModelReaderWriterBuildable(typeof(UserAssignedIdentity))]
     [ModelReaderWriterBuildable(typeof(VirtualNetworkPeeringList))]

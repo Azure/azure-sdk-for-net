@@ -6,6 +6,7 @@
 #nullable disable
 
 using System.ClientModel.Primitives;
+using Azure;
 using Azure.ResourceManager.Models;
 using Azure.ResourceManager.Resources.Models;
 using Azure.ResourceManager.Sql.Models;
@@ -401,6 +402,7 @@ namespace Azure.ResourceManager.Sql
     [ModelReaderWriterBuildable(typeof(ResourceGroupLongTermRetentionBackupResource))]
     [ModelReaderWriterBuildable(typeof(ResourceGroupLongTermRetentionManagedInstanceBackupResource))]
     [ModelReaderWriterBuildable(typeof(ResourceWithWritableName))]
+    [ModelReaderWriterBuildable(typeof(ResponseError))]
     [ModelReaderWriterBuildable(typeof(RestorableDroppedDatabaseData))]
     [ModelReaderWriterBuildable(typeof(RestorableDroppedDatabaseListResult))]
     [ModelReaderWriterBuildable(typeof(RestorableDroppedDatabaseProperties))]

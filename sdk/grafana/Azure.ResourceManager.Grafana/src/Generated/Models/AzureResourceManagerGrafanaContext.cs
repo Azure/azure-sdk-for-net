@@ -6,6 +6,7 @@
 #nullable disable
 
 using System.ClientModel.Primitives;
+using Azure;
 using Azure.ResourceManager.Grafana.Models;
 using Azure.ResourceManager.Models;
 
@@ -67,6 +68,7 @@ namespace Azure.ResourceManager.Grafana
     [ModelReaderWriterBuildable(typeof(MonitorWorkspaceIntegration))]
     [ModelReaderWriterBuildable(typeof(PrivateEndpoint))]
     [ModelReaderWriterBuildable(typeof(PrivateEndpointConnectionProperties))]
+    [ModelReaderWriterBuildable(typeof(ResponseError))]
     [ModelReaderWriterBuildable(typeof(SaasSubscriptionDetails))]
     [ModelReaderWriterBuildable(typeof(SubscriptionTerm))]
     [ModelReaderWriterBuildable(typeof(SystemData))]

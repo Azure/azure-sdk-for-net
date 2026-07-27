@@ -11,7 +11,7 @@ using System.Collections.Generic;
 namespace Azure.ResourceManager.MachineLearning.Models
 {
     /// <summary> The NlpVerticalFeaturizationSettings. </summary>
-    internal partial class NlpVerticalFeaturizationSettings : MachineLearningFeaturizationSettings
+    public partial class NlpVerticalFeaturizationSettings : MachineLearningFeaturizationSettings
     {
         /// <summary> Initializes a new instance of <see cref="NlpVerticalFeaturizationSettings"/>. </summary>
         public NlpVerticalFeaturizationSettings()

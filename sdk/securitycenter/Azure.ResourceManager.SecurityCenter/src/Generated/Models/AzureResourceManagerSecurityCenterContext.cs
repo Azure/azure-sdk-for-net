@@ -6,6 +6,7 @@
 #nullable disable
 
 using System.ClientModel.Primitives;
+using Azure;
 using Azure.ResourceManager.Models;
 using Azure.ResourceManager.Resources.Models;
 using Azure.ResourceManager.SecurityCenter.Models;
@@ -346,6 +347,7 @@ namespace Azure.ResourceManager.SecurityCenter
     [ModelReaderWriterBuildable(typeof(RemediationEta))]
     [ModelReaderWriterBuildable(typeof(ResourceGroupSecurityAlertResource))]
     [ModelReaderWriterBuildable(typeof(ResourceGroupSecurityTaskResource))]
+    [ModelReaderWriterBuildable(typeof(ResponseError))]
     [ModelReaderWriterBuildable(typeof(RuleResultsInput))]
     [ModelReaderWriterBuildable(typeof(RuleResultsProperties))]
     [ModelReaderWriterBuildable(typeof(RulesResults))]

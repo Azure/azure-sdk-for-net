@@ -6,6 +6,7 @@
 #nullable disable
 
 using System.ClientModel.Primitives;
+using Azure;
 using Azure.ResourceManager.Models;
 using Azure.ResourceManager.Monitor.Models;
 
@@ -254,6 +255,7 @@ namespace Azure.ResourceManager.Monitor
     [ModelReaderWriterBuildable(typeof(RecurrentSchedule))]
     [ModelReaderWriterBuildable(typeof(ReferencesSpecEnrichmentData))]
     [ModelReaderWriterBuildable(typeof(ResourceForUpdate))]
+    [ModelReaderWriterBuildable(typeof(ResponseError))]
     [ModelReaderWriterBuildable(typeof(RetentionPolicy))]
     [ModelReaderWriterBuildable(typeof(RuleResolveConfiguration))]
     [ModelReaderWriterBuildable(typeof(ScheduledQueryRuleActions))]
