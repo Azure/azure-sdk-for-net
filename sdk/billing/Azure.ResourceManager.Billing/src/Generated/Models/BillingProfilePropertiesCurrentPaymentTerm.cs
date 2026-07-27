@@ -11,7 +11,7 @@ using System.Collections.Generic;
 namespace Azure.ResourceManager.Billing.Models
 {
     /// <summary> The current payment term of the billing profile. </summary>
-    public partial class BillingProfilePropertiesCurrentPaymentTerm : BillingPaymentTerm
+    internal partial class BillingProfilePropertiesCurrentPaymentTerm : BillingPaymentTerm
     {
         /// <summary> Initializes a new instance of <see cref="BillingProfilePropertiesCurrentPaymentTerm"/>. </summary>
         public BillingProfilePropertiesCurrentPaymentTerm()

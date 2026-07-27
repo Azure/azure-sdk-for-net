@@ -229,6 +229,8 @@ namespace Azure.Generator.Management.Tests.Providers
             Assert.That(asyncSignature.ReturnType?.Arguments[0].FrameworkType, Is.EqualTo(typeof(ArmOperation<>)));
             Assert.That(asyncSignature.ReturnType?.Arguments[0].Arguments[0].IsList, Is.True);
             Assert.That(asyncSignature.Parameters[0].Type.FrameworkType, Is.EqualTo(typeof(WaitUntil)));
+            Assert.That(resourceProvider.BodyDependencyTypes, Does.Contain(plugin.Object.OutputLibrary.ArmOperationOfT.Type));
+            Assert.That(resourceProvider.BodyDependencyTypes.Any(type => type.Name.EndsWith("OperationSource")), Is.True);
         }
 
         [TestCase]
@@ -253,6 +255,8 @@ namespace Azure.Generator.Management.Tests.Providers
             Assert.That(asyncSignature.Parameters[0].Type.FrameworkType, Is.EqualTo(typeof(WaitUntil)));
             Assert.That(asyncSignature.ReturnType?.FrameworkType, Is.EqualTo(typeof(Task<>)));
             Assert.That(asyncSignature.ReturnType?.Arguments[0].FrameworkType, Is.EqualTo(typeof(ArmOperation)));
+            Assert.That(resourceProvider.BodyDependencyTypes, Does.Contain(plugin.Object.OutputLibrary.ArmOperation.Type));
+            Assert.That(resourceProvider.BodyDependencyTypes.Any(type => type.Name.EndsWith("OperationSource")), Is.False);
         }
 
         [TestCase]

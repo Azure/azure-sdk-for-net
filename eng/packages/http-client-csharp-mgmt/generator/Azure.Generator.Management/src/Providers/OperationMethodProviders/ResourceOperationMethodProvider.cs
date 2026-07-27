@@ -221,6 +221,9 @@ namespace Azure.Generator.Management.Providers.OperationMethodProviders
                 null,
                 null,
                 resourceOperationMethodProvider._serviceMethod);
+            ManagementProviderBodyDependencyHelper.RegisterBodyDependencyTypes(
+                methodProvider,
+                resourceOperationMethodProvider.BuildBodyDependencyTypes());
 
             // Add enhanced XML documentation with structured tags
             ResourceHelpers.BuildEnhancedXmlDocs(
@@ -230,6 +233,41 @@ namespace Azure.Generator.Management.Providers.OperationMethodProviders
                 methodProvider.XmlDocs);
 
             return methodProvider;
+        }
+
+        private IReadOnlyList<CSharpType> BuildBodyDependencyTypes()
+        {
+            if (!ShouldApplyLroHandling)
+            {
+                return [];
+            }
+
+            var outputLibrary = ManagementClientGenerator.Instance.OutputLibrary;
+            var dependencies = new List<CSharpType>
+            {
+                HasTypedResultForPublicSurface
+                    ? outputLibrary.ArmOperationOfT.Type
+                    : outputLibrary.ArmOperation.Type
+            };
+
+            if (IsFakeLongRunningOperation || !HasTypedResultForPublicSurface)
+            {
+                return dependencies;
+            }
+
+            if (_returnBodyResourceClient != null)
+            {
+                dependencies.Add(outputLibrary.GetOperationSource(_returnBodyResourceClient).Type);
+                return dependencies;
+            }
+
+            if (_originalBodyType != null &&
+                outputLibrary.OperationSourceDict.TryGetValue(_originalBodyType, out var operationSource))
+            {
+                dependencies.Add(operationSource.Type);
+            }
+
+            return dependencies;
         }
 
         protected virtual MethodBodyStatement[] BuildBodyStatements()
