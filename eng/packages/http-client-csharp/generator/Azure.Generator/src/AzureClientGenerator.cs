@@ -31,7 +31,9 @@ public class AzureClientGenerator : ScmCodeModelGenerator
     /// <inheritdoc/>
     public override AzureOutputLibrary OutputLibrary => _azureOutputLibrary ??= new();
 
-    internal RawRequestUriBuilderExtensionsDefinition RawRequestUriBuilderExtensionsDefinition { get; } = new();
+    private RawRequestUriBuilderExtensionsDefinition? _rawRequestUriBuilderExtensionsDefinition;
+    internal RawRequestUriBuilderExtensionsDefinition RawRequestUriBuilderExtensionsDefinition =>
+        _rawRequestUriBuilderExtensionsDefinition ??= new();
 
     internal RequestHeaderExtensionsDefinition RequestHeaderExtensionsDefinition { get; } = new();
 
