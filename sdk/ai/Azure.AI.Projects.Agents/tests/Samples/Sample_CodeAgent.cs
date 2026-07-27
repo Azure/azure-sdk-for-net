@@ -2,7 +2,6 @@
 // Licensed under the MIT License.
 
 using System;
-using System.ClientModel.Primitives;
 using System.IO;
 using System.Runtime.CompilerServices;
 using System.Threading;
@@ -20,8 +19,8 @@ public class Sample_CodeAgent : SamplesBase
         return Path.Combine([dirName, path]);
     }
 
-    #region Snippet:Sample_CodeAgentMetadata_CodeAgent
-    private static CreateAgentVersionFromCodeMetadata GetAgentMetadata()
+    #region Snippet:Sample_CodeAgentMetadata_CodeAgentProj
+    private static AgentVersionFromCodeMetadata GetAgentMetadata()
     {
         HostedAgentDefinition agentDefinition = new(
             cpu: "0.5",
@@ -35,7 +34,7 @@ public class Sample_CodeAgent : SamplesBase
                 dependencyResolution: CodeDependencyResolution.RemoteBuild
             ),
         };
-        CreateAgentVersionFromCodeMetadata metadata = new(agentDefinition);
+        AgentVersionFromCodeMetadata metadata = new(agentDefinition);
         metadata.Metadata["enableVnextExperience"] = "true";
         return metadata;
     }
@@ -55,7 +54,7 @@ public class Sample_CodeAgent : SamplesBase
             Directory.Delete(Path.GetFullPath("./AgentCode"), recursive: true);
         }
         catch { }
-        #region Snippet:Sample_CodeAgentDeployment_CodeAgent_Async
+        #region Snippet:Sample_CodeAgentDeployment_CodeAgentProj_Async
         AgentAdministrationClient agentsClient = new(endpoint: new Uri(projectEndpoint), tokenProvider: new DefaultAzureCredential());
         ProjectsAgentVersion agentVersion = await agentsClient.CreateAgentVersionFromCodeAsync(
             agentName: "myCodeAgent",

@@ -50,8 +50,8 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
                     yield break;
                 }
                 ZooListResult result = ZooListResult.FromResponse(response);
-                yield return Page<ZooData>.FromValues((IReadOnlyList<ZooData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 nextPage = result.NextLink;
+                yield return Page<ZooData>.FromValues((IReadOnlyList<ZooData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 if (nextPage == null)
                 {
                     yield break;

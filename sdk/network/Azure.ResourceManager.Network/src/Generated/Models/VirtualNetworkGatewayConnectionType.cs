@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.Network.Models
         /// <summary> ExpressRoute. </summary>
         private const string ExpressRouteValue = "ExpressRoute";
         /// <summary> VPNClient. </summary>
-        private const string VPNClientValue = "VPNClient";
+        private const string VpnClientValue = "VPNClient";
 
         /// <summary> Initializes a new instance of <see cref="VirtualNetworkGatewayConnectionType"/>. </summary>
         /// <param name="value"> The value. </param>
@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.Network.Models
         public static VirtualNetworkGatewayConnectionType ExpressRoute { get; } = new VirtualNetworkGatewayConnectionType(ExpressRouteValue);
 
         /// <summary> VPNClient. </summary>
-        public static VirtualNetworkGatewayConnectionType VPNClient { get; } = new VirtualNetworkGatewayConnectionType(VPNClientValue);
+        public static VirtualNetworkGatewayConnectionType VpnClient { get; } = new VirtualNetworkGatewayConnectionType(VpnClientValue);
 
         /// <summary> Determines if two <see cref="VirtualNetworkGatewayConnectionType"/> values are the same. </summary>
         /// <param name="left"> The left value to compare. </param>

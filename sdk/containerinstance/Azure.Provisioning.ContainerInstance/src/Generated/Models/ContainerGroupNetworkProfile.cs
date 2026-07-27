@@ -74,6 +74,10 @@ namespace Azure.Provisioning.ContainerInstance
             base.DefineProvisionableProperties();
             _loadBalancer = DefineModelProperty<LoadBalancer>(nameof(LoadBalancer), new string[] { "loadBalancer" });
             _applicationGateway = DefineModelProperty<ApplicationGateway>(nameof(ApplicationGateway), new string[] { "applicationGateway" });
+            DefineAdditionalProperties();
         }
+
+        /// <summary> Define additional provisionable properties for ContainerGroupNetworkProfile that are not part of the generated code. </summary>
+        partial void DefineAdditionalProperties();
     }
 }

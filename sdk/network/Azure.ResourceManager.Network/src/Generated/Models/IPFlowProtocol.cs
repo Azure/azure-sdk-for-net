@@ -16,9 +16,9 @@ namespace Azure.ResourceManager.Network.Models
     {
         private readonly string _value;
         /// <summary> TCP. </summary>
-        private const string TCPValue = "TCP";
+        private const string TcpValue = "TCP";
         /// <summary> UDP. </summary>
-        private const string UDPValue = "UDP";
+        private const string UdpValue = "UDP";
 
         /// <summary> Initializes a new instance of <see cref="IPFlowProtocol"/>. </summary>
         /// <param name="value"> The value. </param>
@@ -31,10 +31,10 @@ namespace Azure.ResourceManager.Network.Models
         }
 
         /// <summary> TCP. </summary>
-        public static IPFlowProtocol TCP { get; } = new IPFlowProtocol(TCPValue);
+        public static IPFlowProtocol Tcp { get; } = new IPFlowProtocol(TcpValue);
 
         /// <summary> UDP. </summary>
-        public static IPFlowProtocol UDP { get; } = new IPFlowProtocol(UDPValue);
+        public static IPFlowProtocol Udp { get; } = new IPFlowProtocol(UdpValue);
 
         /// <summary> Determines if two <see cref="IPFlowProtocol"/> values are the same. </summary>
         /// <param name="left"> The left value to compare. </param>

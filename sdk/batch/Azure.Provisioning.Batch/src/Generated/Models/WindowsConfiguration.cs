@@ -40,6 +40,10 @@ namespace Azure.Provisioning.Batch
         {
             base.DefineProvisionableProperties();
             _isAutomaticUpdateEnabled = DefineProperty<bool>(nameof(IsAutomaticUpdateEnabled), new string[] { "enableAutomaticUpdates" });
+            DefineAdditionalProperties();
         }
+
+        /// <summary> Define additional provisionable properties for WindowsConfiguration that are not part of the generated code. </summary>
+        partial void DefineAdditionalProperties();
     }
 }

@@ -8,17 +8,56 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Text.Json;
-using Azure.Core;
+using Azure.ResourceManager.SecurityInsights;
 
 namespace Azure.ResourceManager.SecurityInsights.Models
 {
-    public partial class EntityInsightItem : IUtf8JsonSerializable, IJsonModel<EntityInsightItem>
+    /// <summary> Entity insight Item. </summary>
+    public partial class EntityInsightItem : IJsonModel<EntityInsightItem>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<EntityInsightItem>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual EntityInsightItem PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<EntityInsightItem>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    {
+                        return DeserializeEntityInsightItem(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(EntityInsightItem)} does not support reading '{options.Format}' format.");
+            }
+        }
 
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<EntityInsightItem>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerSecurityInsightsContext.Default);
+                default:
+                    throw new FormatException($"The model {nameof(EntityInsightItem)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<EntityInsightItem>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        EntityInsightItem IPersistableModel<EntityInsightItem>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<EntityInsightItem>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<EntityInsightItem>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
@@ -30,12 +69,11 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<EntityInsightItem>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<EntityInsightItem>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(EntityInsightItem)} does not support writing '{format}' format.");
             }
-
             if (Optional.IsDefined(QueryId))
             {
                 writer.WritePropertyName("queryId"u8);
@@ -55,21 +93,21 @@ namespace Azure.ResourceManager.SecurityInsights.Models
             {
                 writer.WritePropertyName("chartQueryResults"u8);
                 writer.WriteStartArray();
-                foreach (var item in ChartQueryResults)
+                foreach (InsightsTableResult item in ChartQueryResults)
                 {
                     writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
-                foreach (var item in _serializedAdditionalRawData)
+                foreach (var item in _additionalBinaryDataProperties)
                 {
                     writer.WritePropertyName(item.Key);
 #if NET6_0_OR_GREATER
-				writer.WriteRawValue(item.Value);
+                    writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value, ModelSerializationExtensions.JsonDocumentOptions))
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
                     {
                         JsonSerializer.Serialize(writer, document.RootElement);
                     }
@@ -78,22 +116,27 @@ namespace Azure.ResourceManager.SecurityInsights.Models
             }
         }
 
-        EntityInsightItem IJsonModel<EntityInsightItem>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        EntityInsightItem IJsonModel<EntityInsightItem>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual EntityInsightItem JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<EntityInsightItem>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<EntityInsightItem>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(EntityInsightItem)} does not support reading '{format}' format.");
             }
-
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
             return DeserializeEntityInsightItem(document.RootElement, options);
         }
 
-        internal static EntityInsightItem DeserializeEntityInsightItem(JsonElement element, ModelReaderWriterOptions options = null)
+        /// <param name="element"> The JSON element to deserialize. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        internal static EntityInsightItem DeserializeEntityInsightItem(JsonElement element, ModelReaderWriterOptions options)
         {
-            options ??= ModelSerializationExtensions.WireOptions;
-
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -101,42 +144,41 @@ namespace Azure.ResourceManager.SecurityInsights.Models
             string queryId = default;
             EntityInsightItemQueryTimeInterval queryTimeInterval = default;
             InsightsTableResult tableQueryResults = default;
-            IReadOnlyList<InsightsTableResult> chartQueryResults = default;
-            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
-            foreach (var property in element.EnumerateObject())
+            IList<InsightsTableResult> chartQueryResults = default;
+            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            foreach (var prop in element.EnumerateObject())
             {
-                if (property.NameEquals("queryId"u8))
+                if (prop.NameEquals("queryId"u8))
                 {
-                    queryId = property.Value.GetString();
+                    queryId = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("queryTimeInterval"u8))
+                if (prop.NameEquals("queryTimeInterval"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    queryTimeInterval = EntityInsightItemQueryTimeInterval.DeserializeEntityInsightItemQueryTimeInterval(property.Value, options);
+                    queryTimeInterval = EntityInsightItemQueryTimeInterval.DeserializeEntityInsightItemQueryTimeInterval(prop.Value, options);
                     continue;
                 }
-                if (property.NameEquals("tableQueryResults"u8))
+                if (prop.NameEquals("tableQueryResults"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    tableQueryResults = InsightsTableResult.DeserializeInsightsTableResult(property.Value, options);
+                    tableQueryResults = InsightsTableResult.DeserializeInsightsTableResult(prop.Value, options);
                     continue;
                 }
-                if (property.NameEquals("chartQueryResults"u8))
+                if (prop.NameEquals("chartQueryResults"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
                     List<InsightsTableResult> array = new List<InsightsTableResult>();
-                    foreach (var item in property.Value.EnumerateArray())
+                    foreach (var item in prop.Value.EnumerateArray())
                     {
                         array.Add(InsightsTableResult.DeserializeInsightsTableResult(item, options));
                     }
@@ -145,135 +187,10 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                 }
                 if (options.Format != "W")
                 {
-                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = rawDataDictionary;
-            return new EntityInsightItem(queryId, queryTimeInterval, tableQueryResults, chartQueryResults ?? new ChangeTrackingList<InsightsTableResult>(), serializedAdditionalRawData);
+            return new EntityInsightItem(queryId, queryTimeInterval, tableQueryResults, chartQueryResults ?? new ChangeTrackingList<InsightsTableResult>(), additionalBinaryDataProperties);
         }
-
-        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
-        {
-            StringBuilder builder = new StringBuilder();
-            BicepModelReaderWriterOptions bicepOptions = options as BicepModelReaderWriterOptions;
-            IDictionary<string, string> propertyOverrides = null;
-            bool hasObjectOverride = bicepOptions != null && bicepOptions.PropertyOverrides.TryGetValue(this, out propertyOverrides);
-            bool hasPropertyOverride = false;
-            string propertyOverride = null;
-
-            builder.AppendLine("{");
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(QueryId), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  queryId: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(QueryId))
-                {
-                    builder.Append("  queryId: ");
-                    if (QueryId.Contains(Environment.NewLine))
-                    {
-                        builder.AppendLine("'''");
-                        builder.AppendLine($"{QueryId}'''");
-                    }
-                    else
-                    {
-                        builder.AppendLine($"'{QueryId}'");
-                    }
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(QueryTimeInterval), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  queryTimeInterval: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(QueryTimeInterval))
-                {
-                    builder.Append("  queryTimeInterval: ");
-                    BicepSerializationHelpers.AppendChildObject(builder, QueryTimeInterval, options, 2, false, "  queryTimeInterval: ");
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(TableQueryResults), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  tableQueryResults: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(TableQueryResults))
-                {
-                    builder.Append("  tableQueryResults: ");
-                    BicepSerializationHelpers.AppendChildObject(builder, TableQueryResults, options, 2, false, "  tableQueryResults: ");
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ChartQueryResults), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  chartQueryResults: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsCollectionDefined(ChartQueryResults))
-                {
-                    if (ChartQueryResults.Any())
-                    {
-                        builder.Append("  chartQueryResults: ");
-                        builder.AppendLine("[");
-                        foreach (var item in ChartQueryResults)
-                        {
-                            BicepSerializationHelpers.AppendChildObject(builder, item, options, 4, true, "  chartQueryResults: ");
-                        }
-                        builder.AppendLine("  ]");
-                    }
-                }
-            }
-
-            builder.AppendLine("}");
-            return BinaryData.FromString(builder.ToString());
-        }
-
-        BinaryData IPersistableModel<EntityInsightItem>.Write(ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<EntityInsightItem>)this).GetFormatFromOptions(options) : options.Format;
-
-            switch (format)
-            {
-                case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerSecurityInsightsContext.Default);
-                case "bicep":
-                    return SerializeBicep(options);
-                default:
-                    throw new FormatException($"The model {nameof(EntityInsightItem)} does not support writing '{options.Format}' format.");
-            }
-        }
-
-        EntityInsightItem IPersistableModel<EntityInsightItem>.Create(BinaryData data, ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<EntityInsightItem>)this).GetFormatFromOptions(options) : options.Format;
-
-            switch (format)
-            {
-                case "J":
-                    {
-                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
-                        return DeserializeEntityInsightItem(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(EntityInsightItem)} does not support reading '{options.Format}' format.");
-            }
-        }
-
-        string IPersistableModel<EntityInsightItem>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

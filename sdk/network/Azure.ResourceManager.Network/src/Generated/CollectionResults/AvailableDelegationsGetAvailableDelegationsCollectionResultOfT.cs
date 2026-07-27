@@ -52,8 +52,8 @@ namespace Azure.ResourceManager.Network
                     yield break;
                 }
                 AvailableDelegationsResult result = AvailableDelegationsResult.FromResponse(response);
-                yield return Page<AvailableDelegation>.FromValues((IReadOnlyList<AvailableDelegation>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 nextPage = result.NextLink;
+                yield return Page<AvailableDelegation>.FromValues((IReadOnlyList<AvailableDelegation>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 if (nextPage == null)
                 {
                     yield break;

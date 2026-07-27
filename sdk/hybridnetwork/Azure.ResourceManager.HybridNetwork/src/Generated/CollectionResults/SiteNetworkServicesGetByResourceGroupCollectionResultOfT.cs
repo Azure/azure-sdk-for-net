@@ -52,8 +52,8 @@ namespace Azure.ResourceManager.HybridNetwork
                     yield break;
                 }
                 SiteNetworkServiceListResult result = SiteNetworkServiceListResult.FromResponse(response);
-                yield return Page<SiteNetworkServiceData>.FromValues((IReadOnlyList<SiteNetworkServiceData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 nextPage = result.NextLink;
+                yield return Page<SiteNetworkServiceData>.FromValues((IReadOnlyList<SiteNetworkServiceData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 if (nextPage == null)
                 {
                     yield break;

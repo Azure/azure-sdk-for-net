@@ -25,12 +25,12 @@ namespace Azure.ResourceManager.Network.Models
 
         /// <summary> Initializes a new instance of <see cref="VirtualHubRoute"/>. </summary>
         /// <param name="addressPrefixes"> List of all addressPrefixes. </param>
-        /// <param name="nextHopIpAddress"> NextHop ip address. </param>
+        /// <param name="nextHopIPAddress"> NextHop ip address. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal VirtualHubRoute(IList<string> addressPrefixes, string nextHopIpAddress, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal VirtualHubRoute(IList<string> addressPrefixes, string nextHopIPAddress, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             AddressPrefixes = addressPrefixes;
-            NextHopIpAddress = nextHopIpAddress;
+            NextHopIPAddress = nextHopIPAddress;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
@@ -40,6 +40,6 @@ namespace Azure.ResourceManager.Network.Models
 
         /// <summary> NextHop ip address. </summary>
         [WirePath("nextHopIpAddress")]
-        public string NextHopIpAddress { get; set; }
+        public string NextHopIPAddress { get; set; }
     }
 }

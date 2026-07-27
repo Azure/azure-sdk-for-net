@@ -11,6 +11,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
 {
     internal static partial class MachineLearningSkuTierExtensions
     {
+        /// <param name="value"> The value to serialize. </param>
         public static string ToSerialString(this MachineLearningSkuTier value) => value switch
         {
             MachineLearningSkuTier.Free => "Free",
@@ -20,12 +21,25 @@ namespace Azure.ResourceManager.MachineLearning.Models
             _ => throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown MachineLearningSkuTier value.")
         };
 
+        /// <param name="value"> The value to deserialize. </param>
         public static MachineLearningSkuTier ToMachineLearningSkuTier(this string value)
         {
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Free")) return MachineLearningSkuTier.Free;
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Basic")) return MachineLearningSkuTier.Basic;
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Standard")) return MachineLearningSkuTier.Standard;
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Premium")) return MachineLearningSkuTier.Premium;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Free"))
+            {
+                return MachineLearningSkuTier.Free;
+            }
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Basic"))
+            {
+                return MachineLearningSkuTier.Basic;
+            }
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Standard"))
+            {
+                return MachineLearningSkuTier.Standard;
+            }
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Premium"))
+            {
+                return MachineLearningSkuTier.Premium;
+            }
             throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown MachineLearningSkuTier value.");
         }
     }

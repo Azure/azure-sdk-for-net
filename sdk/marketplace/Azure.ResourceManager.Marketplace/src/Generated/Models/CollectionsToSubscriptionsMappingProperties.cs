@@ -33,6 +33,6 @@ namespace Azure.ResourceManager.Marketplace.Models
         }
 
         /// <summary> Subscriptions ids list. </summary>
-        public IList<string> SubscriptionIds { get; }
+        public IList<string> SubscriptionIds { get; } = new ChangeTrackingList<string>();
     }
 }

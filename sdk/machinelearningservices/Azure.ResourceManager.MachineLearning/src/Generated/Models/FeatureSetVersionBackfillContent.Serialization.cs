@@ -10,13 +10,65 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.MachineLearning;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
-    public partial class FeatureSetVersionBackfillContent : IUtf8JsonSerializable, IJsonModel<FeatureSetVersionBackfillContent>
+    /// <summary> Request payload for creating a backfill request for a given feature set version. </summary>
+    public partial class FeatureSetVersionBackfillContent : IJsonModel<FeatureSetVersionBackfillContent>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<FeatureSetVersionBackfillContent>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual FeatureSetVersionBackfillContent PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<FeatureSetVersionBackfillContent>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    {
+                        return DeserializeFeatureSetVersionBackfillContent(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(FeatureSetVersionBackfillContent)} does not support reading '{options.Format}' format.");
+            }
+        }
 
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<FeatureSetVersionBackfillContent>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerMachineLearningContext.Default);
+                default:
+                    throw new FormatException($"The model {nameof(FeatureSetVersionBackfillContent)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<FeatureSetVersionBackfillContent>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        FeatureSetVersionBackfillContent IPersistableModel<FeatureSetVersionBackfillContent>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<FeatureSetVersionBackfillContent>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
+        /// <param name="featureSetVersionBackfillContent"> The <see cref="FeatureSetVersionBackfillContent"/> to serialize into <see cref="RequestContent"/>. </param>
+        internal static RequestContent ToRequestContent(FeatureSetVersionBackfillContent featureSetVersionBackfillContent)
+        {
+            if (featureSetVersionBackfillContent == null)
+            {
+                return null;
+            }
+            return RequestContent.Create(featureSetVersionBackfillContent, ModelSerializationExtensions.WireOptions);
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<FeatureSetVersionBackfillContent>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
@@ -28,56 +80,53 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<FeatureSetVersionBackfillContent>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<FeatureSetVersionBackfillContent>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(FeatureSetVersionBackfillContent)} does not support writing '{format}' format.");
             }
-
-            if (Optional.IsDefined(DisplayName))
+            if (Optional.IsCollectionDefined(DataAvailabilityStatus))
             {
-                writer.WritePropertyName("displayName"u8);
-                writer.WriteStringValue(DisplayName);
+                writer.WritePropertyName("dataAvailabilityStatus"u8);
+                writer.WriteStartArray();
+                foreach (DataAvailabilityStatus item in DataAvailabilityStatus)
+                {
+                    writer.WriteStringValue(item.ToString());
+                }
+                writer.WriteEndArray();
             }
             if (Optional.IsDefined(Description))
             {
                 writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);
             }
+            if (Optional.IsDefined(DisplayName))
+            {
+                writer.WritePropertyName("displayName"u8);
+                writer.WriteStringValue(DisplayName);
+            }
             if (Optional.IsDefined(FeatureWindow))
             {
-                if (FeatureWindow != null)
-                {
-                    writer.WritePropertyName("featureWindow"u8);
-                    writer.WriteObjectValue(FeatureWindow, options);
-                }
-                else
-                {
-                    writer.WriteNull("featureWindow");
-                }
-            }
-            if (Optional.IsCollectionDefined(DataAvailabilityStatus))
-            {
-                writer.WritePropertyName("dataAvailabilityStatus"u8);
-                writer.WriteStartArray();
-                foreach (var item in DataAvailabilityStatus)
-                {
-                    writer.WriteStringValue(item.ToString());
-                }
-                writer.WriteEndArray();
+                writer.WritePropertyName("featureWindow"u8);
+                writer.WriteObjectValue(FeatureWindow, options);
             }
             if (Optional.IsDefined(JobId))
             {
                 writer.WritePropertyName("jobId"u8);
                 writer.WriteStringValue(JobId);
             }
-            if (Optional.IsCollectionDefined(Tags))
+            if (Optional.IsCollectionDefined(Properties))
             {
-                writer.WritePropertyName("tags"u8);
+                writer.WritePropertyName("properties"u8);
                 writer.WriteStartObject();
-                foreach (var item in Tags)
+                foreach (var item in Properties)
                 {
                     writer.WritePropertyName(item.Key);
+                    if (item.Value == null)
+                    {
+                        writer.WriteNullValue();
+                        continue;
+                    }
                     writer.WriteStringValue(item.Value);
                 }
                 writer.WriteEndObject();
@@ -94,30 +143,40 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 foreach (var item in SparkConfiguration)
                 {
                     writer.WritePropertyName(item.Key);
+                    if (item.Value == null)
+                    {
+                        writer.WriteNullValue();
+                        continue;
+                    }
                     writer.WriteStringValue(item.Value);
                 }
                 writer.WriteEndObject();
             }
-            if (Optional.IsCollectionDefined(Properties))
+            if (Optional.IsCollectionDefined(Tags))
             {
-                writer.WritePropertyName("properties"u8);
+                writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
-                foreach (var item in Properties)
+                foreach (var item in Tags)
                 {
                     writer.WritePropertyName(item.Key);
+                    if (item.Value == null)
+                    {
+                        writer.WriteNullValue();
+                        continue;
+                    }
                     writer.WriteStringValue(item.Value);
                 }
                 writer.WriteEndObject();
             }
-            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
-                foreach (var item in _serializedAdditionalRawData)
+                foreach (var item in _additionalBinaryDataProperties)
                 {
                     writer.WritePropertyName(item.Key);
 #if NET6_0_OR_GREATER
-				writer.WriteRawValue(item.Value);
+                    writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value, ModelSerializationExtensions.JsonDocumentOptions))
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
                     {
                         JsonSerializer.Serialize(writer, document.RootElement);
                     }
@@ -126,177 +185,170 @@ namespace Azure.ResourceManager.MachineLearning.Models
             }
         }
 
-        FeatureSetVersionBackfillContent IJsonModel<FeatureSetVersionBackfillContent>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        FeatureSetVersionBackfillContent IJsonModel<FeatureSetVersionBackfillContent>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual FeatureSetVersionBackfillContent JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<FeatureSetVersionBackfillContent>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<FeatureSetVersionBackfillContent>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(FeatureSetVersionBackfillContent)} does not support reading '{format}' format.");
             }
-
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
             return DeserializeFeatureSetVersionBackfillContent(document.RootElement, options);
         }
 
-        internal static FeatureSetVersionBackfillContent DeserializeFeatureSetVersionBackfillContent(JsonElement element, ModelReaderWriterOptions options = null)
+        /// <param name="element"> The JSON element to deserialize. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        internal static FeatureSetVersionBackfillContent DeserializeFeatureSetVersionBackfillContent(JsonElement element, ModelReaderWriterOptions options)
         {
-            options ??= ModelSerializationExtensions.WireOptions;
-
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            string displayName = default;
-            string description = default;
-            FeatureWindow featureWindow = default;
             IList<DataAvailabilityStatus> dataAvailabilityStatus = default;
+            string description = default;
+            string displayName = default;
+            FeatureWindow featureWindow = default;
             string jobId = default;
-            IDictionary<string, string> tags = default;
+            IDictionary<string, string> properties = default;
             MaterializationComputeResource resource = default;
             IDictionary<string, string> sparkConfiguration = default;
-            IDictionary<string, string> properties = default;
-            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
-            foreach (var property in element.EnumerateObject())
+            IDictionary<string, string> tags = default;
+            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            foreach (var prop in element.EnumerateObject())
             {
-                if (property.NameEquals("displayName"u8))
+                if (prop.NameEquals("dataAvailabilityStatus"u8))
                 {
-                    displayName = property.Value.GetString();
-                    continue;
-                }
-                if (property.NameEquals("description"u8))
-                {
-                    description = property.Value.GetString();
-                    continue;
-                }
-                if (property.NameEquals("featureWindow"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        featureWindow = null;
-                        continue;
-                    }
-                    featureWindow = FeatureWindow.DeserializeFeatureWindow(property.Value, options);
-                    continue;
-                }
-                if (property.NameEquals("dataAvailabilityStatus"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
                     List<DataAvailabilityStatus> array = new List<DataAvailabilityStatus>();
-                    foreach (var item in property.Value.EnumerateArray())
+                    foreach (var item in prop.Value.EnumerateArray())
                     {
                         array.Add(new DataAvailabilityStatus(item.GetString()));
                     }
                     dataAvailabilityStatus = array;
                     continue;
                 }
-                if (property.NameEquals("jobId"u8))
+                if (prop.NameEquals("description"u8))
                 {
-                    jobId = property.Value.GetString();
+                    description = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("tags"u8))
+                if (prop.NameEquals("displayName"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    displayName = prop.Value.GetString();
+                    continue;
+                }
+                if (prop.NameEquals("featureWindow"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        featureWindow = null;
+                        continue;
+                    }
+                    featureWindow = FeatureWindow.DeserializeFeatureWindow(prop.Value, options);
+                    continue;
+                }
+                if (prop.NameEquals("jobId"u8))
+                {
+                    jobId = prop.Value.GetString();
+                    continue;
+                }
+                if (prop.NameEquals("properties"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
                     Dictionary<string, string> dictionary = new Dictionary<string, string>();
-                    foreach (var property0 in property.Value.EnumerateObject())
+                    foreach (var prop0 in prop.Value.EnumerateObject())
                     {
-                        dictionary.Add(property0.Name, property0.Value.GetString());
-                    }
-                    tags = dictionary;
-                    continue;
-                }
-                if (property.NameEquals("resource"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    resource = MaterializationComputeResource.DeserializeMaterializationComputeResource(property.Value, options);
-                    continue;
-                }
-                if (property.NameEquals("sparkConfiguration"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    Dictionary<string, string> dictionary = new Dictionary<string, string>();
-                    foreach (var property0 in property.Value.EnumerateObject())
-                    {
-                        dictionary.Add(property0.Name, property0.Value.GetString());
-                    }
-                    sparkConfiguration = dictionary;
-                    continue;
-                }
-                if (property.NameEquals("properties"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    Dictionary<string, string> dictionary = new Dictionary<string, string>();
-                    foreach (var property0 in property.Value.EnumerateObject())
-                    {
-                        dictionary.Add(property0.Name, property0.Value.GetString());
+                        if (prop0.Value.ValueKind == JsonValueKind.Null)
+                        {
+                            dictionary.Add(prop0.Name, null);
+                        }
+                        else
+                        {
+                            dictionary.Add(prop0.Name, prop0.Value.GetString());
+                        }
                     }
                     properties = dictionary;
                     continue;
                 }
+                if (prop.NameEquals("resource"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    resource = MaterializationComputeResource.DeserializeMaterializationComputeResource(prop.Value, options);
+                    continue;
+                }
+                if (prop.NameEquals("sparkConfiguration"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    Dictionary<string, string> dictionary = new Dictionary<string, string>();
+                    foreach (var prop0 in prop.Value.EnumerateObject())
+                    {
+                        if (prop0.Value.ValueKind == JsonValueKind.Null)
+                        {
+                            dictionary.Add(prop0.Name, null);
+                        }
+                        else
+                        {
+                            dictionary.Add(prop0.Name, prop0.Value.GetString());
+                        }
+                    }
+                    sparkConfiguration = dictionary;
+                    continue;
+                }
+                if (prop.NameEquals("tags"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    Dictionary<string, string> dictionary = new Dictionary<string, string>();
+                    foreach (var prop0 in prop.Value.EnumerateObject())
+                    {
+                        if (prop0.Value.ValueKind == JsonValueKind.Null)
+                        {
+                            dictionary.Add(prop0.Name, null);
+                        }
+                        else
+                        {
+                            dictionary.Add(prop0.Name, prop0.Value.GetString());
+                        }
+                    }
+                    tags = dictionary;
+                    continue;
+                }
                 if (options.Format != "W")
                 {
-                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = rawDataDictionary;
             return new FeatureSetVersionBackfillContent(
-                displayName,
-                description,
-                featureWindow,
                 dataAvailabilityStatus ?? new ChangeTrackingList<DataAvailabilityStatus>(),
+                description,
+                displayName,
+                featureWindow,
                 jobId,
-                tags ?? new ChangeTrackingDictionary<string, string>(),
+                properties ?? new ChangeTrackingDictionary<string, string>(),
                 resource,
                 sparkConfiguration ?? new ChangeTrackingDictionary<string, string>(),
-                properties ?? new ChangeTrackingDictionary<string, string>(),
-                serializedAdditionalRawData);
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                additionalBinaryDataProperties);
         }
-
-        BinaryData IPersistableModel<FeatureSetVersionBackfillContent>.Write(ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<FeatureSetVersionBackfillContent>)this).GetFormatFromOptions(options) : options.Format;
-
-            switch (format)
-            {
-                case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerMachineLearningContext.Default);
-                default:
-                    throw new FormatException($"The model {nameof(FeatureSetVersionBackfillContent)} does not support writing '{options.Format}' format.");
-            }
-        }
-
-        FeatureSetVersionBackfillContent IPersistableModel<FeatureSetVersionBackfillContent>.Create(BinaryData data, ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<FeatureSetVersionBackfillContent>)this).GetFormatFromOptions(options) : options.Format;
-
-            switch (format)
-            {
-                case "J":
-                    {
-                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
-                        return DeserializeFeatureSetVersionBackfillContent(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(FeatureSetVersionBackfillContent)} does not support reading '{options.Format}' format.");
-            }
-        }
-
-        string IPersistableModel<FeatureSetVersionBackfillContent>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

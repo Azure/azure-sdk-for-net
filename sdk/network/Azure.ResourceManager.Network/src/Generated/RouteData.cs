@@ -83,11 +83,11 @@ namespace Azure.ResourceManager.Network
 
         /// <summary> The IP address packets should be forwarded to. Next hop values are only allowed in routes where the next hop type is VirtualAppliance. </summary>
         [WirePath("properties.nextHopIpAddress")]
-        public string NextHopIpAddress
+        public string NextHopIPAddress
         {
             get
             {
-                return Properties is null ? default : Properties.NextHopIpAddress;
+                return Properties is null ? default : Properties.NextHopIPAddress;
             }
             set
             {
@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.Network
                 {
                     Properties = new RoutePropertiesFormat();
                 }
-                Properties.NextHopIpAddress = value;
+                Properties.NextHopIPAddress = value;
             }
         }
 

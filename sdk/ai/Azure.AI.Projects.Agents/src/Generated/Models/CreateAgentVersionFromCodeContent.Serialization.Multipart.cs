@@ -20,7 +20,7 @@ namespace Azure.AI.Projects.Agents
         {
             MultiPartFormContent content = new MultiPartFormContent();
 
-            content.Add<CreateAgentVersionFromCodeMetadata>("metadata", Metadata, AzureAIProjectsAgentsContext.Default, ModelSerializationExtensions.WireOptions, "application/json");
+            content.Add<AgentVersionFromCodeMetadata>("metadata", Metadata, AzureAIProjectsAgentsContext.Default, ModelSerializationExtensions.WireOptions, "application/json");
             content.Add("code", Code);
 
             return content;

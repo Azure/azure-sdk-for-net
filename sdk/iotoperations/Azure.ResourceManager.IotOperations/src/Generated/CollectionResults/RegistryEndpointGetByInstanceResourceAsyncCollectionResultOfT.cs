@@ -56,8 +56,8 @@ namespace Azure.ResourceManager.IotOperations
                     yield break;
                 }
                 RegistryEndpointResourceListResult result = RegistryEndpointResourceListResult.FromResponse(response);
-                yield return Page<IotOperationsRegistryEndpointData>.FromValues((IReadOnlyList<IotOperationsRegistryEndpointData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 nextPage = result.NextLink;
+                yield return Page<IotOperationsRegistryEndpointData>.FromValues((IReadOnlyList<IotOperationsRegistryEndpointData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 if (nextPage == null)
                 {
                     yield break;

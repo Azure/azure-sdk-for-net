@@ -10,7 +10,6 @@
     <IncludeOperationsSharedSource>true</IncludeOperationsSharedSource>
     <DisableEnhancedAnalysis>true</DisableEnhancedAnalysis>
     <AotCompatOptOut>true</AotCompatOptOut>
-    <NoWarn>$(NoWarn);CS1574</NoWarn>
   </PropertyGroup>
 
     <ItemGroup>

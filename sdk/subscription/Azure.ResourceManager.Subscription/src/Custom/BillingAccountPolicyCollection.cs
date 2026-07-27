@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.Subscription
         {
             _billingAccountPoliciesResponsesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Subscription", BillingAccountPolicyResource.ResourceType.Namespace, Diagnostics);
             TryGetApiVersion(BillingAccountPolicyResource.ResourceType, out string billingAccountPolicyBillingAccountApiVersion);
-            _billingAccountPoliciesResponsesRestClient = new BillingAccountPoliciesResponses(_billingAccountPoliciesResponsesClientDiagnostics, Pipeline, Endpoint, billingAccountPolicyBillingAccountApiVersion ?? "2025-11-01-preview");
+            _billingAccountPoliciesResponsesRestClient = new BillingAccountPoliciesResponses(_billingAccountPoliciesResponsesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, billingAccountPolicyBillingAccountApiVersion ?? "2025-11-01-preview");
 #if DEBUG
             ValidateResourceId(Id);
 #endif

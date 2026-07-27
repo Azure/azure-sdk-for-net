@@ -132,7 +132,7 @@ namespace Azure.ResourceManager.Compute.Models
             {
                 return null;
             }
-            VmScaleSetLifecycleHookEventProperties properties = default;
+            VirtualMachineScaleSetLifecycleHookEventProperties properties = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -142,7 +142,7 @@ namespace Azure.ResourceManager.Compute.Models
                     {
                         continue;
                     }
-                    properties = VmScaleSetLifecycleHookEventProperties.DeserializeVmScaleSetLifecycleHookEventProperties(prop.Value, options);
+                    properties = VirtualMachineScaleSetLifecycleHookEventProperties.DeserializeVirtualMachineScaleSetLifecycleHookEventProperties(prop.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

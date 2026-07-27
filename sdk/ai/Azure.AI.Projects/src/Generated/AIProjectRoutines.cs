@@ -23,11 +23,13 @@ namespace Azure.AI.Projects
         }
 
         /// <summary> Initializes a new instance of AIProjectRoutines. </summary>
+        /// <param name="clientDiagnostics"> The ClientDiagnostics is used to provide tracing support for the client library. </param>
         /// <param name="pipeline"> The HTTP pipeline for sending and receiving REST requests and responses. </param>
         /// <param name="endpoint"> Service endpoint. </param>
         /// <param name="apiVersion"></param>
-        internal AIProjectRoutines(ClientPipeline pipeline, Uri endpoint, string apiVersion)
+        internal AIProjectRoutines(ClientDiagnostics clientDiagnostics, ClientPipeline pipeline, Uri endpoint, string apiVersion)
         {
+            ClientDiagnostics = clientDiagnostics;
             _endpoint = endpoint;
             Pipeline = pipeline;
             _apiVersion = apiVersion;
@@ -36,6 +38,9 @@ namespace Azure.AI.Projects
         /// <summary> The HTTP pipeline for sending and receiving REST requests and responses. </summary>
         public ClientPipeline Pipeline { get; }
 
+        /// <summary> The ClientDiagnostics is used to provide tracing support for the client library. </summary>
+        internal ClientDiagnostics ClientDiagnostics { get; }
+
         /// <summary>
         /// [Protocol Method] Creates a new routine or replaces an existing routine with the supplied definition.
         /// <list type="bullet">
@@ -50,10 +55,20 @@ namespace Azure.AI.Projects
         /// <param name="options"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        internal virtual ClientResult CreateOrUpdateRoutine(string routineName, BinaryContent content, string foundryFeatures = default, RequestOptions options = null)
+        internal virtual ClientResult CreateOrUpdate(string routineName, BinaryContent content, string foundryFeatures = default, RequestOptions options = null)
         {
-            using PipelineMessage message = CreateCreateOrUpdateRoutineRequest(routineName, content, foundryFeatures, options);
-            return ClientResult.FromResponse(Pipeline.ProcessMessage(message, options));
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("AIProjectRoutines.CreateOrUpdate");
+            scope.Start();
+            try
+            {
+                using PipelineMessage message = CreateCreateOrUpdateRequest(routineName, content, foundryFeatures, options);
+                return ClientResult.FromResponse(Pipeline.ProcessMessage(message, options));
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
 
         /// <summary>
@@ -70,10 +85,20 @@ namespace Azure.AI.Projects
         /// <param name="options"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        internal virtual async Task<ClientResult> CreateOrUpdateRoutineAsync(string routineName, BinaryContent content, string foundryFeatures = default, RequestOptions options = null)
+        internal virtual async Task<ClientResult> CreateOrUpdateAsync(string routineName, BinaryContent content, string foundryFeatures = default, RequestOptions options = null)
         {
-            using PipelineMessage message = CreateCreateOrUpdateRoutineRequest(routineName, content, foundryFeatures, options);
-            return ClientResult.FromResponse(await Pipeline.ProcessMessageAsync(message, options).ConfigureAwait(false));
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("AIProjectRoutines.CreateOrUpdate");
+            scope.Start();
+            try
+            {
+                using PipelineMessage message = CreateCreateOrUpdateRequest(routineName, content, foundryFeatures, options);
+                return ClientResult.FromResponse(await Pipeline.ProcessMessageAsync(message, options).ConfigureAwait(false));
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
 
         /// <summary> Creates a new routine or replaces an existing routine with the supplied definition. </summary>
@@ -85,10 +110,10 @@ namespace Azure.AI.Projects
         /// <param name="foundryFeatures"> A feature flag opt-in required when using preview operations or modifying persisted preview resources. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
         /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
-        internal virtual ClientResult<ProjectsRoutine> CreateOrUpdateRoutine(string routineName, string description = default, bool? enabled = default, IDictionary<string, RoutineTrigger> triggers = default, RoutineAction action = default, FoundryFeaturesOptInKeys? foundryFeatures = default, CancellationToken cancellationToken = default)
+        internal virtual ClientResult<ProjectsRoutine> CreateOrUpdate(string routineName, string description = default, bool? enabled = default, IDictionary<string, RoutineTrigger> triggers = default, RoutineAction action = default, FoundryFeaturesOptInKeys? foundryFeatures = default, CancellationToken cancellationToken = default)
         {
             CreateOrUpdateRoutineRequest spreadModel = new CreateOrUpdateRoutineRequest(description, enabled, triggers ?? new ChangeTrackingDictionary<string, RoutineTrigger>(), action, default);
-            ClientResult result = CreateOrUpdateRoutine(routineName, spreadModel, foundryFeatures?.ToSerialString(), cancellationToken.ToRequestOptions());
+            ClientResult result = CreateOrUpdate(routineName, spreadModel, foundryFeatures?.ToSerialString(), cancellationToken.ToRequestOptions());
             return ClientResult.FromValue((ProjectsRoutine)result, result.GetRawResponse());
         }
 
@@ -101,10 +126,10 @@ namespace Azure.AI.Projects
         /// <param name="foundryFeatures"> A feature flag opt-in required when using preview operations or modifying persisted preview resources. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
         /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
-        internal virtual async Task<ClientResult<ProjectsRoutine>> CreateOrUpdateRoutineAsync(string routineName, string description = default, bool? enabled = default, IDictionary<string, RoutineTrigger> triggers = default, RoutineAction action = default, FoundryFeaturesOptInKeys? foundryFeatures = default, CancellationToken cancellationToken = default)
+        internal virtual async Task<ClientResult<ProjectsRoutine>> CreateOrUpdateAsync(string routineName, string description = default, bool? enabled = default, IDictionary<string, RoutineTrigger> triggers = default, RoutineAction action = default, FoundryFeaturesOptInKeys? foundryFeatures = default, CancellationToken cancellationToken = default)
         {
             CreateOrUpdateRoutineRequest spreadModel = new CreateOrUpdateRoutineRequest(description, enabled, triggers ?? new ChangeTrackingDictionary<string, RoutineTrigger>(), action, default);
-            ClientResult result = await CreateOrUpdateRoutineAsync(routineName, spreadModel, foundryFeatures?.ToSerialString(), cancellationToken.ToRequestOptions()).ConfigureAwait(false);
+            ClientResult result = await CreateOrUpdateAsync(routineName, spreadModel, foundryFeatures?.ToSerialString(), cancellationToken.ToRequestOptions()).ConfigureAwait(false);
             return ClientResult.FromValue((ProjectsRoutine)result, result.GetRawResponse());
         }
 
@@ -121,10 +146,20 @@ namespace Azure.AI.Projects
         /// <param name="options"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        internal virtual ClientResult GetRoutine(string routineName, string foundryFeatures, RequestOptions options)
+        internal virtual ClientResult Get(string routineName, string foundryFeatures, RequestOptions options)
         {
-            using PipelineMessage message = CreateGetRoutineRequest(routineName, foundryFeatures, options);
-            return ClientResult.FromResponse(Pipeline.ProcessMessage(message, options));
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("AIProjectRoutines.Get");
+            scope.Start();
+            try
+            {
+                using PipelineMessage message = CreateGetRequest(routineName, foundryFeatures, options);
+                return ClientResult.FromResponse(Pipeline.ProcessMessage(message, options));
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
 
         /// <summary>
@@ -140,10 +175,20 @@ namespace Azure.AI.Projects
         /// <param name="options"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        internal virtual async Task<ClientResult> GetRoutineAsync(string routineName, string foundryFeatures, RequestOptions options)
+        internal virtual async Task<ClientResult> GetAsync(string routineName, string foundryFeatures, RequestOptions options)
         {
-            using PipelineMessage message = CreateGetRoutineRequest(routineName, foundryFeatures, options);
-            return ClientResult.FromResponse(await Pipeline.ProcessMessageAsync(message, options).ConfigureAwait(false));
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("AIProjectRoutines.Get");
+            scope.Start();
+            try
+            {
+                using PipelineMessage message = CreateGetRequest(routineName, foundryFeatures, options);
+                return ClientResult.FromResponse(await Pipeline.ProcessMessageAsync(message, options).ConfigureAwait(false));
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
 
         /// <summary> Retrieves the specified routine and its current configuration. </summary>
@@ -151,9 +196,9 @@ namespace Azure.AI.Projects
         /// <param name="foundryFeatures"> A feature flag opt-in required when using preview operations or modifying persisted preview resources. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
         /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
-        internal virtual ClientResult<ProjectsRoutine> GetRoutine(string routineName, FoundryFeaturesOptInKeys? foundryFeatures = default, CancellationToken cancellationToken = default)
+        internal virtual ClientResult<ProjectsRoutine> Get(string routineName, FoundryFeaturesOptInKeys? foundryFeatures = default, CancellationToken cancellationToken = default)
         {
-            ClientResult result = GetRoutine(routineName, foundryFeatures?.ToSerialString(), cancellationToken.ToRequestOptions());
+            ClientResult result = Get(routineName, foundryFeatures?.ToSerialString(), cancellationToken.ToRequestOptions());
             return ClientResult.FromValue((ProjectsRoutine)result, result.GetRawResponse());
         }
 
@@ -162,9 +207,9 @@ namespace Azure.AI.Projects
         /// <param name="foundryFeatures"> A feature flag opt-in required when using preview operations or modifying persisted preview resources. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
         /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
-        internal virtual async Task<ClientResult<ProjectsRoutine>> GetRoutineAsync(string routineName, FoundryFeaturesOptInKeys? foundryFeatures = default, CancellationToken cancellationToken = default)
+        internal virtual async Task<ClientResult<ProjectsRoutine>> GetAsync(string routineName, FoundryFeaturesOptInKeys? foundryFeatures = default, CancellationToken cancellationToken = default)
         {
-            ClientResult result = await GetRoutineAsync(routineName, foundryFeatures?.ToSerialString(), cancellationToken.ToRequestOptions()).ConfigureAwait(false);
+            ClientResult result = await GetAsync(routineName, foundryFeatures?.ToSerialString(), cancellationToken.ToRequestOptions()).ConfigureAwait(false);
             return ClientResult.FromValue((ProjectsRoutine)result, result.GetRawResponse());
         }
 
@@ -181,10 +226,20 @@ namespace Azure.AI.Projects
         /// <param name="options"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        internal virtual ClientResult EnableRoutine(string routineName, string foundryFeatures, RequestOptions options)
+        internal virtual ClientResult Enable(string routineName, string foundryFeatures, RequestOptions options)
         {
-            using PipelineMessage message = CreateEnableRoutineRequest(routineName, foundryFeatures, options);
-            return ClientResult.FromResponse(Pipeline.ProcessMessage(message, options));
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("AIProjectRoutines.Enable");
+            scope.Start();
+            try
+            {
+                using PipelineMessage message = CreateEnableRequest(routineName, foundryFeatures, options);
+                return ClientResult.FromResponse(Pipeline.ProcessMessage(message, options));
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
 
         /// <summary>
@@ -200,10 +255,20 @@ namespace Azure.AI.Projects
         /// <param name="options"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        internal virtual async Task<ClientResult> EnableRoutineAsync(string routineName, string foundryFeatures, RequestOptions options)
+        internal virtual async Task<ClientResult> EnableAsync(string routineName, string foundryFeatures, RequestOptions options)
         {
-            using PipelineMessage message = CreateEnableRoutineRequest(routineName, foundryFeatures, options);
-            return ClientResult.FromResponse(await Pipeline.ProcessMessageAsync(message, options).ConfigureAwait(false));
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("AIProjectRoutines.Enable");
+            scope.Start();
+            try
+            {
+                using PipelineMessage message = CreateEnableRequest(routineName, foundryFeatures, options);
+                return ClientResult.FromResponse(await Pipeline.ProcessMessageAsync(message, options).ConfigureAwait(false));
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
 
         /// <summary> Enables the specified routine so it can be dispatched. </summary>
@@ -211,9 +276,9 @@ namespace Azure.AI.Projects
         /// <param name="foundryFeatures"> A feature flag opt-in required when using preview operations or modifying persisted preview resources. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
         /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
-        internal virtual ClientResult<ProjectsRoutine> EnableRoutine(string routineName, FoundryFeaturesOptInKeys? foundryFeatures = default, CancellationToken cancellationToken = default)
+        internal virtual ClientResult<ProjectsRoutine> Enable(string routineName, FoundryFeaturesOptInKeys? foundryFeatures = default, CancellationToken cancellationToken = default)
         {
-            ClientResult result = EnableRoutine(routineName, foundryFeatures?.ToSerialString(), cancellationToken.ToRequestOptions());
+            ClientResult result = Enable(routineName, foundryFeatures?.ToSerialString(), cancellationToken.ToRequestOptions());
             return ClientResult.FromValue((ProjectsRoutine)result, result.GetRawResponse());
         }
 
@@ -222,9 +287,9 @@ namespace Azure.AI.Projects
         /// <param name="foundryFeatures"> A feature flag opt-in required when using preview operations or modifying persisted preview resources. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
         /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
-        internal virtual async Task<ClientResult<ProjectsRoutine>> EnableRoutineAsync(string routineName, FoundryFeaturesOptInKeys? foundryFeatures = default, CancellationToken cancellationToken = default)
+        internal virtual async Task<ClientResult<ProjectsRoutine>> EnableAsync(string routineName, FoundryFeaturesOptInKeys? foundryFeatures = default, CancellationToken cancellationToken = default)
         {
-            ClientResult result = await EnableRoutineAsync(routineName, foundryFeatures?.ToSerialString(), cancellationToken.ToRequestOptions()).ConfigureAwait(false);
+            ClientResult result = await EnableAsync(routineName, foundryFeatures?.ToSerialString(), cancellationToken.ToRequestOptions()).ConfigureAwait(false);
             return ClientResult.FromValue((ProjectsRoutine)result, result.GetRawResponse());
         }
 
@@ -241,10 +306,20 @@ namespace Azure.AI.Projects
         /// <param name="options"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        internal virtual ClientResult DisableRoutine(string routineName, string foundryFeatures, RequestOptions options)
+        internal virtual ClientResult Disable(string routineName, string foundryFeatures, RequestOptions options)
         {
-            using PipelineMessage message = CreateDisableRoutineRequest(routineName, foundryFeatures, options);
-            return ClientResult.FromResponse(Pipeline.ProcessMessage(message, options));
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("AIProjectRoutines.Disable");
+            scope.Start();
+            try
+            {
+                using PipelineMessage message = CreateDisableRequest(routineName, foundryFeatures, options);
+                return ClientResult.FromResponse(Pipeline.ProcessMessage(message, options));
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
 
         /// <summary>
@@ -260,10 +335,20 @@ namespace Azure.AI.Projects
         /// <param name="options"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        internal virtual async Task<ClientResult> DisableRoutineAsync(string routineName, string foundryFeatures, RequestOptions options)
+        internal virtual async Task<ClientResult> DisableAsync(string routineName, string foundryFeatures, RequestOptions options)
         {
-            using PipelineMessage message = CreateDisableRoutineRequest(routineName, foundryFeatures, options);
-            return ClientResult.FromResponse(await Pipeline.ProcessMessageAsync(message, options).ConfigureAwait(false));
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("AIProjectRoutines.Disable");
+            scope.Start();
+            try
+            {
+                using PipelineMessage message = CreateDisableRequest(routineName, foundryFeatures, options);
+                return ClientResult.FromResponse(await Pipeline.ProcessMessageAsync(message, options).ConfigureAwait(false));
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
 
         /// <summary> Disables the specified routine so it no longer runs. </summary>
@@ -271,9 +356,9 @@ namespace Azure.AI.Projects
         /// <param name="foundryFeatures"> A feature flag opt-in required when using preview operations or modifying persisted preview resources. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
         /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
-        internal virtual ClientResult<ProjectsRoutine> DisableRoutine(string routineName, FoundryFeaturesOptInKeys? foundryFeatures = default, CancellationToken cancellationToken = default)
+        internal virtual ClientResult<ProjectsRoutine> Disable(string routineName, FoundryFeaturesOptInKeys? foundryFeatures = default, CancellationToken cancellationToken = default)
         {
-            ClientResult result = DisableRoutine(routineName, foundryFeatures?.ToSerialString(), cancellationToken.ToRequestOptions());
+            ClientResult result = Disable(routineName, foundryFeatures?.ToSerialString(), cancellationToken.ToRequestOptions());
             return ClientResult.FromValue((ProjectsRoutine)result, result.GetRawResponse());
         }
 
@@ -282,9 +367,9 @@ namespace Azure.AI.Projects
         /// <param name="foundryFeatures"> A feature flag opt-in required when using preview operations or modifying persisted preview resources. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
         /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
-        internal virtual async Task<ClientResult<ProjectsRoutine>> DisableRoutineAsync(string routineName, FoundryFeaturesOptInKeys? foundryFeatures = default, CancellationToken cancellationToken = default)
+        internal virtual async Task<ClientResult<ProjectsRoutine>> DisableAsync(string routineName, FoundryFeaturesOptInKeys? foundryFeatures = default, CancellationToken cancellationToken = default)
         {
-            ClientResult result = await DisableRoutineAsync(routineName, foundryFeatures?.ToSerialString(), cancellationToken.ToRequestOptions()).ConfigureAwait(false);
+            ClientResult result = await DisableAsync(routineName, foundryFeatures?.ToSerialString(), cancellationToken.ToRequestOptions()).ConfigureAwait(false);
             return ClientResult.FromValue((ProjectsRoutine)result, result.GetRawResponse());
         }
 
@@ -301,10 +386,20 @@ namespace Azure.AI.Projects
         /// <param name="options"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        internal virtual ClientResult DeleteRoutine(string routineName, string foundryFeatures, RequestOptions options)
+        internal virtual ClientResult Delete(string routineName, string foundryFeatures, RequestOptions options)
         {
-            using PipelineMessage message = CreateDeleteRoutineRequest(routineName, foundryFeatures, options);
-            return ClientResult.FromResponse(Pipeline.ProcessMessage(message, options));
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("AIProjectRoutines.Delete");
+            scope.Start();
+            try
+            {
+                using PipelineMessage message = CreateDeleteRequest(routineName, foundryFeatures, options);
+                return ClientResult.FromResponse(Pipeline.ProcessMessage(message, options));
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
 
         /// <summary>
@@ -320,10 +415,20 @@ namespace Azure.AI.Projects
         /// <param name="options"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        internal virtual async Task<ClientResult> DeleteRoutineAsync(string routineName, string foundryFeatures, RequestOptions options)
+        internal virtual async Task<ClientResult> DeleteAsync(string routineName, string foundryFeatures, RequestOptions options)
         {
-            using PipelineMessage message = CreateDeleteRoutineRequest(routineName, foundryFeatures, options);
-            return ClientResult.FromResponse(await Pipeline.ProcessMessageAsync(message, options).ConfigureAwait(false));
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("AIProjectRoutines.Delete");
+            scope.Start();
+            try
+            {
+                using PipelineMessage message = CreateDeleteRequest(routineName, foundryFeatures, options);
+                return ClientResult.FromResponse(await Pipeline.ProcessMessageAsync(message, options).ConfigureAwait(false));
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
 
         /// <summary> Deletes the specified routine. </summary>
@@ -331,9 +436,9 @@ namespace Azure.AI.Projects
         /// <param name="foundryFeatures"> A feature flag opt-in required when using preview operations or modifying persisted preview resources. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
         /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
-        internal virtual ClientResult DeleteRoutine(string routineName, FoundryFeaturesOptInKeys? foundryFeatures = default, CancellationToken cancellationToken = default)
+        internal virtual ClientResult Delete(string routineName, FoundryFeaturesOptInKeys? foundryFeatures = default, CancellationToken cancellationToken = default)
         {
-            return DeleteRoutine(routineName, foundryFeatures?.ToSerialString(), cancellationToken.ToRequestOptions());
+            return Delete(routineName, foundryFeatures?.ToSerialString(), cancellationToken.ToRequestOptions());
         }
 
         /// <summary> Deletes the specified routine. </summary>
@@ -341,9 +446,9 @@ namespace Azure.AI.Projects
         /// <param name="foundryFeatures"> A feature flag opt-in required when using preview operations or modifying persisted preview resources. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
         /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
-        internal virtual async Task<ClientResult> DeleteRoutineAsync(string routineName, FoundryFeaturesOptInKeys? foundryFeatures = default, CancellationToken cancellationToken = default)
+        internal virtual async Task<ClientResult> DeleteAsync(string routineName, FoundryFeaturesOptInKeys? foundryFeatures = default, CancellationToken cancellationToken = default)
         {
-            return await DeleteRoutineAsync(routineName, foundryFeatures?.ToSerialString(), cancellationToken.ToRequestOptions()).ConfigureAwait(false);
+            return await DeleteAsync(routineName, foundryFeatures?.ToSerialString(), cancellationToken.ToRequestOptions()).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -360,10 +465,20 @@ namespace Azure.AI.Projects
         /// <param name="options"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        internal virtual ClientResult DispatchAsyncRoutine(string routineName, BinaryContent content, string foundryFeatures = default, RequestOptions options = null)
+        internal virtual ClientResult Dispatch(string routineName, BinaryContent content, string foundryFeatures = default, RequestOptions options = null)
         {
-            using PipelineMessage message = CreateDispatchAsyncRoutineRequest(routineName, content, foundryFeatures, options);
-            return ClientResult.FromResponse(Pipeline.ProcessMessage(message, options));
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("AIProjectRoutines.Dispatch");
+            scope.Start();
+            try
+            {
+                using PipelineMessage message = CreateDispatchRequest(routineName, content, foundryFeatures, options);
+                return ClientResult.FromResponse(Pipeline.ProcessMessage(message, options));
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
 
         /// <summary>
@@ -380,10 +495,20 @@ namespace Azure.AI.Projects
         /// <param name="options"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        internal virtual async Task<ClientResult> DispatchAsyncRoutineAsync(string routineName, BinaryContent content, string foundryFeatures = default, RequestOptions options = null)
+        internal virtual async Task<ClientResult> DispatchAsync(string routineName, BinaryContent content, string foundryFeatures = default, RequestOptions options = null)
         {
-            using PipelineMessage message = CreateDispatchAsyncRoutineRequest(routineName, content, foundryFeatures, options);
-            return ClientResult.FromResponse(await Pipeline.ProcessMessageAsync(message, options).ConfigureAwait(false));
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("AIProjectRoutines.Dispatch");
+            scope.Start();
+            try
+            {
+                using PipelineMessage message = CreateDispatchRequest(routineName, content, foundryFeatures, options);
+                return ClientResult.FromResponse(await Pipeline.ProcessMessageAsync(message, options).ConfigureAwait(false));
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
 
         /// <summary> Queues an asynchronous dispatch for the specified routine. </summary>
@@ -392,11 +517,11 @@ namespace Azure.AI.Projects
         /// <param name="foundryFeatures"> A feature flag opt-in required when using preview operations or modifying persisted preview resources. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
         /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
-        internal virtual ClientResult<DispatchRoutineResponse> DispatchAsyncRoutine(string routineName, RoutineDispatchPayload payload = default, FoundryFeaturesOptInKeys? foundryFeatures = default, CancellationToken cancellationToken = default)
+        internal virtual ClientResult<DispatchRoutineResult> Dispatch(string routineName, RoutineDispatchPayload payload = default, FoundryFeaturesOptInKeys? foundryFeatures = default, CancellationToken cancellationToken = default)
         {
             DispatchRoutineAsyncRequest spreadModel = new DispatchRoutineAsyncRequest(payload, default);
-            ClientResult result = DispatchAsyncRoutine(routineName, spreadModel, foundryFeatures?.ToSerialString(), cancellationToken.ToRequestOptions());
-            return ClientResult.FromValue((DispatchRoutineResponse)result, result.GetRawResponse());
+            ClientResult result = Dispatch(routineName, spreadModel, foundryFeatures?.ToSerialString(), cancellationToken.ToRequestOptions());
+            return ClientResult.FromValue((DispatchRoutineResult)result, result.GetRawResponse());
         }
 
         /// <summary> Queues an asynchronous dispatch for the specified routine. </summary>
@@ -405,11 +530,11 @@ namespace Azure.AI.Projects
         /// <param name="foundryFeatures"> A feature flag opt-in required when using preview operations or modifying persisted preview resources. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
         /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
-        internal virtual async Task<ClientResult<DispatchRoutineResponse>> DispatchAsyncRoutineAsync(string routineName, RoutineDispatchPayload payload = default, FoundryFeaturesOptInKeys? foundryFeatures = default, CancellationToken cancellationToken = default)
+        internal virtual async Task<ClientResult<DispatchRoutineResult>> DispatchAsync(string routineName, RoutineDispatchPayload payload = default, FoundryFeaturesOptInKeys? foundryFeatures = default, CancellationToken cancellationToken = default)
         {
             DispatchRoutineAsyncRequest spreadModel = new DispatchRoutineAsyncRequest(payload, default);
-            ClientResult result = await DispatchAsyncRoutineAsync(routineName, spreadModel, foundryFeatures?.ToSerialString(), cancellationToken.ToRequestOptions()).ConfigureAwait(false);
-            return ClientResult.FromValue((DispatchRoutineResponse)result, result.GetRawResponse());
+            ClientResult result = await DispatchAsync(routineName, spreadModel, foundryFeatures?.ToSerialString(), cancellationToken.ToRequestOptions()).ConfigureAwait(false);
+            return ClientResult.FromValue((DispatchRoutineResult)result, result.GetRawResponse());
         }
     }
 }

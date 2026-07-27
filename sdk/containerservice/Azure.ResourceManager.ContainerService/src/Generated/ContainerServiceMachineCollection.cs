@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.ContainerService
         {
             TryGetApiVersion(ContainerServiceMachineResource.ResourceType, out string containerServiceMachineApiVersion);
             _machinesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ContainerService", ContainerServiceMachineResource.ResourceType.Namespace, Diagnostics);
-            _machinesRestClient = new Machines(_machinesClientDiagnostics, Pipeline, Endpoint, containerServiceMachineApiVersion ?? "2026-04-02-preview");
+            _machinesRestClient = new Machines(_machinesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, containerServiceMachineApiVersion ?? "2026-04-02-preview");
             ValidateResourceId(id);
         }
 

@@ -25,16 +25,16 @@ namespace Azure.ResourceManager.Network.Models
         /// <summary> Initializes a new instance of <see cref="VirtualApplianceNicProperties"/>. </summary>
         /// <param name="nicType"> NIC type - PublicNic, PrivateNic, or AdditionalNic; AdditionalPrivateNic and AdditionalPublicNic are only supported for NVAs deployed in VNets. </param>
         /// <param name="name"> NIC name. </param>
-        /// <param name="publicIpAddress"> Public IP address. </param>
-        /// <param name="privateIpAddress"> Private IP address. </param>
+        /// <param name="publicIPAddress"> Public IP address. </param>
+        /// <param name="privateIPAddress"> Private IP address. </param>
         /// <param name="instanceName"> Instance on which nic is attached. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal VirtualApplianceNicProperties(NicTypeInResponse? nicType, string name, string publicIpAddress, string privateIpAddress, string instanceName, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal VirtualApplianceNicProperties(NicTypeInResponse? nicType, string name, string publicIPAddress, string privateIPAddress, string instanceName, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             NicType = nicType;
             Name = name;
-            PublicIpAddress = publicIpAddress;
-            PrivateIpAddress = privateIpAddress;
+            PublicIPAddress = publicIPAddress;
+            PrivateIPAddress = privateIPAddress;
             InstanceName = instanceName;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
@@ -49,11 +49,11 @@ namespace Azure.ResourceManager.Network.Models
 
         /// <summary> Public IP address. </summary>
         [WirePath("publicIpAddress")]
-        public string PublicIpAddress { get; }
+        public string PublicIPAddress { get; }
 
         /// <summary> Private IP address. </summary>
         [WirePath("privateIpAddress")]
-        public string PrivateIpAddress { get; }
+        public string PrivateIPAddress { get; }
 
         /// <summary> Instance on which nic is attached. </summary>
         [WirePath("instanceName")]

@@ -34,6 +34,6 @@ namespace Azure.ResourceManager.AppContainers.Models
 
         /// <summary> Open telemetry logs destinations. </summary>
         [WirePath("destinations")]
-        public IList<string> Destinations { get; }
+        public IList<string> Destinations { get; } = new ChangeTrackingList<string>();
     }
 }

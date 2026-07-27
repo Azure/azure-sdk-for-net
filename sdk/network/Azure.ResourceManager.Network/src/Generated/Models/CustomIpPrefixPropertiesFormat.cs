@@ -21,8 +21,8 @@ namespace Azure.ResourceManager.Network.Models
         /// <summary> Initializes a new instance of <see cref="CustomIpPrefixPropertiesFormat"/>. </summary>
         public CustomIpPrefixPropertiesFormat()
         {
-            ChildCustomIpPrefixes = new ChangeTrackingList<NetworkSubResource>();
-            PublicIpPrefixes = new ChangeTrackingList<NetworkSubResource>();
+            ChildCustomIPPrefixes = new ChangeTrackingList<NetworkSubResource>();
+            PublicIPPrefixes = new ChangeTrackingList<NetworkSubResource>();
         }
 
         /// <summary> Initializes a new instance of <see cref="CustomIpPrefixPropertiesFormat"/>. </summary>
@@ -30,32 +30,32 @@ namespace Azure.ResourceManager.Network.Models
         /// <param name="cidr"> The prefix range in CIDR notation. Should include the start address and the prefix length. </param>
         /// <param name="signedMessage"> Signed message for WAN validation. </param>
         /// <param name="authorizationMessage"> Authorization message for WAN validation. </param>
-        /// <param name="customIpPrefixParent"> The Parent CustomIpPrefix for IPv6 /64 CustomIpPrefix. </param>
-        /// <param name="childCustomIpPrefixes"> The list of all Children for IPv6 /48 CustomIpPrefix. </param>
+        /// <param name="customIPPrefixParent"> The Parent CustomIpPrefix for IPv6 /64 CustomIpPrefix. </param>
+        /// <param name="childCustomIPPrefixes"> The list of all Children for IPv6 /48 CustomIpPrefix. </param>
         /// <param name="commissionedState"> The commissioned state of the Custom IP Prefix. </param>
         /// <param name="expressRouteAdvertise"> Whether to do express route advertise. </param>
         /// <param name="geo"> The Geo for CIDR advertising. Should be an Geo code. </param>
         /// <param name="noInternetAdvertise"> Whether to Advertise the range to Internet. </param>
         /// <param name="prefixType"> Type of custom IP prefix. Should be Singular, Parent, or Child. </param>
-        /// <param name="publicIpPrefixes"> The list of all referenced PublicIpPrefixes. </param>
+        /// <param name="publicIPPrefixes"> The list of all referenced PublicIpPrefixes. </param>
         /// <param name="resourceGuid"> The resource GUID property of the custom IP prefix resource. </param>
         /// <param name="failedReason"> The reason why resource is in failed state. </param>
         /// <param name="provisioningState"> The provisioning state of the custom IP prefix resource. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal CustomIpPrefixPropertiesFormat(string asn, string cidr, string signedMessage, string authorizationMessage, ResourceIdentifier customIpPrefixParent, IReadOnlyList<NetworkSubResource> childCustomIpPrefixes, CommissionedState? commissionedState, bool? expressRouteAdvertise, CidrAdvertisingGeoCode? geo, bool? noInternetAdvertise, CustomIPPrefixType? prefixType, IReadOnlyList<NetworkSubResource> publicIpPrefixes, Guid? resourceGuid, string failedReason, NetworkProvisioningState? provisioningState, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal CustomIpPrefixPropertiesFormat(string asn, string cidr, string signedMessage, string authorizationMessage, ResourceIdentifier customIPPrefixParent, IReadOnlyList<NetworkSubResource> childCustomIPPrefixes, CommissionedState? commissionedState, bool? expressRouteAdvertise, CidrAdvertisingGeoCode? geo, bool? noInternetAdvertise, CustomIPPrefixType? prefixType, IReadOnlyList<NetworkSubResource> publicIPPrefixes, Guid? resourceGuid, string failedReason, NetworkProvisioningState? provisioningState, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Asn = asn;
             Cidr = cidr;
             SignedMessage = signedMessage;
             AuthorizationMessage = authorizationMessage;
-            CustomIpPrefixParent = customIpPrefixParent;
-            ChildCustomIpPrefixes = childCustomIpPrefixes;
+            CustomIPPrefixParent = customIPPrefixParent;
+            ChildCustomIPPrefixes = childCustomIPPrefixes;
             CommissionedState = commissionedState;
             ExpressRouteAdvertise = expressRouteAdvertise;
             Geo = geo;
             NoInternetAdvertise = noInternetAdvertise;
             PrefixType = prefixType;
-            PublicIpPrefixes = publicIpPrefixes;
+            PublicIPPrefixes = publicIPPrefixes;
             ResourceGuid = resourceGuid;
             FailedReason = failedReason;
             ProvisioningState = provisioningState;
@@ -80,11 +80,11 @@ namespace Azure.ResourceManager.Network.Models
 
         /// <summary> The Parent CustomIpPrefix for IPv6 /64 CustomIpPrefix. </summary>
         [WirePath("customIpPrefixParent")]
-        public ResourceIdentifier CustomIpPrefixParent { get; set; }
+        public ResourceIdentifier CustomIPPrefixParent { get; set; }
 
         /// <summary> The list of all Children for IPv6 /48 CustomIpPrefix. </summary>
         [WirePath("childCustomIpPrefixes")]
-        public IReadOnlyList<NetworkSubResource> ChildCustomIpPrefixes { get; } = new ChangeTrackingList<NetworkSubResource>();
+        public IReadOnlyList<NetworkSubResource> ChildCustomIPPrefixes { get; } = new ChangeTrackingList<NetworkSubResource>();
 
         /// <summary> The commissioned state of the Custom IP Prefix. </summary>
         [WirePath("commissionedState")]
@@ -108,7 +108,7 @@ namespace Azure.ResourceManager.Network.Models
 
         /// <summary> The list of all referenced PublicIpPrefixes. </summary>
         [WirePath("publicIpPrefixes")]
-        public IReadOnlyList<NetworkSubResource> PublicIpPrefixes { get; } = new ChangeTrackingList<NetworkSubResource>();
+        public IReadOnlyList<NetworkSubResource> PublicIPPrefixes { get; } = new ChangeTrackingList<NetworkSubResource>();
 
         /// <summary> The resource GUID property of the custom IP prefix resource. </summary>
         [WirePath("resourceGuid")]

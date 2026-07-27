@@ -44,12 +44,35 @@ namespace Azure.Generator.Management.Tests.Providers
             var content = new TypeProviderWriter(attributeProvider!).Write().Content;
             Assert.That(content, Does.Contain("internal partial class CodeGenResourceDataAttribute : global::System.Attribute"));
             Assert.That(content, Does.Contain("public CodeGenResourceDataAttribute(global::System.Type dataType)"));
+            Assert.That(content, Does.Contain("public global::System.Type DataType"));
 
             var customCodeAttributeProviders = typeof(CodeModelGenerator).GetProperty(
                 "CustomCodeAttributeProviders",
                 BindingFlags.Instance | BindingFlags.Public | BindingFlags.NonPublic)!
                 .GetValue(plugin.Object) as IReadOnlyList<TypeProvider>;
             Assert.That(customCodeAttributeProviders!.Any(p => p.Name == "CodeGenResourceDataAttribute"), Is.True);
+        }
+
+        [TestCase]
+        public void Verify_CodeGenTagPatchHookAttributeIsEmitted()
+        {
+            var (_, models) = InputResourceData.ClientWithResource();
+            var plugin = ManagementMockHelpers.LoadMockPlugin(inputModels: () => models);
+
+            var attributeProvider = plugin.Object.OutputLibrary.TypeProviders
+                .FirstOrDefault(p => p.Name == "CodeGenTagPatchHookAttribute");
+
+            Assert.That(attributeProvider, Is.Not.Null);
+            var content = new TypeProviderWriter(attributeProvider!).Write().Content;
+            Assert.That(content, Does.Contain("internal partial class CodeGenTagPatchHookAttribute : global::System.Attribute"));
+            Assert.That(content, Does.Contain("public CodeGenTagPatchHookAttribute(string methodName)"));
+            Assert.That(content, Does.Contain("public string MethodName"));
+
+            var customCodeAttributeProviders = typeof(CodeModelGenerator).GetProperty(
+                "CustomCodeAttributeProviders",
+                BindingFlags.Instance | BindingFlags.Public | BindingFlags.NonPublic)!
+                .GetValue(plugin.Object) as IReadOnlyList<TypeProvider>;
+            Assert.That(customCodeAttributeProviders!.Any(p => p.Name == "CodeGenTagPatchHookAttribute"), Is.True);
         }
 
         [TestCase]
@@ -206,6 +229,30 @@ namespace Azure.Generator.Management.Tests.Providers
             Assert.That(asyncSignature.ReturnType?.Arguments[0].FrameworkType, Is.EqualTo(typeof(ArmOperation<>)));
             Assert.That(asyncSignature.ReturnType?.Arguments[0].Arguments[0].IsList, Is.True);
             Assert.That(asyncSignature.Parameters[0].Type.FrameworkType, Is.EqualTo(typeof(WaitUntil)));
+        }
+
+        [TestCase]
+        public void Verify_LroDeleteWithBody_UsesNonGenericArmOperation()
+        {
+            var (client, models) = InputResourceData.ClientWithResourceLroDeleteWithBody();
+            var plugin = ManagementMockHelpers.LoadMockPlugin(inputModels: () => models, clients: () => [client]);
+            var resourceProvider = plugin.Object.OutputLibrary.TypeProviders
+                .OfType<ResourceClientProvider>()
+                .FirstOrDefault();
+            Assert.That(resourceProvider, Is.Not.Null);
+
+            var syncMethod = resourceProvider!.Methods.FirstOrDefault(m => m.Signature.Name == "Delete");
+            Assert.That(syncMethod, Is.Not.Null);
+            var syncSignature = syncMethod!.Signature;
+            Assert.That(syncSignature.Parameters[0].Type.FrameworkType, Is.EqualTo(typeof(WaitUntil)));
+            Assert.That(syncSignature.ReturnType?.FrameworkType, Is.EqualTo(typeof(ArmOperation)));
+
+            var asyncMethod = resourceProvider.Methods.FirstOrDefault(m => m.Signature.Name == "DeleteAsync");
+            Assert.That(asyncMethod, Is.Not.Null);
+            var asyncSignature = asyncMethod!.Signature;
+            Assert.That(asyncSignature.Parameters[0].Type.FrameworkType, Is.EqualTo(typeof(WaitUntil)));
+            Assert.That(asyncSignature.ReturnType?.FrameworkType, Is.EqualTo(typeof(Task<>)));
+            Assert.That(asyncSignature.ReturnType?.Arguments[0].FrameworkType, Is.EqualTo(typeof(ArmOperation)));
         }
 
         [TestCase]

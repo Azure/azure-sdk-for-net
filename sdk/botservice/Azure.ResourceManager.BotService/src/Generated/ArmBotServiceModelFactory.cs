@@ -25,7 +25,7 @@ namespace Azure.ResourceManager.BotService.Models
         /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
         /// <param name="tags"> Resource tags. </param>
         /// <param name="location"> The geo-location where the resource lives. </param>
-        /// <param name="properties"> The resource-specific properties for this resource. </param>
+        /// <param name="properties"> The set of properties specific to bot resource. </param>
         /// <param name="sku"> Gets or sets the SKU of the resource. </param>
         /// <param name="kind"> Required. Gets or sets the Kind of the resource. </param>
         /// <param name="etag"> Entity Tag. </param>
@@ -353,7 +353,7 @@ namespace Azure.ResourceManager.BotService.Models
         /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
         /// <param name="tags"> Resource tags. </param>
         /// <param name="location"> The geo-location where the resource lives. </param>
-        /// <param name="properties"> The resource-specific properties for this resource. </param>
+        /// <param name="properties"> The set of properties specific to bot channel resource. </param>
         /// <param name="sku"> Gets or sets the SKU of the resource. </param>
         /// <param name="kind"> Required. Gets or sets the Kind of the resource. </param>
         /// <param name="etag"> Entity Tag. </param>
@@ -977,13 +977,13 @@ namespace Azure.ResourceManager.BotService.Models
                 default);
         }
 
-        /// <param name="etag"> Entity Tag of the resource. </param>
+        /// <param name="eTag"> Entity Tag of the resource. </param>
         /// <param name="provisioningState"> Provisioning state of the resource. </param>
         /// <param name="location"> Specifies the location of the resource. </param>
-        /// <returns> A new <see cref="Models.Omnichannel"/> instance for mocking. </returns>
-        public static Omnichannel Omnichannel(ETag? etag = default, string provisioningState = default, AzureLocation? location = default)
+        /// <returns> A new <see cref="Models.Dynamics365OmnichannelChannel"/> instance for mocking. </returns>
+        public static Dynamics365OmnichannelChannel Dynamics365OmnichannelChannel(ETag? eTag = default, string provisioningState = default, AzureLocation? location = default)
         {
-            return new Omnichannel(default, etag, provisioningState, location, default);
+            return new Dynamics365OmnichannelChannel(default, eTag, provisioningState, location, default);
         }
 
         /// <param name="etag"> Entity Tag of the resource. </param>
@@ -1184,7 +1184,7 @@ namespace Azure.ResourceManager.BotService.Models
         /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
         /// <param name="tags"> Resource tags. </param>
         /// <param name="location"> The geo-location where the resource lives. </param>
-        /// <param name="properties"> The resource-specific properties for this resource. </param>
+        /// <param name="properties"> The set of properties specific to bot channel resource. </param>
         /// <param name="sku"> Gets or sets the SKU of the resource. </param>
         /// <param name="kind"> Required. Gets or sets the Kind of the resource. </param>
         /// <param name="etag"> Entity Tag. </param>

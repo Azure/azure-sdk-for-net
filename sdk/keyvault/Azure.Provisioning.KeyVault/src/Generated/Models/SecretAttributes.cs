@@ -99,6 +99,10 @@ namespace Azure.Provisioning.KeyVault
             _expires = DefineProperty<DateTimeOffset>(nameof(Expires), new string[] { "exp" });
             _created = DefineProperty<DateTimeOffset>(nameof(Created), new string[] { "created" }, isOutput: true);
             _updated = DefineProperty<DateTimeOffset>(nameof(Updated), new string[] { "updated" }, isOutput: true);
+            DefineAdditionalProperties();
         }
+
+        /// <summary> Define additional provisionable properties for SecretAttributes that are not part of the generated code. </summary>
+        partial void DefineAdditionalProperties();
     }
 }

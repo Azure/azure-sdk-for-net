@@ -18,11 +18,11 @@ namespace Azure.ResourceManager.Network.Models
         /// <summary> Any. </summary>
         private const string AnyValue = "Any";
         /// <summary> TCP. </summary>
-        private const string TCPValue = "TCP";
+        private const string TcpValue = "TCP";
         /// <summary> UDP. </summary>
-        private const string UDPValue = "UDP";
+        private const string UdpValue = "UDP";
         /// <summary> ICMP. </summary>
-        private const string ICMPValue = "ICMP";
+        private const string IcmpValue = "ICMP";
 
         /// <summary> Initializes a new instance of <see cref="NetworkProtocol"/>. </summary>
         /// <param name="value"> The value. </param>
@@ -38,13 +38,13 @@ namespace Azure.ResourceManager.Network.Models
         public static NetworkProtocol Any { get; } = new NetworkProtocol(AnyValue);
 
         /// <summary> TCP. </summary>
-        public static NetworkProtocol TCP { get; } = new NetworkProtocol(TCPValue);
+        public static NetworkProtocol Tcp { get; } = new NetworkProtocol(TcpValue);
 
         /// <summary> UDP. </summary>
-        public static NetworkProtocol UDP { get; } = new NetworkProtocol(UDPValue);
+        public static NetworkProtocol Udp { get; } = new NetworkProtocol(UdpValue);
 
         /// <summary> ICMP. </summary>
-        public static NetworkProtocol ICMP { get; } = new NetworkProtocol(ICMPValue);
+        public static NetworkProtocol Icmp { get; } = new NetworkProtocol(IcmpValue);
 
         /// <summary> Determines if two <see cref="NetworkProtocol"/> values are the same. </summary>
         /// <param name="left"> The left value to compare. </param>

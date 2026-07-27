@@ -113,6 +113,11 @@ namespace Azure.AI.Projects.Agents
                 writer.WritePropertyName("evaluation_level"u8);
                 writer.WriteStringValue(EvaluationLevel.Value.ToString());
             }
+            if (Optional.IsDefined(MaxStalls))
+            {
+                writer.WritePropertyName("max_stalls"u8);
+                writer.WriteNumberValue(MaxStalls.Value);
+            }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
                 foreach (var item in _additionalBinaryDataProperties)
@@ -159,7 +164,8 @@ namespace Azure.AI.Projects.Agents
             IDictionary<string, BinaryData> optimizationConfig = default;
             string evalModel = default;
             string optimizationModel = default;
-            EvaluationLevel? evaluationLevel = default;
+            AgentsEvaluationLevel? evaluationLevel = default;
+            int? maxStalls = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -209,7 +215,16 @@ namespace Azure.AI.Projects.Agents
                     {
                         continue;
                     }
-                    evaluationLevel = new EvaluationLevel(prop.Value.GetString());
+                    evaluationLevel = new AgentsEvaluationLevel(prop.Value.GetString());
+                    continue;
+                }
+                if (prop.NameEquals("max_stalls"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    maxStalls = prop.Value.GetInt32();
                     continue;
                 }
                 if (options.Format != "W")
@@ -223,6 +238,7 @@ namespace Azure.AI.Projects.Agents
                 evalModel,
                 optimizationModel,
                 evaluationLevel,
+                maxStalls,
                 additionalBinaryDataProperties);
         }
     }

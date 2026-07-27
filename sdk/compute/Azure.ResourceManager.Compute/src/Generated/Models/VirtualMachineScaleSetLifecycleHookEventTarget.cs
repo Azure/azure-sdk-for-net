@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.Compute.Models
         /// <param name="resource"> Specifies the target ARM resource. Currently, this can be a virtual machine scale set resource or an individual virtual machine resource within a VMScaleSet. </param>
         /// <param name="actionState"> State of the lifecycle hook for the target resource. The customer can patch this property to move the lifecycle hook to a terminal state. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal VirtualMachineScaleSetLifecycleHookEventTarget(ComputeApiEntityReference resource, LifecycleHookActionState? actionState, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal VirtualMachineScaleSetLifecycleHookEventTarget(ComputeApiEntityReference resource, VirtualMachineScaleSetLifecycleHookActionState? actionState, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Resource = resource;
             ActionState = actionState;
@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.Compute.Models
         internal ComputeApiEntityReference Resource { get; set; }
 
         /// <summary> State of the lifecycle hook for the target resource. The customer can patch this property to move the lifecycle hook to a terminal state. </summary>
-        public LifecycleHookActionState? ActionState { get; set; }
+        public VirtualMachineScaleSetLifecycleHookActionState? ActionState { get; set; }
 
         /// <summary> The ARM resource id in the form of /subscriptions/{SubscriptionId}/resourceGroups/{ResourceGroupName}/... </summary>
         public ResourceIdentifier ResourceId

@@ -80,10 +80,10 @@ namespace Azure.AI.Projects.Agents
                 writer.WritePropertyName("ground_truth"u8);
                 writer.WriteStringValue(GroundTruth);
             }
-            if (Optional.IsDefined(DesiredNumTurns))
+            if (Optional.IsDefined(DesiredTurnCount))
             {
                 writer.WritePropertyName("desired_num_turns"u8);
-                writer.WriteNumberValue(DesiredNumTurns.Value);
+                writer.WriteNumberValue(DesiredTurnCount.Value);
             }
             if (Optional.IsCollectionDefined(Criteria))
             {
@@ -139,7 +139,7 @@ namespace Azure.AI.Projects.Agents
             }
             string query = default;
             string groundTruth = default;
-            int? desiredNumTurns = default;
+            int? desiredTurnCount = default;
             IList<OptimizationDatasetCriterion> criteria = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
@@ -160,7 +160,7 @@ namespace Azure.AI.Projects.Agents
                     {
                         continue;
                     }
-                    desiredNumTurns = prop.Value.GetInt32();
+                    desiredTurnCount = prop.Value.GetInt32();
                     continue;
                 }
                 if (prop.NameEquals("criteria"u8))
@@ -182,7 +182,7 @@ namespace Azure.AI.Projects.Agents
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new OptimizationDatasetItem(query, groundTruth, desiredNumTurns, criteria ?? new ChangeTrackingList<OptimizationDatasetCriterion>(), additionalBinaryDataProperties);
+            return new OptimizationDatasetItem(query, groundTruth, desiredTurnCount, criteria ?? new ChangeTrackingList<OptimizationDatasetCriterion>(), additionalBinaryDataProperties);
         }
     }
 }

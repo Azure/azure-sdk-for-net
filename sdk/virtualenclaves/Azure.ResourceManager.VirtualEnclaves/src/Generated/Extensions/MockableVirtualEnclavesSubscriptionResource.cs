@@ -48,31 +48,31 @@ namespace Azure.ResourceManager.VirtualEnclaves.Mocking
 
         private ClientDiagnostics WorkloadClientDiagnostics => _workloadClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.VirtualEnclaves.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private Workload WorkloadRestClient => _workloadRestClient ??= new Workload(WorkloadClientDiagnostics, Pipeline, Endpoint, "2025-05-01-preview");
+        private Workload WorkloadRestClient => _workloadRestClient ??= new Workload(WorkloadClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2025-05-01-preview");
 
         private ClientDiagnostics VirtualEnclaveClientDiagnostics => _virtualEnclaveClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.VirtualEnclaves.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private VirtualEnclave VirtualEnclaveRestClient => _virtualEnclaveRestClient ??= new VirtualEnclave(VirtualEnclaveClientDiagnostics, Pipeline, Endpoint, "2025-05-01-preview");
+        private VirtualEnclave VirtualEnclaveRestClient => _virtualEnclaveRestClient ??= new VirtualEnclave(VirtualEnclaveClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2025-05-01-preview");
 
         private ClientDiagnostics CommunityClientDiagnostics => _communityClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.VirtualEnclaves.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private Community CommunityRestClient => _communityRestClient ??= new Community(CommunityClientDiagnostics, Pipeline, Endpoint, "2025-05-01-preview");
+        private Community CommunityRestClient => _communityRestClient ??= new Community(CommunityClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2025-05-01-preview");
 
         private ClientDiagnostics TransitHubClientDiagnostics => _transitHubClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.VirtualEnclaves.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private TransitHub TransitHubRestClient => _transitHubRestClient ??= new TransitHub(TransitHubClientDiagnostics, Pipeline, Endpoint, "2025-05-01-preview");
+        private TransitHub TransitHubRestClient => _transitHubRestClient ??= new TransitHub(TransitHubClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2025-05-01-preview");
 
         private ClientDiagnostics EnclaveConnectionClientDiagnostics => _enclaveConnectionClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.VirtualEnclaves.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private EnclaveConnection EnclaveConnectionRestClient => _enclaveConnectionRestClient ??= new EnclaveConnection(EnclaveConnectionClientDiagnostics, Pipeline, Endpoint, "2025-05-01-preview");
+        private EnclaveConnection EnclaveConnectionRestClient => _enclaveConnectionRestClient ??= new EnclaveConnection(EnclaveConnectionClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2025-05-01-preview");
 
         private ClientDiagnostics EnclaveEndpointsClientDiagnostics => _enclaveEndpointsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.VirtualEnclaves.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private EnclaveEndpoints EnclaveEndpointsRestClient => _enclaveEndpointsRestClient ??= new EnclaveEndpoints(EnclaveEndpointsClientDiagnostics, Pipeline, Endpoint, "2025-05-01-preview");
+        private EnclaveEndpoints EnclaveEndpointsRestClient => _enclaveEndpointsRestClient ??= new EnclaveEndpoints(EnclaveEndpointsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2025-05-01-preview");
 
         private ClientDiagnostics CommunityEndpointsClientDiagnostics => _communityEndpointsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.VirtualEnclaves.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private CommunityEndpoints CommunityEndpointsRestClient => _communityEndpointsRestClient ??= new CommunityEndpoints(CommunityEndpointsClientDiagnostics, Pipeline, Endpoint, "2025-05-01-preview");
+        private CommunityEndpoints CommunityEndpointsRestClient => _communityEndpointsRestClient ??= new CommunityEndpoints(CommunityEndpointsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2025-05-01-preview");
 
         /// <summary>
         /// List WorkloadResource resources by subscription ID

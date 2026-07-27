@@ -53,8 +53,8 @@ namespace Azure.ResourceManager.ResilienceManagement
                     yield break;
                 }
                 RecoveryJobListResult result = RecoveryJobListResult.FromResponse(response);
-                yield return Page<RecoveryJobData>.FromValues((IReadOnlyList<RecoveryJobData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 nextPage = result.NextLink;
+                yield return Page<RecoveryJobData>.FromValues((IReadOnlyList<RecoveryJobData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 if (nextPage == null)
                 {
                     yield break;

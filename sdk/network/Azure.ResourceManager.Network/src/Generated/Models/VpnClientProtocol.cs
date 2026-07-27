@@ -18,9 +18,9 @@ namespace Azure.ResourceManager.Network.Models
         /// <summary> IkeV2. </summary>
         private const string IkeV2Value = "IkeV2";
         /// <summary> SSTP. </summary>
-        private const string SSTPValue = "SSTP";
+        private const string SstpValue = "SSTP";
         /// <summary> OpenVPN. </summary>
-        private const string OpenVPNValue = "OpenVPN";
+        private const string OpenVpnValue = "OpenVPN";
 
         /// <summary> Initializes a new instance of <see cref="VpnClientProtocol"/>. </summary>
         /// <param name="value"> The value. </param>
@@ -36,10 +36,10 @@ namespace Azure.ResourceManager.Network.Models
         public static VpnClientProtocol IkeV2 { get; } = new VpnClientProtocol(IkeV2Value);
 
         /// <summary> SSTP. </summary>
-        public static VpnClientProtocol SSTP { get; } = new VpnClientProtocol(SSTPValue);
+        public static VpnClientProtocol Sstp { get; } = new VpnClientProtocol(SstpValue);
 
         /// <summary> OpenVPN. </summary>
-        public static VpnClientProtocol OpenVPN { get; } = new VpnClientProtocol(OpenVPNValue);
+        public static VpnClientProtocol OpenVpn { get; } = new VpnClientProtocol(OpenVpnValue);
 
         /// <summary> Determines if two <see cref="VpnClientProtocol"/> values are the same. </summary>
         /// <param name="left"> The left value to compare. </param>

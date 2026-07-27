@@ -11,8 +11,8 @@ namespace Azure.Provisioning.ProvisioningTypeSpec
     public enum PublicNetworkAccess
     {
         /// <summary> Public network access is enabled. </summary>
-        Enabled,
+        Enabled = 0,
         /// <summary> Public network access is disabled. </summary>
-        Disabled
+        Disabled = 1
     }
 }

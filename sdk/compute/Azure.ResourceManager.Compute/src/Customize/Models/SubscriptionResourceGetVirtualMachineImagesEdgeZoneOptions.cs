@@ -8,6 +8,7 @@ namespace Azure.ResourceManager.Compute.Models
     // Backward-compat option-bag type re-introduced for source compatibility with
     // the previous (AutoRest-based) public surface. See sibling
     // SubscriptionResourceGetVirtualMachineImagesOptions.cs for full justification.
+    /// <summary> The options for the <c>GetVirtualMachineImagesEdgeZone</c> method. </summary>
     public partial class SubscriptionResourceGetVirtualMachineImagesEdgeZoneOptions
     {
         /// <summary> Initializes a new instance of <see cref="SubscriptionResourceGetVirtualMachineImagesEdgeZoneOptions"/>. </summary>

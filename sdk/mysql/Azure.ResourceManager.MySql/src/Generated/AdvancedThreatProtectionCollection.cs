@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.MySql.FlexibleServers
         {
             TryGetApiVersion(AdvancedThreatProtectionResource.ResourceType, out string advancedThreatProtectionApiVersion);
             _advancedThreatProtectionSettingsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.MySql.FlexibleServers", AdvancedThreatProtectionResource.ResourceType.Namespace, Diagnostics);
-            _advancedThreatProtectionSettingsRestClient = new AdvancedThreatProtectionSettings(_advancedThreatProtectionSettingsClientDiagnostics, Pipeline, Endpoint, advancedThreatProtectionApiVersion ?? "2024-12-30");
+            _advancedThreatProtectionSettingsRestClient = new AdvancedThreatProtectionSettings(_advancedThreatProtectionSettingsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, advancedThreatProtectionApiVersion ?? "2024-12-30");
             ValidateResourceId(id);
         }
 

@@ -28,7 +28,7 @@ public class Sample_CodeAgent : ProjectsOpenAITestBase
     #endregion
 
     #region Snippet:Sample_CodeAgentMetadata_CodeAgent
-    private static CreateAgentVersionFromCodeMetadata GetAgentMetadata()
+    private static AgentVersionFromCodeMetadata GetAgentMetadata()
     {
         HostedAgentDefinition agentDefinition = new(
             cpu: "0.5",
@@ -42,7 +42,7 @@ public class Sample_CodeAgent : ProjectsOpenAITestBase
                 dependencyResolution: CodeDependencyResolution.RemoteBuild
             ),
         };
-        CreateAgentVersionFromCodeMetadata metadata = new(agentDefinition);
+        AgentVersionFromCodeMetadata metadata = new(agentDefinition);
         metadata.Metadata["enableVnextExperience"] = "true";
         return metadata;
     }

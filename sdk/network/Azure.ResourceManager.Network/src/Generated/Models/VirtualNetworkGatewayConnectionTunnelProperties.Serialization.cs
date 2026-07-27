@@ -74,10 +74,10 @@ namespace Azure.ResourceManager.Network.Models
             {
                 throw new FormatException($"The model {nameof(VirtualNetworkGatewayConnectionTunnelProperties)} does not support writing '{format}' format.");
             }
-            if (Optional.IsDefined(TunnelIpAddress))
+            if (Optional.IsDefined(TunnelIPAddress))
             {
                 writer.WritePropertyName("tunnelIpAddress"u8);
-                writer.WriteStringValue(TunnelIpAddress);
+                writer.WriteStringValue(TunnelIPAddress);
             }
             if (Optional.IsDefined(BgpPeeringAddress))
             {
@@ -126,14 +126,14 @@ namespace Azure.ResourceManager.Network.Models
             {
                 return null;
             }
-            string tunnelIpAddress = default;
+            string tunnelIPAddress = default;
             string bgpPeeringAddress = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("tunnelIpAddress"u8))
                 {
-                    tunnelIpAddress = prop.Value.GetString();
+                    tunnelIPAddress = prop.Value.GetString();
                     continue;
                 }
                 if (prop.NameEquals("bgpPeeringAddress"u8))
@@ -146,7 +146,7 @@ namespace Azure.ResourceManager.Network.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new VirtualNetworkGatewayConnectionTunnelProperties(tunnelIpAddress, bgpPeeringAddress, additionalBinaryDataProperties);
+            return new VirtualNetworkGatewayConnectionTunnelProperties(tunnelIPAddress, bgpPeeringAddress, additionalBinaryDataProperties);
         }
     }
 }

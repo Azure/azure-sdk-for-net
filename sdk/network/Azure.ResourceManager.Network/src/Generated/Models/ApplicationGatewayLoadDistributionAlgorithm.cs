@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.Network.Models
         /// <summary> LeastConnections. </summary>
         private const string LeastConnectionsValue = "LeastConnections";
         /// <summary> IpHash. </summary>
-        private const string IpHashValue = "IpHash";
+        private const string IPHashValue = "IpHash";
 
         /// <summary> Initializes a new instance of <see cref="ApplicationGatewayLoadDistributionAlgorithm"/>. </summary>
         /// <param name="value"> The value. </param>
@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.Network.Models
         public static ApplicationGatewayLoadDistributionAlgorithm LeastConnections { get; } = new ApplicationGatewayLoadDistributionAlgorithm(LeastConnectionsValue);
 
         /// <summary> IpHash. </summary>
-        public static ApplicationGatewayLoadDistributionAlgorithm IpHash { get; } = new ApplicationGatewayLoadDistributionAlgorithm(IpHashValue);
+        public static ApplicationGatewayLoadDistributionAlgorithm IPHash { get; } = new ApplicationGatewayLoadDistributionAlgorithm(IPHashValue);
 
         /// <summary> Determines if two <see cref="ApplicationGatewayLoadDistributionAlgorithm"/> values are the same. </summary>
         /// <param name="left"> The left value to compare. </param>

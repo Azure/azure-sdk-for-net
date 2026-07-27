@@ -103,9 +103,9 @@ namespace Azure.ResourceManager.Network.Models
             writer.WritePropertyName("saDataSizeKilobytes"u8);
             writer.WriteNumberValue(SaDataSizeKilobytes);
             writer.WritePropertyName("ipsecEncryption"u8);
-            writer.WriteStringValue(IpsecEncryption.ToString());
+            writer.WriteStringValue(IPsecEncryption.ToString());
             writer.WritePropertyName("ipsecIntegrity"u8);
-            writer.WriteStringValue(IpsecIntegrity.ToString());
+            writer.WriteStringValue(IPsecIntegrity.ToString());
             writer.WritePropertyName("ikeEncryption"u8);
             writer.WriteStringValue(IkeEncryption.ToString());
             writer.WritePropertyName("ikeIntegrity"u8);
@@ -158,8 +158,8 @@ namespace Azure.ResourceManager.Network.Models
             }
             int saLifeTimeSeconds = default;
             int saDataSizeKilobytes = default;
-            IPsecEncryption ipsecEncryption = default;
-            IPsecIntegrity ipsecIntegrity = default;
+            IPsecEncryption iPsecEncryption = default;
+            IPsecIntegrity iPsecIntegrity = default;
             IkeEncryption ikeEncryption = default;
             IkeIntegrity ikeIntegrity = default;
             DHGroup dhGroup = default;
@@ -179,12 +179,12 @@ namespace Azure.ResourceManager.Network.Models
                 }
                 if (prop.NameEquals("ipsecEncryption"u8))
                 {
-                    ipsecEncryption = new IPsecEncryption(prop.Value.GetString());
+                    iPsecEncryption = new IPsecEncryption(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("ipsecIntegrity"u8))
                 {
-                    ipsecIntegrity = new IPsecIntegrity(prop.Value.GetString());
+                    iPsecIntegrity = new IPsecIntegrity(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("ikeEncryption"u8))
@@ -215,8 +215,8 @@ namespace Azure.ResourceManager.Network.Models
             return new VpnClientIPsecParameters(
                 saLifeTimeSeconds,
                 saDataSizeKilobytes,
-                ipsecEncryption,
-                ipsecIntegrity,
+                iPsecEncryption,
+                iPsecIntegrity,
                 ikeEncryption,
                 ikeIntegrity,
                 dhGroup,

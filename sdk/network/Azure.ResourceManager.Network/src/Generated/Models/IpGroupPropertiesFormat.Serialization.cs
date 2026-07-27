@@ -81,11 +81,11 @@ namespace Azure.ResourceManager.Network.Models
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState.Value.ToString());
             }
-            if (Optional.IsCollectionDefined(IpAddresses))
+            if (Optional.IsCollectionDefined(IPAddresses))
             {
                 writer.WritePropertyName("ipAddresses"u8);
                 writer.WriteStartArray();
-                foreach (string item in IpAddresses)
+                foreach (string item in IPAddresses)
                 {
                     if (item == null)
                     {

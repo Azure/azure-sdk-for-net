@@ -135,7 +135,7 @@ content = new(
     """
 );
 SkillVersion newVersion = skillsClient.CreateSkillVersion(name: "simple-skill", inlineContent: content);
-skill = skillsClient.UpdateSkill(name: "simple-skill", defaultVersion: newVersion.Version);
+skill = skillsClient.UpdateDefaultVersion(name: "simple-skill", defaultVersion: newVersion.Version);
 Console.WriteLine($"The skill {skill.Name} now has the following description: {skill.Description}");
 ```
 
@@ -153,7 +153,7 @@ content = new(
     """
 );
 SkillVersion newVersion = await skillsClient.CreateSkillVersionAsync(name: "simple-skill", inlineContent: content);
-skill = await skillsClient.UpdateSkillAsync(name: "simple-skill", defaultVersion: newVersion.Version);
+skill = await skillsClient.UpdateDefaultVersionAsync(name: "simple-skill", defaultVersion: newVersion.Version);
 Console.WriteLine($"The skill {skill.Name} now has the following description: {skill.Description}");
 ```
 

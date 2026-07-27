@@ -1,13 +1,14 @@
 directory: specification/ai-foundry/data-plane/Foundry/src/sdk-csharp-azure-ai-projects-agents
-commit: ecdaf71aae1f640daaf7a5161d19019f7a423374
+commit: 5f1334500df34faa63e0255a18f3072b0219cebe
 repo: Azure/azure-rest-api-specs
-additionalDirectories: 
+additionalDirectories:
 - specification/ai-foundry/data-plane/Foundry/src/agents
 - specification/ai-foundry/data-plane/Foundry/src/common
 - specification/ai-foundry/data-plane/Foundry/src/memory-stores
-- specification/ai-foundry/data-plane/Foundry/src/openai-conversations
-- specification/ai-foundry/data-plane/Foundry/src/openai-evaluations
-- specification/ai-foundry/data-plane/Foundry/src/openai-responses
+- specification/ai-foundry/data-plane/Foundry/src/openai
+- specification/ai-foundry/data-plane/Foundry/src/openai/conversations
+- specification/ai-foundry/data-plane/Foundry/src/openai/evaluations
+- specification/ai-foundry/data-plane/Foundry/src/openai/responses
 - specification/ai-foundry/data-plane/Foundry/src/red-teams
 - specification/ai-foundry/data-plane/Foundry/src/tools
 - specification/ai-foundry/data-plane/Foundry/src/toolboxes

@@ -72,7 +72,7 @@ namespace Azure.ResourceManager.Fabric.Models
 
         /// <param name="sku"> The SKU details. </param>
         /// <param name="tags"> Resource tags. </param>
-        /// <param name="fabricCapacityUpdateAdministrationMembers"> Gets or sets the AdministrationMembers. </param>
+        /// <param name="fabricCapacityUpdateAdministrationMembers"> Gets the AdministrationMembers. </param>
         /// <returns> A new <see cref="Models.FabricCapacityPatch"/> instance for mocking. </returns>
         public static FabricCapacityPatch FabricCapacityPatch(FabricSku sku = default, IDictionary<string, string> tags = default, IEnumerable<string> fabricCapacityUpdateAdministrationMembers = default)
         {

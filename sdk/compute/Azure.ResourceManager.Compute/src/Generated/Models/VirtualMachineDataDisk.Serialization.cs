@@ -203,7 +203,7 @@ namespace Azure.ResourceManager.Compute.Models
             bool? writeAcceleratorEnabled = default;
             DiskCreateOptionType createOption = default;
             int? diskSizeGB = default;
-            StorageFaultDomainAlignmentType? storageFaultDomainAlignment = default;
+            ComputeStorageFaultDomainAlignmentType? storageFaultDomainAlignment = default;
             VirtualMachineManagedDisk managedDisk = default;
             ComputeApiEntityReference sourceResource = default;
             bool? toBeDetached = default;
@@ -280,7 +280,7 @@ namespace Azure.ResourceManager.Compute.Models
                     {
                         continue;
                     }
-                    storageFaultDomainAlignment = new StorageFaultDomainAlignmentType(prop.Value.GetString());
+                    storageFaultDomainAlignment = new ComputeStorageFaultDomainAlignmentType(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("managedDisk"u8))

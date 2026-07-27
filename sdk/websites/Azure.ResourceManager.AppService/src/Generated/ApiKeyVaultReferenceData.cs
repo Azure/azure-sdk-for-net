@@ -13,44 +13,11 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.AppService
 {
-    /// <summary>
-    /// A class representing the ApiKeyVaultReference data model.
-    /// Description of site key vault references.
-    /// Serialized Name: ApiKVReference
-    /// </summary>
+    /// <summary> Description of site key vault references. </summary>
     public partial class ApiKeyVaultReferenceData : ResourceData
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="ApiKeyVaultReferenceData"/>. </summary>
         public ApiKeyVaultReferenceData()
@@ -58,77 +25,188 @@ namespace Azure.ResourceManager.AppService
         }
 
         /// <summary> Initializes a new instance of <see cref="ApiKeyVaultReferenceData"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="kind">
-        /// Kind of resource.
-        /// Serialized Name: ApiKVReference.kind
-        /// </param>
-        /// <param name="reference"> Serialized Name: ApiKVReference.properties.reference. </param>
-        /// <param name="status"> Serialized Name: ApiKVReference.properties.status. </param>
-        /// <param name="vaultName"> Serialized Name: ApiKVReference.properties.vaultName. </param>
-        /// <param name="secretName"> Serialized Name: ApiKVReference.properties.secretName. </param>
-        /// <param name="secretVersion"> Serialized Name: ApiKVReference.properties.secretVersion. </param>
-        /// <param name="identity">
-        /// Managed service identity.
-        /// Serialized Name: ApiKVReference.properties.identityType
-        /// </param>
-        /// <param name="details"> Serialized Name: ApiKVReference.properties.details. </param>
-        /// <param name="source"> Serialized Name: ApiKVReference.properties.source. </param>
-        /// <param name="activeVersion"> Serialized Name: ApiKVReference.properties.activeVersion. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ApiKeyVaultReferenceData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string kind, string reference, ResolveStatus? status, string vaultName, string secretName, string secretVersion, ManagedServiceIdentity identity, string details, ConfigReferenceSource? source, string activeVersion, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="properties"> ApiKVReference resource specific properties. </param>
+        /// <param name="kind"> Kind of resource. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal ApiKeyVaultReferenceData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, ApiKeyVaultReferenceProperties properties, string kind, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(id, name, resourceType, systemData)
         {
+            Properties = properties;
             Kind = kind;
-            Reference = reference;
-            Status = status;
-            VaultName = vaultName;
-            SecretName = secretName;
-            SecretVersion = secretVersion;
-            Identity = identity;
-            Details = details;
-            Source = source;
-            ActiveVersion = activeVersion;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
-        /// <summary>
-        /// Kind of resource.
-        /// Serialized Name: ApiKVReference.kind
-        /// </summary>
+        /// <summary> ApiKVReference resource specific properties. </summary>
+        [WirePath("properties")]
+        internal ApiKeyVaultReferenceProperties Properties { get; set; }
+
+        /// <summary> Kind of resource. </summary>
         [WirePath("kind")]
         public string Kind { get; set; }
-        /// <summary> Serialized Name: ApiKVReference.properties.reference. </summary>
+
+        /// <summary> Gets or sets the Reference. </summary>
         [WirePath("properties.reference")]
-        public string Reference { get; set; }
-        /// <summary> Serialized Name: ApiKVReference.properties.status. </summary>
+        public string Reference
+        {
+            get
+            {
+                return Properties is null ? default : Properties.Reference;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new ApiKeyVaultReferenceProperties();
+                }
+                Properties.Reference = value;
+            }
+        }
+
+        /// <summary> Gets or sets the Status. </summary>
         [WirePath("properties.status")]
-        public ResolveStatus? Status { get; set; }
-        /// <summary> Serialized Name: ApiKVReference.properties.vaultName. </summary>
+        public ResolveStatus? Status
+        {
+            get
+            {
+                return Properties is null ? default : Properties.Status;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new ApiKeyVaultReferenceProperties();
+                }
+                Properties.Status = value;
+            }
+        }
+
+        /// <summary> Gets or sets the VaultName. </summary>
         [WirePath("properties.vaultName")]
-        public string VaultName { get; set; }
-        /// <summary> Serialized Name: ApiKVReference.properties.secretName. </summary>
+        public string VaultName
+        {
+            get
+            {
+                return Properties is null ? default : Properties.VaultName;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new ApiKeyVaultReferenceProperties();
+                }
+                Properties.VaultName = value;
+            }
+        }
+
+        /// <summary> Gets or sets the SecretName. </summary>
         [WirePath("properties.secretName")]
-        public string SecretName { get; set; }
-        /// <summary> Serialized Name: ApiKVReference.properties.secretVersion. </summary>
+        public string SecretName
+        {
+            get
+            {
+                return Properties is null ? default : Properties.SecretName;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new ApiKeyVaultReferenceProperties();
+                }
+                Properties.SecretName = value;
+            }
+        }
+
+        /// <summary> Gets or sets the SecretVersion. </summary>
         [WirePath("properties.secretVersion")]
-        public string SecretVersion { get; set; }
-        /// <summary>
-        /// Managed service identity.
-        /// Serialized Name: ApiKVReference.properties.identityType
-        /// </summary>
+        public string SecretVersion
+        {
+            get
+            {
+                return Properties is null ? default : Properties.SecretVersion;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new ApiKeyVaultReferenceProperties();
+                }
+                Properties.SecretVersion = value;
+            }
+        }
+
+        /// <summary> Managed service identity. </summary>
         [WirePath("properties.identityType")]
-        public ManagedServiceIdentity Identity { get; set; }
-        /// <summary> Serialized Name: ApiKVReference.properties.details. </summary>
+        public ManagedServiceIdentity Identity
+        {
+            get
+            {
+                return Properties is null ? default : Properties.Identity;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new ApiKeyVaultReferenceProperties();
+                }
+                Properties.Identity = value;
+            }
+        }
+
+        /// <summary> Gets or sets the Details. </summary>
         [WirePath("properties.details")]
-        public string Details { get; set; }
-        /// <summary> Serialized Name: ApiKVReference.properties.source. </summary>
+        public string Details
+        {
+            get
+            {
+                return Properties is null ? default : Properties.Details;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new ApiKeyVaultReferenceProperties();
+                }
+                Properties.Details = value;
+            }
+        }
+
+        /// <summary> Gets or sets the Source. </summary>
         [WirePath("properties.source")]
-        public ConfigReferenceSource? Source { get; set; }
-        /// <summary> Serialized Name: ApiKVReference.properties.activeVersion. </summary>
+        public ConfigReferenceSource? Source
+        {
+            get
+            {
+                return Properties is null ? default : Properties.Source;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new ApiKeyVaultReferenceProperties();
+                }
+                Properties.Source = value;
+            }
+        }
+
+        /// <summary> Gets or sets the ActiveVersion. </summary>
         [WirePath("properties.activeVersion")]
-        public string ActiveVersion { get; set; }
+        public string ActiveVersion
+        {
+            get
+            {
+                return Properties is null ? default : Properties.ActiveVersion;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new ApiKeyVaultReferenceProperties();
+                }
+                Properties.ActiveVersion = value;
+            }
+        }
     }
 }

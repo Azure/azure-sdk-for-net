@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.SecurityInsights;
 
 namespace Azure.ResourceManager.SecurityInsights.Models
 {
@@ -14,23 +15,42 @@ namespace Azure.ResourceManager.SecurityInsights.Models
     public partial class AadCheckRequirements : DataConnectorsCheckRequirements
     {
         /// <summary> Initializes a new instance of <see cref="AadCheckRequirements"/>. </summary>
-        public AadCheckRequirements()
+        public AadCheckRequirements() : base(DataConnectorKind.AzureActiveDirectory)
         {
-            Kind = DataConnectorKind.AzureActiveDirectory;
         }
 
         /// <summary> Initializes a new instance of <see cref="AadCheckRequirements"/>. </summary>
         /// <param name="kind"> Describes the kind of connector to be checked. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        /// <param name="tenantId"> The tenant id to connect to, and get the data from. </param>
-        internal AadCheckRequirements(DataConnectorKind kind, IDictionary<string, BinaryData> serializedAdditionalRawData, Guid? tenantId) : base(kind, serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="properties"> AADIP (Azure Active Directory Identity Protection) requirements check properties. </param>
+        internal AadCheckRequirements(DataConnectorKind kind, IDictionary<string, BinaryData> additionalBinaryDataProperties, AadCheckRequirementsProperties properties) : base(kind, additionalBinaryDataProperties)
         {
-            TenantId = tenantId;
-            Kind = kind;
+            Properties = properties;
         }
+
+        /// <summary> AADIP (Azure Active Directory Identity Protection) requirements check properties. </summary>
+        [WirePath("properties")]
+        internal AadCheckRequirementsProperties Properties { get; set; }
 
         /// <summary> The tenant id to connect to, and get the data from. </summary>
         [WirePath("properties.tenantId")]
-        public Guid? TenantId { get; set; }
+        public Guid? TenantId
+        {
+            get
+            {
+                return Properties is null ? default : Properties.TenantId;
+            }
+            set
+            {
+                if (value.HasValue)
+                {
+                    if (Properties is null)
+                    {
+                        Properties = new AadCheckRequirementsProperties();
+                    }
+                    Properties.TenantId = value.Value;
+                }
+            }
+        }
     }
 }

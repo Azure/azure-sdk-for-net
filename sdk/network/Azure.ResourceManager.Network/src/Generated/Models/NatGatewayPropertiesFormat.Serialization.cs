@@ -81,41 +81,41 @@ namespace Azure.ResourceManager.Network.Models
                 writer.WritePropertyName("idleTimeoutInMinutes"u8);
                 writer.WriteNumberValue(IdleTimeoutInMinutes.Value);
             }
-            if (Optional.IsCollectionDefined(PublicIpAddresses))
+            if (Optional.IsCollectionDefined(PublicIPAddresses))
             {
                 writer.WritePropertyName("publicIpAddresses"u8);
                 writer.WriteStartArray();
-                foreach (NetworkSubResource item in PublicIpAddresses)
+                foreach (NetworkSubResource item in PublicIPAddresses)
                 {
                     writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(PublicIpAddressesV6))
+            if (Optional.IsCollectionDefined(PublicIPAddressesV6))
             {
                 writer.WritePropertyName("publicIpAddressesV6"u8);
                 writer.WriteStartArray();
-                foreach (NetworkSubResource item in PublicIpAddressesV6)
+                foreach (NetworkSubResource item in PublicIPAddressesV6)
                 {
                     writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(PublicIpPrefixes))
+            if (Optional.IsCollectionDefined(PublicIPPrefixes))
             {
                 writer.WritePropertyName("publicIpPrefixes"u8);
                 writer.WriteStartArray();
-                foreach (NetworkSubResource item in PublicIpPrefixes)
+                foreach (NetworkSubResource item in PublicIPPrefixes)
                 {
                     writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(PublicIpPrefixesV6))
+            if (Optional.IsCollectionDefined(PublicIPPrefixesV6))
             {
                 writer.WritePropertyName("publicIpPrefixesV6"u8);
                 writer.WriteStartArray();
-                foreach (NetworkSubResource item in PublicIpPrefixesV6)
+                foreach (NetworkSubResource item in PublicIPPrefixesV6)
                 {
                     writer.WriteObjectValue(item, options);
                 }
@@ -204,10 +204,10 @@ namespace Azure.ResourceManager.Network.Models
                 return null;
             }
             int? idleTimeoutInMinutes = default;
-            IList<NetworkSubResource> publicIpAddresses = default;
-            IList<NetworkSubResource> publicIpAddressesV6 = default;
-            IList<NetworkSubResource> publicIpPrefixes = default;
-            IList<NetworkSubResource> publicIpPrefixesV6 = default;
+            IList<NetworkSubResource> publicIPAddresses = default;
+            IList<NetworkSubResource> publicIPAddressesV6 = default;
+            IList<NetworkSubResource> publicIPPrefixes = default;
+            IList<NetworkSubResource> publicIPPrefixesV6 = default;
             IReadOnlyList<WritableSubResource> subnets = default;
             NetworkSubResource sourceVirtualNetwork = default;
             NetworkSubResource serviceGateway = default;
@@ -237,7 +237,7 @@ namespace Azure.ResourceManager.Network.Models
                     {
                         array.Add(NetworkSubResource.DeserializeNetworkSubResource(item, options));
                     }
-                    publicIpAddresses = array;
+                    publicIPAddresses = array;
                     continue;
                 }
                 if (prop.NameEquals("publicIpAddressesV6"u8))
@@ -251,7 +251,7 @@ namespace Azure.ResourceManager.Network.Models
                     {
                         array.Add(NetworkSubResource.DeserializeNetworkSubResource(item, options));
                     }
-                    publicIpAddressesV6 = array;
+                    publicIPAddressesV6 = array;
                     continue;
                 }
                 if (prop.NameEquals("publicIpPrefixes"u8))
@@ -265,7 +265,7 @@ namespace Azure.ResourceManager.Network.Models
                     {
                         array.Add(NetworkSubResource.DeserializeNetworkSubResource(item, options));
                     }
-                    publicIpPrefixes = array;
+                    publicIPPrefixes = array;
                     continue;
                 }
                 if (prop.NameEquals("publicIpPrefixesV6"u8))
@@ -279,7 +279,7 @@ namespace Azure.ResourceManager.Network.Models
                     {
                         array.Add(NetworkSubResource.DeserializeNetworkSubResource(item, options));
                     }
-                    publicIpPrefixesV6 = array;
+                    publicIPPrefixesV6 = array;
                     continue;
                 }
                 if (prop.NameEquals("subnets"u8))
@@ -355,10 +355,10 @@ namespace Azure.ResourceManager.Network.Models
             }
             return new NatGatewayPropertiesFormat(
                 idleTimeoutInMinutes,
-                publicIpAddresses ?? new ChangeTrackingList<NetworkSubResource>(),
-                publicIpAddressesV6 ?? new ChangeTrackingList<NetworkSubResource>(),
-                publicIpPrefixes ?? new ChangeTrackingList<NetworkSubResource>(),
-                publicIpPrefixesV6 ?? new ChangeTrackingList<NetworkSubResource>(),
+                publicIPAddresses ?? new ChangeTrackingList<NetworkSubResource>(),
+                publicIPAddressesV6 ?? new ChangeTrackingList<NetworkSubResource>(),
+                publicIPPrefixes ?? new ChangeTrackingList<NetworkSubResource>(),
+                publicIPPrefixesV6 ?? new ChangeTrackingList<NetworkSubResource>(),
                 subnets ?? new ChangeTrackingList<WritableSubResource>(),
                 sourceVirtualNetwork,
                 serviceGateway,

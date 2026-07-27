@@ -25,7 +25,7 @@ namespace Azure.Provisioning.Batch
         {
         }
 
-        /// <summary> Gets or sets the LastKeySyncedOn. </summary>
+        /// <summary> Gets the LastKeySyncedOn. </summary>
         public BicepValue<DateTimeOffset> LastKeySyncedOn
         {
             get
@@ -33,14 +33,9 @@ namespace Azure.Provisioning.Batch
                 Initialize();
                 return _lastKeySyncedOn;
             }
-            set
-            {
-                Initialize();
-                _lastKeySyncedOn.Assign(value);
-            }
         }
 
-        /// <summary> Gets or sets the StorageAccountId. </summary>
+        /// <summary> Gets the StorageAccountId. </summary>
         public BicepValue<ResourceIdentifier> StorageAccountId
         {
             get
@@ -48,14 +43,9 @@ namespace Azure.Provisioning.Batch
                 Initialize();
                 return _storageAccountId;
             }
-            set
-            {
-                Initialize();
-                _storageAccountId.Assign(value);
-            }
         }
 
-        /// <summary> Gets or sets the AuthenticationMode. </summary>
+        /// <summary> Gets the AuthenticationMode. </summary>
         public BicepValue<BatchAutoStorageAuthenticationMode> AuthenticationMode
         {
             get
@@ -63,25 +53,15 @@ namespace Azure.Provisioning.Batch
                 Initialize();
                 return _authenticationMode;
             }
-            set
-            {
-                Initialize();
-                _authenticationMode.Assign(value);
-            }
         }
 
-        /// <summary> Gets or sets the NodeIdentity. </summary>
+        /// <summary> Gets the NodeIdentity. </summary>
         internal ComputeNodeIdentityReference NodeIdentity
         {
             get
             {
                 Initialize();
                 return _nodeIdentity;
-            }
-            set
-            {
-                Initialize();
-                AssignOrReplace(ref _nodeIdentity, value);
             }
         }
 
@@ -90,15 +70,7 @@ namespace Azure.Provisioning.Batch
         {
             get
             {
-                return NodeIdentity is null ? default : NodeIdentity.ResourceId;
-            }
-            set
-            {
-                if (NodeIdentity is null)
-                {
-                    NodeIdentity = new ComputeNodeIdentityReference();
-                }
-                NodeIdentity.ResourceId = value;
+                return NodeIdentity.ResourceId;
             }
         }
 
@@ -106,10 +78,14 @@ namespace Azure.Provisioning.Batch
         protected override void DefineProvisionableProperties()
         {
             base.DefineProvisionableProperties();
-            _lastKeySyncedOn = DefineProperty<DateTimeOffset>(nameof(LastKeySyncedOn), new string[] { "lastKeySync" }, isRequired: true);
-            _storageAccountId = DefineProperty<ResourceIdentifier>(nameof(StorageAccountId), new string[] { "storageAccountId" }, isRequired: true);
+            _lastKeySyncedOn = DefineProperty<DateTimeOffset>(nameof(LastKeySyncedOn), new string[] { "lastKeySync" });
+            _storageAccountId = DefineProperty<ResourceIdentifier>(nameof(StorageAccountId), new string[] { "storageAccountId" });
             _authenticationMode = DefineProperty<BatchAutoStorageAuthenticationMode>(nameof(AuthenticationMode), new string[] { "authenticationMode" });
             _nodeIdentity = DefineModelProperty<ComputeNodeIdentityReference>(nameof(NodeIdentity), new string[] { "nodeIdentityReference" });
+            DefineAdditionalProperties();
         }
+
+        /// <summary> Define additional provisionable properties for BatchAccountAutoStorageConfiguration that are not part of the generated code. </summary>
+        partial void DefineAdditionalProperties();
     }
 }

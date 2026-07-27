@@ -42,5 +42,21 @@ namespace Azure.ResourceManager.AppService.Models
                 Triggers.ConcurrentHttpPerInstanceConcurrency = (int?)value;
             }
         }
+
+        // GA exposed this triggers.http.perInstanceConcurrency value directly as ConcurrentHttpPerInstanceConcurrency.
+        // The generator auto-prefixes flattened paths with the parent property name, producing TriggersConcurrentHttpPerInstanceConcurrency.
+        // Add an alias to restore the GA name.
+        /// <summary> The maximum number of concurrent HTTP trigger invocations per instance. </summary>
+        [WirePath("triggers.http.perInstanceConcurrency")]
+        public int? ConcurrentHttpPerInstanceConcurrency
+        {
+            get => Triggers is null ? default : Triggers.ConcurrentHttpPerInstanceConcurrency;
+            set
+            {
+                if (Triggers is null)
+                    Triggers = new FunctionsScaleAndConcurrencyTriggers();
+                Triggers.ConcurrentHttpPerInstanceConcurrency = value;
+            }
+        }
     }
 }

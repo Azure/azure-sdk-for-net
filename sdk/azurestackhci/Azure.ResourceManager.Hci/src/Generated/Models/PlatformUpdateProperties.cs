@@ -36,6 +36,6 @@ namespace Azure.ResourceManager.Hci.Models
 
         /// <summary> Represents applicable platform updates. </summary>
         [WirePath("platformUpdateDetails")]
-        public IList<PlatformUpdateDetails> PlatformUpdateDetails { get; }
+        public IList<PlatformUpdateDetails> PlatformUpdateDetails { get; } = new ChangeTrackingList<PlatformUpdateDetails>();
     }
 }

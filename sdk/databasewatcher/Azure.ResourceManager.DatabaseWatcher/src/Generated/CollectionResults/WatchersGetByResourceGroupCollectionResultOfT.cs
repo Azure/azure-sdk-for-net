@@ -52,8 +52,8 @@ namespace Azure.ResourceManager.DatabaseWatcher
                     yield break;
                 }
                 WatcherListResult result = WatcherListResult.FromResponse(response);
-                yield return Page<DatabaseWatcherData>.FromValues((IReadOnlyList<DatabaseWatcherData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 nextPage = result.NextLink;
+                yield return Page<DatabaseWatcherData>.FromValues((IReadOnlyList<DatabaseWatcherData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 if (nextPage == null)
                 {
                     yield break;

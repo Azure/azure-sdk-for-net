@@ -7,9 +7,9 @@ using System.ClientModel;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure.AI.Projects.Evaluation;
+using Azure.AI.Projects;
 
-namespace Azure.AI.Projects
+namespace Azure.AI.Projects.Evaluation
 {
     /// <summary> Evaluator Generation Job resource — a long-running job that generates rubric-based evaluator definitions from source materials. On success, the result is the persisted EvaluatorVersion. </summary>
     public partial class EvaluatorGenerationJob : IJsonModel<EvaluatorGenerationJob>
@@ -130,6 +130,16 @@ namespace Azure.AI.Projects
                 writer.WritePropertyName("usage"u8);
                 writer.WriteObjectValue(Usage, options);
             }
+            if (options.Format != "W" && Optional.IsCollectionDefined(InputQualityWarnings))
+            {
+                writer.WritePropertyName("input_quality_warnings"u8);
+                writer.WriteStartArray();
+                foreach (RubricGenerationInputQualityWarning item in InputQualityWarnings)
+                {
+                    writer.WriteObjectValue(item, options);
+                }
+                writer.WriteEndArray();
+            }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
                 foreach (var item in _additionalBinaryDataProperties)
@@ -175,11 +185,12 @@ namespace Azure.AI.Projects
             string id = default;
             EvaluatorGenerationInputs inputs = default;
             EvaluatorVersion result = default;
-            JobStatus status = default;
+            ProjectsJobStatus status = default;
             FoundryOpenAIError error = default;
             DateTimeOffset createdAt = default;
             DateTimeOffset? finishedAt = default;
             EvaluatorGenerationTokenUsage usage = default;
+            IReadOnlyList<RubricGenerationInputQualityWarning> inputQualityWarnings = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -208,7 +219,7 @@ namespace Azure.AI.Projects
                 }
                 if (prop.NameEquals("status"u8))
                 {
-                    status = new JobStatus(prop.Value.GetString());
+                    status = new ProjectsJobStatus(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("error"u8))
@@ -243,6 +254,20 @@ namespace Azure.AI.Projects
                     usage = EvaluatorGenerationTokenUsage.DeserializeEvaluatorGenerationTokenUsage(prop.Value, options);
                     continue;
                 }
+                if (prop.NameEquals("input_quality_warnings"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    List<RubricGenerationInputQualityWarning> array = new List<RubricGenerationInputQualityWarning>();
+                    foreach (var item in prop.Value.EnumerateArray())
+                    {
+                        array.Add(RubricGenerationInputQualityWarning.DeserializeRubricGenerationInputQualityWarning(item, options));
+                    }
+                    inputQualityWarnings = array;
+                    continue;
+                }
                 if (options.Format != "W")
                 {
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
@@ -257,6 +282,7 @@ namespace Azure.AI.Projects
                 createdAt,
                 finishedAt,
                 usage,
+                inputQualityWarnings ?? new ChangeTrackingList<RubricGenerationInputQualityWarning>(),
                 additionalBinaryDataProperties);
         }
     }

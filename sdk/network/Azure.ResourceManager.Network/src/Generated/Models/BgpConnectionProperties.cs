@@ -25,16 +25,16 @@ namespace Azure.ResourceManager.Network.Models
 
         /// <summary> Initializes a new instance of <see cref="BgpConnectionProperties"/>. </summary>
         /// <param name="peerAsn"> Peer ASN. </param>
-        /// <param name="peerIp"> Peer IP. </param>
+        /// <param name="peerIP"> Peer IP. </param>
         /// <param name="hubVirtualNetworkConnection"> The reference to the HubVirtualNetworkConnection resource. </param>
         /// <param name="provisioningState"> The provisioning state of the resource. </param>
         /// <param name="connectionState"> The current state of the VirtualHub to Peer. </param>
         /// <param name="routingConfiguration"> The routing configuration indicating the associated and propagated route tables for this connection. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal BgpConnectionProperties(long? peerAsn, string peerIp, NetworkSubResource hubVirtualNetworkConnection, NetworkProvisioningState? provisioningState, HubBgpConnectionStatus? connectionState, RoutingConfigurationNfv routingConfiguration, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal BgpConnectionProperties(long? peerAsn, string peerIP, NetworkSubResource hubVirtualNetworkConnection, NetworkProvisioningState? provisioningState, HubBgpConnectionStatus? connectionState, RoutingConfigurationNfv routingConfiguration, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             PeerAsn = peerAsn;
-            PeerIp = peerIp;
+            PeerIP = peerIP;
             HubVirtualNetworkConnection = hubVirtualNetworkConnection;
             ProvisioningState = provisioningState;
             ConnectionState = connectionState;
@@ -48,7 +48,7 @@ namespace Azure.ResourceManager.Network.Models
 
         /// <summary> Peer IP. </summary>
         [WirePath("peerIp")]
-        public string PeerIp { get; set; }
+        public string PeerIP { get; set; }
 
         /// <summary> The reference to the HubVirtualNetworkConnection resource. </summary>
         [WirePath("hubVirtualNetworkConnection")]

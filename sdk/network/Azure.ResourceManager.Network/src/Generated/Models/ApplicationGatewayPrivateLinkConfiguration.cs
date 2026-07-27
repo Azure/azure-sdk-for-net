@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.Network.Models
 
         /// <summary> An array of application gateway private link ip configurations. </summary>
         [WirePath("properties.ipConfigurations")]
-        public IList<ApplicationGatewayPrivateLinkIPConfiguration> IpConfigurations
+        public IList<ApplicationGatewayPrivateLinkIPConfiguration> IPConfigurations
         {
             get
             {
@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.Network.Models
                 {
                     Properties = new ApplicationGatewayPrivateLinkConfigurationProperties();
                 }
-                return Properties.IpConfigurations;
+                return Properties.IPConfigurations;
             }
         }
 

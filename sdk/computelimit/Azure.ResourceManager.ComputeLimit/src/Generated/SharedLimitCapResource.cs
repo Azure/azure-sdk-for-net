@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.ComputeLimit
         {
             TryGetApiVersion(ResourceType, out string sharedLimitCapApiVersion);
             _sharedLimitCapsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ComputeLimit", ResourceType.Namespace, Diagnostics);
-            _sharedLimitCapsRestClient = new SharedLimitCaps(_sharedLimitCapsClientDiagnostics, Pipeline, Endpoint, sharedLimitCapApiVersion ?? "2026-07-01");
+            _sharedLimitCapsRestClient = new SharedLimitCaps(_sharedLimitCapsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, sharedLimitCapApiVersion ?? "2026-07-01");
             ValidateResourceId(id);
         }
 
