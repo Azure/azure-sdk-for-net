@@ -43,8 +43,7 @@ namespace System.ClientModel.Tests.Options
             "Server",
             "Transfer-Encoding",
             "User-Agent",
-            "WWW-Authenticate",
-            "azure-deprecating" ];
+            "WWW-Authenticate" ];
             string[] expectedDefaultAllowedQueryParameters = ["api-version"];
 
             ClientLoggingOptions options = new();
