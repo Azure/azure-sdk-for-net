@@ -325,19 +325,6 @@ namespace Azure.AI.VoiceLive
                 volume);
         }
 
-        /// <summary>
-        /// Azure realtime native voice configuration. These voices are natively
-        /// supported by the `azure-realtime` model and offer higher quality speech
-        /// synthesis than standard Azure voices. Only valid when using the
-        /// `azure-realtime` model.
-        /// </summary>
-        /// <param name="name"> The name of the Azure realtime native voice. </param>
-        /// <returns> A new <see cref="VoiceLive.AzureRealtimeNativeVoice"/> instance for mocking. </returns>
-        public static AzureRealtimeNativeVoice AzureRealtimeNativeVoice(AzureRealtimeNativeVoiceName name = default)
-        {
-            return new AzureRealtimeNativeVoice("azure-realtime-native", name, additionalBinaryDataProperties: null);
-        }
-
         /// <summary> Azure semantic end-of-utterance detection (default). </summary>
         /// <param name="thresholdLevel"> Threshold level setting. Recommended instead of `threshold`. One of `low`, `medium`, `high`, or `default`. </param>
         /// <param name="timeoutMs"> Timeout in milliseconds. Recommended instead of `timeout`. </param>

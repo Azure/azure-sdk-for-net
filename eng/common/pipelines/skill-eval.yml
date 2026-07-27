@@ -32,10 +32,7 @@ extends:
     TestType: mock
     vallyRoot: .github/skills
     # Single-level glob excludes azure-typespec-author/evaluate/ (its own benchmark pipeline).
-    # Second entry catches the plain `eval.yaml` name (merged routing+capability file);
-    # it doesn't match *.eval.yaml since "eval.yaml" itself is shorter than that suffix.
     evalGlobs:
       - '*/evals/*.eval.yaml'
-      - '*/evals/eval.yaml'
     # Per-shard job timeout (report-only tier).
     shardTimeoutInMinutes: 20

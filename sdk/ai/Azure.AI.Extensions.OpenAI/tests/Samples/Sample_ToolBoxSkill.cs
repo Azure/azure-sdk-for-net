@@ -127,14 +127,52 @@ public class Sample_ToolBoxSkill : ProjectsOpenAITestBase
         {
             throw new InvalidOperationException($"The Agent deployment failed, status: {agentVersion.Status}");
         }
+        Console.WriteLine($"Created Agent {agentVersion.Name}, v. {agentVersion.Version}.");
+        Console.WriteLine($"The Agent's identity ID is {agentVersion.InstanceIdentity.ClientId}. Please use it to set \"Foundry User\" permission if needed.");
         #endregion
         #region Snippet:Sample_GetResponseFromAgent_ToolBoxSkill_Async
         ProjectResponsesClient responseClient = projectClient.ProjectOpenAIClient.GetProjectResponsesClientForAgentEndpoint(agentVersion.Name);
-        ResponseResult latestResponse = await responseClient.CreateResponseAsync("Compute the shipping cost for a 3 kg package shipped domestically.");
+        CreateResponseOptions nextResponseOptions = new()
+        {
+            InputItems = { ResponseItem.CreateUserMessageItem("Compute the shipping cost for a 3 kg package shipped domestically.") }
+        };
+        ResponseResult latestResponse = null;
+        while (nextResponseOptions is not null)
+        {
+            latestResponse = await responseClient.CreateResponseAsync(nextResponseOptions);
+            nextResponseOptions = null;
+
+            foreach (ResponseItem responseItem in latestResponse.OutputItems)
+            {
+                if (responseItem is McpToolCallApprovalRequestItem mcpToolCall)
+                {
+                    nextResponseOptions = new CreateResponseOptions()
+                    {
+                        PreviousResponseId = latestResponse.Id,
+                    };
+                    if (string.Equals(mcpToolCall.ServerLabel, "agent_framework"))
+                    {
+                        Console.WriteLine($"Approving {mcpToolCall.ServerLabel}...");
+                        // Automatically approve the MCP request to allow the agent to proceed
+                        // In production, you might want to implement more sophisticated approval logic
+                        nextResponseOptions.InputItems.Add(ResponseItem.CreateMcpApprovalResponseItem(approvalRequestId: mcpToolCall.Id, approved: true));
+                    }
+                    else
+                    {
+                        Console.WriteLine($"Rejecting unknown call {mcpToolCall.ServerLabel}...");
+                        nextResponseOptions.InputItems.Add(ResponseItem.CreateMcpApprovalResponseItem(approvalRequestId: mcpToolCall.Id, approved: false));
+                    }
+                }
+                else if (responseItem is FunctionCallResponseItem functionCallResponse)
+                {
+                    Console.WriteLine($"Calling function {functionCallResponse.FunctionName} with arguments {functionCallResponse.FunctionArguments}");
+                }
+            }
+        }
         Console.WriteLine(latestResponse.GetOutputText());
         #endregion
         #region Snippet:DeleteToolBoxSkill_ToolBoxSkill_Async
-        await projectClient.AgentAdministrationClient.DeleteAgentAsync(agentVersion.Name, force: true);
+        // await projectClient.AgentAdministrationClient.DeleteAgentAsync(agentVersion.Name, force: true);
         await toolboxClient.DeleteAsync(name: toolBox.Name);
         await skillsClient.DeleteSkillAsync(name: skill.Name);
         #endregion
@@ -214,14 +252,52 @@ public class Sample_ToolBoxSkill : ProjectsOpenAITestBase
         {
             throw new InvalidOperationException($"The Agent deployment failed, status: {agentVersion.Status}");
         }
+        Console.WriteLine($"Created Agent {agentVersion.Name}, v. {agentVersion.Version}.");
+        Console.WriteLine($"The Agent's identity ID is {agentVersion.InstanceIdentity.ClientId}. Please use it to set \"Foundry User\" permission if needed.");
         #endregion
         #region Snippet:Sample_GetResponseFromAgent_ToolBoxSkill_Sync
         ProjectResponsesClient responseClient = projectClient.ProjectOpenAIClient.GetProjectResponsesClientForAgentEndpoint(agentVersion.Name);
-        ResponseResult latestResponse = responseClient.CreateResponse("Compute the shipping cost for a 3 kg package shipped domestically.");
+        CreateResponseOptions nextResponseOptions = new()
+        {
+            InputItems = { ResponseItem.CreateUserMessageItem("Compute the shipping cost for a 3 kg package shipped domestically.") }
+        };
+        ResponseResult latestResponse = null;
+        while (nextResponseOptions is not null)
+        {
+            latestResponse = responseClient.CreateResponse(nextResponseOptions);
+            nextResponseOptions = null;
+
+            foreach (ResponseItem responseItem in latestResponse.OutputItems)
+            {
+                if (responseItem is McpToolCallApprovalRequestItem mcpToolCall)
+                {
+                    nextResponseOptions = new CreateResponseOptions()
+                    {
+                        PreviousResponseId = latestResponse.Id,
+                    };
+                    if (string.Equals(mcpToolCall.ServerLabel, "agent_framework"))
+                    {
+                        Console.WriteLine($"Approving {mcpToolCall.ServerLabel}...");
+                        // Automatically approve the MCP request to allow the agent to proceed
+                        // In production, you might want to implement more sophisticated approval logic
+                        nextResponseOptions.InputItems.Add(ResponseItem.CreateMcpApprovalResponseItem(approvalRequestId: mcpToolCall.Id, approved: true));
+                    }
+                    else
+                    {
+                        Console.WriteLine($"Rejecting unknown call {mcpToolCall.ServerLabel}...");
+                        nextResponseOptions.InputItems.Add(ResponseItem.CreateMcpApprovalResponseItem(approvalRequestId: mcpToolCall.Id, approved: false));
+                    }
+                }
+                else if (responseItem is FunctionCallResponseItem functionCallResponse)
+                {
+                    Console.WriteLine($"Calling function {functionCallResponse.FunctionName} with arguments {functionCallResponse.FunctionArguments}");
+                }
+            }
+        }
         Console.WriteLine(latestResponse.GetOutputText());
         #endregion
         #region Snippet:DeleteToolBoxSkill_ToolBoxSkill_Sync
-        projectClient.AgentAdministrationClient.DeleteAgent(agentVersion.Name, force: true);
+        // projectClient.AgentAdministrationClient.DeleteAgent(agentVersion.Name, force: true);
         toolboxClient.Delete(name: toolBox.Name);
         skillsClient.DeleteSkill(name: skill.Name);
         #endregion
