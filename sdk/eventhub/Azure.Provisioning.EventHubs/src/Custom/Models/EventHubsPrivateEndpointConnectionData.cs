@@ -12,6 +12,8 @@ using Azure.Provisioning.Resources;
 
 namespace Azure.Provisioning.EventHubs
 {
+    // The TypeSpec provisioning generator now emits EventHubsPrivateEndpointConnection as a child resource.
+    // Preserve the old data model type for source and binary compatibility with Azure.Provisioning.EventHubs 1.1.0.
     /// <summary>
     /// A class representing the EventHubsPrivateEndpointConnection data model.
     /// Properties of the private endpoint connection.
@@ -20,8 +22,6 @@ namespace Azure.Provisioning.EventHubs
     [Obsolete("This type is deprecated and it will be removed in a future version. Please use EventHubsPrivateEndpointConnection instead.")]
     public partial class EventHubsPrivateEndpointConnectionData : ProvisionableConstruct
     {
-        // The TypeSpec provisioning generator now emits EventHubsPrivateEndpointConnection as a child resource.
-        // Preserve the old data model type for source and binary compatibility with Azure.Provisioning.EventHubs 1.1.0.
         private BicepValue<ResourceIdentifier> _privateEndpointId;
         private EventHubsPrivateLinkServiceConnectionState _connectionState;
         private BicepValue<EventHubsPrivateEndpointConnectionProvisioningState> _provisioningState;

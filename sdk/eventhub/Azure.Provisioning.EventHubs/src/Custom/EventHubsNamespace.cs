@@ -12,9 +12,9 @@ namespace Azure.Provisioning.EventHubs
 {
     public partial class EventHubsNamespace
     {
-        /// <summary> Gets or sets the private endpoint connection resources. </summary>
         // The TypeSpec provisioning generator models private endpoint connections as child resources.
         // Keep that new resource-based API under a distinct name so the shipped data-model API can coexist.
+        /// <summary> Gets or sets the private endpoint connection resources. </summary>
         [CodeGenMember("PrivateEndpointConnections")]
         public BicepList<EventHubsPrivateEndpointConnection> PrivateEndpointConnectionResources
         {
@@ -36,11 +36,11 @@ namespace Azure.Provisioning.EventHubs
             }
         }
 
+        // Preserve the old flattened data-model list for callers compiled against Azure.Provisioning.EventHubs 1.1.0.
         /// <summary>
         /// Gets or sets the private endpoint connection data models.
         /// This compatibility property preserves the previous generated model shape.
         /// </summary>
-        // Preserve the old flattened data-model list for callers compiled against Azure.Provisioning.EventHubs 1.1.0.
         [EditorBrowsable(EditorBrowsableState.Never)]
         [Obsolete("This property is deprecated and it will be removed in a future version. Please use PrivateEndpointConnectionResources instead.")]
 #pragma warning disable CS0618 // EventHubsPrivateEndpointConnectionData is intentionally preserved for obsolete compatibility APIs.
