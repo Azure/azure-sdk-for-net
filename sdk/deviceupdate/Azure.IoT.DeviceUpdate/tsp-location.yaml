@@ -1,0 +1,6 @@
+directory: specification/deviceupdate/data-plane/duiothub
+commit: ddd0c57009699d112c645312b462d582b2d94dbb
+repo: Azure/azure-rest-api-specs
+additionalDirectories: 
+
+emitterPackageJsonPath: eng/azure-typespec-http-client-csharp-emitter-package.json
