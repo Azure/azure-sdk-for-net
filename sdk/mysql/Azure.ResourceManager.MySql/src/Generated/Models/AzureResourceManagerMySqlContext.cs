@@ -6,6 +6,7 @@
 #nullable disable
 
 using System.ClientModel.Primitives;
+using Azure;
 using Azure.ResourceManager.Models;
 using Azure.ResourceManager.MySql.FlexibleServers;
 using Azure.ResourceManager.MySql.FlexibleServers.Models;
@@ -40,6 +41,7 @@ namespace Azure.ResourceManager.MySql
     [ModelReaderWriterBuildable(typeof(MaintenancePolicy))]
     [ModelReaderWriterBuildable(typeof(MaintenanceProperties))]
     [ModelReaderWriterBuildable(typeof(MaintenancePropertiesForUpdate))]
+    [ModelReaderWriterBuildable(typeof(ManagedServiceIdentity))]
     [ModelReaderWriterBuildable(typeof(MySqlFlexibleServerAadAdministratorData))]
     [ModelReaderWriterBuildable(typeof(MySqlFlexibleServerAadAdministratorListResult))]
     [ModelReaderWriterBuildable(typeof(MySqlFlexibleServerAadAdministratorResource))]
@@ -106,6 +108,7 @@ namespace Azure.ResourceManager.MySql
     [ModelReaderWriterBuildable(typeof(MySqlFlexibleServerVirtualNetworkSubnetUsageResult))]
     [ModelReaderWriterBuildable(typeof(PrivateEndpoint))]
     [ModelReaderWriterBuildable(typeof(PrivateEndpointConnectionProperties))]
+    [ModelReaderWriterBuildable(typeof(ResponseError))]
     [ModelReaderWriterBuildable(typeof(ServerBackupProperties))]
     [ModelReaderWriterBuildable(typeof(ServerBackupPropertiesV2))]
     [ModelReaderWriterBuildable(typeof(ServerBackupV2ListResult))]
@@ -114,6 +117,7 @@ namespace Azure.ResourceManager.MySql
     [ModelReaderWriterBuildable(typeof(ServerPropertiesForUpdate))]
     [ModelReaderWriterBuildable(typeof(ServerVersionCapabilityV2))]
     [ModelReaderWriterBuildable(typeof(SkuCapabilityV2))]
+    [ModelReaderWriterBuildable(typeof(SystemData))]
     [ModelReaderWriterBuildable(typeof(UnknownBackupStoreDetails))]
     [ModelReaderWriterBuildable(typeof(UserAssignedIdentity))]
     [ModelReaderWriterBuildable(typeof(ValidateBackupResponseProperties))]
