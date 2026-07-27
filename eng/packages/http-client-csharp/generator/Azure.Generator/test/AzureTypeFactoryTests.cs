@@ -3,6 +3,7 @@
 
 using Azure.Core;
 using Azure.Core.Expressions.DataFactory;
+using Azure.Core.Pipeline;
 using Azure.Generator.Tests.Common;
 using Azure.Generator.Tests.TestHelpers;
 using Microsoft.TypeSpec.Generator.Expressions;
@@ -157,6 +158,7 @@ namespace Azure.Generator.Tests
         [TestCase(typeof(ResourceIdentifier))]
         [TestCase(typeof(AzureLocation))]
         [TestCase(typeof(ResponseError))]
+        [TestCase(typeof(ClientDiagnostics))]
         public void CreatesFrameworkType(Type expectedType)
         {
             var factory = new TestTypeFactory();

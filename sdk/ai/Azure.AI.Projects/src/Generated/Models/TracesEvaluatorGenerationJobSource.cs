@@ -4,11 +4,13 @@
 
 using System;
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 using Azure.AI.Projects.Evaluation;
 
 namespace Azure.AI.Projects
 {
     /// <summary> Traces source for evaluator generation jobs — conversation traces from Application Insights. </summary>
+    [Experimental("AAIP001")]
     public partial class TracesEvaluatorGenerationJobSource : EvaluatorGenerationJobSource
     {
         /// <summary> Initializes a new instance of <see cref="TracesEvaluatorGenerationJobSource"/>. </summary>

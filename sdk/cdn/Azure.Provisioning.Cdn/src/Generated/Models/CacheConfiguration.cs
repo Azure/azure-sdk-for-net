@@ -109,6 +109,10 @@ namespace Azure.Provisioning.Cdn
             _isCompressionEnabled = DefineProperty<RuleIsCompressionEnabled>(nameof(IsCompressionEnabled), new string[] { "isCompressionEnabled" });
             _cacheBehavior = DefineProperty<RuleCacheBehavior>(nameof(CacheBehavior), new string[] { "cacheBehavior" });
             _cacheDuration = DefineProperty<TimeSpan>(nameof(CacheDuration), new string[] { "cacheDuration" });
+            DefineAdditionalProperties();
         }
+
+        /// <summary> Define additional provisionable properties for CacheConfiguration that are not part of the generated code. </summary>
+        partial void DefineAdditionalProperties();
     }
 }

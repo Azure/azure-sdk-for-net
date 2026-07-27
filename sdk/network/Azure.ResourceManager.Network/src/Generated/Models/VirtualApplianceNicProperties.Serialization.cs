@@ -84,15 +84,15 @@ namespace Azure.ResourceManager.Network.Models
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
-            if (options.Format != "W" && Optional.IsDefined(PublicIpAddress))
+            if (options.Format != "W" && Optional.IsDefined(PublicIPAddress))
             {
                 writer.WritePropertyName("publicIpAddress"u8);
-                writer.WriteStringValue(PublicIpAddress);
+                writer.WriteStringValue(PublicIPAddress);
             }
-            if (options.Format != "W" && Optional.IsDefined(PrivateIpAddress))
+            if (options.Format != "W" && Optional.IsDefined(PrivateIPAddress))
             {
                 writer.WritePropertyName("privateIpAddress"u8);
-                writer.WriteStringValue(PrivateIpAddress);
+                writer.WriteStringValue(PrivateIPAddress);
             }
             if (options.Format != "W" && Optional.IsDefined(InstanceName))
             {
@@ -143,8 +143,8 @@ namespace Azure.ResourceManager.Network.Models
             }
             NicTypeInResponse? nicType = default;
             string name = default;
-            string publicIpAddress = default;
-            string privateIpAddress = default;
+            string publicIPAddress = default;
+            string privateIPAddress = default;
             string instanceName = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
@@ -165,12 +165,12 @@ namespace Azure.ResourceManager.Network.Models
                 }
                 if (prop.NameEquals("publicIpAddress"u8))
                 {
-                    publicIpAddress = prop.Value.GetString();
+                    publicIPAddress = prop.Value.GetString();
                     continue;
                 }
                 if (prop.NameEquals("privateIpAddress"u8))
                 {
-                    privateIpAddress = prop.Value.GetString();
+                    privateIPAddress = prop.Value.GetString();
                     continue;
                 }
                 if (prop.NameEquals("instanceName"u8))
@@ -186,8 +186,8 @@ namespace Azure.ResourceManager.Network.Models
             return new VirtualApplianceNicProperties(
                 nicType,
                 name,
-                publicIpAddress,
-                privateIpAddress,
+                publicIPAddress,
+                privateIPAddress,
                 instanceName,
                 additionalBinaryDataProperties);
         }

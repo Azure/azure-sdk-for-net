@@ -74,11 +74,11 @@ namespace Azure.ResourceManager.Network.Models
             {
                 throw new FormatException($"The model {nameof(BastionHostPropertiesFormat)} does not support writing '{format}' format.");
             }
-            if (Optional.IsCollectionDefined(IpConfigurations))
+            if (Optional.IsCollectionDefined(IPConfigurations))
             {
                 writer.WritePropertyName("ipConfigurations"u8);
                 writer.WriteStartArray();
-                foreach (BastionHostIPConfiguration item in IpConfigurations)
+                foreach (BastionHostIPConfiguration item in IPConfigurations)
                 {
                     writer.WriteObjectValue(item, options);
                 }
@@ -119,10 +119,10 @@ namespace Azure.ResourceManager.Network.Models
                 writer.WritePropertyName("enableFileCopy"u8);
                 writer.WriteBooleanValue(EnableFileCopy.Value);
             }
-            if (Optional.IsDefined(EnableIpConnect))
+            if (Optional.IsDefined(EnableIPConnect))
             {
                 writer.WritePropertyName("enableIpConnect"u8);
-                writer.WriteBooleanValue(EnableIpConnect.Value);
+                writer.WriteBooleanValue(EnableIPConnect.Value);
             }
             if (Optional.IsDefined(EnableShareableLink))
             {
@@ -199,7 +199,7 @@ namespace Azure.ResourceManager.Network.Models
             int? scaleUnits = default;
             bool? disableCopyPaste = default;
             bool? enableFileCopy = default;
-            bool? enableIpConnect = default;
+            bool? enableIPConnect = default;
             bool? enableShareableLink = default;
             bool? enableTunneling = default;
             bool? enableKerberos = default;
@@ -287,7 +287,7 @@ namespace Azure.ResourceManager.Network.Models
                     {
                         continue;
                     }
-                    enableIpConnect = prop.Value.GetBoolean();
+                    enableIPConnect = prop.Value.GetBoolean();
                     continue;
                 }
                 if (prop.NameEquals("enableShareableLink"u8))
@@ -349,7 +349,7 @@ namespace Azure.ResourceManager.Network.Models
                 scaleUnits,
                 disableCopyPaste,
                 enableFileCopy,
-                enableIpConnect,
+                enableIPConnect,
                 enableShareableLink,
                 enableTunneling,
                 enableKerberos,

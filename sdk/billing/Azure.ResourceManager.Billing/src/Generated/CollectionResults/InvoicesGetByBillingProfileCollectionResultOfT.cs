@@ -76,8 +76,8 @@ namespace Azure.ResourceManager.Billing
                     yield break;
                 }
                 InvoiceListResult result = InvoiceListResult.FromResponse(response);
-                yield return Page<BillingInvoiceData>.FromValues(result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 nextPage = result.NextLink;
+                yield return Page<BillingInvoiceData>.FromValues(result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 if (nextPage == null)
                 {
                     yield break;

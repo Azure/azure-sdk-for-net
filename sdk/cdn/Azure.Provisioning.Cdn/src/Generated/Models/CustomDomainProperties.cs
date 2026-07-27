@@ -122,6 +122,10 @@ namespace Azure.Provisioning.Cdn
             _customDomainHttpsContent = DefineModelProperty<CustomDomainHttpsContent>(nameof(CustomDomainHttpsContent), new string[] { "customHttpsParameters" });
             _validationData = DefineProperty<string>(nameof(ValidationData), new string[] { "validationData" });
             _provisioningState = DefineProperty<CustomHttpsProvisioningState>(nameof(ProvisioningState), new string[] { "provisioningState" }, isOutput: true);
+            DefineAdditionalProperties();
         }
+
+        /// <summary> Define additional provisionable properties for CustomDomainProperties that are not part of the generated code. </summary>
+        partial void DefineAdditionalProperties();
     }
 }

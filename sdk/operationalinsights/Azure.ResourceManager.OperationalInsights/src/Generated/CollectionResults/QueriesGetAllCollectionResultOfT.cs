@@ -64,8 +64,8 @@ namespace Azure.ResourceManager.OperationalInsights
                     yield break;
                 }
                 LogAnalyticsQueryPackQueryListResult result = LogAnalyticsQueryPackQueryListResult.FromResponse(response);
-                yield return Page<LogAnalyticsQueryData>.FromValues((IReadOnlyList<LogAnalyticsQueryData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 nextPage = result.NextLink;
+                yield return Page<LogAnalyticsQueryData>.FromValues((IReadOnlyList<LogAnalyticsQueryData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 if (nextPage == null)
                 {
                     yield break;

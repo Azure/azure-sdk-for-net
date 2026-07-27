@@ -57,6 +57,10 @@ namespace Azure.Provisioning.CostManagement
             base.DefineProvisionableProperties();
             _name = DefineProperty<string>(nameof(Name), new string[] { "name" }, isRequired: true);
             _function = DefineProperty<FunctionType>(nameof(Function), new string[] { "function" }, isRequired: true);
+            DefineAdditionalProperties();
         }
+
+        /// <summary> Define additional provisionable properties for ReportConfigAggregation that are not part of the generated code. </summary>
+        partial void DefineAdditionalProperties();
     }
 }

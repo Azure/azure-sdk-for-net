@@ -52,8 +52,8 @@ namespace Azure.ResourceManager.VirtualEnclaves
                     yield break;
                 }
                 TransitHubResourceListResult result = TransitHubResourceListResult.FromResponse(response);
-                yield return Page<VirtualEnclaveTransitHubData>.FromValues((IReadOnlyList<VirtualEnclaveTransitHubData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 nextPage = result.NextLink;
+                yield return Page<VirtualEnclaveTransitHubData>.FromValues((IReadOnlyList<VirtualEnclaveTransitHubData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 if (nextPage == null)
                 {
                     yield break;

@@ -77,7 +77,14 @@ internal static class ConversationChainIdDerivation
     {
         try
         {
-            return IdGenerator.ExtractPartitionKey(sourceId);
+            string extracted = IdGenerator.ExtractPartitionKey(sourceId);
+
+            // Legacy-format IDs embed a 16-char partition key; new-format IDs embed 18 (16 hex + "00").
+            // Normalize a legacy key the same way IdGenerator.NewId does, so a chain that mixes legacy
+            // and new-format IDs resolves to one stable partition key.
+            return extracted.Length == PartitionHexLength
+                ? extracted + PartitionSuffix
+                : extracted;
         }
         catch (ArgumentException)
         {

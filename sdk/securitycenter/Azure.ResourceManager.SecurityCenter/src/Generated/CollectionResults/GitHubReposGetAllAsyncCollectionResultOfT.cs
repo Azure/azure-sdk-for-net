@@ -59,8 +59,8 @@ namespace Azure.ResourceManager.SecurityCenter
                     yield break;
                 }
                 GitHubRepositoryListResponse result = GitHubRepositoryListResponse.FromResponse(response);
-                yield return Page<GitHubRepositoryData>.FromValues((IReadOnlyList<GitHubRepositoryData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 nextPage = result.NextLink;
+                yield return Page<GitHubRepositoryData>.FromValues((IReadOnlyList<GitHubRepositoryData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 if (nextPage == null)
                 {
                     yield break;

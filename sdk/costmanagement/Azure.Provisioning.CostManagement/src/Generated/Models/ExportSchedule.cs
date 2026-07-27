@@ -74,6 +74,10 @@ namespace Azure.Provisioning.CostManagement
             _status = DefineProperty<ExportScheduleStatusType>(nameof(Status), new string[] { "status" });
             _recurrence = DefineProperty<ExportScheduleRecurrenceType>(nameof(Recurrence), new string[] { "recurrence" });
             _recurrencePeriod = DefineModelProperty<ExportRecurrencePeriod>(nameof(RecurrencePeriod), new string[] { "recurrencePeriod" });
+            DefineAdditionalProperties();
         }
+
+        /// <summary> Define additional provisionable properties for ExportSchedule that are not part of the generated code. </summary>
+        partial void DefineAdditionalProperties();
     }
 }

@@ -56,8 +56,8 @@ namespace Azure.ResourceManager.Sql
                     yield break;
                 }
                 StartStopManagedInstanceScheduleListResult result = StartStopManagedInstanceScheduleListResult.FromResponse(response);
-                yield return Page<ManagedInstanceStartStopScheduleData>.FromValues((IReadOnlyList<ManagedInstanceStartStopScheduleData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 nextPage = result.NextLink;
+                yield return Page<ManagedInstanceStartStopScheduleData>.FromValues((IReadOnlyList<ManagedInstanceStartStopScheduleData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 if (nextPage == null)
                 {
                     yield break;

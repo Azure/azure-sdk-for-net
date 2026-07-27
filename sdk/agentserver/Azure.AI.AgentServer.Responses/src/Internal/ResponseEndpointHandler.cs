@@ -185,6 +185,7 @@ internal sealed class ResponseEndpointHandler
                 : SessionIdDerivation.Derive(
                     conversationId,
                     request.PreviousResponseId,
+                    responseId,
                     request.AgentReference);
         }
 
@@ -702,7 +703,7 @@ internal sealed class ResponseEndpointHandler
         string agentName = agentReference?.Name is { Length: > 0 } name ? name : "server-default-agent";
         string sessionId = request.AgentSessionId is { Length: > 0 } sid
             ? sid
-            : SessionIdDerivation.Derive(conversationId, request.PreviousResponseId, agentReference);
+            : SessionIdDerivation.Derive(conversationId, request.PreviousResponseId, responseId, agentReference);
 
         return ConversationChainIdDerivation.Derive(
             conversationId, request.PreviousResponseId, responseId, agentName, sessionId, steerable);

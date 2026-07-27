@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.EventGrid;
 
 namespace Azure.ResourceManager.EventGrid.Models
 {
@@ -14,35 +15,52 @@ namespace Azure.ResourceManager.EventGrid.Models
     internal readonly partial struct StaticRoutingEnrichmentType : IEquatable<StaticRoutingEnrichmentType>
     {
         private readonly string _value;
+        /// <summary> String. </summary>
+        private const string StringValue = "String";
 
         /// <summary> Initializes a new instance of <see cref="StaticRoutingEnrichmentType"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public StaticRoutingEnrichmentType(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string StringValue = "String";
+            _value = value;
+        }
 
         /// <summary> String. </summary>
         public static StaticRoutingEnrichmentType String { get; } = new StaticRoutingEnrichmentType(StringValue);
+
         /// <summary> Determines if two <see cref="StaticRoutingEnrichmentType"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(StaticRoutingEnrichmentType left, StaticRoutingEnrichmentType right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="StaticRoutingEnrichmentType"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(StaticRoutingEnrichmentType left, StaticRoutingEnrichmentType right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="StaticRoutingEnrichmentType"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="StaticRoutingEnrichmentType"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator StaticRoutingEnrichmentType(string value) => new StaticRoutingEnrichmentType(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="StaticRoutingEnrichmentType"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator StaticRoutingEnrichmentType?(string value) => value == null ? null : new StaticRoutingEnrichmentType(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is StaticRoutingEnrichmentType other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(StaticRoutingEnrichmentType other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

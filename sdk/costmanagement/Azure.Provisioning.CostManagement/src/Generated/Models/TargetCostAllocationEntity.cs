@@ -91,6 +91,10 @@ namespace Azure.Provisioning.CostManagement
             _policyType = DefineProperty<CostAllocationPolicyType>(nameof(PolicyType), new string[] { "policyType" }, isRequired: true);
             _resourceType = DefineProperty<CostAllocationResourceType>(nameof(ResourceType), new string[] { "resourceType" }, isRequired: true);
             _name = DefineProperty<string>(nameof(Name), new string[] { "name" }, isRequired: true);
+            DefineAdditionalProperties();
         }
+
+        /// <summary> Define additional provisionable properties for TargetCostAllocationEntity that are not part of the generated code. </summary>
+        partial void DefineAdditionalProperties();
     }
 }

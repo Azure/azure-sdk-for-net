@@ -247,6 +247,10 @@ namespace Azure.Provisioning.Cdn
             _enforceCertificateNameCheck = DefineProperty<bool>(nameof(EnforceCertificateNameCheck), new string[] { "enforceCertificateNameCheck" });
             _provisioningState = DefineProperty<FrontDoorProvisioningState>(nameof(ProvisioningState), new string[] { "provisioningState" }, isOutput: true);
             _deploymentStatus = DefineProperty<FrontDoorDeploymentStatus>(nameof(DeploymentStatus), new string[] { "deploymentStatus" }, isOutput: true);
+            DefineAdditionalProperties();
         }
+
+        /// <summary> Define additional provisionable properties for FrontDoorOriginProperties that are not part of the generated code. </summary>
+        partial void DefineAdditionalProperties();
     }
 }

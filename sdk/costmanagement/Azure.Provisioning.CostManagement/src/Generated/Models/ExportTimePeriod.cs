@@ -58,6 +58,10 @@ namespace Azure.Provisioning.CostManagement
             base.DefineProvisionableProperties();
             _from = DefineProperty<DateTimeOffset>(nameof(From), new string[] { "from" }, isRequired: true);
             _to = DefineProperty<DateTimeOffset>(nameof(To), new string[] { "to" }, isRequired: true);
+            DefineAdditionalProperties();
         }
+
+        /// <summary> Define additional provisionable properties for ExportTimePeriod that are not part of the generated code. </summary>
+        partial void DefineAdditionalProperties();
     }
 }

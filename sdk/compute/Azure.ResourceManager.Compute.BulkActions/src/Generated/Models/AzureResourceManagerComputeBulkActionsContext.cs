@@ -15,6 +15,7 @@ namespace Azure.ResourceManager.Compute.BulkActions
     /// Context class which will be filled in by the System.ClientModel.SourceGeneration.
     /// For more information <see href='https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/System.ClientModel/src/docs/ModelReaderWriterContext.md' />
     /// </summary>
+    [ModelReaderWriterBuildable(typeof(BulkActionExecutionParameterDetail))]
     [ModelReaderWriterBuildable(typeof(BulkOperationRetryPolicy))]
     [ModelReaderWriterBuildable(typeof(CancelBulkOperationsContent))]
     [ModelReaderWriterBuildable(typeof(CancelBulkOperationsResult))]
@@ -32,7 +33,6 @@ namespace Azure.ResourceManager.Compute.BulkActions
     [ModelReaderWriterBuildable(typeof(GetBulkOperationStatusResult))]
     [ModelReaderWriterBuildable(typeof(HibernateResourceOperationResult))]
     [ModelReaderWriterBuildable(typeof(ResponseError))]
-    [ModelReaderWriterBuildable(typeof(ScheduledActionExecutionParameterDetail))]
     [ModelReaderWriterBuildable(typeof(StartResourceOperationResult))]
     [ModelReaderWriterBuildable(typeof(UserRequestResources))]
     public partial class AzureResourceManagerComputeBulkActionsContext : ModelReaderWriterContext

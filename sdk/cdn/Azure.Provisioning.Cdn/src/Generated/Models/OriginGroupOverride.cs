@@ -75,6 +75,10 @@ namespace Azure.Provisioning.Cdn
             base.DefineProvisionableProperties();
             _originGroup = DefineModelProperty<CdnResourceReference>(nameof(OriginGroup), new string[] { "originGroup" });
             _forwardingProtocol = DefineProperty<ForwardingProtocol>(nameof(ForwardingProtocol), new string[] { "forwardingProtocol" });
+            DefineAdditionalProperties();
         }
+
+        /// <summary> Define additional provisionable properties for OriginGroupOverride that are not part of the generated code. </summary>
+        partial void DefineAdditionalProperties();
     }
 }

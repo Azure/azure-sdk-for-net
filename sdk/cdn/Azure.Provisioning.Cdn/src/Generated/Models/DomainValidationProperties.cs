@@ -48,6 +48,10 @@ namespace Azure.Provisioning.Cdn
             base.DefineProvisionableProperties();
             _validationToken = DefineProperty<string>(nameof(ValidationToken), new string[] { "validationToken" }, isOutput: true);
             _expiresOn = DefineProperty<DateTimeOffset>(nameof(ExpiresOn), new string[] { "expirationDate" }, isOutput: true);
+            DefineAdditionalProperties();
         }
+
+        /// <summary> Define additional provisionable properties for DomainValidationProperties that are not part of the generated code. </summary>
+        partial void DefineAdditionalProperties();
     }
 }

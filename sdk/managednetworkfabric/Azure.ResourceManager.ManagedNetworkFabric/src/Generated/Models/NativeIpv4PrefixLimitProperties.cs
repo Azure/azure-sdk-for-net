@@ -33,6 +33,6 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
         }
 
         /// <summary> Prefix limits. </summary>
-        public IList<PrefixLimitProperties> PrefixLimits { get; }
+        public IList<PrefixLimitProperties> PrefixLimits { get; } = new ChangeTrackingList<PrefixLimitProperties>();
     }
 }

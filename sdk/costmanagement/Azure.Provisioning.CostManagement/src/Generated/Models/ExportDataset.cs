@@ -108,6 +108,10 @@ namespace Azure.Provisioning.CostManagement
             base.DefineProvisionableProperties();
             _granularity = DefineProperty<GranularityType>(nameof(Granularity), new string[] { "granularity" });
             _configuration = DefineModelProperty<ExportDatasetConfiguration>(nameof(Configuration), new string[] { "configuration" });
+            DefineAdditionalProperties();
         }
+
+        /// <summary> Define additional provisionable properties for ExportDataset that are not part of the generated code. </summary>
+        partial void DefineAdditionalProperties();
     }
 }

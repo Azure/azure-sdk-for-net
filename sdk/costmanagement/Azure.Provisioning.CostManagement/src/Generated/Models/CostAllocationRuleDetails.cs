@@ -57,6 +57,10 @@ namespace Azure.Provisioning.CostManagement
             base.DefineProvisionableProperties();
             _sourceResources = DefineListProperty<SourceCostAllocationEntity>(nameof(SourceResources), new string[] { "sourceResources" });
             _targetResources = DefineListProperty<TargetCostAllocationEntity>(nameof(TargetResources), new string[] { "targetResources" });
+            DefineAdditionalProperties();
         }
+
+        /// <summary> Define additional provisionable properties for CostAllocationRuleDetails that are not part of the generated code. </summary>
+        partial void DefineAdditionalProperties();
     }
 }

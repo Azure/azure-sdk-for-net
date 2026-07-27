@@ -28,7 +28,7 @@ jobs:
           (github.repository == 'Azure/azure-sdk-for-java' && contains(github.event.check_run.name, 'Analyze')) ||
           (github.repository == 'Azure/azure-sdk-for-js' && contains(github.event.check_run.name, 'Analyze')) ||
           (github.repository == 'Azure/azure-sdk-for-c' && contains(github.event.check_run.name, 'GenerateReleaseArtifacts')) ||
-          (github.repository == 'Azure/azure-sdk-for-cpp' && contains(github.event.check_run.name, 'Analyze')) ||
+          (github.repository == 'Azure/azure-sdk-for-cpp' && contains(github.event.check_run.name, 'GenerateReleaseArtifacts')) ||
           (github.repository == 'Azure/azure-sdk-for-go' && contains(github.event.check_run.name, 'Analyze')) ||
           (github.repository == 'Azure/azure-sdk-for-ios' && contains(github.event.check_run.name, 'Analyze'))
         )

@@ -33,6 +33,6 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         }
 
         /// <summary> Job properties. </summary>
-        public IDictionary<string, string> PropertyBag { get; }
+        public IDictionary<string, string> PropertyBag { get; } = new ChangeTrackingDictionary<string, string>();
     }
 }

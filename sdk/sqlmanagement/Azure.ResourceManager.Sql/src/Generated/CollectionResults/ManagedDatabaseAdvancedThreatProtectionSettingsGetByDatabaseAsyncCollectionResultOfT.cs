@@ -59,8 +59,8 @@ namespace Azure.ResourceManager.Sql
                     yield break;
                 }
                 ManagedDatabaseAdvancedThreatProtectionListResult result = ManagedDatabaseAdvancedThreatProtectionListResult.FromResponse(response);
-                yield return Page<ManagedDatabaseAdvancedThreatProtectionData>.FromValues((IReadOnlyList<ManagedDatabaseAdvancedThreatProtectionData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 nextPage = result.NextLink;
+                yield return Page<ManagedDatabaseAdvancedThreatProtectionData>.FromValues((IReadOnlyList<ManagedDatabaseAdvancedThreatProtectionData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 if (nextPage == null)
                 {
                     yield break;

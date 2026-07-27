@@ -147,6 +147,10 @@ namespace Azure.Provisioning.ContainerService
             _osSku = DefineProperty<ContainerServiceOSSku>(nameof(OSSku), new string[] { "osSku" }, isOutput: true);
             _vmSize = DefineProperty<string>(nameof(VmSize), new string[] { "vmSize" }, isOutput: true);
             _isFipsEnabled = DefineProperty<bool>(nameof(IsFipsEnabled), new string[] { "enableFIPS" }, isOutput: true);
+            DefineAdditionalProperties();
         }
+
+        /// <summary> Define additional provisionable properties for SnapshotProperties that are not part of the generated code. </summary>
+        partial void DefineAdditionalProperties();
     }
 }

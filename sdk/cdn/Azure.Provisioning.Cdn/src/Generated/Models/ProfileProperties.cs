@@ -106,6 +106,10 @@ namespace Azure.Provisioning.Cdn
             _frontDoorId = DefineProperty<Guid>(nameof(FrontDoorId), new string[] { "frontDoorId" }, isOutput: true);
             _originResponseTimeoutSeconds = DefineProperty<int>(nameof(OriginResponseTimeoutSeconds), new string[] { "originResponseTimeoutSeconds" });
             _logScrubbing = DefineModelProperty<ProfileLogScrubbing>(nameof(LogScrubbing), new string[] { "logScrubbing" });
+            DefineAdditionalProperties();
         }
+
+        /// <summary> Define additional provisionable properties for ProfileProperties that are not part of the generated code. </summary>
+        partial void DefineAdditionalProperties();
     }
 }

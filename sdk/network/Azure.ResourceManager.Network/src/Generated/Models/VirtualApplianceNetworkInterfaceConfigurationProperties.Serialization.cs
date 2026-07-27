@@ -74,11 +74,11 @@ namespace Azure.ResourceManager.Network.Models
             {
                 throw new FormatException($"The model {nameof(VirtualApplianceNetworkInterfaceConfigurationProperties)} does not support writing '{format}' format.");
             }
-            if (Optional.IsCollectionDefined(IpConfigurations))
+            if (Optional.IsCollectionDefined(VirtualApplianceNetworkInterfaceIPConfigurations))
             {
                 writer.WritePropertyName("ipConfigurations"u8);
                 writer.WriteStartArray();
-                foreach (VirtualApplianceIPConfiguration item in IpConfigurations)
+                foreach (VirtualApplianceIPConfiguration item in VirtualApplianceNetworkInterfaceIPConfigurations)
                 {
                     writer.WriteObjectValue(item, options);
                 }
@@ -126,7 +126,7 @@ namespace Azure.ResourceManager.Network.Models
             {
                 return null;
             }
-            IList<VirtualApplianceIPConfiguration> ipConfigurations = default;
+            IList<VirtualApplianceIPConfiguration> virtualApplianceNetworkInterfaceIPConfigurations = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -141,7 +141,7 @@ namespace Azure.ResourceManager.Network.Models
                     {
                         array.Add(VirtualApplianceIPConfiguration.DeserializeVirtualApplianceIPConfiguration(item, options));
                     }
-                    ipConfigurations = array;
+                    virtualApplianceNetworkInterfaceIPConfigurations = array;
                     continue;
                 }
                 if (options.Format != "W")
@@ -149,7 +149,7 @@ namespace Azure.ResourceManager.Network.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new VirtualApplianceNetworkInterfaceConfigurationProperties(ipConfigurations ?? new ChangeTrackingList<VirtualApplianceIPConfiguration>(), additionalBinaryDataProperties);
+            return new VirtualApplianceNetworkInterfaceConfigurationProperties(virtualApplianceNetworkInterfaceIPConfigurations ?? new ChangeTrackingList<VirtualApplianceIPConfiguration>(), additionalBinaryDataProperties);
         }
     }
 }

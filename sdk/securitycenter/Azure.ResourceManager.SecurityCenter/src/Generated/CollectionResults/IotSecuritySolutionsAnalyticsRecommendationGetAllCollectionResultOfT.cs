@@ -58,8 +58,8 @@ namespace Azure.ResourceManager.SecurityCenter
                     yield break;
                 }
                 IoTSecurityAggregatedRecommendationList result = IoTSecurityAggregatedRecommendationList.FromResponse(response);
-                yield return Page<IotSecurityAggregatedRecommendationData>.FromValues((IReadOnlyList<IotSecurityAggregatedRecommendationData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 nextPage = result.NextLink;
+                yield return Page<IotSecurityAggregatedRecommendationData>.FromValues((IReadOnlyList<IotSecurityAggregatedRecommendationData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 if (nextPage == null)
                 {
                     yield break;

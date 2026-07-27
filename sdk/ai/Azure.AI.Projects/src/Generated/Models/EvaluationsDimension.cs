@@ -4,11 +4,13 @@
 
 using System;
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 using Azure.AI.Projects;
 
 namespace Azure.AI.Projects.Evaluation
 {
     /// <summary> A single dimension — one independent, measurable quality dimension within a rubric evaluator's scoring blueprint. </summary>
+    [Experimental("AAIP001")]
     public partial class EvaluationsDimension
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>

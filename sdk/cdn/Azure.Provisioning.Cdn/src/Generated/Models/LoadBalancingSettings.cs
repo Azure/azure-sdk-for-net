@@ -74,6 +74,10 @@ namespace Azure.Provisioning.Cdn
             _sampleSize = DefineProperty<int>(nameof(SampleSize), new string[] { "sampleSize" });
             _successfulSamplesRequired = DefineProperty<int>(nameof(SuccessfulSamplesRequired), new string[] { "successfulSamplesRequired" });
             _additionalLatencyInMilliseconds = DefineProperty<int>(nameof(AdditionalLatencyInMilliseconds), new string[] { "additionalLatencyInMilliseconds" });
+            DefineAdditionalProperties();
         }
+
+        /// <summary> Define additional provisionable properties for LoadBalancingSettings that are not part of the generated code. </summary>
+        partial void DefineAdditionalProperties();
     }
 }

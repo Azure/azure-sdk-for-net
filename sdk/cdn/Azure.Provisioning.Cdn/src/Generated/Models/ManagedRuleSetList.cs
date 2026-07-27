@@ -40,6 +40,10 @@ namespace Azure.Provisioning.Cdn
         {
             base.DefineProvisionableProperties();
             _managedRuleSets = DefineListProperty<WafPolicyManagedRuleSet>(nameof(ManagedRuleSets), new string[] { "managedRuleSets" });
+            DefineAdditionalProperties();
         }
+
+        /// <summary> Define additional provisionable properties for ManagedRuleSetList that are not part of the generated code. </summary>
+        partial void DefineAdditionalProperties();
     }
 }

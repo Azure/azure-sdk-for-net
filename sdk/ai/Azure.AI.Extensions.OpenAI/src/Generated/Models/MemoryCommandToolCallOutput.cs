@@ -4,10 +4,12 @@
 
 using System;
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 
 namespace Azure.AI.Extensions.OpenAI
 {
     /// <summary> The output of a memory command tool call. </summary>
+    [Experimental("AAIP001")]
     public partial class MemoryCommandToolCallOutput : AgentResponseItem
     {
         /// <summary> Initializes a new instance of <see cref="MemoryCommandToolCallOutput"/>. </summary>

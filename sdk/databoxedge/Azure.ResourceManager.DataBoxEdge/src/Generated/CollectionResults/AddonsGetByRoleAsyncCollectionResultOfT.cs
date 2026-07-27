@@ -59,8 +59,8 @@ namespace Azure.ResourceManager.DataBoxEdge
                     yield break;
                 }
                 AddonList result = AddonList.FromResponse(response);
-                yield return Page<DataBoxEdgeRoleAddonData>.FromValues(result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 nextPage = result.NextLink;
+                yield return Page<DataBoxEdgeRoleAddonData>.FromValues(result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 if (nextPage == null)
                 {
                     yield break;

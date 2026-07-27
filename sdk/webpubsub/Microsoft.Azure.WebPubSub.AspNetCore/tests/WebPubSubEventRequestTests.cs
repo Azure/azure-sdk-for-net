@@ -9,6 +9,7 @@ using System.Linq;
 using System.Text;
 using System.Text.Json;
 using System.Threading.Tasks;
+using Azure;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Http.Features;
 using Microsoft.Azure.WebPubSub.Common;
@@ -368,6 +369,47 @@ namespace Microsoft.Azure.WebPubSub.AspNetCore.Tests
             var validator = new RequestValidator(Options.Create(new WebPubSubOptions { ServiceEndpoint = new WebPubSubServiceEndpoint($"Endpoint={TestUri};AccessKey=7aab239577fd4f24bc919802fb629f5f;Version=1.0;") }));
             var result = validator.IsValidSignature(connectionContext);
             Assert.False(result);
+        }
+
+        [TestCase("7aab239577fd4f24bc919802fb629f5f", true)]
+        [TestCase("ccc", false)]
+        public void TestSignatureCheck_AzureKeyCredential(string accessKey, bool valid)
+        {
+            var connectionContext = new WebPubSubConnectionContext(
+                WebPubSubEventType.System,
+                null, null, "0f9c97a2f0bf4706afe87a14e0797b11",
+                signature: "sha256=7767effcb3946f3e1de039df4b986ef02c110b1469d02c0a06f41b3b727ab561",
+                origin: TestUri.Host);
+            var validator = new RequestValidator(Options.Create(new WebPubSubOptions { ServiceEndpoint = new WebPubSubServiceEndpoint(TestUri, new AzureKeyCredential(accessKey)) }));
+            var result = validator.IsValidSignature(connectionContext);
+            Assert.AreEqual(valid, result);
+        }
+
+        [Test]
+        public void TestSignatureCheck_AzureKeyCredentialNoSignatureFail()
+        {
+            var connectionContext = new WebPubSubConnectionContext(
+                WebPubSubEventType.System,
+                null, null, "0f9c97a2f0bf4706afe87a14e0797b11",
+                origin: TestUri.Host);
+            var validator = new RequestValidator(Options.Create(new WebPubSubOptions { ServiceEndpoint = new WebPubSubServiceEndpoint(TestUri, new AzureKeyCredential("7aab239577fd4f24bc919802fb629f5f")) }));
+            var result = validator.IsValidSignature(connectionContext);
+            Assert.False(result);
+        }
+
+        [Test]
+        public void TestSignatureCheck_AzureKeyCredentialRotation()
+        {
+            var connectionContext = new WebPubSubConnectionContext(
+                WebPubSubEventType.System,
+                null, null, "0f9c97a2f0bf4706afe87a14e0797b11",
+                signature: "sha256=7767effcb3946f3e1de039df4b986ef02c110b1469d02c0a06f41b3b727ab561",
+                origin: TestUri.Host);
+            var credential = new AzureKeyCredential("stale-key");
+            var validator = new RequestValidator(Options.Create(new WebPubSubOptions { ServiceEndpoint = new WebPubSubServiceEndpoint(TestUri, credential) }));
+            Assert.False(validator.IsValidSignature(connectionContext));
+            credential.Update("7aab239577fd4f24bc919802fb629f5f");
+            Assert.True(validator.IsValidSignature(connectionContext));
         }
 
         [TestCase("sha256=something,sha256=7767effcb3946f3e1de039df4b986ef02c110b1469d02c0a06f41b3b727ab561")]

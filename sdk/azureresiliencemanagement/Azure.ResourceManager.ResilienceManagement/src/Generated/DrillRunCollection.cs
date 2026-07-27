@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.ResilienceManagement
         {
             TryGetApiVersion(DrillRunResource.ResourceType, out string drillRunApiVersion);
             _drillRunsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ResilienceManagement", DrillRunResource.ResourceType.Namespace, Diagnostics);
-            _drillRunsRestClient = new DrillRuns(_drillRunsClientDiagnostics, Pipeline, Endpoint, drillRunApiVersion ?? "2026-04-01-preview");
+            _drillRunsRestClient = new DrillRuns(_drillRunsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, drillRunApiVersion ?? "2026-04-01-preview");
             ValidateResourceId(id);
         }
 
@@ -48,9 +48,9 @@ namespace Azure.ResourceManager.ResilienceManagement
         [Conditional("DEBUG")]
         internal static void ValidateResourceId(ResourceIdentifier id)
         {
-            if (id.ResourceType != "Microsoft.Management/serviceGroups")
+            if (id.ResourceType != ResilienceManagementDrillResource.ResourceType)
             {
-                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, "Microsoft.Management/serviceGroups"), nameof(id));
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ResilienceManagementDrillResource.ResourceType), nameof(id));
             }
         }
 

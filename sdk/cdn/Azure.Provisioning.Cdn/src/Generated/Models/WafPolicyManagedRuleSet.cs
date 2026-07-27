@@ -91,6 +91,10 @@ namespace Azure.Provisioning.Cdn
             _ruleSetVersion = DefineProperty<string>(nameof(RuleSetVersion), new string[] { "ruleSetVersion" }, isRequired: true);
             _anomalyScore = DefineProperty<int>(nameof(AnomalyScore), new string[] { "anomalyScore" });
             _ruleGroupOverrides = DefineListProperty<ManagedRuleGroupOverrideSetting>(nameof(RuleGroupOverrides), new string[] { "ruleGroupOverrides" });
+            DefineAdditionalProperties();
         }
+
+        /// <summary> Define additional provisionable properties for WafPolicyManagedRuleSet that are not part of the generated code. </summary>
+        partial void DefineAdditionalProperties();
     }
 }

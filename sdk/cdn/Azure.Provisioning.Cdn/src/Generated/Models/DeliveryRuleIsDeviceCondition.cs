@@ -38,6 +38,10 @@ namespace Azure.Provisioning.Cdn
             base.DefineProvisionableProperties();
             DefineProperty<string>("name", new string[] { "name" }, defaultValue: "IsDevice");
             _properties = DefineModelProperty<IsDeviceMatchCondition>(nameof(Properties), new string[] { "parameters" }, isRequired: true);
+            DefineAdditionalProperties();
         }
+
+        /// <summary> Define additional provisionable properties for DeliveryRuleIsDeviceCondition that are not part of the generated code. </summary>
+        partial void DefineAdditionalProperties();
     }
 }

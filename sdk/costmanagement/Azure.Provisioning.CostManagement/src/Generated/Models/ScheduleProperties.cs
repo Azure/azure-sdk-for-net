@@ -143,6 +143,10 @@ namespace Azure.Provisioning.CostManagement
             _dayOfMonth = DefineProperty<int>(nameof(DayOfMonth), new string[] { "dayOfMonth" });
             _startOn = DefineProperty<DateTimeOffset>(nameof(StartOn), new string[] { "startDate" }, isRequired: true);
             _endOn = DefineProperty<DateTimeOffset>(nameof(EndOn), new string[] { "endDate" }, isRequired: true);
+            DefineAdditionalProperties();
         }
+
+        /// <summary> Define additional provisionable properties for ScheduleProperties that are not part of the generated code. </summary>
+        partial void DefineAdditionalProperties();
     }
 }

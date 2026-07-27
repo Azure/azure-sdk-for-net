@@ -91,6 +91,10 @@ namespace Azure.Provisioning.Cdn
             _selectorMatchOperator = DefineProperty<ScrubbingRuleEntryMatchOperator>(nameof(SelectorMatchOperator), new string[] { "selectorMatchOperator" }, isRequired: true);
             _selector = DefineProperty<string>(nameof(Selector), new string[] { "selector" });
             _state = DefineProperty<ScrubbingRuleEntryState>(nameof(State), new string[] { "state" });
+            DefineAdditionalProperties();
         }
+
+        /// <summary> Define additional provisionable properties for ProfileScrubbingRules that are not part of the generated code. </summary>
+        partial void DefineAdditionalProperties();
     }
 }

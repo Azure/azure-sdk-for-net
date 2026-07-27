@@ -67,13 +67,13 @@ namespace Azure.ResourceManager.Automation
                     yield break;
                 }
                 DscNodeConfigurationListResult result = DscNodeConfigurationListResult.FromResponse(response);
-                yield return Page<DscNodeConfigurationData>.FromValues((IReadOnlyList<DscNodeConfigurationData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 string nextPageString = result.NextLink;
-                if (string.IsNullOrEmpty(nextPageString))
+                nextPage = string.IsNullOrEmpty(nextPageString) ? null : new Uri(nextPageString, UriKind.RelativeOrAbsolute);
+                yield return Page<DscNodeConfigurationData>.FromValues((IReadOnlyList<DscNodeConfigurationData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
+                if (nextPage == null)
                 {
                     yield break;
                 }
-                nextPage = new Uri(nextPageString, UriKind.RelativeOrAbsolute);
             }
         }
 

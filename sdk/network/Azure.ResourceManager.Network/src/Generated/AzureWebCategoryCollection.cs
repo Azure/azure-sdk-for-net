@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.Network
         {
             TryGetApiVersion(AzureWebCategoryResource.ResourceType, out string azureWebCategoryApiVersion);
             _webCategoriesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Network", AzureWebCategoryResource.ResourceType.Namespace, Diagnostics);
-            _webCategoriesRestClient = new WebCategories(_webCategoriesClientDiagnostics, Pipeline, Endpoint, azureWebCategoryApiVersion ?? "2025-07-01");
+            _webCategoriesRestClient = new WebCategories(_webCategoriesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, azureWebCategoryApiVersion ?? "2025-07-01");
             ValidateResourceId(id);
         }
 

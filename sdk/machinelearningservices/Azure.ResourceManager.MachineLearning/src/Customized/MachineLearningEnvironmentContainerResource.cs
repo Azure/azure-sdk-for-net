@@ -14,6 +14,7 @@ namespace Azure.ResourceManager.MachineLearning
     {
         // Customized: preserve GA MachineLearning-prefixed child accessors. These wrappers sit over
         // generated child-resource accessors, not standalone REST operations that client.tsp can rename.
+        /// <summary> Gets a collection of MachineLearningEnvironmentVersionResources in the <see cref="MachineLearningEnvironmentContainerResource"/>. </summary>
         public virtual MachineLearningEnvironmentVersionCollection GetMachineLearningEnvironmentVersions() => new MachineLearningEnvironmentVersionCollection(Client, Id);
 
         /// <summary> Gets an environment version. </summary>

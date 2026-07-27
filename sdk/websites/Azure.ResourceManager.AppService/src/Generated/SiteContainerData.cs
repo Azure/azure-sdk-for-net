@@ -13,216 +13,251 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.AppService
 {
-    /// <summary>
-    /// A class representing the SiteContainer data model.
-    /// Container of a site
-    /// Serialized Name: SiteContainer
-    /// </summary>
+    /// <summary> Container of a site. </summary>
     public partial class SiteContainerData : ResourceData
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="SiteContainerData"/>. </summary>
         public SiteContainerData()
         {
-            VolumeMounts = new ChangeTrackingList<SiteContainerVolumeMount>();
-            EnvironmentVariables = new ChangeTrackingList<WebAppEnvironmentVariable>();
         }
 
         /// <summary> Initializes a new instance of <see cref="SiteContainerData"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="kind">
-        /// Kind of resource.
-        /// Serialized Name: SiteContainer.kind
-        /// </param>
-        /// <param name="image">
-        /// Image Name
-        /// Serialized Name: SiteContainer.properties.image
-        /// </param>
-        /// <param name="targetPort">
-        /// Target Port
-        /// Serialized Name: SiteContainer.properties.targetPort
-        /// </param>
-        /// <param name="isMain">
-        /// &lt;code&gt;true&lt;/code&gt; if the container is the main site container; &lt;code&gt;false&lt;/code&gt; otherwise.
-        /// Serialized Name: SiteContainer.properties.isMain
-        /// </param>
-        /// <param name="startUpCommand">
-        /// StartUp Command
-        /// Serialized Name: SiteContainer.properties.startUpCommand
-        /// </param>
-        /// <param name="authType">
-        /// Auth Type
-        /// Serialized Name: SiteContainer.properties.authType
-        /// </param>
-        /// <param name="userName">
-        /// User Name
-        /// Serialized Name: SiteContainer.properties.userName
-        /// </param>
-        /// <param name="passwordSecret">
-        /// Password Secret
-        /// Serialized Name: SiteContainer.properties.passwordSecret
-        /// </param>
-        /// <param name="userManagedIdentityClientId">
-        /// UserManagedIdentity ClientId
-        /// Serialized Name: SiteContainer.properties.userManagedIdentityClientId
-        /// </param>
-        /// <param name="createdOn">
-        /// Created Time
-        /// Serialized Name: SiteContainer.properties.createdTime
-        /// </param>
-        /// <param name="lastModifiedOn">
-        /// Last Modified Time
-        /// Serialized Name: SiteContainer.properties.lastModifiedTime
-        /// </param>
-        /// <param name="volumeMounts">
-        /// List of volume mounts
-        /// Serialized Name: SiteContainer.properties.volumeMounts
-        /// </param>
-        /// <param name="inheritAppSettingsAndConnectionStrings">
-        /// &lt;code&gt;true&lt;/code&gt; if all AppSettings and ConnectionStrings have to be passed to the container as environment variables; &lt;code&gt;false&lt;/code&gt; otherwise.
-        /// Serialized Name: SiteContainer.properties.inheritAppSettingsAndConnectionStrings
-        /// </param>
-        /// <param name="environmentVariables">
-        /// List of environment variables
-        /// Serialized Name: SiteContainer.properties.environmentVariables
-        /// </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal SiteContainerData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string kind, string image, string targetPort, bool? isMain, string startUpCommand, SiteContainerAuthType? authType, string userName, string passwordSecret, string userManagedIdentityClientId, DateTimeOffset? createdOn, DateTimeOffset? lastModifiedOn, IList<SiteContainerVolumeMount> volumeMounts, bool? inheritAppSettingsAndConnectionStrings, IList<WebAppEnvironmentVariable> environmentVariables, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="properties"> SiteContainer resource specific properties. </param>
+        /// <param name="kind"> Kind of resource. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal SiteContainerData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, SiteContainerProperties properties, string kind, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(id, name, resourceType, systemData)
         {
+            Properties = properties;
             Kind = kind;
-            Image = image;
-            TargetPort = targetPort;
-            IsMain = isMain;
-            StartUpCommand = startUpCommand;
-            AuthType = authType;
-            UserName = userName;
-            PasswordSecret = passwordSecret;
-            UserManagedIdentityClientId = userManagedIdentityClientId;
-            CreatedOn = createdOn;
-            LastModifiedOn = lastModifiedOn;
-            VolumeMounts = volumeMounts;
-            InheritAppSettingsAndConnectionStrings = inheritAppSettingsAndConnectionStrings;
-            EnvironmentVariables = environmentVariables;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
-        /// <summary>
-        /// Kind of resource.
-        /// Serialized Name: SiteContainer.kind
-        /// </summary>
+        /// <summary> SiteContainer resource specific properties. </summary>
+        [WirePath("properties")]
+        internal SiteContainerProperties Properties { get; set; }
+
+        /// <summary> Kind of resource. </summary>
         [WirePath("kind")]
         public string Kind { get; set; }
-        /// <summary>
-        /// Image Name
-        /// Serialized Name: SiteContainer.properties.image
-        /// </summary>
+
+        /// <summary> Image Name. </summary>
         [WirePath("properties.image")]
-        public string Image { get; set; }
-        /// <summary>
-        /// Target Port
-        /// Serialized Name: SiteContainer.properties.targetPort
-        /// </summary>
+        public string Image
+        {
+            get
+            {
+                return Properties is null ? default : Properties.Image;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new SiteContainerProperties();
+                }
+                Properties.Image = value;
+            }
+        }
+
+        /// <summary> Target Port. </summary>
         [WirePath("properties.targetPort")]
-        public string TargetPort { get; set; }
-        /// <summary>
-        /// &lt;code&gt;true&lt;/code&gt; if the container is the main site container; &lt;code&gt;false&lt;/code&gt; otherwise.
-        /// Serialized Name: SiteContainer.properties.isMain
-        /// </summary>
+        public string TargetPort
+        {
+            get
+            {
+                return Properties is null ? default : Properties.TargetPort;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new SiteContainerProperties();
+                }
+                Properties.TargetPort = value;
+            }
+        }
+
+        /// <summary> &lt;code&gt;true&lt;/code&gt; if the container is the main site container; &lt;code&gt;false&lt;/code&gt; otherwise. </summary>
         [WirePath("properties.isMain")]
-        public bool? IsMain { get; set; }
-        /// <summary>
-        /// StartUp Command
-        /// Serialized Name: SiteContainer.properties.startUpCommand
-        /// </summary>
+        public bool? IsMain
+        {
+            get
+            {
+                return Properties is null ? default : Properties.IsMain;
+            }
+            set
+            {
+                if (value.HasValue)
+                {
+                    if (Properties is null)
+                    {
+                        Properties = new SiteContainerProperties();
+                    }
+                    Properties.IsMain = value.Value;
+                }
+            }
+        }
+
+        /// <summary> StartUp Command. </summary>
         [WirePath("properties.startUpCommand")]
-        public string StartUpCommand { get; set; }
-        /// <summary>
-        /// Auth Type
-        /// Serialized Name: SiteContainer.properties.authType
-        /// </summary>
+        public string StartUpCommand
+        {
+            get
+            {
+                return Properties is null ? default : Properties.StartUpCommand;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new SiteContainerProperties();
+                }
+                Properties.StartUpCommand = value;
+            }
+        }
+
+        /// <summary> Auth Type. </summary>
         [WirePath("properties.authType")]
-        public SiteContainerAuthType? AuthType { get; set; }
-        /// <summary>
-        /// User Name
-        /// Serialized Name: SiteContainer.properties.userName
-        /// </summary>
+        public SiteContainerAuthType? AuthType
+        {
+            get
+            {
+                return Properties is null ? default : Properties.AuthType;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new SiteContainerProperties();
+                }
+                Properties.AuthType = value;
+            }
+        }
+
+        /// <summary> User Name. </summary>
         [WirePath("properties.userName")]
-        public string UserName { get; set; }
-        /// <summary>
-        /// Password Secret
-        /// Serialized Name: SiteContainer.properties.passwordSecret
-        /// </summary>
+        public string UserName
+        {
+            get
+            {
+                return Properties is null ? default : Properties.UserName;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new SiteContainerProperties();
+                }
+                Properties.UserName = value;
+            }
+        }
+
+        /// <summary> Password Secret. </summary>
         [WirePath("properties.passwordSecret")]
-        public string PasswordSecret { get; set; }
-        /// <summary>
-        /// UserManagedIdentity ClientId
-        /// Serialized Name: SiteContainer.properties.userManagedIdentityClientId
-        /// </summary>
+        public string PasswordSecret
+        {
+            get
+            {
+                return Properties is null ? default : Properties.PasswordSecret;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new SiteContainerProperties();
+                }
+                Properties.PasswordSecret = value;
+            }
+        }
+
+        /// <summary> UserManagedIdentity ClientId. </summary>
         [WirePath("properties.userManagedIdentityClientId")]
-        public string UserManagedIdentityClientId { get; set; }
-        /// <summary>
-        /// Created Time
-        /// Serialized Name: SiteContainer.properties.createdTime
-        /// </summary>
+        public string UserManagedIdentityClientId
+        {
+            get
+            {
+                return Properties is null ? default : Properties.UserManagedIdentityClientId;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new SiteContainerProperties();
+                }
+                Properties.UserManagedIdentityClientId = value;
+            }
+        }
+
+        /// <summary> Created Time. </summary>
         [WirePath("properties.createdTime")]
-        public DateTimeOffset? CreatedOn { get; }
-        /// <summary>
-        /// Last Modified Time
-        /// Serialized Name: SiteContainer.properties.lastModifiedTime
-        /// </summary>
+        public DateTimeOffset? CreatedOn
+        {
+            get
+            {
+                return Properties is null ? default : Properties.CreatedOn;
+            }
+        }
+
+        /// <summary> Last Modified Time. </summary>
         [WirePath("properties.lastModifiedTime")]
-        public DateTimeOffset? LastModifiedOn { get; }
-        /// <summary>
-        /// List of volume mounts
-        /// Serialized Name: SiteContainer.properties.volumeMounts
-        /// </summary>
+        public DateTimeOffset? LastModifiedOn
+        {
+            get
+            {
+                return Properties is null ? default : Properties.LastModifiedOn;
+            }
+        }
+
+        /// <summary> List of volume mounts. </summary>
         [WirePath("properties.volumeMounts")]
-        public IList<SiteContainerVolumeMount> VolumeMounts { get; }
-        /// <summary>
-        /// &lt;code&gt;true&lt;/code&gt; if all AppSettings and ConnectionStrings have to be passed to the container as environment variables; &lt;code&gt;false&lt;/code&gt; otherwise.
-        /// Serialized Name: SiteContainer.properties.inheritAppSettingsAndConnectionStrings
-        /// </summary>
+        public IList<SiteContainerVolumeMount> VolumeMounts
+        {
+            get
+            {
+                if (Properties is null)
+                {
+                    Properties = new SiteContainerProperties();
+                }
+                return Properties.VolumeMounts;
+            }
+        }
+
+        /// <summary> &lt;code&gt;true&lt;/code&gt; if all AppSettings and ConnectionStrings have to be passed to the container as environment variables; &lt;code&gt;false&lt;/code&gt; otherwise. </summary>
         [WirePath("properties.inheritAppSettingsAndConnectionStrings")]
-        public bool? InheritAppSettingsAndConnectionStrings { get; set; }
-        /// <summary>
-        /// List of environment variables
-        /// Serialized Name: SiteContainer.properties.environmentVariables
-        /// </summary>
+        public bool? InheritAppSettingsAndConnectionStrings
+        {
+            get
+            {
+                return Properties is null ? default : Properties.InheritAppSettingsAndConnectionStrings;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new SiteContainerProperties();
+                }
+                Properties.InheritAppSettingsAndConnectionStrings = value;
+            }
+        }
+
+        /// <summary> List of environment variables. </summary>
         [WirePath("properties.environmentVariables")]
-        public IList<WebAppEnvironmentVariable> EnvironmentVariables { get; }
+        public IList<WebAppEnvironmentVariable> EnvironmentVariables
+        {
+            get
+            {
+                if (Properties is null)
+                {
+                    Properties = new SiteContainerProperties();
+                }
+                return Properties.EnvironmentVariables;
+            }
+        }
     }
 }

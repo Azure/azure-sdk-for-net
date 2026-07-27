@@ -196,6 +196,10 @@ namespace Azure.Provisioning.Cdn
             _extendedProperties = DefineDictionaryProperty<string>(nameof(ExtendedProperties), new string[] { "extendedProperties" });
             _provisioningState = DefineProperty<WebApplicationFirewallPolicyProvisioningState>(nameof(ProvisioningState), new string[] { "provisioningState" }, isOutput: true);
             _resourceState = DefineProperty<PolicyResourceState>(nameof(ResourceState), new string[] { "resourceState" }, isOutput: true);
+            DefineAdditionalProperties();
         }
+
+        /// <summary> Define additional provisionable properties for CdnWebApplicationFirewallPolicyProperties that are not part of the generated code. </summary>
+        partial void DefineAdditionalProperties();
     }
 }

@@ -49,8 +49,8 @@ namespace Azure.ResourceManager.SecurityCenter
                     yield break;
                 }
                 WorkspaceSettingList result = WorkspaceSettingList.FromResponse(response);
-                yield return Page<SecurityWorkspaceSettingData>.FromValues((IReadOnlyList<SecurityWorkspaceSettingData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 nextPage = result.NextLink;
+                yield return Page<SecurityWorkspaceSettingData>.FromValues((IReadOnlyList<SecurityWorkspaceSettingData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 if (nextPage == null)
                 {
                     yield break;

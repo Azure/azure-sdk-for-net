@@ -57,6 +57,10 @@ namespace Azure.Provisioning.CostManagement
             base.DefineProvisionableProperties();
             _pivotType = DefineProperty<ViewPivotType>(nameof(PivotType), new string[] { "type" });
             _name = DefineProperty<string>(nameof(Name), new string[] { "name" });
+            DefineAdditionalProperties();
         }
+
+        /// <summary> Define additional provisionable properties for ViewPivotProperties that are not part of the generated code. </summary>
+        partial void DefineAdditionalProperties();
     }
 }

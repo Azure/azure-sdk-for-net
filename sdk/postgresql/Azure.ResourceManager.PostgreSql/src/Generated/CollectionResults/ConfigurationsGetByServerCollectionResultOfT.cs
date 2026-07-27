@@ -55,8 +55,8 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
                     yield break;
                 }
                 ConfigurationList result = ConfigurationList.FromResponse(response);
-                yield return Page<PostgreSqlFlexibleServerConfigurationData>.FromValues((IReadOnlyList<PostgreSqlFlexibleServerConfigurationData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 nextPage = result.NextLink;
+                yield return Page<PostgreSqlFlexibleServerConfigurationData>.FromValues((IReadOnlyList<PostgreSqlFlexibleServerConfigurationData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 if (nextPage == null)
                 {
                     yield break;

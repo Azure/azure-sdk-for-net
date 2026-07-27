@@ -141,7 +141,7 @@ internal sealed class ResponseContextImpl : ResponseContext
         string agentName = agentReference?.Name is { Length: > 0 } name ? name : "server-default-agent";
         string sessionId = _request.AgentSessionId is { Length: > 0 } sid
             ? sid
-            : SessionIdDerivation.Derive(conversationId, previousResponseId, agentReference);
+            : SessionIdDerivation.Derive(conversationId, previousResponseId, ResponseId, agentReference);
 
         return ConversationChainIdDerivation.Derive(
             conversationId,

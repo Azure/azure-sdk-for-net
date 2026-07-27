@@ -1,0 +1,13 @@
+# ApiCompat version presence opt-out list
+#
+# ApiCompat enforcement is gated on a non-empty <ApiCompatVersion> in each shipping library's .csproj.
+# To prevent a partner from silently disabling ApiCompat by deleting that auto-managed element, the
+# ValidateApiCompatVersionPresent target in eng/Directory.Build.Common.targets fails the build when a
+# GA (non-preview) shipping client library is missing ApiCompatVersion.
+#
+# In the rare case the core team approves shipping an already-GA'd package without ApiCompat, add the
+# project name (MSBuildProjectName, e.g. Azure.Storage.Blobs) on its own line below. Because this file
+# lives under the CODEOWNERS-protected eng/apicompatbaselines/ directory, every such exception requires
+# core team review.
+#
+# One project name per line. Lines starting with '#' are comments.

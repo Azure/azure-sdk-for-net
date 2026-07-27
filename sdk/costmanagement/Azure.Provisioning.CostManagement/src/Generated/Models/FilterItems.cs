@@ -57,6 +57,10 @@ namespace Azure.Provisioning.CostManagement
             base.DefineProvisionableProperties();
             _name = DefineProperty<FilterItemNames>(nameof(Name), new string[] { "name" });
             _value = DefineProperty<string>(nameof(Value), new string[] { "value" });
+            DefineAdditionalProperties();
         }
+
+        /// <summary> Define additional provisionable properties for FilterItems that are not part of the generated code. </summary>
+        partial void DefineAdditionalProperties();
     }
 }

@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.MachineLearning
         {
             TryGetApiVersion(MachineLearningBatchDeploymentResource.ResourceType, out string machineLearningBatchDeploymentApiVersion);
             _batchDeploymentsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.MachineLearning", MachineLearningBatchDeploymentResource.ResourceType.Namespace, Diagnostics);
-            _batchDeploymentsRestClient = new BatchDeployments(_batchDeploymentsClientDiagnostics, Pipeline, Endpoint, machineLearningBatchDeploymentApiVersion ?? "2026-03-15-preview");
+            _batchDeploymentsRestClient = new BatchDeployments(_batchDeploymentsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, machineLearningBatchDeploymentApiVersion ?? "2026-03-15-preview");
             ValidateResourceId(id);
         }
 

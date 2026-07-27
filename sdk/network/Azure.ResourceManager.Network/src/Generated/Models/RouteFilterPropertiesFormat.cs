@@ -22,20 +22,20 @@ namespace Azure.ResourceManager.Network.Models
         {
             Rules = new ChangeTrackingList<RouteFilterRuleData>();
             Peerings = new ChangeTrackingList<ExpressRouteCircuitPeeringData>();
-            Ipv6Peerings = new ChangeTrackingList<ExpressRouteCircuitPeeringData>();
+            IPv6Peerings = new ChangeTrackingList<ExpressRouteCircuitPeeringData>();
         }
 
         /// <summary> Initializes a new instance of <see cref="RouteFilterPropertiesFormat"/>. </summary>
         /// <param name="rules"> Collection of RouteFilterRules contained within a route filter. </param>
         /// <param name="peerings"> A collection of references to express route circuit peerings. </param>
-        /// <param name="ipv6Peerings"> A collection of references to express route circuit ipv6 peerings. </param>
+        /// <param name="iPv6Peerings"> A collection of references to express route circuit ipv6 peerings. </param>
         /// <param name="provisioningState"> The provisioning state of the route filter resource. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal RouteFilterPropertiesFormat(IList<RouteFilterRuleData> rules, IReadOnlyList<ExpressRouteCircuitPeeringData> peerings, IReadOnlyList<ExpressRouteCircuitPeeringData> ipv6Peerings, NetworkProvisioningState? provisioningState, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal RouteFilterPropertiesFormat(IList<RouteFilterRuleData> rules, IReadOnlyList<ExpressRouteCircuitPeeringData> peerings, IReadOnlyList<ExpressRouteCircuitPeeringData> iPv6Peerings, NetworkProvisioningState? provisioningState, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Rules = rules;
             Peerings = peerings;
-            Ipv6Peerings = ipv6Peerings;
+            IPv6Peerings = iPv6Peerings;
             ProvisioningState = provisioningState;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.Network.Models
 
         /// <summary> A collection of references to express route circuit ipv6 peerings. </summary>
         [WirePath("ipv6Peerings")]
-        public IReadOnlyList<ExpressRouteCircuitPeeringData> Ipv6Peerings { get; } = new ChangeTrackingList<ExpressRouteCircuitPeeringData>();
+        public IReadOnlyList<ExpressRouteCircuitPeeringData> IPv6Peerings { get; } = new ChangeTrackingList<ExpressRouteCircuitPeeringData>();
 
         /// <summary> The provisioning state of the route filter resource. </summary>
         [WirePath("provisioningState")]

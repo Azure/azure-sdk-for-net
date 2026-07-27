@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.Network.Models
         internal QueryInboundNatRulePortMappingContent(ResourceIdentifier ipConfiguration, string ipAddress, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             IpConfiguration = ipConfiguration;
-            IpAddress = ipAddress;
+            IPAddress = ipAddress;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
@@ -40,6 +40,6 @@ namespace Azure.ResourceManager.Network.Models
 
         /// <summary> IP address set in load balancer backend address. </summary>
         [WirePath("ipAddress")]
-        public string IpAddress { get; set; }
+        public string IPAddress { get; set; }
     }
 }

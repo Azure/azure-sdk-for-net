@@ -59,8 +59,8 @@ namespace Azure.ResourceManager.IotHub
                     yield break;
                 }
                 EventHubConsumerGroupsListResult result = EventHubConsumerGroupsListResult.FromResponse(response);
-                yield return Page<EventHubConsumerGroupInfoData>.FromValues((IReadOnlyList<EventHubConsumerGroupInfoData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 nextPage = result.NextLink;
+                yield return Page<EventHubConsumerGroupInfoData>.FromValues((IReadOnlyList<EventHubConsumerGroupInfoData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 if (nextPage == null)
                 {
                     yield break;

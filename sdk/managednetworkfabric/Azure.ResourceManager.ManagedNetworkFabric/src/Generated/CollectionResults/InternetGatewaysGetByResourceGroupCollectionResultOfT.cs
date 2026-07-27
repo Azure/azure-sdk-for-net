@@ -52,8 +52,8 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
                     yield break;
                 }
                 InternetGatewaysListResult result = InternetGatewaysListResult.FromResponse(response);
-                yield return Page<NetworkFabricInternetGatewayData>.FromValues((IReadOnlyList<NetworkFabricInternetGatewayData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 nextPage = result.NextLink;
+                yield return Page<NetworkFabricInternetGatewayData>.FromValues((IReadOnlyList<NetworkFabricInternetGatewayData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 if (nextPage == null)
                 {
                     yield break;

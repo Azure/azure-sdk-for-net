@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.SecretsStoreExtension
         {
             TryGetApiVersion(SecretSyncResource.ResourceType, out string secretSyncApiVersion);
             _secretSyncsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.SecretsStoreExtension", SecretSyncResource.ResourceType.Namespace, Diagnostics);
-            _secretSyncsRestClient = new SecretSyncs(_secretSyncsClientDiagnostics, Pipeline, Endpoint, secretSyncApiVersion ?? "2024-08-21-preview");
+            _secretSyncsRestClient = new SecretSyncs(_secretSyncsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, secretSyncApiVersion ?? "2024-08-21-preview");
             ValidateResourceId(id);
         }
 

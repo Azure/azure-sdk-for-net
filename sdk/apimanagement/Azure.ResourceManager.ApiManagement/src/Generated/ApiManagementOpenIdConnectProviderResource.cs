@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.ApiManagement
         {
             TryGetApiVersion(ResourceType, out string apiManagementOpenIdConnectProviderApiVersion);
             _openIdConnectProviderClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ApiManagement", ResourceType.Namespace, Diagnostics);
-            _openIdConnectProviderRestClient = new OpenIdConnectProvider(_openIdConnectProviderClientDiagnostics, Pipeline, Endpoint, apiManagementOpenIdConnectProviderApiVersion ?? "2025-09-01-preview");
+            _openIdConnectProviderRestClient = new OpenIdConnectProvider(_openIdConnectProviderClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, apiManagementOpenIdConnectProviderApiVersion ?? "2025-09-01-preview");
             ValidateResourceId(id);
         }
 
@@ -75,10 +75,10 @@ namespace Azure.ResourceManager.ApiManagement
         /// <param name="subscriptionId"> The subscriptionId. </param>
         /// <param name="resourceGroupName"> The resourceGroupName. </param>
         /// <param name="serviceName"> The serviceName. </param>
-        /// <param name="opid"> The opid. </param>
-        public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string serviceName, string opid)
+        /// <param name="openId"> The opid. </param>
+        public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string serviceName, string openId)
         {
-            string resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/openidConnectProviders/{opid}";
+            string resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/openidConnectProviders/{openId}";
             return new ResourceIdentifier(resourceId);
         }
 

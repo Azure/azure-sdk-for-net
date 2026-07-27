@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.ResilienceManagement
         {
             TryGetApiVersion(RecoveryJobResource.ResourceType, out string recoveryJobApiVersion);
             _recoveryJobsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ResilienceManagement", RecoveryJobResource.ResourceType.Namespace, Diagnostics);
-            _recoveryJobsRestClient = new RecoveryJobs(_recoveryJobsClientDiagnostics, Pipeline, Endpoint, recoveryJobApiVersion ?? "2026-04-01-preview");
+            _recoveryJobsRestClient = new RecoveryJobs(_recoveryJobsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, recoveryJobApiVersion ?? "2026-04-01-preview");
             ValidateResourceId(id);
         }
 
@@ -48,9 +48,9 @@ namespace Azure.ResourceManager.ResilienceManagement
         [Conditional("DEBUG")]
         internal static void ValidateResourceId(ResourceIdentifier id)
         {
-            if (id.ResourceType != "Microsoft.Management/serviceGroups")
+            if (id.ResourceType != RecoveryPlanResource.ResourceType)
             {
-                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, "Microsoft.Management/serviceGroups"), nameof(id));
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, RecoveryPlanResource.ResourceType), nameof(id));
             }
         }
 

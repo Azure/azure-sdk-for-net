@@ -23,7 +23,7 @@ namespace Azure.Provisioning.ContainerService
         {
         }
 
-        /// <summary> Gets or sets the Code. </summary>
+        /// <summary> Gets the Code. </summary>
         public BicepValue<string> Code
         {
             get
@@ -31,14 +31,9 @@ namespace Azure.Provisioning.ContainerService
                 Initialize();
                 return _code;
             }
-            set
-            {
-                Initialize();
-                _code.Assign(value);
-            }
         }
 
-        /// <summary> Gets or sets the Message. </summary>
+        /// <summary> Gets the Message. </summary>
         public BicepValue<string> Message
         {
             get
@@ -46,14 +41,9 @@ namespace Azure.Provisioning.ContainerService
                 Initialize();
                 return _message;
             }
-            set
-            {
-                Initialize();
-                _message.Assign(value);
-            }
         }
 
-        /// <summary> Gets or sets the Target. </summary>
+        /// <summary> Gets the Target. </summary>
         public BicepValue<string> Target
         {
             get
@@ -61,25 +51,15 @@ namespace Azure.Provisioning.ContainerService
                 Initialize();
                 return _target;
             }
-            set
-            {
-                Initialize();
-                _target.Assign(value);
-            }
         }
 
-        /// <summary> Gets or sets the Details. </summary>
+        /// <summary> Gets the Details. </summary>
         public BicepList<ManagedClusterPodIdentityProvisioningErrorDetail> Details
         {
             get
             {
                 Initialize();
                 return _details;
-            }
-            set
-            {
-                Initialize();
-                _details.Assign(value);
             }
         }
 
@@ -91,6 +71,10 @@ namespace Azure.Provisioning.ContainerService
             _message = DefineProperty<string>(nameof(Message), new string[] { "message" });
             _target = DefineProperty<string>(nameof(Target), new string[] { "target" });
             _details = DefineListProperty<ManagedClusterPodIdentityProvisioningErrorDetail>(nameof(Details), new string[] { "details" });
+            DefineAdditionalProperties();
         }
+
+        /// <summary> Define additional provisionable properties for ManagedClusterPodIdentityProvisioningErrorDetail that are not part of the generated code. </summary>
+        partial void DefineAdditionalProperties();
     }
 }

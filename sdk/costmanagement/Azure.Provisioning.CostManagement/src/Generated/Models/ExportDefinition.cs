@@ -91,6 +91,10 @@ namespace Azure.Provisioning.CostManagement
             _timeframe = DefineProperty<TimeframeType>(nameof(Timeframe), new string[] { "timeframe" }, isRequired: true);
             _timePeriod = DefineModelProperty<ExportTimePeriod>(nameof(TimePeriod), new string[] { "timePeriod" });
             _dataSet = DefineModelProperty<ExportDataset>(nameof(DataSet), new string[] { "dataSet" });
+            DefineAdditionalProperties();
         }
+
+        /// <summary> Define additional provisionable properties for ExportDefinition that are not part of the generated code. </summary>
+        partial void DefineAdditionalProperties();
     }
 }

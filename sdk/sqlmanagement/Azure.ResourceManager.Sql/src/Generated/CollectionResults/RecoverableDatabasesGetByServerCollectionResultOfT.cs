@@ -55,8 +55,8 @@ namespace Azure.ResourceManager.Sql
                     yield break;
                 }
                 RecoverableDatabaseListResult result = RecoverableDatabaseListResult.FromResponse(response);
-                yield return Page<RecoverableDatabaseData>.FromValues((IReadOnlyList<RecoverableDatabaseData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 nextPage = result.NextLink;
+                yield return Page<RecoverableDatabaseData>.FromValues((IReadOnlyList<RecoverableDatabaseData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 if (nextPage == null)
                 {
                     yield break;

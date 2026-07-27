@@ -177,6 +177,10 @@ namespace Azure.Provisioning.CostManagement
             _scope = DefineProperty<ResourceIdentifier>(nameof(Scope), new string[] { "scope" });
             _status = DefineProperty<ScheduledActionStatus>(nameof(Status), new string[] { "status" }, isRequired: true);
             _viewId = DefineProperty<ResourceIdentifier>(nameof(ViewId), new string[] { "viewId" }, isRequired: true);
+            DefineAdditionalProperties();
         }
+
+        /// <summary> Define additional provisionable properties for ScheduledActionProperties that are not part of the generated code. </summary>
+        partial void DefineAdditionalProperties();
     }
 }

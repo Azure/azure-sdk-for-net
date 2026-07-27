@@ -79,11 +79,11 @@ namespace Azure.ResourceManager.Network.Models
                 writer.WritePropertyName("fqdn"u8);
                 writer.WriteStringValue(Fqdn);
             }
-            if (Optional.IsCollectionDefined(IpAddresses))
+            if (Optional.IsCollectionDefined(IPAddresses))
             {
                 writer.WritePropertyName("ipAddresses"u8);
                 writer.WriteStartArray();
-                foreach (string item in IpAddresses)
+                foreach (string item in IPAddresses)
                 {
                     if (item == null)
                     {

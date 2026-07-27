@@ -189,6 +189,10 @@ namespace Azure.Provisioning.ContainerService
             _idleTimeoutInMinutes = DefineProperty<int>(nameof(IdleTimeoutInMinutes), new string[] { "idleTimeoutInMinutes" });
             _isMultipleStandardLoadBalancersEnabled = DefineProperty<bool>(nameof(IsMultipleStandardLoadBalancersEnabled), new string[] { "enableMultipleStandardLoadBalancers" });
             _backendPoolType = DefineProperty<ManagedClusterLoadBalancerBackendPoolType>(nameof(BackendPoolType), new string[] { "backendPoolType" });
+            DefineAdditionalProperties();
         }
+
+        /// <summary> Define additional provisionable properties for ManagedClusterLoadBalancerProfile that are not part of the generated code. </summary>
+        partial void DefineAdditionalProperties();
     }
 }

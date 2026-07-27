@@ -11,18 +11,18 @@ namespace Azure.Provisioning.CostManagement
     public enum ReportOperationStatusType
     {
         /// <summary> InProgress. </summary>
-        InProgress,
+        InProgress = 0,
         /// <summary> Completed. </summary>
-        Completed,
+        Completed = 1,
         /// <summary> Failed. </summary>
-        Failed,
+        Failed = 2,
         /// <summary> Queued. </summary>
-        Queued,
+        Queued = 3,
         /// <summary> NoDataFound. </summary>
-        NoDataFound,
+        NoDataFound = 4,
         /// <summary> ReadyToDownload. </summary>
-        ReadyToDownload,
+        ReadyToDownload = 5,
         /// <summary> TimedOut. </summary>
-        TimedOut
+        TimedOut = 6
     }
 }

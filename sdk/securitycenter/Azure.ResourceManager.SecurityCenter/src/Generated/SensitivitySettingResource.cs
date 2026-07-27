@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.SecurityCenter
         {
             TryGetApiVersion(ResourceType, out string sensitivitySettingApiVersion);
             _sensitivitySettingsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.SecurityCenter", ResourceType.Namespace, Diagnostics);
-            _sensitivitySettingsRestClient = new SensitivitySettings(_sensitivitySettingsClientDiagnostics, Pipeline, Endpoint, sensitivitySettingApiVersion ?? "2023-02-15-preview");
+            _sensitivitySettingsRestClient = new SensitivitySettings(_sensitivitySettingsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, sensitivitySettingApiVersion ?? "2023-02-15-preview");
             ValidateResourceId(id);
         }
 

@@ -21,8 +21,8 @@ namespace Azure.ResourceManager.Network.Models
         public DscpConfigurationPropertiesFormat()
         {
             Markings = new ChangeTrackingList<int>();
-            SourceIpRanges = new ChangeTrackingList<QosIPRange>();
-            DestinationIpRanges = new ChangeTrackingList<QosIPRange>();
+            SourceIPRanges = new ChangeTrackingList<QosIPRange>();
+            DestinationIPRanges = new ChangeTrackingList<QosIPRange>();
             SourcePortRanges = new ChangeTrackingList<QosPortRange>();
             DestinationPortRanges = new ChangeTrackingList<QosPortRange>();
             QosDefinitionCollection = new ChangeTrackingList<DscpQosDefinition>();
@@ -31,8 +31,8 @@ namespace Azure.ResourceManager.Network.Models
 
         /// <summary> Initializes a new instance of <see cref="DscpConfigurationPropertiesFormat"/>. </summary>
         /// <param name="markings"> List of markings to be used in the configuration. </param>
-        /// <param name="sourceIpRanges"> Source IP ranges. </param>
-        /// <param name="destinationIpRanges"> Destination IP ranges. </param>
+        /// <param name="sourceIPRanges"> Source IP ranges. </param>
+        /// <param name="destinationIPRanges"> Destination IP ranges. </param>
         /// <param name="sourcePortRanges"> Sources port ranges. </param>
         /// <param name="destinationPortRanges"> Destination port ranges. </param>
         /// <param name="protocol"> RNM supported protocol types. </param>
@@ -42,11 +42,11 @@ namespace Azure.ResourceManager.Network.Models
         /// <param name="resourceGuid"> The resource GUID property of the DSCP Configuration resource. </param>
         /// <param name="provisioningState"> The provisioning state of the DSCP Configuration resource. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal DscpConfigurationPropertiesFormat(IList<int> markings, IList<QosIPRange> sourceIpRanges, IList<QosIPRange> destinationIpRanges, IList<QosPortRange> sourcePortRanges, IList<QosPortRange> destinationPortRanges, ProtocolType? protocol, IList<DscpQosDefinition> qosDefinitionCollection, string qosCollectionId, IReadOnlyList<NetworkInterfaceData> associatedNetworkInterfaces, Guid? resourceGuid, NetworkProvisioningState? provisioningState, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal DscpConfigurationPropertiesFormat(IList<int> markings, IList<QosIPRange> sourceIPRanges, IList<QosIPRange> destinationIPRanges, IList<QosPortRange> sourcePortRanges, IList<QosPortRange> destinationPortRanges, ProtocolType? protocol, IList<DscpQosDefinition> qosDefinitionCollection, string qosCollectionId, IReadOnlyList<NetworkInterfaceData> associatedNetworkInterfaces, Guid? resourceGuid, NetworkProvisioningState? provisioningState, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Markings = markings;
-            SourceIpRanges = sourceIpRanges;
-            DestinationIpRanges = destinationIpRanges;
+            SourceIPRanges = sourceIPRanges;
+            DestinationIPRanges = destinationIPRanges;
             SourcePortRanges = sourcePortRanges;
             DestinationPortRanges = destinationPortRanges;
             Protocol = protocol;
@@ -64,11 +64,11 @@ namespace Azure.ResourceManager.Network.Models
 
         /// <summary> Source IP ranges. </summary>
         [WirePath("sourceIpRanges")]
-        public IList<QosIPRange> SourceIpRanges { get; } = new ChangeTrackingList<QosIPRange>();
+        public IList<QosIPRange> SourceIPRanges { get; } = new ChangeTrackingList<QosIPRange>();
 
         /// <summary> Destination IP ranges. </summary>
         [WirePath("destinationIpRanges")]
-        public IList<QosIPRange> DestinationIpRanges { get; } = new ChangeTrackingList<QosIPRange>();
+        public IList<QosIPRange> DestinationIPRanges { get; } = new ChangeTrackingList<QosIPRange>();
 
         /// <summary> Sources port ranges. </summary>
         [WirePath("sourcePortRanges")]

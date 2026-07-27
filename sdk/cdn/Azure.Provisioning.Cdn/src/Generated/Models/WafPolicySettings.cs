@@ -109,6 +109,10 @@ namespace Azure.Provisioning.Cdn
             _defaultRedirectUri = DefineProperty<Uri>(nameof(DefaultRedirectUri), new string[] { "defaultRedirectUrl" });
             _defaultCustomBlockResponseStatusCode = DefineProperty<PolicySettingsDefaultCustomBlockResponseStatusCode>(nameof(DefaultCustomBlockResponseStatusCode), new string[] { "defaultCustomBlockResponseStatusCode" });
             _defaultCustomBlockResponseBody = DefineProperty<BinaryData>(nameof(DefaultCustomBlockResponseBody), new string[] { "defaultCustomBlockResponseBody" });
+            DefineAdditionalProperties();
         }
+
+        /// <summary> Define additional provisionable properties for WafPolicySettings that are not part of the generated code. </summary>
+        partial void DefineAdditionalProperties();
     }
 }

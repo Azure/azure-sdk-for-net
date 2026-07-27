@@ -108,6 +108,10 @@ namespace Azure.Provisioning.CostManagement
             _timePeriod = DefineModelProperty<ReportConfigTimePeriod>(nameof(TimePeriod), new string[] { "timePeriod" });
             _dataSet = DefineModelProperty<ReportConfigDataset>(nameof(DataSet), new string[] { "dataSet" });
             _includeMonetaryCommitment = DefineProperty<bool>(nameof(IncludeMonetaryCommitment), new string[] { "includeMonetaryCommitment" });
+            DefineAdditionalProperties();
         }
+
+        /// <summary> Define additional provisionable properties for ReportConfigDefinition that are not part of the generated code. </summary>
+        partial void DefineAdditionalProperties();
     }
 }

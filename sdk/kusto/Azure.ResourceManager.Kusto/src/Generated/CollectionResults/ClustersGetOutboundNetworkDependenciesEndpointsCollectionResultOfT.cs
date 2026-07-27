@@ -55,8 +55,8 @@ namespace Azure.ResourceManager.Kusto
                     yield break;
                 }
                 OutboundNetworkDependenciesEndpointListResult result = OutboundNetworkDependenciesEndpointListResult.FromResponse(response);
-                yield return Page<OutboundNetworkDependenciesEndpoint>.FromValues((IReadOnlyList<OutboundNetworkDependenciesEndpoint>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 nextPage = result.NextLink;
+                yield return Page<OutboundNetworkDependenciesEndpoint>.FromValues((IReadOnlyList<OutboundNetworkDependenciesEndpoint>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 if (nextPage == null)
                 {
                     yield break;

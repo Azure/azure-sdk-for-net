@@ -33,6 +33,6 @@ namespace Azure.ResourceManager.VirtualEnclaves.Models
         }
 
         /// <summary> List of mandatory approvers for the approval request. </summary>
-        public IList<VirtualEnclaveMandatoryApprover> MandatoryApprovers { get; }
+        public IList<VirtualEnclaveMandatoryApprover> MandatoryApprovers { get; } = new ChangeTrackingList<VirtualEnclaveMandatoryApprover>();
     }
 }

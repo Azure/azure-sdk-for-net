@@ -59,8 +59,8 @@ namespace Azure.ResourceManager.Automation
                     yield break;
                 }
                 WebhookListResult result = WebhookListResult.FromResponse(response);
-                yield return Page<AutomationWebhookData>.FromValues((IReadOnlyList<AutomationWebhookData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 nextPage = result.NextLink;
+                yield return Page<AutomationWebhookData>.FromValues((IReadOnlyList<AutomationWebhookData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 if (nextPage == null)
                 {
                     yield break;

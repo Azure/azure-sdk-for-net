@@ -265,6 +265,10 @@ namespace Azure.Provisioning.Cdn
             _enabledState = DefineProperty<EnabledState>(nameof(EnabledState), new string[] { "enabledState" });
             _provisioningState = DefineProperty<FrontDoorProvisioningState>(nameof(ProvisioningState), new string[] { "provisioningState" }, isOutput: true);
             _deploymentStatus = DefineProperty<FrontDoorDeploymentStatus>(nameof(DeploymentStatus), new string[] { "deploymentStatus" }, isOutput: true);
+            DefineAdditionalProperties();
         }
+
+        /// <summary> Define additional provisionable properties for CdnRouteProperties that are not part of the generated code. </summary>
+        partial void DefineAdditionalProperties();
     }
 }

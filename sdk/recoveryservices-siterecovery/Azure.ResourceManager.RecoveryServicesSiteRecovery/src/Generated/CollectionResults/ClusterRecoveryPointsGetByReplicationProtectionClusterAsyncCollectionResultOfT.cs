@@ -65,8 +65,8 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
                     yield break;
                 }
                 ClusterRecoveryPointCollection result = ClusterRecoveryPointCollection.FromResponse(response);
-                yield return Page<SiteRecoveryClusterRecoveryPoint>.FromValues((IReadOnlyList<SiteRecoveryClusterRecoveryPoint>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 nextPage = result.NextLink;
+                yield return Page<SiteRecoveryClusterRecoveryPoint>.FromValues((IReadOnlyList<SiteRecoveryClusterRecoveryPoint>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 if (nextPage == null)
                 {
                     yield break;

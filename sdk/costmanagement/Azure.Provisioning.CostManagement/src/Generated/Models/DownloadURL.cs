@@ -33,7 +33,7 @@ namespace Azure.Provisioning.CostManagement
             }
         }
 
-        /// <summary> Gets or sets the ValidTill. </summary>
+        /// <summary> Gets the ValidTill. </summary>
         public BicepValue<DateTimeOffset> ValidTill
         {
             get
@@ -41,25 +41,15 @@ namespace Azure.Provisioning.CostManagement
                 Initialize();
                 return _validTill;
             }
-            set
-            {
-                Initialize();
-                _validTill.Assign(value);
-            }
         }
 
-        /// <summary> Gets or sets the DownloadUri. </summary>
+        /// <summary> Gets the DownloadUri. </summary>
         public BicepValue<Uri> DownloadUri
         {
             get
             {
                 Initialize();
                 return _downloadUri;
-            }
-            set
-            {
-                Initialize();
-                _downloadUri.Assign(value);
             }
         }
 
@@ -70,6 +60,10 @@ namespace Azure.Provisioning.CostManagement
             _expiryOn = DefineProperty<DateTimeOffset>(nameof(ExpiryOn), new string[] { "expiryTime" }, isOutput: true);
             _validTill = DefineProperty<DateTimeOffset>(nameof(ValidTill), new string[] { "validTill" });
             _downloadUri = DefineProperty<Uri>(nameof(DownloadUri), new string[] { "downloadUrl" });
+            DefineAdditionalProperties();
         }
+
+        /// <summary> Define additional provisionable properties for DownloadURL that are not part of the generated code. </summary>
+        partial void DefineAdditionalProperties();
     }
 }

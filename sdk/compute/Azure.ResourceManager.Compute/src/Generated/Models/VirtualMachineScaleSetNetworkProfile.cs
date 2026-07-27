@@ -28,12 +28,14 @@ namespace Azure.ResourceManager.Compute.Models
         /// <param name="healthProbe"> A reference to a load balancer probe used to determine the health of an instance in the virtual machine scale set. The reference will be in the form: '/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/loadBalancers/{loadBalancerName}/probes/{probeName}'. </param>
         /// <param name="networkInterfaceConfigurations"> The list of network configurations. </param>
         /// <param name="networkApiVersion"> specifies the Microsoft.Network API version used when creating networking resources in the Network Interface Configurations for Virtual Machine Scale Set with orchestration mode 'Flexible'. </param>
+        /// <param name="interconnectGroupProfile"> Specifies the interconnect group profile to associate with the scale set. Minimum api-version: 2026-03-01. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal VirtualMachineScaleSetNetworkProfile(ComputeApiEntityReference healthProbe, IList<VirtualMachineScaleSetNetworkConfiguration> networkInterfaceConfigurations, NetworkApiVersion? networkApiVersion, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal VirtualMachineScaleSetNetworkProfile(ComputeApiEntityReference healthProbe, IList<VirtualMachineScaleSetNetworkConfiguration> networkInterfaceConfigurations, NetworkApiVersion? networkApiVersion, InterconnectGroupProfile interconnectGroupProfile, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             HealthProbe = healthProbe;
             NetworkInterfaceConfigurations = networkInterfaceConfigurations;
             NetworkApiVersion = networkApiVersion;
+            InterconnectGroupProfile = interconnectGroupProfile;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
@@ -45,6 +47,9 @@ namespace Azure.ResourceManager.Compute.Models
 
         /// <summary> specifies the Microsoft.Network API version used when creating networking resources in the Network Interface Configurations for Virtual Machine Scale Set with orchestration mode 'Flexible'. </summary>
         public NetworkApiVersion? NetworkApiVersion { get; set; }
+
+        /// <summary> Specifies the interconnect group profile to associate with the scale set. Minimum api-version: 2026-03-01. </summary>
+        public InterconnectGroupProfile InterconnectGroupProfile { get; set; }
 
         /// <summary> The ARM resource id in the form of /subscriptions/{SubscriptionId}/resourceGroups/{ResourceGroupName}/... </summary>
         public ResourceIdentifier HealthProbeId

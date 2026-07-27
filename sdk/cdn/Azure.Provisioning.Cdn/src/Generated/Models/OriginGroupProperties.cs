@@ -116,6 +116,10 @@ namespace Azure.Provisioning.Cdn
             _origins = DefineListProperty<WritableSubResource>(nameof(Origins), new string[] { "origins" });
             _trafficRestorationTimeToHealedOrNewEndpointsInMinutes = DefineProperty<int>(nameof(TrafficRestorationTimeToHealedOrNewEndpointsInMinutes), new string[] { "trafficRestorationTimeToHealedOrNewEndpointsInMinutes" });
             _responseBasedOriginErrorDetectionSettings = DefineModelProperty<ResponseBasedOriginErrorDetectionSettings>(nameof(ResponseBasedOriginErrorDetectionSettings), new string[] { "responseBasedOriginErrorDetectionSettings" });
+            DefineAdditionalProperties();
         }
+
+        /// <summary> Define additional provisionable properties for OriginGroupProperties that are not part of the generated code. </summary>
+        partial void DefineAdditionalProperties();
     }
 }

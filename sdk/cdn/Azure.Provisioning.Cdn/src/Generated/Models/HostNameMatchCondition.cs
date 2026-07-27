@@ -91,6 +91,10 @@ namespace Azure.Provisioning.Cdn
             _negateCondition = DefineProperty<bool>(nameof(NegateCondition), new string[] { "negateCondition" });
             _matchValues = DefineListProperty<string>(nameof(MatchValues), new string[] { "matchValues" });
             _transforms = DefineListProperty<PreTransformCategory>(nameof(Transforms), new string[] { "transforms" });
+            DefineAdditionalProperties();
         }
+
+        /// <summary> Define additional provisionable properties for HostNameMatchCondition that are not part of the generated code. </summary>
+        partial void DefineAdditionalProperties();
     }
 }

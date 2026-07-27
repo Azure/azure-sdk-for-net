@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.ContainerRegistry
         {
             TryGetApiVersion(ConnectedRegistryResource.ResourceType, out string connectedRegistryApiVersion);
             _connectedRegistriesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ContainerRegistry", ConnectedRegistryResource.ResourceType.Namespace, Diagnostics);
-            _connectedRegistriesRestClient = new ConnectedRegistries(_connectedRegistriesClientDiagnostics, Pipeline, Endpoint, connectedRegistryApiVersion ?? "2026-01-01-preview");
+            _connectedRegistriesRestClient = new ConnectedRegistries(_connectedRegistriesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, connectedRegistryApiVersion ?? "2026-01-01-preview");
             ValidateResourceId(id);
         }
 

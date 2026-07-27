@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.DataFactory
         {
             TryGetApiVersion(ResourceType, out string dataFactoryLinkedServiceApiVersion);
             _linkedServicesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.DataFactory", ResourceType.Namespace, Diagnostics);
-            _linkedServicesRestClient = new LinkedServices(_linkedServicesClientDiagnostics, Pipeline, Endpoint, dataFactoryLinkedServiceApiVersion ?? "2018-06-01");
+            _linkedServicesRestClient = new LinkedServices(_linkedServicesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, dataFactoryLinkedServiceApiVersion ?? "2018-06-01");
             ValidateResourceId(id);
         }
 

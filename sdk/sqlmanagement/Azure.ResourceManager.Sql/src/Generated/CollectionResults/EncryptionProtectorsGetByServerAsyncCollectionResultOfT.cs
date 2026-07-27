@@ -56,8 +56,8 @@ namespace Azure.ResourceManager.Sql
                     yield break;
                 }
                 EncryptionProtectorListResult result = EncryptionProtectorListResult.FromResponse(response);
-                yield return Page<EncryptionProtectorData>.FromValues((IReadOnlyList<EncryptionProtectorData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 nextPage = result.NextLink;
+                yield return Page<EncryptionProtectorData>.FromValues((IReadOnlyList<EncryptionProtectorData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 if (nextPage == null)
                 {
                     yield break;

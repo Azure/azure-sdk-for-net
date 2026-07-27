@@ -42,9 +42,9 @@ namespace Azure.ResourceManager.SecurityCenter
         {
             TryGetApiVersion(SecurityConnectorApplicationResource.ResourceType, out string securityConnectorApplicationApiVersion);
             _securityConnectorApplicationClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.SecurityCenter", SecurityConnectorApplicationResource.ResourceType.Namespace, Diagnostics);
-            _securityConnectorApplicationRestClient = new SecurityConnectorApplication(_securityConnectorApplicationClientDiagnostics, Pipeline, Endpoint, securityConnectorApplicationApiVersion ?? "2022-07-01-preview");
+            _securityConnectorApplicationRestClient = new SecurityConnectorApplication(_securityConnectorApplicationClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, securityConnectorApplicationApiVersion ?? "2022-07-01-preview");
             _securityConnectorApplicationsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.SecurityCenter", SecurityConnectorApplicationResource.ResourceType.Namespace, Diagnostics);
-            _securityConnectorApplicationsRestClient = new SecurityConnectorApplications(_securityConnectorApplicationsClientDiagnostics, Pipeline, Endpoint, securityConnectorApplicationApiVersion ?? "2022-07-01-preview");
+            _securityConnectorApplicationsRestClient = new SecurityConnectorApplications(_securityConnectorApplicationsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, securityConnectorApplicationApiVersion ?? "2022-07-01-preview");
             ValidateResourceId(id);
         }
 
@@ -52,9 +52,9 @@ namespace Azure.ResourceManager.SecurityCenter
         [Conditional("DEBUG")]
         internal static void ValidateResourceId(ResourceIdentifier id)
         {
-            if (id.ResourceType != "Microsoft.Security/securityConnectors")
+            if (id.ResourceType != SecurityConnectorResource.ResourceType)
             {
-                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, "Microsoft.Security/securityConnectors"), nameof(id));
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, SecurityConnectorResource.ResourceType), nameof(id));
             }
         }
 

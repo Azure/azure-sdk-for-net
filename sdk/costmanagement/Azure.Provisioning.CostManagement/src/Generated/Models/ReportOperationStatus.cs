@@ -20,18 +20,13 @@ namespace Azure.Provisioning.CostManagement
         {
         }
 
-        /// <summary> Gets or sets the StatusValue. </summary>
+        /// <summary> Gets the StatusValue. </summary>
         public BicepValue<ReportOperationStatusType> StatusValue
         {
             get
             {
                 Initialize();
                 return _statusValue;
-            }
-            set
-            {
-                Initialize();
-                _statusValue.Assign(value);
             }
         }
 
@@ -40,6 +35,10 @@ namespace Azure.Provisioning.CostManagement
         {
             base.DefineProvisionableProperties();
             _statusValue = DefineProperty<ReportOperationStatusType>(nameof(StatusValue), new string[] { "status" });
+            DefineAdditionalProperties();
         }
+
+        /// <summary> Define additional provisionable properties for ReportOperationStatus that are not part of the generated code. </summary>
+        partial void DefineAdditionalProperties();
     }
 }

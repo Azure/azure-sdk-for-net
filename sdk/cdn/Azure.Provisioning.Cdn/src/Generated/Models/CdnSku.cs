@@ -54,6 +54,10 @@ namespace Azure.Provisioning.Cdn
         {
             base.DefineProvisionableProperties();
             _name = DefineProperty<CdnSkuName>(nameof(Name), new string[] { "name" });
+            DefineAdditionalProperties();
         }
+
+        /// <summary> Define additional provisionable properties for CdnSku that are not part of the generated code. </summary>
+        partial void DefineAdditionalProperties();
     }
 }

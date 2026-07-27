@@ -179,6 +179,10 @@ namespace Azure.Provisioning.CostManagement
             _contactGroups = DefineListProperty<string>(nameof(ContactGroups), new string[] { "contactGroups" });
             _thresholdType = DefineProperty<ThresholdType>(nameof(ThresholdType), new string[] { "thresholdType" });
             _locale = DefineProperty<CultureCode>(nameof(Locale), new string[] { "locale" });
+            DefineAdditionalProperties();
         }
+
+        /// <summary> Define additional provisionable properties for BudgetNotification that are not part of the generated code. </summary>
+        partial void DefineAdditionalProperties();
     }
 }

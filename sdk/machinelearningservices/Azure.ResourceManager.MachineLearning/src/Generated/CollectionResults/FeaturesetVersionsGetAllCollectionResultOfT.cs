@@ -85,8 +85,8 @@ namespace Azure.ResourceManager.MachineLearning
                     yield break;
                 }
                 FeaturesetVersionResourceArmPaginatedResult result = FeaturesetVersionResourceArmPaginatedResult.FromResponse(response);
-                yield return Page<MachineLearningFeatureSetVersionData>.FromValues((IReadOnlyList<MachineLearningFeatureSetVersionData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 nextPage = result.NextLink;
+                yield return Page<MachineLearningFeatureSetVersionData>.FromValues((IReadOnlyList<MachineLearningFeatureSetVersionData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 if (nextPage == null)
                 {
                     yield break;

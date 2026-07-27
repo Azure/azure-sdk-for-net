@@ -77,6 +77,10 @@ namespace Azure.Provisioning.CostManagement
             _and = DefineListProperty<BudgetFilterProperties>(nameof(And), new string[] { "and" });
             _dimensions = DefineModelProperty<BudgetComparisonExpression>(nameof(Dimensions), new string[] { "dimensions" });
             _tags = DefineModelProperty<BudgetComparisonExpression>(nameof(Tags), new string[] { "tags" });
+            DefineAdditionalProperties();
         }
+
+        /// <summary> Define additional provisionable properties for BudgetFilter that are not part of the generated code. </summary>
+        partial void DefineAdditionalProperties();
     }
 }

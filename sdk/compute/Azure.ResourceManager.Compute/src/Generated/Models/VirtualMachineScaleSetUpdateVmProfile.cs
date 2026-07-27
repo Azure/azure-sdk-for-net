@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.Core;
 
 namespace Azure.ResourceManager.Compute.Models
 {
@@ -34,8 +35,9 @@ namespace Azure.ResourceManager.Compute.Models
         /// <param name="scheduledEventsProfile"> Specifies Scheduled Event related configurations. </param>
         /// <param name="userData"> UserData for the VM, which must be base-64 encoded. Customer should not pass any secrets in here. &lt;br&gt;&lt;br&gt;Minimum api-version: 2021-03-01. </param>
         /// <param name="hardwareProfile"> Specifies the hardware profile related details of a scale set. Minimum api-version: 2021-11-01. </param>
+        /// <param name="interconnectBlockProfile"> Specifies the Interconnect Block related details of a scale set. Minimum api-version: 2026-03-01. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal VirtualMachineScaleSetUpdateVmProfile(VirtualMachineScaleSetUpdateOSProfile osProfile, VirtualMachineScaleSetUpdateStorageProfile storageProfile, VirtualMachineScaleSetUpdateNetworkProfile networkProfile, SecurityPostureReferenceUpdate securityPostureReference, SecurityProfile securityProfile, DiagnosticsProfile diagnosticsProfile, VirtualMachineScaleSetExtensionProfile extensionProfile, string licenseType, BillingProfile billingProfile, ComputeScheduledEventsProfile scheduledEventsProfile, string userData, VirtualMachineScaleSetHardwareProfile hardwareProfile, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal VirtualMachineScaleSetUpdateVmProfile(VirtualMachineScaleSetUpdateOSProfile osProfile, VirtualMachineScaleSetUpdateStorageProfile storageProfile, VirtualMachineScaleSetUpdateNetworkProfile networkProfile, SecurityPostureReferenceUpdate securityPostureReference, SecurityProfile securityProfile, DiagnosticsProfile diagnosticsProfile, VirtualMachineScaleSetExtensionProfile extensionProfile, string licenseType, BillingProfile billingProfile, ComputeScheduledEventsProfile scheduledEventsProfile, string userData, VirtualMachineScaleSetHardwareProfile hardwareProfile, InterconnectBlockProfile interconnectBlockProfile, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             OSProfile = osProfile;
             StorageProfile = storageProfile;
@@ -49,6 +51,7 @@ namespace Azure.ResourceManager.Compute.Models
             ScheduledEventsProfile = scheduledEventsProfile;
             UserData = userData;
             HardwareProfile = hardwareProfile;
+            InterconnectBlockProfile = interconnectBlockProfile;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
@@ -87,6 +90,9 @@ namespace Azure.ResourceManager.Compute.Models
 
         /// <summary> Specifies the hardware profile related details of a scale set. Minimum api-version: 2021-11-01. </summary>
         internal VirtualMachineScaleSetHardwareProfile HardwareProfile { get; set; }
+
+        /// <summary> Specifies the Interconnect Block related details of a scale set. Minimum api-version: 2026-03-01. </summary>
+        internal InterconnectBlockProfile InterconnectBlockProfile { get; set; }
 
         /// <summary> Boot Diagnostics is a debugging feature which allows you to view Console Output and Screenshot to diagnose VM status. <b>NOTE</b>: If storageUri is being specified then ensure that the storage account is in the same region and subscription as the VM. You can easily view the output of your console log. Azure also enables you to see a screenshot of the VM from the hypervisor. </summary>
         public BootDiagnostics BootDiagnostics
@@ -136,6 +142,23 @@ namespace Azure.ResourceManager.Compute.Models
                     HardwareProfile = new VirtualMachineScaleSetHardwareProfile();
                 }
                 HardwareProfile.VmSizeProperties = value;
+            }
+        }
+
+        /// <summary> The ARM resource id in the form of /subscriptions/{SubscriptionId}/resourceGroups/{ResourceGroupName}/... </summary>
+        public ResourceIdentifier InterconnectBlockId
+        {
+            get
+            {
+                return InterconnectBlockProfile is null ? default : InterconnectBlockProfile.InterconnectBlockId;
+            }
+            set
+            {
+                if (InterconnectBlockProfile is null)
+                {
+                    InterconnectBlockProfile = new InterconnectBlockProfile();
+                }
+                InterconnectBlockProfile.InterconnectBlockId = value;
             }
         }
     }

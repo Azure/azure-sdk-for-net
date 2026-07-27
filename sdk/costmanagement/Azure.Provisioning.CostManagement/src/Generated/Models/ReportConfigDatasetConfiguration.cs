@@ -40,6 +40,10 @@ namespace Azure.Provisioning.CostManagement
         {
             base.DefineProvisionableProperties();
             _columns = DefineListProperty<string>(nameof(Columns), new string[] { "columns" });
+            DefineAdditionalProperties();
         }
+
+        /// <summary> Define additional provisionable properties for ReportConfigDatasetConfiguration that are not part of the generated code. </summary>
+        partial void DefineAdditionalProperties();
     }
 }

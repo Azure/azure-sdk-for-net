@@ -125,6 +125,10 @@ namespace Azure.Provisioning.Cdn
             _customHostname = DefineProperty<string>(nameof(CustomHostname), new string[] { "customHostname" });
             _customQueryString = DefineProperty<string>(nameof(CustomQueryString), new string[] { "customQueryString" });
             _customFragment = DefineProperty<string>(nameof(CustomFragment), new string[] { "customFragment" });
+            DefineAdditionalProperties();
         }
+
+        /// <summary> Define additional provisionable properties for UriRedirectActionProperties that are not part of the generated code. </summary>
+        partial void DefineAdditionalProperties();
     }
 }

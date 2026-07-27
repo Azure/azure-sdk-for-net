@@ -58,8 +58,8 @@ namespace Azure.ResourceManager.Compute
                     yield break;
                 }
                 GalleryInVmAccessControlProfileVersionList result = GalleryInVmAccessControlProfileVersionList.FromResponse(response);
-                yield return Page<GalleryInVmAccessControlProfileVersionData>.FromValues((IReadOnlyList<GalleryInVmAccessControlProfileVersionData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 nextPage = result.NextLink;
+                yield return Page<GalleryInVmAccessControlProfileVersionData>.FromValues((IReadOnlyList<GalleryInVmAccessControlProfileVersionData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 if (nextPage == null)
                 {
                     yield break;

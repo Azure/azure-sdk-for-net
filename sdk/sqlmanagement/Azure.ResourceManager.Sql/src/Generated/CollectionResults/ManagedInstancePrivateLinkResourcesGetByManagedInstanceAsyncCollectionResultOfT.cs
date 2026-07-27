@@ -56,8 +56,8 @@ namespace Azure.ResourceManager.Sql
                     yield break;
                 }
                 ManagedInstancePrivateLinkListResult result = ManagedInstancePrivateLinkListResult.FromResponse(response);
-                yield return Page<ManagedInstancePrivateLinkData>.FromValues((IReadOnlyList<ManagedInstancePrivateLinkData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 nextPage = result.NextLink;
+                yield return Page<ManagedInstancePrivateLinkData>.FromValues((IReadOnlyList<ManagedInstancePrivateLinkData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 if (nextPage == null)
                 {
                     yield break;

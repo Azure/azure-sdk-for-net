@@ -56,8 +56,8 @@ namespace Azure.ResourceManager.AppContainers
                     yield break;
                 }
                 ManagedCertificateCollection result = ManagedCertificateCollection.FromResponse(response);
-                yield return Page<ContainerAppManagedCertificateData>.FromValues((IReadOnlyList<ContainerAppManagedCertificateData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 nextPage = result.NextLink;
+                yield return Page<ContainerAppManagedCertificateData>.FromValues((IReadOnlyList<ContainerAppManagedCertificateData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 if (nextPage == null)
                 {
                     yield break;

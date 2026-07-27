@@ -74,6 +74,10 @@ namespace Azure.Provisioning.CostManagement
             _values = DefineListProperty<string>(nameof(Values), new string[] { "values" }, isRequired: true);
             _resourceType = DefineProperty<CostAllocationResourceType>(nameof(ResourceType), new string[] { "resourceType" }, isRequired: true);
             _name = DefineProperty<string>(nameof(Name), new string[] { "name" }, isRequired: true);
+            DefineAdditionalProperties();
         }
+
+        /// <summary> Define additional provisionable properties for SourceCostAllocationEntity that are not part of the generated code. </summary>
+        partial void DefineAdditionalProperties();
     }
 }

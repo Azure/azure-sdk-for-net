@@ -56,8 +56,8 @@ namespace Azure.ResourceManager.Hci
                     yield break;
                 }
                 GpuList result = GpuList.FromResponse(response);
-                yield return Page<EdgeMachineGpuData>.FromValues((IReadOnlyList<EdgeMachineGpuData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 nextPage = result.NextLink;
+                yield return Page<EdgeMachineGpuData>.FromValues((IReadOnlyList<EdgeMachineGpuData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 if (nextPage == null)
                 {
                     yield break;
