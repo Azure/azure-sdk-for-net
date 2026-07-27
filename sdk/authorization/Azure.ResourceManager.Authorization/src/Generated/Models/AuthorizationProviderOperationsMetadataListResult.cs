@@ -7,11 +7,10 @@
 
 using System;
 using System.Collections.Generic;
-using System.Linq;
 
 namespace Azure.ResourceManager.Authorization.Models
 {
-    /// <summary> The response of a ProviderOperationsMetadata list operation. </summary>
+    /// <summary> Provider operations metadata list. </summary>
     internal partial class AuthorizationProviderOperationsMetadataListResult
     {
         /// <summary>
@@ -47,34 +46,25 @@ namespace Azure.ResourceManager.Authorization.Models
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
         /// <summary> Initializes a new instance of <see cref="AuthorizationProviderOperationsMetadataListResult"/>. </summary>
-        /// <param name="value"> The ProviderOperationsMetadata items on this page. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        internal AuthorizationProviderOperationsMetadataListResult(IEnumerable<AuthorizationProviderOperationsMetadataData> value)
+        internal AuthorizationProviderOperationsMetadataListResult()
         {
-            Argument.AssertNotNull(value, nameof(value));
-
-            Value = value.ToList();
+            Value = new ChangeTrackingList<AuthorizationProviderOperationsMetadataData>();
         }
 
         /// <summary> Initializes a new instance of <see cref="AuthorizationProviderOperationsMetadataListResult"/>. </summary>
-        /// <param name="value"> The ProviderOperationsMetadata items on this page. </param>
-        /// <param name="nextLink"> The link to the next page of items. </param>
+        /// <param name="value"> The list of providers. </param>
+        /// <param name="nextLink"> The URL to use for getting the next set of results. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal AuthorizationProviderOperationsMetadataListResult(IReadOnlyList<AuthorizationProviderOperationsMetadataData> value, Uri nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal AuthorizationProviderOperationsMetadataListResult(IReadOnlyList<AuthorizationProviderOperationsMetadataData> value, string nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Value = value;
             NextLink = nextLink;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Initializes a new instance of <see cref="AuthorizationProviderOperationsMetadataListResult"/> for deserialization. </summary>
-        internal AuthorizationProviderOperationsMetadataListResult()
-        {
-        }
-
-        /// <summary> The ProviderOperationsMetadata items on this page. </summary>
+        /// <summary> The list of providers. </summary>
         public IReadOnlyList<AuthorizationProviderOperationsMetadataData> Value { get; }
-        /// <summary> The link to the next page of items. </summary>
-        public Uri NextLink { get; }
+        /// <summary> The URL to use for getting the next set of results. </summary>
+        public string NextLink { get; }
     }
 }

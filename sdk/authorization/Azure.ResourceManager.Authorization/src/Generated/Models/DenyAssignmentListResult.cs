@@ -7,11 +7,10 @@
 
 using System;
 using System.Collections.Generic;
-using System.Linq;
 
 namespace Azure.ResourceManager.Authorization.Models
 {
-    /// <summary> The response of a DenyAssignment list operation. </summary>
+    /// <summary> Deny assignment list operation result. </summary>
     internal partial class DenyAssignmentListResult
     {
         /// <summary>
@@ -47,34 +46,25 @@ namespace Azure.ResourceManager.Authorization.Models
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
         /// <summary> Initializes a new instance of <see cref="DenyAssignmentListResult"/>. </summary>
-        /// <param name="value"> The DenyAssignment items on this page. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        internal DenyAssignmentListResult(IEnumerable<DenyAssignmentData> value)
+        internal DenyAssignmentListResult()
         {
-            Argument.AssertNotNull(value, nameof(value));
-
-            Value = value.ToList();
+            Value = new ChangeTrackingList<DenyAssignmentData>();
         }
 
         /// <summary> Initializes a new instance of <see cref="DenyAssignmentListResult"/>. </summary>
-        /// <param name="value"> The DenyAssignment items on this page. </param>
-        /// <param name="nextLink"> The link to the next page of items. </param>
+        /// <param name="value"> Deny assignment list. </param>
+        /// <param name="nextLink"> The URL to use for getting the next set of results. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal DenyAssignmentListResult(IReadOnlyList<DenyAssignmentData> value, Uri nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal DenyAssignmentListResult(IReadOnlyList<DenyAssignmentData> value, string nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Value = value;
             NextLink = nextLink;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Initializes a new instance of <see cref="DenyAssignmentListResult"/> for deserialization. </summary>
-        internal DenyAssignmentListResult()
-        {
-        }
-
-        /// <summary> The DenyAssignment items on this page. </summary>
+        /// <summary> Deny assignment list. </summary>
         public IReadOnlyList<DenyAssignmentData> Value { get; }
-        /// <summary> The link to the next page of items. </summary>
-        public Uri NextLink { get; }
+        /// <summary> The URL to use for getting the next set of results. </summary>
+        public string NextLink { get; }
     }
 }

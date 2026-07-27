@@ -123,10 +123,10 @@ namespace Azure.ResourceManager.Authorization.Models
             {
                 return null;
             }
-            IList<string> actions = default;
-            IList<string> notActions = default;
-            IList<string> dataActions = default;
-            IList<string> notDataActions = default;
+            IReadOnlyList<string> actions = default;
+            IReadOnlyList<string> notActions = default;
+            IReadOnlyList<string> dataActions = default;
+            IReadOnlyList<string> notDataActions = default;
             string condition = default;
             string conditionVersion = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;

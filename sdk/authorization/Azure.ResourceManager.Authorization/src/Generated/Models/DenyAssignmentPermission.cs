@@ -46,7 +46,7 @@ namespace Azure.ResourceManager.Authorization.Models
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
         /// <summary> Initializes a new instance of <see cref="DenyAssignmentPermission"/>. </summary>
-        public DenyAssignmentPermission()
+        internal DenyAssignmentPermission()
         {
             Actions = new ChangeTrackingList<string>();
             NotActions = new ChangeTrackingList<string>();
@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.Authorization.Models
         /// <param name="condition"> The conditions on the Deny assignment permission. This limits the resources it applies to. </param>
         /// <param name="conditionVersion"> Version of the condition. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal DenyAssignmentPermission(IList<string> actions, IList<string> notActions, IList<string> dataActions, IList<string> notDataActions, string condition, string conditionVersion, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal DenyAssignmentPermission(IReadOnlyList<string> actions, IReadOnlyList<string> notActions, IReadOnlyList<string> dataActions, IReadOnlyList<string> notDataActions, string condition, string conditionVersion, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Actions = actions;
             NotActions = notActions;
@@ -75,21 +75,21 @@ namespace Azure.ResourceManager.Authorization.Models
 
         /// <summary> Actions to which the deny assignment does not grant access. </summary>
         [WirePath("actions")]
-        public IList<string> Actions { get; }
+        public IReadOnlyList<string> Actions { get; }
         /// <summary> Actions to exclude from that the deny assignment does not grant access. </summary>
         [WirePath("notActions")]
-        public IList<string> NotActions { get; }
+        public IReadOnlyList<string> NotActions { get; }
         /// <summary> Data actions to which the deny assignment does not grant access. </summary>
         [WirePath("dataActions")]
-        public IList<string> DataActions { get; }
+        public IReadOnlyList<string> DataActions { get; }
         /// <summary> Data actions to exclude from that the deny assignment does not grant access. </summary>
         [WirePath("notDataActions")]
-        public IList<string> NotDataActions { get; }
+        public IReadOnlyList<string> NotDataActions { get; }
         /// <summary> The conditions on the Deny assignment permission. This limits the resources it applies to. </summary>
         [WirePath("condition")]
-        public string Condition { get; set; }
+        public string Condition { get; }
         /// <summary> Version of the condition. </summary>
         [WirePath("conditionVersion")]
-        public string ConditionVersion { get; set; }
+        public string ConditionVersion { get; }
     }
 }
