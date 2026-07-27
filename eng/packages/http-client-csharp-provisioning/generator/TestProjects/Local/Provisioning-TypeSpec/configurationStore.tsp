@@ -54,12 +54,6 @@ model ConfigurationStoreProperties {
 
   /** The linked resources of the configuration store. */
   linkedResources?: LinkedResource[];
-
-  /** Byte-oriented content that must be serialized as a base64 string. */
-  binaryContent?: bytes;
-
-  /** Arbitrary JSON content that should keep JSON literal semantics. */
-  jsonMetadata?: unknown;
 }
 
 /** A linked resource reference. */

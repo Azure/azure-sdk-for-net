@@ -15,6 +15,5 @@ namespace Azure.Generator.Provisioning.Primitives
         bool IsRequired,
         string[] BicepPath,
         string? DefaultValue = null,
-        CSharpType? TypeOverride = null,
-        string? Format = null);
+        CSharpType? TypeOverride = null);
 }

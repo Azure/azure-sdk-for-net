@@ -67,8 +67,7 @@ namespace Azure.Generator.Provisioning.Providers
                 property.IsReadOnly,
                 !property.IsReadOnly && _hasSettableUsage,
                 property.IsRequired && _hasSettableUsage,
-                [serializedName],
-                Format: BicepTypeHelpers.GetLiteralFormat(property.Type));
+                [serializedName]);
         }
 
         protected override FieldProvider[] BuildFields()
@@ -184,7 +183,7 @@ namespace Azure.Generator.Provisioning.Providers
                 statements.Add(field.Assign(
                     This.Invoke(
                         methodName,
-                        BicepTypeHelpers.BuildDefinePropertyArgs(provProp.Name, provProp.BicepPath, provProp.IsOutput, provProp.IsRequired, provProp.DefaultValue, provProp.Format),
+                        BicepTypeHelpers.BuildDefinePropertyArgs(provProp.Name, provProp.BicepPath, provProp.IsOutput, provProp.IsRequired, provProp.DefaultValue),
                         typeArgs,
                         false)
                 ).Terminate());

@@ -26,8 +26,6 @@ namespace Azure.Provisioning.ProvisioningTypeSpec
         private BicepValue<ConfigurationStoreSkuTier> _skuTier;
         private BicepValue<ConfigurationStoreCreateMode> _createMode;
         private BicepList<SubResource> _linkedResources;
-        private BicepValue<BinaryData> _binaryContent;
-        private BicepValue<BinaryData> _jsonMetadata;
 
         /// <summary> Creates a new ConfigurationStoreProperties. </summary>
         public ConfigurationStoreProperties()
@@ -184,36 +182,6 @@ namespace Azure.Provisioning.ProvisioningTypeSpec
             }
         }
 
-        /// <summary> Gets or sets the BinaryContent. </summary>
-        public BicepValue<BinaryData> BinaryContent
-        {
-            get
-            {
-                Initialize();
-                return _binaryContent;
-            }
-            set
-            {
-                Initialize();
-                _binaryContent.Assign(value);
-            }
-        }
-
-        /// <summary> Gets or sets the JsonMetadata. </summary>
-        public BicepValue<BinaryData> JsonMetadata
-        {
-            get
-            {
-                Initialize();
-                return _jsonMetadata;
-            }
-            set
-            {
-                Initialize();
-                _jsonMetadata.Assign(value);
-            }
-        }
-
         /// <summary> Gets or sets the Name. </summary>
         public BicepValue<string> SkuName
         {
@@ -246,8 +214,6 @@ namespace Azure.Provisioning.ProvisioningTypeSpec
             _skuTier = DefineProperty<ConfigurationStoreSkuTier>(nameof(SkuTier), new string[] { "skuTier" });
             _createMode = DefineProperty<ConfigurationStoreCreateMode>(nameof(CreateMode), new string[] { "createMode" });
             _linkedResources = DefineListProperty<SubResource>(nameof(LinkedResources), new string[] { "linkedResources" });
-            _binaryContent = DefineProperty<BinaryData>(nameof(BinaryContent), new string[] { "binaryContent" }, format: "base64");
-            _jsonMetadata = DefineProperty<BinaryData>(nameof(JsonMetadata), new string[] { "jsonMetadata" });
             DefineAdditionalProperties();
         }
 
