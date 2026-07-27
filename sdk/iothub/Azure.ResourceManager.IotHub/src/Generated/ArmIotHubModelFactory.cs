@@ -525,7 +525,7 @@ namespace Azure.ResourceManager.IotHub.Models
             return new IotHubRootCertificateProperties(isRootCertificateV2Enabled, lastUpdatedOn, default);
         }
 
-        /// <param name="namespaceResourceId"> The identifier of the Azure Device Registry namespace associated with the GEN2 SKU hub. </param>
+        /// <param name="namespaceResourceId"> The identifier of the Azure Device Registry namespace. </param>
         /// <param name="identityResourceId"> The identity used to manage the ADR namespace from the data plane. </param>
         /// <returns> A new <see cref="Models.IotHubDeviceRegistry"/> instance for mocking. </returns>
         public static IotHubDeviceRegistry IotHubDeviceRegistry(ResourceIdentifier namespaceResourceId = default, ResourceIdentifier identityResourceId = default)
